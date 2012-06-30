@@ -156,7 +156,7 @@ xSerialPutChar (xComPortHandle pxPort, signed char cOutChar, portTickType xBlock
 		return pdFAIL;
 	}
 	if (0 == port->tx_queue) {
-		(void)iBSP430USCIRawTransmit(port, cOutChar);
+		(void)iBSP430USCIputc(cOutChar, port);
 		return pdPASS;
 	}
 	rv = xQueueSendToBack(port->tx_queue, &cOutChar, xBlockTime);

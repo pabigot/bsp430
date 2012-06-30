@@ -137,29 +137,6 @@ int iBSP430USCIClose (xBSP430USCIHandle xUSCI);
  */
 void vBSP430USCIWakeupTransmit (xBSP430USCIHandle xUSCI);
 
-/** Transmit a single character on a queued USCI device.
- *
- * @param xUSCI The device on which the character should be
- * transmitted.  It is an error to use this function if the device has
- * a transmit queue; in such a case this call is likely to hang.
- *
- * @param c the character to be written
- *
- * @return @C c. */
-static int
-__inline__
-iBSP430USCIRawTransmit (xBSP430USCIHandle xUSCI,
-						int c)
-{
-	/* Spin until the transmit buffer is available */
-	while (! (xUSCI->usci->ifg & UCTXIFG)) {
-		;
-	}
-	/* Queue the octet for transmission */
-	xUSCI->usci->txbuf = c;
-	return c;
-}
-
 /** Analog to fputc */
 int iBSP430USCIputc (int c, xBSP430USCIHandle xUSCI);
 

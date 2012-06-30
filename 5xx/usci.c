@@ -115,43 +115,61 @@ vBSP430USCIWakeupTransmit (xBSP430USCIHandle device)
 	taskEXIT_CRITICAL();
 }
 
+#define RAW_TRANSMIT(_periph, _c) do {			\
+		while (! (_periph->ifg & UCTXIFG)) {	\
+			;									\
+		}										\
+		_periph->txbuf = _c;					\
+	} while (0)
+
 int
-iBSP430USCIputc (int c, xBSP430USCIHandle hsuart)
+iBSP430USCIputc (int c, xBSP430USCIHandle device)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
 	int passp;
 
-	do {
-		passp = xQueueSendToBack(hsuart->tx_queue, &c, delay);
-		vBSP430USCIWakeupTransmit(hsuart);
-		if (! passp) {
-			delay = MAX_DELAY;
-		}
-	} while (! passp);
+	if (device->tx_queue) {
+		do {
+			passp = xQueueSendToBack(device->tx_queue, &c, delay);
+			vBSP430USCIWakeupTransmit(device);
+			if (! passp) {
+				delay = MAX_DELAY;
+			}
+		} while (! passp);
+	} else {
+		RAW_TRANSMIT(device->usci, c);
+	}
 	return c;
 }
 
 int
-iBSP430USCIputs (const char* str, xBSP430USCIHandle hsuart)
+iBSP430USCIputs (const char* str, xBSP430USCIHandle device)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
 	const char * in_string = str;
 	
-	while (*str) {
-		if (xQueueSendToBack(hsuart->tx_queue, str, delay)) {
-			++str;
-			if (delay) {
-				vBSP430USCIWakeupTransmit(hsuart);
-				delay = 0;
+	if (device->tx_queue) {
+		while (*str) {
+			if (xQueueSendToBack(device->tx_queue, str, delay)) {
+				++str;
+				if (delay) {
+					vBSP430USCIWakeupTransmit(device);
+					delay = 0;
+				}
+			} else {
+				vBSP430USCIWakeupTransmit(device);
+				delay = MAX_DELAY;
 			}
-		} else {
-			vBSP430USCIWakeupTransmit(hsuart);
-			delay = MAX_DELAY;
+		}
+		vBSP430USCIWakeupTransmit(device);
+	} else {
+		while (*str) {
+			RAW_TRANSMIT(device->usci, *str);
+			++str;
 		}
 	}
-	vBSP430USCIWakeupTransmit(hsuart);
 	return str - in_string;
 }
 
