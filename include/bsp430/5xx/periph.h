@@ -204,6 +204,48 @@ typedef struct bsp430_DMAX {
  * value. */
 #define xBSP430Periph_USCI_A3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A3__))
 
+/** @def configBSP430_PERIPH_USE_EUSCI_A0
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_A0 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_A0__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_A0
+#define configBSP430_PERIPH_USE_EUSCI_A0 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
+
+/** Handle for the raw EUSCI_A0 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_A0 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_A0 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A0__))
+
+/** @def configBSP430_PERIPH_USE_EUSCI_A1
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_A1 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_A1__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_A1
+#define configBSP430_PERIPH_USE_EUSCI_A1 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
+
+/** Handle for the raw EUSCI_A1 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_A1 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_A1 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A1__))
+
+/** @def configBSP430_PERIPH_USE_EUSCI_A2
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_A2 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_A2__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_A2
+#define configBSP430_PERIPH_USE_EUSCI_A2 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
+
+/** Handle for the raw EUSCI_A2 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_A2 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_A2 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A2__))
+
 /** @def configBSP430_PERIPH_USE_USCI_B0
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
@@ -259,6 +301,20 @@ typedef struct bsp430_DMAX {
  * only if #configBSP430_PERIPH_USE_USCI_B3 is defined to a true
  * value. */
 #define xBSP430Periph_USCI_B3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B3__))
+
+/** @def configBSP430_PERIPH_USE_EUSCI_B0
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_B0 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_B0__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_B0
+#define configBSP430_PERIPH_USE_EUSCI_B0 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_B0 */
+
+/** Handle for the raw EUSCI_B0 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_B0 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_B0 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_B0__))
 
 /* END EMBED 5xx_periph_decl: AUTOMATICALLY GENERATED CODE */
 
