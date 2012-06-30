@@ -5,21 +5,6 @@
 
 #define COM_PORT_ACTIVE  0x01
 
-/* Work around missing vector definitions for EUSCI devices */
-#define EUSCI_A0_VECTOR USCI_A0_VECTOR 
-#define EUSCI_A1_VECTOR USCI_A1_VECTOR 
-#define EUSCI_A2_VECTOR USCI_A2_VECTOR 
-#define EUSCI_B0_VECTOR USCI_B0_VECTOR 
-
-/* Work around too-specialized definitions for EUSCI devices.  SPI and
- * UART have the same bit values; I2C doesn't use these. */
-#ifndef USCI_UCRXIFG
-#define USCI_UCRXIFG USCI_SPI_UCRXIFG
-#endif /* USCI_UCRXIFG */
-#ifndef USCI_UCTXIFG
-#define USCI_UCTXIFG USCI_SPI_UCTXIFG
-#endif /* USCI_UCTXIFG */
-
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
 static xBSP430USCIHandle periphToDevice (xBSP430Periph periph);
@@ -287,51 +272,6 @@ irq_USCI_A3 (void)
 }
 #endif /* configBSP430_PERIPH_USE_USCI_A3 */
 
-#if configBSP430_PERIPH_USE_EUSCI_A0 - 0
-static struct xBSP430USCI xBSP430EUSCI_A0_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_EUSCI_A0__
-};
-
-xBSP430USCIHandle const xBSP430EUSCI_A0 = &xBSP430EUSCI_A0_;
-
-static void
-__attribute__((__interrupt__(EUSCI_A0_VECTOR)))
-irq_EUSCI_A0 (void)
-{
-	usci_irq(xBSP430EUSCI_A0);
-}
-#endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
-
-#if configBSP430_PERIPH_USE_EUSCI_A1 - 0
-static struct xBSP430USCI xBSP430EUSCI_A1_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_EUSCI_A1__
-};
-
-xBSP430USCIHandle const xBSP430EUSCI_A1 = &xBSP430EUSCI_A1_;
-
-static void
-__attribute__((__interrupt__(EUSCI_A1_VECTOR)))
-irq_EUSCI_A1 (void)
-{
-	usci_irq(xBSP430EUSCI_A1);
-}
-#endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
-
-#if configBSP430_PERIPH_USE_EUSCI_A2 - 0
-static struct xBSP430USCI xBSP430EUSCI_A2_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_EUSCI_A2__
-};
-
-xBSP430USCIHandle const xBSP430EUSCI_A2 = &xBSP430EUSCI_A2_;
-
-static void
-__attribute__((__interrupt__(EUSCI_A2_VECTOR)))
-irq_EUSCI_A2 (void)
-{
-	usci_irq(xBSP430EUSCI_A2);
-}
-#endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
-
 #if configBSP430_PERIPH_USE_USCI_B0 - 0
 static struct xBSP430USCI xBSP430USCI_B0_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B0__
@@ -392,21 +332,6 @@ irq_USCI_B3 (void)
 }
 #endif /* configBSP430_PERIPH_USE_USCI_B3 */
 
-#if configBSP430_PERIPH_USE_EUSCI_B0 - 0
-static struct xBSP430USCI xBSP430EUSCI_B0_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_EUSCI_B0__
-};
-
-xBSP430USCIHandle const xBSP430EUSCI_B0 = &xBSP430EUSCI_B0_;
-
-static void
-__attribute__((__interrupt__(EUSCI_B0_VECTOR)))
-irq_EUSCI_B0 (void)
-{
-	usci_irq(xBSP430EUSCI_B0);
-}
-#endif /* configBSP430_PERIPH_USE_EUSCI_B0 */
-
 /* END EMBED usci_defn: AUTOMATICALLY GENERATED CODE */
 
 static xBSP430USCIHandle periphToDevice (xBSP430Periph periph)
@@ -434,21 +359,6 @@ static xBSP430USCIHandle periphToDevice (xBSP430Periph periph)
 		return xBSP430USCI_A3;
 	}
 #endif /* configBSP430_PERIPH_USE_USCI_A3 */
-#if configBSP430_PERIPH_USE_EUSCI_A0 - 0
-	if (xBSP430Periph_EUSCI_A0 == periph) {
-		return xBSP430EUSCI_A0;
-	}
-#endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
-#if configBSP430_PERIPH_USE_EUSCI_A1 - 0
-	if (xBSP430Periph_EUSCI_A1 == periph) {
-		return xBSP430EUSCI_A1;
-	}
-#endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
-#if configBSP430_PERIPH_USE_EUSCI_A2 - 0
-	if (xBSP430Periph_EUSCI_A2 == periph) {
-		return xBSP430EUSCI_A2;
-	}
-#endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
 #if configBSP430_PERIPH_USE_USCI_B0 - 0
 	if (xBSP430Periph_USCI_B0 == periph) {
 		return xBSP430USCI_B0;
@@ -469,11 +379,6 @@ static xBSP430USCIHandle periphToDevice (xBSP430Periph periph)
 		return xBSP430USCI_B3;
 	}
 #endif /* configBSP430_PERIPH_USE_USCI_B3 */
-#if configBSP430_PERIPH_USE_EUSCI_B0 - 0
-	if (xBSP430Periph_EUSCI_B0 == periph) {
-		return xBSP430EUSCI_B0;
-	}
-#endif /* configBSP430_PERIPH_USE_EUSCI_B0 */
 /* END EMBED usci_demux: AUTOMATICALLY GENERATED CODE */
 	return NULL;
 }
