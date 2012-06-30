@@ -36,11 +36,6 @@
  * The behavior of this module is modified with the following
  * configuration options:
  *
- * bsp430CONFIG_5XX_SYSRST_WITH_DESCRIPTION : Define to a true value
- * to enable text descriptions of reset causes.  If left undefined,
- * the text descriptions are dropped reducing application size by
- * several hundred bytes.
- *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -51,6 +46,16 @@
 #define BSP430_5XX_SYSRST_H
 
 #include "platform.h"
+
+/** @def configBSP430_5XX_SYSRST_USE_DESCRIPTION
+ *
+ * Define to a true value to enable text descriptions of reset causes.
+ * If left undefined, the text descriptions are dropped reducing
+ * application size by several hundred bytes.
+ */
+#ifndef configBSP430_5XX_SYSRST_USE_DESCRIPTION
+#define configBSP430_5XX_SYSRST_USE_DESCRIPTION 0
+#endif /* configBSP430_5XX_SYSRST_USE_DESCRIPTION */
 
 /** Generate the events recorded within the system reset vector.
  *
@@ -66,7 +71,9 @@
  * POR or PUC.
  *
  * @param ppcDescription Optional parameter that returns a text
- * description of the reset cause that is being returned.
+ * description of the reset cause that is being returned.  If
+ * requested but #configBSP430_5XX_SYSRST_USE_DESCRIPTION is not
+ * enabled a single character string "?" will be returned.
  *
  * @return A positive integer value corresponding to a SYSRST_type
  * supported on the current microcontroller, or zero if all such

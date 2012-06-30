@@ -39,12 +39,12 @@ passing that output through:
 
 typedef struct sysrstiv_pair_t {
 	unsigned char iv;
-#if bsp430CONFIG_5XX_SYSRSTIV_WITH_DESCRIPTION - 0
+#if configBSP430_5XX_SYSRST_USE_DESCRIPTION - 0
 #define EMIT_SYSRSTIV(_iv,_txt) { iv: _iv, desc: _txt },
 	const char * desc;
-#else
+#else /* configBSP430_5XX_SYSRST_USE_DESCRIPTION */
 #define EMIT_SYSRSTIV(_iv,_txt) { iv: _iv },
-#endif /* bsp430CONFIG_5XX_SYSRSTIV_WITH_DESCRIPTION */
+#endif /* configBSP430_5XX_SYSRST_USE_DESCRIPTION */
 } sysrstiv_pair_t;
 
 static const sysrstiv_pair_t sysrstiv_pairs[] = {
@@ -224,7 +224,7 @@ xBSP430sysrstGenerator (unsigned char * pucHaveBOR,
 		*pucHaveBOR = 1;
 	}
 	if (NULL != ppcDescription) {
-#if bsp430CONFIG_5XX_SYSRSTIV_WITH_DESCRIPTION - 0
+#if configBSP430_5XX_SYSRST_USE_DESCRIPTION - 0
 		const sysrstiv_pair_t * pp = sysrstiv_pairs;
 		const sysrstiv_pair_t * epp = pp + sizeof(sysrstiv_pairs)/sizeof(*sysrstiv_pairs);
 
@@ -232,9 +232,9 @@ xBSP430sysrstGenerator (unsigned char * pucHaveBOR,
 			++pp;
 		}
 		*ppcDescription = (pp < epp) ? pp->desc : "?";
-#else /* bsp430CONFIG_5XX_SYSRSTIV_WITH_DESCRIPTION */
+#else /* configBSP430_5XX_SYSRST_USE_DESCRIPTION */
 		*ppcDescription = "?";
-#endif /* bsp430CONFIG_5XX_SYSRSTIV_WITH_DESCRIPTION */
+#endif /* configBSP430_5XX_SYSRST_USE_DESCRIPTION */
 	}
 	return iv;
 }
