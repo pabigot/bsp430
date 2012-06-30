@@ -65,8 +65,12 @@
 #ifndef BSP430_UTILITY_TERMINAL_H
 #define BSP430_UTILITY_TERMINAL_H
 
-#include <bsp430/5xx/usci.h>
+#include <bsp430/common/periph.h>
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "semphr.h"
 #include "task.h"
+
 
 /* Forward declarations */
 struct xBSP430_COMMAND_DEFN;
@@ -155,12 +159,12 @@ void vBSP430CommandAdd (xBSP430CommandGroup * pxCommandGroup,
 typedef struct xBSP430_TERMINAL_CONFIGURATION {
 	/** TEMPORARY The device ID for the UART device that manages the
 	 * connection */
-	int uart_devid;
+	xBSP430Periph uart;
 
-	/** Parameter to bsp430_usci_uart_open */
+	/** Parameter to #xBSP430USCIOpenUART */
 	unsigned int control_word;
 
-	/** Parameter to bsp430_usci_uart_open */
+	/** Parameter to #xBSP430USCIOpenUART */
 	unsigned long baud;
 
 	/** Priority of the terminal task.  Processing of commands

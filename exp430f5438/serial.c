@@ -5,11 +5,9 @@
 #include <bsp430/clocks/ucs.h>
 #include <bsp430/5xx/usci.h>
 
-typedef bsp430_USCI xUSCI_A_UART;
-
 #define COM_PORT_ACTIVE  0x01
 
-typedef bsp430_FreeRTOS_USCI xComPort;
+typedef struct xBSP430USCI xComPort;
 
 static xComPort*
 configurePort_ (xComPort* port,
@@ -32,8 +30,8 @@ configurePort_ (xComPort* port,
 		}
 	}
 
-	configured_port = bsp430_usci_uart_open((int)(port->usci), 0, baud,
-											rx_queue, tx_queue);
+	configured_port = xBSP430USCIOpenUART((xBSP430Periph)(port->usci), 0, baud,
+										  rx_queue, tx_queue);
 
 	if (NULL != configured_port) {
 		return configured_port;
@@ -54,7 +52,7 @@ unconfigurePort_ (xComPort* port)
 {
 	xQueueHandle rx_queue = port->rx_queue;
 	xQueueHandle tx_queue = port->tx_queue;
-	(void)bsp430_usci_close(port);
+	(void)iBSP430USCIClose(port);
 	if (tx_queue) {
 		vQueueDelete(tx_queue);
 	}
@@ -66,18 +64,23 @@ unconfigurePort_ (xComPort* port)
 static xComPort*
 portToDevice (eCOMPort ePort)
 {
-	int devid;
-
 	switch (ePort) {
-	case serCOM1: devid = BSP430_USCI_A0; break;
-	case serCOM2: devid = BSP430_USCI_A1; break;
-	case serCOM3: devid = BSP430_USCI_A2; break;
-	case serCOM4: devid = BSP430_USCI_A3; break;
+#if configBSP430_PERIPH_USE_USCI_A0 - 0
+	case serCOM1: return xBSP430USCI_A0;
+#endif /* configBSP430_PERIPH_USE_USCI_A0 */
+#if configBSP430_PERIPH_USE_USCI_A1 - 0
+	case serCOM2: return xBSP430USCI_A1;
+#endif /* configBSP430_PERIPH_USE_USCI_A1 */
+#if configBSP430_PERIPH_USE_USCI_A2 - 0
+	case serCOM3: return xBSP430USCI_A2;
+#endif /* configBSP430_PERIPH_USE_USCI_A2 */
+#if configBSP430_PERIPH_USE_USCI_A3 - 0
+	case serCOM4: return xBSP430USCI_A3;
+#endif /* configBSP430_PERIPH_USE_USCI_A3 */
 	default:
-		devid = 0;
 		break;
 	}
-	return bsp430_usci_lookup(devid);
+	return NULL;
 }
 
 static unsigned long
@@ -153,12 +156,12 @@ xSerialPutChar (xComPortHandle pxPort, signed char cOutChar, portTickType xBlock
 		return pdFAIL;
 	}
 	if (0 == port->tx_queue) {
-		(void)bsp430_usci_raw_transmit(port, cOutChar);
+		(void)iBSP430USCIRawTransmit(port, cOutChar);
 		return pdPASS;
 	}
 	rv = xQueueSendToBack(port->tx_queue, &cOutChar, xBlockTime);
 	if (pdTRUE == rv) {
-		(void)bsp430_usci_wakeup_transmit(port);
+		vBSP430USCIWakeupTransmit(port);
 	}
 	return pdTRUE == rv;
 }

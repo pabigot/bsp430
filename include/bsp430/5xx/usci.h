@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Genericized UCSI on 5xx/6xx devices
+ * Genericized UCSI_A/USCI_B on 5xx/6xx devices
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -48,13 +48,13 @@
 #include <bsp430/5xx/periph.h>
 
 /** Structure holding USCI-related information */
-typedef struct bsp430_FreeRTOS_USCI {
-	/** Flags indicating various things; primarily whether anybody is
+struct xBSP430USCI {
+	/** Flags indicating various things: primarily, whether anybody is
 	 * using the device. */
 	unsigned int flags;
 	
 	/** Pointer to the peripheral register structure. */
-	volatile bsp430_USCI * const usci;
+	volatile xBSP430Periph_USCI * const usci;
 
 	/** Queue used to collect input via interrupt.  If null,
 	 * interrupts are not used for reception. */
@@ -69,22 +69,18 @@ typedef struct bsp430_FreeRTOS_USCI {
 
 	/** Total number of transmitted octets */
 	unsigned long num_tx;
-} bsp430_FreeRTOS_USCI;
+};
 
-/** Find the FreeRTOS USCI structure associated with the given USCI device
- *
- * @return The corresponding bsp430_FreeRTOS_USCI Device, or a null
- * pointer if there is no such device. */
-bsp430_FreeRTOS_USCI*
-bsp430_usci_lookup (int devid);
+/** The USCI internal state is private to the implementation. */
+typedef struct xBSP430USCI * xBSP430USCIHandle;
 
 /** Request and configure a USCI device in UART mode.
  *
- * @param devnum The device that is being requested, e.g. BSP430_USCI_A0.
+ * @param xUSCI The device that is being requested.
  *
  * @param control_word The configuration to be written to the device's
- * ctlw0 word.  Most bit fields will be assigned, but UCSYNC will be
- * cleared, and UCSSELx will be set based on baud rate.
+ * ctlw0 word.  Most bit fields will be assigned from this value, but
+ * UCSYNC will be cleared, and UCSSELx will be set based on baud rate.
  *
  * @param baud The desired baud rate.  This will be configured
  * based on the current clock setting, using ACLK if the rate is low
@@ -99,21 +95,19 @@ bsp430_usci_lookup (int devid);
  * transmission, and the application should add data to the queue for
  * transmission.
  *
- * @return A pointer to the allocated and configured USCI peripheral
- * if successful; a null pointer if something went wrong. */
-bsp430_FreeRTOS_USCI*
-bsp430_usci_uart_open (int devid,
-					   unsigned int control_word,
-					   unsigned long baud,
-					   xQueueHandle rx_queue,
-					   xQueueHandle tx_queue);
+ * @return @a xUSCI if the allocation and configuration is successful,
+ * and a null handle if something went wrong. */
+xBSP430USCIHandle xBSP430USCIOpenUART (xBSP430Periph xPeriph,
+									   unsigned int control_word,
+									   unsigned long baud,
+									   xQueueHandle rx_queue,
+									   xQueueHandle tx_queue);
 
-bsp430_FreeRTOS_USCI*
-bsp430_usci_spi_open (int devid,
-					  unsigned int control_word,
-					  unsigned int prescaler,
-					  xQueueHandle rx_queue,
-					  xQueueHandle tx_queue);
+xBSP430USCIHandle xBSP430USCIOpenSPI (xBSP430Periph xPeriph,
+									  unsigned int control_word,
+									  unsigned int prescaler,
+									  xQueueHandle rx_queue,
+									  xQueueHandle tx_queue);
 
 /** Release a USCI device.
  *
@@ -124,7 +118,7 @@ bsp430_usci_spi_open (int devid,
  * @param device The device to be closed.
  *
  * @return 0 if the close occurred without error. */
-int bsp430_usci_close (bsp430_FreeRTOS_USCI* device);
+int iBSP430USCIClose (xBSP430USCIHandle xUSCI);
 
 /** Wake up the interrupt-driven transmission if necessary.
  *
@@ -140,7 +134,7 @@ int bsp430_usci_close (bsp430_FreeRTOS_USCI* device);
  *
  * @param device A USCI device which must have a transmit queue.
  */
-void bsp430_usci_wakeup_transmit (bsp430_FreeRTOS_USCI* device);
+void vBSP430USCIWakeupTransmit (xBSP430USCIHandle xUSCI);
 
 /** Transmit a single character on a queued USCI device.
  *
@@ -153,22 +147,56 @@ void bsp430_usci_wakeup_transmit (bsp430_FreeRTOS_USCI* device);
  * @return @C c. */
 static int
 __inline__
-bsp430_usci_raw_transmit (bsp430_FreeRTOS_USCI* device,
-						  int c)
+iBSP430USCIRawTransmit (xBSP430USCIHandle xUSCI,
+						int c)
 {
 	/* Spin until the transmit buffer is available */
-	while (! (device->usci->ifg & UCTXIFG)) {
+	while (! (xUSCI->usci->ifg & UCTXIFG)) {
 		;
 	}
 	/* Queue the octet for transmission */
-	device->usci->txbuf = c;
+	xUSCI->usci->txbuf = c;
 	return c;
 }
 
 /** Analog to fputc */
-int bsp430_uart_putc (int c, bsp430_FreeRTOS_USCI* hsuart);
+int iBSP430USCIputc (int c, xBSP430USCIHandle xUSCI);
 
 /** Analog to fputs */
-int bsp430_uart_puts (const char* str, bsp430_FreeRTOS_USCI* hsuart);
+int iBSP430USCIputs (const char* str, xBSP430USCIHandle xUSCI);
+
+/** Handle for USCI_A0.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_A0 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_A0;
+
+/** Handle for USCI_A1.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_A1 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_A1;
+
+/** Handle for USCI_A2.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_A2 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_A2;
+
+/** Handle for USCI_A3.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_A3 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_A3;
+
+/** Handle for USCI_B0.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_B0 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_B0;
+
+/** Handle for USCI_B1.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_B1 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_B1;
+
+/** Handle for USCI_B2.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_B2 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_B2;
+
+/** Handle for USCI_B3.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_USCI_B3 is defined to a true value. */
+extern xBSP430USCIHandle const xBSP430USCI_B3;
+
+
 
 #endif /* BSP430_5XX_USCI_H */

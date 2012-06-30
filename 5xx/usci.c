@@ -3,100 +3,31 @@
 #include <bsp430/common/platform.h>
 #include "task.h"
 
-enum {
-#if defined(__MSP430_HAS_USCI_A0__)
-	DEVIDX_USCI_A0,
-#endif /* __MSP430_HAS_USCI_A0__ */
-#if defined(__MSP430_HAS_USCI_A1__)
-	DEVIDX_USCI_A1,
-#endif /* __MSP430_HAS_USCI_A1__ */
-#if defined(__MSP430_HAS_USCI_A2__)
-	DEVIDX_USCI_A2,
-#endif /* __MSP430_HAS_USCI_A2__ */
-#if defined(__MSP430_HAS_USCI_A3__)
-	DEVIDX_USCI_A3,
-#endif /* __MSP430_HAS_USCI_A3__ */
-#if defined(__MSP430_HAS_USCI_B0__)
-	DEVIDX_USCI_B0,
-#endif /* __MSP430_HAS_USCI_B0__ */
-#if defined(__MSP430_HAS_USCI_B1__)
-	DEVIDX_USCI_B1,
-#endif /* __MSP430_HAS_USCI_B1__ */
-#if defined(__MSP430_HAS_USCI_B2__)
-	DEVIDX_USCI_B2,
-#endif /* __MSP430_HAS_USCI_B2__ */
-#if defined(__MSP430_HAS_USCI_B3__)
-	DEVIDX_USCI_B3,
-#endif /* __MSP430_HAS_USCI_B3__ */
-};
-
-#define DEVID_TO_USCI(_devid) ((volatile bsp430_USCI *)(_devid))
-#define DEVICE_TO_DEVID(_device) ((int)((_device)->usci))
-
-bsp430_FreeRTOS_USCI usci_devices[] = {
-#if defined(__MSP430_HAS_USCI_A0__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_A0__) },
-#endif /* __MSP430_HAS_USCI_A0__ */
-#if defined(__MSP430_HAS_USCI_A1__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_A1__) },
-#endif /* __MSP430_HAS_USCI_A1__ */
-#if defined(__MSP430_HAS_USCI_A2__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_A2__) },
-#endif /* __MSP430_HAS_USCI_A2__ */
-#if defined(__MSP430_HAS_USCI_A3__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_A3__) },
-#endif /* __MSP430_HAS_USCI_A3__ */
-#if defined(__MSP430_HAS_USCI_B0__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_B0__) },
-#endif /* __MSP430_HAS_USCI_B0__ */
-#if defined(__MSP430_HAS_USCI_B1__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_B1__) },
-#endif /* __MSP430_HAS_USCI_B1__ */
-#if defined(__MSP430_HAS_USCI_B2__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_B2__) },
-#endif /* __MSP430_HAS_USCI_B2__ */
-#if defined(__MSP430_HAS_USCI_B3__)
-	{ .usci = DEVID_TO_USCI(__MSP430_BASEADDRESS_USCI_B3__) },
-#endif /* __MSP430_HAS_USCI_B3__ */
-};
-const bsp430_FreeRTOS_USCI* const end_usci_devices = usci_devices + sizeof(usci_devices)/sizeof(*usci_devices);
-
 #define COM_PORT_ACTIVE  0x01
 
-bsp430_FreeRTOS_USCI*
-bsp430_usci_lookup (int devid)
-{
-	bsp430_FreeRTOS_USCI* device = usci_devices;
-	
-	while (device < end_usci_devices) {
-		if (device->usci == DEVID_TO_USCI(devid)) {
-			return device;
-		}
-		++device;
-	}
-	return NULL;
-}
+static xBSP430USCIHandle periphToDevice (xBSP430Periph periph);
 
-bsp430_FreeRTOS_USCI*
-bsp430_usci_uart_open (int devid,
-					   unsigned int control_word,
-					   unsigned long baud,
-					   xQueueHandle rx_queue,
-					   xQueueHandle tx_queue)
+xBSP430USCIHandle
+xBSP430USCIOpenUART (xBSP430Periph periph,
+					 unsigned int control_word,
+					 unsigned long baud,
+					 xQueueHandle rx_queue,
+					 xQueueHandle tx_queue)
 {
-	bsp430_FreeRTOS_USCI* device;
 	unsigned long brclk_hz;
+	xBSP430USCIHandle device = periphToDevice(periph);
 	uint16_t br;
 	uint16_t brs;
+
+	configASSERT(NULL != device);
 
 	/* Reject invalid baud rates */
 	if ((0 == baud) || (1000000UL < baud)) {
 		return NULL;
 	}
 
-	/* Reject non-existent devices */
-	device = bsp430_usci_lookup(devid);
-	if (! device) {
+	/* Reject if the pins can't be configured */
+	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430Periph)(device->usci), 1)) {
 		return NULL;
 	}
 
@@ -118,8 +49,6 @@ bsp430_usci_uart_open (int devid,
 	device->usci->brw = br;
 	device->usci->mctl = (0 * UCBRF_1) | (brs * UCBRS_1);
 
-	vBSP430platformConfigurePeripheralPins (DEVICE_TO_DEVID(device), 1);
-
 	/* Mark the device active */
 	device->num_rx = device->num_tx = 0;
 	device->flags |= COM_PORT_ACTIVE;
@@ -135,10 +64,10 @@ bsp430_usci_uart_open (int devid,
 }
 
 int
-bsp430_usci_close (bsp430_FreeRTOS_USCI* device)
+iBSP430USCIClose (xBSP430USCIHandle device)
 {
 	device->usci->ctlw0 = UCSWRST;
-	vBSP430platformConfigurePeripheralPins (DEVICE_TO_DEVID(device), 0);
+	iBSP430platformConfigurePeripheralPins ((xBSP430Periph)(device->usci), 0);
 	device->tx_queue = 0;
 	device->rx_queue = 0;
 	device->flags = 0;
@@ -162,7 +91,7 @@ bsp430_usci_close (bsp430_FreeRTOS_USCI* device)
 	} while (0)
 
 void
-bsp430_usci_wakeup_transmit (bsp430_FreeRTOS_USCI* device)
+vBSP430USCIWakeupTransmit (xBSP430USCIHandle device)
 {
 	taskENTER_CRITICAL();
 	USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
@@ -170,7 +99,7 @@ bsp430_usci_wakeup_transmit (bsp430_FreeRTOS_USCI* device)
 }
 
 int
-bsp430_uart_putc (int c, bsp430_FreeRTOS_USCI* hsuart)
+iBSP430USCIputc (int c, xBSP430USCIHandle hsuart)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
@@ -178,7 +107,7 @@ bsp430_uart_putc (int c, bsp430_FreeRTOS_USCI* hsuart)
 
 	do {
 		passp = xQueueSendToBack(hsuart->tx_queue, &c, delay);
-		bsp430_usci_wakeup_transmit(hsuart);
+		vBSP430USCIWakeupTransmit(hsuart);
 		if (! passp) {
 			delay = MAX_DELAY;
 		}
@@ -187,7 +116,7 @@ bsp430_uart_putc (int c, bsp430_FreeRTOS_USCI* hsuart)
 }
 
 int
-bsp430_uart_puts (const char* str, bsp430_FreeRTOS_USCI* hsuart)
+iBSP430USCIputs (const char* str, xBSP430USCIHandle hsuart)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
@@ -197,15 +126,15 @@ bsp430_uart_puts (const char* str, bsp430_FreeRTOS_USCI* hsuart)
 		if (xQueueSendToBack(hsuart->tx_queue, str, delay)) {
 			++str;
 			if (delay) {
-				bsp430_usci_wakeup_transmit(hsuart);
+				vBSP430USCIWakeupTransmit(hsuart);
 				delay = 0;
 			}
 		} else {
-			bsp430_usci_wakeup_transmit(hsuart);
+			vBSP430USCIWakeupTransmit(hsuart);
 			delay = MAX_DELAY;
 		}
 	}
-	bsp430_usci_wakeup_transmit(hsuart);
+	vBSP430USCIWakeupTransmit(hsuart);
 	return str - in_string;
 }
 
@@ -229,100 +158,199 @@ static void
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usci_irq (bsp430_FreeRTOS_USCI *port)
+usci_irq (xBSP430USCIHandle device)
 {
 	portBASE_TYPE yield = pdFALSE;
 	portBASE_TYPE rv = pdFALSE;
 	uint8_t c;
 
-	switch (port->usci->iv) {
+	switch (device->usci->iv) {
 	default:
 	case USCI_NONE:
 		break;
 	case USCI_UCTXIFG:
-		rv = xQueueReceiveFromISR(port->tx_queue, &c, &yield);
-		if (xQueueIsQueueEmptyFromISR(port->tx_queue)) {
+		rv = xQueueReceiveFromISR(device->tx_queue, &c, &yield);
+		if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
 			signed portBASE_TYPE sema_yield = pdFALSE;
-			port->usci->ie &= ~UCTXIE;
+			device->usci->ie &= ~UCTXIE;
 			yield |= sema_yield;
 		}
 		if (rv) {
-			++port->num_tx;
-			port->usci->txbuf = c;
+			++device->num_tx;
+			device->usci->txbuf = c;
 		}
 		break;
 	case USCI_UCRXIFG:
-		c = port->usci->rxbuf;
-		++port->num_rx;
-		rv = xQueueSendToBackFromISR(port->rx_queue, &c, &yield);
+		c = device->usci->rxbuf;
+		++device->num_rx;
+		rv = xQueueSendToBackFromISR(device->rx_queue, &c, &yield);
 		break;
 	}
 	portYIELD_FROM_ISR(yield);
 }
 
-/* No current MCU has more than 4 USCI_B instances */
+#if configBSP430_PERIPH_USE_USCI_A0 - 0
+static struct xBSP430USCI xBSP430USCI_A0_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A0__
+};
 
-#if defined(__MSP430_HAS_USCI_A0__)
+xBSP430USCIHandle const xBSP430USCI_A0 = &xBSP430USCI_A0_;
+
 static void
 __attribute__((__interrupt__(USCI_A0_VECTOR)))
-usci_a0_irq (void)
+irq_USCI_A0 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_A0);
+	usci_irq(xBSP430USCI_A0);
 }
-#endif /* __MSP430_HAS_USCI_A0__ */
-#if defined(__MSP430_HAS_USCI_A1__)
+
+#endif /* configBSP430_PERIPH_USE_USCI_A0 */
+#if configBSP430_PERIPH_USE_USCI_A1 - 0
+static struct xBSP430USCI xBSP430USCI_A1_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A1__
+};
+
+xBSP430USCIHandle const xBSP430USCI_A1 = &xBSP430USCI_A1_;
+
 static void
 __attribute__((__interrupt__(USCI_A1_VECTOR)))
-usci_a1_irq (void)
+irq_USCI_A1 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_A1);
+	usci_irq(xBSP430USCI_A1);
 }
-#endif /* __MSP430_HAS_USCI_A1__ */
-#if defined(__MSP430_HAS_USCI_A2__)
+
+#endif /* configBSP430_PERIPH_USE_USCI_A1 */
+#if configBSP430_PERIPH_USE_USCI_A2 - 0
+static struct xBSP430USCI xBSP430USCI_A2_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A2__
+};
+
+xBSP430USCIHandle const xBSP430USCI_A2 = &xBSP430USCI_A2_;
+
 static void
 __attribute__((__interrupt__(USCI_A2_VECTOR)))
-usci_a2_irq (void)
+irq_USCI_A2 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_A2);
+	usci_irq(xBSP430USCI_A2);
 }
-#endif /* __MSP430_HAS_USCI_A2__ */
-#if defined(__MSP430_HAS_USCI_A3__)
+
+#endif /* configBSP430_PERIPH_USE_USCI_A2 */
+#if configBSP430_PERIPH_USE_USCI_A3 - 0
+static struct xBSP430USCI xBSP430USCI_A3_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A3__
+};
+
+xBSP430USCIHandle const xBSP430USCI_A3 = &xBSP430USCI_A3_;
+
 static void
 __attribute__((__interrupt__(USCI_A3_VECTOR)))
-usci_a3_irq (void)
+irq_USCI_A3 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_A3);
+	usci_irq(xBSP430USCI_A3);
 }
-#endif /* __MSP430_HAS_USCI_A3__ */
-#if defined(__MSP430_HAS_USCI_B0__)
+
+#endif /* configBSP430_PERIPH_USE_USCI_A3 */
+#if configBSP430_PERIPH_USE_USCI_B0 - 0
+static struct xBSP430USCI xBSP430USCI_B0_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B0__
+};
+
+xBSP430USCIHandle const xBSP430USCI_B0 = &xBSP430USCI_B0_;
+
 static void
 __attribute__((__interrupt__(USCI_B0_VECTOR)))
-usci_b0_irq (void)
+irq_USCI_B0 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_B0);
+	usci_irq(xBSP430USCI_B0);
 }
-#endif /* __MSP430_HAS_USCI_B0__ */
-#if defined(__MSP430_HAS_USCI_B1__)
+
+#endif /* configBSP430_PERIPH_USE_USCI_B0 */
+#if configBSP430_PERIPH_USE_USCI_B1 - 0
+static struct xBSP430USCI xBSP430USCI_B1_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B1__
+};
+
+xBSP430USCIHandle const xBSP430USCI_B1 = &xBSP430USCI_B1_;
+
 static void
 __attribute__((__interrupt__(USCI_B1_VECTOR)))
-usci_b1_irq (void)
+irq_USCI_B1 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_B1);
+	usci_irq(xBSP430USCI_B1);
 }
-#endif /* __MSP430_HAS_USCI_B1__ */
-#if defined(__MSP430_HAS_USCI_B2__)
+
+#endif /* configBSP430_PERIPH_USE_USCI_B1 */
+#if configBSP430_PERIPH_USE_USCI_B2 - 0
+static struct xBSP430USCI xBSP430USCI_B2_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B2__
+};
+
+xBSP430USCIHandle const xBSP430USCI_B2 = &xBSP430USCI_B2_;
+
 static void
 __attribute__((__interrupt__(USCI_B2_VECTOR)))
-usci_b2_irq (void)
+irq_USCI_B2 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_B2);
+	usci_irq(xBSP430USCI_B2);
 }
-#endif /* __MSP430_HAS_USCI_B2__ */
-#if defined(__MSP430_HAS_USCI_B3__)
+
+#endif /* configBSP430_PERIPH_USE_USCI_B2 */
+#if configBSP430_PERIPH_USE_USCI_B3 - 0
+static struct xBSP430USCI xBSP430USCI_B3_ = {
+	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B3__
+};
+
+xBSP430USCIHandle const xBSP430USCI_B3 = &xBSP430USCI_B3_;
+
 static void
 __attribute__((__interrupt__(USCI_B3_VECTOR)))
-usci_b3_irq (void)
+irq_USCI_B3 (void)
 {
-	usci_irq(usci_devices + DEVIDX_USCI_B3);
+	usci_irq(xBSP430USCI_B3);
 }
-#endif /* __MSP430_HAS_USCI_B3__ */
+
+#endif /* configBSP430_PERIPH_USE_USCI_B3 */
+
+static xBSP430USCIHandle periphToDevice (xBSP430Periph periph)
+{
+#if configBSP430_PERIPH_USE_USCI_A0 - 0
+	if (xBSP430Periph_USCI_A0 == periph) {
+		return xBSP430USCI_A0;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_A0 */
+#if configBSP430_PERIPH_USE_USCI_A1 - 0
+	if (xBSP430Periph_USCI_A1 == periph) {
+		return xBSP430USCI_A1;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_A1 */
+#if configBSP430_PERIPH_USE_USCI_A2 - 0
+	if (xBSP430Periph_USCI_A2 == periph) {
+		return xBSP430USCI_A2;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_A2 */
+#if configBSP430_PERIPH_USE_USCI_A3 - 0
+	if (xBSP430Periph_USCI_A3 == periph) {
+		return xBSP430USCI_A3;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_A3 */
+#if configBSP430_PERIPH_USE_USCI_B0 - 0
+	if (xBSP430Periph_USCI_B0 == periph) {
+		return xBSP430USCI_B0;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_B0 */
+#if configBSP430_PERIPH_USE_USCI_B1 - 0
+	if (xBSP430Periph_USCI_B1 == periph) {
+		return xBSP430USCI_B1;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_B1 */
+#if configBSP430_PERIPH_USE_USCI_B2 - 0
+	if (xBSP430Periph_USCI_B2 == periph) {
+		return xBSP430USCI_B2;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_B2 */
+#if configBSP430_PERIPH_USE_USCI_B3 - 0
+	if (xBSP430Periph_USCI_B3 == periph) {
+		return xBSP430USCI_B3;
+	}
+#endif /* configBSP430_PERIPH_USE_USCI_B3 */
+	return NULL;
+}

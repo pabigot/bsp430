@@ -41,6 +41,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <msp430.h>
 #include "FreeRTOS.h"
+#include <bsp430/common/periph.h>
 
 /** Basic configuration for the platform.
  *
@@ -55,7 +56,8 @@ void vBSP430platformSetup ();
 
 /** Configure the pins associated with a given peripheral.
  *
- * @param devid Device for which pins should be configured
+ * @param device Raw peripheral device for which pins should be
+ * configured.
  * 
  * @param enablep TRUE to enable for peripheral use; FALSE to disable
  * (return to general purpose IO)
@@ -63,6 +65,6 @@ void vBSP430platformSetup ();
  * @return 0 if configuration was successful, -1 if the device was not
  * recognized.
  */
-int vBSP430platformConfigurePeripheralPins (int devid, int enablep);
+int iBSP430platformConfigurePeripheralPins (xBSP430Periph device, int enablep);
 
 #endif /* BSP430_COMMON_PLATFORM_H */
