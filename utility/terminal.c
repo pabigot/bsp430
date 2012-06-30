@@ -8,6 +8,7 @@
  */
 
 #include <bsp430/utility/terminal.h>
+#include <bsp430/timers/timerA0.h>
 #include <bsp430/5xx/usci.h>
 #include <ctype.h>
 #include <string.h>
