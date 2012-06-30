@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Genericized UCSI_A/USCI_B on 5xx/6xx devices
+ * Genericized eUCSI_A on 5xx/6xx devices
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -39,26 +39,22 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_5XX_USCI_H
-#define BSP430_5XX_USCI_H
+#ifndef BSP430_5XX_EUSCI_A_H
+#define BSP430_5XX_EUSCI_A_H
 
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"
 #include <bsp430/5xx/periph.h>
 
-#if defined(__MSP430_HAS_EUSCI_A0__)
-#error Wrong header: use <bsp430/5xx/eusci_a.h>
-#endif /* EUSCI */
-
 /** Structure holding USCI-related information */
-struct xBSP430USCI {
+struct xBSP430eUSCIA {
 	/** Flags indicating various things: primarily, whether anybody is
 	 * using the device. */
 	unsigned int flags;
 	
 	/** Pointer to the peripheral register structure. */
-	volatile xBSP430Periph_USCI * const usci;
+	volatile xBSP430Periph_eUSCI_A * const usci;
 
 	/** Queue used to collect input via interrupt.  If null,
 	 * interrupts are not used for reception. */
@@ -76,12 +72,12 @@ struct xBSP430USCI {
 };
 
 /** The USCI internal state is private to the implementation. */
-typedef struct xBSP430USCI * xBSP430USCIHandle;
+typedef struct xBSP430eUSCIA * xBSP430eUSCIAHandle;
 
 /** Request and configure a USCI device in UART mode.
  *
  * @param xPeriph The raw device identifier for the USCI device that
- * is being requested. E.g., @c xBSP430Periph_USCI_A0. 
+ * is being requested. E.g., @c xBSP430Periph_EUSCI_A0. 
  *
  * @param control_word The configuration to be written to the device's
  * ctlw0 word.  Most bit fields will be assigned from this value, but
@@ -102,17 +98,17 @@ typedef struct xBSP430USCI * xBSP430USCIHandle;
  *
  * @return @a xUSCI if the allocation and configuration is successful,
  * and a null handle if something went wrong. */
-xBSP430USCIHandle xBSP430USCIOpenUART (xBSP430Periph xPeriph,
-									   unsigned int control_word,
-									   unsigned long baud,
-									   xQueueHandle rx_queue,
-									   xQueueHandle tx_queue);
+xBSP430eUSCIAHandle xBSP430eUSCIAOpenUART (xBSP430Periph xPeriph,
+										   unsigned int control_word,
+										   unsigned long baud,
+										   xQueueHandle rx_queue,
+										   xQueueHandle tx_queue);
 
-xBSP430USCIHandle xBSP430USCIOpenSPI (xBSP430Periph xPeriph,
-									  unsigned int control_word,
-									  unsigned int prescaler,
-									  xQueueHandle rx_queue,
-									  xQueueHandle tx_queue);
+xBSP430eUSCIAHandle xBSP430eUSCIAOpenSPI (xBSP430Periph xPeriph,
+										  unsigned int control_word,
+										  unsigned int prescaler,
+										  xQueueHandle rx_queue,
+										  xQueueHandle tx_queue);
 
 /** Release a USCI device.
  *
@@ -123,7 +119,7 @@ xBSP430USCIHandle xBSP430USCIOpenSPI (xBSP430Periph xPeriph,
  * @param xUSCI The device to be closed.
  *
  * @return 0 if the close occurred without error. */
-int iBSP430USCIClose (xBSP430USCIHandle xUSCI);
+int iBSP430eUSCIAClose (xBSP430eUSCIAHandle xUSCI);
 
 /** Wake up the interrupt-driven transmission if necessary.
  *
@@ -139,49 +135,29 @@ int iBSP430USCIClose (xBSP430USCIHandle xUSCI);
  *
  * @param xUSCI A USCI device which must have a transmit queue.
  */
-void vBSP430USCIWakeupTransmit (xBSP430USCIHandle xUSCI);
+void vBSP430eUSCIAWakeupTransmit (xBSP430eUSCIAHandle xUSCI);
 
 /** Analog to fputc */
-int iBSP430USCIputc (int c, xBSP430USCIHandle xUSCI);
+int iBSP430eUSCIAputc (int c, xBSP430eUSCIAHandle xUSCI);
 
 /** Analog to fputs */
-int iBSP430USCIputs (const char* str, xBSP430USCIHandle xUSCI);
+int iBSP430eUSCIAputs (const char* str, xBSP430eUSCIAHandle xUSCI);
 
-/* BEGIN EMBED usci_decl */
+/* BEGIN EMBED eusci_a_decl */
 /* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
 
-/** Handle for USCI_A0.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_A0 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_A0;
+/** Handle for EUSCI_A0.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_EUSCI_A0 is defined to a true value. */
+extern xBSP430eUSCIAHandle const xBSP430EUSCI_A0;
 
-/** Handle for USCI_A1.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_A1 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_A1;
+/** Handle for EUSCI_A1.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_EUSCI_A1 is defined to a true value. */
+extern xBSP430eUSCIAHandle const xBSP430EUSCI_A1;
 
-/** Handle for USCI_A2.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_A2 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_A2;
+/** Handle for EUSCI_A2.  The handle may be referenced only if 
+ * #configBSP430_PERIPH_USE_EUSCI_A2 is defined to a true value. */
+extern xBSP430eUSCIAHandle const xBSP430EUSCI_A2;
 
-/** Handle for USCI_A3.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_A3 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_A3;
+/* END EMBED eusci_a_decl: AUTOMATICALLY GENERATED CODE */
 
-/** Handle for USCI_B0.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_B0 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_B0;
-
-/** Handle for USCI_B1.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_B1 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_B1;
-
-/** Handle for USCI_B2.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_B2 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_B2;
-
-/** Handle for USCI_B3.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_USCI_B3 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430USCI_B3;
-
-/* END EMBED usci_decl: AUTOMATICALLY GENERATED CODE */
-
-#endif /* BSP430_5XX_USCI_H */
+#endif /* BSP430_5XX_EUSCI_A_H */
