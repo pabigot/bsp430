@@ -69,6 +69,15 @@
 
 #include "FreeRTOS.h"
 
+/** @def configBSP430_UCS_SMCLK_DIVIDING_SHIFT
+ *
+ * SMCLK is configured to divide DCOCLK by shifting it left this many
+ * positions.  E.g., if DCOCLK is 20 MHz, a dividing shift of 2 will
+ * produce a clock divisor of 4 and an SMCLK at 5 MHz. */
+#ifndef configBSP430_UCS_SMCLK_DIVIDING_SHIFT
+#define configBSP430_UCS_SMCLK_DIVIDING_SHIFT 0
+#endif /* configBSP430_UCS_SMCLK_DIVIDING_SHIFT */
+
 /** Call this to initially configure the UCS peripheral.
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK=SMCLK.
@@ -78,9 +87,14 @@
  * table in the device-specific data sheet.  The same target frequency
  * may be reachable with different RSELs but with different
  * accuracies.  If a negative value is given, the function may be able
- * to select a default.
+ * to select a default from an internal table if that table has been
+ * updated to include information on the relevant device.
  * 
- * @return an estimate of the actual running frequency. */
+ * @return an estimate of the actual running frequency.
+ *
+ * @note This function expects a valid clock source on XT1.  Port pin
+ * configuration for XIN and XOUT is device specific and should be
+ * done prior to invoking this function. */
 
 unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 									 short sRSEL );
@@ -96,11 +110,16 @@ unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
  * while this routine is being run, so UART, SPI, and other
  * peripherals may need to be shut down first.
  * 
- * @note This function must be invoked with interrupts disabled.
+ * @note This function is named in accordance with the FreeRTOS
+ * standards that indicate it should be called with interrupts
+ * disabled and will not block.  It will, however, delay for as much
+ * as 32 milliseconds while waiting for the FLL to settle.  The common
+ * case of delay is much less, but it would still be wise not to
+ * invoke this from within an interrupt handler.
  *
  * @return an estimate of the actual running frequency.
  */
-unsigned long ulBSP430ucsTrimFLL ();
+unsigned long ulBSP430ucsTrimFLLFromISR ();
 
 /** Return the last calculated MCLK frequency.
  *

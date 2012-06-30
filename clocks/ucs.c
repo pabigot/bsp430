@@ -1,46 +1,37 @@
-/*
-  
-Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-* Neither the name of the software nor the names of its contributors may be
-  used to endorse or promote products derived from this software without
-  specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-
-*/
+/* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <bsp430/clocks/ucs.h>
 #include <stdint.h>
-
-#ifndef configPORT_SMCLK_DIVIDING_SHIFT
-/** SMCLK is configured to divide DCOCLK by shifting it left this many
- * positions.  E.g., if DCOCLK is 20 MHz, a dividing shift of 4 will
- * produce an SMCLK of 5 MHz. */
-#define configPORT_SMCLK_DIVIDING_SHIFT 0
-#endif /* configPORT_SMCLK_DIVIDING_SHIFT */
+#include "task.h"
 
 /* Frequency measurement occurs over this duration when determining
  * whether trim is required.  The number of SMCLK ticks in an ACLK
@@ -66,7 +57,8 @@ static uint16_t targetFrequency_tsp_;
 /* The last calculated trim frequency */
 static unsigned long lastTrimFrequency_Hz_;
 
-unsigned long ulBSP430ucsTrimFLL ()
+unsigned long
+ulBSP430ucsTrimFLLFromISR ()
 {
 	short taps_left = 32;
 	unsigned short last_ctl0;
@@ -75,7 +67,7 @@ unsigned long ulBSP430ucsTrimFLL ()
 
 	last_ctl0 = ~0;
 	tolerance_tsp = targetFrequency_tsp_ / TRIM_TOLERANCE_DIVISOR;
-	while( 0 < taps_left--) {
+	while (0 < taps_left--) {
 		int i;
 		unsigned int c0 = 0;
 		unsigned int c1;
@@ -108,21 +100,21 @@ unsigned long ulBSP430ucsTrimFLL ()
 			abs_freq_err_tsp = targetFrequency_tsp_ - current_frequency_tsp;
 		}
 #if 0
-		printf("RSEL %u DCO %u MOD %u current %u target %u tol %u err %u ; ctl0 %04x last %04x\n",
+		cprintf("RSEL %u DCO %u MOD %u current %u target %u tol %u err %u ; ctl0 %04x last %04x\n",
 			   (UCSCTL1 >> 4) & 0x07, (UCSCTL0 >> 8) & 0x1F, (UCSCTL0 >> 3) & 0x1F,
 			   current_frequency_tsp, targetFrequency_tsp_, tolerance_tsp, abs_freq_err_tsp,
 			   UCSCTL0, last_ctl0);
 #endif
 		if ((abs_freq_err_tsp <= tolerance_tsp)
-			|| ( UCSCTL0 == last_ctl0 ) ) {
+			|| (UCSCTL0 == last_ctl0)) {
 #if 0
-			printf("terminate tap %u error %u ctl0 %04x was %04x\n",
+			cprintf("terminate tap %u error %u ctl0 %04x was %04x\n",
 				   taps_left, abs_freq_err_tsp, UCSCTL0, last_ctl0);
 #endif
 			break;
 		}
 #if 0
-		printf("running fll, error %u\n", abs_freq_err_tsp);
+		cprintf("running fll, error %u\n", abs_freq_err_tsp);
 #endif
 		/* Save current DCO/MOD values, then let FLL run for 32 REFCLK
 		 * ticks (potentially trying each modulation within one
@@ -132,7 +124,7 @@ unsigned long ulBSP430ucsTrimFLL ()
 		__bic_status_register(SCG0);
 		TB0CCTL0 = 0;
 		TB0CCR0 = TB0R + 32;
-		while( ! (TB0CCTL0 & CCIFG ) ) {
+		while (! (TB0CCTL0 & CCIFG)) {
 			/* nop */
 		}
 		__bis_status_register(SCG0);
@@ -140,39 +132,45 @@ unsigned long ulBSP430ucsTrimFLL ()
 		 * update. */
 		TB0CCTL0 &= ~CCIFG;
 		TB0CCR0 = TB0R + 2;
-		while( ! (TB0CCTL0 & CCIFG ) ) {
+		while (! (TB0CCTL0 & CCIFG)) {
 			/* nop */
 		}
 		TB0CTL = 0;
 		TB0CCTL0 = 0;
 	}
 	lastTrimFrequency_Hz_ = current_frequency_tsp * (32768UL / TRIM_SAMPLE_PERIOD_ACLK);
-	lastTrimFrequency_Hz_ <<= configPORT_SMCLK_DIVIDING_SHIFT;
+	lastTrimFrequency_Hz_ <<= configBSP430_UCS_SMCLK_DIVIDING_SHIFT;
 	return lastTrimFrequency_Hz_;
 }
 
-unsigned long ulBSP430ucsMCLK_Hz ()
+unsigned long
+ulBSP430ucsMCLK_Hz ()
 {
 	return lastTrimFrequency_Hz_;
 }
 
-unsigned long ulBSP430ucsSMCLK_Hz ()
+unsigned long
+ulBSP430ucsSMCLK_Hz ()
 {
-	return lastTrimFrequency_Hz_ >> configPORT_SMCLK_DIVIDING_SHIFT;
+	return lastTrimFrequency_Hz_ >> configBSP430_UCS_SMCLK_DIVIDING_SHIFT;
 }
 
-unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
-									 short sRSEL )
+unsigned long
+ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
+					   short sRSEL )
 {
+	/* The values in this table should be roughly half the minimum
+	 * frequency for the specified RSEL with DCOx=31 and MODx=0,
+	 * as taken from the device-specific data sheet. */
 	static const unsigned long pulRSELCutoffs [] = {
 #if defined(__MSP430F5438__) || defined(__MSP430F5438A__)
-		400000UL, 				/* RSEL0 */
-		800000UL, 				/* RSEL1 */
-		2000000UL,				/* RSEL2 */
-		4000000UL,				/* RSEL3 */
-		8000000UL,				/* RSEL4 */
-		16000000UL,				/* RSEL5 */
-		20000000UL,				/* RSEL6 */
+		700000UL / 2,			/* RSEL0 */
+		1470000UL / 2,			/* RSEL1 */
+		3170000UL / 2,			/* RSEL2 */
+		6070000UL / 2,			/* RSEL3 */
+		12300000UL / 2,			/* RSEL4 */
+		23700000UL / 2,			/* RSEL5 */
+		39000000UL / 2,			/* RSEL6 */
 #else
 #endif
 		UINT32_MAX
@@ -183,19 +181,17 @@ unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 	
 	/* If not told what RSEL to use, pick the one appropriate for the
 	 * target frequency. */
-	if( 0 > sRSEL )
-	{
+	if ((0 > sRSEL) || (7 < sRSEL)) {
 		sRSEL = 0;
-		while( pulRSELCutoffs[ sRSEL ] < ulFrequency_Hz )
-		{
+		while (pulRSELCutoffs[ sRSEL ] < ulFrequency_Hz) {
 			++sRSEL;
 		}
 	}
 
-	portENTER_CRITICAL();
+	taskENTER_CRITICAL();
 
 	/* Low frequency XT1 needed; XT2 off.  Spin at high drive to
-	   stability, then drop back. */
+	 * stability, then drop back. */
 	UCSCTL6 = XT2OFF | XT1DRIVE_3 | XCAP_0;
 	do {
 		UCSCTL7 &= ~XT1LFOFFG;
@@ -217,9 +213,9 @@ unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 	UCSCTL4 = SELA__XT1CLK | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
 
 	targetFrequency_tsp_ = ulFrequency_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
-	targetFrequency_tsp_ >>= configPORT_SMCLK_DIVIDING_SHIFT;
+	targetFrequency_tsp_ >>= configBSP430_UCS_SMCLK_DIVIDING_SHIFT;
 
-	ulReturn = ulBSP430ucsTrimFLL();
+	ulReturn = ulBSP430ucsTrimFLLFromISR();
 
 	/* Spin until DCO stabilized */
 	do {
@@ -227,13 +223,13 @@ unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 		SFRIFG1 &= ~OFIFG;
 	} while (UCSCTL7 & DCOFFG);
 
-	UCSCTL5 = (0x70 & (configPORT_SMCLK_DIVIDING_SHIFT << 4));
+	UCSCTL5 = (0x70 & (configBSP430_UCS_SMCLK_DIVIDING_SHIFT << 4));
 
-#if ! defined(portDISABLE_FLL)
+#if ! (portDISABLE_FLL - 0)
 	/* Turn FLL back on */
 	__bic_status_register(SCG0);
 #endif
-	portEXIT_CRITICAL();
+	taskEXIT_CRITICAL();
 
 	return ulReturn;
 }

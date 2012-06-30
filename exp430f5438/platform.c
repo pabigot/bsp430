@@ -54,7 +54,7 @@ void vBSP430platformSetup ()
 	WDTCTL = WDTPW + WDTHOLD;
 
 	/* Enable XT1 functions and clock */
-	P7SEL |= BIT0;
+	P7SEL |= BIT0 | BIT1;
 	ulBSP430ucsConfigure( configCPU_CLOCK_HZ, -1 );
 
 	/* Enable basic timer */
