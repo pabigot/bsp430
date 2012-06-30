@@ -32,6 +32,21 @@
 #include <bsp430/utility/led.h>
 #include <task.h>
 
+/* Some MSP430 MCUs use two selector registers.  At this time, it
+ * appears that if an MCU has two selectors for one port, it has two
+ * for all, so we'll use the existings of P1SEL0 as the trigger for
+ * the variation. */
+#if defined(P1SEL0)
+#define prvCLEAR_SEL_X(_x, _bit) do {			\
+		P##_x##SEL0 &= ~_bit;					\
+		P##_x##SEL1 &= ~_bit;					\
+	} while(0)
+#else /* P1SEL0 */
+#define prvCLEAR_SEL_X(_x, _bit) do {			\
+		P##_x##SEL &= ~_bit;					\
+	} while(0)
+#endif /* P1SEL0 */
+
 /** Macro to configure GPIO for a LED within a particular port.
  *
  * I'm sorry if this isn't MISRA compliant, but I'm not replicating
@@ -40,7 +55,7 @@
 	do {										\
 		if (&P##_x##OUT == pxLED->pucPxOUT)	{	\
 			P##_x##DIR |= pxLED->ucBIT;			\
-			P##_x##SEL &= ~pxLED->ucBIT;		\
+			prvCLEAR_SEL_X(_x, pxLED->ucBIT);	\
 			P##_x##OUT &= ~pxLED->ucBIT;		\
 			continue;							\
 		}										\
