@@ -1,19 +1,56 @@
+/* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
 /** @file
  *
  * Declarations for a terminal-capable command line processor.
  *
- * In concept, this is similar to the role of FreeRTOS-Products
- * FreeRTOS-Plus-CLI.  There are several differences in approach,
- * including the assumption that command strings are text (char)
- * rather than signed bytes, that commands may have arbitrary
- * parameters, and that the infrastructure should assist by stripping
- * off parts of the command string that it has processed but should
- * not presume to understand how to parse the remainder of the command
- * line.
+ * In gross concept, this module addresses needs similar to those
+ * addressed by <a
+ * href="http://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_CLI/FreeRTOS_Plus_Command_Line_Interface.shtml">FreeRTOS-Plus-CLI</a>.
+ * This version incorporates several differences in approach,
+ * including:
+ *
+ * @li the assumption that command strings are text (char) rather than
+ * signed bytes;
+
+ * @li that commands may have arbitrary parameters; and
+
+ * @li that the infrastructure should assist by stripping off parts of
+ * the command string that it has processed but should not presume to
+ * understand how to parse the remainder of the command line.
  *
  * In addition, this module provides a task that is responsible for
  * executing commands that are submitted to it.  That task also
- * suppors an interactive environment through which commands may be
+ * supports an interactive environment through which commands may be
  * entered and their results displayed.  It is expected that
  * applications which use this feature will use that interface as
  * their console, and thus the infrastructure permits asynchronous
@@ -21,7 +58,8 @@
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
- * @copyright @link http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause @endlink
+ * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_UTILITY_TERMINAL_H
@@ -169,7 +207,7 @@ typedef struct xBSP430_TERMINAL_CONFIGURATION {
  *
  * @return A pointer to a terminal, or NULL if the terminal could not
  * be allocated. */
-xBSP430TerminalHandle xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp);
+xBSP430TerminalHandle xBSP430TerminalCreate (const xBSP430TerminalConfiguration * pxTerminalConfig);
 
 /** Set the string to be used as a terminal prompt.
  *
@@ -273,8 +311,9 @@ portBASE_TYPE xBSP430TerminalDisplayCode (xBSP430TerminalHandle xTerminal,
  * @param pusAvailable Optional pointer to a location into which the
  * length of the returned buffer will be written.  If null, the length
  * of the buffer cannot be provided, but some existing FreeRTOS APIs
- * do not provide a way to avoid overwriting buffers.  The value is
- * valid only if this function returns a non-null pointer.
+ * do not provide a way to avoid overwriting buffers so for those APIs
+ * it isn't needed.  The length is written only if this function
+ * returns a non-null pointer.
  *
  * @param xTicksToWait Duration, in ticks, to wait for another process
  * to return the buffer and make it available.  If this function is
