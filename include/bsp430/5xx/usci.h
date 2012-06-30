@@ -165,6 +165,9 @@ int iBSP430USCIputc (int c, xBSP430USCIHandle xUSCI);
 /** Analog to fputs */
 int iBSP430USCIputs (const char* str, xBSP430USCIHandle xUSCI);
 
+/* BEGIN EMBED usci_decl */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+
 /** Handle for USCI_A0.  The handle may be referenced only if 
  * #configBSP430_PERIPH_USE_USCI_A0 is defined to a true value. */
 extern xBSP430USCIHandle const xBSP430USCI_A0;
@@ -197,6 +200,6 @@ extern xBSP430USCIHandle const xBSP430USCI_B2;
  * #configBSP430_PERIPH_USE_USCI_B3 is defined to a true value. */
 extern xBSP430USCIHandle const xBSP430USCI_B3;
 
-
+/* END EMBED usci_decl: AUTOMATICALLY GENERATED CODE */
 
 #endif /* BSP430_5XX_USCI_H */

@@ -5,6 +5,8 @@
 
 #define COM_PORT_ACTIVE  0x01
 
+/** Convert from a raw peripheral handle to the corresponding USCI
+ * device handle. */
 static xBSP430USCIHandle periphToDevice (xBSP430Periph periph);
 
 xBSP430USCIHandle
@@ -189,6 +191,9 @@ usci_irq (xBSP430USCIHandle device)
 	portYIELD_FROM_ISR(yield);
 }
 
+/* BEGIN EMBED usci_defn */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+
 #if configBSP430_PERIPH_USE_USCI_A0 - 0
 static struct xBSP430USCI xBSP430USCI_A0_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A0__
@@ -202,8 +207,8 @@ irq_USCI_A0 (void)
 {
 	usci_irq(xBSP430USCI_A0);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_A0 */
+
 #if configBSP430_PERIPH_USE_USCI_A1 - 0
 static struct xBSP430USCI xBSP430USCI_A1_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A1__
@@ -217,8 +222,8 @@ irq_USCI_A1 (void)
 {
 	usci_irq(xBSP430USCI_A1);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_A1 */
+
 #if configBSP430_PERIPH_USE_USCI_A2 - 0
 static struct xBSP430USCI xBSP430USCI_A2_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A2__
@@ -232,8 +237,8 @@ irq_USCI_A2 (void)
 {
 	usci_irq(xBSP430USCI_A2);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_A2 */
+
 #if configBSP430_PERIPH_USE_USCI_A3 - 0
 static struct xBSP430USCI xBSP430USCI_A3_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A3__
@@ -247,8 +252,8 @@ irq_USCI_A3 (void)
 {
 	usci_irq(xBSP430USCI_A3);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_A3 */
+
 #if configBSP430_PERIPH_USE_USCI_B0 - 0
 static struct xBSP430USCI xBSP430USCI_B0_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B0__
@@ -262,8 +267,8 @@ irq_USCI_B0 (void)
 {
 	usci_irq(xBSP430USCI_B0);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_B0 */
+
 #if configBSP430_PERIPH_USE_USCI_B1 - 0
 static struct xBSP430USCI xBSP430USCI_B1_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B1__
@@ -277,8 +282,8 @@ irq_USCI_B1 (void)
 {
 	usci_irq(xBSP430USCI_B1);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_B1 */
+
 #if configBSP430_PERIPH_USE_USCI_B2 - 0
 static struct xBSP430USCI xBSP430USCI_B2_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B2__
@@ -292,8 +297,8 @@ irq_USCI_B2 (void)
 {
 	usci_irq(xBSP430USCI_B2);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_B2 */
+
 #if configBSP430_PERIPH_USE_USCI_B3 - 0
 static struct xBSP430USCI xBSP430USCI_B3_ = {
 	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B3__
@@ -307,11 +312,15 @@ irq_USCI_B3 (void)
 {
 	usci_irq(xBSP430USCI_B3);
 }
-
 #endif /* configBSP430_PERIPH_USE_USCI_B3 */
+
+/* END EMBED usci_defn: AUTOMATICALLY GENERATED CODE */
 
 static xBSP430USCIHandle periphToDevice (xBSP430Periph periph)
 {
+/* BEGIN EMBED usci_demux */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+
 #if configBSP430_PERIPH_USE_USCI_A0 - 0
 	if (xBSP430Periph_USCI_A0 == periph) {
 		return xBSP430USCI_A0;
@@ -352,5 +361,6 @@ static xBSP430USCIHandle periphToDevice (xBSP430Periph periph)
 		return xBSP430USCI_B3;
 	}
 #endif /* configBSP430_PERIPH_USE_USCI_B3 */
+/* END EMBED usci_demux: AUTOMATICALLY GENERATED CODE */
 	return NULL;
 }

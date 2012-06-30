@@ -119,6 +119,35 @@ typedef struct xBSP430Periph_USCI {
 	unsigned int iv;			/* 0x1E */
 } xBSP430Periph_USCI;
 
+#if 0
+
+/* Structure for a single DMA channel */
+typedef struct bsp430_DMAX_channel {
+	unsigned int ctl;			/* 0x00 */
+	unsigned long int __attribute__((__a20__)) sa; /* 0x02 */
+	unsigned long int __attribute__((__a20__)) da; /* 0x06 */
+	unsigned int sz;							   /* 0x0a */
+	unsigned int _reserved_0x0c;
+	unsigned int _reserved_0x0e;
+} bsp430_DMAX_channel;
+
+/* Structure for the DMAX peripheral.  The number of channels is
+ * device-specific. */
+typedef struct bsp430_DMAX {
+	unsigned int ctl0;
+	unsigned int ctl1;
+	unsigned int ctl2;
+	unsigned int ctl3;
+	unsigned int ctl4;
+	unsigned int iv;
+	bsp430_DMAX_channel channel[1];
+} bsp430_DMAX;
+
+#endif
+
+/* BEGIN EMBED 5xx_periph_decl */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+
 /** @def configBSP430_PERIPH_USE_USCI_A0
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
@@ -231,31 +260,6 @@ typedef struct xBSP430Periph_USCI {
  * value. */
 #define xBSP430Periph_USCI_B3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B3__))
 
-
-#if 0
-
-/* Structure for a single DMA channel */
-typedef struct bsp430_DMAX_channel {
-	unsigned int ctl;			/* 0x00 */
-	unsigned long int __attribute__((__a20__)) sa; /* 0x02 */
-	unsigned long int __attribute__((__a20__)) da; /* 0x06 */
-	unsigned int sz;							   /* 0x0a */
-	unsigned int _reserved_0x0c;
-	unsigned int _reserved_0x0e;
-} bsp430_DMAX_channel;
-
-/* Structure for the DMAX peripheral.  The number of channels is
- * device-specific. */
-typedef struct bsp430_DMAX {
-	unsigned int ctl0;
-	unsigned int ctl1;
-	unsigned int ctl2;
-	unsigned int ctl3;
-	unsigned int ctl4;
-	unsigned int iv;
-	bsp430_DMAX_channel channel[1];
-} bsp430_DMAX;
-
-#endif
+/* END EMBED 5xx_periph_decl: AUTOMATICALLY GENERATED CODE */
 
 #endif /* BSP430_5XX_PERIPH_H */
