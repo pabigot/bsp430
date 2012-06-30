@@ -59,9 +59,9 @@
 
 #include <bsp430/common/periph.h>
 
-/* Register map for (e)USCI_xy peripheral on a MSP430 5xx/6xx MCU. */
+/* Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
 typedef struct xBSP430Periph_USCI {
-	union { /* 0x00 */
+	union {						/* 0x00 */
 		unsigned int ctlw0;
 		struct {
 			unsigned char ctl1;
@@ -70,14 +70,14 @@ typedef struct xBSP430Periph_USCI {
 	};
 	unsigned int _unused_0x02;
 	unsigned int _unused_0x04;
-	union { /* 0x06 */
+	union {						/* 0x06 */
 		unsigned int brw;
 		struct {
 			unsigned char br0;
 			unsigned char br1;
 		};
 	};
-	union {			/* 0x08 */
+	union {						/* 0x08 */
 		struct { /* USCI_A */
 			unsigned char mctl;
 			unsigned char _reserved_0x09;
@@ -118,6 +118,90 @@ typedef struct xBSP430Periph_USCI {
 	};
 	unsigned int iv;			/* 0x1E */
 } xBSP430Periph_USCI;
+
+/* Register map for eUSCI_A peripheral on a MSP430 5xx/6xx MCU. */
+typedef struct xBSP430Periph_eUSCI_A {
+	union {						/* 0x00 */
+		unsigned int ctlw0;
+		struct {
+			unsigned char ctl1;
+			unsigned char ctl0;
+		};
+	};
+	unsigned int ctlw1;			/* 0x02 */
+	unsigned int _unused_0x04;
+	union {						/* 0x06 */
+		unsigned int brw;
+		struct {
+			unsigned char br0;
+			unsigned char br1;
+		};
+	};
+	unsigned int mctlw;			/* 0x08 */
+	unsigned int statw;			/* 0x0A */
+	unsigned int rxbuf;			/* 0x0C */
+	unsigned int txbuf;			/* 0x0E */
+	unsigned int abctl;			/* 0x10 */
+	union {						/* 0x12 */
+		unsigned int irctl;
+		struct {
+			unsigned char irtctl; /* 0x12 */
+			unsigned char irrctl; /* 0x13 */
+		};
+	};
+	unsigned int _unused_0x14;
+	unsigned int _unused_0x16;
+	unsigned int _unused_0x18;
+	unsigned int ie;			/* 0x1A */
+	unsigned int ifg;			/* 0x1C */
+	unsigned int iv;			/* 0x1E */
+} xBSP430Periph_eUSCI_A;
+
+/* Register map for eUSCI_B peripheral on a MSP430 5xx/6xx MCU. */
+typedef struct xBSP430Periph_eUSCI_B {
+	union {						/* 0x00 */
+		unsigned int ctlw0;
+		struct {
+			unsigned char ctl1;
+			unsigned char ctl0;
+		};
+	};
+	unsigned int ctlw1;			/* 0x02 */
+	unsigned int _unused_0x04;
+	union {						/* 0x06 */
+		unsigned int brw;
+		struct {
+			unsigned char br0;
+			unsigned char br1;
+		};
+	};
+	union {						/* 0x08 */
+		unsigned int statw;
+		struct {				/* I2C only */
+			unsigned char stat;
+			unsigned char bcnt;
+		};
+	};
+	unsigned int tbcnt;			/* 0x0A */
+	unsigned int rxbuf;			/* 0x0C */
+	unsigned int txbuf;			/* 0x0E */
+	unsigned int _unused_0x10;
+	unsigned int _unused_0x12;
+	unsigned int i2coa0;		/* 0x14 */
+	unsigned int i2coa1;		/* 0x16 */
+	unsigned int i2coa2;		/* 0x18 */
+	unsigned int i2coa3;		/* 0x1A */
+	unsigned int addrx;			/* 0x1C */
+	unsigned int addmask;		/* 0x1E */
+	unsigned int i2csa;			/* 0x20 */
+	unsigned int _unused_0x22;
+	unsigned int _unused_0x24;
+	unsigned int _unused_0x26;
+	unsigned int _unused_0x28;
+	unsigned int ie;			/* 0x2A */
+	unsigned int ifg;			/* 0x2C */
+	unsigned int iv;			/* 0x2E */
+} xBSP430Periph_eUSCI_B;
 
 #if 0
 
