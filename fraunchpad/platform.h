@@ -1,0 +1,6 @@
+#ifndef BSP430_FRAUNCHPAD_PLATFORM_H
+#define BSP430_FRAUNCHPAD_PLATFORM_H
+
+#include <bsp430/common/platform.h>
+
+#endif /* BSP430_FRAUNCHPAD_PLATFORM_H */
