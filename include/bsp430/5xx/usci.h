@@ -76,7 +76,8 @@ typedef struct xBSP430USCI * xBSP430USCIHandle;
 
 /** Request and configure a USCI device in UART mode.
  *
- * @param xUSCI The device that is being requested.
+ * @param xPeriph The raw device identifier for the USCI device that
+ * is being requested. E.g., @c xBSP430Periph_USCI_A0. 
  *
  * @param control_word The configuration to be written to the device's
  * ctlw0 word.  Most bit fields will be assigned from this value, but
@@ -115,7 +116,7 @@ xBSP430USCIHandle xBSP430USCIOpenSPI (xBSP430Periph xPeriph,
  * to port function, and releases any resources allocated when the
  * device was opened.
  *
- * @param device The device to be closed.
+ * @param xUSCI The device to be closed.
  *
  * @return 0 if the close occurred without error. */
 int iBSP430USCIClose (xBSP430USCIHandle xUSCI);
@@ -132,13 +133,13 @@ int iBSP430USCIClose (xBSP430USCIHandle xUSCI);
  * data is present in the transmit queue but that the transmission
  * infrastructure may be idle.
  *
- * @param device A USCI device which must have a transmit queue.
+ * @param xUSCI A USCI device which must have a transmit queue.
  */
 void vBSP430USCIWakeupTransmit (xBSP430USCIHandle xUSCI);
 
 /** Transmit a single character on a queued USCI device.
  *
- * @param device The device on which the character should be
+ * @param xUSCI The device on which the character should be
  * transmitted.  It is an error to use this function if the device has
  * a transmit queue; in such a case this call is likely to hang.
  *

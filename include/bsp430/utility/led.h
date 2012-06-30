@@ -85,7 +85,7 @@ void vBSP430ledInit (void);
  * on.  If zero, the LED is turned off.  If negative, the LED state is
  * inverted.
  */
-void vBSP430ledSet (unsigned char uxLED,
+void vBSP430ledSet (unsigned char ucLED,
 					signed portBASE_TYPE xValue);
 
 #endif /* BSP430_UTILITY_LED_H */
