@@ -73,18 +73,19 @@ extern const unsigned char ucLEDDefnCount;
 
 /** Call this once to initialize the hardware for all LEDs defined in
  * the pxLEDDefn array. */
-void vBSP430ledInit( void );
+void vBSP430ledInit (void);
 
 /** Invoke to change the state of a given LED.
  *
- * @param uxLED The index to the LED of interest.  No-op if uxLED is
- * not between zero and ucLEDDefnCount-1, inclusive.
+ * @param ucLED The index to the LED of interest.  The call does
+ * nothing if ucLED is not between zero and ucLEDDefnCount-1,
+ * inclusive.
  *
  * @param xValue How to set the LED.  If positive, the LED is turned
  * on.  If zero, the LED is turned off.  If negative, the LED state is
  * inverted.
  */
-void vBSP430ledSet( unsigned portBASE_TYPE uxLED,
-					signed portBASE_TYPE xValue );
+void vBSP430ledSet (unsigned char uxLED,
+					signed portBASE_TYPE xValue);
 
 #endif /* BSP430_UTILITY_LED_H */
