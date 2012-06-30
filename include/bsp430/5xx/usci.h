@@ -162,18 +162,6 @@ extern xBSP430USCIHandle const xBSP430USCI_A2;
  * #configBSP430_PERIPH_USE_USCI_A3 is defined to a true value. */
 extern xBSP430USCIHandle const xBSP430USCI_A3;
 
-/** Handle for EUSCI_A0.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_EUSCI_A0 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430EUSCI_A0;
-
-/** Handle for EUSCI_A1.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_EUSCI_A1 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430EUSCI_A1;
-
-/** Handle for EUSCI_A2.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_EUSCI_A2 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430EUSCI_A2;
-
 /** Handle for USCI_B0.  The handle may be referenced only if 
  * #configBSP430_PERIPH_USE_USCI_B0 is defined to a true value. */
 extern xBSP430USCIHandle const xBSP430USCI_B0;
@@ -189,10 +177,6 @@ extern xBSP430USCIHandle const xBSP430USCI_B2;
 /** Handle for USCI_B3.  The handle may be referenced only if 
  * #configBSP430_PERIPH_USE_USCI_B3 is defined to a true value. */
 extern xBSP430USCIHandle const xBSP430USCI_B3;
-
-/** Handle for EUSCI_B0.  The handle may be referenced only if 
- * #configBSP430_PERIPH_USE_EUSCI_B0 is defined to a true value. */
-extern xBSP430USCIHandle const xBSP430EUSCI_B0;
 
 /* END EMBED usci_decl: AUTOMATICALLY GENERATED CODE */
 
