@@ -38,6 +38,7 @@ xConsoleConfigure (xComPortHandle xConsole,
 		prvConsoleSemaphore = 0;
 	}
 	prvConsole = 0;
+	prvBlockTime = xBlockTime;
 	if (xConsole) {
 		vSemaphoreCreateBinary(prvConsoleSemaphore);
 		if (! prvConsoleSemaphore) {
