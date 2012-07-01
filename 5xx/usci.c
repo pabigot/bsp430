@@ -30,7 +30,7 @@ xBSP430USCIOpenUART (xBSP430Periph periph,
 	}
 
 	/* Reject if the pins can't be configured */
-	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430Periph)(device->usci), 1)) {
+	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430Periph)(uintptr_t)(device->usci), 1)) {
 		return NULL;
 	}
 
@@ -72,7 +72,7 @@ int
 iBSP430USCIClose (xBSP430USCIHandle device)
 {
 	device->usci->ctlw0 = UCSWRST;
-	iBSP430platformConfigurePeripheralPins ((xBSP430Periph)(device->usci), 0);
+	iBSP430platformConfigurePeripheralPins ((xBSP430Periph)(uintptr_t)(device->usci), 0);
 	device->tx_queue = 0;
 	device->rx_queue = 0;
 	device->flags = 0;
