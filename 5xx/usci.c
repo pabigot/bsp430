@@ -16,7 +16,8 @@ xBSP430USCIOpenUART (xBSP430Periph periph,
 					 xQueueHandle rx_queue,
 					 xQueueHandle tx_queue)
 {
-	unsigned long brclk_hz;
+	unsigned short aclk_Hz;
+	unsigned long brclk_Hz;
 	xBSP430USCIHandle device = periphToDevice(periph);
 	uint16_t br;
 	uint16_t brs;
@@ -36,17 +37,19 @@ xBSP430USCIOpenUART (xBSP430Periph periph,
 	device->rx_queue = rx_queue;
 	device->tx_queue = tx_queue;
 
-	/* Prefer ACLK for rates that are low enough.  Use SMCLK for
-	 * anything larger. */
-	if (portACLK_FREQUENCY_HZ >= (3 * baud)) {
+	/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
+	 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
+	 * anything larger.  */
+	aclk_Hz = usBSP430clockACLK_Hz();
+	if ((aclk_Hz > 20000) && (aclk_Hz >= (3 * baud))) {
 		device->usci->ctlw0 = UCSWRST | UCSSEL__ACLK;
-		brclk_hz = portACLK_FREQUENCY_HZ;
+		brclk_Hz = portACLK_FREQUENCY_HZ;
 	} else {
 		device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-		brclk_hz = ulBSP430clockSMCLK_Hz();
+		brclk_Hz = ulBSP430clockSMCLK_Hz();
 	}
-	br = (brclk_hz / baud);
-	brs = (1 + 16 * (brclk_hz - baud * br) / baud) / 2;
+	br = (brclk_Hz / baud);
+	brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;
 
 	device->usci->brw = br;
 	device->usci->mctl = (0 * UCBRF0) | (brs * UCBRS0);

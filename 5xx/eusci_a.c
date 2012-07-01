@@ -22,9 +22,13 @@ xBSP430eUSCIAOpenUART (xBSP430Periph periph,
 					   xQueueHandle rx_queue,
 					   xQueueHandle tx_queue)
 {
-	unsigned long brclk_hz;
+	unsigned short aclk_Hz;
+	unsigned long brclk_Hz;
 	xBSP430eUSCIAHandle device = periphToDevice(periph);
+	unsigned long n;
 	uint16_t br;
+	uint16_t os16 = 0;
+	uint16_t brf = 0;
 	uint16_t brs;
 
 	configASSERT(NULL != device);
@@ -42,20 +46,36 @@ xBSP430eUSCIAOpenUART (xBSP430Periph periph,
 	device->rx_queue = rx_queue;
 	device->tx_queue = tx_queue;
 
-	/* Prefer ACLK for rates that are low enough.  Use SMCLK for
-	 * anything larger. */
-	if (portACLK_FREQUENCY_HZ >= (3 * baud)) {
+	/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
+	 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
+	 * anything larger.  */
+	aclk_Hz = usBSP430clockACLK_Hz();
+	if ((aclk_Hz > 20000) && (aclk_Hz >= (3 * baud))) {
 		device->usci->ctlw0 = UCSWRST | UCSSEL__ACLK;
-		brclk_hz = portACLK_FREQUENCY_HZ;
+		brclk_Hz = portACLK_FREQUENCY_HZ;
 	} else {
 		device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-		brclk_hz = ulBSP430clockSMCLK_Hz();
+		brclk_Hz = ulBSP430clockSMCLK_Hz();
 	}
-	br = (brclk_hz / baud);
-	brs = (1 + 16 * (brclk_hz - baud * br) / baud) / 2;
-
+#define BR_FRACTION_SHIFT 6
+	/* The value for BRS is supposed to be a table lookup based on the
+	 * fractional part of f_brclk / baud.  Rather than replicate the
+	 * table, we simply preserve BR_FRACTION_SHIFT bits of the
+	 * fraction, then use that as the upper bits of the value of
+	 * BRS.  Seems to work, at least for 9600 baud. */
+	n = (brclk_Hz << BR_FRACTION_SHIFT) / baud;
+	brs = n & ((1 << BR_FRACTION_SHIFT) - 1);
+	n >>= BR_FRACTION_SHIFT;
+	brs <<= 8 - BR_FRACTION_SHIFT;
+#undef BR_FRACTION_SHIFT
+	br = n;
+	if (16 <= br) {
+		br = br / 16;
+		os16 = UCOS16;
+		brf = n - 16 * br;
+	}
 	device->usci->brw = br;
-	device->usci->mctlw = (0 * UCBRF0) | (brs * UCBRS0);
+	device->usci->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
 
 	/* Mark the device active */
 	device->num_rx = device->num_tx = 0;
