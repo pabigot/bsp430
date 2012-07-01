@@ -21,8 +21,8 @@ void vBSP430ledInit (void)
 	PBSEL1 &= ~0xF0;
 }
 
-void vBSP430ledSet (unsigned char ucLED,
-					signed portBASE_TYPE xValue)
+void vBSP430ledSetFromISR (unsigned char ucLED,
+						   signed portBASE_TYPE xValue)
 {
 	unsigned int bit;
 	volatile unsigned int * pxout;
@@ -35,7 +35,6 @@ void vBSP430ledSet (unsigned char ucLED,
 	} else {
 		pxout = &PJOUT;
 	}
-	taskENTER_CRITICAL();
 	if (xValue > 0)	{
 		*pxout |= bit;
 	} else if (xValue < 0) {
@@ -43,6 +42,13 @@ void vBSP430ledSet (unsigned char ucLED,
 	} else {
 		*pxout &= ~bit;
 	}
+}
+
+void vBSP430ledSet (unsigned char ucLED,
+					signed portBASE_TYPE xValue)
+{
+	taskENTER_CRITICAL();
+	vBSP430ledSetFromISR(ucLED, xValue);
 	taskEXIT_CRITICAL();
 }
 

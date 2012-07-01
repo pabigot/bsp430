@@ -108,13 +108,12 @@ vBSP430ledInit( void )
 }
 
 void
-vBSP430ledSet (unsigned char ucLED,
-			   signed portBASE_TYPE xValue)
+vBSP430ledSetFromISR (unsigned char ucLED,
+					  signed portBASE_TYPE xValue)
 {
 	if (ucLED < ucBSP430leds) {
 		const xBSP430led * pxLED = pxBSP430leds + ucLED;
 
-		taskENTER_CRITICAL();
 		if (xValue > 0)	{
 			*pxLED->pucPxOUT |= pxLED->ucBIT;
 		} else if (xValue < 0) {
@@ -122,6 +121,14 @@ vBSP430ledSet (unsigned char ucLED,
 		} else {
 			*pxLED->pucPxOUT &= ~pxLED->ucBIT;
 		}
-		taskEXIT_CRITICAL();
 	}
+}
+
+void
+vBSP430ledSet (unsigned char ucLED,
+			   signed portBASE_TYPE xValue)
+{
+	taskENTER_CRITICAL();
+	vBSP430ledSetFromISR(ucLED, xValue);
+	taskEXIT_CRITICAL();
 }

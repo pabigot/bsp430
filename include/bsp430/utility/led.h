@@ -44,18 +44,27 @@
 
 #include "FreeRTOS.h"
 
-/** Call this once to initialize the hardware for all LEDs defined in
- * the pxLEDDefn array.
+/** Call this once to initialize the hardware for all LEDs.
+ *
+ * The common implementation uses the LEDs defined in #pxBSP430leds.
  *
  * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
  * value, the application or platform must define this function. */
 void vBSP430ledInit (void);
 
+/** Manipulate LEDs without entering critical section.
+ * 
+ * @see #vBSP430ledSet
+ * 
+ * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
+ * value, the application or platform must define this function. */
+void vBSP430ledSetFromISR (unsigned char ucLED,
+						   signed portBASE_TYPE xValue);
+
 /** Invoke to change the state of a given LED.
  *
  * @param ucLED The index to the LED of interest.  The call does
- * nothing if ucLED is not between zero and ucLEDDefnCount-1,
- * inclusive.
+ * should simply return if ucLED does not specify a valid LED.
  *
  * @param xValue How to set the LED.  If positive, the LED is turned
  * on.  If zero, the LED is turned off.  If negative, the LED state is
@@ -68,9 +77,10 @@ void vBSP430ledSet (unsigned char ucLED,
 
 /** @def configBSP430_LED_USE_COMMON
  *
- * If the development board has LEDs spread among multiple 8-bit
- * digital I/O ports, then the common implementation of
- * the LED interface can be used.  In that case, define this to a true
+ * If the development board has LEDs that can be expressed using
+ * #xBSP430led (i.e., controlled through 8-bit digital I/O ports with
+ * a single selection register) then the common implementation of the
+ * LED interface can be used.  In that case, define this to a true
  * value, and provide within a platform file or the application
  * definitions of the #pxBSP430leds and #ucBSP430leds variables.
  *
