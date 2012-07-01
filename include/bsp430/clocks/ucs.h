@@ -60,13 +60,18 @@
  *
  * Other refinements in this module:
  *
- * @li The return value of #ulBSP430clockMCLK_Hz is the most recent
- * measured trimmed frequency.
+ * @li #ulBSP430clockMCLK_Hz returns the most recent measured trimmed
+ * frequency.
  * 
- * @li The return value of #ulBSP430clockSMCLK_Hz is the most recent
- * measured trimmed frequency shifted right by
+ * @li #ulBSP430clockSMCLK_Hz returns the most recent measured trimmed
+ * frequency shifted right by
  * #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
-
+ *
+ * @li #ulBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
+ * selected source for ACLK and OFIFG is clear, and returns 10000 (the
+ * nominal VLOCLK frequency) otherwise.  Be aware that the actual
+ * VLOCLK frequency may be different by 10-20%.
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012

@@ -79,4 +79,13 @@ unsigned long ulBSP430clockMCLK_Hz ();
  * @return an estimate of the SMCLK frequency, in Hz */
 unsigned long ulBSP430clockSMCLK_Hz ();
 
+/** Return the best available estimate of ACLK frequency.
+ *
+ * Depending on clock capabilities, this may simply return
+ * #portACLK_FREQUENCY_HZ, or it may return a value calculated from
+ * observations.
+ *
+ * @return an estimate of the ACLK frequency, in Hz */
+unsigned short usBSP430clockACLK_Hz ();
+
 #endif /* BSP430_COMMON_CLOCKS_H */

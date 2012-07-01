@@ -155,6 +155,15 @@ ulBSP430clockSMCLK_Hz ()
 	return lastTrimFrequency_Hz_ >> configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 }
 
+unsigned short
+usBSP430clockACLK_Hz ()
+{
+	if ((SELA__XT1CLK == (UCSCTL4 & (SELA0 | SELA1 | SELA2)))
+		&& !(SFRIFG1 & OFIFG)) {
+		return 32768U;
+	return 10000;
+}
+
 unsigned long
 ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 					   short sRSEL )

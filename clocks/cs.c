@@ -72,6 +72,16 @@ ulBSP430clockSMCLK_Hz ()
 	return ulBSP430clockMCLK_Hz() >> configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 }
 
+unsigned short
+usBSP430clockACLK_Hz ()
+{
+	if ((SELA__XT1CLK == (CSCTL2 & (SELA0 | SELA1 | SELA2)))
+		&& !(SFRIFG1 & OFIFG)) {
+		return 32768U;
+	}
+	return 10000;
+}
+
 unsigned long
 ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz)
 {
@@ -96,4 +106,33 @@ ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz)
 	CSCTL0_H = !0xA5;
 
 	return ulBSP430clockMCLK_Hz();
+}
+
+portBASE_TYPE
+xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
+						unsigned short usLoops)
+{
+	CSCTL0_H = 0xA5;
+	if (xUseXT1) {
+		unsigned short loop_delta = (0 == usLoops) ? 0 : 1;
+
+		CSCTL4 = (CSCTL4 | XT1DRIVE_0) & ~XT1OFF;
+		do {
+			CSCTL5 &= ~XT1OFFG;                     // Clear XT1 fault flag
+			SFRIFG1 &= ~OFIFG;
+			usLoops -= loop_delta;
+			__delay_cycles(50000);
+		} while ((SFRIFG1 & OFIFG) && (0 < usLoops));
+		xUseXT1 = ! (SFRIFG1 & OFIFG);
+		if (! xUseXT1) {
+			CSCTL4 |= XT1OFF;
+		}
+	}
+	if (xUseXT1) {
+		CSCTL2 = (CSCTL2 & 0xF8FF) | SELS__XT1CLK;
+	} else {
+		CSCTL2 = (CSCTL2 & 0xF8FF) | SELS__VLOCLK;
+	}
+	CSCTL0_H = !0xA5;
+	return xUseXT1;
 }

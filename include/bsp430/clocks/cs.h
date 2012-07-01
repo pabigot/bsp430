@@ -46,7 +46,12 @@
  * @li #ulBSP430clockSMCLK_Hz assumes DCOCLK is the selected source
  * for SMCLK, and returns the selected trimmed DCOCLK frequency
  * shifted right by #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
-
+ *
+ * @li #ulBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
+ * selected source for ACLK and OFIFG is clear, and returns 10000 (the
+ * nominal VLOCLK frequency) otherwise.  Be aware that the actual
+ * VLOCLK frequency may be different by 10-20%.
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -80,5 +85,32 @@
  */
 unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
 
-#endif /* BSP430_CLOCKS_CS_H */
+/** Call this to configure ACLK to use XT1.
+ *
+ * If @a yesp is @c pdTRUE, check whether the crystal is present and
+ * stabilized.  If so, configure ACLK to source from XT1 and return
+ * pdTRUE.  Otherwise configure ACLK to source from VLOCLK and return
+ * pdFALSE.
+ *
+ * Stabilization is checked by clearing the XT1 oscillator faults,
+ * waiting 50k MCLK cycles, and checking for a fault.  This is
+ * repeated, limited by @a usLoops, until stabilization is detected.
+ * Prior to invoking this function the crystal's port pins must be
+ * configured to their peripheral function as specified in the MCU
+ * data sheet.
+ *
+ * @param yesp pdTRUE if the ACLK should be sourced from XT1; pdFALSE
+ * if it should be sourced from VLOCLK.
+ *
+ * @param usLoops The number of times the stabilization check should
+ * be repeated.  If stabilization has not been achieved after this
+ * many loops, assume the crystal is absent and configure for VLOCLK.
+ * Pass a value of zero to loop until stabilization is detected
+ * regardless of how long that might take.
+ *
+ * @param pdTRUE iff ACLK is sourced from a stable XT1.
+ */
+portBASE_TYPE xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
+									  unsigned short usLoops);
 
+#endif /* BSP430_CLOCKS_CS_H */
