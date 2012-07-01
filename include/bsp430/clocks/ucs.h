@@ -81,7 +81,9 @@
 
 /** Call this to initially configure the UCS peripheral.
  *
- * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK=SMCLK.
+ * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.
+ * SMCLK will be set to DCOCLKDIV divided in accordance with
+ * #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
  * @param sRSEL The DCO frequency range selection.  The appropriate
  * value is frequency-dependent, and specified in the "DCO Frequency"
