@@ -161,6 +161,7 @@ usBSP430clockACLK_Hz ()
 	if ((SELA__XT1CLK == (UCSCTL4 & (SELA0 | SELA1 | SELA2)))
 		&& !(SFRIFG1 & OFIFG)) {
 		return 32768U;
+	}
 	return 10000;
 }
 
