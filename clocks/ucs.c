@@ -139,20 +139,20 @@ ulBSP430ucsTrimFLLFromISR ()
 		TB0CCTL0 = 0;
 	}
 	lastTrimFrequency_Hz_ = current_frequency_tsp * (32768UL / TRIM_SAMPLE_PERIOD_ACLK);
-	lastTrimFrequency_Hz_ <<= configBSP430_UCS_SMCLK_DIVIDING_SHIFT;
+	lastTrimFrequency_Hz_ <<= configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 	return lastTrimFrequency_Hz_;
 }
 
 unsigned long
-ulBSP430ucsMCLK_Hz ()
+ulBSP430clockMCLK_Hz ()
 {
 	return lastTrimFrequency_Hz_;
 }
 
 unsigned long
-ulBSP430ucsSMCLK_Hz ()
+ulBSP430clockSMCLK_Hz ()
 {
-	return lastTrimFrequency_Hz_ >> configBSP430_UCS_SMCLK_DIVIDING_SHIFT;
+	return lastTrimFrequency_Hz_ >> configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 }
 
 unsigned long
@@ -213,7 +213,7 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 	UCSCTL4 = SELA__XT1CLK | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
 
 	targetFrequency_tsp_ = ulFrequency_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
-	targetFrequency_tsp_ >>= configBSP430_UCS_SMCLK_DIVIDING_SHIFT;
+	targetFrequency_tsp_ >>= configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 
 	ulReturn = ulBSP430ucsTrimFLLFromISR();
 
@@ -223,7 +223,7 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 		SFRIFG1 &= ~OFIFG;
 	} while (UCSCTL7 & DCOFFG);
 
-	UCSCTL5 = (0x70 & (configBSP430_UCS_SMCLK_DIVIDING_SHIFT << 4));
+	UCSCTL5 = (0x70 & (configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT << 4));
 
 #if ! (portDISABLE_FLL - 0)
 	/* Turn FLL back on */

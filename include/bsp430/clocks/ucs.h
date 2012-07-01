@@ -58,6 +58,15 @@
  *     clocks are otherwise unused.  Thus SCG0 is expected to be set
  *     at all times except when trimming.
  *
+ * Other refinements in this module:
+ *
+ * @li The return value of #ulBSP430clockMCLK_Hz is the most recent
+ * measured trimmed frequency.
+ * 
+ * @li The return value of #ulBSP430clockSMCLK_Hz is the most recent
+ * measured trimmed frequency shifted right by
+ * #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
+
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -68,15 +77,7 @@
 #define BSP430_CLOCKS_UCS_H
 
 #include "FreeRTOS.h"
-
-/** @def configBSP430_UCS_SMCLK_DIVIDING_SHIFT
- *
- * SMCLK is configured to divide DCOCLK by shifting it left this many
- * positions.  E.g., if DCOCLK is 20 MHz, a dividing shift of 2 will
- * produce a clock divisor of 4 and an SMCLK at 5 MHz. */
-#ifndef configBSP430_UCS_SMCLK_DIVIDING_SHIFT
-#define configBSP430_UCS_SMCLK_DIVIDING_SHIFT 0
-#endif /* configBSP430_UCS_SMCLK_DIVIDING_SHIFT */
+#include <bsp430/common/clocks.h>
 
 /** Call this to initially configure the UCS peripheral.
  *
@@ -121,20 +122,5 @@ unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
  */
 unsigned long ulBSP430ucsTrimFLLFromISR ();
 
-/** Return the last calculated MCLK frequency.
- *
- * This may be off if the FLL has drifted and not been trimmed
- * recently.
- *
- * @return an estimate of the MCLK frequency, in Hz */
-unsigned long ulBSP430ucsMCLK_Hz ();
-
-/** Return the last calculated SMCLK frequency.
- *
- * This may be off if the FLL has drifted and not been trimmed
- * recently.
- *
- * @return an estimate of the SMCLK frequency, in Hz */
-unsigned long ulBSP430ucsSMCLK_Hz ();
-
 #endif /* BSP430_CLOCKS_UCS_H */
+

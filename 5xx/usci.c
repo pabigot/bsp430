@@ -1,5 +1,5 @@
 #include <bsp430/5xx/usci.h>
-#include <bsp430/clocks/ucs.h>
+#include <bsp430/common/clocks.h>
 #include <bsp430/common/platform.h>
 #include "task.h"
 
@@ -43,7 +43,7 @@ xBSP430USCIOpenUART (xBSP430Periph periph,
 		brclk_hz = portACLK_FREQUENCY_HZ;
 	} else {
 		device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-		brclk_hz = ulBSP430ucsSMCLK_Hz();
+		brclk_hz = ulBSP430clockSMCLK_Hz();
 	}
 	br = (brclk_hz / baud);
 	brs = (1 + 16 * (brclk_hz - baud * br) / baud) / 2;

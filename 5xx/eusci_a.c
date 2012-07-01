@@ -49,7 +49,7 @@ xBSP430eUSCIAOpenUART (xBSP430Periph periph,
 		brclk_hz = portACLK_FREQUENCY_HZ;
 	} else {
 		device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-		brclk_hz = 0; // ulBSP430ucsSMCLK_Hz();
+		brclk_hz = ulBSP430clockSMCLK_Hz();
 	}
 	br = (brclk_hz / baud);
 	brs = (1 + 16 * (brclk_hz - baud * br) / baud) / 2;
