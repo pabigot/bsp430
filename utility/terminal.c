@@ -9,7 +9,6 @@
 
 #include <bsp430/utility/terminal.h>
 #include <bsp430/timers/timerA0.h>
-#include <bsp430/5xx/usci.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
@@ -17,7 +16,7 @@
 /** The internal state necessary to manage a terminal task. */
 typedef struct xBSP430_TERMINAL_STATE {
 	/** Device used to display results and receive commands. */
-	xBSP430USCIHandle hsuart;
+	xBSP430UARTHandle hsuart;
 
 	/** Queue for receiving data.  The reader task pulls characters
 	 * from this and aggregates them for handling by the terminal
@@ -126,12 +125,12 @@ typedef struct event {
  * putchar function, so this has to live globally.  It's reasonably
  * unlikely that multiple terminal instances will be present; when
  * somebody needs them, then this has to be fixed. */
-static xBSP430USCIHandle tprintf_uart;
+static xBSP430UARTHandle tprintf_uart;
 
 static int
 tputchar (int c)
 {
-	return iBSP430USCIputc(c, tprintf_uart);
+	return iBSP430UARTputc(c, tprintf_uart);
 }
 
 static int
@@ -355,21 +354,21 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
 					case KEY_BS:
 						if (cp > terminal->command_buffer) {
 							*--cp = 0;
-							iBSP430USCIputs("\b \b", terminal->hsuart);
+							iBSP430UARTputs("\b \b", terminal->hsuart);
 						} else {
-							iBSP430USCIputc(KEY_BELL, terminal->hsuart);
+							iBSP430UARTputc(KEY_BELL, terminal->hsuart);
 						}
 						break;
 					case KEY_CR: {
 						vBSP430CommandProcess(terminal, terminal->pxCommandGroup, terminal->command_buffer);
 						need_prompt = 1;
-						iBSP430USCIputc('\n', terminal->hsuart);
+						iBSP430UARTputc('\n', terminal->hsuart);
 						cp = terminal->command_buffer;
 						*cp = 0;
 						break;
 					}
 					case KEY_FF:
-						iBSP430USCIputc('\f', terminal->hsuart);
+						iBSP430UARTputc('\f', terminal->hsuart);
 						need_prompt = 1;
 						break;
 					case KEY_KILL_LINE:
@@ -391,11 +390,11 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
 					}
 					default:
 						if (cp >= ecp) {
-							iBSP430USCIputc(KEY_BELL, terminal->hsuart);
+							iBSP430UARTputc(KEY_BELL, terminal->hsuart);
 						} else {
 							*cp++ = c;
 							*cp = 0;
-							iBSP430USCIputc(c, terminal->hsuart);
+							iBSP430UARTputc(c, terminal->hsuart);
 						}
 						break;
 					}
@@ -405,7 +404,7 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
 				tprintf("\r\n%s: ", pcTaskGetTaskName(evt.display.task));
 				if ((EVT_DISPLAY_TEXT == evt.event_type)
 					&& (evt.display.text != NULL)) {
-					iBSP430USCIputs(evt.display.text, terminal->hsuart);
+					iBSP430UARTputs(evt.display.text, terminal->hsuart);
 				}
 				if (EVT_DISPLAY_CODE == evt.event_type) {
 					tprintf("code %d", evt.display.code);
@@ -414,7 +413,7 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
 					xSemaphoreGive(evt.display.notify_sema);
 				}
 				need_prompt = 1;
-				iBSP430USCIputc('\n', terminal->hsuart);
+				iBSP430UARTputc('\n', terminal->hsuart);
 			}
 		}
 	}
@@ -461,7 +460,7 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
 			goto failed;
 		}
 	}
-	terminal->hsuart = xBSP430USCIOpenUART(configp->uart, configp->control_word, configp->baud, terminal->rx_queue, terminal->tx_queue);
+	terminal->hsuart = xBSP430UARTOpen(configp->uart, configp->control_word, configp->baud, terminal->rx_queue, terminal->tx_queue);
 	if (! terminal->hsuart) {
 		goto failed;
 	}
@@ -491,7 +490,7 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
 	}
 #endif /* INCLUDE_vTaskDelete */
 	if (terminal->hsuart) {
-		bsp430_usci_close(terminal->hsuart);
+		iBSP430UARTClose(terminal->hsuart);
 	}
 	if (terminal->display_buffer) {
 		vPortFree(terminal->display_buffer);

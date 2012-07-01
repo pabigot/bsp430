@@ -6,31 +6,29 @@
  * @copyright @link http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause @endlink
  */
 
-#include "platform.h"
-#include "serial.h"
 #include <bsp430/utility/console.h>
 #include "semphr.h"
 #include "stdio.h"
 
-static xComPortHandle prvConsole;
+static xBSP430UARTHandle prvConsole;
 static xSemaphoreHandle prvConsoleSemaphore;
 static portTickType prvBlockTime;
 
 static int
 cputchar (int c)
 {
-	return xSerialPutChar(prvConsole, c, 0) ? c : -1;
+	return iBSP430UARTputc(c, prvConsole);
 }
 
 int
 __attribute__((__weak__))
 putchar (int c)
 {
-	return xSerialPutChar(prvConsole, c, 0) ? c : -1;
+	return iBSP430UARTputc(c, prvConsole);
 }
 
 portBASE_TYPE
-xConsoleConfigure (xComPortHandle xConsole,
+xConsoleConfigure (xBSP430UARTHandle xConsole,
 				   portTickType xBlockTime)
 {
 	if (prvConsoleSemaphore) {

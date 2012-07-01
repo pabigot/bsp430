@@ -47,7 +47,7 @@
 #ifndef BSP430_UTILITY_CONSOLE_H
 #define BSP430_UTILITY_CONSOLE_H
 
-#include "serial.h"
+#include <bsp430/common/uart.h>
 
 /** Like printf, but to platform console.
  *
@@ -58,16 +58,15 @@ __attribute__((__format__(printf, 1, 2)));
 
 /** Configure a console device.
  *
- * @param xConsole a serial device, preferably one that does
- * non-blocking writes.  Pass zero to disable the console print
- * infrastructure.
+ * @param xUART a serial device, preferably one that does non-blocking
+ * writes.  Pass zero to disable the console print infrastructure.
  *
  * @param xBlockTime the duration to wait for any other active users
  * of cprintf to exit
  *
  * @return pdSUCCESS if the console could be configured, pdFAIL
  * otherwise. */
-portBASE_TYPE xConsoleConfigure (xComPortHandle xConsole,
+portBASE_TYPE xConsoleConfigure (xBSP430UARTHandle xUART,
 								 portTickType xBlockTime);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

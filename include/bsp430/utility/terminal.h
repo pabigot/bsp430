@@ -66,6 +66,7 @@
 #define BSP430_UTILITY_TERMINAL_H
 
 #include <bsp430/common/periph.h>
+#include <bsp430/common/uart.h>
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"
@@ -161,10 +162,10 @@ typedef struct xBSP430_TERMINAL_CONFIGURATION {
 	 * connection */
 	xBSP430Periph uart;
 
-	/** Parameter to #xBSP430USCIOpenUART */
+	/** Parameter to #xBSP430UARTOpen */
 	unsigned int control_word;
 
-	/** Parameter to #xBSP430USCIOpenUART */
+	/** Parameter to #xBSP430UARTOpen */
 	unsigned long baud;
 
 	/** Priority of the terminal task.  Processing of commands
