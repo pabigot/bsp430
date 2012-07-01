@@ -121,7 +121,7 @@ xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
 			CSCTL5 &= ~XT1OFFG;                     // Clear XT1 fault flag
 			SFRIFG1 &= ~OFIFG;
 			usLoops -= loop_delta;
-			__delay_cycles(50000);
+			__delay_cycles(configBSP430_FR5XX_CS_XT1_DELAY_CYCLES);
 		} while ((SFRIFG1 & OFIFG) && (0 < usLoops));
 		xUseXT1 = ! (SFRIFG1 & OFIFG);
 		if (! xUseXT1) {

@@ -47,7 +47,7 @@
  * for SMCLK, and returns the selected trimmed DCOCLK frequency
  * shifted right by #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
- * @li #ulBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
+ * @li #usBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the
  * nominal VLOCLK frequency) otherwise.  Be aware that the actual
  * VLOCLK frequency may be different by 10-20%.
@@ -64,15 +64,27 @@
 #include "FreeRTOS.h"
 #include <bsp430/common/clocks.h>
 
-/** @def configBSP430_FR5XX_CS_ENABLE_HIGH_SPEED
+/** @def configBSP430_FR5XX_CS_XT1_DELAY_CYCLES
  *
- * Define this to a true value to indicate that the MCU being used is
- * expected to be capable of setting the CSCTL1.DCORSEL bit to select
- * higher trimmed speeds.  This extends the set of reachable
- * frequencies to include 16 MHz, 20 MHz, and 24 MHz. */
-#ifndef configBSP430_FR5XX_CS_ENABLE_HIGH_SPEED
-#define configBSP430_FR5XX_CS_ENABLE_HIGH_SPEED 0
-#endif /* configBSP430_FR5XX_CS_ENABLE_HIGH_SPEED */
+ * Define this to the number of MCLK cycles to delay, after clearing
+ * oscillator faults, before checking for oscillator stability.  This
+ * must be a compile-time constant integer.  See also the @a usLoops
+ * parameter to #xBSP430csACLKSourceXT1.  To wait up to one second for
+ * the crystal to stabilize, use:
+ *
+ * @code
+ * // Set up pins for XT1 function
+ * if (! xBSP430csACLKSourceXT1(1, configCPU_CLOCK_HZ / configBSP430_FR5XX_CS_XT1_DELAY_CYCLES)) {
+ *    // XT1 not available, return pins to GPIO function
+ * }
+ * @endcode
+ *
+ * Be aware that it may take several hundred milliseconds to stabilize
+ * the crystal; 500ms has been observed to be too short.
+ */
+#ifndef configBSP430_FR5XX_CS_XT1_DELAY_CYCLES
+#define configBSP430_FR5XX_CS_XT1_DELAY_CYCLES 10000
+#endif /* configBSP430_FR5XX_CS_XT1_DELAY_CYCLES */
 
 /** Call this to configure MCLK and SMCLK via CS peripheral.
  *
@@ -87,20 +99,20 @@ unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
 
 /** Call this to configure ACLK to use XT1.
  *
- * If @a yesp is @c pdTRUE, check whether the crystal is present and
+ * If @a xUseXT1 is @c pdTRUE, check whether the crystal is present and
  * stabilized.  If so, configure ACLK to source from XT1 and return
  * pdTRUE.  Otherwise configure ACLK to source from VLOCLK and return
  * pdFALSE.
  *
  * Stabilization is checked by clearing the XT1 oscillator faults,
- * waiting 50k MCLK cycles, and checking for a fault.  This is
- * repeated, limited by @a usLoops, until stabilization is detected.
- * Prior to invoking this function the crystal's port pins must be
- * configured to their peripheral function as specified in the MCU
- * data sheet.
+ * waiting #configBSP430_FR5XX_CS_XT1_DELAY_CYCLES MCLK cycles, and
+ * checking for a fault.  This is repeated, limited by @a usLoops,
+ * until stabilization is detected.  Prior to invoking this function
+ * the crystal's port pins must be configured to their peripheral
+ * function as specified in the MCU data sheet.
  *
- * @param yesp pdTRUE if the ACLK should be sourced from XT1; pdFALSE
- * if it should be sourced from VLOCLK.
+ * @param xUseXT1 Pass a nonzero value if the ACLK should be sourced
+ * from XT1.  Pass zero if it should be sourced from VLOCLK.
  *
  * @param usLoops The number of times the stabilization check should
  * be repeated.  If stabilization has not been achieved after this
@@ -108,7 +120,7 @@ unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
  * Pass a value of zero to loop until stabilization is detected
  * regardless of how long that might take.
  *
- * @param pdTRUE iff ACLK is sourced from a stable XT1.
+ * @return Nonzero iff ACLK is sourced from a stable XT1.
  */
 portBASE_TYPE xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
 									  unsigned short usLoops);
