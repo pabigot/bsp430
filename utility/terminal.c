@@ -372,7 +372,7 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
 						need_prompt = 1;
 						break;
 					case KEY_KILL_LINE:
-						tprintf("\e[%uD\e[K", cp - terminal->command_buffer);
+						tprintf("\e[%uD\e[K", (unsigned int)(cp - terminal->command_buffer));
 						cp = terminal->command_buffer;
 						*cp = 0;
 						break;
@@ -383,7 +383,7 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
 						while (--kp > terminal->command_buffer && !isspace(*kp)) {
 						}
 						++kp;
-						tprintf("\e[%uD\e[K", cp-kp);
+						tprintf("\e[%uD\e[K", (unsigned int)(cp-kp));
 						cp = kp;
 						*cp = 0;
 						break;
@@ -465,7 +465,8 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
 		goto failed;
 	}
 	if (terminal->rx_queue) {
-		xTaskCreate(vConsoleReader, (signed char *) "RX", 32 + 3*portTCB_SIZE_WORDS,
+		xTaskCreate(vConsoleReader, (signed char *) "RX",
+					configBSP430_TERMINAL_READER_STACK_ADJUSTMENT + configMINIMAL_STACK_SIZE,
 					terminal,
 					configp->uxPriority ? configp->uxPriority-1 : 0,
 					&terminal->reader_task);
@@ -473,7 +474,8 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
 			goto failed;
 		}
 	}
-	xTaskCreate(vSerialStuff, (signed char *) "TRM", 128 + 6 * portTCB_SIZE_WORDS,
+	xTaskCreate(vSerialStuff, (signed char *) "TRM",
+				configBSP430_TERMINAL_STACK_ADJUSTMENT + configMINIMAL_STACK_SIZE,
 				terminal, configp->uxPriority, &terminal->terminal_task);
 	if (! terminal->terminal_task) {
 		goto failed;
