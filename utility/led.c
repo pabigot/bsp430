@@ -66,8 +66,8 @@ vBSP430ledInit( void )
 {
 	unsigned char ucLED;
 
-	for (ucLED = 0; ucLED < ucLEDDefnCount; ++ucLED) {
-		const xLEDDefn * pxLED = pxLEDDefn + ucLED;
+	for (ucLED = 0; ucLED < ucBSP430leds; ++ucLED) {
+		const xBSP430led * pxLED = pxBSP430leds + ucLED;
 
 		/* Only include the configuration checks if the target MCU has
 		 * the corresponding port supported. */
@@ -111,8 +111,8 @@ void
 vBSP430ledSet (unsigned char ucLED,
 			   signed portBASE_TYPE xValue)
 {
-	if (ucLED < ucLEDDefnCount) {
-		const xLEDDefn * pxLED = pxLEDDefn + ucLED;
+	if (ucLED < ucBSP430leds) {
+		const xBSP430led * pxLED = pxBSP430leds + ucLED;
 
 		taskENTER_CRITICAL();
 		if (xValue > 0)	{

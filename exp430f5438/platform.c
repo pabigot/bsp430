@@ -5,11 +5,11 @@
 #include <bsp430/5xx/periph.h>
 #include "serial.h"
 
-const xLEDDefn pxLEDDefn[] = {
+const xBSP430led pxBSP430leds[] = {
 	{ .pucPxOUT = &P1OUT, .ucBIT = BIT0 }, /* Red */
 	{ .pucPxOUT = &P1OUT, .ucBIT = BIT1 }, /* Orange */
 };
-const unsigned char ucLEDDefnCount = sizeof(pxLEDDefn) / sizeof(*pxLEDDefn);
+const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
 
 int
 iBSP430platformConfigurePeripheralPins (xBSP430Periph device, int enablep)

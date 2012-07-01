@@ -44,35 +44,11 @@
 
 #include "FreeRTOS.h"
 
-/** Structure used to define the LED interface.
- *
- * The assumption is that all MSP430 board LEDs are controlled through
- * GPIO pins.  The address of the PxOUT register is provided
- * explicitly; the PxSEL and PxDIR registers are inferred by comparing
- * that address with the known addresses of the PxOUT registers in the
- * initialization loop. */
-
-typedef struct xLED_DEFN {
-	/** Address of the PxOUT register used to control the LED */
-	volatile unsigned char* pucPxOUT;
-	/** The bit mask for the LED (not the bit position) */
-	unsigned char ucBIT;
-	/** Unused at the moment but makes alignment requirements
-	 * explicit.  If we need to support a platform that wires its LEDs
-	 * to be on when low, this is where that would be communicated to
-	 * the infrastructure. */
-	unsigned char ucFLAGS;
-} xLEDDefn;
-
-/** Platform should define the LED configuration available to it. */
-extern const xLEDDefn pxLEDDefn[];
-
-/** Platform should define the length of the LED configuration array.
- * We'll assume there can't be more than 255 LEDs. */
-extern const unsigned char ucLEDDefnCount;
-
 /** Call this once to initialize the hardware for all LEDs defined in
- * the pxLEDDefn array. */
+ * the pxLEDDefn array.
+ *
+ * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
+ * value, the application or platform must define this function. */
 void vBSP430ledInit (void);
 
 /** Invoke to change the state of a given LED.
@@ -84,8 +60,52 @@ void vBSP430ledInit (void);
  * @param xValue How to set the LED.  If positive, the LED is turned
  * on.  If zero, the LED is turned off.  If negative, the LED state is
  * inverted.
- */
+ *
+ * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
+ * value, the application or platform must define this function. */
 void vBSP430ledSet (unsigned char ucLED,
 					signed portBASE_TYPE xValue);
+
+/** @def configBSP430_LED_USE_COMMON
+ *
+ * If the development board has LEDs spread among multiple 8-bit
+ * digital I/O ports, then the common implementation of
+ * the LED interface can be used.  In that case, define this to a true
+ * value, and provide within a platform file or the application
+ * definitions of the #pxBSP430leds and #ucBSP430leds variables.
+ *
+ * Since most platforms can benefit from the shared implementation,
+ * those that do not should override the default value. */
+#ifndef configBSP430_LED_USE_COMMON
+#define configBSP430_LED_USE_COMMON 1
+#endif /* configBSP430_LED_USE_COMMON */
+
+/** Structure used to define the LED interface.
+ *
+ * The assumption is that all MSP430 board LEDs are controlled through
+ * GPIO pins.  The address of the PxOUT register is provided
+ * explicitly; the PxSEL and PxDIR registers are inferred by comparing
+ * that address with the known addresses of the PxOUT registers in the
+ * initialization loop. */
+typedef struct xBSP430_LED_DEFN {
+	/** Address of the PxOUT register used to control the LED */
+	volatile unsigned char* pucPxOUT;
+	/** The bit mask for the LED (not the bit position) */
+	unsigned char ucBIT;
+	/** Unused at the moment but makes alignment requirements
+	 * explicit.  If we need to support a platform that wires its LEDs
+	 * to be on when low, this is where that would be communicated to
+	 * the infrastructure. */
+	unsigned char ucFLAGS;
+} xBSP430led;
+
+/** Platform should define the LED configuration available to it. */
+extern const xBSP430led pxBSP430leds[];
+
+/** Platform should define the length of the pxBSP430leds
+ * configuration array.  We'll assume there can't be more than 255
+ * LEDs. */
+extern const unsigned char ucBSP430leds;
+
 
 #endif /* BSP430_UTILITY_LED_H */
