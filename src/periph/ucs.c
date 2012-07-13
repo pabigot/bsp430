@@ -29,8 +29,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/clocks/ucs.h>
-#include <stdint.h>
+#include <bsp430/platform.h>
+#include <bsp430/periph/ucs.h>
+#include "FreeRTOS.h"
 #include "task.h"
 
 /* Frequency measurement occurs over this duration when determining

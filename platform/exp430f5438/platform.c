@@ -1,9 +1,8 @@
-#include "platform.h"
-#include <bsp430/clocks/ucs.h>
+#include <bsp430/platform.h>
+#include <bsp430/periph/ucs.h>
 #include <bsp430/timers/timerA0.h>
 #include <bsp430/utility/led.h>
-#include <bsp430/5xx/periph.h>
-#include "serial.h"
+#include <bsp430/periph/usci.h>
 
 const xBSP430led pxBSP430leds[] = {
 	{ .pucPxOUT = &P1OUT, .ucBIT = BIT0 }, /* Red */

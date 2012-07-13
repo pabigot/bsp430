@@ -81,8 +81,7 @@
 #ifndef BSP430_CLOCKS_UCS_H
 #define BSP430_CLOCKS_UCS_H
 
-#include "FreeRTOS.h"
-#include <bsp430/common/clocks.h>
+#include <bsp430/clocks.h>
 
 /** Call this to initially configure the UCS peripheral.
  *

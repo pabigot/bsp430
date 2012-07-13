@@ -45,7 +45,7 @@ timer     all	    Timer_A and Timer_B                          TA#, TB#, T#A#, T
 
 usart     2xx       universal sync/async receive/transmit        USART
 usi       2xx       universal serial interface                   USI
-usci	  2xx/4xx   universal serial communications interface    USCI, USCI_AB#
+usci_ab	  2xx/4xx   universal serial communications interface    USCI, USCI_AB#
 usci_a    5xx/6xx   universal serial communications interface    USCI_A#
 usci_b    5xx/6xx   universal serial communications interface    USCI_B#
 eusci_a   FR5xx     enhanced USCI                                EUSCI_A#

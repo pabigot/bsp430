@@ -42,10 +42,10 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_COMMON_UART_H
-#define BSP430_COMMON_UART_H
+#ifndef BSP430_UART_H
+#define BSP430_UART_H
 
-#include "FreeRTOS.h"
+#include <bsp430/common.h>
 
 /** @typedef xBSP430UARTHandle
  *
@@ -59,7 +59,7 @@
 #endif /* configBSP430_UART_USE_5XX_USCI */
 
 #if configBSP430_UART_USE_5XX_USCI - 0
-#include <bsp430/5xx/usci.h>
+#include <bsp430/periph/usci.h>
 
 /** Alias for device providing UART capabilities */
 typedef xBSP430USCIHandle xBSP430UARTHandle;
@@ -102,7 +102,7 @@ iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
 
 #if configBSP430_UART_USE_EUSCI - 0
 
-#include <bsp430/5xx/eusci_a.h>
+#include <bsp430/periph/eusci_a.h>
 
 /** Alias for device providing UART capabilities */
 typedef xBSP430eUSCIAHandle xBSP430UARTHandle;
@@ -137,4 +137,4 @@ iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
 
 #endif /* configBSP430_UART_USE_EUSCI */
 
-#endif /* BSP430_COMMON_UART_H */
+#endif /* BSP430_UART_H */

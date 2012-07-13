@@ -42,20 +42,20 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_5XX_SYSRST_H
-#define BSP430_5XX_SYSRST_H
+#ifndef BSP430_PERIPH_SYS_H
+#define BSP430_PERIPH_SYS_H
 
-#include "platform.h"
+#include "FreeRTOS.h"
 
-/** @def configBSP430_5XX_SYSRST_USE_DESCRIPTION
+/** @def configBSP430_PERIPH_SYS_USE_DESCRIPTION
  *
  * Define to a true value to enable text descriptions of reset causes.
  * If left undefined, the text descriptions are dropped reducing
  * application size by several hundred bytes.
  */
-#ifndef configBSP430_5XX_SYSRST_USE_DESCRIPTION
-#define configBSP430_5XX_SYSRST_USE_DESCRIPTION 0
-#endif /* configBSP430_5XX_SYSRST_USE_DESCRIPTION */
+#ifndef configBSP430_PERIPH_SYS_USE_DESCRIPTION
+#define configBSP430_PERIPH_SYS_USE_DESCRIPTION 0
+#endif /* configBSP430_PERIPH_SYS_USE_DESCRIPTION */
 
 /** Generate the events recorded within the system reset vector.
  *
@@ -72,7 +72,7 @@
  *
  * @param ppcDescription Optional parameter that returns a text
  * description of the reset cause that is being returned.  If
- * requested but #configBSP430_5XX_SYSRST_USE_DESCRIPTION is not
+ * requested but #configBSP430_PERIPH_SYS_USE_DESCRIPTION is not
  * enabled a single character string "?" will be returned.
  *
  * @return A positive integer value corresponding to a SYSRST_type
@@ -91,4 +91,4 @@ portBASE_TYPE xBSP430sysrstGenerator (unsigned char * pucHaveBOR,
 		PMMCTL0 = PMMPW | PMMSWPOR;				\
 	} while (0)
 
-#endif /* BSP430_5XX_SYSRST_H */
+#endif /* BSP430_PERIPH_SYS_H */

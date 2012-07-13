@@ -1,6 +1,7 @@
-#include <bsp430/5xx/usci.h>
-#include <bsp430/common/clocks.h>
-#include <bsp430/common/platform.h>
+#include <bsp430/platform.h>
+#include <bsp430/clocks.h>
+#include <bsp430/periph/usci.h>
+#include "FreeRTOS.h"
 #include "task.h"
 
 #define COM_PORT_ACTIVE  0x01

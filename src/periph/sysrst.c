@@ -7,7 +7,7 @@
  * @copyright @link http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause @endlink
  */
 
-#include <bsp430/5xx/sysrst.h>
+#include <bsp430/periph/sysrst.h>
 
 /* The list of relevant system reset vector values can be obtained by
  * filtering the MCU-specific headers using this pipe:

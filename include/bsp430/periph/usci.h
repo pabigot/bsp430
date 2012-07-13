@@ -39,17 +39,77 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_5XX_USCI_H
-#define BSP430_5XX_USCI_H
+#ifndef BSP430_PERIPH_USCI_H
+#define BSP430_PERIPH_USCI_H
 
+#include <bsp430/periph.h>
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"
-#include <bsp430/5xx/periph.h>
 
 #if defined(__MSP430_HAS_EUSCI_A0__)
-#error Wrong header: use <bsp430/5xx/eusci_a.h>
+#error Wrong header: use <bsp430/periph/eusci_a.h>
 #endif /* EUSCI */
+
+/* Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
+typedef struct xBSP430Periph_USCI {
+	union {						/* 0x00 */
+		unsigned int ctlw0;
+		struct {
+			unsigned char ctl1;
+			unsigned char ctl0;
+		};
+	};
+	unsigned int _unused_0x02;
+	unsigned int _unused_0x04;
+	union {						/* 0x06 */
+		unsigned int brw;
+		struct {
+			unsigned char br0;
+			unsigned char br1;
+		};
+	};
+	union {						/* 0x08 */
+		struct { /* USCI_A */
+			unsigned char mctl;
+			unsigned char _reserved_0x09;
+		};
+		unsigned int _reserved_0x08; /* USCI_B */
+	};
+	unsigned char stat;			/* 0x0A */
+	unsigned char _reserved_0x0B;
+	unsigned char rxbuf;		/* 0x0C */
+	unsigned char _reserved_0x0D;
+	unsigned char txbuf;		/* 0x0E */
+	unsigned char _reserved_0x0F;
+	union {						/* 0x10 */
+		struct {				/* USCI_A */
+			unsigned char abctl;
+			unsigned char _reserved_0x11;
+		};
+		unsigned int i2coa;		/* USCI_B */
+	};
+	union {						/* 0x12 */
+		unsigned int irctl;		/* USCI_A */
+		struct {
+			unsigned char irtctl;
+			unsigned char irrctl;
+		};
+		unsigned int i2csa;		/* USCI_B */
+	};
+	unsigned int _unused_0x14;
+	unsigned int _unused_0x16;
+	unsigned int _unused_0x18;
+	unsigned int _unused_0x1a;
+	union {						/* 0x1C */
+		unsigned int ictl;
+		struct {
+			unsigned char ie;
+			unsigned char ifg;
+		};
+	};
+	unsigned int iv;			/* 0x1E */
+} xBSP430Periph_USCI;
 
 /** Structure holding USCI-related information */
 struct xBSP430USCI {
@@ -74,6 +134,123 @@ struct xBSP430USCI {
 	/** Total number of transmitted octets */
 	unsigned long num_tx;
 };
+
+/* BEGIN EMBED 5xx_periph_decl */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+
+/** @def configBSP430_PERIPH_USE_USCI_A0
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_A0 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_A0__) */
+#ifndef configBSP430_PERIPH_USE_USCI_A0
+#define configBSP430_PERIPH_USE_USCI_A0 0
+#endif /* configBSP430_PERIPH_USE_USCI_A0 */
+
+/** Handle for the raw USCI_A0 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_A0 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_A0 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A0__))
+
+/** @def configBSP430_PERIPH_USE_USCI_A1
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_A1 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_A1__) */
+#ifndef configBSP430_PERIPH_USE_USCI_A1
+#define configBSP430_PERIPH_USE_USCI_A1 0
+#endif /* configBSP430_PERIPH_USE_USCI_A1 */
+
+/** Handle for the raw USCI_A1 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_A1 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_A1 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A1__))
+
+/** @def configBSP430_PERIPH_USE_USCI_A2
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_A2 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_A2__) */
+#ifndef configBSP430_PERIPH_USE_USCI_A2
+#define configBSP430_PERIPH_USE_USCI_A2 0
+#endif /* configBSP430_PERIPH_USE_USCI_A2 */
+
+/** Handle for the raw USCI_A2 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_A2 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_A2 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A2__))
+
+/** @def configBSP430_PERIPH_USE_USCI_A3
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_A3 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_A3__) */
+#ifndef configBSP430_PERIPH_USE_USCI_A3
+#define configBSP430_PERIPH_USE_USCI_A3 0
+#endif /* configBSP430_PERIPH_USE_USCI_A3 */
+
+/** Handle for the raw USCI_A3 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_A3 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_A3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A3__))
+
+/** @def configBSP430_PERIPH_USE_USCI_B0
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_B0 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_B0__) */
+#ifndef configBSP430_PERIPH_USE_USCI_B0
+#define configBSP430_PERIPH_USE_USCI_B0 0
+#endif /* configBSP430_PERIPH_USE_USCI_B0 */
+
+/** Handle for the raw USCI_B0 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_B0 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_B0 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B0__))
+
+/** @def configBSP430_PERIPH_USE_USCI_B1
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_B1 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_B1__) */
+#ifndef configBSP430_PERIPH_USE_USCI_B1
+#define configBSP430_PERIPH_USE_USCI_B1 0
+#endif /* configBSP430_PERIPH_USE_USCI_B1 */
+
+/** Handle for the raw USCI_B1 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_B1 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_B1 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B1__))
+
+/** @def configBSP430_PERIPH_USE_USCI_B2
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_B2 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_B2__) */
+#ifndef configBSP430_PERIPH_USE_USCI_B2
+#define configBSP430_PERIPH_USE_USCI_B2 0
+#endif /* configBSP430_PERIPH_USE_USCI_B2 */
+
+/** Handle for the raw USCI_B2 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_B2 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_B2 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B2__))
+
+/** @def configBSP430_PERIPH_USE_USCI_B3
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * USCI_B3 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_USCI_B3__) */
+#ifndef configBSP430_PERIPH_USE_USCI_B3
+#define configBSP430_PERIPH_USE_USCI_B3 0
+#endif /* configBSP430_PERIPH_USE_USCI_B3 */
+
+/** Handle for the raw USCI_B3 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_B3 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_B3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B3__))
+
+/* END EMBED 5xx_periph_decl: AUTOMATICALLY GENERATED CODE */
 
 /** The USCI internal state is private to the implementation. */
 typedef struct xBSP430USCI * xBSP430USCIHandle;
@@ -184,4 +361,4 @@ extern xBSP430USCIHandle const xBSP430USCI_B3;
 
 /* END EMBED usci_decl: AUTOMATICALLY GENERATED CODE */
 
-#endif /* BSP430_5XX_USCI_H */
+#endif /* BSP430_PERIPH_USCI_H */

@@ -1,8 +1,7 @@
-#include "platform.h"
-#include <bsp430/clocks/ucs.h>
+#include <bsp430/periph/ucs.h>
 #include <bsp430/timers/timerA0.h>
 #include <bsp430/utility/led.h>
-#include <bsp430/5xx/periph.h>
+#include <bsp430/periph/eusci_a.h>
 #include "serial.h"
 #include "task.h"
 

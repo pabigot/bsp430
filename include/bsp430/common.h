@@ -29,44 +29,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** @file
- *
- * Declarations for a generic console print capability.
- *
- * cprintf* is like printf* except that it incorporates a semaphore to
- * ensure the output is not interleaved when multiple tasks are
- * printing at the same time.  It also assumes a console device which
- * uses non-blocking output.
- * 
- * @author Peter A. Bigot <bigotp@acm.org>
- * @date 2012
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
- */
+#ifndef BSP430_COMMON_H
+#define BSP430_COMMON_H
 
-#ifndef BSP430_UTILITY_CONSOLE_H
-#define BSP430_UTILITY_CONSOLE_H
+#include "FreeRTOS.h"
 
-#include <bsp430/uart.h>
+/** A monotonically non-decreasing integer reflecting the version of
+ * the BSP430 library that is being used.  The value represents a
+ * development freeze date in the form YYYYMMDD as a decimal
+ * number. */
+#define BSP430_VERSION 20120713
 
-/** Like printf, but to platform console.
- *
- * Calls block until access to the console is obtained. */
-int
-cprintf (const char *string, ...)
-__attribute__((__format__(printf, 1, 2)));
-
-/** Configure a console device.
- *
- * @param xUART a serial device, preferably one that does non-blocking
- * writes.  Pass zero to disable the console print infrastructure.
- *
- * @param xBlockTime the duration to wait for any other active users
- * of cprintf to exit
- *
- * @return pdSUCCESS if the console could be configured, pdFAIL
- * otherwise. */
-portBASE_TYPE xConsoleConfigure (xBSP430UARTHandle xUART,
-								 portTickType xBlockTime);
-
-#endif /* BSP430_UTILITY_CONSOLE_H */
+#endif /* BSP430_COMMON_H */

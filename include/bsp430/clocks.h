@@ -45,7 +45,7 @@
 #ifndef BSP430_COMMON_CLOCKS_H
 #define BSP430_COMMON_CLOCKS_H
 
-#include "FreeRTOS.h"
+#include <bsp430/common.h>
 
 /** @def configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
  *

@@ -29,6 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <msp430.h>
 #include <bsp430/utility/led.h>
 #include <task.h>
 

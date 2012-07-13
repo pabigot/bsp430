@@ -39,13 +39,164 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_5XX_EUSCI_A_H
-#define BSP430_5XX_EUSCI_A_H
+#ifndef BSP430_PERIPH_EUSCI_A_H
+#define BSP430_PERIPH_EUSCI_A_H
+
+#include <bsp430/periph.h>
+
+/* Register map for eUSCI_A peripheral on a MSP430 5xx/6xx MCU. */
+typedef struct xBSP430Periph_eUSCI_A {
+	union {						/* 0x00 */
+		unsigned int ctlw0;
+		struct {
+			unsigned char ctl1;
+			unsigned char ctl0;
+		};
+	};
+	unsigned int ctlw1;			/* 0x02 */
+	unsigned int _unused_0x04;
+	union {						/* 0x06 */
+		unsigned int brw;
+		struct {
+			unsigned char br0;
+			unsigned char br1;
+		};
+	};
+	unsigned int mctlw;			/* 0x08 */
+	unsigned int statw;			/* 0x0A */
+	unsigned int rxbuf;			/* 0x0C */
+	unsigned int txbuf;			/* 0x0E */
+	unsigned int abctl;			/* 0x10 */
+	union {						/* 0x12 */
+		unsigned int irctl;
+		struct {
+			unsigned char irtctl; /* 0x12 */
+			unsigned char irrctl; /* 0x13 */
+		};
+	};
+	unsigned int _unused_0x14;
+	unsigned int _unused_0x16;
+	unsigned int _unused_0x18;
+	unsigned int ie;			/* 0x1A */
+	unsigned int ifg;			/* 0x1C */
+	unsigned int iv;			/* 0x1E */
+} xBSP430Periph_eUSCI_A;
+
+/* Register map for eUSCI_B peripheral on a MSP430 5xx/6xx MCU. */
+typedef struct xBSP430Periph_eUSCI_B {
+	union {						/* 0x00 */
+		unsigned int ctlw0;
+		struct {
+			unsigned char ctl1;
+			unsigned char ctl0;
+		};
+	};
+	unsigned int ctlw1;			/* 0x02 */
+	unsigned int _unused_0x04;
+	union {						/* 0x06 */
+		unsigned int brw;
+		struct {
+			unsigned char br0;
+			unsigned char br1;
+		};
+	};
+	union {						/* 0x08 */
+		unsigned int statw;
+		struct {				/* I2C only */
+			unsigned char stat;
+			unsigned char bcnt;
+		};
+	};
+	unsigned int tbcnt;			/* 0x0A */
+	unsigned int rxbuf;			/* 0x0C */
+	unsigned int txbuf;			/* 0x0E */
+	unsigned int _unused_0x10;
+	unsigned int _unused_0x12;
+	unsigned int i2coa0;		/* 0x14 */
+	unsigned int i2coa1;		/* 0x16 */
+	unsigned int i2coa2;		/* 0x18 */
+	unsigned int i2coa3;		/* 0x1A */
+	unsigned int addrx;			/* 0x1C */
+	unsigned int addmask;		/* 0x1E */
+	unsigned int i2csa;			/* 0x20 */
+	unsigned int _unused_0x22;
+	unsigned int _unused_0x24;
+	unsigned int _unused_0x26;
+	unsigned int _unused_0x28;
+	unsigned int ie;			/* 0x2A */
+	unsigned int ifg;			/* 0x2C */
+	unsigned int iv;			/* 0x2E */
+} xBSP430Periph_eUSCI_B;
+
+/* BEGIN EMBED 5xx_periph_decl */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+
+/** Handle for the raw USCI_B3 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_USCI_B3 is defined to a true
+ * value. */
+#define xBSP430Periph_USCI_B3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B3__))
+
+/** @def configBSP430_PERIPH_USE_EUSCI_A0
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_A0 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_A0__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_A0
+#define configBSP430_PERIPH_USE_EUSCI_A0 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
+
+/** Handle for the raw EUSCI_A0 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_A0 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_A0 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A0__))
+
+/** @def configBSP430_PERIPH_USE_EUSCI_A1
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_A1 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_A1__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_A1
+#define configBSP430_PERIPH_USE_EUSCI_A1 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
+
+/** Handle for the raw EUSCI_A1 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_A1 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_A1 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A1__))
+
+/** @def configBSP430_PERIPH_USE_EUSCI_A2
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_A2 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_A2__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_A2
+#define configBSP430_PERIPH_USE_EUSCI_A2 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
+
+/** Handle for the raw EUSCI_A2 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_A2 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_A2 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A2__))
+
+/** @def configBSP430_PERIPH_USE_EUSCI_B0
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * EUSCI_B0 peripheral.  Only do this if the MCU you are using actually
+ * has this device (check __MSP430_HAS_EUSCI_B0__) */
+#ifndef configBSP430_PERIPH_USE_EUSCI_B0
+#define configBSP430_PERIPH_USE_EUSCI_B0 0
+#endif /* configBSP430_PERIPH_USE_EUSCI_B0 */
+
+/** Handle for the raw EUSCI_B0 device.  The handle may be referenced 
+ * only if #configBSP430_PERIPH_USE_EUSCI_B0 is defined to a true
+ * value. */
+#define xBSP430Periph_EUSCI_B0 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_B0__))
+
+/* END EMBED 5xx_periph_decl: AUTOMATICALLY GENERATED CODE */
 
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"
-#include <bsp430/5xx/periph.h>
 
 /** Structure holding USCI-related information */
 struct xBSP430eUSCIA {
@@ -160,4 +311,4 @@ extern xBSP430eUSCIAHandle const xBSP430EUSCI_A2;
 
 /* END EMBED eusci_a_decl: AUTOMATICALLY GENERATED CODE */
 
-#endif /* BSP430_5XX_EUSCI_A_H */
+#endif /* BSP430_PERIPH_EUSCI_A_H */

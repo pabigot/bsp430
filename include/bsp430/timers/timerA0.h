@@ -53,8 +53,6 @@
 #ifndef BSP430_TIMERS_TIMERA0_H
 #define BSP430_TIMERS_TIMERA0_H
 
-#include "platform.h"
-
 typedef void (* isrHandler) ();
 
 /** Assign a handler to be invoked from the TA0 top-half ISR.

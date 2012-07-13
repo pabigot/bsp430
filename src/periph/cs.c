@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/clocks/cs.h>
+#include <bsp430/periph/cs.h>
 #include <stdint.h>
 
 #if 5 < configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT

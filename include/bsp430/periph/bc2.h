@@ -43,7 +43,7 @@
 #ifndef BSP430_CLOCKS_BC2_H
 #define BSP430_CLOCKS_BC2_H
 
-#include "FreeRTOS.h"
+#include <bsp430/clocks.h>
 
 /** Call this to reconfigure the BC2 peripheral.
  *
@@ -54,13 +54,13 @@
  * to run at the factory-calibrated 16MHz rate with a crystal:
  *
  * @code
-    /* Configure port to enable crystal: P2.6 = XIN, P2.7 = XOUT */
+    // Configure port to enable crystal: P2.6 = XIN, P2.7 = XOUT
     P2DIR &= ~BIT6;
     P2DIR |= BIT7;
     P2SEL |= ( BIT6 | BIT7 );
     P2SEL2 &= ~ ( BIT6 | BIT7 );
     if ( pdFALSE == ucBSP430bc2Configure( CALDCO_16MHZ, CALBC1_16MHZ, DIVS_1, XCAP_1 ) ) {
-       /* No crystal: return pins to port function */
+       // No crystal: return pins to port function
        P2DIR |= BIT6 | BIT7;
        P2SEL &= ~( BIT6 | BIT7 );
     }

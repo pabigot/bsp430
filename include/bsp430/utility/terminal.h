@@ -65,8 +65,8 @@
 #ifndef BSP430_UTILITY_TERMINAL_H
 #define BSP430_UTILITY_TERMINAL_H
 
-#include <bsp430/common/periph.h>
-#include <bsp430/common/uart.h>
+#include <bsp430/periph.h>
+#include <bsp430/uart.h>
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"

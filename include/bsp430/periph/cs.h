@@ -58,11 +58,10 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_CLOCKS_CS_H
-#define BSP430_CLOCKS_CS_H
+#ifndef BSP430_PERIPH_CS_H
+#define BSP430_PERIPH_CS_H
 
-#include "FreeRTOS.h"
-#include <bsp430/common/clocks.h>
+#include <bsp430/clocks.h>
 
 /** @def configBSP430_FR5XX_CS_XT1_DELAY_CYCLES
  *
@@ -125,4 +124,4 @@ unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
 portBASE_TYPE xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
 									  unsigned short usLoops);
 
-#endif /* BSP430_CLOCKS_CS_H */
+#endif /* BSP430_PERIPH_CS_H */
