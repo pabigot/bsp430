@@ -1,0 +1,33 @@
+/*! \page coding_p BSP430 Coding Style
+
+\section coding BSP430 Coding Standard and Style Guide
+
+As BSP430 is intended as a library for use with <a
+href="http://www.freertos.org">FreeRTOS</a>, the code style attempts to
+follow the <a
+href="http://www.freertos.org/FreeRTOS-Coding-Standard-and-Style-Guide.html">FreeRTOS
+Coding Standard and Style Guide</a>.  The attempt is best-effort, with
+several intentional deviations:
+
+<ul>
+
+<li>The C standard type corresponding to the native word size of the MSP430
+is @c int, as it is for many platforms.  The type @c int (<tt>unsigned
+int</tt>) will often be used in lieu of @c portBASE_TYPE.  A prefix
+character @e i shall be used in lieu of @e x in function names.
+
+<li>While the FreeRTOS variant of <a
+href="http://en.wikipedia.org/wiki/Hungarian_notation">Systems Hungarian</a>
+is used for global type and function names and for parameters in function
+declarations, it is not used in implementation or in internal structures.
+
+<li>Function names comprise the encoding of return type, the identifier @c
+BSP430, a lowercase module identifier such as @usci, followed by a
+camel-case initial-capital suffix reflecting the function purpose.
+
+</ul>
+
+The use of tab characters instead of spaces, with a non-standard spacing of
+four positions for tables, is retained (regrettably).
+
+*/

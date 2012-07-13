@@ -1,0 +1,57 @@
+/*! \mainpage BSP430
+
+\section Introduction
+
+BSP430 is a library of routines coded to provide both a hardware
+presentation layer and a hardware abstraction layer to interface MSP430
+processors to FreeRTOS applications.
+
+See \ref coding.
+
+\subsection hpl Hardware Presentation Layer
+
+The hardware presentation layer is a minimal abstraction of the underlying
+peripheral registers.  No attempt is made to provide functions that do what
+is normally done by setting and clearing bits in peripheral registers.
+
+The only generic abstraction is for peripherals that commonly have multiple
+instances on a single device (timers, UARTs, digital i/o ports).  The
+abstraction comprises a structure definition which overlays an
+instance-specific region of the peripheral address space, allowing the same
+code to operate on any instance of the peripheral on that device.
+
+Where the correct configuration for the registers of a peripheral is a
+complex calculation that is specific to a peripheral variant, the HPL
+includes functions to accomplish this configuration.  Examples include
+calculation of register settings to achieve a particular system clock
+frequency or to communicate over a UART at a particular baud rate.
+
+\subsection hal Hardware Abstraction Layer
+
+Where a common function uses peripheral-specific implementations, an
+abstraction layer hides this from application code.  An example is serial
+communication on a UART, whether that UART be provided by a USART, USI,
+USCI, USCI_AB, USCI_A, or eUSCI_A peripheral.
+
+
+clocks:
+
+bc2       2xx       basic clock module+                          BC2
+cs	  FR5xx     clock system                                 CS
+fllplus   4xx       frequency-locked loop clock system           FLLPLUS, FLLPLUS_SMALL
+ucs	  5xx/6xx   universal clock system                       UCS, UCS_RF
+
+timer     all	    Timer_A and Timer_B                          TA#, TB#, T#A#, T#B#
+
+usart     2xx       universal sync/async receive/transmit        USART
+usi       2xx       universal serial interface                   USI
+usci	  2xx/4xx   universal serial communications interface    USCI, USCI_AB#
+usci_a    5xx/6xx   universal serial communications interface    USCI_A#
+usci_b    5xx/6xx   universal serial communications interface    USCI_B#
+eusci_a   FR5xx     enhanced USCI                                EUSCI_A#
+eusci_b   FR5xx     enhanced USCI                                EUSCI_A#
+
+
+sys       5xx/6xx   system                                       SYS
+
+*/
