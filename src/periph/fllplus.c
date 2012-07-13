@@ -36,7 +36,7 @@ unsigned char ucBSP430fllplusConfigure( const xFLLPLUSDefn * pxConfig )
 	unsigned char ucReturnValue;
 	unsigned int uxStableLoopsLeft = 100;
 	
-	portENTER_CRITICAL();
+	BSP430_ENTER_CRITICAL();
 
 	FLL_CTL0 = pxConfig->ucFLL_CTL0;
 	FLL_CTL1 = pxConfig->ucFLL_CTL1;
@@ -49,6 +49,6 @@ unsigned char ucBSP430fllplusConfigure( const xFLLPLUSDefn * pxConfig )
 	SCFI0 = pxConfig->ucSCFI0;
 	SCFQCTL = pxConfig->ucSCFQCTL;
 
-	portEXIT_CRITICAL();
+	BSP430_EXIT_CRITICAL();
 	return ucReturnValue;
 }

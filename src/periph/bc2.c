@@ -40,7 +40,7 @@ ucBSP430bc2Configure (unsigned char ucDCOCTL,
 {
 	unsigned char ucCrystalOK = pdFALSE;
 	
-	portENTER_CRITICAL();
+	BSP430_ENTER_CRITICAL();
 	
 	BCSCTL3 = ucBCSCTL3;
 	if ( ! ( BCSCTL3 & LFXT1S1 ) ) {
@@ -73,6 +73,6 @@ ucBSP430bc2Configure (unsigned char ucDCOCTL,
 	/* Set clock dividers */
 	BCSCTL2 = ucBCSCTL2;
 
-	portEXIT_CRITICAL();
+	BSP430_EXIT_CRITICAL();
 	return ucCrystalOK;
 }

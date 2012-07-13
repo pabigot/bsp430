@@ -199,7 +199,7 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 		}
 	}
 
-	taskENTER_CRITICAL();
+	BSP430_ENTER_CRITICAL();
 
 	/* Low frequency XT1 needed; XT2 off.  Spin at high drive to
 	 * stability, then drop back. */
@@ -240,7 +240,7 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 	/* Turn FLL back on */
 	__bic_status_register(SCG0);
 #endif
-	taskEXIT_CRITICAL();
+	BSP430_EXIT_CRITICAL();
 
 	return ulReturn;
 }

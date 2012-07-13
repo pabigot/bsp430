@@ -129,7 +129,5 @@ void
 vBSP430ledSet (unsigned char ucLED,
 			   signed portBASE_TYPE xValue)
 {
-	taskENTER_CRITICAL();
 	vBSP430ledSetFromISR(ucLED, xValue);
-	taskEXIT_CRITICAL();
 }

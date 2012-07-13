@@ -32,12 +32,18 @@
 #ifndef BSP430_COMMON_H
 #define BSP430_COMMON_H
 
-#include "FreeRTOS.h"
-
 /** A monotonically non-decreasing integer reflecting the version of
  * the BSP430 library that is being used.  The value represents a
  * development freeze date in the form YYYYMMDD as a decimal
  * number. */
 #define BSP430_VERSION 20120713
+
+#include "FreeRTOS.h"
+
+/** Disable interrupts and halt any potential task switching */
+#define BSP430_ENTER_CRITICAL() portENTER_CRITICAL()
+
+/** Decrease critical nesting level */
+#define BSP430_EXIT_CRITICAL() portEXIT_CRITICAL()
 
 #endif /* BSP430_COMMON_H */

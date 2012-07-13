@@ -122,9 +122,9 @@ iBSP430eUSCIAClose (xBSP430eUSCIAHandle device)
 void
 vBSP430eUSCIAWakeupTransmit (xBSP430eUSCIAHandle device)
 {
-	taskENTER_CRITICAL();
+	BSP430_ENTER_CRITICAL();
 	USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
-	taskEXIT_CRITICAL();
+	BSP430_EXIT_CRITICAL();
 }
 
 #define RAW_TRANSMIT(_periph, _c) do {			\
