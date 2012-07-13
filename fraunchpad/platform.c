@@ -74,10 +74,12 @@ iBSP430platformConfigurePeripheralPins (xBSP430Periph device, int enablep)
 #endif
 	(void)bits;
 #if configBSP430_PERIPH_USE_EUSCI_A1 - 0
+#error Platform pins not configured
 	else if (xBSP430Periph_EUSCI_A1 == device) {
 	}
 #endif
 #if configBSP430_PERIPH_USE_EUSCI_B0 - 0
+#error Platform pins not configured
 	else if (xBSP430Periph_EUSCI_B0 == device) {
 	}
 #endif
@@ -92,9 +94,30 @@ void vBSP430platformSetup ()
 	/* Enable XT1 functions and clock */
 	PJSEL0 |= BIT4 | BIT5;
 	PJSEL1 &= ~(BIT4 | BIT5);
-#if 0
-	ulBSP430ucsConfigure(configCPU_CLOCK_HZ, -1);
-#endif
+
 	/* Enable basic timer */
 	vBSP430timerA0Configure();
+}
+
+void
+vBSP430platformSpinForJumper (void)
+{
+	int bit = 0;
+	/* P4.0 input with pullup */
+	P4DIR &= ~BIT0;
+	P4REN |= BIT0;
+	P4OUT |= BIT0;
+	while (! (P4IN & BIT0)) {
+		vBSP430ledSet(bit, -1);
+		vBSP430ledSet(7-bit, -1);
+		__delay_cycles(4000000);
+		vBSP430ledSet(bit, -1);
+		vBSP430ledSet(7-bit, -1);
+		if (4 == ++bit) {
+			bit = 0;
+		}
+	}
+	/* Restore P4.0 */
+	P4DIR |= BIT0;
+	P4REN &= ~BIT0;
 }
