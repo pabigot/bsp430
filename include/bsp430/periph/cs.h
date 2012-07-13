@@ -63,17 +63,18 @@
 
 #include <bsp430/clocks.h>
 
-/** @def configBSP430_FR5XX_CS_XT1_DELAY_CYCLES
+/** @def configBSP430_CS_XT1_DELAY_CYCLES
  *
  * Define this to the number of MCLK cycles to delay, after clearing
  * oscillator faults, before checking for oscillator stability.  This
- * must be a compile-time constant integer.  See also the @a usLoops
- * parameter to #xBSP430csACLKSourceXT1.  To wait up to one second for
- * the crystal to stabilize, use:
+ * must be a compile-time constant integer compatible with
+ * <tt>unsigned long</tt>.  See also the @a usLoops parameter to
+ * #xBSP430csACLKSourceXT1.  To wait up to one second for the crystal
+ * to stabilize, use:
  *
  * @code
  * // Set up pins for XT1 function
- * if (! xBSP430csACLKSourceXT1(1, configCPU_CLOCK_HZ / configBSP430_FR5XX_CS_XT1_DELAY_CYCLES)) {
+ * if (! xBSP430csACLKSourceXT1(1, configCPU_CLOCK_HZ / configBSP430_CS_XT1_DELAY_CYCLES)) {
  *    // XT1 not available, return pins to GPIO function
  * }
  * @endcode
@@ -81,9 +82,9 @@
  * Be aware that it may take several hundred milliseconds to stabilize
  * the crystal; 500ms has been observed to be too short.
  */
-#ifndef configBSP430_FR5XX_CS_XT1_DELAY_CYCLES
-#define configBSP430_FR5XX_CS_XT1_DELAY_CYCLES 10000
-#endif /* configBSP430_FR5XX_CS_XT1_DELAY_CYCLES */
+#ifndef configBSP430_CS_XT1_DELAY_CYCLES
+#define configBSP430_CS_XT1_DELAY_CYCLES 10000
+#endif /* configBSP430_CS_XT1_DELAY_CYCLES */
 
 /** Call this to configure MCLK and SMCLK via CS peripheral.
  *
@@ -104,11 +105,11 @@ unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
  * pdFALSE.
  *
  * Stabilization is checked by clearing the XT1 oscillator faults,
- * waiting #configBSP430_FR5XX_CS_XT1_DELAY_CYCLES MCLK cycles, and
- * checking for a fault.  This is repeated, limited by @a usLoops,
- * until stabilization is detected.  Prior to invoking this function
- * the crystal's port pins must be configured to their peripheral
- * function as specified in the MCU data sheet.
+ * waiting #configBSP430_CS_XT1_DELAY_CYCLES MCLK cycles, and checking
+ * for a fault.  This is repeated, limited by @a usLoops, until
+ * stabilization is detected.  Prior to invoking this function the
+ * crystal's port pins must be configured to their peripheral function
+ * as specified in the MCU data sheet.
  *
  * @param xUseXT1 Pass a nonzero value if the ACLK should be sourced
  * from XT1.  Pass zero if it should be sourced from VLOCLK.
