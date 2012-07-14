@@ -36,6 +36,8 @@
 #error FR5xx CS module cannot express configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
 #endif /* configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
 
+#define SELA_MASK (SELA0 | SELA1 | SELA2)
+
 unsigned long
 ulBSP430clockMCLK_Hz ()
 {
@@ -101,7 +103,7 @@ ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz)
 
 	CSCTL0_H = 0xA5;
 	CSCTL1 = csctl1;
-	CSCTL2 = (CSCTL2 & 0x0700) | SELS__DCOCLK | SELM__DCOCLK;
+	CSCTL2 = (CSCTL2 & SELA_MASK) | SELS__DCOCLK | SELM__DCOCLK;
 	CSCTL3 = configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT << 4;
 	CSCTL0_H = !0xA5;
 
@@ -129,9 +131,9 @@ xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
 		}
 	}
 	if (xUseXT1) {
-		CSCTL2 = (CSCTL2 & 0xF8FF) | SELS__XT1CLK;
+		CSCTL2 = (CSCTL2 & ~SELA_MASK) | SELS__XT1CLK;
 	} else {
-		CSCTL2 = (CSCTL2 & 0xF8FF) | SELS__VLOCLK;
+		CSCTL2 = (CSCTL2 & ~SELA_MASK) | SELS__VLOCLK;
 	}
 	CSCTL0_H = !0xA5;
 	return xUseXT1;
