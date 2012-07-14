@@ -43,7 +43,7 @@
 #ifndef BSP430_CLOCKS_BC2_H
 #define BSP430_CLOCKS_BC2_H
 
-#include <bsp430/clocks.h>
+#include <bsp430/clock.h>
 
 /** Call this to reconfigure the BC2 peripheral.
  *

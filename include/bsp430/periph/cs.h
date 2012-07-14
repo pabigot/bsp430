@@ -61,7 +61,7 @@
 #ifndef BSP430_PERIPH_CS_H
 #define BSP430_PERIPH_CS_H
 
-#include <bsp430/clocks.h>
+#include <bsp430/clock.h>
 
 /** @def configBSP430_CS_XT1_DELAY_CYCLES
  *

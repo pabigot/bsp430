@@ -1,5 +1,5 @@
 #include <bsp430/platform.h>
-#include <bsp430/clocks.h>
+#include <bsp430/clock.h>
 #include <bsp430/periph/usci.h>
 #include "FreeRTOS.h"
 #include "task.h"

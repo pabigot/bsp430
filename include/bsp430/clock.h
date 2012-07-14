@@ -42,8 +42,8 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_COMMON_CLOCKS_H
-#define BSP430_COMMON_CLOCKS_H
+#ifndef BSP430_CLOCK_H
+#define BSP430_CLOCK_H
 
 #include <bsp430/common.h>
 
@@ -88,4 +88,4 @@ unsigned long ulBSP430clockSMCLK_Hz ();
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned short usBSP430clockACLK_Hz ();
 
-#endif /* BSP430_COMMON_CLOCKS_H */
+#endif /* BSP430_CLOCK_H */

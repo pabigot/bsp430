@@ -81,7 +81,7 @@
 #ifndef BSP430_CLOCKS_UCS_H
 #define BSP430_CLOCKS_UCS_H
 
-#include <bsp430/clocks.h>
+#include <bsp430/clock.h>
 
 /** Call this to initially configure the UCS peripheral.
  *
