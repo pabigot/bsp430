@@ -70,7 +70,7 @@ void vBSP430platformSetup ();
  * @return 0 if configuration was successful, -1 if the device was not
  * recognized.
  */
-int iBSP430platformConfigurePeripheralPins (xBSP430Periph device, int enablep);
+int iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep);
 
 /** Block until a platform-specific jumper has been removed.
  *

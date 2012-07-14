@@ -65,7 +65,7 @@
 typedef xBSP430USCIHandle xBSP430UARTHandle;
 
 static __inline__ xBSP430UARTHandle
-xBSP430UARTOpen (xBSP430Periph xPeriph,
+xBSP430UARTOpen (xBSP430periphHandle xPeriph,
 				 unsigned int control_word,
 				 unsigned long baud,
 				 xQueueHandle rx_queue,
@@ -108,7 +108,7 @@ iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
 typedef xBSP430eUSCIAHandle xBSP430UARTHandle;
 
 static __inline__ xBSP430UARTHandle
-xBSP430UARTOpen (xBSP430Periph xPeriph,
+xBSP430UARTOpen (xBSP430periphHandle xPeriph,
 				 unsigned int control_word,
 				 unsigned long baud,
 				 xQueueHandle rx_queue,

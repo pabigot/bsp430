@@ -30,7 +30,7 @@ configurePort_ (xComPort* port,
 		}
 	}
 
-	configured_port = xBSP430USCIOpenUART((xBSP430Periph)(port->usci), 0, baud,
+	configured_port = xBSP430USCIOpenUART((xBSP430periphHandle)(port->usci), 0, baud,
 										  rx_queue, tx_queue);
 
 	if (NULL != configured_port) {

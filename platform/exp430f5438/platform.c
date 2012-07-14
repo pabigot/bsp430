@@ -11,7 +11,7 @@ const xBSP430led pxBSP430leds[] = {
 const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
 
 int
-iBSP430platformConfigurePeripheralPins (xBSP430Periph device, int enablep)
+iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 {
 	uint8_t bits = 0;
 	volatile uint8_t* pxsel = 0;

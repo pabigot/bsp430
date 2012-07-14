@@ -152,7 +152,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_A0 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_A0 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_A0 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A0__))
+#define xBSP430Periph_USCI_A0 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A0__))
 
 /** @def configBSP430_PERIPH_USE_USCI_A1
  *
@@ -166,7 +166,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_A1 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_A1 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_A1 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A1__))
+#define xBSP430Periph_USCI_A1 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A1__))
 
 /** @def configBSP430_PERIPH_USE_USCI_A2
  *
@@ -180,7 +180,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_A2 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_A2 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_A2 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A2__))
+#define xBSP430Periph_USCI_A2 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A2__))
 
 /** @def configBSP430_PERIPH_USE_USCI_A3
  *
@@ -194,7 +194,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_A3 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_A3 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_A3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_A3__))
+#define xBSP430Periph_USCI_A3 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A3__))
 
 /** @def configBSP430_PERIPH_USE_USCI_B0
  *
@@ -208,7 +208,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_B0 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_B0 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_B0 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B0__))
+#define xBSP430Periph_USCI_B0 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B0__))
 
 /** @def configBSP430_PERIPH_USE_USCI_B1
  *
@@ -222,7 +222,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_B1 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_B1 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_B1 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B1__))
+#define xBSP430Periph_USCI_B1 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B1__))
 
 /** @def configBSP430_PERIPH_USE_USCI_B2
  *
@@ -236,7 +236,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_B2 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_B2 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_B2 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B2__))
+#define xBSP430Periph_USCI_B2 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B2__))
 
 /** @def configBSP430_PERIPH_USE_USCI_B3
  *
@@ -250,7 +250,7 @@ struct xBSP430USCI {
 /** Handle for the raw USCI_B3 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_B3 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_B3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B3__))
+#define xBSP430Periph_USCI_B3 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B3__))
 
 /* END EMBED 5xx_periph_decl: AUTOMATICALLY GENERATED CODE */
 
@@ -281,13 +281,13 @@ typedef struct xBSP430USCI * xBSP430USCIHandle;
  *
  * @return @a xUSCI if the allocation and configuration is successful,
  * and a null handle if something went wrong. */
-xBSP430USCIHandle xBSP430USCIOpenUART (xBSP430Periph xPeriph,
+xBSP430USCIHandle xBSP430USCIOpenUART (xBSP430periphHandle xPeriph,
 									   unsigned int control_word,
 									   unsigned long baud,
 									   xQueueHandle rx_queue,
 									   xQueueHandle tx_queue);
 
-xBSP430USCIHandle xBSP430USCIOpenSPI (xBSP430Periph xPeriph,
+xBSP430USCIHandle xBSP430USCIOpenSPI (xBSP430periphHandle xPeriph,
 									  unsigned int control_word,
 									  unsigned int prescaler,
 									  xQueueHandle rx_queue,

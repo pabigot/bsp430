@@ -50,7 +50,7 @@ void vBSP430ledSet (unsigned char ucLED,
 }
 
 int
-iBSP430platformConfigurePeripheralPins (xBSP430Periph device, int enablep)
+iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 {
 	unsigned char bits = 0;
 	if (0) {

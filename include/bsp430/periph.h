@@ -31,21 +31,22 @@
 
 /** @file
  *
- * Peripheral identifiers and hardware interfaces for 5xx/6xx MCUs.
+ * Generic peripheral support for MSP430 MCUs.
  *
- * This file, or peripheral-specific include files, declares handles
- * to peripherals which in turn are used in application code.  Use of
- * a given peripheral must be indicated by defining the corresponding
- * @c configBSP430_PERIPH_USE_xx in the application @c
+ * This file, included by peripheral-specific include files, supports
+ * handles to peripherals which in turn are used in application code.
+ * Use of a given peripheral must be indicated by defining the
+ * corresponding @c configBSP430_PERIPH_USE_xx in the application @c
  * FreeRTOSConfig.h file.
  *
- * Structures are defined for each class of peripheral to simplify
- * access by converting the periphal address to a pointer to such a
- * structure.  These structures intentionally uses the GCC/ISO C11
- * extensions for unnamed struct/union fields.  Access to the
- * peripheral area through such pointers must be done with care, as
- * some structure fields are not valid for some variants of the
- * peripheral.
+ * Structures are defined in the peripheral-specific header for each
+ * class of peripheral that may have multiple instances with the same
+ * register set, to simplify access by converting the periphal address
+ * to a pointer to such a structure.  These structures intentionally
+ * uses the GCC/ISO C11 extensions for unnamed struct/union fields.
+ * Access to the peripheral area through such pointers must be done
+ * with care, as some structure fields are not valid for some variants
+ * of the peripheral.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -59,7 +60,14 @@
 #include <bsp430/common.h>
 #include <msp430.h>
 
-/** An integral type used to uniquely identify a raw peripheral. */
-typedef unsigned int xBSP430Periph;
+/** An integral type used to uniquely identify a raw MCU peripheral.
+ *
+ * For MCU families where peripheral base addresses are provided in
+ * the header files, those base addresses are used as the handle.  In
+ * other cases arbitrary values may be used, so in general objects
+ * with this type should be referenced only equality testing against
+ * the constant handle identifier provided in the peripheral
+ * header. */
+typedef unsigned int xBSP430periphHandle;
 
 #endif /* BSP430_PERIPH_H */

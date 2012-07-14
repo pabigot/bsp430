@@ -138,7 +138,7 @@ typedef struct xBSP430Periph_eUSCI_B {
 /** Handle for the raw USCI_B3 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_USCI_B3 is defined to a true
  * value. */
-#define xBSP430Periph_USCI_B3 ((xBSP430Periph)(__MSP430_BASEADDRESS_USCI_B3__))
+#define xBSP430Periph_USCI_B3 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B3__))
 
 /** @def configBSP430_PERIPH_USE_EUSCI_A0
  *
@@ -152,7 +152,7 @@ typedef struct xBSP430Periph_eUSCI_B {
 /** Handle for the raw EUSCI_A0 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_EUSCI_A0 is defined to a true
  * value. */
-#define xBSP430Periph_EUSCI_A0 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A0__))
+#define xBSP430Periph_EUSCI_A0 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_EUSCI_A0__))
 
 /** @def configBSP430_PERIPH_USE_EUSCI_A1
  *
@@ -166,7 +166,7 @@ typedef struct xBSP430Periph_eUSCI_B {
 /** Handle for the raw EUSCI_A1 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_EUSCI_A1 is defined to a true
  * value. */
-#define xBSP430Periph_EUSCI_A1 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A1__))
+#define xBSP430Periph_EUSCI_A1 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_EUSCI_A1__))
 
 /** @def configBSP430_PERIPH_USE_EUSCI_A2
  *
@@ -180,7 +180,7 @@ typedef struct xBSP430Periph_eUSCI_B {
 /** Handle for the raw EUSCI_A2 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_EUSCI_A2 is defined to a true
  * value. */
-#define xBSP430Periph_EUSCI_A2 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_A2__))
+#define xBSP430Periph_EUSCI_A2 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_EUSCI_A2__))
 
 /** @def configBSP430_PERIPH_USE_EUSCI_B0
  *
@@ -194,7 +194,7 @@ typedef struct xBSP430Periph_eUSCI_B {
 /** Handle for the raw EUSCI_B0 device.  The handle may be referenced 
  * only if #configBSP430_PERIPH_USE_EUSCI_B0 is defined to a true
  * value. */
-#define xBSP430Periph_EUSCI_B0 ((xBSP430Periph)(__MSP430_BASEADDRESS_EUSCI_B0__))
+#define xBSP430Periph_EUSCI_B0 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_EUSCI_B0__))
 
 /* END EMBED 5xx_periph_decl: AUTOMATICALLY GENERATED CODE */
 
@@ -253,13 +253,13 @@ typedef struct xBSP430eUSCIA * xBSP430eUSCIAHandle;
  *
  * @return @a xUSCI if the allocation and configuration is successful,
  * and a null handle if something went wrong. */
-xBSP430eUSCIAHandle xBSP430eUSCIAOpenUART (xBSP430Periph xPeriph,
+xBSP430eUSCIAHandle xBSP430eUSCIAOpenUART (xBSP430periphHandle xPeriph,
 										   unsigned int control_word,
 										   unsigned long baud,
 										   xQueueHandle rx_queue,
 										   xQueueHandle tx_queue);
 
-xBSP430eUSCIAHandle xBSP430eUSCIAOpenSPI (xBSP430Periph xPeriph,
+xBSP430eUSCIAHandle xBSP430eUSCIAOpenSPI (xBSP430periphHandle xPeriph,
 										  unsigned int control_word,
 										  unsigned int prescaler,
 										  xQueueHandle rx_queue,

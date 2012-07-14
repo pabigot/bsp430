@@ -8,10 +8,10 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
-static xBSP430USCIHandle periphToDevice (xBSP430Periph periph);
+static xBSP430USCIHandle periphToDevice (xBSP430periphHandle periph);
 
 xBSP430USCIHandle
-xBSP430USCIOpenUART (xBSP430Periph periph,
+xBSP430USCIOpenUART (xBSP430periphHandle periph,
 					 unsigned int control_word,
 					 unsigned long baud,
 					 xQueueHandle rx_queue,
@@ -31,7 +31,7 @@ xBSP430USCIOpenUART (xBSP430Periph periph,
 	}
 
 	/* Reject if the pins can't be configured */
-	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430Periph)(uintptr_t)(device->usci), 1)) {
+	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(uintptr_t)(device->usci), 1)) {
 		return NULL;
 	}
 
@@ -73,7 +73,7 @@ int
 iBSP430USCIClose (xBSP430USCIHandle device)
 {
 	device->usci->ctlw0 = UCSWRST;
-	iBSP430platformConfigurePeripheralPins ((xBSP430Periph)(uintptr_t)(device->usci), 0);
+	iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(uintptr_t)(device->usci), 0);
 	device->tx_queue = 0;
 	device->rx_queue = 0;
 	device->flags = 0;
@@ -338,7 +338,7 @@ irq_USCI_B3 (void)
 
 /* END EMBED usci_defn: AUTOMATICALLY GENERATED CODE */
 
-static xBSP430USCIHandle periphToDevice (xBSP430Periph periph)
+static xBSP430USCIHandle periphToDevice (xBSP430periphHandle periph)
 {
 /* BEGIN EMBED usci_demux */
 /* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
