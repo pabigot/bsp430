@@ -33,9 +33,6 @@
  *
  * Support for system reset and related diagnostics.
  *
- * The behavior of this module is modified with the following
- * configuration options:
- *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -47,15 +44,15 @@
 
 #include "FreeRTOS.h"
 
-/** @def configBSP430_PERIPH_SYS_USE_DESCRIPTION
+/** @def configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION
  *
  * Define to a true value to enable text descriptions of reset causes.
  * If left undefined, the text descriptions are dropped reducing
  * application size by several hundred bytes.
  */
-#ifndef configBSP430_PERIPH_SYS_USE_DESCRIPTION
-#define configBSP430_PERIPH_SYS_USE_DESCRIPTION 0
-#endif /* configBSP430_PERIPH_SYS_USE_DESCRIPTION */
+#ifndef configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION
+#define configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION 0
+#endif /* configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION */
 
 /** Generate the events recorded within the system reset vector.
  *
@@ -72,23 +69,13 @@
  *
  * @param ppcDescription Optional parameter that returns a text
  * description of the reset cause that is being returned.  If
- * requested but #configBSP430_PERIPH_SYS_USE_DESCRIPTION is not
- * enabled a single character string "?" will be returned.
+ * requested but #configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION is
+ * not enabled a single character string "?" will be returned.
  *
  * @return A positive integer value corresponding to a SYSRST_type
  * supported on the current microcontroller, or zero if all such
  * values have been returned. */
-portBASE_TYPE xBSP430sysrstGenerator (unsigned char * pucHaveBOR,
-										const char ** ppcDescription);
-
-/** Cause a brown-out reset */
-#define vBSP430sysrstInduceBOR() do {			\
-		PMMCTL0 = PMMPW | PMMSWBOR;				\
-	} while (0)
-
-/** Cause a power-on reset */
-#define vBSP430sysrstInducePOR() do {			\
-		PMMCTL0 = PMMPW | PMMSWPOR;				\
-	} while (0)
+portBASE_TYPE xBSP430sysSYSRSTGenerator (unsigned char * pucHaveBOR,
+										 const char ** ppcDescription);
 
 #endif /* BSP430_PERIPH_SYS_H */
