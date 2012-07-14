@@ -51,8 +51,9 @@
 #error Wrong header: use <bsp430/periph/eusci_a.h>
 #endif /* EUSCI */
 
-/* Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
+/** Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
 typedef struct xBSP430Periph_USCI {
+	/** @cond Doxygen_Suppress */
 	union {						/* 0x00 */
 		unsigned int ctlw0;
 		struct {
@@ -109,6 +110,7 @@ typedef struct xBSP430Periph_USCI {
 		};
 	};
 	unsigned int iv;			/* 0x1E */
+	/** @endcond */
 } xBSP430Periph_USCI;
 
 /** Structure holding USCI-related information */

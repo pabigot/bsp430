@@ -44,8 +44,9 @@
 
 #include <bsp430/periph.h>
 
-/* Register map for eUSCI_A peripheral on a MSP430 5xx/6xx MCU. */
+/** Register map for eUSCI_A peripheral. */
 typedef struct xBSP430Periph_eUSCI_A {
+	/** @cond Doxygen_Suppress */
 	union {						/* 0x00 */
 		unsigned int ctlw0;
 		struct {
@@ -80,10 +81,12 @@ typedef struct xBSP430Periph_eUSCI_A {
 	unsigned int ie;			/* 0x1A */
 	unsigned int ifg;			/* 0x1C */
 	unsigned int iv;			/* 0x1E */
+	/** @endcond */
 } xBSP430Periph_eUSCI_A;
 
-/* Register map for eUSCI_B peripheral on a MSP430 5xx/6xx MCU. */
+/** Register map for eUSCI_B peripheral. */
 typedef struct xBSP430Periph_eUSCI_B {
+	/** @cond Doxygen_Suppress */
 	union {						/* 0x00 */
 		unsigned int ctlw0;
 		struct {
@@ -126,6 +129,7 @@ typedef struct xBSP430Periph_eUSCI_B {
 	unsigned int ie;			/* 0x2A */
 	unsigned int ifg;			/* 0x2C */
 	unsigned int iv;			/* 0x2E */
+	/** @endcond */
 } xBSP430Periph_eUSCI_B;
 
 /* BEGIN EMBED 5xx_periph_decl */

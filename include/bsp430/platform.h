@@ -29,8 +29,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** 
+/** @file
  *
+ * Entrypoint for platform-specific capabilities.
+ *
+ * Mostly prototypes for functions that are implemented in the
+ * platform source files.
+ *
+ * @author Peter A. Bigot <bigotp@acm.org>
+ * @date 2012
+ * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_PLATFORM_H

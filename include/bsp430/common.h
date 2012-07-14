@@ -29,6 +29,22 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+/** @file
+ *
+ * Common header included by all BSP430 leaf headers.
+ *
+ * This must be included by all BSP430 headers that do not include
+ * another BSP430 header, so that it is available in all environments
+ * where a BSP430 capability is referenced.  It is responsible for
+ * ensuring that "FreeRTOS.h" is included, providing
+ * application-specific configuration information that must be
+ * consistent between headers and implementation files.
+ *
+ * @author Peter A. Bigot <bigotp@acm.org>
+ * @date 2012
+ * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ */
 #ifndef BSP430_COMMON_H
 #define BSP430_COMMON_H
 
