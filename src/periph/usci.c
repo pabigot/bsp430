@@ -1,17 +1,50 @@
+/* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
-#include <bsp430/periph/usci.h>
-#include "FreeRTOS.h"
+#include <bsp430/periph/usci_.h>
 #include "task.h"
+
+/* !BSP430! periph=usci */
+/* !BSP430! instance=USCI_A0,USCI_A1,USCI_A2,USCI_A3,USCI_B0,USCI_B1,USCI_B2,USCI_B3 */
 
 #define COM_PORT_ACTIVE  0x01
 
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
-static xBSP430USCIHandle periphToDevice (xBSP430periphHandle periph);
+static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph);
 
-xBSP430USCIHandle
-xBSP430USCIOpenUART (xBSP430periphHandle periph,
+xBSP430usciHandle
+xBSP430usciOpenUART (xBSP430periphHandle periph,
 					 unsigned int control_word,
 					 unsigned long baud,
 					 xQueueHandle rx_queue,
@@ -19,7 +52,7 @@ xBSP430USCIOpenUART (xBSP430periphHandle periph,
 {
 	unsigned short aclk_Hz;
 	unsigned long brclk_Hz;
-	xBSP430USCIHandle device = periphToDevice(periph);
+	xBSP430usciHandle device = periphToDevice(periph);
 	uint16_t br;
 	uint16_t brs;
 
@@ -70,7 +103,7 @@ xBSP430USCIOpenUART (xBSP430periphHandle periph,
 }
 
 int
-iBSP430USCIClose (xBSP430USCIHandle device)
+iBSP430usciClose (xBSP430usciHandle device)
 {
 	device->usci->ctlw0 = UCSWRST;
 	iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(uintptr_t)(device->usci), 0);
@@ -97,7 +130,7 @@ iBSP430USCIClose (xBSP430USCIHandle device)
 	} while (0)
 
 void
-vBSP430USCIWakeupTransmit (xBSP430USCIHandle device)
+vBSP430usciWakeupTransmit (xBSP430usciHandle device)
 {
 	BSP430_ENTER_CRITICAL();
 	USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
@@ -112,7 +145,7 @@ vBSP430USCIWakeupTransmit (xBSP430USCIHandle device)
 	} while (0)
 
 int
-iBSP430USCIputc (int c, xBSP430USCIHandle device)
+iBSP430usciPutChar (int c, xBSP430usciHandle device)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
@@ -121,7 +154,7 @@ iBSP430USCIputc (int c, xBSP430USCIHandle device)
 	if (device->tx_queue) {
 		do {
 			passp = xQueueSendToBack(device->tx_queue, &c, delay);
-			vBSP430USCIWakeupTransmit(device);
+			vBSP430usciWakeupTransmit(device);
 			if (! passp) {
 				delay = MAX_DELAY;
 			}
@@ -133,7 +166,7 @@ iBSP430USCIputc (int c, xBSP430USCIHandle device)
 }
 
 int
-iBSP430USCIputs (const char* str, xBSP430USCIHandle device)
+iBSP430usciPutString (const char* str, xBSP430usciHandle device)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
@@ -144,15 +177,15 @@ iBSP430USCIputs (const char* str, xBSP430USCIHandle device)
 			if (xQueueSendToBack(device->tx_queue, str, delay)) {
 				++str;
 				if (delay) {
-					vBSP430USCIWakeupTransmit(device);
+					vBSP430usciWakeupTransmit(device);
 					delay = 0;
 				}
 			} else {
-				vBSP430USCIWakeupTransmit(device);
+				vBSP430usciWakeupTransmit(device);
 				delay = MAX_DELAY;
 			}
 		}
-		vBSP430USCIWakeupTransmit(device);
+		vBSP430usciWakeupTransmit(device);
 	} else {
 		while (*str) {
 			RAW_TRANSMIT(device->usci, *str);
@@ -176,13 +209,13 @@ iBSP430USCIputs (const char* str, xBSP430USCIHandle device)
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
-
+#if configBSP430_SHARE_USCI_ISR - 0
 static void
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usci_irq (xBSP430USCIHandle device)
+usci_irq (xBSP430usciHandle device)
 {
 	portBASE_TYPE yield = pdFALSE;
 	portBASE_TYPE rv = pdFALSE;
@@ -212,177 +245,234 @@ usci_irq (xBSP430USCIHandle device)
 	}
 	portYIELD_FROM_ISR(yield);
 }
+#endif  /* configBSP430_SHARE_USCI_ISR - 0 */
 
-/* BEGIN EMBED usci_defn */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
-
+/* !BSP430! insert=hpl_ba_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_defn] */
 #if configBSP430_PERIPH_USCI_A0 - 0
-static struct xBSP430USCI xBSP430USCI_A0_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A0__
+static struct xBSP430usciState state_USCI_A0_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A0__
 };
 
-xBSP430USCIHandle const xBSP430USCI_A0 = &xBSP430USCI_A0_;
+xBSP430usciHandle const xBSP430usci_USCI_A0 = &state_USCI_A0_;
 
+#if configBSP430_PERIPH_USCI_A0_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_A0_VECTOR)))
 irq_USCI_A0 (void)
 {
-	usci_irq(xBSP430USCI_A0);
+	usci_irq(xBSP430usci_USCI_A0);
 }
+#endif /* configBSP430_USCI_USCI_A0_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_A0 */
 
 #if configBSP430_PERIPH_USCI_A1 - 0
-static struct xBSP430USCI xBSP430USCI_A1_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A1__
+static struct xBSP430usciState state_USCI_A1_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A1__
 };
 
-xBSP430USCIHandle const xBSP430USCI_A1 = &xBSP430USCI_A1_;
+xBSP430usciHandle const xBSP430usci_USCI_A1 = &state_USCI_A1_;
 
+#if configBSP430_PERIPH_USCI_A1_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_A1_VECTOR)))
 irq_USCI_A1 (void)
 {
-	usci_irq(xBSP430USCI_A1);
+	usci_irq(xBSP430usci_USCI_A1);
 }
+#endif /* configBSP430_USCI_USCI_A1_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_A1 */
 
 #if configBSP430_PERIPH_USCI_A2 - 0
-static struct xBSP430USCI xBSP430USCI_A2_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A2__
+static struct xBSP430usciState state_USCI_A2_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A2__
 };
 
-xBSP430USCIHandle const xBSP430USCI_A2 = &xBSP430USCI_A2_;
+xBSP430usciHandle const xBSP430usci_USCI_A2 = &state_USCI_A2_;
 
+#if configBSP430_PERIPH_USCI_A2_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_A2_VECTOR)))
 irq_USCI_A2 (void)
 {
-	usci_irq(xBSP430USCI_A2);
+	usci_irq(xBSP430usci_USCI_A2);
 }
+#endif /* configBSP430_USCI_USCI_A2_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_A2 */
 
 #if configBSP430_PERIPH_USCI_A3 - 0
-static struct xBSP430USCI xBSP430USCI_A3_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_A3__
+static struct xBSP430usciState state_USCI_A3_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A3__
 };
 
-xBSP430USCIHandle const xBSP430USCI_A3 = &xBSP430USCI_A3_;
+xBSP430usciHandle const xBSP430usci_USCI_A3 = &state_USCI_A3_;
 
+#if configBSP430_PERIPH_USCI_A3_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_A3_VECTOR)))
 irq_USCI_A3 (void)
 {
-	usci_irq(xBSP430USCI_A3);
+	usci_irq(xBSP430usci_USCI_A3);
 }
+#endif /* configBSP430_USCI_USCI_A3_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_A3 */
 
 #if configBSP430_PERIPH_USCI_B0 - 0
-static struct xBSP430USCI xBSP430USCI_B0_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B0__
+static struct xBSP430usciState state_USCI_B0_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B0__
 };
 
-xBSP430USCIHandle const xBSP430USCI_B0 = &xBSP430USCI_B0_;
+xBSP430usciHandle const xBSP430usci_USCI_B0 = &state_USCI_B0_;
 
+#if configBSP430_PERIPH_USCI_B0_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_B0_VECTOR)))
 irq_USCI_B0 (void)
 {
-	usci_irq(xBSP430USCI_B0);
+	usci_irq(xBSP430usci_USCI_B0);
 }
+#endif /* configBSP430_USCI_USCI_B0_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_B0 */
 
 #if configBSP430_PERIPH_USCI_B1 - 0
-static struct xBSP430USCI xBSP430USCI_B1_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B1__
+static struct xBSP430usciState state_USCI_B1_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B1__
 };
 
-xBSP430USCIHandle const xBSP430USCI_B1 = &xBSP430USCI_B1_;
+xBSP430usciHandle const xBSP430usci_USCI_B1 = &state_USCI_B1_;
 
+#if configBSP430_PERIPH_USCI_B1_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_B1_VECTOR)))
 irq_USCI_B1 (void)
 {
-	usci_irq(xBSP430USCI_B1);
+	usci_irq(xBSP430usci_USCI_B1);
 }
+#endif /* configBSP430_USCI_USCI_B1_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_B1 */
 
 #if configBSP430_PERIPH_USCI_B2 - 0
-static struct xBSP430USCI xBSP430USCI_B2_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B2__
+static struct xBSP430usciState state_USCI_B2_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B2__
 };
 
-xBSP430USCIHandle const xBSP430USCI_B2 = &xBSP430USCI_B2_;
+xBSP430usciHandle const xBSP430usci_USCI_B2 = &state_USCI_B2_;
 
+#if configBSP430_PERIPH_USCI_B2_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_B2_VECTOR)))
 irq_USCI_B2 (void)
 {
-	usci_irq(xBSP430USCI_B2);
+	usci_irq(xBSP430usci_USCI_B2);
 }
+#endif /* configBSP430_USCI_USCI_B2_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_B2 */
 
 #if configBSP430_PERIPH_USCI_B3 - 0
-static struct xBSP430USCI xBSP430USCI_B3_ = {
-	.usci = (xBSP430Periph_USCI *)__MSP430_BASEADDRESS_USCI_B3__
+static struct xBSP430usciState state_USCI_B3_ = {
+	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B3__
 };
 
-xBSP430USCIHandle const xBSP430USCI_B3 = &xBSP430USCI_B3_;
+xBSP430usciHandle const xBSP430usci_USCI_B3 = &state_USCI_B3_;
 
+#if configBSP430_PERIPH_USCI_B3_ISR - 0
+#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#error Shared periphal HAL ISR disabled
+#endif /* configBSP430_SHARE_USCI_ISR */
 static void
 __attribute__((__interrupt__(USCI_B3_VECTOR)))
 irq_USCI_B3 (void)
 {
-	usci_irq(xBSP430USCI_B3);
+	usci_irq(xBSP430usci_USCI_B3);
 }
+#endif /* configBSP430_USCI_USCI_B3_ISR */
+
 #endif /* configBSP430_PERIPH_USCI_B3 */
 
-/* END EMBED usci_defn: AUTOMATICALLY GENERATED CODE */
+/* END AUTOMATICALLY GENERATED CODE [hpl_ba_defn] */
+/* !BSP430! end=hpl_ba_defn */
 
-static xBSP430USCIHandle periphToDevice (xBSP430periphHandle periph)
+static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph)
 {
-/* BEGIN EMBED usci_demux */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
-
+/* !BSP430! insert=hpl_hal_demux */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_hal_demux] */
 #if configBSP430_PERIPH_USCI_A0 - 0
-	if (xBSP430Periph_USCI_A0 == periph) {
-		return xBSP430USCI_A0;
+	if (BSP430_PERIPH_USCI_A0 == periph) {
+		return xBSP430usci_USCI_A0;
 	}
 #endif /* configBSP430_PERIPH_USCI_A0 */
+
 #if configBSP430_PERIPH_USCI_A1 - 0
-	if (xBSP430Periph_USCI_A1 == periph) {
-		return xBSP430USCI_A1;
+	if (BSP430_PERIPH_USCI_A1 == periph) {
+		return xBSP430usci_USCI_A1;
 	}
 #endif /* configBSP430_PERIPH_USCI_A1 */
+
 #if configBSP430_PERIPH_USCI_A2 - 0
-	if (xBSP430Periph_USCI_A2 == periph) {
-		return xBSP430USCI_A2;
+	if (BSP430_PERIPH_USCI_A2 == periph) {
+		return xBSP430usci_USCI_A2;
 	}
 #endif /* configBSP430_PERIPH_USCI_A2 */
+
 #if configBSP430_PERIPH_USCI_A3 - 0
-	if (xBSP430Periph_USCI_A3 == periph) {
-		return xBSP430USCI_A3;
+	if (BSP430_PERIPH_USCI_A3 == periph) {
+		return xBSP430usci_USCI_A3;
 	}
 #endif /* configBSP430_PERIPH_USCI_A3 */
+
 #if configBSP430_PERIPH_USCI_B0 - 0
-	if (xBSP430Periph_USCI_B0 == periph) {
-		return xBSP430USCI_B0;
+	if (BSP430_PERIPH_USCI_B0 == periph) {
+		return xBSP430usci_USCI_B0;
 	}
 #endif /* configBSP430_PERIPH_USCI_B0 */
+
 #if configBSP430_PERIPH_USCI_B1 - 0
-	if (xBSP430Periph_USCI_B1 == periph) {
-		return xBSP430USCI_B1;
+	if (BSP430_PERIPH_USCI_B1 == periph) {
+		return xBSP430usci_USCI_B1;
 	}
 #endif /* configBSP430_PERIPH_USCI_B1 */
+
 #if configBSP430_PERIPH_USCI_B2 - 0
-	if (xBSP430Periph_USCI_B2 == periph) {
-		return xBSP430USCI_B2;
+	if (BSP430_PERIPH_USCI_B2 == periph) {
+		return xBSP430usci_USCI_B2;
 	}
 #endif /* configBSP430_PERIPH_USCI_B2 */
+
 #if configBSP430_PERIPH_USCI_B3 - 0
-	if (xBSP430Periph_USCI_B3 == periph) {
-		return xBSP430USCI_B3;
+	if (BSP430_PERIPH_USCI_B3 == periph) {
+		return xBSP430usci_USCI_B3;
 	}
 #endif /* configBSP430_PERIPH_USCI_B3 */
-/* END EMBED usci_demux: AUTOMATICALLY GENERATED CODE */
+
+/* END AUTOMATICALLY GENERATED CODE [hpl_hal_demux] */
+/* !BSP430! end=hpl_hal_demux */
 	return NULL;
 }

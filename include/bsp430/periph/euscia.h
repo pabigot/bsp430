@@ -104,7 +104,6 @@ typedef struct xBSP430periphEUSCIA {
 #define configBSP430_SHARE_EUSCIA_ISR 1
 #endif /* configBSP430_SHARE_EUSCIA_ISR */
 
-
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_EUSCI_A0
