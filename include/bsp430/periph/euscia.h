@@ -53,42 +53,40 @@
 
 /** Register map for eUSCI_A peripheral hardware presentation layer. */
 typedef struct xBSP430periphEUSCIA {
-	/** @cond Doxygen_Suppress */
 	union {						/* 0x00 */
-		unsigned int ctlw0;
+		unsigned int ctlw0;		/**< UCAxCTLW0 */
 		struct {
-			unsigned char ctl1;
-			unsigned char ctl0;
+			unsigned char ctl1; /**< UCAxCTL1 */
+			unsigned char ctl0; /**< UCAxCTL0 */
 		};
 	};
-	unsigned int ctlw1;			/* 0x02 */
+	unsigned int ctlw1;			/**< UCAxCTLW1 */ /* 0x02 */
 	unsigned int _unused_0x04;
 	union {						/* 0x06 */
-		unsigned int brw;
+		unsigned int brw;		/**< UCAxBRW */
 		struct {
-			unsigned char br0;
-			unsigned char br1;
+			unsigned char br0;	/**< UCAxBR0 */
+			unsigned char br1;	/**< UCAxBR1 */
 		};
 	};
-	unsigned int mctlw;			/* 0x08 */
-	unsigned int statw;			/* 0x0A */
-	unsigned int rxbuf;			/* 0x0C */
-	unsigned int txbuf;			/* 0x0E */
-	unsigned int abctl;			/* 0x10 */
+	unsigned int mctlw;			/**< UCAxMCTLW (UART) */ /* 0x08 */
+	unsigned int statw;			/**< UCAxSTATW */ /* 0x0A */
+	unsigned int rxbuf;			/**< UCAxRXBUF */ /* 0x0C */
+	unsigned int txbuf;			/**< UCAxTXBUF */ /* 0x0E */
+	unsigned int abctl;			/**< UCAxABCTL (UART) */ /* 0x10 */
 	union {						/* 0x12 */
-		unsigned int irctl;
+		unsigned int irctl;		/**< UCAxIRCTL (UART) */
 		struct {
-			unsigned char irtctl; /* 0x12 */
-			unsigned char irrctl; /* 0x13 */
+			unsigned char irtctl; /**< UCAxIRTCTL (UART) */ /* 0x12 */
+			unsigned char irrctl; /**< UCAxIRRCTL (UART) */ /* 0x13 */
 		};
 	};
 	unsigned int _unused_0x14;
 	unsigned int _unused_0x16;
 	unsigned int _unused_0x18;
-	unsigned int ie;			/* 0x1A */
-	unsigned int ifg;			/* 0x1C */
-	unsigned int iv;			/* 0x1E */
-	/** @endcond */
+	unsigned int ie;			/**< UCAxIE */ /* 0x1A */
+	unsigned int ifg;			/**< UCAxIFG */ /* 0x1C */
+	unsigned int iv;			/**< UCAxIV */ /* 0x1E */
 } xBSP430periphEUSCIA;
 
 /** @def configBSP430_EUSCIA_SHARE_ISR

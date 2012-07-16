@@ -47,11 +47,6 @@
 
 #include <bsp430/common.h>
 
-/** @typedef xBSP430uartHandle
- *
- * Alias for an underlying peripheral handle that serves as the UART
- * facility for the application. */
-
 #ifndef configBSP430_UART_USE_5XX_USCI
 /** Define to true value to select xBSP430usci as the underlying UART
  * implementation. */

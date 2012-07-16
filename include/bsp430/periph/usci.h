@@ -52,64 +52,62 @@
 
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
 typedef struct xBSP430periphUSCI {
-	/** @cond Doxygen_Suppress */
 	union {						/* 0x00 */
-		unsigned int ctlw0;
+		unsigned int ctlw0;		/**< UCtxCTLW0 */
 		struct {
-			unsigned char ctl1;
-			unsigned char ctl0;
+			unsigned char ctl1;	/**< UCtxCTL1 */
+			unsigned char ctl0;	/**< UCtxCTL0 */
 		};
 	};
 	unsigned int _unused_0x02;
 	unsigned int _unused_0x04;
 	union {						/* 0x06 */
-		unsigned int brw;
+		unsigned int brw;		/**< UCtxBRW */
 		struct {
-			unsigned char br0;
-			unsigned char br1;
+			unsigned char br0;	/**< UCtxBR0 */
+			unsigned char br1;	/**< UCtxBR1 */
 		};
 	};
 	union {						/* 0x08 */
 		struct { /* USCI_A */
-			unsigned char mctl;
+			unsigned char mctl;	/**< UCAxMCTL (UART) */
 			unsigned char _reserved_0x09;
 		};
 		unsigned int _reserved_0x08; /* USCI_B */
 	};
-	unsigned char stat;			/* 0x0A */
+	unsigned char stat;			/**< UCtxSTAT */ /* 0x0A */
 	unsigned char _reserved_0x0B;
-	unsigned char rxbuf;		/* 0x0C */
+	unsigned char rxbuf;		/**< UCtxRXBUF */ /* 0x0C */
 	unsigned char _reserved_0x0D;
-	unsigned char txbuf;		/* 0x0E */
+	unsigned char txbuf;		/**< UCtxTXBUF */ /* 0x0E */
 	unsigned char _reserved_0x0F;
 	union {						/* 0x10 */
 		struct {				/* USCI_A */
-			unsigned char abctl;
+			unsigned char abctl; /**< UCAxABCTL (UART) */
 			unsigned char _reserved_0x11;
 		};
-		unsigned int i2coa;		/* USCI_B */
+		unsigned int i2coa;		/**< UCBxI2COA (I2C) */ /* USCI_B */
 	};
 	union {						/* 0x12 */
-		unsigned int irctl;		/* USCI_A */
+		unsigned int irctl;		/**< UCAxIRCTL (UART)*/
 		struct {
-			unsigned char irtctl;
-			unsigned char irrctl;
+			unsigned char irtctl; /**< UCAxIRTCTL (UART) */
+			unsigned char irrctl; /**< UCAxIRRCTL (UART) */
 		};
-		unsigned int i2csa;		/* USCI_B */
+		unsigned int i2csa;		/**< UCBxI2CSA (I2C) */
 	};
 	unsigned int _unused_0x14;
 	unsigned int _unused_0x16;
 	unsigned int _unused_0x18;
 	unsigned int _unused_0x1a;
 	union {						/* 0x1C */
-		unsigned int ictl;
+		unsigned int ictl;		/**< UCtxICTL */
 		struct {
-			unsigned char ie;
-			unsigned char ifg;
+			unsigned char ie;	/**< UCtxIE */
+			unsigned char ifg;	/**< UCtxIFG */
 		};
 	};
-	unsigned int iv;			/* 0x1E */
-	/** @endcond */
+	unsigned int iv;			/**< UCtxIV */ /* 0x1E */
 } xBSP430periphUSCI;
 
 /** @def configBSP430_USCI_SHARE_ISR
