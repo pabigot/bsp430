@@ -43,6 +43,10 @@
 #define BSP430_PERIPH_USCI_H
 
 #include <bsp430/periph.h>
+#if ! defined(__MSP430_HAS_USCI_A0__)
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_USCI_A0__ */
+
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"

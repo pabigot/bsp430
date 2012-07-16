@@ -82,6 +82,10 @@
 #define BSP430_CLOCKS_UCS_H
 
 #include <bsp430/clock.h>
+#include <bsp430/periph.h>
+#if ! (defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__))
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_UCS__ */
 
 /** Call this to initially configure the UCS peripheral.
  *

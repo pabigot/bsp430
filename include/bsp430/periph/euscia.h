@@ -47,6 +47,10 @@
 
 #include <bsp430/periph.h>
 
+#if ! defined(__MSP430_HAS_EUSCI_A0__)
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_EUSCI_A0__ */
+
 /** Register map for eUSCI_A peripheral hardware presentation layer. */
 typedef struct xBSP430periphEUSCIA {
 	/** @cond Doxygen_Suppress */

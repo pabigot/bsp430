@@ -47,7 +47,12 @@
 #ifndef BSP430_CLOCKS_FLLPLUS_H
 #define BSP430_CLOCKS_FLLPLUS_H
 
-#include "FreeRTOS.h"
+#include <bsp430/clocks.h>
+#include <bsp430/periph.h>
+
+#if ! defined(__MSP430_HAS_FLLPLUS__)
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_FLLPLUS__ */
 
 /** Structure used to configure the frequency-locked loop clock module.
  *

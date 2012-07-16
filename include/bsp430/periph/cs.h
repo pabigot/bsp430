@@ -62,6 +62,11 @@
 #define BSP430_PERIPH_CS_H
 
 #include <bsp430/clock.h>
+#include <bsp430/periph.h>
+
+#if ! (defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__))
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_CS__ */
 
 /** @def configBSP430_CS_XT1_DELAY_CYCLES
  *

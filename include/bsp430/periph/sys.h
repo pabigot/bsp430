@@ -42,7 +42,10 @@
 #ifndef BSP430_PERIPH_SYS_H
 #define BSP430_PERIPH_SYS_H
 
-#include "FreeRTOS.h"
+#include <bsp430/periph.h>
+#if ! defined(__MSP430_HAS_SYS__)
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_SYS__ */
 
 /** @def configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION
  *

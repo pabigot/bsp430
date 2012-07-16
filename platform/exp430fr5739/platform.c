@@ -1,4 +1,4 @@
-#include <bsp430/periph/ucs.h>
+#include <bsp430/periph/cs.h>
 #include <bsp430/timers/timerA0.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/euscia.h>

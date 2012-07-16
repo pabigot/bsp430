@@ -44,6 +44,11 @@
 #define BSP430_CLOCKS_BC2_H
 
 #include <bsp430/clock.h>
+#include <bsp430/periph.h>
+
+#if ! defined(__MSP430_HAS_BC2__)
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_BC2__ */
 
 /** Call this to reconfigure the BC2 peripheral.
  *

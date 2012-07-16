@@ -45,7 +45,10 @@
 #ifndef BSP430_PERIPH_PMM_H
 #define BSP430_PERIPH_PMM_H
 
-#include <msp430.h>
+#include <bsp430/periph.h>
+#if ! defined(__MSP430_HAS_PMM__)
+#warning Peripheral not supported by configured MCU
+#endif /* __MSP430_HAS_PMM__ */
 
 /** Cause a brown-out reset */
 #define vBSP430pmmInduceBOR() do {				\
