@@ -29,9 +29,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BSP430_PLATFORM_EXP430F5438_H
-#define BSP430_PLATFORM_EXP430F5438_H
+#include <bsp430/platform.h>
+#include <bsp430/periph/fllplus.h>
+#include <bsp430/timers/timerA0.h>
+#include <bsp430/utility/led.h>
 
-#include <bsp430/common/platform.h>
+const xBSP430led pxBSP430leds[] = {
+	{ .pucPxOUT = &P5OUT, .ucBIT = BIT1 }, /* Red */
+	{ .pucPxOUT = &P2OUT, .ucBIT = BIT2 }, /* Green */
+	{ .pucPxOUT = &P2OUT, .ucBIT = BIT1 }, /* Yellow */
+};
+const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
 
-#endif /* BSP430_PLATFORM_EXP430F5438_H */
+int
+iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
+{
+	uint8_t bits = 0;
+	volatile uint8_t* pxsel = 0;
+	if (BSP430_PERIPH_XT1 == device) {
+		/* XIN/XOUT are dedicated pins on this device. */
+		return 0;
+	}
+	return -1;
+}
+
+void vBSP430platformSetup ()
+{
+	int rc;
+	
+	/* Hold off watchdog */
+	WDTCTL = WDTPW + WDTHOLD;
+
+	/* Enable XT1 functions and clock */
+	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+	//ulBSP430fllplusConfigureMCLK(configCPU_CLOCK_HZ);
+
+	/* Enable basic timer */
+	vBSP430timerA0Configure();
+}

@@ -53,3 +53,46 @@ ucBSP430fllplusConfigure (const xBSP430fllplusConfig * pxConfig)
 	BSP430_EXIT_CRITICAL();
 	return ucReturnValue;
 }
+
+unsigned long
+ulBSP430clockMCLK_Hz ()
+{
+}
+
+unsigned long
+ulBSP430clockSMCLK_Hz ()
+{
+}
+
+unsigned short
+usBSP430clockACLK_Hz ()
+{
+	return (FLL_CTL0 & LFOF) ? 12000U : 32768U;
+}
+
+int
+iBSP430clockConfigureXT1 (int enablep,
+						  int loop_limit)
+{
+	int loop_delta;
+	int rc;
+	
+	rc = iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, enablep);
+	if ((0 != rc) || (! enablep)) {
+		return rc;
+	}
+	loop_delta = (0 < loop_limit) ? 1 : 0;
+
+	FLL_CTL0 = (FLL_CTL0 & ~(OSCCAP0 | OSCCAP1 | XTS_FLL)) | configBSP430_FLLPLUS_XCAPxPF;
+	do {
+		FLL_CTL0 &= ~LFOF;
+		loop_limit -= loop_delta;
+		__delay_cycles(configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+	} while ((FLL_CTL0 & LFOF) && (0 != loop_limit));
+
+	rc = !(FLL_CTL0 & LFOF);
+	if (! rc) {
+		(void)iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, 0);
+	}
+	return rc;
+}

@@ -38,6 +38,11 @@
  * for SELM/SELS; this difference is irrelevant to the implementation
  * supported here.
  *
+ * @note This implementation currently does not support configuring
+ * ACLK.  ACLK is always assumed to follow LFXT1 running at 32 kiHz.
+ * (The issue is not all chips with FLLPLUS support selecting the low
+ * frequency clock.)
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -47,12 +52,26 @@
 #ifndef BSP430_PERIPH_FLLPLUS_H
 #define BSP430_PERIPH_FLLPLUS_H
 
-#include <bsp430/clocks.h>
+#include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
 #if ! defined(__MSP430_HAS_FLLPLUS__)
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_FLLPLUS__ */
+
+/** @def configBSP430_FLLPLUS_XCAPxPF
+ *
+ * Oscillator capacitor section to be applied to FLL_CTL0 by
+ * #iBSP430fllplusConfigureXT1.
+ *
+ * @note Most examples use XCAP14PF, but my crude tests suggest that
+ * of the capacitances available 0pF produces the closest to 32768 Hz,
+ * at least on the EXP430FG4618 board.  This also happens to be the
+ * power-up default.
+ */
+#ifndef configBSP430_FLLPLUS_XCAPxPF
+#define configBSP430_FLLPLUS_XCAPxPF XCAP0PF
+#endif /* configBSP430_FLLPLUS_XCAPxPF */
 
 /** Structure used to configure the frequency-locked loop clock module.
  *

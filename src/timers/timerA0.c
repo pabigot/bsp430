@@ -45,6 +45,13 @@ volatile static isrHandler isr_handlers [
 #endif
 										];
 
+#ifndef TASSEL__ACLK
+#define TASSEL__ACLK TASSEL_1
+#endif /* TASSEL__ACLK */
+#ifndef MC__CONTINOUS
+#define MC__CONTINOUS MC_2
+#endif /* MC__CONTINOUS */
+
 /* Count of rollover events */
 static uint32_t prvRollovers;
 
@@ -109,6 +116,13 @@ unsigned long ulBSP430timerA0Ticks ()
 	__set_interrupt_state(istate);
 	return rv;
 }
+
+#ifndef TA0IV_NONE
+#define TA0IV_NONE 0
+#endif /* TA0IV_NONE */
+#ifndef TA0IV_TA0IFG
+#define TA0IV_TA0IFG TAIFG
+#endif /* TA0IV_TA0IFG */
 
 __attribute__( ( __interrupt__( TIMER0_A1_VECTOR ) ) )
 static void prvT0AISR ( void )
