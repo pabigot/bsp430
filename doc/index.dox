@@ -46,12 +46,11 @@ timer     all	    Timer_A and Timer_B                          TA#, TB#, T#A#, T
 usart     2xx       universal sync/async receive/transmit        USART
 usi       2xx       universal serial interface                   USI
 usci_ab	  2xx/4xx   universal serial communications interface    USCI, USCI_AB#
-usci_a    5xx/6xx   universal serial communications interface    USCI_A#
-usci_b    5xx/6xx   universal serial communications interface    USCI_B#
-eusci_a   FR5xx     enhanced USCI                                EUSCI_A#
-eusci_b   FR5xx     enhanced USCI                                EUSCI_A#
-
+usci      5xx/6xx   universal serial communications interface    USCI_A#, USCI_B#
+euscia    FR5xx     enhanced USCI                                EUSCI_A#
+euscib    FR5xx     enhanced USCI                                EUSCI_B#
 
 sys       5xx/6xx   system                                       SYS
+pmm	  5xx/6xx   power management module			 PMM, PMM_FR5xx, PMM_FRAM
 
 */
