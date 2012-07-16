@@ -19,7 +19,7 @@ templates = {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_%(PERIPH)s_ISR must be enabled for this to be
+ * @c #configBSP430_%(PERIPH)s_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_%(INSTANCE)s_ISR
 #define configBSP430_PERIPH_%(INSTANCE)s_ISR 1
@@ -49,14 +49,14 @@ static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
 xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
 
 #if configBSP430_PERIPH_%(INSTANCE)s_ISR - 0
-#if ! (configBSP430_SHARE_%(PERIPH)s_ISR - 0)
+#if ! (configBSP430_%(PERIPH)s_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_%(PERIPH)s_ISR */
+#endif /* configBSP430_%(PERIPH)s_SHARE_ISR */
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
-irq_%(INSTANCE)s (void)
+isr_%(INSTANCE)s (void)
 {
-	%(periph)s_irq(xBSP430%(periph)s_%(INSTANCE)s);
+	%(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
 }
 #endif /* configBSP430_%(PERIPH)s_%(INSTANCE)s_ISR */
 

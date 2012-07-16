@@ -209,13 +209,13 @@ iBSP430usciPutString (const char* str, xBSP430usciHandle device)
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
-#if configBSP430_SHARE_USCI_ISR - 0
+#if configBSP430_USCI_SHARE_ISR - 0
 static void
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usci_irq (xBSP430usciHandle device)
+usci_isr (xBSP430usciHandle device)
 {
 	portBASE_TYPE yield = pdFALSE;
 	portBASE_TYPE rv = pdFALSE;
@@ -245,7 +245,7 @@ usci_irq (xBSP430usciHandle device)
 	}
 	portYIELD_FROM_ISR(yield);
 }
-#endif  /* configBSP430_SHARE_USCI_ISR - 0 */
+#endif  /* configBSP430_USCI_SHARE_ISR - 0 */
 
 /* !BSP430! insert=hpl_ba_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_defn] */
@@ -257,14 +257,14 @@ static struct xBSP430usciState state_USCI_A0_ = {
 xBSP430usciHandle const xBSP430usci_USCI_A0 = &state_USCI_A0_;
 
 #if configBSP430_PERIPH_USCI_A0_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_A0_VECTOR)))
-irq_USCI_A0 (void)
+isr_USCI_A0 (void)
 {
-	usci_irq(xBSP430usci_USCI_A0);
+	usci_isr(xBSP430usci_USCI_A0);
 }
 #endif /* configBSP430_USCI_USCI_A0_ISR */
 
@@ -278,14 +278,14 @@ static struct xBSP430usciState state_USCI_A1_ = {
 xBSP430usciHandle const xBSP430usci_USCI_A1 = &state_USCI_A1_;
 
 #if configBSP430_PERIPH_USCI_A1_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_A1_VECTOR)))
-irq_USCI_A1 (void)
+isr_USCI_A1 (void)
 {
-	usci_irq(xBSP430usci_USCI_A1);
+	usci_isr(xBSP430usci_USCI_A1);
 }
 #endif /* configBSP430_USCI_USCI_A1_ISR */
 
@@ -299,14 +299,14 @@ static struct xBSP430usciState state_USCI_A2_ = {
 xBSP430usciHandle const xBSP430usci_USCI_A2 = &state_USCI_A2_;
 
 #if configBSP430_PERIPH_USCI_A2_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_A2_VECTOR)))
-irq_USCI_A2 (void)
+isr_USCI_A2 (void)
 {
-	usci_irq(xBSP430usci_USCI_A2);
+	usci_isr(xBSP430usci_USCI_A2);
 }
 #endif /* configBSP430_USCI_USCI_A2_ISR */
 
@@ -320,14 +320,14 @@ static struct xBSP430usciState state_USCI_A3_ = {
 xBSP430usciHandle const xBSP430usci_USCI_A3 = &state_USCI_A3_;
 
 #if configBSP430_PERIPH_USCI_A3_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_A3_VECTOR)))
-irq_USCI_A3 (void)
+isr_USCI_A3 (void)
 {
-	usci_irq(xBSP430usci_USCI_A3);
+	usci_isr(xBSP430usci_USCI_A3);
 }
 #endif /* configBSP430_USCI_USCI_A3_ISR */
 
@@ -341,14 +341,14 @@ static struct xBSP430usciState state_USCI_B0_ = {
 xBSP430usciHandle const xBSP430usci_USCI_B0 = &state_USCI_B0_;
 
 #if configBSP430_PERIPH_USCI_B0_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_B0_VECTOR)))
-irq_USCI_B0 (void)
+isr_USCI_B0 (void)
 {
-	usci_irq(xBSP430usci_USCI_B0);
+	usci_isr(xBSP430usci_USCI_B0);
 }
 #endif /* configBSP430_USCI_USCI_B0_ISR */
 
@@ -362,14 +362,14 @@ static struct xBSP430usciState state_USCI_B1_ = {
 xBSP430usciHandle const xBSP430usci_USCI_B1 = &state_USCI_B1_;
 
 #if configBSP430_PERIPH_USCI_B1_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_B1_VECTOR)))
-irq_USCI_B1 (void)
+isr_USCI_B1 (void)
 {
-	usci_irq(xBSP430usci_USCI_B1);
+	usci_isr(xBSP430usci_USCI_B1);
 }
 #endif /* configBSP430_USCI_USCI_B1_ISR */
 
@@ -383,14 +383,14 @@ static struct xBSP430usciState state_USCI_B2_ = {
 xBSP430usciHandle const xBSP430usci_USCI_B2 = &state_USCI_B2_;
 
 #if configBSP430_PERIPH_USCI_B2_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_B2_VECTOR)))
-irq_USCI_B2 (void)
+isr_USCI_B2 (void)
 {
-	usci_irq(xBSP430usci_USCI_B2);
+	usci_isr(xBSP430usci_USCI_B2);
 }
 #endif /* configBSP430_USCI_USCI_B2_ISR */
 
@@ -404,14 +404,14 @@ static struct xBSP430usciState state_USCI_B3_ = {
 xBSP430usciHandle const xBSP430usci_USCI_B3 = &state_USCI_B3_;
 
 #if configBSP430_PERIPH_USCI_B3_ISR - 0
-#if ! (configBSP430_SHARE_USCI_ISR - 0)
+#if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_SHARE_USCI_ISR */
+#endif /* configBSP430_USCI_SHARE_ISR */
 static void
 __attribute__((__interrupt__(USCI_B3_VECTOR)))
-irq_USCI_B3 (void)
+isr_USCI_B3 (void)
 {
-	usci_irq(xBSP430usci_USCI_B3);
+	usci_isr(xBSP430usci_USCI_B3);
 }
 #endif /* configBSP430_USCI_USCI_B3_ISR */
 

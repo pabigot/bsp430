@@ -112,7 +112,7 @@ typedef struct xBSP430periphUSCI {
 	/** @endcond */
 } xBSP430periphUSCI;
 
-/** @def configBSP430_SHARE_USCI_ISR
+/** @def configBSP430_USCI_SHARE_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * shared USCI peripheral HAL interrupt vector.  If this is defined,
@@ -121,9 +121,9 @@ typedef struct xBSP430periphUSCI {
  *
  * This must be available in order to use the HAL interrupt vector for
  * specific device instances. */
-#ifndef configBSP430_SHARE_USCI_ISR
-#define configBSP430_SHARE_USCI_ISR 1
-#endif /* configBSP430_SHARE_USCI_ISR */
+#ifndef configBSP430_USCI_SHARE_ISR
+#define configBSP430_USCI_SHARE_ISR 1
+#endif /* configBSP430_USCI_SHARE_ISR */
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
@@ -143,7 +143,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_A0_ISR
 #define configBSP430_PERIPH_USCI_A0_ISR 1
@@ -172,7 +172,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_A1_ISR
 #define configBSP430_PERIPH_USCI_A1_ISR 1
@@ -201,7 +201,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_A2_ISR
 #define configBSP430_PERIPH_USCI_A2_ISR 1
@@ -230,7 +230,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_A3_ISR
 #define configBSP430_PERIPH_USCI_A3_ISR 1
@@ -259,7 +259,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_B0_ISR
 #define configBSP430_PERIPH_USCI_B0_ISR 1
@@ -288,7 +288,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_B1_ISR
 #define configBSP430_PERIPH_USCI_B1_ISR 1
@@ -317,7 +317,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_B2_ISR
 #define configBSP430_PERIPH_USCI_B2_ISR 1
@@ -346,7 +346,7 @@ typedef struct xBSP430periphUSCI {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_USCI_ISR must be enabled for this to be
+ * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_USCI_B3_ISR
 #define configBSP430_PERIPH_USCI_B3_ISR 1

@@ -91,7 +91,7 @@ typedef struct xBSP430periphEUSCIA {
 	/** @endcond */
 } xBSP430periphEUSCIA;
 
-/** @def configBSP430_SHARE_EUSCIA_ISR
+/** @def configBSP430_EUSCIA_SHARE_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * shared EUSCIA peripheral HAL interrupt vector.  If this is defined,
@@ -100,9 +100,9 @@ typedef struct xBSP430periphEUSCIA {
  *
  * This must be available in order to use the HAL interrupt vector for
  * specific device instances. */
-#ifndef configBSP430_SHARE_EUSCIA_ISR
-#define configBSP430_SHARE_EUSCIA_ISR 1
-#endif /* configBSP430_SHARE_EUSCIA_ISR */
+#ifndef configBSP430_EUSCIA_SHARE_ISR
+#define configBSP430_EUSCIA_SHARE_ISR 1
+#endif /* configBSP430_EUSCIA_SHARE_ISR */
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
@@ -122,7 +122,7 @@ typedef struct xBSP430periphEUSCIA {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_EUSCIA_ISR must be enabled for this to be
+ * @c #configBSP430_EUSCIA_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_EUSCI_A0_ISR
 #define configBSP430_PERIPH_EUSCI_A0_ISR 1
@@ -151,7 +151,7 @@ typedef struct xBSP430periphEUSCIA {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_EUSCIA_ISR must be enabled for this to be
+ * @c #configBSP430_EUSCIA_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_EUSCI_A1_ISR
 #define configBSP430_PERIPH_EUSCI_A1_ISR 1
@@ -180,7 +180,7 @@ typedef struct xBSP430periphEUSCIA {
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_SHARE_EUSCIA_ISR must be enabled for this to be
+ * @c #configBSP430_EUSCIA_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_EUSCI_A2_ISR
 #define configBSP430_PERIPH_EUSCI_A2_ISR 1
