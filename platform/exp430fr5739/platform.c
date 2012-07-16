@@ -55,7 +55,7 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 	unsigned char bits = 0;
 	if (0) {
 	}
-#if configBSP430_PERIPH_USE_EUSCI_A0 - 0
+#if configBSP430_PERIPH_EUSCI_A0 - 0
 	else if (BSP430_PERIPH_EUSCI_A0 == device) {
 		bits = BIT0 | BIT1;
 		if (enablep) {
@@ -70,12 +70,12 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 	}
 #endif
 	(void)bits;
-#if configBSP430_PERIPH_USE_EUSCI_A1 - 0
+#if configBSP430_PERIPH_EUSCI_A1 - 0
 #error Platform pins not configured
 	else if (BSP430_PERIPH_EUSCI_A1 == device) {
 	}
 #endif
-#if configBSP430_PERIPH_USE_EUSCI_B0 - 0
+#if configBSP430_PERIPH_EUSCI_B0 - 0
 #error Platform pins not configured
 	else if (BSP430_PERIPH_EUSCI_B0 == device) {
 	}

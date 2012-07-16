@@ -36,7 +36,7 @@
  * This file, included by peripheral-specific include files, supports
  * handles to peripherals which in turn are used in application code.
  * Use of a given peripheral must be indicated by defining the
- * corresponding @c configBSP430_PERIPH_USE_xx in the application @c
+ * corresponding @c configBSP430_PERIPH_xx in the application @c
  * FreeRTOSConfig.h file.
  *
  * Structures are defined in the peripheral-specific header for each
@@ -69,7 +69,7 @@
  * the constant handle identifier provided in the peripheral
  * header.
  *
- * The value zero is reserved and available as BSP430_PERIPH_NONE to
+ * The value zero is reserved and available as #BSP430_PERIPH_NONE to
  * indicate no peripheral.
  *
  * Negative values indicate an error. */

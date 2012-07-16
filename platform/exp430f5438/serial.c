@@ -65,18 +65,18 @@ static xComPort*
 portToDevice (eCOMPort ePort)
 {
 	switch (ePort) {
-#if configBSP430_PERIPH_USE_USCI_A0 - 0
+#if configBSP430_PERIPH_USCI_A0 - 0
 	case serCOM1: return xBSP430USCI_A0;
-#endif /* configBSP430_PERIPH_USE_USCI_A0 */
-#if configBSP430_PERIPH_USE_USCI_A1 - 0
+#endif /* configBSP430_PERIPH_USCI_A0 */
+#if configBSP430_PERIPH_USCI_A1 - 0
 	case serCOM2: return xBSP430USCI_A1;
-#endif /* configBSP430_PERIPH_USE_USCI_A1 */
-#if configBSP430_PERIPH_USE_USCI_A2 - 0
+#endif /* configBSP430_PERIPH_USCI_A1 */
+#if configBSP430_PERIPH_USCI_A2 - 0
 	case serCOM3: return xBSP430USCI_A2;
-#endif /* configBSP430_PERIPH_USE_USCI_A2 */
-#if configBSP430_PERIPH_USE_USCI_A3 - 0
+#endif /* configBSP430_PERIPH_USCI_A2 */
+#if configBSP430_PERIPH_USCI_A3 - 0
 	case serCOM4: return xBSP430USCI_A3;
-#endif /* configBSP430_PERIPH_USE_USCI_A3 */
+#endif /* configBSP430_PERIPH_USCI_A3 */
 	default:
 		break;
 	}

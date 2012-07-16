@@ -17,25 +17,25 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 	volatile uint8_t* pxsel = 0;
 	if (0) {
 	}
-#if configBSP430_PERIPH_USE_USCI_A0 - 0
+#if configBSP430_PERIPH_USCI_A0 - 0
 	else if (xBSP430Periph_USCI_A0 == device) {
 		bits = BIT4 | BIT5;
 		pxsel = &P3SEL;
 	}
 #endif
-#if configBSP430_PERIPH_USE_USCI_A1 - 0
+#if configBSP430_PERIPH_USCI_A1 - 0
 	else if (xBSP430Periph_USCI_A1 == device) {
 		bits = BIT6 | BIT7;
 		pxsel = &P5SEL;
 	}
 #endif
-#if configBSP430_PERIPH_USE_USCI_A2 - 0
+#if configBSP430_PERIPH_USCI_A2 - 0
 	else if (xBSP430Periph_USCI_A2 == device) {
 		bits = BIT4 | BIT5;
 		pxsel = &P9SEL;
 	}
 #endif
-#if configBSP430_PERIPH_USE_USCI_A3 - 0
+#if configBSP430_PERIPH_USCI_A3 - 0
 	else if (xBSP430Periph_USCI_A3 == device) {
 		bits = BIT4 | BIT5;
 		pxsel = &P10SEL;
