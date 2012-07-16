@@ -40,10 +40,8 @@
  * Based on experimentation, the following is assumed or enforced for
  * all supported clock configurations:
  * 
- * @li SELREF is XT1CLK running at 32768 Hz.  The configuration
- *     routine expects the XIN/XOUT pins to have been configured for
- *     their peripheral function prior to being invoked, but will do
- *     the XT1 enabling and fault checking for you.
+ * @li SELREF is XT1CLK running at 32768 Hz.  #ulBSP430ucsConfigure
+ * will enforce this.
  *
  * @li FLLD is consistently set to /2, which is the PUC value and
  *     which is adequate to support speeds up to 32 MiHz with a 32768
@@ -70,7 +68,8 @@
  * @li #usBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the
  * nominal VLOCLK frequency) otherwise.  Be aware that the actual
- * VLOCLK frequency may be different by 10-20%.
+ * VLOCLK frequency may be different by 10-20%, and that if ACLK is
+ * not actually based on XT1CLK the rest of this module may not work.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -108,8 +107,8 @@
  * #iBSP430clockConfigureXT1 and #iBSP430ucsConfigureACLK to ensure
  * the expectation is met.  A call to this function will not return if
  * XT1 cannot be stabilized. */
-unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
-									 short sRSEL );
+unsigned long ulBSP430ucsConfigure (unsigned long ulFrequency_Hz,
+									short sRSEL);
 
 /** Call this to configure ACLK via the UCS peripheral.
  *
