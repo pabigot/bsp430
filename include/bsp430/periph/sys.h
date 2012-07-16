@@ -47,15 +47,15 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_SYS__ */
 
-/** @def configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION
+/** @def configBSP430_SYS_USE_SYSRST_DESCRIPTION
  *
  * Define to a true value to enable text descriptions of reset causes.
  * If left undefined, the text descriptions are dropped reducing
  * application size by several hundred bytes.
  */
-#ifndef configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION
-#define configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION 0
-#endif /* configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION */
+#ifndef configBSP430_SYS_USE_SYSRST_DESCRIPTION
+#define configBSP430_SYS_USE_SYSRST_DESCRIPTION 0
+#endif /* configBSP430_SYS_USE_SYSRST_DESCRIPTION */
 
 /** Generate the events recorded within the system reset vector.
  *
@@ -72,7 +72,7 @@
  *
  * @param ppcDescription Optional parameter that returns a text
  * description of the reset cause that is being returned.  If
- * requested but #configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION is
+ * requested but #configBSP430_SYS_USE_SYSRST_DESCRIPTION is
  * not enabled a single character string "?" will be returned.
  *
  * @return A positive integer value corresponding to a SYSRST_type

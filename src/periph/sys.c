@@ -67,12 +67,12 @@ passing that output through:
 
 typedef struct sysrstiv_pair_t {
 	unsigned char iv;
-#if configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION - 0
+#if configBSP430_SYS_USE_SYSRST_DESCRIPTION - 0
 #define EMIT_SYSRSTIV(_iv,_txt) { iv: _iv, desc: _txt },
 	const char * desc;
-#else /* configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION */
+#else /* configBSP430_SYS_USE_SYSRST_DESCRIPTION */
 #define EMIT_SYSRSTIV(_iv,_txt) { iv: _iv },
-#endif /* configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION */
+#endif /* configBSP430_SYS_USE_SYSRST_DESCRIPTION */
 } sysrstiv_pair_t;
 
 static const sysrstiv_pair_t sysrstiv_pairs[] = {
@@ -252,7 +252,7 @@ xBSP430sysSYSRSTGenerator (unsigned char * pucHaveBOR,
 		*pucHaveBOR = 1;
 	}
 	if (NULL != ppcDescription) {
-#if configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION - 0
+#if configBSP430_SYS_USE_SYSRST_DESCRIPTION - 0
 		const sysrstiv_pair_t * pp = sysrstiv_pairs;
 		const sysrstiv_pair_t * epp = pp + sizeof(sysrstiv_pairs)/sizeof(*sysrstiv_pairs);
 
@@ -260,9 +260,9 @@ xBSP430sysSYSRSTGenerator (unsigned char * pucHaveBOR,
 			++pp;
 		}
 		*ppcDescription = (pp < epp) ? pp->desc : "?";
-#else /* configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION */
+#else /* configBSP430_SYS_USE_SYSRST_DESCRIPTION */
 		*ppcDescription = "?";
-#endif /* configBSP430_PERIPH_SYS_USE_SYSRST_DESCRIPTION */
+#endif /* configBSP430_SYS_USE_SYSRST_DESCRIPTION */
 	}
 	return iv;
 }
