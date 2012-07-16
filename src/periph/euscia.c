@@ -1,7 +1,6 @@
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
-#include <bsp430/periph/euscia.h>
-#include "FreeRTOS.h"
+#include <bsp430/periph/euscia_.h>
 #include "task.h"
 
 /* !BSP430! periph=euscia */

@@ -195,31 +195,9 @@ typedef struct xBSP430periphEUSCIA {
 
 #include "FreeRTOS.h"
 #include "queue.h"
-#include "semphr.h"
 
-/** Structure holding hardware abstraction layer state for eUSCI_A. */
-struct xBSP430eusciaState {
-	/** Flags indicating various things: primarily, whether anybody is
-	 * using the device. */
-	unsigned int flags;
-	
-	/** Pointer to the peripheral register structure. */
-	volatile xBSP430periphEUSCIA * const euscia;
-
-	/** Queue used to collect input via interrupt.  If null,
-	 * interrupts are not used for reception. */
-	xQueueHandle rx_queue;
-
-	/** Queue used to transmit output via interrupt.  If null,
-	 * interrupts are not used for transmission. */
-	xQueueHandle tx_queue;
-
-	/** Total number of received octets */
-	unsigned long num_rx;
-
-	/** Total number of transmitted octets */
-	unsigned long num_tx;
-};
+/* Forward declaration to hardware abstraction layer state for eUSCI_A. */
+struct xBSP430eusciaState;
 
 /** The USCI internal state is private to the implementation. */
 typedef struct xBSP430eusciaState * xBSP430eusciaHandle;
