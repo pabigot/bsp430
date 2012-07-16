@@ -4,6 +4,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+/* !BSP430! periph=euscia */
+/* !BSP430! instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
+
 #define COM_PORT_ACTIVE  0x01
 
 /* Work around missing vector definitions for EUSCI devices */
@@ -205,7 +208,7 @@ static void
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usci_irq (xBSP430eusciaHandle device)
+euscia_irq (xBSP430eusciaHandle device)
 {
 	portBASE_TYPE yield = pdFALSE;
 	portBASE_TYPE rv = pdFALSE;
@@ -236,9 +239,8 @@ usci_irq (xBSP430eusciaHandle device)
 	portYIELD_FROM_ISR(yield);
 }
 
-/* !BSP430! expand=hpl_ba_defn */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_defn] */
-
+/* !BSP430! insert=hpl_ba_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_defn] */
 #if configBSP430_PERIPH_USE_EUSCI_A0 - 0
 static struct xBSP430eusciaState state_EUSCI_A0_ = {
 	.euscia = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A0__
@@ -246,12 +248,15 @@ static struct xBSP430eusciaState state_EUSCI_A0_ = {
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
 
+#if ! (configBSP430_EUSCIA_NO_EUSCI_A0_IRQ - 0)
 static void
 __attribute__((__interrupt__(EUSCI_A0_VECTOR)))
 irq_EUSCI_A0 (void)
 {
-	usci_irq(xBSP430euscia_EUSCI_A0);
+	euscia_irq(xBSP430euscia_EUSCI_A0);
 }
+#endif /* ! configBSP430_EUSCIA_NO_EUSCI_A0_IRQ */
+
 #endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
 
 #if configBSP430_PERIPH_USE_EUSCI_A1 - 0
@@ -261,12 +266,15 @@ static struct xBSP430eusciaState state_EUSCI_A1_ = {
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
 
+#if ! (configBSP430_EUSCIA_NO_EUSCI_A1_IRQ - 0)
 static void
 __attribute__((__interrupt__(EUSCI_A1_VECTOR)))
 irq_EUSCI_A1 (void)
 {
-	usci_irq(xBSP430euscia_EUSCI_A1);
+	euscia_irq(xBSP430euscia_EUSCI_A1);
 }
+#endif /* ! configBSP430_EUSCIA_NO_EUSCI_A1_IRQ */
+
 #endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
 
 #if configBSP430_PERIPH_USE_EUSCI_A2 - 0
@@ -276,36 +284,44 @@ static struct xBSP430eusciaState state_EUSCI_A2_ = {
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;
 
+#if ! (configBSP430_EUSCIA_NO_EUSCI_A2_IRQ - 0)
 static void
 __attribute__((__interrupt__(EUSCI_A2_VECTOR)))
 irq_EUSCI_A2 (void)
 {
-	usci_irq(xBSP430euscia_EUSCI_A2);
+	euscia_irq(xBSP430euscia_EUSCI_A2);
 }
+#endif /* ! configBSP430_EUSCIA_NO_EUSCI_A2_IRQ */
+
 #endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_defn] */
+/* !BSP430! end=hpl_ba_defn */
+
 
 static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
 {
-/* !BSP430! expand=hpl_hal_demux */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_hal_demux] */
-
+/* !BSP430! insert=hpl_hal_demux */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_hal_demux] */
 #if configBSP430_PERIPH_USE_EUSCI_A0 - 0
 	if (BSP430_PERIPH_EUSCI_A0 == periph) {
 		return xBSP430euscia_EUSCI_A0;
 	}
 #endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
+
 #if configBSP430_PERIPH_USE_EUSCI_A1 - 0
 	if (BSP430_PERIPH_EUSCI_A1 == periph) {
 		return xBSP430euscia_EUSCI_A1;
 	}
 #endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
+
 #if configBSP430_PERIPH_USE_EUSCI_A2 - 0
 	if (BSP430_PERIPH_EUSCI_A2 == periph) {
 		return xBSP430euscia_EUSCI_A2;
 	}
 #endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
+
 /* END AUTOMATICALLY GENERATED CODE [hpl_hal_demux] */
+/* !BSP430! end=hpl_hal_demux */
 	return NULL;
 }
