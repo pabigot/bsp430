@@ -31,7 +31,8 @@
 
 #include <bsp430/periph/fllplus.h>
 
-unsigned char ucBSP430fllplusConfigure( const xFLLPLUSDefn * pxConfig )
+unsigned char
+ucBSP430fllplusConfigure (const xBSP430fllplusConfig * pxConfig)
 {
 	unsigned char ucReturnValue;
 	unsigned int uxStableLoopsLeft = 100;

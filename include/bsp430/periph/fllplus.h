@@ -44,8 +44,8 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_CLOCKS_FLLPLUS_H
-#define BSP430_CLOCKS_FLLPLUS_H
+#ifndef BSP430_PERIPH_FLLPLUS_H
+#define BSP430_PERIPH_FLLPLUS_H
 
 #include <bsp430/clocks.h>
 #include <bsp430/periph.h>
@@ -61,7 +61,7 @@
  * will be (N+1)*f_crystal, optionally scaled by a feedback
  * pre-divider (multiplying the output frequency).
  */
-typedef struct xFLLPLUS_DEFN {
+typedef struct xBSP430fllplusConfig {
 	/** Value for FLL_CTL0.  This configures the pre-divider DCOPLUS,
 	 * the LFTX1 mode XTS_FLL, and the oscilator capacitor.  Other
 	 * bits denote oscillator faults and are read-only. */
@@ -83,7 +83,7 @@ typedef struct xFLLPLUS_DEFN {
 	 * bits must not be zero. */
 	unsigned char ucSCFQCTL;
 
-} xFLLPLUSDefn;
+} xBSP430fllplusConfig;
 
 /** Call this to reconfigure the FLL+ peripheral.
  *
@@ -95,6 +95,6 @@ typedef struct xFLLPLUS_DEFN {
  *
  * @return pdTrue if the oscillator has stabilized within the
  * default wait time, and pdFalse if not. */
-unsigned char ucBSP430fllplusConfigure( const xFLLPLUSDefn * pxConfig );
+unsigned char ucBSP430fllplusConfigure (const xBSP430fllplusConfig * pxConfig);
 
-#endif /* BSP430_CLOCKS_FLLPLUS_H */
+#endif /* BSP430_PERIPH_FLLPLUS_H */
