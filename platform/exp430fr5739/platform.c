@@ -1,7 +1,7 @@
 #include <bsp430/periph/ucs.h>
 #include <bsp430/timers/timerA0.h>
 #include <bsp430/utility/led.h>
-#include <bsp430/periph/eusci_a.h>
+#include <bsp430/periph/euscia.h>
 #include "serial.h"
 #include "task.h"
 
@@ -56,7 +56,7 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 	if (0) {
 	}
 #if configBSP430_PERIPH_USE_EUSCI_A0 - 0
-	else if (xBSP430Periph_EUSCI_A0 == device) {
+	else if (BSP430_PERIPH_EUSCI_A0 == device) {
 		bits = BIT0 | BIT1;
 		if (enablep) {
 			P2SEL0 &= ~bits;
@@ -72,12 +72,12 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 	(void)bits;
 #if configBSP430_PERIPH_USE_EUSCI_A1 - 0
 #error Platform pins not configured
-	else if (xBSP430Periph_EUSCI_A1 == device) {
+	else if (BSP430_PERIPH_EUSCI_A1 == device) {
 	}
 #endif
 #if configBSP430_PERIPH_USE_EUSCI_B0 - 0
 #error Platform pins not configured
-	else if (xBSP430Periph_EUSCI_B0 == device) {
+	else if (BSP430_PERIPH_EUSCI_B0 == device) {
 	}
 #endif
 	return -1;

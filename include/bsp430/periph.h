@@ -67,7 +67,14 @@
  * other cases arbitrary values may be used, so in general objects
  * with this type should be referenced only equality testing against
  * the constant handle identifier provided in the peripheral
- * header. */
-typedef unsigned int xBSP430periphHandle;
+ * header.
+ *
+ * The value zero is reserved and available as BSP430_PERIPH_NONE to
+ * indicate no peripheral.
+ *
+ * Negative values indicate an error. */
+typedef int xBSP430periphHandle;
+
+#define BSP430_PERIPH_NONE ((xBSP430periphHandle)0)
 
 #endif /* BSP430_PERIPH_H */

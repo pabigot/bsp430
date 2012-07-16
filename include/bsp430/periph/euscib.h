@@ -132,7 +132,7 @@ typedef struct xBSP430periphEUSCI_B {
 	/** @endcond */
 } xBSP430periphEUSCI_B;
 
-/* BEGIN EMBED 5xx_periph_decl */
+/* !BSP430_EMBED -t periph_decl EUSCI_A0 EUSCI_A1 EUSCI_A2 EUSCI_B0 */
 /* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
 
 /** Handle for the raw USCI_B3 device.  The handle may be referenced 
@@ -227,7 +227,7 @@ struct xBSP430eUSCIA {
 };
 
 /** The USCI internal state is private to the implementation. */
-typedef struct xBSP430eUSCIA * xBSP430eUSCIAHandle;
+typedef struct xBSP430_eusci_a * xBSP430eusci_aHandle;
 
 /** Request and configure a USCI device in UART mode.
  *
@@ -316,3 +316,4 @@ extern xBSP430eUSCIAHandle const xBSP430EUSCI_A2;
 /* END EMBED eusci_a_decl: AUTOMATICALLY GENERATED CODE */
 
 #endif /* BSP430_PERIPH_EUSCI_A_H */
+p

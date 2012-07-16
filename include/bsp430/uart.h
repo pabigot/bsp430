@@ -94,18 +94,18 @@ iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
 
 #endif /* configBSP430_UART_USE_5XX_USCI */
 
-#ifndef configBSP430_UART_USE_EUSCI
-/** Define to true value to select xBSP430eUSCI_A as the underlying
- * UART implementation. */
-#define configBSP430_UART_USE_EUSCI 0
-#endif /* configBSP430_UART_USE_EUSCI */
+#ifndef configBSP430_UART_USE_EUSCIA
+/** Define to true value to select eUSCI_A as the underlying UART
+ * implementation. */
+#define configBSP430_UART_USE_EUSCIA 0
+#endif /* configBSP430_UART_USE_EUSCIA */
 
-#if configBSP430_UART_USE_EUSCI - 0
+#if configBSP430_UART_USE_EUSCIA - 0
 
-#include <bsp430/periph/eusci_a.h>
+#include <bsp430/periph/euscia.h>
 
 /** Alias for device providing UART capabilities */
-typedef xBSP430eUSCIAHandle xBSP430UARTHandle;
+typedef xBSP430eusciaHandle xBSP430UARTHandle;
 
 static __inline__ xBSP430UARTHandle
 xBSP430UARTOpen (xBSP430periphHandle xPeriph,
@@ -114,25 +114,25 @@ xBSP430UARTOpen (xBSP430periphHandle xPeriph,
 				 xQueueHandle rx_queue,
 				 xQueueHandle tx_queue)
 {
-	return xBSP430eUSCIAOpenUART(xPeriph, control_word, baud, rx_queue, tx_queue);
+	return xBSP430eusciaOpenUART(xPeriph, control_word, baud, rx_queue, tx_queue);
 }
 
 static __inline__ int
 iBSP430UARTClose (xBSP430UARTHandle xUART)
 {
-	return iBSP430eUSCIAClose(xUART);
+	return iBSP430eusciaClose(xUART);
 }
 
 static __inline__ int
 iBSP430UARTputc (int c, xBSP430UARTHandle xUART)
 {
-	return iBSP430eUSCIAputc(c, xUART);
+	return iBSP430eusciaPutc(c, xUART);
 }
 
 static __inline__ int
 iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
 {
-	return iBSP430eUSCIAputs(str, xUART);
+	return iBSP430eusciaPuts(str, xUART);
 }
 
 #endif /* configBSP430_UART_USE_EUSCI */

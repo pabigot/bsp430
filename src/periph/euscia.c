@@ -1,6 +1,6 @@
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
-#include <bsp430/periph/eusci_a.h>
+#include <bsp430/periph/euscia.h>
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -14,10 +14,10 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
-static xBSP430eUSCIAHandle periphToDevice (xBSP430periphHandle periph);
+static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph);
 
-xBSP430eUSCIAHandle
-xBSP430eUSCIAOpenUART (xBSP430periphHandle periph,
+xBSP430eusciaHandle
+xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 					   unsigned int control_word,
 					   unsigned long baud,
 					   xQueueHandle rx_queue,
@@ -25,7 +25,7 @@ xBSP430eUSCIAOpenUART (xBSP430periphHandle periph,
 {
 	unsigned short aclk_Hz;
 	unsigned long brclk_Hz;
-	xBSP430eUSCIAHandle device = periphToDevice(periph);
+	xBSP430eusciaHandle device = periphToDevice(periph);
 	unsigned long n;
 	uint16_t br;
 	uint16_t os16 = 0;
@@ -93,7 +93,7 @@ xBSP430eUSCIAOpenUART (xBSP430periphHandle periph,
 }
 
 int
-iBSP430eUSCIAClose (xBSP430eUSCIAHandle device)
+iBSP430eusciaClose (xBSP430eusciaHandle device)
 {
 	device->usci->ctlw0 = UCSWRST;
 	iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(device->usci), 0);
@@ -120,7 +120,7 @@ iBSP430eUSCIAClose (xBSP430eUSCIAHandle device)
 	} while (0)
 
 void
-vBSP430eUSCIAWakeupTransmit (xBSP430eUSCIAHandle device)
+vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle device)
 {
 	BSP430_ENTER_CRITICAL();
 	USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
@@ -135,7 +135,7 @@ vBSP430eUSCIAWakeupTransmit (xBSP430eUSCIAHandle device)
 	} while (0)
 
 int
-iBSP430eUSCIAputc (int c, xBSP430eUSCIAHandle device)
+iBSP430eusciaPutc (int c, xBSP430eusciaHandle device)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
@@ -144,7 +144,7 @@ iBSP430eUSCIAputc (int c, xBSP430eUSCIAHandle device)
 	if (device->tx_queue) {
 		do {
 			passp = xQueueSendToBack(device->tx_queue, &c, delay);
-			vBSP430eUSCIAWakeupTransmit(device);
+			vBSP430eusciaWakeupTransmit(device);
 			if (! passp) {
 				delay = MAX_DELAY;
 			}
@@ -156,7 +156,7 @@ iBSP430eUSCIAputc (int c, xBSP430eUSCIAHandle device)
 }
 
 int
-iBSP430eUSCIAputs (const char* str, xBSP430eUSCIAHandle device)
+iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle device)
 {
 	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
 	portTickType delay = 0;
@@ -167,15 +167,15 @@ iBSP430eUSCIAputs (const char* str, xBSP430eUSCIAHandle device)
 			if (xQueueSendToBack(device->tx_queue, str, delay)) {
 				++str;
 				if (delay) {
-					vBSP430eUSCIAWakeupTransmit(device);
+					vBSP430eusciaWakeupTransmit(device);
 					delay = 0;
 				}
 			} else {
-				vBSP430eUSCIAWakeupTransmit(device);
+				vBSP430eusciaWakeupTransmit(device);
 				delay = MAX_DELAY;
 			}
 		}
-		vBSP430eUSCIAWakeupTransmit(device);
+		vBSP430eusciaWakeupTransmit(device);
 	} else {
 		while (*str) {
 			RAW_TRANSMIT(device->usci, *str);
@@ -205,7 +205,7 @@ static void
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usci_irq (xBSP430eUSCIAHandle device)
+usci_irq (xBSP430eusciaHandle device)
 {
 	portBASE_TYPE yield = pdFALSE;
 	portBASE_TYPE rv = pdFALSE;
@@ -240,70 +240,70 @@ usci_irq (xBSP430eUSCIAHandle device)
 /* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
 
 #if configBSP430_PERIPH_USE_EUSCI_A0 - 0
-static struct xBSP430eUSCIA xBSP430EUSCI_A0_ = {
-	.usci = (xBSP430periphEUSCI_A *)__MSP430_BASEADDRESS_EUSCI_A0__
+static struct xBSP430eusciaState xBSP430EUSCI_A0_ = {
+	.usci = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A0__
 };
 
-xBSP430eUSCIAHandle const xBSP430EUSCI_A0 = &xBSP430EUSCI_A0_;
+xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &xBSP430EUSCI_A0_;
 
 static void
 __attribute__((__interrupt__(EUSCI_A0_VECTOR)))
 irq_EUSCI_A0 (void)
 {
-	usci_irq(xBSP430EUSCI_A0);
+	usci_irq(xBSP430euscia_EUSCI_A0);
 }
 #endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
 
 #if configBSP430_PERIPH_USE_EUSCI_A1 - 0
-static struct xBSP430eUSCIA xBSP430EUSCI_A1_ = {
-	.usci = (xBSP430periphEUSCI_A *)__MSP430_BASEADDRESS_EUSCI_A1__
+static struct xBSP430eusciaState xBSP430EUSCI_A1_ = {
+	.usci = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A1__
 };
 
-xBSP430eUSCIAHandle const xBSP430EUSCI_A1 = &xBSP430EUSCI_A1_;
+xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &xBSP430EUSCI_A1_;
 
 static void
 __attribute__((__interrupt__(EUSCI_A1_VECTOR)))
 irq_EUSCI_A1 (void)
 {
-	usci_irq(xBSP430EUSCI_A1);
+	usci_irq(xBSP430euscia_EUSCI_A1);
 }
 #endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
 
 #if configBSP430_PERIPH_USE_EUSCI_A2 - 0
-static struct xBSP430eUSCIA xBSP430EUSCI_A2_ = {
-	.usci = (xBSP430periphEUSCI_A *)__MSP430_BASEADDRESS_EUSCI_A2__
+static struct xBSP430eusciaState xBSP430EUSCI_A2_ = {
+	.usci = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A2__
 };
 
-xBSP430eUSCIAHandle const xBSP430EUSCI_A2 = &xBSP430EUSCI_A2_;
+xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &xBSP430EUSCI_A2_;
 
 static void
 __attribute__((__interrupt__(EUSCI_A2_VECTOR)))
 irq_EUSCI_A2 (void)
 {
-	usci_irq(xBSP430EUSCI_A2);
+	usci_irq(xBSP430euscia_EUSCI_A2);
 }
 #endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
 
 /* END EMBED eusci_a_defn: AUTOMATICALLY GENERATED CODE */
 
-static xBSP430eUSCIAHandle periphToDevice (xBSP430periphHandle periph)
+static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
 {
 /* BEGIN EMBED eusci_a_demux */
 /* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
 
 #if configBSP430_PERIPH_USE_EUSCI_A0 - 0
-	if (xBSP430Periph_EUSCI_A0 == periph) {
-		return xBSP430EUSCI_A0;
+	if (BSP430_PERIPH_EUSCI_A0 == periph) {
+		return xBSP430euscia_EUSCI_A0;
 	}
 #endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
 #if configBSP430_PERIPH_USE_EUSCI_A1 - 0
-	if (xBSP430Periph_EUSCI_A1 == periph) {
-		return xBSP430EUSCI_A1;
+	if (BSP430_PERIPH_EUSCI_A1 == periph) {
+		return xBSP430euscia_EUSCI_A1;
 	}
 #endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
 #if configBSP430_PERIPH_USE_EUSCI_A2 - 0
-	if (xBSP430Periph_EUSCI_A2 == periph) {
-		return xBSP430EUSCI_A2;
+	if (BSP430_PERIPH_EUSCI_A2 == periph) {
+		return xBSP430euscia_EUSCI_A2;
 	}
 #endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
 /* END EMBED eusci_a_demux: AUTOMATICALLY GENERATED CODE */
