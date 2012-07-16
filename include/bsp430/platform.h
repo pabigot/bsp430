@@ -55,12 +55,15 @@
  * @li Enable the platform crystal, if available
  * @li Configure the clocks based on configCPU_CLOCK_HZ
  * @li Configure TimerA0
- * @li Set up a 9600 baud console
  */
 void vBSP430platformSetup ();
 
 /** Configure the pins associated with a given peripheral.
  *
+ * @note All platforms should support #BSP430_PERIPH_XT1.  Consult the
+ * MCU data sheet to determine which the appropriate port selection
+ * register configuration to enable XIN and XOUT.
+ * 
  * @param device Raw peripheral device for which pins should be
  * configured.
  * 

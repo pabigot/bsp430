@@ -53,7 +53,15 @@ int
 iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 {
 	unsigned char bits = 0;
-	if (0) {
+	if (BSP430_PERIPH_XT1 == device) {
+		bits = BIT4 | BIT5;
+		if (enablep) {
+			PJSEL0 |= bits;
+		} else {
+			PJSEL0 &= ~bits;
+		}
+		PJSEL1 &= ~bits;
+		return 0;
 	}
 #if configBSP430_PERIPH_EUSCI_A0 - 0
 	else if (BSP430_PERIPH_EUSCI_A0 == device) {
@@ -85,12 +93,16 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 
 void vBSP430platformSetup ()
 {
+	int rc;
+	
 	/* Hold off watchdog */
 	WDTCTL = WDTPW + WDTHOLD;
 
-	/* Enable XT1 functions and clock */
-	PJSEL0 |= BIT4 | BIT5;
-	PJSEL1 &= ~(BIT4 | BIT5);
+	/* Note: Platform crystal requires more than one second to
+	 * stabilize! */
+	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+	iBSP430csConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
+    ulBSP430csConfigureMCLK(configCPU_CLOCK_HZ);
 
 	/* Enable basic timer */
 	vBSP430timerA0Configure();

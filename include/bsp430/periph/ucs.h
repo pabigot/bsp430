@@ -103,12 +103,26 @@
  * 
  * @return an estimate of the actual running frequency.
  *
- * @note This function expects a valid clock source on XT1.  Port pin
- * configuration for XIN and XOUT is device specific and should be
- * done prior to invoking this function. */
-
+ * @note This function expects a valid 32 kiHz clock source on XT1,
+ * and that this will be used as the source for ACLK.  It invokes
+ * #iBSP430clockConfigureXT1 and #iBSP430ucsConfigureACLK to ensure
+ * the expectation is met.  A call to this function will not return if
+ * XT1 cannot be stabilized. */
 unsigned long ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 									 short sRSEL );
+
+/** Call this to configure ACLK via the UCS peripheral.
+ *
+ * Prior to invoking this, use #iBSP430clockConfigureXT1 to check for
+ * crystal stability, if ACLK is to be sourced from XT1.
+ * 
+ * @param sela The constant to assign to the SELA field of UCSCTL4.
+ * Standard values are @c SELA__XT1CLK and @c SELA__VLOCLK.
+ *
+ * @return Zero if the configuration was successful; -1 if the value
+ * for @a sela was not valid.
+ */
+int iBSP430ucsConfigureACLK (unsigned int sela);
 
 /** Call this periodically to trim the FLL.
  *

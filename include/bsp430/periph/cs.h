@@ -68,37 +68,6 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_CS__ */
 
-/** @def configBSP430_CS_XT1_DELAY_CYCLES
- *
- * Define this to the number of MCLK cycles that
- * #xBSP430csACLKSourceXT1 should delay, after clearing oscillator
- * faults, before checking for oscillator stability.  This must be a
- * compile-time constant integer compatible with <tt>unsigned
- * long</tt>.  If this value is too short, an oscillator fault may not
- * be revealed until after the outer loop terminates; if it is too
- * long, the return from #xBSP430csACLKSourceXT1 is delayed.
- *
- * See also the @a usLoops parameter to #xBSP430csACLKSourceXT1.  To
- * wait up to one second for the crystal to stabilize, use:
- *
- * @code
- * // Set up pins for XT1 function
- * if (! xBSP430csACLKSourceXT1(1, configCPU_CLOCK_HZ / configBSP430_CS_XT1_DELAY_CYCLES)) {
- *    // XT1 not available, return pins to GPIO function
- * }
- * @endcode
- *
- * Be aware that it may take several hundred milliseconds to stabilize
- * the crystal; 500ms has been observed to be too short.
- *
- * @note The value depends on the MCLK frequency at the time
- * #xBSP430csACLKSourceXT1 is invoked.  It is suggested that the
- * crystal be checked and ACLK configured prior to configuring MCLK.
- */
-#ifndef configBSP430_CS_XT1_DELAY_CYCLES
-#define configBSP430_CS_XT1_DELAY_CYCLES 100000
-#endif /* configBSP430_CS_XT1_DELAY_CYCLES */
-
 /** Call this to configure MCLK and SMCLK via CS peripheral.
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.  The
@@ -112,32 +81,17 @@
  */
 unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
 
-/** Call this to configure ACLK to use XT1.
+/** Call this to configure ACLK via the CS peripheral.
  *
- * If @a xUseXT1 is @c pdTRUE, check whether the crystal is present and
- * stabilized.  If so, configure ACLK to source from XT1 and return
- * pdTRUE.  Otherwise configure ACLK to source from VLOCLK and return
- * pdFALSE.
+ * Prior to invoking this, use #iBSP430clockConfigureXT1 to check for
+ * crystal stability, if ACLK is to be sourced from XT1.
+ * 
+ * @param sela The constant to assign to the SELA field of CSCTL2.
+ * Standard values are @c SELA__XT1CLK and @c SELA_VLOCLK.
  *
- * Stabilization is checked by clearing the XT1 oscillator faults,
- * waiting #configBSP430_CS_XT1_DELAY_CYCLES MCLK cycles, and checking
- * for a fault.  This is repeated, limited by @a usLoops, until
- * stabilization is detected.  Prior to invoking this function the
- * crystal's port pins must be configured to their peripheral function
- * as specified in the MCU data sheet.
- *
- * @param xUseXT1 Pass a nonzero value if the ACLK should be sourced
- * from XT1.  Pass zero if it should be sourced from VLOCLK.
- *
- * @param usLoops The number of times the stabilization check should
- * be repeated.  If stabilization has not been achieved after this
- * many loops, assume the crystal is absent and configure for VLOCLK.
- * Pass a value of zero to loop until stabilization is detected
- * regardless of how long that might take.
- *
- * @return Nonzero iff ACLK is sourced from a stable XT1.
+ * @return Zero if the configuration was successful; -1 if the value
+ * for @a sela was not valid.
  */
-portBASE_TYPE xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
-									  unsigned short usLoops);
+int iBSP430csConfigureACLK (unsigned int sela);
 
 #endif /* BSP430_PERIPH_CS_H */

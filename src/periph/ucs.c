@@ -34,6 +34,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+/* Mask for SELA bits in UCSCTL4 */
+#define SELA_MASK (SELA0 | SELA1 | SELA2)
+
 /* Frequency measurement occurs over this duration when determining
  * whether trim is required.  The number of SMCLK ticks in an ACLK
  * period is the target frequency divided by 32768; accumulating over
@@ -166,6 +169,48 @@ usBSP430clockACLK_Hz ()
 	return 10000;
 }
 
+int
+iBSP430clockConfigureXT1 (int enablep,
+						  int loop_limit)
+{
+	int loop_delta;
+	int rc;
+	
+	rc = iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, enablep);
+	if ((0 != rc) || (! enablep)) {
+		return rc;
+	}
+	loop_delta = (0 < loop_limit) ? 1 : 0;
+
+	/* Low frequency XT1 needed; XT2 off.  Spin at high drive to
+	 * stability, then drop back. */
+	UCSCTL6 = XT2OFF | XT1DRIVE_3 | XCAP_0;
+	do {
+		UCSCTL7 &= ~XT1LFOFFG;
+		loop_limit -= loop_delta;
+		__delay_cycles(configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+
+	} while ((UCSCTL7 & XT1LFOFFG) && (0 != loop_limit));
+	UCSCTL6 &= ~XT1DRIVE_3;
+
+	rc = !(UCSCTL7 & XT1LFOFFG);
+	if (! rc) {
+		UCSCTL6 |= XT1OFF;
+		(void)iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, 0);
+	}
+	return rc;
+}
+
+
+int iBSP430ucsConfigureACLK (unsigned int sela)
+{
+	if (sela & ~SELA_MASK) {
+		return -1;
+	}
+	UCSCTL4 = (UCSCTL4 & ~SELA_MASK) | sela;
+	return 0;
+}
+
 unsigned long
 ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 					   short sRSEL )
@@ -201,13 +246,11 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 
 	BSP430_ENTER_CRITICAL();
 
-	/* Low frequency XT1 needed; XT2 off.  Spin at high drive to
-	 * stability, then drop back. */
-	UCSCTL6 = XT2OFF | XT1DRIVE_3 | XCAP_0;
-	do {
-		UCSCTL7 &= ~XT1LFOFFG;
-	} while (UCSCTL7 & XT1LFOFFG);
-	UCSCTL6 &= ~XT1DRIVE_3;
+	/* Require XT1 valid and use it as ACLK source */
+	if (UCSCTL7 & XT1LFOFFG) {
+		(void)iBSP430clockConfigureXT1 (1, -1);
+	}
+	iBSP430ucsConfigureACLK(SELA__XT1CLK);
 
 	/* All supported frequencies can be efficiently achieved using
 	 * FFLD set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).
@@ -221,7 +264,7 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 	UCSCTL1 = ctl1;
 	UCSCTL2 = ctl2;
 	UCSCTL3 = SELREF__XT1CLK | FLLREFDIV_0;
-	UCSCTL4 = SELA__XT1CLK | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+	UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
 
 	targetFrequency_tsp_ = ulFrequency_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
 	targetFrequency_tsp_ >>= configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT;

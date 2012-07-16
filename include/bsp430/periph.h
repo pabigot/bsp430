@@ -72,10 +72,20 @@
  * The value zero is reserved and available as #BSP430_PERIPH_NONE to
  * indicate no peripheral.
  *
+ * Odd values are reserved for peripherals that are not associated
+ * with registers, such as #BSP430_PERIPH_XT1.
+ *
  * Negative values indicate an error. */
 typedef int xBSP430periphHandle;
 
 /** HPL handle specifying that no peripheral has been identified. */
 #define BSP430_PERIPH_NONE ((xBSP430periphHandle)0)
+
+/** HPL handle identifying the XT1 crystal functionality.
+ *
+ * This is used by platform-independent clock peripherals to request
+ * that the pins related to XIN and XOUT be configured to their
+ * peripheral function. */
+#define BSP430_PERIPH_XT1 ((xBSP430periphHandle)1)
 
 #endif /* BSP430_PERIPH_H */

@@ -15,7 +15,9 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 {
 	uint8_t bits = 0;
 	volatile uint8_t* pxsel = 0;
-	if (0) {
+	if (BSP430_PERIPH_XT1 == device) {
+		bits = BIT0 | BIT1;
+		pxsel = &P7SEL;
 	}
 #if configBSP430_PERIPH_USCI_A0 - 0
 	else if (xBSP430Periph_USCI_A0 == device) {
@@ -55,11 +57,14 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 
 void vBSP430platformSetup ()
 {
+	int rc;
+	
 	/* Hold off watchdog */
 	WDTCTL = WDTPW + WDTHOLD;
 
 	/* Enable XT1 functions and clock */
-	P7SEL |= BIT0 | BIT1;
+	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+	iBSP430ucsConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
 	ulBSP430ucsConfigure( configCPU_CLOCK_HZ, -1 );
 
 	/* Enable basic timer */

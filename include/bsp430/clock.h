@@ -61,6 +61,39 @@
 #define configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT 0
 #endif /* configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
 
+/** @def configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES
+ *
+ * Define this to the number of MCLK cycles that
+ * #iBSP430clockConfigureXT1 should delay, after clearing oscillator
+ * faults, before checking for oscillator stability.  This must be a
+ * compile-time constant integer compatible with <tt>unsigned
+ * long</tt>.  If this value is too short, #iBSP430clockConfigureXT1
+ * may prematurely decide that the crystal is working; if it is too
+ * long, the return from #iBSP430clockConfigureXT1 is delayed.
+ *
+ * @note The value depends on the MCLK frequency at the time
+ * #iBSP430clockConfigureXT1 is invoked.  It is suggested that the
+ * crystal be checked and ACLK configured prior to configuring MCLK
+ * for the application, when the MCU power-up MCLK frequency of 1 MHz
+ * is in effect.  If this is done, the nominal value for this option
+ * should delay roughly 100msec, which should be long enough to detect
+ * an unstable crystal.  Repeated checks are required to detect a
+ * stable crystal, so to delay for up to one second use:
+ *
+ * @code
+ * if (0 >= iBSP430clockConfigureXT1(1, 1000000L / configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES)) {
+ *    // XT1 not available
+ * }
+ * @endcode
+ *
+ * Crystal stabilization can take hundreds of milliseconds; on some
+ * platforms the one second delay above is insufficient.
+ */
+#ifndef configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES
+#define configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES 100000UL
+#endif /* configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES */
+
+
 /** Return the best available estimate of MCLK frequency.
  *
  * Depending on clock capabilities, this may simply return
@@ -87,5 +120,37 @@ unsigned long ulBSP430clockSMCLK_Hz ();
  *
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned short usBSP430clockACLK_Hz ();
+
+/** Configure (or deconfigure) XT1 as a clock source.
+ *
+ * The peripheral-specific implementation will use
+ * #iBSP430platformConfigurePeripheralPins with #BSP430_PERIPH_XT1 to
+ * configure the crystal.  If crystal functionality has been
+ * requested, it then clears oscillator faults, delays
+ * #configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES, then detects
+ * whether the crystal is functioning.  It terminates with success
+ * once the oscillator remains unfaulted after the delay, and
+ * otherwise repeats the clear/delay/check process as specified by @a
+ * loop_limit.
+ * 
+ * @param enablep Pass a nonzero value to configure XIN/XOUT for
+ * crystal functionality and to loop until the crystal is stabilized
+ * or has failed to stabilize.  Pass a zero value to turn off the
+ * crystal function.
+ *
+ * @param loop_limit The number of times the stabilization check
+ * should be repeated.  If stabilization has not been achieved after
+ * this many loops, assume the crystal is absent and configure for
+ * VLOCLK.  A negative value indicates the process should loop until
+ * stabilization is detected.  The parameter is ignored if @a enablep
+ * is zero.
+ *
+ * @return Zero if XT1 was disabled by the call, and a positive value
+ * if XT1 is stable on completion of the call (available as a clock
+ * source).  A negative value indicates an error, such as inability to
+ * configure XIN/XOUT pins.
+ */
+int iBSP430clockConfigureXT1 (int enablep,
+							  int loop_limit);
 
 #endif /* BSP430_CLOCK_H */

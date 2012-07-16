@@ -30,12 +30,13 @@
  */
 
 #include <bsp430/periph/cs.h>
-#include <stdint.h>
+#include <bsp430/platform.h>
 
 #if 5 < configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
 #error FR5xx CS module cannot express configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
 #endif /* configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
 
+/* Mask for SELA bits in CSCTL2 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
 
 unsigned long
@@ -77,7 +78,7 @@ ulBSP430clockSMCLK_Hz ()
 unsigned short
 usBSP430clockACLK_Hz ()
 {
-	if ((SELA__XT1CLK == (CSCTL2 & (SELA0 | SELA1 | SELA2)))
+	if ((SELA__XT1CLK == (CSCTL2 & SELA_MASK))
 		&& !(SFRIFG1 & OFIFG)) {
 		return 32768U;
 	}
@@ -104,37 +105,52 @@ ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz)
 	CSCTL0_H = 0xA5;
 	CSCTL1 = csctl1;
 	CSCTL2 = (CSCTL2 & SELA_MASK) | SELS__DCOCLK | SELM__DCOCLK;
-	CSCTL3 = configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT << 4;
+	CSCTL3 = configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0;
 	CSCTL0_H = !0xA5;
 
 	return ulBSP430clockMCLK_Hz();
 }
 
-portBASE_TYPE
-xBSP430csACLKSourceXT1 (portBASE_TYPE xUseXT1,
-						unsigned short usLoops)
+int
+iBSP430clockConfigureXT1 (int enablep,
+						  int loop_limit)
 {
-	CSCTL0_H = 0xA5;
-	if (xUseXT1) {
-		unsigned short loop_delta = (0 == usLoops) ? 0 : 1;
-
-		CSCTL4 = (CSCTL4 | XT1DRIVE_0) & ~XT1OFF;
-		do {
-			CSCTL5 &= ~XT1OFFG;                     // Clear XT1 fault flag
-			SFRIFG1 &= ~OFIFG;
-			usLoops -= loop_delta;
-			__delay_cycles(configBSP430_CS_XT1_DELAY_CYCLES);
-		} while ((SFRIFG1 & OFIFG) && (0 < usLoops));
-		xUseXT1 = ! (SFRIFG1 & OFIFG);
-		if (! xUseXT1) {
-			CSCTL4 |= XT1OFF;
-		}
+	int loop_delta;
+	int rc;
+	
+	rc = iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, enablep);
+	if ((0 != rc) || (! enablep)) {
+		return rc;
 	}
-	if (xUseXT1) {
-		CSCTL2 = (CSCTL2 & ~SELA_MASK) | SELS__XT1CLK;
-	} else {
-		CSCTL2 = (CSCTL2 & ~SELA_MASK) | SELS__VLOCLK;
+	CSCTL0_H = 0xA5;
+	loop_delta = (0 < loop_limit) ? 1 : 0;
+
+	CSCTL4 = (CSCTL4 | XT1DRIVE_3) & ~(XTS | XT1BYPASS | XT1OFF);
+	do {
+		CSCTL5 &= ~XT1OFFG;
+		SFRIFG1 &= ~OFIFG;
+		loop_limit -= loop_delta;
+		__delay_cycles(configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+	} while ((CSCTL5 & XT1OFFG) && (0 != loop_limit));
+	CSCTL4 = CSCTL4 & ~XT1DRIVE_3;
+	rc = !(CSCTL5 & XT1OFFG);
+	if (! rc) {
+		CSCTL4 |= XT1OFF;
+		(void)iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, 0);
 	}
 	CSCTL0_H = !0xA5;
-	return xUseXT1;
+	return rc;
+}
+
+int
+iBSP430csConfigureACLK (unsigned int sela)
+{
+	if (sela & ~SELA_MASK) {
+		return -1;
+	}
+
+	CSCTL0_H = 0xA5;
+	CSCTL2 = (CSCTL2 & ~SELA_MASK) | sela;
+	CSCTL0_H = !0xA5;
+	return 0;
 }
