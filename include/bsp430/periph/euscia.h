@@ -47,7 +47,7 @@
 
 #include <bsp430/periph.h>
 
-/** Register map for eUSCI_A peripheral. */
+/** Register map for eUSCI_A peripheral hardware presentation layer. */
 typedef struct xBSP430periphEUSCIA {
 	/** @cond Doxygen_Suppress */
 	union {						/* 0x00 */
@@ -87,8 +87,8 @@ typedef struct xBSP430periphEUSCIA {
 	/** @endcond */
 } xBSP430periphEUSCIA;
 
-/* !BSP430! expand=hpl_decl */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+/* !BSP430! expand=hpl_ba_decl */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 
 /** @def configBSP430_PERIPH_USE_EUSCI_A0
  *
@@ -132,20 +132,20 @@ typedef struct xBSP430periphEUSCIA {
  * value. */
 #define BSP430_PERIPH_EUSCI_A2 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_EUSCI_A2__))
 
-/* END EMBED 5xx_periph_decl: AUTOMATICALLY GENERATED CODE */
+/* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"
 
-/** Structure holding USCI-related information */
+/** Structure holding hardware abstraction layer state for eUSCI_A. */
 struct xBSP430eusciaState {
 	/** Flags indicating various things: primarily, whether anybody is
 	 * using the device. */
 	unsigned int flags;
 	
 	/** Pointer to the peripheral register structure. */
-	volatile xBSP430periphEUSCIA * const usci;
+	volatile xBSP430periphEUSCIA * const euscia;
 
 	/** Queue used to collect input via interrupt.  If null,
 	 * interrupts are not used for reception. */
@@ -224,7 +224,7 @@ int iBSP430eusciaClose (xBSP430eusciaHandle xUSCI);
  * data is present in the transmit queue but that the transmission
  * infrastructure may be idle.
  *
- * @param xUSCI A USCI device which must have a transmit queue.
+ * @param xUSCI An EUSCI_A device which must have a transmit queue.
  */
 void vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle xUSCI);
 
@@ -235,7 +235,7 @@ int iBSP430eusciaPutc (int c, xBSP430eusciaHandle xUSCI);
 int iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle xUSCI);
 
 /* !BSP430! expand=hal_decl */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 
 /** Handle for EUSCI_A0.  The handle may be referenced only if 
  * #configBSP430_PERIPH_USE_EUSCI_A0 is defined to a true value. */
@@ -249,7 +249,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1;
  * #configBSP430_PERIPH_USE_EUSCI_A2 is defined to a true value. */
 extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
 
-/* END EMBED eusci_a_decl: AUTOMATICALLY GENERATED CODE */
+/* END EMBED eusci_a_decl: AUTOMATICALLY GENERATED CODE [hal_decl] */
 
 #endif /* BSP430_PERIPH_EUSCIA_H */
 

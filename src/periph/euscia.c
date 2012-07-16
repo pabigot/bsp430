@@ -40,7 +40,7 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 	}
 
 	/* Reject if the pins can't be configured */
-	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(device->usci), 1)) {
+	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(device->euscia), 1)) {
 		return NULL;
 	}
 
@@ -52,10 +52,10 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 	 * anything larger.  */
 	aclk_Hz = usBSP430clockACLK_Hz();
 	if ((aclk_Hz > 20000) && (aclk_Hz >= (3 * baud))) {
-		device->usci->ctlw0 = UCSWRST | UCSSEL__ACLK;
+		device->euscia->ctlw0 = UCSWRST | UCSSEL__ACLK;
 		brclk_Hz = portACLK_FREQUENCY_HZ;
 	} else {
-		device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
+		device->euscia->ctlw0 = UCSWRST | UCSSEL__SMCLK;
 		brclk_Hz = ulBSP430clockSMCLK_Hz();
 	}
 #define BR_FRACTION_SHIFT 6
@@ -75,8 +75,8 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 		os16 = UCOS16;
 		brf = n - 16 * br;
 	}
-	device->usci->brw = br;
-	device->usci->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
+	device->euscia->brw = br;
+	device->euscia->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
 
 	/* Mark the device active */
 	device->num_rx = device->num_tx = 0;
@@ -84,9 +84,9 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 
 	/* Release the USCI and enable the interrupts.  Interrupts are
 	 * disabled and cleared when UCSWRST is set. */
-	device->usci->ctlw0 &= ~UCSWRST;
+	device->euscia->ctlw0 &= ~UCSWRST;
 	if (0 != device->rx_queue) {
-		device->usci->ie |= UCRXIE;
+		device->euscia->ie |= UCRXIE;
 	}
 
 	return device;
@@ -95,8 +95,8 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 int
 iBSP430eusciaClose (xBSP430eusciaHandle device)
 {
-	device->usci->ctlw0 = UCSWRST;
-	iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(device->usci), 0);
+	device->euscia->ctlw0 = UCSWRST;
+	iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(device->euscia), 0);
 	device->tx_queue = 0;
 	device->rx_queue = 0;
 	device->flags = 0;
@@ -114,8 +114,8 @@ iBSP430eusciaClose (xBSP430eusciaHandle device)
  * correct. */
 #define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do {			\
 		if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
-			&& (! (device->usci->ie & UCTXIE))) {			\
-			device->usci->ie |= UCTXIE;						\
+			&& (! (device->euscia->ie & UCTXIE))) {			\
+			device->euscia->ie |= UCTXIE;						\
 		}													\
 	} while (0)
 
@@ -150,7 +150,7 @@ iBSP430eusciaPutc (int c, xBSP430eusciaHandle device)
 			}
 		} while (! passp);
 	} else {
-		RAW_TRANSMIT(device->usci, c);
+		RAW_TRANSMIT(device->euscia, c);
 	}
 	return c;
 }
@@ -178,7 +178,7 @@ iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle device)
 		vBSP430eusciaWakeupTransmit(device);
 	} else {
 		while (*str) {
-			RAW_TRANSMIT(device->usci, *str);
+			RAW_TRANSMIT(device->euscia, *str);
 			++str;
 		}
 	}
@@ -211,7 +211,7 @@ usci_irq (xBSP430eusciaHandle device)
 	portBASE_TYPE rv = pdFALSE;
 	uint8_t c;
 
-	switch (device->usci->iv) {
+	switch (device->euscia->iv) {
 	default:
 	case USCI_NONE:
 		break;
@@ -219,16 +219,16 @@ usci_irq (xBSP430eusciaHandle device)
 		rv = xQueueReceiveFromISR(device->tx_queue, &c, &yield);
 		if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
 			signed portBASE_TYPE sema_yield = pdFALSE;
-			device->usci->ie &= ~UCTXIE;
+			device->euscia->ie &= ~UCTXIE;
 			yield |= sema_yield;
 		}
 		if (rv) {
 			++device->num_tx;
-			device->usci->txbuf = c;
+			device->euscia->txbuf = c;
 		}
 		break;
 	case USCI_UART_UCRXIFG: /* == USCI_SPI_UCRXIFG */
-		c = device->usci->rxbuf;
+		c = device->euscia->rxbuf;
 		++device->num_rx;
 		rv = xQueueSendToBackFromISR(device->rx_queue, &c, &yield);
 		break;
@@ -236,15 +236,15 @@ usci_irq (xBSP430eusciaHandle device)
 	portYIELD_FROM_ISR(yield);
 }
 
-/* BEGIN EMBED eusci_a_defn */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+/* !BSP430! expand=hpl_ba_defn */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_defn] */
 
 #if configBSP430_PERIPH_USE_EUSCI_A0 - 0
-static struct xBSP430eusciaState xBSP430EUSCI_A0_ = {
-	.usci = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A0__
+static struct xBSP430eusciaState state_EUSCI_A0_ = {
+	.euscia = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A0__
 };
 
-xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &xBSP430EUSCI_A0_;
+xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
 
 static void
 __attribute__((__interrupt__(EUSCI_A0_VECTOR)))
@@ -255,11 +255,11 @@ irq_EUSCI_A0 (void)
 #endif /* configBSP430_PERIPH_USE_EUSCI_A0 */
 
 #if configBSP430_PERIPH_USE_EUSCI_A1 - 0
-static struct xBSP430eusciaState xBSP430EUSCI_A1_ = {
-	.usci = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A1__
+static struct xBSP430eusciaState state_EUSCI_A1_ = {
+	.euscia = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A1__
 };
 
-xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &xBSP430EUSCI_A1_;
+xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
 
 static void
 __attribute__((__interrupt__(EUSCI_A1_VECTOR)))
@@ -270,11 +270,11 @@ irq_EUSCI_A1 (void)
 #endif /* configBSP430_PERIPH_USE_EUSCI_A1 */
 
 #if configBSP430_PERIPH_USE_EUSCI_A2 - 0
-static struct xBSP430eusciaState xBSP430EUSCI_A2_ = {
-	.usci = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A2__
+static struct xBSP430eusciaState state_EUSCI_A2_ = {
+	.euscia = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A2__
 };
 
-xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &xBSP430EUSCI_A2_;
+xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;
 
 static void
 __attribute__((__interrupt__(EUSCI_A2_VECTOR)))
@@ -284,12 +284,12 @@ irq_EUSCI_A2 (void)
 }
 #endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
 
-/* END EMBED eusci_a_defn: AUTOMATICALLY GENERATED CODE */
+/* END AUTOMATICALLY GENERATED CODE [hpl_ba_defn] */
 
 static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
 {
-/* BEGIN EMBED eusci_a_demux */
-/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY */
+/* !BSP430! expand=hpl_hal_demux */
+/* AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_hal_demux] */
 
 #if configBSP430_PERIPH_USE_EUSCI_A0 - 0
 	if (BSP430_PERIPH_EUSCI_A0 == periph) {
@@ -306,6 +306,6 @@ static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
 		return xBSP430euscia_EUSCI_A2;
 	}
 #endif /* configBSP430_PERIPH_USE_EUSCI_A2 */
-/* END EMBED eusci_a_demux: AUTOMATICALLY GENERATED CODE */
+/* END AUTOMATICALLY GENERATED CODE [hpl_hal_demux] */
 	return NULL;
 }
