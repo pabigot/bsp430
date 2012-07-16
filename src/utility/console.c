@@ -42,25 +42,25 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 
-static xBSP430UARTHandle prvConsole;
+static xBSP430uartHandle prvConsole;
 static xSemaphoreHandle prvConsoleSemaphore;
 static portTickType prvBlockTime;
 
 static int
 cputchar (int c)
 {
-	return iBSP430UARTputc(c, prvConsole);
+	return iBSP430uartPutChar(c, prvConsole);
 }
 
 int
 __attribute__((__weak__))
 putchar (int c)
 {
-	return iBSP430UARTputc(c, prvConsole);
+	return iBSP430uartPutChar(c, prvConsole);
 }
 
 portBASE_TYPE
-xConsoleConfigure (xBSP430UARTHandle xConsole,
+xConsoleConfigure (xBSP430uartHandle xConsole,
 				   portTickType xBlockTime)
 {
 	if (prvConsoleSemaphore) {

@@ -47,7 +47,7 @@
 
 #include <bsp430/common.h>
 
-/** @typedef xBSP430UARTHandle
+/** @typedef xBSP430uartHandle
  *
  * Alias for an underlying peripheral handle that serves as the UART
  * facility for the application. */
@@ -62,10 +62,10 @@
 #include <bsp430/periph/usci.h>
 
 /** Alias for device providing UART capabilities */
-typedef xBSP430USCIHandle xBSP430UARTHandle;
+typedef xBSP430USCIHandle xBSP430uartHandle;
 
-static __inline__ xBSP430UARTHandle
-xBSP430UARTOpen (xBSP430periphHandle xPeriph,
+static __inline__ xBSP430uartHandle
+xBSP430uartOpen (xBSP430periphHandle xPeriph,
 				 unsigned int control_word,
 				 unsigned long baud,
 				 xQueueHandle rx_queue,
@@ -75,19 +75,19 @@ xBSP430UARTOpen (xBSP430periphHandle xPeriph,
 }
 
 static __inline__ int
-iBSP430UARTClose (xBSP430UARTHandle xUART)
+iBSP430uartClose (xBSP430uartHandle xUART)
 {
 	return iBSP430USCIClose(xUART);
 }
 
 static __inline__ int
-iBSP430UARTputc (int c, xBSP430UARTHandle xUART)
+iBSP430uartPutChar (int c, xBSP430uartHandle xUART)
 {
 	return iBSP430USCIputc(c, xUART);
 }
 
 static __inline__ int
-iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
+iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 {
 	return iBSP430USCIputs(str, xUART);
 }
@@ -105,10 +105,10 @@ iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
 #include <bsp430/periph/euscia.h>
 
 /** Alias for device providing UART capabilities */
-typedef xBSP430eusciaHandle xBSP430UARTHandle;
+typedef xBSP430eusciaHandle xBSP430uartHandle;
 
-static __inline__ xBSP430UARTHandle
-xBSP430UARTOpen (xBSP430periphHandle xPeriph,
+static __inline__ xBSP430uartHandle
+xBSP430uartOpen (xBSP430periphHandle xPeriph,
 				 unsigned int control_word,
 				 unsigned long baud,
 				 xQueueHandle rx_queue,
@@ -118,19 +118,19 @@ xBSP430UARTOpen (xBSP430periphHandle xPeriph,
 }
 
 static __inline__ int
-iBSP430UARTClose (xBSP430UARTHandle xUART)
+iBSP430uartClose (xBSP430uartHandle xUART)
 {
 	return iBSP430eusciaClose(xUART);
 }
 
 static __inline__ int
-iBSP430UARTputc (int c, xBSP430UARTHandle xUART)
+iBSP430uartPutChar (int c, xBSP430uartHandle xUART)
 {
 	return iBSP430eusciaPutc(c, xUART);
 }
 
 static __inline__ int
-iBSP430UARTputs (const char * str, xBSP430UARTHandle xUART)
+iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 {
 	return iBSP430eusciaPuts(str, xUART);
 }

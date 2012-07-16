@@ -66,7 +66,7 @@ __attribute__((__format__(printf, 1, 2)));
  *
  * @return pdSUCCESS if the console could be configured, pdFAIL
  * otherwise. */
-portBASE_TYPE xConsoleConfigure (xBSP430UARTHandle xUART,
+portBASE_TYPE xConsoleConfigure (xBSP430uartHandle xUART,
 								 portTickType xBlockTime);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

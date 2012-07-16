@@ -188,10 +188,10 @@ typedef struct xBSP430_TERMINAL_CONFIGURATION {
 	 * connection */
 	xBSP430periphHandle uart;
 
-	/** Parameter to #xBSP430UARTOpen */
+	/** Parameter to #xBSP430uartOpen */
 	unsigned int control_word;
 
-	/** Parameter to #xBSP430UARTOpen */
+	/** Parameter to #xBSP430uartOpen */
 	unsigned long baud;
 
 	/** Priority of the terminal task.  Processing of commands
