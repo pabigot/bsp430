@@ -75,6 +75,7 @@
  * Negative values indicate an error. */
 typedef int xBSP430periphHandle;
 
+/** HPL handle specifying that no peripheral has been identified. */
 #define BSP430_PERIPH_NONE ((xBSP430periphHandle)0)
 
 #endif /* BSP430_PERIPH_H */
