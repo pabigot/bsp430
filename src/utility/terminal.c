@@ -460,8 +460,11 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
 			goto failed;
 		}
 	}
-	terminal->hsuart = xBSP430uartOpen(configp->uart, configp->control_word, configp->baud, terminal->rx_queue, terminal->tx_queue);
+	terminal->hsuart = xBSP430uartOpen(configp->uart, configp->control_word, configp->baud);
 	if (! terminal->hsuart) {
+		goto failed;
+	}
+	if (0 != iBSP430uartConfigureQueues(terminal->hsuart, terminal->rx_queue, terminal->tx_queue)) {
 		goto failed;
 	}
 	if (terminal->rx_queue) {
@@ -492,6 +495,7 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
 	}
 #endif /* INCLUDE_vTaskDelete */
 	if (terminal->hsuart) {
+		(void)iBSP430uartConfigureQueues(terminal->hsuart, NULL, NULL);
 		iBSP430uartClose(terminal->hsuart);
 	}
 	if (terminal->display_buffer) {

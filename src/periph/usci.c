@@ -46,9 +46,7 @@ static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph);
 xBSP430usciHandle
 xBSP430usciOpenUART (xBSP430periphHandle periph,
 					 unsigned int control_word,
-					 unsigned long baud,
-					 xQueueHandle rx_queue,
-					 xQueueHandle tx_queue)
+					 unsigned long baud)
 {
 	unsigned short aclk_Hz;
 	unsigned long brclk_Hz;
@@ -58,59 +56,88 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 
 	configASSERT(NULL != device);
 
+	BSP430_ENTER_CRITICAL();
 	/* Reject invalid baud rates */
 	if ((0 == baud) || (1000000UL < baud)) {
-		return NULL;
+		device = NULL;
 	}
 
 	/* Reject if the pins can't be configured */
-	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(uintptr_t)(device->usci), 1)) {
-		return NULL;
+	if ((NULL != device)
+		&& (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(uintptr_t)(device->usci), 1))) {
+		device = NULL;
 	}
 
-	device->rx_queue = rx_queue;
-	device->tx_queue = tx_queue;
+	if (NULL != device) {
+		/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
+		 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
+		 * anything larger.  */
+		aclk_Hz = usBSP430clockACLK_Hz();
+		if ((aclk_Hz > 20000) && (aclk_Hz >= (3 * baud))) {
+			device->usci->ctlw0 = UCSWRST | UCSSEL__ACLK;
+			brclk_Hz = portACLK_FREQUENCY_HZ;
+		} else {
+			device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
+			brclk_Hz = ulBSP430clockSMCLK_Hz();
+		}
+		br = (brclk_Hz / baud);
+		brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;
 
-	/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
-	 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
-	 * anything larger.  */
-	aclk_Hz = usBSP430clockACLK_Hz();
-	if ((aclk_Hz > 20000) && (aclk_Hz >= (3 * baud))) {
-		device->usci->ctlw0 = UCSWRST | UCSSEL__ACLK;
-		brclk_Hz = portACLK_FREQUENCY_HZ;
+		device->usci->brw = br;
+		device->usci->mctl = (0 * UCBRF0) | (brs * UCBRS0);
+
+		/* Mark the device active */
+		device->num_rx = device->num_tx = 0;
+		device->flags |= COM_PORT_ACTIVE;
+
+		/* Release the USCI and enable the interrupts.  Interrupts are
+		 * disabled and cleared when UCSWRST is set. */
+		device->usci->ctlw0 &= ~UCSWRST;
+		if (0 != device->rx_queue) {
+			device->usci->ie |= UCRXIE;
+		}
+	}
+	BSP430_EXIT_CRITICAL();
+
+	return device;
+}
+
+int
+iBSP430usciConfigureQueues (xBSP430usciHandle device,
+							xQueueHandle rx_queue,
+							xQueueHandle tx_queue)
+{
+	int rc = 0;
+	
+	BSP430_ENTER_CRITICAL();
+	device->usci->ctlw0 |= UCSWRST;
+	if (device->rx_queue || device->tx_queue) {
+		rc = -1;
 	} else {
-		device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-		brclk_Hz = ulBSP430clockSMCLK_Hz();
+		device->rx_queue = rx_queue;
+		device->tx_queue = tx_queue;
 	}
-	br = (brclk_Hz / baud);
-	brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;
-
-	device->usci->brw = br;
-	device->usci->mctl = (0 * UCBRF0) | (brs * UCBRS0);
-
-	/* Mark the device active */
-	device->num_rx = device->num_tx = 0;
-	device->flags |= COM_PORT_ACTIVE;
-
 	/* Release the USCI and enable the interrupts.  Interrupts are
 	 * disabled and cleared when UCSWRST is set. */
 	device->usci->ctlw0 &= ~UCSWRST;
 	if (0 != device->rx_queue) {
 		device->usci->ie |= UCRXIE;
 	}
-
-	return device;
+	BSP430_EXIT_CRITICAL();
+	return rc;
 }
 
 int
 iBSP430usciClose (xBSP430usciHandle device)
 {
+	int rc;
+	
+	BSP430_ENTER_CRITICAL();
 	device->usci->ctlw0 = UCSWRST;
-	iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(uintptr_t)(device->usci), 0);
-	device->tx_queue = 0;
-	device->rx_queue = 0;
+	rc = iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(uintptr_t)(device->usci), 0);
 	device->flags = 0;
-	return 0;
+	BSP430_EXIT_CRITICAL();
+	return rc;
 }
 
 /* If there's data in the transmit queue, and the transmit interrupt

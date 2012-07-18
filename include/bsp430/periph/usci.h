@@ -371,6 +371,10 @@ typedef struct xBSP430usciState * xBSP430usciHandle;
 
 /** Request and configure a USCI device in UART mode.
  *
+ * If queues had been associated with this device using
+ * #iBSP430usciConfigureQueues(), behavior with respect to interrupts
+ * is as if those queues were associated during this call.
+ *
  * @param xPeriph The raw device identifier for the USCI device that
  * is being requested. E.g., @c xBSP430Periph_USCI_A0. 
  *
@@ -382,6 +386,33 @@ typedef struct xBSP430usciState * xBSP430usciHandle;
  * based on the current clock setting, using ACLK if the rate is low
  * enough and SMCLK otherwise.
  *
+ * @return @a xUSCI if the allocation and configuration is successful,
+ * and a null handle if something went wrong. */
+xBSP430usciHandle xBSP430usciOpenUART (xBSP430periphHandle xPeriph,
+									   unsigned int control_word,
+									   unsigned long baud);
+
+xBSP430usciHandle xBSP430usciOpenSPI (xBSP430periphHandle xPeriph,
+									  unsigned int control_word,
+									  unsigned int prescaler);
+
+/** Assign FreeRTOS queues for transmit and receive.
+ *
+ * The underlying device is held in reset mode while the queue
+ * configuration is changed within a critical section (interrupts
+ * disabled).  If a receive queue is provided, the UCRXIE bit is set
+ * to enable interrupt-driven reception.  Interrupt-driven
+ * transmission is managed using #vBSP430usciWakeupTransmit().
+ *
+ * Note that #iBSP430usciClose() does not disassociate the queues from
+ * the device.  This must be done manually either before or after
+ * closing the device, by invoking this function with null handles for
+ * the queues.
+ *
+ * @param xUSCI A USCI device.  If (non-null) queues are already
+ * associated with this device, an error will be returned and the
+ * previous configuration left unchanged.
+ *
  * @param rx_queue A references to a queue to be used for receiving.
  * A non-null value enables interrupt-driven reception, and data
  * should be read from the queue by the application.
@@ -391,25 +422,18 @@ typedef struct xBSP430usciState * xBSP430usciHandle;
  * transmission, and the application should add data to the queue for
  * transmission.
  *
- * @return @a xUSCI if the allocation and configuration is successful,
- * and a null handle if something went wrong. */
-xBSP430usciHandle xBSP430usciOpenUART (xBSP430periphHandle xPeriph,
-									   unsigned int control_word,
-									   unsigned long baud,
-									   xQueueHandle rx_queue,
-									   xQueueHandle tx_queue);
-
-xBSP430usciHandle xBSP430usciOpenSPI (xBSP430periphHandle xPeriph,
-									  unsigned int control_word,
-									  unsigned int prescaler,
-									  xQueueHandle rx_queue,
-									  xQueueHandle tx_queue);
+ * @return Zero if the configuration was successful, a negative value
+ * if something went wrong.
+ */
+int iBSP430usciConfigureQueues (xBSP430usciHandle xUSCI,
+								xQueueHandle rx_queue,
+								xQueueHandle tx_queue);
 
 /** Release a USCI device.
  *
- * This places the device into reset mode, reset the peripheral pins
- * to port function, and releases any resources allocated when the
- * device was opened.
+ * This places the device into reset mode and resets the peripheral
+ * pins to port function.  It does not release or disassociate any
+ * queues that were provided through #iBSP430usciConfigureQueues.
  *
  * @param xUSCI The device to be closed.
  *

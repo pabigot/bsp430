@@ -52,9 +52,7 @@ static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph);
 xBSP430eusciaHandle
 xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 					   unsigned int control_word,
-					   unsigned long baud,
-					   xQueueHandle rx_queue,
-					   xQueueHandle tx_queue)
+					   unsigned long baud)
 {
 	unsigned short aclk_Hz;
 	unsigned long brclk_Hz;
@@ -67,73 +65,102 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 
 	configASSERT(NULL != device);
 
+	BSP430_ENTER_CRITICAL();
 	/* Reject invalid baud rates */
 	if ((0 == baud) || (1000000UL < baud)) {
-		return NULL;
+		device = NULL;
 	}
 
 	/* Reject if the pins can't be configured */
-	if (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(device->euscia), 1)) {
-		return NULL;
+	if ((NULL != device)
+		&& (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(device->euscia), 1))) {
+		device = NULL;
 	}
 
-	device->rx_queue = rx_queue;
-	device->tx_queue = tx_queue;
-
-	/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
-	 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
-	 * anything larger.  */
-	aclk_Hz = usBSP430clockACLK_Hz();
-	if ((aclk_Hz > 20000) && (aclk_Hz >= (3 * baud))) {
-		device->euscia->ctlw0 = UCSWRST | UCSSEL__ACLK;
-		brclk_Hz = portACLK_FREQUENCY_HZ;
-	} else {
-		device->euscia->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-		brclk_Hz = ulBSP430clockSMCLK_Hz();
-	}
+	if (NULL != device) {
+		/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
+		 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
+		 * anything larger.  */
+		aclk_Hz = usBSP430clockACLK_Hz();
+		if ((aclk_Hz > 20000) && (aclk_Hz >= (3 * baud))) {
+			device->euscia->ctlw0 = UCSWRST | UCSSEL__ACLK;
+			brclk_Hz = portACLK_FREQUENCY_HZ;
+		} else {
+			device->euscia->ctlw0 = UCSWRST | UCSSEL__SMCLK;
+			brclk_Hz = ulBSP430clockSMCLK_Hz();
+		}
 #define BR_FRACTION_SHIFT 6
-	/* The value for BRS is supposed to be a table lookup based on the
-	 * fractional part of f_brclk / baud.  Rather than replicate the
-	 * table, we simply preserve BR_FRACTION_SHIFT bits of the
-	 * fraction, then use that as the upper bits of the value of
-	 * BRS.  Seems to work, at least for 9600 baud. */
-	n = (brclk_Hz << BR_FRACTION_SHIFT) / baud;
-	brs = n & ((1 << BR_FRACTION_SHIFT) - 1);
-	n >>= BR_FRACTION_SHIFT;
-	brs <<= 8 - BR_FRACTION_SHIFT;
+		/* The value for BRS is supposed to be a table lookup based on the
+		 * fractional part of f_brclk / baud.  Rather than replicate the
+		 * table, we simply preserve BR_FRACTION_SHIFT bits of the
+		 * fraction, then use that as the upper bits of the value of
+		 * BRS.  Seems to work, at least for 9600 baud. */
+		n = (brclk_Hz << BR_FRACTION_SHIFT) / baud;
+		brs = n & ((1 << BR_FRACTION_SHIFT) - 1);
+		n >>= BR_FRACTION_SHIFT;
+		brs <<= 8 - BR_FRACTION_SHIFT;
 #undef BR_FRACTION_SHIFT
-	br = n;
-	if (16 <= br) {
-		br = br / 16;
-		os16 = UCOS16;
-		brf = n - 16 * br;
+		br = n;
+		if (16 <= br) {
+			br = br / 16;
+			os16 = UCOS16;
+			brf = n - 16 * br;
+		}
+		device->euscia->brw = br;
+		device->euscia->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
+
+		/* Mark the device active */
+		device->num_rx = device->num_tx = 0;
+		device->flags |= COM_PORT_ACTIVE;
+
+		/* Release the USCI and enable the interrupts.  Interrupts are
+		 * disabled and cleared when UCSWRST is set. */
+		device->euscia->ctlw0 &= ~UCSWRST;
+		if (0 != device->rx_queue) {
+			device->euscia->ie |= UCRXIE;
+		}
 	}
-	device->euscia->brw = br;
-	device->euscia->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
+	BSP430_EXIT_CRITICAL();
 
-	/* Mark the device active */
-	device->num_rx = device->num_tx = 0;
-	device->flags |= COM_PORT_ACTIVE;
+	return device;
+}
 
+int
+iBSP430eusciaConfigureQueues (xBSP430eusciaHandle device,
+							  xQueueHandle rx_queue,
+							  xQueueHandle tx_queue)
+{
+	int rc = 0;
+	
+	BSP430_ENTER_CRITICAL();
+	device->euscia->ctlw0 |= UCSWRST;
+	if (device->rx_queue || device->tx_queue) {
+		rc = -1;
+	} else {
+		device->rx_queue = rx_queue;
+		device->tx_queue = tx_queue;
+	}
 	/* Release the USCI and enable the interrupts.  Interrupts are
 	 * disabled and cleared when UCSWRST is set. */
 	device->euscia->ctlw0 &= ~UCSWRST;
 	if (0 != device->rx_queue) {
 		device->euscia->ie |= UCRXIE;
 	}
-
-	return device;
+	BSP430_EXIT_CRITICAL();
+	return rc;
 }
 
 int
 iBSP430eusciaClose (xBSP430eusciaHandle device)
 {
+	int rc;
+
+	BSP430_ENTER_CRITICAL();
 	device->euscia->ctlw0 = UCSWRST;
-	iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(device->euscia), 0);
-	device->tx_queue = 0;
-	device->rx_queue = 0;
+	rc = iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(device->euscia), 0);
 	device->flags = 0;
-	return 0;
+	BSP430_EXIT_CRITICAL();
+	return rc;
 }
 
 /* If there's data in the transmit queue, and the transmit interrupt
