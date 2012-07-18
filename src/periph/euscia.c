@@ -241,29 +241,32 @@ __attribute__ ( ( __c16__ ) )
 euscia_isr (xBSP430eusciaHandle device)
 {
 	portBASE_TYPE yield = pdFALSE;
-	portBASE_TYPE rv = pdFALSE;
-	uint8_t c;
+	int rv = 1;
 
 	switch (device->euscia->iv) {
 	default:
 	case USCI_NONE:
 		break;
 	case USCI_UART_UCTXIFG: /* == USCI_SPI_UCTXIFG */
-		rv = xQueueReceiveFromISR(device->tx_queue, &c, &yield);
-		if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
-			signed portBASE_TYPE sema_yield = pdFALSE;
-			device->euscia->ie &= ~UCTXIE;
-			yield |= sema_yield;
+		if (device->tx_queue) {
+			rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
+			if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
+				signed portBASE_TYPE sema_yield = pdFALSE;
+				device->euscia->ie &= ~UCTXIE;
+				yield |= sema_yield;
+			}
 		}
 		if (rv) {
 			++device->num_tx;
-			device->euscia->txbuf = c;
+			device->euscia->txbuf = device->tx_byte;
 		}
 		break;
 	case USCI_UART_UCRXIFG: /* == USCI_SPI_UCRXIFG */
-		c = device->euscia->rxbuf;
+		device->rx_byte = device->euscia->rxbuf;
 		++device->num_rx;
-		rv = xQueueSendToBackFromISR(device->rx_queue, &c, &yield);
+		if (device->rx_queue) {
+			rv = xQueueSendToBackFromISR(device->rx_queue, &device->rx_byte, &yield);
+		}
 		break;
 	}
 	portYIELD_FROM_ISR(yield);

@@ -64,6 +64,14 @@ struct xBSP430eusciaState {
 	 * interrupts are not used for transmission. */
 	xQueueHandle tx_queue;
 
+	/** Location to store a single incoming character when #rx_queue
+	 * is undefined. */
+	uint8_t rx_byte;
+
+	/** Location to store a single outgoing character when #tx_queue
+	 * is undefined.  This is probably not very useful. */
+	uint8_t tx_byte;
+
 	/** Total number of received octets */
 	unsigned long num_rx;
 
