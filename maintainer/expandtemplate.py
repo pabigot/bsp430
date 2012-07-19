@@ -151,7 +151,9 @@ static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-	__bic_status_register_on_exit(port_isr(xBSP430port_%(INSTANCE)s, P%(#)sIV));
+	int rv = port_isr(xBSP430port_%(INSTANCE)s, P%(#)sIV);
+	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
 #endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
 ''',

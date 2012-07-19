@@ -235,6 +235,14 @@ typedef _BSP430_PERIPH_PORT_IE xBSP430periphPORT_IE;
  * The underlying structure selected depends on the MCU family. */
 typedef _BSP430_PERIPH_PORT xBSP430periphPORT;
 
+/** Callback flag indicating ISR should yield.
+ *
+ * Since the #xBSP430portInterruptCallback does not execute in the
+ * stack frame of the ISR top half, this bit is to be added to the
+ * return value of a callback if the callback has detected that the
+ * interrupt should yield before returning. */
+#define BSP430_PORT_ISR_YIELD 0x1000
+
 #if 1 // defined(__MSP430_HAS_MSP430XV2_CPU__)
 /* 5xx-family port management */
 
@@ -244,7 +252,7 @@ struct xBSP430port5xxState;
 /** The PORT internal state is protected. */
 typedef struct xBSP430port5xxState * xBSP430portHandle;
 
-/** Prototype for callbacks from shared interrupt service routines.
+/** Prototype for callbacks from shared port interrupt service routines.
  *
  * @note Because these callbacks do not execute in the stack frame of
  * the ISR itself, you cannot use the standard @c
@@ -259,7 +267,8 @@ typedef struct xBSP430port5xxState * xBSP430portHandle;
  *
  * @return Bits to clear in the status register before returning from
  * the ISR.  For example, if the routine wants to leave low-power mode
- * without affecting the interrupt enable bit, return @c LPM4_bits. */
+ * without affecting the interrupt enable bit, return @c LPM4_bits.
+ * Other bits are also relevant, see #BSP430_PORT_ISR_YIELD. */
 typedef int (* xBSP430portInterruptCallback) (xBSP430portHandle port, int bit);
 
 struct xBSP430port5xxState {
