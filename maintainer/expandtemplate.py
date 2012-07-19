@@ -69,7 +69,93 @@ isr_%(INSTANCE)s (void)
 	}
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
-    
+
+    'hpl_port_5xx' : '''
+#if defined(__MSP430_HAS_%(PORTA)s_R__)
+#define _BSP430_PERIPH_%(PORT1)s_BASEADDRESS __MSP430_BASEADDRESS_%(PORTA)s_R__
+#define _BSP430_PERIPH_%(PORT2)s_BASEADDRESS (1+__MSP430_BASEADDRESS_%(PORTA)s_R__)
+#else /* %(PORTA)s_R */
+#define _BSP430_PERIPH_%(PORT1)s_BASEADDRESS __MSP430_BASEADDRESS_%(PORTA)s__
+#define _BSP430_PERIPH_%(PORT2)s_BASEADDRESS (1+__MSP430_BASEADDRESS_%(PORTA)s__)
+#endif /* %(PORTA)s_R */
+
+#define BSP430_PERIPH_%(PORT1)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT1)s_BASEADDRESS))
+#define BSP430_PERIPH_%(PORT2)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT2)s_BASEADDRESS))
+
+/** @def configBSP430_PERIPH_%(PORT1)s
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * @c %(PORT1)s peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_%(PORT1)s__ or
+ * @c __MSP430_HAS_%(PORT1)s_R__) */
+#ifndef configBSP430_PERIPH_%(PORT1)s
+#define configBSP430_PERIPH_%(PORT1)s 0
+#endif /* configBSP430_PERIPH_%(PORT1)s */
+
+/** @def configBSP430_PERIPH_%(PORT1)s_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c %(PORT1)s.  Define to a false value if you
+ * need complete control over how interrupts are handled for the device
+ * and will be defining the vector yourself.
+ *
+ * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * enabled. */
+#ifndef configBSP430_PERIPH_%(PORT1)s_ISR
+#define configBSP430_PERIPH_%(PORT1)s_ISR 0
+#endif /* configBSP430_PERIPH_%(PORT1)s_ISR */
+
+/** @def configBSP430_PERIPH_%(PORT2)s
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of the
+ * @c %(PORT2)s peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_%(PORT2)s__ or
+ * @c __MSP430_HAS_%(PORT2)s_R__) */
+#ifndef configBSP430_PERIPH_%(PORT2)s
+#define configBSP430_PERIPH_%(PORT2)s 0
+#endif /* configBSP430_PERIPH_%(PORT2)s */
+
+/** @def configBSP430_PERIPH_%(PORT2)s_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c %(PORT2)s.  Define to a false value if you
+ * need complete control over how interrupts are handled for the device
+ * and will be defining the vector yourself.
+ *
+ * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * enabled. */
+#ifndef configBSP430_PERIPH_%(PORT2)s_ISR
+#define configBSP430_PERIPH_%(PORT2)s_ISR 0
+#endif /* configBSP430_PERIPH_%(PORT2)s_ISR */
+''',
+
+    'hal_port' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
+ *
+ * The handle may be referenced only if
+ * #configBSP430_PERIPH_%(INSTANCE)s is defined to a true
+ * value. */
+
+extern xBSP430portHandle const xBSP430port_%(INSTANCE)s;
+''',
+
+    'hal_port_5xx_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+static struct xBSP430port5xxState state_%(INSTANCE)s = {
+		.port = (volatile xBSP430periphPORT_5XX_8 *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
+	};
+xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
+#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+''',
+
+    'hal_port_5xx_isr_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s_ISR - 0
+static void
+__attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
+isr_%(INSTANCE)s (void)
+{
+	__bic_status_register_on_exit(port_isr(xBSP430port_%(INSTANCE)s, P%(#)sIV));
+}
+#endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
+''',
+
     }
 
 directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')
@@ -87,8 +173,15 @@ def expandTemplate (tplname, idmap):
     text.append('/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [%(template)s] */' % subst_map)
 
     for i in idmap['instance'].split(','):
+        if i.startswith(periph.upper()):
+            subst_map.update({ '#' : i[len(periph):] })
         subst_map.update({ 'instance': i.lower(), 'INSTANCE': i.upper() })
+        if idmap.get('portexpand', False):
+            subst_map.update({ 'PORTA' : 'PORT' + i[0],
+                               'PORT1': 'PORT%d' % (1 + 2 * (ord(i[0]) - ord('A')),),
+                               'PORT2': 'PORT%d' % (2 + 2 * (ord(i[0]) - ord('A')),) })
         text.append(template % subst_map)
+        subst_map.pop('#', None)
     text.append('/* END AUTOMATICALLY GENERATED CODE [%(template)s] */' % subst_map)
     text.append('')
     return '\n'.join(text)
