@@ -29,23 +29,28 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+/** @file
+ *
+ * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fr5739">EXP430FR5739</a>
+ *
+ * This board is also known as the "Fraunchpad" 
+ *
+ * The following platform-specific features are supported: <ul>
+ *
+ * <li> #vBSP430platformSpinForJumper The jumper for this platform
+ * is P4.0, located on the right of the board at the top.  Place the
+ * jumper between P4.0 and GND.
+ *
+ * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks share LED lines, and can
+ * be measured at the test points below the LEDs.  Proceeding from the
+ * rightmost LED: TP10 provides SMCLK, TP11 provides MCLK, and TP12
+ * provides ACLK.
+ *
+ * </ul>
+ */
 #ifndef BSP430_PLATFORM_EXP430FR5739_H
 #define BSP430_PLATFORM_EXP430FR5739_H
 
 #include <bsp430/common/platform.h>
-
-/** Block until the jumper between P4.0 and GND has been removed.
- *
- * The USB device used for the EXP430FR5739, like that for the
- * Launchpad, must not transmit any data while the driver is
- * initializing.  We need a way to hold off an installed application
- * from writing to the serial port until that's happened.  What we do
- * is, if P4.0 is grounded, block until it's released.  When plugging
- * in a device for the first time, place a jumper connect P4.0 to
- * ground, wait for the driver to load, then remove the jumper.
- *
- * @note vBSP430ledInit() must have been invoked before this function
- * is called. */
-void vBSP430platformSpinForJumper (void);
 
 #endif /* BSP430_PLATFORM_EXP430FR5739_H */

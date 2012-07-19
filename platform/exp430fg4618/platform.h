@@ -32,6 +32,23 @@
 #ifndef BSP430_PLATFORM_EXP430FG4618_H
 #define BSP430_PLATFORM_EXP430FG4618_H
 
+/** @file
+ *
+ * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fg4618">EXP430FG4618</a>
+ *
+ * The following platform-specific features are supported:
+ * <ul>
+ *
+ * <li> #vBSP430platformSpinForJumper is not implemented on this
+ * platform.
+ *
+ * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks are exposed on header H2,
+ * just below the FG4618 JTAG header.  MCLK is available on H2.2
+ * (P1.1), SMCLK on H2.5 (P1.4), and ACLK on H2.7 (P1.5)
+ *
+ * </ul>
+ */
+
 #include <bsp430/common/platform.h>
 
 #endif /* BSP430_PLATFORM_EXP430FG4618_H */

@@ -45,11 +45,18 @@ int
 iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 {
 	uint8_t bits = 0;
-	volatile uint8_t* pxsel = 0;
+	volatile uint8_t * pxsel = 0;
 	if (BSP430_PERIPH_XT1 == device) {
 		bits = BIT0 | BIT1;
 		pxsel = &P7SEL;
 	}
+#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+	else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
+		bits = BIT0 | BIT1 | BIT2;
+		pxsel = &P11SEL;
+		P11DIR |= bits;
+	}
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_PERIPH_USCI_A0 - 0
 	else if (BSP430_PERIPH_USCI_A0 == device) {
 		bits = BIT4 | BIT5;

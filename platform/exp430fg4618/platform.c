@@ -50,6 +50,18 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 		/* XIN/XOUT are dedicated pins on this device. */
 		return 0;
 	}
+#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+	else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
+		bits = BIT1 | BIT4 | BIT5;
+		P1DIR |= bits;
+		if (enablep) {
+			P1SEL |= bits;
+		} else {
+			P1SEL &= ~bits;
+		}
+		return 0;
+	}
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 	return -1;
 }
 

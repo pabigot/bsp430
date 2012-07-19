@@ -72,8 +72,10 @@
  * The value zero is reserved and available as #BSP430_PERIPH_NONE to
  * indicate no peripheral.
  *
- * Odd values are reserved for peripherals that are not associated
- * with registers, such as #BSP430_PERIPH_XT1.
+ * Odd values are reserved for non-standard "peripherals" for which
+ * some identifier is necessary to allow use in functions like
+ * #iBSP430platformConfigurePeripheralPins, such as
+ * #BSP430_PERIPH_XT1.
  *
  * Negative values indicate an error. */
 typedef int xBSP430periphHandle;
@@ -87,5 +89,23 @@ typedef int xBSP430periphHandle;
  * that the pins related to XIN and XOUT be configured to their
  * peripheral function. */
 #define BSP430_PERIPH_XT1 ((xBSP430periphHandle)1)
+
+/** HPL handle identifying the ability to expose clock signals.
+ *
+ * This is used by application code as a debug facility, invoking
+ * #iBSP430platformConfigurePeripheralPins to expose MCLK, SMCLK, and
+ * ACLK on pins where they may be monitored.  Its availability is
+ * conditional on platform support and
+ * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
+#define BSP430_PERIPH_EXPOSED_CLOCKS ((xBSP430periphHandle)3)
+
+/** @def configBSP430_PERIPH_EXPOSED_CLOCKS
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to enable use of
+ * #BSP430_PERIPH_EXPOSED_CLOCKS in
+ * #iBSP430platformConfigurePeripheralPins. */
+#ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
+#define configBSP430_PERIPH_EXPOSED_CLOCKS 0
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
 #endif /* BSP430_PERIPH_H */

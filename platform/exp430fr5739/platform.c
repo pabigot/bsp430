@@ -33,7 +33,6 @@
 #include <bsp430/timers/timerA0.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/euscia.h>
-#include "serial.h"
 #include "task.h"
 
 /* exp430fr5739 LEDs are PJ.0 to PJ.3 and PB.4 to PB.7.  PJ is not
@@ -83,7 +82,7 @@ void vBSP430ledSet (unsigned char ucLED,
 int
 iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 {
-	unsigned char bits = 0;
+	unsigned int bits = 0;
 	if (BSP430_PERIPH_XT1 == device) {
 		bits = BIT4 | BIT5;
 		if (enablep) {
@@ -94,6 +93,19 @@ iBSP430platformConfigurePeripheralPins (xBSP430periphHandle device, int enablep)
 		PJSEL1 &= ~bits;
 		return 0;
 	}
+#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+	else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
+		bits = BIT0 | BIT1 | BIT2;
+		PJDIR |= bits;
+		PJSEL1 &= ~bits;
+		if (enablep) {
+			PJSEL0 |= bits;
+		} else {
+			PJSEL0 &= ~bits;
+		}
+		return 0;
+	}
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_PERIPH_EUSCI_A0 - 0
 	else if (BSP430_PERIPH_EUSCI_A0 == device) {
 		bits = BIT0 | BIT1;

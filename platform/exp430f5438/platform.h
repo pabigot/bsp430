@@ -32,6 +32,21 @@
 #ifndef BSP430_PLATFORM_EXP430F5438_H
 #define BSP430_PLATFORM_EXP430F5438_H
 
+/** @file
+ *
+ * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430f5438">EXP430F5438</a>
+ *
+ * The following platform-specific features are supported:
+ * <ul>
+ *
+ * <li> #vBSP430platformSpinForJumper is not implemented on this
+ * platform.
+ *
+ * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks are made available at
+ * dedicated labelled test points below the JTAG header.
+ *
+ * </ul>
+ */
 #include <bsp430/common/platform.h>
 
 #endif /* BSP430_PLATFORM_EXP430F5438_H */
