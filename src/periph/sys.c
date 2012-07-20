@@ -219,37 +219,26 @@ EMIT_SYSRSTIV(SYSRSTIV_WDTTO, "WDT Time out")
 
 };
 
-portBASE_TYPE
-xBSP430sysSYSRSTGenerator (unsigned char * pucHaveBOR,
-						   const char ** ppcDescription)
+unsigned int
+uiBSP430sysSYSRSTGenerator (unsigned int * puiResetFlags,
+							const char ** ppcDescription)
 {
-	uint16_t iv = SYSRSTIV;
+	unsigned int iv = SYSRSTIV;
 
 	if (SYSRSTIV_NONE == iv) {
 		return 0;
 	}
-	if ((NULL != pucHaveBOR)
-		&& (0
-#ifdef SYSRSTIV_BOR
-			|| (SYSRSTIV_BOR == iv)
-#endif /* SYSRSTIV_BOR */
-#ifdef SYSRSTIV_RSTNMI
-			|| (SYSRSTIV_RSTNMI == iv)
-#endif /* SYSRSTIV_RSTNMI */
-#ifdef SYSRSTIV_SVMBOR
-			|| (SYSRSTIV_SVMBOR == iv)
-#endif /* SYSRSTIV_SVMBOR */
-#ifdef SYSRSTIV_DOBOR
-			|| (SYSRSTIV_DOBOR == iv)
-#endif /* SYSRSTIV_DOBOR */
-#ifdef SYSRSTIV_LPM5WU
-			|| (SYSRSTIV_LPM5WU == iv)
-#endif /* SYSRSTIV_LPM5WU */
-#ifdef SYSRSTIV_SECYV
-			|| (SYSRSTIV_SECYV == iv)
-#endif /* SYSRSTIV_SECYV */
-			)) {
-		*pucHaveBOR = 1;
+	if (NULL != puiResetFlags) {
+		if (iv <= SYSRSTIV_SECYV) {
+			*puiResetFlags |= BSP430_SYS_FLAG_SYSRST_BOR;
+		}
+		if (iv == SYSRSTIV_LPM5WU) {
+			*puiResetFlags |= BSP430_SYS_FLAG_SYSRST_LPM5WU;
+		}
+		if (iv <= SYSRSTIV_DOPOR) {
+			*puiResetFlags |= BSP430_SYS_FLAG_SYSRST_POR;
+		}
+		*puiResetFlags |= BSP430_SYS_FLAG_SYSRST_PUC;
 	}
 	if (NULL != ppcDescription) {
 #if configBSP430_SYS_USE_SYSRST_DESCRIPTION - 0

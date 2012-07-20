@@ -57,6 +57,33 @@
 #define configBSP430_SYS_USE_SYSRST_DESCRIPTION 0
 #endif /* configBSP430_SYS_USE_SYSRST_DESCRIPTION */
 
+/** Flag indicating a BOR occurred during the last reset.
+ *
+ * Set in the output reset flags parameter by
+ * #uiBSP430sysSYSRSTGenerator when a reset cause with a priority at
+ * least as high as security violation has been recorded. */
+#define BSP430_SYS_FLAG_SYSRST_BOR 0x0001
+
+/** Flag indicating an LPMx.5 wakeup occurred during the last reset.
+ *
+ * Set in the output reset flags parameter by
+ * #uiBSP430sysSYSRSTGenerator when SYSRSTIV_LPM5WU has been
+ * recorded. */
+#define BSP430_SYS_FLAG_SYSRST_LPM5WU 0x0002
+
+/** Flag indicating a POR occurred during the last reset.
+ *
+ * Set in the output reset flags parameter by
+ * #uiBSP430sysSYSRSTGenerator when a reset cause with a priority at
+ * least as high as PMM_DOPOR has been recorded. */
+#define BSP430_SYS_FLAG_SYSRST_POR 0x0004
+
+/** Flag indicating a PUC occurred during the last reset.
+ *
+ * Set in the output reset flags parameter by
+ * #uiBSP430sysSYSRSTGenerator when any reset cause was recorded. */
+#define BSP430_SYS_FLAG_SYSRST_PUC 0x0008
+
 /** Generate the events recorded within the system reset vector.
  *
  * This routine can be used to determine the cause of a reset.  It can
@@ -65,10 +92,11 @@
  * an MSP430 power on reset (POR) does not in fact return all values
  * to power on defaults, nor does a power up clear (PUC).
  *
- * @param pucHaveBOR Optional pointer to a flag that is set to a
- * nonzero value if the reset cause that will be returned induced a
- * BOR.  The flag is left unmodified if the reset cause only induced a
- * POR or PUC.
+ * @param puiResetFlags Optional pointer to a variable that indicates
+ * the class of reset causes encountered.  On initial call, the value
+ * of the pointed-to variable should be zero; it is updated with
+ * #BSP430_SYS_FLAG_SYSRST_BOR and related flags as each reset cause
+ * is returned.
  *
  * @param ppcDescription Optional parameter that returns a text
  * description of the reset cause that is being returned.  If
@@ -78,7 +106,7 @@
  * @return A positive integer value corresponding to a SYSRST_type
  * supported on the current microcontroller, or zero if all such
  * values have been returned. */
-portBASE_TYPE xBSP430sysSYSRSTGenerator (unsigned char * pucHaveBOR,
+unsigned int uiBSP430sysSYSRSTGenerator (unsigned int * puiResetFlags,
 										 const char ** ppcDescription);
 
 #endif /* BSP430_PERIPH_SYS_H */
