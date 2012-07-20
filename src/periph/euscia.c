@@ -73,7 +73,7 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 
 	/* Reject if the pins can't be configured */
 	if ((NULL != device)
-		&& (0 != iBSP430platformConfigurePeripheralPins((xBSP430periphHandle)(device->euscia), 1))) {
+		&& (0 != iBSP430platformConfigurePeripheralPinsFromISR((xBSP430periphHandle)(device->euscia), 1))) {
 		device = NULL;
 	}
 
@@ -157,7 +157,7 @@ iBSP430eusciaClose (xBSP430eusciaHandle device)
 
 	BSP430_ENTER_CRITICAL();
 	device->euscia->ctlw0 = UCSWRST;
-	rc = iBSP430platformConfigurePeripheralPins ((xBSP430periphHandle)(device->euscia), 0);
+	rc = iBSP430platformConfigurePeripheralPinsFromISR ((xBSP430periphHandle)(device->euscia), 0);
 	device->flags = 0;
 	BSP430_EXIT_CRITICAL();
 	return rc;

@@ -176,7 +176,7 @@ iBSP430clockConfigureXT1 (int enablep,
 	int loop_delta;
 	int rc;
 	
-	rc = iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, enablep);
+	rc = iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, enablep);
 	if ((0 != rc) || (! enablep)) {
 		return rc;
 	}
@@ -196,7 +196,7 @@ iBSP430clockConfigureXT1 (int enablep,
 	rc = !(UCSCTL7 & XT1LFOFFG);
 	if (! rc) {
 		UCSCTL6 |= XT1OFF;
-		(void)iBSP430platformConfigurePeripheralPins(BSP430_PERIPH_XT1, 0);
+		(void)iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 0);
 	}
 	return rc;
 }

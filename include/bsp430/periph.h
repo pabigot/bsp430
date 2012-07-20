@@ -74,7 +74,7 @@
  *
  * Odd values are reserved for non-standard "peripherals" for which
  * some identifier is necessary to allow use in functions like
- * #iBSP430platformConfigurePeripheralPins, such as
+ * #iBSP430platformConfigurePeripheralPinsFromISR, such as
  * #BSP430_PERIPH_XT1.
  *
  * Negative values indicate an error. */
@@ -93,7 +93,7 @@ typedef int xBSP430periphHandle;
 /** HPL handle identifying the ability to expose clock signals.
  *
  * This is used by application code as a debug facility, invoking
- * #iBSP430platformConfigurePeripheralPins to expose MCLK, SMCLK, and
+ * #iBSP430platformConfigurePeripheralPinsFromISR to expose MCLK, SMCLK, and
  * ACLK on pins where they may be monitored.  Its availability is
  * conditional on platform support and
  * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
@@ -103,7 +103,7 @@ typedef int xBSP430periphHandle;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of
  * #BSP430_PERIPH_EXPOSED_CLOCKS in
- * #iBSP430platformConfigurePeripheralPins. */
+ * #iBSP430platformConfigurePeripheralPinsFromISR. */
 #ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 0
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
