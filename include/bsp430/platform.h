@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Entrypoint for platform-specific capabilities.
+ * @brief Entrypoint for platform-specific capabilities.
  *
  * Mostly prototypes for functions that are implemented in the
  * platform source files.

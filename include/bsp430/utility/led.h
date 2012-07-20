@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Support for platform-independent LED manipulation
+ * @brief Support for platform-independent LED manipulation.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

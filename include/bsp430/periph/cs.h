@@ -31,11 +31,13 @@
 
 /** @file
  *
+ * @brief Hardware presentation/abstraction for Clock System (CS).
+ *
  * This module supports the Clock System (CS) peripheral present in
  * FR5xx-family devices.
  *
- * The module supports only a few factory-trimmed frequencies: 5.33,
- * 6.67, and 8 MHz on low-speed devices.  On high-speed--capable
+ * The peripheral supports only a few factory-trimmed frequencies:
+ * 5.33, 6.67, and 8 MHz on low-speed devices.  On high-speed--capable
  * devices the speed may also be set to 16, 20 and 24 MHz.
  *
  * Other refinements in this module:

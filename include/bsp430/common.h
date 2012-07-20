@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Common header included by all BSP430 leaf headers.
+ * @brief Common header included by all BSP430 leaf headers.
  *
  * This must be included by all BSP430 headers that do not include
  * another BSP430 header, so that it is available in all environments

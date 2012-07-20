@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Generic peripheral support for MSP430 MCUs.
+ * @brief Generic peripheral support for MSP430 MCUs.
  *
  * This file, included by peripheral-specific include files, supports
  * handles to peripherals which in turn are used in application code.

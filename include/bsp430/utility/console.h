@@ -31,12 +31,12 @@
 
 /** @file
  *
- * Declarations for a generic console print capability.
+ * @brief A generic console print capability.
  *
- * cprintf* is like printf* except that it incorporates a semaphore to
- * ensure the output is not interleaved when multiple tasks are
+ * #cprintf is like @c printf except that it incorporates a semaphore
+ * to ensure the output is not interleaved when multiple tasks are
  * printing at the same time.  It also assumes a console device which
- * uses non-blocking output.
+ * uses blocking output.
  * 
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -54,12 +54,16 @@
  * Calls block until access to the console is obtained. */
 int
 cprintf (const char *string, ...)
-__attribute__((__format__(printf, 1, 2)));
+#if __GNUC__ - 0
+__attribute__((__format__(printf, 1, 2)))
+#endif /* __GNUC__ */
+	;
 
 /** Configure a console device.
  *
- * @param xUART a serial device, preferably one that does non-blocking
- * writes.  Pass zero to disable the console print infrastructure.
+ * @param xUART a serial device, preferably one that does blocking
+ * writes (output is complete when the function returns.  Pass zero to
+ * disable the console print infrastructure.
  *
  * @param xBlockTime the duration to wait for any other active users
  * of cprintf to exit

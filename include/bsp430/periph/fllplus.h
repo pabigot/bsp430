@@ -31,6 +31,8 @@
 
 /** @file
  *
+ * @brief Hardware presentation/abstraction for FLL Plus (FLLPLUS).
+ *
  * This module supports the FLLPLUS and FLLPLUS_SMALL peripherals,
  * which are present in 4xx-family devices.
  *

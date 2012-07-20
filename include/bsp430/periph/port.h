@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Genericized digital I/O port (PORTX/PORTX_R) for MSP430 MCUs
+ * @brief Genericized digital I/O port (PORTX/PORTX_R) for MSP430 MCUs
  *
  * A hardware presentation layer is defined that provides a structure
  * definition associated with a port-specific address, to allow

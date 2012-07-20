@@ -31,7 +31,10 @@
 
 /** @file
  *
- * Support for system reset and related diagnostics.
+ * @brief Hardware presentation/abstraction for SYS peripheral (SYS).
+ *
+ * This exists on 5xx/6xx family devices, and is primarily an
+ * interface to reset causes.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

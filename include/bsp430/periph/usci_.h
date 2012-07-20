@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Protected UCSI (5xx/6xx) HAL interface declarations.
+ * @brief Protected UCSI (5xx/6xx) HAL interface declarations.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

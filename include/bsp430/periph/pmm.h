@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Support for power management module capabilities
+ * @brief Hardware presentation/abstraction for Power Management Module (PMM).
  *
  * The behavior of this module is modified with the following
  * configuration options:

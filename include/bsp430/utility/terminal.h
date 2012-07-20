@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Declarations for a terminal-capable command line processor.
+ * @brief Support for a terminal-capable command line processor.
  *
  * In gross concept, this module addresses needs similar to those
  * addressed by <a

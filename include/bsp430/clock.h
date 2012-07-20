@@ -31,7 +31,7 @@
 
 /** @file
  *
- * This module declares common clock-related functions.
+ * @brief Clock-related functions implemented on all MSP430 MCUs.
  *
  * The actual implementation of the functions are within the
  * peripheral-specific clock modules.

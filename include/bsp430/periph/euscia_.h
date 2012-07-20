@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Protected eUCSI_A HAL interface declarations.
+ * @brief Protected eUCSI_A HAL interface declarations.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

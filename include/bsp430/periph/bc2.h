@@ -31,6 +31,8 @@
 
 /** @file
  *
+ * @brief Hardware presentation/abstraction for Basic Clock Module+ (BC2).
+ * 
  * This module supports the BC2 ("Basic Clock Module+") peripheral,
  * which is present in 2xx-family devices.
  *

@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Genericized UCSI (USCI_A/USCI_B) for 5xx/6xx devices
+ * @brief Genericized UCSI (USCI_A/USCI_B) for 5xx/6xx devices.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

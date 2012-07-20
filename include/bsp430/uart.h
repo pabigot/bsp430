@@ -31,10 +31,11 @@
 
 /** @file
  *
- * Genericized UART interface
+ * @brief Abstracted UART interface.
  *
- * Select from supported devices and provide adaptation layer so that
- * other modules can be ignorant of the device type.
+ * Selects from supported devices and provides an adaptation layer so
+ * that other modules can be ignorant of the specific underlying UART
+ * device type.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

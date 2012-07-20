@@ -31,6 +31,8 @@
 
 /** @file
  *
+ * @brief Hardware presentation/abstraction for eUSCI_A.
+ * 
  * Genericized eUCSI_A on 5xx/6xx devices
  *
  * @author Peter A. Bigot <bigotp@acm.org>

@@ -31,6 +31,8 @@
 
 /** @file
  *
+ * @brief Hardware presentation/abstraction for Unified Clock System (UCS).
+ *
  * This module supports the Unified Clock System (UCS) and UCS_RF
  * peripherals, which are present in 5xx/6xx-family devices.
  *
