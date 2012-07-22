@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/periph/timer.h>
+#include <bsp430/periph/timer_.h>
 
 /* !BSP430! periph=timer */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */

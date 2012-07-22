@@ -209,15 +209,11 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-struct xBSP430timerState {
-	unsigned int flags;
-	volatile xBSP430periphTIMER * const timer;
-#if 0
-	struct xBSP430timerOverflowCallbackState * overflow_cbs
-	struct xBSP430timerCCRCallbackState * ccr_cbs[1];
-#endif
-};
+/* Forward declaration.  Structure declaration provided in
+ * <bsp430/timer_.h>. */
+struct xBSP430timerState;
 
+/** The timer internal state is protected. */
 typedef struct xBSP430timerState * xBSP430timerHandle;
 
 /* !BSP430! insert=hpl_ba_decl */
