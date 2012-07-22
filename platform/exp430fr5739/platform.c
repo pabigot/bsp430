@@ -84,7 +84,9 @@ iBSP430platformConfigurePeripheralPinsFromISR (xBSP430periphHandle device, int e
 {
 	unsigned int bits = 0;
 	if (BSP430_PERIPH_XT1 == device) {
-		bits = BIT4 | BIT5;
+		/* NB: Only XIN (PJ.4) needs to be configured; XOUT follows
+		 * it. */
+		bits = BIT4;
 		if (enablep) {
 			PJSEL0 |= bits;
 		} else {
