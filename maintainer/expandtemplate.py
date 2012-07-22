@@ -74,14 +74,6 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_port' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
- *
- * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
- * is defined to a true value. */
-
-extern xBSP430portHandle const xBSP430port_%(INSTANCE)s;
-''',
-
     'hal_port_5xx_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
 static struct xBSP430port5xxState state_%(INSTANCE)s = {
 		.port = (volatile xBSP430periphPORT_5XX_8 *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,

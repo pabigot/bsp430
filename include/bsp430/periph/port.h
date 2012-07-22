@@ -767,87 +767,76 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
 #warning not yet implemented
 #endif /* MSP430XV2 */
 
-/* !BSP430! insert=hal_port */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port] */
+/* !BSP430! insert=hal_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** FreeRTOS HAL handle for PORT1.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT1
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT1;
 
 /** FreeRTOS HAL handle for PORT2.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT2
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT2;
 
 /** FreeRTOS HAL handle for PORT3.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT3
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT3;
 
 /** FreeRTOS HAL handle for PORT4.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT4
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT4;
 
 /** FreeRTOS HAL handle for PORT5.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT5
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT5;
 
 /** FreeRTOS HAL handle for PORT6.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT6
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT6;
 
 /** FreeRTOS HAL handle for PORT7.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT7
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT7;
 
 /** FreeRTOS HAL handle for PORT8.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT8
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT8;
 
 /** FreeRTOS HAL handle for PORT9.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT9
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT9;
 
 /** FreeRTOS HAL handle for PORT10.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT10
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT10;
 
 /** FreeRTOS HAL handle for PORT11.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT11
  * is defined to a true value. */
-
 extern xBSP430portHandle const xBSP430port_PORT11;
 
-/* END AUTOMATICALLY GENERATED CODE [hal_port] */
-/* !BSP430! end=hal_port */
+/* END AUTOMATICALLY GENERATED CODE [hal_decl] */
+/* !BSP430! end=hal_decl */
 
 xBSP430portHandle xBSP430portLookup (xBSP430periphHandle xHandle);
 
