@@ -67,6 +67,74 @@ volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphT
 /* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_defn] */
 /* !BSP430! end=periph_ba_hpl_defn */
 
+/* !BSP430! insert=hal_ba_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
+#if configBSP430_PERIPH_TA0 - 0
+static struct xBSP430timerState state_TA0_ = {
+	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS
+};
+
+xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_;
+
+#endif /* configBSP430_PERIPH_TA0 */
+
+#if configBSP430_PERIPH_TA1 - 0
+static struct xBSP430timerState state_TA1_ = {
+	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS
+};
+
+xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_;
+
+#endif /* configBSP430_PERIPH_TA1 */
+
+#if configBSP430_PERIPH_TA2 - 0
+static struct xBSP430timerState state_TA2_ = {
+	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS
+};
+
+xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_;
+
+#endif /* configBSP430_PERIPH_TA2 */
+
+#if configBSP430_PERIPH_TA3 - 0
+static struct xBSP430timerState state_TA3_ = {
+	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS
+};
+
+xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_;
+
+#endif /* configBSP430_PERIPH_TA3 */
+
+#if configBSP430_PERIPH_TB0 - 0
+static struct xBSP430timerState state_TB0_ = {
+	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS
+};
+
+xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_;
+
+#endif /* configBSP430_PERIPH_TB0 */
+
+#if configBSP430_PERIPH_TB1 - 0
+static struct xBSP430timerState state_TB1_ = {
+	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS
+};
+
+xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_;
+
+#endif /* configBSP430_PERIPH_TB1 */
+
+#if configBSP430_PERIPH_TB2 - 0
+static struct xBSP430timerState state_TB2_ = {
+	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS
+};
+
+xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_;
+
+#endif /* configBSP430_PERIPH_TB2 */
+
+/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
+/* !BSP430! end=hal_ba_defn */
+
 volatile xBSP430periphTIMER *
 xBSP430periphLookupTIMER (xBSP430periphHandle periph)
 {

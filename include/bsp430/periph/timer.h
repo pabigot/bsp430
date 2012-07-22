@@ -30,7 +30,7 @@
  */
 
 /** @file
- * @brief Hardware presentation/abstraction for generic timers (T\#A/T\#B)
+ * @brief Hardware presentation/abstraction for generic timers (Timer_A/Timer_B)
  *
  * A hardware presentation layer is defined that provides a structure
  * definition associated with an MCU-specific address to allow
@@ -40,7 +40,8 @@
  *
  * The number of capture/compare registers supported by an instance is
  * not an identifying characteristic.  The HPL peripheral register
- * structure provides access to these as both named indexed elements.
+ * structure provides access to these as both named and indexed
+ * elements.
  *
  * The original nomenclature for MSP430 timers in MSP430 has proven to
  * be inconsistent as the number of instances grew.  While the
@@ -207,6 +208,17 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
 #define _BSP430_PERIPH_TB0_BASEADDRESS 0x0180
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
+
+struct xBSP430timerState {
+	unsigned int flags;
+	volatile xBSP430periphTIMER * const timer;
+#if 0
+	struct xBSP430timerOverflowCallbackState * overflow_cbs
+	struct xBSP430timerCCRCallbackState * ccr_cbs[1];
+#endif
+};
+
+typedef struct xBSP430timerState * xBSP430timerHandle;
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
@@ -455,5 +467,52 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
+
+/* !BSP430! insert=hal_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
+/** FreeRTOS HAL handle for TA0.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_TA0
+ * is defined to a true value. */
+extern xBSP430timerHandle const xBSP430timer_TA0;
+
+/** FreeRTOS HAL handle for TA1.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_TA1
+ * is defined to a true value. */
+extern xBSP430timerHandle const xBSP430timer_TA1;
+
+/** FreeRTOS HAL handle for TA2.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_TA2
+ * is defined to a true value. */
+extern xBSP430timerHandle const xBSP430timer_TA2;
+
+/** FreeRTOS HAL handle for TA3.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_TA3
+ * is defined to a true value. */
+extern xBSP430timerHandle const xBSP430timer_TA3;
+
+/** FreeRTOS HAL handle for TB0.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_TB0
+ * is defined to a true value. */
+extern xBSP430timerHandle const xBSP430timer_TB0;
+
+/** FreeRTOS HAL handle for TB1.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_TB1
+ * is defined to a true value. */
+extern xBSP430timerHandle const xBSP430timer_TB1;
+
+/** FreeRTOS HAL handle for TB2.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_TB2
+ * is defined to a true value. */
+extern xBSP430timerHandle const xBSP430timer_TB2;
+
+/* END AUTOMATICALLY GENERATED CODE [hal_decl] */
+/* !BSP430! end=hal_decl */
 
 #endif /* BSP430_PERIPH_TIMER_H */
