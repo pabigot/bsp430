@@ -294,7 +294,6 @@ static struct xBSP430usciState state_USCI_A0_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_A0 = &state_USCI_A0_;
-
 #endif /* configBSP430_PERIPH_USCI_A0 */
 
 #if configBSP430_PERIPH_USCI_A1 - 0
@@ -303,7 +302,6 @@ static struct xBSP430usciState state_USCI_A1_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_A1 = &state_USCI_A1_;
-
 #endif /* configBSP430_PERIPH_USCI_A1 */
 
 #if configBSP430_PERIPH_USCI_A2 - 0
@@ -312,7 +310,6 @@ static struct xBSP430usciState state_USCI_A2_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_A2 = &state_USCI_A2_;
-
 #endif /* configBSP430_PERIPH_USCI_A2 */
 
 #if configBSP430_PERIPH_USCI_A3 - 0
@@ -321,7 +318,6 @@ static struct xBSP430usciState state_USCI_A3_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_A3 = &state_USCI_A3_;
-
 #endif /* configBSP430_PERIPH_USCI_A3 */
 
 #if configBSP430_PERIPH_USCI_B0 - 0
@@ -330,7 +326,6 @@ static struct xBSP430usciState state_USCI_B0_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_B0 = &state_USCI_B0_;
-
 #endif /* configBSP430_PERIPH_USCI_B0 */
 
 #if configBSP430_PERIPH_USCI_B1 - 0
@@ -339,7 +334,6 @@ static struct xBSP430usciState state_USCI_B1_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_B1 = &state_USCI_B1_;
-
 #endif /* configBSP430_PERIPH_USCI_B1 */
 
 #if configBSP430_PERIPH_USCI_B2 - 0
@@ -348,7 +342,6 @@ static struct xBSP430usciState state_USCI_B2_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_B2 = &state_USCI_B2_;
-
 #endif /* configBSP430_PERIPH_USCI_B2 */
 
 #if configBSP430_PERIPH_USCI_B3 - 0
@@ -357,7 +350,6 @@ static struct xBSP430usciState state_USCI_B3_ = {
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_B3 = &state_USCI_B3_;
-
 #endif /* configBSP430_PERIPH_USCI_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */

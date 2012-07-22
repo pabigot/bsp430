@@ -75,7 +75,6 @@ static struct xBSP430timerState state_TA0_ = {
 };
 
 xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_;
-
 #endif /* configBSP430_PERIPH_TA0 */
 
 #if configBSP430_PERIPH_TA1 - 0
@@ -84,7 +83,6 @@ static struct xBSP430timerState state_TA1_ = {
 };
 
 xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_;
-
 #endif /* configBSP430_PERIPH_TA1 */
 
 #if configBSP430_PERIPH_TA2 - 0
@@ -93,7 +91,6 @@ static struct xBSP430timerState state_TA2_ = {
 };
 
 xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_;
-
 #endif /* configBSP430_PERIPH_TA2 */
 
 #if configBSP430_PERIPH_TA3 - 0
@@ -102,7 +99,6 @@ static struct xBSP430timerState state_TA3_ = {
 };
 
 xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_;
-
 #endif /* configBSP430_PERIPH_TA3 */
 
 #if configBSP430_PERIPH_TB0 - 0
@@ -111,7 +107,6 @@ static struct xBSP430timerState state_TB0_ = {
 };
 
 xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_;
-
 #endif /* configBSP430_PERIPH_TB0 */
 
 #if configBSP430_PERIPH_TB1 - 0
@@ -120,7 +115,6 @@ static struct xBSP430timerState state_TB1_ = {
 };
 
 xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_;
-
 #endif /* configBSP430_PERIPH_TB1 */
 
 #if configBSP430_PERIPH_TB2 - 0
@@ -129,7 +123,6 @@ static struct xBSP430timerState state_TB2_ = {
 };
 
 xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_;
-
 #endif /* configBSP430_PERIPH_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */

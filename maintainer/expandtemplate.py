@@ -52,7 +52,6 @@ static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
 };
 
 xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
-
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 

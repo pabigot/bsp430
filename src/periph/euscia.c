@@ -312,7 +312,6 @@ static struct xBSP430eusciaState state_EUSCI_A0_ = {
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
-
 #endif /* configBSP430_PERIPH_EUSCI_A0 */
 
 #if configBSP430_PERIPH_EUSCI_A1 - 0
@@ -321,7 +320,6 @@ static struct xBSP430eusciaState state_EUSCI_A1_ = {
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
-
 #endif /* configBSP430_PERIPH_EUSCI_A1 */
 
 #if configBSP430_PERIPH_EUSCI_A2 - 0
@@ -330,7 +328,6 @@ static struct xBSP430eusciaState state_EUSCI_A2_ = {
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;
-
 #endif /* configBSP430_PERIPH_EUSCI_A2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
