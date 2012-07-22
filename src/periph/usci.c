@@ -277,8 +277,8 @@ usci_isr (xBSP430usciHandle device)
 }
 #endif  /* configBSP430_USCI_SHARE_ISR - 0 */
 
-/* !BSP430! insert=hpl_ba_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_defn] */
+/* !BSP430! insert=hal_ba_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_PERIPH_USCI_A0 - 0
 static struct xBSP430usciState state_USCI_A0_ = {
 	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A0__
@@ -447,8 +447,8 @@ isr_USCI_B3 (void)
 
 #endif /* configBSP430_PERIPH_USCI_B3 */
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_ba_defn] */
-/* !BSP430! end=hpl_ba_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
+/* !BSP430! end=hal_ba_defn */
 
 static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph)
 {

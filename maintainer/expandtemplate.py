@@ -45,7 +45,7 @@ extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
 extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
 ''',
 
-    'hpl_ba_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+    'hal_ba_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
 static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
 	.%(periph)s = (xBSP430periph%(PERIPH)s *)__MSP430_BASEADDRESS_%(INSTANCE)s__
 };

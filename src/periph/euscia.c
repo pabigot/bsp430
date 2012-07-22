@@ -300,8 +300,8 @@ euscia_isr (xBSP430eusciaHandle device)
 }
 #endif /* configBSP430_EUSCIA_SHARE_ISR */
 
-/* !BSP430! insert=hpl_ba_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_defn] */
+/* !BSP430! insert=hal_ba_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_PERIPH_EUSCI_A0 - 0
 static struct xBSP430eusciaState state_EUSCI_A0_ = {
 	.euscia = (xBSP430periphEUSCIA *)__MSP430_BASEADDRESS_EUSCI_A0__
@@ -365,8 +365,8 @@ isr_EUSCI_A2 (void)
 
 #endif /* configBSP430_PERIPH_EUSCI_A2 */
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_ba_defn] */
-/* !BSP430! end=hpl_ba_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
+/* !BSP430! end=hal_ba_defn */
 
 
 static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
