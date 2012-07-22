@@ -78,6 +78,22 @@
  * power mode. */
 #define BSP430_LPM_LPM5_BIT 0x1000
 
+/** Bit indicating that the scheduler should be suspended.
+ *
+ * This bit may be set along with the other LPM bits to indicate that
+ * the infrastructure should disable the periodic tick that controls
+ * task switching.  It should only be set when it is known that all
+ * tasks are woken only as a result of an external interrupt.
+ *
+ * In FreeRTOS, this bit should not be set if the application uses a
+ * blocking semaphore or queue operation with a timeout specified as
+ * something other than @c portMAX_DELAY.
+ *
+ * @note This only disables the interval interrupt that wakes the
+ * scheduler.  It does not inhibit the low frequency clock counters
+ * that retain time-since-boot. */
+#define BSP430_LPM_SUSPEND_BIT 0x2000
+
 /** Reset all port pins for low power applications.
  *
  * This function should be invoked at application power-up so that
