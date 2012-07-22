@@ -27,17 +27,21 @@ templates = {
 
 /** Handle for the raw %(INSTANCE)s device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_%(INSTANCE)s is defined to a true
- * value. */
-#define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(__MSP430_BASEADDRESS_%(INSTANCE)s__))
+ * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * is defined to a true value. */
+#define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS))
+
+/** Pointer to the peripheral register map for %(INSTANCE)s.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * is defined to a true value. */
+extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
 ''',
     
     'hal_decl' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_%(INSTANCE)s is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * is defined to a true value. */
 extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
 ''',
 
@@ -83,19 +87,19 @@ isr_%(INSTANCE)s (void)
 
 /** Handle for the raw %(PORT1)s device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_%(PORT1)s
+ * The handle may be used only if configBSP430_PERIPH_%(PORT1)s
  * is defined to a true value. */
 #define BSP430_PERIPH_%(PORT1)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT1)s_BASEADDRESS))
 
 /** Handle for the raw %(PORT2)s device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_%(PORT2)s
+ * The handle may be used only if configBSP430_PERIPH_%(PORT2)s
  * is defined to a true value. */
 #define BSP430_PERIPH_%(PORT2)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT2)s_BASEADDRESS))
 
 /** Handle for the raw %(PORTA)s device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_%(PORTA)s
+ * The handle may be used only if configBSP430_PERIPH_%(PORTA)s
  * is defined to a true value. */
 #define BSP430_PERIPH_%(PORTA)s ((xBSP430periphHandle)(1 + _BSP430_PERIPH_%(PORT1)s_BASEADDRESS))
 
@@ -148,9 +152,8 @@ isr_%(INSTANCE)s (void)
 
     'hal_port' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_%(INSTANCE)s is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_%(INSTANCE)s;
 ''',
@@ -163,7 +166,7 @@ xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_port_5xx_isr_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s_ISR - 0
+    'hal_port_5xx_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
@@ -173,41 +176,6 @@ isr_%(INSTANCE)s (void)
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
 #endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
-''',
-
-    'hpl_timer' : '''/** @def configBSP430_PERIPH_%(INSTANCE)s
- *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c %(INSTANCE)s peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
-#ifndef configBSP430_PERIPH_%(INSTANCE)s
-#define configBSP430_PERIPH_%(INSTANCE)s 0
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
-
-/** @def configBSP430_PERIPH_%(INSTANCE)s_ISR
- *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c %(INSTANCE)s.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_%(PERIPH)s_SHARE_ISR must be enabled for this to be
- * enabled. */
-#ifndef configBSP430_PERIPH_%(INSTANCE)s_ISR
-#define configBSP430_PERIPH_%(INSTANCE)s_ISR 1
-#endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
-
-/** Handle for the raw %(INSTANCE)s device.
- *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_%(INSTANCE)s is defined to a true
- * value. */
-#define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS))
-
-/** Pointer to the peripheral register map for %(INSTANCE)s.
- */
-extern volatile xBSP430periphTIMER * const xBSP430periph_%(INSTANCE)s;
 ''',
 
     'periph_ba_hpl_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0

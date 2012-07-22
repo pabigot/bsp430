@@ -56,6 +56,7 @@
  */
 
 /* !BSP430! periph=port */
+/* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
 
 #ifndef BSP430_PERIPH_PORT_H
 #define BSP430_PERIPH_PORT_H
@@ -255,6 +256,78 @@ typedef _BSP430_PERIPH_PORTW xBSP430periphPORTW;
  * interrupt should yield before returning. */
 #define BSP430_PORT_ISR_YIELD 0x1000
 
+/** Get the peripheral register pointer for an interrupt-enabled port.
+ *
+ * @note All ports on 5xx-family devices are interrupt-enabled.
+ * 
+ * @param xHandle The handle identifier, such as #BSP430_PERIPH_PORT1.
+ *
+ * @return A typed pointer that can be used to manipulate the port.  A
+ * null pointer is returned if the handle does not correspond to a
+ * timer which has been enabled (e.g., with
+ * #configBSP430_PERIPH_PORT1), or if the specified port does not
+ * support interrupts (see #xBSP430periphLookupPORT)
+ */
+volatile xBSP430periphPORTIE * xBSP430periphLookupPORTIE (xBSP430periphHandle xHandle);
+
+/** Get the peripheral register pointer for a non-interrupt-enabled port.
+ *
+ * @param xHandle The handle identifier, such as #BSP430_PERIPH_PORT1.
+ *
+ * @return A typed pointer that can be used to manipulate the port.  A
+ * null pointer is returned if the handle does not correspond to a
+ * timer which has been enabled (e.g., with
+ * #configBSP430_PERIPH_PORT1), or if the specified port supports
+ * interrupts (see #xBSP430periphLookupPORTIE)
+ */
+volatile xBSP430periphPORT * xBSP430periphLookupPORT (xBSP430periphHandle xHandle);
+
+/** @cond DOXYGEN_INTERNAL */
+
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+/* All 5xx ports are resistor enabled */
+#define _BSP430_PERIPH_PORTA_BASEADDRESS __MSP430_BASEADDRESS_PORTA_R__
+#define _BSP430_PERIPH_PORTB_BASEADDRESS __MSP430_BASEADDRESS_PORTB_R__
+#define _BSP430_PERIPH_PORTC_BASEADDRESS __MSP430_BASEADDRESS_PORTC_R__
+#define _BSP430_PERIPH_PORTD_BASEADDRESS __MSP430_BASEADDRESS_PORTD_R__
+#define _BSP430_PERIPH_PORTE_BASEADDRESS __MSP430_BASEADDRESS_PORTE_R__
+#define _BSP430_PERIPH_PORTF_BASEADDRESS __MSP430_BASEADDRESS_PORTF_R__
+
+#define _BSP430_PERIPH_PORT1_BASEADDRESS __MSP430_BASEADDRESS_PORT1_R__
+#define _BSP430_PERIPH_PORT2_BASEADDRESS __MSP430_BASEADDRESS_PORT2_R__
+#define _BSP430_PERIPH_PORT3_BASEADDRESS __MSP430_BASEADDRESS_PORT3_R__
+#define _BSP430_PERIPH_PORT4_BASEADDRESS __MSP430_BASEADDRESS_PORT4_R__
+#define _BSP430_PERIPH_PORT5_BASEADDRESS __MSP430_BASEADDRESS_PORT5_R__
+#define _BSP430_PERIPH_PORT6_BASEADDRESS __MSP430_BASEADDRESS_PORT6_R__
+#define _BSP430_PERIPH_PORT7_BASEADDRESS __MSP430_BASEADDRESS_PORT7_R__
+#define _BSP430_PERIPH_PORT8_BASEADDRESS __MSP430_BASEADDRESS_PORT8_R__
+#define _BSP430_PERIPH_PORT9_BASEADDRESS __MSP430_BASEADDRESS_PORT9_R__
+#define _BSP430_PERIPH_PORT10_BASEADDRESS __MSP430_BASEADDRESS_PORT10_R__
+#define _BSP430_PERIPH_PORT11_BASEADDRESS __MSP430_BASEADDRESS_PORT11_R__
+
+#define _BSP430_PERIPH_PORTJ_BASEADDRESS __MSP430_BASEADDRESS_PORTJ_R__
+
+#else /* 5xx */
+/* Port addresses are fixed for all pre-5xx families. */
+#define _BSP430_PERIPH_PORT1_BASEADDRESS 0x0020
+#define _BSP430_PERIPH_PORT2_BASEADDRESS 0x0028
+#define _BSP430_PERIPH_PORT3_BASEADDRESS 0x0018
+#define _BSP430_PERIPH_PORT4_BASEADDRESS 0x000C
+#define _BSP430_PERIPH_PORT5_BASEADDRESS 0x0030
+#define _BSP430_PERIPH_PORT6_BASEADDRESS 0x0034
+
+#define _BSP430_PERIPH_PORTA_BASEADDRESS 0x0038
+#define _BSP430_PERIPH_PORT7_BASEADDRESS 0x0038
+#define _BSP430_PERIPH_PORT8_BASEADDRESS 0x0039
+
+#define _BSP430_PERIPH_PORTB_BASEADDRESS 0x0008
+#define _BSP430_PERIPH_PORT9_BASEADDRESS 0x0008
+#define _BSP430_PERIPH_PORT10_BASEADDRESS 0x0009
+
+#endif /* 5xx */
+
+/** @endcond */ /* DOXYGEN_INTERNAL */
+
 #if 1 // defined(__MSP430_HAS_MSP430XV2_CPU__)
 /* 5xx-family port management */
 
@@ -304,43 +377,13 @@ struct xBSP430port5xxState {
 #define configBSP430_PORT_SHARE_ISR 1
 #endif /* configBSP430_PORT_SHARE_ISR */
 
-/* !BSP430! portexpand=True instance=A,B,C,D,E,F insert=hpl_port_5xx */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_port_5xx] */
-
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_PORTA_R__)
-#define _BSP430_PERIPH_PORT1_BASEADDRESS __MSP430_BASEADDRESS_PORTA_R__
-#define _BSP430_PERIPH_PORT2_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTA_R__)
-#else /* PORTA_R */
-#define _BSP430_PERIPH_PORT1_BASEADDRESS __MSP430_BASEADDRESS_PORTA__
-#define _BSP430_PERIPH_PORT2_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTA__)
-#endif /* PORTA_R */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
-/** Handle for the raw PORT1 device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORT1
- * is defined to a true value. */
-#define BSP430_PERIPH_PORT1 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT1_BASEADDRESS))
-
-/** Handle for the raw PORT2 device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORT2
- * is defined to a true value. */
-#define BSP430_PERIPH_PORT2 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT2_BASEADDRESS))
-
-/** Handle for the raw PORTA device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORTA
- * is defined to a true value. */
-#define BSP430_PERIPH_PORTA ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT1_BASEADDRESS))
-
+/* !BSP430! insert=hpl_ba_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_PORT1
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT1 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT1__ or
- * @c __MSP430_HAS_PORT1_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT1__) */
 #ifndef configBSP430_PERIPH_PORT1
 #define configBSP430_PERIPH_PORT1 0
 #endif /* configBSP430_PERIPH_PORT1 */
@@ -355,15 +398,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT1_ISR
-#define configBSP430_PERIPH_PORT1_ISR 0
+#define configBSP430_PERIPH_PORT1_ISR 1
 #endif /* configBSP430_PERIPH_PORT1_ISR */
+
+/** Handle for the raw PORT1 device.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_PORT1
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORT1 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT1_BASEADDRESS))
+
+/** Pointer to the peripheral register map for PORT1.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_PORT1
+ * is defined to a true value. */
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT1;
 
 /** @def configBSP430_PERIPH_PORT2
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT2 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT2__ or
- * @c __MSP430_HAS_PORT2_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT2__) */
 #ifndef configBSP430_PERIPH_PORT2
 #define configBSP430_PERIPH_PORT2 0
 #endif /* configBSP430_PERIPH_PORT2 */
@@ -378,44 +432,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT2_ISR
-#define configBSP430_PERIPH_PORT2_ISR 0
+#define configBSP430_PERIPH_PORT2_ISR 1
 #endif /* configBSP430_PERIPH_PORT2_ISR */
 
-
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_PORTB_R__)
-#define _BSP430_PERIPH_PORT3_BASEADDRESS __MSP430_BASEADDRESS_PORTB_R__
-#define _BSP430_PERIPH_PORT4_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTB_R__)
-#else /* PORTB_R */
-#define _BSP430_PERIPH_PORT3_BASEADDRESS __MSP430_BASEADDRESS_PORTB__
-#define _BSP430_PERIPH_PORT4_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTB__)
-#endif /* PORTB_R */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
-/** Handle for the raw PORT3 device.
+/** Handle for the raw PORT2 device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT3
+ * The handle may be used only if #configBSP430_PERIPH_PORT2
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT3 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT3_BASEADDRESS))
+#define BSP430_PERIPH_PORT2 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT2_BASEADDRESS))
 
-/** Handle for the raw PORT4 device.
+/** Pointer to the peripheral register map for PORT2.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT4
+ * The pointer may be used only if #configBSP430_PERIPH_PORT2
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT4 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT4_BASEADDRESS))
-
-/** Handle for the raw PORTB device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORTB
- * is defined to a true value. */
-#define BSP430_PERIPH_PORTB ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT3_BASEADDRESS))
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT2;
 
 /** @def configBSP430_PERIPH_PORT3
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT3 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT3__ or
- * @c __MSP430_HAS_PORT3_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT3__) */
 #ifndef configBSP430_PERIPH_PORT3
 #define configBSP430_PERIPH_PORT3 0
 #endif /* configBSP430_PERIPH_PORT3 */
@@ -430,15 +466,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT3_ISR
-#define configBSP430_PERIPH_PORT3_ISR 0
+#define configBSP430_PERIPH_PORT3_ISR 1
 #endif /* configBSP430_PERIPH_PORT3_ISR */
+
+/** Handle for the raw PORT3 device.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_PORT3
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORT3 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT3_BASEADDRESS))
+
+/** Pointer to the peripheral register map for PORT3.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_PORT3
+ * is defined to a true value. */
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT3;
 
 /** @def configBSP430_PERIPH_PORT4
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT4 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT4__ or
- * @c __MSP430_HAS_PORT4_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT4__) */
 #ifndef configBSP430_PERIPH_PORT4
 #define configBSP430_PERIPH_PORT4 0
 #endif /* configBSP430_PERIPH_PORT4 */
@@ -453,44 +500,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT4_ISR
-#define configBSP430_PERIPH_PORT4_ISR 0
+#define configBSP430_PERIPH_PORT4_ISR 1
 #endif /* configBSP430_PERIPH_PORT4_ISR */
 
-
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_PORTC_R__)
-#define _BSP430_PERIPH_PORT5_BASEADDRESS __MSP430_BASEADDRESS_PORTC_R__
-#define _BSP430_PERIPH_PORT6_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTC_R__)
-#else /* PORTC_R */
-#define _BSP430_PERIPH_PORT5_BASEADDRESS __MSP430_BASEADDRESS_PORTC__
-#define _BSP430_PERIPH_PORT6_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTC__)
-#endif /* PORTC_R */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
-/** Handle for the raw PORT5 device.
+/** Handle for the raw PORT4 device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT5
+ * The handle may be used only if #configBSP430_PERIPH_PORT4
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT5 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT5_BASEADDRESS))
+#define BSP430_PERIPH_PORT4 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT4_BASEADDRESS))
 
-/** Handle for the raw PORT6 device.
+/** Pointer to the peripheral register map for PORT4.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT6
+ * The pointer may be used only if #configBSP430_PERIPH_PORT4
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT6 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT6_BASEADDRESS))
-
-/** Handle for the raw PORTC device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORTC
- * is defined to a true value. */
-#define BSP430_PERIPH_PORTC ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT5_BASEADDRESS))
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT4;
 
 /** @def configBSP430_PERIPH_PORT5
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT5 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT5__ or
- * @c __MSP430_HAS_PORT5_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT5__) */
 #ifndef configBSP430_PERIPH_PORT5
 #define configBSP430_PERIPH_PORT5 0
 #endif /* configBSP430_PERIPH_PORT5 */
@@ -505,15 +534,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT5_ISR
-#define configBSP430_PERIPH_PORT5_ISR 0
+#define configBSP430_PERIPH_PORT5_ISR 1
 #endif /* configBSP430_PERIPH_PORT5_ISR */
+
+/** Handle for the raw PORT5 device.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_PORT5
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORT5 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT5_BASEADDRESS))
+
+/** Pointer to the peripheral register map for PORT5.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_PORT5
+ * is defined to a true value. */
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT5;
 
 /** @def configBSP430_PERIPH_PORT6
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT6 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT6__ or
- * @c __MSP430_HAS_PORT6_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT6__) */
 #ifndef configBSP430_PERIPH_PORT6
 #define configBSP430_PERIPH_PORT6 0
 #endif /* configBSP430_PERIPH_PORT6 */
@@ -528,44 +568,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT6_ISR
-#define configBSP430_PERIPH_PORT6_ISR 0
+#define configBSP430_PERIPH_PORT6_ISR 1
 #endif /* configBSP430_PERIPH_PORT6_ISR */
 
-
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_PORTD_R__)
-#define _BSP430_PERIPH_PORT7_BASEADDRESS __MSP430_BASEADDRESS_PORTD_R__
-#define _BSP430_PERIPH_PORT8_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTD_R__)
-#else /* PORTD_R */
-#define _BSP430_PERIPH_PORT7_BASEADDRESS __MSP430_BASEADDRESS_PORTD__
-#define _BSP430_PERIPH_PORT8_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTD__)
-#endif /* PORTD_R */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
-/** Handle for the raw PORT7 device.
+/** Handle for the raw PORT6 device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT7
+ * The handle may be used only if #configBSP430_PERIPH_PORT6
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT7 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT7_BASEADDRESS))
+#define BSP430_PERIPH_PORT6 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT6_BASEADDRESS))
 
-/** Handle for the raw PORT8 device.
+/** Pointer to the peripheral register map for PORT6.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT8
+ * The pointer may be used only if #configBSP430_PERIPH_PORT6
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT8 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT8_BASEADDRESS))
-
-/** Handle for the raw PORTD device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORTD
- * is defined to a true value. */
-#define BSP430_PERIPH_PORTD ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT7_BASEADDRESS))
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT6;
 
 /** @def configBSP430_PERIPH_PORT7
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT7 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT7__ or
- * @c __MSP430_HAS_PORT7_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT7__) */
 #ifndef configBSP430_PERIPH_PORT7
 #define configBSP430_PERIPH_PORT7 0
 #endif /* configBSP430_PERIPH_PORT7 */
@@ -580,15 +602,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT7_ISR
-#define configBSP430_PERIPH_PORT7_ISR 0
+#define configBSP430_PERIPH_PORT7_ISR 1
 #endif /* configBSP430_PERIPH_PORT7_ISR */
+
+/** Handle for the raw PORT7 device.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_PORT7
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORT7 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT7_BASEADDRESS))
+
+/** Pointer to the peripheral register map for PORT7.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_PORT7
+ * is defined to a true value. */
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT7;
 
 /** @def configBSP430_PERIPH_PORT8
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT8 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT8__ or
- * @c __MSP430_HAS_PORT8_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT8__) */
 #ifndef configBSP430_PERIPH_PORT8
 #define configBSP430_PERIPH_PORT8 0
 #endif /* configBSP430_PERIPH_PORT8 */
@@ -603,44 +636,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT8_ISR
-#define configBSP430_PERIPH_PORT8_ISR 0
+#define configBSP430_PERIPH_PORT8_ISR 1
 #endif /* configBSP430_PERIPH_PORT8_ISR */
 
-
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_PORTE_R__)
-#define _BSP430_PERIPH_PORT9_BASEADDRESS __MSP430_BASEADDRESS_PORTE_R__
-#define _BSP430_PERIPH_PORT10_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTE_R__)
-#else /* PORTE_R */
-#define _BSP430_PERIPH_PORT9_BASEADDRESS __MSP430_BASEADDRESS_PORTE__
-#define _BSP430_PERIPH_PORT10_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTE__)
-#endif /* PORTE_R */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
-/** Handle for the raw PORT9 device.
+/** Handle for the raw PORT8 device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT9
+ * The handle may be used only if #configBSP430_PERIPH_PORT8
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT9 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT9_BASEADDRESS))
+#define BSP430_PERIPH_PORT8 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT8_BASEADDRESS))
 
-/** Handle for the raw PORT10 device.
+/** Pointer to the peripheral register map for PORT8.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT10
+ * The pointer may be used only if #configBSP430_PERIPH_PORT8
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT10 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT10_BASEADDRESS))
-
-/** Handle for the raw PORTE device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORTE
- * is defined to a true value. */
-#define BSP430_PERIPH_PORTE ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT9_BASEADDRESS))
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT8;
 
 /** @def configBSP430_PERIPH_PORT9
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT9 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT9__ or
- * @c __MSP430_HAS_PORT9_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT9__) */
 #ifndef configBSP430_PERIPH_PORT9
 #define configBSP430_PERIPH_PORT9 0
 #endif /* configBSP430_PERIPH_PORT9 */
@@ -655,15 +670,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT9_ISR
-#define configBSP430_PERIPH_PORT9_ISR 0
+#define configBSP430_PERIPH_PORT9_ISR 1
 #endif /* configBSP430_PERIPH_PORT9_ISR */
+
+/** Handle for the raw PORT9 device.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_PORT9
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORT9 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT9_BASEADDRESS))
+
+/** Pointer to the peripheral register map for PORT9.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_PORT9
+ * is defined to a true value. */
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT9;
 
 /** @def configBSP430_PERIPH_PORT10
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT10 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT10__ or
- * @c __MSP430_HAS_PORT10_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT10__) */
 #ifndef configBSP430_PERIPH_PORT10
 #define configBSP430_PERIPH_PORT10 0
 #endif /* configBSP430_PERIPH_PORT10 */
@@ -678,44 +704,26 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT10_ISR
-#define configBSP430_PERIPH_PORT10_ISR 0
+#define configBSP430_PERIPH_PORT10_ISR 1
 #endif /* configBSP430_PERIPH_PORT10_ISR */
 
-
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_PORTF_R__)
-#define _BSP430_PERIPH_PORT11_BASEADDRESS __MSP430_BASEADDRESS_PORTF_R__
-#define _BSP430_PERIPH_PORT12_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTF_R__)
-#else /* PORTF_R */
-#define _BSP430_PERIPH_PORT11_BASEADDRESS __MSP430_BASEADDRESS_PORTF__
-#define _BSP430_PERIPH_PORT12_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTF__)
-#endif /* PORTF_R */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
-/** Handle for the raw PORT11 device.
+/** Handle for the raw PORT10 device.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT11
+ * The handle may be used only if #configBSP430_PERIPH_PORT10
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT11 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT11_BASEADDRESS))
+#define BSP430_PERIPH_PORT10 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT10_BASEADDRESS))
 
-/** Handle for the raw PORT12 device.
+/** Pointer to the peripheral register map for PORT10.
  *
- * The handle may be referenced only if configBSP430_PERIPH_PORT12
+ * The pointer may be used only if #configBSP430_PERIPH_PORT10
  * is defined to a true value. */
-#define BSP430_PERIPH_PORT12 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT12_BASEADDRESS))
-
-/** Handle for the raw PORTF device.
- *
- * The handle may be referenced only if configBSP430_PERIPH_PORTF
- * is defined to a true value. */
-#define BSP430_PERIPH_PORTF ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT11_BASEADDRESS))
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT10;
 
 /** @def configBSP430_PERIPH_PORT11
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT11 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT11__ or
- * @c __MSP430_HAS_PORT11_R__) */
+ * supports this device (check @c __MSP430_HAS_PORT11__) */
 #ifndef configBSP430_PERIPH_PORT11
 #define configBSP430_PERIPH_PORT11 0
 #endif /* configBSP430_PERIPH_PORT11 */
@@ -730,126 +738,105 @@ struct xBSP430port5xxState {
  * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
  * enabled. */
 #ifndef configBSP430_PERIPH_PORT11_ISR
-#define configBSP430_PERIPH_PORT11_ISR 0
+#define configBSP430_PERIPH_PORT11_ISR 1
 #endif /* configBSP430_PERIPH_PORT11_ISR */
 
-/** @def configBSP430_PERIPH_PORT12
+/** Handle for the raw PORT11 device.
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c PORT12 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT12__ or
- * @c __MSP430_HAS_PORT12_R__) */
-#ifndef configBSP430_PERIPH_PORT12
-#define configBSP430_PERIPH_PORT12 0
-#endif /* configBSP430_PERIPH_PORT12 */
+ * The handle may be used only if #configBSP430_PERIPH_PORT11
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORT11 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT11_BASEADDRESS))
 
-/** @def configBSP430_PERIPH_PORT12_ISR
+/** Pointer to the peripheral register map for PORT11.
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c PORT12.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
- * enabled. */
-#ifndef configBSP430_PERIPH_PORT12_ISR
-#define configBSP430_PERIPH_PORT12_ISR 0
-#endif /* configBSP430_PERIPH_PORT12_ISR */
+ * The pointer may be used only if #configBSP430_PERIPH_PORT11
+ * is defined to a true value. */
+extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_port_5xx] */
-/* !BSP430! end=hpl_port_5xx */
+/* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
+/* !BSP430! end=hpl_ba_decl */
+
 #else /* MSP430XV2 */
 /* 1xx through 4xx port management */
 #warning not yet implemented
 #endif /* MSP430XV2 */
 
-/* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 insert=hal_port */
+/* !BSP430! insert=hal_port */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port] */
 /** FreeRTOS HAL handle for PORT1.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT1 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT1
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT1;
 
 /** FreeRTOS HAL handle for PORT2.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT2 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT2
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT2;
 
 /** FreeRTOS HAL handle for PORT3.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT3 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT3
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT3;
 
 /** FreeRTOS HAL handle for PORT4.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT4 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT4
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT4;
 
 /** FreeRTOS HAL handle for PORT5.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT5 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT5
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT5;
 
 /** FreeRTOS HAL handle for PORT6.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT6 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT6
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT6;
 
 /** FreeRTOS HAL handle for PORT7.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT7 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT7
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT7;
 
 /** FreeRTOS HAL handle for PORT8.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT8 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT8
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT8;
 
 /** FreeRTOS HAL handle for PORT9.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT9 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT9
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT9;
 
 /** FreeRTOS HAL handle for PORT10.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT10 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT10
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT10;
 
 /** FreeRTOS HAL handle for PORT11.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_PORT11 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_PORT11
+ * is defined to a true value. */
 
 extern xBSP430portHandle const xBSP430port_PORT11;
 

@@ -3,6 +3,55 @@
 /* !BSP430! periph=port */
 /* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
 
+/* !BSP430! insert=periph_ba_hpl_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_defn] */
+#if configBSP430_PERIPH_PORT1 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT1_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT1 */
+
+#if configBSP430_PERIPH_PORT2 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT2_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT2 */
+
+#if configBSP430_PERIPH_PORT3 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT3_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT3 */
+
+#if configBSP430_PERIPH_PORT4 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT4_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT4 */
+
+#if configBSP430_PERIPH_PORT5 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT5_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT5 */
+
+#if configBSP430_PERIPH_PORT6 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT6_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT6 */
+
+#if configBSP430_PERIPH_PORT7 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT7_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT7 */
+
+#if configBSP430_PERIPH_PORT8 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT8_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT8 */
+
+#if configBSP430_PERIPH_PORT9 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT9_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT9 */
+
+#if configBSP430_PERIPH_PORT10 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT10_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT10 */
+
+#if configBSP430_PERIPH_PORT11 - 0
+volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT11_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT11 */
+
+/* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_defn] */
+/* !BSP430! end=periph_ba_hpl_defn */
+
 /* !BSP430! insert=hal_port_5xx_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_defn] */
 #if configBSP430_PERIPH_PORT1 - 0
@@ -122,7 +171,7 @@ port_isr (xBSP430portHandle device,
 
 /* !BSP430! insert=hal_port_5xx_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_isr_defn] */
-#if configBSP430_PERIPH_PORT1_ISR - 0
+#if (configBSP430_PERIPH_PORT1 - 0) && (configBSP430_PERIPH_PORT1_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT1_VECTOR)))
 isr_PORT1 (void)
@@ -133,7 +182,7 @@ isr_PORT1 (void)
 }
 #endif /* configBSP430_PERIPH_PORT1_ISR */
 
-#if configBSP430_PERIPH_PORT2_ISR - 0
+#if (configBSP430_PERIPH_PORT2 - 0) && (configBSP430_PERIPH_PORT2_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT2_VECTOR)))
 isr_PORT2 (void)
@@ -144,7 +193,7 @@ isr_PORT2 (void)
 }
 #endif /* configBSP430_PERIPH_PORT2_ISR */
 
-#if configBSP430_PERIPH_PORT3_ISR - 0
+#if (configBSP430_PERIPH_PORT3 - 0) && (configBSP430_PERIPH_PORT3_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT3_VECTOR)))
 isr_PORT3 (void)
@@ -155,7 +204,7 @@ isr_PORT3 (void)
 }
 #endif /* configBSP430_PERIPH_PORT3_ISR */
 
-#if configBSP430_PERIPH_PORT4_ISR - 0
+#if (configBSP430_PERIPH_PORT4 - 0) && (configBSP430_PERIPH_PORT4_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT4_VECTOR)))
 isr_PORT4 (void)
@@ -166,7 +215,7 @@ isr_PORT4 (void)
 }
 #endif /* configBSP430_PERIPH_PORT4_ISR */
 
-#if configBSP430_PERIPH_PORT5_ISR - 0
+#if (configBSP430_PERIPH_PORT5 - 0) && (configBSP430_PERIPH_PORT5_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT5_VECTOR)))
 isr_PORT5 (void)
@@ -177,7 +226,7 @@ isr_PORT5 (void)
 }
 #endif /* configBSP430_PERIPH_PORT5_ISR */
 
-#if configBSP430_PERIPH_PORT6_ISR - 0
+#if (configBSP430_PERIPH_PORT6 - 0) && (configBSP430_PERIPH_PORT6_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT6_VECTOR)))
 isr_PORT6 (void)
@@ -188,7 +237,7 @@ isr_PORT6 (void)
 }
 #endif /* configBSP430_PERIPH_PORT6_ISR */
 
-#if configBSP430_PERIPH_PORT7_ISR - 0
+#if (configBSP430_PERIPH_PORT7 - 0) && (configBSP430_PERIPH_PORT7_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT7_VECTOR)))
 isr_PORT7 (void)
@@ -199,7 +248,7 @@ isr_PORT7 (void)
 }
 #endif /* configBSP430_PERIPH_PORT7_ISR */
 
-#if configBSP430_PERIPH_PORT8_ISR - 0
+#if (configBSP430_PERIPH_PORT8 - 0) && (configBSP430_PERIPH_PORT8_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT8_VECTOR)))
 isr_PORT8 (void)
@@ -210,7 +259,7 @@ isr_PORT8 (void)
 }
 #endif /* configBSP430_PERIPH_PORT8_ISR */
 
-#if configBSP430_PERIPH_PORT9_ISR - 0
+#if (configBSP430_PERIPH_PORT9 - 0) && (configBSP430_PERIPH_PORT9_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT9_VECTOR)))
 isr_PORT9 (void)
@@ -221,7 +270,7 @@ isr_PORT9 (void)
 }
 #endif /* configBSP430_PERIPH_PORT9_ISR */
 
-#if configBSP430_PERIPH_PORT10_ISR - 0
+#if (configBSP430_PERIPH_PORT10 - 0) && (configBSP430_PERIPH_PORT10_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT10_VECTOR)))
 isr_PORT10 (void)
@@ -232,7 +281,7 @@ isr_PORT10 (void)
 }
 #endif /* configBSP430_PERIPH_PORT10_ISR */
 
-#if configBSP430_PERIPH_PORT11_ISR - 0
+#if (configBSP430_PERIPH_PORT11 - 0) && (configBSP430_PERIPH_PORT11_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT11_VECTOR)))
 isr_PORT11 (void)
@@ -245,6 +294,98 @@ isr_PORT11 (void)
 
 /* END AUTOMATICALLY GENERATED CODE [hal_port_5xx_isr_defn] */
 /* !BSP430! end=hal_port_5xx_isr_defn */
+
+volatile xBSP430periphPORTIE *
+xBSP430periphLookupPORTIE (xBSP430periphHandle periph)
+{
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+/* !BSP430! insert=periph_ba_hpl_demux */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
+#if configBSP430_PERIPH_PORT1 - 0
+	if (BSP430_PERIPH_PORT1 == periph) {
+		return xBSP430periph_PORT1;
+	}
+#endif /* configBSP430_PERIPH_PORT1 */
+
+#if configBSP430_PERIPH_PORT2 - 0
+	if (BSP430_PERIPH_PORT2 == periph) {
+		return xBSP430periph_PORT2;
+	}
+#endif /* configBSP430_PERIPH_PORT2 */
+
+#if configBSP430_PERIPH_PORT3 - 0
+	if (BSP430_PERIPH_PORT3 == periph) {
+		return xBSP430periph_PORT3;
+	}
+#endif /* configBSP430_PERIPH_PORT3 */
+
+#if configBSP430_PERIPH_PORT4 - 0
+	if (BSP430_PERIPH_PORT4 == periph) {
+		return xBSP430periph_PORT4;
+	}
+#endif /* configBSP430_PERIPH_PORT4 */
+
+#if configBSP430_PERIPH_PORT5 - 0
+	if (BSP430_PERIPH_PORT5 == periph) {
+		return xBSP430periph_PORT5;
+	}
+#endif /* configBSP430_PERIPH_PORT5 */
+
+#if configBSP430_PERIPH_PORT6 - 0
+	if (BSP430_PERIPH_PORT6 == periph) {
+		return xBSP430periph_PORT6;
+	}
+#endif /* configBSP430_PERIPH_PORT6 */
+
+#if configBSP430_PERIPH_PORT7 - 0
+	if (BSP430_PERIPH_PORT7 == periph) {
+		return xBSP430periph_PORT7;
+	}
+#endif /* configBSP430_PERIPH_PORT7 */
+
+#if configBSP430_PERIPH_PORT8 - 0
+	if (BSP430_PERIPH_PORT8 == periph) {
+		return xBSP430periph_PORT8;
+	}
+#endif /* configBSP430_PERIPH_PORT8 */
+
+#if configBSP430_PERIPH_PORT9 - 0
+	if (BSP430_PERIPH_PORT9 == periph) {
+		return xBSP430periph_PORT9;
+	}
+#endif /* configBSP430_PERIPH_PORT9 */
+
+#if configBSP430_PERIPH_PORT10 - 0
+	if (BSP430_PERIPH_PORT10 == periph) {
+		return xBSP430periph_PORT10;
+	}
+#endif /* configBSP430_PERIPH_PORT10 */
+
+#if configBSP430_PERIPH_PORT11 - 0
+	if (BSP430_PERIPH_PORT11 == periph) {
+		return xBSP430periph_PORT11;
+	}
+#endif /* configBSP430_PERIPH_PORT11 */
+
+/* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_demux] */
+/* !BSP430! end=periph_ba_hpl_demux */
+#else /* 5xx */
+#error Not implemented
+#endif /* 5xx */
+	return NULL;
+}
+
+volatile xBSP430periphPORT *
+xBSP430periphLookupPORT (xBSP430periphHandle periph)
+{
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+	return NULL;
+#else /* 5xx */
+#error Not implemented
+#endif /* 5xx */
+	return NULL;
+}
+
 
 #endif /* configBSP430_PORT_SHARE_ISR */
 

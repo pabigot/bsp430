@@ -208,14 +208,13 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/* !BSP430! insert=hpl_timer */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_timer] */
+/* !BSP430! insert=hpl_ba_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_TA0
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA0 peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
+ * @c TA0 peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_TA0__) */
 #ifndef configBSP430_PERIPH_TA0
 #define configBSP430_PERIPH_TA0 0
 #endif /* configBSP430_PERIPH_TA0 */
@@ -235,21 +234,21 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
 
 /** Handle for the raw TA0 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_TA0 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_TA0
+ * is defined to a true value. */
 #define BSP430_PERIPH_TA0 ((xBSP430periphHandle)(_BSP430_PERIPH_TA0_BASEADDRESS))
 
 /** Pointer to the peripheral register map for TA0.
- */
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_TA0
+ * is defined to a true value. */
 extern volatile xBSP430periphTIMER * const xBSP430periph_TA0;
 
 /** @def configBSP430_PERIPH_TA1
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA1 peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
+ * @c TA1 peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_TA1__) */
 #ifndef configBSP430_PERIPH_TA1
 #define configBSP430_PERIPH_TA1 0
 #endif /* configBSP430_PERIPH_TA1 */
@@ -269,21 +268,21 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TA0;
 
 /** Handle for the raw TA1 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_TA1 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_TA1
+ * is defined to a true value. */
 #define BSP430_PERIPH_TA1 ((xBSP430periphHandle)(_BSP430_PERIPH_TA1_BASEADDRESS))
 
 /** Pointer to the peripheral register map for TA1.
- */
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_TA1
+ * is defined to a true value. */
 extern volatile xBSP430periphTIMER * const xBSP430periph_TA1;
 
 /** @def configBSP430_PERIPH_TA2
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA2 peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
+ * @c TA2 peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_TA2__) */
 #ifndef configBSP430_PERIPH_TA2
 #define configBSP430_PERIPH_TA2 0
 #endif /* configBSP430_PERIPH_TA2 */
@@ -303,21 +302,21 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TA1;
 
 /** Handle for the raw TA2 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_TA2 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_TA2
+ * is defined to a true value. */
 #define BSP430_PERIPH_TA2 ((xBSP430periphHandle)(_BSP430_PERIPH_TA2_BASEADDRESS))
 
 /** Pointer to the peripheral register map for TA2.
- */
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_TA2
+ * is defined to a true value. */
 extern volatile xBSP430periphTIMER * const xBSP430periph_TA2;
 
 /** @def configBSP430_PERIPH_TA3
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA3 peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
+ * @c TA3 peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_TA3__) */
 #ifndef configBSP430_PERIPH_TA3
 #define configBSP430_PERIPH_TA3 0
 #endif /* configBSP430_PERIPH_TA3 */
@@ -337,21 +336,21 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TA2;
 
 /** Handle for the raw TA3 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_TA3 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_TA3
+ * is defined to a true value. */
 #define BSP430_PERIPH_TA3 ((xBSP430periphHandle)(_BSP430_PERIPH_TA3_BASEADDRESS))
 
 /** Pointer to the peripheral register map for TA3.
- */
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_TA3
+ * is defined to a true value. */
 extern volatile xBSP430periphTIMER * const xBSP430periph_TA3;
 
 /** @def configBSP430_PERIPH_TB0
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TB0 peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
+ * @c TB0 peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_TB0__) */
 #ifndef configBSP430_PERIPH_TB0
 #define configBSP430_PERIPH_TB0 0
 #endif /* configBSP430_PERIPH_TB0 */
@@ -371,21 +370,21 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TA3;
 
 /** Handle for the raw TB0 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_TB0 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_TB0
+ * is defined to a true value. */
 #define BSP430_PERIPH_TB0 ((xBSP430periphHandle)(_BSP430_PERIPH_TB0_BASEADDRESS))
 
 /** Pointer to the peripheral register map for TB0.
- */
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_TB0
+ * is defined to a true value. */
 extern volatile xBSP430periphTIMER * const xBSP430periph_TB0;
 
 /** @def configBSP430_PERIPH_TB1
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TB1 peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
+ * @c TB1 peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_TB1__) */
 #ifndef configBSP430_PERIPH_TB1
 #define configBSP430_PERIPH_TB1 0
 #endif /* configBSP430_PERIPH_TB1 */
@@ -405,21 +404,21 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB0;
 
 /** Handle for the raw TB1 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_TB1 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_TB1
+ * is defined to a true value. */
 #define BSP430_PERIPH_TB1 ((xBSP430periphHandle)(_BSP430_PERIPH_TB1_BASEADDRESS))
 
 /** Pointer to the peripheral register map for TB1.
- */
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_TB1
+ * is defined to a true value. */
 extern volatile xBSP430periphTIMER * const xBSP430periph_TB1;
 
 /** @def configBSP430_PERIPH_TB2
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TB2 peripheral HPL or HAL interface.  If the MCU
- * does not support this timer, a compile-time error will probably
- * be produced. */
+ * @c TB2 peripheral HPL or HAL interface.  Only do this if the MCU
+ * supports this device (check @c __MSP430_HAS_TB2__) */
 #ifndef configBSP430_PERIPH_TB2
 #define configBSP430_PERIPH_TB2 0
 #endif /* configBSP430_PERIPH_TB2 */
@@ -439,16 +438,17 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB1;
 
 /** Handle for the raw TB2 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_TB2 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_TB2
+ * is defined to a true value. */
 #define BSP430_PERIPH_TB2 ((xBSP430periphHandle)(_BSP430_PERIPH_TB2_BASEADDRESS))
 
 /** Pointer to the peripheral register map for TB2.
- */
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_TB2
+ * is defined to a true value. */
 extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_timer] */
-/* !BSP430! end=hpl_timer */
+/* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
+/* !BSP430! end=hpl_ba_decl */
 
 #endif /* BSP430_PERIPH_TIMER_H */

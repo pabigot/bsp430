@@ -123,6 +123,17 @@ typedef struct xBSP430periphUSCI {
 #define configBSP430_USCI_SHARE_ISR 1
 #endif /* configBSP430_USCI_SHARE_ISR */
 
+/** @cond DOXYGEN_INTERNAL */
+#define _BSP430_PERIPH_USCI_A0_BASEADDRESS __MSP430_BASEADDRESS_USCI_A0__
+#define _BSP430_PERIPH_USCI_A1_BASEADDRESS __MSP430_BASEADDRESS_USCI_A1__
+#define _BSP430_PERIPH_USCI_A2_BASEADDRESS __MSP430_BASEADDRESS_USCI_A2__
+#define _BSP430_PERIPH_USCI_A3_BASEADDRESS __MSP430_BASEADDRESS_USCI_A3__
+#define _BSP430_PERIPH_USCI_B0_BASEADDRESS __MSP430_BASEADDRESS_USCI_B0__
+#define _BSP430_PERIPH_USCI_B1_BASEADDRESS __MSP430_BASEADDRESS_USCI_B1__
+#define _BSP430_PERIPH_USCI_B2_BASEADDRESS __MSP430_BASEADDRESS_USCI_B2__
+#define _BSP430_PERIPH_USCI_B3_BASEADDRESS __MSP430_BASEADDRESS_USCI_B3__
+/** @endcond */ /* DOXYGEN_INTERNAL */
+
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_USCI_A0
@@ -149,10 +160,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_A0 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A0 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_A0 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A0__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A0
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_A0 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A0_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_A0.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_A0
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0;
 
 /** @def configBSP430_PERIPH_USCI_A1
  *
@@ -178,10 +194,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_A1 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A1 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_A1 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A1__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A1
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_A1 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A1_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_A1.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_A1
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1;
 
 /** @def configBSP430_PERIPH_USCI_A2
  *
@@ -207,10 +228,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_A2 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A2 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_A2 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A2__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A2
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_A2 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A2_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_A2.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_A2
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A2;
 
 /** @def configBSP430_PERIPH_USCI_A3
  *
@@ -236,10 +262,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_A3 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A3 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_A3 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_A3__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A3
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_A3 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A3_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_A3.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_A3
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A3;
 
 /** @def configBSP430_PERIPH_USCI_B0
  *
@@ -265,10 +296,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_B0 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B0 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_B0 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B0__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B0
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_B0 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B0_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_B0.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_B0
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0;
 
 /** @def configBSP430_PERIPH_USCI_B1
  *
@@ -294,10 +330,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_B1 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B1 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_B1 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B1__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B1
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_B1 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B1_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_B1.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_B1
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1;
 
 /** @def configBSP430_PERIPH_USCI_B2
  *
@@ -323,10 +364,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_B2 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B2 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_B2 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B2__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B2
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_B2 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B2_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_B2.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_B2
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B2;
 
 /** @def configBSP430_PERIPH_USCI_B3
  *
@@ -352,10 +398,15 @@ typedef struct xBSP430periphUSCI {
 
 /** Handle for the raw USCI_B3 device.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B3 is defined to a true
- * value. */
-#define BSP430_PERIPH_USCI_B3 ((xBSP430periphHandle)(__MSP430_BASEADDRESS_USCI_B3__))
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B3
+ * is defined to a true value. */
+#define BSP430_PERIPH_USCI_B3 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B3_BASEADDRESS))
+
+/** Pointer to the peripheral register map for USCI_B3.
+ *
+ * The pointer may be used only if #configBSP430_PERIPH_USCI_B3
+ * is defined to a true value. */
+extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 /* !BSP430! end=hpl_ba_decl */
@@ -466,58 +517,50 @@ int iBSP430usciPutString (const char* str, xBSP430usciHandle xUSCI);
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** FreeRTOS HAL handle for USCI_A0.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A0 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A0
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_A0;
 
 /** FreeRTOS HAL handle for USCI_A1.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A1 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A1
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_A1;
 
 /** FreeRTOS HAL handle for USCI_A2.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A2 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A2
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_A2;
 
 /** FreeRTOS HAL handle for USCI_A3.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_A3 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_A3
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_A3;
 
 /** FreeRTOS HAL handle for USCI_B0.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B0 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B0
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_B0;
 
 /** FreeRTOS HAL handle for USCI_B1.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B1 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B1
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_B1;
 
 /** FreeRTOS HAL handle for USCI_B2.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B2 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B2
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_B2;
 
 /** FreeRTOS HAL handle for USCI_B3.
  *
- * The handle may be referenced only if
- * #configBSP430_PERIPH_USCI_B3 is defined to a true
- * value. */
+ * The handle may be used only if #configBSP430_PERIPH_USCI_B3
+ * is defined to a true value. */
 extern xBSP430usciHandle const xBSP430usci_USCI_B3;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
