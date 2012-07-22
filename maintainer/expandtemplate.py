@@ -74,82 +74,6 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hpl_port_5xx' : '''
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_%(PORTA)s_R__)
-#define _BSP430_PERIPH_%(PORT1)s_BASEADDRESS __MSP430_BASEADDRESS_%(PORTA)s_R__
-#define _BSP430_PERIPH_%(PORT2)s_BASEADDRESS (1+__MSP430_BASEADDRESS_%(PORTA)s_R__)
-#else /* %(PORTA)s_R */
-#define _BSP430_PERIPH_%(PORT1)s_BASEADDRESS __MSP430_BASEADDRESS_%(PORTA)s__
-#define _BSP430_PERIPH_%(PORT2)s_BASEADDRESS (1+__MSP430_BASEADDRESS_%(PORTA)s__)
-#endif /* %(PORTA)s_R */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
-/** Handle for the raw %(PORT1)s device.
- *
- * The handle may be used only if configBSP430_PERIPH_%(PORT1)s
- * is defined to a true value. */
-#define BSP430_PERIPH_%(PORT1)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT1)s_BASEADDRESS))
-
-/** Handle for the raw %(PORT2)s device.
- *
- * The handle may be used only if configBSP430_PERIPH_%(PORT2)s
- * is defined to a true value. */
-#define BSP430_PERIPH_%(PORT2)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT2)s_BASEADDRESS))
-
-/** Handle for the raw %(PORTA)s device.
- *
- * The handle may be used only if configBSP430_PERIPH_%(PORTA)s
- * is defined to a true value. */
-#define BSP430_PERIPH_%(PORTA)s ((xBSP430periphHandle)(1 + _BSP430_PERIPH_%(PORT1)s_BASEADDRESS))
-
-/** @def configBSP430_PERIPH_%(PORT1)s
- *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c %(PORT1)s peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_%(PORT1)s__ or
- * @c __MSP430_HAS_%(PORT1)s_R__) */
-#ifndef configBSP430_PERIPH_%(PORT1)s
-#define configBSP430_PERIPH_%(PORT1)s 0
-#endif /* configBSP430_PERIPH_%(PORT1)s */
-
-/** @def configBSP430_PERIPH_%(PORT1)s_ISR
- *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c %(PORT1)s.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
- * enabled. */
-#ifndef configBSP430_PERIPH_%(PORT1)s_ISR
-#define configBSP430_PERIPH_%(PORT1)s_ISR 0
-#endif /* configBSP430_PERIPH_%(PORT1)s_ISR */
-
-/** @def configBSP430_PERIPH_%(PORT2)s
- *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c %(PORT2)s peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_%(PORT2)s__ or
- * @c __MSP430_HAS_%(PORT2)s_R__) */
-#ifndef configBSP430_PERIPH_%(PORT2)s
-#define configBSP430_PERIPH_%(PORT2)s 0
-#endif /* configBSP430_PERIPH_%(PORT2)s */
-
-/** @def configBSP430_PERIPH_%(PORT2)s_ISR
- *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c %(PORT2)s.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
- * enabled. */
-#ifndef configBSP430_PERIPH_%(PORT2)s_ISR
-#define configBSP430_PERIPH_%(PORT2)s_ISR 0
-#endif /* configBSP430_PERIPH_%(PORT2)s_ISR */
-''',
-
     'hal_port' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
  *
  * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
@@ -191,8 +115,6 @@ volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile 
 ''',
 
     }
-
-
 
 directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')
 idmap = {}
