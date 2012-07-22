@@ -167,21 +167,24 @@ typedef struct xBSP430periphPORT_16 {
 /** Layout for 5xx family ports, 16-bit access
  */
 typedef struct xBSP430periphPORT_5XX_16 {
-	xBSP430periphPORT_16_u in;	/* 0x00 */
-	xBSP430periphPORT_16_u out;	/* 0x02 */
-	xBSP430periphPORT_16_u dir;	/* 0x04 */
-	xBSP430periphPORT_16_u ren;	/* 0x06 */
-	unsigned int _reserved_x08;
-	xBSP430periphPORT_16_u sel0; /* 0x0A */
-	xBSP430periphPORT_16_u sel1; /* 0x0C */
+	xBSP430periphPORT_16_u in;	/**< PxIN */ /* 0x00 */
+	xBSP430periphPORT_16_u out;	/**< PxOUT */ /* 0x02 */
+	xBSP430periphPORT_16_u dir;	/**< PxDIR (set for output) */ /* 0x04 */
+	xBSP430periphPORT_16_u ren;	/**< PxREN (set to enable) */ /* 0x06 */
+	xBSP430periphPORT_16_u ds;	/**< PxDS (drive select, some devices) */ /* 0x08 */
+	union {
+		xBSP430periphPORT_16_u sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
+		xBSP430periphPORT_16_u sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
+	};
+	xBSP430periphPORT_16_u sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
 	unsigned int _reserved_x0E;
-	xBSP430periphPORT_16_u selc; /* 0x10 */
+	xBSP430periphPORT_16_u selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
 	unsigned int _reserved_x12;
 	unsigned int _reserved_x14;
 	unsigned int _reserved_x16;
-	xBSP430periphPORT_16_u ies;	 /* 0x18 */
-	xBSP430periphPORT_16_u ie;	 /* 0x1A */
-	xBSP430periphPORT_16_u ifg;	 /* 0x1C */
+	xBSP430periphPORT_16_u ies;	 /**< PxIES */ /* 0x18 */
+	xBSP430periphPORT_16_u ie;	 /**< PxIE */ /* 0x1A */
+	xBSP430periphPORT_16_u ifg;	 /**< PxIFG */ /* 0x1C */
 } xBSP430periphPORT_5XX_16;
 
 /** Layout for 5xx family ports, 8-bit access
@@ -190,23 +193,26 @@ typedef struct xBSP430periphPORT_5XX_16 {
  * when referencing the second 8-bit register in a 16-bit bank.
  */
 typedef struct xBSP430periphPORT_5XX_8 {
-	unsigned char in;	/* 0x00 */
+	unsigned char in;	/**< PxIN */ /* 0x00 */
 	unsigned char _reserved_x01;
-	unsigned char out;	/* 0x02 */
+	unsigned char out;	/**< PxOUT */ /* 0x02 */
 	unsigned char _reserved_x03;
-	unsigned char dir;	/* 0x04 */
+	unsigned char dir;	/**< PxDIR (set for output) */ /* 0x04 */
 	unsigned char _reserved_x05;
-	unsigned char ren;	/* 0x06 */
+	unsigned char ren;	/**< PxREN (set to enable) */ /* 0x06 */
 	unsigned char _reserved_x07;
-	unsigned char _reserved_x08;
+	unsigned char ds; /**< PxDS (drive select, some devices) */ /* 0x08 */
 	unsigned char _reserved_x09;
-	unsigned char sel0; /* 0x0A */
+	union {
+		unsigned char sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
+		unsigned char sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
+	};
 	unsigned char _reserved_x0B;
-	unsigned char sel1; /* 0x0C */
+	unsigned char sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
 	unsigned char _reserved_x0D;
 	unsigned char _reserved_x0E;
 	unsigned char _reserved_x0F;
-	unsigned char selc; /* 0x10 */
+	unsigned char selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) *//* 0x10 */
 	unsigned char _reserved_x11;
 	unsigned char _reserved_x12;
 	unsigned char _reserved_x13;
@@ -214,11 +220,11 @@ typedef struct xBSP430periphPORT_5XX_8 {
 	unsigned char _reserved_x15;
 	unsigned char _reserved_x16;
 	unsigned char _reserved_x17;
-	unsigned char ies;	 /* 0x18 */
+	unsigned char ies;	 /**< PxIES */ /* 0x18 */
 	unsigned char _reserved_x19;
-	unsigned char ie;	 /* 0x1A */
+	unsigned char ie;	 /**< PxIE */ /* 0x1A */
 	unsigned char _reserved_x1B;
-	unsigned char ifg;	 /* 0x1C */
+	unsigned char ifg;	 /**< PxIFG */ /* 0x1C */
 } xBSP430periphPORT_5XX_8;
 
 /** @cond DOXYGEN_INTERNAL */
