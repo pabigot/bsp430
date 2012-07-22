@@ -259,10 +259,10 @@ iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle device)
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
-#if (configBSP430_EUSCIA_SHARE_ISR - 0)			\
-	&& (((configBSP430_PERIPH_EUSCI_A0 - 0) && (configBSP430_PERIPH_EUSCI_A0_ISR - 0)) \
-		|| ((configBSP430_PERIPH_EUSCI_A1 - 0) && (configBSP430_PERIPH_EUSCI_A1_ISR - 0)) \
-		|| ((configBSP430_PERIPH_EUSCI_A2 - 0) && (configBSP430_PERIPH_EUSCI_A2_ISR - 0)) \
+#if (configBSP430_HAL_SHARE_EUSCIA_ISR - 0)			\
+	&& (((configBSP430_HAL_EUSCI_A0 - 0) && (configBSP430_PERIPH_EUSCI_A0_ISR - 0)) \
+		|| ((configBSP430_HAL_EUSCI_A1 - 0) && (configBSP430_PERIPH_EUSCI_A1_ISR - 0)) \
+		|| ((configBSP430_HAL_EUSCI_A2 - 0) && (configBSP430_PERIPH_EUSCI_A2_ISR - 0)) \
 		)
 static void
 #if __MSP430X__
@@ -302,7 +302,7 @@ euscia_isr (xBSP430eusciaHandle device)
 	}
 	portYIELD_FROM_ISR(yield);
 }
-#endif /* configBSP430_EUSCIA_SHARE_ISR */
+#endif /* configBSP430_HAL_SHARE_EUSCIA_ISR */
 
 /* !BSP430! insert=hal_ba_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
@@ -335,10 +335,10 @@ xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;
 
 /* !BSP430! insert=hal_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_defn] */
-#if (configBSP430_PERIPH_EUSCI_A0 - 0) && (configBSP430_PERIPH_EUSCI_A0_ISR - 0)
-#if ! (configBSP430_EUSCIA_SHARE_ISR - 0)
+#if (configBSP430_HAL_EUSCI_A0 - 0) && (configBSP430_PERIPH_EUSCI_A0_ISR - 0)
+#if ! (configBSP430_HAL_SHARE_EUSCIA_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_EUSCIA_SHARE_ISR */
+#endif /* configBSP430_HAL_SHARE_EUSCIA_ISR */
 static void
 __attribute__((__interrupt__(EUSCI_A0_VECTOR)))
 isr_EUSCI_A0 (void)
@@ -347,10 +347,10 @@ isr_EUSCI_A0 (void)
 }
 #endif /* configBSP430_EUSCIA_EUSCI_A0_ISR */
 
-#if (configBSP430_PERIPH_EUSCI_A1 - 0) && (configBSP430_PERIPH_EUSCI_A1_ISR - 0)
-#if ! (configBSP430_EUSCIA_SHARE_ISR - 0)
+#if (configBSP430_HAL_EUSCI_A1 - 0) && (configBSP430_PERIPH_EUSCI_A1_ISR - 0)
+#if ! (configBSP430_HAL_SHARE_EUSCIA_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_EUSCIA_SHARE_ISR */
+#endif /* configBSP430_HAL_SHARE_EUSCIA_ISR */
 static void
 __attribute__((__interrupt__(EUSCI_A1_VECTOR)))
 isr_EUSCI_A1 (void)
@@ -359,10 +359,10 @@ isr_EUSCI_A1 (void)
 }
 #endif /* configBSP430_EUSCIA_EUSCI_A1_ISR */
 
-#if (configBSP430_PERIPH_EUSCI_A2 - 0) && (configBSP430_PERIPH_EUSCI_A2_ISR - 0)
-#if ! (configBSP430_EUSCIA_SHARE_ISR - 0)
+#if (configBSP430_HAL_EUSCI_A2 - 0) && (configBSP430_PERIPH_EUSCI_A2_ISR - 0)
+#if ! (configBSP430_HAL_SHARE_EUSCIA_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_EUSCIA_SHARE_ISR */
+#endif /* configBSP430_HAL_SHARE_EUSCIA_ISR */
 static void
 __attribute__((__interrupt__(EUSCI_A2_VECTOR)))
 isr_EUSCI_A2 (void)

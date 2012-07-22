@@ -368,7 +368,7 @@ struct xBSP430port5xxState {
 	xBSP430portInterruptCallback isr[8];
 };
 
-/** @def configBSP430_PORT_SHARE_ISR
+/** @def configBSP430_HAL_SHARE_PORT_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * shared PORT peripheral HAL interrupt vector.  If this is defined, a
@@ -378,10 +378,10 @@ struct xBSP430port5xxState {
  *
  * This must be available in order to use the HAL interrupt vector for
  * specific device instances such as
- * #configBSP430_PERIPH_PORT1_ISR. */
-#ifndef configBSP430_PORT_SHARE_ISR
-#define configBSP430_PORT_SHARE_ISR 1
-#endif /* configBSP430_PORT_SHARE_ISR */
+ * #configBSP430_HAL_PORT1_ISR. */
+#ifndef configBSP430_HAL_SHARE_PORT_ISR
+#define configBSP430_HAL_SHARE_PORT_ISR 1
+#endif /* configBSP430_HAL_SHARE_PORT_ISR */
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
@@ -621,148 +621,148 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
 
 /* !BSP430! insert=hal_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
-/** @def configBSP430_PERIPH_PORT1_ISR
+/** @def configBSP430_HAL_PORT1_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT1.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT1_ISR
-#define configBSP430_PERIPH_PORT1_ISR 1
-#endif /* configBSP430_PERIPH_PORT1_ISR */
+#ifndef configBSP430_HAL_PORT1_ISR
+#define configBSP430_HAL_PORT1_ISR 1
+#endif /* configBSP430_HAL_PORT1_ISR */
 
-/** @def configBSP430_PERIPH_PORT2_ISR
+/** @def configBSP430_HAL_PORT2_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT2.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT2_ISR
-#define configBSP430_PERIPH_PORT2_ISR 1
-#endif /* configBSP430_PERIPH_PORT2_ISR */
+#ifndef configBSP430_HAL_PORT2_ISR
+#define configBSP430_HAL_PORT2_ISR 1
+#endif /* configBSP430_HAL_PORT2_ISR */
 
-/** @def configBSP430_PERIPH_PORT3_ISR
+/** @def configBSP430_HAL_PORT3_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT3.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT3_ISR
-#define configBSP430_PERIPH_PORT3_ISR 1
-#endif /* configBSP430_PERIPH_PORT3_ISR */
+#ifndef configBSP430_HAL_PORT3_ISR
+#define configBSP430_HAL_PORT3_ISR 1
+#endif /* configBSP430_HAL_PORT3_ISR */
 
-/** @def configBSP430_PERIPH_PORT4_ISR
+/** @def configBSP430_HAL_PORT4_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT4.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT4_ISR
-#define configBSP430_PERIPH_PORT4_ISR 1
-#endif /* configBSP430_PERIPH_PORT4_ISR */
+#ifndef configBSP430_HAL_PORT4_ISR
+#define configBSP430_HAL_PORT4_ISR 1
+#endif /* configBSP430_HAL_PORT4_ISR */
 
-/** @def configBSP430_PERIPH_PORT5_ISR
+/** @def configBSP430_HAL_PORT5_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT5.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT5_ISR
-#define configBSP430_PERIPH_PORT5_ISR 1
-#endif /* configBSP430_PERIPH_PORT5_ISR */
+#ifndef configBSP430_HAL_PORT5_ISR
+#define configBSP430_HAL_PORT5_ISR 1
+#endif /* configBSP430_HAL_PORT5_ISR */
 
-/** @def configBSP430_PERIPH_PORT6_ISR
+/** @def configBSP430_HAL_PORT6_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT6.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT6_ISR
-#define configBSP430_PERIPH_PORT6_ISR 1
-#endif /* configBSP430_PERIPH_PORT6_ISR */
+#ifndef configBSP430_HAL_PORT6_ISR
+#define configBSP430_HAL_PORT6_ISR 1
+#endif /* configBSP430_HAL_PORT6_ISR */
 
-/** @def configBSP430_PERIPH_PORT7_ISR
+/** @def configBSP430_HAL_PORT7_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT7.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT7_ISR
-#define configBSP430_PERIPH_PORT7_ISR 1
-#endif /* configBSP430_PERIPH_PORT7_ISR */
+#ifndef configBSP430_HAL_PORT7_ISR
+#define configBSP430_HAL_PORT7_ISR 1
+#endif /* configBSP430_HAL_PORT7_ISR */
 
-/** @def configBSP430_PERIPH_PORT8_ISR
+/** @def configBSP430_HAL_PORT8_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT8.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT8_ISR
-#define configBSP430_PERIPH_PORT8_ISR 1
-#endif /* configBSP430_PERIPH_PORT8_ISR */
+#ifndef configBSP430_HAL_PORT8_ISR
+#define configBSP430_HAL_PORT8_ISR 1
+#endif /* configBSP430_HAL_PORT8_ISR */
 
-/** @def configBSP430_PERIPH_PORT9_ISR
+/** @def configBSP430_HAL_PORT9_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT9.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT9_ISR
-#define configBSP430_PERIPH_PORT9_ISR 1
-#endif /* configBSP430_PERIPH_PORT9_ISR */
+#ifndef configBSP430_HAL_PORT9_ISR
+#define configBSP430_HAL_PORT9_ISR 1
+#endif /* configBSP430_HAL_PORT9_ISR */
 
-/** @def configBSP430_PERIPH_PORT10_ISR
+/** @def configBSP430_HAL_PORT10_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT10.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT10_ISR
-#define configBSP430_PERIPH_PORT10_ISR 1
-#endif /* configBSP430_PERIPH_PORT10_ISR */
+#ifndef configBSP430_HAL_PORT10_ISR
+#define configBSP430_HAL_PORT10_ISR 1
+#endif /* configBSP430_HAL_PORT10_ISR */
 
-/** @def configBSP430_PERIPH_PORT11_ISR
+/** @def configBSP430_HAL_PORT11_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT11.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_PORT_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_PORT_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_PORT11_ISR
-#define configBSP430_PERIPH_PORT11_ISR 1
-#endif /* configBSP430_PERIPH_PORT11_ISR */
+#ifndef configBSP430_HAL_PORT11_ISR
+#define configBSP430_HAL_PORT11_ISR 1
+#endif /* configBSP430_HAL_PORT11_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */

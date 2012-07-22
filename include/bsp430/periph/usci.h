@@ -110,7 +110,7 @@ typedef struct xBSP430periphUSCI {
 	unsigned int iv;			/**< UCtxIV */ /* 0x1E */
 } xBSP430periphUSCI;
 
-/** @def configBSP430_USCI_SHARE_ISR
+/** @def configBSP430_HAL_SHARE_USCI_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * shared USCI peripheral HAL interrupt vector.  If this is defined,
@@ -119,9 +119,9 @@ typedef struct xBSP430periphUSCI {
  *
  * This must be available in order to use the HAL interrupt vector for
  * specific device instances. */
-#ifndef configBSP430_USCI_SHARE_ISR
-#define configBSP430_USCI_SHARE_ISR 1
-#endif /* configBSP430_USCI_SHARE_ISR */
+#ifndef configBSP430_HAL_SHARE_USCI_ISR
+#define configBSP430_HAL_SHARE_USCI_ISR 1
+#endif /* configBSP430_HAL_SHARE_USCI_ISR */
 
 /** @cond DOXYGEN_INTERNAL */
 #define _BSP430_PERIPH_USCI_A0_BASEADDRESS __MSP430_BASEADDRESS_USCI_A0__
@@ -309,109 +309,109 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
 
 /* !BSP430! insert=hal_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
-/** @def configBSP430_PERIPH_USCI_A0_ISR
+/** @def configBSP430_HAL_USCI_A0_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A0.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_A0_ISR
-#define configBSP430_PERIPH_USCI_A0_ISR 1
-#endif /* configBSP430_PERIPH_USCI_A0_ISR */
+#ifndef configBSP430_HAL_USCI_A0_ISR
+#define configBSP430_HAL_USCI_A0_ISR 1
+#endif /* configBSP430_HAL_USCI_A0_ISR */
 
-/** @def configBSP430_PERIPH_USCI_A1_ISR
+/** @def configBSP430_HAL_USCI_A1_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A1.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_A1_ISR
-#define configBSP430_PERIPH_USCI_A1_ISR 1
-#endif /* configBSP430_PERIPH_USCI_A1_ISR */
+#ifndef configBSP430_HAL_USCI_A1_ISR
+#define configBSP430_HAL_USCI_A1_ISR 1
+#endif /* configBSP430_HAL_USCI_A1_ISR */
 
-/** @def configBSP430_PERIPH_USCI_A2_ISR
+/** @def configBSP430_HAL_USCI_A2_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A2.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_A2_ISR
-#define configBSP430_PERIPH_USCI_A2_ISR 1
-#endif /* configBSP430_PERIPH_USCI_A2_ISR */
+#ifndef configBSP430_HAL_USCI_A2_ISR
+#define configBSP430_HAL_USCI_A2_ISR 1
+#endif /* configBSP430_HAL_USCI_A2_ISR */
 
-/** @def configBSP430_PERIPH_USCI_A3_ISR
+/** @def configBSP430_HAL_USCI_A3_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A3.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_A3_ISR
-#define configBSP430_PERIPH_USCI_A3_ISR 1
-#endif /* configBSP430_PERIPH_USCI_A3_ISR */
+#ifndef configBSP430_HAL_USCI_A3_ISR
+#define configBSP430_HAL_USCI_A3_ISR 1
+#endif /* configBSP430_HAL_USCI_A3_ISR */
 
-/** @def configBSP430_PERIPH_USCI_B0_ISR
+/** @def configBSP430_HAL_USCI_B0_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B0.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_B0_ISR
-#define configBSP430_PERIPH_USCI_B0_ISR 1
-#endif /* configBSP430_PERIPH_USCI_B0_ISR */
+#ifndef configBSP430_HAL_USCI_B0_ISR
+#define configBSP430_HAL_USCI_B0_ISR 1
+#endif /* configBSP430_HAL_USCI_B0_ISR */
 
-/** @def configBSP430_PERIPH_USCI_B1_ISR
+/** @def configBSP430_HAL_USCI_B1_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B1.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_B1_ISR
-#define configBSP430_PERIPH_USCI_B1_ISR 1
-#endif /* configBSP430_PERIPH_USCI_B1_ISR */
+#ifndef configBSP430_HAL_USCI_B1_ISR
+#define configBSP430_HAL_USCI_B1_ISR 1
+#endif /* configBSP430_HAL_USCI_B1_ISR */
 
-/** @def configBSP430_PERIPH_USCI_B2_ISR
+/** @def configBSP430_HAL_USCI_B2_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B2.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_B2_ISR
-#define configBSP430_PERIPH_USCI_B2_ISR 1
-#endif /* configBSP430_PERIPH_USCI_B2_ISR */
+#ifndef configBSP430_HAL_USCI_B2_ISR
+#define configBSP430_HAL_USCI_B2_ISR 1
+#endif /* configBSP430_HAL_USCI_B2_ISR */
 
-/** @def configBSP430_PERIPH_USCI_B3_ISR
+/** @def configBSP430_HAL_USCI_B3_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B3.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_USCI_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_USCI_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_USCI_B3_ISR
-#define configBSP430_PERIPH_USCI_B3_ISR 1
-#endif /* configBSP430_PERIPH_USCI_B3_ISR */
+#ifndef configBSP430_HAL_USCI_B3_ISR
+#define configBSP430_HAL_USCI_B3_ISR 1
+#endif /* configBSP430_HAL_USCI_B3_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */

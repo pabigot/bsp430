@@ -134,19 +134,19 @@ xBSP430portHandle const xBSP430port_PORT11 = &state_PORT11;
 /* END AUTOMATICALLY GENERATED CODE [hal_port_5xx_defn] */
 /* !BSP430! end=hal_port_5xx_defn */
 
-#if ((configBSP430_PORT_SHARE_ISR - 0)				\
-	 && ((configBSP430_PERIPH_PORT1_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT2_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT3_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT4_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT5_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT6_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT7_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT8_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT9_ISR - 0)		\
-		 || (configBSP430_PERIPH_PORT10_ISR - 0)	\
-		 || (configBSP430_PERIPH_PORT11_ISR - 0)	\
-		 || (configBSP430_PERIPH_PORT12_ISR - 0)	\
+#if ((configBSP430_HAL_SHARE_PORT_ISR - 0)				\
+	 && ((configBSP430_HAL_PORT1_ISR - 0)		\
+		 || (configBSP430_HAL_PORT2_ISR - 0)		\
+		 || (configBSP430_HAL_PORT3_ISR - 0)		\
+		 || (configBSP430_HAL_PORT4_ISR - 0)		\
+		 || (configBSP430_HAL_PORT5_ISR - 0)		\
+		 || (configBSP430_HAL_PORT6_ISR - 0)		\
+		 || (configBSP430_HAL_PORT7_ISR - 0)		\
+		 || (configBSP430_HAL_PORT8_ISR - 0)		\
+		 || (configBSP430_HAL_PORT9_ISR - 0)		\
+		 || (configBSP430_HAL_PORT10_ISR - 0)	\
+		 || (configBSP430_HAL_PORT11_ISR - 0)	\
+		 || (configBSP430_HAL_PORT12_ISR - 0)	\
 		 ))
 static int
 #if __MSP430X__
@@ -171,7 +171,7 @@ port_isr (xBSP430portHandle device,
 
 /* !BSP430! insert=hal_port_5xx_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_isr_defn] */
-#if (configBSP430_PERIPH_PORT1 - 0) && (configBSP430_PERIPH_PORT1_ISR - 0)
+#if (configBSP430_HAL_PORT1 - 0) && (configBSP430_PERIPH_PORT1_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT1_VECTOR)))
 isr_PORT1 (void)
@@ -180,9 +180,9 @@ isr_PORT1 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT1_ISR */
+#endif /* configBSP430_HAL_PORT1_ISR */
 
-#if (configBSP430_PERIPH_PORT2 - 0) && (configBSP430_PERIPH_PORT2_ISR - 0)
+#if (configBSP430_HAL_PORT2 - 0) && (configBSP430_PERIPH_PORT2_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT2_VECTOR)))
 isr_PORT2 (void)
@@ -191,9 +191,9 @@ isr_PORT2 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT2_ISR */
+#endif /* configBSP430_HAL_PORT2_ISR */
 
-#if (configBSP430_PERIPH_PORT3 - 0) && (configBSP430_PERIPH_PORT3_ISR - 0)
+#if (configBSP430_HAL_PORT3 - 0) && (configBSP430_PERIPH_PORT3_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT3_VECTOR)))
 isr_PORT3 (void)
@@ -202,9 +202,9 @@ isr_PORT3 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT3_ISR */
+#endif /* configBSP430_HAL_PORT3_ISR */
 
-#if (configBSP430_PERIPH_PORT4 - 0) && (configBSP430_PERIPH_PORT4_ISR - 0)
+#if (configBSP430_HAL_PORT4 - 0) && (configBSP430_PERIPH_PORT4_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT4_VECTOR)))
 isr_PORT4 (void)
@@ -213,9 +213,9 @@ isr_PORT4 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT4_ISR */
+#endif /* configBSP430_HAL_PORT4_ISR */
 
-#if (configBSP430_PERIPH_PORT5 - 0) && (configBSP430_PERIPH_PORT5_ISR - 0)
+#if (configBSP430_HAL_PORT5 - 0) && (configBSP430_PERIPH_PORT5_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT5_VECTOR)))
 isr_PORT5 (void)
@@ -224,9 +224,9 @@ isr_PORT5 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT5_ISR */
+#endif /* configBSP430_HAL_PORT5_ISR */
 
-#if (configBSP430_PERIPH_PORT6 - 0) && (configBSP430_PERIPH_PORT6_ISR - 0)
+#if (configBSP430_HAL_PORT6 - 0) && (configBSP430_PERIPH_PORT6_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT6_VECTOR)))
 isr_PORT6 (void)
@@ -235,9 +235,9 @@ isr_PORT6 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT6_ISR */
+#endif /* configBSP430_HAL_PORT6_ISR */
 
-#if (configBSP430_PERIPH_PORT7 - 0) && (configBSP430_PERIPH_PORT7_ISR - 0)
+#if (configBSP430_HAL_PORT7 - 0) && (configBSP430_PERIPH_PORT7_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT7_VECTOR)))
 isr_PORT7 (void)
@@ -246,9 +246,9 @@ isr_PORT7 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT7_ISR */
+#endif /* configBSP430_HAL_PORT7_ISR */
 
-#if (configBSP430_PERIPH_PORT8 - 0) && (configBSP430_PERIPH_PORT8_ISR - 0)
+#if (configBSP430_HAL_PORT8 - 0) && (configBSP430_PERIPH_PORT8_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT8_VECTOR)))
 isr_PORT8 (void)
@@ -257,9 +257,9 @@ isr_PORT8 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT8_ISR */
+#endif /* configBSP430_HAL_PORT8_ISR */
 
-#if (configBSP430_PERIPH_PORT9 - 0) && (configBSP430_PERIPH_PORT9_ISR - 0)
+#if (configBSP430_HAL_PORT9 - 0) && (configBSP430_PERIPH_PORT9_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT9_VECTOR)))
 isr_PORT9 (void)
@@ -268,9 +268,9 @@ isr_PORT9 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT9_ISR */
+#endif /* configBSP430_HAL_PORT9_ISR */
 
-#if (configBSP430_PERIPH_PORT10 - 0) && (configBSP430_PERIPH_PORT10_ISR - 0)
+#if (configBSP430_HAL_PORT10 - 0) && (configBSP430_PERIPH_PORT10_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT10_VECTOR)))
 isr_PORT10 (void)
@@ -279,9 +279,9 @@ isr_PORT10 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT10_ISR */
+#endif /* configBSP430_HAL_PORT10_ISR */
 
-#if (configBSP430_PERIPH_PORT11 - 0) && (configBSP430_PERIPH_PORT11_ISR - 0)
+#if (configBSP430_HAL_PORT11 - 0) && (configBSP430_PERIPH_PORT11_ISR - 0)
 static void
 __attribute__((__interrupt__(PORT11_VECTOR)))
 isr_PORT11 (void)
@@ -290,7 +290,7 @@ isr_PORT11 (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_PORT11_ISR */
+#endif /* configBSP430_HAL_PORT11_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_port_5xx_isr_defn] */
 /* !BSP430! end=hal_port_5xx_isr_defn */
@@ -387,5 +387,5 @@ xBSP430periphLookupPORT (xBSP430periphHandle periph)
 }
 
 
-#endif /* configBSP430_PORT_SHARE_ISR */
+#endif /* configBSP430_HAL_SHARE_PORT_ISR */
 

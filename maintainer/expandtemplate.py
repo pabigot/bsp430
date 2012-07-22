@@ -25,18 +25,18 @@ templates = {
 extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
 ''',
     
-    'hal_isr_decl' : '''/** @def configBSP430_PERIPH_%(INSTANCE)s_ISR
+    'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c %(INSTANCE)s.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
  * and will be defining the vector yourself.
  *
- * @c #configBSP430_%(PERIPH)s_SHARE_ISR must be enabled for this to be
+ * @c #configBSP430_HAL_SHARE_%(PERIPH)s_ISR must be enabled for this to be
  * enabled. */
-#ifndef configBSP430_PERIPH_%(INSTANCE)s_ISR
-#define configBSP430_PERIPH_%(INSTANCE)s_ISR 1
-#endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
+#ifndef configBSP430_HAL_%(INSTANCE)s_ISR
+#define configBSP430_HAL_%(INSTANCE)s_ISR 1
+#endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
     'hal_decl' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
@@ -55,10 +55,10 @@ xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
-#if ! (configBSP430_%(PERIPH)s_SHARE_ISR - 0)
+    'hal_isr_defn' : '''#if (configBSP430_HAL_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
+#if ! (configBSP430_HAL_SHARE_%(PERIPH)s_ISR - 0)
 #error Shared periphal HAL ISR disabled
-#endif /* configBSP430_%(PERIPH)s_SHARE_ISR */
+#endif /* configBSP430_HAL_SHARE_%(PERIPH)s_ISR */
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
@@ -83,7 +83,7 @@ xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_port_5xx_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
+    'hal_port_5xx_isr_defn' : '''#if (configBSP430_HAL_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
@@ -92,7 +92,7 @@ isr_%(INSTANCE)s (void)
 	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
 	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
-#endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
+#endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
     'periph_ba_hpl_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
