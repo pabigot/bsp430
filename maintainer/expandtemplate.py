@@ -71,6 +71,7 @@ isr_%(INSTANCE)s (void)
 ''',
 
     'hpl_port_5xx' : '''
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_%(PORTA)s_R__)
 #define _BSP430_PERIPH_%(PORT1)s_BASEADDRESS __MSP430_BASEADDRESS_%(PORTA)s_R__
 #define _BSP430_PERIPH_%(PORT2)s_BASEADDRESS (1+__MSP430_BASEADDRESS_%(PORTA)s_R__)
@@ -78,6 +79,7 @@ isr_%(INSTANCE)s (void)
 #define _BSP430_PERIPH_%(PORT1)s_BASEADDRESS __MSP430_BASEADDRESS_%(PORTA)s__
 #define _BSP430_PERIPH_%(PORT2)s_BASEADDRESS (1+__MSP430_BASEADDRESS_%(PORTA)s__)
 #endif /* %(PORTA)s_R */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Handle for the raw %(PORT1)s device.
  *

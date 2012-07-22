@@ -220,6 +220,7 @@ typedef struct xBSP430periphPORT_5XX_8 {
 	unsigned char ifg;	 /* 0x1C */
 } xBSP430periphPORT_5XX_8;
 
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define _BSP430_PERIPH_PORTIE xBSP430periphPORT_5XX_8
 #define _BSP430_PERIPH_PORT xBSP430periphPORT_5XX_8
@@ -229,6 +230,7 @@ typedef struct xBSP430periphPORT_5XX_8 {
 #define _BSP430_PERIPH_PORT xBSP430periphPORT_8
 #define _BSP430_PERIPH_PORTW xBSP430periphPORT_16
 #endif /* MSP430XV2 */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Structure used to access ports with interrupt capability.
  *
@@ -305,6 +307,7 @@ struct xBSP430port5xxState {
 /* !BSP430! portexpand=True instance=A,B,C,D,E,F insert=hpl_port_5xx */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_port_5xx] */
 
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_PORTA_R__)
 #define _BSP430_PERIPH_PORT1_BASEADDRESS __MSP430_BASEADDRESS_PORTA_R__
 #define _BSP430_PERIPH_PORT2_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTA_R__)
@@ -312,6 +315,7 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT1_BASEADDRESS __MSP430_BASEADDRESS_PORTA__
 #define _BSP430_PERIPH_PORT2_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTA__)
 #endif /* PORTA_R */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Handle for the raw PORT1 device.
  *
@@ -378,6 +382,7 @@ struct xBSP430port5xxState {
 #endif /* configBSP430_PERIPH_PORT2_ISR */
 
 
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_PORTB_R__)
 #define _BSP430_PERIPH_PORT3_BASEADDRESS __MSP430_BASEADDRESS_PORTB_R__
 #define _BSP430_PERIPH_PORT4_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTB_R__)
@@ -385,6 +390,7 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT3_BASEADDRESS __MSP430_BASEADDRESS_PORTB__
 #define _BSP430_PERIPH_PORT4_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTB__)
 #endif /* PORTB_R */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Handle for the raw PORT3 device.
  *
@@ -451,6 +457,7 @@ struct xBSP430port5xxState {
 #endif /* configBSP430_PERIPH_PORT4_ISR */
 
 
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_PORTC_R__)
 #define _BSP430_PERIPH_PORT5_BASEADDRESS __MSP430_BASEADDRESS_PORTC_R__
 #define _BSP430_PERIPH_PORT6_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTC_R__)
@@ -458,6 +465,7 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT5_BASEADDRESS __MSP430_BASEADDRESS_PORTC__
 #define _BSP430_PERIPH_PORT6_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTC__)
 #endif /* PORTC_R */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Handle for the raw PORT5 device.
  *
@@ -524,6 +532,7 @@ struct xBSP430port5xxState {
 #endif /* configBSP430_PERIPH_PORT6_ISR */
 
 
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_PORTD_R__)
 #define _BSP430_PERIPH_PORT7_BASEADDRESS __MSP430_BASEADDRESS_PORTD_R__
 #define _BSP430_PERIPH_PORT8_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTD_R__)
@@ -531,6 +540,7 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT7_BASEADDRESS __MSP430_BASEADDRESS_PORTD__
 #define _BSP430_PERIPH_PORT8_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTD__)
 #endif /* PORTD_R */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Handle for the raw PORT7 device.
  *
@@ -597,6 +607,7 @@ struct xBSP430port5xxState {
 #endif /* configBSP430_PERIPH_PORT8_ISR */
 
 
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_PORTE_R__)
 #define _BSP430_PERIPH_PORT9_BASEADDRESS __MSP430_BASEADDRESS_PORTE_R__
 #define _BSP430_PERIPH_PORT10_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTE_R__)
@@ -604,6 +615,7 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT9_BASEADDRESS __MSP430_BASEADDRESS_PORTE__
 #define _BSP430_PERIPH_PORT10_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTE__)
 #endif /* PORTE_R */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Handle for the raw PORT9 device.
  *
@@ -670,6 +682,7 @@ struct xBSP430port5xxState {
 #endif /* configBSP430_PERIPH_PORT10_ISR */
 
 
+/** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_PORTF_R__)
 #define _BSP430_PERIPH_PORT11_BASEADDRESS __MSP430_BASEADDRESS_PORTF_R__
 #define _BSP430_PERIPH_PORT12_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTF_R__)
@@ -677,6 +690,7 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT11_BASEADDRESS __MSP430_BASEADDRESS_PORTF__
 #define _BSP430_PERIPH_PORT12_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTF__)
 #endif /* PORTF_R */
+/** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Handle for the raw PORT11 device.
  *
