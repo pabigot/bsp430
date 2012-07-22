@@ -36,6 +36,9 @@
  * The actual implementation of the functions are within the
  * peripheral-specific clock modules.
  *
+ * @note Where LFXT1 is used in this module, it is assumed to refer to
+ * an external 32 kiHz crystal.
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -61,7 +64,7 @@
 #define configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT 0
 #endif /* configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
 
-/** @def configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES
+/** @def configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
  *
  * Define this to the number of MCLK cycles that
  * #iBSP430clockConfigureXT1 should delay, after clearing oscillator
@@ -71,28 +74,28 @@
  * may prematurely decide that the crystal is working; if it is too
  * long, the return from #iBSP430clockConfigureXT1 is delayed.
  *
- * @note The value depends on the MCLK frequency at the time
- * #iBSP430clockConfigureXT1 is invoked.  It is suggested that the
- * crystal be checked and ACLK configured prior to configuring MCLK
- * for the application, when the MCU power-up MCLK frequency of 1 MHz
- * is in effect.  If this is done, the nominal value for this option
- * should delay roughly 100msec, which should be long enough to detect
- * an unstable crystal.  Repeated checks are required to detect a
- * stable crystal, so to delay for up to one second use:
+ * @note The value is in MCLK ticks, so depends on the MCLK frequency
+ * at the time #iBSP430clockConfigureXT1 is invoked.  It is suggested
+ * that the crystal be checked and ACLK configured prior to
+ * configuring MCLK for the application, when the MCU power-up MCLK
+ * frequency of 1 MHz is in effect.  If this is done, the nominal
+ * value for this option should delay roughly 100msec, which should be
+ * long enough to detect an unstable crystal.  Repeated checks are
+ * required to detect a stable crystal, so to delay for up to one
+ * second use:
  *
  * @code
- * if (0 >= iBSP430clockConfigureXT1(1, 1000000L / configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES)) {
+ * if (0 >= iBSP430clockConfigureXT1(1, 1000000L / configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES)) {
  *    // XT1 not available
  * }
  * @endcode
  *
  * Crystal stabilization can take hundreds of milliseconds; on some
- * platforms the one second delay above is insufficient.
+ * platforms even the one second delay above is insufficient.
  */
-#ifndef configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES
-#define configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES 100000UL
-#endif /* configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES */
-
+#ifndef configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
+#define configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES 100000UL
+#endif /* configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
 
 /** Return the best available estimate of MCLK frequency.
  *
@@ -121,13 +124,55 @@ unsigned long ulBSP430clockSMCLK_Hz ();
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned short usBSP430clockACLK_Hz ();
 
+/** Check whether the LFXT1 crystal has a fault condition.
+ *
+ * The generic implementation looks for any oscillator fault by
+ * checking the system-wide register.  It is overridden in
+ * peripheral-specific clock headers where an ability exists to check
+ * specifically for a LFXT1 fault.  The value is nonzero iff a fault
+ * has been detected.
+ *
+ * @note This function macro is implicitly FromISR, and should be
+ * implemented where possible as a single instruction test.
+ *
+ * @note Where the test is overridden to check peripheral-specific
+ * flags, the state of the system oscillator fault bit is not
+ * reflected in the value.
+ *
+ * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT() */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() (SFRIFG1 & OFIFG)
+#else /* 5xx */
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() (IFG1 & OFIFG)
+#endif /* 5xx */
+
+/** Clear the fault associated with LFXT1.
+ *
+ * This clears the state bits associated with a fault in the LFXT1
+ * crystal.  If the crystal still exhibits a fault condition, the bits
+ * will be set again.
+ *
+ * @note This function macro is implicitly FromISR: should be called
+ * with interrupts disabled and will not induce a task switch.
+ *
+ * @note Where faults can be cleared on peripheral-specific registers,
+ * the system oscillator fault is also cleared.  This is in contrast
+ * to what is tested by #BSP430_CLOCK_LFXT1_IS_FAULTED(). 
+ *
+ * @see #BSP430_CLOCK_LFXT1_IS_FAULTED() */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { SFRIFG1 &= ~OFIFG; } while (0)
+#else /* 5xx */
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { IFG1 &= ~OFIFG; } while (0)
+#endif /* 5xx */
+
 /** Configure (or deconfigure) XT1 as a clock source.
  *
  * The peripheral-specific implementation will use
  * #iBSP430platformConfigurePeripheralPinsFromISR with #BSP430_PERIPH_XT1 to
  * configure the crystal.  If crystal functionality has been
  * requested, it then clears oscillator faults, delays
- * #configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES, then detects
+ * #configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, then detects
  * whether the crystal is functioning.  It terminates with success
  * once the oscillator remains unfaulted after the delay, and
  * otherwise repeats the clear/delay/check process as specified by @a

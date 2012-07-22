@@ -127,13 +127,13 @@ iBSP430clockConfigureXT1 (int enablep,
 
 	CSCTL4 = (CSCTL4 | XT1DRIVE_3) & ~(XTS | XT1BYPASS | XT1OFF);
 	do {
-		CSCTL5 &= ~XT1OFFG;
-		SFRIFG1 &= ~OFIFG;
+		BSP430_CLOCK_LFXT1_CLEAR_FAULT();
 		loop_limit -= loop_delta;
-		__delay_cycles(configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
-	} while ((CSCTL5 & XT1OFFG) && (0 != loop_limit));
+		__delay_cycles(configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+
+	} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
 	CSCTL4 = CSCTL4 & ~XT1DRIVE_3;
-	rc = !(CSCTL5 & XT1OFFG);
+	rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
 	if (! rc) {
 		CSCTL4 |= XT1OFF;
 		(void)iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 0);

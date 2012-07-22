@@ -61,6 +61,23 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_FLLPLUS__ */
 
+#undef BSP430_CLOCK_LFXT1_IS_FAULTED
+/** Check whether the LFXT1 crystal has a fault condition.
+ *
+ * This definition overrides the generic definition to test the
+ * crystal-specific flags. */
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() (FLL_CTL0 & LFOF)
+
+#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
+/** Clear the fault associated with LFXT1.
+ *
+ * This definition overrides the generic definition to clear the
+ * crystal-specific flags as well as the system flag. */
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {				\
+		/* User's guide says FLL_CTL0.LFOF is read-only. */ \
+		IFG1 &= ~OFIFG;										\
+	} while (0)
+
 /** @def configBSP430_FLLPLUS_XCAPxPF
  *
  * Oscillator capacitor section to be applied to FLL_CTL0 by

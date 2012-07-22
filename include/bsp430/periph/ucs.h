@@ -88,6 +88,23 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_UCS__ */
 
+#undef BSP430_CLOCK_LFXT1_IS_FAULTED
+/** Check whether the LFXT1 crystal has a fault condition.
+ *
+ * This definition overrides the generic definition to test the
+ * crystal-specific flags. */
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() (UCSCTL7 & XT1LFOFFG)
+
+#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
+/** Clear the fault associated with LFXT1.
+ *
+ * This definition overrides the generic definition to clear the
+ * crystal-specific flags as well as the system flag. */
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {	\
+		UCSCTL7 &= ~XT1LFOFFG;					\
+		SFRIFG1 &= ~OFIFG;						\
+	} while (0)
+
 /** Call this to initially configure the UCS peripheral.
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.

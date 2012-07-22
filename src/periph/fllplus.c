@@ -42,11 +42,12 @@ ucBSP430fllplusConfigure (const xBSP430fllplusConfig * pxConfig)
 	FLL_CTL0 = pxConfig->ucFLL_CTL0;
 	FLL_CTL1 = pxConfig->ucFLL_CTL1;
 	do {
-		IFG1 &= ~OFIFG;
-		__delay_cycles(20000);
-		--uxStableLoopsLeft;
-	} while ((IFG1 & OFIFG) && (0 < uxStableLoopsLeft));
-	ucReturnValue = !(IFG1 & OFIFG);
+		BSP430_CLOCK_LFXT1_CLEAR_FAULT();
+		loop_limit -= loop_delta;
+		__delay_cycles(configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+
+	} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
+	ucReturnValue = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
 	SCFI0 = pxConfig->ucSCFI0;
 	SCFQCTL = pxConfig->ucSCFQCTL;
 
@@ -87,7 +88,7 @@ iBSP430clockConfigureXT1 (int enablep,
 	do {
 		FLL_CTL0 &= ~LFOF;
 		loop_limit -= loop_delta;
-		__delay_cycles(configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+		__delay_cycles(configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 	} while ((FLL_CTL0 & LFOF) && (0 != loop_limit));
 
 	rc = !(FLL_CTL0 & LFOF);

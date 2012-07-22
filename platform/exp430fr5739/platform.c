@@ -145,7 +145,7 @@ void vBSP430platformSetup ()
 
 	/* Note: Platform crystal requires more than one second to
 	 * stabilize! */
-	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_XT1_STABILIZATION_DELAY_CYCLES);
+	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 	iBSP430csConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
     ulBSP430csConfigureMCLK(configCPU_CLOCK_HZ);
 

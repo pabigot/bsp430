@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <msp430.h>
+#include <bsp430/platform.h>
 #include <bsp430/periph/bc2.h>
 
 unsigned char
@@ -43,25 +43,27 @@ ucBSP430bc2Configure (unsigned char ucDCOCTL,
 	BSP430_ENTER_CRITICAL();
 	
 	BCSCTL3 = ucBCSCTL3;
-	if ( ! ( BCSCTL3 & LFXT1S1 ) ) {
+	if ((! (BCSCTL3 & LFXT1S1))
+		&& (0 == iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 1))) {
 		portBASE_TYPE uxStableLoopsLeft = 10;
 
-		/* See whether the crystal is populated and functional.
-		 * Assume that if fault is not detected in 100msec, the
-		 * crystal is stable.  Retry for up to one second.  Reset the
-		 * DCO to its PUC values for the purpose of the delay loop. */
+		/* See whether the crystal is populated and functional.  Do
+		 * this with the DCO reset to the power-up configuration,
+		 * where clock should be nominal 1 MHz. */
 		DCOCTL = 0;
 		BCSCTL1 = 0x87;
 		DCOCTL = 0x60;
 		do {
-			IFG1 &= ~OFIFG;
-			__delay_cycles(100000UL);
+			BSP430_CLOCK_LFXT1_CLEAR_FAULT();
 			--uxStableLoopsLeft;
-		} while ( ( IFG1 & OFIFG ) && ( 0 < uxStableLoopsLeft ) );
-		ucCrystalOK = ! ( IFG1 & OFIFG );
+			__delay_cycles(configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+			
+		} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 < uxStableLoopsLeft));
+		ucCrystalOK = !BSP430_CLOCK_LFXT1_IS_FAULTED();
 		if (! ucCrystalOK) {
 			/* No functional crystal; fall back to drive ACLK from VLOCLK */
 			BCSCTL3 |= LFXT1S_2;
+			(void)iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 0);
 		}
 	}
 	/* Select lowest DCOx and MODx prior to configuring */

@@ -52,26 +52,27 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_BC2__ */
 
+#undef BSP430_CLOCK_LFXT1_IS_FAULTED
+/** Check whether the LFXT1 crystal has a fault condition.
+ *
+ * This definition overrides the generic definition to test the
+ * crystal-specific flags. */
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() (BCSCTL3 & LFXT1OF)
+
+#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
+/** Clear the fault associated with LFXT1.
+ *
+ * This definition overrides the generic definition to clear the
+ * crystal-specific flags as well as the system flag. */
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {					\
+		/* User's guide says BCSCTL3.LFXT1OF is read-only. */	\
+		IFG1 &= ~OFIFG;											\
+	} while (0)
+
 /** Call this to reconfigure the BC2 peripheral.
  *
  * The relevant BC2 registers are configured as requested.  See the
  * 2xx Family User's Guide for details.
- *
- * The following example shows use of this to configure an MSP430G2553
- * to run at the factory-calibrated 16MHz rate with a crystal:
- *
- * @code
-    // Configure port to enable crystal: P2.6 = XIN, P2.7 = XOUT
-    P2DIR &= ~BIT6;
-    P2DIR |= BIT7;
-    P2SEL |= ( BIT6 | BIT7 );
-    P2SEL2 &= ~ ( BIT6 | BIT7 );
-    if ( pdFALSE == ucBSP430bc2Configure( CALDCO_16MHZ, CALBC1_16MHZ, DIVS_1, XCAP_1 ) ) {
-       // No crystal: return pins to port function
-       P2DIR |= BIT6 | BIT7;
-       P2SEL &= ~( BIT6 | BIT7 );
-    }
- * @endcode
  *
  * @param ucDCOCTL This configures the frequency and modulator
  * selection.
@@ -81,20 +82,15 @@
  * 
  * @param ucBCSCTL2 This sets clock dividers.
  *
- * @param ucBCSCTL3 This configures external crystals.  If bit
- * LFXT1S1 is set, the configuration uses VLOCLK and
- * presence/stabilization of the crystal is not performed.  If bit
- * LFXT1S1 is clear, the routine will attempt to configure the
- * crystal; if this fails, it will fall back to VLOCLK.
+ * @param ucBCSCTL3 This configures external crystals.  If bit LFXT1S1
+ * is set, the configuration uses VLOCLK and presence/stabilization of
+ * the crystal is not performed.  If bit LFXT1S1 is clear, the routine
+ * will attempt to configure the crystal; if this fails, it will fall
+ * back to VLOCLK.  The code invokes
+ * #iBSP430platformConfigurePeripheralPinsFromISR as necessary.
  *
- * @note XIN and XOUT must be externally configured to their
- * peripheral function prior to invoking this if the crystal is to be
- * used.  As this is MCU-specific, the code is not part of this
- * function.  If crystal stability is not achieved, the caller should
- * deconfigure these pins.
- *
- * @return pdTrue if the oscillator has stabilized within the
- * default wait time, and pdFalse if not. */
+ * @return pdTrue if LFXT1 is enabled and has stabilized within the
+ * default wait time, and pdFalse in all other cases. */
 unsigned char
 ucBSP430bc2Configure (unsigned char ucDCOCTL,
 					  unsigned char ucBCSCTL1,

@@ -70,6 +70,23 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_CS__ */
 
+#undef BSP430_CLOCK_LFXT1_IS_FAULTED
+/** Check whether the LFXT1 crystal has a fault condition.
+ *
+ * This definition overrides the generic definition to test the
+ * crystal-specific flags. */
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() (CSCTL5 & XT1OFFG)
+
+#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
+/** Clear the fault associated with LFXT1.
+ *
+ * This definition overrides the generic definition to clear the
+ * crystal-specific flags as well as the system flag. */
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {	\
+		CSCTL5 &= ~XT1OFFG;						\
+		SFRIFG1 &= ~OFIFG;						\
+	} while (0)
+
 /** Call this to configure MCLK and SMCLK via CS peripheral.
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.  The
