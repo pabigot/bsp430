@@ -236,7 +236,16 @@ iBSP430usciPutString (const char* str, xBSP430usciHandle device)
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
-#if configBSP430_USCI_SHARE_ISR - 0
+#if (configBSP430_USCI_SHARE_ISR - 0)			\
+	&& (((configBSP430_PERIPH_USCI_A0 - 0) && (configBSP430_PERIPH_USCI_A0_ISR - 0)) \
+		|| ((configBSP430_PERIPH_USCI_A1 - 0) && (configBSP430_PERIPH_USCI_A1_ISR - 0)) \
+		|| ((configBSP430_PERIPH_USCI_A2 - 0) && (configBSP430_PERIPH_USCI_A2_ISR - 0)) \
+		|| ((configBSP430_PERIPH_USCI_A3 - 0) && (configBSP430_PERIPH_USCI_A3_ISR - 0)) \
+		|| ((configBSP430_PERIPH_USCI_B0 - 0) && (configBSP430_PERIPH_USCI_B0_ISR - 0)) \
+		|| ((configBSP430_PERIPH_USCI_B1 - 0) && (configBSP430_PERIPH_USCI_B1_ISR - 0)) \
+		|| ((configBSP430_PERIPH_USCI_B2 - 0) && (configBSP430_PERIPH_USCI_B2_ISR - 0)) \
+		|| ((configBSP430_PERIPH_USCI_B3 - 0) && (configBSP430_PERIPH_USCI_B3_ISR - 0)) \
+		)
 static void
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
@@ -281,12 +290,82 @@ usci_isr (xBSP430usciHandle device)
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_PERIPH_USCI_A0 - 0
 static struct xBSP430usciState state_USCI_A0_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A0__
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A0_BASEADDRESS
 };
 
 xBSP430usciHandle const xBSP430usci_USCI_A0 = &state_USCI_A0_;
 
-#if configBSP430_PERIPH_USCI_A0_ISR - 0
+#endif /* configBSP430_PERIPH_USCI_A0 */
+
+#if configBSP430_PERIPH_USCI_A1 - 0
+static struct xBSP430usciState state_USCI_A1_ = {
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A1_BASEADDRESS
+};
+
+xBSP430usciHandle const xBSP430usci_USCI_A1 = &state_USCI_A1_;
+
+#endif /* configBSP430_PERIPH_USCI_A1 */
+
+#if configBSP430_PERIPH_USCI_A2 - 0
+static struct xBSP430usciState state_USCI_A2_ = {
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A2_BASEADDRESS
+};
+
+xBSP430usciHandle const xBSP430usci_USCI_A2 = &state_USCI_A2_;
+
+#endif /* configBSP430_PERIPH_USCI_A2 */
+
+#if configBSP430_PERIPH_USCI_A3 - 0
+static struct xBSP430usciState state_USCI_A3_ = {
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A3_BASEADDRESS
+};
+
+xBSP430usciHandle const xBSP430usci_USCI_A3 = &state_USCI_A3_;
+
+#endif /* configBSP430_PERIPH_USCI_A3 */
+
+#if configBSP430_PERIPH_USCI_B0 - 0
+static struct xBSP430usciState state_USCI_B0_ = {
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B0_BASEADDRESS
+};
+
+xBSP430usciHandle const xBSP430usci_USCI_B0 = &state_USCI_B0_;
+
+#endif /* configBSP430_PERIPH_USCI_B0 */
+
+#if configBSP430_PERIPH_USCI_B1 - 0
+static struct xBSP430usciState state_USCI_B1_ = {
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B1_BASEADDRESS
+};
+
+xBSP430usciHandle const xBSP430usci_USCI_B1 = &state_USCI_B1_;
+
+#endif /* configBSP430_PERIPH_USCI_B1 */
+
+#if configBSP430_PERIPH_USCI_B2 - 0
+static struct xBSP430usciState state_USCI_B2_ = {
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B2_BASEADDRESS
+};
+
+xBSP430usciHandle const xBSP430usci_USCI_B2 = &state_USCI_B2_;
+
+#endif /* configBSP430_PERIPH_USCI_B2 */
+
+#if configBSP430_PERIPH_USCI_B3 - 0
+static struct xBSP430usciState state_USCI_B3_ = {
+	.usci = (xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B3_BASEADDRESS
+};
+
+xBSP430usciHandle const xBSP430usci_USCI_B3 = &state_USCI_B3_;
+
+#endif /* configBSP430_PERIPH_USCI_B3 */
+
+/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
+/* !BSP430! end=hal_ba_defn */
+
+/* !BSP430! insert=hal_isr_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_defn] */
+#if (configBSP430_PERIPH_USCI_A0 - 0) && (configBSP430_PERIPH_USCI_A0_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -298,16 +377,7 @@ isr_USCI_A0 (void)
 }
 #endif /* configBSP430_USCI_USCI_A0_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_A0 */
-
-#if configBSP430_PERIPH_USCI_A1 - 0
-static struct xBSP430usciState state_USCI_A1_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A1__
-};
-
-xBSP430usciHandle const xBSP430usci_USCI_A1 = &state_USCI_A1_;
-
-#if configBSP430_PERIPH_USCI_A1_ISR - 0
+#if (configBSP430_PERIPH_USCI_A1 - 0) && (configBSP430_PERIPH_USCI_A1_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -319,16 +389,7 @@ isr_USCI_A1 (void)
 }
 #endif /* configBSP430_USCI_USCI_A1_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_A1 */
-
-#if configBSP430_PERIPH_USCI_A2 - 0
-static struct xBSP430usciState state_USCI_A2_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A2__
-};
-
-xBSP430usciHandle const xBSP430usci_USCI_A2 = &state_USCI_A2_;
-
-#if configBSP430_PERIPH_USCI_A2_ISR - 0
+#if (configBSP430_PERIPH_USCI_A2 - 0) && (configBSP430_PERIPH_USCI_A2_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -340,16 +401,7 @@ isr_USCI_A2 (void)
 }
 #endif /* configBSP430_USCI_USCI_A2_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_A2 */
-
-#if configBSP430_PERIPH_USCI_A3 - 0
-static struct xBSP430usciState state_USCI_A3_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_A3__
-};
-
-xBSP430usciHandle const xBSP430usci_USCI_A3 = &state_USCI_A3_;
-
-#if configBSP430_PERIPH_USCI_A3_ISR - 0
+#if (configBSP430_PERIPH_USCI_A3 - 0) && (configBSP430_PERIPH_USCI_A3_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -361,16 +413,7 @@ isr_USCI_A3 (void)
 }
 #endif /* configBSP430_USCI_USCI_A3_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_A3 */
-
-#if configBSP430_PERIPH_USCI_B0 - 0
-static struct xBSP430usciState state_USCI_B0_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B0__
-};
-
-xBSP430usciHandle const xBSP430usci_USCI_B0 = &state_USCI_B0_;
-
-#if configBSP430_PERIPH_USCI_B0_ISR - 0
+#if (configBSP430_PERIPH_USCI_B0 - 0) && (configBSP430_PERIPH_USCI_B0_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -382,16 +425,7 @@ isr_USCI_B0 (void)
 }
 #endif /* configBSP430_USCI_USCI_B0_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_B0 */
-
-#if configBSP430_PERIPH_USCI_B1 - 0
-static struct xBSP430usciState state_USCI_B1_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B1__
-};
-
-xBSP430usciHandle const xBSP430usci_USCI_B1 = &state_USCI_B1_;
-
-#if configBSP430_PERIPH_USCI_B1_ISR - 0
+#if (configBSP430_PERIPH_USCI_B1 - 0) && (configBSP430_PERIPH_USCI_B1_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -403,16 +437,7 @@ isr_USCI_B1 (void)
 }
 #endif /* configBSP430_USCI_USCI_B1_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_B1 */
-
-#if configBSP430_PERIPH_USCI_B2 - 0
-static struct xBSP430usciState state_USCI_B2_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B2__
-};
-
-xBSP430usciHandle const xBSP430usci_USCI_B2 = &state_USCI_B2_;
-
-#if configBSP430_PERIPH_USCI_B2_ISR - 0
+#if (configBSP430_PERIPH_USCI_B2 - 0) && (configBSP430_PERIPH_USCI_B2_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -424,16 +449,7 @@ isr_USCI_B2 (void)
 }
 #endif /* configBSP430_USCI_USCI_B2_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_B2 */
-
-#if configBSP430_PERIPH_USCI_B3 - 0
-static struct xBSP430usciState state_USCI_B3_ = {
-	.usci = (xBSP430periphUSCI *)__MSP430_BASEADDRESS_USCI_B3__
-};
-
-xBSP430usciHandle const xBSP430usci_USCI_B3 = &state_USCI_B3_;
-
-#if configBSP430_PERIPH_USCI_B3_ISR - 0
+#if (configBSP430_PERIPH_USCI_B3 - 0) && (configBSP430_PERIPH_USCI_B3_ISR - 0)
 #if ! (configBSP430_USCI_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_USCI_SHARE_ISR */
@@ -445,10 +461,8 @@ isr_USCI_B3 (void)
 }
 #endif /* configBSP430_USCI_USCI_B3_ISR */
 
-#endif /* configBSP430_PERIPH_USCI_B3 */
-
-/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
-/* !BSP430! end=hal_ba_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
+/* !BSP430! end=hal_isr_defn */
 
 static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph)
 {

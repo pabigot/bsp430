@@ -12,19 +12,6 @@ templates = {
 #define configBSP430_PERIPH_%(INSTANCE)s 0
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 
-/** @def configBSP430_PERIPH_%(INSTANCE)s_ISR
- *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c %(INSTANCE)s.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_%(PERIPH)s_SHARE_ISR must be enabled for this to be
- * enabled. */
-#ifndef configBSP430_PERIPH_%(INSTANCE)s_ISR
-#define configBSP430_PERIPH_%(INSTANCE)s_ISR 1
-#endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
-
 /** Handle for the raw %(INSTANCE)s device.
  *
  * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
@@ -38,6 +25,20 @@ templates = {
 extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
 ''',
     
+    'hal_isr_decl' : '''/** @def configBSP430_PERIPH_%(INSTANCE)s_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c %(INSTANCE)s.  Define to a false value if you
+ * need complete control over how interrupts are handled for the device
+ * and will be defining the vector yourself.
+ *
+ * @c #configBSP430_%(PERIPH)s_SHARE_ISR must be enabled for this to be
+ * enabled. */
+#ifndef configBSP430_PERIPH_%(INSTANCE)s_ISR
+#define configBSP430_PERIPH_%(INSTANCE)s_ISR 1
+#endif /* configBSP430_PERIPH_%(INSTANCE)s_ISR */
+''',
+
     'hal_decl' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
  *
  * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
@@ -47,12 +48,15 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
 
     'hal_ba_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
 static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
-	.%(periph)s = (xBSP430periph%(PERIPH)s *)__MSP430_BASEADDRESS_%(INSTANCE)s__
+	.%(periph)s = (xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS
 };
 
 xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
 
-#if configBSP430_PERIPH_%(INSTANCE)s_ISR - 0
+#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+''',
+
+    'hal_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
 #if ! (configBSP430_%(PERIPH)s_SHARE_ISR - 0)
 #error Shared periphal HAL ISR disabled
 #endif /* configBSP430_%(PERIPH)s_SHARE_ISR */
@@ -63,8 +67,6 @@ isr_%(INSTANCE)s (void)
 	%(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
 }
 #endif /* configBSP430_%(PERIPH)s_%(INSTANCE)s_ISR */
-
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
     'periph_hal_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
