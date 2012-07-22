@@ -38,13 +38,16 @@
  * manipulation of standard port registers like @c PxDIR and @c PxSEL
  * through a single pointer.  This would be useful when an external
  * component such as a DS18B20 may be placed on one of several ports
- * depending on platform.
+ * depending on platform.  Presentation layer structures are defined
+ * for each 8-bit port, and for the 16-bit port interfaces on MCUs
+ * that support them.
  *
  * A hardware abstraction layer is defined that allows registering
  * callbacks to be invoked when port interrupts occur.  This is
  * necessary when a library provides support for an external component
  * that signals events through an interrupt, but is not permitted to
- * define the interrupt handler for the entire port.
+ * define the interrupt handler for the entire port.  The abstraction
+ * layer is supported only for the 8-bit port interface.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -218,22 +221,29 @@ typedef struct xBSP430periphPORT_5XX_8 {
 } xBSP430periphPORT_5XX_8;
 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-#define _BSP430_PERIPH_PORT_IE xBSP430periphPORT_5XX_8
+#define _BSP430_PERIPH_PORTIE xBSP430periphPORT_5XX_8
 #define _BSP430_PERIPH_PORT xBSP430periphPORT_5XX_8
+#define _BSP430_PERIPH_PORTW xBSP430periphPORT_5XX_16
 #else /* MSP430XV2 */
-#define _BSP430_PERIPH_PORT_IE xBSP430periphPORT_IE_8
+#define _BSP430_PERIPH_PORTIE xBSP430periphPORT_IE_8
 #define _BSP430_PERIPH_PORT xBSP430periphPORT_8
+#define _BSP430_PERIPH_PORTW xBSP430periphPORT_16
 #endif /* MSP430XV2 */
 
 /** Structure used to access ports with interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-typedef _BSP430_PERIPH_PORT_IE xBSP430periphPORT_IE;
+typedef _BSP430_PERIPH_PORTIE xBSP430periphPORTIE;
 
 /** Structure used to access ports without interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
 typedef _BSP430_PERIPH_PORT xBSP430periphPORT;
+
+/** Structure used to access 16-bit ports.
+ *
+ * The underlying structure selected depends on the MCU family. */
+typedef _BSP430_PERIPH_PORTW xBSP430periphPORTW;
 
 /** Callback flag indicating ISR should yield.
  *
@@ -303,8 +313,23 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT2_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTA__)
 #endif /* PORTA_R */
 
+/** Handle for the raw PORT1 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT1
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT1 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT1_BASEADDRESS))
+
+/** Handle for the raw PORT2 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT2
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT2 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT2_BASEADDRESS))
+
+/** Handle for the raw PORTA device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORTA
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORTA ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT1_BASEADDRESS))
 
 /** @def configBSP430_PERIPH_PORT1
  *
@@ -361,8 +386,23 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT4_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTB__)
 #endif /* PORTB_R */
 
+/** Handle for the raw PORT3 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT3
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT3 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT3_BASEADDRESS))
+
+/** Handle for the raw PORT4 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT4
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT4 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT4_BASEADDRESS))
+
+/** Handle for the raw PORTB device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORTB
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORTB ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT3_BASEADDRESS))
 
 /** @def configBSP430_PERIPH_PORT3
  *
@@ -419,8 +459,23 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT6_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTC__)
 #endif /* PORTC_R */
 
+/** Handle for the raw PORT5 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT5
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT5 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT5_BASEADDRESS))
+
+/** Handle for the raw PORT6 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT6
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT6 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT6_BASEADDRESS))
+
+/** Handle for the raw PORTC device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORTC
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORTC ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT5_BASEADDRESS))
 
 /** @def configBSP430_PERIPH_PORT5
  *
@@ -477,8 +532,23 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT8_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTD__)
 #endif /* PORTD_R */
 
+/** Handle for the raw PORT7 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT7
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT7 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT7_BASEADDRESS))
+
+/** Handle for the raw PORT8 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT8
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT8 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT8_BASEADDRESS))
+
+/** Handle for the raw PORTD device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORTD
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORTD ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT7_BASEADDRESS))
 
 /** @def configBSP430_PERIPH_PORT7
  *
@@ -535,8 +605,23 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT10_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTE__)
 #endif /* PORTE_R */
 
+/** Handle for the raw PORT9 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT9
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT9 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT9_BASEADDRESS))
+
+/** Handle for the raw PORT10 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT10
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT10 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT10_BASEADDRESS))
+
+/** Handle for the raw PORTE device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORTE
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORTE ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT9_BASEADDRESS))
 
 /** @def configBSP430_PERIPH_PORT9
  *
@@ -593,8 +678,23 @@ struct xBSP430port5xxState {
 #define _BSP430_PERIPH_PORT12_BASEADDRESS (1+__MSP430_BASEADDRESS_PORTF__)
 #endif /* PORTF_R */
 
+/** Handle for the raw PORT11 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT11
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT11 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT11_BASEADDRESS))
+
+/** Handle for the raw PORT12 device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORT12
+ * is defined to a true value. */
 #define BSP430_PERIPH_PORT12 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT12_BASEADDRESS))
+
+/** Handle for the raw PORTF device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_PORTF
+ * is defined to a true value. */
+#define BSP430_PERIPH_PORTF ((xBSP430periphHandle)(1 + _BSP430_PERIPH_PORT11_BASEADDRESS))
 
 /** @def configBSP430_PERIPH_PORT11
  *

@@ -79,8 +79,23 @@ isr_%(INSTANCE)s (void)
 #define _BSP430_PERIPH_%(PORT2)s_BASEADDRESS (1+__MSP430_BASEADDRESS_%(PORTA)s__)
 #endif /* %(PORTA)s_R */
 
+/** Handle for the raw %(PORT1)s device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_%(PORT1)s
+ * is defined to a true value. */
 #define BSP430_PERIPH_%(PORT1)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT1)s_BASEADDRESS))
+
+/** Handle for the raw %(PORT2)s device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_%(PORT2)s
+ * is defined to a true value. */
 #define BSP430_PERIPH_%(PORT2)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(PORT2)s_BASEADDRESS))
+
+/** Handle for the raw %(PORTA)s device.
+ *
+ * The handle may be referenced only if configBSP430_PERIPH_%(PORTA)s
+ * is defined to a true value. */
+#define BSP430_PERIPH_%(PORTA)s ((xBSP430periphHandle)(1 + _BSP430_PERIPH_%(PORT1)s_BASEADDRESS))
 
 /** @def configBSP430_PERIPH_%(PORT1)s
  *
