@@ -452,8 +452,8 @@ isr_USCI_B3 (void)
 
 static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph)
 {
-/* !BSP430! insert=hpl_hal_demux */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_hal_demux] */
+/* !BSP430! insert=periph_hal_demux */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
 #if configBSP430_PERIPH_USCI_A0 - 0
 	if (BSP430_PERIPH_USCI_A0 == periph) {
 		return xBSP430usci_USCI_A0;
@@ -502,7 +502,7 @@ static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph)
 	}
 #endif /* configBSP430_PERIPH_USCI_B3 */
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_hal_demux] */
-/* !BSP430! end=hpl_hal_demux */
+/* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
+/* !BSP430! end=periph_hal_demux */
 	return NULL;
 }

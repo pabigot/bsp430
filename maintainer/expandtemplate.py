@@ -67,7 +67,7 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hpl_hal_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+    'periph_hal_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
 	if (BSP430_PERIPH_%(INSTANCE)s == periph) {
 		return xBSP430%(periph)s_%(INSTANCE)s;
 	}
