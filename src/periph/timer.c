@@ -32,54 +32,87 @@
 #include <bsp430/periph/timer.h>
 
 /* !BSP430! periph=timer */
-/* !BSP430! instance=T0A,T1A,T2A,T3A,T0B,T1B,T2B */
+/* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
+
+/* !BSP430! insert=periph_ba_hpl_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_defn] */
+#if configBSP430_PERIPH_TA0 - 0
+volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS;
+#endif /* configBSP430_PERIPH_TA0 */
+
+#if configBSP430_PERIPH_TA1 - 0
+volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS;
+#endif /* configBSP430_PERIPH_TA1 */
+
+#if configBSP430_PERIPH_TA2 - 0
+volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS;
+#endif /* configBSP430_PERIPH_TA2 */
+
+#if configBSP430_PERIPH_TA3 - 0
+volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS;
+#endif /* configBSP430_PERIPH_TA3 */
+
+#if configBSP430_PERIPH_TB0 - 0
+volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS;
+#endif /* configBSP430_PERIPH_TB0 */
+
+#if configBSP430_PERIPH_TB1 - 0
+volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS;
+#endif /* configBSP430_PERIPH_TB1 */
+
+#if configBSP430_PERIPH_TB2 - 0
+volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS;
+#endif /* configBSP430_PERIPH_TB2 */
+
+/* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_defn] */
+/* !BSP430! end=periph_ba_hpl_defn */
 
 volatile xBSP430periphTIMER *
 xBSP430periphLookupTIMER (xBSP430periphHandle periph)
 {
 /* !BSP430! insert=periph_ba_hpl_demux */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
-#if configBSP430_PERIPH_T0A - 0
-	if (BSP430_PERIPH_T0A == periph) {
-		return xBSP430periph_T0A;
+#if configBSP430_PERIPH_TA0 - 0
+	if (BSP430_PERIPH_TA0 == periph) {
+		return xBSP430periph_TA0;
 	}
-#endif /* configBSP430_PERIPH_T0A */
+#endif /* configBSP430_PERIPH_TA0 */
 
-#if configBSP430_PERIPH_T1A - 0
-	if (BSP430_PERIPH_T1A == periph) {
-		return xBSP430periph_T1A;
+#if configBSP430_PERIPH_TA1 - 0
+	if (BSP430_PERIPH_TA1 == periph) {
+		return xBSP430periph_TA1;
 	}
-#endif /* configBSP430_PERIPH_T1A */
+#endif /* configBSP430_PERIPH_TA1 */
 
-#if configBSP430_PERIPH_T2A - 0
-	if (BSP430_PERIPH_T2A == periph) {
-		return xBSP430periph_T2A;
+#if configBSP430_PERIPH_TA2 - 0
+	if (BSP430_PERIPH_TA2 == periph) {
+		return xBSP430periph_TA2;
 	}
-#endif /* configBSP430_PERIPH_T2A */
+#endif /* configBSP430_PERIPH_TA2 */
 
-#if configBSP430_PERIPH_T3A - 0
-	if (BSP430_PERIPH_T3A == periph) {
-		return xBSP430periph_T3A;
+#if configBSP430_PERIPH_TA3 - 0
+	if (BSP430_PERIPH_TA3 == periph) {
+		return xBSP430periph_TA3;
 	}
-#endif /* configBSP430_PERIPH_T3A */
+#endif /* configBSP430_PERIPH_TA3 */
 
-#if configBSP430_PERIPH_T0B - 0
-	if (BSP430_PERIPH_T0B == periph) {
-		return xBSP430periph_T0B;
+#if configBSP430_PERIPH_TB0 - 0
+	if (BSP430_PERIPH_TB0 == periph) {
+		return xBSP430periph_TB0;
 	}
-#endif /* configBSP430_PERIPH_T0B */
+#endif /* configBSP430_PERIPH_TB0 */
 
-#if configBSP430_PERIPH_T1B - 0
-	if (BSP430_PERIPH_T1B == periph) {
-		return xBSP430periph_T1B;
+#if configBSP430_PERIPH_TB1 - 0
+	if (BSP430_PERIPH_TB1 == periph) {
+		return xBSP430periph_TB1;
 	}
-#endif /* configBSP430_PERIPH_T1B */
+#endif /* configBSP430_PERIPH_TB1 */
 
-#if configBSP430_PERIPH_T2B - 0
-	if (BSP430_PERIPH_T2B == periph) {
-		return xBSP430periph_T2B;
+#if configBSP430_PERIPH_TB2 - 0
+	if (BSP430_PERIPH_TB2 == periph) {
+		return xBSP430periph_TB2;
 	}
-#endif /* configBSP430_PERIPH_T2B */
+#endif /* configBSP430_PERIPH_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_demux] */
 /* !BSP430! end=periph_ba_hpl_demux */
