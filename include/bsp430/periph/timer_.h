@@ -51,10 +51,9 @@
 struct xBSP430timerState {
 	unsigned int flags;
 	volatile xBSP430periphTIMER * const timer;
-#if 0
-	struct xBSP430timerOverflowCallbackState * overflow_cbs
-	struct xBSP430timerCCRCallbackState * ccr_cbs[1];
-#endif
+	struct xBSP430timerInterruptState * overflow_cbs;
+	struct xBSP430timerInterruptState * cc0_cbs;
+	struct xBSP430timerCCInterruptState * cc_cbs[1];
 };
 
 #endif /* BSP430_PERIPH_TIMER__H */

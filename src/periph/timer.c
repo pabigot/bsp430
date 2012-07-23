@@ -31,8 +31,95 @@
 
 #include <bsp430/periph/timer_.h>
 
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define TA_OVERFLOW 0x0E
+#else /* 5xx */
+/* Pre-5xx Timer_A only supported 5 CCs and used 0x0A to denote
+ * overflow. */
+#define TA_OVERFLOW 0x0A
+#endif /* 5xx */
+/* All families use 0x0E for overflow in Timer_B */
+#define TB_OVERFLOW 0x0E
+
 /* !BSP430! periph=timer */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
+
+#if (((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_CC0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_CC0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_CC0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_CC0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_CC0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TB2 - 0) && (configBSP430_HAL_TB2_CC0_ISR - 0)))
+/* static */ int
+#if __MSP430X__
+__attribute__((__c16__))
+#endif /* CPUX */
+/* __attribute__((__always_inline__)) */
+cc0_isr (xBSP430timerHandle timer,
+		 int iv)
+{
+	int rv = 0;
+	struct xBSP430timerInterruptState ** cbs = &timer->cc0_cbs;
+	while (NULL != *cbs) {
+		rv |= (*cbs)->callback(timer, *cbs);
+		cbs = &((*cbs)->next);
+	}
+	return rv;						
+}
+#endif /* TA0 CC0 ISR */
+
+#define TIMER_ISR_BODY(_timer, _iv, _OVERFLOW) do {						\
+		int rv = 0;														\
+		if (0 != _iv) {													\
+			if (_OVERFLOW == _iv) {										\
+				struct xBSP430timerInterruptState ** cbs = &_timer->overflow_cbs; \
+				while (NULL != *cbs) {									\
+					rv |= (*cbs)->callback(_timer, *cbs);				\
+					cbs = &((*cbs)->next);								\
+				}														\
+			} else {													\
+				int cc = (_iv - 4) / 2;									\
+				struct xBSP430timerCCInterruptState ** cbs = cc + _timer->cc_cbs; \
+				while (NULL != *cbs) {									\
+					rv |= (*cbs)->callback(_timer, cc, *cbs);			\
+					cbs = &((*cbs)->next);								\
+				}														\
+			}															\
+		}																\
+		return rv;														\
+	} while (0)
+
+#if (((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)))
+
+/* static */ int
+#if __MSP430X__
+__attribute__((__c16__))
+#endif /* CPUX */
+/* __attribute__((__always_inline__)) */
+ta_isr (xBSP430timerHandle timer,
+		int iv)
+{
+	TIMER_ISR_BODY(timer, iv, TA_OVERFLOW);
+}
+#endif /* TA0 ISR */
+
+#if (((configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TB2 - 0) && (configBSP430_HAL_TB2_ISR - 0)))
+
+/* static */ int
+#if __MSP430X__
+__attribute__((__c16__))
+#endif /* CPUX */
+/* __attribute__((__always_inline__)) */
+tb_isr (xBSP430timerHandle timer,
+		int iv)
+{
+	TIMER_ISR_BODY(timer, iv, TB_OVERFLOW);
+}
+#endif /* TB0 ISR */
 
 /* !BSP430! insert=periph_ba_hpl_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_defn] */

@@ -46,18 +46,18 @@
  * The original nomenclature for MSP430 timers in MSP430 has proven to
  * be inconsistent as the number of instances grew.  While the
  * identifier @c TA3 in early MCUs specified the presence of a Timer_A
- * instance with 3 CCRs, this led to the need to denote a second
- * Timer_A instance with 5 CCRs as T1A5 within the MCU-specific
+ * instance with 3 CCs, this led to the need to denote a second
+ * Timer_A instance with 5 CCs as T1A5 within the MCU-specific
  * headers.  The data sheets, however, refer to that same instance as
- * TA1, with a dot-separated CCR number where necessary (e.g., TA1.4
- * refers to the fifth CCR on the second Timer_A instance, and is
+ * TA1, with a dot-separated CC number where necessary (e.g., TA1.4
+ * refers to the fifth CC on the second Timer_A instance, and is
  * controlled via TA1CCTL4).
  *
  * For this interface, instance names uniformly begin with instance
  * zero, even on MCUs where the documented peripheral name does not
  * include an instance.  For example, peripheral called @c TA2 on the
- * MSP430G2231 is simply the first Timer_A instance and has 2 CCRs.
- * It is identified here as @c TA0, with the number of CCRs left
+ * MSP430G2231 is simply the first Timer_A instance and has 2 CCs.
+ * It is identified here as @c TA0, with the number of CCs left
  * implicit.
  *
  * This module specifically does not support Timer_D, which has an
@@ -132,18 +132,18 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
  *
  * What we're doing here is providing the base addresses for the
  * peripheral register maps in a manner that ignores the number of
- * CCRs present in an instance. */ 
+ * CCs present in an instance. */ 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 /* Find the relevant tests with the following command over the
  * upstream include files in the msp430mcu package::
 
-  for i in TA0 TA1 TA2 TA3 TB0 TB1 TB2 TB3 ; do
+  for i in TA T0A T1A T2A T3A TB T0B T1B T2B T3B ; do
      grep -h BASEADDRESS_${i} * \
        | sort \
        | uniq ;
   done
 
- * Use the alternative with the most CCRs as the default.  If the MCU
+ * Use the alternative with the most CCs as the default.  If the MCU
  * doesn't support it but a user references the handle, the name will
  * be unresolved at compile time, which is a fair error message.
  */
@@ -201,6 +201,77 @@ struct xBSP430timerState;
 
 /** The timer internal state is protected. */
 typedef struct xBSP430timerState * xBSP430timerHandle;
+
+struct xBSP430timerCCInterruptState;
+struct xBSP430timerInterruptState;
+
+/** Prototype for CC callbacks from shared timer interrupt service routines.
+ *
+ * @note Because these callbacks do not execute in the stack frame of
+ * the ISR itself, you cannot use the standard @c
+ * __bic_status_register_on_exit() intrinsic to affect the status
+ * register flags upon return.  Instead, you must provide information
+ * related to interrupt return as the return value of the callback.
+ *
+ * @param port A reference to the HAL structure associated with the timer.
+ *
+ * @param bit The bit for which the interrupt was received; values
+ * range from 0 through 7.
+ *
+ * @param data A pointer to state information specified when the
+ * callback was registered.
+ *
+ * @return Bits to clear in the status register before returning from
+ * the ISR.  For example, if the routine wants to leave low-power mode
+ * without affecting the interrupt enable bit, return @c LPM4_bits.
+ * Other bits are also relevant, see #BSP430_PORT_ISR_YIELD. */
+typedef int (* xBSP430timerCCInterruptCallback) (xBSP430timerHandle timer,
+												 int bit,
+												 struct xBSP430timerCCInterruptState * state);
+
+/** Prototype for overflow callback from shared timer interrupt service routines.
+ *
+ * @note Because these callbacks do not execute in the stack frame of
+ * the ISR itself, you cannot use the standard @c
+ * __bic_status_register_on_exit() intrinsic to affect the status
+ * register flags upon return.  Instead, you must provide information
+ * related to interrupt return as the return value of the callback.
+ *
+ * @param port A reference to the HAL structure associated with the timer.
+ *
+ * @param data A pointer to state information specified when the
+ * callback was registered.
+ *
+ * @return Bits to clear in the status register before returning from
+ * the ISR.  For example, if the routine wants to leave low-power mode
+ * without affecting the interrupt enable bit, return @c LPM4_bits.
+ * Other bits are also relevant, see #BSP430_PORT_ISR_YIELD. */
+typedef int (* xBSP430timerInterruptCallback) (xBSP430timerHandle timer,
+											   struct xBSP430timerInterruptState * state);
+
+struct xBSP430timerCCInterruptState {
+	/** Pointer to the next state associated with a timer CC block. */
+	struct xBSP430timerCCInterruptState * next;
+	xBSP430timerCCInterruptCallback callback;
+};
+
+int xBSP430timerRegisterCCCallback (xBSP430timerHandle handle,
+									struct xBSP430timerCCInterruptState * state,
+									int ccr,
+									int registerp);
+
+struct xBSP430timerInterruptState {
+	struct xBSP430timerInterruptState * next;
+	xBSP430timerInterruptCallback callback;
+};
+
+int xBSP430timerRegisterOverflowCallback (xBSP430timerHandle handle,
+										  struct xBSP430timerInterruptState * state,
+										  int registerp);
+
+int xBSP430timerRegisterCC0Callback (xBSP430timerHandle handle,
+									 struct xBSP430timerInterruptState * state,
+									 int registerp);
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
