@@ -34,9 +34,6 @@
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/uptime.h>
-#if ! (configBSP430_UPTIME - 0)
-#include <bsp430/timers/timerA0.h>
-#endif
 
 const xBSP430led pxBSP430leds[] = {
 	{ .pucPxOUT = &P1OUT, .ucBIT = BIT0 }, /* Red */
@@ -109,7 +106,5 @@ void vBSP430platformSetup ()
 	ulBSP430ucsConfigure( configCPU_CLOCK_HZ, -1 );
 #if configBSP430_UPTIME - 0
 	vBSP430uptimeStart();
-#else
-	vBSP430timerA0Configure();
 #endif /* configBSP430_UPTIME */
 }

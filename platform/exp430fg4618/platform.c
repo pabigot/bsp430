@@ -31,7 +31,6 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/periph/fllplus.h>
-#include <bsp430/timers/timerA0.h>
 #include <bsp430/utility/led.h>
 
 const xBSP430led pxBSP430leds[] = {
@@ -75,7 +74,4 @@ void vBSP430platformSetup ()
 	/* Enable XT1 functions and clock */
 	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 	//ulBSP430fllplusConfigureMCLK(configCPU_CLOCK_HZ);
-
-	/* Enable basic timer */
-	vBSP430timerA0Configure();
 }
