@@ -44,6 +44,129 @@
 /* !BSP430! periph=timer */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
+#define DECLARE_AUX_CCS(_n) \
+	struct xBSP430timerCCInterruptState * _aux_cc_cbs[_n]
+
+#if 1 /* configBSP430_PERIPH_TA0 - 0 */
+static struct {
+	struct xBSP430timerState state;
+	/* State includes one CC record.  Add more as required. */
+#if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
+	DECLARE_AUX_CCS(1);			/* 2 total */
+#elif defined(__MSP430_HAS_TA3__) || defined(__MSP430_HAS_T0A3__)
+	DECLARE_AUX_CCS(2);			/* 3 total */
+#else
+	DECLARE_AUX_CCS(4);			/* 5 total */
+#endif /* TA0 */
+} state_TA0_ = {
+	.state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS }
+};
+
+xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_.state;
+#endif /* configBSP430_PERIPH_TA0 */
+
+#if configBSP430_PERIPH_TA1 - 0
+static struct {
+	struct xBSP430timerState state;
+	/* State includes one CC record.  Add more as required. */
+#if defined(__MSP430_HAS_T1A2__)
+	DECLARE_AUX_CCS(1);			/* 2 total */
+#elif defined(__MSP430_HAS_T1A3__)
+	DECLARE_AUX_CCS(2);			/* 3 total */
+#else
+	DECLARE_AUX_CCS(4);			/* 5 total */
+#endif /* TA1 */
+} state_TA1_ = {
+	.state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS }
+};
+
+xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_.state;
+#endif /* configBSP430_PERIPH_TA1 */
+
+#if configBSP430_PERIPH_TA2 - 0
+static struct {
+	struct xBSP430timerState state;
+	/* State includes one CC record.  Add more as required. */
+#if defined(__MSP430_HAS_T2A2__)
+	DECLARE_AUX_CCS(1);			/* 2 total */
+#elif defined(__MSP430_HAS_T2A3__)
+	DECLARE_AUX_CCS(2);			/* 3 total */
+#else
+	DECLARE_AUX_CCS(4);			/* 5 total */
+#endif /* TA2 */
+} state_TA2_ = {
+	.state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS }
+};
+
+xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_.state;
+#endif /* configBSP430_PERIPH_TA2 */
+
+#if configBSP430_PERIPH_TA3 - 0
+static struct {
+	struct xBSP430timerState state;
+	/* State includes one CC record.  Add more as required. */
+#if defined(__MSP430_HAS_T3A2__)
+	DECLARE_AUX_CCS(1);			/* 2 total */
+#elif defined(__MSP430_HAS_T3A3__)
+	DECLARE_AUX_CCS(2);			/* 3 total */
+#else
+	DECLARE_AUX_CCS(4);			/* 5 total */
+#endif /* TA3 */
+} state_TA3_ = {
+	.state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS }
+};
+
+xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_.state;
+#endif /* configBSP430_PERIPH_TA3 */
+
+#if configBSP430_PERIPH_TB0 - 0
+static struct {
+	struct xBSP430timerState state;
+	/* State includes one CC record.  Add more as required. */
+#if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
+	DECLARE_AUX_CCS(2);			/* 3 total */
+#else
+	DECLARE_AUX_CCS(6);			/* 7 total */
+#endif /* TB0 */
+} state_TB0_ = {
+	.state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS }
+};
+
+xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_.state;
+#endif /* configBSP430_PERIPH_TB0 */
+
+#if configBSP430_PERIPH_TB1 - 0
+static struct {
+	struct xBSP430timerState state;
+	/* State includes one CC record.  Add more as required. */
+#if defined(__MSP430_HAS_T1B3__)
+	DECLARE_AUX_CCS(2);			/* 3 total */
+#else
+	DECLARE_AUX_CCS(6);			/* 7 total */
+#endif /* TB1 */
+} state_TB1_ = {
+	.state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS }
+};
+
+xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_.state;
+#endif /* configBSP430_PERIPH_TB1 */
+
+#if configBSP430_PERIPH_TB2 - 0
+static struct {
+	struct xBSP430timerState state;
+	/* State includes one CC record.  Add more as required. */
+#if defined(__MSP430_HAS_T2B3__)
+	DECLARE_AUX_CCS(2);			/* 3 total */
+#else
+	DECLARE_AUX_CCS(6);			/* 7 total */
+#endif /* TB2 */
+} state_TB2_ = {
+	.state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS }
+};
+
+xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
+#endif /* configBSP430_PERIPH_TB2 */
+
 #if (((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_CC0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_CC0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_CC0_ISR - 0)) \
@@ -153,67 +276,6 @@ volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphT
 
 /* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_defn] */
 /* !BSP430! end=periph_ba_hpl_defn */
-
-/* !BSP430! insert=hal_ba_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
-#if configBSP430_PERIPH_TA0 - 0
-static struct xBSP430timerState state_TA0_ = {
-	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS
-};
-
-xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_;
-#endif /* configBSP430_PERIPH_TA0 */
-
-#if configBSP430_PERIPH_TA1 - 0
-static struct xBSP430timerState state_TA1_ = {
-	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS
-};
-
-xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_;
-#endif /* configBSP430_PERIPH_TA1 */
-
-#if configBSP430_PERIPH_TA2 - 0
-static struct xBSP430timerState state_TA2_ = {
-	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS
-};
-
-xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_;
-#endif /* configBSP430_PERIPH_TA2 */
-
-#if configBSP430_PERIPH_TA3 - 0
-static struct xBSP430timerState state_TA3_ = {
-	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS
-};
-
-xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_;
-#endif /* configBSP430_PERIPH_TA3 */
-
-#if configBSP430_PERIPH_TB0 - 0
-static struct xBSP430timerState state_TB0_ = {
-	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS
-};
-
-xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_;
-#endif /* configBSP430_PERIPH_TB0 */
-
-#if configBSP430_PERIPH_TB1 - 0
-static struct xBSP430timerState state_TB1_ = {
-	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS
-};
-
-xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_;
-#endif /* configBSP430_PERIPH_TB1 */
-
-#if configBSP430_PERIPH_TB2 - 0
-static struct xBSP430timerState state_TB2_ = {
-	.timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS
-};
-
-xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_;
-#endif /* configBSP430_PERIPH_TB2 */
-
-/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
-/* !BSP430! end=hal_ba_defn */
 
 volatile xBSP430periphTIMER *
 xBSP430periphLookupTIMER (xBSP430periphHandle periph)
