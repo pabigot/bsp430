@@ -171,8 +171,7 @@ __attribute__((__interrupt__(PORT1_VECTOR)))
 isr_PORT1 (void)
 {
 	int rv = port_isr(xBSP430port_PORT1, P1IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT1_ISR */
 
@@ -182,8 +181,7 @@ __attribute__((__interrupt__(PORT2_VECTOR)))
 isr_PORT2 (void)
 {
 	int rv = port_isr(xBSP430port_PORT2, P2IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT2_ISR */
 
@@ -193,8 +191,7 @@ __attribute__((__interrupt__(PORT3_VECTOR)))
 isr_PORT3 (void)
 {
 	int rv = port_isr(xBSP430port_PORT3, P3IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT3_ISR */
 
@@ -204,8 +201,7 @@ __attribute__((__interrupt__(PORT4_VECTOR)))
 isr_PORT4 (void)
 {
 	int rv = port_isr(xBSP430port_PORT4, P4IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT4_ISR */
 
@@ -215,8 +211,7 @@ __attribute__((__interrupt__(PORT5_VECTOR)))
 isr_PORT5 (void)
 {
 	int rv = port_isr(xBSP430port_PORT5, P5IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT5_ISR */
 
@@ -226,8 +221,7 @@ __attribute__((__interrupt__(PORT6_VECTOR)))
 isr_PORT6 (void)
 {
 	int rv = port_isr(xBSP430port_PORT6, P6IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT6_ISR */
 
@@ -237,8 +231,7 @@ __attribute__((__interrupt__(PORT7_VECTOR)))
 isr_PORT7 (void)
 {
 	int rv = port_isr(xBSP430port_PORT7, P7IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT7_ISR */
 
@@ -248,8 +241,7 @@ __attribute__((__interrupt__(PORT8_VECTOR)))
 isr_PORT8 (void)
 {
 	int rv = port_isr(xBSP430port_PORT8, P8IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT8_ISR */
 
@@ -259,8 +251,7 @@ __attribute__((__interrupt__(PORT9_VECTOR)))
 isr_PORT9 (void)
 {
 	int rv = port_isr(xBSP430port_PORT9, P9IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT9_ISR */
 
@@ -270,8 +261,7 @@ __attribute__((__interrupt__(PORT10_VECTOR)))
 isr_PORT10 (void)
 {
 	int rv = port_isr(xBSP430port_PORT10, P10IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT10_ISR */
 
@@ -281,8 +271,7 @@ __attribute__((__interrupt__(PORT11_VECTOR)))
 isr_PORT11 (void)
 {
 	int rv = port_isr(xBSP430port_PORT11, P11IV);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_PORT11_ISR */
 

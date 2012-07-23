@@ -43,7 +43,6 @@
 #define BSP430_PERIPH_PORT__H
 
 #include <bsp430/periph/port.h>
-#include <bsp430/utility/callback.h>
 
 /** Structure holding hardware abstraction layer state for Timer_A and Timer_B.
  *
@@ -53,7 +52,7 @@
 struct xBSP430portState {
 	unsigned int flags;
 	volatile xBSP430periphPORTIE * const port;
-	const struct xBSP430callbackISRIndexed * pin_callback[8];
+	const struct xBSP430periphISRCallbackIndexed * pin_callback[8];
 };
 
 #endif /* BSP430_PERIPH_PORT__H */

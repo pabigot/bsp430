@@ -48,7 +48,7 @@
  * one in the base type.  This allows us to use only the amount of
  * space necessary to support the CC blocks on the target MCU. */
 #define DECLARE_AUX_CCS(_n) \
-	struct xBSP430callbackISRIndexed * _aux_cc_callback[_n]
+	struct xBSP430periphISRCallbackIndexed * _aux_cc_callback[_n]
 
 #if configBSP430_PERIPH_TA0 - 0
 static struct {
@@ -212,8 +212,7 @@ isr_cc0_TA0 (void)
 {
 	xBSP430timerHandle timer = xBSP430timer_TA0;
 	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
 
@@ -233,8 +232,7 @@ isr_TA0 (void)
 			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA0_ISR */
 
@@ -245,8 +243,7 @@ isr_cc0_TA1 (void)
 {
 	xBSP430timerHandle timer = xBSP430timer_TA1;
 	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
 
@@ -266,8 +263,7 @@ isr_TA1 (void)
 			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA1_ISR */
 
@@ -278,8 +274,7 @@ isr_cc0_TA2 (void)
 {
 	xBSP430timerHandle timer = xBSP430timer_TA2;
 	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
 
@@ -299,8 +294,7 @@ isr_TA2 (void)
 			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA2_ISR */
 
@@ -311,8 +305,7 @@ isr_cc0_TA3 (void)
 {
 	xBSP430timerHandle timer = xBSP430timer_TA3;
 	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
 
@@ -332,8 +325,7 @@ isr_TA3 (void)
 			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TA3_ISR */
 
@@ -348,8 +340,7 @@ isr_cc0_TB0 (void)
 {
 	xBSP430timerHandle timer = xBSP430timer_TB0;
 	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
 
@@ -369,8 +360,7 @@ isr_TB0 (void)
 			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TB0_ISR */
 
@@ -381,8 +371,7 @@ isr_cc0_TB1 (void)
 {
 	xBSP430timerHandle timer = xBSP430timer_TB1;
 	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
 
@@ -402,8 +391,7 @@ isr_TB1 (void)
 			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TB1_ISR */
 
@@ -414,8 +402,7 @@ isr_cc0_TB2 (void)
 {
 	xBSP430timerHandle timer = xBSP430timer_TB2;
 	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
 
@@ -435,8 +422,7 @@ isr_TB2 (void)
 			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
-	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_TB2_ISR */
 

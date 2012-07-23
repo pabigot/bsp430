@@ -43,10 +43,15 @@
  * class of peripheral that may have multiple instances with the same
  * register set, to simplify access by converting the periphal address
  * to a pointer to such a structure.  These structures intentionally
- * uses the GCC/ISO C11 extensions for unnamed struct/union fields.
+ * use the GCC/ISO C11 extensions for unnamed struct/union fields.
+ *
  * Access to the peripheral area through such pointers must be done
  * with care, as some structure fields are not valid for some variants
  * of the peripheral.
+ *
+ * In addition, callback function types, structures, and helper
+ * functions exist to allow shared interrupts to delegate event
+ * handling to application-specific code.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -107,5 +112,145 @@ typedef int xBSP430periphHandle;
 #ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 0
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+
+/* Forward declarations */
+struct xBSP430periphISRCallbackVoid;
+struct xBSP430periphISRCallbackIndexed;
+									 
+/** Mask for status register bits cleared in ISR top half.
+ *
+ * This is used to prevent corrupting the status register when the
+ * return value of #iBSP430periphISRCallbackVoid and
+ * #iBSP430periphISRCallbackIndexed includes bits that are not relevant to
+ * status register bits. */
+#define BSP430_PERIPH_ISR_CALLBACK_BIC_MASK 0x00F8
+
+/** Indicate ISR top half should yield on return.
+ *
+ * In some cases, a chained ISR handler might perform an operation
+ * that enables a higher-priority task.  This bit may be set in the
+ * return value of #iBSP430periphISRCallbackVoid and
+ * #iBSP430periphISRCallbackIndexed to indicate that the interrupt should
+ * yield to that task when it returns. */
+#define BSP430_PERIPH_ISR_CALLBACK_YIELD 0x1000
+
+/** Callback for ISR chains that require no special arguments.
+ *
+ * @param cb A reference to the callback structure.  In most cases,
+ * this will be ignored; however, callback-specific state can be
+ * passed this way by providing a callback structure that is the first
+ * member in a structure that holds that state.
+ *
+ * @param context A reference to the hardware abstraction state handle
+ * for the interrupt that occurred, such as a timer.
+ *
+ * @return An integral value used by the ISR top half to wake up from
+ * low power modes and otherwise affect subsequent execution.  It
+ * should be a combination of bits like LPM4_bits and
+ * #BSP430_PERIPH_ISR_CALLBACK_YIELD.
+ */
+typedef int (* iBSP430periphISRCallbackVoid) (const struct xBSP430periphISRCallbackVoid * cb,
+											  void * context);
+
+/** Callback for ISR chains where the event includes an index
+ *
+ * This type of callback is used for digital IO ports and
+ * capture/compare events on timers.
+ *
+ * @param cb As with #iBSP430periphISRCallbackVoid.
+ *
+ * @param context As with #iBSP430periphISRCallbackVoid.
+ *
+ * @param idx The sub-entity to which the event applies, such as a
+ * specific pin on a port or capture/compare block on a timer.
+ *
+ * @return As with #iBSP430periphISRCallbackVoid.
+ */
+typedef int (* iBSP430periphISRCallbackIndexed) (const struct xBSP430periphISRCallbackIndexed * cb,
+												 void * context,
+												 int idx);
+/** Structure used to record #iBSP430periphISRCallbackVoid chains. */
+struct xBSP430periphISRCallbackVoid {
+	/** The next callback in the chain.  Assign a null pointer to
+	 * terminate the chain. */
+	const struct xBSP430periphISRCallbackVoid * next;
+
+	/** The function to be invoked. */
+	iBSP430periphISRCallbackVoid callback;
+};
+
+/** Structure used to record #iBSP430periphISRCallbackIndexed chains. */
+struct xBSP430periphISRCallbackIndexed {
+	/** The next callback in the chain.  Assign a null pointer to
+	 * terminate the chain. */
+	const struct xBSP430periphISRCallbackIndexed * next;
+
+	/** The function to be invoked. */
+	iBSP430periphISRCallbackIndexed callback;
+};
+
+/** Execute a chain of #iBSP430periphISRCallbackVoid callbacks.
+ *
+ * The return value of the callback is expected to be a bitmask
+ * indicating bits to be cleared to wake from low power modes and bits
+ * indicating other activities to be performed by the ISR top half.
+ * The return value of individual callbacks is combined using bitwise
+ * or with the @a basis parameter.
+ *
+ * @param cbpp Pointer to the start of the chain
+ * @param context The context to be passed into each callback
+ * @param basis The basis for the return value
+ * @return The bitwise OR of the @a basis value and the return values
+ * of each callback */
+static int
+__inline__
+iBSP430callbackInvokeISRVoid (const struct xBSP430periphISRCallbackVoid * const * cbpp,
+							  void * context,
+							  int basis)
+{
+	while (*cbpp) {
+		basis |= (*cbpp)->callback(*cbpp, context);
+		cbpp = &(*cbpp)->next;
+	}
+	return basis;
+}
+
+/** Execute a chain of #iBSP430periphISRCallbackIndexed callbacks.
+ *
+ * Same as #iBSP430callbackInvokeISRVoid, but providing an index to
+ * the callback.
+ *
+ * @param cbpp As with #iBSP430callbackInvokeISRVoid
+ * @param context As with #iBSP430callbackInvokeISRVoid
+ * @param idx The index to be passed to each #iBSP430periphISRCallbackIndexed handler
+ * @param basis As with #iBSP430callbackInvokeISRVoid
+ * @return As with #iBSP430callbackInvokeISRVoid */
+static int
+__inline__
+iBSP430callbackInvokeISRIndexed (const struct xBSP430periphISRCallbackIndexed * const * cbpp,
+								 void * context,
+								 int idx,
+								 int basis)
+{
+	while (*cbpp) {
+		basis |= (*cbpp)->callback(*cbpp, context, idx);
+		cbpp = &(*cbpp)->next;
+	}
+	return basis;
+}
+
+/** Execute code in ISR top-half based on callback return flags.
+ *
+ * Clear the requested bits in the status register, and if necessary
+ * yield control to a higher priority task.
+ *
+ * @param _return_flags An expression denoting a return value from a
+ * chain of callbacks, producing bits including (for example) @c
+ * LPM_bits and/or #BSP430_PERIPH_ISR_CALLBACK_YIELD. */
+#define BSP430_PERIPH_ISR_CALLBACK_TAIL(_return_flags) do {				\
+		int return_flags_ = (_return_flags);							\
+		__bic_status_register_on_exit((return_flags_) & BSP430_PERIPH_ISR_CALLBACK_BIC_MASK); \
+		portYIELD_FROM_ISR(((return_flags_) & BSP430_PERIPH_ISR_CALLBACK_YIELD) ? pdTRUE : pdFALSE); \
+	} while (0)
 
 #endif /* BSP430_PERIPH_H */
