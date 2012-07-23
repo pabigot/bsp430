@@ -1,6 +1,7 @@
 import sys
 import re
 import os.path
+import argparse
 
 templates = {
     'hpl_ba_decl' : '''/** @def configBSP430_PERIPH_%(INSTANCE)s
@@ -163,7 +164,15 @@ def expandTemplate (tplname, idmap):
     text.append('')
     return '\n'.join(text)
 
-for fn in sys.argv[1:]:
+aparse = argparse.ArgumentParser(description='Expand templates in BSP430 source code')
+aparse.add_argument('files', metavar='FILE', type=str, nargs='+',
+                    help='files to be expanded')
+aparse.add_argument('-s', '--strip-templates',
+                    dest='strip_templates', action='store_true',
+                    help='remove existing template expansions from the code')
+args = aparse.parse_args()
+
+for fn in args.files:
     try:
         contents = file(fn).readlines()
     except IOError as e:
@@ -187,7 +196,8 @@ for fn in sys.argv[1:]:
             end_name = idmap.pop('end', None)
             if end_name is not None:
                 assert end_name == insert_name, '%s != %s' % (end_name, insert_name)
-                new_contents.append(insertable)
+                if not args.strip_templates:
+                    new_contents.append(insertable)
                 new_contents.append(line)
                 insertable = None
 

@@ -1,2 +1,4 @@
+#!/bin/sh
+
 git grep -l '!BSP430!' include src platform \
-  | xargs python maintainer/expandtemplate.py
+  | xargs python maintainer/expandtemplate.py "${@}"
