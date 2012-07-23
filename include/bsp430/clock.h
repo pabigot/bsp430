@@ -166,6 +166,38 @@ unsigned short usBSP430clockACLK_Hz ();
 #define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { IFG1 &= ~OFIFG; } while (0)
 #endif /* 5xx */
 
+
+/** @def BSP430_CLOCK_VLOCLK_HZ
+ * 
+ * Nominal frequency of VLOCLK, in Hz.
+ *
+ * This is a family-specific value normally somewhere near 10-12 kHz.
+ * The value should be an unsigned integer constant. */
+#ifndef BSP430_CLOCK_VLOCLK_HZ
+#if defined(__MSP430_HAS_BC2__)					\
+	|| defined(__MSP430_HAS_FLLPLUS__)			\
+	|| defined(__MSP430_HAS_FLLPLUS_SMALL__)
+#define BSP430_CLOCK_VLOCLK_HZ 12000U
+#elif defined(__MSP430_HAS_CS__)				\
+	|| defined(__MSP430_HAS_UCS__) 				\
+	|| defined(__MSP430_HAS_UCS_RF__)
+#define BSP430_CLOCK_VLOCLK_HZ 10000U
+#else /* clock system */
+#define BSP430_CLOCK_VLOCLK_HZ 12000U
+#endif /* clock system*/
+#endif /* BSP430_CLOCK_VLOCLK_HZ */
+
+/** @def BSP430_CLOCK_ACLK_HZ
+ *
+ * Nominal frequency of ACLK, in Hz.
+ *
+ * Note that the calculated value of this assumes that ACLK is
+ * configured to source from a 32 kiHz watch crystal normally, but
+ * deferring to VLOCLK if LFXT1 is faulted. */
+#ifndef BSP430_CLOCK_ACLK_HZ
+#define BSP430_CLOCK_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_VLOCLK_HZ : 32768U)
+#endif /* BSP430_CLOCK_ACLK_HZ */
+
 /** Configure (or deconfigure) XT1 as a clock source.
  *
  * The peripheral-specific implementation will use

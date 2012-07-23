@@ -8,7 +8,10 @@
  */
 
 #include <bsp430/utility/terminal.h>
+#include <bsp430/utility/uptime.h>
+#if ! (configBSP430_UPTIME - 0)
 #include <bsp430/timers/timerA0.h>
+#endif
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
@@ -333,7 +336,11 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
 			if (terminal->prompt) {
 				tprintf("\r%s%s", terminal->prompt, terminal->command_buffer);
 			} else {
+#if configBSP430_UPTIME - 0
+				unsigned long uptime = ulBSP430uptime() / BSP430_UPTIME_CLOCK_HZ;
+#else
 				unsigned long uptime = ulBSP430timerA0Ticks() / portACLK_FREQUENCY_HZ;
+#endif
 				unsigned int seconds;
 				unsigned int minutes;
 

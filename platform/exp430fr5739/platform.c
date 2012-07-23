@@ -30,10 +30,12 @@
  */
 
 #include <bsp430/periph/cs.h>
-#include <bsp430/timers/timerA0.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/euscia.h>
-#include "task.h"
+#include <bsp430/utility/uptime.h>
+#if ! (configBSP430_UPTIME - 0)
+#include <bsp430/timers/timerA0.h>
+#endif
 
 /* exp430fr5739 LEDs are PJ.0 to PJ.3 and PB.4 to PB.7.  PJ is not
  * byte addressable, so we need to have a custom implementation of the
@@ -148,9 +150,11 @@ void vBSP430platformSetup ()
 	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 	iBSP430csConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
     ulBSP430csConfigureMCLK(configCPU_CLOCK_HZ);
-
-	/* Enable basic timer */
+#if configBSP430_UPTIME - 0
+	vBSP430uptimeStart();
+#else
 	vBSP430timerA0Configure();
+#endif /* configBSP430_UPTIME */
 }
 
 void
