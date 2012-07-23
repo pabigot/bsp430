@@ -36,7 +36,7 @@
  * This must be included by all BSP430 headers that do not include
  * another BSP430 header, so that it is available in all environments
  * where a BSP430 capability is referenced.  It is responsible for
- * ensuring that "FreeRTOS.h" is included, providing
+ * including any RTOS-related header files that contain
  * application-specific configuration information that must be
  * consistent between headers and implementation files.
  *
@@ -54,6 +54,10 @@
  * number. */
 #define BSP430_VERSION 20120713
 
+#if configBSP430_RTOS_FREERTOS - 0
+/* FreeRTOS defines application behavior in a shared header.  Read it
+ * in here so everybody agrees on its contents. */
+
 #include "FreeRTOS.h"
 
 /** Disable interrupts and halt any potential task switching */
@@ -61,5 +65,7 @@
 
 /** Decrease critical nesting level */
 #define BSP430_EXIT_CRITICAL() portEXIT_CRITICAL()
+
+#endif /* configBSP430_RTOS_FREERTOS */
 
 #endif /* BSP430_COMMON_H */

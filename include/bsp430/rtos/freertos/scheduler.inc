@@ -30,70 +30,70 @@
  */
 
 /** @file
- *
- * Definitions for a generic console print capability.
+ * @brief BSP430 scheduler implementation for FreeRTOS
  *
  * @author Peter A. Bigot <bigotp@acm.org>
- * @copyright @link http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause @endlink
+ * @date 2012
+ * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#include <bsp430/utility/console.h>
-#include <stdio.h>
-#include "semphr.h"
+#include <bsp430/periph/timer_.h>
+#include "FreeRTOS.h"
 
-static xBSP430uartHandle prvConsole;
-static xSemaphoreHandle prvConsoleSemaphore;
-static portTickType prvBlockTime;
+#if configBSP430_HAL_TA0_CC0_ISR - 0
+#error FreeRTOS override reserves TA0 CC0 for internal use
+#endif /* configBSP430_HAL_TA0_CC0_ISR */
 
-static int
-cputchar (int c)
+#define TIMESLICE_DURATION_tck (portACLK_FREQUENCY_HZ / configTICK_RATE_HZ)
+
+void
+vBSP430freertosSuspendScheduler (void)
 {
-	return iBSP430uartPutChar(c, prvConsole);
+	xBSP430periph_TA0->cctl0 &= ~(CCIE | CCIFG);
 }
 
-int
-__attribute__((__weak__))
-putchar (int c)
+void
+vBSP430freertosResumeScheduler (void)
 {
-	return iBSP430uartPutChar(c, prvConsole);
+	xBSP430periph_TA0->ccr0 = TIMESLICE_DURATION_tck + xBSP430periph_TA0->r;
+	xBSP430periph_TA0->cctl0 |= CCIE;
 }
 
 portBASE_TYPE
-xConsoleConfigure (xBSP430uartHandle xConsole,
-				   portTickType xBlockTime)
+xPortStartScheduler (void)
 {
-	if (prvConsoleSemaphore) {
-		vSemaphoreDelete(prvConsoleSemaphore);
-		prvConsoleSemaphore = 0;
+	/* If TA0 appears to be stopped, start it driving from ACLK in
+	 * continuous mode. */
+	if (0 == ((MC0 | MC1) & xBSP430periph_TA0->ctl)) {
+		xBSP430periph_TA0->ctl = TASSEL_1 | MC_2 | TACLR;
 	}
-	prvConsole = 0;
-	prvBlockTime = xBlockTime;
-	if (xConsole) {
-		vSemaphoreCreateBinary(prvConsoleSemaphore);
-		if (! prvConsoleSemaphore) {
-			return pdFAIL;
-		}
-		prvConsole = xConsole;
-	}
-	return pdPASS;
+	vBSP430freertosResumeScheduler();
+	portRESTORE_CONTEXT();
+	return pdTRUE;
 }
 
-int
-__attribute__((__format__(printf, 1, 2)))
-cprintf (const char *fmt, ...)
+void vPortEndScheduler (void)
 {
-	va_list argp;
-	int rc;
+	vBSP430freertosSuspendScheduler();
+}
+
+static void
+__attribute__((__interrupt__(TIMER0_A0_VECTOR)))
+#if configUSE_PREEMPTION == 1
+__attribute__((__naked__))
+#endif /* configUSE_PREEMPTION */
+scheduler_isr (void)
+{
+#if configUSE_PREEMPTION == 1
+	portSAVE_CONTEXT();
+#endif /* configUSE_PREEMPTION */
 	
-	if (! prvConsoleSemaphore) {
-		return -1;
-	}
-	if (! xSemaphoreTake(prvConsoleSemaphore, prvBlockTime)) {
-		return -1;
-	}
-	va_start (argp, fmt);
-	rc = vuprintf (cputchar, fmt, argp);
-	va_end (argp);
-	xSemaphoreGive(prvConsoleSemaphore);
-	return rc;
+	xBSP430periph_TA0->ccr0 += TIMESLICE_DURATION_tck;
+	vTaskIncrementTick();
+	
+#if configUSE_PREEMPTION == 1
+	vTaskSwitchContext();
+	portRESTORE_CONTEXT();
+#endif /* configUSE_PREEMPTION */
 }
