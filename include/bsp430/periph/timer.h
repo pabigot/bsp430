@@ -118,20 +118,6 @@ typedef struct xBSP430periphTIMER {
 	};		
 } xBSP430periphTIMER;
 
-/** @def configBSP430_HAL_SHARE_TIMER_ISR
- *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * shared TIMER peripheral HAL interrupt vector.  If this is defined, a
- * single ISR implementation is used, with the individual ISRs
- * invoking it with the instance state and interrupt cause as
- * parameters.
- *
- * This must be available in order to use the HAL interrupt vector for
- * specific device instances such as #configBSP430_HAL_TA0_ISR. */
-#ifndef configBSP430_HAL_SHARE_TIMER_ISR
-#define configBSP430_HAL_SHARE_TIMER_ISR 1
-#endif /* configBSP430_HAL_SHARE_TIMER_ISR */
-
 /** Get the peripheral register pointer for a specific timer.
  *
  * @param xHandle The handle identifier, such as #BSP430_PERIPH_TA0.
@@ -375,10 +361,7 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c TA0.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_TIMER_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_TA0_ISR
 #define configBSP430_HAL_TA0_ISR 1
 #endif /* configBSP430_HAL_TA0_ISR */
@@ -388,10 +371,7 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c TA1.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_TIMER_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_TA1_ISR
 #define configBSP430_HAL_TA1_ISR 1
 #endif /* configBSP430_HAL_TA1_ISR */
@@ -401,10 +381,7 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c TA2.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_TIMER_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_TA2_ISR
 #define configBSP430_HAL_TA2_ISR 1
 #endif /* configBSP430_HAL_TA2_ISR */
@@ -414,10 +391,7 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c TA3.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_TIMER_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_TA3_ISR
 #define configBSP430_HAL_TA3_ISR 1
 #endif /* configBSP430_HAL_TA3_ISR */
@@ -427,10 +401,7 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c TB0.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_TIMER_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_TB0_ISR
 #define configBSP430_HAL_TB0_ISR 1
 #endif /* configBSP430_HAL_TB0_ISR */
@@ -440,10 +411,7 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c TB1.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_TIMER_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_TB1_ISR
 #define configBSP430_HAL_TB1_ISR 1
 #endif /* configBSP430_HAL_TB1_ISR */
@@ -453,10 +421,7 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c TB2.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_TIMER_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_TB2_ISR
 #define configBSP430_HAL_TB2_ISR 1
 #endif /* configBSP430_HAL_TB2_ISR */

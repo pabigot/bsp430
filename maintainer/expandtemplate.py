@@ -30,10 +30,7 @@ extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c %(INSTANCE)s.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
- *
- * @c #configBSP430_HAL_SHARE_%(PERIPH)s_ISR must be enabled for this to be
- * enabled. */
+ * and will be defining the vector yourself. */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR 1
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
@@ -55,10 +52,7 @@ xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_isr_defn' : '''#if (configBSP430_HAL_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
-#if ! (configBSP430_HAL_SHARE_%(PERIPH)s_ISR - 0)
-#error Shared periphal HAL ISR disabled
-#endif /* configBSP430_HAL_SHARE_%(PERIPH)s_ISR */
+    'hal_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_HAL_%(INSTANCE)s_ISR - 0)
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
@@ -83,7 +77,7 @@ xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_port_5xx_isr_defn' : '''#if (configBSP430_HAL_%(INSTANCE)s - 0) && (configBSP430_PERIPH_%(INSTANCE)s_ISR - 0)
+    'hal_port_5xx_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_HAL_%(INSTANCE)s_ISR - 0)
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
