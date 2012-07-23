@@ -55,18 +55,18 @@ struct xBSP430timerState {
 
 	/** The callback chain to invoke when an overflow interrupt is
 	 * received. */
-	const struct xBSP430callbackISRVoid * overflow_cb;
+	const struct xBSP430callbackISRVoid * overflow_callback;
 
 	/** The callback chain to invoke when a CC0 interrupt is
 	 * received. */
-	const struct xBSP430callbackISRVoid * cc0_cb;
+	const struct xBSP430callbackISRVoid * cc0_callback;
 
 	/** The callback chain to invoke when a CCx interrupt is received.
 	 *
 	 * The chains are independent for each capture/compare block, but
 	 * the block index is passed into the chain so that a common
 	 * handler can be invoked if desired. */
-	const struct xBSP430callbackISRIndexed * cc_cbs[1];
+	const struct xBSP430callbackISRIndexed * cc_callback[1];
 };
 
 #endif /* BSP430_PERIPH_TIMER__H */

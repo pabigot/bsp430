@@ -48,7 +48,7 @@
  * one in the base type.  This allows us to use only the amount of
  * space necessary to support the CC blocks on the target MCU. */
 #define DECLARE_AUX_CCS(_n) \
-	struct xBSP430callbackISRIndexed * _aux_cc_cbs[_n]
+	struct xBSP430callbackISRIndexed * _aux_cc_callback[_n]
 
 #if configBSP430_PERIPH_TA0 - 0
 static struct {
@@ -170,71 +170,6 @@ static struct {
 xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
 #endif /* configBSP430_PERIPH_TB2 */
 
-#if (((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_CC0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_CC0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_CC0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA3 - 0) && (configBSP430_HAL_TA3_CC0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_CC0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_CC0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TB2 - 0) && (configBSP430_HAL_TB2_CC0_ISR - 0)))
-/* static */ int
-#if __MSP430X__
-__attribute__((__c16__))
-#endif /* CPUX */
-/* __attribute__((__always_inline__)) */
-cc0_isr (xBSP430timerHandle timer,
-		 int iv)
-{
-	return iBSP430callbackInvokeISRVoid(&timer->cc0_cb, timer, 0);
-}
-#endif /* TA0 CC0 ISR */
-
-#define TIMER_ISR_BODY(_timer, _iv, _OVERFLOW) do {						\
-		int rv = 0;														\
-		if (0 != _iv) {													\
-			if (_OVERFLOW == _iv) {										\
-				rv = iBSP430callbackInvokeISRVoid(&_timer->overflow_cb, timer, rv); \
-			} else {													\
-				int cc = (_iv - 4) / 2;									\
-				rv = iBSP430callbackInvokeISRVoid(cc + _timer->cc_cb, timer, cc, rv); \
-			}															\
-		}																\
-		return rv;														\
-	} while (0)
-
-#if (((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA3 - 0) && (configBSP430_HAL_TA3_ISR - 0)))
-
-/* static */ int
-#if __MSP430X__
-__attribute__((__c16__))
-#endif /* CPUX */
-/* __attribute__((__always_inline__)) */
-ta_isr (xBSP430timerHandle timer,
-		int iv)
-{
-	TIMER_ISR_BODY(timer, iv, TA_OVERFLOW);
-}
-#endif /* TAx ISR */
-
-#if (((configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TB2 - 0) && (configBSP430_HAL_TB2_ISR - 0)))
-
-/* static */ int
-#if __MSP430X__
-__attribute__((__c16__))
-#endif /* CPUX */
-/* __attribute__((__always_inline__)) */
-tb_isr (xBSP430timerHandle timer,
-		int iv)
-{
-	TIMER_ISR_BODY(timer, iv, TB_OVERFLOW);
-}
-#endif /* TBx ISR */
-
 /* !BSP430! insert=periph_ba_hpl_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_defn] */
 #if configBSP430_PERIPH_TA0 - 0
@@ -267,6 +202,247 @@ volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphT
 
 /* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_defn] */
 /* !BSP430! end=periph_ba_hpl_defn */
+
+/* !BSP430! TYPE=A subst=TYPE instance=0,1,2,3 insert=hal_timer_isr_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_defn] */
+#if (configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER0_A0_VECTOR)))
+isr_cc0_TA0 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA0;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA0_CC0_ISR */
+
+#if (configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER0_A1_VECTOR)))
+isr_TA0 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA0;
+	int iv = TA0IV;
+	int rv = 0;
+	if (0 != iv) {
+		if (TA_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA0_ISR */
+
+#if (configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER1_A0_VECTOR)))
+isr_cc0_TA1 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA1;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA1_CC0_ISR */
+
+#if (configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER1_A1_VECTOR)))
+isr_TA1 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA1;
+	int iv = TA1IV;
+	int rv = 0;
+	if (0 != iv) {
+		if (TA_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA1_ISR */
+
+#if (configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER2_A0_VECTOR)))
+isr_cc0_TA2 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA2;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA2_CC0_ISR */
+
+#if (configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER2_A1_VECTOR)))
+isr_TA2 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA2;
+	int iv = TA2IV;
+	int rv = 0;
+	if (0 != iv) {
+		if (TA_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA2_ISR */
+
+#if (configBSP430_PERIPH_TA3 - 0) && (configBSP430_HAL_TA3_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER3_A0_VECTOR)))
+isr_cc0_TA3 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA3;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA3_CC0_ISR */
+
+#if (configBSP430_PERIPH_TA3 - 0) && (configBSP430_HAL_TA3_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER3_A1_VECTOR)))
+isr_TA3 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TA3;
+	int iv = TA3IV;
+	int rv = 0;
+	if (0 != iv) {
+		if (TA_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TA3_ISR */
+
+/* END AUTOMATICALLY GENERATED CODE [hal_timer_isr_defn] */
+/* !BSP430! end=hal_timer_isr_defn */
+/* !BSP430! TYPE=B subst=TYPE instance=0,1,2 insert=hal_timer_isr_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_defn] */
+#if (configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER0_B0_VECTOR)))
+isr_cc0_TB0 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TB0;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TB0_CC0_ISR */
+
+#if (configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER0_B1_VECTOR)))
+isr_TB0 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TB0;
+	int iv = TB0IV;
+	int rv = 0;
+	if (0 != iv) {
+		if (TB_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TB0_ISR */
+
+#if (configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER1_B0_VECTOR)))
+isr_cc0_TB1 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TB1;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TB1_CC0_ISR */
+
+#if (configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER1_B1_VECTOR)))
+isr_TB1 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TB1;
+	int iv = TB1IV;
+	int rv = 0;
+	if (0 != iv) {
+		if (TB_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TB1_ISR */
+
+#if (configBSP430_PERIPH_TB2 - 0) && (configBSP430_HAL_TB2_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER2_B0_VECTOR)))
+isr_cc0_TB2 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TB2;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TB2_CC0_ISR */
+
+#if (configBSP430_PERIPH_TB2 - 0) && (configBSP430_HAL_TB2_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER2_B1_VECTOR)))
+isr_TB2 (void)
+{
+	xBSP430timerHandle timer = xBSP430timer_TB2;
+	int iv = TB2IV;
+	int rv = 0;
+	if (0 != iv) {
+		if (TB_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_TB2_ISR */
+
+/* END AUTOMATICALLY GENERATED CODE [hal_timer_isr_defn] */
+/* !BSP430! end=hal_timer_isr_defn */
+/* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
 volatile xBSP430periphTIMER *
 xBSP430periphLookupTIMER (xBSP430periphHandle periph)

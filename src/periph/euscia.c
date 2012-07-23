@@ -341,7 +341,7 @@ isr_EUSCI_A0 (void)
 {
 	euscia_isr(xBSP430euscia_EUSCI_A0);
 }
-#endif /* configBSP430_EUSCIA_EUSCI_A0_ISR */
+#endif /* configBSP430_HAL_EUSCI_A0_ISR */
 
 #if (configBSP430_PERIPH_EUSCI_A1 - 0) && (configBSP430_HAL_EUSCI_A1_ISR - 0)
 static void
@@ -350,7 +350,7 @@ isr_EUSCI_A1 (void)
 {
 	euscia_isr(xBSP430euscia_EUSCI_A1);
 }
-#endif /* configBSP430_EUSCIA_EUSCI_A1_ISR */
+#endif /* configBSP430_HAL_EUSCI_A1_ISR */
 
 #if (configBSP430_PERIPH_EUSCI_A2 - 0) && (configBSP430_HAL_EUSCI_A2_ISR - 0)
 static void
@@ -359,7 +359,7 @@ isr_EUSCI_A2 (void)
 {
 	euscia_isr(xBSP430euscia_EUSCI_A2);
 }
-#endif /* configBSP430_EUSCIA_EUSCI_A2_ISR */
+#endif /* configBSP430_HAL_EUSCI_A2_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */

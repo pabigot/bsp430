@@ -363,7 +363,7 @@ isr_USCI_A0 (void)
 {
 	usci_isr(xBSP430usci_USCI_A0);
 }
-#endif /* configBSP430_USCI_USCI_A0_ISR */
+#endif /* configBSP430_HAL_USCI_A0_ISR */
 
 #if (configBSP430_PERIPH_USCI_A1 - 0) && (configBSP430_HAL_USCI_A1_ISR - 0)
 static void
@@ -372,7 +372,7 @@ isr_USCI_A1 (void)
 {
 	usci_isr(xBSP430usci_USCI_A1);
 }
-#endif /* configBSP430_USCI_USCI_A1_ISR */
+#endif /* configBSP430_HAL_USCI_A1_ISR */
 
 #if (configBSP430_PERIPH_USCI_A2 - 0) && (configBSP430_HAL_USCI_A2_ISR - 0)
 static void
@@ -381,7 +381,7 @@ isr_USCI_A2 (void)
 {
 	usci_isr(xBSP430usci_USCI_A2);
 }
-#endif /* configBSP430_USCI_USCI_A2_ISR */
+#endif /* configBSP430_HAL_USCI_A2_ISR */
 
 #if (configBSP430_PERIPH_USCI_A3 - 0) && (configBSP430_HAL_USCI_A3_ISR - 0)
 static void
@@ -390,7 +390,7 @@ isr_USCI_A3 (void)
 {
 	usci_isr(xBSP430usci_USCI_A3);
 }
-#endif /* configBSP430_USCI_USCI_A3_ISR */
+#endif /* configBSP430_HAL_USCI_A3_ISR */
 
 #if (configBSP430_PERIPH_USCI_B0 - 0) && (configBSP430_HAL_USCI_B0_ISR - 0)
 static void
@@ -399,7 +399,7 @@ isr_USCI_B0 (void)
 {
 	usci_isr(xBSP430usci_USCI_B0);
 }
-#endif /* configBSP430_USCI_USCI_B0_ISR */
+#endif /* configBSP430_HAL_USCI_B0_ISR */
 
 #if (configBSP430_PERIPH_USCI_B1 - 0) && (configBSP430_HAL_USCI_B1_ISR - 0)
 static void
@@ -408,7 +408,7 @@ isr_USCI_B1 (void)
 {
 	usci_isr(xBSP430usci_USCI_B1);
 }
-#endif /* configBSP430_USCI_USCI_B1_ISR */
+#endif /* configBSP430_HAL_USCI_B1_ISR */
 
 #if (configBSP430_PERIPH_USCI_B2 - 0) && (configBSP430_HAL_USCI_B2_ISR - 0)
 static void
@@ -417,7 +417,7 @@ isr_USCI_B2 (void)
 {
 	usci_isr(xBSP430usci_USCI_B2);
 }
-#endif /* configBSP430_USCI_USCI_B2_ISR */
+#endif /* configBSP430_HAL_USCI_B2_ISR */
 
 #if (configBSP430_PERIPH_USCI_B3 - 0) && (configBSP430_HAL_USCI_B3_ISR - 0)
 static void
@@ -426,7 +426,7 @@ isr_USCI_B3 (void)
 {
 	usci_isr(xBSP430usci_USCI_B3);
 }
-#endif /* configBSP430_USCI_USCI_B3_ISR */
+#endif /* configBSP430_HAL_USCI_B3_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */

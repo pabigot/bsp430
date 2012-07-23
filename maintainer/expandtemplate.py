@@ -92,9 +92,43 @@ isr_%(INSTANCE)s (void)
 {
 	%(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
 }
-#endif /* configBSP430_%(PERIPH)s_%(INSTANCE)s_ISR */
+#endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
+    'hal_timer_isr_defn' : '''#if (configBSP430_PERIPH_T%(TYPE)s%(INSTANCE)s - 0) && (configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
+isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
+{
+	xBSP430%(periph)sHandle timer = xBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR */
+
+#if (configBSP430_PERIPH_T%(TYPE)s%(INSTANCE)s - 0) && (configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR - 0)
+static void
+__attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
+isr_T%(TYPE)s%(INSTANCE)s (void)
+{
+	xBSP430%(periph)sHandle timer = xBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+	int iv = T%(TYPE)s%(INSTANCE)sIV;
+	int rv = 0;
+	if (0 != iv) {
+		if (T%(TYPE)s_OVERFLOW == iv) {
+			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+		} else {
+			int cc = (iv - 4) / 2;
+			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+		}
+	}
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
+}
+#endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
+''',
+    
     'periph_hal_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
 	if (BSP430_PERIPH_%(INSTANCE)s == periph) {
 		return xBSP430%(periph)s_%(INSTANCE)s;
@@ -147,6 +181,10 @@ def expandTemplate (tplname, idmap):
     subst_map = { 'template' : tplname,
                   'periph': periph.lower(),
                   'PERIPH': periph.upper() }
+    subst_keys = idmap.get('subst')
+    if subst_keys is not None:
+        for sm in subst_keys.split(','):
+            subst_map[sm] = idmap[sm]
     text = []
     text.append('/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [%(template)s] */' % subst_map)
 

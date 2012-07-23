@@ -53,7 +53,7 @@
 struct xBSP430portState {
 	unsigned int flags;
 	volatile xBSP430periphPORTIE * const port;
-	const struct xBSP430callbackISRIndexed * pin_callbacks[8];
+	const struct xBSP430callbackISRIndexed * pin_callback[8];
 };
 
 #endif /* BSP430_PERIPH_PORT__H */
