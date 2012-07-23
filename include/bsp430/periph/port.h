@@ -582,7 +582,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT1 must be also be true. */
 #ifndef configBSP430_HAL_PORT1_ISR
-#define configBSP430_HAL_PORT1_ISR 1
+#define configBSP430_HAL_PORT1_ISR 0
 #endif /* configBSP430_HAL_PORT1_ISR */
 
 /** @def configBSP430_HAL_PORT2_ISR
@@ -595,7 +595,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT2 must be also be true. */
 #ifndef configBSP430_HAL_PORT2_ISR
-#define configBSP430_HAL_PORT2_ISR 1
+#define configBSP430_HAL_PORT2_ISR 0
 #endif /* configBSP430_HAL_PORT2_ISR */
 
 /** @def configBSP430_HAL_PORT3_ISR
@@ -608,7 +608,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT3 must be also be true. */
 #ifndef configBSP430_HAL_PORT3_ISR
-#define configBSP430_HAL_PORT3_ISR 1
+#define configBSP430_HAL_PORT3_ISR 0
 #endif /* configBSP430_HAL_PORT3_ISR */
 
 /** @def configBSP430_HAL_PORT4_ISR
@@ -621,7 +621,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT4 must be also be true. */
 #ifndef configBSP430_HAL_PORT4_ISR
-#define configBSP430_HAL_PORT4_ISR 1
+#define configBSP430_HAL_PORT4_ISR 0
 #endif /* configBSP430_HAL_PORT4_ISR */
 
 /** @def configBSP430_HAL_PORT5_ISR
@@ -634,7 +634,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT5 must be also be true. */
 #ifndef configBSP430_HAL_PORT5_ISR
-#define configBSP430_HAL_PORT5_ISR 1
+#define configBSP430_HAL_PORT5_ISR 0
 #endif /* configBSP430_HAL_PORT5_ISR */
 
 /** @def configBSP430_HAL_PORT6_ISR
@@ -647,7 +647,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT6 must be also be true. */
 #ifndef configBSP430_HAL_PORT6_ISR
-#define configBSP430_HAL_PORT6_ISR 1
+#define configBSP430_HAL_PORT6_ISR 0
 #endif /* configBSP430_HAL_PORT6_ISR */
 
 /** @def configBSP430_HAL_PORT7_ISR
@@ -660,7 +660,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT7 must be also be true. */
 #ifndef configBSP430_HAL_PORT7_ISR
-#define configBSP430_HAL_PORT7_ISR 1
+#define configBSP430_HAL_PORT7_ISR 0
 #endif /* configBSP430_HAL_PORT7_ISR */
 
 /** @def configBSP430_HAL_PORT8_ISR
@@ -673,7 +673,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT8 must be also be true. */
 #ifndef configBSP430_HAL_PORT8_ISR
-#define configBSP430_HAL_PORT8_ISR 1
+#define configBSP430_HAL_PORT8_ISR 0
 #endif /* configBSP430_HAL_PORT8_ISR */
 
 /** @def configBSP430_HAL_PORT9_ISR
@@ -686,7 +686,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT9 must be also be true. */
 #ifndef configBSP430_HAL_PORT9_ISR
-#define configBSP430_HAL_PORT9_ISR 1
+#define configBSP430_HAL_PORT9_ISR 0
 #endif /* configBSP430_HAL_PORT9_ISR */
 
 /** @def configBSP430_HAL_PORT10_ISR
@@ -699,7 +699,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT10 must be also be true. */
 #ifndef configBSP430_HAL_PORT10_ISR
-#define configBSP430_HAL_PORT10_ISR 1
+#define configBSP430_HAL_PORT10_ISR 0
 #endif /* configBSP430_HAL_PORT10_ISR */
 
 /** @def configBSP430_HAL_PORT11_ISR
@@ -712,7 +712,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  *
  * @note #configBSP430_PERIPH_PORT11 must be also be true. */
 #ifndef configBSP430_HAL_PORT11_ISR
-#define configBSP430_HAL_PORT11_ISR 1
+#define configBSP430_HAL_PORT11_ISR 0
 #endif /* configBSP430_HAL_PORT11_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */

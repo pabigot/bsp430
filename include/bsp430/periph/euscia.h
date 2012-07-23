@@ -182,7 +182,7 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
  *
  * @note #configBSP430_PERIPH_EUSCI_A0 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A0_ISR
-#define configBSP430_HAL_EUSCI_A0_ISR 1
+#define configBSP430_HAL_EUSCI_A0_ISR 0
 #endif /* configBSP430_HAL_EUSCI_A0_ISR */
 
 /** @def configBSP430_HAL_EUSCI_A1_ISR
@@ -195,7 +195,7 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
  *
  * @note #configBSP430_PERIPH_EUSCI_A1 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A1_ISR
-#define configBSP430_HAL_EUSCI_A1_ISR 1
+#define configBSP430_HAL_EUSCI_A1_ISR 0
 #endif /* configBSP430_HAL_EUSCI_A1_ISR */
 
 /** @def configBSP430_HAL_EUSCI_A2_ISR
@@ -208,7 +208,7 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
  *
  * @note #configBSP430_PERIPH_EUSCI_A2 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A2_ISR
-#define configBSP430_HAL_EUSCI_A2_ISR 1
+#define configBSP430_HAL_EUSCI_A2_ISR 0
 #endif /* configBSP430_HAL_EUSCI_A2_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */

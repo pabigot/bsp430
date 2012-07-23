@@ -306,7 +306,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_A0 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A0_ISR
-#define configBSP430_HAL_USCI_A0_ISR 1
+#define configBSP430_HAL_USCI_A0_ISR 0
 #endif /* configBSP430_HAL_USCI_A0_ISR */
 
 /** @def configBSP430_HAL_USCI_A1_ISR
@@ -319,7 +319,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_A1 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A1_ISR
-#define configBSP430_HAL_USCI_A1_ISR 1
+#define configBSP430_HAL_USCI_A1_ISR 0
 #endif /* configBSP430_HAL_USCI_A1_ISR */
 
 /** @def configBSP430_HAL_USCI_A2_ISR
@@ -332,7 +332,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_A2 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A2_ISR
-#define configBSP430_HAL_USCI_A2_ISR 1
+#define configBSP430_HAL_USCI_A2_ISR 0
 #endif /* configBSP430_HAL_USCI_A2_ISR */
 
 /** @def configBSP430_HAL_USCI_A3_ISR
@@ -345,7 +345,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_A3 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A3_ISR
-#define configBSP430_HAL_USCI_A3_ISR 1
+#define configBSP430_HAL_USCI_A3_ISR 0
 #endif /* configBSP430_HAL_USCI_A3_ISR */
 
 /** @def configBSP430_HAL_USCI_B0_ISR
@@ -358,7 +358,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_B0 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B0_ISR
-#define configBSP430_HAL_USCI_B0_ISR 1
+#define configBSP430_HAL_USCI_B0_ISR 0
 #endif /* configBSP430_HAL_USCI_B0_ISR */
 
 /** @def configBSP430_HAL_USCI_B1_ISR
@@ -371,7 +371,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_B1 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B1_ISR
-#define configBSP430_HAL_USCI_B1_ISR 1
+#define configBSP430_HAL_USCI_B1_ISR 0
 #endif /* configBSP430_HAL_USCI_B1_ISR */
 
 /** @def configBSP430_HAL_USCI_B2_ISR
@@ -384,7 +384,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_B2 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B2_ISR
-#define configBSP430_HAL_USCI_B2_ISR 1
+#define configBSP430_HAL_USCI_B2_ISR 0
 #endif /* configBSP430_HAL_USCI_B2_ISR */
 
 /** @def configBSP430_HAL_USCI_B3_ISR
@@ -397,7 +397,7 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
  *
  * @note #configBSP430_PERIPH_USCI_B3 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B3_ISR
-#define configBSP430_HAL_USCI_B3_ISR 1
+#define configBSP430_HAL_USCI_B3_ISR 0
 #endif /* configBSP430_HAL_USCI_B3_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
