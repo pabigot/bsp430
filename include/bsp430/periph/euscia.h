@@ -108,7 +108,7 @@ typedef struct xBSP430periphEUSCIA {
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c EUSCI_A0 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_EUSCI_A0__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_EUSCI_A0
 #define configBSP430_PERIPH_EUSCI_A0 0
 #endif /* configBSP430_PERIPH_EUSCI_A0 */
@@ -129,7 +129,7 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c EUSCI_A1 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_EUSCI_A1__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_EUSCI_A1
 #define configBSP430_PERIPH_EUSCI_A1 0
 #endif /* configBSP430_PERIPH_EUSCI_A1 */
@@ -150,7 +150,7 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c EUSCI_A2 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_EUSCI_A2__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_EUSCI_A2
 #define configBSP430_PERIPH_EUSCI_A2 0
 #endif /* configBSP430_PERIPH_EUSCI_A2 */
@@ -177,7 +177,9 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c EUSCI_A0.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_EUSCI_A0 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A0_ISR
 #define configBSP430_HAL_EUSCI_A0_ISR 1
 #endif /* configBSP430_HAL_EUSCI_A0_ISR */
@@ -187,7 +189,9 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c EUSCI_A1.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_EUSCI_A1 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A1_ISR
 #define configBSP430_HAL_EUSCI_A1_ISR 1
 #endif /* configBSP430_HAL_EUSCI_A1_ISR */
@@ -197,7 +201,9 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c EUSCI_A2.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_EUSCI_A2 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A2_ISR
 #define configBSP430_HAL_EUSCI_A2_ISR 1
 #endif /* configBSP430_HAL_EUSCI_A2_ISR */

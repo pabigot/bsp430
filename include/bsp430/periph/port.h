@@ -374,7 +374,7 @@ struct xBSP430port5xxState {
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT1 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT1__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT1
 #define configBSP430_PERIPH_PORT1 0
 #endif /* configBSP430_PERIPH_PORT1 */
@@ -395,7 +395,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT1;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT2 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT2__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT2
 #define configBSP430_PERIPH_PORT2 0
 #endif /* configBSP430_PERIPH_PORT2 */
@@ -416,7 +416,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT2;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT3 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT3__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT3
 #define configBSP430_PERIPH_PORT3 0
 #endif /* configBSP430_PERIPH_PORT3 */
@@ -437,7 +437,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT3;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT4 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT4__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT4
 #define configBSP430_PERIPH_PORT4 0
 #endif /* configBSP430_PERIPH_PORT4 */
@@ -458,7 +458,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT4;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT5 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT5__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT5
 #define configBSP430_PERIPH_PORT5 0
 #endif /* configBSP430_PERIPH_PORT5 */
@@ -479,7 +479,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT5;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT6 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT6__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT6
 #define configBSP430_PERIPH_PORT6 0
 #endif /* configBSP430_PERIPH_PORT6 */
@@ -500,7 +500,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT6;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT7 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT7__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT7
 #define configBSP430_PERIPH_PORT7 0
 #endif /* configBSP430_PERIPH_PORT7 */
@@ -521,7 +521,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT7;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT8 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT8__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT8
 #define configBSP430_PERIPH_PORT8 0
 #endif /* configBSP430_PERIPH_PORT8 */
@@ -542,7 +542,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT8;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT9 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT9__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT9
 #define configBSP430_PERIPH_PORT9 0
 #endif /* configBSP430_PERIPH_PORT9 */
@@ -563,7 +563,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT9;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT10 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT10__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT10
 #define configBSP430_PERIPH_PORT10 0
 #endif /* configBSP430_PERIPH_PORT10 */
@@ -584,7 +584,7 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT10;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c PORT11 peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_PORT11__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_PORT11
 #define configBSP430_PERIPH_PORT11 0
 #endif /* configBSP430_PERIPH_PORT11 */
@@ -611,7 +611,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT1.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT1 must be also be true. */
 #ifndef configBSP430_HAL_PORT1_ISR
 #define configBSP430_HAL_PORT1_ISR 1
 #endif /* configBSP430_HAL_PORT1_ISR */
@@ -621,7 +623,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT2.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT2 must be also be true. */
 #ifndef configBSP430_HAL_PORT2_ISR
 #define configBSP430_HAL_PORT2_ISR 1
 #endif /* configBSP430_HAL_PORT2_ISR */
@@ -631,7 +635,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT3.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT3 must be also be true. */
 #ifndef configBSP430_HAL_PORT3_ISR
 #define configBSP430_HAL_PORT3_ISR 1
 #endif /* configBSP430_HAL_PORT3_ISR */
@@ -641,7 +647,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT4.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT4 must be also be true. */
 #ifndef configBSP430_HAL_PORT4_ISR
 #define configBSP430_HAL_PORT4_ISR 1
 #endif /* configBSP430_HAL_PORT4_ISR */
@@ -651,7 +659,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT5.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT5 must be also be true. */
 #ifndef configBSP430_HAL_PORT5_ISR
 #define configBSP430_HAL_PORT5_ISR 1
 #endif /* configBSP430_HAL_PORT5_ISR */
@@ -661,7 +671,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT6.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT6 must be also be true. */
 #ifndef configBSP430_HAL_PORT6_ISR
 #define configBSP430_HAL_PORT6_ISR 1
 #endif /* configBSP430_HAL_PORT6_ISR */
@@ -671,7 +683,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT7.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT7 must be also be true. */
 #ifndef configBSP430_HAL_PORT7_ISR
 #define configBSP430_HAL_PORT7_ISR 1
 #endif /* configBSP430_HAL_PORT7_ISR */
@@ -681,7 +695,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT8.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT8 must be also be true. */
 #ifndef configBSP430_HAL_PORT8_ISR
 #define configBSP430_HAL_PORT8_ISR 1
 #endif /* configBSP430_HAL_PORT8_ISR */
@@ -691,7 +707,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT9.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT9 must be also be true. */
 #ifndef configBSP430_HAL_PORT9_ISR
 #define configBSP430_HAL_PORT9_ISR 1
 #endif /* configBSP430_HAL_PORT9_ISR */
@@ -701,7 +719,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT10.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT10 must be also be true. */
 #ifndef configBSP430_HAL_PORT10_ISR
 #define configBSP430_HAL_PORT10_ISR 1
 #endif /* configBSP430_HAL_PORT10_ISR */
@@ -711,7 +731,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c PORT11.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_PORT11 must be also be true. */
 #ifndef configBSP430_HAL_PORT11_ISR
 #define configBSP430_HAL_PORT11_ISR 1
 #endif /* configBSP430_HAL_PORT11_ISR */

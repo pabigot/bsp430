@@ -7,7 +7,7 @@ templates = {
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of the
  * @c %(INSTANCE)s peripheral HPL or HAL interface.  Only do this if the MCU
- * supports this device (check @c __MSP430_HAS_%(INSTANCE)s__) */
+ * supports this device. */
 #ifndef configBSP430_PERIPH_%(INSTANCE)s
 #define configBSP430_PERIPH_%(INSTANCE)s 0
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
@@ -30,7 +30,9 @@ extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
  * interrupt vector for @c %(INSTANCE)s.  Define to a false value if you
  * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself. */
+ * and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_%(INSTANCE)s must be also be true. */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR 1
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
