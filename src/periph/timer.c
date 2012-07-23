@@ -170,6 +170,60 @@ static struct {
 xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
 #endif /* configBSP430_PERIPH_TB2 */
 
+unsigned long
+ulBSP430timerCounterFromISR (xBSP430timerHandle timer,
+							 unsigned int * overflowp)
+{
+	unsigned int r;
+	unsigned int ctla;
+	unsigned int ctlb;
+
+	/* What we're doing is ensuring that we have a counter value that
+	 * was captured at a point where the control word did not change.
+	 * The expectation is that any pending overflow flag reflected in
+	 * that CTL word applies to the counter value.  (Since the counter
+	 * value may be tied to SMCLK, it's not possible to expect to read
+	 * the same counter value twice.) */
+	do {
+		ctla = timer->timer->ctl;
+		r = timer->timer->r;
+		ctlb = timer->timer->ctl;
+	} while (ctla != ctlb);
+
+	/* If an overflow has occurred, register its effect.  Note that
+	 * TAIFG and TBIFG have the same value, so it doesn't matter which
+	 * type of timer this is. */
+	if (ctla & TAIFG) {
+		++timer->overflow_count;
+		timer->timer->ctl &= ~TAIFG;
+	}
+	if (overflowp) {
+		*overflowp = timer->overflow_count >> 16;
+	}
+	return (timer->overflow_count << 16) + r;
+}
+
+unsigned long
+ulBSP430timerCounter (xBSP430timerHandle timer,
+					  unsigned int * overflowp)
+{
+	unsigned long rv;
+	BSP430_ENTER_CRITICAL();
+	rv = ulBSP430timerCounterFromISR(timer, overflowp);
+	BSP430_EXIT_CRITICAL();
+	return rv;
+}
+
+void
+vBSP430timerResetCounter (xBSP430timerHandle timer)
+{
+	BSP430_ENTER_CRITICAL();
+	timer->overflow_count = 0;
+	timer->timer->r = 0;
+	timer->timer->ctl &= ~TAIFG;
+	BSP430_EXIT_CRITICAL();
+}
+
 /* !BSP430! insert=periph_ba_hpl_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_defn] */
 #if configBSP430_PERIPH_TA0 - 0
@@ -226,6 +280,7 @@ isr_TA0 (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (TA_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
@@ -257,6 +312,7 @@ isr_TA1 (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (TA_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
@@ -288,6 +344,7 @@ isr_TA2 (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (TA_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
@@ -319,6 +376,7 @@ isr_TA3 (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (TA_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
@@ -354,6 +412,7 @@ isr_TB0 (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (TB_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
@@ -385,6 +444,7 @@ isr_TB1 (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (TB_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
@@ -416,6 +476,7 @@ isr_TB2 (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (TB_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;

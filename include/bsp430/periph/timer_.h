@@ -52,6 +52,17 @@ struct xBSP430timerState {
 	/** The underlying timer peripheral register structure */
 	volatile xBSP430periphTIMER * const timer;
 
+	/** The number of times the timer has wrapped.
+	 *
+	 * The value is maintained only if the overflow interrupt is
+	 * enabled (TxIE in the timer control word).
+	 *
+	 * @note This field is not marked volatile because doing so costs
+	 * several extra instructions as it is not an atomic type.  It
+	 * should be read and written only when interrupts are
+	 * disabled. */
+	unsigned long overflow_count;
+	
 	/** The callback chain to invoke when an overflow interrupt is
 	 * received. */
 	const struct xBSP430periphISRCallbackVoid * overflow_callback;

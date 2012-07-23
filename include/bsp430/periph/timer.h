@@ -202,6 +202,36 @@ struct xBSP430timerState;
 /** The timer internal state is protected. */
 typedef struct xBSP430timerState * xBSP430timerHandle;
 
+/** Read the timer counter assuming interrupts are disabled.
+ *
+ * @param timer The timer for which the count is desired.
+ * 
+ * @param overflowp An optional pointer in which the high word of the
+ * overflow counter is stored, supporting a 48-bit counter.
+ *
+ * @return A 32-bit unsigned count of the number of clock ticks
+ * observed since the timer was last reset. */
+unsigned long ulBSP430timerCounterFromISR (xBSP430timerHandle timer,
+										   unsigned int * overflowp);
+
+/** Read the timer counter.
+ *
+ * @param timer The timer for which the count is desired.
+ * 
+ * @param overflowp An optional pointer in which the high word of the
+ * overflow counter is stored, supporting a 48-bit counter.
+ *
+ * @return A 32-bit unsigned count of the number of clock ticks
+ * observed since the timer was last reset. */
+unsigned long ulBSP430timerCounter (xBSP430timerHandle timer,
+									unsigned int * overflowp);
+
+/** Reset the timer counter.
+ *
+ * This clears both the overflow count and the timer internal counter.
+ * It does not start or stop the timer. */
+void vBSP430timerResetCounter (xBSP430timerHandle timer);
+
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_TA0

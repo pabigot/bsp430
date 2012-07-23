@@ -116,6 +116,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 	int rv = 0;
 	if (0 != iv) {
 		if (T%(TYPE)s_OVERFLOW == iv) {
+			++timer->overflow_count;
 			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
