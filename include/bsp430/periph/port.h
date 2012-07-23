@@ -254,14 +254,6 @@ typedef _BSP430_PERIPH_PORT xBSP430periphPORT;
  * The underlying structure selected depends on the MCU family. */
 typedef _BSP430_PERIPH_PORTW xBSP430periphPORTW;
 
-/** Callback flag indicating ISR should yield.
- *
- * Since the #xBSP430portInterruptCallback does not execute in the
- * stack frame of the ISR top half, this bit is to be added to the
- * return value of a callback if the callback has detected that the
- * interrupt should yield before returning. */
-#define BSP430_PORT_ISR_YIELD 0x1000
-
 /** Get the peripheral register pointer for an interrupt-enabled port.
  *
  * @note All ports on 5xx-family devices are interrupt-enabled.
@@ -334,39 +326,13 @@ volatile xBSP430periphPORT * xBSP430periphLookupPORT (xBSP430periphHandle xHandl
 
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-#if 1 // defined(__MSP430_HAS_MSP430XV2_CPU__)
-/* 5xx-family port management */
-
-/* Forward declaration to hardware abstraction layer for 5xx-family ports */
-struct xBSP430port5xxState;
+/* Forward declaration to hardware abstraction layer ports */
+struct xBSP430portState;
 
 /** The PORT internal state is protected. */
-typedef struct xBSP430port5xxState * xBSP430portHandle;
+typedef struct xBSP430portState * xBSP430portHandle;
 
-/** Prototype for callbacks from shared port interrupt service routines.
- *
- * @note Because these callbacks do not execute in the stack frame of
- * the ISR itself, you cannot use the standard @c
- * __bic_status_register_on_exit() intrinsic to affect the status
- * register flags upon return.  Instead, you must provide the bits
- * that you want cleared as the return value of the callback.
- *
- * @param port A reference to the HAL port structure associated with the port.
- *
- * @param bit The bit for which the interrupt was received; values
- * range from 0 through 7.
- *
- * @return Bits to clear in the status register before returning from
- * the ISR.  For example, if the routine wants to leave low-power mode
- * without affecting the interrupt enable bit, return @c LPM4_bits.
- * Other bits are also relevant, see #BSP430_PORT_ISR_YIELD. */
-typedef int (* xBSP430portInterruptCallback) (xBSP430portHandle port, int bit);
-
-struct xBSP430port5xxState {
-	unsigned int flags;
-	volatile xBSP430periphPORT_5XX_8 * const port;
-	xBSP430portInterruptCallback isr[8];
-};
+#if 1 // defined(__MSP430_HAS_MSP430XV2_CPU__)
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */

@@ -102,8 +102,8 @@ isr_%(INSTANCE)s (void)
 ''',
 
     'hal_port_5xx_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
-static struct xBSP430port5xxState state_%(INSTANCE)s = {
-		.port = (volatile xBSP430periphPORT_5XX_8 *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
+static struct xBSP430portState state_%(INSTANCE)s = {
+		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
@@ -115,8 +115,8 @@ __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
 	int rv = port_isr(xBSP430port_%(INSTANCE)s, P%(#)sIV);
-	__bic_status_register_on_exit(rv & BSP430_PORT_ISR_BIC_MASK);
-	portYIELD_FROM_ISR((rv & BSP430_PORT_ISR_YIELD) ? pdTRUE : pdFALSE);
+	__bic_status_register_on_exit(rv & BSP430_CALLBACK_ISR_BIC_MASK);
+	portYIELD_FROM_ISR((rv & BSP430_CALLBACK_ISR_YIELD) ? pdTRUE : pdFALSE);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
