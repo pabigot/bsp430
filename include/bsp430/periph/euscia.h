@@ -175,9 +175,10 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
 /** @def configBSP430_HAL_EUSCI_A0_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c EUSCI_A0.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c EUSCI_A0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_EUSCI_A0 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A0_ISR
@@ -187,9 +188,10 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
 /** @def configBSP430_HAL_EUSCI_A1_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c EUSCI_A1.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c EUSCI_A1.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_EUSCI_A1 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A1_ISR
@@ -199,9 +201,10 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
 /** @def configBSP430_HAL_EUSCI_A2_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c EUSCI_A2.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c EUSCI_A2.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_EUSCI_A2 must be also be true. */
 #ifndef configBSP430_HAL_EUSCI_A2_ISR

@@ -28,9 +28,39 @@ extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
     'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c %(INSTANCE)s.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c %(INSTANCE)s.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_%(INSTANCE)s must be also be true. */
+#ifndef configBSP430_HAL_%(INSTANCE)s_ISR
+#define configBSP430_HAL_%(INSTANCE)s_ISR 1
+#endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
+''',
+
+    'hal_timer_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c %(INSTANCE)s.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_%(INSTANCE)s must be also be true. */
+#ifndef configBSP430_HAL_%(INSTANCE)s_CC0_ISR
+#define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 1
+#endif /* configBSP430_HAL_%(INSTANCE)s_CC0_ISR */
+
+/** @def configBSP430_HAL_%(INSTANCE)s_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c %(INSTANCE)s.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_%(INSTANCE)s must be also be true. */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR

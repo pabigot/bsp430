@@ -354,94 +354,206 @@ extern volatile xBSP430periphTIMER * const xBSP430periph_TB2;
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 /* !BSP430! end=hpl_ba_decl */
 
-/* !BSP430! insert=hal_isr_decl */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
+/* !BSP430! insert=hal_timer_isr_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_decl] */
+/** @def configBSP430_HAL_TA0_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c TA0.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_TA0 must be also be true. */
+#ifndef configBSP430_HAL_TA0_CC0_ISR
+#define configBSP430_HAL_TA0_CC0_ISR 1
+#endif /* configBSP430_HAL_TA0_CC0_ISR */
+
 /** @def configBSP430_HAL_TA0_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c TA0.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c TA0.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_TA0 must be also be true. */
 #ifndef configBSP430_HAL_TA0_ISR
 #define configBSP430_HAL_TA0_ISR 1
 #endif /* configBSP430_HAL_TA0_ISR */
 
+/** @def configBSP430_HAL_TA1_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c TA1.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_TA1 must be also be true. */
+#ifndef configBSP430_HAL_TA1_CC0_ISR
+#define configBSP430_HAL_TA1_CC0_ISR 1
+#endif /* configBSP430_HAL_TA1_CC0_ISR */
+
 /** @def configBSP430_HAL_TA1_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c TA1.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c TA1.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_TA1 must be also be true. */
 #ifndef configBSP430_HAL_TA1_ISR
 #define configBSP430_HAL_TA1_ISR 1
 #endif /* configBSP430_HAL_TA1_ISR */
 
+/** @def configBSP430_HAL_TA2_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c TA2.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_TA2 must be also be true. */
+#ifndef configBSP430_HAL_TA2_CC0_ISR
+#define configBSP430_HAL_TA2_CC0_ISR 1
+#endif /* configBSP430_HAL_TA2_CC0_ISR */
+
 /** @def configBSP430_HAL_TA2_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c TA2.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c TA2.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_TA2 must be also be true. */
 #ifndef configBSP430_HAL_TA2_ISR
 #define configBSP430_HAL_TA2_ISR 1
 #endif /* configBSP430_HAL_TA2_ISR */
 
+/** @def configBSP430_HAL_TA3_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c TA3.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_TA3 must be also be true. */
+#ifndef configBSP430_HAL_TA3_CC0_ISR
+#define configBSP430_HAL_TA3_CC0_ISR 1
+#endif /* configBSP430_HAL_TA3_CC0_ISR */
+
 /** @def configBSP430_HAL_TA3_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c TA3.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c TA3.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_TA3 must be also be true. */
 #ifndef configBSP430_HAL_TA3_ISR
 #define configBSP430_HAL_TA3_ISR 1
 #endif /* configBSP430_HAL_TA3_ISR */
 
+/** @def configBSP430_HAL_TB0_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c TB0.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_TB0 must be also be true. */
+#ifndef configBSP430_HAL_TB0_CC0_ISR
+#define configBSP430_HAL_TB0_CC0_ISR 1
+#endif /* configBSP430_HAL_TB0_CC0_ISR */
+
 /** @def configBSP430_HAL_TB0_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c TB0.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c TB0.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_TB0 must be also be true. */
 #ifndef configBSP430_HAL_TB0_ISR
 #define configBSP430_HAL_TB0_ISR 1
 #endif /* configBSP430_HAL_TB0_ISR */
 
+/** @def configBSP430_HAL_TB1_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c TB1.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_TB1 must be also be true. */
+#ifndef configBSP430_HAL_TB1_CC0_ISR
+#define configBSP430_HAL_TB1_CC0_ISR 1
+#endif /* configBSP430_HAL_TB1_CC0_ISR */
+
 /** @def configBSP430_HAL_TB1_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c TB1.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c TB1.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_TB1 must be also be true. */
 #ifndef configBSP430_HAL_TB1_ISR
 #define configBSP430_HAL_TB1_ISR 1
 #endif /* configBSP430_HAL_TB1_ISR */
 
+/** @def configBSP430_HAL_TB2_CC0_ISR
+ *
+ * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * interrupt vector for @c TB2.  This is the Txy0_VECTOR
+ * interrupt, handling only CC0.
+ *
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
+ *
+ * @note #configBSP430_PERIPH_TB2 must be also be true. */
+#ifndef configBSP430_HAL_TB2_CC0_ISR
+#define configBSP430_HAL_TB2_CC0_ISR 1
+#endif /* configBSP430_HAL_TB2_CC0_ISR */
+
 /** @def configBSP430_HAL_TB2_ISR
  *
  * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
- * interrupt vector for @c TB2.  Define to a false value if you
- * need complete control over how interrupts are handled for the device
- * and will be defining the vector yourself.
+ * interrupt vector for @c TB2.  This is the Txy1_VECTOR
+ * interrupt, handling overflows and CC1-CC6.
+ * 
+ * Define to a false value if you need complete control over interrupt
+ * handling for the peripheral and will be defining the vector yourself.
  *
  * @note #configBSP430_PERIPH_TB2 must be also be true. */
 #ifndef configBSP430_HAL_TB2_ISR
 #define configBSP430_HAL_TB2_ISR 1
 #endif /* configBSP430_HAL_TB2_ISR */
 
-/* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
-/* !BSP430! end=hal_isr_decl */
+/* END AUTOMATICALLY GENERATED CODE [hal_timer_isr_decl] */
+/* !BSP430! end=hal_timer_isr_decl */
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
