@@ -44,10 +44,13 @@
 /* !BSP430! periph=timer */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
+/* Declares additional callback pointers that immediately follow the
+ * one in the base type.  This allows us to use only the amount of
+ * space necessary to support the CC blocks on the target MCU. */
 #define DECLARE_AUX_CCS(_n) \
-	struct xBSP430timerCCInterruptState * _aux_cc_cbs[_n]
+	struct xBSP430callbackISRIndexed * _aux_cc_cbs[_n]
 
-#if 1 /* configBSP430_PERIPH_TA0 - 0 */
+#if configBSP430_PERIPH_TA0 - 0
 static struct {
 	struct xBSP430timerState state;
 	/* State includes one CC record.  Add more as required. */
@@ -182,13 +185,7 @@ __attribute__((__c16__))
 cc0_isr (xBSP430timerHandle timer,
 		 int iv)
 {
-	int rv = 0;
-	struct xBSP430timerInterruptState ** cbs = &timer->cc0_cbs;
-	while (NULL != *cbs) {
-		rv |= (*cbs)->callback(timer, *cbs);
-		cbs = &((*cbs)->next);
-	}
-	return rv;						
+	return iBSP430callbackInvokeISRVoid(&timer->cc0_cb, timer, 0);
 }
 #endif /* TA0 CC0 ISR */
 
@@ -196,18 +193,10 @@ cc0_isr (xBSP430timerHandle timer,
 		int rv = 0;														\
 		if (0 != _iv) {													\
 			if (_OVERFLOW == _iv) {										\
-				struct xBSP430timerInterruptState ** cbs = &_timer->overflow_cbs; \
-				while (NULL != *cbs) {									\
-					rv |= (*cbs)->callback(_timer, *cbs);				\
-					cbs = &((*cbs)->next);								\
-				}														\
+				rv = iBSP430callbackInvokeISRVoid(&_timer->overflow_cb, timer, rv); \
 			} else {													\
 				int cc = (_iv - 4) / 2;									\
-				struct xBSP430timerCCInterruptState ** cbs = cc + _timer->cc_cbs; \
-				while (NULL != *cbs) {									\
-					rv |= (*cbs)->callback(_timer, cc, *cbs);			\
-					cbs = &((*cbs)->next);								\
-				}														\
+				rv = iBSP430callbackInvokeISRVoid(cc + _timer->cc_cb, timer, cc, rv); \
 			}															\
 		}																\
 		return rv;														\
@@ -228,7 +217,7 @@ ta_isr (xBSP430timerHandle timer,
 {
 	TIMER_ISR_BODY(timer, iv, TA_OVERFLOW);
 }
-#endif /* TA0 ISR */
+#endif /* TAx ISR */
 
 #if (((configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_ISR - 0)) \
@@ -244,7 +233,7 @@ tb_isr (xBSP430timerHandle timer,
 {
 	TIMER_ISR_BODY(timer, iv, TB_OVERFLOW);
 }
-#endif /* TB0 ISR */
+#endif /* TBx ISR */
 
 /* !BSP430! insert=periph_ba_hpl_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_defn] */

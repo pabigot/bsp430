@@ -56,8 +56,8 @@
 #define BSP430_UTILITY_CALLBACK_H
 
 /* Forward declarations */
-struct xBSP430callbackVoid;
-struct xBSP430callbackIndexed;
+struct xBSP430callbackISRVoid;
+struct xBSP430callbackISRIndexed;
 									 
 /** Mask for status register bits cleared in ISR top half.
  *

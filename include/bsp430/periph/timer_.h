@@ -43,17 +43,30 @@
 #define BSP430_PERIPH_TIMER__H
 
 #include <bsp430/periph/timer.h>
+#include <bsp430/utility/callback.h>
 
 /** Structure holding hardware abstraction layer state for Timer_A and Timer_B.
  *
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
 struct xBSP430timerState {
-	unsigned int flags;
+	/** The underlying timer peripheral register structure */
 	volatile xBSP430periphTIMER * const timer;
-	struct xBSP430timerInterruptState * overflow_cbs;
-	struct xBSP430timerInterruptState * cc0_cbs;
-	struct xBSP430timerCCInterruptState * cc_cbs[1];
+
+	/** The callback chain to invoke when an overflow interrupt is
+	 * received. */
+	const struct xBSP430callbackISRVoid * overflow_cb;
+
+	/** The callback chain to invoke when a CC0 interrupt is
+	 * received. */
+	const struct xBSP430callbackISRVoid * cc0_cb;
+
+	/** The callback chain to invoke when a CCx interrupt is received.
+	 *
+	 * The chains are independent for each capture/compare block, but
+	 * the block index is passed into the chain so that a common
+	 * handler can be invoked if desired. */
+	const struct xBSP430callbackISRIndexed * cc_cbs[1];
 };
 
 #endif /* BSP430_PERIPH_TIMER__H */
