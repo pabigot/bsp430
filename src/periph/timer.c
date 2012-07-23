@@ -170,6 +170,7 @@ xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
 #if (((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_CC0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_CC0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_CC0_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TA3 - 0) && (configBSP430_HAL_TA3_CC0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TB0 - 0) && (configBSP430_HAL_TB0_CC0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TB1 - 0) && (configBSP430_HAL_TB1_CC0_ISR - 0)) \
 	 || ((configBSP430_PERIPH_TB2 - 0) && (configBSP430_HAL_TB2_CC0_ISR - 0)))
@@ -213,8 +214,9 @@ cc0_isr (xBSP430timerHandle timer,
 	} while (0)
 
 #if (((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_ISR - 0)))
+	 || ((configBSP430_PERIPH_TA1 - 0) && (configBSP430_HAL_TA1_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TA2 - 0) && (configBSP430_HAL_TA2_ISR - 0)) \
+	 || ((configBSP430_PERIPH_TA3 - 0) && (configBSP430_HAL_TA3_ISR - 0)))
 
 /* static */ int
 #if __MSP430X__
