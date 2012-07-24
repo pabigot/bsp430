@@ -78,7 +78,7 @@
 		IFG1 &= ~OFIFG;										\
 	} while (0)
 
-/** @def configBSP430_FLLPLUS_XCAPxPF
+/** @def BSP430_FLLPLUS_XCAPxPF
  *
  * Oscillator capacitor section to be applied to FLL_CTL0 by
  * #iBSP430clockConfigureXT1.
@@ -88,9 +88,9 @@
  * at least on the EXP430FG4618 board.  This also happens to be the
  * power-up default.
  */
-#ifndef configBSP430_FLLPLUS_XCAPxPF
-#define configBSP430_FLLPLUS_XCAPxPF XCAP0PF
-#endif /* configBSP430_FLLPLUS_XCAPxPF */
+#ifndef BSP430_FLLPLUS_XCAPxPF
+#define BSP430_FLLPLUS_XCAPxPF XCAP0PF
+#endif /* BSP430_FLLPLUS_XCAPxPF */
 
 /** Structure used to configure the frequency-locked loop clock module.
  *

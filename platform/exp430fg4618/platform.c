@@ -72,6 +72,6 @@ void vBSP430platformSetup ()
 	WDTCTL = WDTPW + WDTHOLD;
 
 	/* Enable XT1 functions and clock */
-	rc = iBSP430clockConfigureXT1(1, 2000000L / configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+	rc = iBSP430clockConfigureXT1(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 	//ulBSP430fllplusConfigureMCLK(configCPU_CLOCK_HZ);
 }

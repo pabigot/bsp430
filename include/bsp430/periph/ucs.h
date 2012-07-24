@@ -65,7 +65,7 @@
  * 
  * @li #ulBSP430clockSMCLK_Hz returns the most recent measured trimmed
  * frequency shifted right by
- * #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
+ * #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
  * @li #usBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the
@@ -109,7 +109,7 @@
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.
  * SMCLK will be set to DCOCLKDIV divided in accordance with
- * #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
+ * #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
  * @param sRSEL The DCO frequency range selection.  The appropriate
  * value is frequency-dependent, and specified in the "DCO Frequency"

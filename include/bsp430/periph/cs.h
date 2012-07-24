@@ -47,7 +47,7 @@
  * 
  * @li #ulBSP430clockSMCLK_Hz assumes DCOCLK is the selected source
  * for SMCLK, and returns the selected trimmed DCOCLK frequency
- * shifted right by #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
+ * shifted right by #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
  * @li #usBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the

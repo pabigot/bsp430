@@ -56,7 +56,7 @@ ucBSP430bc2Configure (unsigned char ucDCOCTL,
 		do {
 			BSP430_CLOCK_LFXT1_CLEAR_FAULT();
 			--uxStableLoopsLeft;
-			__delay_cycles(configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+			__delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 			
 		} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 < uxStableLoopsLeft));
 		ucCrystalOK = !BSP430_CLOCK_LFXT1_IS_FAULTED();

@@ -32,9 +32,9 @@
 #include <bsp430/periph/cs.h>
 #include <bsp430/platform.h>
 
-#if 5 < configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
-#error FR5xx CS module cannot express configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
-#endif /* configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
+#if 5 < BSP430_CLOCK_SMCLK_DIVIDING_SHIFT
+#error FR5xx CS module cannot express BSP430_CLOCK_SMCLK_DIVIDING_SHIFT
+#endif /* BSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
 
 /* Mask for SELA bits in CSCTL2 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
@@ -72,7 +72,7 @@ ulBSP430clockMCLK_Hz ()
 unsigned long
 ulBSP430clockSMCLK_Hz ()
 {
-	return ulBSP430clockMCLK_Hz() >> configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
+	return ulBSP430clockMCLK_Hz() >> BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 }
 
 unsigned short
@@ -105,7 +105,7 @@ ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz)
 	CSCTL0_H = 0xA5;
 	CSCTL1 = csctl1;
 	CSCTL2 = (CSCTL2 & SELA_MASK) | SELS__DCOCLK | SELM__DCOCLK;
-	CSCTL3 = configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0;
+	CSCTL3 = BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0;
 	CSCTL0_H = !0xA5;
 
 	return ulBSP430clockMCLK_Hz();
@@ -129,7 +129,7 @@ iBSP430clockConfigureXT1 (int enablep,
 	do {
 		BSP430_CLOCK_LFXT1_CLEAR_FAULT();
 		loop_limit -= loop_delta;
-		__delay_cycles(configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+		__delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 
 	} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
 	CSCTL4 = CSCTL4 & ~XT1DRIVE_3;

@@ -50,7 +50,7 @@
 
 #include <bsp430/common.h>
 
-/** @def configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
+/** @def BSP430_CLOCK_SMCLK_DIVIDING_SHIFT
  *
  * SMCLK is normally configured to divide another clock by shifting it
  * left this many positions.  E.g., if MCLK is 20 MHz, a dividing shift
@@ -60,11 +60,11 @@
  * clock source for SMCLK is different than an undivided MCLK, the
  * code that configures the clock may need to modify the shift
  * value. */
-#ifndef configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT
-#define configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT 0
-#endif /* configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
+#ifndef BSP430_CLOCK_SMCLK_DIVIDING_SHIFT
+#define BSP430_CLOCK_SMCLK_DIVIDING_SHIFT 0
+#endif /* BSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
 
-/** @def configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
+/** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
  *
  * Define this to the number of MCLK cycles that
  * #iBSP430clockConfigureXT1 should delay, after clearing oscillator
@@ -85,7 +85,7 @@
  * second use:
  *
  * @code
- * if (0 >= iBSP430clockConfigureXT1(1, 1000000L / configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES)) {
+ * if (0 >= iBSP430clockConfigureXT1(1, 1000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES)) {
  *    // XT1 not available
  * }
  * @endcode
@@ -93,9 +93,9 @@
  * Crystal stabilization can take hundreds of milliseconds; on some
  * platforms even the one second delay above is insufficient.
  */
-#ifndef configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
-#define configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES 100000UL
-#endif /* configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
+#ifndef BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
+#define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES 100000UL
+#endif /* BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
 
 /** Return the best available estimate of MCLK frequency.
  *
@@ -109,7 +109,7 @@ unsigned long ulBSP430clockMCLK_Hz ();
 /** Return the best available estimate of SMCLK frequency.
  *
  * Depending on clock capabilities, this may simply return
- * #configCPU_CLOCK_HZ >> #configBSP430_CLOCK_SMCLK_DIVIDING_SHIFT, or
+ * #configCPU_CLOCK_HZ >> #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT, or
  * it may return a value calculated from observations.
  *
  * @return an estimate of the SMCLK frequency, in Hz */
@@ -204,7 +204,7 @@ unsigned short usBSP430clockACLK_Hz ();
  * #iBSP430platformConfigurePeripheralPinsFromISR with #BSP430_PERIPH_XT1 to
  * configure the crystal.  If crystal functionality has been
  * requested, it then clears oscillator faults, delays
- * #configBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, then detects
+ * #BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, then detects
  * whether the crystal is functioning.  It terminates with success
  * once the oscillator remains unfaulted after the delay, and
  * otherwise repeats the clear/delay/check process as specified by @a
