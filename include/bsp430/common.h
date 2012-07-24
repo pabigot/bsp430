@@ -54,6 +54,31 @@
  * number. */
 #define BSP430_VERSION 20120713
 
+/** @def configBSP430_CONFIG_FILE
+ *
+ * BSP430 depends heavily on configuration specified by preprocessor
+ * tokens defined to true or false values.  Proper application
+ * behavior requires that all object files be built using the same
+ * configuration settings.
+ *
+ * All BSP430 implementation files include <bsp430/common.h>, either
+ * directly or through other headers.  Defining
+ * #configBSP430_CONFIG_FILE to a true value (which is its default)
+ * will cause this header to include a file named "bsp430_config.h".
+ * All application configuration may be placed into this file.
+ * 
+ * If you provide configuration through external means (e.g., through
+ * @c -D arguments to the preprocessor) you can inhibit this inclusion
+ * by defining #configBSP430_CONFIG_FILE to 0. */
+#ifndef configBSP430_CONFIG_FILE
+#define configBSP430_CONFIG_FILE 1
+#endif /* configBSP430_CONFIG_FILE */
+
+#if configBSP430_CONFIG_FILE - 0
+#include "bsp430_config.h"
+#endif /* configBSP430_CONFIG_FILE */
+
+/* See <bsp430/rtos/freertos.h> */
 #if configBSP430_RTOS_FREERTOS - 0
 /* FreeRTOS defines application behavior in a shared header.  Read it
  * in here so everybody agrees on its contents. */
