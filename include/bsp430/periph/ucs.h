@@ -144,10 +144,15 @@ int iBSP430ucsConfigureACLK (unsigned int sela);
 
 /** Call this periodically to trim the FLL.
  *
- * The function uses TB0 to determine the speed of SMCLK, and if it is
- * "too far" from the value specified in the last call to
- * ulBSP430ucsConfigure() enables the FLL for a short period to see if
- * accuracy can be improved.
+ * The function uses the ratio of SMCLK to ACLK to determine the speed
+ * of SMCLK, and if it is "too far" from the value specified in the
+ * last call to ulBSP430ucsConfigure() enables the FLL for a short
+ * period to see if accuracy can be improved.
+ *
+ * If no timer is identified by #BSP430_UCS_TRIMFLL_TIMER_HAL_HANDLE,
+ * this function is not provided.  The specified timer will be
+ * reconfigured in various ways while trimming occurs, and will be
+ * left disabled on exit.
  *
  * @warning MCLK, SMCLK, and any clocks derived from them are unstable
  * while this routine is being run, so UART, SPI, and other
@@ -155,14 +160,55 @@ int iBSP430ucsConfigureACLK (unsigned int sela);
  * 
  * @note This function is named in accordance with the FreeRTOS
  * standards that indicate it should be called with interrupts
- * disabled and will not block.  It will, however, delay for as much
- * as 32 milliseconds while waiting for the FLL to settle.  The common
- * case of delay is much less, but it would still be wise not to
- * invoke this from within an interrupt handler.
+ * disabled and will not block or induce a context switch.  It will,
+ * however, delay for as much as 32 milliseconds while waiting for the
+ * FLL to settle.  The common case of delay is much less, but it would
+ * still be wise not to invoke this from within an interrupt handler.
  *
  * @return an estimate of the actual running frequency.
  */
 unsigned long ulBSP430ucsTrimFLLFromISR ();
+
+/** @def BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
+ *
+ * #ulBSP430ucsTrimFLLFromISR requires a timer that can be used while
+ * the FLL is being trimmed.  The timer must have a capture/compare
+ * block which can be configured to use ACLK as its input.  CCI0B on
+ * TB0.6 is a candidate for at least some 5xx/6xx family MCUs.
+ * 
+ * The value of this parameter should be a reference to one of the
+ * timer HPL handles, such as #xBSP43periph_TB0.  The corresponding
+ * #configBSP430_PERIPH_TB0 must also be set.
+ * 
+ * @note The timer may be shared among other users.  It is the
+ * caller's responsibility to ensure that no other users of the timer
+ * are active while the clock is being trimmed.
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE no default value
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX
+ *
+ * The index of a capture/compare block within
+ * #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE that can take input from
+ * ACLK.  The capability is MCU-specific.
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX no default value
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS
+ *
+ * The value to be written to the CCIS field of the control register
+ * for capture/compare block #BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX
+ * of timer #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE in order to select
+ * ACLK as the input source.  The capability is MCU-specific, but
+ * consider CCI0B (CCIS_1) of TB0.6.
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS no default value
+#endif /* BSP430_DOXYGEN */
 
 #endif /* BSP430_CLOCKS_UCS_H */
 

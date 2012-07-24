@@ -61,6 +61,19 @@ static uint16_t targetFrequency_tsp_;
 /* The last calculated trim frequency */
 static unsigned long lastTrimFrequency_Hz_;
 
+#include <bsp430/utility/console.h>
+#include <bsp430/periph/timer_.h>
+
+#ifdef BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
+
+#ifndef BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX
+#error BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX must be defined
+#endif /* BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX */
+
+#ifndef BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS
+#error BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS must be defined
+#endif /* BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS */
+
 unsigned long
 ulBSP430ucsTrimFLLFromISR ()
 {
@@ -68,6 +81,8 @@ ulBSP430ucsTrimFLLFromISR ()
 	unsigned short last_ctl0;
 	uint16_t tolerance_tsp;
 	uint16_t current_frequency_tsp = 0;
+	volatile xBSP430periphTIMER * tp = BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE;
+	const int ccidx = BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX;
 
 	last_ctl0 = ~0;
 	tolerance_tsp = targetFrequency_tsp_ / TRIM_TOLERANCE_DIVISOR;
@@ -78,32 +93,32 @@ ulBSP430ucsTrimFLLFromISR ()
 		uint16_t abs_freq_err_tsp;
 
 		/* Capture the SMCLK ticks between adjacent ACLK ticks */
-		TB0CTL = TASSEL__SMCLK | MC__CONTINOUS | TBCLR;
-		TB0CCTL6 = CM_2 | CCIS_1 | CAP | SCS;
+		tp->ctl = TASSEL__SMCLK | MC__CONTINOUS | TBCLR;
+		tp->cctl[ccidx] = CM_2 | BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS | CAP | SCS;
 		/* NOTE: CCIFG seems to be set immediately on the second and
 		 * subsequent iterations.  Flush the first capture. */
-        while (! (TB0CCTL6 & CCIFG)) {
+        while (! (tp->cctl[ccidx] & CCIFG)) {
           ; /* nop */
         }
 		for (i = 0; i <= TRIM_SAMPLE_PERIOD_ACLK; ++i) {
-			TB0CCTL6 &= ~CCIFG;
-			while (! (TB0CCTL6 & CCIFG)) {
+			tp->cctl[ccidx] &= ~CCIFG;
+			while (! (tp->cctl[ccidx] & CCIFG)) {
 				; /* nop */
 			}
 			if (0 == i) {
-				c0 = TB0CCR6;
+				c0 = tp->ccr[ccidx];
 			}
 		}
-        c1 = TB0CCR6;
-		TB0CTL = 0;
-		TB0CCTL6 = 0;
+        c1 = tp->ccr[ccidx];
+		tp->ctl = 0;
+		tp->cctl[ccidx] = 0;
 		current_frequency_tsp = (c0 > c1) ? (c0 - c1) : (c1 - c0);
 		if (current_frequency_tsp > targetFrequency_tsp_) {
 			abs_freq_err_tsp = current_frequency_tsp - targetFrequency_tsp_;
 		} else {
 			abs_freq_err_tsp = targetFrequency_tsp_ - current_frequency_tsp;
 		}
-#if 0
+#if 1
 		cprintf("RSEL %u DCO %u MOD %u current %u target %u tol %u err %u ; ctl0 %04x last %04x\n",
 			   (UCSCTL1 >> 4) & 0x07, (UCSCTL0 >> 8) & 0x1F, (UCSCTL0 >> 3) & 0x1F,
 			   current_frequency_tsp, targetFrequency_tsp_, tolerance_tsp, abs_freq_err_tsp,
@@ -111,41 +126,42 @@ ulBSP430ucsTrimFLLFromISR ()
 #endif
 		if ((abs_freq_err_tsp <= tolerance_tsp)
 			|| (UCSCTL0 == last_ctl0)) {
-#if 0
+#if 1
 			cprintf("terminate tap %u error %u ctl0 %04x was %04x\n",
 				   taps_left, abs_freq_err_tsp, UCSCTL0, last_ctl0);
 #endif
 			break;
 		}
-#if 0
+#if 1
 		cprintf("running fll, error %u\n", abs_freq_err_tsp);
 #endif
 		/* Save current DCO/MOD values, then let FLL run for 32 REFCLK
 		 * ticks (potentially trying each modulation within one
 		 * tap) */
 		last_ctl0 = UCSCTL0;
-		TB0CTL = TASSEL__ACLK | MC__CONTINOUS | TBCLR;
+		tp->ctl = TASSEL__ACLK | MC__CONTINOUS | TBCLR;
 		__bic_status_register(SCG0);
-		TB0CCTL0 = 0;
-		TB0CCR0 = TB0R + 32;
-		while (! (TB0CCTL0 & CCIFG)) {
+		tp->cctl0 = 0;
+		tp->ccr0 = tp->r + 32;
+		while (! (tp->cctl0 & CCIFG)) {
 			/* nop */
 		}
 		__bis_status_register(SCG0);
 		/* Delay another 1..2 ACLK cycles for the integrator to fully
 		 * update. */
-		TB0CCTL0 &= ~CCIFG;
-		TB0CCR0 = TB0R + 2;
-		while (! (TB0CCTL0 & CCIFG)) {
+		tp->cctl0 &= ~CCIFG;
+		tp->ccr0 = tp->r + 2;
+		while (! (tp->cctl0 & CCIFG)) {
 			/* nop */
 		}
-		TB0CTL = 0;
-		TB0CCTL0 = 0;
+		tp->ctl = 0;
+		tp->cctl0 = 0;
 	}
 	lastTrimFrequency_Hz_ = current_frequency_tsp * (32768UL / TRIM_SAMPLE_PERIOD_ACLK);
 	lastTrimFrequency_Hz_ <<= BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 	return lastTrimFrequency_Hz_;
 }
+#endif /* BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE */
 
 unsigned long
 ulBSP430clockMCLK_Hz ()
