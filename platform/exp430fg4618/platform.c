@@ -73,5 +73,5 @@ void vBSP430platformSetup ()
 
 	/* Enable XT1 functions and clock */
 	rc = iBSP430clockConfigureXT1(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-	//ulBSP430fllplusConfigureMCLK(configCPU_CLOCK_HZ);
+	//ulBSP430fllplusConfigureMCLK(BSP430_CLOCK_NOMINAL_MCLK_HZ);
 }

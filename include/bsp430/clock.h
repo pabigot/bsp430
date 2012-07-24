@@ -50,6 +50,24 @@
 
 #include <bsp430/common.h>
 
+/** @def BSP430_CLOCK_NOMINAL_MCLK_HZ
+ *
+ * A constant representing the desired clock speed of the master
+ * clock.  Platform-specific configuration will use this value to
+ * initialize the system clocks, and it may affect the return value
+ * for functions like #ulBSP430clockMCLK_Hz and
+ * #ulBSP430clockSMCLK_Hz.
+ *
+ * @note The default value is calculated from
+ * 3*3*5*5*512*69=115200*69, and is the value nearest 8MHz which is
+ * also compatible with as many serial baud rates as possible.
+ *
+ * @note Applications may wish to provide an alternative value better
+ * suited to specific needs. */
+#ifndef BSP430_CLOCK_NOMINAL_MCLK_HZ
+#define BSP430_CLOCK_NOMINAL_MCLK_HZ 7948800U
+#endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
+
 /** @def BSP430_CLOCK_SMCLK_DIVIDING_SHIFT
  *
  * SMCLK is normally configured to divide another clock by shifting it
@@ -100,8 +118,8 @@
 /** Return the best available estimate of MCLK frequency.
  *
  * Depending on clock capabilities, this may simply return
- * #configCPU_CLOCK_HZ, or it may return a value calculated from
- * observations.
+ * #BSP430_CLOCK_NOMINAL_MCLK_HZ, or it may return a value calculated
+ * from observations.
  *
  * @return an estimate of the MCLK frequency, in Hz */
 unsigned long ulBSP430clockMCLK_Hz ();
@@ -109,7 +127,7 @@ unsigned long ulBSP430clockMCLK_Hz ();
 /** Return the best available estimate of SMCLK frequency.
  *
  * Depending on clock capabilities, this may simply return
- * #configCPU_CLOCK_HZ >> #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT, or
+ * #BSP430_CLOCK_NOMINAL_MCLK_HZ >> #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT, or
  * it may return a value calculated from observations.
  *
  * @return an estimate of the SMCLK frequency, in Hz */
@@ -118,7 +136,7 @@ unsigned long ulBSP430clockSMCLK_Hz ();
 /** Return the best available estimate of ACLK frequency.
  *
  * Depending on clock capabilities, this may simply return
- * #portACLK_FREQUENCY_HZ, or it may return a value calculated from
+ * #BSP430_CLOCK_NOMINAL_ACLK_HZ, or it may return a value calculated from
  * observations.
  *
  * @return an estimate of the ACLK frequency, in Hz */
@@ -167,36 +185,42 @@ unsigned short usBSP430clockACLK_Hz ();
 #endif /* 5xx */
 
 
-/** @def BSP430_CLOCK_VLOCLK_HZ
+/** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
  * 
  * Nominal frequency of VLOCLK, in Hz.
  *
  * This is a family-specific value normally somewhere near 10-12 kHz.
- * The value should be an unsigned integer constant. */
-#ifndef BSP430_CLOCK_VLOCLK_HZ
+ * The value should be an unsigned integer constant.
+ * 
+ * @note The value of this clock is often off by as much as 10%. */
+#ifndef BSP430_CLOCK_NOMINAL_VLOCLK_HZ
 #if defined(__MSP430_HAS_BC2__)					\
 	|| defined(__MSP430_HAS_FLLPLUS__)			\
 	|| defined(__MSP430_HAS_FLLPLUS_SMALL__)
-#define BSP430_CLOCK_VLOCLK_HZ 12000U
+#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
 #elif defined(__MSP430_HAS_CS__)				\
 	|| defined(__MSP430_HAS_UCS__) 				\
 	|| defined(__MSP430_HAS_UCS_RF__)
-#define BSP430_CLOCK_VLOCLK_HZ 10000U
+#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
 #else /* clock system */
-#define BSP430_CLOCK_VLOCLK_HZ 12000U
+#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
 #endif /* clock system*/
-#endif /* BSP430_CLOCK_VLOCLK_HZ */
+#endif /* BSP430_CLOCK_NOMINAL_VLOCLK_HZ */
 
-/** @def BSP430_CLOCK_ACLK_HZ
+/** @def BSP430_CLOCK_NOMINAL_ACLK_HZ
  *
  * Nominal frequency of ACLK, in Hz.
+ *
+ * This value should be quickly calculatable, and be either a
+ * compile-time constant or a selection between two compile-time
+ * constants based on a single-instruction test.
  *
  * Note that the calculated value of this assumes that ACLK is
  * configured to source from a 32 kiHz watch crystal normally, but
  * deferring to VLOCLK if LFXT1 is faulted. */
-#ifndef BSP430_CLOCK_ACLK_HZ
-#define BSP430_CLOCK_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_VLOCLK_HZ : 32768U)
-#endif /* BSP430_CLOCK_ACLK_HZ */
+#ifndef BSP430_CLOCK_NOMINAL_ACLK_HZ
+#define BSP430_CLOCK_NOMINAL_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : 32768U)
+#endif /* BSP430_CLOCK_NOMINAL_ACLK_HZ */
 
 /** Configure (or deconfigure) XT1 as a clock source.
  *

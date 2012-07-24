@@ -146,7 +146,7 @@ void vBSP430platformSetup ()
 	 * stabilize! */
 	rc = iBSP430clockConfigureXT1(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 	iBSP430csConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
-    ulBSP430csConfigureMCLK(configCPU_CLOCK_HZ);
+    ulBSP430csConfigureMCLK(BSP430_CLOCK_NOMINAL_MCLK_HZ);
 #if configBSP430_UPTIME - 0
 	vBSP430uptimeStart();
 #endif /* configBSP430_UPTIME */

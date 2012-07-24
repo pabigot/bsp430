@@ -103,7 +103,7 @@ void vBSP430platformSetup ()
 	/* Enable XT1 functions and clock */
 	rc = iBSP430clockConfigureXT1(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 	iBSP430ucsConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
-	ulBSP430ucsConfigure( configCPU_CLOCK_HZ, -1 );
+	ulBSP430ucsConfigure(BSP430_CLOCK_NOMINAL_MCLK_HZ, -1 );
 #if configBSP430_UPTIME - 0
 	vBSP430uptimeStart();
 #endif /* configBSP430_UPTIME */

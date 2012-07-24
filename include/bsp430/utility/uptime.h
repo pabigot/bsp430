@@ -97,7 +97,7 @@
  *
  * Number of uptime clocks per second. */
 #ifndef BSP430_UPTIME_CLOCK_HZ
-#define BSP430_UPTIME_CLOCK_HZ (BSP430_CLOCK_ACLK_HZ >> BSP430_UPTIME_DIVIDING_SHIFT)
+#define BSP430_UPTIME_CLOCK_HZ (BSP430_CLOCK_NOMINAL_ACLK_HZ >> BSP430_UPTIME_DIVIDING_SHIFT)
 #endif /* BSP430_UPTIME_CLOCK_HZ */
 
 /** Return system uptime in clock ticks.

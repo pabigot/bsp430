@@ -54,7 +54,7 @@
  * @li Disable the watchdog
  * @li Enable the platform crystal, if available
  * @li Configure ACLK to use the crystal (if available)
- * @li Configure the clocks based on configCPU_CLOCK_HZ
+ * @li Configure the clocks based on #BSP430_CLOCK_NOMINAL_MCLK_HZ
  * @li Start the system clock (if #configBSP430_UPTIME)
  */
 void vBSP430platformSetup ();
