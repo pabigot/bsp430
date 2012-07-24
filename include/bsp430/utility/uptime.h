@@ -54,7 +54,7 @@
  * Define to a true value to enable the uptime infrastructure to
  * maintain a continuous system clock.
  *
- * @note #BSP430_UPTIME_HAL_HANDLE must also be defined, and the clock
+ * @note #BSP430_UPTIME_TIMER_HAL_HANDLE must also be defined, and the clock
  * and its HAL ISR must be enabled (e.g., using
  * #configBSP430_PERIPH_TA0 and #configBSP430_HAL_TA0_ISR).
  */
@@ -62,14 +62,14 @@
 #define configBSP430_UPTIME 0
 #endif /* configBSP430_UPTIME */
 
-/** @def BSP430_UPTIME_HAL_HANDLE
+/** @def BSP430_UPTIME_TIMER_HAL_HANDLE
  *
  * Define to the handle of a HAL timer that can be used to maintain a
  * continuous system clock sourced from ACLK.
  */
-#ifndef BSP430_UPTIME_HAL_HANDLE
-#define BSP430_UPTIME_HAL_HANDLE xBSP430timer_TA0
-#endif /* BSP430_UPTIME_HAL_HANDLE */
+#ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
+#define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
+#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
 
 /** @def BSP430_UPTIME_SSEL
  *
@@ -108,7 +108,7 @@ static unsigned long
 __inline__
 ulBSP430uptimeFromISR (void)
 {
-	return ulBSP430timerCounterFromISR(BSP430_UPTIME_HAL_HANDLE, 0);
+	return ulBSP430timerCounterFromISR(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
 }
 
 /** Return the system uptime in clock ticks. */
@@ -116,7 +116,7 @@ static unsigned long
 __inline__
 ulBSP430uptime (void)
 {
-	return ulBSP430timerCounter(BSP430_UPTIME_HAL_HANDLE, 0);
+	return ulBSP430timerCounter(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
 }
 
 /** Configure the system uptime clock.

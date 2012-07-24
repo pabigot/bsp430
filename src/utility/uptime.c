@@ -35,9 +35,9 @@
 void
 vBSP430uptimeStart (void)
 {
-	BSP430_UPTIME_HAL_HANDLE->timer->ctl = 0;
-	vBSP430timerResetCounter(BSP430_UPTIME_HAL_HANDLE);
-	BSP430_UPTIME_HAL_HANDLE->timer->ctl = 
+	BSP430_UPTIME_TIMER_HAL_HANDLE->timer->ctl = 0;
+	vBSP430timerResetCounter(BSP430_UPTIME_TIMER_HAL_HANDLE);
+	BSP430_UPTIME_TIMER_HAL_HANDLE->timer->ctl = 
 		((TASSEL0 | TASSEL1) & (BSP430_UPTIME_SSEL))
 		| ((ID0 | ID1) & (BSP430_UPTIME_DIVIDING_SHIFT))
 		| MC_2 | TACLR | TAIE;
@@ -46,11 +46,11 @@ vBSP430uptimeStart (void)
 void
 vBSP430uptimeSuspend ()
 {
-	BSP430_UPTIME_HAL_HANDLE->timer->ctl &= ~(MC0 | MC1);
+	BSP430_UPTIME_TIMER_HAL_HANDLE->timer->ctl &= ~(MC0 | MC1);
 }
 
 void
 vBSP430uptimeResume ()
 {
-	BSP430_UPTIME_HAL_HANDLE->timer->ctl |= MC_2;
+	BSP430_UPTIME_TIMER_HAL_HANDLE->timer->ctl |= MC_2;
 }
