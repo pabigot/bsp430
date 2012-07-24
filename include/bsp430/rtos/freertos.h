@@ -32,18 +32,18 @@
 /** @file
  * @brief BSP430 interface to FreeRTOS
  *
- * Primarily this enables use of the BSP430 timer infrastructure as
- * the FreeRTOS task scheduler.  The benefits of that include ability
- * to use TA0 as a system clock, and ability to temporarily inhibit
- * task timeslice interrupts to reduce power when no activity is
- * required.
+ * This header is not included by any BSP430 code, nor should it be
+ * directly included by application code.  It is included by the
+ * freertos-mspgcc port of FreeRTOS via the @c portmacro.h header if
+ * #configBSP430_RTOS_FREERTOS is defined to a true value by the
+ * compilation environment.  Doing this makes basic BSP430
+ * configuration data available within FreeRTOS application code.
  *
- * This header is not included by any BSP430 code, nor is it directly
- * included by application code.  It is included by the
- * freertos-mspgcc port of FreeRTOS when the @c portmacro.h header is
- * included if #configBSP430_RTOS_FREERTOS is defined to a true value
- * by the compilation environment.  The @c FreeRTOS.h header is
- * similarly included by @c bsp430/common.h with this same cue.
+ * The @c FreeRTOS.h header is similarly included by @c
+ * bsp430/common.h when #configBSP430_RTOS_FREERTOS is defined to a
+ * true value by the compilation environment.  This ensures that the
+ * BSP430 infrastructure uses FreeRTOS-compatible mechanisms for
+ * critical sections and interrupt management.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -54,30 +54,52 @@
 #ifndef BSP430_RTOS_FREERTOS_H
 #define BSP430_RTOS_FREERTOS_H
 
+#include <bsp430/common.h>
+
 /** Mark that BSP430 will be running under FreeRTOS.
  *
- * Defining this macro to a true value externally to the system will
- * cause the inclusion of bsp430/common.h to also include FreeRTOS.h,
- * making available the standard FreeRTOS environment.  This should be
- * done by adding <tt>-DconfigBSP430_RTOS_FREERTOS</tt> to the @c
- * CPPFLAGS variable during builds, since otherwise builds of BSP430
- * sources will not attempt to read configuration data provided in @c
- * FreeRTOS_Config.h.
+ * Defining this macro to a true value externally to the system will:
+ * <ul>
+ *
+ * <li> Cause the inclusion of bsp430/common.h to also include
+ * "FreeRTOS.h", making available the standard FreeRTOS environment to
+ * BSP430 library code and defining RTOS-related macros to use the
+ * FreeRTOS implementation.
+ *
+ * <li> Cause the inclusion of "FreeRTOS.h" to include
+ * <bsp430/common.h>, make standard BSP430 configuration data
+ * available to the FreeRTOS application code.
+ *
+ * </ul> This cascading effect should be initiated by adding
+ * <tt>-DconfigBSP430_RTOS_FREERTOS</tt> to the @c CPPFLAGS variable
+ * during builds of FreeRTOS applications.
  */
 #ifndef configBSP430_RTOS_FREERTOS
 #define configBSP430_RTOS_FREERTOS 0
 #endif /* configBSP430_RTOS_FREERTOS */
 
-/** Use the BSP430 timer infrastructure as the FreeRTOS scheduler.
+/** @def configBSP430_FREERTOS_SCHEDULER
  *
- */
+ * If defined to a true value, the FreeRTOS-MSPGCC port.c file will
+ * use the BSP430 timer infrastructure on TA0 for the task scheduler.
+ * This requires that #configBSP430_PERIPH_TA0 be true and
+ * #configBSP430_HAL_TA0_CC0_ISR be false.  Use of this feature is
+ * compatible with #configBSP430_UPTIME, and allows the FreeRTOS
+ * scheduler to co-exist with other users of TA0. */
 #ifndef configBSP430_FREERTOS_SCHEDULER
 #define configBSP430_FREERTOS_SCHEDULER 1
 #endif /* configBSP430_FREERTOS_SCHEDULER */
 
-/** FreeRTOS scheduler requires use of TA0 */
+/** FreeRTOS scheduler requires use of TA0.
+ *
+ * @note If the setting here conflicts with a setting elsewhere, the
+ * compiler should generate a warning. */
 #define configBSP430_PERIPH_TA0 1
-/** FreeRTOS scheduler defines its own TA0 CC0 ISR */
+
+/** FreeRTOS scheduler defines its own TA0 CC0 ISR.
+ *
+ * @note If the setting here conflicts with a setting elsewhere, the
+ * compiler should generate a warning.  */
 #define configBSP430_HAL_TA0_CC0_ISR 0
 
 /** Invoke to suspend the FreeRTOS scheduler.
