@@ -30,13 +30,15 @@ camel-case initial-capital suffix reflecting the function purpose.
 The use of tab characters instead of spaces, with a non-standard spacing of
 four positions for tables, is retained (regrettably).
 
+5xx/6xx-family devices are identified by checking for
+defined(__MSP430_HAS_MSP430XV2_CPU__).
+
 
 header: periph/%(periph)s.h
 multiple include protection: BSP430_PERIPH_%(PERIPH)s_H
 
-instance-specific HPL support: configBSP430_PERIPH_%(INSTANCE)s
-Shared HAL ISR: configBSP430_%(PERIPH)s_SHARE_ISR
-Instance-specific HAL ISR: configBSP430_PERIPH_%(INSTANCE)s_ISR
+Instance-specific HPL and HAL support: configBSP430_PERIPH_%(INSTANCE)s
+Instance-specific HAL ISR: configBSP430_HAL_%(INSTANCE)s_ISR
 
 peripheral instance handles: BSP430_PERIPH_%(INSTANCE)s
 register structure overlay: xBSP430periph%(PERIPH)
