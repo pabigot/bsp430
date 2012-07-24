@@ -32,39 +32,50 @@
 #include <bsp430/platform.h>
 #include <bsp430/periph/bc2.h>
 
+int
+iBSP430clockConfigureXT1 (int enablep,
+						  int loop_limit)
+{
+	int loop_delta;
+	int rc;
+	
+	rc = iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, enablep);
+	if ((0 != rc) || (! enablep)) {
+		return rc;
+	}
+	loop_delta = (0 < loop_limit) ? 1 : 0;
+
+	/* See whether the crystal is populated and functional.  Do
+	 * this with the DCO reset to the power-up configuration,
+	 * where clock should be nominal 1 MHz. */
+	BCSCTL3 = XCAP_1;
+	do {
+		BSP430_CLOCK_LFXT1_CLEAR_FAULT();
+		loop_limit -= loop_delta;
+		__delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+
+	} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
+	rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
+	if (! rc) {
+		BCSCTL3 = LFXT1S_2;
+		(void)iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 0);
+	}
+	return rc;
+}
+
 unsigned char
 ucBSP430bc2Configure (unsigned char ucDCOCTL,
 					  unsigned char ucBCSCTL1,
 					  unsigned char ucBCSCTL2,
 					  unsigned char ucBCSCTL3)
 {
-	unsigned char ucCrystalOK = pdFALSE;
+	unsigned char ucCrystalOK = 0;
 	
 	BSP430_ENTER_CRITICAL();
 	
 	BCSCTL3 = ucBCSCTL3;
-	if ((! (BCSCTL3 & LFXT1S1))
-		&& (0 == iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 1))) {
-		portBASE_TYPE uxStableLoopsLeft = 10;
-
-		/* See whether the crystal is populated and functional.  Do
-		 * this with the DCO reset to the power-up configuration,
-		 * where clock should be nominal 1 MHz. */
-		DCOCTL = 0;
-		BCSCTL1 = 0x87;
-		DCOCTL = 0x60;
-		do {
-			BSP430_CLOCK_LFXT1_CLEAR_FAULT();
-			--uxStableLoopsLeft;
-			__delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-			
-		} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 < uxStableLoopsLeft));
-		ucCrystalOK = !BSP430_CLOCK_LFXT1_IS_FAULTED();
-		if (! ucCrystalOK) {
-			/* No functional crystal; fall back to drive ACLK from VLOCLK */
-			BCSCTL3 |= LFXT1S_2;
-			(void)iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 0);
-		}
+	if (! (BCSCTL3 & LFXT1S1)) {
+		ucCrystalOK = iBSP430clockConfigureXT1(1, 10);
 	}
 	/* Select lowest DCOx and MODx prior to configuring */
 	DCOCTL = 0;
