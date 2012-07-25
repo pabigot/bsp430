@@ -158,7 +158,7 @@ iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus)
 }
 
 int
-iBSP430onewireReadByte_ni_ni (const xBSP430onewireBus * bus)
+iBSP430onewireReadByte_ni (const xBSP430onewireBus * bus)
 {
   int byte = 0;
   int bit = 1;

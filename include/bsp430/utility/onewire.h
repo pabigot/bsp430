@@ -130,7 +130,7 @@ int iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus);
  * @param bus The port and bit identifying the 1-wire bus
  * 
  * @return The value of the byte read (0 to 255). */
-int iBSP430onewireReadByte_ni_ni (const xBSP430onewireBus * bus);
+int iBSP430onewireReadByte_ni (const xBSP430onewireBus * bus);
 
 /** Calculate the CRC over the data.
  *
