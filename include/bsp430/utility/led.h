@@ -52,15 +52,6 @@
  * value, the application or platform must define this function. */
 void vBSP430ledInit_ni (void);
 
-/** Manipulate LEDs without entering critical section.
- * 
- * @see #vBSP430ledSet
- * 
- * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
- * value, the application or platform must define this function. */
-void vBSP430ledSet_ni (unsigned char ucLED,
-						   signed portBASE_TYPE xValue);
-
 /** Invoke to change the state of a given LED.
  *
  * @param ucLED The index to the LED of interest.  The call does
@@ -70,8 +61,10 @@ void vBSP430ledSet_ni (unsigned char ucLED,
  * on.  If zero, the LED is turned off.  If negative, the LED state is
  * inverted.
  *
- * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
- * value, the application or platform must define this function. */
+ * @note If #configBSP430_LED_USE_COMMON is defined to a true value,
+ * the application or platform need not define this function, but must
+ * provide the data structures described for
+ * #configBSP430_LED_USE_COMMON. */
 void vBSP430ledSet (unsigned char ucLED,
 					signed portBASE_TYPE xValue);
 
