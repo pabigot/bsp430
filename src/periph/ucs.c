@@ -118,7 +118,7 @@ ulBSP430ucsTrimFLLFromISR ()
 		} else {
 			abs_freq_err_tsp = targetFrequency_tsp_ - current_frequency_tsp;
 		}
-#if 1
+#if 0
 		cprintf("RSEL %u DCO %u MOD %u current %u target %u tol %u err %u ; ctl0 %04x last %04x\n",
 			   (UCSCTL1 >> 4) & 0x07, (UCSCTL0 >> 8) & 0x1F, (UCSCTL0 >> 3) & 0x1F,
 			   current_frequency_tsp, targetFrequency_tsp_, tolerance_tsp, abs_freq_err_tsp,
@@ -126,13 +126,13 @@ ulBSP430ucsTrimFLLFromISR ()
 #endif
 		if ((abs_freq_err_tsp <= tolerance_tsp)
 			|| (UCSCTL0 == last_ctl0)) {
-#if 1
+#if 0
 			cprintf("terminate tap %u error %u ctl0 %04x was %04x\n",
 				   taps_left, abs_freq_err_tsp, UCSCTL0, last_ctl0);
 #endif
 			break;
 		}
-#if 1
+#if 0
 		cprintf("running fll, error %u\n", abs_freq_err_tsp);
 #endif
 		/* Save current DCO/MOD values, then let FLL run for 32 REFCLK
