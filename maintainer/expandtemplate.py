@@ -23,7 +23,9 @@ templates = {
  *
  * The pointer may be used only if #configBSP430_PERIPH_%(INSTANCE)s
  * is defined to a true value. */
-extern volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_%(INSTANCE)s - 0)
+static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS;
+#endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
     
     'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
@@ -158,11 +160,6 @@ isr_%(INSTANCE)s (void)
 	if (BSP430_PERIPH_%(INSTANCE)s == periph) {
 		return xBSP430periph_%(INSTANCE)s;
 	}
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
-''',
-
-    'periph_ba_hpl_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
-volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 

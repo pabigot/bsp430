@@ -355,7 +355,9 @@ typedef struct xBSP430portState * xBSP430portHandle;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT1
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT1;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT1 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT1_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT1 */
 
 /** @def configBSP430_PERIPH_PORT2
  *
@@ -376,7 +378,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT1;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT2
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT2;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT2 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT2_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT2 */
 
 /** @def configBSP430_PERIPH_PORT3
  *
@@ -397,7 +401,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT2;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT3
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT3;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT3 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT3_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT3 */
 
 /** @def configBSP430_PERIPH_PORT4
  *
@@ -418,7 +424,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT3;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT4
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT4;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT4 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT4_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT4 */
 
 /** @def configBSP430_PERIPH_PORT5
  *
@@ -439,7 +447,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT4;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT5
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT5;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT5 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT5_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT5 */
 
 /** @def configBSP430_PERIPH_PORT6
  *
@@ -460,7 +470,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT5;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT6
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT6;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT6 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT6_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT6 */
 
 /** @def configBSP430_PERIPH_PORT7
  *
@@ -481,7 +493,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT6;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT7
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT7;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT7 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT7_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT7 */
 
 /** @def configBSP430_PERIPH_PORT8
  *
@@ -502,7 +516,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT7;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT8
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT8;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT8 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT8_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT8 */
 
 /** @def configBSP430_PERIPH_PORT9
  *
@@ -523,7 +539,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT8;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT9
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT9;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT9 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT9_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT9 */
 
 /** @def configBSP430_PERIPH_PORT10
  *
@@ -544,7 +562,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT9;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT10
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT10;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT10 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT10_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT10 */
 
 /** @def configBSP430_PERIPH_PORT11
  *
@@ -565,7 +585,9 @@ extern volatile xBSP430periphPORT * const xBSP430periph_PORT10;
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT11
  * is defined to a true value. */
-extern volatile xBSP430periphPORT * const xBSP430periph_PORT11;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT11 - 0)
+static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT11_BASEADDRESS;
+#endif /* configBSP430_PERIPH_PORT11 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 /* !BSP430! end=hpl_ba_decl */

@@ -142,7 +142,9 @@ typedef struct xBSP430periphUSCI {
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_A0
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A0 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A0_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_A0 */
 
 /** @def configBSP430_PERIPH_USCI_A1
  *
@@ -163,7 +165,9 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0;
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_A1
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A1 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A1_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_A1 */
 
 /** @def configBSP430_PERIPH_USCI_A2
  *
@@ -184,7 +188,9 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1;
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_A2
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A2;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A2 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A2 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A2_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_A2 */
 
 /** @def configBSP430_PERIPH_USCI_A3
  *
@@ -205,7 +211,9 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A2;
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_A3
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A3;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A3 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A3 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A3_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_A3 */
 
 /** @def configBSP430_PERIPH_USCI_B0
  *
@@ -226,7 +234,9 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_A3;
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_B0
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B0 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B0_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_B0 */
 
 /** @def configBSP430_PERIPH_USCI_B1
  *
@@ -247,7 +257,9 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0;
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_B1
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B1 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B1_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_B1 */
 
 /** @def configBSP430_PERIPH_USCI_B2
  *
@@ -268,7 +280,9 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1;
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_B2
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B2;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B2 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B2 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B2_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_B2 */
 
 /** @def configBSP430_PERIPH_USCI_B3
  *
@@ -289,7 +303,9 @@ extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B2;
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_B3
  * is defined to a true value. */
-extern volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B3 - 0)
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B3_BASEADDRESS;
+#endif /* configBSP430_PERIPH_USCI_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 /* !BSP430! end=hpl_ba_decl */

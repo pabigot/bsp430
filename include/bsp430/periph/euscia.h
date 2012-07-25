@@ -123,7 +123,9 @@ typedef struct xBSP430periphEUSCIA {
  *
  * The pointer may be used only if #configBSP430_PERIPH_EUSCI_A0
  * is defined to a true value. */
-extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A0 - 0)
+static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = (volatile xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A0_BASEADDRESS;
+#endif /* configBSP430_PERIPH_EUSCI_A0 */
 
 /** @def configBSP430_PERIPH_EUSCI_A1
  *
@@ -144,7 +146,9 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0;
  *
  * The pointer may be used only if #configBSP430_PERIPH_EUSCI_A1
  * is defined to a true value. */
-extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A1 - 0)
+static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = (volatile xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A1_BASEADDRESS;
+#endif /* configBSP430_PERIPH_EUSCI_A1 */
 
 /** @def configBSP430_PERIPH_EUSCI_A2
  *
@@ -165,7 +169,9 @@ extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1;
  *
  * The pointer may be used only if #configBSP430_PERIPH_EUSCI_A2
  * is defined to a true value. */
-extern volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2;
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A2 - 0)
+static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A2_BASEADDRESS;
+#endif /* configBSP430_PERIPH_EUSCI_A2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 /* !BSP430! end=hpl_ba_decl */

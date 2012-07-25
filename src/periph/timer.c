@@ -224,39 +224,6 @@ vBSP430timerResetCounter (xBSP430timerHandle timer)
 	BSP430_EXIT_CRITICAL();
 }
 
-/* !BSP430! insert=periph_ba_hpl_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_defn] */
-#if configBSP430_PERIPH_TA0 - 0
-volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS;
-#endif /* configBSP430_PERIPH_TA0 */
-
-#if configBSP430_PERIPH_TA1 - 0
-volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS;
-#endif /* configBSP430_PERIPH_TA1 */
-
-#if configBSP430_PERIPH_TA2 - 0
-volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS;
-#endif /* configBSP430_PERIPH_TA2 */
-
-#if configBSP430_PERIPH_TA3 - 0
-volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS;
-#endif /* configBSP430_PERIPH_TA3 */
-
-#if configBSP430_PERIPH_TB0 - 0
-volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS;
-#endif /* configBSP430_PERIPH_TB0 */
-
-#if configBSP430_PERIPH_TB1 - 0
-volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS;
-#endif /* configBSP430_PERIPH_TB1 */
-
-#if configBSP430_PERIPH_TB2 - 0
-volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS;
-#endif /* configBSP430_PERIPH_TB2 */
-
-/* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_defn] */
-/* !BSP430! end=periph_ba_hpl_defn */
-
 /* !BSP430! TYPE=A subst=TYPE instance=0,1,2,3 insert=hal_timer_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_defn] */
 #if (configBSP430_PERIPH_TA0 - 0) && (configBSP430_HAL_TA0_CC0_ISR - 0)
