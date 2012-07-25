@@ -57,7 +57,7 @@
  * @li Configure the clocks based on #BSP430_CLOCK_NOMINAL_MCLK_HZ
  * @li Start the system clock (if #configBSP430_UPTIME)
  */
-void vBSP430platformSetup ();
+void vBSP430platformSetup_ni ();
 
 /** Configure the pins associated with a given peripheral.
  *
@@ -88,8 +88,8 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
  * that pin to ground, wait for the driver to load, then remove the
  * jumper.
  *
- * @note vBSP430ledInit() must have been invoked before this function
+ * @note vBSP430ledInit_ni() must have been invoked before this function
  * is called. */
-void vBSP430platformSpinForJumper (void);
+void vBSP430platformSpinForJumper_ni (void);
 
 #endif /* BSP430_PLATFORM_H */

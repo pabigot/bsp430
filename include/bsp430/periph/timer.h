@@ -230,7 +230,7 @@ unsigned long ulBSP430timerCounter (xBSP430timerHandle timer,
  *
  * This clears both the overflow count and the timer internal counter.
  * It does not start or stop the timer. */
-void vBSP430timerResetCounter (xBSP430timerHandle timer);
+void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */

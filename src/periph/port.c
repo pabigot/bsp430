@@ -108,7 +108,7 @@ port_isr (xBSP430portHandle device,
 	int rv = 0;
 	if (0 != iv) {
 		int bit = (iv - 2) / 2;
-		rv = iBSP430callbackInvokeISRIndexed(device->pin_callback + bit, device, bit, rv);
+		rv = iBSP430callbackInvokeISRIndexed_ni(device->pin_callback + bit, device, bit, rv);
 	}
 	return rv;
 }

@@ -93,7 +93,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 }
 
 
-void vBSP430platformSetup ()
+void vBSP430platformSetup_ni ()
 {
 	int rc;
 	
@@ -101,10 +101,10 @@ void vBSP430platformSetup ()
 	WDTCTL = WDTPW + WDTHOLD;
 
 	/* Enable XT1 functions and clock */
-	rc = iBSP430clockConfigureXT1(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-	iBSP430ucsConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
-	ulBSP430ucsConfigure(BSP430_CLOCK_NOMINAL_MCLK_HZ, -1 );
+	rc = iBSP430clockConfigureXT1_ni(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+	iBSP430ucsConfigureACLK_ni(rc ? SELA__XT1CLK : SELA__VLOCLK);
+	ulBSP430ucsConfigure_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ, -1 );
 #if configBSP430_UPTIME - 0
-	vBSP430uptimeStart();
+	vBSP430uptimeStart_ni();
 #endif /* configBSP430_UPTIME */
 }

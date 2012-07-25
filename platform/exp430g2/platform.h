@@ -13,8 +13,8 @@
  * in a device for the first time, place a jumper connect P4.0 to
  * ground, wait for the driver to load, then remove the jumper.
  *
- * @note vBSP430ledInit() must have been invoked before this function
+ * @note vBSP430ledInit_ni() must have been invoked before this function
  * is called. */
-void vBSP430platformSpinForJumper (void);
+void vBSP430platformSpinForJumper_ni (void);
 
 #endif /* BSP430_PLATFORM_EXP430G2_H */

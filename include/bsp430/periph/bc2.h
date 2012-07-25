@@ -92,7 +92,7 @@
  * @return pdTrue if LFXT1 is enabled and has stabilized within the
  * default wait time, and pdFalse in all other cases. */
 unsigned char
-ucBSP430bc2Configure (unsigned char ucDCOCTL,
+ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
 					  unsigned char ucBCSCTL1,
 					  unsigned char ucBCSCTL2,
 					  unsigned char ucBCSCTL3);

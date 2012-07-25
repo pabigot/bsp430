@@ -40,7 +40,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 void vParTestInitialise( void )
 {
-	vBSP430ledInit();
+	vBSP430ledInit_ni();
 }
 
 void vParTestSetLED( unsigned portBASE_TYPE uxLED, signed portBASE_TYPE xValue )

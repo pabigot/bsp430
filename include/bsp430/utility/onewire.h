@@ -75,7 +75,7 @@ enum {
    * default 12-bit resolution.
    * 
    * For an externally (non-parasite) powered sensor, the caller may
-   * use #iBSP430onewireReadBit to determine whether the conversion
+   * use #iBSP430onewireReadBit_ni to determine whether the conversion
    * has completed.  Completion is indicated when the device responds
    * with a 1. */
   BSP430_ONEWIRE_CMD_CONVERT_T = 0x44,
@@ -96,7 +96,7 @@ enum {
  * @return 0 if no device was detected, 1 if a device responded to the
  * reset.
  */
-int iBSP430onewireReset (const xBSP430onewireBus * bus);
+int iBSP430onewireReset_ni (const xBSP430onewireBus * bus);
 
 /** Configure the bus pin for low power mode.
  *
@@ -104,7 +104,7 @@ int iBSP430onewireReset (const xBSP430onewireBus * bus);
  *
  * @param bus The port and bit identifying the 1-wire bus
  */
-void vBSP430onewireShutdown (const xBSP430onewireBus * bus);
+void vBSP430onewireShutdown_ni (const xBSP430onewireBus * bus);
 
 /** Write a byte onto the 1-wire bus.
  *
@@ -112,7 +112,7 @@ void vBSP430onewireShutdown (const xBSP430onewireBus * bus);
  * 
  * @param byte The value to be written.  The low 8 bits are
  * transmitted LSB-first. */
-void vBSP430onewireWriteByte (const xBSP430onewireBus * bus,
+void vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
                               int byte);
 
 /** Read a bit from the 1-wire bus.
@@ -120,17 +120,17 @@ void vBSP430onewireWriteByte (const xBSP430onewireBus * bus,
  * @param bus The port and bit identifying the 1-wire bus
  * 
  * @return The value of the bit read (0 or 1). */
-int iBSP430onewireReadBit (const xBSP430onewireBus * bus);
+int iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus);
 
 /** Read a byte from the 1-wire bus.
  *
- * Invokes #iBSP430onewireReadBit eight times to read the data, least
+ * Invokes #iBSP430onewireReadBit_ni eight times to read the data, least
  * significant bit first.
  *
  * @param bus The port and bit identifying the 1-wire bus
  * 
  * @return The value of the byte read (0 to 255). */
-int iBSP430onewireReadByte (const xBSP430onewireBus * bus);
+int iBSP430onewireReadByte_ni_ni (const xBSP430onewireBus * bus);
 
 /** Calculate the CRC over the data.
  *

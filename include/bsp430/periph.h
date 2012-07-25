@@ -204,7 +204,7 @@ struct xBSP430periphISRCallbackIndexed {
  * of each callback */
 static int
 __inline__
-iBSP430callbackInvokeISRVoid (const struct xBSP430periphISRCallbackVoid * const * cbpp,
+iBSP430callbackInvokeISRVoid_ni (const struct xBSP430periphISRCallbackVoid * const * cbpp,
 							  void * context,
 							  int basis)
 {
@@ -217,17 +217,17 @@ iBSP430callbackInvokeISRVoid (const struct xBSP430periphISRCallbackVoid * const 
 
 /** Execute a chain of #iBSP430periphISRCallbackIndexed callbacks.
  *
- * Same as #iBSP430callbackInvokeISRVoid, but providing an index to
+ * Same as #iBSP430callbackInvokeISRVoid_ni, but providing an index to
  * the callback.
  *
- * @param cbpp As with #iBSP430callbackInvokeISRVoid
- * @param context As with #iBSP430callbackInvokeISRVoid
+ * @param cbpp As with #iBSP430callbackInvokeISRVoid_ni
+ * @param context As with #iBSP430callbackInvokeISRVoid_ni
  * @param idx The index to be passed to each #iBSP430periphISRCallbackIndexed handler
- * @param basis As with #iBSP430callbackInvokeISRVoid
- * @return As with #iBSP430callbackInvokeISRVoid */
+ * @param basis As with #iBSP430callbackInvokeISRVoid_ni
+ * @return As with #iBSP430callbackInvokeISRVoid_ni */
 static int
 __inline__
-iBSP430callbackInvokeISRIndexed (const struct xBSP430periphISRCallbackIndexed * const * cbpp,
+iBSP430callbackInvokeISRIndexed_ni (const struct xBSP430periphISRCallbackIndexed * const * cbpp,
 								 void * context,
 								 int idx,
 								 int basis)

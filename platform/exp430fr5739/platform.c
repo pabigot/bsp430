@@ -37,7 +37,7 @@
 /* exp430fr5739 LEDs are PJ.0 to PJ.3 and PB.4 to PB.7.  PJ is not
  * byte addressable, so we need to have a custom implementation of the
  * LED interface. */
-void vBSP430ledInit (void)
+void vBSP430ledInit_ni (void)
 {
 	PJDIR |= 0x0F;
 	PJOUT &= ~0x0F;
@@ -135,7 +135,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 	return -1;
 }
 
-void vBSP430platformSetup ()
+void vBSP430platformSetup_ni ()
 {
 	int rc;
 	
@@ -144,16 +144,16 @@ void vBSP430platformSetup ()
 
 	/* Note: Platform crystal requires more than one second to
 	 * stabilize! */
-	rc = iBSP430clockConfigureXT1(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-	iBSP430csConfigureACLK(rc ? SELA__XT1CLK : SELA__VLOCLK);
-    ulBSP430csConfigureMCLK(BSP430_CLOCK_NOMINAL_MCLK_HZ);
+	rc = iBSP430clockConfigureXT1_ni(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+	iBSP430csConfigureACLK_ni(rc ? SELA__XT1CLK : SELA__VLOCLK);
+    ulBSP430csConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
 #if configBSP430_UPTIME - 0
-	vBSP430uptimeStart();
+	vBSP430uptimeStart_ni();
 #endif /* configBSP430_UPTIME */
 }
 
 void
-vBSP430platformSpinForJumper (void)
+vBSP430platformSpinForJumper_ni (void)
 {
 	int bit = 0;
 	/* P4.0 input with pullup */

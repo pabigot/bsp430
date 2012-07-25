@@ -42,14 +42,14 @@
  *
  * Other refinements in this module:
  *
- * @li #ulBSP430clockMCLK_Hz assumes that DCOCLK is the selected
+ * @li #ulBSP430clockMCLK_Hz_ni assumes that DCOCLK is the selected
  * source for MCLK, and returns the selected trimmed DCOCLK frequency.
  * 
- * @li #ulBSP430clockSMCLK_Hz assumes DCOCLK is the selected source
+ * @li #ulBSP430clockSMCLK_Hz_ni assumes DCOCLK is the selected source
  * for SMCLK, and returns the selected trimmed DCOCLK frequency
  * shifted right by #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
- * @li #usBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
+ * @li #usBSP430clockACLK_Hz_ni assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the
  * nominal VLOCLK frequency) otherwise.  Be aware that the actual
  * VLOCLK frequency may be different by 10-20%.
@@ -98,11 +98,11 @@
  *
  * @note This function has no effect on ACLK configuration.
  */
-unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
+unsigned long ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz);
 
 /** Call this to configure ACLK via the CS peripheral.
  *
- * Prior to invoking this, use #iBSP430clockConfigureXT1 to check for
+ * Prior to invoking this, use #iBSP430clockConfigureXT1_ni to check for
  * crystal stability, if ACLK is to be sourced from XT1.
  * 
  * @param sela The constant to assign to the SELA field of CSCTL2.
@@ -111,6 +111,6 @@ unsigned long ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz);
  * @return Zero if the configuration was successful; -1 if the value
  * for @a sela was not valid.
  */
-int iBSP430csConfigureACLK (unsigned int sela);
+int iBSP430csConfigureACLK_ni (unsigned int sela);
 
 #endif /* BSP430_PERIPH_CS_H */

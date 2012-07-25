@@ -55,8 +55,8 @@
  * A constant representing the desired clock speed of the master
  * clock.  Platform-specific configuration will use this value to
  * initialize the system clocks, and it may affect the return value
- * for functions like #ulBSP430clockMCLK_Hz and
- * #ulBSP430clockSMCLK_Hz.
+ * for functions like #ulBSP430clockMCLK_Hz_ni and
+ * #ulBSP430clockSMCLK_Hz_ni.
  *
  * @note The default value is calculated from
  * 3*3*5*5*512*69=115200*69, and is the value nearest 8MHz which is
@@ -85,15 +85,15 @@
 /** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
  *
  * Define this to the number of MCLK cycles that
- * #iBSP430clockConfigureXT1 should delay, after clearing oscillator
+ * #iBSP430clockConfigureXT1_ni should delay, after clearing oscillator
  * faults, before checking for oscillator stability.  This must be a
  * compile-time constant integer compatible with <tt>unsigned
- * long</tt>.  If this value is too short, #iBSP430clockConfigureXT1
+ * long</tt>.  If this value is too short, #iBSP430clockConfigureXT1_ni
  * may prematurely decide that the crystal is working; if it is too
- * long, the return from #iBSP430clockConfigureXT1 is delayed.
+ * long, the return from #iBSP430clockConfigureXT1_ni is delayed.
  *
  * @note The value is in MCLK ticks, so depends on the MCLK frequency
- * at the time #iBSP430clockConfigureXT1 is invoked.  It is suggested
+ * at the time #iBSP430clockConfigureXT1_ni is invoked.  It is suggested
  * that the crystal be checked and ACLK configured prior to
  * configuring MCLK for the application, when the MCU power-up MCLK
  * frequency of 1 MHz is in effect.  If this is done, the nominal
@@ -103,7 +103,7 @@
  * second use:
  *
  * @code
- * if (0 >= iBSP430clockConfigureXT1(1, 1000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES)) {
+ * if (0 >= iBSP430clockConfigureXT1_ni(1, 1000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES)) {
  *    // XT1 not available
  * }
  * @endcode
@@ -122,7 +122,7 @@
  * from observations.
  *
  * @return an estimate of the MCLK frequency, in Hz */
-unsigned long ulBSP430clockMCLK_Hz ();
+unsigned long ulBSP430clockMCLK_Hz_ni ();
 
 /** Return the best available estimate of SMCLK frequency.
  *
@@ -131,7 +131,7 @@ unsigned long ulBSP430clockMCLK_Hz ();
  * it may return a value calculated from observations.
  *
  * @return an estimate of the SMCLK frequency, in Hz */
-unsigned long ulBSP430clockSMCLK_Hz ();
+unsigned long ulBSP430clockSMCLK_Hz_ni ();
 
 /** Return the best available estimate of ACLK frequency.
  *
@@ -140,7 +140,7 @@ unsigned long ulBSP430clockSMCLK_Hz ();
  * observations.
  *
  * @return an estimate of the ACLK frequency, in Hz */
-unsigned short usBSP430clockACLK_Hz ();
+unsigned short usBSP430clockACLK_Hz_ni ();
 
 /** Check whether the LFXT1 crystal has a fault condition.
  *
@@ -251,7 +251,7 @@ unsigned short usBSP430clockACLK_Hz ();
  * source).  A negative value indicates an error, such as inability to
  * configure XIN/XOUT pins.
  */
-int iBSP430clockConfigureXT1 (int enablep,
+int iBSP430clockConfigureXT1_ni (int enablep,
 							  int loop_limit);
 
 #endif /* BSP430_CLOCK_H */

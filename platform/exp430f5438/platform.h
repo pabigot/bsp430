@@ -39,7 +39,7 @@
  * The following platform-specific features are supported:
  * <ul>
  *
- * <li> #vBSP430platformSpinForJumper is not implemented on this
+ * <li> #vBSP430platformSpinForJumper_ni is not implemented on this
  * platform.
  *
  * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks are made available at

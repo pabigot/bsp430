@@ -33,7 +33,7 @@
 #include <bsp430/periph/bc2.h>
 
 int
-iBSP430clockConfigureXT1 (int enablep,
+iBSP430clockConfigureXT1_ni (int enablep,
 						  int loop_limit)
 {
 	int loop_delta;
@@ -64,7 +64,7 @@ iBSP430clockConfigureXT1 (int enablep,
 }
 
 unsigned char
-ucBSP430bc2Configure (unsigned char ucDCOCTL,
+ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
 					  unsigned char ucBCSCTL1,
 					  unsigned char ucBCSCTL2,
 					  unsigned char ucBCSCTL3)
@@ -75,7 +75,7 @@ ucBSP430bc2Configure (unsigned char ucDCOCTL,
 	
 	BCSCTL3 = ucBCSCTL3;
 	if (! (BCSCTL3 & LFXT1S1)) {
-		ucCrystalOK = iBSP430clockConfigureXT1(1, 10);
+		ucCrystalOK = iBSP430clockConfigureXT1_ni(1, 10);
 	}
 	/* Select lowest DCOx and MODx prior to configuring */
 	DCOCTL = 0;

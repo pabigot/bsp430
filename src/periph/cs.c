@@ -40,7 +40,7 @@
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
 
 unsigned long
-ulBSP430clockMCLK_Hz ()
+ulBSP430clockMCLK_Hz_ni ()
 {
 	unsigned long freq_Hz = 0;
 	
@@ -70,13 +70,13 @@ ulBSP430clockMCLK_Hz ()
 }
 
 unsigned long
-ulBSP430clockSMCLK_Hz ()
+ulBSP430clockSMCLK_Hz_ni ()
 {
-	return ulBSP430clockMCLK_Hz() >> BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
+	return ulBSP430clockMCLK_Hz_ni() >> BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 }
 
 unsigned short
-usBSP430clockACLK_Hz ()
+usBSP430clockACLK_Hz_ni ()
 {
 	if ((SELA__XT1CLK == (CSCTL2 & SELA_MASK))
 		&& !(SFRIFG1 & OFIFG)) {
@@ -86,7 +86,7 @@ usBSP430clockACLK_Hz ()
 }
 
 unsigned long
-ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz)
+ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz)
 {
 	unsigned int csctl1 = 0x06;
 	if ((5330000UL + 6670000UL) / 2 > ulFrequency_Hz) {
@@ -108,11 +108,11 @@ ulBSP430csConfigureMCLK (unsigned long ulFrequency_Hz)
 	CSCTL3 = BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0;
 	CSCTL0_H = !0xA5;
 
-	return ulBSP430clockMCLK_Hz();
+	return ulBSP430clockMCLK_Hz_ni();
 }
 
 int
-iBSP430clockConfigureXT1 (int enablep,
+iBSP430clockConfigureXT1_ni (int enablep,
 						  int loop_limit)
 {
 	int loop_delta;
@@ -143,7 +143,7 @@ iBSP430clockConfigureXT1 (int enablep,
 }
 
 int
-iBSP430csConfigureACLK (unsigned int sela)
+iBSP430csConfigureACLK_ni (unsigned int sela)
 {
 	if (sela & ~SELA_MASK) {
 		return -1;

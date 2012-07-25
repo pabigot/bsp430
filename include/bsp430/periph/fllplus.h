@@ -81,7 +81,7 @@
 /** @def BSP430_FLLPLUS_XCAPxPF
  *
  * Oscillator capacitor section to be applied to FLL_CTL0 by
- * #iBSP430clockConfigureXT1.
+ * #iBSP430clockConfigureXT1_ni.
  *
  * @note Most examples use XCAP14PF, but my crude tests suggest that
  * of the capacitances available 0pF produces the closest to 32768 Hz,
@@ -133,6 +133,6 @@ typedef struct xBSP430fllplusConfig {
  *
  * @return pdTrue if the oscillator has stabilized within the
  * default wait time, and pdFalse if not. */
-unsigned char ucBSP430fllplusConfigure (const xBSP430fllplusConfig * pxConfig);
+unsigned char ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig);
 
 #endif /* BSP430_PERIPH_FLLPLUS_H */

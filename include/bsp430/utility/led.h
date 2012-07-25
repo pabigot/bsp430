@@ -50,7 +50,7 @@
  *
  * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
  * value, the application or platform must define this function. */
-void vBSP430ledInit (void);
+void vBSP430ledInit_ni (void);
 
 /** Manipulate LEDs without entering critical section.
  * 

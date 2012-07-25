@@ -68,7 +68,7 @@ enum {
 #define US_TO_CYCLES(_us) (((_us) * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000)
 
 int
-iBSP430onewireReset (const xBSP430onewireBus * bus)
+iBSP430onewireReset_ni (const xBSP430onewireBus * bus)
 {
   int present;
   
@@ -106,14 +106,14 @@ iBSP430onewireReset (const xBSP430onewireBus * bus)
 }
 
 void
-vBSP430onewireShutdown (const xBSP430onewireBus * bus)
+vBSP430onewireShutdown_ni (const xBSP430onewireBus * bus)
 {
   bus->port->out &= ~bus->bit;
   bus->port->dir &= ~bus->bit;
 }
 
 void
-vBSP430onewireWriteByte (const xBSP430onewireBus * bus,
+vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
                          int byte)
 {
   int bp;
@@ -143,7 +143,7 @@ vBSP430onewireWriteByte (const xBSP430onewireBus * bus,
 }
 
 int
-iBSP430onewireReadBit (const xBSP430onewireBus * bus)
+iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus)
 {
   int rv;
   
@@ -158,13 +158,13 @@ iBSP430onewireReadBit (const xBSP430onewireBus * bus)
 }
 
 int
-iBSP430onewireReadByte (const xBSP430onewireBus * bus)
+iBSP430onewireReadByte_ni_ni (const xBSP430onewireBus * bus)
 {
   int byte = 0;
   int bit = 1;
 
   do {
-    if (iBSP430onewireReadBit(bus)) {
+    if (iBSP430onewireReadBit_ni(bus)) {
       byte |= bit;
     }
     bit <<= 1;

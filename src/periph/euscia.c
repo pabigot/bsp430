@@ -80,12 +80,12 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 		/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
 		 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
 		 * anything larger.  */
-		brclk_Hz = usBSP430clockACLK_Hz();
+		brclk_Hz = usBSP430clockACLK_Hz_ni();
 		if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
 			device->euscia->ctlw0 = UCSWRST | UCSSEL__ACLK;
 		} else {
 			device->euscia->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-			brclk_Hz = ulBSP430clockSMCLK_Hz();
+			brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
 		}
 #define BR_FRACTION_SHIFT 6
 		/* The value for BRS is supposed to be a table lookup based on the

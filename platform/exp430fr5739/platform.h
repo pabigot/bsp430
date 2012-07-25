@@ -37,7 +37,7 @@
  *
  * The following platform-specific features are supported: <ul>
  *
- * <li> #vBSP430platformSpinForJumper The jumper for this platform
+ * <li> #vBSP430platformSpinForJumper_ni The jumper for this platform
  * is P4.0, located on the right of the board at the top.  Place the
  * jumper between P4.0 and GND.
  *

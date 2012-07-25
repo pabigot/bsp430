@@ -42,7 +42,7 @@
  * Based on experimentation, the following is assumed or enforced for
  * all supported clock configurations:
  * 
- * @li SELREF is XT1CLK running at 32768 Hz.  #ulBSP430ucsConfigure
+ * @li SELREF is XT1CLK running at 32768 Hz.  #ulBSP430ucsConfigure_ni
  * will enforce this.
  *
  * @li FLLD is consistently set to /2, which is the PUC value and
@@ -60,14 +60,14 @@
  *
  * Other refinements in this module:
  *
- * @li #ulBSP430clockMCLK_Hz returns the most recent measured trimmed
+ * @li #ulBSP430clockMCLK_Hz_ni returns the most recent measured trimmed
  * frequency.
  * 
- * @li #ulBSP430clockSMCLK_Hz returns the most recent measured trimmed
+ * @li #ulBSP430clockSMCLK_Hz_ni returns the most recent measured trimmed
  * frequency shifted right by
  * #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
- * @li #usBSP430clockACLK_Hz assumes returns 32768 if XT1CLK is the
+ * @li #usBSP430clockACLK_Hz_ni assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the
  * nominal VLOCLK frequency) otherwise.  Be aware that the actual
  * VLOCLK frequency may be different by 10-20%, and that if ACLK is
@@ -123,15 +123,15 @@
  *
  * @note This function expects a valid 32 kiHz clock source on XT1,
  * and that this will be used as the source for ACLK.  It invokes
- * #iBSP430clockConfigureXT1 and #iBSP430ucsConfigureACLK to ensure
+ * #iBSP430clockConfigureXT1_ni and #iBSP430ucsConfigureACLK_ni to ensure
  * the expectation is met.  A call to this function will not return if
  * XT1 cannot be stabilized. */
-unsigned long ulBSP430ucsConfigure (unsigned long ulFrequency_Hz,
+unsigned long ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
 									short sRSEL);
 
 /** Call this to configure ACLK via the UCS peripheral.
  *
- * Prior to invoking this, use #iBSP430clockConfigureXT1 to check for
+ * Prior to invoking this, use #iBSP430clockConfigureXT1_ni to check for
  * crystal stability, if ACLK is to be sourced from XT1.
  * 
  * @param sela The constant to assign to the SELA field of UCSCTL4.
@@ -140,13 +140,13 @@ unsigned long ulBSP430ucsConfigure (unsigned long ulFrequency_Hz,
  * @return Zero if the configuration was successful; -1 if the value
  * for @a sela was not valid.
  */
-int iBSP430ucsConfigureACLK (unsigned int sela);
+int iBSP430ucsConfigureACLK_ni (unsigned int sela);
 
 /** Call this periodically to trim the FLL.
  *
  * The function uses the ratio of SMCLK to ACLK to determine the speed
  * of SMCLK, and if it is "too far" from the value specified in the
- * last call to ulBSP430ucsConfigure() enables the FLL for a short
+ * last call to ulBSP430ucsConfigure_ni() enables the FLL for a short
  * period to see if accuracy can be improved.
  *
  * If no timer is identified by #BSP430_UCS_TRIMFLL_TIMER_HAL_HANDLE,

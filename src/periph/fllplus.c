@@ -32,7 +32,7 @@
 #include <bsp430/periph/fllplus.h>
 
 unsigned char
-ucBSP430fllplusConfigure (const xBSP430fllplusConfig * pxConfig)
+ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
 {
 	unsigned char ucReturnValue;
 	unsigned int uxStableLoopsLeft = 100;
@@ -56,23 +56,23 @@ ucBSP430fllplusConfigure (const xBSP430fllplusConfig * pxConfig)
 }
 
 unsigned long
-ulBSP430clockMCLK_Hz ()
+ulBSP430clockMCLK_Hz_ni ()
 {
 }
 
 unsigned long
-ulBSP430clockSMCLK_Hz ()
+ulBSP430clockSMCLK_Hz_ni ()
 {
 }
 
 unsigned short
-usBSP430clockACLK_Hz ()
+usBSP430clockACLK_Hz_ni ()
 {
 	return (FLL_CTL0 & LFOF) ? 12000U : 32768U;
 }
 
 int
-iBSP430clockConfigureXT1 (int enablep,
+iBSP430clockConfigureXT1_ni (int enablep,
 						  int loop_limit)
 {
 	int loop_delta;

@@ -164,19 +164,19 @@ ulBSP430ucsTrimFLL_ni ()
 #endif /* BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE */
 
 unsigned long
-ulBSP430clockMCLK_Hz ()
+ulBSP430clockMCLK_Hz_ni ()
 {
 	return lastTrimFrequency_Hz_;
 }
 
 unsigned long
-ulBSP430clockSMCLK_Hz ()
+ulBSP430clockSMCLK_Hz_ni ()
 {
 	return lastTrimFrequency_Hz_ >> BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 }
 
 unsigned short
-usBSP430clockACLK_Hz ()
+usBSP430clockACLK_Hz_ni ()
 {
 	if ((SELA__XT1CLK == (UCSCTL4 & (SELA0 | SELA1 | SELA2)))
 		&& !(SFRIFG1 & OFIFG)) {
@@ -186,7 +186,7 @@ usBSP430clockACLK_Hz ()
 }
 
 int
-iBSP430clockConfigureXT1 (int enablep,
+iBSP430clockConfigureXT1_ni (int enablep,
 						  int loop_limit)
 {
 	int loop_delta;
@@ -218,7 +218,7 @@ iBSP430clockConfigureXT1 (int enablep,
 }
 
 
-int iBSP430ucsConfigureACLK (unsigned int sela)
+int iBSP430ucsConfigureACLK_ni (unsigned int sela)
 {
 	if (sela & ~SELA_MASK) {
 		return -1;
@@ -228,7 +228,7 @@ int iBSP430ucsConfigureACLK (unsigned int sela)
 }
 
 unsigned long
-ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
+ulBSP430ucsConfigure_ni ( unsigned long ulFrequency_Hz,
 					   short sRSEL )
 {
 	/* The values in this table should be roughly half the minimum
@@ -264,9 +264,9 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 
 	/* Require XT1 valid and use it as ACLK source */
 	if (UCSCTL7 & XT1LFOFFG) {
-		(void)iBSP430clockConfigureXT1 (1, -1);
+		(void)iBSP430clockConfigureXT1_ni (1, -1);
 	}
-	iBSP430ucsConfigureACLK(SELA__XT1CLK);
+	iBSP430ucsConfigureACLK_ni(SELA__XT1CLK);
 
 	/* All supported frequencies can be efficiently achieved using
 	 * FFLD set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).

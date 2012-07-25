@@ -63,28 +63,28 @@
 /** Flag indicating a BOR occurred during the last reset.
  *
  * Set in the output reset flags parameter by
- * #uiBSP430sysSYSRSTGenerator when a reset cause with a priority at
+ * #uiBSP430sysSYSRSTGenerator_ni when a reset cause with a priority at
  * least as high as security violation has been recorded. */
 #define BSP430_SYS_FLAG_SYSRST_BOR 0x0001
 
 /** Flag indicating an LPMx.5 wakeup occurred during the last reset.
  *
  * Set in the output reset flags parameter by
- * #uiBSP430sysSYSRSTGenerator when SYSRSTIV_LPM5WU has been
+ * #uiBSP430sysSYSRSTGenerator_ni when SYSRSTIV_LPM5WU has been
  * recorded. */
 #define BSP430_SYS_FLAG_SYSRST_LPM5WU 0x0002
 
 /** Flag indicating a POR occurred during the last reset.
  *
  * Set in the output reset flags parameter by
- * #uiBSP430sysSYSRSTGenerator when a reset cause with a priority at
+ * #uiBSP430sysSYSRSTGenerator_ni when a reset cause with a priority at
  * least as high as PMM_DOPOR has been recorded. */
 #define BSP430_SYS_FLAG_SYSRST_POR 0x0004
 
 /** Flag indicating a PUC occurred during the last reset.
  *
  * Set in the output reset flags parameter by
- * #uiBSP430sysSYSRSTGenerator when any reset cause was recorded. */
+ * #uiBSP430sysSYSRSTGenerator_ni when any reset cause was recorded. */
 #define BSP430_SYS_FLAG_SYSRST_PUC 0x0008
 
 /** Generate the events recorded within the system reset vector.
@@ -109,7 +109,7 @@
  * @return A positive integer value corresponding to a SYSRST_type
  * supported on the current microcontroller, or zero if all such
  * values have been returned. */
-unsigned int uiBSP430sysSYSRSTGenerator (unsigned int * puiResetFlags,
+unsigned int uiBSP430sysSYSRSTGenerator_ni (unsigned int * puiResetFlags,
 										 const char ** ppcDescription);
 
 #endif /* BSP430_PERIPH_SYS_H */

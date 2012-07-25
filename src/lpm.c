@@ -40,7 +40,7 @@
 #include <bsp430/lpm.h>
 
 void
-vBSP430lpmConfigurePortsForLPM ()
+vBSP430lpmConfigurePortsForLPM_ni ()
 {
 #define CONFIGURE_FOR_LPM(_p) do { \
 		P##_p##DIR = ~0;		   \

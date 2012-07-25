@@ -41,7 +41,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 	return -1;
 }
 
-void vBSP430platformSetup ()
+void vBSP430platformSetup_ni ()
 {
 	unsigned char ucDCOCTL = DCOCTL;
 	unsigned char ucBCSCTL1 = BCSCTL1;
@@ -73,16 +73,16 @@ void vBSP430platformSetup ()
 
 	ucBCSCTL2 = DIVS0 * BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 
-	/* ucBSP430bc2Configure does the crystal stabilization */
-	(void)ucBSP430bc2Configure(ucDCOCTL, ucBCSCTL1, ucBCSCTL2, ucBCSCTL3);
+	/* ucBSP430bc2Configure_ni does the crystal stabilization */
+	(void)ucBSP430bc2Configure_ni(ucDCOCTL, ucBCSCTL1, ucBCSCTL2, ucBCSCTL3);
 
 #if configBSP430_UPTIME - 0
-	vBSP430uptimeStart();
+	vBSP430uptimeStart_ni();
 #endif
 }
 
 void
-vBSP430platformSpinForJumper (void)
+vBSP430platformSpinForJumper_ni (void)
 {
     /* P2.6 I/O input with pullup */
     P2DIR &= ~BIT6;

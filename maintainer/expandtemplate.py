@@ -103,7 +103,7 @@ __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
 isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 {
 	xBSP430%(periph)sHandle timer = xBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
-	int rv = iBSP430callbackInvokeISRVoid(&timer->cc0_callback, timer, 0);
+	int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
 	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR */
@@ -119,10 +119,10 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 	if (0 != iv) {
 		if (T%(TYPE)s_OVERFLOW == iv) {
 			++timer->overflow_count;
-			rv = iBSP430callbackInvokeISRVoid(&timer->overflow_callback, timer, rv);
+			rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
 		} else {
 			int cc = (iv - 4) / 2;
-			rv = iBSP430callbackInvokeISRIndexed(cc + timer->cc_callback, timer, 1+cc, rv);
+			rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
 		}
 	}
 	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);

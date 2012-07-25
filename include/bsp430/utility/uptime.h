@@ -34,7 +34,7 @@
  *
  * It is recommended that the default configuration using undivided
  * ACLK be retained, and that this functionality be enabled by
- * defining #configBSP430_UPTIME and invoking #vBSP430uptimeStart on
+ * defining #configBSP430_UPTIME and invoking #vBSP430uptimeStart_ni on
  * hardware initialization (as soon as the crystal driving ACLK has
  * been stabilized).
  * 
@@ -123,25 +123,25 @@ ulBSP430uptime (void)
  *
  * The timer associated with the uptime clock is reset to zero and
  * begins counting up. */
-void vBSP430uptimeStart (void);
+void vBSP430uptimeStart_ni (void);
 
 /** Suspend the system uptime clock.
  *
  * Suspension means that the clocks are halted and interrupts from
  * them inhibited.  Counter values are not modified.
- * #vBSP430uptimeResume should be invoked to release the clocks to
+ * #vBSP430uptimeResume_ni should be invoked to release the clocks to
  * continue counting.
  *
  * The system clock may be suspended prior to entering certain low
  * power modes.
  */
-void vBSP430uptimeSuspend (void);
+void vBSP430uptimeSuspend_ni (void);
 
 /** Resume the system uptime clock
  *
  * The clocks are re-enabled to continue counting from their last
  * recorded value.
  */
-void vBSP430uptimeResume (void);
+void vBSP430uptimeResume_ni (void);
 
 #endif /* BSP430_UTILITY_UPTIME_H */

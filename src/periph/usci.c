@@ -71,12 +71,12 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 		/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
 		 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
 		 * anything larger.  */
-		brclk_Hz = usBSP430clockACLK_Hz();
+		brclk_Hz = usBSP430clockACLK_Hz_ni();
 		if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
 			device->usci->ctlw0 = UCSWRST | UCSSEL__ACLK;
 		} else {
 			device->usci->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-			brclk_Hz = ulBSP430clockSMCLK_Hz();
+			brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
 		}
 		br = (brclk_Hz / baud);
 		brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;

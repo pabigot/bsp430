@@ -220,7 +220,7 @@ EMIT_SYSRSTIV(SYSRSTIV_WDTTO, "WDT Time out")
 };
 
 unsigned int
-uiBSP430sysSYSRSTGenerator (unsigned int * puiResetFlags,
+uiBSP430sysSYSRSTGenerator_ni (unsigned int * puiResetFlags,
 							const char ** ppcDescription)
 {
 	unsigned int iv = SYSRSTIV;
