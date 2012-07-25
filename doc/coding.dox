@@ -27,6 +27,19 @@ camel-case initial-capital suffix reflecting the function purpose.
 
 </ul>
 
+_ni : Not interruptible.  Caller must have disabled interrupts prior to
+invoking this; failure to do so permits "bad" behavior possibly including
+system deadlocks.
+
+In the absence of the _ni suffix, functions will complete in accordance with
+their documented behavior.  That behavior may include yielding control in a
+cooperative or preemptive multitasking environment.  The implementation may
+internally block interrupts as necessary to complete its work safely; if it
+does, the interrupt state on entry will be restored on exit.  If the
+function is documented to depend on an external resource (such as a UART),
+it may assume that no activity that might occur while it is executing will
+interfere with that resource.
+
 The use of tab characters instead of spaces, with a non-standard spacing of
 four positions for tables, is retained (regrettably).
 

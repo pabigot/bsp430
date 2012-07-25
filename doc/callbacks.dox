@@ -1,0 +1,17 @@
+/** @file
+
+@brief Support for chained callback registrations.
+
+Applications often need to perform specific operations when events occur.
+Encoding those operations directly into the event infrastructure can
+introduce coupling, especially when the infrastructure is a shared interrupt
+service routine.
+
+This header provides function types and structures that allow applications
+to hook into callback chains.  Function types reflect common purposes: for
+example, notifying interested parties that a particular event has occurred,
+and aggregating their overall response.  Structures support linked lists of
+callback function pointers.  Inline functions simplify the invocation of the
+callback chains.
+
+*/
