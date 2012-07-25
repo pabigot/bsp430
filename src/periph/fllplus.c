@@ -37,8 +37,6 @@ ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
 	unsigned char ucReturnValue;
 	unsigned int uxStableLoopsLeft = 100;
 	
-	BSP430_ENTER_CRITICAL();
-
 	FLL_CTL0 = pxConfig->ucFLL_CTL0;
 	FLL_CTL1 = pxConfig->ucFLL_CTL1;
 	do {
@@ -51,7 +49,6 @@ ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
 	SCFI0 = pxConfig->ucSCFI0;
 	SCFQCTL = pxConfig->ucSCFQCTL;
 
-	BSP430_EXIT_CRITICAL();
 	return ucReturnValue;
 }
 

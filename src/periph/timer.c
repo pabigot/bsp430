@@ -203,25 +203,12 @@ ulBSP430timerCounter_ni (xBSP430timerHandle timer,
 	return (timer->overflow_count << 16) + r;
 }
 
-unsigned long
-ulBSP430timerCounter (xBSP430timerHandle timer,
-					  unsigned int * overflowp)
-{
-	unsigned long rv;
-	BSP430_ENTER_CRITICAL();
-	rv = ulBSP430timerCounter_ni(timer, overflowp);
-	BSP430_EXIT_CRITICAL();
-	return rv;
-}
-
 void
 vBSP430timerResetCounter_ni (xBSP430timerHandle timer)
 {
-	BSP430_ENTER_CRITICAL();
 	timer->overflow_count = 0;
 	timer->timer->r = 0;
 	timer->timer->ctl &= ~TAIFG;
-	BSP430_EXIT_CRITICAL();
 }
 
 /* !BSP430! TYPE=A subst=TYPE instance=0,1,2,3 insert=hal_timer_isr_defn */

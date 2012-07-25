@@ -48,6 +48,7 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 					 unsigned int control_word,
 					 unsigned long baud)
 {
+	BSP430_CORE_INTERRUPT_STATE_T istate;
 	unsigned long brclk_Hz;
 	xBSP430usciHandle device = periphToDevice(periph);
 	uint16_t br;
@@ -55,7 +56,7 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 
 	configASSERT(NULL != device);
 
-	BSP430_ENTER_CRITICAL();
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
 	/* Reject invalid baud rates */
 	if ((0 == baud) || (1000000UL < baud)) {
 		device = NULL;
@@ -95,7 +96,7 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 			device->usci->ie |= UCRXIE;
 		}
 	}
-	BSP430_EXIT_CRITICAL();
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
 	return device;
 }
@@ -105,9 +106,10 @@ iBSP430usciConfigureQueues (xBSP430usciHandle device,
 							xQueueHandle rx_queue,
 							xQueueHandle tx_queue)
 {
+	BSP430_CORE_INTERRUPT_STATE_T istate;
 	int rc = 0;
 	
-	BSP430_ENTER_CRITICAL();
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
 	device->usci->ctlw0 |= UCSWRST;
 	if (device->rx_queue || device->tx_queue) {
 		rc = -1;
@@ -121,20 +123,23 @@ iBSP430usciConfigureQueues (xBSP430usciHandle device,
 	if (0 != device->rx_queue) {
 		device->usci->ie |= UCRXIE;
 	}
-	BSP430_EXIT_CRITICAL();
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
 	return rc;
 }
 
 int
 iBSP430usciClose (xBSP430usciHandle device)
 {
+	BSP430_CORE_INTERRUPT_STATE_T istate;
 	int rc;
 	
-	BSP430_ENTER_CRITICAL();
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
 	device->usci->ctlw0 = UCSWRST;
 	rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(uintptr_t)(device->usci), 0);
 	device->flags = 0;
-	BSP430_EXIT_CRITICAL();
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
 	return rc;
 }
 
@@ -157,9 +162,10 @@ iBSP430usciClose (xBSP430usciHandle device)
 void
 vBSP430usciWakeupTransmit (xBSP430usciHandle device)
 {
-	BSP430_ENTER_CRITICAL();
+	BSP430_CORE_INTERRUPT_STATE_T istate;
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
 	USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
-	BSP430_EXIT_CRITICAL();
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
 #define RAW_TRANSMIT(_periph, _c) do {			\

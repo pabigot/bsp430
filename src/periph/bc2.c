@@ -71,8 +71,6 @@ ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
 {
 	unsigned char ucCrystalOK = 0;
 	
-	BSP430_ENTER_CRITICAL();
-	
 	BCSCTL3 = ucBCSCTL3;
 	if (! (BCSCTL3 & LFXT1S1)) {
 		ucCrystalOK = iBSP430clockConfigureXT1_ni(1, 10);
@@ -86,6 +84,5 @@ ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
 	/* Set clock dividers */
 	BCSCTL2 = ucBCSCTL2;
 
-	BSP430_EXIT_CRITICAL();
 	return ucCrystalOK;
 }

@@ -85,12 +85,59 @@
 
 #include "FreeRTOS.h"
 
-/** Disable interrupts and halt any potential task switching */
-#define BSP430_ENTER_CRITICAL() portENTER_CRITICAL()
-
-/** Decrease critical nesting level */
-#define BSP430_EXIT_CRITICAL() portEXIT_CRITICAL()
-
 #endif /* configBSP430_RTOS_FREERTOS */
+
+/** @def BSP430_CORE_INTERRUPT_STATE_T
+ *
+ * A type that can be used to declare a variable that will hold
+ * interrupt state stored by #BSP430_CORE_SAVE_INTERRUPT_STATE.
+ */
+#ifndef BSP430_CORE_INTERRUPT_STATE_T
+#define BSP430_CORE_INTERRUPT_STATE_T __istate_t
+#endif /* BSP430_CORE_INTERRUPT_STATE_T */
+
+/** @def BSP430_CORE_SAVE_INTERRUPT_STATE(_state)
+ *
+ * A function macro that will record whether interrupts are currently
+ * enabled in the state parameter.  The parameter should subsequently
+ * be passed to #BSP430_CORE_RESTORE_INTERRUPT_STATE.
+ *
+ * @param _state where the interrupt enable/disable state is stored.
+ */
+#ifndef BSP430_CORE_SAVE_INTERRUPT_STATE
+#define BSP430_CORE_SAVE_INTERRUPT_STATE(_state) do {	\
+		(_state) = __get_interrupt_state();				\
+	} while (0)
+#endif /* BSP430_CORE_SAVE_INTERRUPT_STATE */
+
+/** @def BSP430_CORE_RESTORE_INTERRUPT_STATE(_state)
+ *
+ * A function macro that will enable or disable interrupts as recorded
+ * in the provided state parameter.  The parameter value should have
+ * been created using #BSP430_CORE_SAVE_INTERRUPT_STATE.
+ *
+ * @param _state where the interrupt enable/disable state is stored.
+ */
+#ifndef BSP430_CORE_RESTORE_INTERRUPT_STATE
+#define BSP430_CORE_RESTORE_INTERRUPT_STATE(_state) do {	\
+		__set_interrupt_state(_state);						\
+	} while (0)
+#endif /* BSP430_CORE_RESTORE_INTERRUPT_STATE */
+
+/** @def BSP430_CORE_ENABLE_INTERRUPT()
+ *
+ * Set the status register #GIE bit so that interrupts are enabled.
+ */
+#ifndef BSP430_CORE_ENABLE_INTERRUPT
+#define BSP430_CORE_ENABLE_INTERRUPT() __enable_interrupt()
+#endif /* BSP430_CORE_ENABLE_INTERRUPT */
+
+/** @def BSP430_CORE_DISABLE_INTERRUPT()
+ *
+ * Clear the status register #GIE bit so that interrupts are disabled.
+ */
+#ifndef BSP430_CORE_DISABLE_INTERRUPT
+#define BSP430_CORE_DISABLE_INTERRUPT() __disable_interrupt()
+#endif /* BSP430_CORE_DISABLE_INTERRUPT */
 
 #endif /* BSP430_COMMON_H */

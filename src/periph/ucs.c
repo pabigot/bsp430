@@ -260,8 +260,6 @@ ulBSP430ucsConfigure_ni ( unsigned long ulFrequency_Hz,
 		}
 	}
 
-	BSP430_ENTER_CRITICAL();
-
 	/* Require XT1 valid and use it as ACLK source */
 	if (UCSCTL7 & XT1LFOFFG) {
 		(void)iBSP430clockConfigureXT1_ni (1, -1);
@@ -299,7 +297,6 @@ ulBSP430ucsConfigure_ni ( unsigned long ulFrequency_Hz,
 	/* Turn FLL back on */
 	__bic_status_register(SCG0);
 #endif
-	BSP430_EXIT_CRITICAL();
 
 	return ulReturn;
 }

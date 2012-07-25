@@ -214,6 +214,26 @@ typedef struct xBSP430timerState * xBSP430timerHandle;
 unsigned long ulBSP430timerCounter_ni (xBSP430timerHandle timer,
 										   unsigned int * overflowp);
 
+/** Read timer counter regardless of interrupt enable state.
+ *
+ * This wraps #ulBSP430timerCounter_ni with code that saves the
+ * interrupt state, reads the timer, then restores the entry interrupt
+ * state prior to returning the timer counts.
+ */
+static unsigned long
+__inline__
+ulBSP430timerCounter (xBSP430timerHandle timer,
+					  unsigned int * overflowp)
+{
+	BSP430_CORE_INTERRUPT_STATE_T istate;
+	unsigned long rv;
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	BSP430_CORE_DISABLE_INTERRUPT();
+	rv = ulBSP430timerCounter_ni(timer, overflowp);
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+	return rv;
+}
+
 /** Read the timer counter.
  *
  * @param timer The timer for which the count is desired.

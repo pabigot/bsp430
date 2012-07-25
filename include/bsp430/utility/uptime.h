@@ -100,10 +100,7 @@
 #define BSP430_UPTIME_CLOCK_HZ (BSP430_CLOCK_NOMINAL_ACLK_HZ >> BSP430_UPTIME_DIVIDING_SHIFT)
 #endif /* BSP430_UPTIME_CLOCK_HZ */
 
-/** Return system uptime in clock ticks.
- *
- * This function should be called with interrupts disabled. 
- */
+/** Return system uptime in clock ticks with disabled interrupts. */
 static unsigned long
 __inline__
 ulBSP430uptime_ni (void)
