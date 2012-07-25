@@ -1,0 +1,7 @@
+#!/bin/sh
+
+( find . -name '*~' ;
+  find . -name '*.d' ;
+  find . -name '*.o' ;
+  find . -name '*.bak'
+) | xargs rm
