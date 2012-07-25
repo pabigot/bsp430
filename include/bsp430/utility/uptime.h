@@ -106,9 +106,9 @@
  */
 static unsigned long
 __inline__
-ulBSP430uptimeFromISR (void)
+ulBSP430uptime_ni (void)
 {
-	return ulBSP430timerCounterFromISR(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
+	return ulBSP430timerCounter_ni(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
 }
 
 /** Return the system uptime in clock ticks. */

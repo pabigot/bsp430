@@ -75,7 +75,7 @@ static unsigned long lastTrimFrequency_Hz_;
 #endif /* BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS */
 
 unsigned long
-ulBSP430ucsTrimFLLFromISR ()
+ulBSP430ucsTrimFLL_ni ()
 {
 	short taps_left = 32;
 	unsigned short last_ctl0;
@@ -192,7 +192,7 @@ iBSP430clockConfigureXT1 (int enablep,
 	int loop_delta;
 	int rc;
 	
-	rc = iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, enablep);
+	rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, enablep);
 	if ((0 != rc) || (! enablep)) {
 		return rc;
 	}
@@ -212,7 +212,7 @@ iBSP430clockConfigureXT1 (int enablep,
 	rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
 	if (! rc) {
 		UCSCTL6 |= XT1OFF;
-		(void)iBSP430platformConfigurePeripheralPinsFromISR(BSP430_PERIPH_XT1, 0);
+		(void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, 0);
 	}
 	return rc;
 }
@@ -285,7 +285,7 @@ ulBSP430ucsConfigure ( unsigned long ulFrequency_Hz,
 	targetFrequency_tsp_ = ulFrequency_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
 	targetFrequency_tsp_ >>= BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 
-	ulReturn = ulBSP430ucsTrimFLLFromISR();
+	ulReturn = ulBSP430ucsTrimFLL_ni();
 
 	/* Spin until DCO stabilized */
 	do {

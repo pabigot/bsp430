@@ -211,7 +211,7 @@ typedef struct xBSP430timerState * xBSP430timerHandle;
  *
  * @return A 32-bit unsigned count of the number of clock ticks
  * observed since the timer was last reset. */
-unsigned long ulBSP430timerCounterFromISR (xBSP430timerHandle timer,
+unsigned long ulBSP430timerCounter_ni (xBSP430timerHandle timer,
 										   unsigned int * overflowp);
 
 /** Read the timer counter.

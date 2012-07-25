@@ -171,7 +171,7 @@ xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
 #endif /* configBSP430_PERIPH_TB2 */
 
 unsigned long
-ulBSP430timerCounterFromISR (xBSP430timerHandle timer,
+ulBSP430timerCounter_ni (xBSP430timerHandle timer,
 							 unsigned int * overflowp)
 {
 	unsigned int r;
@@ -209,7 +209,7 @@ ulBSP430timerCounter (xBSP430timerHandle timer,
 {
 	unsigned long rv;
 	BSP430_ENTER_CRITICAL();
-	rv = ulBSP430timerCounterFromISR(timer, overflowp);
+	rv = ulBSP430timerCounter_ni(timer, overflowp);
 	BSP430_EXIT_CRITICAL();
 	return rv;
 }

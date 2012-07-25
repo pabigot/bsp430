@@ -225,7 +225,7 @@ unsigned short usBSP430clockACLK_Hz ();
 /** Configure (or deconfigure) XT1 as a clock source.
  *
  * The peripheral-specific implementation will use
- * #iBSP430platformConfigurePeripheralPinsFromISR with #BSP430_PERIPH_XT1 to
+ * #iBSP430platformConfigurePeripheralPins_ni with #BSP430_PERIPH_XT1 to
  * configure the crystal.  If crystal functionality has been
  * requested, it then clears oscillator faults, delays
  * #BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, then detects

@@ -58,7 +58,7 @@ void vBSP430ledInit (void);
  * 
  * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
  * value, the application or platform must define this function. */
-void vBSP430ledSetFromISR (unsigned char ucLED,
+void vBSP430ledSet_ni (unsigned char ucLED,
 						   signed portBASE_TYPE xValue);
 
 /** Invoke to change the state of a given LED.

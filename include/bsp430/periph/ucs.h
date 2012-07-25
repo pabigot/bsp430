@@ -167,11 +167,11 @@ int iBSP430ucsConfigureACLK (unsigned int sela);
  *
  * @return an estimate of the actual running frequency.
  */
-unsigned long ulBSP430ucsTrimFLLFromISR ();
+unsigned long ulBSP430ucsTrimFLL_ni ();
 
 /** @def BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
  *
- * #ulBSP430ucsTrimFLLFromISR requires a timer that can be used while
+ * #ulBSP430ucsTrimFLL_ni requires a timer that can be used while
  * the FLL is being trimmed.  The timer must have a capture/compare
  * block which can be configured to use ACLK as its input.  CCI0B on
  * TB0.6 is a candidate for at least some 5xx/6xx family MCUs.

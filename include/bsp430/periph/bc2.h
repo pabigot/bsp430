@@ -87,7 +87,7 @@
  * the crystal is not performed.  If bit LFXT1S1 is clear, the routine
  * will attempt to configure the crystal; if this fails, it will fall
  * back to VLOCLK.  The code invokes
- * #iBSP430platformConfigurePeripheralPinsFromISR as necessary.
+ * #iBSP430platformConfigurePeripheralPins_ni as necessary.
  *
  * @return pdTrue if LFXT1 is enabled and has stabilized within the
  * default wait time, and pdFalse in all other cases. */

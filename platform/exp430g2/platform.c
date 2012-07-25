@@ -12,7 +12,7 @@ const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
 
 
 int
-iBSP430platformConfigurePeripheralPinsFromISR (xBSP430periphHandle device, int enablep)
+iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enablep)
 {
 	unsigned int bits;
 

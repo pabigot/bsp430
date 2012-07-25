@@ -109,7 +109,7 @@ vBSP430ledInit( void )
 }
 
 void
-vBSP430ledSetFromISR (unsigned char ucLED,
+vBSP430ledSet_ni (unsigned char ucLED,
 					  signed portBASE_TYPE xValue)
 {
 	if (ucLED < ucBSP430leds) {
@@ -129,5 +129,5 @@ void
 vBSP430ledSet (unsigned char ucLED,
 			   signed portBASE_TYPE xValue)
 {
-	vBSP430ledSetFromISR(ucLED, xValue);
+	vBSP430ledSet_ni(ucLED, xValue);
 }

@@ -49,7 +49,7 @@ void vBSP430ledInit (void)
 	PBSEL1 &= ~0xF0;
 }
 
-void vBSP430ledSetFromISR (unsigned char ucLED,
+void vBSP430ledSet_ni (unsigned char ucLED,
 						   signed portBASE_TYPE xValue)
 {
 	unsigned int bit;
@@ -75,11 +75,11 @@ void vBSP430ledSetFromISR (unsigned char ucLED,
 void vBSP430ledSet (unsigned char ucLED,
 					signed portBASE_TYPE xValue)
 {
-	vBSP430ledSetFromISR(ucLED, xValue);
+	vBSP430ledSet_ni(ucLED, xValue);
 }
 
 int
-iBSP430platformConfigurePeripheralPinsFromISR (xBSP430periphHandle device, int enablep)
+iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enablep)
 {
 	unsigned int bits = 0;
 	if (BSP430_PERIPH_XT1 == device) {
