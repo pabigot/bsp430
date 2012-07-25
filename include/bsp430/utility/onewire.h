@@ -50,35 +50,35 @@
 
 /** Structure identifying 1-wire bus information. */
 typedef struct xBSP430onewireBus {
-  /** The peripheral port containing the bus */
-  volatile xBSP430periphPORT * const port;
-  /** The pin by which the bus is connected to the MCU */
-  unsigned char bit;
+	/** The peripheral port containing the bus */
+	volatile xBSP430periphPORT * const port;
+	/** The pin by which the bus is connected to the MCU */
+	unsigned char bit;
 } xBSP430onewireBus;
   
 enum {
-  /** Read 64-bit ROM code without using search procedure */
-  BSP430_ONEWIRE_CMD_READ_ROM = 0x33,
+	/** Read 64-bit ROM code without using search procedure */
+	BSP430_ONEWIRE_CMD_READ_ROM = 0x33,
 
-  /** Skip ROM sends the following command to all bus devices */
-  BSP430_ONEWIRE_CMD_SKIP_ROM = 0xcc,
+	/** Skip ROM sends the following command to all bus devices */
+	BSP430_ONEWIRE_CMD_SKIP_ROM = 0xcc,
 
-  /** Store data from EEPROM into RAM */
-  BSP430_ONEWIRE_CMD_RECALL_EE = 0xb8,
+	/** Store data from EEPROM into RAM */
+	BSP430_ONEWIRE_CMD_RECALL_EE = 0xb8,
 
-  /** Read the RAM area. */
-  BSP430_ONEWIRE_CMD_READ_SCRATCHPAD = 0xbe,
+	/** Read the RAM area. */
+	BSP430_ONEWIRE_CMD_READ_SCRATCHPAD = 0xbe,
 
-  /** Initiate a temperature conversion.
-   *
-   * Be aware that temperature conversion can take up to 750ms at the
-   * default 12-bit resolution.
-   * 
-   * For an externally (non-parasite) powered sensor, the caller may
-   * use #iBSP430onewireReadBit_ni to determine whether the conversion
-   * has completed.  Completion is indicated when the device responds
-   * with a 1. */
-  BSP430_ONEWIRE_CMD_CONVERT_T = 0x44,
+	/** Initiate a temperature conversion.
+	 *
+	 * Be aware that temperature conversion can take up to 750ms at the
+	 * default 12-bit resolution.
+	 * 
+	 * For an externally (non-parasite) powered sensor, the caller may
+	 * use #iBSP430onewireReadBit_ni to determine whether the conversion
+	 * has completed.  Completion is indicated when the device responds
+	 * with a 1. */
+	BSP430_ONEWIRE_CMD_CONVERT_T = 0x44,
 };
 
 /** Reset the bus and check for device presence.
@@ -113,7 +113,7 @@ void vBSP430onewireShutdown_ni (const xBSP430onewireBus * bus);
  * @param byte The value to be written.  The low 8 bits are
  * transmitted LSB-first. */
 void vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
-                              int byte);
+								 int byte);
 
 /** Read a bit from the 1-wire bus.
  *
