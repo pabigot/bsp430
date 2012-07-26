@@ -51,13 +51,19 @@
 #endif /* __MSP430_HAS_PMM__ */
 
 /** Cause a brown-out reset */
-#define vBSP430pmmInduceBOR() do {				\
-		PMMCTL0 = PMMPW | PMMSWBOR;				\
-	} while (0)
+static void
+__inline__
+vBSP430pmmInduceBOR (void)
+{
+	PMMCTL0 = PMMPW | PMMSWBOR;
+}
 
 /** Cause a power-on reset */
-#define vBSP430pmmInducePOR() do {				\
-		PMMCTL0 = PMMPW | PMMSWPOR;				\
-	} while (0)
+static void
+__inline__
+vBSP430pmmInducePOR (void)
+{
+	PMMCTL0 = PMMPW | PMMSWPOR;
+}
 
 #endif /* BSP430_PERIPH_PMM_H */
