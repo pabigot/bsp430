@@ -55,7 +55,7 @@
  *
  * @li Due to UCS10 and UCS7, normal practice on UCS-based MCUs is to
  *     leave the FLL disabled, and adjust it periodically when the
- *     clocks are otherwise unused.  Thus SCG0 is expected to be set
+ *     clocks are otherwise unused.  Thus #SCG0 is expected to be set
  *     at all times except when trimming; see #BSP430_CLOCK_DISABLE_FLL.
  *
  * Other refinements in this module:

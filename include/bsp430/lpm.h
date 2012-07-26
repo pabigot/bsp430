@@ -33,21 +33,21 @@
  *
  * @brief Support for low power mode execution.
  *
- * SCG1 : Status register bit that, when set, turns off the DCO generator if
+ * #SCG1 : Status register bit that, when set, turns off the DCO generator if
  * DCOCLK is not used for MCLK or SMCLK.  It is set in LPM modes 2, 3,
  * and 4.
  *
- * SCG0 : Status register bit that, when set, turns off FLL loop
+ * #SCG0 : Status register bit that, when set, turns off FLL loop
  * control.  It is set in LPM modes 1, 3, and 4.
  *
- * OSCOFF : Status register bit that, when set, turns off the LFXT1
+ * #OSCOFF : Status register bit that, when set, turns off the LFXT1
  * crystal oscillator when LFXT1CLK is not used for MCLK or SMCLK.  It
  * is set in LPM mode 4 and in LPMx.5.
  *
- * CPUOFF : Status register bit that, when set, turns off the CPU.  It
+ * #CPUOFF : Status register bit that, when set, turns off the CPU.  It
  * is set in all LPM modes.
  *
- * GIE : Status register bit that, when set, enables maskable
+ * #GIE : Status register bit that, when set, enables maskable
  * interrrupts.  It should be set in any LPM mode for which exit is
  * signalled by an interrupt (which is most of them).  It may be left
  * set on wakeup if interrupts are normally disabled in the main
