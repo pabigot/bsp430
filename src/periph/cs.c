@@ -79,10 +79,10 @@ unsigned short
 usBSP430clockACLK_Hz_ni ()
 {
 	if ((SELA__XT1CLK == (CSCTL2 & SELA_MASK))
-		&& !(SFRIFG1 & OFIFG)) {
+		&& !(BSP430_CLOCK_LFXT1_IS_FAULTED())) {
 		return 32768U;
 	}
-	return 10000;
+	return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
 }
 
 unsigned long

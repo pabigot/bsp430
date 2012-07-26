@@ -124,6 +124,19 @@
  * @return an estimate of the MCLK frequency, in Hz */
 unsigned long ulBSP430clockMCLK_Hz_ni ();
 
+/** Interruptible-preserving wrapper for #ulBSP430clockMCLK_Hz_ni */
+static unsigned long
+__inline__
+ulBSP430clockMCLK_Hz ()
+{
+	unsigned long rv;
+	BSP430_CORE_INTERRUPT_STATE_T istate;
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	rv = ulBSP430clockMCLK_Hz_ni();
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+	return rv;
+}
+
 /** Return the best available estimate of SMCLK frequency.
  *
  * Depending on clock capabilities, this may simply return
@@ -133,14 +146,48 @@ unsigned long ulBSP430clockMCLK_Hz_ni ();
  * @return an estimate of the SMCLK frequency, in Hz */
 unsigned long ulBSP430clockSMCLK_Hz_ni ();
 
+/** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
+static unsigned long
+__inline__
+ulBSP430clockSMCLK_Hz ()
+{
+	unsigned long rv;
+	BSP430_CORE_INTERRUPT_STATE_T istate;
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	rv = ulBSP430clockSMCLK_Hz_ni();
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+	return rv;
+}
+
 /** Return the best available estimate of ACLK frequency.
  *
- * Depending on clock capabilities, this may simply return
- * #BSP430_CLOCK_NOMINAL_ACLK_HZ, or it may return a value calculated from
- * observations.
+ * Depending on clock capabilities, this may simply return the
+ * peripheral-specific value of #BSP430_CLOCK_NOMINAL_ACLK_HZ, or it
+ * may return a value calculated from observations.
+ *
+ * @note When considering whether to use this function or the macro
+ * #BSP430_CLOCK_NOMINAL_ACLK_HZ, recall that the generic definition
+ * of the macro will defer to #BSP430_CLOCK_NOMINAL_VLOCLK_HZ if there
+ * is an oscillator fault in the system, while this function will
+ * check whether ACLK is sourced from LFXT1, and if so whether there
+ * is a fault specific to that oscillator.  The two forms (function
+ * versus macro) may yield different results.
  *
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned short usBSP430clockACLK_Hz_ni ();
+
+/** Interruptible-preserving wrapper for #ulBSP430clockACLK_Hz_ni */
+static unsigned short
+__inline__
+usBSP430clockACLK_Hz ()
+{
+	unsigned short rv;
+	BSP430_CORE_INTERRUPT_STATE_T istate;
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	rv = usBSP430clockACLK_Hz_ni();
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+	return rv;
+}
 
 /** Check whether the LFXT1 crystal has a fault condition.
  *
@@ -252,6 +299,6 @@ unsigned short usBSP430clockACLK_Hz_ni ();
  * configure XIN/XOUT pins.
  */
 int iBSP430clockConfigureXT1_ni (int enablep,
-							  int loop_limit);
+								 int loop_limit);
 
 #endif /* BSP430_CLOCK_H */

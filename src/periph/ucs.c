@@ -179,10 +179,10 @@ unsigned short
 usBSP430clockACLK_Hz_ni ()
 {
 	if ((SELA__XT1CLK == (UCSCTL4 & (SELA0 | SELA1 | SELA2)))
-		&& !(SFRIFG1 & OFIFG)) {
+		&& !(BSP430_CLOCK_LFXT1_IS_FAULTED())) {
 		return 32768U;
 	}
-	return 10000;
+	return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
 }
 
 int

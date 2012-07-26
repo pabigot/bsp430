@@ -65,7 +65,10 @@ ulBSP430clockSMCLK_Hz_ni ()
 unsigned short
 usBSP430clockACLK_Hz_ni ()
 {
-	return (FLL_CTL0 & LFOF) ? 12000U : 32768U;
+	if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+		return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+	}
+	return 32768U;
 }
 
 int
