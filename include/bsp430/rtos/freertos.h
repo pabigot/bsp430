@@ -38,6 +38,9 @@
  * #configBSP430_RTOS_FREERTOS is defined to a true value by the
  * compilation environment.  Doing this makes basic BSP430
  * configuration data available within FreeRTOS application code.
+ * Note that this inclusion occurs before FreeRTOS.h includes the
+ * application-specific FreeRTOSConfig.h, allowing this file to set
+ * defaults for the FreeRTOS port.
  *
  * The @c FreeRTOS.h header is similarly included by @c
  * bsp430/common.h when #configBSP430_RTOS_FREERTOS is defined to a
@@ -55,6 +58,7 @@
 #define BSP430_RTOS_FREERTOS_H
 
 #include <bsp430/common.h>
+#include <bsp430/clock.h>
 
 /** Mark that BSP430 will be running under FreeRTOS.
  *
@@ -72,7 +76,8 @@
  *
  * </ul> This cascading effect should be initiated by adding
  * <tt>-DconfigBSP430_RTOS_FREERTOS</tt> to the @c CPPFLAGS variable
- * during builds of FreeRTOS applications.
+ * during builds of FreeRTOS applications, including the BSP430
+ * modules linked to the application.
  */
 #ifndef configBSP430_RTOS_FREERTOS
 #define configBSP430_RTOS_FREERTOS 0
@@ -80,7 +85,7 @@
 
 /** @def configBSP430_FREERTOS_SCHEDULER
  *
- * If defined to a true value, the FreeRTOS-MSPGCC port.c file will
+ * If defined to a true value, the FreeRTOS-BSP430 port.c file will
  * use the BSP430 timer infrastructure on TA0 for the task scheduler.
  * This requires that #configBSP430_PERIPH_TA0 be true and
  * #configBSP430_HAL_TA0_CC0_ISR be false.  Use of this feature is
@@ -89,6 +94,15 @@
 #ifndef configBSP430_FREERTOS_SCHEDULER
 #define configBSP430_FREERTOS_SCHEDULER 1
 #endif /* configBSP430_FREERTOS_SCHEDULER */
+
+/** @def portACLK_FREQUENCY_HZ
+ *
+ * The FreeRTOS-BSP430 port needs to know the rate at which the
+ * scheduler clock runs.  This is normally ACLK, but the speed depends
+ * on the MCU family and whether LFXT1 is used. */
+#ifndef portACLK_FREQUENCY_HZ
+#define portACLK_FREQUENCY_HZ BSP430_CLOCK_NOMINAL_ACLK_HZ
+#endif /* portACLK_FREQUENCY_HZ */
 
 /** FreeRTOS scheduler requires use of TA0.
  *
@@ -107,8 +121,12 @@
  * This does not suspend any tasks, or prevent the scheduler from
  * resuming the way vTaskEndScheduler does.  It merely inhibits the
  * task timeslice interrupt.  The intent is that this be invoked prior
- * to suspending the application in a low power mode, if it is
- * determined that no task is blocked on a tick-related event. */
+ * to suspending the application in a low power mode that includes
+ * #OSCOFF (e.g., #LPM4_bits), if it is determined that no task is
+ * blocked on a tick-related event.
+ *
+ * @note This function is available only if
+ * #configBSP430_FREERTOS_SCHEDULER is true. */
 void vBSP430freertosSuspendScheduler (void);
 
 /** Invoke to resume the FreeRTOS scheduler.
@@ -117,7 +135,10 @@ void vBSP430freertosSuspendScheduler (void);
  * interrupt after completion of a full timeslice.
  *
  * The intent is that this be invoked after the application wakes up
- * from a low power mode. */
+ * from a low power mode in which #OSCOFF was set.
+ *
+ * @note This function is available only if
+ #configBSP430_FREERTOS_SCHEDULER is true. */
 void vBSP430freertosResumeScheduler (void);
 
 #endif /* BSP430_RTOS_FREERTOS_H */

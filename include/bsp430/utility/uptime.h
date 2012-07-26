@@ -66,6 +66,11 @@
  *
  * Define to the handle of a HAL timer that can be used to maintain a
  * continuous system clock sourced from ACLK.
+ *
+ * @warning Be sure to also enable the corresponding peripheral (e.g.,
+ * with #configBSP430_PERIPH_TA0) and to support the matching HAL
+ * interrupt that will count overflows
+ * (e.g. #configBSP430_HAL_TA0_ISR).
  */
 #ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
