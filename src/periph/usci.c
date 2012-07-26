@@ -57,6 +57,7 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 	configASSERT(NULL != device);
 
 	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	BSP430_CORE_DISABLE_INTERRUPT();
 	/* Reject invalid baud rates */
 	if ((0 == baud) || (1000000UL < baud)) {
 		device = NULL;
@@ -110,6 +111,7 @@ iBSP430usciConfigureQueues (xBSP430usciHandle device,
 	int rc = 0;
 	
 	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	BSP430_CORE_DISABLE_INTERRUPT();
 	device->usci->ctlw0 |= UCSWRST;
 	if (device->rx_queue || device->tx_queue) {
 		rc = -1;
@@ -135,6 +137,7 @@ iBSP430usciClose (xBSP430usciHandle device)
 	int rc;
 	
 	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	BSP430_CORE_DISABLE_INTERRUPT();
 	device->usci->ctlw0 = UCSWRST;
 	rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(uintptr_t)(device->usci), 0);
 	device->flags = 0;
@@ -164,6 +167,7 @@ vBSP430usciWakeupTransmit (xBSP430usciHandle device)
 {
 	BSP430_CORE_INTERRUPT_STATE_T istate;
 	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	BSP430_CORE_DISABLE_INTERRUPT();
 	USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
 	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
