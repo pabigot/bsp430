@@ -80,15 +80,6 @@
 #include "bsp430_config.h"
 #endif /* configBSP430_CONFIG_FILE */
 
-/* See <bsp430/rtos/freertos.h> */
-#if configBSP430_RTOS_FREERTOS - 0
-/* FreeRTOS defines application behavior in a shared header.  Read it
- * in here so everybody agrees on its contents. */
-
-#include "FreeRTOS.h"
-
-#endif /* configBSP430_RTOS_FREERTOS */
-
 /** @def BSP430_CORE_INTERRUPT_STATE_T
  *
  * A type that can be used to declare a variable that will hold
@@ -141,5 +132,14 @@
 #ifndef BSP430_CORE_DISABLE_INTERRUPT
 #define BSP430_CORE_DISABLE_INTERRUPT() __disable_interrupt()
 #endif /* BSP430_CORE_DISABLE_INTERRUPT */
+
+/* See <bsp430/rtos/freertos.h> */
+#if configBSP430_RTOS_FREERTOS - 0
+/* FreeRTOS defines application behavior in a shared header.  Read it
+ * in here so everybody agrees on its contents. */
+
+#include "FreeRTOS.h"
+
+#endif /* configBSP430_RTOS_FREERTOS */
 
 #endif /* BSP430_COMMON_H */
