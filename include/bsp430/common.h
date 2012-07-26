@@ -48,7 +48,9 @@
 #ifndef BSP430_COMMON_H
 #define BSP430_COMMON_H
 
-/** A monotonically non-decreasing integer reflecting the version of
+/** Version identifier for the BSP430 library
+ *
+ * A monotonically non-decreasing integer reflecting the version of
  * the BSP430 library that is being used.  The value represents a
  * development freeze date in the form YYYYMMDD as a decimal
  * number. */
