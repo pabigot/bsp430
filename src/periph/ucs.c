@@ -273,6 +273,7 @@ ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
 	ctl1 = sRSEL * DCORSEL0;
 	ctl2 = FLLD_1 | ((((ulFrequency_Hz << 1) / (32768 >> 0)) >> 1) - 1);
 
+	/* Disable FLL while manually trimming */
 	__bis_status_register(SCG0);
 	UCSCTL0 = 0;
 	UCSCTL1 = ctl1;
@@ -293,7 +294,7 @@ ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
 
 	UCSCTL5 = (0x70 & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT << 4));
 
-#if ! (portDISABLE_FLL - 0)
+#if ! (BSP430_CLOCK_DISABLE_FLL - 0)
 	/* Turn FLL back on */
 	__bic_status_register(SCG0);
 #endif

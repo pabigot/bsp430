@@ -56,7 +56,7 @@
  * @li Due to UCS10 and UCS7, normal practice on UCS-based MCUs is to
  *     leave the FLL disabled, and adjust it periodically when the
  *     clocks are otherwise unused.  Thus SCG0 is expected to be set
- *     at all times except when trimming.
+ *     at all times except when trimming; see #BSP430_CLOCK_DISABLE_FLL.
  *
  * Other refinements in this module:
  *
@@ -147,16 +147,18 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela);
  * The function uses the ratio of SMCLK to ACLK to determine the speed
  * of SMCLK, and if it is "too far" from the value specified in the
  * last call to ulBSP430ucsConfigure_ni() enables the FLL for a short
- * period to see if accuracy can be improved.
+ * period to see if accuracy can be improved.  See discussion at
+ * #BSP430_CLOCK_DISABLE_FLL.
  *
- * If no timer is identified by #BSP430_UCS_TRIMFLL_TIMER_HAL_HANDLE,
- * this function is not provided.  The specified timer will be
+ * For this function to be provided a timer must be identified by
+ * #BSP430_UCS_TRIMFLL_TIMER_HAL_HANDLE.  The specified timer will be
  * reconfigured in various ways while trimming occurs, and will be
- * left disabled on exit.
+ * left disabled on exit.  It may be used for other purposes when this
+ * function is not being invoked.
  *
  * @warning MCLK, SMCLK, and any clocks derived from them are unstable
  * while this routine is being run, so UART, SPI, and other
- * peripherals may need to be shut down first.
+ * peripherals should be turned off prior to invoking it.
  * 
  * @note This function is named in accordance with the FreeRTOS
  * standards that indicate it should be called with interrupts

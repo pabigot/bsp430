@@ -82,6 +82,24 @@
 #define BSP430_CLOCK_SMCLK_DIVIDING_SHIFT 0
 #endif /* BSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
 
+/** @def BSP430_CLOCK_DISABLE_FLL
+ *
+ * The UCS peripheral has several errata which result in severe clock
+ * instabilities when the FLL is allowed to run unmanaged.  These
+ * include UCS7 ("DCO drifts when servicing short ISRs when in LPM0 or
+ * exiting active from ISRs for short periods of time" and UCS10
+ * ("Modulation causes shift in DCO frequency").  The latter is
+ * documented in <a href="http://www.ti.com/lit/pdf/SLAA489">UCS10
+ * Guidance</a>.  The BSP430 function #ulBSP430ucsTrimFLL_ni function
+ * is provided to support UCS10 workaround.  To further reduce the
+ * likelihood either erratum affects clock stability, this macro may
+ * be defined to a true value to request that BSP430 ensure that #SCG0
+ * remain set, preventing the FLL from changing the DCO configuration
+ * without application intervention. */
+#ifndef BSP430_CLOCK_DISABLE_FLL
+#define BSP430_CLOCK_DISABLE_FLL 0
+#endif /* BSP430_CLOCK_DISABLE_FLL */
+
 /** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
  *
  * Define this to the number of MCLK cycles that
