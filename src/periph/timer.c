@@ -172,7 +172,7 @@ xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
 
 unsigned long
 ulBSP430timerCounter_ni (xBSP430timerHandle timer,
-							 unsigned int * overflowp)
+						 unsigned int * overflowp)
 {
 	unsigned int r;
 	unsigned int ctla;

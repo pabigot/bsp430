@@ -187,7 +187,7 @@ usBSP430clockACLK_Hz_ni ()
 
 int
 iBSP430clockConfigureXT1_ni (int enablep,
-						  int loop_limit)
+							 int loop_limit)
 {
 	int loop_delta;
 	int rc;
@@ -228,8 +228,8 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela)
 }
 
 unsigned long
-ulBSP430ucsConfigure_ni ( unsigned long ulFrequency_Hz,
-					   short sRSEL )
+ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
+						 short sRSEL)
 {
 	/* The values in this table should be roughly half the minimum
 	 * frequency for the specified RSEL with DCOx=31 and MODx=0,

@@ -34,7 +34,7 @@
 
 int
 iBSP430clockConfigureXT1_ni (int enablep,
-						  int loop_limit)
+							 int loop_limit)
 {
 	int loop_delta;
 	int rc;
@@ -65,9 +65,9 @@ iBSP430clockConfigureXT1_ni (int enablep,
 
 unsigned char
 ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
-					  unsigned char ucBCSCTL1,
-					  unsigned char ucBCSCTL2,
-					  unsigned char ucBCSCTL3)
+						 unsigned char ucBCSCTL1,
+						 unsigned char ucBCSCTL2,
+						 unsigned char ucBCSCTL3)
 {
 	unsigned char ucCrystalOK = 0;
 	

@@ -113,7 +113,7 @@ ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz)
 
 int
 iBSP430clockConfigureXT1_ni (int enablep,
-						  int loop_limit)
+							 int loop_limit)
 {
 	int loop_delta;
 	int rc;
