@@ -75,37 +75,13 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 
 void vBSP430platformSetup_ni ()
 {
-	unsigned char ucDCOCTL = DCOCTL;
-	unsigned char ucBCSCTL1 = BCSCTL1;
-	unsigned char ucBCSCTL2 = BCSCTL2;
-	unsigned char ucBCSCTL3 = BCSCTL3;
-	
 	/* Hold off watchdog */
 	WDTCTL = WDTPW + WDTHOLD;
 
-	ucBCSCTL3 = XCAP_1;
-#if 16000000 == BSP430_CLOCK_NOMINAL_MCLK_HZ
-	/* 16 MHz MCLK, 4 MHz SMCLK */
-	ucBCSCTL1 = CALBC1_16MHZ;
-	ucDCOCTL = CALDCO_16MHZ;
-#elif 12000000 == BSP430_CLOCK_NOMINAL_MCLK_HZ
-	/* 12 MHz MCLK, 12 MHz SMCLK */
-	ucBCSCTL1 = CALBC1_12MHZ;
-	ucDCOCTL = CALDCO_12MHZ;
-#elif 8000000 == BSP430_CLOCK_NOMINAL_MCLK_HZ
-	/* 8 MHz MCLK, 4 MHz SMCLK */
-	ucBCSCTL1 = CALBC1_8MHZ;
-	ucDCOCTL = CALDCO_8MHZ;
-#elif 1000000 == BSP430_CLOCK_NOMINAL_MCLK_HZ
-	/* 1 MHz MCLK, 1 MHz SMCLK */
-	ucBCSCTL1 = CALBC1_1MHZ;
-	ucDCOCTL = CALDCO_1MHZ;
-#endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
-
-	ucBCSCTL2 = DIVS0 * BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
-
-	/* ucBSP430bc2Configure_ni does the crystal stabilization */
-	(void)ucBSP430bc2Configure_ni(ucDCOCTL, ucBCSCTL1, ucBCSCTL2, ucBCSCTL3);
+	/* Assume up to one second for crystal to stabilize; boot MCLK is
+	 * 1.1 MHz */
+	(void)iBSP430clockConfigureXT1_ni(1, 1100000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+    ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
 
 #if configBSP430_UPTIME - 0
 	vBSP430uptimeStart_ni();

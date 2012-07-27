@@ -36,6 +36,12 @@
  * This module supports the BC2 ("Basic Clock Module+") peripheral,
  * which is present in 2xx-family devices.
  *
+ * <li> For #ulBSP430clockConfigureMCLK_ni the only recognized
+ * frequencies are 1 MHz, 8 MHz, 12 MHz, and 16 MHz.  Availability of a
+ * given frequency depends on the specific MCU.  The selected
+ * frequency may be above or below the requested frequency, but will
+ * be the closest supported by available calibrated clocks.
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012

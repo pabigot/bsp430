@@ -32,6 +32,11 @@
 #include <bsp430/platform.h>
 #include <bsp430/periph/bc2.h>
 
+/** The last frequency configured using #ulBSP430clockConfigureMCLK_ni */
+static unsigned long configuredMCLK_Hz = 1100000UL;
+
+#define DIVS_MASK (DIVS0 | DIVS1)
+
 int
 iBSP430clockConfigureXT1_ni (int enablep,
 							 int loop_limit)
@@ -85,4 +90,79 @@ ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
 	BCSCTL2 = ucBCSCTL2;
 
 	return ucCrystalOK;
+}
+
+int
+iBSP430clockSMCLKDividingShift_ni (void)
+{
+	/* Assume that the source for both MCLK and SMCLK is DCOCLK and
+	 * that DIVM_0 is in effect. */
+	return (BCSCTL2 & DIVS_MASK) / DIVS0;
+}
+
+unsigned long
+ulBSP430clockMCLK_Hz_ni ()
+{
+	return configuredMCLK_Hz;
+}
+
+#include <stdio.h>
+
+unsigned long
+ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
+{
+	unsigned char dcoctl;
+	unsigned char bcsctl1;
+	unsigned char bcsctl2;
+	unsigned long error_Hz;
+	long freq_Hz;
+
+	/* Power-up defaults */
+	dcoctl = 0x60;
+	bcsctl1 = 0x87;
+	freq_Hz = 1100000UL;
+
+/* Calculate absolute error from _freq_Hz to target */
+#define ERROR_HZ(_freq_Hz) ((mclk_Hz < _freq_Hz) ? (_freq_Hz - mclk_Hz) : (mclk_Hz - _freq_Hz))
+	error_Hz = ERROR_HZ(freq_Hz);
+
+/* Test a candidate to see if it's better than what we've got now */
+#define TRY_FREQ(_tag, _cand_Hz) do {									\
+		unsigned long cand_error_Hz = ERROR_HZ(_cand_Hz);				\
+		if (cand_error_Hz < error_Hz) {									\
+			dcoctl = CALDCO_##_tag;										\
+			bcsctl1 = CALBC1_##_tag;									\
+			freq_Hz = _cand_Hz;											\
+			error_Hz = cand_error_Hz;									\
+		}																\
+	} while (0)
+
+	/* Candidate availability is MCU-specific and can be determined by
+	 * checking for a corresponding preprocessor definition */
+#if defined(CALDCO_1MHZ_)
+	TRY_FREQ(1MHZ, 1000000UL);
+#endif /* CALDCO_1MHZ */
+#if defined(CALDCO_8MHZ_)
+	TRY_FREQ(8MHZ, 8000000UL);
+#endif /* CALDCO_8MHZ */
+#if defined(CALDCO_12MHZ_)
+	TRY_FREQ(12MHZ, 12000000UL);
+#endif /* CALDCO_12MHZ */
+#if defined(CALDCO_16MHZ_)
+	TRY_FREQ(16MHZ, 16000000UL);
+#endif /* CALDCO_16MHZ */
+
+#undef TRY_FREQ
+#undef ERROR_HZ
+	
+	bcsctl2 = DIVS_MASK & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0);
+
+	DCOCTL = 0;
+	BCSCTL1 = bcsctl1;
+	DCOCTL = dcoctl;
+	/* SELM = SELS = DCOCLK; DIVM = /1; DIVS as configured */
+	BCSCTL2 = bcsctl2;
+	configuredMCLK_Hz = freq_Hz;
+
+	return configuredMCLK_Hz;
 }

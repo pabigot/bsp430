@@ -156,14 +156,28 @@ ulBSP430clockMCLK_Hz ()
 	return rv;
 }
 
+/** Return the shift used to divide MCLK to produce SMCLK.
+ *
+ * This is extracted from the peripheral-specific registers.
+ *
+ * @return The power of 2 by which MCLK is divided to produce SMCLK. */
+int iBSP430clockSMCLKDividingShift_ni (void);
+
 /** Return the best available estimate of SMCLK frequency.
  *
- * Depending on clock capabilities, this may simply return
- * #BSP430_CLOCK_NOMINAL_MCLK_HZ >> #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT, or
- * it may return a value calculated from observations.
+ * This simply estimates MCLK then divides it based on the
+ * peripheral-specific divider.  If clocks are configured through a
+ * mechanism other than #ulBSP430clockConfigureMCLK_ni assumptions
+ * made by the implementation may be incorrect.
  *
  * @return an estimate of the SMCLK frequency, in Hz */
-unsigned long ulBSP430clockSMCLK_Hz_ni ();
+static unsigned long
+__inline__
+ulBSP430clockSMCLK_Hz_ni (void)
+{
+	unsigned long mclk_hz = ulBSP430clockMCLK_Hz_ni();
+	return mclk_hz >> iBSP430clockSMCLKDividingShift_ni();
+}
 
 /** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
 static unsigned long
@@ -321,5 +335,19 @@ usBSP430clockACLK_Hz ()
  */
 int iBSP430clockConfigureXT1_ni (int enablep,
 								 int loop_limit);
+
+/** Configure MCLK to a desired frequency.
+ *
+ * The peripheral-specific implementation will configure MCLK to a
+ * frequency as close as possible to the requested frequency.  The
+ * actual frequency may be higher or lower than the requested one.
+ *
+ * @param mclk_Hz Desired frequency for the master clock, in Hz
+ *
+ * @return Configured frequency in Hz.  This may be higher or lower
+ * than the requested frequency.
+ */
+unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
+
 
 #endif /* BSP430_CLOCK_H */
