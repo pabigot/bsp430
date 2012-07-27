@@ -33,10 +33,18 @@
  *
  * @brief A generic console print capability.
  *
- * #cprintf is like @c printf except that it incorporates a semaphore
- * to ensure the output is not interleaved when multiple tasks are
- * printing at the same time.  It also assumes a console device which
- * uses blocking output.
+ * #cprintf is like @c printf.  It disables interrupts while operating
+ * to ensure that interleaved messages do not occur.  It is "safe" for
+ * call from within interrupt handlers.
+ *
+ * A companion #cputs is provided where the complexity of printf is
+ * not required but atomic output is desired.
+ *
+ * Other routines permit display of plain text, single characters, and
+ * integers without incurring the stack overhead of printf, which can
+ * be quite high (on the order of 100 bytes if 64-bit integer support
+ * is included).  These assume that interrupts are disabled when
+ * called.
  * 
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -49,9 +57,84 @@
 
 #include <bsp430/uart.h>
 
-/** Like printf, but to platform console.
+/** @def configBSP430_CONSOLE_PROVIDES_PUTCHAR
  *
- * Calls block until access to the console is obtained. */
+ * If defined to a true value, the individual character display
+ * function used internally to the console module will be made public
+ * with the name @c putchar so that it will be used by @c printf(3)
+ * when the C library depends on an external @c putchar.
+ *
+ * The "atomic" behavior promised by #cprintf is not guaranteed for @c
+ * printf, @c puts, or any other library function that might invoke
+ * this putchar implementation. */
+#ifndef configBSP430_CONSOLE_PROVIDES_PUTCHAR
+#define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0
+#endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
+
+/** @def configBSP430_CONSOLE_USE_ONLCR
+ * 
+ * If defined to true, the console display routines will always emit a
+ * carriage return before a newline.  This provides compatibility with
+ * standard terminal programs like minicom. */
+#ifndef configBSP430_CONSOLE_USE_ONLCR
+#define configBSP430_CONSOLE_USE_ONLCR 1
+#endif /* configBSP430_CONSOLE_USE_ONLCR */
+
+/** @def configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
+ *
+ * Define to false if your libc does not provide vuprintf.
+ * msp430-libc does provide this, and it is used to implement
+ * cprintf. */
+#ifndef configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
+#define configBSP430_CONSOLE_LIBC_HAS_VUPRINTF 1
+#endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
+
+/** @def configBSP430_CONSOLE_LIBC_HAS_ITOA
+ *
+ * Define to false if your libc does not provide itoa.  msp430-libc
+ * does provide this, and it is used to implement cputi. */
+#ifndef configBSP430_CONSOLE_LIBC_HAS_ITOA
+#define configBSP430_CONSOLE_LIBC_HAS_ITOA 1
+#endif /* configBSP430_CONSOLE_LIBC_HAS_ITOA */
+
+/** @def configBSP430_CONSOLE_LIBC_HAS_UTOA
+ *
+ * Define to false if your libc does not provide utoa.  msp430-libc
+ * does provide this, and it is used to implement cputu. */
+#ifndef configBSP430_CONSOLE_LIBC_HAS_UTOA
+#define configBSP430_CONSOLE_LIBC_HAS_UTOA 1
+#endif /* configBSP430_CONSOLE_LIBC_HAS_UTOA */
+
+/** @def configBSP430_CONSOLE_LIBC_HAS_LTOA
+ *
+ * Define to false if your libc does not provide ltoa.  msp430-libc
+ * does provide this, and it is used to implement cputl. */
+#ifndef configBSP430_CONSOLE_LIBC_HAS_LTOA
+#define configBSP430_CONSOLE_LIBC_HAS_LTOA 1
+#endif /* configBSP430_CONSOLE_LIBC_HAS_LTOA */
+
+/** @def configBSP430_CONSOLE_LIBC_HAS_ULTOA
+ *
+ * Define to false if your libc does not provide ultoa.  msp430-libc
+ * does provide this, and it is used to implement cputul. */
+#ifndef configBSP430_CONSOLE_LIBC_HAS_ULTOA
+#define configBSP430_CONSOLE_LIBC_HAS_ULTOA 1
+#endif /* configBSP430_CONSOLE_LIBC_HAS_ULTOA */
+
+/** Like printf(3), but to the console UART.
+ *
+ * Interrupts are disabled during the duration of the invocation.  On
+ * exit, interruptibility state is restored (if entered with
+ * interrupts disabled, they remain disabled).
+ *
+ * If #xBSP430consoleConfigure has not assigned a UART device, the
+ * call is a no-op.
+ *
+ * @param format A printf(3) format string
+ *
+ * @return Number of characters printed if the console is enabled; 0
+ * if it is disabled; a negative error code if an error is
+ * encountered */
 int
 cprintf (const char *string, ...)
 #if __GNUC__ - 0
@@ -59,18 +142,116 @@ __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
 	;
 
+/** Like puts(3) to the console UART
+ *
+ * As with #cprintf, interrupts are disabled for the duration of the
+ * invocation.
+ *
+ * @note Any errors returned by the underlying UART implementation
+ * while writing are ignored.
+ * 
+ * @param s a string to be emitted to the console
+ *
+ * @return the number of characters written, including the newline
+ */
+int cputs (const char * s);
+
+/** Like putchar(3) to the console UART
+ *
+ * @param c character to be output
+ *
+ * @return the character that was output */
+int cputchar_ni (int c);
+
+/** Like puts(3) to the console UART without trailing newline
+ *
+ * @note Any errors returned by the underlying UART implementation
+ * while writing are ignored.
+ * 
+ * @param s a string to be emitted to the console
+ *
+ * @return the number of characters written
+ */
+int cputtext_ni (const char * s);
+
+/** Format an int using itoa and emit it to the console.
+ *
+ * @note This function is unimplemented if
+ * #configBSP430_CONSOLE_LIBC_HAS_ITOA is false.
+ *
+ * @param n the integer value to be formatted
+ * @param radix the radix to use when formatting
+ *
+ * @warning The implementation here assumes that the radix is at least
+ * 10.  Passing a smaller radix will likely result in stack
+ * corruption.
+ *
+ * @return the number of characters emitted */
+int cputi_ni (int i, int radix);
+
+/** Format an int using utoa and emit it to the console.
+ *
+ * @note This function is unimplemented if
+ * #configBSP430_CONSOLE_LIBC_HAS_UTOA is false.
+ *
+ * @param n the integer value to be formatted
+ * @param radix the radix to use when formatting
+ * 
+ * @warning The implementation here assumes that the radix is at least
+ * 10.  Passing a smaller radix will likely result in stack
+ * corruption.
+ *
+ * @return the number of characters emitted */
+int cputu_ni (unsigned int n, int radix);
+
+/** Format an int using ltoa and emit it to the console.
+ *
+ * @note This function is unimplemented if
+ * #configBSP430_CONSOLE_LIBC_HAS_LTOA is false.
+ *
+ * @param n the integer value to be formatted
+ * @param radix the radix to use when formatting
+ *
+ * @warning The implementation here assumes that the radix is at least
+ * 10.  Passing a smaller radix will likely result in stack
+ * corruption.
+ *
+ * @return the number of characters emitted */
+int cputl_ni (long i, int radix);
+
+/** Format an int using itoa and emit it to the console.
+ *
+ * @note This function is unimplemented if
+ * #configBSP430_CONSOLE_LIBC_HAS_ULTOA is false.
+ *
+ * @param n the integer value to be formatted
+ * @param radix the radix to use when formatting
+
+ * @warning The implementation here assumes that the radix is at least
+ * 10.  Passing a smaller radix will likely result in stack
+ * corruption.
+ *
+ * @return the number of characters emitted */
+int cputul_ni (unsigned long i, int radix);
+
+
 /** Configure a console device.
  *
- * @param xUART a serial device, preferably one that does blocking
- * writes (output is complete when the function returns.  Pass zero to
- * disable the console print infrastructure.
+ * @note Any errors returned by the underlying UART implementation
+ * while writing are ignored.
+ * 
+ * @note Although the interface permits changing the UART associated
+ * with the console, nothing is done to prevent catastrophe if the
+ * previous device is being actively used by a function in this
+ * module.
  *
- * @param xBlockTime the duration to wait for any other active users
- * of cprintf to exit
+ * @param uart a serial device to be used for #cprintf.  Pass a null
+ * handle to disable the console print infrastructure.  Attempts to
+ * re-initialize with a new device do not produce a diagnostic; the
+ * new device is used in subsequent operations.
  *
- * @return pdSUCCESS if the console could be configured, pdFAIL
- * otherwise. */
-portBASE_TYPE xConsoleConfigure (xBSP430uartHandle xUART,
-								 portTickType xBlockTime);
+ * @return 0 if the console could be configured in accordance with @a
+ * uart, -1 if an error occurred. */
+int xBSP430consoleInitialize (xBSP430uartHandle uart);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

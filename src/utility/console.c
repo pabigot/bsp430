@@ -31,69 +31,169 @@
 
 /** @file
  *
- * Definitions for a generic console print capability.
+ * @brief Implementation for the BSP430 console facility
  *
  * @author Peter A. Bigot <bigotp@acm.org>
+ * @date 2012
+ * @homepage http://github.com/pabigot/freertos-mspgcc
  * @copyright @link http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause @endlink
  */
 
 #include <bsp430/utility/console.h>
 #include <stdio.h>
-#include "semphr.h"
+#include <stdarg.h>
+#include <stdlib.h>
 
-static xBSP430uartHandle prvConsole;
-static xSemaphoreHandle prvConsoleSemaphore;
-static portTickType prvBlockTime;
+static xBSP430uartHandle console_uart;
 
+/* Base version used by cprintf.  This has to re-read the console_uart
+ * variable each time. */
+static
+__inline__
+int
+emit_char_ni (int c)
+{
+	xBSP430uartHandle uart = console_uart;
+	if (NULL == uart) {
+		return -1;
+	}
+#if configBSP430_CONSOLE_USE_ONLCR - 0
+	if ('\n' == c) {
+		iBSP430uartPutChar('\r', uart);
+	}
+#endif /* configBSP430_CONSOLE_USE_ONLCR */
+	return iBSP430uartPutChar(c, uart);
+}
+
+/* Optimized version used inline.  Assumes that the uart is not
+ * null. */
+static
+__inline__
+int
+emit_char2_ni (int c, xBSP430uartHandle uart)
+{
+#if configBSP430_CONSOLE_USE_ONLCR - 0
+	if ('\n' == c) {
+		iBSP430uartPutChar(c, uart);
+	}
+#endif /* configBSP430_CONSOLE_USE_ONLCR */
+	return iBSP430uartPutChar(c, uart);
+}
+
+
+#if configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0
+int putchar (c) { return emit_char_ni(c); }
+#endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
+
+int
+cputchar_ni (int c)
+{
+	return emit_char_ni(c);
+}
+
+/* Emit a NUL-terminated string of text, returning the number of
+ * characters emitted. */
 static int
-cputchar (int c)
+emit_text_ni (const char * s,
+		   xBSP430uartHandle uart)
 {
-	return iBSP430uartPutChar(c, prvConsole);
-}
-
-int
-__attribute__((__weak__))
-putchar (int c)
-{
-	return iBSP430uartPutChar(c, prvConsole);
-}
-
-portBASE_TYPE
-xConsoleConfigure (xBSP430uartHandle xConsole,
-				   portTickType xBlockTime)
-{
-	if (prvConsoleSemaphore) {
-		vSemaphoreDelete(prvConsoleSemaphore);
-		prvConsoleSemaphore = 0;
-	}
-	prvConsole = 0;
-	prvBlockTime = xBlockTime;
-	if (xConsole) {
-		vSemaphoreCreateBinary(prvConsoleSemaphore);
-		if (! prvConsoleSemaphore) {
-			return pdFAIL;
+	int rv = 0;
+	if (uart) {
+		while (s[rv]) {
+			emit_char2_ni(s[rv++], uart);
 		}
-		prvConsole = xConsole;
 	}
-	return pdPASS;
+	return rv;
 }
 
 int
+cputs (const char * s)
+{
+	int rv = 0;
+	xBSP430uartHandle uart = console_uart;
+	BSP430_CORE_INTERRUPT_STATE_T istate;
+
+	if (! uart) {
+		return 0;
+	}
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	BSP430_CORE_DISABLE_INTERRUPT();
+	rv = emit_text_ni(s, uart);
+	emit_char2_ni('\n', uart);
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+	return 1+rv;
+}
+
+int
+cputtext_ni (const char * s)
+{
+	return emit_text_ni(s, console_uart);
+}
+
+#if configBSP430_CONSOLE_LIBC_HAS_ITOA - 0
+int
+cputi_ni (int n, int radix)
+{
+	char buffer[sizeof("-32767")];
+	return emit_text_ni(itoa(n, buffer, radix), console_uart);
+}
+#endif /* configBSP430_CONSOLE_LIBC_HAS_ITOA */
+
+#if configBSP430_CONSOLE_LIBC_HAS_UTOA - 0
+int
+cputu_ni (unsigned int n, int radix)
+{
+	char buffer[sizeof("65535")];
+	return emit_text_ni(utoa(n, buffer, radix), console_uart);
+}
+#endif /* configBSP430_CONSOLE_LIBC_HAS_UTOA */
+
+#if configBSP430_CONSOLE_LIBC_HAS_LTOA - 0
+int
+cputl_ni (long n, int radix)
+{
+	char buffer[sizeof("-2147483647")];
+	return emit_text_ni(ltoa(n, buffer, radix), console_uart);
+}
+#endif /* configBSP430_CONSOLE_LIBC_HAS_LTOA */
+
+#if configBSP430_CONSOLE_LIBC_HAS_ULTOA - 0
+int
+cputul_ni (unsigned long n, int radix)
+{
+	char buffer[sizeof("4294967295")];
+	return emit_text_ni(ultoa(n, buffer, radix), console_uart);
+}
+#endif /* configBSP430_CONSOLE_LIBC_HAS_ULTOA */
+
+#if configBSP430_CONSOLE_LIBC_HAS_VUPRINTF - 0
+int
+#if __GNUC__ - 0
 __attribute__((__format__(printf, 1, 2)))
+#endif /* __GNUC__ */
 cprintf (const char *fmt, ...)
 {
+	BSP430_CORE_INTERRUPT_STATE_T istate;
 	va_list argp;
-	int rc;
-	
-	if (! prvConsoleSemaphore) {
-		return -1;
+	int rv;
+
+	/* Fail fast if printing is disabled */
+	if (! console_uart) {
+		return 0;
 	}
-	if (! xSemaphoreTake(prvConsoleSemaphore, prvBlockTime)) {
-		return -1;
-	}
+	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+	BSP430_CORE_DISABLE_INTERRUPT();
 	va_start (argp, fmt);
-	rc = vuprintf (cputchar, fmt, argp);
+	rv = vuprintf(emit_char_ni, fmt, argp);
 	va_end (argp);
-	xSemaphoreGive(prvConsoleSemaphore);
-	return rc;
+	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+	return rv;
+}
+#endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
+
+int
+xBSP430consoleInitialize (xBSP430uartHandle uart)
+{
+	console_uart = uart;
+	return 0;
 }
