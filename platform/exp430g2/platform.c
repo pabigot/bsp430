@@ -47,7 +47,6 @@ void vBSP430platformSetup_ni ()
 	unsigned char ucBCSCTL1 = BCSCTL1;
 	unsigned char ucBCSCTL2 = BCSCTL2;
 	unsigned char ucBCSCTL3 = BCSCTL3;
-	int rc;
 	
 	/* Hold off watchdog */
 	WDTCTL = WDTPW + WDTHOLD;
