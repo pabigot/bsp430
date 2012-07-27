@@ -36,77 +36,77 @@
 
 /* !BSP430! insert=hal_port_5xx_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_defn] */
-#if configBSP430_PERIPH_PORT1 - 0
+#if configBSP430_HAL_PORT1 - 0
 static struct xBSP430portState state_PORT1 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT1_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT1 = &state_PORT1;
 #endif /* configBSP430_PERIPH_PORT1 */
 
-#if configBSP430_PERIPH_PORT2 - 0
+#if configBSP430_HAL_PORT2 - 0
 static struct xBSP430portState state_PORT2 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT2_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT2 = &state_PORT2;
 #endif /* configBSP430_PERIPH_PORT2 */
 
-#if configBSP430_PERIPH_PORT3 - 0
+#if configBSP430_HAL_PORT3 - 0
 static struct xBSP430portState state_PORT3 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT3_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT3 = &state_PORT3;
 #endif /* configBSP430_PERIPH_PORT3 */
 
-#if configBSP430_PERIPH_PORT4 - 0
+#if configBSP430_HAL_PORT4 - 0
 static struct xBSP430portState state_PORT4 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT4_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT4 = &state_PORT4;
 #endif /* configBSP430_PERIPH_PORT4 */
 
-#if configBSP430_PERIPH_PORT5 - 0
+#if configBSP430_HAL_PORT5 - 0
 static struct xBSP430portState state_PORT5 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT5_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT5 = &state_PORT5;
 #endif /* configBSP430_PERIPH_PORT5 */
 
-#if configBSP430_PERIPH_PORT6 - 0
+#if configBSP430_HAL_PORT6 - 0
 static struct xBSP430portState state_PORT6 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT6_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT6 = &state_PORT6;
 #endif /* configBSP430_PERIPH_PORT6 */
 
-#if configBSP430_PERIPH_PORT7 - 0
+#if configBSP430_HAL_PORT7 - 0
 static struct xBSP430portState state_PORT7 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT7_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT7 = &state_PORT7;
 #endif /* configBSP430_PERIPH_PORT7 */
 
-#if configBSP430_PERIPH_PORT8 - 0
+#if configBSP430_HAL_PORT8 - 0
 static struct xBSP430portState state_PORT8 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT8_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT8 = &state_PORT8;
 #endif /* configBSP430_PERIPH_PORT8 */
 
-#if configBSP430_PERIPH_PORT9 - 0
+#if configBSP430_HAL_PORT9 - 0
 static struct xBSP430portState state_PORT9 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT9_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT9 = &state_PORT9;
 #endif /* configBSP430_PERIPH_PORT9 */
 
-#if configBSP430_PERIPH_PORT10 - 0
+#if configBSP430_HAL_PORT10 - 0
 static struct xBSP430portState state_PORT10 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT10_BASEADDRESS,
 	};
 xBSP430portHandle const xBSP430port_PORT10 = &state_PORT10;
 #endif /* configBSP430_PERIPH_PORT10 */
 
-#if configBSP430_PERIPH_PORT11 - 0
+#if configBSP430_HAL_PORT11 - 0
 static struct xBSP430portState state_PORT11 = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_PORT11_BASEADDRESS,
 	};
@@ -147,7 +147,7 @@ port_isr (xBSP430portHandle device,
 
 /* !BSP430! insert=hal_port_5xx_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_isr_defn] */
-#if (configBSP430_PERIPH_PORT1 - 0) && (configBSP430_HAL_PORT1_ISR - 0)
+#if configBSP430_HAL_PORT1_ISR - 0
 static void
 __attribute__((__interrupt__(PORT1_VECTOR)))
 isr_PORT1 (void)
@@ -157,7 +157,7 @@ isr_PORT1 (void)
 }
 #endif /* configBSP430_HAL_PORT1_ISR */
 
-#if (configBSP430_PERIPH_PORT2 - 0) && (configBSP430_HAL_PORT2_ISR - 0)
+#if configBSP430_HAL_PORT2_ISR - 0
 static void
 __attribute__((__interrupt__(PORT2_VECTOR)))
 isr_PORT2 (void)
@@ -167,7 +167,7 @@ isr_PORT2 (void)
 }
 #endif /* configBSP430_HAL_PORT2_ISR */
 
-#if (configBSP430_PERIPH_PORT3 - 0) && (configBSP430_HAL_PORT3_ISR - 0)
+#if configBSP430_HAL_PORT3_ISR - 0
 static void
 __attribute__((__interrupt__(PORT3_VECTOR)))
 isr_PORT3 (void)
@@ -177,7 +177,7 @@ isr_PORT3 (void)
 }
 #endif /* configBSP430_HAL_PORT3_ISR */
 
-#if (configBSP430_PERIPH_PORT4 - 0) && (configBSP430_HAL_PORT4_ISR - 0)
+#if configBSP430_HAL_PORT4_ISR - 0
 static void
 __attribute__((__interrupt__(PORT4_VECTOR)))
 isr_PORT4 (void)
@@ -187,7 +187,7 @@ isr_PORT4 (void)
 }
 #endif /* configBSP430_HAL_PORT4_ISR */
 
-#if (configBSP430_PERIPH_PORT5 - 0) && (configBSP430_HAL_PORT5_ISR - 0)
+#if configBSP430_HAL_PORT5_ISR - 0
 static void
 __attribute__((__interrupt__(PORT5_VECTOR)))
 isr_PORT5 (void)
@@ -197,7 +197,7 @@ isr_PORT5 (void)
 }
 #endif /* configBSP430_HAL_PORT5_ISR */
 
-#if (configBSP430_PERIPH_PORT6 - 0) && (configBSP430_HAL_PORT6_ISR - 0)
+#if configBSP430_HAL_PORT6_ISR - 0
 static void
 __attribute__((__interrupt__(PORT6_VECTOR)))
 isr_PORT6 (void)
@@ -207,7 +207,7 @@ isr_PORT6 (void)
 }
 #endif /* configBSP430_HAL_PORT6_ISR */
 
-#if (configBSP430_PERIPH_PORT7 - 0) && (configBSP430_HAL_PORT7_ISR - 0)
+#if configBSP430_HAL_PORT7_ISR - 0
 static void
 __attribute__((__interrupt__(PORT7_VECTOR)))
 isr_PORT7 (void)
@@ -217,7 +217,7 @@ isr_PORT7 (void)
 }
 #endif /* configBSP430_HAL_PORT7_ISR */
 
-#if (configBSP430_PERIPH_PORT8 - 0) && (configBSP430_HAL_PORT8_ISR - 0)
+#if configBSP430_HAL_PORT8_ISR - 0
 static void
 __attribute__((__interrupt__(PORT8_VECTOR)))
 isr_PORT8 (void)
@@ -227,7 +227,7 @@ isr_PORT8 (void)
 }
 #endif /* configBSP430_HAL_PORT8_ISR */
 
-#if (configBSP430_PERIPH_PORT9 - 0) && (configBSP430_HAL_PORT9_ISR - 0)
+#if configBSP430_HAL_PORT9_ISR - 0
 static void
 __attribute__((__interrupt__(PORT9_VECTOR)))
 isr_PORT9 (void)
@@ -237,7 +237,7 @@ isr_PORT9 (void)
 }
 #endif /* configBSP430_HAL_PORT9_ISR */
 
-#if (configBSP430_PERIPH_PORT10 - 0) && (configBSP430_HAL_PORT10_ISR - 0)
+#if configBSP430_HAL_PORT10_ISR - 0
 static void
 __attribute__((__interrupt__(PORT10_VECTOR)))
 isr_PORT10 (void)
@@ -247,7 +247,7 @@ isr_PORT10 (void)
 }
 #endif /* configBSP430_HAL_PORT10_ISR */
 
-#if (configBSP430_PERIPH_PORT11 - 0) && (configBSP430_HAL_PORT11_ISR - 0)
+#if configBSP430_HAL_PORT11_ISR - 0
 static void
 __attribute__((__interrupt__(PORT11_VECTOR)))
 isr_PORT11 (void)

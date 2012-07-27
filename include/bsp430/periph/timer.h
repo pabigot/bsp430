@@ -256,8 +256,8 @@ void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_TA0
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA0 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA0 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_TA0
 #define configBSP430_PERIPH_TA0 0
@@ -279,8 +279,8 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
 
 /** @def configBSP430_PERIPH_TA1
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA1 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA1 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_TA1
 #define configBSP430_PERIPH_TA1 0
@@ -302,8 +302,8 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
 
 /** @def configBSP430_PERIPH_TA2
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA2 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA2 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_TA2
 #define configBSP430_PERIPH_TA2 0
@@ -325,8 +325,8 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
 
 /** @def configBSP430_PERIPH_TA3
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TA3 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA3 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_TA3
 #define configBSP430_PERIPH_TA3 0
@@ -348,8 +348,8 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
 
 /** @def configBSP430_PERIPH_TB0
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TB0 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TB0 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_TB0
 #define configBSP430_PERIPH_TB0 0
@@ -371,8 +371,8 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
 
 /** @def configBSP430_PERIPH_TB1
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TB1 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TB1 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_TB1
 #define configBSP430_PERIPH_TB1 0
@@ -394,8 +394,8 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
 
 /** @def configBSP430_PERIPH_TB2
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c TB2 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TB2 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_TB2
 #define configBSP430_PERIPH_TB2 0
@@ -422,7 +422,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_decl] */
 /** @def configBSP430_HAL_TA0_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA0.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -434,9 +434,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA0_CC0_ISR 0
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
 
+#if (configBSP430_HAL_TA0_CC0_ISR - 0) && ! (configBSP430_HAL_TA0 - 0)
+#warning configBSP430_HAL_TA0_CC0_ISR requested without configBSP430_HAL_TA0
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_TA0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA0.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -448,9 +452,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA0_ISR 0
 #endif /* configBSP430_HAL_TA0_ISR */
 
+#if (configBSP430_HAL_TA0_ISR - 0) && ! (configBSP430_HAL_TA0 - 0)
+#warning configBSP430_HAL_TA0_ISR requested without configBSP430_HAL_TA0
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_TA1_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA1.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -462,9 +470,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA1_CC0_ISR 0
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
 
+#if (configBSP430_HAL_TA1_CC0_ISR - 0) && ! (configBSP430_HAL_TA1 - 0)
+#warning configBSP430_HAL_TA1_CC0_ISR requested without configBSP430_HAL_TA1
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_TA1_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA1.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -476,9 +488,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA1_ISR 0
 #endif /* configBSP430_HAL_TA1_ISR */
 
+#if (configBSP430_HAL_TA1_ISR - 0) && ! (configBSP430_HAL_TA1 - 0)
+#warning configBSP430_HAL_TA1_ISR requested without configBSP430_HAL_TA1
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_TA2_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA2.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -490,9 +506,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA2_CC0_ISR 0
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
 
+#if (configBSP430_HAL_TA2_CC0_ISR - 0) && ! (configBSP430_HAL_TA2 - 0)
+#warning configBSP430_HAL_TA2_CC0_ISR requested without configBSP430_HAL_TA2
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_TA2_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA2.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -504,9 +524,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA2_ISR 0
 #endif /* configBSP430_HAL_TA2_ISR */
 
+#if (configBSP430_HAL_TA2_ISR - 0) && ! (configBSP430_HAL_TA2 - 0)
+#warning configBSP430_HAL_TA2_ISR requested without configBSP430_HAL_TA2
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_TA3_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA3.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -518,9 +542,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA3_CC0_ISR 0
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
 
+#if (configBSP430_HAL_TA3_CC0_ISR - 0) && ! (configBSP430_HAL_TA3 - 0)
+#warning configBSP430_HAL_TA3_CC0_ISR requested without configBSP430_HAL_TA3
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_TA3_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TA3.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -532,9 +560,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TA3_ISR 0
 #endif /* configBSP430_HAL_TA3_ISR */
 
+#if (configBSP430_HAL_TA3_ISR - 0) && ! (configBSP430_HAL_TA3 - 0)
+#warning configBSP430_HAL_TA3_ISR requested without configBSP430_HAL_TA3
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_TB0_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TB0.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -546,9 +578,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TB0_CC0_ISR 0
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
 
+#if (configBSP430_HAL_TB0_CC0_ISR - 0) && ! (configBSP430_HAL_TB0 - 0)
+#warning configBSP430_HAL_TB0_CC0_ISR requested without configBSP430_HAL_TB0
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_TB0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TB0.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -560,9 +596,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TB0_ISR 0
 #endif /* configBSP430_HAL_TB0_ISR */
 
+#if (configBSP430_HAL_TB0_ISR - 0) && ! (configBSP430_HAL_TB0 - 0)
+#warning configBSP430_HAL_TB0_ISR requested without configBSP430_HAL_TB0
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_TB1_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TB1.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -574,9 +614,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TB1_CC0_ISR 0
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
 
+#if (configBSP430_HAL_TB1_CC0_ISR - 0) && ! (configBSP430_HAL_TB1 - 0)
+#warning configBSP430_HAL_TB1_CC0_ISR requested without configBSP430_HAL_TB1
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_TB1_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TB1.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -588,9 +632,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TB1_ISR 0
 #endif /* configBSP430_HAL_TB1_ISR */
 
+#if (configBSP430_HAL_TB1_ISR - 0) && ! (configBSP430_HAL_TB1 - 0)
+#warning configBSP430_HAL_TB1_ISR requested without configBSP430_HAL_TB1
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_TB2_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TB2.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -602,9 +650,13 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TB2_CC0_ISR 0
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
 
+#if (configBSP430_HAL_TB2_CC0_ISR - 0) && ! (configBSP430_HAL_TB2 - 0)
+#warning configBSP430_HAL_TB2_CC0_ISR requested without configBSP430_HAL_TB2
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_TB2_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c TB2.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -616,52 +668,168 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
 #define configBSP430_HAL_TB2_ISR 0
 #endif /* configBSP430_HAL_TB2_ISR */
 
+#if (configBSP430_HAL_TB2_ISR - 0) && ! (configBSP430_HAL_TB2 - 0)
+#warning configBSP430_HAL_TB2_ISR requested without configBSP430_HAL_TB2
+#endif /* HAL_ISR and not HAL */
+
 /* END AUTOMATICALLY GENERATED CODE [hal_timer_isr_decl] */
 /* !BSP430! end=hal_timer_isr_decl */
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
-/** FreeRTOS HAL handle for TA0.
+/** @def configBSP430_HAL_TA0
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA0 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_TA0. */
+#ifndef configBSP430_HAL_TA0
+#define configBSP430_HAL_TA0 0
+#endif /* configBSP430_HAL_TA0 */
+
+#if (configBSP430_HAL_TA0 - 0) && ! (configBSP430_PERIPH_TA0 - 0)
+#warning configBSP430_HAL_TA0 requested without configBSP430_PERIPH_TA0
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for TA0.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA0
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_TA0 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA0;
+#endif /* configBSP430_HAL_TA0 */
 
-/** FreeRTOS HAL handle for TA1.
+/** @def configBSP430_HAL_TA1
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA1 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_TA1. */
+#ifndef configBSP430_HAL_TA1
+#define configBSP430_HAL_TA1 0
+#endif /* configBSP430_HAL_TA1 */
+
+#if (configBSP430_HAL_TA1 - 0) && ! (configBSP430_PERIPH_TA1 - 0)
+#warning configBSP430_HAL_TA1 requested without configBSP430_PERIPH_TA1
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for TA1.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA1
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_TA1 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA1;
+#endif /* configBSP430_HAL_TA1 */
 
-/** FreeRTOS HAL handle for TA2.
+/** @def configBSP430_HAL_TA2
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA2 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_TA2. */
+#ifndef configBSP430_HAL_TA2
+#define configBSP430_HAL_TA2 0
+#endif /* configBSP430_HAL_TA2 */
+
+#if (configBSP430_HAL_TA2 - 0) && ! (configBSP430_PERIPH_TA2 - 0)
+#warning configBSP430_HAL_TA2 requested without configBSP430_PERIPH_TA2
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for TA2.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA2
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_TA2 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA2;
+#endif /* configBSP430_HAL_TA2 */
 
-/** FreeRTOS HAL handle for TA3.
+/** @def configBSP430_HAL_TA3
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TA3 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_TA3. */
+#ifndef configBSP430_HAL_TA3
+#define configBSP430_HAL_TA3 0
+#endif /* configBSP430_HAL_TA3 */
+
+#if (configBSP430_HAL_TA3 - 0) && ! (configBSP430_PERIPH_TA3 - 0)
+#warning configBSP430_HAL_TA3 requested without configBSP430_PERIPH_TA3
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for TA3.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA3
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_TA3 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA3;
+#endif /* configBSP430_HAL_TA3 */
 
-/** FreeRTOS HAL handle for TB0.
+/** @def configBSP430_HAL_TB0
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TB0 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_TB0. */
+#ifndef configBSP430_HAL_TB0
+#define configBSP430_HAL_TB0 0
+#endif /* configBSP430_HAL_TB0 */
+
+#if (configBSP430_HAL_TB0 - 0) && ! (configBSP430_PERIPH_TB0 - 0)
+#warning configBSP430_HAL_TB0 requested without configBSP430_PERIPH_TB0
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for TB0.
  *
  * The handle may be used only if #configBSP430_PERIPH_TB0
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_TB0 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB0;
+#endif /* configBSP430_HAL_TB0 */
 
-/** FreeRTOS HAL handle for TB1.
+/** @def configBSP430_HAL_TB1
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TB1 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_TB1. */
+#ifndef configBSP430_HAL_TB1
+#define configBSP430_HAL_TB1 0
+#endif /* configBSP430_HAL_TB1 */
+
+#if (configBSP430_HAL_TB1 - 0) && ! (configBSP430_PERIPH_TB1 - 0)
+#warning configBSP430_HAL_TB1 requested without configBSP430_PERIPH_TB1
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for TB1.
  *
  * The handle may be used only if #configBSP430_PERIPH_TB1
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_TB1 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB1;
+#endif /* configBSP430_HAL_TB1 */
 
-/** FreeRTOS HAL handle for TB2.
+/** @def configBSP430_HAL_TB2
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c TB2 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_TB2. */
+#ifndef configBSP430_HAL_TB2
+#define configBSP430_HAL_TB2 0
+#endif /* configBSP430_HAL_TB2 */
+
+#if (configBSP430_HAL_TB2 - 0) && ! (configBSP430_PERIPH_TB2 - 0)
+#warning configBSP430_HAL_TB2 requested without configBSP430_PERIPH_TB2
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for TB2.
  *
  * The handle may be used only if #configBSP430_PERIPH_TB2
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_TB2 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB2;
+#endif /* configBSP430_HAL_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */

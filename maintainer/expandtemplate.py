@@ -6,8 +6,8 @@ import argparse
 templates = {
     'hpl_ba_decl' : '''/** @def configBSP430_PERIPH_%(INSTANCE)s
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c %(INSTANCE)s peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c %(INSTANCE)s peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_%(INSTANCE)s
 #define configBSP430_PERIPH_%(INSTANCE)s 0
@@ -28,23 +28,50 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
     
+    'hal_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c %(INSTANCE)s peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_%(INSTANCE)s. */
+#ifndef configBSP430_HAL_%(INSTANCE)s
+#define configBSP430_HAL_%(INSTANCE)s 0
+#endif /* configBSP430_HAL_%(INSTANCE)s */
+
+#if (configBSP430_HAL_%(INSTANCE)s - 0) && ! (configBSP430_PERIPH_%(INSTANCE)s - 0)
+#warning configBSP430_HAL_%(INSTANCE)s requested without configBSP430_PERIPH_%(INSTANCE)s
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for %(INSTANCE)s.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_%(INSTANCE)s - 0)
+extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
+#endif /* configBSP430_HAL_%(INSTANCE)s */
+''',
+
     'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c %(INSTANCE)s.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_%(INSTANCE)s must be also be true. */
+ * @note #configBSP430_HAL_%(INSTANCE)s must be also be true. */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR 0
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
+
+#if (configBSP430_HAL_%(INSTANCE)s_ISR - 0) && ! (configBSP430_HAL_%(INSTANCE)s - 0)
+#warning configBSP430_HAL_%(INSTANCE)s_ISR requested without configBSP430_HAL_%(INSTANCE)s
+#endif /* HAL_ISR and not HAL */
 ''',
 
     'hal_timer_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_CC0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c %(INSTANCE)s.  This is the TIMERx_t0_VECTOR
  * interrupt, handling only CC0.
  *
@@ -56,9 +83,13 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 #define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 0
 #endif /* configBSP430_HAL_%(INSTANCE)s_CC0_ISR */
 
+#if (configBSP430_HAL_%(INSTANCE)s_CC0_ISR - 0) && ! (configBSP430_HAL_%(INSTANCE)s - 0)
+#warning configBSP430_HAL_%(INSTANCE)s_CC0_ISR requested without configBSP430_HAL_%(INSTANCE)s
+#endif /* HAL_CC0_ISR and not HAL */
+
 /** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c %(INSTANCE)s.  This is the TIMERx_t1_VECTOR
  * interrupt, handling overflows and CC1-CC6.
  * 
@@ -69,25 +100,22 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR 0
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
+
+#if (configBSP430_HAL_%(INSTANCE)s_ISR - 0) && ! (configBSP430_HAL_%(INSTANCE)s - 0)
+#warning configBSP430_HAL_%(INSTANCE)s_ISR requested without configBSP430_HAL_%(INSTANCE)s
+#endif /* HAL_ISR and not HAL */
 ''',
 
-    'hal_decl' : '''/** FreeRTOS HAL handle for %(INSTANCE)s.
- *
- * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
- * is defined to a true value. */
-extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
-''',
-
-    'hal_ba_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+    'hal_ba_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
 	.%(periph)s = (xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS
 };
 
 xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+#endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
-    'hal_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_HAL_%(INSTANCE)s_ISR - 0)
+    'hal_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
@@ -97,7 +125,7 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
-    'hal_timer_isr_defn' : '''#if (configBSP430_PERIPH_T%(TYPE)s%(INSTANCE)s - 0) && (configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR - 0)
+    'hal_timer_isr_defn' : '''#if configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR - 0
 static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
 isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
@@ -108,7 +136,7 @@ isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 }
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR */
 
-#if (configBSP430_PERIPH_T%(TYPE)s%(INSTANCE)s - 0) && (configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR - 0)
+#if configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR - 0
 static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
 isr_T%(TYPE)s%(INSTANCE)s (void)
@@ -130,14 +158,14 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
 ''',
     
-    'periph_hal_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+    'periph_hal_demux' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 	if (BSP430_PERIPH_%(INSTANCE)s == periph) {
 		return xBSP430%(periph)s_%(INSTANCE)s;
 	}
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_port_5xx_defn' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+    'hal_port_5xx_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct xBSP430portState state_%(INSTANCE)s = {
 		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
 	};
@@ -145,7 +173,7 @@ xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
-    'hal_port_5xx_isr_defn' : '''#if (configBSP430_PERIPH_%(INSTANCE)s - 0) && (configBSP430_HAL_%(INSTANCE)s_ISR - 0)
+    'hal_port_5xx_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
@@ -207,7 +235,12 @@ def expandTemplate (tplname, idmap):
             subst_map.update({ 'PORTA' : 'PORT' + i[0],
                                'PORT1': 'PORT%d' % (1 + 2 * (ord(i[0]) - ord('A')),),
                                'PORT2': 'PORT%d' % (2 + 2 * (ord(i[0]) - ord('A')),) })
-        text.append(template % subst_map)
+        try:
+            text.append(template % subst_map)
+        except TypeError as e:
+            print 'Exception expanding %s with %s: %s' % (insert_name, subst_map, e)
+            print template
+            raise
         subst_map.pop('#', None)
     text.append('/* END AUTOMATICALLY GENERATED CODE [%(template)s] */' % subst_map)
     text.append('')

@@ -125,8 +125,8 @@ typedef struct xBSP430periphUSCI {
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_USCI_A0
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_A0 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A0 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_A0
 #define configBSP430_PERIPH_USCI_A0 0
@@ -148,8 +148,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP
 
 /** @def configBSP430_PERIPH_USCI_A1
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_A1 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A1 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_A1
 #define configBSP430_PERIPH_USCI_A1 0
@@ -171,8 +171,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP
 
 /** @def configBSP430_PERIPH_USCI_A2
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_A2 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A2 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_A2
 #define configBSP430_PERIPH_USCI_A2 0
@@ -194,8 +194,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A2 = (volatile xBSP
 
 /** @def configBSP430_PERIPH_USCI_A3
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_A3 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A3 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_A3
 #define configBSP430_PERIPH_USCI_A3 0
@@ -217,8 +217,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A3 = (volatile xBSP
 
 /** @def configBSP430_PERIPH_USCI_B0
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_B0 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B0 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_B0
 #define configBSP430_PERIPH_USCI_B0 0
@@ -240,8 +240,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP
 
 /** @def configBSP430_PERIPH_USCI_B1
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_B1 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B1 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_B1
 #define configBSP430_PERIPH_USCI_B1 0
@@ -263,8 +263,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
 
 /** @def configBSP430_PERIPH_USCI_B2
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_B2 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B2 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_B2
 #define configBSP430_PERIPH_USCI_B2 0
@@ -286,8 +286,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B2 = (volatile xBSP
 
 /** @def configBSP430_PERIPH_USCI_B3
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of the
- * @c USCI_B3 peripheral HPL or HAL interface.  Only do this if the MCU
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B3 peripheral HPL interface.  Only do this if the MCU
  * supports this device. */
 #ifndef configBSP430_PERIPH_USCI_B3
 #define configBSP430_PERIPH_USCI_B3 0
@@ -314,107 +314,139 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B3 = (volatile xBSP
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
 /** @def configBSP430_HAL_USCI_A0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A0.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_A0 must be also be true. */
+ * @note #configBSP430_HAL_USCI_A0 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A0_ISR
 #define configBSP430_HAL_USCI_A0_ISR 0
 #endif /* configBSP430_HAL_USCI_A0_ISR */
 
+#if (configBSP430_HAL_USCI_A0_ISR - 0) && ! (configBSP430_HAL_USCI_A0 - 0)
+#warning configBSP430_HAL_USCI_A0_ISR requested without configBSP430_HAL_USCI_A0
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_USCI_A1_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A1.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_A1 must be also be true. */
+ * @note #configBSP430_HAL_USCI_A1 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A1_ISR
 #define configBSP430_HAL_USCI_A1_ISR 0
 #endif /* configBSP430_HAL_USCI_A1_ISR */
 
+#if (configBSP430_HAL_USCI_A1_ISR - 0) && ! (configBSP430_HAL_USCI_A1 - 0)
+#warning configBSP430_HAL_USCI_A1_ISR requested without configBSP430_HAL_USCI_A1
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_USCI_A2_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A2.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_A2 must be also be true. */
+ * @note #configBSP430_HAL_USCI_A2 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A2_ISR
 #define configBSP430_HAL_USCI_A2_ISR 0
 #endif /* configBSP430_HAL_USCI_A2_ISR */
 
+#if (configBSP430_HAL_USCI_A2_ISR - 0) && ! (configBSP430_HAL_USCI_A2 - 0)
+#warning configBSP430_HAL_USCI_A2_ISR requested without configBSP430_HAL_USCI_A2
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_USCI_A3_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_A3.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_A3 must be also be true. */
+ * @note #configBSP430_HAL_USCI_A3 must be also be true. */
 #ifndef configBSP430_HAL_USCI_A3_ISR
 #define configBSP430_HAL_USCI_A3_ISR 0
 #endif /* configBSP430_HAL_USCI_A3_ISR */
 
+#if (configBSP430_HAL_USCI_A3_ISR - 0) && ! (configBSP430_HAL_USCI_A3 - 0)
+#warning configBSP430_HAL_USCI_A3_ISR requested without configBSP430_HAL_USCI_A3
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_USCI_B0_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B0.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_B0 must be also be true. */
+ * @note #configBSP430_HAL_USCI_B0 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B0_ISR
 #define configBSP430_HAL_USCI_B0_ISR 0
 #endif /* configBSP430_HAL_USCI_B0_ISR */
 
+#if (configBSP430_HAL_USCI_B0_ISR - 0) && ! (configBSP430_HAL_USCI_B0 - 0)
+#warning configBSP430_HAL_USCI_B0_ISR requested without configBSP430_HAL_USCI_B0
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_USCI_B1_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B1.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_B1 must be also be true. */
+ * @note #configBSP430_HAL_USCI_B1 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B1_ISR
 #define configBSP430_HAL_USCI_B1_ISR 0
 #endif /* configBSP430_HAL_USCI_B1_ISR */
 
+#if (configBSP430_HAL_USCI_B1_ISR - 0) && ! (configBSP430_HAL_USCI_B1 - 0)
+#warning configBSP430_HAL_USCI_B1_ISR requested without configBSP430_HAL_USCI_B1
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_USCI_B2_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B2.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_B2 must be also be true. */
+ * @note #configBSP430_HAL_USCI_B2 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B2_ISR
 #define configBSP430_HAL_USCI_B2_ISR 0
 #endif /* configBSP430_HAL_USCI_B2_ISR */
 
+#if (configBSP430_HAL_USCI_B2_ISR - 0) && ! (configBSP430_HAL_USCI_B2 - 0)
+#warning configBSP430_HAL_USCI_B2_ISR requested without configBSP430_HAL_USCI_B2
+#endif /* HAL_ISR and not HAL */
+
 /** @def configBSP430_HAL_USCI_B3_ISR
  *
- * Define to a true value in @c FreeRTOSConfig.h to use the BSP430 HAL
+ * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
  * interrupt vector for @c USCI_B3.
  *
  * Define to a false value if you need complete control over interrupt
  * handling for the peripheral and will be defining the vector yourself.
  *
- * @note #configBSP430_PERIPH_USCI_B3 must be also be true. */
+ * @note #configBSP430_HAL_USCI_B3 must be also be true. */
 #ifndef configBSP430_HAL_USCI_B3_ISR
 #define configBSP430_HAL_USCI_B3_ISR 0
 #endif /* configBSP430_HAL_USCI_B3_ISR */
+
+#if (configBSP430_HAL_USCI_B3_ISR - 0) && ! (configBSP430_HAL_USCI_B3 - 0)
+#warning configBSP430_HAL_USCI_B3_ISR requested without configBSP430_HAL_USCI_B3
+#endif /* HAL_ISR and not HAL */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
@@ -523,53 +555,181 @@ int iBSP430usciPutString (const char* str, xBSP430usciHandle xUSCI);
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
-/** FreeRTOS HAL handle for USCI_A0.
+/** @def configBSP430_HAL_USCI_A0
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A0 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_A0. */
+#ifndef configBSP430_HAL_USCI_A0
+#define configBSP430_HAL_USCI_A0 0
+#endif /* configBSP430_HAL_USCI_A0 */
+
+#if (configBSP430_HAL_USCI_A0 - 0) && ! (configBSP430_PERIPH_USCI_A0 - 0)
+#warning configBSP430_HAL_USCI_A0 requested without configBSP430_PERIPH_USCI_A0
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_A0.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_A0
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_A0 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_A0;
+#endif /* configBSP430_HAL_USCI_A0 */
 
-/** FreeRTOS HAL handle for USCI_A1.
+/** @def configBSP430_HAL_USCI_A1
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A1 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_A1. */
+#ifndef configBSP430_HAL_USCI_A1
+#define configBSP430_HAL_USCI_A1 0
+#endif /* configBSP430_HAL_USCI_A1 */
+
+#if (configBSP430_HAL_USCI_A1 - 0) && ! (configBSP430_PERIPH_USCI_A1 - 0)
+#warning configBSP430_HAL_USCI_A1 requested without configBSP430_PERIPH_USCI_A1
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_A1.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_A1
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_A1 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_A1;
+#endif /* configBSP430_HAL_USCI_A1 */
 
-/** FreeRTOS HAL handle for USCI_A2.
+/** @def configBSP430_HAL_USCI_A2
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A2 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_A2. */
+#ifndef configBSP430_HAL_USCI_A2
+#define configBSP430_HAL_USCI_A2 0
+#endif /* configBSP430_HAL_USCI_A2 */
+
+#if (configBSP430_HAL_USCI_A2 - 0) && ! (configBSP430_PERIPH_USCI_A2 - 0)
+#warning configBSP430_HAL_USCI_A2 requested without configBSP430_PERIPH_USCI_A2
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_A2.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_A2
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_A2 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_A2;
+#endif /* configBSP430_HAL_USCI_A2 */
 
-/** FreeRTOS HAL handle for USCI_A3.
+/** @def configBSP430_HAL_USCI_A3
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_A3 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_A3. */
+#ifndef configBSP430_HAL_USCI_A3
+#define configBSP430_HAL_USCI_A3 0
+#endif /* configBSP430_HAL_USCI_A3 */
+
+#if (configBSP430_HAL_USCI_A3 - 0) && ! (configBSP430_PERIPH_USCI_A3 - 0)
+#warning configBSP430_HAL_USCI_A3 requested without configBSP430_PERIPH_USCI_A3
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_A3.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_A3
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_A3 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_A3;
+#endif /* configBSP430_HAL_USCI_A3 */
 
-/** FreeRTOS HAL handle for USCI_B0.
+/** @def configBSP430_HAL_USCI_B0
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B0 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_B0. */
+#ifndef configBSP430_HAL_USCI_B0
+#define configBSP430_HAL_USCI_B0 0
+#endif /* configBSP430_HAL_USCI_B0 */
+
+#if (configBSP430_HAL_USCI_B0 - 0) && ! (configBSP430_PERIPH_USCI_B0 - 0)
+#warning configBSP430_HAL_USCI_B0 requested without configBSP430_PERIPH_USCI_B0
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_B0.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_B0
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_B0 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_B0;
+#endif /* configBSP430_HAL_USCI_B0 */
 
-/** FreeRTOS HAL handle for USCI_B1.
+/** @def configBSP430_HAL_USCI_B1
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B1 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_B1. */
+#ifndef configBSP430_HAL_USCI_B1
+#define configBSP430_HAL_USCI_B1 0
+#endif /* configBSP430_HAL_USCI_B1 */
+
+#if (configBSP430_HAL_USCI_B1 - 0) && ! (configBSP430_PERIPH_USCI_B1 - 0)
+#warning configBSP430_HAL_USCI_B1 requested without configBSP430_PERIPH_USCI_B1
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_B1.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_B1
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_B1 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_B1;
+#endif /* configBSP430_HAL_USCI_B1 */
 
-/** FreeRTOS HAL handle for USCI_B2.
+/** @def configBSP430_HAL_USCI_B2
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B2 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_B2. */
+#ifndef configBSP430_HAL_USCI_B2
+#define configBSP430_HAL_USCI_B2 0
+#endif /* configBSP430_HAL_USCI_B2 */
+
+#if (configBSP430_HAL_USCI_B2 - 0) && ! (configBSP430_PERIPH_USCI_B2 - 0)
+#warning configBSP430_HAL_USCI_B2 requested without configBSP430_PERIPH_USCI_B2
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_B2.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_B2
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_B2 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_B2;
+#endif /* configBSP430_HAL_USCI_B2 */
 
-/** FreeRTOS HAL handle for USCI_B3.
+/** @def configBSP430_HAL_USCI_B3
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c USCI_B3 peripheral HAL interface.  Only do this if the MCU
+ * supports this device.  You must also explicitly enable
+ * #configBSP430_PERIPH_USCI_B3. */
+#ifndef configBSP430_HAL_USCI_B3
+#define configBSP430_HAL_USCI_B3 0
+#endif /* configBSP430_HAL_USCI_B3 */
+
+#if (configBSP430_HAL_USCI_B3 - 0) && ! (configBSP430_PERIPH_USCI_B3 - 0)
+#warning configBSP430_HAL_USCI_B3 requested without configBSP430_PERIPH_USCI_B3
+#endif /* HAL and not HPL */
+
+/** BSP430 HAL handle for USCI_B3.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_B3
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_USCI_B3 - 0)
 extern xBSP430usciHandle const xBSP430usci_USCI_B3;
+#endif /* configBSP430_HAL_USCI_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
