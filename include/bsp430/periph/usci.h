@@ -330,7 +330,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
 #define configBSP430_HAL_USCIAB0RX_ISR ((configBSP430_HAL_USCI_A0 - 0) | (configBSP430_HAL_USCI_B0 - 0))
 #endif /* configBSP430_HAL_USCIAB0RX_ISR */
 
-#if ((configBSP430_HAL_0_ISR - 0)      && ! ((configBSP430_HAL_USCI_A0RX - 0) | (configBSP430_HAL_USCI_B0 - 0)))
+#if ((configBSP430_HAL_0_ISR - 0) \
+     && ! ((configBSP430_HAL_USCI_A0RX - 0) | (configBSP430_HAL_USCI_B0 - 0)))
 #warning configBSP430_HAL_USCIAB0RX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
 #endif /* HAL_ISR and not HAL */
 
@@ -353,7 +354,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
 #define configBSP430_HAL_USCIAB0TX_ISR ((configBSP430_HAL_USCI_A0 - 0) | (configBSP430_HAL_USCI_B0 - 0))
 #endif /* configBSP430_HAL_USCIAB0TX_ISR */
 
-#if ((configBSP430_HAL_0_ISR - 0)      && ! ((configBSP430_HAL_USCI_A0TX - 0) | (configBSP430_HAL_USCI_B0 - 0)))
+#if ((configBSP430_HAL_0_ISR - 0) \
+     && ! ((configBSP430_HAL_USCI_A0TX - 0) | (configBSP430_HAL_USCI_B0 - 0)))
 #warning configBSP430_HAL_USCIAB0TX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
 #endif /* HAL_ISR and not HAL */
 
@@ -376,7 +378,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
 #define configBSP430_HAL_USCIAB1RX_ISR ((configBSP430_HAL_USCI_A1 - 0) | (configBSP430_HAL_USCI_B1 - 0))
 #endif /* configBSP430_HAL_USCIAB1RX_ISR */
 
-#if ((configBSP430_HAL_1_ISR - 0)      && ! ((configBSP430_HAL_USCI_A1RX - 0) | (configBSP430_HAL_USCI_B1 - 0)))
+#if ((configBSP430_HAL_1_ISR - 0) \
+     && ! ((configBSP430_HAL_USCI_A1RX - 0) | (configBSP430_HAL_USCI_B1 - 0)))
 #warning configBSP430_HAL_USCIAB1RX_ISR requested without configBSP430_HAL_USCI_A1 or configBSP430_HAL_USCI_B1
 #endif /* HAL_ISR and not HAL */
 
@@ -399,7 +402,8 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
 #define configBSP430_HAL_USCIAB1TX_ISR ((configBSP430_HAL_USCI_A1 - 0) | (configBSP430_HAL_USCI_B1 - 0))
 #endif /* configBSP430_HAL_USCIAB1TX_ISR */
 
-#if ((configBSP430_HAL_1_ISR - 0)      && ! ((configBSP430_HAL_USCI_A1TX - 0) | (configBSP430_HAL_USCI_B1 - 0)))
+#if ((configBSP430_HAL_1_ISR - 0) \
+     && ! ((configBSP430_HAL_USCI_A1TX - 0) | (configBSP430_HAL_USCI_B1 - 0)))
 #warning configBSP430_HAL_USCIAB1TX_ISR requested without configBSP430_HAL_USCI_A1 or configBSP430_HAL_USCI_B1
 #endif /* HAL_ISR and not HAL */
 

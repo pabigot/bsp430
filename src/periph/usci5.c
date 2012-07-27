@@ -244,14 +244,14 @@ iBSP430usci5PutString (const char* str, xBSP430usci5Handle device)
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
-#if (((configBSP430_PERIPH_USCI5_A0 - 0) && (configBSP430_HAL_USCI5_A0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_USCI5_A1 - 0) && (configBSP430_HAL_USCI5_A1_ISR - 0)) \
-	 || ((configBSP430_PERIPH_USCI5_A2 - 0) && (configBSP430_HAL_USCI5_A2_ISR - 0)) \
-	 || ((configBSP430_PERIPH_USCI5_A3 - 0) && (configBSP430_HAL_USCI5_A3_ISR - 0)) \
-	 || ((configBSP430_PERIPH_USCI5_B0 - 0) && (configBSP430_HAL_USCI5_B0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_USCI5_B1 - 0) && (configBSP430_HAL_USCI5_B1_ISR - 0)) \
-	 || ((configBSP430_PERIPH_USCI5_B2 - 0) && (configBSP430_HAL_USCI5_B2_ISR - 0)) \
-	 || ((configBSP430_PERIPH_USCI5_B3 - 0) && (configBSP430_HAL_USCI5_B3_ISR - 0)) \
+#if ((configBSP430_HAL_USCI5_A0_ISR - 0) \
+	 || (configBSP430_HAL_USCI5_A1_ISR - 0) \
+	 || (configBSP430_HAL_USCI5_A2_ISR - 0) \
+	 || (configBSP430_HAL_USCI5_A3_ISR - 0) \
+	 || (configBSP430_HAL_USCI5_B0_ISR - 0) \
+	 || (configBSP430_HAL_USCI5_B1_ISR - 0) \
+	 || (configBSP430_HAL_USCI5_B2_ISR - 0) \
+	 || (configBSP430_HAL_USCI5_B3_ISR - 0) \
 	 )
 static void
 #if __MSP430X__

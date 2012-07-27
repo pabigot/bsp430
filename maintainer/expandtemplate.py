@@ -99,7 +99,7 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 #define configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
 #endif /* configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR */
 
-#if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \
+#if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \\
      && ! ((configBSP430_HAL_USCI_A%(INSTANCE)sRX - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0)))
 #warning configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
 #endif /* HAL_ISR and not HAL */
@@ -123,7 +123,7 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 #define configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
 #endif /* configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR */
 
-#if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \
+#if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \\
      && ! ((configBSP430_HAL_USCI_A%(INSTANCE)sTX - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0)))
 #warning configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
 #endif /* HAL_ISR and not HAL */
