@@ -32,11 +32,25 @@
 /** @file
  * @brief Support for maintaining a system uptime counter.
  *
- * It is recommended that the default configuration using undivided
- * ACLK be retained, and that this functionality be enabled by
- * defining #configBSP430_UPTIME and invoking #vBSP430uptimeStart_ni on
- * hardware initialization (as soon as the crystal driving ACLK has
- * been stabilized).
+ * This module provides routines to initialize and query a long-term
+ * clock, normally using #xBSP430timer_TA0 sourced by an undivided
+ * ACLK.  The feature is enabled by adding the following to your
+ * bsp430_config.h:
+ *
+ * @code
+
+#define configBSP430_UPTIME 1
+#define configBSP430_PERIPH_TA0 1
+#define configBSP430_HAL_TA0_ISR 1
+
+ * @endcode
+ *
+ * #vBSP430uptimeStart_ni must be invoked on hardware initialization
+ * after configuring the system clocks.  This is done for you in
+ * #vBSP430platformSetup_ni if #configBSP430_UPTIME is true.
+ *
+ * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to use
+ * something other than #xBSP430timer_TA0 as the uptime clock source.
  * 
  * @author Peter A. Bigot <bigotp@acm.org> @homepage
  * http://github.com/pabigot/freertos-mspgcc @date 2012 @copyright <a
@@ -52,26 +66,64 @@
 /** @def configBSP430_UPTIME
  *
  * Define to a true value to enable the uptime infrastructure to
- * maintain a continuous system clock.
+ * maintain a continuous system clock.  Normally accompanied by the
+ * required enabling of the underlying peripheral and HAL interrupt
+ * handler:
  *
- * @note #BSP430_UPTIME_TIMER_HAL_HANDLE must also be defined, and the clock
- * and its HAL ISR must be enabled (e.g., using
- * #configBSP430_PERIPH_TA0 and #configBSP430_HAL_TA0_ISR).
+ * @code
+
+#define configBSP430_UPTIME 1
+#define configBSP430_PERIPH_TA0 1
+#define configBSP430_HAL_TA0_ISR 1
+
+ * @endcode
+ *
+ * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE.
  */
 #ifndef configBSP430_UPTIME
 #define configBSP430_UPTIME 0
 #endif /* configBSP430_UPTIME */
+
+/** @def configBSP430_UPTIME_USE_DEFAULT_RESOURCE
+ *
+ * In almost all cases, when #configBSP430_UPTIME is enabled
+ * #xBSP430timer_TA0 will be used as #BSP430_UPTIME_TIMER_HAL_HANDLE.
+ * Correct functioning requires that #configBSP430_PERIPH_TA0 and
+ * #configBSP430_HAL_TA0_ISR be set as well.  It is very easy to
+ * forget to do this, which can result in an unhandled interrupt.
+ *
+ * While it is not possible within the uptime header to correct a
+ * misconfigured system, it is possible to detect the misconfiguration
+ * and emit a warning.  Setting this option to a false value will
+ * inhibit that check, and must be done if
+ * #BSP430_UPTIME_TIMER_HAL_HANDLE is changed. */
+#ifndef configBSP430_UPTIME_USE_DEFAULT_RESOURCE
+#define configBSP430_UPTIME_USE_DEFAULT_RESOURCE 1
+#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
+
+#if configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0
+#if defined(BSP430_UPTIME_TIMER_HAL_HANDLE)
+#warning Override of BSP430_UPTIME_TIMER_HAL_HANDLE with true configBSP430_UPTIME_USE_DEFAULT_RESOURCE
+#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
+#if !(configBSP430_PERIPH_TA0 - 0)
+#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_PERIPH_TA0 not enabled
+#endif /* configBSP430_PERIPH_TA0 */
+#if !(configBSP430_HAL_TA0_ISR - 0)
+#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0_ISR not enabled
+#endif /* configBSP430_HAL_TA0_ISR */
+#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
 
 /** @def BSP430_UPTIME_TIMER_HAL_HANDLE
  *
  * Define to the handle of a HAL timer that can be used to maintain a
  * continuous system clock sourced from ACLK.
  *
- * @warning Be sure to also enable the corresponding peripheral (e.g.,
- * with #configBSP430_PERIPH_TA0) and to support the matching HAL
- * interrupt that will count overflows
- * (e.g. #configBSP430_HAL_TA0_ISR).
- */
+ * @warning If you set this, you must also set
+ * #configBSP430_UPTIME_USE_DEFAULT_RESOURCE to be a false value.  You
+ * must also enable the corresponding peripheral
+ * (e.g. #configBSP430_PERIPH_TA1) and HAL interrupt that will count
+ * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled, as the
+ * checks for that cannot be enforced for non-default resources. */
 #ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
 #endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
