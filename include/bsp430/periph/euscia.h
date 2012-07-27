@@ -102,22 +102,106 @@ typedef struct xBSP430periphEUSCIA {
 #define _BSP430_PERIPH_EUSCI_B3_BASEADDRESS __MSP430_BASEADDRESS_EUSCI_B3__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
+#include "FreeRTOS.h"
+#include "queue.h"
+
+/* Forward declaration to hardware abstraction layer state for eUSCI_A. */
+struct xBSP430eusciaState;
+
+/** The USCI internal state is private to the implementation. */
+typedef struct xBSP430eusciaState * xBSP430eusciaHandle;
+
+/* !BSP430! insert=hal_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
+/** @def configBSP430_HAL_EUSCI_A0
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_A0 peripheral HAL interface.  This defines a global
+ * object xBSP430eusciaHandle supporting enhanced functionality
+ * for the peripheral.
+ *
+ * @note Enabling this defaults #configBSP430_PERIPH_EUSCI_A0 to true. */
+#ifndef configBSP430_HAL_EUSCI_A0
+#define configBSP430_HAL_EUSCI_A0 0
+#endif /* configBSP430_HAL_EUSCI_A0 */
+
+/** BSP430 HAL handle for EUSCI_A0.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_EUSCI_A0
+ * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A0 - 0)
+extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0;
+#endif /* configBSP430_HAL_EUSCI_A0 */
+
+/** @def configBSP430_HAL_EUSCI_A1
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_A1 peripheral HAL interface.  This defines a global
+ * object xBSP430eusciaHandle supporting enhanced functionality
+ * for the peripheral.
+ *
+ * @note Enabling this defaults #configBSP430_PERIPH_EUSCI_A1 to true. */
+#ifndef configBSP430_HAL_EUSCI_A1
+#define configBSP430_HAL_EUSCI_A1 0
+#endif /* configBSP430_HAL_EUSCI_A1 */
+
+/** BSP430 HAL handle for EUSCI_A1.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_EUSCI_A1
+ * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A1 - 0)
+extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1;
+#endif /* configBSP430_HAL_EUSCI_A1 */
+
+/** @def configBSP430_HAL_EUSCI_A2
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_A2 peripheral HAL interface.  This defines a global
+ * object xBSP430eusciaHandle supporting enhanced functionality
+ * for the peripheral.
+ *
+ * @note Enabling this defaults #configBSP430_PERIPH_EUSCI_A2 to true. */
+#ifndef configBSP430_HAL_EUSCI_A2
+#define configBSP430_HAL_EUSCI_A2 0
+#endif /* configBSP430_HAL_EUSCI_A2 */
+
+/** BSP430 HAL handle for EUSCI_A2.
+ *
+ * The handle may be used only if #configBSP430_PERIPH_EUSCI_A2
+ * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A2 - 0)
+extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
+#endif /* configBSP430_HAL_EUSCI_A2 */
+
+/* END AUTOMATICALLY GENERATED CODE [hal_decl] */
+/* !BSP430! end=hal_decl */
+
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
 /** @def configBSP430_PERIPH_EUSCI_A0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c EUSCI_A0 peripheral HPL interface.  Only do this if the MCU
- * supports this device. */
+ * supports this device.
+ *
+ * @note Enabling #configBSP430_HAL_EUSCI_A0 defaults this to
+ * true, so you only need to explicitly request if you want the HPL
+ * interface without the HAL interface. */
 #ifndef configBSP430_PERIPH_EUSCI_A0
-#define configBSP430_PERIPH_EUSCI_A0 0
+#define configBSP430_PERIPH_EUSCI_A0 (configBSP430_HAL_EUSCI_A0 - 0)
 #endif /* configBSP430_PERIPH_EUSCI_A0 */
+
+#if (configBSP430_HAL_EUSCI_A0 - 0) && ! (configBSP430_PERIPH_EUSCI_A0 - 0)
+#warning configBSP430_HAL_EUSCI_A0 requested without configBSP430_PERIPH_EUSCI_A0
+#endif /* HAL and not HPL */
 
 /** Handle for the raw EUSCI_A0 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_EUSCI_A0
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A0 - 0)
 #define BSP430_PERIPH_EUSCI_A0 ((xBSP430periphHandle)(_BSP430_PERIPH_EUSCI_A0_BASEADDRESS))
+#endif /* configBSP430_PERIPH_EUSCI_A0 */
 
 /** Pointer to the peripheral register map for EUSCI_A0.
  *
@@ -131,16 +215,26 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = (volatile x
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c EUSCI_A1 peripheral HPL interface.  Only do this if the MCU
- * supports this device. */
+ * supports this device.
+ *
+ * @note Enabling #configBSP430_HAL_EUSCI_A1 defaults this to
+ * true, so you only need to explicitly request if you want the HPL
+ * interface without the HAL interface. */
 #ifndef configBSP430_PERIPH_EUSCI_A1
-#define configBSP430_PERIPH_EUSCI_A1 0
+#define configBSP430_PERIPH_EUSCI_A1 (configBSP430_HAL_EUSCI_A1 - 0)
 #endif /* configBSP430_PERIPH_EUSCI_A1 */
+
+#if (configBSP430_HAL_EUSCI_A1 - 0) && ! (configBSP430_PERIPH_EUSCI_A1 - 0)
+#warning configBSP430_HAL_EUSCI_A1 requested without configBSP430_PERIPH_EUSCI_A1
+#endif /* HAL and not HPL */
 
 /** Handle for the raw EUSCI_A1 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_EUSCI_A1
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A1 - 0)
 #define BSP430_PERIPH_EUSCI_A1 ((xBSP430periphHandle)(_BSP430_PERIPH_EUSCI_A1_BASEADDRESS))
+#endif /* configBSP430_PERIPH_EUSCI_A1 */
 
 /** Pointer to the peripheral register map for EUSCI_A1.
  *
@@ -154,16 +248,26 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = (volatile x
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c EUSCI_A2 peripheral HPL interface.  Only do this if the MCU
- * supports this device. */
+ * supports this device.
+ *
+ * @note Enabling #configBSP430_HAL_EUSCI_A2 defaults this to
+ * true, so you only need to explicitly request if you want the HPL
+ * interface without the HAL interface. */
 #ifndef configBSP430_PERIPH_EUSCI_A2
-#define configBSP430_PERIPH_EUSCI_A2 0
+#define configBSP430_PERIPH_EUSCI_A2 (configBSP430_HAL_EUSCI_A2 - 0)
 #endif /* configBSP430_PERIPH_EUSCI_A2 */
+
+#if (configBSP430_HAL_EUSCI_A2 - 0) && ! (configBSP430_PERIPH_EUSCI_A2 - 0)
+#warning configBSP430_HAL_EUSCI_A2 requested without configBSP430_PERIPH_EUSCI_A2
+#endif /* HAL and not HPL */
 
 /** Handle for the raw EUSCI_A2 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_EUSCI_A2
  * is defined to a true value. */
+#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A2 - 0)
 #define BSP430_PERIPH_EUSCI_A2 ((xBSP430periphHandle)(_BSP430_PERIPH_EUSCI_A2_BASEADDRESS))
+#endif /* configBSP430_PERIPH_EUSCI_A2 */
 
 /** Pointer to the peripheral register map for EUSCI_A2.
  *
@@ -180,15 +284,18 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile x
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
 /** @def configBSP430_HAL_EUSCI_A0_ISR
  *
- * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
- * interrupt vector for @c EUSCI_A0.
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c EUSCI_A0, but want to define your
+ * own interrupt service routine for the peripheral.
  *
- * Define to a false value if you need complete control over interrupt
- * handling for the peripheral and will be defining the vector yourself.
+ * Enabling #configBSP430_HAL_EUSCI_A0 defaults this to
+ * true, so you only need to explicitly set it if you do not want to
+ * use the standard ISR provided by BSP430.
  *
- * @note #configBSP430_HAL_EUSCI_A0 must be also be true. */
+ * @note Enabling this requires that #configBSP430_HAL_EUSCI_A0
+ * also be true. */
 #ifndef configBSP430_HAL_EUSCI_A0_ISR
-#define configBSP430_HAL_EUSCI_A0_ISR 0
+#define configBSP430_HAL_EUSCI_A0_ISR (configBSP430_HAL_EUSCI_A0 - 0)
 #endif /* configBSP430_HAL_EUSCI_A0_ISR */
 
 #if (configBSP430_HAL_EUSCI_A0_ISR - 0) && ! (configBSP430_HAL_EUSCI_A0 - 0)
@@ -197,15 +304,18 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile x
 
 /** @def configBSP430_HAL_EUSCI_A1_ISR
  *
- * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
- * interrupt vector for @c EUSCI_A1.
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c EUSCI_A1, but want to define your
+ * own interrupt service routine for the peripheral.
  *
- * Define to a false value if you need complete control over interrupt
- * handling for the peripheral and will be defining the vector yourself.
+ * Enabling #configBSP430_HAL_EUSCI_A1 defaults this to
+ * true, so you only need to explicitly set it if you do not want to
+ * use the standard ISR provided by BSP430.
  *
- * @note #configBSP430_HAL_EUSCI_A1 must be also be true. */
+ * @note Enabling this requires that #configBSP430_HAL_EUSCI_A1
+ * also be true. */
 #ifndef configBSP430_HAL_EUSCI_A1_ISR
-#define configBSP430_HAL_EUSCI_A1_ISR 0
+#define configBSP430_HAL_EUSCI_A1_ISR (configBSP430_HAL_EUSCI_A1 - 0)
 #endif /* configBSP430_HAL_EUSCI_A1_ISR */
 
 #if (configBSP430_HAL_EUSCI_A1_ISR - 0) && ! (configBSP430_HAL_EUSCI_A1 - 0)
@@ -214,15 +324,18 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile x
 
 /** @def configBSP430_HAL_EUSCI_A2_ISR
  *
- * Define to a true value in @c bsp430_config.h to use the BSP430 HAL
- * interrupt vector for @c EUSCI_A2.
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c EUSCI_A2, but want to define your
+ * own interrupt service routine for the peripheral.
  *
- * Define to a false value if you need complete control over interrupt
- * handling for the peripheral and will be defining the vector yourself.
+ * Enabling #configBSP430_HAL_EUSCI_A2 defaults this to
+ * true, so you only need to explicitly set it if you do not want to
+ * use the standard ISR provided by BSP430.
  *
- * @note #configBSP430_HAL_EUSCI_A2 must be also be true. */
+ * @note Enabling this requires that #configBSP430_HAL_EUSCI_A2
+ * also be true. */
 #ifndef configBSP430_HAL_EUSCI_A2_ISR
-#define configBSP430_HAL_EUSCI_A2_ISR 0
+#define configBSP430_HAL_EUSCI_A2_ISR (configBSP430_HAL_EUSCI_A2 - 0)
 #endif /* configBSP430_HAL_EUSCI_A2_ISR */
 
 #if (configBSP430_HAL_EUSCI_A2_ISR - 0) && ! (configBSP430_HAL_EUSCI_A2 - 0)
@@ -231,15 +344,6 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile x
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
-
-#include "FreeRTOS.h"
-#include "queue.h"
-
-/* Forward declaration to hardware abstraction layer state for eUSCI_A. */
-struct xBSP430eusciaState;
-
-/** The USCI internal state is private to the implementation. */
-typedef struct xBSP430eusciaState * xBSP430eusciaHandle;
 
 /** Request and configure a USCI device in UART mode.
  *
@@ -333,77 +437,6 @@ int iBSP430eusciaPutc (int c, xBSP430eusciaHandle xUSCI);
 
 /** Analog to fputs */
 int iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle xUSCI);
-
-/* !BSP430! insert=hal_decl */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
-/** @def configBSP430_HAL_EUSCI_A0
- *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A0 peripheral HAL interface.  Only do this if the MCU
- * supports this device.  You must also explicitly enable
- * #configBSP430_PERIPH_EUSCI_A0. */
-#ifndef configBSP430_HAL_EUSCI_A0
-#define configBSP430_HAL_EUSCI_A0 0
-#endif /* configBSP430_HAL_EUSCI_A0 */
-
-#if (configBSP430_HAL_EUSCI_A0 - 0) && ! (configBSP430_PERIPH_EUSCI_A0 - 0)
-#warning configBSP430_HAL_EUSCI_A0 requested without configBSP430_PERIPH_EUSCI_A0
-#endif /* HAL and not HPL */
-
-/** BSP430 HAL handle for EUSCI_A0.
- *
- * The handle may be used only if #configBSP430_PERIPH_EUSCI_A0
- * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A0 - 0)
-extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0;
-#endif /* configBSP430_HAL_EUSCI_A0 */
-
-/** @def configBSP430_HAL_EUSCI_A1
- *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A1 peripheral HAL interface.  Only do this if the MCU
- * supports this device.  You must also explicitly enable
- * #configBSP430_PERIPH_EUSCI_A1. */
-#ifndef configBSP430_HAL_EUSCI_A1
-#define configBSP430_HAL_EUSCI_A1 0
-#endif /* configBSP430_HAL_EUSCI_A1 */
-
-#if (configBSP430_HAL_EUSCI_A1 - 0) && ! (configBSP430_PERIPH_EUSCI_A1 - 0)
-#warning configBSP430_HAL_EUSCI_A1 requested without configBSP430_PERIPH_EUSCI_A1
-#endif /* HAL and not HPL */
-
-/** BSP430 HAL handle for EUSCI_A1.
- *
- * The handle may be used only if #configBSP430_PERIPH_EUSCI_A1
- * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A1 - 0)
-extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1;
-#endif /* configBSP430_HAL_EUSCI_A1 */
-
-/** @def configBSP430_HAL_EUSCI_A2
- *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A2 peripheral HAL interface.  Only do this if the MCU
- * supports this device.  You must also explicitly enable
- * #configBSP430_PERIPH_EUSCI_A2. */
-#ifndef configBSP430_HAL_EUSCI_A2
-#define configBSP430_HAL_EUSCI_A2 0
-#endif /* configBSP430_HAL_EUSCI_A2 */
-
-#if (configBSP430_HAL_EUSCI_A2 - 0) && ! (configBSP430_PERIPH_EUSCI_A2 - 0)
-#warning configBSP430_HAL_EUSCI_A2 requested without configBSP430_PERIPH_EUSCI_A2
-#endif /* HAL and not HPL */
-
-/** BSP430 HAL handle for EUSCI_A2.
- *
- * The handle may be used only if #configBSP430_PERIPH_EUSCI_A2
- * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A2 - 0)
-extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
-#endif /* configBSP430_HAL_EUSCI_A2 */
-
-/* END AUTOMATICALLY GENERATED CODE [hal_decl] */
-/* !BSP430! end=hal_decl */
 
 #endif /* BSP430_PERIPH_EUSCIA_H */
 

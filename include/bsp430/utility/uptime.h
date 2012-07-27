@@ -40,8 +40,7 @@
  * @code
 
 #define configBSP430_UPTIME 1
-#define configBSP430_PERIPH_TA0 1
-#define configBSP430_HAL_TA0_ISR 1
+#define configBSP430_HAL_TA0 1
 
  * @endcode
  *
@@ -66,15 +65,14 @@
 /** @def configBSP430_UPTIME
  *
  * Define to a true value to enable the uptime infrastructure to
- * maintain a continuous system clock.  Normally accompanied by the
- * required enabling of the underlying peripheral and HAL interrupt
- * handler:
+ * maintain a continuous system clock.  Must be accompanied by the
+ * required enabling of the HAL interrupt handler which monitors
+ * counter overflows:
  *
  * @code
 
 #define configBSP430_UPTIME 1
-#define configBSP430_PERIPH_TA0 1
-#define configBSP430_HAL_TA0_ISR 1
+#define configBSP430_HAL_TA0 1
 
  * @endcode
  *
@@ -89,14 +87,17 @@
  * In almost all cases, when #configBSP430_UPTIME is enabled
  * #xBSP430timer_TA0 will be used as #BSP430_UPTIME_TIMER_HAL_HANDLE.
  * Correct functioning requires that #configBSP430_PERIPH_TA0 and
- * #configBSP430_HAL_TA0_ISR be set as well.  It is very easy to
- * forget to do this, which can result in an unhandled interrupt.
+ * #configBSP430_HAL_TA0_ISR be set as well.  Although these are
+ * enabled by default when #configBSP430_HAL_TA0 is enabled, it is
+ * easy to forget this step.
  *
  * While it is not possible within the uptime header to correct a
- * misconfigured system, it is possible to detect the misconfiguration
+ * misconfigured system, if the selected peripheral can be identified
+ * by the C preprocessor it is possible to detect the misconfiguration
  * and emit a warning.  Setting this option to a false value will
  * inhibit that check, and must be done if
- * #BSP430_UPTIME_TIMER_HAL_HANDLE is changed. */
+ * #BSP430_UPTIME_TIMER_HAL_HANDLE is changed from its default
+ * value. */
 #ifndef configBSP430_UPTIME_USE_DEFAULT_RESOURCE
 #define configBSP430_UPTIME_USE_DEFAULT_RESOURCE 1
 #endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
@@ -120,10 +121,11 @@
  *
  * @warning If you set this, you must also set
  * #configBSP430_UPTIME_USE_DEFAULT_RESOURCE to be a false value.  You
- * must also enable the corresponding peripheral
+ * must also ensure the corresponding peripheral
  * (e.g. #configBSP430_PERIPH_TA1) and HAL interrupt that will count
- * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled, as the
- * checks for that cannot be enforced for non-default resources. */
+ * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled, for example
+ * by enabling #configBSP430_HAL_TA1, as the check for these
+ * requirements cannot be enforced for non-default resources. */
 #ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
 #endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
