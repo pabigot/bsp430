@@ -74,7 +74,7 @@ emit_char2_ni (int c, xBSP430uartHandle uart)
 {
 #if configBSP430_CONSOLE_USE_ONLCR - 0
 	if ('\n' == c) {
-		iBSP430uartPutChar(c, uart);
+		iBSP430uartPutChar('\r', uart);
 	}
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
 	return iBSP430uartPutChar(c, uart);
