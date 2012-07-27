@@ -29,6 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <bsp430/platform/exp430fr5739.h>
 #include <bsp430/periph/cs.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/euscia.h>

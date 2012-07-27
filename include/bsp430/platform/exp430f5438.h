@@ -34,7 +34,7 @@
 
 /** @file
  *
- * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430f5438">EXP430F5438</a>
+ * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
  *
  * The following platform-specific features are supported:
  * <ul>
@@ -47,6 +47,12 @@
  *
  * </ul>
  */
-#include <bsp430/common/platform.h>
+
+/* Unconditionally define this, so as to produce errors if there is a
+ * conflict in definition. */
+#define BSP430_PLATFORM_EXP430F5438 1
+
+/* Include generic file, in case this is being included directly */
+#include <bsp430/platform.h>
 
 #endif /* BSP430_PLATFORM_EXP430F5438_H */

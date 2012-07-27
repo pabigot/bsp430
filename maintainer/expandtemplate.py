@@ -163,6 +163,22 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
+    'platform_decl' : '''/** @def BSP430_PLATFORM_%(INSTANCE)s
+* Define to a true value if application is being built for the
+* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-%(INSTANCE)s</a> platform.
+* This causes <bsp430/platform.h> to include the corresponding
+* platform-specific header <bsp430/platform/%(instance)s.h>.
+* If you include that header directly, #BSP430_PLATFORM_%(INSTANCE)s will be
+* defined for you. */
+#ifndef BSP430_PLATFORM_%(INSTANCE)s
+#define BSP430_PLATFORM_%(INSTANCE)s 0
+#endif /* BSP430_PLATFORM_%(INSTANCE)s */
+
+#if BSP430_PLATFORM_%(INSTANCE)s - 0
+#include <bsp430/platform/%(instance)s.h>
+#endif /* BSP430_PLATFORM_%(INSTANCE)s */
+''',
+
     }
 
 directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')

@@ -34,7 +34,9 @@
  * @brief Entrypoint for platform-specific capabilities.
  *
  * Mostly prototypes for functions that are implemented in the
- * platform source files.
+ * platform source files.  If a recognized @c BSP430_PLATFORM_foo
+ * macro is defined to a true value, the corresponding
+ * platform-specific header will be included for you.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -61,9 +63,14 @@ void vBSP430platformSetup_ni ();
 
 /** Configure the pins associated with a given peripheral.
  *
- * @note All platforms should support #BSP430_PERIPH_XT1.  Consult the
- * MCU data sheet to determine which the appropriate port selection
- * register configuration to enable XIN and XOUT.
+ * @note All platforms should support #BSP430_PERIPH_XT1.
+ *
+ * Implementers should consult the MCU data sheet to determine the
+ * appropriate port selection register configuration.  Note that in
+ * many cases it is not necessary to configure the port direction
+ * (e.g. P1DIR) for peripheral functions (e.g. UCA0RXD and UCA0TXD).
+ * In some cases it is not necessary to configure XOUT if XIN is
+ * configured.
  * 
  * @param device Raw peripheral device for which pins should be
  * configured.
@@ -88,8 +95,77 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
  * that pin to ground, wait for the driver to load, then remove the
  * jumper.
  *
+ * The platform-specific header should document whether this function
+ * is supported, and if it is what jumper configuration is recognized.
+ *
  * @note vBSP430ledInit_ni() must have been invoked before this function
  * is called. */
 void vBSP430platformSpinForJumper_ni (void);
+
+/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */
+/* !BSP430! insert=platform_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
+/** @def BSP430_PLATFORM_EXP430F5438
+* Define to a true value if application is being built for the
+* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430F5438</a> platform.
+* This causes <bsp430/platform.h> to include the corresponding
+* platform-specific header <bsp430/platform/exp430f5438.h>.
+* If you include that header directly, #BSP430_PLATFORM_EXP430F5438 will be
+* defined for you. */
+#ifndef BSP430_PLATFORM_EXP430F5438
+#define BSP430_PLATFORM_EXP430F5438 0
+#endif /* BSP430_PLATFORM_EXP430F5438 */
+
+#if BSP430_PLATFORM_EXP430F5438 - 0
+#include <bsp430/platform/exp430f5438.h>
+#endif /* BSP430_PLATFORM_EXP430F5438 */
+
+/** @def BSP430_PLATFORM_EXP430FR5739
+* Define to a true value if application is being built for the
+* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FR5739</a> platform.
+* This causes <bsp430/platform.h> to include the corresponding
+* platform-specific header <bsp430/platform/exp430fr5739.h>.
+* If you include that header directly, #BSP430_PLATFORM_EXP430FR5739 will be
+* defined for you. */
+#ifndef BSP430_PLATFORM_EXP430FR5739
+#define BSP430_PLATFORM_EXP430FR5739 0
+#endif /* BSP430_PLATFORM_EXP430FR5739 */
+
+#if BSP430_PLATFORM_EXP430FR5739 - 0
+#include <bsp430/platform/exp430fr5739.h>
+#endif /* BSP430_PLATFORM_EXP430FR5739 */
+
+/** @def BSP430_PLATFORM_EXP430FG4618
+* Define to a true value if application is being built for the
+* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FG4618</a> platform.
+* This causes <bsp430/platform.h> to include the corresponding
+* platform-specific header <bsp430/platform/exp430fg4618.h>.
+* If you include that header directly, #BSP430_PLATFORM_EXP430FG4618 will be
+* defined for you. */
+#ifndef BSP430_PLATFORM_EXP430FG4618
+#define BSP430_PLATFORM_EXP430FG4618 0
+#endif /* BSP430_PLATFORM_EXP430FG4618 */
+
+#if BSP430_PLATFORM_EXP430FG4618 - 0
+#include <bsp430/platform/exp430fg4618.h>
+#endif /* BSP430_PLATFORM_EXP430FG4618 */
+
+/** @def BSP430_PLATFORM_EXP430G2
+* Define to a true value if application is being built for the
+* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430G2</a> platform.
+* This causes <bsp430/platform.h> to include the corresponding
+* platform-specific header <bsp430/platform/exp430g2.h>.
+* If you include that header directly, #BSP430_PLATFORM_EXP430G2 will be
+* defined for you. */
+#ifndef BSP430_PLATFORM_EXP430G2
+#define BSP430_PLATFORM_EXP430G2 0
+#endif /* BSP430_PLATFORM_EXP430G2 */
+
+#if BSP430_PLATFORM_EXP430G2 - 0
+#include <bsp430/platform/exp430g2.h>
+#endif /* BSP430_PLATFORM_EXP430G2 */
+
+/* END AUTOMATICALLY GENERATED CODE [platform_decl] */
+/* !BSP430! end=platform_decl */
 
 #endif /* BSP430_PLATFORM_H */
