@@ -37,6 +37,9 @@
 /* Mask for SELA bits in UCSCTL4 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
 
+/* Mask for DIVS bits in UCSCTL5 */
+#define DIVS_MASK (DIVS0 | DIVS1 | DIVS2)
+
 /* Frequency measurement occurs over this duration when determining
  * whether trim is required.  The number of SMCLK ticks in an ACLK
  * period is the target frequency divided by 32768; accumulating over
@@ -169,10 +172,10 @@ ulBSP430clockMCLK_Hz_ni ()
 	return lastTrimFrequency_Hz_;
 }
 
-unsigned long
-ulBSP430clockSMCLK_Hz_ni ()
+int
+iBSP430clockSMCLKDividingShift_ni (void)
 {
-	return lastTrimFrequency_Hz_ >> BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
+	return (UCSCTL5 & DIVS_MASK) / DIVS0;
 }
 
 unsigned short
@@ -292,7 +295,7 @@ ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
 		SFRIFG1 &= ~OFIFG;
 	} while (UCSCTL7 & DCOFFG);
 
-	UCSCTL5 = (0x70 & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT << 4));
+	UCSCTL5 = DIVS_MASK & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0);
 
 #if ! (BSP430_CLOCK_DISABLE_FLL - 0)
 	/* Turn FLL back on */
