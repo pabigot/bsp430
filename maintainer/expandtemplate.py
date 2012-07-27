@@ -136,7 +136,7 @@ xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE
 
     'hal_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
 static void
-__attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
+__attribute__((__interrupt__(%(BASEINSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
 	%(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
@@ -250,6 +250,12 @@ def expandTemplate (tplname, idmap):
         if i.startswith(periph.upper()):
             subst_map.update({ '#' : i[len(periph):] })
         subst_map.update({ 'instance': i.lower(), 'INSTANCE': i.upper() })
+        subst_map.update({ 'baseinstance' : subst_map.get('instance'),
+                           'BASEINSTANCE' : subst_map.get('INSTANCE') })
+        uscifrom = idmap.get('uscifrom', None)
+        if uscifrom is not None:
+            subst_map.update({ 'baseinstance' : subst_map.get('instance').replace(uscifrom.lower(), 'usci'),
+                               'BASEINSTANCE' : subst_map.get('INSTANCE').replace(uscifrom.upper(), 'USCI') })
         if idmap.get('portexpand', False):
             subst_map.update({ 'PORTA' : 'PORT' + i[0],
                                'PORT1': 'PORT%d' % (1 + 2 * (ord(i[0]) - ord('A')),),

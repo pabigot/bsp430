@@ -32,7 +32,7 @@
 #include <bsp430/platform/exp430f5438.h>
 #include <bsp430/periph/ucs.h>
 #include <bsp430/utility/led.h>
-#include <bsp430/periph/usci.h>
+#include <bsp430/periph/usci5.h>
 #include <bsp430/utility/uptime.h>
 
 const xBSP430led pxBSP430leds[] = {
@@ -57,26 +57,26 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 		P11DIR |= bits;
 	}
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_PERIPH_USCI_A0 - 0
-	else if (BSP430_PERIPH_USCI_A0 == device) {
+#if configBSP430_PERIPH_USCI5_A0 - 0
+	else if (BSP430_PERIPH_USCI5_A0 == device) {
 		bits = BIT4 | BIT5;
 		pxsel = &P3SEL;
 	}
 #endif
-#if configBSP430_PERIPH_USCI_A1 - 0
-	else if (BSP430_PERIPH_USCI_A1 == device) {
+#if configBSP430_PERIPH_USCI5_A1 - 0
+	else if (BSP430_PERIPH_USCI5_A1 == device) {
 		bits = BIT6 | BIT7;
 		pxsel = &P5SEL;
 	}
 #endif
-#if configBSP430_PERIPH_USCI_A2 - 0
-	else if (BSP430_PERIPH_USCI_A2 == device) {
+#if configBSP430_PERIPH_USCI5_A2 - 0
+	else if (BSP430_PERIPH_USCI5_A2 == device) {
 		bits = BIT4 | BIT5;
 		pxsel = &P9SEL;
 	}
 #endif
-#if configBSP430_PERIPH_USCI_A3 - 0
-	else if (BSP430_PERIPH_USCI_A3 == device) {
+#if configBSP430_PERIPH_USCI5_A3 - 0
+	else if (BSP430_PERIPH_USCI5_A3 == device) {
 		bits = BIT4 | BIT5;
 		pxsel = &P10SEL;
 	}

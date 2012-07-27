@@ -48,24 +48,24 @@
 
 #include <bsp430/common.h>
 
-#ifndef configBSP430_UART_USE_5XX_USCI
-/** Define to true value to select xBSP430usci as the underlying UART
+#ifndef configBSP430_UART_USE_USCI5
+/** Define to true value to select xBSP430usci5 as the underlying UART
  * implementation. */
-#define configBSP430_UART_USE_5XX_USCI 0
-#endif /* configBSP430_UART_USE_5XX_USCI */
+#define configBSP430_UART_USE_USCI5 0
+#endif /* configBSP430_UART_USE_USCI5 */
 
-#if configBSP430_UART_USE_5XX_USCI - 0
-#include <bsp430/periph/usci.h>
+#if configBSP430_UART_USE_USCI5 - 0
+#include <bsp430/periph/usci5.h>
 
 /** Alias for device providing UART capabilities */
-typedef xBSP430usciHandle xBSP430uartHandle;
+typedef xBSP430usci5Handle xBSP430uartHandle;
 
 static __inline__ xBSP430uartHandle
 xBSP430uartOpen (xBSP430periphHandle xPeriph,
 				 unsigned int control_word,
 				 unsigned long baud)
 {
-	return xBSP430usciOpenUART(xPeriph, control_word, baud);
+	return xBSP430usci5OpenUART(xPeriph, control_word, baud);
 }
 
 static __inline__ int
@@ -73,28 +73,28 @@ iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
 							xQueueHandle rx_queue,
 							xQueueHandle tx_queue)
 {
-	return iBSP430usciConfigureQueues(xUART, rx_queue, tx_queue);
+	return iBSP430usci5ConfigureQueues(xUART, rx_queue, tx_queue);
 }
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
 {
-	return iBSP430usciClose(xUART);
+	return iBSP430usci5Close(xUART);
 }
 
 static __inline__ int
 iBSP430uartPutChar (int c, xBSP430uartHandle xUART)
 {
-	return iBSP430usciPutChar(c, xUART);
+	return iBSP430usci5PutChar(c, xUART);
 }
 
 static __inline__ int
 iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 {
-	return iBSP430usciPutString(str, xUART);
+	return iBSP430usci5PutString(str, xUART);
 }
 
-#endif /* configBSP430_UART_USE_5XX_USCI */
+#endif /* configBSP430_UART_USE_USCI5 */
 
 #ifndef configBSP430_UART_USE_EUSCIA
 /** Define to true value to select eUSCI_A as the underlying UART

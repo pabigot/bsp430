@@ -31,7 +31,7 @@
 
 /** @file
  *
- * @brief Protected UCSI (5xx/6xx) HAL interface declarations.
+ * @brief Protected USCI (5xx/6xx) HAL interface declarations.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -39,22 +39,22 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_PERIPH_USCI__H
-#define BSP430_PERIPH_USCI__H
+#ifndef BSP430_PERIPH_USCI5__H
+#define BSP430_PERIPH_USCI5__H
 
-#include <bsp430/periph/usci.h>
+#include <bsp430/periph/usci5.h>
 
 /** Structure holding hardware abstraction layer state for eUSCI_A.
  *
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
-struct xBSP430usciState {
+struct xBSP430usci5State {
 	/** Flags indicating various things: primarily, whether anybody is
 	 * using the device. */
 	unsigned int flags;
 	
 	/** Pointer to the peripheral register structure. */
-	volatile xBSP430periphUSCI * const usci;
+	volatile xBSP430periphUSCI5 * const usci5;
 
 	/** Queue used to collect input via interrupt.  If null,
 	 * interrupts are not used for reception. */
@@ -79,5 +79,5 @@ struct xBSP430usciState {
 	unsigned long num_tx;
 };
 
-#endif /* BSP430_PERIPH_USCI__H */
+#endif /* BSP430_PERIPH_USCI5__H */
 

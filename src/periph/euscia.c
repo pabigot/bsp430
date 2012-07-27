@@ -39,12 +39,6 @@
 
 #define COM_PORT_ACTIVE  0x01
 
-/* Work around missing vector definitions for EUSCI devices */
-#define EUSCI_A0_VECTOR USCI_A0_VECTOR 
-#define EUSCI_A1_VECTOR USCI_A1_VECTOR 
-#define EUSCI_A2_VECTOR USCI_A2_VECTOR 
-#define EUSCI_B0_VECTOR USCI_B0_VECTOR 
-
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
 static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph);
@@ -338,11 +332,11 @@ xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;
 /* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
 /* !BSP430! end=hal_ba_defn */
 
-/* !BSP430! insert=hal_isr_defn */
+/* !BSP430! uscifrom=eusci insert=hal_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_defn] */
 #if configBSP430_HAL_EUSCI_A0_ISR - 0
 static void
-__attribute__((__interrupt__(EUSCI_A0_VECTOR)))
+__attribute__((__interrupt__(USCI_A0_VECTOR)))
 isr_EUSCI_A0 (void)
 {
 	euscia_isr(xBSP430euscia_EUSCI_A0);
@@ -351,7 +345,7 @@ isr_EUSCI_A0 (void)
 
 #if configBSP430_HAL_EUSCI_A1_ISR - 0
 static void
-__attribute__((__interrupt__(EUSCI_A1_VECTOR)))
+__attribute__((__interrupt__(USCI_A1_VECTOR)))
 isr_EUSCI_A1 (void)
 {
 	euscia_isr(xBSP430euscia_EUSCI_A1);
@@ -360,7 +354,7 @@ isr_EUSCI_A1 (void)
 
 #if configBSP430_HAL_EUSCI_A2_ISR - 0
 static void
-__attribute__((__interrupt__(EUSCI_A2_VECTOR)))
+__attribute__((__interrupt__(USCI_A2_VECTOR)))
 isr_EUSCI_A2 (void)
 {
 	euscia_isr(xBSP430euscia_EUSCI_A2);
