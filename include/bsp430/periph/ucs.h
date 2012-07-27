@@ -169,7 +169,7 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela);
  *
  * @return an estimate of the actual running frequency.
  */
-unsigned long ulBSP430ucsTrimFLL_ni ();
+unsigned long ulBSP430ucsTrimFLL_ni (void);
 
 /** @def BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
  *

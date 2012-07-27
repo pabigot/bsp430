@@ -101,13 +101,13 @@ iBSP430clockSMCLKDividingShift_ni (void)
 }
 
 unsigned short
-usBSP430clockACLK_Hz_ni ()
+usBSP430clockACLK_Hz_ni (void)
 {
 	return BSP430_CLOCK_NOMINAL_ACLK_HZ;
 }
 
 unsigned long
-ulBSP430clockMCLK_Hz_ni ()
+ulBSP430clockMCLK_Hz_ni (void)
 {
 	return configuredMCLK_Hz;
 }

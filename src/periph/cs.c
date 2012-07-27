@@ -40,7 +40,7 @@
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
 
 unsigned long
-ulBSP430clockMCLK_Hz_ni ()
+ulBSP430clockMCLK_Hz_ni (void)
 {
 	unsigned long freq_Hz = 0;
 	
@@ -70,13 +70,13 @@ ulBSP430clockMCLK_Hz_ni ()
 }
 
 unsigned long
-ulBSP430clockSMCLK_Hz_ni ()
+ulBSP430clockSMCLK_Hz_ni (void)
 {
 	return ulBSP430clockMCLK_Hz_ni() >> BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
 }
 
 unsigned short
-usBSP430clockACLK_Hz_ni ()
+usBSP430clockACLK_Hz_ni (void)
 {
 	if ((SELA__XT1CLK == (CSCTL2 & SELA_MASK))
 		&& !(BSP430_CLOCK_LFXT1_IS_FAULTED())) {

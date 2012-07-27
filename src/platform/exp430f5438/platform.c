@@ -93,7 +93,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 }
 
 
-void vBSP430platformSetup_ni ()
+void vBSP430platformSetup_ni (void)
 {
 	int rc;
 	

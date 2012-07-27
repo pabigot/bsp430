@@ -44,13 +44,13 @@ vBSP430uptimeStart_ni (void)
 }
 
 void
-vBSP430uptimeSuspend_ni ()
+vBSP430uptimeSuspend_ni (void)
 {
 	BSP430_UPTIME_TIMER_HAL_HANDLE->timer->ctl &= ~(MC0 | MC1);
 }
 
 void
-vBSP430uptimeResume_ni ()
+vBSP430uptimeResume_ni (void)
 {
 	BSP430_UPTIME_TIMER_HAL_HANDLE->timer->ctl |= MC_2;
 }

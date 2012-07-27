@@ -59,7 +59,7 @@
  * @li Configure the clocks based on #BSP430_CLOCK_NOMINAL_MCLK_HZ
  * @li Start the system clock (if #configBSP430_UPTIME)
  */
-void vBSP430platformSetup_ni ();
+void vBSP430platformSetup_ni (void);
 
 /** Configure the pins associated with a given peripheral.
  *

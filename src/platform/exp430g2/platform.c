@@ -85,7 +85,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 	return -1;
 }
 
-void vBSP430platformSetup_ni ()
+void vBSP430platformSetup_ni (void)
 {
 	/* Hold off watchdog */
 	WDTCTL = WDTPW + WDTHOLD;

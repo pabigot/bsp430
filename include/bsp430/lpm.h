@@ -106,6 +106,6 @@
  * 8-bit equivalents, PORT1 through PORT12) are configured to their
  * i/o function, output direction, and outputs set to zero.
  */
-void vBSP430lpmConfigurePortsForLPM_ni ();
+void vBSP430lpmConfigurePortsForLPM_ni (void);
 
 #endif /* BSP430_LPM_H */

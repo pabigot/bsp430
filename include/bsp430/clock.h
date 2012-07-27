@@ -140,12 +140,12 @@
  * from observations.
  *
  * @return an estimate of the MCLK frequency, in Hz */
-unsigned long ulBSP430clockMCLK_Hz_ni ();
+unsigned long ulBSP430clockMCLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for #ulBSP430clockMCLK_Hz_ni */
 static unsigned long
 __inline__
-ulBSP430clockMCLK_Hz ()
+ulBSP430clockMCLK_Hz (void)
 {
 	unsigned long rv;
 	BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -182,7 +182,7 @@ ulBSP430clockSMCLK_Hz_ni (void)
 /** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
 static unsigned long
 __inline__
-ulBSP430clockSMCLK_Hz ()
+ulBSP430clockSMCLK_Hz (void)
 {
 	unsigned long rv;
 	BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -208,12 +208,12 @@ ulBSP430clockSMCLK_Hz ()
  * versus macro) may yield different results.
  *
  * @return an estimate of the ACLK frequency, in Hz */
-unsigned short usBSP430clockACLK_Hz_ni ();
+unsigned short usBSP430clockACLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for #ulBSP430clockACLK_Hz_ni */
 static unsigned short
 __inline__
-usBSP430clockACLK_Hz ()
+usBSP430clockACLK_Hz (void)
 {
 	unsigned short rv;
 	BSP430_CORE_INTERRUPT_STATE_T istate;

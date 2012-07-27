@@ -78,7 +78,7 @@ static unsigned long lastTrimFrequency_Hz_;
 #endif /* BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS */
 
 unsigned long
-ulBSP430ucsTrimFLL_ni ()
+ulBSP430ucsTrimFLL_ni (void)
 {
 	short taps_left = 32;
 	unsigned short last_ctl0;
@@ -167,7 +167,7 @@ ulBSP430ucsTrimFLL_ni ()
 #endif /* BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE */
 
 unsigned long
-ulBSP430clockMCLK_Hz_ni ()
+ulBSP430clockMCLK_Hz_ni (void)
 {
 	return lastTrimFrequency_Hz_;
 }
@@ -179,7 +179,7 @@ iBSP430clockSMCLKDividingShift_ni (void)
 }
 
 unsigned short
-usBSP430clockACLK_Hz_ni ()
+usBSP430clockACLK_Hz_ni (void)
 {
 	if ((SELA__XT1CLK == (UCSCTL4 & (SELA0 | SELA1 | SELA2)))
 		&& !(BSP430_CLOCK_LFXT1_IS_FAULTED())) {

@@ -53,17 +53,17 @@ ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
 }
 
 unsigned long
-ulBSP430clockMCLK_Hz_ni ()
+ulBSP430clockMCLK_Hz_ni (void)
 {
 }
 
 unsigned long
-ulBSP430clockSMCLK_Hz_ni ()
+ulBSP430clockSMCLK_Hz_ni (void)
 {
 }
 
 unsigned short
-usBSP430clockACLK_Hz_ni ()
+usBSP430clockACLK_Hz_ni (void)
 {
 	if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
 		return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
