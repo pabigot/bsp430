@@ -100,6 +100,12 @@ iBSP430clockSMCLKDividingShift_ni (void)
 	return (BCSCTL2 & DIVS_MASK) / DIVS0;
 }
 
+unsigned short
+usBSP430clockACLK_Hz_ni ()
+{
+	return BSP430_CLOCK_NOMINAL_ACLK_HZ;
+}
+
 unsigned long
 ulBSP430clockMCLK_Hz_ni ()
 {

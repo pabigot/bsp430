@@ -80,6 +80,55 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 #endif /* HAL_ISR and not HAL */
 ''',
 
+    'hal_usci_isr_decl' : '''/** @def configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR
+ *
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
+ * USCI_B%(INSTANCE)s, but want to define your own interrupt service
+ * routine for receive operations for the peripheral.
+ *
+ * Enabling #configBSP430_HAL_USCI_A%(INSTANCE)s or
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s defaults this to true, so you
+ * only need to explicitly set it if you do not want to use the
+ * standard ISR provided by BSP430.
+ *
+ * @note Enabling this requires that at least one of
+ * #configBSP430_HAL_USCI_A%(INSTANCE)s and
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true. */
+#ifndef configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR
+#define configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
+#endif /* configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR */
+
+#if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \
+     && ! ((configBSP430_HAL_USCI_A%(INSTANCE)sRX - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0)))
+#warning configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
+#endif /* HAL_ISR and not HAL */
+
+/** @def configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR
+ *
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
+ * USCI_B%(INSTANCE)s, but want to define your own interrupt service
+ * routine for transmit operations for the peripheral.
+ *
+ * Enabling #configBSP430_HAL_USCI_A%(INSTANCE)s or
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s defaults this to true, so you
+ * only need to explicitly set it if you do not want to use the
+ * standard ISR provided by BSP430.
+ *
+ * @note Enabling this requires that at least one of
+ * #configBSP430_HAL_USCI_A%(INSTANCE)s and
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true. */
+#ifndef configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR
+#define configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
+#endif /* configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR */
+
+#if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \
+     && ! ((configBSP430_HAL_USCI_A%(INSTANCE)sTX - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0)))
+#warning configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
+#endif /* HAL_ISR and not HAL */
+''',
+
     'hal_timer_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_CC0_ISR
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.

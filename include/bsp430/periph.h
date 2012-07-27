@@ -134,6 +134,16 @@ struct xBSP430periphISRCallbackIndexed;
  * yield to that task when it returns. */
 #define BSP430_PERIPH_ISR_CALLBACK_YIELD 0x1000
 
+/** Indicate ISR top half should disable the corresponding interrupt on return.
+ *
+ * In some cases, the handler can determine that the interrupt is no
+ * longer needed, but cannot itself disable the interrupt enable bit.
+ * This bit may be set in the return value of
+ * #iBSP430periphISRCallbackVoid and #iBSP430periphISRCallbackIndexed
+ * to indicate that the top-half should clear the corresponding IE bit
+ * before returning returns. */
+#define BSP430_PERIPH_ISR_DISABLE_INTERRUPT 0x2000
+
 /** Callback for ISR chains that require no special arguments.
  *
  * @param cb A reference to the callback structure.  In most cases,

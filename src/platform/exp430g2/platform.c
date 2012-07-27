@@ -31,9 +31,9 @@
 
 #include <bsp430/platform/exp430g2.h>
 #include <bsp430/periph/bc2.h>
+#include <bsp430/periph/usci.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/led.h>
-#include "serial.h"
 #include "task.h"
 
 const xBSP430led pxBSP430leds[] = {
@@ -41,7 +41,6 @@ const xBSP430led pxBSP430leds[] = {
 	{ .pucPxOUT = &P1OUT, .ucBIT = BIT6 }, /* Green */
 };
 const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
-
 
 int
 iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enablep)
@@ -69,6 +68,19 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 		return 0;
 	}
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+#if configBSP430_PERIPH_USCI_A0 - 0
+	else if (BSP430_PERIPH_USCI_A0 == device) {
+		bits = BIT1 | BIT2;
+		if (enablep) {
+			P1SEL2 |= bits;
+			P1SEL |= bits;
+		} else {
+			P1SEL &= ~bits;
+			P1SEL2 &= ~bits;
+		}
+		return 0;
+	}
+#endif /* configBSP430_PERIPH_USCI_A0 */
 
 	return -1;
 }
