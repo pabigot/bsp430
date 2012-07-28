@@ -102,8 +102,10 @@ typedef struct xBSP430periphEUSCIA {
 #define _BSP430_PERIPH_EUSCI_B3_BASEADDRESS __MSP430_BASEADDRESS_EUSCI_B3__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
+#if configBSP430_RTOS_FREERTOS - 0
 #include "FreeRTOS.h"
 #include "queue.h"
+#endif /* configBSP430_RTOS_FREERTOS */
 
 /* Forward declaration to hardware abstraction layer state for eUSCI_A. */
 struct xBSP430eusciaState;
@@ -372,6 +374,7 @@ xBSP430eusciaHandle xBSP430eusciaOpenSPI (xBSP430periphHandle xPeriph,
     unsigned int control_word,
     unsigned int prescaler);
 
+#if configBSP430_RTOS_FREERTOS - 0
 /** Assign FreeRTOS queues for transmit and receive.
  *
  * The underlying device is held in reset mode while the queue
@@ -404,6 +407,7 @@ xBSP430eusciaHandle xBSP430eusciaOpenSPI (xBSP430periphHandle xPeriph,
 int iBSP430eusciaConfigureQueues (xBSP430eusciaHandle xUSCI,
                                   xQueueHandle rx_queue,
                                   xQueueHandle tx_queue);
+#endif /* configBSP430_RTOS_FREERTOS */
 
 /** Release a USCI device.
  *
