@@ -105,8 +105,8 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
  * The platform-specific header should document whether this function
  * is supported, and if it is what jumper configuration is recognized.
  *
- * @note vBSP430ledInit_ni() must have been invoked before this function
- * is called. */
+ * @note vBSP430ledInitialize_ni() must have been invoked before this
+ * function is called. */
 void vBSP430platformSpinForJumper_ni (void);
 
 /* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */

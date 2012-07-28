@@ -38,7 +38,7 @@
 /* exp430fr5739 LEDs are PJ.0 to PJ.3 and PB.4 to PB.7.  PJ is not
  * byte addressable, so we need to have a custom implementation of the
  * LED interface. */
-void vBSP430ledInit_ni (void)
+void vBSP430ledInitialize_ni (void)
 {
   PJDIR |= 0x0F;
   PJOUT &= ~0x0F;

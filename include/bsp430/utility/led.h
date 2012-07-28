@@ -48,7 +48,7 @@
  *
  * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
  * value, the application or platform must define this function. */
-void vBSP430ledInit_ni (void);
+void vBSP430ledInitialize_ni (void);
 
 /** Invoke to change the state of a given LED.
  *

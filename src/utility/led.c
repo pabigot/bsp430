@@ -63,7 +63,7 @@
   } while (0)
 
 void
-vBSP430ledInit_ni( void )
+vBSP430ledInitialize_ni (void)
 {
   unsigned char ucLED;
 
