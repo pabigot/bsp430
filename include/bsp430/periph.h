@@ -104,6 +104,18 @@ typedef int xBSP430periphHandle;
  * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
 #define BSP430_PERIPH_EXPOSED_CLOCKS ((xBSP430periphHandle)3)
 
+/** @def BSP430_PERIPH_EXPOSED_CLOCKS_HELP
+ *
+ * A string constant that can be displayed by an application that uses
+ * #BSP430_PERIPH_EXPOSED_CLOCKS to inform an observer where the
+ * clocks may be found.  This should be defined in the
+ * platform-specific header and made available via <bsp430/platform.h>.
+ *
+ * @nodefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "MCLK on P1.0; SMCLK on P1.1; ACLK on P1.2"
+#endif /* BSP430_DOXYGEN */
+
 /** @def configBSP430_PERIPH_EXPOSED_CLOCKS
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of

@@ -55,6 +55,9 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FR5739 1
 
+/** Where clocks are found on this platform */
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Test points below LED1-3: SMCLK on TP10; MCLK on TP11; ACLK on TP12"
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
