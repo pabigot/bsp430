@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -117,8 +117,8 @@ typedef struct xBSP430_TERMINAL_STATE * xBSP430TerminalHandle;
  * Any remaining leading whitespace is not removed.
  */
 typedef void (* xBSP430CommandFunction) (xBSP430TerminalHandle terminal,
-										 struct xBSP430_COMMAND_DEFN * pxCommandDefn,
-										 char * pcArgString);
+    struct xBSP430_COMMAND_DEFN * pxCommandDefn,
+    char * pcArgString);
 
 /** Definition of a command that is recognized by this
  * infrastructure.
@@ -128,28 +128,28 @@ typedef void (* xBSP430CommandFunction) (xBSP430TerminalHandle terminal,
  * to access the remainder of the enclosing structure to obtain other
  * information related to processing the command. */
 typedef struct xBSP430_COMMAND_DEFN {
-	/** An identifier used to recognize this particular command.
-	 *
-	 * The value should be a sequence of characters that are not
-	 * isspace() characters.  Commands are recognized when the first
-	 * sequence of non-space characters in a command line match this
-	 * tag.  The match is not to a prefix of either the tag or the
-	 * command line. */
-	const char * tag;
+  /** An identifier used to recognize this particular command.
+   *
+   * The value should be a sequence of characters that are not
+   * isspace() characters.  Commands are recognized when the first
+   * sequence of non-space characters in a command line match this
+   * tag.  The match is not to a prefix of either the tag or the
+   * command line. */
+  const char * tag;
 
-	/** Pointer to the next command available in the list.  The
-	 * pointer is null for the last command in a set, and should be
-	 * null at all times when the command structure is not linked into
-	 * a set. */
-	struct xBSP430_COMMAND_DEFN * next;
+  /** Pointer to the next command available in the list.  The
+   * pointer is null for the last command in a set, and should be
+   * null at all times when the command structure is not linked into
+   * a set. */
+  struct xBSP430_COMMAND_DEFN * next;
 
-	/** Optional pointer to a string describing how the command works.
-	 * Appropriate contents would include a template for any arguments
-	 * for the command, and a description of what the command does. */
-	char * help;
+  /** Optional pointer to a string describing how the command works.
+   * Appropriate contents would include a template for any arguments
+   * for the command, and a description of what the command does. */
+  char * help;
 
-	/** The function used to execute the command. */
-	xBSP430CommandFunction function;
+  /** The function used to execute the command. */
+  xBSP430CommandFunction function;
 } xBSP430CommandDefn;
 
 /** A group of commands used to interpret a given command string.
@@ -158,15 +158,15 @@ typedef struct xBSP430_COMMAND_DEFN {
  * be aggregated into a "task" group and contain subcommands like
  * "start", "stop", "status". */
 typedef struct xBSP430_COMMAND_GROUP {
-	/** An identifier for the group.  This is used primarily for
-	 * diagnostic purposes. */
-	char * group;
+  /** An identifier for the group.  This is used primarily for
+   * diagnostic purposes. */
+  char * group;
 
-	/** A pointer to the first command in the group.  This must be
-	 * null prior to adding the first command to the group.  An order
-	 * on commands may be imposed by the infrastructure, e.g. to sort
-	 * them for the purposes of displaying help. */
-	xBSP430CommandDefn * commands;
+  /** A pointer to the first command in the group.  This must be
+   * null prior to adding the first command to the group.  An order
+   * on commands may be imposed by the infrastructure, e.g. to sort
+   * them for the purposes of displaying help. */
+  xBSP430CommandDefn * commands;
 } xBSP430CommandGroup;
 
 /** Add a command to a command set.
@@ -179,57 +179,57 @@ typedef struct xBSP430_COMMAND_GROUP {
  * command group.
  */
 void vBSP430CommandAdd (xBSP430CommandGroup * pxCommandGroup,
-						xBSP430CommandDefn * pxCommand);
+                        xBSP430CommandDefn * pxCommand);
 
 /** Structure holding the relevant information required to create a
  * terminal interface. */
 typedef struct xBSP430_TERMINAL_CONFIGURATION {
-	/** TEMPORARY The device ID for the UART device that manages the
-	 * connection */
-	xBSP430periphHandle uart;
+  /** TEMPORARY The device ID for the UART device that manages the
+   * connection */
+  xBSP430periphHandle uart;
 
-	/** Parameter to #xBSP430uartOpen */
-	unsigned int control_word;
+  /** Parameter to #xBSP430uartOpen */
+  unsigned int control_word;
 
-	/** Parameter to #xBSP430uartOpen */
-	unsigned long baud;
+  /** Parameter to #xBSP430uartOpen */
+  unsigned long baud;
 
-	/** Priority of the terminal task.  Processing of commands
-	 * received over the serial interface, and dispatch of displayed
-	 * data, will be done at this priority.  If the priority is
-	 * nonzero, the supporting reader task (if required) will be one
-	 * priority level lower. */
-	unsigned portBASE_TYPE uxPriority;
+  /** Priority of the terminal task.  Processing of commands
+   * received over the serial interface, and dispatch of displayed
+   * data, will be done at this priority.  If the priority is
+   * nonzero, the supporting reader task (if required) will be one
+   * priority level lower. */
+  unsigned portBASE_TYPE uxPriority;
 
-	/** The top-level commands supported by this terminal interface. */
-	xBSP430CommandGroup * pxCommandGroup;
+  /** The top-level commands supported by this terminal interface. */
+  xBSP430CommandGroup * pxCommandGroup;
 
-	/** The number of bytes to be made available to commands as a
-	 * display buffer for the terminal.  If zero, no display buffer
-	 * will be allocated.  This length includes a required terminating
-	 * NUL as the end-of-string marker. */
-	unsigned short usDisplayBufferLength;
+  /** The number of bytes to be made available to commands as a
+   * display buffer for the terminal.  If zero, no display buffer
+   * will be allocated.  This length includes a required terminating
+   * NUL as the end-of-string marker. */
+  unsigned short usDisplayBufferLength;
 
-	/** The number of bytes to be reserved for commands originating
-	 * over the serial interface.  If zero, the serial input facility
-	 * will be disabled.  This length includes a required terminating
-	 * NUL as the end-of-string marker. */
-	unsigned short usCommandBufferLength;
+  /** The number of bytes to be reserved for commands originating
+   * over the serial interface.  If zero, the serial input facility
+   * will be disabled.  This length includes a required terminating
+   * NUL as the end-of-string marker. */
+  unsigned short usCommandBufferLength;
 
-	/** The length of the queue filled by the UART receive interrupt.
-	 * If zero, the terminal does not accept input, which may be
-	 * appropriate if it is solely a command processing task,
-	 * optionally with notification capability. */
-	uint8_t ucReceiveQueueLength;
+  /** The length of the queue filled by the UART receive interrupt.
+   * If zero, the terminal does not accept input, which may be
+   * appropriate if it is solely a command processing task,
+   * optionally with notification capability. */
+  uint8_t ucReceiveQueueLength;
 
-	/** The length of the queue drained by the UART transmit
-	 * interrupt.  Must be nonzero. */
-	uint8_t ucTransmitQueueLength;
+  /** The length of the queue drained by the UART transmit
+   * interrupt.  Must be nonzero. */
+  uint8_t ucTransmitQueueLength;
 
-	/** The length of the queue used to hold events to be processed by
-	 * the terminal task, including received characters and
-	 * asynchronous notifications. */
-	uint8_t ucEventQueueLength;
+  /** The length of the queue used to hold events to be processed by
+   * the terminal task, including received characters and
+   * asynchronous notifications. */
+  uint8_t ucEventQueueLength;
 } xBSP430TerminalConfiguration;
 
 /** Configure and allocate tasks that manage a terminal.
@@ -247,7 +247,7 @@ xBSP430TerminalHandle xBSP430TerminalCreate (const xBSP430TerminalConfiguration 
  *
  * @param pcPrompt Text to be emitted when a prompt is required. */
 void vBSP430TerminalSetPrompt (xBSP430TerminalHandle xTerminal,
-							   const char * pcPrompt);
+                               const char * pcPrompt);
 
 /** Evaluate a command in the context of a terminal.
  *
@@ -264,8 +264,8 @@ void vBSP430TerminalSetPrompt (xBSP430TerminalHandle xTerminal,
  * @return 0 if the command was successfully executed, or an error code.
  */
 int vBSP430CommandProcess (xBSP430TerminalHandle xTerminal,
-						   xBSP430CommandGroup * pxCommandGroup,
-						   char * pcCommand);
+                           xBSP430CommandGroup * pxCommandGroup,
+                           char * pcCommand);
 
 /** Display text on the terminal.
  *
@@ -292,9 +292,9 @@ int vBSP430CommandProcess (xBSP430TerminalHandle xTerminal,
  * it was not queued.
  */
 portBASE_TYPE xBSP430TerminalDisplayText (xBSP430TerminalHandle xTerminal,
-										  const char * pcDisplayText,
-										  portTickType xTicksToWait,
-										  xSemaphoreHandle xNotifySemaphore);
+    const char * pcDisplayText,
+    portTickType xTicksToWait,
+    xSemaphoreHandle xNotifySemaphore);
 
 /** Display an integral event code on the terminal.
  *
@@ -323,9 +323,9 @@ portBASE_TYPE xBSP430TerminalDisplayText (xBSP430TerminalHandle xTerminal,
  * it was not queued.
  */
 portBASE_TYPE xBSP430TerminalDisplayCode (xBSP430TerminalHandle xTerminal,
-										  portBASE_TYPE xCode,
-										  portTickType xTicksToWait,
-										  xSemaphoreHandle xNotifySemaphore);
+    portBASE_TYPE xCode,
+    portTickType xTicksToWait,
+    xSemaphoreHandle xNotifySemaphore);
 
 /** Request access to the terminal's shared display buffer.
  *
@@ -356,8 +356,8 @@ portBASE_TYPE xBSP430TerminalDisplayCode (xBSP430TerminalHandle xTerminal,
  * caller must eventually invoke xBSP430TerminalReturnDisplay() to
  * release the hold on the buffer. */
 char * pcBSP430TerminalRequestDisplay (xBSP430TerminalHandle xTerminal,
-									   unsigned short * pusAvailable,
-									   portTickType xTicksToWait);
+                                       unsigned short * pusAvailable,
+                                       portTickType xTicksToWait);
 
 /** Release access to the terminal's shared display buffer.
  *
@@ -376,9 +376,9 @@ char * pcBSP430TerminalRequestDisplay (xBSP430TerminalHandle xTerminal,
  * @return pdTRUE if the request to display was queued for the
  * terminal, pdFAIL if the request was not queued for the terminal.
  * Regardless of return value, the caller is not permitted to access
- * the memory in the buffer after this function returns. */ 
+ * the memory in the buffer after this function returns. */
 portBASE_TYPE xBSP430TerminalReturnDisplay (xBSP430TerminalHandle xTerminal,
-											const char * pcDisplayText,
-											portTickType xTicksToWait);
+    const char * pcDisplayText,
+    portTickType xTicksToWait);
 
 #endif /* BSP430_UTILITY_TERMINAL_H */

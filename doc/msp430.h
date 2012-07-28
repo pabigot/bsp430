@@ -19,7 +19,7 @@
  * @date 2012
  * @homepage http://github.com/pabigot/freertos-mspgcc
  */
- *  
+*
 /* ============================================================================ */
 /* Copyright (c) 2012, Texas Instruments Incorporated                           */
 /*  All rights reserved.                                                        */
@@ -138,7 +138,7 @@
 * CPU
 ************************************************************/
 /** Definition to show that MCU has MSP430XV2 CPU
- * 
+ *
  * This is the defining characteristic for 5xx/6xx family devices
  * (including FR5xx devices). */
 #define __MSP430_HAS_MSP430XV2_CPU__

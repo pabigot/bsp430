@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -62,36 +62,36 @@ typedef xBSP430usciHandle xBSP430uartHandle;
 
 static __inline__ xBSP430uartHandle
 xBSP430uartOpen (xBSP430periphHandle xPeriph,
-				 unsigned int control_word,
-				 unsigned long baud)
+                 unsigned int control_word,
+                 unsigned long baud)
 {
-	return xBSP430usciOpenUART(xPeriph, control_word, baud);
+  return xBSP430usciOpenUART(xPeriph, control_word, baud);
 }
 
 static __inline__ int
 iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
-							xQueueHandle rx_queue,
-							xQueueHandle tx_queue)
+                            xQueueHandle rx_queue,
+                            xQueueHandle tx_queue)
 {
-	return iBSP430usciConfigureQueues(xUART, rx_queue, tx_queue);
+  return iBSP430usciConfigureQueues(xUART, rx_queue, tx_queue);
 }
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
 {
-	return iBSP430usciClose(xUART);
+  return iBSP430usciClose(xUART);
 }
 
 static __inline__ int
 iBSP430uartPutChar (int c, xBSP430uartHandle xUART)
 {
-	return iBSP430usciPutChar(c, xUART);
+  return iBSP430usciPutChar(c, xUART);
 }
 
 static __inline__ int
 iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 {
-	return iBSP430usciPutString(str, xUART);
+  return iBSP430usciPutString(str, xUART);
 }
 
 #endif /* configBSP430_UART_USE_USCI */
@@ -110,36 +110,36 @@ typedef xBSP430usci5Handle xBSP430uartHandle;
 
 static __inline__ xBSP430uartHandle
 xBSP430uartOpen (xBSP430periphHandle xPeriph,
-				 unsigned int control_word,
-				 unsigned long baud)
+                 unsigned int control_word,
+                 unsigned long baud)
 {
-	return xBSP430usci5OpenUART(xPeriph, control_word, baud);
+  return xBSP430usci5OpenUART(xPeriph, control_word, baud);
 }
 
 static __inline__ int
 iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
-							xQueueHandle rx_queue,
-							xQueueHandle tx_queue)
+                            xQueueHandle rx_queue,
+                            xQueueHandle tx_queue)
 {
-	return iBSP430usci5ConfigureQueues(xUART, rx_queue, tx_queue);
+  return iBSP430usci5ConfigureQueues(xUART, rx_queue, tx_queue);
 }
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
 {
-	return iBSP430usci5Close(xUART);
+  return iBSP430usci5Close(xUART);
 }
 
 static __inline__ int
 iBSP430uartPutChar (int c, xBSP430uartHandle xUART)
 {
-	return iBSP430usci5PutChar(c, xUART);
+  return iBSP430usci5PutChar(c, xUART);
 }
 
 static __inline__ int
 iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 {
-	return iBSP430usci5PutString(str, xUART);
+  return iBSP430usci5PutString(str, xUART);
 }
 
 #endif /* configBSP430_UART_USE_USCI5 */
@@ -159,36 +159,36 @@ typedef xBSP430eusciaHandle xBSP430uartHandle;
 
 static __inline__ xBSP430uartHandle
 xBSP430uartOpen (xBSP430periphHandle xPeriph,
-				 unsigned int control_word,
-				 unsigned long baud)
+                 unsigned int control_word,
+                 unsigned long baud)
 {
-	return xBSP430eusciaOpenUART(xPeriph, control_word, baud);
+  return xBSP430eusciaOpenUART(xPeriph, control_word, baud);
 }
 
 static __inline__ int
 iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
-							xQueueHandle rx_queue,
-							xQueueHandle tx_queue)
+                            xQueueHandle rx_queue,
+                            xQueueHandle tx_queue)
 {
-	return iBSP430eusciaConfigureQueues(xUART, rx_queue, tx_queue);
+  return iBSP430eusciaConfigureQueues(xUART, rx_queue, tx_queue);
 }
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
 {
-	return iBSP430eusciaClose(xUART);
+  return iBSP430eusciaClose(xUART);
 }
 
 static __inline__ int
 iBSP430uartPutChar (int c, xBSP430uartHandle xUART)
 {
-	return iBSP430eusciaPutc(c, xUART);
+  return iBSP430eusciaPutc(c, xUART);
 }
 
 static __inline__ int
 iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 {
-	return iBSP430eusciaPuts(str, xUART);
+  return iBSP430eusciaPuts(str, xUART);
 }
 
 #endif /* configBSP430_UART_USE_EUSCI */

@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -44,7 +44,7 @@
  *
  * @li #ulBSP430clockMCLK_Hz_ni assumes that DCOCLK is the selected
  * source for MCLK, and returns the selected trimmed DCOCLK frequency.
- * 
+ *
  * @li #ulBSP430clockSMCLK_Hz_ni assumes DCOCLK is the selected source
  * for SMCLK, and returns the selected trimmed DCOCLK frequency
  * shifted right by #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
@@ -104,7 +104,7 @@ unsigned long ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz);
  *
  * Prior to invoking this, use #iBSP430clockConfigureXT1_ni to check for
  * crystal stability, if ACLK is to be sourced from XT1.
- * 
+ *
  * @param sela The constant to assign to the SELA field of CSCTL2.
  * Standard values are @c SELA__XT1CLK and @c SELA_VLOCLK.
  *

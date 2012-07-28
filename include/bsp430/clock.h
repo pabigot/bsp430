@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -147,13 +147,13 @@ static unsigned long
 __inline__
 ulBSP430clockMCLK_Hz (void)
 {
-	unsigned long rv;
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	rv = ulBSP430clockMCLK_Hz_ni();
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return rv;
+  unsigned long rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = ulBSP430clockMCLK_Hz_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 /** Return the shift used to divide MCLK to produce SMCLK.
@@ -175,8 +175,8 @@ static unsigned long
 __inline__
 ulBSP430clockSMCLK_Hz_ni (void)
 {
-	unsigned long mclk_hz = ulBSP430clockMCLK_Hz_ni();
-	return mclk_hz >> iBSP430clockSMCLKDividingShift_ni();
+  unsigned long mclk_hz = ulBSP430clockMCLK_Hz_ni();
+  return mclk_hz >> iBSP430clockSMCLKDividingShift_ni();
 }
 
 /** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
@@ -184,13 +184,13 @@ static unsigned long
 __inline__
 ulBSP430clockSMCLK_Hz (void)
 {
-	unsigned long rv;
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	rv = ulBSP430clockSMCLK_Hz_ni();
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return rv;
+  unsigned long rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = ulBSP430clockSMCLK_Hz_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 /** Return the best available estimate of ACLK frequency.
@@ -215,13 +215,13 @@ static unsigned short
 __inline__
 usBSP430clockACLK_Hz (void)
 {
-	unsigned short rv;
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	rv = usBSP430clockACLK_Hz_ni();
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return rv;
+  unsigned short rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = usBSP430clockACLK_Hz_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 /** Check whether the LFXT1 crystal has a fault condition.
@@ -257,7 +257,7 @@ usBSP430clockACLK_Hz (void)
  *
  * @note Where faults can be cleared on peripheral-specific registers,
  * the system oscillator fault is also cleared.  This is in contrast
- * to what is tested by #BSP430_CLOCK_LFXT1_IS_FAULTED(). 
+ * to what is tested by #BSP430_CLOCK_LFXT1_IS_FAULTED().
  *
  * @see #BSP430_CLOCK_LFXT1_IS_FAULTED() */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
@@ -268,12 +268,12 @@ usBSP430clockACLK_Hz (void)
 
 
 /** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
- * 
+ *
  * Nominal frequency of VLOCLK, in Hz.
  *
  * This is a family-specific value normally somewhere near 10-12 kHz.
  * The value should be an unsigned integer constant.
- * 
+ *
  * @note The value of this clock is often off by as much as 10%. */
 #ifndef BSP430_CLOCK_NOMINAL_VLOCLK_HZ
 #if defined(__MSP430_HAS_BC2__)					\
@@ -315,7 +315,7 @@ usBSP430clockACLK_Hz (void)
  * once the oscillator remains unfaulted after the delay, and
  * otherwise repeats the clear/delay/check process as specified by @a
  * loop_limit.
- * 
+ *
  * @param enablep Pass a nonzero value to configure XIN/XOUT for
  * crystal functionality and to loop until the crystal is stabilized
  * or has failed to stabilize.  Pass a zero value to turn off the
@@ -334,7 +334,7 @@ usBSP430clockACLK_Hz (void)
  * configure XIN/XOUT pins.
  */
 int iBSP430clockConfigureXT1_ni (int enablep,
-								 int loop_limit);
+                                 int loop_limit);
 
 /** Configure MCLK to a desired frequency.
  *

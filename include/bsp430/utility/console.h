@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -45,7 +45,7 @@
  * be quite high (on the order of 100 bytes if 64-bit integer support
  * is included).  These assume that interrupts are disabled when
  * called.
- * 
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -72,7 +72,7 @@
 #endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
 
 /** @def configBSP430_CONSOLE_USE_ONLCR
- * 
+ *
  * If defined to true, the console display routines will always emit a
  * carriage return before a newline.  This provides compatibility with
  * standard terminal programs like minicom. */
@@ -140,7 +140,7 @@ cprintf (const char *string, ...)
 #if __GNUC__ - 0
 __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
-	;
+;
 
 /** Like puts(3) to the console UART
  *
@@ -149,7 +149,7 @@ __attribute__((__format__(printf, 1, 2)))
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
- * 
+ *
  * @param s a string to be emitted to the console
  *
  * @return the number of characters written, including the newline
@@ -167,7 +167,7 @@ int cputchar_ni (int c);
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
- * 
+ *
  * @param s a string to be emitted to the console
  *
  * @return the number of characters written
@@ -196,7 +196,7 @@ int cputi_ni (int i, int radix);
  *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
- * 
+ *
  * @warning The implementation here assumes that the radix is at least
  * 10.  Passing a smaller radix will likely result in stack
  * corruption.
@@ -239,7 +239,7 @@ int cputul_ni (unsigned long i, int radix);
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
- * 
+ *
  * @note Although the interface permits changing the UART associated
  * with the console, nothing is done to prevent catastrophe if the
  * previous device is being actively used by a function in this

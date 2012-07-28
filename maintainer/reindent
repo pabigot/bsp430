@@ -1,0 +1,12 @@
+#!/bin/sh
+
+astyle \
+  --options=none \
+  --style=1tbs \
+  --indent=spaces=2 \
+  --indent-switches \
+   --pad-header \
+   -r \
+      '*.c' \
+      '*.h' \
+      '*.inc'

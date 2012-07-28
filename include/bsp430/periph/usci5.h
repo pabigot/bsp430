@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -52,62 +52,62 @@
 
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
 typedef struct xBSP430periphUSCI5 {
-	union {						/* 0x00 */
-		unsigned int ctlw0;		/**< UCtxCTLW0 */
-		struct {
-			unsigned char ctl1;	/**< UCtxCTL1 */
-			unsigned char ctl0;	/**< UCtxCTL0 */
-		};
-	};
-	unsigned int _unused_0x02;
-	unsigned int _unused_0x04;
-	union {						/* 0x06 */
-		unsigned int brw;		/**< UCtxBRW */
-		struct {
-			unsigned char br0;	/**< UCtxBR0 */
-			unsigned char br1;	/**< UCtxBR1 */
-		};
-	};
-	union {						/* 0x08 */
-		struct { /* USCI_A */
-			unsigned char mctl;	/**< UCAxMCTL (UART) */
-			unsigned char _reserved_0x09;
-		};
-		unsigned int _reserved_0x08; /* USCI_B */
-	};
-	unsigned char stat;			/**< UCtxSTAT */ /* 0x0A */
-	unsigned char _reserved_0x0B;
-	unsigned char rxbuf;		/**< UCtxRXBUF */ /* 0x0C */
-	unsigned char _reserved_0x0D;
-	unsigned char txbuf;		/**< UCtxTXBUF */ /* 0x0E */
-	unsigned char _reserved_0x0F;
-	union {						/* 0x10 */
-		struct {				/* USCI_A */
-			unsigned char abctl; /**< UCAxABCTL (UART) */
-			unsigned char _reserved_0x11;
-		};
-		unsigned int i2coa;		/**< UCBxI2COA (I2C) */ /* USCI_B */
-	};
-	union {						/* 0x12 */
-		unsigned int irctl;		/**< UCAxIRCTL (UART)*/
-		struct {
-			unsigned char irtctl; /**< UCAxIRTCTL (UART) */
-			unsigned char irrctl; /**< UCAxIRRCTL (UART) */
-		};
-		unsigned int i2csa;		/**< UCBxI2CSA (I2C) */
-	};
-	unsigned int _unused_0x14;
-	unsigned int _unused_0x16;
-	unsigned int _unused_0x18;
-	unsigned int _unused_0x1a;
-	union {						/* 0x1C */
-		unsigned int ictl;		/**< UCtxICTL */
-		struct {
-			unsigned char ie;	/**< UCtxIE */
-			unsigned char ifg;	/**< UCtxIFG */
-		};
-	};
-	unsigned int iv;			/**< UCtxIV */ /* 0x1E */
+  union {						/* 0x00 */
+    unsigned int ctlw0;		/**< UCtxCTLW0 */
+    struct {
+      unsigned char ctl1;	/**< UCtxCTL1 */
+      unsigned char ctl0;	/**< UCtxCTL0 */
+    };
+  };
+  unsigned int _unused_0x02;
+  unsigned int _unused_0x04;
+  union {						/* 0x06 */
+    unsigned int brw;		/**< UCtxBRW */
+    struct {
+      unsigned char br0;	/**< UCtxBR0 */
+      unsigned char br1;	/**< UCtxBR1 */
+    };
+  };
+  union {						/* 0x08 */
+    struct { /* USCI_A */
+      unsigned char mctl;	/**< UCAxMCTL (UART) */
+      unsigned char _reserved_0x09;
+    };
+    unsigned int _reserved_0x08; /* USCI_B */
+  };
+  unsigned char stat;			/**< UCtxSTAT */ /* 0x0A */
+  unsigned char _reserved_0x0B;
+  unsigned char rxbuf;		/**< UCtxRXBUF */ /* 0x0C */
+  unsigned char _reserved_0x0D;
+  unsigned char txbuf;		/**< UCtxTXBUF */ /* 0x0E */
+  unsigned char _reserved_0x0F;
+  union {						/* 0x10 */
+    struct {				/* USCI_A */
+      unsigned char abctl; /**< UCAxABCTL (UART) */
+      unsigned char _reserved_0x11;
+    };
+    unsigned int i2coa;		/**< UCBxI2COA (I2C) */ /* USCI_B */
+  };
+  union {						/* 0x12 */
+    unsigned int irctl;		/**< UCAxIRCTL (UART)*/
+    struct {
+      unsigned char irtctl; /**< UCAxIRTCTL (UART) */
+      unsigned char irrctl; /**< UCAxIRRCTL (UART) */
+    };
+    unsigned int i2csa;		/**< UCBxI2CSA (I2C) */
+  };
+  unsigned int _unused_0x14;
+  unsigned int _unused_0x16;
+  unsigned int _unused_0x18;
+  unsigned int _unused_0x1a;
+  union {						/* 0x1C */
+    unsigned int ictl;		/**< UCtxICTL */
+    struct {
+      unsigned char ie;	/**< UCtxIE */
+      unsigned char ifg;	/**< UCtxIFG */
+    };
+  };
+  unsigned int iv;			/**< UCtxIV */ /* 0x1E */
 } xBSP430periphUSCI5;
 
 /** @cond DOXYGEN_INTERNAL */
@@ -736,7 +736,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B3 = (volatile xB
  * is as if those queues were associated during this call.
  *
  * @param xPeriph The raw device identifier for the USCI5 device that
- * is being requested. E.g., @c xBSP430Periph_USCI5_A0. 
+ * is being requested. E.g., @c xBSP430Periph_USCI5_A0.
  *
  * @param control_word The configuration to be written to the device's
  * ctlw0 word.  Most bit fields will be assigned from this value, but
@@ -749,12 +749,12 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B3 = (volatile xB
  * @return @a xUSCI5 if the allocation and configuration is successful,
  * and a null handle if something went wrong. */
 xBSP430usci5Handle xBSP430usci5OpenUART (xBSP430periphHandle xPeriph,
-									   unsigned int control_word,
-									   unsigned long baud);
+    unsigned int control_word,
+    unsigned long baud);
 
 xBSP430usci5Handle xBSP430usci5OpenSPI (xBSP430periphHandle xPeriph,
-									  unsigned int control_word,
-									  unsigned int prescaler);
+                                        unsigned int control_word,
+                                        unsigned int prescaler);
 
 /** Assign FreeRTOS queues for transmit and receive.
  *
@@ -786,8 +786,8 @@ xBSP430usci5Handle xBSP430usci5OpenSPI (xBSP430periphHandle xPeriph,
  * if something went wrong.
  */
 int iBSP430usci5ConfigureQueues (xBSP430usci5Handle xUSCI5,
-								xQueueHandle rx_queue,
-								xQueueHandle tx_queue);
+                                 xQueueHandle rx_queue,
+                                 xQueueHandle tx_queue);
 
 /** Release a USCI5 device.
  *

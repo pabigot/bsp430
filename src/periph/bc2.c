@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -39,77 +39,77 @@ static unsigned long configuredMCLK_Hz = 1100000UL;
 
 int
 iBSP430clockConfigureXT1_ni (int enablep,
-							 int loop_limit)
+                             int loop_limit)
 {
-	int loop_delta;
-	int rc;
-	
-	rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, enablep);
-	if ((0 != rc) || (! enablep)) {
-		return rc;
-	}
-	loop_delta = (0 < loop_limit) ? 1 : 0;
+  int loop_delta;
+  int rc;
 
-	/* See whether the crystal is populated and functional.  Do
-	 * this with the DCO reset to the power-up configuration,
-	 * where clock should be nominal 1 MHz. */
-	BCSCTL3 = XCAP_1;
-	do {
-		BSP430_CLOCK_LFXT1_CLEAR_FAULT();
-		loop_limit -= loop_delta;
-		__delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+  rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, enablep);
+  if ((0 != rc) || (! enablep)) {
+    return rc;
+  }
+  loop_delta = (0 < loop_limit) ? 1 : 0;
 
-	} while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
-	rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
-	if (! rc) {
-		BCSCTL3 = LFXT1S_2;
-		(void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, 0);
-	}
-	return rc;
+  /* See whether the crystal is populated and functional.  Do
+   * this with the DCO reset to the power-up configuration,
+   * where clock should be nominal 1 MHz. */
+  BCSCTL3 = XCAP_1;
+  do {
+    BSP430_CLOCK_LFXT1_CLEAR_FAULT();
+    loop_limit -= loop_delta;
+    __delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+
+  } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
+  rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
+  if (! rc) {
+    BCSCTL3 = LFXT1S_2;
+    (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, 0);
+  }
+  return rc;
 }
 
 unsigned char
 ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
-						 unsigned char ucBCSCTL1,
-						 unsigned char ucBCSCTL2,
-						 unsigned char ucBCSCTL3)
+                         unsigned char ucBCSCTL1,
+                         unsigned char ucBCSCTL2,
+                         unsigned char ucBCSCTL3)
 {
-	unsigned char ucCrystalOK = 0;
-	
-	BCSCTL3 = ucBCSCTL3;
-	if (! (BCSCTL3 & LFXT1S1)) {
-		ucCrystalOK = iBSP430clockConfigureXT1_ni(1, 10);
-	}
-	/* Select lowest DCOx and MODx prior to configuring */
-	DCOCTL = 0;
-	/* Set range */
-	BCSCTL1 = ucBCSCTL1;
-	/* Set DCO step and modulation */
-	DCOCTL = ucDCOCTL;
-	/* Set clock dividers */
-	BCSCTL2 = ucBCSCTL2;
+  unsigned char ucCrystalOK = 0;
 
-	return ucCrystalOK;
+  BCSCTL3 = ucBCSCTL3;
+  if (! (BCSCTL3 & LFXT1S1)) {
+    ucCrystalOK = iBSP430clockConfigureXT1_ni(1, 10);
+  }
+  /* Select lowest DCOx and MODx prior to configuring */
+  DCOCTL = 0;
+  /* Set range */
+  BCSCTL1 = ucBCSCTL1;
+  /* Set DCO step and modulation */
+  DCOCTL = ucDCOCTL;
+  /* Set clock dividers */
+  BCSCTL2 = ucBCSCTL2;
+
+  return ucCrystalOK;
 }
 
 int
 iBSP430clockSMCLKDividingShift_ni (void)
 {
-	/* Assume that the source for both MCLK and SMCLK is DCOCLK and
-	 * that DIVM_0 is in effect. */
-	return (BCSCTL2 & DIVS_MASK) / DIVS0;
+  /* Assume that the source for both MCLK and SMCLK is DCOCLK and
+   * that DIVM_0 is in effect. */
+  return (BCSCTL2 & DIVS_MASK) / DIVS0;
 }
 
 unsigned short
 usBSP430clockACLK_Hz_ni (void)
 {
-	return BSP430_CLOCK_NOMINAL_ACLK_HZ;
+  return BSP430_CLOCK_NOMINAL_ACLK_HZ;
 }
 
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
-	return configuredMCLK_Hz;
+  return configuredMCLK_Hz;
 }
 
 #include <stdio.h>
@@ -117,22 +117,22 @@ ulBSP430clockMCLK_Hz_ni (void)
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
-	unsigned char dcoctl;
-	unsigned char bcsctl1;
-	unsigned char bcsctl2;
-	unsigned long error_Hz;
-	long freq_Hz;
+  unsigned char dcoctl;
+  unsigned char bcsctl1;
+  unsigned char bcsctl2;
+  unsigned long error_Hz;
+  long freq_Hz;
 
-	/* Power-up defaults */
-	dcoctl = 0x60;
-	bcsctl1 = 0x87;
-	freq_Hz = 1100000UL;
+  /* Power-up defaults */
+  dcoctl = 0x60;
+  bcsctl1 = 0x87;
+  freq_Hz = 1100000UL;
 
-/* Calculate absolute error from _freq_Hz to target */
+  /* Calculate absolute error from _freq_Hz to target */
 #define ERROR_HZ(_freq_Hz) ((mclk_Hz < _freq_Hz) ? (_freq_Hz - mclk_Hz) : (mclk_Hz - _freq_Hz))
-	error_Hz = ERROR_HZ(freq_Hz);
+  error_Hz = ERROR_HZ(freq_Hz);
 
-/* Test a candidate to see if it's better than what we've got now */
+  /* Test a candidate to see if it's better than what we've got now */
 #define TRY_FREQ(_tag, _cand_Hz) do {									\
 		unsigned long cand_error_Hz = ERROR_HZ(_cand_Hz);				\
 		if (cand_error_Hz < error_Hz) {									\
@@ -143,32 +143,32 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 		}																\
 	} while (0)
 
-	/* Candidate availability is MCU-specific and can be determined by
-	 * checking for a corresponding preprocessor definition */
+  /* Candidate availability is MCU-specific and can be determined by
+   * checking for a corresponding preprocessor definition */
 #if defined(CALDCO_1MHZ_)
-	TRY_FREQ(1MHZ, 1000000UL);
+  TRY_FREQ(1MHZ, 1000000UL);
 #endif /* CALDCO_1MHZ */
 #if defined(CALDCO_8MHZ_)
-	TRY_FREQ(8MHZ, 8000000UL);
+  TRY_FREQ(8MHZ, 8000000UL);
 #endif /* CALDCO_8MHZ */
 #if defined(CALDCO_12MHZ_)
-	TRY_FREQ(12MHZ, 12000000UL);
+  TRY_FREQ(12MHZ, 12000000UL);
 #endif /* CALDCO_12MHZ */
 #if defined(CALDCO_16MHZ_)
-	TRY_FREQ(16MHZ, 16000000UL);
+  TRY_FREQ(16MHZ, 16000000UL);
 #endif /* CALDCO_16MHZ */
 
 #undef TRY_FREQ
 #undef ERROR_HZ
-	
-	bcsctl2 = DIVS_MASK & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0);
 
-	DCOCTL = 0;
-	BCSCTL1 = bcsctl1;
-	DCOCTL = dcoctl;
-	/* SELM = SELS = DCOCLK; DIVM = /1; DIVS as configured */
-	BCSCTL2 = bcsctl2;
-	configuredMCLK_Hz = freq_Hz;
+  bcsctl2 = DIVS_MASK & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0);
 
-	return configuredMCLK_Hz;
+  DCOCTL = 0;
+  BCSCTL1 = bcsctl1;
+  DCOCTL = dcoctl;
+  /* SELM = SELS = DCOCLK; DIVM = /1; DIVS as configured */
+  BCSCTL2 = bcsctl2;
+  configuredMCLK_Hz = freq_Hz;
+
+  return configuredMCLK_Hz;
 }

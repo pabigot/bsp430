@@ -176,7 +176,7 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 
     'hal_ba_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
-	.%(periph)s = (xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS
+  .%(periph)s = (xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS
 };
 
 xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
@@ -188,7 +188,7 @@ static void
 __attribute__((__interrupt__(%(BASEINSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-	%(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
+  %(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
@@ -198,9 +198,9 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
 isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 {
-	xBSP430%(periph)sHandle timer = xBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
-	int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  xBSP430%(periph)sHandle timer = xBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+  int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR */
 
@@ -209,34 +209,34 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
 isr_T%(TYPE)s%(INSTANCE)s (void)
 {
-	xBSP430%(periph)sHandle timer = xBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
-	int iv = T%(TYPE)s%(INSTANCE)sIV;
-	int rv = 0;
-	if (0 != iv) {
-		if (T%(TYPE)s_OVERFLOW == iv) {
-			++timer->overflow_count;
-			rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
-		} else {
-			int cc = (iv - 4) / 2;
-			rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
-		}
-	}
-	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  xBSP430%(periph)sHandle timer = xBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+  int iv = T%(TYPE)s%(INSTANCE)sIV;
+  int rv = 0;
+  if (0 != iv) {
+    if (T%(TYPE)s_OVERFLOW == iv) {
+      ++timer->overflow_count;
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+    } else {
+      int cc = (iv - 4) / 2;
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
+    }
+  }
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
 ''',
     
     'periph_hal_demux' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-	if (BSP430_PERIPH_%(INSTANCE)s == periph) {
-		return xBSP430%(periph)s_%(INSTANCE)s;
-	}
+  if (BSP430_PERIPH_%(INSTANCE)s == periph) {
+    return xBSP430%(periph)s_%(INSTANCE)s;
+  }
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 
     'hal_port_5xx_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct xBSP430portState state_%(INSTANCE)s = {
-		.port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
-	};
+  .port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
+};
 xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
@@ -246,16 +246,16 @@ static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-	int rv = port_isr(xBSP430port_%(INSTANCE)s, P%(#)sIV);
-	BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  int rv = port_isr(xBSP430port_%(INSTANCE)s, P%(#)sIV);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
     'periph_ba_hpl_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
-	if (BSP430_PERIPH_%(INSTANCE)s == periph) {
-		return xBSP430periph_%(INSTANCE)s;
-	}
+  if (BSP430_PERIPH_%(INSTANCE)s == periph) {
+    return xBSP430periph_%(INSTANCE)s;
+  }
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
 

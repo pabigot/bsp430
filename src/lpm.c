@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,63 +49,63 @@ vBSP430lpmConfigurePortsForLPM_ni (void)
 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #if defined(__MSP430_HAS_PORTA__) || defined(__MSP430_HAS_PORTA_R__)
-	CONFIGURE_FOR_LPM(A);
+  CONFIGURE_FOR_LPM(A);
 #endif /* PORTA */
 #if defined(__MSP430_HAS_PORTB__) || defined(__MSP430_HAS_PORTB_R__)
-	CONFIGURE_FOR_LPM(B);
+  CONFIGURE_FOR_LPM(B);
 #endif /* PORTB */
 #if defined(__MSP430_HAS_PORTC__) || defined(__MSP430_HAS_PORTC_R__)
-	CONFIGURE_FOR_LPM(C);
+  CONFIGURE_FOR_LPM(C);
 #endif /* PORTC */
 #if defined(__MSP430_HAS_PORTD__) || defined(__MSP430_HAS_PORTD_R__)
-	CONFIGURE_FOR_LPM(D);
+  CONFIGURE_FOR_LPM(D);
 #endif /* PORTD */
 #if defined(__MSP430_HAS_PORTE__) || defined(__MSP430_HAS_PORTE_R__)
-	CONFIGURE_FOR_LPM(E);
+  CONFIGURE_FOR_LPM(E);
 #endif /* PORTE */
 #if defined(__MSP430_HAS_PORTF__) || defined(__MSP430_HAS_PORTF_R__)
-	CONFIGURE_FOR_LPM(F);
+  CONFIGURE_FOR_LPM(F);
 #endif /* PORTF */
 #else /* CPUXV2 */
 #if defined(__MSP430_HAS_PORT1__) || defined(__MSP430_HAS_PORT1_R__)
-	CONFIGURE_FOR_LPM(1);
+  CONFIGURE_FOR_LPM(1);
 #endif /* PORT1 */
 #if defined(__MSP430_HAS_PORT2__) || defined(__MSP430_HAS_PORT2_R__)
-	CONFIGURE_FOR_LPM(2);
+  CONFIGURE_FOR_LPM(2);
 #endif /* PORT2 */
 #if defined(__MSP430_HAS_PORT3__) || defined(__MSP430_HAS_PORT3_R__)
-	CONFIGURE_FOR_LPM(3);
+  CONFIGURE_FOR_LPM(3);
 #endif /* PORT3 */
 #if defined(__MSP430_HAS_PORT4__) || defined(__MSP430_HAS_PORT4_R__)
-	CONFIGURE_FOR_LPM(4);
+  CONFIGURE_FOR_LPM(4);
 #endif /* PORT4 */
 #if defined(__MSP430_HAS_PORT5__) || defined(__MSP430_HAS_PORT5_R__)
-	CONFIGURE_FOR_LPM(5);
+  CONFIGURE_FOR_LPM(5);
 #endif /* PORT5 */
 #if defined(__MSP430_HAS_PORT6__) || defined(__MSP430_HAS_PORT6_R__)
-	CONFIGURE_FOR_LPM(6);
+  CONFIGURE_FOR_LPM(6);
 #endif /* PORT6 */
 #if defined(__MSP430_HAS_PORT7__) || defined(__MSP430_HAS_PORT7_R__)
-	CONFIGURE_FOR_LPM(7);
+  CONFIGURE_FOR_LPM(7);
 #endif /* PORT7 */
 #if defined(__MSP430_HAS_PORT8__) || defined(__MSP430_HAS_PORT8_R__)
-	CONFIGURE_FOR_LPM(8);
+  CONFIGURE_FOR_LPM(8);
 #endif /* PORT8 */
 #if defined(__MSP430_HAS_PORT9__) || defined(__MSP430_HAS_PORT9_R__)
-	CONFIGURE_FOR_LPM(9);
+  CONFIGURE_FOR_LPM(9);
 #endif /* PORT9 */
 #if defined(__MSP430_HAS_PORT10__) || defined(__MSP430_HAS_PORT10_R__)
-	CONFIGURE_FOR_LPM(10);
+  CONFIGURE_FOR_LPM(10);
 #endif /* PORT10 */
 #if defined(__MSP430_HAS_PORT11__) || defined(__MSP430_HAS_PORT11_R__)
-	CONFIGURE_FOR_LPM(11);
+  CONFIGURE_FOR_LPM(11);
 #endif /* PORT11 */
 #if defined(__MSP430_HAS_PORT12__) || defined(__MSP430_HAS_PORT12_R__)
-	CONFIGURE_FOR_LPM(12);
+  CONFIGURE_FOR_LPM(12);
 #endif /* PORT12 */
 #endif /* CPUXV2 */
 #if defined(__MSP430_HAS_PORTJ__)
-	CONFIGURE_FOR_LPM(J);
+  CONFIGURE_FOR_LPM(J);
 #endif /* PORTJ */
 #undef CONFIGURE_FOR_LPM
 }

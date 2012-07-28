@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -45,120 +45,120 @@ static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph);
 
 xBSP430eusciaHandle
 xBSP430eusciaOpenUART (xBSP430periphHandle periph,
-					   unsigned int control_word,
-					   unsigned long baud)
+                       unsigned int control_word,
+                       unsigned long baud)
 {
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	unsigned long brclk_Hz;
-	xBSP430eusciaHandle device = periphToDevice(periph);
-	unsigned long n;
-	uint16_t br;
-	uint16_t os16 = 0;
-	uint16_t brf = 0;
-	uint16_t brs;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  unsigned long brclk_Hz;
+  xBSP430eusciaHandle device = periphToDevice(periph);
+  unsigned long n;
+  uint16_t br;
+  uint16_t os16 = 0;
+  uint16_t brf = 0;
+  uint16_t brs;
 
-	configASSERT(NULL != device);
+  configASSERT(NULL != device);
 
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	/* Reject invalid baud rates */
-	if ((0 == baud) || (1000000UL < baud)) {
-		device = NULL;
-	}
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  /* Reject invalid baud rates */
+  if ((0 == baud) || (1000000UL < baud)) {
+    device = NULL;
+  }
 
-	/* Reject if the pins can't be configured */
-	if ((NULL != device)
-		&& (0 != iBSP430platformConfigurePeripheralPins_ni((xBSP430periphHandle)(device->euscia), 1))) {
-		device = NULL;
-	}
+  /* Reject if the pins can't be configured */
+  if ((NULL != device)
+      && (0 != iBSP430platformConfigurePeripheralPins_ni((xBSP430periphHandle)(device->euscia), 1))) {
+    device = NULL;
+  }
 
-	if (NULL != device) {
-		/* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
-		 * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
-		 * anything larger.  */
-		brclk_Hz = usBSP430clockACLK_Hz_ni();
-		if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
-			device->euscia->ctlw0 = UCSWRST | UCSSEL__ACLK;
-		} else {
-			device->euscia->ctlw0 = UCSWRST | UCSSEL__SMCLK;
-			brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
-		}
+  if (NULL != device) {
+    /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
+     * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
+     * anything larger.  */
+    brclk_Hz = usBSP430clockACLK_Hz_ni();
+    if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
+      device->euscia->ctlw0 = UCSWRST | UCSSEL__ACLK;
+    } else {
+      device->euscia->ctlw0 = UCSWRST | UCSSEL__SMCLK;
+      brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
+    }
 #define BR_FRACTION_SHIFT 6
-		/* The value for BRS is supposed to be a table lookup based on the
-		 * fractional part of f_brclk / baud.  Rather than replicate the
-		 * table, we simply preserve BR_FRACTION_SHIFT bits of the
-		 * fraction, then use that as the upper bits of the value of
-		 * BRS.  Seems to work, at least for 9600 baud. */
-		n = (brclk_Hz << BR_FRACTION_SHIFT) / baud;
-		brs = n & ((1 << BR_FRACTION_SHIFT) - 1);
-		n >>= BR_FRACTION_SHIFT;
-		brs <<= 8 - BR_FRACTION_SHIFT;
+    /* The value for BRS is supposed to be a table lookup based on the
+     * fractional part of f_brclk / baud.  Rather than replicate the
+     * table, we simply preserve BR_FRACTION_SHIFT bits of the
+     * fraction, then use that as the upper bits of the value of
+     * BRS.  Seems to work, at least for 9600 baud. */
+    n = (brclk_Hz << BR_FRACTION_SHIFT) / baud;
+    brs = n & ((1 << BR_FRACTION_SHIFT) - 1);
+    n >>= BR_FRACTION_SHIFT;
+    brs <<= 8 - BR_FRACTION_SHIFT;
 #undef BR_FRACTION_SHIFT
-		br = n;
-		if (16 <= br) {
-			br = br / 16;
-			os16 = UCOS16;
-			brf = n - 16 * br;
-		}
-		device->euscia->brw = br;
-		device->euscia->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
+    br = n;
+    if (16 <= br) {
+      br = br / 16;
+      os16 = UCOS16;
+      brf = n - 16 * br;
+    }
+    device->euscia->brw = br;
+    device->euscia->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
 
-		/* Mark the device active */
-		device->num_rx = device->num_tx = 0;
-		device->flags |= COM_PORT_ACTIVE;
+    /* Mark the device active */
+    device->num_rx = device->num_tx = 0;
+    device->flags |= COM_PORT_ACTIVE;
 
-		/* Release the USCI and enable the interrupts.  Interrupts are
-		 * disabled and cleared when UCSWRST is set. */
-		device->euscia->ctlw0 &= ~UCSWRST;
-		if (0 != device->rx_queue) {
-			device->euscia->ie |= UCRXIE;
-		}
-	}
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+    /* Release the USCI and enable the interrupts.  Interrupts are
+     * disabled and cleared when UCSWRST is set. */
+    device->euscia->ctlw0 &= ~UCSWRST;
+    if (0 != device->rx_queue) {
+      device->euscia->ie |= UCRXIE;
+    }
+  }
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
-	return device;
+  return device;
 }
 
 int
 iBSP430eusciaConfigureQueues (xBSP430eusciaHandle device,
-							  xQueueHandle rx_queue,
-							  xQueueHandle tx_queue)
+                              xQueueHandle rx_queue,
+                              xQueueHandle tx_queue)
 {
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	int rc = 0;
-	
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	device->euscia->ctlw0 |= UCSWRST;
-	if (device->rx_queue || device->tx_queue) {
-		rc = -1;
-	} else {
-		device->rx_queue = rx_queue;
-		device->tx_queue = tx_queue;
-	}
-	/* Release the USCI and enable the interrupts.  Interrupts are
-	 * disabled and cleared when UCSWRST is set. */
-	device->euscia->ctlw0 &= ~UCSWRST;
-	if (0 != device->rx_queue) {
-		device->euscia->ie |= UCRXIE;
-	}
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return rc;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rc = 0;
+
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  device->euscia->ctlw0 |= UCSWRST;
+  if (device->rx_queue || device->tx_queue) {
+    rc = -1;
+  } else {
+    device->rx_queue = rx_queue;
+    device->tx_queue = tx_queue;
+  }
+  /* Release the USCI and enable the interrupts.  Interrupts are
+   * disabled and cleared when UCSWRST is set. */
+  device->euscia->ctlw0 &= ~UCSWRST;
+  if (0 != device->rx_queue) {
+    device->euscia->ie |= UCRXIE;
+  }
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rc;
 }
 
 int
 iBSP430eusciaClose (xBSP430eusciaHandle device)
 {
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	int rc;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rc;
 
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	device->euscia->ctlw0 = UCSWRST;
-	rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(device->euscia), 0);
-	device->flags = 0;
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return rc;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  device->euscia->ctlw0 = UCSWRST;
+  rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(device->euscia), 0);
+  device->flags = 0;
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rc;
 }
 
 /* If there's data in the transmit queue, and the transmit interrupt
@@ -180,11 +180,11 @@ iBSP430eusciaClose (xBSP430eusciaHandle device)
 void
 vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle device)
 {
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
 #define RAW_TRANSMIT(_periph, _c) do {			\
@@ -197,52 +197,52 @@ vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle device)
 int
 iBSP430eusciaPutc (int c, xBSP430eusciaHandle device)
 {
-	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
-	portTickType delay = 0;
-	int passp;
+  const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
+  portTickType delay = 0;
+  int passp;
 
-	if (device->tx_queue) {
-		do {
-			passp = xQueueSendToBack(device->tx_queue, &c, delay);
-			vBSP430eusciaWakeupTransmit(device);
-			if (! passp) {
-				delay = MAX_DELAY;
-			}
-		} while (! passp);
-	} else {
-		RAW_TRANSMIT(device->euscia, c);
-	}
-	return c;
+  if (device->tx_queue) {
+    do {
+      passp = xQueueSendToBack(device->tx_queue, &c, delay);
+      vBSP430eusciaWakeupTransmit(device);
+      if (! passp) {
+        delay = MAX_DELAY;
+      }
+    } while (! passp);
+  } else {
+    RAW_TRANSMIT(device->euscia, c);
+  }
+  return c;
 }
 
 int
 iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle device)
 {
-	const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
-	portTickType delay = 0;
-	const char * in_string = str;
-	
-	if (device->tx_queue) {
-		while (*str) {
-			if (xQueueSendToBack(device->tx_queue, str, delay)) {
-				++str;
-				if (delay) {
-					vBSP430eusciaWakeupTransmit(device);
-					delay = 0;
-				}
-			} else {
-				vBSP430eusciaWakeupTransmit(device);
-				delay = MAX_DELAY;
-			}
-		}
-		vBSP430eusciaWakeupTransmit(device);
-	} else {
-		while (*str) {
-			RAW_TRANSMIT(device->euscia, *str);
-			++str;
-		}
-	}
-	return str - in_string;
+  const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
+  portTickType delay = 0;
+  const char * in_string = str;
+
+  if (device->tx_queue) {
+    while (*str) {
+      if (xQueueSendToBack(device->tx_queue, str, delay)) {
+        ++str;
+        if (delay) {
+          vBSP430eusciaWakeupTransmit(device);
+          delay = 0;
+        }
+      } else {
+        vBSP430eusciaWakeupTransmit(device);
+        delay = MAX_DELAY;
+      }
+    }
+    vBSP430eusciaWakeupTransmit(device);
+  } else {
+    while (*str) {
+      RAW_TRANSMIT(device->euscia, *str);
+      ++str;
+    }
+  }
+  return str - in_string;
 }
 
 /* Since the interrupt code is the same for all peripherals, on MCUs
@@ -270,34 +270,34 @@ __attribute__ ( ( __c16__ ) )
 /* __attribute__((__always_inline__)) */
 euscia_isr (xBSP430eusciaHandle device)
 {
-	portBASE_TYPE yield = pdFALSE;
-	int rv = 1;
+  portBASE_TYPE yield = pdFALSE;
+  int rv = 1;
 
-	switch (device->euscia->iv) {
-	default:
-	case USCI_NONE:
-		break;
-	case USCI_UART_UCTXIFG: /* == USCI_SPI_UCTXIFG */
-		if (device->tx_queue) {
-			rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
-			if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
-				device->euscia->ie &= ~UCTXIE;
-			}
-		}
-		if (rv) {
-			++device->num_tx;
-			device->euscia->txbuf = device->tx_byte;
-		}
-		break;
-	case USCI_UART_UCRXIFG: /* == USCI_SPI_UCRXIFG */
-		device->rx_byte = device->euscia->rxbuf;
-		++device->num_rx;
-		if (device->rx_queue) {
-			rv = xQueueSendToBackFromISR(device->rx_queue, &device->rx_byte, &yield);
-		}
-		break;
-	}
-	portYIELD_FROM_ISR(yield);
+  switch (device->euscia->iv) {
+    default:
+    case USCI_NONE:
+      break;
+    case USCI_UART_UCTXIFG: /* == USCI_SPI_UCTXIFG */
+      if (device->tx_queue) {
+        rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
+        if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
+          device->euscia->ie &= ~UCTXIE;
+        }
+      }
+      if (rv) {
+        ++device->num_tx;
+        device->euscia->txbuf = device->tx_byte;
+      }
+      break;
+    case USCI_UART_UCRXIFG: /* == USCI_SPI_UCRXIFG */
+      device->rx_byte = device->euscia->rxbuf;
+      ++device->num_rx;
+      if (device->rx_queue) {
+        rv = xQueueSendToBackFromISR(device->rx_queue, &device->rx_byte, &yield);
+      }
+      break;
+  }
+  portYIELD_FROM_ISR(yield);
 }
 #endif /* EUSCIA ISR */
 
@@ -305,7 +305,7 @@ euscia_isr (xBSP430eusciaHandle device)
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_HAL_EUSCI_A0 - 0
 static struct xBSP430eusciaState state_EUSCI_A0_ = {
-	.euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A0_BASEADDRESS
+  .euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A0_BASEADDRESS
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
@@ -313,7 +313,7 @@ xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
 
 #if configBSP430_HAL_EUSCI_A1 - 0
 static struct xBSP430eusciaState state_EUSCI_A1_ = {
-	.euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A1_BASEADDRESS
+  .euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A1_BASEADDRESS
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
@@ -321,7 +321,7 @@ xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
 
 #if configBSP430_HAL_EUSCI_A2 - 0
 static struct xBSP430eusciaState state_EUSCI_A2_ = {
-	.euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A2_BASEADDRESS
+  .euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A2_BASEADDRESS
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;
@@ -337,7 +337,7 @@ static void
 __attribute__((__interrupt__(USCI_A0_VECTOR)))
 isr_EUSCI_A0 (void)
 {
-	euscia_isr(xBSP430euscia_EUSCI_A0);
+  euscia_isr(xBSP430euscia_EUSCI_A0);
 }
 #endif /* configBSP430_HAL_EUSCI_A0_ISR */
 
@@ -346,7 +346,7 @@ static void
 __attribute__((__interrupt__(USCI_A1_VECTOR)))
 isr_EUSCI_A1 (void)
 {
-	euscia_isr(xBSP430euscia_EUSCI_A1);
+  euscia_isr(xBSP430euscia_EUSCI_A1);
 }
 #endif /* configBSP430_HAL_EUSCI_A1_ISR */
 
@@ -355,7 +355,7 @@ static void
 __attribute__((__interrupt__(USCI_A2_VECTOR)))
 isr_EUSCI_A2 (void)
 {
-	euscia_isr(xBSP430euscia_EUSCI_A2);
+  euscia_isr(xBSP430euscia_EUSCI_A2);
 }
 #endif /* configBSP430_HAL_EUSCI_A2_ISR */
 
@@ -364,27 +364,27 @@ isr_EUSCI_A2 (void)
 
 static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
 {
-/* !BSP430! insert=periph_hal_demux */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
+  /* !BSP430! insert=periph_hal_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
 #if configBSP430_HAL_EUSCI_A0 - 0
-	if (BSP430_PERIPH_EUSCI_A0 == periph) {
-		return xBSP430euscia_EUSCI_A0;
-	}
+  if (BSP430_PERIPH_EUSCI_A0 == periph) {
+    return xBSP430euscia_EUSCI_A0;
+  }
 #endif /* configBSP430_PERIPH_EUSCI_A0 */
 
 #if configBSP430_HAL_EUSCI_A1 - 0
-	if (BSP430_PERIPH_EUSCI_A1 == periph) {
-		return xBSP430euscia_EUSCI_A1;
-	}
+  if (BSP430_PERIPH_EUSCI_A1 == periph) {
+    return xBSP430euscia_EUSCI_A1;
+  }
 #endif /* configBSP430_PERIPH_EUSCI_A1 */
 
 #if configBSP430_HAL_EUSCI_A2 - 0
-	if (BSP430_PERIPH_EUSCI_A2 == periph) {
-		return xBSP430euscia_EUSCI_A2;
-	}
+  if (BSP430_PERIPH_EUSCI_A2 == periph) {
+    return xBSP430euscia_EUSCI_A2;
+  }
 #endif /* configBSP430_PERIPH_EUSCI_A2 */
 
-/* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
-/* !BSP430! end=periph_hal_demux */
-	return NULL;
+  /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
+  /* !BSP430! end=periph_hal_demux */
+  return NULL;
 }

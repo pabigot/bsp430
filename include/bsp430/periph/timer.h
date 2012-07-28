@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -90,32 +90,32 @@
 /** Layout for Timer_A and Timer_B peripherals.
  */
 typedef struct xBSP430periphTIMER {
-	unsigned int ctl;			/**< Control register (TA0CTL) */
-	union {
-		unsigned int cctl[7];		/**< Capture/Compare Control registers (indexed) */
-		struct {
-			unsigned int cctl0;	/**< Tx#CCTL0 */
-			unsigned int cctl1;	/**< Tx#CCTL1 */
-			unsigned int cctl2;	/**< Tx#CCTL2 */
-			unsigned int cctl3;	/**< Tx#CCTL3 */
-			unsigned int cctl4;	/**< Tx#CCTL4 */
-			unsigned int cctl5; /**< TB#CCTL5 */
-			unsigned int cctl6;	/**< TB#CCTL6 */
-		};
-	};
-	unsigned int r;				/**< Raw timer counter (TA0R) */
-	union {
-		unsigned int ccr[7];	/**< Capture/Compare registers (indexed) */
-		struct {
-			unsigned int ccr0;	/**< Tx#CCR0 */
-			unsigned int ccr1;	/**< Tx#CCR1 */
-			unsigned int ccr2;	/**< Tx#CCR2 */
-			unsigned int ccr3;	/**< Tx#CCR3 */
-			unsigned int ccr4;	/**< Tx#CCR4 */
-			unsigned int ccr5;	/**< TB#CCR5 */
-			unsigned int ccr6;	/**< TB#CCR6 */
-		};
-	};		
+  unsigned int ctl;			/**< Control register (TA0CTL) */
+  union {
+    unsigned int cctl[7];		/**< Capture/Compare Control registers (indexed) */
+    struct {
+      unsigned int cctl0;	/**< Tx#CCTL0 */
+      unsigned int cctl1;	/**< Tx#CCTL1 */
+      unsigned int cctl2;	/**< Tx#CCTL2 */
+      unsigned int cctl3;	/**< Tx#CCTL3 */
+      unsigned int cctl4;	/**< Tx#CCTL4 */
+      unsigned int cctl5; /**< TB#CCTL5 */
+      unsigned int cctl6;	/**< TB#CCTL6 */
+    };
+  };
+  unsigned int r;				/**< Raw timer counter (TA0R) */
+  union {
+    unsigned int ccr[7];	/**< Capture/Compare registers (indexed) */
+    struct {
+      unsigned int ccr0;	/**< Tx#CCR0 */
+      unsigned int ccr1;	/**< Tx#CCR1 */
+      unsigned int ccr2;	/**< Tx#CCR2 */
+      unsigned int ccr3;	/**< Tx#CCR3 */
+      unsigned int ccr4;	/**< Tx#CCR4 */
+      unsigned int ccr5;	/**< TB#CCR5 */
+      unsigned int ccr6;	/**< TB#CCR6 */
+    };
+  };
 } xBSP430periphTIMER;
 
 /** Get the peripheral register pointer for a specific timer.
@@ -132,7 +132,7 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
  *
  * What we're doing here is providing the base addresses for the
  * peripheral register maps in a manner that ignores the number of
- * CCs present in an instance. */ 
+ * CCs present in an instance. */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 /* Find the relevant tests with the following command over the
  * upstream include files in the msp430mcu package::
@@ -205,14 +205,14 @@ typedef struct xBSP430timerState * xBSP430timerHandle;
 /** Read the timer counter assuming interrupts are disabled.
  *
  * @param timer The timer for which the count is desired.
- * 
+ *
  * @param overflowp An optional pointer in which the high word of the
  * overflow counter is stored, supporting a 48-bit counter.
  *
  * @return A 32-bit unsigned count of the number of clock ticks
  * observed since the timer was last reset. */
 unsigned long ulBSP430timerCounter_ni (xBSP430timerHandle timer,
-										   unsigned int * overflowp);
+                                       unsigned int * overflowp);
 
 /** Read timer counter regardless of interrupt enable state.
  *
@@ -223,28 +223,28 @@ unsigned long ulBSP430timerCounter_ni (xBSP430timerHandle timer,
 static unsigned long
 __inline__
 ulBSP430timerCounter (xBSP430timerHandle timer,
-					  unsigned int * overflowp)
+                      unsigned int * overflowp)
 {
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	unsigned long rv;
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	rv = ulBSP430timerCounter_ni(timer, overflowp);
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  unsigned long rv;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = ulBSP430timerCounter_ni(timer, overflowp);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 /** Read the timer counter.
  *
  * @param timer The timer for which the count is desired.
- * 
+ *
  * @param overflowp An optional pointer in which the high word of the
  * overflow counter is stored, supporting a 48-bit counter.
  *
  * @return A 32-bit unsigned count of the number of clock ticks
  * observed since the timer was last reset. */
 unsigned long ulBSP430timerCounter (xBSP430timerHandle timer,
-									unsigned int * overflowp);
+                                    unsigned int * overflowp);
 
 /** Reset the timer counter.
  *

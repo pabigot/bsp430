@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -77,11 +77,11 @@
  * interrupt capability.  P3-P6 are uniform 8-bit and P7-P8 are
  * uniform 16-bit contiguous, exclusive of REN and SEL2.  PA=(P7,P8)
  * in the headers, but is not named as such in the user's guide.
- * 
+ *
  * 3xx: P1/P2 are uniform contiguous with interrupt capability.  P3-P4
  * are uniform contiguous without interrupt capability.  There is no
  * REN capability.
- * 
+ *
  * 4xx: P1/P2 are uniform contiguous including REN capability, and
  * have interrupt capability.  P3-P6 are uniform 8-bit and P7-P10 are
  * uniform 16-bit contiguous; these are exclusive of REN, which is
@@ -122,14 +122,14 @@
  * Access to SEL2 capability for these ports is not available in the
  * hardware-presentation layer. */
 typedef struct xBSP430periphPORT_IE_8 {
-	unsigned char in;			/* 0x00 */
-	unsigned char out;			/* 0x01 */
-	unsigned char dir;			/* 0x02 */
-	unsigned char ifg;			/* 0x03 */
-	unsigned char ies;			/* 0x04 */
-	unsigned char ie;			/* 0x05 */
-	unsigned char sel;			/* 0x06 */
-	unsigned char ren;			/* 0x07 */
+  unsigned char in;			/* 0x00 */
+  unsigned char out;			/* 0x01 */
+  unsigned char dir;			/* 0x02 */
+  unsigned char ifg;			/* 0x03 */
+  unsigned char ies;			/* 0x04 */
+  unsigned char ie;			/* 0x05 */
+  unsigned char sel;			/* 0x06 */
+  unsigned char ren;			/* 0x07 */
 } xBSP430periphPORT_IE_8;
 
 /** Layout for pre-5xx--family 8-bit ports not supporting interrupts.
@@ -137,20 +137,20 @@ typedef struct xBSP430periphPORT_IE_8 {
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
 typedef struct xBSP430periphPORT_8 {
-	unsigned char in;			/* 0x00 */
-	unsigned char out;			/* 0x01 */
-	unsigned char dir;			/* 0x02 */
-	unsigned char sel;			/* 0x03 */
+  unsigned char in;			/* 0x00 */
+  unsigned char out;			/* 0x01 */
+  unsigned char dir;			/* 0x02 */
+  unsigned char sel;			/* 0x03 */
 } xBSP430periphPORT_8;
 
 /** Helper for accessing 8-bit registers within 16-bit registers */
 typedef union xBSP430periphPORT_16_u {
-	unsigned int w;				/**< Word access (e.g., PAIN) */
-	unsigned char b[2];			/**< Byte access, indexed */
-	struct {
-		unsigned char l;		/**< Low byte access for odd members of pair (e.g., P1IN) */
-		unsigned char h;		/**< High byte access for even members of pair (e.g., P2IN) */
-	};
+  unsigned int w;				/**< Word access (e.g., PAIN) */
+  unsigned char b[2];			/**< Byte access, indexed */
+  struct {
+    unsigned char l;		/**< Low byte access for odd members of pair (e.g., P1IN) */
+    unsigned char h;		/**< High byte access for even members of pair (e.g., P2IN) */
+  };
 } xBSP430periphPORT_16_u;
 
 /** Layout for 2xx/4xx family 16-bit ports not supporting interrupts.
@@ -158,33 +158,33 @@ typedef union xBSP430periphPORT_16_u {
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
 typedef struct xBSP430periphPORT_16 {
-	xBSP430periphPORT_16_u in;	/* 0x00 */
-	xBSP430periphPORT_16_u out;	/* 0x02 */
-	xBSP430periphPORT_16_u dir;	/* 0x04 */
-	xBSP430periphPORT_16_u sel;	/* 0x08 */
+  xBSP430periphPORT_16_u in;	/* 0x00 */
+  xBSP430periphPORT_16_u out;	/* 0x02 */
+  xBSP430periphPORT_16_u dir;	/* 0x04 */
+  xBSP430periphPORT_16_u sel;	/* 0x08 */
 } xBSP430periphPORT_16;
 
 /** Layout for 5xx family ports, 16-bit access
  */
 typedef struct xBSP430periphPORT_5XX_16 {
-	xBSP430periphPORT_16_u in;	/**< PxIN */ /* 0x00 */
-	xBSP430periphPORT_16_u out;	/**< PxOUT */ /* 0x02 */
-	xBSP430periphPORT_16_u dir;	/**< PxDIR (set for output) */ /* 0x04 */
-	xBSP430periphPORT_16_u ren;	/**< PxREN (set to enable) */ /* 0x06 */
-	xBSP430periphPORT_16_u ds;	/**< PxDS (drive select, some devices) */ /* 0x08 */
-	union {
-		xBSP430periphPORT_16_u sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
-		xBSP430periphPORT_16_u sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
-	};
-	xBSP430periphPORT_16_u sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
-	unsigned int _reserved_x0E;
-	xBSP430periphPORT_16_u selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
-	unsigned int _reserved_x12;
-	unsigned int _reserved_x14;
-	unsigned int _reserved_x16;
-	xBSP430periphPORT_16_u ies;	 /**< PxIES */ /* 0x18 */
-	xBSP430periphPORT_16_u ie;	 /**< PxIE */ /* 0x1A */
-	xBSP430periphPORT_16_u ifg;	 /**< PxIFG */ /* 0x1C */
+  xBSP430periphPORT_16_u in;	/**< PxIN */ /* 0x00 */
+  xBSP430periphPORT_16_u out;	/**< PxOUT */ /* 0x02 */
+  xBSP430periphPORT_16_u dir;	/**< PxDIR (set for output) */ /* 0x04 */
+  xBSP430periphPORT_16_u ren;	/**< PxREN (set to enable) */ /* 0x06 */
+  xBSP430periphPORT_16_u ds;	/**< PxDS (drive select, some devices) */ /* 0x08 */
+  union {
+    xBSP430periphPORT_16_u sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
+    xBSP430periphPORT_16_u sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
+  };
+  xBSP430periphPORT_16_u sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
+  unsigned int _reserved_x0E;
+  xBSP430periphPORT_16_u selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
+  unsigned int _reserved_x12;
+  unsigned int _reserved_x14;
+  unsigned int _reserved_x16;
+  xBSP430periphPORT_16_u ies;	 /**< PxIES */ /* 0x18 */
+  xBSP430periphPORT_16_u ie;	 /**< PxIE */ /* 0x1A */
+  xBSP430periphPORT_16_u ifg;	 /**< PxIFG */ /* 0x1C */
 } xBSP430periphPORT_5XX_16;
 
 /** Layout for 5xx family ports, 8-bit access
@@ -193,38 +193,38 @@ typedef struct xBSP430periphPORT_5XX_16 {
  * when referencing the second 8-bit register in a 16-bit bank.
  */
 typedef struct xBSP430periphPORT_5XX_8 {
-	unsigned char in;	/**< PxIN */ /* 0x00 */
-	unsigned char _reserved_x01;
-	unsigned char out;	/**< PxOUT */ /* 0x02 */
-	unsigned char _reserved_x03;
-	unsigned char dir;	/**< PxDIR (set for output) */ /* 0x04 */
-	unsigned char _reserved_x05;
-	unsigned char ren;	/**< PxREN (set to enable) */ /* 0x06 */
-	unsigned char _reserved_x07;
-	unsigned char ds; /**< PxDS (drive select, some devices) */ /* 0x08 */
-	unsigned char _reserved_x09;
-	union {
-		unsigned char sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
-		unsigned char sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
-	};
-	unsigned char _reserved_x0B;
-	unsigned char sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
-	unsigned char _reserved_x0D;
-	unsigned char _reserved_x0E;
-	unsigned char _reserved_x0F;
-	unsigned char selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) *//* 0x10 */
-	unsigned char _reserved_x11;
-	unsigned char _reserved_x12;
-	unsigned char _reserved_x13;
-	unsigned char _reserved_x14;
-	unsigned char _reserved_x15;
-	unsigned char _reserved_x16;
-	unsigned char _reserved_x17;
-	unsigned char ies;	 /**< PxIES */ /* 0x18 */
-	unsigned char _reserved_x19;
-	unsigned char ie;	 /**< PxIE */ /* 0x1A */
-	unsigned char _reserved_x1B;
-	unsigned char ifg;	 /**< PxIFG */ /* 0x1C */
+  unsigned char in;	/**< PxIN */ /* 0x00 */
+  unsigned char _reserved_x01;
+  unsigned char out;	/**< PxOUT */ /* 0x02 */
+  unsigned char _reserved_x03;
+  unsigned char dir;	/**< PxDIR (set for output) */ /* 0x04 */
+  unsigned char _reserved_x05;
+  unsigned char ren;	/**< PxREN (set to enable) */ /* 0x06 */
+  unsigned char _reserved_x07;
+  unsigned char ds; /**< PxDS (drive select, some devices) */ /* 0x08 */
+  unsigned char _reserved_x09;
+  union {
+    unsigned char sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
+    unsigned char sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
+  };
+  unsigned char _reserved_x0B;
+  unsigned char sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
+  unsigned char _reserved_x0D;
+  unsigned char _reserved_x0E;
+  unsigned char _reserved_x0F;
+  unsigned char selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) *//* 0x10 */
+  unsigned char _reserved_x11;
+  unsigned char _reserved_x12;
+  unsigned char _reserved_x13;
+  unsigned char _reserved_x14;
+  unsigned char _reserved_x15;
+  unsigned char _reserved_x16;
+  unsigned char _reserved_x17;
+  unsigned char ies;	 /**< PxIES */ /* 0x18 */
+  unsigned char _reserved_x19;
+  unsigned char ie;	 /**< PxIE */ /* 0x1A */
+  unsigned char _reserved_x1B;
+  unsigned char ifg;	 /**< PxIFG */ /* 0x1C */
 } xBSP430periphPORT_5XX_8;
 
 /** @cond DOXYGEN_INTERNAL */
@@ -257,7 +257,7 @@ typedef _BSP430_PERIPH_PORTW xBSP430periphPORTW;
 /** Get the peripheral register pointer for an interrupt-enabled port.
  *
  * @note All ports on 5xx-family devices are interrupt-enabled.
- * 
+ *
  * @param xHandle The handle identifier, such as #BSP430_PERIPH_PORT1.
  *
  * @return A typed pointer that can be used to manipulate the port.  A

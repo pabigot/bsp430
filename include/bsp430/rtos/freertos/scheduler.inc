@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -50,32 +50,32 @@
 void
 vBSP430freertosSuspendScheduler (void)
 {
-	xBSP430periph_TA0->cctl0 &= ~(CCIE | CCIFG);
+  xBSP430periph_TA0->cctl0 &= ~(CCIE | CCIFG);
 }
 
 void
 vBSP430freertosResumeScheduler (void)
 {
-	xBSP430periph_TA0->ccr0 = TIMESLICE_DURATION_tck + xBSP430periph_TA0->r;
-	xBSP430periph_TA0->cctl0 |= CCIE;
+  xBSP430periph_TA0->ccr0 = TIMESLICE_DURATION_tck + xBSP430periph_TA0->r;
+  xBSP430periph_TA0->cctl0 |= CCIE;
 }
 
 portBASE_TYPE
 xPortStartScheduler (void)
 {
-	/* If TA0 appears to be stopped, start it driving from ACLK in
-	 * continuous mode. */
-	if (0 == ((MC0 | MC1) & xBSP430periph_TA0->ctl)) {
-		xBSP430periph_TA0->ctl = TASSEL_1 | MC_2 | TACLR;
-	}
-	vBSP430freertosResumeScheduler();
-	portRESTORE_CONTEXT();
-	return pdTRUE;
+  /* If TA0 appears to be stopped, start it driving from ACLK in
+   * continuous mode. */
+  if (0 == ((MC0 | MC1) & xBSP430periph_TA0->ctl)) {
+    xBSP430periph_TA0->ctl = TASSEL_1 | MC_2 | TACLR;
+  }
+  vBSP430freertosResumeScheduler();
+  portRESTORE_CONTEXT();
+  return pdTRUE;
 }
 
 void vPortEndScheduler (void)
 {
-	vBSP430freertosSuspendScheduler();
+  vBSP430freertosSuspendScheduler();
 }
 
 static void
@@ -86,14 +86,14 @@ __attribute__((__naked__))
 scheduler_isr (void)
 {
 #if configUSE_PREEMPTION == 1
-	portSAVE_CONTEXT();
+  portSAVE_CONTEXT();
 #endif /* configUSE_PREEMPTION */
-	
-	xBSP430periph_TA0->ccr0 += TIMESLICE_DURATION_tck;
-	vTaskIncrementTick();
-	
+
+  xBSP430periph_TA0->ccr0 += TIMESLICE_DURATION_tck;
+  vTaskIncrementTick();
+
 #if configUSE_PREEMPTION == 1
-	vTaskSwitchContext();
-	portRESTORE_CONTEXT();
+  vTaskSwitchContext();
+  portRESTORE_CONTEXT();
 #endif /* configUSE_PREEMPTION */
 }

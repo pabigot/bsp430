@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,14 +60,14 @@
 
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 2xx/4xx MCU. */
 typedef struct xBSP430periphUSCI {
-	unsigned char ctl0;	/**< UCtxCTL0 */ /* 0x00 */
-	unsigned char ctl1;	/**< UCtxCTL1 */ /* 0x01 */
-	unsigned char br0;	/**< UCtxBR0 */ /* 0x02 */
-	unsigned char br1;	/**< UCtxBR1 */ /* 0x03 */
-	unsigned char mctl;	/**< UCAxMCTL (UART) */ /* 0x04 */
-	unsigned char stat;	/**< UCtxSTAT */ /* 0x05 */
-	unsigned char rxbuf; /**< UCtxRXBUF */ /* 0x06 */
-	unsigned char txbuf; /**< UCtxTXBUF */ /* 0x07 */
+  unsigned char ctl0;	/**< UCtxCTL0 */ /* 0x00 */
+  unsigned char ctl1;	/**< UCtxCTL1 */ /* 0x01 */
+  unsigned char br0;	/**< UCtxBR0 */ /* 0x02 */
+  unsigned char br1;	/**< UCtxBR1 */ /* 0x03 */
+  unsigned char mctl;	/**< UCAxMCTL (UART) */ /* 0x04 */
+  unsigned char stat;	/**< UCtxSTAT */ /* 0x05 */
+  unsigned char rxbuf; /**< UCtxRXBUF */ /* 0x06 */
+  unsigned char txbuf; /**< UCtxTXBUF */ /* 0x07 */
 } xBSP430periphUSCI;
 
 /** @cond DOXYGEN_INTERNAL */
@@ -418,7 +418,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
  * is as if those queues were associated during this call.
  *
  * @param xPeriph The raw device identifier for the USCI device that
- * is being requested. E.g., @c xBSP430Periph_USCI_A0. 
+ * is being requested. E.g., @c xBSP430Periph_USCI_A0.
  *
  * @param control_word The configuration to be written to the device's
  * ctlw0 word.  Most bit fields will be assigned from this value, but
@@ -431,12 +431,12 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
  * @return @a xUSCI if the allocation and configuration is successful,
  * and a null handle if something went wrong. */
 xBSP430usciHandle xBSP430usciOpenUART (xBSP430periphHandle xPeriph,
-									   unsigned int control_word,
-									   unsigned long baud);
+                                       unsigned int control_word,
+                                       unsigned long baud);
 
 xBSP430usciHandle xBSP430usciOpenSPI (xBSP430periphHandle xPeriph,
-									  unsigned int control_word,
-									  unsigned int prescaler);
+                                      unsigned int control_word,
+                                      unsigned int prescaler);
 
 /** Assign FreeRTOS queues for transmit and receive.
  *
@@ -468,8 +468,8 @@ xBSP430usciHandle xBSP430usciOpenSPI (xBSP430periphHandle xPeriph,
  * if something went wrong.
  */
 int iBSP430usciConfigureQueues (xBSP430usciHandle xUSCI,
-								xQueueHandle rx_queue,
-								xQueueHandle tx_queue);
+                                xQueueHandle rx_queue,
+                                xQueueHandle tx_queue);
 
 /** Release a USCI device.
  *

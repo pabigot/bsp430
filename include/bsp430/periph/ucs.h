@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -41,7 +41,7 @@
  *
  * Based on experimentation, the following is assumed or enforced for
  * all supported clock configurations:
- * 
+ *
  * @li SELREF is XT1CLK running at 32768 Hz.  #ulBSP430ucsConfigure_ni
  * will enforce this.
  *
@@ -62,7 +62,7 @@
  *
  * @li #ulBSP430clockMCLK_Hz_ni returns the most recent measured trimmed
  * frequency.
- * 
+ *
  * @li #ulBSP430clockSMCLK_Hz_ni returns the most recent measured trimmed
  * frequency shifted right by
  * #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
@@ -118,7 +118,7 @@
  * accuracies.  If a negative value is given, the function may be able
  * to select a default from an internal table if that table has been
  * updated to include information on the relevant device.
- * 
+ *
  * @return an estimate of the actual running frequency.
  *
  * @note This function expects a valid 32 kiHz clock source on XT1,
@@ -127,13 +127,13 @@
  * the expectation is met.  A call to this function will not return if
  * XT1 cannot be stabilized. */
 unsigned long ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
-									short sRSEL);
+                                       short sRSEL);
 
 /** Call this to configure ACLK via the UCS peripheral.
  *
  * Prior to invoking this, use #iBSP430clockConfigureXT1_ni to check for
  * crystal stability, if ACLK is to be sourced from XT1.
- * 
+ *
  * @param sela The constant to assign to the SELA field of UCSCTL4.
  * Standard values are @c SELA__XT1CLK and @c SELA__VLOCLK.
  *
@@ -159,7 +159,7 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela);
  * @warning MCLK, SMCLK, and any clocks derived from them are unstable
  * while this routine is being run, so UART, SPI, and other
  * peripherals should be turned off prior to invoking it.
- * 
+ *
  * @note This function is named in accordance with the FreeRTOS
  * standards that indicate it should be called with interrupts
  * disabled and will not block or induce a context switch.  It will,
@@ -177,11 +177,11 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
  * the FLL is being trimmed.  The timer must have a capture/compare
  * block which can be configured to use ACLK as its input.  CCI0B on
  * TB0.6 is a candidate for at least some 5xx/6xx family MCUs.
- * 
+ *
  * The value of this parameter should be a reference to one of the
  * timer HPL handles, such as #xBSP43periph_TB0.  The corresponding
  * #configBSP430_PERIPH_TB0 must also be set.
- * 
+ *
  * @note The timer may be shared among other users.  It is the
  * caller's responsibility to ensure that no other users of the timer
  * are active while the clock is being trimmed.

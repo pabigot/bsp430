@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -53,16 +53,16 @@ __inline__
 int
 emit_char_ni (int c)
 {
-	xBSP430uartHandle uart = console_uart;
-	if (NULL == uart) {
-		return -1;
-	}
+  xBSP430uartHandle uart = console_uart;
+  if (NULL == uart) {
+    return -1;
+  }
 #if configBSP430_CONSOLE_USE_ONLCR - 0
-	if ('\n' == c) {
-		iBSP430uartPutChar('\r', uart);
-	}
+  if ('\n' == c) {
+    iBSP430uartPutChar('\r', uart);
+  }
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
-	return iBSP430uartPutChar(c, uart);
+  return iBSP430uartPutChar(c, uart);
 }
 
 /* Optimized version used inline.  Assumes that the uart is not
@@ -73,69 +73,72 @@ int
 emit_char2_ni (int c, xBSP430uartHandle uart)
 {
 #if configBSP430_CONSOLE_USE_ONLCR - 0
-	if ('\n' == c) {
-		iBSP430uartPutChar('\r', uart);
-	}
+  if ('\n' == c) {
+    iBSP430uartPutChar('\r', uart);
+  }
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
-	return iBSP430uartPutChar(c, uart);
+  return iBSP430uartPutChar(c, uart);
 }
 
 
 #if configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0
-int putchar (c) { return emit_char_ni(c); }
+int putchar (c)
+{
+  return emit_char_ni(c);
+}
 #endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
 
 int
 cputchar_ni (int c)
 {
-	return emit_char_ni(c);
+  return emit_char_ni(c);
 }
 
 /* Emit a NUL-terminated string of text, returning the number of
  * characters emitted. */
 static int
 emit_text_ni (const char * s,
-		   xBSP430uartHandle uart)
+              xBSP430uartHandle uart)
 {
-	int rv = 0;
-	if (uart) {
-		while (s[rv]) {
-			emit_char2_ni(s[rv++], uart);
-		}
-	}
-	return rv;
+  int rv = 0;
+  if (uart) {
+    while (s[rv]) {
+      emit_char2_ni(s[rv++], uart);
+    }
+  }
+  return rv;
 }
 
 int
 cputs (const char * s)
 {
-	int rv = 0;
-	xBSP430uartHandle uart = console_uart;
-	BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv = 0;
+  xBSP430uartHandle uart = console_uart;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-	if (! uart) {
-		return 0;
-	}
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	rv = emit_text_ni(s, uart);
-	emit_char2_ni('\n', uart);
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return 1+rv;
+  if (! uart) {
+    return 0;
+  }
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = emit_text_ni(s, uart);
+  emit_char2_ni('\n', uart);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return 1+rv;
 }
 
 int
 cputtext_ni (const char * s)
 {
-	return emit_text_ni(s, console_uart);
+  return emit_text_ni(s, console_uart);
 }
 
 #if configBSP430_CONSOLE_LIBC_HAS_ITOA - 0
 int
 cputi_ni (int n, int radix)
 {
-	char buffer[sizeof("-32767")];
-	return emit_text_ni(itoa(n, buffer, radix), console_uart);
+  char buffer[sizeof("-32767")];
+  return emit_text_ni(itoa(n, buffer, radix), console_uart);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_ITOA */
 
@@ -143,8 +146,8 @@ cputi_ni (int n, int radix)
 int
 cputu_ni (unsigned int n, int radix)
 {
-	char buffer[sizeof("65535")];
-	return emit_text_ni(utoa(n, buffer, radix), console_uart);
+  char buffer[sizeof("65535")];
+  return emit_text_ni(utoa(n, buffer, radix), console_uart);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_UTOA */
 
@@ -152,8 +155,8 @@ cputu_ni (unsigned int n, int radix)
 int
 cputl_ni (long n, int radix)
 {
-	char buffer[sizeof("-2147483647")];
-	return emit_text_ni(ltoa(n, buffer, radix), console_uart);
+  char buffer[sizeof("-2147483647")];
+  return emit_text_ni(ltoa(n, buffer, radix), console_uart);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_LTOA */
 
@@ -161,8 +164,8 @@ cputl_ni (long n, int radix)
 int
 cputul_ni (unsigned long n, int radix)
 {
-	char buffer[sizeof("4294967295")];
-	return emit_text_ni(ultoa(n, buffer, radix), console_uart);
+  char buffer[sizeof("4294967295")];
+  return emit_text_ni(ultoa(n, buffer, radix), console_uart);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_ULTOA */
 
@@ -173,27 +176,27 @@ __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
 cprintf (const char *fmt, ...)
 {
-	BSP430_CORE_INTERRUPT_STATE_T istate;
-	va_list argp;
-	int rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  va_list argp;
+  int rv;
 
-	/* Fail fast if printing is disabled */
-	if (! console_uart) {
-		return 0;
-	}
-	BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-	BSP430_CORE_DISABLE_INTERRUPT();
-	va_start (argp, fmt);
-	rv = vuprintf(emit_char_ni, fmt, argp);
-	va_end (argp);
-	BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-	return rv;
+  /* Fail fast if printing is disabled */
+  if (! console_uart) {
+    return 0;
+  }
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  va_start (argp, fmt);
+  rv = vuprintf(emit_char_ni, fmt, argp);
+  va_end (argp);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
 int
 xBSP430consoleInitialize (xBSP430uartHandle uart)
 {
-	console_uart = uart;
-	return 0;
+  console_uart = uart;
+  return 0;
 }

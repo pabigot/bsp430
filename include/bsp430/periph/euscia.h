@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -32,7 +32,7 @@
 /** @file
  *
  * @brief Hardware presentation/abstraction for eUSCI_A.
- * 
+ *
  * Genericized eUCSI_A on 5xx/6xx devices
  *
  * @author Peter A. Bigot <bigotp@acm.org>
@@ -55,40 +55,40 @@
 
 /** Register map for eUSCI_A peripheral hardware presentation layer. */
 typedef struct xBSP430periphEUSCIA {
-	union {						/* 0x00 */
-		unsigned int ctlw0;		/**< UCAxCTLW0 */
-		struct {
-			unsigned char ctl1; /**< UCAxCTL1 */
-			unsigned char ctl0; /**< UCAxCTL0 */
-		};
-	};
-	unsigned int ctlw1;			/**< UCAxCTLW1 */ /* 0x02 */
-	unsigned int _unused_0x04;
-	union {						/* 0x06 */
-		unsigned int brw;		/**< UCAxBRW */
-		struct {
-			unsigned char br0;	/**< UCAxBR0 */
-			unsigned char br1;	/**< UCAxBR1 */
-		};
-	};
-	unsigned int mctlw;			/**< UCAxMCTLW (UART) */ /* 0x08 */
-	unsigned int statw;			/**< UCAxSTATW */ /* 0x0A */
-	unsigned int rxbuf;			/**< UCAxRXBUF */ /* 0x0C */
-	unsigned int txbuf;			/**< UCAxTXBUF */ /* 0x0E */
-	unsigned int abctl;			/**< UCAxABCTL (UART) */ /* 0x10 */
-	union {						/* 0x12 */
-		unsigned int irctl;		/**< UCAxIRCTL (UART) */
-		struct {
-			unsigned char irtctl; /**< UCAxIRTCTL (UART) */ /* 0x12 */
-			unsigned char irrctl; /**< UCAxIRRCTL (UART) */ /* 0x13 */
-		};
-	};
-	unsigned int _unused_0x14;
-	unsigned int _unused_0x16;
-	unsigned int _unused_0x18;
-	unsigned int ie;			/**< UCAxIE */ /* 0x1A */
-	unsigned int ifg;			/**< UCAxIFG */ /* 0x1C */
-	unsigned int iv;			/**< UCAxIV */ /* 0x1E */
+  union {						/* 0x00 */
+    unsigned int ctlw0;		/**< UCAxCTLW0 */
+    struct {
+      unsigned char ctl1; /**< UCAxCTL1 */
+      unsigned char ctl0; /**< UCAxCTL0 */
+    };
+  };
+  unsigned int ctlw1;			/**< UCAxCTLW1 */ /* 0x02 */
+  unsigned int _unused_0x04;
+  union {						/* 0x06 */
+    unsigned int brw;		/**< UCAxBRW */
+    struct {
+      unsigned char br0;	/**< UCAxBR0 */
+      unsigned char br1;	/**< UCAxBR1 */
+    };
+  };
+  unsigned int mctlw;			/**< UCAxMCTLW (UART) */ /* 0x08 */
+  unsigned int statw;			/**< UCAxSTATW */ /* 0x0A */
+  unsigned int rxbuf;			/**< UCAxRXBUF */ /* 0x0C */
+  unsigned int txbuf;			/**< UCAxTXBUF */ /* 0x0E */
+  unsigned int abctl;			/**< UCAxABCTL (UART) */ /* 0x10 */
+  union {						/* 0x12 */
+    unsigned int irctl;		/**< UCAxIRCTL (UART) */
+    struct {
+      unsigned char irtctl; /**< UCAxIRTCTL (UART) */ /* 0x12 */
+      unsigned char irrctl; /**< UCAxIRRCTL (UART) */ /* 0x13 */
+    };
+  };
+  unsigned int _unused_0x14;
+  unsigned int _unused_0x16;
+  unsigned int _unused_0x18;
+  unsigned int ie;			/**< UCAxIE */ /* 0x1A */
+  unsigned int ifg;			/**< UCAxIFG */ /* 0x1C */
+  unsigned int iv;			/**< UCAxIV */ /* 0x1E */
 } xBSP430periphEUSCIA;
 
 /** @cond DOXYGEN_INTERNAL */
@@ -352,7 +352,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile x
  * interrupts is as if those queues were associated during this call.
  *
  * @param xPeriph The raw device identifier for the USCI device that
- * is being requested. E.g., @c xBSP430Periph_EUSCI_A0. 
+ * is being requested. E.g., @c xBSP430Periph_EUSCI_A0.
  *
  * @param control_word The configuration to be written to the device's
  * ctlw0 word.  Most bit fields will be assigned from this value, but
@@ -365,12 +365,12 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile x
  * @return @a xUSCI if the allocation and configuration is successful,
  * and a null handle if something went wrong. */
 xBSP430eusciaHandle xBSP430eusciaOpenUART (xBSP430periphHandle xPeriph,
-										   unsigned int control_word,
-										   unsigned long baud);
+    unsigned int control_word,
+    unsigned long baud);
 
 xBSP430eusciaHandle xBSP430eusciaOpenSPI (xBSP430periphHandle xPeriph,
-										  unsigned int control_word,
-										  unsigned int prescaler);
+    unsigned int control_word,
+    unsigned int prescaler);
 
 /** Assign FreeRTOS queues for transmit and receive.
  *
@@ -402,8 +402,8 @@ xBSP430eusciaHandle xBSP430eusciaOpenSPI (xBSP430periphHandle xPeriph,
  * if something went wrong.
  */
 int iBSP430eusciaConfigureQueues (xBSP430eusciaHandle xUSCI,
-								  xQueueHandle rx_queue,
-								  xQueueHandle tx_queue);
+                                  xQueueHandle rx_queue,
+                                  xQueueHandle tx_queue);
 
 /** Release a USCI device.
  *

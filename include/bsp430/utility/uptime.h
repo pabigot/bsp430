@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot <bigotp@acm.org>
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -50,7 +50,7 @@
  *
  * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to use
  * something other than #xBSP430timer_TA0 as the uptime clock source.
- * 
+ *
  * @author Peter A. Bigot <bigotp@acm.org> @homepage
  * http://github.com/pabigot/freertos-mspgcc @date 2012 @copyright <a
  * href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -164,7 +164,7 @@ static unsigned long
 __inline__
 ulBSP430uptime_ni (void)
 {
-	return ulBSP430timerCounter_ni(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
+  return ulBSP430timerCounter_ni(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
 }
 
 /** Return the system uptime in clock ticks. */
@@ -172,7 +172,7 @@ static unsigned long
 __inline__
 ulBSP430uptime (void)
 {
-	return ulBSP430timerCounter(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
+  return ulBSP430timerCounter(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
 }
 
 /** Configure the system uptime clock.
