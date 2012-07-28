@@ -155,12 +155,12 @@ iBSP430usci5Close (xBSP430usci5Handle device)
  * For this to work, of course, nobody else should ever muck with the
  * TXIFG bit.  Normal management of this bit via UCSWRST is
  * correct. */
-#define USCI5_WAKEUP_TRANSMIT_FROM_ISR(device) do {			\
-		if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
-			&& (! (device->usci5->ie & UCTXIE))) {			\
-			device->usci5->ie |= UCTXIE;						\
-		}													\
-	} while (0)
+#define USCI5_WAKEUP_TRANSMIT_FROM_ISR(device) do {     \
+    if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
+        && (! (device->usci5->ie & UCTXIE))) {          \
+      device->usci5->ie |= UCTXIE;                      \
+    }                                                   \
+  } while (0)
 
 void
 vBSP430usci5WakeupTransmit (xBSP430usci5Handle device)
@@ -172,12 +172,12 @@ vBSP430usci5WakeupTransmit (xBSP430usci5Handle device)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
-#define RAW_TRANSMIT(_periph, _c) do {			\
-		while (! (_periph->ifg & UCTXIFG)) {	\
-			;									\
-		}										\
-		_periph->txbuf = _c;					\
-	} while (0)
+#define RAW_TRANSMIT(_periph, _c) do {          \
+    while (! (_periph->ifg & UCTXIFG)) {	\
+      ;                                         \
+    }                                           \
+    _periph->txbuf = _c;                        \
+  } while (0)
 
 int
 iBSP430usci5PutChar (int c, xBSP430usci5Handle device)
@@ -244,15 +244,15 @@ iBSP430usci5PutString (const char* str, xBSP430usci5Handle device)
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
-#if ((configBSP430_HAL_USCI5_A0_ISR - 0) \
-	 || (configBSP430_HAL_USCI5_A1_ISR - 0) \
-	 || (configBSP430_HAL_USCI5_A2_ISR - 0) \
-	 || (configBSP430_HAL_USCI5_A3_ISR - 0) \
-	 || (configBSP430_HAL_USCI5_B0_ISR - 0) \
-	 || (configBSP430_HAL_USCI5_B1_ISR - 0) \
-	 || (configBSP430_HAL_USCI5_B2_ISR - 0) \
-	 || (configBSP430_HAL_USCI5_B3_ISR - 0) \
-	 )
+#if ((configBSP430_HAL_USCI5_A0_ISR - 0)        \
+     || (configBSP430_HAL_USCI5_A1_ISR - 0)     \
+     || (configBSP430_HAL_USCI5_A2_ISR - 0)     \
+     || (configBSP430_HAL_USCI5_A3_ISR - 0)     \
+     || (configBSP430_HAL_USCI5_B0_ISR - 0)     \
+     || (configBSP430_HAL_USCI5_B1_ISR - 0)     \
+     || (configBSP430_HAL_USCI5_B2_ISR - 0)     \
+     || (configBSP430_HAL_USCI5_B3_ISR - 0)     \
+     )
 static void
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )

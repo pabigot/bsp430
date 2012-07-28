@@ -170,12 +170,12 @@ iBSP430eusciaClose (xBSP430eusciaHandle device)
  * For this to work, of course, nobody else should ever muck with the
  * TXIFG bit.  Normal management of this bit via UCSWRST is
  * correct. */
-#define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do {			\
-		if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
-			&& (! (device->euscia->ie & UCTXIE))) {			\
-			device->euscia->ie |= UCTXIE;						\
-		}													\
-	} while (0)
+#define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do {      \
+    if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
+        && (! (device->euscia->ie & UCTXIE))) {         \
+      device->euscia->ie |= UCTXIE;                     \
+    }                                                   \
+  } while (0)
 
 void
 vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle device)
@@ -187,12 +187,12 @@ vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle device)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
-#define RAW_TRANSMIT(_periph, _c) do {			\
-		while (! (_periph->ifg & UCTXIFG)) {	\
-			;									\
-		}										\
-		_periph->txbuf = _c;					\
-	} while (0)
+#define RAW_TRANSMIT(_periph, _c) do {          \
+    while (! (_periph->ifg & UCTXIFG)) {	\
+      ;                                         \
+    }                                           \
+    _periph->txbuf = _c;                        \
+  } while (0)
 
 int
 iBSP430eusciaPutc (int c, xBSP430eusciaHandle device)
@@ -260,9 +260,9 @@ iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle device)
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
 #if (((configBSP430_PERIPH_EUSCI_A0 - 0) && (configBSP430_HAL_EUSCI_A0_ISR - 0)) \
-	 || ((configBSP430_PERIPH_EUSCI_A1 - 0) && (configBSP430_HAL_EUSCI_A1_ISR - 0)) \
-	 || ((configBSP430_PERIPH_EUSCI_A2 - 0) && (configBSP430_HAL_EUSCI_A2_ISR - 0)) \
-	 )
+     || ((configBSP430_PERIPH_EUSCI_A1 - 0) && (configBSP430_HAL_EUSCI_A1_ISR - 0)) \
+     || ((configBSP430_PERIPH_EUSCI_A2 - 0) && (configBSP430_HAL_EUSCI_A2_ISR - 0)) \
+     )
 static void
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )

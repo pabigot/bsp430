@@ -99,8 +99,8 @@
  */
 #ifndef BSP430_CORE_SAVE_INTERRUPT_STATE
 #define BSP430_CORE_SAVE_INTERRUPT_STATE(_state) do {	\
-		(_state) = __get_interrupt_state();				\
-	} while (0)
+    (_state) = __get_interrupt_state();                 \
+  } while (0)
 #endif /* BSP430_CORE_SAVE_INTERRUPT_STATE */
 
 /** @def BSP430_CORE_RESTORE_INTERRUPT_STATE(_state)
@@ -113,8 +113,8 @@
  */
 #ifndef BSP430_CORE_RESTORE_INTERRUPT_STATE
 #define BSP430_CORE_RESTORE_INTERRUPT_STATE(_state) do {	\
-		__set_interrupt_state(_state);						\
-	} while (0)
+    __set_interrupt_state(_state);                              \
+  } while (0)
 #endif /* BSP430_CORE_RESTORE_INTERRUPT_STATE */
 
 /** @def BSP430_CORE_ENABLE_INTERRUPT()

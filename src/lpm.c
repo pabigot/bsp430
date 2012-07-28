@@ -42,10 +42,10 @@
 void
 vBSP430lpmConfigurePortsForLPM_ni (void)
 {
-#define CONFIGURE_FOR_LPM(_p) do { \
-		P##_p##DIR = ~0;		   \
-		P##_p##OUT = 0;			   \
-	} while (0)
+#define CONFIGURE_FOR_LPM(_p) do {              \
+    P##_p##DIR = ~0;                            \
+    P##_p##OUT = 0;                             \
+  } while (0)
 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #if defined(__MSP430_HAS_PORTA__) || defined(__MSP430_HAS_PORTA_R__)

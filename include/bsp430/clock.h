@@ -276,13 +276,13 @@ usBSP430clockACLK_Hz (void)
  *
  * @note The value of this clock is often off by as much as 10%. */
 #ifndef BSP430_CLOCK_NOMINAL_VLOCLK_HZ
-#if defined(__MSP430_HAS_BC2__)					\
-	|| defined(__MSP430_HAS_FLLPLUS__)			\
-	|| defined(__MSP430_HAS_FLLPLUS_SMALL__)
+#if defined(__MSP430_HAS_BC2__)                 \
+  || defined(__MSP430_HAS_FLLPLUS__)            \
+  || defined(__MSP430_HAS_FLLPLUS_SMALL__)
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
-#elif defined(__MSP430_HAS_CS__)				\
-	|| defined(__MSP430_HAS_UCS__) 				\
-	|| defined(__MSP430_HAS_UCS_RF__)
+#elif defined(__MSP430_HAS_CS__)                \
+  || defined(__MSP430_HAS_UCS__)                \
+  || defined(__MSP430_HAS_UCS_RF__)
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
 #else /* clock system */
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U

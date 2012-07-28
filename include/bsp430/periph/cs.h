@@ -83,9 +83,9 @@
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag. */
 #define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {	\
-		CSCTL5 &= ~XT1OFFG;						\
-		SFRIFG1 &= ~OFIFG;						\
-	} while (0)
+    CSCTL5 &= ~XT1OFFG;                         \
+    SFRIFG1 &= ~OFIFG;                          \
+  } while (0)
 
 /** Call this to configure MCLK and SMCLK via CS peripheral.
  *

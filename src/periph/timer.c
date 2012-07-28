@@ -47,8 +47,8 @@
 /* Declares additional callback pointers that immediately follow the
  * one in the base type.  This allows us to use only the amount of
  * space necessary to support the CC blocks on the target MCU. */
-#define DECLARE_AUX_CCS(_n) \
-	struct xBSP430periphISRCallbackIndexed * _aux_cc_callback[_n]
+#define DECLARE_AUX_CCS(_n)                                     \
+  struct xBSP430periphISRCallbackIndexed * _aux_cc_callback[_n]
 
 #if configBSP430_PERIPH_TA0 - 0
 static struct {

@@ -133,15 +133,15 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   error_Hz = ERROR_HZ(freq_Hz);
 
   /* Test a candidate to see if it's better than what we've got now */
-#define TRY_FREQ(_tag, _cand_Hz) do {									\
-		unsigned long cand_error_Hz = ERROR_HZ(_cand_Hz);				\
-		if (cand_error_Hz < error_Hz) {									\
-			dcoctl = CALDCO_##_tag;										\
-			bcsctl1 = CALBC1_##_tag;									\
-			freq_Hz = _cand_Hz;											\
-			error_Hz = cand_error_Hz;									\
-		}																\
-	} while (0)
+#define TRY_FREQ(_tag, _cand_Hz) do {                   \
+    unsigned long cand_error_Hz = ERROR_HZ(_cand_Hz);   \
+    if (cand_error_Hz < error_Hz) {                     \
+      dcoctl = CALDCO_##_tag;                           \
+      bcsctl1 = CALBC1_##_tag;                          \
+      freq_Hz = _cand_Hz;                               \
+      error_Hz = cand_error_Hz;                         \
+    }                                                   \
+  } while (0)
 
   /* Candidate availability is MCU-specific and can be determined by
    * checking for a corresponding preprocessor definition */

@@ -159,12 +159,12 @@ iBSP430usciClose (xBSP430usciHandle device)
  * For this to work, of course, nobody else should ever muck with the
  * TXIFG bit.  Normal management of this bit via UCSWRST is
  * correct. */
-#define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do {			\
-		if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
-			&& (! (device->tx_bit & *device->iep))) {		\
-			*device->iep |= device->tx_bit;					\
-		}													\
-	} while (0)
+#define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do {      \
+    if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
+        && (! (device->tx_bit & *device->iep))) {       \
+      *device->iep |= device->tx_bit;                   \
+    }                                                   \
+  } while (0)
 
 void
 vBSP430usciWakeupTransmit (xBSP430usciHandle device)
@@ -177,11 +177,11 @@ vBSP430usciWakeupTransmit (xBSP430usciHandle device)
 }
 
 #define RAW_TRANSMIT(_hal, _c) do {			\
-		while (! ((_hal)->tx_bit & *(_hal)->ifgp)) {	\
-			;									\
-		}										\
-		(_hal)->usci->txbuf = _c;				\
-	} while (0)
+    while (! ((_hal)->tx_bit & *(_hal)->ifgp)) {	\
+      ;                                                 \
+    }                                                   \
+    (_hal)->usci->txbuf = _c;				\
+  } while (0)
 
 int
 iBSP430usciPutChar (int c, xBSP430usciHandle device)

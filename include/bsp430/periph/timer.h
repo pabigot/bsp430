@@ -78,12 +78,12 @@
 #include <bsp430/periph.h>
 /* Surprisingly, not every MCU has a Timer_A.  Some have only a Basic
  * Timer (BT). */
-#if ! (defined(__MSP430_HAS_TA2__)						\
-	   || defined(__MSP430_HAS_TA3__)					\
-	   || defined(__MSP430_HAS_TA5__)					\
-	   || defined(__MSP430_HAS_T0A3__)					\
-	   || defined(__MSP430_HAS_T0A5__)					\
-	   )
+#if ! (defined(__MSP430_HAS_TA2__)              \
+       || defined(__MSP430_HAS_TA3__)           \
+       || defined(__MSP430_HAS_TA5__)           \
+       || defined(__MSP430_HAS_T0A3__)          \
+       || defined(__MSP430_HAS_T0A5__)          \
+       )
 #warning Peripheral not supported by configured MCU
 #endif /* has Timer_A */
 

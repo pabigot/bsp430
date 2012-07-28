@@ -38,29 +38,29 @@
  * for all, so we'll use the existings of P1SEL0 as the trigger for
  * the variation. */
 #if defined(P1SEL0)
-#define prvCLEAR_SEL_X(_x, _bit) do {			\
-		P##_x##SEL0 &= ~_bit;					\
-		P##_x##SEL1 &= ~_bit;					\
-	} while(0)
+#define prvCLEAR_SEL_X(_x, _bit) do {           \
+    P##_x##SEL0 &= ~_bit;                       \
+    P##_x##SEL1 &= ~_bit;                       \
+  } while(0)
 #else /* P1SEL0 */
-#define prvCLEAR_SEL_X(_x, _bit) do {			\
-		P##_x##SEL &= ~_bit;					\
-	} while(0)
+#define prvCLEAR_SEL_X(_x, _bit) do {           \
+    P##_x##SEL &= ~_bit;                        \
+  } while(0)
 #endif /* P1SEL0 */
 
 /** Macro to configure GPIO for a LED within a particular port.
  *
  * I'm sorry if this isn't MISRA compliant, but I'm not replicating
  * this code for each of the 11 potential ports. */
-#define prvCONFIG_PORT_X_LED(_x)				\
-	do {										\
-		if (&P##_x##OUT == pxLED->pucPxOUT)	{	\
-			P##_x##DIR |= pxLED->ucBIT;			\
-			prvCLEAR_SEL_X(_x, pxLED->ucBIT);	\
-			P##_x##OUT &= ~pxLED->ucBIT;		\
-			continue;							\
-		}										\
-	} while (0)
+#define prvCONFIG_PORT_X_LED(_x)                \
+  do {                                          \
+    if (&P##_x##OUT == pxLED->pucPxOUT)	{	\
+      P##_x##DIR |= pxLED->ucBIT;               \
+      prvCLEAR_SEL_X(_x, pxLED->ucBIT);         \
+      P##_x##OUT &= ~pxLED->ucBIT;		\
+      continue;                                 \
+    }                                           \
+  } while (0)
 
 void
 vBSP430ledInit_ni( void )

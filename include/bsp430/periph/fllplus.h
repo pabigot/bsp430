@@ -73,10 +73,10 @@
  *
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {				\
-		/* User's guide says FLL_CTL0.LFOF is read-only. */ \
-		IFG1 &= ~OFIFG;										\
-	} while (0)
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {           \
+    /* User's guide says FLL_CTL0.LFOF is read-only. */ \
+    IFG1 &= ~OFIFG;                                     \
+  } while (0)
 
 /** @def BSP430_FLLPLUS_XCAPxPF
  *
