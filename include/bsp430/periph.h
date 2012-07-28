@@ -260,7 +260,9 @@ iBSP430callbackInvokeISRIndexed_ni (const struct xBSP430periphISRCallbackIndexed
 #define BSP430_PERIPH_ISR_CALLBACK_TAIL(_return_flags) do {             \
     int return_flags_ = (_return_flags);                                \
     __bic_status_register_on_exit((return_flags_) & BSP430_PERIPH_ISR_CALLBACK_BIC_MASK); \
-    portYIELD_FROM_ISR(((return_flags_) & BSP430_PERIPH_ISR_CALLBACK_YIELD) ? pdTRUE : pdFALSE); \
+    if ((return_flags_) & BSP430_PERIPH_ISR_CALLBACK_YIELD) {           \
+      BSP430_RTOS_YIELD_FROM_ISR();                                     \
+    }                                                                   \
   } while (0)
 
 #endif /* BSP430_PERIPH_H */

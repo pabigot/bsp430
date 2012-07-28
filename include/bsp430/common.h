@@ -48,6 +48,8 @@
 #ifndef BSP430_COMMON_H
 #define BSP430_COMMON_H
 
+#include <msp430.h>
+
 /** Version identifier for the BSP430 library
  *
  * A monotonically non-decreasing integer reflecting the version of
@@ -140,6 +142,23 @@
 
 #include "FreeRTOS.h"
 
+#define BSP430_RTOS_YIELD_FROM_ISR() portYIELD_FROM_ISR(1)
+
 #endif /* configBSP430_RTOS_FREERTOS */
+
+/** @def BSP430_RTOS_YIELD_FROM_ISR
+ *
+ * Instruct the RTOS environment to execute a context switch.  This
+ * should only be invoked from with the function that is the top-half
+ * of an interrupt service routine, and is usually invoked within
+ * #BSP430_PERIPH_ISR_CALLBACK_TAIL when
+ * #BSP430_PERIPH_ISR_CALLBACK_YIELD has been set.
+ *
+ * It is defined to a no-op in environments that do not support
+ * context switches.
+ */
+#ifndef BSP430_RTOS_YIELD_FROM_ISR
+#define BSP430_RTOS_YIELD_FROM_ISR() do { } while (0)
+#endif /* BSP430_RTOS_YIELD_FROM_ISR */
 
 #endif /* BSP430_COMMON_H */
