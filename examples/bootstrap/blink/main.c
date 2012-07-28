@@ -40,5 +40,5 @@ void main ()
     __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
     vBSP430ledSet(0, -1);
   }
-  
+
 }

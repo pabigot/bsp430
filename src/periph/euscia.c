@@ -224,9 +224,9 @@ iBSP430eusciaPutc (int c, xBSP430eusciaHandle device)
     } while (! passp);
   } else
 #endif /* configBSP430_RTOS_FREERTOS */
-    {
-      RAW_TRANSMIT(device->euscia, c);
-    }
+  {
+    RAW_TRANSMIT(device->euscia, c);
+  }
   return c;
 }
 

@@ -354,7 +354,7 @@ typedef struct xBSP430portState * xBSP430portHandle;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT1
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT1 - 0)
 extern xBSP430portHandle const xBSP430port_PORT1;
 #endif /* configBSP430_HAL_PORT1 */
 
@@ -376,7 +376,7 @@ extern xBSP430portHandle const xBSP430port_PORT1;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT2
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT2 - 0)
 extern xBSP430portHandle const xBSP430port_PORT2;
 #endif /* configBSP430_HAL_PORT2 */
 
@@ -398,7 +398,7 @@ extern xBSP430portHandle const xBSP430port_PORT2;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT3
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT3 - 0)
 extern xBSP430portHandle const xBSP430port_PORT3;
 #endif /* configBSP430_HAL_PORT3 */
 
@@ -420,7 +420,7 @@ extern xBSP430portHandle const xBSP430port_PORT3;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT4
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT4 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT4 - 0)
 extern xBSP430portHandle const xBSP430port_PORT4;
 #endif /* configBSP430_HAL_PORT4 */
 
@@ -442,7 +442,7 @@ extern xBSP430portHandle const xBSP430port_PORT4;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT5
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT5 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT5 - 0)
 extern xBSP430portHandle const xBSP430port_PORT5;
 #endif /* configBSP430_HAL_PORT5 */
 
@@ -464,7 +464,7 @@ extern xBSP430portHandle const xBSP430port_PORT5;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT6
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT6 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT6 - 0)
 extern xBSP430portHandle const xBSP430port_PORT6;
 #endif /* configBSP430_HAL_PORT6 */
 
@@ -486,7 +486,7 @@ extern xBSP430portHandle const xBSP430port_PORT6;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT7
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT7 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT7 - 0)
 extern xBSP430portHandle const xBSP430port_PORT7;
 #endif /* configBSP430_HAL_PORT7 */
 
@@ -508,7 +508,7 @@ extern xBSP430portHandle const xBSP430port_PORT7;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT8
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT8 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT8 - 0)
 extern xBSP430portHandle const xBSP430port_PORT8;
 #endif /* configBSP430_HAL_PORT8 */
 
@@ -530,7 +530,7 @@ extern xBSP430portHandle const xBSP430port_PORT8;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT9
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT9 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT9 - 0)
 extern xBSP430portHandle const xBSP430port_PORT9;
 #endif /* configBSP430_HAL_PORT9 */
 
@@ -552,7 +552,7 @@ extern xBSP430portHandle const xBSP430port_PORT9;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT10
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT10 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT10 - 0)
 extern xBSP430portHandle const xBSP430port_PORT10;
 #endif /* configBSP430_HAL_PORT10 */
 
@@ -574,7 +574,7 @@ extern xBSP430portHandle const xBSP430port_PORT10;
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT11
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_PORT11 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT11 - 0)
 extern xBSP430portHandle const xBSP430port_PORT11;
 #endif /* configBSP430_HAL_PORT11 */
 
@@ -608,7 +608,7 @@ extern xBSP430portHandle const xBSP430port_PORT11;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT1 - 0)
 #define BSP430_PERIPH_PORT1 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT1 */
 
@@ -618,7 +618,7 @@ extern xBSP430portHandle const xBSP430port_PORT11;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT1 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT1 */
 
@@ -647,7 +647,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT2 - 0)
 #define BSP430_PERIPH_PORT2 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT2_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT2 */
 
@@ -657,7 +657,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT2 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT2_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT2 */
 
@@ -686,7 +686,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT3 - 0)
 #define BSP430_PERIPH_PORT3 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT3_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT3 */
 
@@ -696,7 +696,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT3 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT3_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT3 */
 
@@ -725,7 +725,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT4 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT4 - 0)
 #define BSP430_PERIPH_PORT4 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT4_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT4 */
 
@@ -735,7 +735,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT4 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT4 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT4_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT4 */
 
@@ -764,7 +764,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT5 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT5 - 0)
 #define BSP430_PERIPH_PORT5 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT5_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT5 */
 
@@ -774,7 +774,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT5 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT5 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT5_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT5 */
 
@@ -803,7 +803,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT6 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT6 - 0)
 #define BSP430_PERIPH_PORT6 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT6_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT6 */
 
@@ -813,7 +813,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT6 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT6 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT6_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT6 */
 
@@ -842,7 +842,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT7 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT7 - 0)
 #define BSP430_PERIPH_PORT7 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT7_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT7 */
 
@@ -852,7 +852,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT7 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT7 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT7_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT7 */
 
@@ -881,7 +881,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT8 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT8 - 0)
 #define BSP430_PERIPH_PORT8 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT8_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT8 */
 
@@ -891,7 +891,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT8 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT8 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT8_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT8 */
 
@@ -920,7 +920,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT9 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT9 - 0)
 #define BSP430_PERIPH_PORT9 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT9_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT9 */
 
@@ -930,7 +930,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT9 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT9 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT9_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT9 */
 
@@ -959,7 +959,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT10 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT10 - 0)
 #define BSP430_PERIPH_PORT10 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT10_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT10 */
 
@@ -969,7 +969,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP43
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT10 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT10 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT10_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT10 */
 
@@ -998,7 +998,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP4
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT11 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT11 - 0)
 #define BSP430_PERIPH_PORT11 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT11_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT11 */
 
@@ -1008,7 +1008,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP4
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT11 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_PORT11 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT11_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT11 */
 

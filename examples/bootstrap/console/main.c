@@ -36,7 +36,7 @@
 void main ()
 {
   xBSP430uartHandle console_handle;
-  
+
   /* First thing you do in main is configure the platform. */
   vBSP430platformSetup_ni();
 
@@ -76,5 +76,5 @@ void main ()
       }
     }
   }
-  
+
 }

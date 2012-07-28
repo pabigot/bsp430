@@ -56,14 +56,14 @@
 /** @def BSP430_CONSOLE_UART_PERIPH_HANDLE
  *
  * Provide a default based on the available serial peripheral.
- * 
+ *
  * @par<b>Peripheral-specific</b>:
  * Based on common use by TI experimenter boards:<ul>
  * <li>USCI selects #BSP430_PERIPH_USCI_A0.
  * <li>USCI5 selects #BSP430_PERIPH_USCI5_A1.
  * <li>EUSCI selects #BSP430_PERIPH_EUSCI_A0.
  * </ul>
- * 
+ *
  * If a definition was not already provided and tf the corresponding
  * peripheral is identified as being available on the target MCU, the
  * macro is defined to the specified handle and the HAL configuration

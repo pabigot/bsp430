@@ -272,7 +272,7 @@ void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
  *
  * The handle may be used only if #configBSP430_PERIPH_TA0
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_TA0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA0 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA0;
 #endif /* configBSP430_HAL_TA0 */
 
@@ -294,7 +294,7 @@ extern xBSP430timerHandle const xBSP430timer_TA0;
  *
  * The handle may be used only if #configBSP430_PERIPH_TA1
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_TA1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA1 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA1;
 #endif /* configBSP430_HAL_TA1 */
 
@@ -316,7 +316,7 @@ extern xBSP430timerHandle const xBSP430timer_TA1;
  *
  * The handle may be used only if #configBSP430_PERIPH_TA2
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_TA2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA2 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA2;
 #endif /* configBSP430_HAL_TA2 */
 
@@ -338,7 +338,7 @@ extern xBSP430timerHandle const xBSP430timer_TA2;
  *
  * The handle may be used only if #configBSP430_PERIPH_TA3
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_TA3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA3 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA3;
 #endif /* configBSP430_HAL_TA3 */
 
@@ -360,7 +360,7 @@ extern xBSP430timerHandle const xBSP430timer_TA3;
  *
  * The handle may be used only if #configBSP430_PERIPH_TB0
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_TB0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB0 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB0;
 #endif /* configBSP430_HAL_TB0 */
 
@@ -382,7 +382,7 @@ extern xBSP430timerHandle const xBSP430timer_TB0;
  *
  * The handle may be used only if #configBSP430_PERIPH_TB1
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_TB1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB1 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB1;
 #endif /* configBSP430_HAL_TB1 */
 
@@ -404,7 +404,7 @@ extern xBSP430timerHandle const xBSP430timer_TB1;
  *
  * The handle may be used only if #configBSP430_PERIPH_TB2
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_TB2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB2 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB2;
 #endif /* configBSP430_HAL_TB2 */
 
@@ -438,7 +438,7 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA0 - 0)
 #define BSP430_PERIPH_TA0 ((xBSP430periphHandle)(_BSP430_PERIPH_TA0_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA0 */
 
@@ -448,7 +448,7 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA0 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA0 */
 
@@ -477,7 +477,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA1 - 0)
 #define BSP430_PERIPH_TA1 ((xBSP430periphHandle)(_BSP430_PERIPH_TA1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA1 */
 
@@ -487,7 +487,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA1 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA1 */
 
@@ -516,7 +516,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA2 - 0)
 #define BSP430_PERIPH_TA2 ((xBSP430periphHandle)(_BSP430_PERIPH_TA2_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA2 */
 
@@ -526,7 +526,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA2 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA2 */
 
@@ -555,7 +555,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA3 - 0)
 #define BSP430_PERIPH_TA3 ((xBSP430periphHandle)(_BSP430_PERIPH_TA3_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA3 */
 
@@ -565,7 +565,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TA3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA3 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA3 */
 
@@ -594,7 +594,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TB0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB0 - 0)
 #define BSP430_PERIPH_TB0 ((xBSP430periphHandle)(_BSP430_PERIPH_TB0_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TB0 */
 
@@ -604,7 +604,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TB0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB0 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TB0 */
 
@@ -633,7 +633,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TB1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB1 - 0)
 #define BSP430_PERIPH_TB1 ((xBSP430periphHandle)(_BSP430_PERIPH_TB1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TB1 */
 
@@ -643,7 +643,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TB1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB1 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TB1 */
 
@@ -672,7 +672,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TB2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB2 - 0)
 #define BSP430_PERIPH_TB2 ((xBSP430periphHandle)(_BSP430_PERIPH_TB2_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TB2 */
 
@@ -682,7 +682,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_TB2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB2 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TB2 */
 

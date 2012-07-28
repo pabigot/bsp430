@@ -61,11 +61,15 @@
  *
  * The HPL peripheral handle that should be used by platform-agnostic
  * programs to create the console.  Suggested possibilities are
- * #xBSP430periph_USCI_A0, #xBSP430periph_USCI5_A1 (sic), and
- * #xBSP430periph_EUSCI_A0.  A potential default is often made
+ * #BSP430_PERIPH_USCI_A0, #BSP430_PERIPH_USCI5_A1 (sic), and
+ * #BSP430_PERIPH_EUSCI_A0.  A potential default is often made
  * available by including <bsp430/platform/bsp430_config.h>.  If you
  * provide one yourself, remember to enable the HAL for the
  * peripheral.
+ *
+ * If you want to disable the console for an application but are
+ * getting a default assigned anyway, define this to
+ * #BSP430_PERIPH_NONE.
  *
  * @nodefault */
 #if defined(BSP430_DOXYGEN)

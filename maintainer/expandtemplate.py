@@ -22,7 +22,7 @@ templates = {
  *
  * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_%(INSTANCE)s - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_%(INSTANCE)s - 0)
 extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
@@ -52,7 +52,7 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_%(INSTANCE)s - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_%(INSTANCE)s - 0)
 #define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS))
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 
@@ -62,7 +62,7 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_%(INSTANCE)s - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_%(INSTANCE)s - 0)
 static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',

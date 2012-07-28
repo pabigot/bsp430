@@ -133,7 +133,7 @@ typedef struct xBSP430eusciaState * xBSP430eusciaHandle;
  *
  * The handle may be used only if #configBSP430_PERIPH_EUSCI_A0
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A0 - 0)
 extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0;
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
@@ -155,7 +155,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0;
  *
  * The handle may be used only if #configBSP430_PERIPH_EUSCI_A1
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A1 - 0)
 extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1;
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
@@ -177,7 +177,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1;
  *
  * The handle may be used only if #configBSP430_PERIPH_EUSCI_A2
  * is defined to a true value. */
-#if BSP430_DOXYGEN || (configBSP430_HAL_EUSCI_A2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A2 - 0)
 extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
@@ -211,7 +211,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EUSCI_A0 - 0)
 #define BSP430_PERIPH_EUSCI_A0 ((xBSP430periphHandle)(_BSP430_PERIPH_EUSCI_A0_BASEADDRESS))
 #endif /* configBSP430_PERIPH_EUSCI_A0 */
 
@@ -221,7 +221,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EUSCI_A0 - 0)
 static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = (volatile xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A0_BASEADDRESS;
 #endif /* configBSP430_PERIPH_EUSCI_A0 */
 
@@ -250,7 +250,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = (volatile x
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EUSCI_A1 - 0)
 #define BSP430_PERIPH_EUSCI_A1 ((xBSP430periphHandle)(_BSP430_PERIPH_EUSCI_A1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_EUSCI_A1 */
 
@@ -260,7 +260,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = (volatile x
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EUSCI_A1 - 0)
 static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = (volatile xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_EUSCI_A1 */
 
@@ -289,7 +289,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = (volatile x
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EUSCI_A2 - 0)
 #define BSP430_PERIPH_EUSCI_A2 ((xBSP430periphHandle)(_BSP430_PERIPH_EUSCI_A2_BASEADDRESS))
 #endif /* configBSP430_PERIPH_EUSCI_A2 */
 
@@ -299,7 +299,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = (volatile x
  * is defined to a true value.
  *
  * @defaulted */
-#if BSP430_DOXYGEN || (configBSP430_PERIPH_EUSCI_A2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EUSCI_A2 - 0)
 static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = (volatile xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A2_BASEADDRESS;
 #endif /* configBSP430_PERIPH_EUSCI_A2 */
 
