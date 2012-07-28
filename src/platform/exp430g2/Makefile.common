@@ -1,0 +1,7 @@
+# Platform include for MSP-EXP430G2 "LaunchPad"
+
+# Unless told otherwise, assume it's an MSP430G2553
+MCU ?= msp430g2553
+
+# mspdebug uses the RF2500 driver for this board
+MSPDEBUG_DRIVER ?= rf2500

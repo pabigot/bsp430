@@ -1,0 +1,2 @@
+MCU ?= msp430f5438a
+MSPDEBUG_DRIVER ?= -j uif

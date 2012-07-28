@@ -1,0 +1,9 @@
+MCU=msp430fr5739
+MSPDEBUG_DRIVER=rf2500
+MSPDEBUG_PROG=load
+SRC_PLATFORM = \
+    $(BSP430_ROOT)/src/platform/$(PLATFORM)/platform.c \
+    $(BSP430_ROOT)/src/periph/timer.c \
+    $(BSP430_ROOT)/src/periph/cs.c \
+    $(BSP430_ROOT)/src/utility/uptime.c
+

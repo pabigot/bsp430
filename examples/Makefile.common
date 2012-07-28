@@ -1,0 +1,172 @@
+# BSP430 examples shared Makefile.common
+#
+# This file is in the public domain.
+#
+# BSP430 applications can significantly reduce the size of
+# application-specific Makefiles by defining BSP430_ROOT, perhaps PLATFORM,
+# and SRC, then including this file.  Some variables documented in this file
+# enable specific features.
+
+# BSP430_ROOT: Path to root of a BSP430 installation.  This is used to set
+# paths for platform files.
+ifndef BSP430_ROOT
+$(error Must specify BSP430_ROOT)
+endif # BSP430_ROOT
+
+# WITH_GCC: Unless defined to 0, assume that GCC will be used, and
+# define options suitable for building with it.
+WITH_GCC ?= 1
+ifneq (0,$(WITH_GCC))
+CROSS_COMPILE ?= msp430-
+CC=$(CROSS_COMPILE)gcc
+LD=$(CROSS_COMPILE)ld
+AR=$(CROSS_COMPILE)ar
+SIZE=$(CROSS_COMPILE)size
+
+# PLATFORM: Standard nomenclature for a particular board with
+# particular features.  If defined, other settings such as the MCU and
+# how to flash the application might be read from a common file.
+ifdef PLATFORM
+-include $(BSP430_ROOT)/src/platform/$(PLATFORM)/Makefile.common
+endif # PLATFORM
+
+# TARGET_FLAGS: Target-specific flags controlling MCU selection,
+# memory model, etc.
+ifndef TARGET_FLAGS
+
+# MCU: The specific microcontroller for which the application is to be
+# built.  Must be defined; a suitable default may be provided by the
+# platform Makefile.common.
+ifndef MCU
+$(error No MCU identified)
+endif # MCU
+TARGET_FLAGS = -mmcu=$(MCU)
+
+# MEMORY_MODEL: Level of 20-bit support, assuming this is a CPUX MCU.
+ifdef MEMORY_MODEL
+TARGET_FLAGS += -mmemory-model=$(MEMORY_MODEL)
+endif # MEMORY_MODEL
+
+# Extend the derived configuration with application Makefile (AUX_*)
+# and externally provided (EXT_*) refinements.
+TARGET_FLAGS += $(AUX_TARGET_FLAGS) $(EXT_TARGET_FLAGS)
+endif # TARGET_FLAGS
+
+# OPT_CFLAGS: CFLAGS related to optimization and debugging.  The
+# default enables debugging and optimizes for size, and puts each
+# function and data object in its own section so it can be discarded
+# at link time if not needed.  Also review OPT_LDFLAGS.
+OPT_CFLAGS ?= -ggdb -Os -ffunction-sections -fdata-sections
+
+# OPT_LDFLAGS: LDFLAGS related to optimization and debugging.  THe
+# default value enables removal of unreferenced sections during
+# non-relocatable link.
+OPT_LDFLAGS ?= -Wl,-gc-sections
+
+# WARN_CFLAGS: CFLAGS that control warnings
+WARN_CFLAGS ?= -Wall -Wno-main
+
+# WITH_WARN_ERROR: If not set to zero, adds -Werror which causes all
+# warnings to be treated as errors.
+WITH_WARN_ERROR ?= 1
+ifneq (0,$(WITH_WARN_ERROR))
+WARN_CFLAGS += -Werror
+endif # WITH_WARN_ERROR
+
+# Use GCC to generate dependency files
+%.d: %.c
+	set -e; $(RM) $@; \
+	 $(CC) -MM -MT$*.o $(CPPFLAGS) $(CFLAGS) $< > $@.$$$$; \
+	 sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	 $(RM) $@.$$$$
+
+# Interleaved source/object-code/asm listing
+%.lst: %.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -ggdb -Wa,-ahdlns=$@ -c $<
+CLEAN += $(SRC:.c=.lst)
+
+endif # WITH_GCC
+
+CFLAGS += $(WARN_CFLAGS)
+CFLAGS += $(OPT_CFLAGS)
+CFLAGS += $(TARGET_FLAGS)
+
+LDFLAGS += $(OPT_LDFLAGS)
+
+# Assume the application-specific bsp430_config.h is same directory as the
+# Makefile.
+
+CPPFLAGS += -I.
+
+# GNU Make function to convert text to upper case (assuming a POSIX shell
+# environment)
+uc=$(shell echo $(1) | tr '[a-z]' '[A-Z]')
+
+# Add BSP430 support, if requested
+ifdef PLATFORM
+CPPFLAGS += -DBSP430_PLATFORM_$(call uc,$(PLATFORM))
+endif # PLATFORM
+
+ifdef BSP430_ROOT
+CPPFLAGS += -I$(BSP430_ROOT)/include
+endif # BSP430_ROOT
+
+# Append any extra flags pre-defined in the Makefile (AUX_*) or passed
+# on the make command line (EXT_*).
+CPPFLAGS += $(AUX_CPPFLAGS) $(EXT_CPPFLAGS)
+CFLAGS += $(AUX_CFLAGS) $(EXT_CFLAGS)
+LDFLAGS += $(AUX_LDFLAGS) $(EXT_CFLAGS)
+
+# Object file derived from assembler source including preprocessor
+%.o: %.S
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+
+# Object files derive from C source files and preprocessed assembly files
+OBJ += $(SRC:.c=.o) $(SRC_S:.S=.o)
+
+# Dependency files derive from C source files
+DEP += $(SRC:.c=.d)
+
+# AOUT: The name of the application image.
+AOUT ?= app.elf
+$(AOUT): $(OBJ)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ)
+ifneq (0,$(WITH_GCC))
+	$(SIZE) $@
+endif # WITH_GCC
+
+# CLEAN: Additional files to be removed on make clean
+clean:
+	-$(RM) $(OBJ) $(CLEAN)
+
+# REALCLEAN: Additional files to be removed on make realclean
+realclean: clean
+	-$(RM) $(AOUT) $(DEP) $(REALCLEAN)
+
+# MSPDEBUG: Path to the mspdebug application (http://mspdebug.sourceforge.net/)
+MSPDEBUG ?= mspdebug
+
+# MSPDEBUG_PROG: Command used by mspdebug to write an image into flash.
+# "prog" for most MCUs, but "load" for FRAM.
+MSPDEBUG_PROG ?= prog
+
+# MSPDEBUG_OPTIONS: Options influencing mspdebug, such as the USB or
+# tty device to be used.
+MSPDEBUG_OPTIONS ?=
+
+# MSPDEBUG_DRIVER: Driver used by mspdebug to interact with the target
+# device.  This variable should include any MSPDEBUG options specific
+# to the driver, e.g. that the uif driver is to use JTAG.
+MSPDEBUG_DRIVER ?= -j uif
+
+# WITH_MSPDEBUG: Unless defined to 0, assume that the image will be
+# downloaded to the board using mspdebug.  If this is zero, an install
+# rule must be provided externally.
+WITH_MSPDEBUG ?= 1
+ifneq (0,$(WITH_MSPDEBUG))
+install: $(AOUT)
+	$(MSPDEBUG) $(MSPDEBUG_OPTIONS) $(MSPDEBUG_DRIVER) '$(MSPDEBUG_PROG) $(AOUT)'
+endif # WITH_MSPDEBUG
+
+# Include dependency files
+-include $(DEP)
