@@ -50,23 +50,23 @@ void vBSP430ledInit_ni (void)
   PBSEL1 &= ~0xF0;
 }
 
-void vBSP430ledSet (unsigned char ucLED,
-                    signed portBASE_TYPE xValue)
+void vBSP430ledSet (int led_idx,
+                    int value)
 {
   unsigned int bit;
   volatile unsigned int * pxout;
-  if (8 <= ucLED) {
+  if (8 <= led_idx) {
     return;
   }
-  bit = 1 << ucLED;
-  if (4 <= ucLED) {
+  bit = 1 << led_idx;
+  if (4 <= led_idx) {
     pxout = &PBOUT;
   } else {
     pxout = &PJOUT;
   }
-  if (xValue > 0)	{
+  if (value > 0)	{
     *pxout |= bit;
-  } else if (xValue < 0) {
+  } else if (value < 0) {
     *pxout ^= bit;
   } else {
     *pxout &= ~bit;

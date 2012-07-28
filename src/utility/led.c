@@ -109,8 +109,8 @@ vBSP430ledInit_ni( void )
 }
 
 void
-vBSP430ledSet (unsigned char ucLED,
-               signed portBASE_TYPE xValue)
+vBSP430ledSet (int led_idx,
+               int value)
 {
   if (ucLED < ucBSP430leds) {
     const xBSP430led * pxLED = pxBSP430leds + ucLED;

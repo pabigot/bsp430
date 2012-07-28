@@ -42,8 +42,6 @@
 #ifndef BSP430_UTILITY_LED_H
 #define BSP430_UTILITY_LED_H
 
-#include "FreeRTOS.h"
-
 /** Call this once to initialize the hardware for all LEDs.
  *
  * The common implementation uses the LEDs defined in #pxBSP430leds.
@@ -54,10 +52,10 @@ void vBSP430ledInit_ni (void);
 
 /** Invoke to change the state of a given LED.
  *
- * @param ucLED The index to the LED of interest.  The call does
+ * @param led_idx the index to the LED of interest.  The call does
  * should simply return if ucLED does not specify a valid LED.
  *
- * @param xValue How to set the LED.  If positive, the LED is turned
+ * @param value how to set the LED.  If positive, the LED is turned
  * on.  If zero, the LED is turned off.  If negative, the LED state is
  * inverted.
  *
@@ -65,8 +63,8 @@ void vBSP430ledInit_ni (void);
  * the application or platform need not define this function, but must
  * provide the data structures described for
  * #configBSP430_LED_USE_COMMON. */
-void vBSP430ledSet (unsigned char ucLED,
-                    signed portBASE_TYPE xValue);
+void vBSP430ledSet (int led_idx,
+                    int value);
 
 /** @def configBSP430_LED_USE_COMMON
  *
