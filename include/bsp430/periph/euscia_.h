@@ -43,6 +43,7 @@
 #define BSP430_PERIPH_EUSCIA__H
 
 #include <bsp430/periph/euscia.h>
+#include <stdint.h>
 
 /** Structure holding hardware abstraction layer state for eUSCI_A.
  *

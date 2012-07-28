@@ -32,7 +32,10 @@
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
 #include <bsp430/periph/euscia_.h>
+#include <stddef.h>
+#if configBSP430_RTOS_FREERTOS - 0
 #include "task.h"
+#endif /* configBSP430_RTOS_FREERTOS */
 
 /* !BSP430! periph=euscia */
 /* !BSP430! instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
@@ -56,8 +59,6 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
   uint16_t os16 = 0;
   uint16_t brf = 0;
   uint16_t brs;
-
-  configASSERT(NULL != device);
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -110,15 +111,18 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
     /* Release the USCI and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     device->euscia->ctlw0 &= ~UCSWRST;
+#if configBSP430_RTOS_FREERTOS - 0
     if (0 != device->rx_queue) {
       device->euscia->ie |= UCRXIE;
     }
+#endif /* configBSP430_RTOS_FREERTOS */
   }
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return device;
 }
 
+#if configBSP430_RTOS_FREERTOS - 0
 int
 iBSP430eusciaConfigureQueues (xBSP430eusciaHandle device,
                               xQueueHandle rx_queue,
@@ -145,6 +149,7 @@ iBSP430eusciaConfigureQueues (xBSP430eusciaHandle device,
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rc;
 }
+#endif /* configBSP430_RTOS_FREERTOS */
 
 int
 iBSP430eusciaClose (xBSP430eusciaHandle device)
@@ -170,12 +175,19 @@ iBSP430eusciaClose (xBSP430eusciaHandle device)
  * For this to work, of course, nobody else should ever muck with the
  * TXIFG bit.  Normal management of this bit via UCSWRST is
  * correct. */
+
+#if configBSP430_RTOS_FREERTOS - 0
+
 #define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do {      \
     if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
         && (! (device->euscia->ie & UCTXIE))) {         \
       device->euscia->ie |= UCTXIE;                     \
     }                                                   \
   } while (0)
+
+#else /* configBSP430_RTOS_FREERTOS */
+#define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do { } while (0)
+#endif /* configBSP430_RTOS_FREERTOS */
 
 void
 vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle device)
@@ -197,6 +209,7 @@ vBSP430eusciaWakeupTransmit (xBSP430eusciaHandle device)
 int
 iBSP430eusciaPutc (int c, xBSP430eusciaHandle device)
 {
+#if configBSP430_RTOS_FREERTOS - 0
   const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
   portTickType delay = 0;
   int passp;
@@ -209,19 +222,24 @@ iBSP430eusciaPutc (int c, xBSP430eusciaHandle device)
         delay = MAX_DELAY;
       }
     } while (! passp);
-  } else {
-    RAW_TRANSMIT(device->euscia, c);
-  }
+  } else
+#endif /* configBSP430_RTOS_FREERTOS */
+    {
+      RAW_TRANSMIT(device->euscia, c);
+    }
   return c;
 }
 
 int
 iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle device)
 {
+#if configBSP430_RTOS_FREERTOS - 0
   const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
   portTickType delay = 0;
+#endif /* configBSP430_RTOS_FREERTOS */
   const char * in_string = str;
 
+#if configBSP430_RTOS_FREERTOS - 0
   if (device->tx_queue) {
     while (*str) {
       if (xQueueSendToBack(device->tx_queue, str, delay)) {
@@ -236,12 +254,12 @@ iBSP430eusciaPuts (const char* str, xBSP430eusciaHandle device)
       }
     }
     vBSP430eusciaWakeupTransmit(device);
-  } else {
+  } else
+#endif /* configBSP430_RTOS_FREERTOS */
     while (*str) {
       RAW_TRANSMIT(device->euscia, *str);
       ++str;
     }
-  }
   return str - in_string;
 }
 
@@ -270,7 +288,9 @@ __attribute__ ( ( __c16__ ) )
 /* __attribute__((__always_inline__)) */
 euscia_isr (xBSP430eusciaHandle device)
 {
+#if configBSP430_RTOS_FREERTOS - 0
   portBASE_TYPE yield = pdFALSE;
+#endif /* configBSP430_RTOS_FREERTOS */
   int rv = 1;
 
   switch (device->euscia->iv) {
@@ -278,12 +298,14 @@ euscia_isr (xBSP430eusciaHandle device)
     case USCI_NONE:
       break;
     case USCI_UART_UCTXIFG: /* == USCI_SPI_UCTXIFG */
+#if configBSP430_RTOS_FREERTOS - 0
       if (device->tx_queue) {
         rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
         if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
           device->euscia->ie &= ~UCTXIE;
         }
       }
+#endif /* configBSP430_RTOS_FREERTOS */
       if (rv) {
         ++device->num_tx;
         device->euscia->txbuf = device->tx_byte;
@@ -292,12 +314,16 @@ euscia_isr (xBSP430eusciaHandle device)
     case USCI_UART_UCRXIFG: /* == USCI_SPI_UCRXIFG */
       device->rx_byte = device->euscia->rxbuf;
       ++device->num_rx;
+#if configBSP430_RTOS_FREERTOS - 0
       if (device->rx_queue) {
         rv = xQueueSendToBackFromISR(device->rx_queue, &device->rx_byte, &yield);
       }
+#endif /* configBSP430_RTOS_FREERTOS */
       break;
   }
+#if configBSP430_RTOS_FREERTOS - 0
   portYIELD_FROM_ISR(yield);
+#endif /* configBSP430_RTOS_FREERTOS */
 }
 #endif /* EUSCIA ISR */
 

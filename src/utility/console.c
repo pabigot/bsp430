@@ -195,8 +195,8 @@ cprintf (const char *fmt, ...)
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
 int
-xBSP430consoleInitialize (xBSP430uartHandle uart)
+iBSP430consoleConfigure (xBSP430uartHandle uart)
 {
   console_uart = uart;
-  return 0;
+  return (NULL != console_uart);
 }

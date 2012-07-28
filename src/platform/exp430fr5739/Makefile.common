@@ -7,3 +7,6 @@ SRC_PLATFORM = \
     $(BSP430_ROOT)/src/periph/cs.c \
     $(BSP430_ROOT)/src/utility/uptime.c
 
+SRC_CONSOLE = \
+    $(BSP430_ROOT)/src/utility/console.c \
+    $(BSP430_ROOT)/src/periph/euscia.c

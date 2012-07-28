@@ -53,4 +53,54 @@
 #define configBSP430_HAL_TA0 1
 #endif /* configBSP430_UPTIME */
 
+/** @def BSP430_CONSOLE_UART_PERIPH_HANDLE
+ *
+ * Provide a default based on the available serial peripheral.
+ * 
+ * @par<b>Peripheral-specific</b>:
+ * Based on common use by TI experimenter boards:<ul>
+ * <li>USCI selects #BSP430_PERIPH_USCI_A0.
+ * <li>USCI5 selects #BSP430_PERIPH_USCI5_A1.
+ * <li>EUSCI selects #BSP430_PERIPH_EUSCI_A0.
+ * </ul>
+ * 
+ * If a definition was not already provided and tf the corresponding
+ * peripheral is identified as being available on the target MCU, the
+ * macro is defined to the specified handle and the HAL configuration
+ * for that instance is defaulted to true.
+ *
+ * If no supported UART peripheral is identified, no default value is
+ * assigned.
+ */
+#ifndef BSP430_CONSOLE_UART_PERIPH_HANDLE
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CONSOLE_UART_PERIPH_HANDLE peripheral-specific value
+#endif /* BSP430_DOXYGEN */
+
+#if defined(__MSP430_HAS_USCI__)
+#define BSP430_CONSOLE_UART_PERIPH_HANDLE BSP430_PERIPH_USCI_A0
+#ifndef configBSP430_HAL_USCI_A0
+/** Default to enable use of console device */
+#define configBSP430_HAL_USCI_A0 1
+#endif /* configBSP430_HAL_USCI_A0 */
+#endif /* __MSP430_HAS_USCI__ */
+
+#if defined(__MSP430_HAS_USCI_A0__)
+#define BSP430_CONSOLE_UART_PERIPH_HANDLE BSP430_PERIPH_USCI5_A1
+#ifndef configBSP430_HAL_USCI5_A1
+/** Default to enable use of console device */
+#define configBSP430_HAL_USCI5_A1 1
+#endif /* configBSP430_HAL_USCI5_A1 */
+#endif /* __MSP430_HAS_USCI_A0__ */
+
+#if defined(__MSP430_HAS_EUSCI_A0__)
+#define BSP430_CONSOLE_UART_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A0
+#ifndef configBSP430_HAL_EUSCI_A0
+/** Default to enable use of console device */
+#define configBSP430_HAL_EUSCI_A0 1
+#endif /* configBSP430_HAL_EUSCI_A0 */
+#endif /* __MSP430_HAS_EUSCI_A0__ */
+
+#endif /* BSP430_CONSOLE_UART_PERIPH_HANDLE */
+
 #endif /* BSP430_PLATFORM_BSP430_CONFIG_H */

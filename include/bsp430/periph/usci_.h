@@ -43,6 +43,7 @@
 #define BSP430_PERIPH_USCI__H
 
 #include <bsp430/periph/usci.h>
+#include <stdint.h>
 
 /** Structure holding hardware abstraction layer state for
  * USCI_A/USCI_B on 2xx/4xx devices.

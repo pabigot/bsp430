@@ -57,6 +57,21 @@
 
 #include <bsp430/uart.h>
 
+/** @def BSP430_CONSOLE_UART_PERIPH_HANDLE
+ *
+ * The HPL peripheral handle that should be used by platform-agnostic
+ * programs to create the console.  Suggested possibilities are
+ * #xBSP430periph_USCI_A0, #xBSP430periph_USCI5_A1 (sic), and
+ * #xBSP430periph_EUSCI_A0.  A potential default is often made
+ * available by including <bsp430/platform/bsp430_config.h>.  If you
+ * provide one yourself, remember to enable the HAL for the
+ * peripheral.
+ *
+ * @nodefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CONSOLE_UART_PERIPH_HANDLE no default value
+#endif /* BSP430_DOXYGEN */
+
 /** @def configBSP430_CONSOLE_PROVIDES_PUTCHAR
  *
  * If defined to a true value, the individual character display
@@ -264,8 +279,8 @@ int cputul_ni (unsigned long n, int radix);
  * re-initialize with a new device do not produce a diagnostic; the
  * new device is used in subsequent operations.
  *
- * @return 0 if the console could be configured in accordance with @a
- * uart, -1 if an error occurred. */
-int xBSP430consoleInitialize (xBSP430uartHandle uart);
+ * @return 1 if a valid console was passed; 0 if the console facility
+ * was disabled by passing a null handle; -1 if an error occurred */
+int iBSP430consoleConfigure (xBSP430uartHandle uart);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

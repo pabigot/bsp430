@@ -53,7 +53,7 @@
  * underlying UART implementation.
  *
  * @defaulted  */
-#define configBSP430_UART_USE_USCI 0
+#define configBSP430_UART_USE_USCI defined(__MSP430_HAS_USCI__)
 #endif /* configBSP430_UART_USE_USCI */
 
 #if configBSP430_UART_USE_USCI - 0
@@ -70,6 +70,7 @@ xBSP430uartOpen (xBSP430periphHandle xPeriph,
   return xBSP430usciOpenUART(xPeriph, control_word, baud);
 }
 
+#if configBSP430_RTOS_FREERTOS - 0
 static __inline__ int
 iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
                             xQueueHandle rx_queue,
@@ -77,6 +78,7 @@ iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
 {
   return iBSP430usciConfigureQueues(xUART, rx_queue, tx_queue);
 }
+#endif /* configBSP430_RTOS_FREERTOS */
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
@@ -103,7 +105,7 @@ iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
  * underlying UART implementation.
  *
  * @defaulted */
-#define configBSP430_UART_USE_USCI5 0
+#define configBSP430_UART_USE_USCI5 defined(__MSP430_HAS_USCI_A0__)
 #endif /* configBSP430_UART_USE_USCI5 */
 
 #if configBSP430_UART_USE_USCI5 - 0
@@ -120,6 +122,7 @@ xBSP430uartOpen (xBSP430periphHandle xPeriph,
   return xBSP430usci5OpenUART(xPeriph, control_word, baud);
 }
 
+#if configBSP430_RTOS_FREERTOS - 0
 static __inline__ int
 iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
                             xQueueHandle rx_queue,
@@ -127,6 +130,7 @@ iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
 {
   return iBSP430usci5ConfigureQueues(xUART, rx_queue, tx_queue);
 }
+#endif /* configBSP430_RTOS_FREERTOS */
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
@@ -153,7 +157,7 @@ iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
  * underlying UART implementation.
  *
  * @defaulted */
-#define configBSP430_UART_USE_EUSCIA 0
+#define configBSP430_UART_USE_EUSCIA defined(__MSP430_HAS_EUSCI_A0__)
 #endif /* configBSP430_UART_USE_EUSCIA */
 
 #if configBSP430_UART_USE_EUSCIA - 0
@@ -171,6 +175,7 @@ xBSP430uartOpen (xBSP430periphHandle xPeriph,
   return xBSP430eusciaOpenUART(xPeriph, control_word, baud);
 }
 
+#if configBSP430_RTOS_FREERTOS - 0
 static __inline__ int
 iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
                             xQueueHandle rx_queue,
@@ -178,6 +183,7 @@ iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
 {
   return iBSP430eusciaConfigureQueues(xUART, rx_queue, tx_queue);
 }
+#endif /* configBSP430_RTOS_FREERTOS */
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
