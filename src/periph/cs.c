@@ -39,6 +39,9 @@
 /* Mask for SELA bits in CSCTL2 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
 
+/* Mask for DIVS bits in CSCTL3 */
+#define DIVS_MASK (DIVS0 | DIVS1 | DIVS2)
+
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
@@ -69,10 +72,10 @@ ulBSP430clockMCLK_Hz_ni (void)
 	return freq_Hz;
 }
 
-unsigned long
-ulBSP430clockSMCLK_Hz_ni (void)
+int
+iBSP430clockSMCLKDividingShift_ni (void)
 {
-	return ulBSP430clockMCLK_Hz_ni() >> BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
+	return (CSCTL3 & DIVS_MASK) / DIVS0;
 }
 
 unsigned short
