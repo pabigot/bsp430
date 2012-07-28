@@ -92,8 +92,10 @@
 /** Check whether the LFXT1 crystal has a fault condition.
  *
  * This definition overrides the generic definition to test the
- * crystal-specific flags. */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED() (UCSCTL7 & XT1LFOFFG)
+ * crystal-specific flags.  Note that if somebody has turned off the
+ * crystal by setting UCSCTL6.XT1OFF, the crystal is assumed to be
+ * faulted.*/
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() ((UCSCTL6 & XT1OFF) || (UCSCTL7 & XT1LFOFFG))
 
 #undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
 /** Clear the fault associated with LFXT1.

@@ -62,9 +62,11 @@
 /** Check whether the LFXT1 crystal has a fault condition.
  *
  * This definition overrides the generic definition to test the
- * crystal-specific flags.  Assume a fault if either the crystal is
- * disabled (LFXT1S1) or a fault is noted (LFXT1OF). */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED() (BCSCTL3 & (LFXT1S1 | LFXT1OF))
+ * crystal-specific flags.  The LFXT1OF bit reflects the stability of
+ * the external crystal only if the external crystal is the source for
+ * LFXT1, so check that too: all is good only if LFXT1S is an external
+ * crystal that is not faulted. */
+#define BSP430_CLOCK_LFXT1_IS_FAULTED() (BCSCTL3 & (LFXT1S1 | LFXT1S0 | LFXT1OF))
 
 #undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
 /** Clear the fault associated with LFXT1.

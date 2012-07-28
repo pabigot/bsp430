@@ -57,7 +57,7 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
-#if ! defined(__MSP430_HAS_FLLPLUS__)
+#if ! (defined(__MSP430_HAS_FLLPLUS__) || defined(__MSP430_HAS_FLLPLUS_SMALL__))
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_FLLPLUS__ */
 
@@ -65,7 +65,13 @@
 /** Check whether the LFXT1 crystal has a fault condition.
  *
  * This definition overrides the generic definition to test the
- * crystal-specific flags. */
+ * crystal-specific flags.
+ *
+ * @warning MSP430F41x2 devices support an FLL_CTL2 register which can
+ * select an alternative source for LFXT1.  This macro does not verify
+ * whether that register exists and is in fact selecting the external
+ * crystal.  In all other MCUs with FLLPLUS, it is believed that the
+ * crystal is mandatory and cannot be deselected. */
 #define BSP430_CLOCK_LFXT1_IS_FAULTED() (FLL_CTL0 & LFOF)
 
 #undef BSP430_CLOCK_LFXT1_CLEAR_FAULT

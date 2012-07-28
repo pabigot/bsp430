@@ -33,8 +33,21 @@
  *
  * @brief Clock-related functions implemented on all MSP430 MCUs.
  *
- * The actual implementation of the functions are within the
- * peripheral-specific clock modules.
+ * This module declares functions and macros of general use in
+ * managing MSP430 clocks.  The interface here is independent of the
+ * underlying clock peripheral, but in some cases behavior is refined
+ * or clarified in the peripheral-specific header.
+ *
+ * This module will include the peripheral-specific header if a
+ * functional presence preprocessor symbol is available that is
+ * recognized as a supported clock peripheral.  Recognized peripherals
+ * and the corresponding BSP430 header are:
+ * <ul>
+ * <li> <bsp430/periph/bc2.h> for BC2 (Basic Clock Module+)
+ * <li> <bsp430/periph/fllplus.h> for FLLPLUS and FLLPLUS_SMALL (FLL Plus)
+ * <li> <bsp430/periph/ucs.h> for UCS and UCS_RF (Unified Clock System)
+ * <li> <bsp430/periph/cs.h> for CS (Clock System)
+ * </ul>
  *
  * @note Where LFXT1 is used in this module, it is assumed to refer to
  * an external 32 kiHz crystal.
@@ -229,15 +242,19 @@ usBSP430clockACLK_Hz (void)
  * The generic implementation looks for any oscillator fault by
  * checking the system-wide register.  It is overridden in
  * peripheral-specific clock headers where an ability exists to check
- * specifically for a LFXT1 fault.  The value is nonzero iff a fault
- * has been detected.
+ * specifically for a LFXT1 fault.  The value is nonzero iff an
+ * external crystal is the source for LFXT1 and a fault has been
+ * detected.
  *
- * @note This function macro is implicitly FromISR, and should be
- * implemented where possible as a single instruction test.
+ * @note This function macro is implicitly not to be interrupted, and
+ * should be implemented where possible as a single instruction test.
  *
- * @note Where the test is overridden to check peripheral-specific
- * flags, the state of the system oscillator fault bit is not
- * reflected in the value.
+ * @note This test is intended specifically to validate an external
+ * watch crystal running at 32 kiHz.  Where LFXT1 is sourced from
+ * other means, it is assumed that the (missing) crystal is faulted
+ * even if the peripheral-specific bit suggests it is not.  Similarly,
+ * the state of the system oscillator fault bit is not reflected in
+ * the value for a peripheral-specific check.
  *
  * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT() */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
@@ -250,7 +267,7 @@ usBSP430clockACLK_Hz (void)
  *
  * This clears the state bits associated with a fault in the LFXT1
  * crystal.  If the crystal still exhibits a fault condition, the bits
- * will be set again.
+ * will be set again automatically.
  *
  * @note This function macro is implicitly FromISR: should be called
  * with interrupts disabled and will not induce a task switch.
@@ -349,5 +366,18 @@ int iBSP430clockConfigureXT1_ni (int enablep,
  */
 unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
 
+/* Include peripheral-specific header where recognized */
+#if defined(__MSP430_HAS_BC2__)
+#include <bsp430/periph/bc2.h>
+#endif /* __MSP430_HAS_BC2__ */
+#if defined(__MSP430_HAS_FLLPLUS__) || defined(__MSP430_HAS_FLLPLUS_SMALL__)
+#include <bsp430/periph/fllplus.h>
+#endif /* __MSP430_HAS_FLLPLUS__ */
+#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
+#include <bsp430/periph/ucs.h>
+#endif /* __MSP430_HAS_UCS__ */
+#if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)
+#include <bsp430/periph/cs.h>
+#endif /* __MSP430_HAS_CS__ */
 
 #endif /* BSP430_CLOCK_H */
