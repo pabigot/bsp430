@@ -30,6 +30,7 @@
  */
 
 #include <bsp430/periph/timer_.h>
+#include <stddef.h>
 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define TA_OVERFLOW 0x0E
