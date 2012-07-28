@@ -116,17 +116,17 @@ xBSP430portHandle const xBSP430port_PORT11 = &state_PORT11;
 /* END AUTOMATICALLY GENERATED CODE [hal_port_5xx_defn] */
 /* !BSP430! end=hal_port_5xx_defn */
 
-#if (((configBSP430_PERIPH_PORT1 - 0) && (configBSP430_HAL_PORT1_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT2 - 0) && (configBSP430_HAL_PORT2_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT3 - 0) && (configBSP430_HAL_PORT3_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT4 - 0) && (configBSP430_HAL_PORT4_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT5 - 0) && (configBSP430_HAL_PORT5_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT6 - 0) && (configBSP430_HAL_PORT6_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT7 - 0) && (configBSP430_HAL_PORT7_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT8 - 0) && (configBSP430_HAL_PORT8_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT9 - 0) && (configBSP430_HAL_PORT9_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT10 - 0) && (configBSP430_HAL_PORT10_ISR - 0)) \
-     || ((configBSP430_PERIPH_PORT11 - 0) && (configBSP430_HAL_PORT12_ISR - 0)) \
+#if ((configBSP430_HAL_PORT1_ISR - 0)           \
+     || (configBSP430_HAL_PORT2_ISR - 0)        \
+     || (configBSP430_HAL_PORT3_ISR - 0)        \
+     || (configBSP430_HAL_PORT4_ISR - 0)        \
+     || (configBSP430_HAL_PORT5_ISR - 0)        \
+     || (configBSP430_HAL_PORT6_ISR - 0)        \
+     || (configBSP430_HAL_PORT7_ISR - 0)        \
+     || (configBSP430_HAL_PORT8_ISR - 0)        \
+     || (configBSP430_HAL_PORT9_ISR - 0)        \
+     || (configBSP430_HAL_PORT10_ISR - 0)       \
+     || (configBSP430_HAL_PORT12_ISR - 0)       \
      )
 static int
 #if __MSP430X__
