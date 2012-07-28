@@ -66,8 +66,12 @@
 /** @def BSP430_CLOCK_NOMINAL_MCLK_HZ
  *
  * A constant representing the desired clock speed of the master
- * clock.  If the value specified is not zero, vBSP430platformSetup_ni()
- * use it to initialize the system clocks.
+ * clock.
+ *
+ * If this macro is defined to a nonzero value,
+ * vBSP430platformSetup_ni() will use it to initialize the system
+ * clocks.  If it is defined as zero, the power-up clock configuration
+ * will be left unchanged.
  *
  * @note The default value is calculated from
  * 3*3*5*5*512*69=115200*69, and is the value nearest 8MHz which is
@@ -86,18 +90,21 @@
  * SMCLK is normally configured to divide another clock by shifting it
  * left this many positions.  E.g., if MCLK is 20 MHz, a dividing
  * shift of 2 will produce a clock divisor of 4 and an SMCLK at 5 MHz.
- * The range of division and default divisor may be MCU-specific.
+ * The range of division and default divisor may be MCU-specific.  The
+ * value reflects the divisor of MCLK.  If the clock source for SMCLK
+ * is different than an undivided MCLK, the code that configures the
+ * clock may modify the shift value that is stored in the peripheral
+ * registers.
  *
  * If this macro is defined to a non-negative value,
  * vBSP430platformSetup_ni() will pass it to
- * vBSP430clockConfigureSMCLKDividingShift_ni() to configure the clock
- * divisors prior to setting the nominal MCLK frequency.
+ * iBSP430clockConfigureSMCLKDividingShift_ni() to configure the clock
+ * divisors after setting the nominal MCLK frequency.
  *
- * @note The value of define reflects the divisor of MCLK.  If the
- * clock source for SMCLK is different than an undivided MCLK, the
- * code that configures the clock may need to modify the shift
- * value.
- *
+ * @note iBSP430clockSMCLKDividingShift_ni() should always be used in
+ * preference to this constant to determine the current relative
+ * MCLK/SMCLK frequencies.
+ * 
  * @defaulted  */
 #ifndef BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
 #define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 0
@@ -197,12 +204,7 @@ int iBSP430clockSMCLKDividingShift_ni (void);
  * specific to the peripheral.  Where MCLK is itself divided, the
  * underlying implementation will take that into account.
  *
- * If #BSP430_CLOCK_NOMINAL_MCLK_HZ and
- * #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT are defined,
- * vBSP430platformSetup_ni() will invoke this to configure SMCLK after
- * configuring MCLK.  iBSP430clockSMCLKDividingShift_ni() should
- * always be used in preference to this constant to determine the
- * current relative MCLK/SMCLK frequencies.
+ * See also #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT.
  *
  * @param shift_pos the number of bit positions by which the incoming
  * clock is divided; e.g. a value of 2 produces /4.
