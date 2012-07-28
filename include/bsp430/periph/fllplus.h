@@ -101,6 +101,9 @@
 #define BSP430_FLLPLUS_XCAPxPF XCAP0PF
 #endif /* BSP430_FLLPLUS_XCAPxPF */
 
+/** Unconditional define for peripheral-specific constant */
+#define _BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
+
 /** Structure used to configure the frequency-locked loop clock module.
  *
  * The structure fields are assigned in the listed order.  See the 4xx

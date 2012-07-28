@@ -325,28 +325,6 @@ usBSP430clockACLK_Hz (void)
 #endif /* 5xx */
 
 
-/** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
- *
- * Nominal frequency of VLOCLK, in Hz.
- *
- * This is a family-specific value normally somewhere near 10-12 kHz.
- * The value should be an unsigned integer constant.
- *
- * @note The value of this clock is often off by as much as 10%. */
-#ifndef BSP430_CLOCK_NOMINAL_VLOCLK_HZ
-#if defined(__MSP430_HAS_BC2__)                 \
-  || defined(__MSP430_HAS_FLLPLUS__)            \
-  || defined(__MSP430_HAS_FLLPLUS_SMALL__)
-#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
-#elif defined(__MSP430_HAS_CS__)                \
-  || defined(__MSP430_HAS_UCS__)                \
-  || defined(__MSP430_HAS_UCS_RF__)
-#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
-#else /* clock system */
-#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
-#endif /* clock system*/
-#endif /* BSP430_CLOCK_NOMINAL_VLOCLK_HZ */
-
 /** @def BSP430_CLOCK_NOMINAL_ACLK_HZ
  *
  * Nominal frequency of ACLK, in Hz.
@@ -422,5 +400,20 @@ unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
 #if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)
 #include <bsp430/periph/cs.h>
 #endif /* __MSP430_HAS_CS__ */
+
+/** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
+ *
+ * Nominal frequency of VLOCLK, in Hz.
+ *
+ * This is a family-specific value normally somewhere near 10-12 kHz.
+ * The value should be an unsigned integer constant.
+ *
+ * @note The value of this clock is often off by as much as 20%.
+ * 
+ * @defaulted */
+#ifndef BSP430_CLOCK_NOMINAL_VLOCLK_HZ
+#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ _BSP430_CLOCK_NOMINAL_VLOCLK_HZ
+#endif /* BSP430_CLOCK_NOMINAL_VLOCLK_HZ */
+
 
 #endif /* BSP430_CLOCK_H */

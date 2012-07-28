@@ -81,6 +81,9 @@
     IFG1 &= ~OFIFG;                                             \
   } while (0)
 
+/** Unconditional define for peripheral-specific constant */
+#define _BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
+
 /** Call this to reconfigure the BC2 peripheral.
  *
  * The relevant BC2 registers are configured as requested.  See the

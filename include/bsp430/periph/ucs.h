@@ -105,6 +105,9 @@
     SFRIFG1 &= ~OFIFG;                          \
   } while (0)
 
+/** Unconditional define for peripheral-specific constant */
+#define _BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
+
 /** Call this to initially configure the UCS peripheral.
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.
