@@ -271,9 +271,7 @@ usci5_isr (xBSP430usci5Handle device)
 		if (device->tx_queue) {
 			rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
 			if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
-				signed portBASE_TYPE sema_yield = pdFALSE;
 				device->usci5->ie &= ~UCTXIE;
-				yield |= sema_yield;
 			}
 		}
 		if (rv) {

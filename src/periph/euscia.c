@@ -281,9 +281,7 @@ euscia_isr (xBSP430eusciaHandle device)
 		if (device->tx_queue) {
 			rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
 			if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
-				signed portBASE_TYPE sema_yield = pdFALSE;
 				device->euscia->ie &= ~UCTXIE;
-				yield |= sema_yield;
 			}
 		}
 		if (rv) {
