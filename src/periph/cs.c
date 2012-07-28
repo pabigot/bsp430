@@ -32,19 +32,25 @@
 #include <bsp430/periph/cs.h>
 #include <bsp430/platform.h>
 
-#if 5 < BSP430_CLOCK_SMCLK_DIVIDING_SHIFT
-#error FR5xx CS module cannot express BSP430_CLOCK_SMCLK_DIVIDING_SHIFT
-#endif /* BSP430_CLOCK_SMCLK_DIVIDING_SHIFT */
-
 /* Mask for SELA bits in CSCTL2 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
+
+/* Mask for SELS bits in CSCTL2 */
+#define SELS_MASK (SELS0 | SELS1 | SELS2)
+
+/* Mask for SELM bits in CSCTL2 */
+#define SELM_MASK (SELM0 | SELM1 | SELM2)
 
 /* Mask for DIVS bits in CSCTL3 */
 #define DIVS_MASK (DIVS0 | DIVS1 | DIVS2)
 
+/* Mask for DIVM bits in CSCTL3 */
+#define DIVM_MASK (DIVM0 | DIVM1 | DIVM2)
+
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
+  unsigned int divm;
   unsigned long freq_Hz = 0;
 
   switch (CSCTL1 & 0x86) {
@@ -69,13 +75,38 @@ ulBSP430clockMCLK_Hz_ni (void)
       freq_Hz = 24000000UL;
       break;
   }
-  return freq_Hz;
+  divm = (CSCTL3 & DIVM_MASK) / DIVM0;
+  return freq_Hz >> divm;
 }
 
 int
 iBSP430clockSMCLKDividingShift_ni (void)
 {
-  return (CSCTL3 & DIVS_MASK) / DIVS0;
+  int divs;
+  /* Assume that the source for both MCLK and SMCLK is the same, but
+   * account for a potential DIVM. */
+  divs = (CSCTL3 & DIVS_MASK) / DIVS0;
+  divs -= (CSCTL3 & DIVM_MASK) / DIVM0;
+  return divs;
+}
+
+int
+iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
+{
+  unsigned int selm;
+
+  /* Set SELS to the same value as SELM. */
+  selm = (CSCTL2 & SELM_MASK) / SELM0;
+
+  /* Adjust the shift for any division happening at MCLK. */
+  shift_pos += (CSCTL3 & DIVM_MASK) / DIVM0;
+
+  CSCTL0_H = 0xA5;
+  CSCTL2 = (CSCTL2 & ~SELS_MASK) | (selm * SELS0);
+  CSCTL3 = (CSCTL3 & ~DIVS_MASK) | (DIVS_MASK & (shift_pos * DIVS0));
+  CSCTL0_H = !0xA5;
+
+  return iBSP430clockSMCLKDividingShift_ni();
 }
 
 unsigned short
@@ -107,8 +138,8 @@ ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz)
 
   CSCTL0_H = 0xA5;
   CSCTL1 = csctl1;
-  CSCTL2 = (CSCTL2 & SELA_MASK) | SELS__DCOCLK | SELM__DCOCLK;
-  CSCTL3 = BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0;
+  CSCTL2 = (CSCTL2 & (SELA_MASK | SELS_MASK)) | SELM__DCOCLK;
+  CSCTL3 &= ~DIVM_MASK;
   CSCTL0_H = !0xA5;
 
   return ulBSP430clockMCLK_Hz_ni();

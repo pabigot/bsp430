@@ -57,9 +57,25 @@ ulBSP430clockMCLK_Hz_ni (void)
 {
 }
 
-unsigned long
-ulBSP430clockSMCLK_Hz_ni (void)
+int
+iBSP430clockSMCLKDividingShift_ni (void)
 {
+  /* Dividing shift is not configurable on this peripheral */
+  return 0;
+}
+
+int
+iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
+{
+#if defined(SELS)
+  /* If supported, source SMCLK from same source as MCLK */
+  if (FLL_CTL1 & SELM1) {
+    FLL_CTL1 |= SELS;
+  } else {
+    FLL_CTL1 &= ~SELS;
+  }
+#endif /* SELS */
+  return 0;
 }
 
 unsigned short

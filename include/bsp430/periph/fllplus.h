@@ -45,6 +45,8 @@
  * (The issue is not all chips with FLLPLUS support selecting the low
  * frequency clock.)
  *
+ * @note This peripheral does not support dividing SMCLK.
+ * 
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012

@@ -42,6 +42,9 @@
  * frequency may be above or below the requested frequency, but will
  * be the closest supported by available calibrated clocks.
  *
+ * <li> The implementation assumes that MCLK and SMCLK are both
+ * sourced from DCOCLK.
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012

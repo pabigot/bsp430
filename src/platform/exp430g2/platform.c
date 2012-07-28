@@ -93,7 +93,14 @@ void vBSP430platformSetup_ni (void)
   /* Assume up to one second for crystal to stabilize; boot MCLK is
    * 1.1 MHz */
   (void)iBSP430clockConfigureXT1_ni(1, 1100000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+
+#if 0 != BSP430_CLOCK_NOMINAL_MCLK_HZ
   ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
+#endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
+
+#if 0 <= BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
+  iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
+#endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
 
 #if configBSP430_UPTIME - 0
   vBSP430uptimeStart_ni();

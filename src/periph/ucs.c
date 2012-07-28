@@ -37,8 +37,17 @@
 /* Mask for SELA bits in UCSCTL4 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
 
+/* Mask for SELS bits in UCSCTL4 */
+#define SELS_MASK (SELS0 | SELS1 | SELS2)
+
+/* Mask for SELM bits in UCSCTL4 */
+#define SELM_MASK (SELM0 | SELM1 | SELM2)
+
 /* Mask for DIVS bits in UCSCTL5 */
 #define DIVS_MASK (DIVS0 | DIVS1 | DIVS2)
+
+/* Mask for DIVM bits in UCSCTL5 */
+#define DIVM_MASK (DIVM0 | DIVM1 | DIVM2)
 
 /* Frequency measurement occurs over this duration when determining
  * whether trim is required.  The number of SMCLK ticks in an ACLK
@@ -161,7 +170,6 @@ ulBSP430ucsTrimFLL_ni (void)
     tp->cctl0 = 0;
   }
   lastTrimFrequency_Hz_ = current_frequency_tsp * (32768UL / TRIM_SAMPLE_PERIOD_ACLK);
-  lastTrimFrequency_Hz_ <<= BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
   return lastTrimFrequency_Hz_;
 }
 #endif /* BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE */
@@ -169,13 +177,34 @@ ulBSP430ucsTrimFLL_ni (void)
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
-  return lastTrimFrequency_Hz_;
+  unsigned int divm = (UCSCTL5 & DIVM_MASK) / DIVM0;
+  return lastTrimFrequency_Hz_ >> divm;
 }
 
 int
 iBSP430clockSMCLKDividingShift_ni (void)
 {
-  return (UCSCTL5 & DIVS_MASK) / DIVS0;
+  int divs;
+  /* Assume that the source for both MCLK and SMCLK is the same, but
+   * account for a potential DIVM. */
+  divs = (UCSCTL5 & DIVS_MASK) / DIVS0;
+  divs -= (UCSCTL5 & DIVM_MASK) / DIVM0;
+  return divs;
+}
+
+int
+iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
+{
+  unsigned int selm;
+
+  /* Set SELS to the same value as SELM. */
+  selm = (UCSCTL4 & SELM_MASK) / SELM0;
+  UCSCTL4 = (UCSCTL4 & ~SELS_MASK) | (selm * SELS0);
+
+  /* Adjust the shift for any division happening at MCLK. */
+  shift_pos += (UCSCTL5 & DIVM_MASK) / DIVM0;
+  UCSCTL5 = (UCSCTL5 & ~DIVS_MASK) | (DIVS_MASK & (shift_pos * DIVS0));
+  return iBSP430clockSMCLKDividingShift_ni();
 }
 
 unsigned short
@@ -234,6 +263,8 @@ unsigned long
 ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
                          short sRSEL)
 {
+  unsigned int divs_bits;
+  unsigned int sels_bits;
   /* The values in this table should be roughly half the minimum
    * frequency for the specified RSEL with DCOx=31 and MODx=0,
    * as taken from the device-specific data sheet. */
@@ -282,12 +313,17 @@ ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
   UCSCTL1 = ctl1;
   UCSCTL2 = ctl2;
   UCSCTL3 = SELREF__XT1CLK | FLLREFDIV_0;
+  sels_bits = UCSCTL4 & SELS_MASK;
   UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+  divs_bits = UCSCTL5 & DIVS_MASK;
+  UCSCTL5 &= ~(DIVS_MASK | DIVM_MASK);
 
   targetFrequency_tsp_ = ulFrequency_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
-  targetFrequency_tsp_ >>= BSP430_CLOCK_SMCLK_DIVIDING_SHIFT;
-
   ulReturn = ulBSP430ucsTrimFLL_ni();
+
+  /* Restore SMCLK source and divisor */
+  UCSCTL5 |= divs_bits;
+  UCSCTL4 = (UCSCTL4 & ~SELS_MASK) | sels_bits;
 
   /* Spin until DCO stabilized */
   do {
@@ -295,7 +331,6 @@ ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
     SFRIFG1 &= ~OFIFG;
   } while (UCSCTL7 & DCOFFG);
 
-  UCSCTL5 = DIVS_MASK & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0);
 
 #if ! (BSP430_CLOCK_DISABLE_FLL - 0)
   /* Turn FLL back on */

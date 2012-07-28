@@ -35,6 +35,9 @@
 /** The last frequency configured using #ulBSP430clockConfigureMCLK_ni */
 static unsigned long configuredMCLK_Hz = 1100000UL;
 
+#define SELS_MASK (SELS)
+#define SELM_MASK (SELM0 | SELM1)
+#define DIVM_MASK (DIVM0 | DIVM1)
 #define DIVS_MASK (DIVS0 | DIVS1)
 
 int
@@ -95,9 +98,30 @@ ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
 int
 iBSP430clockSMCLKDividingShift_ni (void)
 {
-  /* Assume that the source for both MCLK and SMCLK is DCOCLK and
-   * that DIVM_0 is in effect. */
-  return (BCSCTL2 & DIVS_MASK) / DIVS0;
+  int divs;
+
+  /* Assume that the source for both MCLK and SMCLK is the same, but
+   * account for a potential DIVM. */
+  divs = (BCSCTL2 & DIVS_MASK) / DIVS0;
+  divs -= (BCSCTL2 & DIVM_MASK) / DIVM0;
+  return divs;
+}
+
+int
+iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
+{
+  unsigned char bcsctl2 = BCSCTL2;
+
+  /* Set SMCLK source to the same as MCLK */
+  if (SELM1 & bcsctl2) {
+    bcsctl2 |= SELS;
+  } else {
+    bcsctl2 &= ~SELS;
+  }
+  /* Adjust for division of MCLK */
+  shift_pos += (bcsctl2 & DIVM_MASK) / DIVM0;
+  BCSCTL2 = (bcsctl2 & ~DIVS_MASK) | (DIVS_MASK & (shift_pos * DIVS0));
+  return iBSP430clockSMCLKDividingShift_ni();
 }
 
 unsigned short
@@ -119,7 +143,6 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
   unsigned char dcoctl;
   unsigned char bcsctl1;
-  unsigned char bcsctl2;
   unsigned long error_Hz;
   long freq_Hz;
 
@@ -161,13 +184,11 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 #undef TRY_FREQ
 #undef ERROR_HZ
 
-  bcsctl2 = DIVS_MASK & (BSP430_CLOCK_SMCLK_DIVIDING_SHIFT * DIVS0);
-
   DCOCTL = 0;
   BCSCTL1 = bcsctl1;
   DCOCTL = dcoctl;
-  /* SELM = SELS = DCOCLK; DIVM = /1; DIVS as configured */
-  BCSCTL2 = bcsctl2;
+  /* SELM = DCOCLK; DIVM = /1 */
+  BCSCTL2 &= ~(SELM_MASK | DIVM_MASK);
   configuredMCLK_Hz = freq_Hz;
 
   return configuredMCLK_Hz;

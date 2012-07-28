@@ -43,11 +43,7 @@
  * Other refinements in this module:
  *
  * @li #ulBSP430clockMCLK_Hz_ni assumes that DCOCLK is the selected
- * source for MCLK, and returns the selected trimmed DCOCLK frequency.
- *
- * @li #ulBSP430clockSMCLK_Hz_ni assumes DCOCLK is the selected source
- * for SMCLK, and returns the selected trimmed DCOCLK frequency
- * shifted right by #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
+ * source for MCLK, and returns the divided trimmed DCOCLK frequency.
  *
  * @li #usBSP430clockACLK_Hz_ni assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the

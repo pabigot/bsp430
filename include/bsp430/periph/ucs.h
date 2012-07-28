@@ -39,6 +39,8 @@
  * UCS_RF differs from UCS by adding support for XT2.  This difference
  * is currently ignored.
  *
+ * @warning the documentation below on expectations is outdated
+ *  
  * Based on experimentation, the following is assumed or enforced for
  * all supported clock configurations:
  *
@@ -62,10 +64,6 @@
  *
  * @li #ulBSP430clockMCLK_Hz_ni returns the most recent measured trimmed
  * frequency.
- *
- * @li #ulBSP430clockSMCLK_Hz_ni returns the most recent measured trimmed
- * frequency shifted right by
- * #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
  * @li #usBSP430clockACLK_Hz_ni assumes returns 32768 if XT1CLK is the
  * selected source for ACLK and OFIFG is clear, and returns 10000 (the
@@ -110,8 +108,6 @@
 /** Call this to initially configure the UCS peripheral.
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.
- * SMCLK will be set to DCOCLKDIV divided in accordance with
- * #BSP430_CLOCK_SMCLK_DIVIDING_SHIFT.
  *
  * @param sRSEL The DCO frequency range selection.  The appropriate
  * value is frequency-dependent, and specified in the "DCO Frequency"

@@ -56,7 +56,12 @@
  * @li Disable the watchdog
  * @li Enable the platform crystal, if available
  * @li Configure ACLK to use the crystal (if available)
- * @li Configure the clocks based on #BSP430_CLOCK_NOMINAL_MCLK_HZ
+ * @li Configure the MCLK frequency based on
+ * #BSP430_CLOCK_NOMINAL_MCLK_HZ if that is defined to a non-zero
+ * value.
+ * @li Configure the SMCLK divisor based on
+ * #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT if that is defined to a
+ * non-negative value.
  * @li Start the system clock (if #configBSP430_UPTIME)
  */
 void vBSP430platformSetup_ni (void);

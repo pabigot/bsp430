@@ -103,7 +103,15 @@ void vBSP430platformSetup_ni (void)
   /* Enable XT1 functions and clock */
   rc = iBSP430clockConfigureXT1_ni(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
   iBSP430ucsConfigureACLK_ni(rc ? SELA__XT1CLK : SELA__VLOCLK);
-  ulBSP430ucsConfigure_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ, -1 );
+
+#if 0 != BSP430_CLOCK_NOMINAL_MCLK_HZ
+  ulBSP430ucsConfigure_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ, -1);
+#endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
+
+#if 0 <= BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
+  iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
+#endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
+
 #if configBSP430_UPTIME - 0
   vBSP430uptimeStart_ni();
 #endif /* configBSP430_UPTIME */
