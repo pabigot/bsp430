@@ -66,8 +66,8 @@
  *
  * The "atomic" behavior promised by #cprintf is not guaranteed for @c
  * printf, @c puts, or any other library function that might invoke
- * this putchar implementation. 
- * 
+ * this putchar implementation.
+ *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_PROVIDES_PUTCHAR
 #define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0
@@ -77,8 +77,8 @@
  *
  * If defined to true, the console display routines will always emit a
  * carriage return before a newline.  This provides compatibility with
- * standard terminal programs like minicom. 
- * 
+ * standard terminal programs like minicom.
+ *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_USE_ONLCR
 #define configBSP430_CONSOLE_USE_ONLCR 1
@@ -88,8 +88,8 @@
  *
  * Define to false if your libc does not provide vuprintf.
  * msp430-libc does provide this, and it is used to implement
- * cprintf. 
- * 
+ * cprintf.
+ *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
 #define configBSP430_CONSOLE_LIBC_HAS_VUPRINTF 1
@@ -98,8 +98,8 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_ITOA
  *
  * Define to false if your libc does not provide itoa.  msp430-libc
- * does provide this, and it is used to implement cputi. 
- * 
+ * does provide this, and it is used to implement cputi.
+ *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_ITOA
 #define configBSP430_CONSOLE_LIBC_HAS_ITOA 1
@@ -108,8 +108,8 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_UTOA
  *
  * Define to false if your libc does not provide utoa.  msp430-libc
- * does provide this, and it is used to implement cputu. 
- * 
+ * does provide this, and it is used to implement cputu.
+ *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_UTOA
 #define configBSP430_CONSOLE_LIBC_HAS_UTOA 1
@@ -118,8 +118,8 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_LTOA
  *
  * Define to false if your libc does not provide ltoa.  msp430-libc
- * does provide this, and it is used to implement cputl. 
- * 
+ * does provide this, and it is used to implement cputl.
+ *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_LTOA
 #define configBSP430_CONSOLE_LIBC_HAS_LTOA 1
@@ -128,8 +128,8 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_ULTOA
  *
  * Define to false if your libc does not provide ultoa.  msp430-libc
- * does provide this, and it is used to implement cputul. 
- * 
+ * does provide this, and it is used to implement cputul.
+ *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_ULTOA
 #define configBSP430_CONSOLE_LIBC_HAS_ULTOA 1

@@ -186,7 +186,7 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
  * @note The timer may be shared among other users.  It is the
  * caller's responsibility to ensure that no other users of the timer
  * are active while the clock is being trimmed.
- * 
+ *
  * @defaulted */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE no default value
@@ -197,7 +197,7 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
  * The index of a capture/compare block within
  * #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE that can take input from
  * ACLK.  The capability is MCU-specific.
- * 
+ *
  * @defaulted */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX no default value
@@ -210,7 +210,7 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
  * of timer #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE in order to select
  * ACLK as the input source.  The capability is MCU-specific, but
  * consider CCI0B (CCIS_1) of TB0.6.
- * 
+ *
  * @defaulted */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS no default value

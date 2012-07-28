@@ -35,8 +35,8 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
  *
  * @note Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. 
- * 
+ * interface without the HAL interface.
+ *
  * @defaulted */
 #ifndef configBSP430_PERIPH_%(INSTANCE)s
 #define configBSP430_PERIPH_%(INSTANCE)s (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -49,8 +49,8 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
 /** Handle for the raw %(INSTANCE)s device.
  *
  * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
- * is defined to a true value. 
- * 
+ * is defined to a true value.
+ *
  * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_%(INSTANCE)s - 0)
 #define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS))
@@ -59,8 +59,8 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
 /** Pointer to the peripheral register map for %(INSTANCE)s.
  *
  * The pointer may be used only if #configBSP430_PERIPH_%(INSTANCE)s
- * is defined to a true value. 
- * 
+ * is defined to a true value.
+ *
  * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_%(INSTANCE)s - 0)
 static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS;
@@ -78,8 +78,8 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
- * also be true. 
- * 
+ * also be true.
+ *
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -104,8 +104,8 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
  *
  * @note Enabling this requires that at least one of
  * #configBSP430_HAL_USCI_A%(INSTANCE)s and
- * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true. 
- * 
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true.
+ *
  * @defaulted */
 #ifndef configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR
 #define configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
@@ -130,8 +130,8 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
  *
  * @note Enabling this requires that at least one of
  * #configBSP430_HAL_USCI_A%(INSTANCE)s and
- * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true. 
- * 
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true.
+ *
  * @defaulted */
 #ifndef configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR
 #define configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
@@ -156,8 +156,8 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
- * also be true. 
- * 
+ * also be true.
+ *
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_CC0_ISR
 #define configBSP430_HAL_%(INSTANCE)s_CC0_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -180,8 +180,8 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
- * also be true. 
- * 
+ * also be true.
+ *
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -284,7 +284,7 @@ isr_%(INSTANCE)s (void)
  * platform-specific header <bsp430/platform/%(instance)s.h>.
  * If you include that header directly, #BSP430_PLATFORM_%(INSTANCE)s will be
  * defined for you.
- * 
+ *
  * @defaulted */
 #ifndef BSP430_PLATFORM_%(INSTANCE)s
 #define BSP430_PLATFORM_%(INSTANCE)s 0

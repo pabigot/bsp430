@@ -55,7 +55,7 @@
  * Define to a true value to enable text descriptions of reset causes.
  * If left undefined, the text descriptions are dropped reducing
  * application size by several hundred bytes.
- * 
+ *
  * @defaulted */
 #ifndef configBSP430_SYS_USE_SYSRST_DESCRIPTION
 #define configBSP430_SYS_USE_SYSRST_DESCRIPTION 0

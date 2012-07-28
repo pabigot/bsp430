@@ -83,7 +83,7 @@
  * <tt>-DconfigBSP430_RTOS_FREERTOS</tt> to the @c CPPFLAGS variable
  * during builds of FreeRTOS applications, including the BSP430
  * modules linked to the application.
- * 
+ *
  * @defaulted */
 #ifndef configBSP430_RTOS_FREERTOS
 #define configBSP430_RTOS_FREERTOS 0
@@ -96,8 +96,8 @@
  * This requires that #configBSP430_PERIPH_TA0 be true and
  * #configBSP430_HAL_TA0_CC0_ISR be false.  Use of this feature is
  * compatible with #configBSP430_UPTIME, and allows the FreeRTOS
- * scheduler to co-exist with other users of TA0. 
- * 
+ * scheduler to co-exist with other users of TA0.
+ *
  * @defaulted */
 #ifndef configBSP430_FREERTOS_SCHEDULER
 #define configBSP430_FREERTOS_SCHEDULER 1
@@ -107,8 +107,8 @@
  *
  * The FreeRTOS-BSP430 port needs to know the rate at which the
  * scheduler clock runs.  This is normally ACLK, but the speed depends
- * on the MCU family and whether LFXT1 is used. 
- * 
+ * on the MCU family and whether LFXT1 is used.
+ *
  * @defaulted */
 #ifndef portACLK_FREQUENCY_HZ
 #define portACLK_FREQUENCY_HZ BSP430_CLOCK_NOMINAL_ACLK_HZ

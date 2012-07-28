@@ -104,7 +104,7 @@
  * @note iBSP430clockSMCLKDividingShift_ni() should always be used in
  * preference to this constant to determine the current relative
  * MCLK/SMCLK frequencies.
- * 
+ *
  * @defaulted  */
 #ifndef BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
 #define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 0
@@ -411,7 +411,7 @@ unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
  * The value should be an unsigned integer constant.
  *
  * @note The value of this clock is often off by as much as 20%.
- * 
+ *
  * @defaulted */
 #ifndef BSP430_CLOCK_NOMINAL_VLOCLK_HZ
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ _BSP430_CLOCK_NOMINAL_VLOCLK_HZ

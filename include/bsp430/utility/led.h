@@ -76,8 +76,8 @@ void vBSP430ledSet (int led_idx,
  * definitions of the #pxBSP430leds and #ucBSP430leds variables.
  *
  * Since most platforms can benefit from the shared implementation,
- * those that do not should override the default value. 
- * 
+ * those that do not should override the default value.
+ *
  * @defaulted */
 #ifndef configBSP430_LED_USE_COMMON
 #define configBSP430_LED_USE_COMMON 1
