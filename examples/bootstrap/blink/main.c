@@ -1,6 +1,7 @@
 /** This file is in the public domain.
  *
- * This program initializes the platform then spins toggling the first LED.
+ * This program initializes the platform then spins toggling each LED
+ * in turn.
  *
  * Its role is primarily as a sanity check when bootstrapping a new
  * platform: the second step is to make LEDs blink.
@@ -26,19 +27,23 @@
 
 void main ()
 {
+  int led = 0;
+  
   /* First thing you do in main is configure the platform. */
   vBSP430platformSetup_ni();
 
   /* Now initialize the LEDs */
   vBSP430ledInitialize_ni();
 
-  /* Turn the first one on */
-  vBSP430ledSet(0, 1);
-
-  /* And blink it every nominal half second */
   while (1) {
+    /* Turn each LED on in turn wait a half second, then turn it off
+     * and move to the next LED */
+    vBSP430ledSet(led, 1);
     __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
-    vBSP430ledSet(0, -1);
+    vBSP430ledSet(led, -1);
+    if (++led == ucBSP430leds) {
+      led = 0;
+    }
   }
 
 }
