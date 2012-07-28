@@ -143,6 +143,7 @@
  * (including FR5xx devices). */
 #define __MSP430_HAS_MSP430XV2_CPU__
 
+/** @cond DOXYGEN_EXCLUDE */
 /************************************************************
 * ADC10_A
 ************************************************************/
@@ -372,3 +373,4 @@
 * TLV Descriptors
 ************************************************************/
 #define __MSP430_HAS_TLV__              /**< Definition to show that Module is available */
+/** @endcond */

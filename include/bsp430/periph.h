@@ -108,7 +108,9 @@ typedef int xBSP430periphHandle;
  *
  * Define to a true value in @c FreeRTOSConfig.h to enable use of
  * #BSP430_PERIPH_EXPOSED_CLOCKS in
- * #iBSP430platformConfigurePeripheralPins_ni. */
+ * #iBSP430platformConfigurePeripheralPins_ni.
+ *
+ * @defaulted  */
 #ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 0
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */

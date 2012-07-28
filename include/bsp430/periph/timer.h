@@ -261,7 +261,9 @@ void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA0 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_TA0 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA0
 #define configBSP430_HAL_TA0 0
 #endif /* configBSP430_HAL_TA0 */
@@ -281,7 +283,9 @@ extern xBSP430timerHandle const xBSP430timer_TA0;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA1 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_TA1 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA1
 #define configBSP430_HAL_TA1 0
 #endif /* configBSP430_HAL_TA1 */
@@ -301,7 +305,9 @@ extern xBSP430timerHandle const xBSP430timer_TA1;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA2 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_TA2 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA2
 #define configBSP430_HAL_TA2 0
 #endif /* configBSP430_HAL_TA2 */
@@ -321,7 +327,9 @@ extern xBSP430timerHandle const xBSP430timer_TA2;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA3 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_TA3 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA3
 #define configBSP430_HAL_TA3 0
 #endif /* configBSP430_HAL_TA3 */
@@ -341,7 +349,9 @@ extern xBSP430timerHandle const xBSP430timer_TA3;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TB0 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_TB0 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB0
 #define configBSP430_HAL_TB0 0
 #endif /* configBSP430_HAL_TB0 */
@@ -361,7 +371,9 @@ extern xBSP430timerHandle const xBSP430timer_TB0;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TB1 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_TB1 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB1
 #define configBSP430_HAL_TB1 0
 #endif /* configBSP430_HAL_TB1 */
@@ -381,7 +393,9 @@ extern xBSP430timerHandle const xBSP430timer_TB1;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TB2 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_TB2 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB2
 #define configBSP430_HAL_TB2 0
 #endif /* configBSP430_HAL_TB2 */
@@ -407,7 +421,9 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
  *
  * @note Enabling #configBSP430_HAL_TA0 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_TA0
 #define configBSP430_PERIPH_TA0 (configBSP430_HAL_TA0 - 0)
 #endif /* configBSP430_PERIPH_TA0 */
@@ -419,7 +435,9 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
 /** Handle for the raw TA0 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA0 - 0)
 #define BSP430_PERIPH_TA0 ((xBSP430periphHandle)(_BSP430_PERIPH_TA0_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA0 */
@@ -427,7 +445,9 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
 /** Pointer to the peripheral register map for TA0.
  *
  * The pointer may be used only if #configBSP430_PERIPH_TA0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA0 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA0 */
@@ -440,7 +460,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
  *
  * @note Enabling #configBSP430_HAL_TA1 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_TA1
 #define configBSP430_PERIPH_TA1 (configBSP430_HAL_TA1 - 0)
 #endif /* configBSP430_PERIPH_TA1 */
@@ -452,7 +474,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
 /** Handle for the raw TA1 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA1 - 0)
 #define BSP430_PERIPH_TA1 ((xBSP430periphHandle)(_BSP430_PERIPH_TA1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA1 */
@@ -460,7 +484,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
 /** Pointer to the peripheral register map for TA1.
  *
  * The pointer may be used only if #configBSP430_PERIPH_TA1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA1 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA1 */
@@ -473,7 +499,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
  *
  * @note Enabling #configBSP430_HAL_TA2 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_TA2
 #define configBSP430_PERIPH_TA2 (configBSP430_HAL_TA2 - 0)
 #endif /* configBSP430_PERIPH_TA2 */
@@ -485,7 +513,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
 /** Handle for the raw TA2 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA2 - 0)
 #define BSP430_PERIPH_TA2 ((xBSP430periphHandle)(_BSP430_PERIPH_TA2_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA2 */
@@ -493,7 +523,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
 /** Pointer to the peripheral register map for TA2.
  *
  * The pointer may be used only if #configBSP430_PERIPH_TA2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA2 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA2 */
@@ -506,7 +538,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
  *
  * @note Enabling #configBSP430_HAL_TA3 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_TA3
 #define configBSP430_PERIPH_TA3 (configBSP430_HAL_TA3 - 0)
 #endif /* configBSP430_PERIPH_TA3 */
@@ -518,7 +552,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
 /** Handle for the raw TA3 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_TA3
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA3 - 0)
 #define BSP430_PERIPH_TA3 ((xBSP430periphHandle)(_BSP430_PERIPH_TA3_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TA3 */
@@ -526,7 +562,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
 /** Pointer to the peripheral register map for TA3.
  *
  * The pointer may be used only if #configBSP430_PERIPH_TA3
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TA3 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TA3 */
@@ -539,7 +577,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
  *
  * @note Enabling #configBSP430_HAL_TB0 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_TB0
 #define configBSP430_PERIPH_TB0 (configBSP430_HAL_TB0 - 0)
 #endif /* configBSP430_PERIPH_TB0 */
@@ -551,7 +591,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
 /** Handle for the raw TB0 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_TB0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TB0 - 0)
 #define BSP430_PERIPH_TB0 ((xBSP430periphHandle)(_BSP430_PERIPH_TB0_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TB0 */
@@ -559,7 +601,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
 /** Pointer to the peripheral register map for TB0.
  *
  * The pointer may be used only if #configBSP430_PERIPH_TB0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TB0 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TB0 */
@@ -572,7 +616,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
  *
  * @note Enabling #configBSP430_HAL_TB1 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_TB1
 #define configBSP430_PERIPH_TB1 (configBSP430_HAL_TB1 - 0)
 #endif /* configBSP430_PERIPH_TB1 */
@@ -584,7 +630,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
 /** Handle for the raw TB1 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_TB1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TB1 - 0)
 #define BSP430_PERIPH_TB1 ((xBSP430periphHandle)(_BSP430_PERIPH_TB1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TB1 */
@@ -592,7 +640,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
 /** Pointer to the peripheral register map for TB1.
  *
  * The pointer may be used only if #configBSP430_PERIPH_TB1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TB1 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TB1 */
@@ -605,7 +655,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
  *
  * @note Enabling #configBSP430_HAL_TB2 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_TB2
 #define configBSP430_PERIPH_TB2 (configBSP430_HAL_TB2 - 0)
 #endif /* configBSP430_PERIPH_TB2 */
@@ -617,7 +669,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
 /** Handle for the raw TB2 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_TB2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TB2 - 0)
 #define BSP430_PERIPH_TB2 ((xBSP430periphHandle)(_BSP430_PERIPH_TB2_BASEADDRESS))
 #endif /* configBSP430_PERIPH_TB2 */
@@ -625,7 +679,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
 /** Pointer to the peripheral register map for TB2.
  *
  * The pointer may be used only if #configBSP430_PERIPH_TB2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_TB2 - 0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS;
 #endif /* configBSP430_PERIPH_TB2 */
@@ -648,7 +704,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA0
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA0_CC0_ISR
 #define configBSP430_HAL_TA0_CC0_ISR (configBSP430_HAL_TA0 - 0)
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
@@ -670,7 +728,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA0
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA0_ISR
 #define configBSP430_HAL_TA0_ISR (configBSP430_HAL_TA0 - 0)
 #endif /* configBSP430_HAL_TA0_ISR */
@@ -692,7 +752,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA1
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA1_CC0_ISR
 #define configBSP430_HAL_TA1_CC0_ISR (configBSP430_HAL_TA1 - 0)
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
@@ -714,7 +776,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA1
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA1_ISR
 #define configBSP430_HAL_TA1_ISR (configBSP430_HAL_TA1 - 0)
 #endif /* configBSP430_HAL_TA1_ISR */
@@ -736,7 +800,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA2
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA2_CC0_ISR
 #define configBSP430_HAL_TA2_CC0_ISR (configBSP430_HAL_TA2 - 0)
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
@@ -758,7 +824,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA2
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA2_ISR
 #define configBSP430_HAL_TA2_ISR (configBSP430_HAL_TA2 - 0)
 #endif /* configBSP430_HAL_TA2_ISR */
@@ -780,7 +848,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA3
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA3_CC0_ISR
 #define configBSP430_HAL_TA3_CC0_ISR (configBSP430_HAL_TA3 - 0)
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
@@ -802,7 +872,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TA3
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TA3_ISR
 #define configBSP430_HAL_TA3_ISR (configBSP430_HAL_TA3 - 0)
 #endif /* configBSP430_HAL_TA3_ISR */
@@ -824,7 +896,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TB0
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB0_CC0_ISR
 #define configBSP430_HAL_TB0_CC0_ISR (configBSP430_HAL_TB0 - 0)
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
@@ -846,7 +920,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TB0
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB0_ISR
 #define configBSP430_HAL_TB0_ISR (configBSP430_HAL_TB0 - 0)
 #endif /* configBSP430_HAL_TB0_ISR */
@@ -868,7 +944,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TB1
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB1_CC0_ISR
 #define configBSP430_HAL_TB1_CC0_ISR (configBSP430_HAL_TB1 - 0)
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
@@ -890,7 +968,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TB1
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB1_ISR
 #define configBSP430_HAL_TB1_ISR (configBSP430_HAL_TB1 - 0)
 #endif /* configBSP430_HAL_TB1_ISR */
@@ -912,7 +992,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TB2
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB2_CC0_ISR
 #define configBSP430_HAL_TB2_CC0_ISR (configBSP430_HAL_TB2 - 0)
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
@@ -934,7 +1016,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_TB2
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_TB2_ISR
 #define configBSP430_HAL_TB2_ISR (configBSP430_HAL_TB2 - 0)
 #endif /* configBSP430_HAL_TB2_ISR */

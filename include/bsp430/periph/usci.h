@@ -95,7 +95,9 @@ typedef struct xBSP430usciState * xBSP430usciHandle;
  * object xBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI_A0 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_USCI_A0 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCI_A0
 #define configBSP430_HAL_USCI_A0 0
 #endif /* configBSP430_HAL_USCI_A0 */
@@ -115,7 +117,9 @@ extern xBSP430usciHandle const xBSP430usci_USCI_A0;
  * object xBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI_A1 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_USCI_A1 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCI_A1
 #define configBSP430_HAL_USCI_A1 0
 #endif /* configBSP430_HAL_USCI_A1 */
@@ -135,7 +139,9 @@ extern xBSP430usciHandle const xBSP430usci_USCI_A1;
  * object xBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI_B0 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_USCI_B0 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCI_B0
 #define configBSP430_HAL_USCI_B0 0
 #endif /* configBSP430_HAL_USCI_B0 */
@@ -155,7 +161,9 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B0;
  * object xBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI_B1 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_USCI_B1 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCI_B1
 #define configBSP430_HAL_USCI_B1 0
 #endif /* configBSP430_HAL_USCI_B1 */
@@ -181,7 +189,9 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
  *
  * @note Enabling #configBSP430_HAL_USCI_A0 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_USCI_A0
 #define configBSP430_PERIPH_USCI_A0 (configBSP430_HAL_USCI_A0 - 0)
 #endif /* configBSP430_PERIPH_USCI_A0 */
@@ -193,7 +203,9 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
 /** Handle for the raw USCI_A0 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_A0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A0 - 0)
 #define BSP430_PERIPH_USCI_A0 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A0_BASEADDRESS))
 #endif /* configBSP430_PERIPH_USCI_A0 */
@@ -201,7 +213,9 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
 /** Pointer to the peripheral register map for USCI_A0.
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_A0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A0 - 0)
 static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A0_BASEADDRESS;
 #endif /* configBSP430_PERIPH_USCI_A0 */
@@ -214,7 +228,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP
  *
  * @note Enabling #configBSP430_HAL_USCI_A1 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_USCI_A1
 #define configBSP430_PERIPH_USCI_A1 (configBSP430_HAL_USCI_A1 - 0)
 #endif /* configBSP430_PERIPH_USCI_A1 */
@@ -226,7 +242,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP
 /** Handle for the raw USCI_A1 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_A1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A1 - 0)
 #define BSP430_PERIPH_USCI_A1 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_USCI_A1 */
@@ -234,7 +252,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP
 /** Pointer to the peripheral register map for USCI_A1.
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_A1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_A1 - 0)
 static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_USCI_A1 */
@@ -247,7 +267,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP
  *
  * @note Enabling #configBSP430_HAL_USCI_B0 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_USCI_B0
 #define configBSP430_PERIPH_USCI_B0 (configBSP430_HAL_USCI_B0 - 0)
 #endif /* configBSP430_PERIPH_USCI_B0 */
@@ -259,7 +281,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP
 /** Handle for the raw USCI_B0 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_B0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B0 - 0)
 #define BSP430_PERIPH_USCI_B0 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B0_BASEADDRESS))
 #endif /* configBSP430_PERIPH_USCI_B0 */
@@ -267,7 +291,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP
 /** Pointer to the peripheral register map for USCI_B0.
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_B0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B0 - 0)
 static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B0_BASEADDRESS;
 #endif /* configBSP430_PERIPH_USCI_B0 */
@@ -280,7 +306,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP
  *
  * @note Enabling #configBSP430_HAL_USCI_B1 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_USCI_B1
 #define configBSP430_PERIPH_USCI_B1 (configBSP430_HAL_USCI_B1 - 0)
 #endif /* configBSP430_PERIPH_USCI_B1 */
@@ -292,7 +320,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP
 /** Handle for the raw USCI_B1 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_USCI_B1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B1 - 0)
 #define BSP430_PERIPH_USCI_B1 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_USCI_B1 */
@@ -300,7 +330,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP
 /** Pointer to the peripheral register map for USCI_B1.
  *
  * The pointer may be used only if #configBSP430_PERIPH_USCI_B1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_USCI_B1 - 0)
 static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_USCI_B1 */
@@ -325,7 +357,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
  *
  * @note Enabling this requires that at least one of
  * #configBSP430_HAL_USCI_A0 and
- * #configBSP430_HAL_USCI_B0 also be true. */
+ * #configBSP430_HAL_USCI_B0 also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCIAB0RX_ISR
 #define configBSP430_HAL_USCIAB0RX_ISR ((configBSP430_HAL_USCI_A0 - 0) | (configBSP430_HAL_USCI_B0 - 0))
 #endif /* configBSP430_HAL_USCIAB0RX_ISR */
@@ -349,7 +383,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
  *
  * @note Enabling this requires that at least one of
  * #configBSP430_HAL_USCI_A0 and
- * #configBSP430_HAL_USCI_B0 also be true. */
+ * #configBSP430_HAL_USCI_B0 also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCIAB0TX_ISR
 #define configBSP430_HAL_USCIAB0TX_ISR ((configBSP430_HAL_USCI_A0 - 0) | (configBSP430_HAL_USCI_B0 - 0))
 #endif /* configBSP430_HAL_USCIAB0TX_ISR */
@@ -373,7 +409,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
  *
  * @note Enabling this requires that at least one of
  * #configBSP430_HAL_USCI_A1 and
- * #configBSP430_HAL_USCI_B1 also be true. */
+ * #configBSP430_HAL_USCI_B1 also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCIAB1RX_ISR
 #define configBSP430_HAL_USCIAB1RX_ISR ((configBSP430_HAL_USCI_A1 - 0) | (configBSP430_HAL_USCI_B1 - 0))
 #endif /* configBSP430_HAL_USCIAB1RX_ISR */
@@ -397,7 +435,9 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
  *
  * @note Enabling this requires that at least one of
  * #configBSP430_HAL_USCI_A1 and
- * #configBSP430_HAL_USCI_B1 also be true. */
+ * #configBSP430_HAL_USCI_B1 also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_USCIAB1TX_ISR
 #define configBSP430_HAL_USCIAB1TX_ISR ((configBSP430_HAL_USCI_A1 - 0) | (configBSP430_HAL_USCI_B1 - 0))
 #endif /* configBSP430_HAL_USCIAB1TX_ISR */

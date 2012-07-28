@@ -40,7 +40,7 @@
  * is currently ignored.
  *
  * @warning the documentation below on expectations is outdated
- *  
+ *
  * Based on experimentation, the following is assumed or enforced for
  * all supported clock configurations:
  *
@@ -149,7 +149,7 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela);
  * #BSP430_CLOCK_DISABLE_FLL.
  *
  * For this function to be provided a timer must be identified by
- * #BSP430_UCS_TRIMFLL_TIMER_HAL_HANDLE.  The specified timer will be
+ * #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE.  The specified timer will be
  * reconfigured in various ways while trimming occurs, and will be
  * left disabled on exit.  It may be used for other purposes when this
  * function is not being invoked.
@@ -183,7 +183,8 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
  * @note The timer may be shared among other users.  It is the
  * caller's responsibility to ensure that no other users of the timer
  * are active while the clock is being trimmed.
- */
+ * 
+ * @defaulted */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE no default value
 #endif /* BSP430_DOXYGEN */
@@ -193,7 +194,8 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
  * The index of a capture/compare block within
  * #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE that can take input from
  * ACLK.  The capability is MCU-specific.
- */
+ * 
+ * @defaulted */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX no default value
 #endif /* BSP430_DOXYGEN */
@@ -205,7 +207,8 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
  * of timer #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE in order to select
  * ACLK as the input source.  The capability is MCU-specific, but
  * consider CCI0B (CCIS_1) of TB0.6.
- */
+ * 
+ * @defaulted */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS no default value
 #endif /* BSP430_DOXYGEN */

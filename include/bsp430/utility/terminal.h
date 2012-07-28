@@ -81,7 +81,9 @@
  * stack-based buffer and which is often interrupted by a hardware ISR
  * that must also use the stack, you probably don't want this below
  * 96.  You may need to increase it if you do a lot in the command
- * processing. */
+ * processing. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_TERMINAL_STACK_ADJUSTMENT
 #define configBSP430_TERMINAL_STACK_ADJUSTMENT (48 + 40 * sizeof(portSAVED_REGISTER_TYPE) / sizeof(portBASE_TYPE))
 #endif /* configBSP430_TERMINAL_STACK_ADJUSTMENT */
@@ -93,7 +95,9 @@
  *
  * This task only needs to aggregate incoming characters and hand them
  * off to the terminal task, so you probably don't need to change
- * this. */
+ * this. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_TERMINAL_READER_STACK_ADJUSTMENT
 #define configBSP430_TERMINAL_READER_STACK_ADJUSTMENT (12 + 4 * sizeof(portSAVED_REGISTER_TYPE) / sizeof(portBASE_TYPE))
 #endif /* configBSP430_TERMINAL_READER_STACK_ADJUSTMENT */

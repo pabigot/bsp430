@@ -68,13 +68,15 @@
  * A constant representing the desired clock speed of the master
  * clock.  If the value specified is not zero, vBSP430platformSetup_ni()
  * use it to initialize the system clocks.
- * 
+ *
  * @note The default value is calculated from
  * 3*3*5*5*512*69=115200*69, and is the value nearest 8MHz which is
  * also compatible with as many serial baud rates as possible.
  *
  * @note Applications may wish to provide an alternative value better
- * suited to specific needs. */
+ * suited to specific needs.
+ *
+ * @defaulted  */
 #ifndef BSP430_CLOCK_NOMINAL_MCLK_HZ
 #define BSP430_CLOCK_NOMINAL_MCLK_HZ 7948800U
 #endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
@@ -94,7 +96,9 @@
  * @note The value of define reflects the divisor of MCLK.  If the
  * clock source for SMCLK is different than an undivided MCLK, the
  * code that configures the clock may need to modify the shift
- * value. */
+ * value.
+ *
+ * @defaulted  */
 #ifndef BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
 #define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 0
 #endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
@@ -112,7 +116,9 @@
  * likelihood either erratum affects clock stability, this macro may
  * be defined to a true value to request that BSP430 ensure that #SCG0
  * remain set, preventing the FLL from changing the DCO configuration
- * without application intervention. */
+ * without application intervention.
+ *
+ * @defaulted  */
 #ifndef BSP430_CLOCK_DISABLE_FLL
 #define BSP430_CLOCK_DISABLE_FLL 0
 #endif /* BSP430_CLOCK_DISABLE_FLL */
@@ -145,6 +151,8 @@
  *
  * Crystal stabilization can take hundreds of milliseconds; on some
  * platforms even the one second delay above is insufficient.
+ *
+ * @defaulted
  */
 #ifndef BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
 #define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES 100000UL
@@ -189,9 +197,9 @@ int iBSP430clockSMCLKDividingShift_ni (void);
  * specific to the peripheral.  Where MCLK is itself divided, the
  * underlying implementation will take that into account.
  *
- * If #BSP430_CONFIG_NOMINAL_MCLK and
- * #BSP430_CONFIG_NOMINAL_SMCLK_DIVIDING_SHIFT are defined,
- * #vBSP430platformSetup will invoke this to configure SMCLK after
+ * If #BSP430_CLOCK_NOMINAL_MCLK_HZ and
+ * #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT are defined,
+ * vBSP430platformSetup_ni() will invoke this to configure SMCLK after
  * configuring MCLK.  iBSP430clockSMCLKDividingShift_ni() should
  * always be used in preference to this constant to determine the
  * current relative MCLK/SMCLK frequencies.
@@ -250,7 +258,7 @@ ulBSP430clockSMCLK_Hz (void)
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned short usBSP430clockACLK_Hz_ni (void);
 
-/** Interruptible-preserving wrapper for #ulBSP430clockACLK_Hz_ni */
+/** Interruptible-preserving wrapper for usBSP430clockACLK_Hz_ni() */
 static unsigned short
 __inline__
 usBSP430clockACLK_Hz (void)
@@ -283,7 +291,10 @@ usBSP430clockACLK_Hz (void)
  * the state of the system oscillator fault bit is not reflected in
  * the value for a peripheral-specific check.
  *
- * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT() */
+ * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT()
+ *
+ * @defaulted
+ * @overridable */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define BSP430_CLOCK_LFXT1_IS_FAULTED() (SFRIFG1 & OFIFG)
 #else /* 5xx */
@@ -303,7 +314,10 @@ usBSP430clockACLK_Hz (void)
  * the system oscillator fault is also cleared.  This is in contrast
  * to what is tested by #BSP430_CLOCK_LFXT1_IS_FAULTED().
  *
- * @see #BSP430_CLOCK_LFXT1_IS_FAULTED() */
+ * @see #BSP430_CLOCK_LFXT1_IS_FAULTED()
+ *
+ * @defaulted
+ * @overridable */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { SFRIFG1 &= ~OFIFG; } while (0)
 #else /* 5xx */
@@ -343,7 +357,9 @@ usBSP430clockACLK_Hz (void)
  *
  * Note that the calculated value of this assumes that ACLK is
  * configured to source from a 32 kiHz watch crystal normally, but
- * deferring to VLOCLK if LFXT1 is faulted. */
+ * deferring to VLOCLK if LFXT1 is faulted.
+ *
+ * @defaulted  */
 #ifndef BSP430_CLOCK_NOMINAL_ACLK_HZ
 #define BSP430_CLOCK_NOMINAL_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : 32768U)
 #endif /* BSP430_CLOCK_NOMINAL_ACLK_HZ */

@@ -46,7 +46,7 @@
  * frequency clock.)
  *
  * @note This peripheral does not support dividing SMCLK.
- * 
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -95,7 +95,8 @@
  * of the capacitances available 0pF produces the closest to 32768 Hz,
  * at least on the EXP430FG4618 board.  This also happens to be the
  * power-up default.
- */
+ * 
+ * @defaulted */
 #ifndef BSP430_FLLPLUS_XCAPxPF
 #define BSP430_FLLPLUS_XCAPxPF XCAP0PF
 #endif /* BSP430_FLLPLUS_XCAPxPF */

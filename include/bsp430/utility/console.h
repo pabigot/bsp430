@@ -66,7 +66,9 @@
  *
  * The "atomic" behavior promised by #cprintf is not guaranteed for @c
  * printf, @c puts, or any other library function that might invoke
- * this putchar implementation. */
+ * this putchar implementation. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_CONSOLE_PROVIDES_PUTCHAR
 #define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0
 #endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
@@ -75,7 +77,9 @@
  *
  * If defined to true, the console display routines will always emit a
  * carriage return before a newline.  This provides compatibility with
- * standard terminal programs like minicom. */
+ * standard terminal programs like minicom. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_CONSOLE_USE_ONLCR
 #define configBSP430_CONSOLE_USE_ONLCR 1
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
@@ -84,7 +88,9 @@
  *
  * Define to false if your libc does not provide vuprintf.
  * msp430-libc does provide this, and it is used to implement
- * cprintf. */
+ * cprintf. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
 #define configBSP430_CONSOLE_LIBC_HAS_VUPRINTF 1
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
@@ -92,7 +98,9 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_ITOA
  *
  * Define to false if your libc does not provide itoa.  msp430-libc
- * does provide this, and it is used to implement cputi. */
+ * does provide this, and it is used to implement cputi. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_ITOA
 #define configBSP430_CONSOLE_LIBC_HAS_ITOA 1
 #endif /* configBSP430_CONSOLE_LIBC_HAS_ITOA */
@@ -100,7 +108,9 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_UTOA
  *
  * Define to false if your libc does not provide utoa.  msp430-libc
- * does provide this, and it is used to implement cputu. */
+ * does provide this, and it is used to implement cputu. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_UTOA
 #define configBSP430_CONSOLE_LIBC_HAS_UTOA 1
 #endif /* configBSP430_CONSOLE_LIBC_HAS_UTOA */
@@ -108,7 +118,9 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_LTOA
  *
  * Define to false if your libc does not provide ltoa.  msp430-libc
- * does provide this, and it is used to implement cputl. */
+ * does provide this, and it is used to implement cputl. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_LTOA
 #define configBSP430_CONSOLE_LIBC_HAS_LTOA 1
 #endif /* configBSP430_CONSOLE_LIBC_HAS_LTOA */
@@ -116,7 +128,9 @@
 /** @def configBSP430_CONSOLE_LIBC_HAS_ULTOA
  *
  * Define to false if your libc does not provide ultoa.  msp430-libc
- * does provide this, and it is used to implement cputul. */
+ * does provide this, and it is used to implement cputul. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_ULTOA
 #define configBSP430_CONSOLE_LIBC_HAS_ULTOA 1
 #endif /* configBSP430_CONSOLE_LIBC_HAS_ULTOA */
@@ -136,7 +150,7 @@
  * if it is disabled; a negative error code if an error is
  * encountered */
 int
-cprintf (const char *string, ...)
+cprintf (const char * format, ...)
 #if __GNUC__ - 0
 __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
@@ -187,7 +201,7 @@ int cputtext_ni (const char * s);
  * corruption.
  *
  * @return the number of characters emitted */
-int cputi_ni (int i, int radix);
+int cputi_ni (int n, int radix);
 
 /** Format an int using utoa and emit it to the console.
  *
@@ -217,7 +231,7 @@ int cputu_ni (unsigned int n, int radix);
  * corruption.
  *
  * @return the number of characters emitted */
-int cputl_ni (long i, int radix);
+int cputl_ni (long n, int radix);
 
 /** Format an int using itoa and emit it to the console.
  *
@@ -232,7 +246,7 @@ int cputl_ni (long i, int radix);
  * corruption.
  *
  * @return the number of characters emitted */
-int cputul_ni (unsigned long i, int radix);
+int cputul_ni (unsigned long n, int radix);
 
 
 /** Configure a console device.

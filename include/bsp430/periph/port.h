@@ -343,7 +343,9 @@ typedef struct xBSP430portState * xBSP430portHandle;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT1 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT1 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT1
 #define configBSP430_HAL_PORT1 0
 #endif /* configBSP430_HAL_PORT1 */
@@ -363,7 +365,9 @@ extern xBSP430portHandle const xBSP430port_PORT1;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT2 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT2 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT2
 #define configBSP430_HAL_PORT2 0
 #endif /* configBSP430_HAL_PORT2 */
@@ -383,7 +387,9 @@ extern xBSP430portHandle const xBSP430port_PORT2;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT3 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT3 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT3
 #define configBSP430_HAL_PORT3 0
 #endif /* configBSP430_HAL_PORT3 */
@@ -403,7 +409,9 @@ extern xBSP430portHandle const xBSP430port_PORT3;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT4 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT4 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT4
 #define configBSP430_HAL_PORT4 0
 #endif /* configBSP430_HAL_PORT4 */
@@ -423,7 +431,9 @@ extern xBSP430portHandle const xBSP430port_PORT4;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT5 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT5 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT5
 #define configBSP430_HAL_PORT5 0
 #endif /* configBSP430_HAL_PORT5 */
@@ -443,7 +453,9 @@ extern xBSP430portHandle const xBSP430port_PORT5;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT6 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT6 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT6
 #define configBSP430_HAL_PORT6 0
 #endif /* configBSP430_HAL_PORT6 */
@@ -463,7 +475,9 @@ extern xBSP430portHandle const xBSP430port_PORT6;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT7 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT7 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT7
 #define configBSP430_HAL_PORT7 0
 #endif /* configBSP430_HAL_PORT7 */
@@ -483,7 +497,9 @@ extern xBSP430portHandle const xBSP430port_PORT7;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT8 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT8 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT8
 #define configBSP430_HAL_PORT8 0
 #endif /* configBSP430_HAL_PORT8 */
@@ -503,7 +519,9 @@ extern xBSP430portHandle const xBSP430port_PORT8;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT9 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT9 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT9
 #define configBSP430_HAL_PORT9 0
 #endif /* configBSP430_HAL_PORT9 */
@@ -523,7 +541,9 @@ extern xBSP430portHandle const xBSP430port_PORT9;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT10 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT10 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT10
 #define configBSP430_HAL_PORT10 0
 #endif /* configBSP430_HAL_PORT10 */
@@ -543,7 +563,9 @@ extern xBSP430portHandle const xBSP430port_PORT10;
  * object xBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_PORT11 to true. */
+ * @note Enabling this defaults #configBSP430_PERIPH_PORT11 to true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT11
 #define configBSP430_HAL_PORT11 0
 #endif /* configBSP430_HAL_PORT11 */
@@ -569,7 +591,9 @@ extern xBSP430portHandle const xBSP430port_PORT11;
  *
  * @note Enabling #configBSP430_HAL_PORT1 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT1
 #define configBSP430_PERIPH_PORT1 (configBSP430_HAL_PORT1 - 0)
 #endif /* configBSP430_PERIPH_PORT1 */
@@ -581,7 +605,9 @@ extern xBSP430portHandle const xBSP430port_PORT11;
 /** Handle for the raw PORT1 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT1 - 0)
 #define BSP430_PERIPH_PORT1 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT1_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT1 */
@@ -589,7 +615,9 @@ extern xBSP430portHandle const xBSP430port_PORT11;
 /** Pointer to the peripheral register map for PORT1.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT1 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT1_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT1 */
@@ -602,7 +630,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT2 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT2
 #define configBSP430_PERIPH_PORT2 (configBSP430_HAL_PORT2 - 0)
 #endif /* configBSP430_PERIPH_PORT2 */
@@ -614,7 +644,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP43
 /** Handle for the raw PORT2 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT2 - 0)
 #define BSP430_PERIPH_PORT2 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT2_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT2 */
@@ -622,7 +654,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT2.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT2 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT2_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT2 */
@@ -635,7 +669,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT3 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT3
 #define configBSP430_PERIPH_PORT3 (configBSP430_HAL_PORT3 - 0)
 #endif /* configBSP430_PERIPH_PORT3 */
@@ -647,7 +683,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP43
 /** Handle for the raw PORT3 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT3
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT3 - 0)
 #define BSP430_PERIPH_PORT3 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT3_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT3 */
@@ -655,7 +693,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT3.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT3
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT3 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT3_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT3 */
@@ -668,7 +708,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT4 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT4
 #define configBSP430_PERIPH_PORT4 (configBSP430_HAL_PORT4 - 0)
 #endif /* configBSP430_PERIPH_PORT4 */
@@ -680,7 +722,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP43
 /** Handle for the raw PORT4 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT4
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT4 - 0)
 #define BSP430_PERIPH_PORT4 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT4_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT4 */
@@ -688,7 +732,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT4.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT4
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT4 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT4_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT4 */
@@ -701,7 +747,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT5 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT5
 #define configBSP430_PERIPH_PORT5 (configBSP430_HAL_PORT5 - 0)
 #endif /* configBSP430_PERIPH_PORT5 */
@@ -713,7 +761,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP43
 /** Handle for the raw PORT5 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT5
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT5 - 0)
 #define BSP430_PERIPH_PORT5 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT5_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT5 */
@@ -721,7 +771,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT5.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT5
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT5 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT5_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT5 */
@@ -734,7 +786,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT6 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT6
 #define configBSP430_PERIPH_PORT6 (configBSP430_HAL_PORT6 - 0)
 #endif /* configBSP430_PERIPH_PORT6 */
@@ -746,7 +800,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP43
 /** Handle for the raw PORT6 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT6
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT6 - 0)
 #define BSP430_PERIPH_PORT6 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT6_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT6 */
@@ -754,7 +810,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT6.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT6
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT6 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT6_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT6 */
@@ -767,7 +825,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT7 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT7
 #define configBSP430_PERIPH_PORT7 (configBSP430_HAL_PORT7 - 0)
 #endif /* configBSP430_PERIPH_PORT7 */
@@ -779,7 +839,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP43
 /** Handle for the raw PORT7 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT7
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT7 - 0)
 #define BSP430_PERIPH_PORT7 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT7_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT7 */
@@ -787,7 +849,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT7.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT7
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT7 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT7_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT7 */
@@ -800,7 +864,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT8 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT8
 #define configBSP430_PERIPH_PORT8 (configBSP430_HAL_PORT8 - 0)
 #endif /* configBSP430_PERIPH_PORT8 */
@@ -812,7 +878,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP43
 /** Handle for the raw PORT8 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT8
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT8 - 0)
 #define BSP430_PERIPH_PORT8 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT8_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT8 */
@@ -820,7 +888,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT8.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT8
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT8 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT8_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT8 */
@@ -833,7 +903,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT9 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT9
 #define configBSP430_PERIPH_PORT9 (configBSP430_HAL_PORT9 - 0)
 #endif /* configBSP430_PERIPH_PORT9 */
@@ -845,7 +917,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP43
 /** Handle for the raw PORT9 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT9
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT9 - 0)
 #define BSP430_PERIPH_PORT9 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT9_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT9 */
@@ -853,7 +927,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT9.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT9
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT9 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT9_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT9 */
@@ -866,7 +942,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP43
  *
  * @note Enabling #configBSP430_HAL_PORT10 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT10
 #define configBSP430_PERIPH_PORT10 (configBSP430_HAL_PORT10 - 0)
 #endif /* configBSP430_PERIPH_PORT10 */
@@ -878,7 +956,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP43
 /** Handle for the raw PORT10 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT10
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT10 - 0)
 #define BSP430_PERIPH_PORT10 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT10_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT10 */
@@ -886,7 +966,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = (volatile xBSP43
 /** Pointer to the peripheral register map for PORT10.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT10
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT10 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT10_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT10 */
@@ -899,7 +981,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP4
  *
  * @note Enabling #configBSP430_HAL_PORT11 defaults this to
  * true, so you only need to explicitly request if you want the HPL
- * interface without the HAL interface. */
+ * interface without the HAL interface.
+ *
+ * @defaulted */
 #ifndef configBSP430_PERIPH_PORT11
 #define configBSP430_PERIPH_PORT11 (configBSP430_HAL_PORT11 - 0)
 #endif /* configBSP430_PERIPH_PORT11 */
@@ -911,7 +995,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP4
 /** Handle for the raw PORT11 device.
  *
  * The handle may be used only if #configBSP430_PERIPH_PORT11
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT11 - 0)
 #define BSP430_PERIPH_PORT11 ((xBSP430periphHandle)(_BSP430_PERIPH_PORT11_BASEADDRESS))
 #endif /* configBSP430_PERIPH_PORT11 */
@@ -919,7 +1005,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = (volatile xBSP4
 /** Pointer to the peripheral register map for PORT11.
  *
  * The pointer may be used only if #configBSP430_PERIPH_PORT11
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @defaulted */
 #if BSP430_DOXYGEN || (configBSP430_PERIPH_PORT11 - 0)
 static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP430periphPORT *)_BSP430_PERIPH_PORT11_BASEADDRESS;
 #endif /* configBSP430_PERIPH_PORT11 */
@@ -940,7 +1028,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT1
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT1_ISR
 #define configBSP430_HAL_PORT1_ISR (configBSP430_HAL_PORT1 - 0)
 #endif /* configBSP430_HAL_PORT1_ISR */
@@ -960,7 +1050,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT2
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT2_ISR
 #define configBSP430_HAL_PORT2_ISR (configBSP430_HAL_PORT2 - 0)
 #endif /* configBSP430_HAL_PORT2_ISR */
@@ -980,7 +1072,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT3
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT3_ISR
 #define configBSP430_HAL_PORT3_ISR (configBSP430_HAL_PORT3 - 0)
 #endif /* configBSP430_HAL_PORT3_ISR */
@@ -1000,7 +1094,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT4
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT4_ISR
 #define configBSP430_HAL_PORT4_ISR (configBSP430_HAL_PORT4 - 0)
 #endif /* configBSP430_HAL_PORT4_ISR */
@@ -1020,7 +1116,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT5
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT5_ISR
 #define configBSP430_HAL_PORT5_ISR (configBSP430_HAL_PORT5 - 0)
 #endif /* configBSP430_HAL_PORT5_ISR */
@@ -1040,7 +1138,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT6
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT6_ISR
 #define configBSP430_HAL_PORT6_ISR (configBSP430_HAL_PORT6 - 0)
 #endif /* configBSP430_HAL_PORT6_ISR */
@@ -1060,7 +1160,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT7
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT7_ISR
 #define configBSP430_HAL_PORT7_ISR (configBSP430_HAL_PORT7 - 0)
 #endif /* configBSP430_HAL_PORT7_ISR */
@@ -1080,7 +1182,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT8
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT8_ISR
 #define configBSP430_HAL_PORT8_ISR (configBSP430_HAL_PORT8 - 0)
 #endif /* configBSP430_HAL_PORT8_ISR */
@@ -1100,7 +1204,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT9
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT9_ISR
 #define configBSP430_HAL_PORT9_ISR (configBSP430_HAL_PORT9 - 0)
 #endif /* configBSP430_HAL_PORT9_ISR */
@@ -1120,7 +1226,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT10
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT10_ISR
 #define configBSP430_HAL_PORT10_ISR (configBSP430_HAL_PORT10 - 0)
 #endif /* configBSP430_HAL_PORT10_ISR */
@@ -1140,7 +1248,9 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
  * use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT11
- * also be true. */
+ * also be true.
+ *
+ * @defaulted */
 #ifndef configBSP430_HAL_PORT11_ISR
 #define configBSP430_HAL_PORT11_ISR (configBSP430_HAL_PORT11 - 0)
 #endif /* configBSP430_HAL_PORT11_ISR */
@@ -1157,6 +1267,12 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = (volatile xBSP4
 #warning not yet implemented
 #endif /* MSP430XV2 */
 
-xBSP430portHandle xBSP430portLookup (xBSP430periphHandle xHandle);
+/** Translate a port HPL handle to its corresponding HAL handle.
+ *
+ * @param hpl the hardware presentation layer handle for a port
+ *
+ * @return the HAL handle for the port, or NULL if either the HPL port
+ * is unrecognized or the corresponding HAL port was not enabled. */
+xBSP430portHandle xBSP430portLookup (xBSP430periphHandle hpl);
 
 #endif /* BSP430_PERIPH_PORT_H */

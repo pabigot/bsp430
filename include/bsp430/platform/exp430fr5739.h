@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739</a>
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739 ("Fraunchpad")</a>
  *
  * This board is also known as the "Fraunchpad"
  *
@@ -51,7 +51,7 @@
 #ifndef BSP430_PLATFORM_EXP430FR5739_H
 #define BSP430_PLATFORM_EXP430FR5739_H
 
-/* Unconditionally define this, so as to produce errors if there is a
+/** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FR5739 1
 

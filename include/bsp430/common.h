@@ -73,7 +73,9 @@
  *
  * If you provide configuration through external means (e.g., through
  * @c -D arguments to the preprocessor) you can inhibit this inclusion
- * by defining #configBSP430_CONFIG_FILE to 0. */
+ * by defining #configBSP430_CONFIG_FILE to 0.
+ *
+ * @defaulted */
 #ifndef configBSP430_CONFIG_FILE
 #define configBSP430_CONFIG_FILE 1
 #endif /* configBSP430_CONFIG_FILE */
@@ -86,7 +88,8 @@
  *
  * A type that can be used to declare a variable that will hold
  * interrupt state stored by #BSP430_CORE_SAVE_INTERRUPT_STATE.
- */
+ *
+ * @defaulted */
 #ifndef BSP430_CORE_INTERRUPT_STATE_T
 #define BSP430_CORE_INTERRUPT_STATE_T __istate_t
 #endif /* BSP430_CORE_INTERRUPT_STATE_T */
@@ -98,7 +101,8 @@
  * be passed to #BSP430_CORE_RESTORE_INTERRUPT_STATE.
  *
  * @param _state where the interrupt enable/disable state is stored.
- */
+ *
+ * @defaulted */
 #ifndef BSP430_CORE_SAVE_INTERRUPT_STATE
 #define BSP430_CORE_SAVE_INTERRUPT_STATE(_state) do {	\
     (_state) = __get_interrupt_state();                 \
@@ -112,7 +116,8 @@
  * been created using #BSP430_CORE_SAVE_INTERRUPT_STATE.
  *
  * @param _state where the interrupt enable/disable state is stored.
- */
+ *
+ * @defaulted */
 #ifndef BSP430_CORE_RESTORE_INTERRUPT_STATE
 #define BSP430_CORE_RESTORE_INTERRUPT_STATE(_state) do {	\
     __set_interrupt_state(_state);                              \
@@ -122,7 +127,8 @@
 /** @def BSP430_CORE_ENABLE_INTERRUPT()
  *
  * Set the status register #GIE bit so that interrupts are enabled.
- */
+ *
+ * @defaulted */
 #ifndef BSP430_CORE_ENABLE_INTERRUPT
 #define BSP430_CORE_ENABLE_INTERRUPT() __enable_interrupt()
 #endif /* BSP430_CORE_ENABLE_INTERRUPT */
@@ -130,7 +136,8 @@
 /** @def BSP430_CORE_DISABLE_INTERRUPT()
  *
  * Clear the status register #GIE bit so that interrupts are disabled.
- */
+ *
+ * @defaulted */
 #ifndef BSP430_CORE_DISABLE_INTERRUPT
 #define BSP430_CORE_DISABLE_INTERRUPT() __disable_interrupt()
 #endif /* BSP430_CORE_DISABLE_INTERRUPT */
@@ -156,7 +163,8 @@
  *
  * It is defined to a no-op in environments that do not support
  * context switches.
- */
+ *
+ * @defaulted */
 #ifndef BSP430_RTOS_YIELD_FROM_ISR
 #define BSP430_RTOS_YIELD_FROM_ISR() do { } while (0)
 #endif /* BSP430_RTOS_YIELD_FROM_ISR */

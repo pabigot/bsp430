@@ -31,7 +31,7 @@
 
 /** @file
  *
- * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2</a>
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a>
  *
  * This board is also known as the "LaunchPad"
  *
@@ -50,7 +50,7 @@
 #ifndef BSP430_PLATFORM_EXP430G2_H
 #define BSP430_PLATFORM_EXP430G2_H
 
-/* Unconditionally define this, so as to produce errors if there is a
+/** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430G2 1
 

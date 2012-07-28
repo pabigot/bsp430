@@ -77,6 +77,8 @@
  * @endcode
  *
  * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE.
+ * 
+ * @defaulted 
  */
 #ifndef configBSP430_UPTIME
 #define configBSP430_UPTIME 0
@@ -97,7 +99,9 @@
  * and emit a warning.  Setting this option to a false value will
  * inhibit that check, and must be done if
  * #BSP430_UPTIME_TIMER_HAL_HANDLE is changed from its default
- * value. */
+ * value. 
+ * 
+ * @defaulted */
 #ifndef configBSP430_UPTIME_USE_DEFAULT_RESOURCE
 #define configBSP430_UPTIME_USE_DEFAULT_RESOURCE 1
 #endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
@@ -125,7 +129,9 @@
  * (e.g. #configBSP430_PERIPH_TA1) and HAL interrupt that will count
  * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled, for example
  * by enabling #configBSP430_HAL_TA1, as the check for these
- * requirements cannot be enforced for non-default resources. */
+ * requirements cannot be enforced for non-default resources. 
+ * 
+ * @defaulted */
 #ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
 #endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
@@ -138,15 +144,17 @@
  *
  * @note If you select a source other than ACLK (@c TASSEL_1), update
  * #BSP430_UPTIME_CLOCK_HZ.
- */
+ * 
+ * @defaulted */
 #ifndef BSP430_UPTIME_SSEL
-#define BSP430_UPTIME_SSEL TASSEL_1
+#define BSP430_UPTIME_SSEL TASSEL_1 /* == TASSEL__ACLK */
 #endif /* BSP430_UPTIME_SSEL */
 
 /** @def BSP430_UPTIME_DIVIDING_SHIFT
  *
  * Shift value dividing #BSP430_UPTIME_SSEL for the uptime clock.
- *
+ * 
+ * @defaulted 
  */
 #ifndef BSP430_UPTIME_DIVIDING_SHIFT
 #define BSP430_UPTIME_DIVIDING_SHIFT 0
@@ -154,7 +162,9 @@
 
 /** @def BSP430_UPTIME_CLOCK_HZ
  *
- * Number of uptime clocks per second. */
+ * Number of uptime clocks per second.
+ * 
+ * @defaulted  */
 #ifndef BSP430_UPTIME_CLOCK_HZ
 #define BSP430_UPTIME_CLOCK_HZ (BSP430_CLOCK_NOMINAL_ACLK_HZ >> BSP430_UPTIME_DIVIDING_SHIFT)
 #endif /* BSP430_UPTIME_CLOCK_HZ */

@@ -34,7 +34,7 @@
 
 /** @file
  *
- * Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
  *
  * The following platform-specific features are supported:
  * <ul>
@@ -49,7 +49,7 @@
  * </ul>
  */
 
-/* Unconditionally define this, so as to produce errors if there is a
+/** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FG4618 1
 

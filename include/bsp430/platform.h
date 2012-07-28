@@ -111,12 +111,14 @@ void vBSP430platformSpinForJumper_ni (void);
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
 /** @def BSP430_PLATFORM_EXP430F5438
-* Define to a true value if application is being built for the
-* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430F5438</a> platform.
-* This causes <bsp430/platform.h> to include the corresponding
-* platform-specific header <bsp430/platform/exp430f5438.h>.
-* If you include that header directly, #BSP430_PLATFORM_EXP430F5438 will be
-* defined for you. */
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430F5438</a> platform.
+ * This causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/exp430f5438.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EXP430F5438 will be
+ * defined for you.
+ *
+ * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430F5438
 #define BSP430_PLATFORM_EXP430F5438 0
 #endif /* BSP430_PLATFORM_EXP430F5438 */
@@ -126,12 +128,14 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
 /** @def BSP430_PLATFORM_EXP430FR5739
-* Define to a true value if application is being built for the
-* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FR5739</a> platform.
-* This causes <bsp430/platform.h> to include the corresponding
-* platform-specific header <bsp430/platform/exp430fr5739.h>.
-* If you include that header directly, #BSP430_PLATFORM_EXP430FR5739 will be
-* defined for you. */
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FR5739</a> platform.
+ * This causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/exp430fr5739.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EXP430FR5739 will be
+ * defined for you.
+ *
+ * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430FR5739
 #define BSP430_PLATFORM_EXP430FR5739 0
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
@@ -141,12 +145,14 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
 /** @def BSP430_PLATFORM_EXP430FG4618
-* Define to a true value if application is being built for the
-* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FG4618</a> platform.
-* This causes <bsp430/platform.h> to include the corresponding
-* platform-specific header <bsp430/platform/exp430fg4618.h>.
-* If you include that header directly, #BSP430_PLATFORM_EXP430FG4618 will be
-* defined for you. */
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FG4618</a> platform.
+ * This causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/exp430fg4618.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EXP430FG4618 will be
+ * defined for you.
+ *
+ * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430FG4618
 #define BSP430_PLATFORM_EXP430FG4618 0
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
@@ -156,12 +162,14 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
 /** @def BSP430_PLATFORM_EXP430G2
-* Define to a true value if application is being built for the
-* <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430G2</a> platform.
-* This causes <bsp430/platform.h> to include the corresponding
-* platform-specific header <bsp430/platform/exp430g2.h>.
-* If you include that header directly, #BSP430_PLATFORM_EXP430G2 will be
-* defined for you. */
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430G2</a> platform.
+ * This causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/exp430g2.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EXP430G2 will be
+ * defined for you.
+ *
+ * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430G2
 #define BSP430_PLATFORM_EXP430G2 0
 #endif /* BSP430_PLATFORM_EXP430G2 */

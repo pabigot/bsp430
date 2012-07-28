@@ -50,7 +50,9 @@
 
 #ifndef configBSP430_UART_USE_USCI
 /** Define to true value to select #xBSP430usciHandle as the
- * underlying UART implementation. */
+ * underlying UART implementation.
+ *
+ * @defaulted  */
 #define configBSP430_UART_USE_USCI 0
 #endif /* configBSP430_UART_USE_USCI */
 
@@ -98,7 +100,9 @@ iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 
 #ifndef configBSP430_UART_USE_USCI5
 /** Define to true value to select #xBSP430usci5Handle as the
- * underlying UART implementation. */
+ * underlying UART implementation.
+ *
+ * @defaulted */
 #define configBSP430_UART_USE_USCI5 0
 #endif /* configBSP430_UART_USE_USCI5 */
 
@@ -146,7 +150,9 @@ iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
 
 #ifndef configBSP430_UART_USE_EUSCIA
 /** Define to true value to select #xBSP430eusciaHandle as the
- * underlying UART implementation. */
+ * underlying UART implementation.
+ *
+ * @defaulted */
 #define configBSP430_UART_USE_EUSCIA 0
 #endif /* configBSP430_UART_USE_EUSCIA */
 
