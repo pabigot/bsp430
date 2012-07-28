@@ -367,7 +367,8 @@ static void
 __attribute__((__interrupt__(USCI_A0_VECTOR)))
 isr_USCI5_A0 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_A0);
+  int rv = usci5_isr(xBSP430usci5_USCI5_A0);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A0_ISR */
 
@@ -376,7 +377,8 @@ static void
 __attribute__((__interrupt__(USCI_A1_VECTOR)))
 isr_USCI5_A1 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_A1);
+  int rv = usci5_isr(xBSP430usci5_USCI5_A1);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A1_ISR */
 
@@ -385,7 +387,8 @@ static void
 __attribute__((__interrupt__(USCI_A2_VECTOR)))
 isr_USCI5_A2 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_A2);
+  int rv = usci5_isr(xBSP430usci5_USCI5_A2);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A2_ISR */
 
@@ -394,7 +397,8 @@ static void
 __attribute__((__interrupt__(USCI_A3_VECTOR)))
 isr_USCI5_A3 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_A3);
+  int rv = usci5_isr(xBSP430usci5_USCI5_A3);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A3_ISR */
 
@@ -403,7 +407,8 @@ static void
 __attribute__((__interrupt__(USCI_B0_VECTOR)))
 isr_USCI5_B0 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_B0);
+  int rv = usci5_isr(xBSP430usci5_USCI5_B0);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B0_ISR */
 
@@ -412,7 +417,8 @@ static void
 __attribute__((__interrupt__(USCI_B1_VECTOR)))
 isr_USCI5_B1 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_B1);
+  int rv = usci5_isr(xBSP430usci5_USCI5_B1);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B1_ISR */
 
@@ -421,7 +427,8 @@ static void
 __attribute__((__interrupt__(USCI_B2_VECTOR)))
 isr_USCI5_B2 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_B2);
+  int rv = usci5_isr(xBSP430usci5_USCI5_B2);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B2_ISR */
 
@@ -430,7 +437,8 @@ static void
 __attribute__((__interrupt__(USCI_B3_VECTOR)))
 isr_USCI5_B3 (void)
 {
-  usci5_isr(xBSP430usci5_USCI5_B3);
+  int rv = usci5_isr(xBSP430usci5_USCI5_B3);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B3_ISR */
 

@@ -46,6 +46,21 @@
 
 static xBSP430uartHandle console_uart;
 
+/* Optimized version used inline.  Assumes that the uart is not
+ * null. */
+static
+__inline__
+int
+emit_char2_ni (int c, xBSP430uartHandle uart)
+{
+#if configBSP430_CONSOLE_USE_ONLCR - 0
+  if ('\n' == c) {
+    iBSP430uartPutByte_ni('\r', uart);
+  }
+#endif /* configBSP430_CONSOLE_USE_ONLCR */
+  return iBSP430uartPutByte_ni(c, uart);
+}
+
 /* Base version used by cprintf.  This has to re-read the console_uart
  * variable each time. */
 static
@@ -57,29 +72,8 @@ emit_char_ni (int c)
   if (NULL == uart) {
     return -1;
   }
-#if configBSP430_CONSOLE_USE_ONLCR - 0
-  if ('\n' == c) {
-    iBSP430uartPutChar('\r', uart);
-  }
-#endif /* configBSP430_CONSOLE_USE_ONLCR */
-  return iBSP430uartPutChar(c, uart);
+  return emit_char2_ni(c, uart);
 }
-
-/* Optimized version used inline.  Assumes that the uart is not
- * null. */
-static
-__inline__
-int
-emit_char2_ni (int c, xBSP430uartHandle uart)
-{
-#if configBSP430_CONSOLE_USE_ONLCR - 0
-  if ('\n' == c) {
-    iBSP430uartPutChar('\r', uart);
-  }
-#endif /* configBSP430_CONSOLE_USE_ONLCR */
-  return iBSP430uartPutChar(c, uart);
-}
-
 
 #if configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0
 int putchar (c)

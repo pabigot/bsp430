@@ -206,7 +206,8 @@ static void
 __attribute__((__interrupt__(%(BASEINSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-  %(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
+  int rv = %(periph)s_isr(xBSP430%(periph)s_%(INSTANCE)s);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',

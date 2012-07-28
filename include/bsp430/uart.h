@@ -70,17 +70,14 @@ xBSP430uartOpen (xBSP430periphHandle xPeriph,
   return xBSP430usciOpenUART(xPeriph, control_word, baud);
 }
 
-#if configBSP430_RTOS_FREERTOS - 0
 static __inline__ int
-iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
-                            xQueueHandle rx_queue,
-                            xQueueHandle tx_queue)
+iBSP430uartConfigureCallbacks (xBSP430uartHandle uart,
+                               const struct xBSP430periphISRCallbackVoid * rx_callback,
+                               const struct xBSP430periphISRCallbackVoid * tx_callback)
 {
-  return iBSP430usciConfigureQueues(xUART, rx_queue, tx_queue);
+  return iBSP430usciConfigureCallbacks(uart, rx_callback, tx_callback);
 }
-#endif /* configBSP430_RTOS_FREERTOS */
 
-static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
 {
   return iBSP430usciClose(xUART);
@@ -122,15 +119,13 @@ xBSP430uartOpen (xBSP430periphHandle xPeriph,
   return xBSP430usci5OpenUART(xPeriph, control_word, baud);
 }
 
-#if configBSP430_RTOS_FREERTOS - 0
 static __inline__ int
-iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
-                            xQueueHandle rx_queue,
-                            xQueueHandle tx_queue)
+iBSP430uartConfigureCallbacks (xBSP430uartHandle uart,
+                               const struct xBSP430periphISRCallbackVoid * rx_callback,
+                               const struct xBSP430periphISRCallbackVoid * tx_callback)
 {
-  return iBSP430usci5ConfigureQueues(xUART, rx_queue, tx_queue);
+  return iBSP430usci5ConfigureCallbacks(uart, rx_callback, tx_callback);
 }
-#endif /* configBSP430_RTOS_FREERTOS */
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
@@ -175,15 +170,13 @@ xBSP430uartOpen (xBSP430periphHandle xPeriph,
   return xBSP430eusciaOpenUART(xPeriph, control_word, baud);
 }
 
-#if configBSP430_RTOS_FREERTOS - 0
 static __inline__ int
-iBSP430uartConfigureQueues (xBSP430uartHandle xUART,
-                            xQueueHandle rx_queue,
-                            xQueueHandle tx_queue)
+iBSP430uartConfigureCallbacks (xBSP430uartHandle uart,
+                               const struct xBSP430periphISRCallbackVoid * rx_callback,
+                               const struct xBSP430periphISRCallbackVoid * tx_callback)
 {
-  return iBSP430eusciaConfigureQueues(xUART, rx_queue, tx_queue);
+  return iBSP430eusciaConfigureCallbacks(uart, rx_callback, tx_callback);
 }
-#endif /* configBSP430_RTOS_FREERTOS */
 
 static __inline__ int
 iBSP430uartClose (xBSP430uartHandle xUART)
@@ -192,15 +185,15 @@ iBSP430uartClose (xBSP430uartHandle xUART)
 }
 
 static __inline__ int
-iBSP430uartPutChar (int c, xBSP430uartHandle xUART)
+iBSP430uartPutByte_ni (int c, xBSP430uartHandle xUART)
 {
-  return iBSP430eusciaPutc(c, xUART);
+  return iBSP430eusciaPutByte_ni(c, xUART);
 }
 
 static __inline__ int
-iBSP430uartPutString (const char * str, xBSP430uartHandle xUART)
+iBSP430uartPutASCIIZ_ni (const char * str, xBSP430uartHandle xUART)
 {
-  return iBSP430eusciaPuts(str, xUART);
+  return iBSP430eusciaPutASCIIZ_ni(str, xUART);
 }
 
 #endif /* configBSP430_UART_USE_EUSCI */

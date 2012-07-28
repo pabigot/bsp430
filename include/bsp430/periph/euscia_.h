@@ -57,16 +57,6 @@ struct xBSP430eusciaState {
   /** Pointer to the peripheral register structure. */
   volatile xBSP430periphEUSCIA * const euscia;
 
-#if configBSP430_RTOS_FREERTOS - 0
-  /** Queue used to collect input via interrupt.  If null,
-   * interrupts are not used for reception. */
-  xQueueHandle rx_queue;
-
-  /** Queue used to transmit output via interrupt.  If null,
-   * interrupts are not used for transmission. */
-  xQueueHandle tx_queue;
-#endif /* configBSP430_RTOS_FREERTOS */
-
   /** Location to store a single incoming character when #rx_queue
    * is undefined. */
   uint8_t rx_byte;
@@ -74,6 +64,13 @@ struct xBSP430eusciaState {
   /** Location to store a single outgoing character when #tx_queue
    * is undefined.  This is probably not very useful. */
   uint8_t tx_byte;
+
+  /** The callback chain to invoke when a byte is received */
+  const struct xBSP430periphISRCallbackVoid * rx_callback;
+
+  /** The callback chain to invoke when space is available in the
+   * transmission buffer */
+  const struct xBSP430periphISRCallbackVoid * tx_callback;
 
   /** Total number of received octets */
   unsigned long num_rx;

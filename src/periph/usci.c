@@ -325,7 +325,7 @@ isr_USCIAB0RX (void)
 #endif /* configBSP430_HAL_USCI_B0_ISR */
   if (usci) {
     int rv = usciabrx_isr(usci);
-    if (rv & BSP430_PERIPH_ISR_DISABLE_INTERRUPT) {
+    if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
       *usci->iep &= ~usci->rx_bit;
     }
     BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
@@ -349,7 +349,7 @@ usciabtx_isr (xBSP430usciHandle device)
   if (device->tx_queue) {
     rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
     if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
-      rv |= BSP430_PERIPH_ISR_DISABLE_INTERRUPT;
+      rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
     }
     if (yield) {
       rv |= BSP430_PERIPH_ISR_CALLBACK_YIELD;
@@ -383,7 +383,7 @@ isr_USCIAB0TX (void)
 #endif /* configBSP430_HAL_USCI_B0_ISR */
   if (usci) {
     int rv = usciabtx_isr(usci);
-    if (rv & BSP430_PERIPH_ISR_DISABLE_INTERRUPT) {
+    if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
       *usci->iep &= ~usci->tx_bit;
     }
     BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);

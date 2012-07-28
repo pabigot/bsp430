@@ -156,7 +156,22 @@ struct xBSP430periphISRCallbackIndexed;
  * #iBSP430periphISRCallbackVoid and #iBSP430periphISRCallbackIndexed
  * to indicate that the top-half should clear the corresponding IE bit
  * before returning returns. */
-#define BSP430_PERIPH_ISR_DISABLE_INTERRUPT 0x2000
+#define BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT 0x2000
+
+/** Indicate that no further ISR callbacks should be invoked.
+ *
+ * In some cases, a handler can determine that no subsequent handler in
+ * the chain should be invoked.  For example, a USCI interrupt is
+ * raised when there is space in the transmission buffer, and the
+ * callback chain is invoked.  The first handler in the chain that can
+ * provide data for transmission should store it in the context and
+ * return this flag.  Subsequent handlers will not be invoked, and the
+ * ISR itself will be informed whether data has been made available.
+ *
+ * (The value of this flag is specifically selected to be a value
+ * supported by the constant generator, to optimize the callback
+ * loop.) */
+#define BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN 0x0001
 
 /** Callback for ISR chains that require no special arguments.
  *
@@ -170,7 +185,7 @@ struct xBSP430periphISRCallbackIndexed;
  *
  * @return An integral value used by the ISR top half to wake up from
  * low power modes and otherwise affect subsequent execution.  It
- * should be a combination of bits like LPM4_bits and
+ * should be a combination of bits like #LPM4_bits and
  * #BSP430_PERIPH_ISR_CALLBACK_YIELD.
  */
 typedef int (* iBSP430periphISRCallbackVoid) (const struct xBSP430periphISRCallbackVoid * cb,
@@ -232,7 +247,7 @@ iBSP430callbackInvokeISRVoid_ni (const struct xBSP430periphISRCallbackVoid * con
                                  void * context,
                                  int basis)
 {
-  while (*cbpp) {
+  while (*cbpp && ! (basis & BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN)) {
     basis |= (*cbpp)->callback(*cbpp, context);
     cbpp = &(*cbpp)->next;
   }
@@ -256,7 +271,7 @@ iBSP430callbackInvokeISRIndexed_ni (const struct xBSP430periphISRCallbackIndexed
                                     int idx,
                                     int basis)
 {
-  while (*cbpp) {
+  while (*cbpp && ! (basis & BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN)) {
     basis |= (*cbpp)->callback(*cbpp, context, idx);
     cbpp = &(*cbpp)->next;
   }
