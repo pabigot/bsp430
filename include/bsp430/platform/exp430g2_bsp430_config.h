@@ -48,4 +48,13 @@
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
+#if defined(BSP430_DOXYGEN)                                     \
+  || ((configBSP430_PLATFORM_TIMER_CCACLK - 0)                  \
+      && ! defined(BSP430_BSP430_PLATFORM_TIMER_CCACLK))
+#if defined(__MSP430G2553__)
+/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
+#define configBSP430_PERIPH_TA0 1
+#endif /* MCU */
+#endif /* configBSP430_PLATFORM_TIMER_CCACLK && need default */
+
 #endif /* BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H */

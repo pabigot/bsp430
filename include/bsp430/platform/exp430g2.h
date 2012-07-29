@@ -54,6 +54,19 @@
 /** Where clocks are found on this platform */
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
 
+#if defined(BSP430_DOXYGEN)                                     \
+  || ((configBSP430_PLATFORM_TIMER_CCACLK - 0)                  \
+      && ! defined(BSP430_BSP430_PLATFORM_TIMER_CCACLK))
+#if defined(__MSP430G2553__)
+/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK. @defaulted */
+#define BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA0
+/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
+#define BSP430_PLATFORM_TIMER_CCACLK_CC_INDEX 0
+/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
+#define BSP430_PLATFORM_TIMER_CCACLK_CCIS CCIS_1
+#endif /* MCU */
+#endif /* configBSP430_PLATFORM_TIMER_CCACLK && need default */
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
