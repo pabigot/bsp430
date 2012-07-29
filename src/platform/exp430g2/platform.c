@@ -111,21 +111,23 @@ void vBSP430platformSetup_ni (void)
 void
 vBSP430platformSpinForJumper_ni (void)
 {
-  /* P2.6 I/O input with pullup */
+  /* P1.4 output low, P1.5 configured with pullup */
+  P1DIR |= BIT4;
+  P1OUT &= ~BIT4;
+  P1DIR &= ~BIT5;
+  P1REN |= BIT5;
+  P1OUT |= BIT5;
   P2DIR &= ~BIT6;
-  P2SEL &= ~BIT6;
-  P2REN |= BIT6;
-  P2OUT |= BIT6;
 
   /* Flash LEDs alternately while waiting */
   P1OUT |= BIT0;
-  while (! (P2IN & BIT6)) {
-    __delay_cycles(100000);
+  while (! (P1IN & BIT5)) {
+    __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 10);
     P1OUT ^= BIT0 | BIT6;
   }
 
-  /* Restore P2.6 and LEDs */
-  P1OUT &= ~(BIT0 | BIT6);
-  P2DIR |= BIT6;
-  P2REN &= ~BIT6;
+  /* Restore P1.4, P1.5, and LEDs */
+  P1OUT &= ~(BIT0 | BIT4 | BIT5 | BIT6);
+  P1DIR |= BIT5;
+  P1REN &= ~BIT5;
 }

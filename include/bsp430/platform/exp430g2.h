@@ -37,12 +37,9 @@
  *
  * The following platform-specific features are supported: <ul>
  *
- * <li> #vBSP430platformSpinForJumper_ni The jumper for this platform
- * is P2.7, labelled XIN and located at the top of the right header.
- * Place the jumper between P2.7 and GND.
- *
- * <li> #BSP430_PERIPH_EXPOSED_CLOCKS ACLK is made available on P1.0
- * which is also the red LED.  SMCLK is made available on P1.4.
+ * <li> #vBSP430platformSpinForJumper_ni The jumper pair for this
+ * platform is P1.4 and P1.5, located in the left header.  Place the
+ * jumper across these pins.
  *
  * </ul>
  */
