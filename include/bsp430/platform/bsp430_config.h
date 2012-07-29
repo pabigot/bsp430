@@ -32,6 +32,13 @@
 /** @file
  * @brief BSP430 configuration directives for generic platform support
  *
+ * This simplifies management of application-specific bsp430_config.h
+ * files.  First define anything for your application, then include
+ * this file.  This file will first include any platform-specific
+ * files, then will provide BSP430-generic recommended defaults.
+ *
+ * Each inclusion will respect previous configuration values.
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -41,24 +48,40 @@
 #ifndef BSP430_PLATFORM_BSP430_CONFIG_H
 #define BSP430_PLATFORM_BSP430_CONFIG_H
 
+/* Include the platform-specific overrides first */
+/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */
+/* !BSP430! insert=platform_bsp430_config */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430F5438 - 0)
+#include <bsp430/platform/exp430f5438_bsp430_config.h>
+#endif /* BSP430_PLATFORM_EXP430F5438 */
+
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430FR5739 - 0)
+#include <bsp430/platform/exp430fr5739_bsp430_config.h>
+#endif /* BSP430_PLATFORM_EXP430FR5739 */
+
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430FG4618 - 0)
+#include <bsp430/platform/exp430fg4618_bsp430_config.h>
+#endif /* BSP430_PLATFORM_EXP430FG4618 */
+
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430G2 - 0)
+#include <bsp430/platform/exp430g2_bsp430_config.h>
+#endif /* BSP430_PLATFORM_EXP430G2 */
+
+/* END AUTOMATICALLY GENERATED CODE [platform_bsp430_config] */
+/* !BSP430! end=platform_bsp430_config */
+
 /** Platform support should normally include uptime
  * @defaulted */
 #ifndef configBSP430_UPTIME
 #define configBSP430_UPTIME 1
 #endif /* configBSP430_UPTIME */
 
-/** Requirements to support uptime, if desired
+/** Requirements to support uptime (if that is enabled)
  * @defaulted */
 #if configBSP430_UPTIME - 0
 #define configBSP430_HAL_TA0 1
 #endif /* configBSP430_UPTIME */
-
-#if BSP430_PLATFORM_EXP430F5438 - 0
-#define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE xBSP430periph_TB0
-#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX 6
-#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS CCIS_1
-#define configBSP430_PERIPH_TB0 1
-#endif
 
 /** @def BSP430_CONSOLE_UART_PERIPH_HANDLE
  *
@@ -71,13 +94,15 @@
  * <li>EUSCI selects #BSP430_PERIPH_EUSCI_A0.
  * </ul>
  *
- * If a definition was not already provided and tf the corresponding
+ * If a definition was not already provided and the the corresponding
  * peripheral is identified as being available on the target MCU, the
  * macro is defined to the specified handle and the HAL configuration
  * for that instance is defaulted to true.
  *
  * If no supported UART peripheral is identified, no default value is
  * assigned.
+ *
+ * @defaulted
  */
 #ifndef BSP430_CONSOLE_UART_PERIPH_HANDLE
 #if defined(BSP430_DOXYGEN)
@@ -87,7 +112,8 @@
 #if defined(__MSP430_HAS_USCI__)
 #define BSP430_CONSOLE_UART_PERIPH_HANDLE BSP430_PERIPH_USCI_A0
 #ifndef configBSP430_HAL_USCI_A0
-/** Default to enable use of console device */
+/** Default to enable use of console device
+ * @defaulted */
 #define configBSP430_HAL_USCI_A0 1
 #endif /* configBSP430_HAL_USCI_A0 */
 #endif /* __MSP430_HAS_USCI__ */
@@ -95,7 +121,8 @@
 #if defined(__MSP430_HAS_USCI_A0__)
 #define BSP430_CONSOLE_UART_PERIPH_HANDLE BSP430_PERIPH_USCI5_A1
 #ifndef configBSP430_HAL_USCI5_A1
-/** Default to enable use of console device */
+/** Default to enable use of console device
+ * @defaulted */
 #define configBSP430_HAL_USCI5_A1 1
 #endif /* configBSP430_HAL_USCI5_A1 */
 #endif /* __MSP430_HAS_USCI_A0__ */
@@ -103,11 +130,13 @@
 #if defined(__MSP430_HAS_EUSCI_A0__)
 #define BSP430_CONSOLE_UART_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A0
 #ifndef configBSP430_HAL_EUSCI_A0
-/** Default to enable use of console device */
+/** Default to enable use of console device
+ * @defaulted */
 #define configBSP430_HAL_EUSCI_A0 1
 #endif /* configBSP430_HAL_EUSCI_A0 */
 #endif /* __MSP430_HAS_EUSCI_A0__ */
 
 #endif /* BSP430_CONSOLE_UART_PERIPH_HANDLE */
+
 
 #endif /* BSP430_PLATFORM_BSP430_CONFIG_H */

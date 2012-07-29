@@ -125,7 +125,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #define BSP430_PLATFORM_EXP430F5438 0
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
-#if BSP430_PLATFORM_EXP430F5438 - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430F5438 - 0)
 #include <bsp430/platform/exp430f5438.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
@@ -142,7 +142,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #define BSP430_PLATFORM_EXP430FR5739 0
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
-#if BSP430_PLATFORM_EXP430FR5739 - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430FR5739 - 0)
 #include <bsp430/platform/exp430fr5739.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
@@ -159,7 +159,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #define BSP430_PLATFORM_EXP430FG4618 0
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
-#if BSP430_PLATFORM_EXP430FG4618 - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430FG4618 - 0)
 #include <bsp430/platform/exp430fg4618.h>
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
@@ -176,7 +176,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #define BSP430_PLATFORM_EXP430G2 0
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
-#if BSP430_PLATFORM_EXP430G2 - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430G2 - 0)
 #include <bsp430/platform/exp430g2.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
 

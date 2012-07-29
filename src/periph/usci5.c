@@ -134,7 +134,7 @@ iBSP430usci5ConfigureCallbacks (xBSP430usci5Handle device,
   FLUSH_HPL_NI(device->usci5);
   device->usci5->ctlw0 |= UCSWRST;
   if (device->rx_callback || device->tx_callback) {
-     rc = -1;
+    rc = -1;
   } else {
     device->rx_callback = rx_callback;
     device->tx_callback = tx_callback;

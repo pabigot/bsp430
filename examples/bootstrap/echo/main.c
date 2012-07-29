@@ -69,7 +69,7 @@ tx_callback (const struct xBSP430periphISRCallbackVoid * cb,
 {
   xBSP430uartHandle device = (xBSP430uartHandle)context;
   int rv = 0;
-  
+
   vBSP430ledSet(1, 0);
 
   /* If there's a pending character, store it in the transmission
@@ -97,7 +97,7 @@ const struct xBSP430periphISRCallbackVoid tx_entry = {
 void main ()
 {
   xBSP430uartHandle tty0 = NULL;
-  
+
   /* First thing you do in main is configure the platform. */
   vBSP430platformSetup_ni();
 

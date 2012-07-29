@@ -291,8 +291,13 @@ isr_%(INSTANCE)s (void)
 #define BSP430_PLATFORM_%(INSTANCE)s 0
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */
 
-#if BSP430_PLATFORM_%(INSTANCE)s - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_%(INSTANCE)s - 0)
 #include <bsp430/platform/%(instance)s.h>
+#endif /* BSP430_PLATFORM_%(INSTANCE)s */
+''',
+
+    'platform_bsp430_config' : '''#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_%(INSTANCE)s - 0)
+#include <bsp430/platform/%(instance)s_bsp430_config.h>
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */
 ''',
 
