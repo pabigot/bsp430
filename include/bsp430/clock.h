@@ -85,6 +85,32 @@
 #define BSP430_CLOCK_NOMINAL_MCLK_HZ 7948800U
 #endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
 
+/** @def BSP430_CLOCK_DISABLE_FLL
+ *
+ * This macro may be defined to a true value to request that BSP430
+ * attempt to ensure #SCG0 remain set, preventing the FLL from
+ * changing the DCO configuration without application intervention.
+ * Its primary effect is in the selection of bits cleared when leaving
+ * interrupts.
+ * 
+ * The UCS peripheral has several errata which result in severe clock
+ * instabilities when the FLL is allowed to run unmanaged.  These
+ * include UCS7 ("DCO drifts when servicing short ISRs when in LPM0 or
+ * exiting active from ISRs for short periods of time" and UCS10
+ * ("Modulation causes shift in DCO frequency").  The latter is
+ * documented in <a href="http://www.ti.com/lit/pdf/SLAA489">UCS10
+ * Guidance</a>.  The BSP430 function #ulBSP430ucsTrimFLL_ni function
+ * is provided to support UCS10 workaround.
+ *
+ * Stability in the presence of UCS7 and UCS10 may be further enhanced
+ * by setting this option.  It is made generic in case there are other
+ * cases where #SCG0 should not be cleared on wakeup.
+ *
+ * @defaulted  */
+#ifndef BSP430_CLOCK_DISABLE_FLL
+#define BSP430_CLOCK_DISABLE_FLL 0
+#endif /* BSP430_CLOCK_DISABLE_FLL */
+
 /** @def BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
  *
  * SMCLK is normally configured to divide another clock by shifting it
@@ -109,26 +135,6 @@
 #ifndef BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
 #define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 0
 #endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
-
-/** @def BSP430_CLOCK_DISABLE_FLL
- *
- * The UCS peripheral has several errata which result in severe clock
- * instabilities when the FLL is allowed to run unmanaged.  These
- * include UCS7 ("DCO drifts when servicing short ISRs when in LPM0 or
- * exiting active from ISRs for short periods of time" and UCS10
- * ("Modulation causes shift in DCO frequency").  The latter is
- * documented in <a href="http://www.ti.com/lit/pdf/SLAA489">UCS10
- * Guidance</a>.  The BSP430 function #ulBSP430ucsTrimFLL_ni function
- * is provided to support UCS10 workaround.  To further reduce the
- * likelihood either erratum affects clock stability, this macro may
- * be defined to a true value to request that BSP430 ensure that #SCG0
- * remain set, preventing the FLL from changing the DCO configuration
- * without application intervention.
- *
- * @defaulted  */
-#ifndef BSP430_CLOCK_DISABLE_FLL
-#define BSP430_CLOCK_DISABLE_FLL 0
-#endif /* BSP430_CLOCK_DISABLE_FLL */
 
 /** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
  *
@@ -164,115 +170,6 @@
 #ifndef BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
 #define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES 100000UL
 #endif /* BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
-
-/** Return the best available estimate of MCLK frequency.
- *
- * Depending on clock capabilities, this may simply return
- * #BSP430_CLOCK_NOMINAL_MCLK_HZ, or it may return a value calculated
- * from observations.
- *
- * @return an estimate of the MCLK frequency, in Hz */
-unsigned long ulBSP430clockMCLK_Hz_ni (void);
-
-/** Interruptible-preserving wrapper for #ulBSP430clockMCLK_Hz_ni */
-static unsigned long
-__inline__
-ulBSP430clockMCLK_Hz (void)
-{
-  unsigned long rv;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  rv = ulBSP430clockMCLK_Hz_ni();
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
-}
-
-/** Return the shift used to divide MCLK to produce SMCLK.
- *
- * This is extracted from the peripheral-specific registers and
- * accounts for any division by MCLK of a shared source clock.
- *
- * @return The power of 2 by which MCLK is divided to produce SMCLK. */
-int iBSP430clockSMCLKDividingShift_ni (void);
-
-/** Configure SMCLK by dividing MCLK.
- *
- * The peripheral clock registers are configured to produce SMCLK from
- * the same source as MCLK at a rate where SMCLK divides MCLK by a
- * specified power of two.  The range of supported shift values is
- * specific to the peripheral.  Where MCLK is itself divided, the
- * underlying implementation will take that into account.
- *
- * See also #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT.
- *
- * @param shift_pos the number of bit positions by which the incoming
- * clock is divided; e.g. a value of 2 produces /4.
- *
- * @return iBSP430clockSMCLKDividingShift_ni() as evaluated after the
- * configuration is complete */
-int iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos);
-
-/** Return the best available estimate of SMCLK frequency.
- *
- * This simply estimates MCLK then divides it based on the
- * peripheral-specific divider.  If clocks are configured through a
- * mechanism other than #ulBSP430clockConfigureMCLK_ni assumptions
- * made by the implementation may be incorrect.
- *
- * @return an estimate of the SMCLK frequency, in Hz */
-static unsigned long
-__inline__
-ulBSP430clockSMCLK_Hz_ni (void)
-{
-  unsigned long mclk_hz = ulBSP430clockMCLK_Hz_ni();
-  return mclk_hz >> iBSP430clockSMCLKDividingShift_ni();
-}
-
-/** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
-static unsigned long
-__inline__
-ulBSP430clockSMCLK_Hz (void)
-{
-  unsigned long rv;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  rv = ulBSP430clockSMCLK_Hz_ni();
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
-}
-
-/** Return the best available estimate of ACLK frequency.
- *
- * Depending on clock capabilities, this may simply return the
- * peripheral-specific value of #BSP430_CLOCK_NOMINAL_ACLK_HZ, or it
- * may return a value calculated from observations.
- *
- * @note When considering whether to use this function or the macro
- * #BSP430_CLOCK_NOMINAL_ACLK_HZ, recall that the generic definition
- * of the macro will defer to #BSP430_CLOCK_NOMINAL_VLOCLK_HZ if there
- * is an oscillator fault in the system, while this function will
- * check whether ACLK is sourced from LFXT1, and if so whether there
- * is a fault specific to that oscillator.  The two forms (function
- * versus macro) may yield different results.
- *
- * @return an estimate of the ACLK frequency, in Hz */
-unsigned short usBSP430clockACLK_Hz_ni (void);
-
-/** Interruptible-preserving wrapper for usBSP430clockACLK_Hz_ni() */
-static unsigned short
-__inline__
-usBSP430clockACLK_Hz (void)
-{
-  unsigned short rv;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  rv = usBSP430clockACLK_Hz_ni();
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
-}
 
 /** Check whether the LFXT1 crystal has a fault condition.
  *
@@ -344,6 +241,97 @@ usBSP430clockACLK_Hz (void)
 #define BSP430_CLOCK_NOMINAL_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : 32768U)
 #endif /* BSP430_CLOCK_NOMINAL_ACLK_HZ */
 
+/** Configure MCLK to a desired frequency.
+ *
+ * The peripheral-specific implementation will configure MCLK to a
+ * frequency as close as possible to the requested frequency.  The
+ * actual frequency may be higher or lower than the requested one.
+ *
+ * @param mclk_Hz Desired frequency for the master clock, in Hz
+ *
+ * @return Configured frequency in Hz.  This may be higher or lower
+ * than the requested frequency.
+ */
+unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
+
+/** Return the best available estimate of MCLK frequency.
+ *
+ * Depending on clock capabilities, this may simply return
+ * #BSP430_CLOCK_NOMINAL_MCLK_HZ, or it may return a value calculated
+ * from observations.
+ *
+ * @return an estimate of the MCLK frequency, in Hz */
+unsigned long ulBSP430clockMCLK_Hz_ni (void);
+
+/** Interruptible-preserving wrapper for #ulBSP430clockMCLK_Hz_ni */
+static unsigned long
+__inline__
+ulBSP430clockMCLK_Hz (void)
+{
+  unsigned long rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = ulBSP430clockMCLK_Hz_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+/** Configure SMCLK by dividing MCLK.
+ *
+ * The peripheral clock registers are configured to produce SMCLK from
+ * the same source as MCLK at a rate where SMCLK divides MCLK by a
+ * specified power of two.  The range of supported shift values is
+ * specific to the peripheral.  Where MCLK is itself divided, the
+ * underlying implementation will take that into account.
+ *
+ * See also #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT.
+ *
+ * @param shift_pos the number of bit positions by which the incoming
+ * clock is divided; e.g. a value of 2 produces /4.
+ *
+ * @return iBSP430clockSMCLKDividingShift_ni() as evaluated after the
+ * configuration is complete */
+int iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos);
+
+/** Return the shift used to divide MCLK to produce SMCLK.
+ *
+ * This is extracted from the peripheral-specific registers and
+ * accounts for any division by MCLK of a shared source clock.
+ *
+ * @return The power of 2 by which MCLK is divided to produce SMCLK. */
+int iBSP430clockSMCLKDividingShift_ni (void);
+
+/** Return the best available estimate of SMCLK frequency.
+ *
+ * This simply estimates MCLK then divides it based on the
+ * peripheral-specific divider.  If clocks are configured through a
+ * mechanism other than #ulBSP430clockConfigureMCLK_ni assumptions
+ * made by the implementation may be incorrect.
+ *
+ * @return an estimate of the SMCLK frequency, in Hz */
+static unsigned long
+__inline__
+ulBSP430clockSMCLK_Hz_ni (void)
+{
+  unsigned long mclk_hz = ulBSP430clockMCLK_Hz_ni();
+  return mclk_hz >> iBSP430clockSMCLKDividingShift_ni();
+}
+
+/** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
+static unsigned long
+__inline__
+ulBSP430clockSMCLK_Hz (void)
+{
+  unsigned long rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = ulBSP430clockSMCLK_Hz_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
 /** Configure (or deconfigure) XT1 as a clock source.
  *
  * The peripheral-specific implementation will use
@@ -376,18 +364,36 @@ usBSP430clockACLK_Hz (void)
 int iBSP430clockConfigureXT1_ni (int enablep,
                                  int loop_limit);
 
-/** Configure MCLK to a desired frequency.
+/** Return the best available estimate of ACLK frequency.
  *
- * The peripheral-specific implementation will configure MCLK to a
- * frequency as close as possible to the requested frequency.  The
- * actual frequency may be higher or lower than the requested one.
+ * Depending on clock capabilities, this may simply return the
+ * peripheral-specific value of #BSP430_CLOCK_NOMINAL_ACLK_HZ, or it
+ * may return a value calculated from observations.
  *
- * @param mclk_Hz Desired frequency for the master clock, in Hz
+ * @note When considering whether to use this function or the macro
+ * #BSP430_CLOCK_NOMINAL_ACLK_HZ, recall that the generic definition
+ * of the macro will defer to #BSP430_CLOCK_NOMINAL_VLOCLK_HZ if there
+ * is an oscillator fault in the system, while this function will
+ * check whether ACLK is sourced from LFXT1, and if so whether there
+ * is a fault specific to that oscillator.  The two forms (function
+ * versus macro) may yield different results.
  *
- * @return Configured frequency in Hz.  This may be higher or lower
- * than the requested frequency.
- */
-unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
+ * @return an estimate of the ACLK frequency, in Hz */
+unsigned short usBSP430clockACLK_Hz_ni (void);
+
+/** Interruptible-preserving wrapper for usBSP430clockACLK_Hz_ni() */
+static unsigned short
+__inline__
+usBSP430clockACLK_Hz (void)
+{
+  unsigned short rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = usBSP430clockACLK_Hz_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
 
 /* Include peripheral-specific header where recognized */
 #if defined(__MSP430_HAS_BC2__)
