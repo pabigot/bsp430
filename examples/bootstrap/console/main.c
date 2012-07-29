@@ -39,9 +39,6 @@ make AUX_CPPFLAGS='-DconfigBSP430_CORE_SUPPORT_WATCHDOG=1 -DBSP430_CLOCK_LFXT1_S
 /* We're going to use a console. */
 #include <bsp430/utility/console.h>
 
-/* And we need NULL */
-#include <stddef.h>
-
 void main ()
 {
   xBSP430serialHandle console_handle;

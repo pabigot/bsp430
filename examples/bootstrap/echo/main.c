@@ -33,9 +33,6 @@
 /* We're going to use a console. */
 #include <bsp430/utility/console.h>
 
-/* And we need NULL */
-#include <stddef.h>
-
 /* The buffer in which pending characters are placed.  A negative
  * value indicates the space is available. */
 int to_tx = -1;
