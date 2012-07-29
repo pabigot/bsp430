@@ -90,24 +90,41 @@ void vBSP430platformSetup_ni (void);
  */
 int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enablep);
 
+/** @def configBSP430_PLATFORM_SPIN_FOR_JUMPER
+ *
+ * Define to a true value to enable the
+ * vBSP430platformSpinForJumper_ni() function, and to inform generic
+ * applications that it should be used.
+ * 
+ * @defaulted */
+#ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
+#define configBSP430_PLATFORM_SPIN_FOR_JUMPER 0
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+
 /** Block until a platform-specific jumper has been removed.
  *
  * Several platforms that use a TIUSB device to provide serial port
- * emulation, including the MSP430 Launchpad and the EXP430FR5739,
- * must not transmit any data while the driver is initializing.  We
- * need a way to hold off an installed application from writing to the
- * serial port until that's happened.  What we do is, if a
- * platform-specific pin is grounded, block until it's released.  When
- * plugging in a device for the first time, place a jumper connecting
- * that pin to ground, wait for the driver to load, then remove the
- * jumper.
+ * emulation, including the MSP430 LaunchPad and the EXP430FR5739,
+ * must not transmit any data while a driver is initializing,
+ * especially on Linux systems.  We need a way to hold off an
+ * installed application from writing to the serial port until that's
+ * happened.  What we do is, if a platform-specific pin is grounded,
+ * block until it's released.  When plugging in a device for the first
+ * time, place a jumper connecting that pin to ground, wait for the
+ * driver to load, then remove the jumper.
  *
  * The platform-specific header should document whether this function
  * is supported, and if it is what jumper configuration is recognized.
  *
  * @note vBSP430ledInitialize_ni() must have been invoked before this
- * function is called. */
+ * function is called.
+ *
+ * @note This function is available only if
+ * #configBSP430_PLATFORM_SPIN_FOR_JUMPER is defined to a true
+ * value. */
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0)
 void vBSP430platformSpinForJumper_ni (void);
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 /* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */

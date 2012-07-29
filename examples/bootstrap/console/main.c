@@ -52,6 +52,10 @@ void main ()
   /* Now initialize the LEDs */
   vBSP430ledInitialize_ni();
 
+#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+  vBSP430platformSpinForJumper_ni();
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+
   /* Turn the first one on */
   vBSP430ledSet(0, 1);
 

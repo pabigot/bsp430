@@ -53,6 +53,11 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FG4618 1
 
+/* Warn on reference to unsupported feature */
+#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#warning configBSP430_PLATFORM_SPIN_FOR_JUMPER set but vBSP430platformSpinForJumper_ni not supported
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
