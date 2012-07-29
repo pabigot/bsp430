@@ -64,6 +64,8 @@ void main ()
   cputul_ni(ulBSP430clockSMCLK_Hz_ni(), 10);
   cputtext_ni("\nCrystal stabilization delay per iteration: ");
   cputul_ni(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, 10);
+  cputtext_ni("\nBoot crystal stabilization delay (seconds): ");
+  cputu_ni(BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC, 10);
   cputtext_ni("\nLFXT1 shows ");
   cputtext_ni(BSP430_CLOCK_LFXT1_IS_FAULTED() ? "FAULT" : "ok");
   cputtext_ni("\nNominal VLOCLK (Hz): ");
