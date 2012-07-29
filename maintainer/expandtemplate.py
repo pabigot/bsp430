@@ -245,7 +245,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
 ''',
     
-    'periph_hal_demux' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
+    'periph_hal_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
     return xBSP430%(periph)s_%(INSTANCE)s;
   }
@@ -257,7 +257,7 @@ static struct xBSP430portState state_%(INSTANCE)s = {
   .port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
 };
 xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+#endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
     'hal_port_5xx_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0

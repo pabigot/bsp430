@@ -360,19 +360,19 @@ static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_HAL_EUSCI_A0 - 0
+#if configBSP430_PERIPH_EUSCI_A0 - 0
   if (BSP430_PERIPH_EUSCI_A0 == periph) {
     return xBSP430euscia_EUSCI_A0;
   }
 #endif /* configBSP430_PERIPH_EUSCI_A0 */
 
-#if configBSP430_HAL_EUSCI_A1 - 0
+#if configBSP430_PERIPH_EUSCI_A1 - 0
   if (BSP430_PERIPH_EUSCI_A1 == periph) {
     return xBSP430euscia_EUSCI_A1;
   }
 #endif /* configBSP430_PERIPH_EUSCI_A1 */
 
-#if configBSP430_HAL_EUSCI_A2 - 0
+#if configBSP430_PERIPH_EUSCI_A2 - 0
   if (BSP430_PERIPH_EUSCI_A2 == periph) {
     return xBSP430euscia_EUSCI_A2;
   }
