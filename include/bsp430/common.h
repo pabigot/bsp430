@@ -90,7 +90,7 @@
 #include "bsp430_config.h"
 #endif /* configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE */
 
-/** @def configBSP430_CORE_USE_WATCHDOG
+/** @def configBSP430_CORE_SUPPORT_WATCHDOG
  *
  * Control use of the watchdog infrastructure by BSP430.
  *
@@ -121,7 +121,7 @@
  *
  * @warning To reduce preprocessor conditionals in the core library,
  * this macro is unconditionally bound to a no-op if
- * #configBSP430_CORE_USE_WATCHDOG is false, even if it has been
+ * #configBSP430_CORE_SUPPORT_WATCHDOG is false, even if it has been
  * previously defined to a different value.
  *
  * @defaulted */
