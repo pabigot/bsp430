@@ -96,6 +96,204 @@
 #define configBSP430_SERIAL_USE_EUSCIA defined(__MSP430_HAS_EUSCI_A0__)
 #endif /* configBSP430_SERIAL_USE_EUSCIA */
 
+#if defined(BSP430_DOXYGEN)
+/** An alias for the peripheral-specific HAL handle that supports the
+ * serial HAL abstraction on this platform.
+ *
+ * @delegated This typedef selects #xBSP430usciHandle,
+ * #xBSP430usci5Handle, #xBSP430eusciaHandle, or another
+ * implementation based on peripheral availability. */
+typedef xBSP430serialHandle xBSP430serialHandle;
+#endif
+
+/** Request and configure a serial device in UART mode.
+ *
+ * If callbacks had been associated with this device using
+ * #iBSP430serialConfigureCallbacks(), behavior with respect to
+ * interrupts is as if those callbacks were associated during this
+ * call.
+ *
+ * @param periph The peripheral HPL device identifier for the USCI
+ * device that is being requested. E.g., BSP430_PERIPH_USCI_A0.
+ *
+ * @param control_word The configuration to be written to the device's
+ * ctlw0 word.  If the device does not support a ctlw0 register, the
+ * lower byte is written to ctl0 and the upper byte to ctl1.  Most bit
+ * fields will be assigned from this value, but UCSYNC will be
+ * cleared, and UCSSELx will be set based on baud rate.
+ *
+ * @note In almost all cases, a value of zero is appropriate.  If you
+ * need to configure parity and other control word features, be aware
+ * that #xBSP430periphUSCI5 and #xBSP430periphEUSCIA have the ctl0 and
+ * ctl1 fields swapped relative to their order in #xBSP430periphUSCI.
+ * Since these peripherals have a ctlw0 field, that will be used,
+ * resulting in the lower word being written to ctl1 and the upper
+ * word to ctl0.  This can result in confusion, since constants like
+ * @c UCSYNC are relative to ctl0 for the USCI and USCI5 variants, but
+ * are defined for the ctlw0 position in eUSCI.  Take this up with
+ * Texas Instruments; they defined the register map and the header
+ * constants.
+ *
+ * @param baud The desired baud rate.  This will be configured
+ * automatically.  ACLK will be used as the baud rate clock if ACLK is
+ * both at least 20 kHz and at least three times faster than the
+ * requested baud rate; otherwise SMCLK will be used.  The function
+ * invokes ulBSP430clockSMCLK_Hz() and usBSP430clockACLK_Hz() as
+ * necessary to determine the actual speed of the baud rate clock.
+ *
+ * @return @a A peripheral-specific HAL handle if the allocation and
+ * configuration is successful, and a null handle if something went
+ * wrong.
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+#if defined(BSP430_DOXYGEN)
+xBSP430serialHandle xBSP430serialOpenUART (xBSP430periphHandle periph,
+    unsigned int control_word,
+    unsigned long baud);
+#endif /* BSP430_DOXYGEN */
+
+#if defined(BSP430_DOXYGEN)
+xBSP430serialHandle xBSP430serialOpenSPI (xBSP430periphHandle xPeriph,
+    unsigned int control_word,
+    unsigned int prescaler);
+#endif /* BSP430_DOXYGEN */
+
+/** Assign callbacks for transmission and reception.
+ *
+ * Callbacks are assigned within a critical section.  The code waits
+ * until the device becomes idle, then places it in reset mode.  After
+ * configuration, the receive interrupt is enabled if a receive
+ * callback is registered.  The critical section restores
+ * interruptibility state to its entry state on exit.
+ *
+ * @param device a serial HAL handle.  If (non-null) callbacks are
+ * already associated with this device, an error will be returned and
+ * the previous configuration left unchanged.
+ *
+ * @param rx_callback a pointer to the head of a callback chain to be
+ * used for receiving.  A non-null value enables interrupt-driven
+ * reception, and data will be provided to the callbacks on
+ * receiption.
+ *
+ * @param tx_callback a pointer to the head of a callback chain to be
+ * used for transmission.  A non-null value enables interrupt-driven
+ * transmission, and the chain will be invoked as necessary.  The
+ * infrastructure must be made aware of data to be transmitted, so it
+ * can enable the interrupt that will request the data through the
+ * callback.  This is done using vBSP430serialWakeupTransmit_ni().
+ * The callback function should return
+ * #BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN if data to transmit is
+ * available, and #BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT if it
+ * is known that there will not be data available after the
+ * transmission.
+ *
+ * @return zero if the configuration was successful, a negative value
+ * if something went wrong.
+ *
+ * @note #iBSP430serialClose() does not disassociate the callbacks
+ * from the device.  If the disassociation is desired, it can be done
+ * manually either before or after closing the device by invoking this
+ * function with null callback pointers.
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation.
+ */
+#if defined(BSP430_DOXYGEN)
+int iBSP430serialConfigureCallbacks (xBSP430serialHandle device,
+                                     const struct xBSP430periphISRCallbackVoid * rx_callback,
+                                     const struct xBSP430periphISRCallbackVoid * tx_callback);
+#endif /* BSP430_DOXYGEN */
+
+/** Release a serial device.
+ *
+ * This places the device into reset mode and resets the peripheral
+ * pins to port function.  It does not release or disassociate any
+ * queues that were provided through #iBSP430usciConfigureQueues.
+ *
+ * @param device a serial HAL handle previously obtained through
+ * xBSP430serialOpenUART() or xBSP430serialOpenSPI()
+ *
+ * @return 0 if the close occurred without error.
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+#if defined(BSP430_DOXYGEN)
+int iBSP430serialClose (xBSP430serialHandle device);
+#endif /* BSP430_DOXYGEN */
+
+/** Wake up the interrupt-driven transmission if necessary.
+ *
+ * Normally the transmission infrastructure transmits data as soon as
+ * space is available in the transmission buffer.  The infrastructure
+ * is disabled when the transmit queue is emptied.  When this has
+ * happened, it must be told that more data has been added and the
+ * infrastructure re-enabled.
+ *
+ * For efficiency, this should only be called if it is believed that
+ * data is present in the transmit queue but that the transmission
+ * infrastructure may be idle.
+ *
+ * @param device a serial HAL handle
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+#if defined(BSP430_DOXYGEN)
+void vBSP430serialWakeupTransmit_ni (xBSP430serialHandle device);
+#endif /* BSP430_DOXYGEN */
+
+/** Spin until any in-progress transmission or reception is complete.
+ *
+ * This is used to ensure the device is idle prior to reconfiguring it.
+ *
+ * @param device a serial HAL handle
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+#if defined(BSP430_DOXYGEN)
+void vBSP430serialFlush_ni (xBSP430serialHandle device);
+#endif /* BSP430_DOXYGEN */
+
+/** Transmit a byte over the device.
+ *
+ * This routine should only be invoked when there is no transmit
+ * callback registered.  If a callback is present, it is expected to
+ * be used to provide data for transmission.
+ *
+ * @param c a data byte to be transmitted
+ *
+ * @param device the serial device over which the data should be
+ * transmitted
+ *
+ * @return the input character @a c if transmitted, or -1 if an error
+ * occurred
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+#if defined(BSP430_DOXYGEN)
+int iBSP430serialPutByte_ni (int c, xBSP430serialHandle device);
+#endif /* BSP430_DOXYGEN */
+
+/** Transmit a sequence of bytes, terminated by NUL, over the device.
+ *
+ * This routine should only be invoked when there is no transmit
+ * callback registered.  If a callback is present, it is expected to
+ * be used to provide data for transmission.
+ *
+ * @param str a NUL-terminated sequence of bytes to be transmitted
+ *
+ * @param device the serial device over which the data should be
+ * transmitted
+ *
+ * @return the number of bytes transmitted, or -1 if an error
+ * occurs
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+#if defined(BSP430_DOXYGEN)
+int iBSP430serialPutASCIIZ_ni (const char* str, xBSP430serialHandle device);
+#endif /* BSP430_DOXYGEN */
+
 /** @cond DOXYGEN_EXCLUDE */
 
 #define _DELEGATE_HANDLE(_serial)                       \
