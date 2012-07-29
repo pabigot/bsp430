@@ -30,7 +30,7 @@ void main ()
   int led = 0;
 
   /* First thing you do in main is configure the platform. */
-  vBSP430platformSetup_ni();
+  vBSP430platformInitialize_ni();
 
   /* Now initialize the LEDs */
   vBSP430ledInitialize_ni();

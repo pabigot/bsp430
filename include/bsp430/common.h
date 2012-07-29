@@ -95,7 +95,7 @@
  * Control use of the watchdog infrastructure by BSP430.
  *
  * If defined to a true value, the watchdog will not be inhibited by
- * vBSP430platformSetup_ni(), and any code where BSP430 executes a
+ * vBSP430platformInitialize_ni(), and any code where BSP430 executes a
  * loop will invoke #BSP430_CORE_WATCHDOG_CLEAR() at a frequency of at
  * least once every 30 milliseconds.
  *

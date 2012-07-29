@@ -69,7 +69,7 @@
  * clock.
  *
  * If this macro is defined to a nonzero value,
- * vBSP430platformSetup_ni() will use it to initialize the system
+ * vBSP430platformInitialize_ni() will use it to initialize the system
  * clocks.  If it is defined as zero, the power-up clock configuration
  * will be left unchanged.
  *
@@ -124,7 +124,7 @@
  * registers.
  *
  * If this macro is defined to a non-negative value,
- * vBSP430platformSetup_ni() will pass it to
+ * vBSP430platformInitialize_ni() will pass it to
  * iBSP430clockConfigureSMCLKDividingShift_ni() to configure the clock
  * divisors after setting the nominal MCLK frequency.
  *

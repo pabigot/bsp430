@@ -21,6 +21,6 @@
 void main ()
 {
   /* First thing you do in main is configure the platform. */
-  vBSP430platformSetup_ni();
+  vBSP430platformInitialize_ni();
   /* And that's all this one does. */
 }

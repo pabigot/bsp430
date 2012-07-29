@@ -42,7 +42,7 @@
 #define BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H
 
 /** Enable spin-for-jumper
- * 
+ *
  * @defaulted */
 #ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1

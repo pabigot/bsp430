@@ -37,7 +37,7 @@ void main ()
   xBSP430serialHandle console_handle = NULL;
 
   /* First thing you do in main is configure the platform. */
-  vBSP430platformSetup_ni();
+  vBSP430platformInitialize_ni();
 
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
   vBSP430ledInitialize_ni();

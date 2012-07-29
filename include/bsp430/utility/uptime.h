@@ -46,7 +46,7 @@
  *
  * #vBSP430uptimeStart_ni must be invoked on hardware initialization
  * after configuring the system clocks.  This is done for you in
- * #vBSP430platformSetup_ni if #configBSP430_UPTIME is true.
+ * #vBSP430platformInitialize_ni if #configBSP430_UPTIME is true.
  *
  * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to use
  * something other than #xBSP430timer_TA0 as the uptime clock source.

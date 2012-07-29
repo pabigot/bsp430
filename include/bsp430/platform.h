@@ -68,7 +68,7 @@
  * the power-up SMCLK source and divider are left unchanged.)
  * @li Start the system clock (if #configBSP430_UPTIME)
  */
-void vBSP430platformSetup_ni (void);
+void vBSP430platformInitialize_ni (void);
 
 /** Configure the pins associated with a given peripheral.
  *
@@ -97,7 +97,7 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
  * Define to a true value to enable the
  * vBSP430platformSpinForJumper_ni() function, and to inform generic
  * applications that it should be used.
- * 
+ *
  * @defaulted */
 #ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 0
@@ -204,7 +204,7 @@ void vBSP430platformSpinForJumper_ni (void);
 
 /** @def BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
  *
- * The number of seconds that vBSP430platformSetup_ni() should
+ * The number of seconds that vBSP430platformInitialize_ni() should
  * use in calculating the loop count parameter to
  * iBSP430clockConfigureXT1_ni() while attempting to stabilize the
  * clock.

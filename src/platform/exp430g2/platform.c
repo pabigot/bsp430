@@ -84,7 +84,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
   return -1;
 }
 
-void vBSP430platformSetup_ni (void)
+void vBSP430platformInitialize_ni (void)
 {
 #if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
   /* Hold off watchdog */
