@@ -53,6 +53,13 @@
 #define configBSP430_HAL_TA0 1
 #endif /* configBSP430_UPTIME */
 
+#if BSP430_PLATFORM_EXP430F5438 - 0
+#define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE xBSP430periph_TB0
+#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX 6
+#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS CCIS_1
+#define configBSP430_PERIPH_TB0 1
+#endif
+
 /** @def BSP430_CONSOLE_UART_PERIPH_HANDLE
  *
  * Provide a default based on the available serial peripheral.
