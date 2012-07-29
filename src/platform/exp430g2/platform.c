@@ -34,7 +34,6 @@
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/led.h>
-#include "task.h"
 
 const xBSP430led pxBSP430leds[] = {
   { .pucPxOUT = &P1OUT, .ucBIT = BIT0 }, /* Red */

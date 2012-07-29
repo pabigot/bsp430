@@ -32,7 +32,6 @@
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
 #include <bsp430/periph/usci_.h>
-#include "task.h"
 
 /* !BSP430! periph=usci */
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
@@ -43,7 +42,24 @@
  * device handle. */
 static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph);
 
-#include <stdio.h>
+#define WAKEUP_TRANSMIT_HAL_NI(_hal) do {               \
+    if (! (*(_hal)->iep & (_hal)->tx_bit)) {            \
+      *(_hal)->iep |= (*(_hal)->ifgp & (_hal)->tx_bit); \
+    }                                                   \
+  } while (0)
+
+#define RAW_TRANSMIT_HAL_NI(_hal, _c) do {              \
+    while (! ((_hal)->tx_bit & *(_hal)->ifgp)) {	\
+      ;                                                 \
+    }                                                   \
+    _hal->usci->txbuf = _c;                             \
+  } while (0)
+
+#define FLUSH_HAL_NI(_hal) do {                 \
+    while (_hal->usci->stat & UCBUSY) {         \
+      ;                                         \
+    }                                           \
+  } while (0)
 
 xBSP430usciHandle
 xBSP430usciOpenUART (xBSP430periphHandle periph,
@@ -55,8 +71,6 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
   xBSP430usciHandle device = periphToDevice(periph);
   uint16_t br = 0;
   uint16_t brs = 0;
-
-  configASSERT(NULL != device);
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -96,7 +110,7 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
     /* Release the USCI and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     device->usci->ctl1 &= ~UCSWRST;
-    if (0 != device->rx_queue) {
+    if (0 != device->rx_callback) {
       *device->iep |= device->rx_bit;
     }
   }
@@ -106,9 +120,9 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 }
 
 int
-iBSP430usciConfigureQueues (xBSP430usciHandle device,
-                            xQueueHandle rx_queue,
-                            xQueueHandle tx_queue)
+iBSP430usciConfigureCallbacks (xBSP430usciHandle device,
+                               const struct xBSP430periphISRCallbackVoid * rx_callback,
+                               const struct xBSP430periphISRCallbackVoid * tx_callback)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc = 0;
@@ -116,21 +130,19 @@ iBSP430usciConfigureQueues (xBSP430usciHandle device,
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   device->usci->ctl1 |= UCSWRST;
-  if (device->rx_queue || device->tx_queue) {
+  if (device->rx_callback || device->tx_callback) {
     rc = -1;
   } else {
-    device->rx_queue = rx_queue;
-    device->tx_queue = tx_queue;
+    device->rx_callback = rx_callback;
+    device->tx_callback = tx_callback;
   }
   /* Release the USCI and enable the interrupts.  Interrupts are
    * disabled and cleared when UCSWRST is set. */
   device->usci->ctl1 &= ~UCSWRST;
-  if (0 != device->rx_queue) {
+  if (device->rx_callback) {
     *device->iep |= device->rx_bit;
   }
-
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-
   return rc;
 }
 
@@ -150,86 +162,55 @@ iBSP430usciClose (xBSP430usciHandle device)
   return rc;
 }
 
-/* If there's data in the transmit queue, and the transmit interrupt
- * is not enabled, then enable the interrupt.  Do NOT muck with TXIFG,
- * since it may be that the ISR just completed draining the queue but
- * the data has not been transmitted, in which case setting TXIFG
- * would cause the in-progress transmission to be corrupted.
- *
- * For this to work, of course, nobody else should ever muck with the
- * TXIFG bit.  Normal management of this bit via UCSWRST is
- * correct. */
-#define USCI_WAKEUP_TRANSMIT_FROM_ISR(device) do {      \
-    if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
-        && (! (device->tx_bit & *device->iep))) {       \
-      *device->iep |= device->tx_bit;                   \
-    }                                                   \
-  } while (0)
-
 void
-vBSP430usciWakeupTransmit (xBSP430usciHandle device)
+vBSP430usciFlush_ni (xBSP430usciHandle device)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  USCI_WAKEUP_TRANSMIT_FROM_ISR(device);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  FLUSH_HAL_NI(device);
 }
 
-#define RAW_TRANSMIT(_hal, _c) do {			\
-    while (! ((_hal)->tx_bit & *(_hal)->ifgp)) {	\
-      ;                                                 \
-    }                                                   \
-    (_hal)->usci->txbuf = _c;				\
-  } while (0)
+void
+vBSP430usciWakeupTransmit_ni (xBSP430usciHandle device)
+{
+  WAKEUP_TRANSMIT_HAL_NI(device);
+}
 
 int
-iBSP430usciPutChar (int c, xBSP430usciHandle device)
+iBSP430usciTransmitByte_ni (xBSP430usciHandle device, int c)
 {
-  const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
-  portTickType delay = 0;
-  int passp;
-
-  if (device->tx_queue) {
-    do {
-      passp = xQueueSendToBack(device->tx_queue, &c, delay);
-      vBSP430usciWakeupTransmit(device);
-      if (! passp) {
-        delay = MAX_DELAY;
-      }
-    } while (! passp);
-  } else {
-    RAW_TRANSMIT(device, c);
+  if (device->tx_callback) {
+    return -1;
   }
+  RAW_TRANSMIT_HAL_NI(device, c);
   return c;
 }
 
 int
-iBSP430usciPutString (const char* str, xBSP430usciHandle device)
+iBSP430usciTransmitData_ni (xBSP430usciHandle device,
+                            const uint8_t * data,
+                            size_t len)
 {
-  const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
-  portTickType delay = 0;
+  const uint8_t * p = data;
+  const uint8_t * edata = data + len;
+  if (device->tx_callback) {
+    return -1;
+  }
+  while (p < edata) {
+    RAW_TRANSMIT_HAL_NI(device, *p++);
+  }
+  return p - data;
+}
+
+int
+iBSP430usciTransmitASCIIZ_ni (xBSP430usciHandle device, const char * str)
+{
   const char * in_string = str;
 
-  if (device->tx_queue) {
-    while (*str) {
-      if (xQueueSendToBack(device->tx_queue, str, delay)) {
-        ++str;
-        if (delay) {
-          vBSP430usciWakeupTransmit(device);
-          delay = 0;
-        }
-      } else {
-        vBSP430usciWakeupTransmit(device);
-        delay = MAX_DELAY;
-      }
-    }
-    vBSP430usciWakeupTransmit(device);
-  } else {
-    while (*str) {
-      RAW_TRANSMIT(device, *str);
-      ++str;
-    }
+  if (device->tx_callback) {
+    return -1;
+  }
+  while (*str) {
+    RAW_TRANSMIT_HAL_NI(device, *str);
+    ++str;
   }
   return str - in_string;
 }
@@ -290,18 +271,9 @@ __attribute__ ( ( __c16__ ) )
 /* __attribute__((__always_inline__)) */
 usciabrx_isr (xBSP430usciHandle device)
 {
-  int rv = 0;
-
   device->rx_byte = device->usci->rxbuf;
   ++device->num_rx;
-  if (device->rx_queue) {
-    portBASE_TYPE yield = pdFALSE;
-    if ((pdFALSE != xQueueSendToBackFromISR(device->rx_queue, &device->rx_byte, &yield))
-        && yield) {
-      rv |= BSP430_PERIPH_ISR_CALLBACK_YIELD;
-    }
-  }
-  return rv;
+  return iBSP430callbackInvokeISRVoid_ni(&device->rx_callback, device, 0);
 }
 
 #if configBSP430_HAL_USCIAB0RX_ISR - 0
@@ -310,7 +282,8 @@ __attribute__((__interrupt__(USCIAB0RX_VECTOR)))
 isr_USCIAB0RX (void)
 {
   xBSP430usciHandle usci = NULL;
-
+  int rv = 0;
+  
   if (0) {
   }
 #if configBSP430_HAL_USCI_A0_ISR - 0
@@ -324,12 +297,9 @@ isr_USCIAB0RX (void)
   }
 #endif /* configBSP430_HAL_USCI_B0_ISR */
   if (usci) {
-    int rv = usciabrx_isr(usci);
-    if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
-      *usci->iep &= ~usci->rx_bit;
-    }
-    BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+    rv = usciabrx_isr(usci);
   }
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* HAL USCIAB0RX ISR */
 
@@ -343,21 +313,21 @@ __attribute__ ( ( __c16__ ) )
 /* __attribute__((__always_inline__)) */
 usciabtx_isr (xBSP430usciHandle device)
 {
-  portBASE_TYPE yield = pdFALSE;
-  int rv = 0;
-
-  if (device->tx_queue) {
-    rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
-    if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
-      rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
-    }
-    if (yield) {
-      rv |= BSP430_PERIPH_ISR_CALLBACK_YIELD;
-    }
-  }
-  if (rv) {
+  int rv = iBSP430callbackInvokeISRVoid_ni(&device->tx_callback, device, 0);
+  if (rv & BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN) {
+    /* Found some data; send it out */
     ++device->num_tx;
     device->usci->txbuf = device->tx_byte;
+  } else {
+    /* No data; mark transmission disabled */
+    rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
+  }
+  /* If no more is expected, clear the interrupt but mark that the
+   * function is ready so when the interrupt is next set it will
+   * fire. */
+  if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    *device->iep &= ~device->tx_bit;
+    *device->ifgp |= device->tx_bit;
   }
   return rv;
 }
@@ -367,6 +337,7 @@ static void
 __attribute__((__interrupt__(USCIAB0TX_VECTOR)))
 isr_USCIAB0TX (void)
 {
+  int rv = 0;
   xBSP430usciHandle usci = NULL;
 
   if (0) {
@@ -382,12 +353,9 @@ isr_USCIAB0TX (void)
   }
 #endif /* configBSP430_HAL_USCI_B0_ISR */
   if (usci) {
-    int rv = usciabtx_isr(usci);
-    if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
-      *usci->iep &= ~usci->tx_bit;
-    }
-    BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+    rv = usciabtx_isr(usci);
   }
+  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
 }
 #endif /* HAL USCIAB0TX ISR */
 

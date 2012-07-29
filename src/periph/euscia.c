@@ -127,7 +127,9 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
     /* Release the USCI and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     device->euscia->ctlw0 &= ~UCSWRST;
-    device->euscia->ie |= UCRXIE | UCTXIE;
+    if (device->rx_callback) {
+      device->euscia->ie |= UCRXIE;
+    }
   }
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -157,7 +159,9 @@ iBSP430eusciaConfigureCallbacks (xBSP430eusciaHandle device,
   /* Release the USCI and enable the interrupts.  Interrupts are
    * disabled and cleared when UCSWRST is set. */
   device->euscia->ctlw0 &= ~UCSWRST;
-  device->euscia->ie |= UCRXIE | UCTXIE;
+  if (device->rx_callback) {
+    device->euscia->ie |= UCRXIE;
+  }
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rc;
 }

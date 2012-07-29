@@ -77,9 +77,6 @@ typedef struct xBSP430periphUSCI {
 #define _BSP430_PERIPH_USCI_B1_BASEADDRESS 0x00d8
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-#include "FreeRTOS.h"
-#include "queue.h"
-
 /* Forward declaration to hardware abstraction layer state for USCI_A/USCI_B. */
 struct xBSP430usciState;
 

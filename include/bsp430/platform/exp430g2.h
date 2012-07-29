@@ -54,6 +54,9 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430G2 1
 
+/** Where clocks are found on this platform */
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
