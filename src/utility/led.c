@@ -31,7 +31,6 @@
 
 #include <msp430.h>
 #include <bsp430/utility/led.h>
-#include <task.h>
 
 /* Some MSP430 MCUs use two selector registers.  At this time, it
  * appears that if an MCU has two selectors for one port, it has two
@@ -112,12 +111,12 @@ void
 vBSP430ledSet (int led_idx,
                int value)
 {
-  if (ucLED < ucBSP430leds) {
-    const xBSP430led * pxLED = pxBSP430leds + ucLED;
+  if (led_idx < ucBSP430leds) {
+    const xBSP430led * pxLED = pxBSP430leds + led_idx;
 
-    if (xValue > 0)	{
+    if (value > 0)	{
       *pxLED->pucPxOUT |= pxLED->ucBIT;
-    } else if (xValue < 0) {
+    } else if (value < 0) {
       *pxLED->pucPxOUT ^= pxLED->ucBIT;
     } else {
       *pxLED->pucPxOUT &= ~pxLED->ucBIT;
