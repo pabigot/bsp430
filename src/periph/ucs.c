@@ -31,8 +31,7 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/periph/ucs.h>
-#include "FreeRTOS.h"
-#include "task.h"
+#include <stdint.h>
 
 /* Mask for SELA bits in UCSCTL4 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
@@ -281,8 +280,8 @@ ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
 #endif
     UINT32_MAX
   };
-  unsigned portBASE_TYPE ctl1;
-  unsigned portBASE_TYPE ctl2;
+  unsigned int ctl1;
+  unsigned int ctl2;
   unsigned long ulReturn;
 
   /* If not told what RSEL to use, pick the one appropriate for the
