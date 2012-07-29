@@ -93,28 +93,25 @@ iBSP430clockConfigureXT1_ni (int enablep,
                              int loop_limit)
 {
   int loop_delta;
-  int rc;
+  int rc = 0;
 
-  /* Loop for zero iterations is another way to say "disable without
-   * checking" */
-  if (0 == loop_limit) {
-    enablep = 0;
+  if (0 != loop_limit) {
+    rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, enablep);
+    if ((0 != rc) || (! enablep)) {
+      return rc;
+    }
+    loop_delta = (0 < loop_limit) ? 1 : 0;
+
+    FLL_CTL0 = (FLL_CTL0 & ~(OSCCAP0 | OSCCAP1 | XTS_FLL)) | BSP430_FLLPLUS_XCAPxPF;
+    do {
+      FLL_CTL0 &= ~LFOF;
+      loop_limit -= loop_delta;
+      BSP430_CORE_WATCHDOG_CLEAR();
+      __delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+    } while ((FLL_CTL0 & LFOF) && (0 != loop_limit));
+
+    rc = !(FLL_CTL0 & LFOF);
   }
-  rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, enablep);
-  if ((0 != rc) || (! enablep)) {
-    return rc;
-  }
-  loop_delta = (0 < loop_limit) ? 1 : 0;
-
-  FLL_CTL0 = (FLL_CTL0 & ~(OSCCAP0 | OSCCAP1 | XTS_FLL)) | BSP430_FLLPLUS_XCAPxPF;
-  do {
-    FLL_CTL0 &= ~LFOF;
-    loop_limit -= loop_delta;
-    BSP430_CORE_WATCHDOG_CLEAR();
-    __delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-  } while ((FLL_CTL0 & LFOF) && (0 != loop_limit));
-
-  rc = !(FLL_CTL0 & LFOF);
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, 0);
   }
