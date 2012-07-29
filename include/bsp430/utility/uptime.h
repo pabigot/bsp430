@@ -103,7 +103,7 @@
  *
  * @defaulted */
 #ifndef configBSP430_UPTIME_USE_DEFAULT_RESOURCE
-#define configBSP430_UPTIME_USE_DEFAULT_RESOURCE 1
+#define configBSP430_UPTIME_USE_DEFAULT_RESOURCE (configBSP430_UPTIME - 0)
 #endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
 
 #if configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0
@@ -132,9 +132,11 @@
  * requirements cannot be enforced for non-default resources.
  *
  * @defaulted */
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0) 
 #ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
 #endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
+#endif /* configBSP430_UPTIME */
 
 /** @def BSP430_UPTIME_SSEL
  *
@@ -169,6 +171,7 @@
 #define BSP430_UPTIME_CLOCK_HZ (BSP430_CLOCK_NOMINAL_ACLK_HZ >> BSP430_UPTIME_DIVIDING_SHIFT)
 #endif /* BSP430_UPTIME_CLOCK_HZ */
 
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0)
 /** Return system uptime in clock ticks with disabled interrupts. */
 static unsigned long
 __inline__
@@ -184,6 +187,7 @@ ulBSP430uptime (void)
 {
   return ulBSP430timerCounter(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
 }
+#endif /* configBSP430_UPTIME */
 
 /** Configure the system uptime clock.
  *

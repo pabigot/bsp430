@@ -58,6 +58,17 @@
 /** Where clocks are found on this platform */
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Test points below LED1-3: SMCLK on TP10; MCLK on TP11; ACLK on TP12"
 
+#if defined(BSP430_DOXYGEN)                                     \
+  || ((configBSP430_PLATFORM_TIMER_CCACLK - 0)                  \
+      && ! defined(BSP430_BSP430_PLATFORM_TIMER_CCACLK))
+/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK. @defaulted */
+#define BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA1
+/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
+#define BSP430_PLATFORM_TIMER_CCACLK_CC_INDEX 2
+/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
+#define BSP430_PLATFORM_TIMER_CCACLK_CCIS CCIS_1
+#endif /* configBSP430_PLATFORM_TIMER_CCACLK && need default */
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
