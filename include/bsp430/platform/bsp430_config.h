@@ -49,7 +49,7 @@
 #define BSP430_PLATFORM_BSP430_CONFIG_H
 
 /* Include the platform-specific overrides first */
-/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */
+/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */
 #if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430F5438 - 0)
@@ -67,6 +67,10 @@
 #if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430G2 - 0)
 #include <bsp430/platform/exp430g2_bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
+
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_RF2500T - 0)
+#include <bsp430/platform/rf2500t_bsp430_config.h>
+#endif /* BSP430_PLATFORM_RF2500T */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_bsp430_config] */
 /* !BSP430! end=platform_bsp430_config */

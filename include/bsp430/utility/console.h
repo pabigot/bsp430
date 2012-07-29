@@ -76,6 +76,17 @@
 #define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE no default value
 #endif /* BSP430_DOXYGEN */
 
+/** @def BSP430_CONSOLE_BAUD_RATE
+ *
+ * The baud rate that should be used for the console.  This may be
+ * overridden in a platform header (or by an application
+ * configuration).
+ *
+ * @defaulted */
+#ifndef BSP430_CONSOLE_BAUD_RATE
+#define BSP430_CONSOLE_BAUD_RATE 9600
+#endif /* BSP430_CONSOLE_BAUD_RATE */
+
 /** @def configBSP430_CONSOLE_PROVIDES_PUTCHAR
  *
  * If defined to a true value, the individual character display

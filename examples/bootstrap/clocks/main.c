@@ -47,7 +47,7 @@ void main ()
 {
   unsigned long smclk_hz;
   unsigned short aclk_hz;
-  
+
   xBSP430serialHandle console_handle = NULL;
 
   /* First thing you do in main is configure the platform. */
@@ -62,7 +62,7 @@ void main ()
    * If something goes wrong, then nothing will show up on the serial port,
    * but the clocks should still be running. */
 #ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
-  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, 9600);
+  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
   iBSP430consoleConfigure(console_handle);
 
   cputtext_ni("\nSystem running\n");
@@ -75,7 +75,7 @@ void main ()
   cputtext_ni("\nQueried SMCLK shift: ");
   cputi_ni(iBSP430clockSMCLKDividingShift_ni(), 10);
   cputtext_ni("\nQueried platform SMCLK (Hz): ");
-  smclk_hz = ulBSP430clockSMCLK_Hz_ni(); 
+  smclk_hz = ulBSP430clockSMCLK_Hz_ni();
   cputul_ni(smclk_hz, 10);
   cputtext_ni("\nCrystal stabilization delay per iteration: ");
   cputul_ni(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, 10);
@@ -88,7 +88,7 @@ void main ()
   cputtext_ni("\nNominal ACLK (Hz): ");
   cputu_ni(BSP430_CLOCK_NOMINAL_ACLK_HZ, 10);
   cputtext_ni("\nQueried platform ACLK (Hz): ");
-  aclk_hz = usBSP430clockACLK_Hz_ni(); 
+  aclk_hz = usBSP430clockACLK_Hz_ni();
   cputu_ni(aclk_hz, 10);
 
 #if defined(BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE)
@@ -102,7 +102,7 @@ void main ()
     unsigned int cc_delta;
     unsigned long aclk_rel_smclk_hz;
     unsigned long smclk_rel_aclk_hz;
-    
+
 
     if (! tp) {
       cputtext_ni("\nUnable to access configured CCACLK timer");

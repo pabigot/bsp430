@@ -109,7 +109,7 @@ void main ()
 #ifndef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
 #error No console UART PERIPH handle has been defined
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
-  tty0 = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, 9600);
+  tty0 = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
   if (! tty0) {
     return;
   }

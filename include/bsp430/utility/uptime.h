@@ -132,7 +132,7 @@
  * requirements cannot be enforced for non-default resources.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0) 
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0)
 #ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
 #endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */

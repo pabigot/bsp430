@@ -60,7 +60,7 @@ void main ()
 #ifndef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
 #error No console UART PERIPH handle has been defined
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
-  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, 9600);
+  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
 
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);

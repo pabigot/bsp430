@@ -135,13 +135,13 @@ void vBSP430platformSpinForJumper_ni (void);
  * capture/compare input signal.  The timer is identified by
  * #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE, and may be used to
  * measure the relative speed of SMCLK and ACLK.
- * 
+ *
  * @defaulted */
 #ifndef configBSP430_PLATFORM_TIMER_CCACLK
 #define configBSP430_PLATFORM_TIMER_CCACLK 0
 #endif /* configBSP430_PLATFORM_TIMER_CCACLK */
 
-/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */
+/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
 /** @def BSP430_PLATFORM_EXP430F5438
@@ -211,6 +211,23 @@ void vBSP430platformSpinForJumper_ni (void);
 #if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430G2 - 0)
 #include <bsp430/platform/exp430g2.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
+
+/** @def BSP430_PLATFORM_RF2500T
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-RF2500T</a> platform.
+ * This causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/rf2500t.h>.
+ * If you include that header directly, #BSP430_PLATFORM_RF2500T will be
+ * defined for you.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_RF2500T
+#define BSP430_PLATFORM_RF2500T 0
+#endif /* BSP430_PLATFORM_RF2500T */
+
+#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_RF2500T - 0)
+#include <bsp430/platform/rf2500t.h>
+#endif /* BSP430_PLATFORM_RF2500T */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_decl] */
 /* !BSP430! end=platform_decl */
