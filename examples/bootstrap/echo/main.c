@@ -44,14 +44,14 @@ static int
 rx_callback (const struct xBSP430periphISRCallbackVoid * cb,
              void * context)
 {
-  xBSP430uartHandle device = (xBSP430uartHandle)context;
+  xBSP430serialHandle device = (xBSP430serialHandle)context;
   vBSP430ledSet(1, 1);
 
   /* If there's space, queue the received character for
    * transmission. */
   if (0 > to_tx) {
     to_tx = device->rx_byte;
-    vBSP430uartWakeupTransmit_ni(device);
+    vBSP430serialWakeupTransmit_ni(device);
   }
 
   /* There are no flags to be communicated back to the ISR */
@@ -67,7 +67,7 @@ static int
 tx_callback (const struct xBSP430periphISRCallbackVoid * cb,
              void * context)
 {
-  xBSP430uartHandle device = (xBSP430uartHandle)context;
+  xBSP430serialHandle device = (xBSP430serialHandle)context;
   int rv = 0;
 
   vBSP430ledSet(1, 0);
@@ -96,7 +96,7 @@ const struct xBSP430periphISRCallbackVoid tx_entry = {
 
 void main ()
 {
-  xBSP430uartHandle tty0 = NULL;
+  xBSP430serialHandle tty0 = NULL;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformSetup_ni();
@@ -105,16 +105,16 @@ void main ()
   vBSP430ledInitialize_ni();
 
   /* Configure the echo using the standard console handle */
-#ifndef BSP430_CONSOLE_UART_PERIPH_HANDLE
+#ifndef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
 #error No console UART PERIPH handle has been defined
-#endif /* BSP430_CONSOLE_UART_PERIPH_HANDLE */
-  tty0 = xBSP430uartOpen(BSP430_CONSOLE_UART_PERIPH_HANDLE, 0, 9600);
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
+  tty0 = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, 9600);
   if (! tty0) {
     return;
   }
 
   /* Register the callback handlers */
-  if (0 != iBSP430uartConfigureCallbacks(tty0, &rx_entry, &tx_entry)) {
+  if (0 != iBSP430serialConfigureCallbacks(tty0, &rx_entry, &tx_entry)) {
     return;
   }
 

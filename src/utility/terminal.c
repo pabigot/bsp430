@@ -16,7 +16,7 @@
 /** The internal state necessary to manage a terminal task. */
 typedef struct xBSP430_TERMINAL_STATE {
   /** Device used to display results and receive commands. */
-  xBSP430uartHandle hsuart;
+  xBSP430serialHandle hsuart;
 
   /** Queue for receiving data.  The reader task pulls characters
    * from this and aggregates them for handling by the terminal
@@ -125,12 +125,12 @@ typedef struct event {
  * putchar function, so this has to live globally.  It's reasonably
  * unlikely that multiple terminal instances will be present; when
  * somebody needs them, then this has to be fixed. */
-static xBSP430uartHandle tprintf_uart;
+static xBSP430serialHandle tprintf_uart;
 
 static int
 tputchar (int c)
 {
-  return iBSP430uartPutByte_ni(c, tprintf_uart);
+  return iBSP430serialPutByte_ni(c, tprintf_uart);
 }
 
 static int
@@ -357,21 +357,21 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
             case KEY_BS:
               if (cp > terminal->command_buffer) {
                 *--cp = 0;
-                iBSP430uartPutASCIIZ_ni("\b \b", terminal->hsuart);
+                iBSP430serialPutASCIIZ_ni("\b \b", terminal->hsuart);
               } else {
-                iBSP430uartPutByte_ni(KEY_BELL, terminal->hsuart);
+                iBSP430serialPutByte_ni(KEY_BELL, terminal->hsuart);
               }
               break;
             case KEY_CR: {
               vBSP430CommandProcess(terminal, terminal->pxCommandGroup, terminal->command_buffer);
               need_prompt = 1;
-              iBSP430uartPutByte_ni('\n', terminal->hsuart);
+              iBSP430serialPutByte_ni('\n', terminal->hsuart);
               cp = terminal->command_buffer;
               *cp = 0;
               break;
             }
             case KEY_FF:
-              iBSP430uartPutByte_ni('\f', terminal->hsuart);
+              iBSP430serialPutByte_ni('\f', terminal->hsuart);
               need_prompt = 1;
               break;
             case KEY_KILL_LINE:
@@ -393,11 +393,11 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
             }
             default:
               if (cp >= ecp) {
-                iBSP430uartPutByte_ni(KEY_BELL, terminal->hsuart);
+                iBSP430serialPutByte_ni(KEY_BELL, terminal->hsuart);
               } else {
                 *cp++ = c;
                 *cp = 0;
-                iBSP430uartPutByte_ni(c, terminal->hsuart);
+                iBSP430serialPutByte_ni(c, terminal->hsuart);
               }
               break;
           }
@@ -407,7 +407,7 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
         tprintf("\r\n%s: ", pcTaskGetTaskName(evt.display.task));
         if ((EVT_DISPLAY_TEXT == evt.event_type)
             && (evt.display.text != NULL)) {
-          iBSP430uartPutASCIIZ_ni(evt.display.text, terminal->hsuart);
+          iBSP430serialPutASCIIZ_ni(evt.display.text, terminal->hsuart);
         }
         if (EVT_DISPLAY_CODE == evt.event_type) {
           tprintf("code %d", evt.display.code);
@@ -416,7 +416,7 @@ static portTASK_FUNCTION( vSerialStuff, pvParameters )
           xSemaphoreGive(evt.display.notify_sema);
         }
         need_prompt = 1;
-        iBSP430uartPutByte_ni('\n', terminal->hsuart);
+        iBSP430serialPutByte_ni('\n', terminal->hsuart);
       }
     }
   }
@@ -463,12 +463,12 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
       goto failed;
     }
   }
-  terminal->hsuart = xBSP430uartOpen(configp->uart, configp->control_word, configp->baud);
+  terminal->hsuart = xBSP430serialOpen(configp->uart, configp->control_word, configp->baud);
   if (! terminal->hsuart) {
     goto failed;
   }
 #if 0
-  if (0 != iBSP430uartConfigureCallbacks(terminal->hsuart, terminal->rx_queue, terminal->tx_queue)) {
+  if (0 != iBSP430serialConfigureCallbacks(terminal->hsuart, terminal->rx_queue, terminal->tx_queue)) {
     goto failed;
   }
   if (terminal->rx_queue) {
@@ -500,8 +500,8 @@ failed:
   }
 #endif /* INCLUDE_vTaskDelete */
   if (terminal->hsuart) {
-    (void)iBSP430uartConfigureQueues(terminal->hsuart, NULL, NULL);
-    iBSP430uartClose(terminal->hsuart);
+    (void)iBSP430serialConfigureQueues(terminal->hsuart, NULL, NULL);
+    iBSP430serialClose(terminal->hsuart);
   }
   if (terminal->display_buffer) {
     vPortFree(terminal->display_buffer);

@@ -33,7 +33,7 @@
 
 void main ()
 {
-  xBSP430uartHandle console_handle = NULL;
+  xBSP430serialHandle console_handle = NULL;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformSetup_ni();
@@ -41,8 +41,8 @@ void main ()
   /* Configure the console to use the default UART handle, if we know that.
    * If something goes wrong, then nothing will show up on the serial port,
    * but the clocks should still be running. */
-#ifdef BSP430_CONSOLE_UART_PERIPH_HANDLE
-  console_handle = xBSP430uartOpen(BSP430_CONSOLE_UART_PERIPH_HANDLE, 0, 9600);
+#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
+  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, 9600);
   iBSP430consoleConfigure(console_handle);
 
   cputtext_ni("\nSystem running\n");
@@ -65,9 +65,9 @@ void main ()
   cputtext_ni("\nQueried platform ACLK (Hz): ");
   cputu_ni(usBSP430clockACLK_Hz_ni(), 10);
   cputchar_ni('\n');
-#endif /* BSP430_CONSOLE_UART_PERIPH_HANDLE */
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 1)) {
-#ifdef BSP430_CONSOLE_UART_PERIPH_HANDLE
+#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
     cputtext_ni("\nClock signals exposed:\n\t");
 #ifdef BSP430_PERIPH_EXPOSED_CLOCKS_HELP
     cputtext_ni(BSP430_PERIPH_EXPOSED_CLOCKS_HELP);
@@ -77,7 +77,7 @@ void main ()
     cprintf("\nStatus register LPM bits: ");
     cputu_ni(__read_status_register() & BSP430_LPM_SR_MASK, 16);
     cputchar_ni('\n');
-#endif /* BSP430_CONSOLE_UART_PERIPH_HANDLE */
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
     /* Spin here with CPU active.  In LPM0, MCLK is disabled.  Other
      * clocks get disabled at deeper sleep modes; if you fall off the
      * bottom, you might end up in LPM4 with all clocks disabled. */
@@ -85,7 +85,7 @@ void main ()
       ;
     }
   } else {
-#ifdef BSP430_CONSOLE_UART_PERIPH_HANDLE
+#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
     cputtext_ni("\nFailed to expose clock signals\n");
 #endif /* BSP430_PERIPH_EXPOSED_CLOCKS_HELP */
   }

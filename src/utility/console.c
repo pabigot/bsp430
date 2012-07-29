@@ -44,21 +44,21 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-static xBSP430uartHandle console_uart;
+static xBSP430serialHandle console_uart;
 
 /* Optimized version used inline.  Assumes that the uart is not
  * null. */
 static
 __inline__
 int
-emit_char2_ni (int c, xBSP430uartHandle uart)
+emit_char2_ni (int c, xBSP430serialHandle uart)
 {
 #if configBSP430_CONSOLE_USE_ONLCR - 0
   if ('\n' == c) {
-    iBSP430uartPutByte_ni('\r', uart);
+    iBSP430serialPutByte_ni('\r', uart);
   }
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
-  return iBSP430uartPutByte_ni(c, uart);
+  return iBSP430serialPutByte_ni(c, uart);
 }
 
 /* Base version used by cprintf.  This has to re-read the console_uart
@@ -68,7 +68,7 @@ __inline__
 int
 emit_char_ni (int c)
 {
-  xBSP430uartHandle uart = console_uart;
+  xBSP430serialHandle uart = console_uart;
   if (NULL == uart) {
     return -1;
   }
@@ -92,7 +92,7 @@ cputchar_ni (int c)
  * characters emitted. */
 static int
 emit_text_ni (const char * s,
-              xBSP430uartHandle uart)
+              xBSP430serialHandle uart)
 {
   int rv = 0;
   if (uart) {
@@ -108,7 +108,7 @@ int
 cputs (const char * s)
 {
   int rv = 0;
-  xBSP430uartHandle uart = console_uart;
+  xBSP430serialHandle uart = console_uart;
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
   if (! uart) {
@@ -190,7 +190,7 @@ cprintf (const char *fmt, ...)
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
 int
-iBSP430consoleConfigure (xBSP430uartHandle uart)
+iBSP430consoleConfigure (xBSP430serialHandle uart)
 {
   console_uart = uart;
   return (NULL != console_uart);

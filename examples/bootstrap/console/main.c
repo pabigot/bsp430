@@ -10,13 +10,13 @@
  *
  * It also serves as an example of the sort of changes you need to
  * make if your application uses the watchdog timer.  Test this with:
- * 
+ *
  * @code
 
 make AUX_CPPFLAGS='-DconfigBSP430_CORE_SUPPORT_WATCHDOG=1 -DBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES=10000'
 
  * @endcode
- * 
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -44,7 +44,7 @@ make AUX_CPPFLAGS='-DconfigBSP430_CORE_SUPPORT_WATCHDOG=1 -DBSP430_CLOCK_LFXT1_S
 
 void main ()
 {
-  xBSP430uartHandle console_handle;
+  xBSP430serialHandle console_handle;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformSetup_ni();
@@ -56,10 +56,10 @@ void main ()
   vBSP430ledSet(0, 1);
 
   /* Configure the console to use the default UART handle */
-#ifndef BSP430_CONSOLE_UART_PERIPH_HANDLE
+#ifndef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
 #error No console UART PERIPH handle has been defined
-#endif /* BSP430_CONSOLE_UART_PERIPH_HANDLE */
-  console_handle = xBSP430uartOpen(BSP430_CONSOLE_UART_PERIPH_HANDLE, 0, 9600);
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
+  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, 9600);
 
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);

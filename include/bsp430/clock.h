@@ -92,7 +92,7 @@
  * changing the DCO configuration without application intervention.
  * Its primary effect is in the selection of bits cleared when leaving
  * interrupts.
- * 
+ *
  * The UCS peripheral has several errata which result in severe clock
  * instabilities when the FLL is allowed to run unmanaged.  These
  * include UCS7 ("DCO drifts when servicing short ISRs when in LPM0 or
