@@ -431,7 +431,7 @@ xBSP430eusciaHandle xBSP430eusciaOpenSPI (xBSP430periphHandle xPeriph,
  * @return zero if the configuration was successful, a negative value
  * if something went wrong.
  */
-int iBSP430eusciaConfigureCallbacks (xBSP430eusciaHandle xUSCI,
+int iBSP430eusciaConfigureCallbacks (xBSP430eusciaHandle device,
                                      const struct xBSP430periphISRCallbackVoid * rx_callback,
                                      const struct xBSP430periphISRCallbackVoid * tx_callback);
 

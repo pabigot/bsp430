@@ -121,9 +121,6 @@ typedef struct xBSP430periphUSCI5 {
 #define _BSP430_PERIPH_USCI5_B3_BASEADDRESS __MSP430_BASEADDRESS_USCI_B3__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-#include "FreeRTOS.h"
-#include "queue.h"
-
 /* Forward declaration to hardware abstraction layer state for USCI_A/USCI_B. */
 struct xBSP430usci5State;
 
@@ -836,38 +833,41 @@ xBSP430usci5Handle xBSP430usci5OpenSPI (xBSP430periphHandle xPeriph,
                                         unsigned int control_word,
                                         unsigned int prescaler);
 
-/** Assign FreeRTOS queues for transmit and receive.
+/** Assign callbacks for transmission and receive.
  *
- * The underlying device is held in reset mode while the queue
+ * The underlying device is held in reset mode while the callback
  * configuration is changed within a critical section (interrupts
- * disabled).  If a receive queue is provided, the UCRXIE bit is set
- * to enable interrupt-driven reception.  Interrupt-driven
- * transmission is managed using #vBSP430usci5WakeupTransmit().
+ * disabled).
  *
- * Note that #iBSP430usci5Close() does not disassociate the queues from
- * the device.  This must be done manually either before or after
- * closing the device, by invoking this function with null handles for
- * the queues.
+ * Note that #iBSP430eusciaClose() does not disassociate the callbacks
+ * from the device.  This must be done manually either before or after
+ * closing the device, by invoking this function with null callback
+ * pointers.
  *
- * @param xUSCI5 A USCI5 device.  If (non-null) queues are already
- * associated with this device, an error will be returned and the
- * previous configuration left unchanged.
+ * @param device an EUSCI_Ax HAL device.  If (non-null) callbacks are
+ * already associated with this device, an error will be returned and
+ * the previous configuration left unchanged.
  *
- * @param rx_queue A references to a queue to be used for receiving.
- * A non-null value enables interrupt-driven reception, and data
- * should be read from the queue by the application.
+ * @param rx_callback a pointer to the head of a callback chain to be
+ * used for receiving.  A non-null value enables interrupt-driven
+ * reception, and data will be provided to the callbacks on
+ * receiption.
  *
- * @param tx_queue A references to a queue to be used for
- * transmitting.  A non-null value enables interrupt-driven
- * transmission, and the application should add data to the queue for
+ * @param tx_callback a pointer to the head of a callback chain to be
+ * used for transmission.  A non-null value enables interrupt-driven
+ * transmission, and the chain will be invoked whenever there is space
+ * available in the transmit buffer.  A callback should return
+ * #BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN if data to transmit is
+ * available, and #BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT if it
+ * is known that there will not be data available after the
  * transmission.
  *
- * @return Zero if the configuration was successful, a negative value
+ * @return zero if the configuration was successful, a negative value
  * if something went wrong.
  */
-int iBSP430usci5ConfigureQueues (xBSP430usci5Handle xUSCI5,
-                                 xQueueHandle rx_queue,
-                                 xQueueHandle tx_queue);
+int iBSP430usci5ConfigureCallbacks (xBSP430usci5Handle device,
+                                    const struct xBSP430periphISRCallbackVoid * rx_callback,
+                                    const struct xBSP430periphISRCallbackVoid * tx_callback);
 
 /** Release a USCI5 device.
  *
@@ -875,31 +875,63 @@ int iBSP430usci5ConfigureQueues (xBSP430usci5Handle xUSCI5,
  * pins to port function.  It does not release or disassociate any
  * queues that were provided through #iBSP430usci5ConfigureQueues.
  *
- * @param xUSCI5 The device to be closed.
+ * @param device The device to be closed.
  *
  * @return 0 if the close occurred without error. */
-int iBSP430usci5Close (xBSP430usci5Handle xUSCI5);
+int iBSP430usci5Close (xBSP430usci5Handle device);
 
 /** Wake up the interrupt-driven transmission if necessary.
  *
- * Normally the transmission infrastructure transmits data that is
- * added to the queue.  However, the infrastructure is disabled when
- * the transmit queue is emptied.  When this has happened, it must be
- * told that more data has been added and the infrastructure
- * re-enabled.
+ * Normally the transmission infrastructure transmits data as soon as
+ * space is available in the transmission buffer.  The infrastructure
+ * is disabled when the transmit queue is emptied.  When this has
+ * happened, it must be told that more data has been added and the
+ * infrastructure re-enabled.
  *
  * For efficiency, this should only be called if it is believed that
  * data is present in the transmit queue but that the transmission
  * infrastructure may be idle.
  *
- * @param xUSCI5 A USCI5 device which must have a transmit queue.
+ * @param device an EUSCI_A device
  */
-void vBSP430usci5WakeupTransmit (xBSP430usci5Handle xUSCI5);
+void vBSP430usci5WakeupTransmit_ni (xBSP430usci5Handle device);
 
-/** Analog to fputc */
-int iBSP430usci5PutChar (int c, xBSP430usci5Handle xUSCI5);
+/** Spin until any in-progress transmission or reception is complete.
+ *
+ * This is used to ensure the device is idle prior to reconfiguring it.
+ *
+ * @param device an EUSCI_A device
+ */
+void vBSP430usci5Flush_ni (xBSP430usci5Handle device);
 
-/** Analog to fputs */
-int iBSP430usci5PutString (const char* str, xBSP430usci5Handle xUSCI5);
+/** Transmit a byte over the device.
+ *
+ * This routine should only be invoked when there is no transmit
+ * callback registered.  If a callback is present, it is expected to
+ * be used to provide data for transmission.
+ *
+ * @param c a data byte to be transmitted
+ *
+ * @param device the EUSCI_A device over which the data should be
+ * transmitted
+ *
+ * @return the input character @a c if transmitted, or -1 if an error
+ * occurred */
+int iBSP430usci5PutByte_ni (int c, xBSP430usci5Handle device);
+
+/** Transmit a sequence of bytes, terminated by NUL, over the device.
+ *
+ * This routine should only be invoked when there is no transmit
+ * callback registered.  If a callback is present, it is expected to
+ * be used to provide data for transmission.
+ *
+ * @param str a NUL-terminated sequence of bytes to be transmitted
+ *
+ * @param device the EUSCI_A device over which the data should be
+ * transmitted
+ *
+ * @return the number of bytes transmitted, or -1 if an error
+ * occurs */
+int iBSP430usci5PutASCIIZ_ni (const char * str, xBSP430usci5Handle device);
 
 #endif /* BSP430_PERIPH_USCI5_H */

@@ -32,7 +32,7 @@
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
 #include <bsp430/periph/usci5_.h>
-#include "task.h"
+#include <stddef.h>
 
 /* !BSP430! periph=usci5 */
 /* !BSP430! instance=USCI5_A0,USCI5_A1,USCI5_A2,USCI5_A3,USCI5_B0,USCI5_B1,USCI5_B2,USCI5_B3 */
@@ -42,6 +42,25 @@
 /** Convert from a raw peripheral handle to the corresponding USCI5
  * device handle. */
 static xBSP430usci5Handle periphToDevice (xBSP430periphHandle periph);
+
+#define WAKEUP_TRANSMIT_HPL_NI(_hpl) do {       \
+    if (! (_hpl->ie & UCTXIE)) {                \
+      _hpl->ie |= (_hpl->ifg & UCTXIFG);        \
+    }                                           \
+  } while (0)
+
+#define RAW_TRANSMIT_HPL_NI(_hpl, _c) do {      \
+    while (! (_hpl->ifg & UCTXIFG)) {           \
+      ;                                         \
+    }                                           \
+    _hpl->txbuf = _c;                           \
+  } while (0)
+
+#define FLUSH_HPL_NI(_hpl) do {                 \
+    while (_hpl->stat & UCBUSY) {               \
+      ;                                         \
+    }                                           \
+  } while (0)
 
 xBSP430usci5Handle
 xBSP430usci5OpenUART (xBSP430periphHandle periph,
@@ -53,8 +72,6 @@ xBSP430usci5OpenUART (xBSP430periphHandle periph,
   xBSP430usci5Handle device = periphToDevice(periph);
   uint16_t br;
   uint16_t brs;
-
-  configASSERT(NULL != device);
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -93,7 +110,7 @@ xBSP430usci5OpenUART (xBSP430periphHandle periph,
     /* Release the USCI5 and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     device->usci5->ctlw0 &= ~UCSWRST;
-    if (0 != device->rx_queue) {
+    if (device->rx_callback) {
       device->usci5->ie |= UCRXIE;
     }
   }
@@ -103,26 +120,29 @@ xBSP430usci5OpenUART (xBSP430periphHandle periph,
 }
 
 int
-iBSP430usci5ConfigureQueues (xBSP430usci5Handle device,
-                             xQueueHandle rx_queue,
-                             xQueueHandle tx_queue)
+iBSP430usci5ConfigureCallbacks (xBSP430usci5Handle device,
+                                const struct xBSP430periphISRCallbackVoid * rx_callback,
+                                const struct xBSP430periphISRCallbackVoid * tx_callback)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc = 0;
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
+  /* Finish any current activity, inhibiting the start of new activity
+   * due to !GIE. */
+  FLUSH_HPL_NI(device->usci5);
   device->usci5->ctlw0 |= UCSWRST;
-  if (device->rx_queue || device->tx_queue) {
-    rc = -1;
+  if (device->rx_callback || device->tx_callback) {
+     rc = -1;
   } else {
-    device->rx_queue = rx_queue;
-    device->tx_queue = tx_queue;
+    device->rx_callback = rx_callback;
+    device->tx_callback = tx_callback;
   }
   /* Release the USCI5 and enable the interrupts.  Interrupts are
    * disabled and cleared when UCSWRST is set. */
   device->usci5->ctlw0 &= ~UCSWRST;
-  if (0 != device->rx_queue) {
+  if (device->rx_callback) {
     device->usci5->ie |= UCRXIE;
   }
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -138,6 +158,7 @@ iBSP430usci5Close (xBSP430usci5Handle device)
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
+  FLUSH_HPL_NI(device->usci5);
   device->usci5->ctlw0 = UCSWRST;
   rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(uintptr_t)(device->usci5), 0);
   device->flags = 0;
@@ -146,86 +167,40 @@ iBSP430usci5Close (xBSP430usci5Handle device)
   return rc;
 }
 
-/* If there's data in the transmit queue, and the transmit interrupt
- * is not enabled, then enable the interrupt.  Do NOT muck with TXIFG,
- * since it may be that the ISR just completed draining the queue but
- * the data has not been transmitted, in which case setting TXIFG
- * would cause the in-progress transmission to be corrupted.
- *
- * For this to work, of course, nobody else should ever muck with the
- * TXIFG bit.  Normal management of this bit via UCSWRST is
- * correct. */
-#define USCI5_WAKEUP_TRANSMIT_FROM_ISR(device) do {     \
-    if ((! xQueueIsQueueEmptyFromISR(device->tx_queue)) \
-        && (! (device->usci5->ie & UCTXIE))) {          \
-      device->usci5->ie |= UCTXIE;                      \
-    }                                                   \
-  } while (0)
-
 void
-vBSP430usci5WakeupTransmit (xBSP430usci5Handle device)
+vBSP430usci5Flush_ni (xBSP430usci5Handle device)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  USCI5_WAKEUP_TRANSMIT_FROM_ISR(device);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  FLUSH_HPL_NI(device->usci5);
 }
 
-#define RAW_TRANSMIT(_periph, _c) do {          \
-    while (! (_periph->ifg & UCTXIFG)) {	\
-      ;                                         \
-    }                                           \
-    _periph->txbuf = _c;                        \
-  } while (0)
+void
+vBSP430usci5WakeupTransmit_ni (xBSP430usci5Handle device)
+{
+  WAKEUP_TRANSMIT_HPL_NI(device->usci5);
+}
+
 
 int
-iBSP430usci5PutChar (int c, xBSP430usci5Handle device)
+iBSP430usci5PutByte_ni (int c, xBSP430usci5Handle device)
 {
-  const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
-  portTickType delay = 0;
-  int passp;
-
-  if (device->tx_queue) {
-    do {
-      passp = xQueueSendToBack(device->tx_queue, &c, delay);
-      vBSP430usci5WakeupTransmit(device);
-      if (! passp) {
-        delay = MAX_DELAY;
-      }
-    } while (! passp);
-  } else {
-    RAW_TRANSMIT(device->usci5, c);
+  if (device->tx_callback) {
+    return -1;
   }
+  RAW_TRANSMIT_HPL_NI(device->usci5, c);
   return c;
 }
 
 int
-iBSP430usci5PutString (const char* str, xBSP430usci5Handle device)
+iBSP430usci5PutASCIIZ_ni (const char* str, xBSP430usci5Handle device)
 {
-  const portTickType MAX_DELAY = portMAX_DELAY; // 2000;
-  portTickType delay = 0;
   const char * in_string = str;
 
-  if (device->tx_queue) {
-    while (*str) {
-      if (xQueueSendToBack(device->tx_queue, str, delay)) {
-        ++str;
-        if (delay) {
-          vBSP430usci5WakeupTransmit(device);
-          delay = 0;
-        }
-      } else {
-        vBSP430usci5WakeupTransmit(device);
-        delay = MAX_DELAY;
-      }
-    }
-    vBSP430usci5WakeupTransmit(device);
-  } else {
-    while (*str) {
-      RAW_TRANSMIT(device->usci5, *str);
-      ++str;
-    }
+  if (device->tx_callback) {
+    return -1;
+  }
+  while (*str) {
+    RAW_TRANSMIT_HPL_NI(device->usci5, *str);
+    ++str;
   }
   return str - in_string;
 }
@@ -253,41 +228,45 @@ iBSP430usci5PutString (const char* str, xBSP430usci5Handle device)
      || (configBSP430_HAL_USCI5_B2_ISR - 0)     \
      || (configBSP430_HAL_USCI5_B3_ISR - 0)     \
      )
-static void
+static int
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
 usci5_isr (xBSP430usci5Handle device)
 {
-  portBASE_TYPE yield = pdFALSE;
-  int rv = 1;
+  int rv = 0;
 
   switch (device->usci5->iv) {
     default:
     case USCI_NONE:
       break;
     case USCI_UCTXIFG:
-      if (device->tx_queue) {
-        rv = xQueueReceiveFromISR(device->tx_queue, &device->tx_byte, &yield);
-        if (xQueueIsQueueEmptyFromISR(device->tx_queue)) {
-          device->usci5->ie &= ~UCTXIE;
-        }
-      }
-      if (rv) {
+      rv = iBSP430callbackInvokeISRVoid_ni(&device->tx_callback, device, 0);
+      if (rv & BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN) {
+        /* Found some data; send it out */
         ++device->num_tx;
         device->usci5->txbuf = device->tx_byte;
+      } else {
+        /* No data; disable transmission interrupt */
+        rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
+      }
+
+      /* If no more is expected, clear the interrupt but mark that the
+       * function is ready so when the interrupt is next set it will
+       * fire. */
+      if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        device->usci5->ie &= ~UCTXIE;
+        device->usci5->ifg |= UCTXIFG;
       }
       break;
     case USCI_UCRXIFG:
       device->rx_byte = device->usci5->rxbuf;
       ++device->num_rx;
-      if (device->rx_queue) {
-        rv = xQueueSendToBackFromISR(device->rx_queue, &device->rx_byte, &yield);
-      }
+      rv = iBSP430callbackInvokeISRVoid_ni(&device->rx_callback, device, 0);
       break;
   }
-  portYIELD_FROM_ISR(yield);
+  return rv;
 }
 #endif  /* HAL ISR */
 

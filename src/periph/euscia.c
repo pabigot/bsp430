@@ -228,10 +228,9 @@ iBSP430eusciaPutASCIIZ_ni (const char* str, xBSP430eusciaHandle device)
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
  * cases. */
-#if (((configBSP430_PERIPH_EUSCI_A0 - 0) && (configBSP430_HAL_EUSCI_A0_ISR - 0)) \
-     || ((configBSP430_PERIPH_EUSCI_A1 - 0) && (configBSP430_HAL_EUSCI_A1_ISR - 0)) \
-     || ((configBSP430_PERIPH_EUSCI_A2 - 0) && (configBSP430_HAL_EUSCI_A2_ISR - 0)) \
-     )
+#if ((configBSP430_HAL_EUSCI_A0_ISR - 0)        \
+     || (configBSP430_HAL_EUSCI_A1_ISR - 0)     \
+     || (configBSP430_HAL_EUSCI_A2_ISR - 0))
 static int
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
@@ -246,7 +245,7 @@ euscia_isr (xBSP430eusciaHandle device)
     case USCI_NONE:
       break;
     case USCI_UART_UCTXIFG: /* == USCI_SPI_UCTXIFG */
-      rv = iBSP430callbackInvokeISRVoid_ni(&device->rx_callback, device, 0);
+      rv = iBSP430callbackInvokeISRVoid_ni(&device->tx_callback, device, 0);
       if (rv & BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN) {
         /* Found some data; send it out */
         ++device->num_tx;

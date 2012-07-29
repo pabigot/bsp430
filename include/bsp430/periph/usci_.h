@@ -70,13 +70,12 @@ struct xBSP430usciState {
   /** Bit within *iep and *ifgp used to denote a TX interrupt */
   unsigned char const tx_bit;
 
-  /** Queue used to collect input via interrupt.  If null,
-   * interrupts are not used for reception. */
-  xQueueHandle rx_queue;
+  /** The callback chain to invoke when a byte is received */
+  const struct xBSP430periphISRCallbackVoid * rx_callback;
 
-  /** Queue used to transmit output via interrupt.  If null,
-   * interrupts are not used for transmission. */
-  xQueueHandle tx_queue;
+  /** The callback chain to invoke when space is available in the
+   * transmission buffer */
+  const struct xBSP430periphISRCallbackVoid * tx_callback;
 
   /** Location to store a single incoming character when #rx_queue
    * is undefined. */
