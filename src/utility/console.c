@@ -98,6 +98,7 @@ emit_text_ni (const char * s,
   if (uart) {
     while (s[rv]) {
       emit_char2_ni(s[rv++], uart);
+      BSP430_CORE_WATCHDOG_CLEAR();
     }
   }
   return rv;

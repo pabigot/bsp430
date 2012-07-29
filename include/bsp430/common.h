@@ -58,7 +58,7 @@
  * number. */
 #define BSP430_VERSION 20120713
 
-/** @def configBSP430_CONFIG_FILE
+/** @def configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE
  *
  * BSP430 depends heavily on configuration specified by preprocessor
  * tokens defined to true or false values.  Proper application
@@ -67,22 +67,73 @@
  *
  * All BSP430 implementation files include <bsp430/common.h>, either
  * directly or through other headers.  Defining
- * #configBSP430_CONFIG_FILE to a true value (which is its default)
- * will cause this header to include a file named "bsp430_config.h".
- * All application configuration may be placed into this file.
+ * #configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE to a true value
+ * (which is its default) will cause this header to include a file
+ * named "bsp430_config.h", which is presumed to be in the compiler's
+ * include path.  All application configuration may be placed into
+ * this file.  It is recommended that this file end with the inclusion
+ * of <bsp430/platform/bsp430_config.h> to reduce the amount of
+ * generic configuration that must be supplied.
  *
- * If you provide configuration through external means (e.g., through
- * @c -D arguments to the preprocessor) you can inhibit this inclusion
- * by defining #configBSP430_CONFIG_FILE to 0.
+ * If you provide configuration solely through external means (e.g.,
+ * through @c -D arguments to the preprocessor) you can inhibit this
+ * inclusion by defining #configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE to 0.
  *
  * @defaulted */
-#ifndef configBSP430_CONFIG_FILE
-#define configBSP430_CONFIG_FILE 1
-#endif /* configBSP430_CONFIG_FILE */
+#ifndef configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE
+#define configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE 1
+#endif /* configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE */
 
-#if configBSP430_CONFIG_FILE - 0
+#if configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE - 0
 #include "bsp430_config.h"
-#endif /* configBSP430_CONFIG_FILE */
+#endif /* configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE */
+
+/** @def configBSP430_CORE_USE_WATCHDOG
+ *
+ * Control use of the watchdog infrastructure by BSP430.
+ *
+ * If defined to a true value, the watchdog will not be inhibited by
+ * vBSP430platformSetup_ni(), and any code where BSP430 executes a
+ * loop will invoke #BSP430_CORE_WATCHDOG_CLEAR() at a frequency of at
+ * least once every 30 milliseconds.
+ *
+ * @warning The above is described intent and has not been rigorously
+ * validated.
+ *
+ * @defaulted */
+#ifndef configBSP430_CORE_SUPPORT_WATCHDOG
+#define configBSP430_CORE_SUPPORT_WATCHDOG 0
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+
+/** @def BSP430_CORE_WATCHDOG_CLEAR
+ *
+ * A function macro which should expand to a toolchain-specific
+ * statement that resets ("kicks") the watchdog timer.
+ *
+ * Be aware that the toolchain may provide an intrinsic with special
+ * semantics, which should be understood before using its definition.
+ * For example, in MSPGCC the __watchdog_clear() intrinsic references
+ * a clear value managed with __set_watchdog_clear_value().  Invoking
+ * __watchdog_clear() after manually halting the watchdog will restart
+ * it in its last active configuration.
+ *
+ * @warning To reduce preprocessor conditionals in the core library,
+ * this macro is unconditionally bound to a no-op if
+ * #configBSP430_CORE_USE_WATCHDOG is false, even if it has been
+ * previously defined to a different value.
+ *
+ * @defaulted */
+#if configBSP430_CORE_SUPPORT_WATCHDOG - 0
+#ifndef BSP430_CORE_WATCHDOG_CLEAR
+#if 20120406 < __MSPGCC__
+#define BSP430_CORE_WATCHDOG_CLEAR() __watchdog_clear()
+#endif /* MSPGCC */
+#endif /* BSP430_CORE_WATCHDOG_CLEAR */
+#else /* configBSP430_CORE_SUPPORT_WATCHDOG */
+#undef BSP430_CORE_WATCHDOG_CLEAR
+#define BSP430_CORE_WATCHDOG_CLEAR() do { } while (0)
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+
 
 /** @def BSP430_CORE_INTERRUPT_STATE_T
  *

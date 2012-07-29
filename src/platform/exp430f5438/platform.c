@@ -98,8 +98,10 @@ void vBSP430platformSetup_ni (void)
 {
   int rc;
 
+#if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
   /* Hold off watchdog */
   WDTCTL = WDTPW + WDTHOLD;
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
   /* Enable XT1 functions and clock */
   rc = iBSP430clockConfigureXT1_ni(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);

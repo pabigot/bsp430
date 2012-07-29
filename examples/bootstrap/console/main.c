@@ -8,6 +8,15 @@
  * platform: the third step is to support printf.  (Though printf is
  * heavy-weight, so we're using the console print routines.)
  *
+ * It also serves as an example of the sort of changes you need to
+ * make if your application uses the watchdog timer.  Test this with:
+ * 
+ * @code
+
+make AUX_CPPFLAGS='-DconfigBSP430_CORE_SUPPORT_WATCHDOG=1 -DBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES=10000'
+
+ * @endcode
+ * 
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -68,7 +77,28 @@ void main ()
        * second.  The blink proves that the loop is running even if
        * nothing's coming out the serial port. */
       while (1) {
+#if configBSP430_CORE_SUPPORT_WATCHDOG - 0
+        /* BSP430 should support a watchdog timer that will hold off
+         * at least 30 msec.  Any loop that exceeds that time needs to
+         * be broken up so the watchdog can be cleared.  To be
+         * conservative, we'll reset every millisecond, so a
+         * half-second loop has to be broken into 500 sections.
+         *
+         * Note that we need a compile-time constant for
+         * __delay_cycles(), so have to rely on
+         * BSP430_CLOCK_NOMINAL_MCLK_HZ instead of the actual clock
+         * speed. */
+        {
+          int iters = 500;
+#define MSEC_MCLK (BSP430_CLOCK_NOMINAL_MCLK_HZ / 1000UL)
+          while (0 < iters--) {
+            BSP430_CORE_WATCHDOG_CLEAR();
+            __delay_cycles(MSEC_MCLK);
+          }
+        }
+#else /* configBSP430_CORE_SUPPORT_WATCHDOG */
         __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
         cputtext_ni("\nCounter ");
         cputu_ni(counter, 10);
         ++counter;

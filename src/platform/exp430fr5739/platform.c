@@ -136,8 +136,10 @@ void vBSP430platformSetup_ni (void)
 {
   int rc;
 
+#if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
   /* Hold off watchdog */
   WDTCTL = WDTPW + WDTHOLD;
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
   /* Note: Platform crystal requires more than one second to
    * stabilize! */

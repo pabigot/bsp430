@@ -87,8 +87,10 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 
 void vBSP430platformSetup_ni (void)
 {
+#if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
   /* Hold off watchdog */
   WDTCTL = WDTPW + WDTHOLD;
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
   /* Assume up to one second for crystal to stabilize; boot MCLK is
    * 1.1 MHz */

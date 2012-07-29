@@ -60,6 +60,7 @@ iBSP430clockConfigureXT1_ni (int enablep,
   do {
     BSP430_CLOCK_LFXT1_CLEAR_FAULT();
     loop_limit -= loop_delta;
+    BSP430_CORE_WATCHDOG_CLEAR();
     __delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 
   } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));

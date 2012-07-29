@@ -103,6 +103,7 @@ ulBSP430ucsTrimFLL_ni (void)
     unsigned int c1;
     uint16_t abs_freq_err_tsp;
 
+    BSP430_CORE_WATCHDOG_CLEAR();
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL__SMCLK | MC__CONTINOUS | TBCLR;
     tp->cctl[ccidx] = CM_2 | BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS | CAP | SCS;
@@ -235,6 +236,7 @@ iBSP430clockConfigureXT1_ni (int enablep,
   do {
     BSP430_CLOCK_LFXT1_CLEAR_FAULT();
     loop_limit -= loop_delta;
+    BSP430_CORE_WATCHDOG_CLEAR();
     __delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 
   } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
