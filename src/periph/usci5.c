@@ -179,9 +179,8 @@ vBSP430usci5WakeupTransmit_ni (xBSP430usci5Handle device)
   WAKEUP_TRANSMIT_HPL_NI(device->usci5);
 }
 
-
 int
-iBSP430usci5PutByte_ni (int c, xBSP430usci5Handle device)
+iBSP430usci5TransmitByte_ni (xBSP430usci5Handle device, int c)
 {
   if (device->tx_callback) {
     return -1;
@@ -191,7 +190,23 @@ iBSP430usci5PutByte_ni (int c, xBSP430usci5Handle device)
 }
 
 int
-iBSP430usci5PutASCIIZ_ni (const char* str, xBSP430usci5Handle device)
+iBSP430usci5TransmitData_ni (xBSP430usci5Handle device,
+                             const uint8_t * data,
+                             size_t len)
+{
+  const uint8_t * p = data;
+  const uint8_t * edata = data + len;
+  if (device->tx_callback) {
+    return -1;
+  }
+  while (p < edata) {
+    RAW_TRANSMIT_HPL_NI(device->usci5, *p++);
+  }
+  return p - data;
+}
+
+int
+iBSP430usci5TransmitASCIIZ_ni (xBSP430usci5Handle device, const char * str)
 {
   const char * in_string = str;
 
@@ -251,7 +266,6 @@ usci5_isr (xBSP430usci5Handle device)
         /* No data; disable transmission interrupt */
         rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
       }
-
       /* If no more is expected, clear the interrupt but mark that the
        * function is ready so when the interrupt is next set it will
        * fire. */

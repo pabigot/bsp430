@@ -48,7 +48,9 @@
 #ifndef BSP430_COMMON_H
 #define BSP430_COMMON_H
 
-#include <msp430.h>
+#include <msp430.h>             /* MSP430 MCU-specific information */
+#include <stdint.h>             /* Size-annotated integral types (uint8_t) */
+#include <stddef.h>             /* NULL and size_t */
 
 /** Version identifier for the BSP430 library
  *

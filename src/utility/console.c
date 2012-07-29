@@ -55,10 +55,10 @@ emit_char2_ni (int c, xBSP430serialHandle uart)
 {
 #if configBSP430_CONSOLE_USE_ONLCR - 0
   if ('\n' == c) {
-    iBSP430serialPutByte_ni('\r', uart);
+    iBSP430serialTransmitByte_ni(uart, '\r');
   }
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
-  return iBSP430serialPutByte_ni(c, uart);
+  return iBSP430serialTransmitByte_ni(uart, c);
 }
 
 /* Base version used by cprintf.  This has to re-read the console_uart

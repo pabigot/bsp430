@@ -451,97 +451,37 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP
 /* !BSP430! end=hal_usci_isr_decl */
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
-/** Request and configure a USCI device in UART mode.
- *
- * If queues had been associated with this device using
- * #iBSP430usciConfigureQueues(), behavior with respect to interrupts
- * is as if those queues were associated during this call.
- *
- * @param xPeriph The raw device identifier for the USCI device that
- * is being requested. E.g., @c xBSP430Periph_USCI_A0.
- *
- * @param control_word The configuration to be written to the device's
- * ctlw0 word.  Most bit fields will be assigned from this value, but
- * UCSYNC will be cleared, and UCSSELx will be set based on baud rate.
- *
- * @param baud The desired baud rate.  This will be configured
- * based on the current clock setting, using ACLK if the rate is low
- * enough and SMCLK otherwise.
- *
- * @return @a xUSCI if the allocation and configuration is successful,
- * and a null handle if something went wrong. */
+/** USCI-specific implementation of xBSP430serialOpenUART() */
 xBSP430usciHandle xBSP430usciOpenUART (xBSP430periphHandle xPeriph,
                                        unsigned int control_word,
                                        unsigned long baud);
 
+/** USCI-specific implementation of xBSP430serialOpenSPI() */
 xBSP430usciHandle xBSP430usciOpenSPI (xBSP430periphHandle xPeriph,
                                       unsigned int control_word,
                                       unsigned int prescaler);
 
-/** Assign FreeRTOS queues for transmit and receive.
- *
- * The underlying device is held in reset mode while the queue
- * configuration is changed within a critical section (interrupts
- * disabled).  If a receive queue is provided, the UCRXIE bit is set
- * to enable interrupt-driven reception.  Interrupt-driven
- * transmission is managed using #vBSP430usciWakeupTransmit().
- *
- * Note that #iBSP430usciClose() does not disassociate the queues from
- * the device.  This must be done manually either before or after
- * closing the device, by invoking this function with null handles for
- * the queues.
- *
- * @param xUSCI A USCI device.  If (non-null) queues are already
- * associated with this device, an error will be returned and the
- * previous configuration left unchanged.
- *
- * @param rx_queue A references to a queue to be used for receiving.
- * A non-null value enables interrupt-driven reception, and data
- * should be read from the queue by the application.
- *
- * @param tx_queue A references to a queue to be used for
- * transmitting.  A non-null value enables interrupt-driven
- * transmission, and the application should add data to the queue for
- * transmission.
- *
- * @return Zero if the configuration was successful, a negative value
- * if something went wrong.
- */
-int iBSP430usciConfigureQueues (xBSP430usciHandle xUSCI,
-                                xQueueHandle rx_queue,
-                                xQueueHandle tx_queue);
+/** USCI-specific implementation of xBSP430serialConfigureCallbacks() */
+int iBSP430usciConfigureCallbacks (xBSP430usciHandle device,
+                                   const struct xBSP430periphISRCallbackVoid * rx_callback,
+                                   const struct xBSP430periphISRCallbackVoid * tx_callback);
 
-/** Release a USCI device.
- *
- * This places the device into reset mode and resets the peripheral
- * pins to port function.  It does not release or disassociate any
- * queues that were provided through #iBSP430usciConfigureQueues.
- *
- * @param xUSCI The device to be closed.
- *
- * @return 0 if the close occurred without error. */
+/** USCI-specific implementation of xBSP430serialClose() */
 int iBSP430usciClose (xBSP430usciHandle xUSCI);
 
-/** Wake up the interrupt-driven transmission if necessary.
- *
- * Normally the transmission infrastructure transmits data that is
- * added to the queue.  However, the infrastructure is disabled when
- * the transmit queue is emptied.  When this has happened, it must be
- * told that more data has been added and the infrastructure
- * re-enabled.
- *
- * For efficiency, this should only be called if it is believed that
- * data is present in the transmit queue but that the transmission
- * infrastructure may be idle.
- *
- * @param xUSCI A USCI device which must have a transmit queue.
- */
-void vBSP430usciWakeupTransmit (xBSP430usciHandle xUSCI);
+/** USCI-specific implementation of xBSP430serialWakeupTransmit_ni() */
+void vBSP430usciWakeupTransmit_ni (xBSP430usciHandle device);
 
-/** Analog to fputc */
-int iBSP430usciPutChar (int c, xBSP430usciHandle xUSCI);
+/** USCI-specific implementation of xBSP430serialFlush_ni() */
+void vBSP430usciFlush_ni (xBSP430usciHandle device);
 
-/** Analog to fputs */
-int iBSP430usciPutString (const char* str, xBSP430usciHandle xUSCI);
+/** USCI-specific implementation of xBSP430serialTransmitByte_ni() */
+int iBSP430usciTransmitByte_ni (xBSP430usciHandle device, int c);
+
+/** USCI-specific implementation of xBSP430serialTransmitData_ni() */
+int iBSP430usciTransmitData_ni (xBSP430usciHandle device, const uint8_t * data, size_t len);
+
+/** USCI-specific implementation of xBSP430serialPutASCIIZ_ni() */
+int iBSP430usciTransmitASCIIZ_ni (xBSP430usciHandle device, const char * str);
 
 #endif /* BSP430_PERIPH_USCI_H */

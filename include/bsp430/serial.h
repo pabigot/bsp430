@@ -271,19 +271,44 @@ void vBSP430serialFlush_ni (xBSP430serialHandle device);
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-int iBSP430serialPutByte_ni (int c, xBSP430serialHandle device);
+int iBSP430serialTransmitByte_ni (xBSP430serialHandle device, int c);
 #endif /* BSP430_DOXYGEN */
 
-/** Transmit a sequence of bytes, terminated by NUL, over the device.
+/** Transmit a block of data over the device.
  *
  * This routine should only be invoked when there is no transmit
  * callback registered.  If a callback is present, it is expected to
  * be used to provide data for transmission.
  *
- * @param str a NUL-terminated sequence of bytes to be transmitted
+ * @param device the serial device over which the data should be
+ * transmitted
+ *
+ * @param data pointer to the start of a sequence of data to transmit
+ *
+ * @param len the number of octets to be transmitted
+ *
+ * @return the number of octets successfully transmitted
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+#if defined(BSP430_DOXYGEN)
+int iBSP430serialTransmitData_ni (xBSP430serialHandle device,
+                                  const uint8_t * data,
+                                  size_t len);
+#endif /* BSP430_DOXYGEN */
+
+/** Transmit a sequence of characters over the device.
+ *
+ * This routine should only be invoked when there is no transmit
+ * callback registered.  If a callback is present, it is expected to
+ * be used to provide data for transmission.
  *
  * @param device the serial device over which the data should be
  * transmitted
+ *
+ * @param str a NUL-terminated sequence of character data to be
+ * transmitted.  The NUL serves only as a termination marker, and is
+ * not transmitted.
  *
  * @return the number of bytes transmitted, or -1 if an error
  * occurs
@@ -291,7 +316,7 @@ int iBSP430serialPutByte_ni (int c, xBSP430serialHandle device);
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-int iBSP430serialPutASCIIZ_ni (const char* str, xBSP430serialHandle device);
+int iBSP430serialTransmitASCIIZ_ni (xBSP430serialHandle device, const char * str);
 #endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */
@@ -343,20 +368,30 @@ int iBSP430serialPutASCIIZ_ni (const char* str, xBSP430serialHandle device);
     vBSP430##_serial##Flush_ni(device);                 \
   }
 
-#define _DELEGATE_PUT_BYTE_NI(_serial)                          \
-  static __inline__                                             \
-  int                                                           \
-  iBSP430serialPutByte_ni (int c, xBSP430serialHandle device)   \
-  {                                                             \
-    return iBSP430##_serial##PutByte_ni(c, device);             \
-  }
-
-#define _DELEGATE_PUT_ASCIIZ_NI(_serial)                                \
+#define _DELEGATE_TRANSMIT_BYTE_NI(_serial)                             \
   static __inline__                                                     \
   int                                                                   \
-  iBSP430serialPutASCIIZ_ni (const char * str, xBSP430serialHandle device) \
+  iBSP430serialTransmitByte_ni (xBSP430serialHandle device, int c)      \
   {                                                                     \
-    return iBSP430##_serial##PutASCIIZ_ni(str, device);                 \
+    return iBSP430##_serial##TransmitByte_ni(device, c);                \
+  }
+
+#define _DELEGATE_TRANSMIT_DATA_NI(_serial)                             \
+  static __inline__                                                     \
+  int                                                                   \
+  iBSP430serialTransmitData_ni (xBSP430serialHandle device,             \
+                                const uint8_t * data,                   \
+                                size_t len)                             \
+  {                                                                     \
+    return iBSP430##_serial##TransmitData_ni(device, data, len);        \
+  }
+
+#define _DELEGATE_TRANSMIT_ASCIIZ_NI(_serial)                           \
+  static __inline__                                                     \
+  int                                                                   \
+  iBSP430serialTransmitASCIIZ_ni (xBSP430serialHandle device, const char * str) \
+  {                                                                     \
+    return iBSP430##_serial##TransmitASCIIZ_ni(device, str);            \
   }
 
 #define _DELEGATE(_serial)                      \
@@ -366,8 +401,9 @@ int iBSP430serialPutASCIIZ_ni (const char* str, xBSP430serialHandle device);
   _DELEGATE_CLOSE(_serial)                      \
   _DELEGATE_WAKEUP_TRANSMIT_NI(_serial)         \
   _DELEGATE_FLUSH_NI(_serial)                   \
-  _DELEGATE_PUT_BYTE_NI(_serial)                \
-  _DELEGATE_PUT_ASCIIZ_NI(_serial)
+  _DELEGATE_TRANSMIT_BYTE_NI(_serial)           \
+  _DELEGATE_TRANSMIT_DATA_NI(_serial)           \
+  _DELEGATE_TRANSMIT_ASCIIZ_NI(_serial)
 
 #if configBSP430_SERIAL_USE_USCI - 0
 #if configBSP430_SERIAL_EXPOSE_STATE - 0
@@ -404,8 +440,9 @@ _DELEGATE(euscia)
 #endif /* configBSP430_SERIAL_USE_EUSCI */
 
 #undef _DELEGATE
-#undef _DELEGATE_PUT_ASCIIZ_NI
-#undef _DELEGATE_PUT_BYTE_NI
+#undef _DELEGATE_TRANSMIT_ASCIIZ_NI
+#undef _DELEGATE_TRANSMIT_DATA_NI
+#undef _DELEGATE_TRANSMIT_BYTE_NI
 #undef _DELEGATE_FLUSH_NI
 #undef _DELEGATE_WAKEUP_TRANSMIT_NI
 #undef _DELEGATE_CLOSE

@@ -806,132 +806,37 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B3 = (volatile xB
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
 
-/** Request and configure a USCI5 device in UART mode.
- *
- * If queues had been associated with this device using
- * #iBSP430usci5ConfigureQueues(), behavior with respect to interrupts
- * is as if those queues were associated during this call.
- *
- * @param xPeriph The raw device identifier for the USCI5 device that
- * is being requested. E.g., @c xBSP430Periph_USCI5_A0.
- *
- * @param control_word The configuration to be written to the device's
- * ctlw0 word.  Most bit fields will be assigned from this value, but
- * UCSYNC will be cleared, and UCSSELx will be set based on baud rate.
- *
- * @param baud The desired baud rate.  This will be configured
- * based on the current clock setting, using ACLK if the rate is low
- * enough and SMCLK otherwise.
- *
- * @return @a xUSCI5 if the allocation and configuration is successful,
- * and a null handle if something went wrong. */
+/** USCI5-specific implementation of xBSP430serialOpenUART() */
 xBSP430usci5Handle xBSP430usci5OpenUART (xBSP430periphHandle xPeriph,
     unsigned int control_word,
     unsigned long baud);
 
+/** USCI5-specific implementation of xBSP430serialOpenSPI() */
 xBSP430usci5Handle xBSP430usci5OpenSPI (xBSP430periphHandle xPeriph,
                                         unsigned int control_word,
                                         unsigned int prescaler);
 
-/** Assign callbacks for transmission and receive.
- *
- * The underlying device is held in reset mode while the callback
- * configuration is changed within a critical section (interrupts
- * disabled).
- *
- * Note that #iBSP430eusciaClose() does not disassociate the callbacks
- * from the device.  This must be done manually either before or after
- * closing the device, by invoking this function with null callback
- * pointers.
- *
- * @param device an EUSCI_Ax HAL device.  If (non-null) callbacks are
- * already associated with this device, an error will be returned and
- * the previous configuration left unchanged.
- *
- * @param rx_callback a pointer to the head of a callback chain to be
- * used for receiving.  A non-null value enables interrupt-driven
- * reception, and data will be provided to the callbacks on
- * receiption.
- *
- * @param tx_callback a pointer to the head of a callback chain to be
- * used for transmission.  A non-null value enables interrupt-driven
- * transmission, and the chain will be invoked whenever there is space
- * available in the transmit buffer.  A callback should return
- * #BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN if data to transmit is
- * available, and #BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT if it
- * is known that there will not be data available after the
- * transmission.
- *
- * @return zero if the configuration was successful, a negative value
- * if something went wrong.
- */
+/** USCI5-specific implementation of xBSP430serialConfigureCallbacks() */
 int iBSP430usci5ConfigureCallbacks (xBSP430usci5Handle device,
                                     const struct xBSP430periphISRCallbackVoid * rx_callback,
                                     const struct xBSP430periphISRCallbackVoid * tx_callback);
 
-/** Release a USCI5 device.
- *
- * This places the device into reset mode and resets the peripheral
- * pins to port function.  It does not release or disassociate any
- * queues that were provided through #iBSP430usci5ConfigureQueues.
- *
- * @param device The device to be closed.
- *
- * @return 0 if the close occurred without error. */
-int iBSP430usci5Close (xBSP430usci5Handle device);
+/** USCI5-specific implementation of xBSP430serialClose() */
+int iBSP430usci5Close (xBSP430usci5Handle xUSCI);
 
-/** Wake up the interrupt-driven transmission if necessary.
- *
- * Normally the transmission infrastructure transmits data as soon as
- * space is available in the transmission buffer.  The infrastructure
- * is disabled when the transmit queue is emptied.  When this has
- * happened, it must be told that more data has been added and the
- * infrastructure re-enabled.
- *
- * For efficiency, this should only be called if it is believed that
- * data is present in the transmit queue but that the transmission
- * infrastructure may be idle.
- *
- * @param device an EUSCI_A device
- */
+/** USCI5-specific implementation of xBSP430serialWakeupTransmit_ni() */
 void vBSP430usci5WakeupTransmit_ni (xBSP430usci5Handle device);
 
-/** Spin until any in-progress transmission or reception is complete.
- *
- * This is used to ensure the device is idle prior to reconfiguring it.
- *
- * @param device an EUSCI_A device
- */
+/** USCI5-specific implementation of xBSP430serialFlush_ni() */
 void vBSP430usci5Flush_ni (xBSP430usci5Handle device);
 
-/** Transmit a byte over the device.
- *
- * This routine should only be invoked when there is no transmit
- * callback registered.  If a callback is present, it is expected to
- * be used to provide data for transmission.
- *
- * @param c a data byte to be transmitted
- *
- * @param device the EUSCI_A device over which the data should be
- * transmitted
- *
- * @return the input character @a c if transmitted, or -1 if an error
- * occurred */
-int iBSP430usci5PutByte_ni (int c, xBSP430usci5Handle device);
+/** USCI5-specific implementation of xBSP430serialTransmitByte_ni() */
+int iBSP430usci5TransmitByte_ni (xBSP430usci5Handle device, int c);
 
-/** Transmit a sequence of bytes, terminated by NUL, over the device.
- *
- * This routine should only be invoked when there is no transmit
- * callback registered.  If a callback is present, it is expected to
- * be used to provide data for transmission.
- *
- * @param str a NUL-terminated sequence of bytes to be transmitted
- *
- * @param device the EUSCI_A device over which the data should be
- * transmitted
- *
- * @return the number of bytes transmitted, or -1 if an error
- * occurs */
-int iBSP430usci5PutASCIIZ_ni (const char * str, xBSP430usci5Handle device);
+/** USCI5-specific implementation of xBSP430serialTransmitData_ni() */
+int iBSP430usci5TransmitData_ni (xBSP430usci5Handle device, const uint8_t * data, size_t len);
+
+/** USCI5-specific implementation of xBSP430serialPutASCIIZ_ni() */
+int iBSP430usci5TransmitASCIIZ_ni (xBSP430usci5Handle device, const char * str);
 
 #endif /* BSP430_PERIPH_USCI5_H */

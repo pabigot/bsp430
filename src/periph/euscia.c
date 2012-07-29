@@ -190,7 +190,7 @@ vBSP430eusciaWakeupTransmit_ni (xBSP430eusciaHandle device)
 }
 
 int
-iBSP430eusciaPutByte_ni (int c, xBSP430eusciaHandle device)
+iBSP430eusciaTransmitByte_ni (xBSP430eusciaHandle device, int c)
 {
   if (device->tx_callback) {
     return -1;
@@ -200,7 +200,23 @@ iBSP430eusciaPutByte_ni (int c, xBSP430eusciaHandle device)
 }
 
 int
-iBSP430eusciaPutASCIIZ_ni (const char* str, xBSP430eusciaHandle device)
+iBSP430eusciaTransmitData_ni (xBSP430eusciaHandle device,
+                              const uint8_t * data,
+                              size_t len)
+{
+  const uint8_t * p = data;
+  const uint8_t * edata = data + len;
+  if (device->tx_callback) {
+    return -1;
+  }
+  while (p < edata) {
+    RAW_TRANSMIT_HPL_NI(device->euscia, *p++);
+  }
+  return p - data;
+}
+
+int
+iBSP430eusciaTransmitASCIIZ_ni (xBSP430eusciaHandle device, const char * str)
 {
   const char * in_string = str;
 
@@ -254,6 +270,9 @@ euscia_isr (xBSP430eusciaHandle device)
         /* No data; mark transmission disabled */
         rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
       }
+      /* If no more is expected, clear the interrupt but mark that the
+       * function is ready so when the interrupt is next set it will
+       * fire. */
       if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
         device->euscia->ie &= ~UCTXIE;
         device->euscia->ifg |= UCTXIFG;
