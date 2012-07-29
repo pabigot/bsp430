@@ -85,6 +85,7 @@
 #define BSP430_CLOCK_NOMINAL_MCLK_HZ 7948800U
 #endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
 
+
 /** @def BSP430_CLOCK_DISABLE_FLL
  *
  * This macro may be defined to a true value to request that BSP430
@@ -139,36 +140,27 @@
 /** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
  *
  * Define this to the number of MCLK cycles that
- * #iBSP430clockConfigureXT1_ni should delay, after clearing oscillator
- * faults, before checking for oscillator stability.  This must be a
- * compile-time constant integer compatible with <tt>unsigned
- * long</tt>.  If this value is too short, #iBSP430clockConfigureXT1_ni
- * may prematurely decide that the crystal is working; if it is too
- * long, the return from #iBSP430clockConfigureXT1_ni is delayed.
+ * #iBSP430clockConfigureXT1_ni should delay, after clearing
+ * oscillator faults, before checking for oscillator stability.  This
+ * must be a compile-time constant integer compatible with
+ * <tt>unsigned long</tt>.
  *
- * @note The value is in MCLK ticks, so depends on the MCLK frequency
- * at the time #iBSP430clockConfigureXT1_ni is invoked.  It is suggested
- * that the crystal be checked and ACLK configured prior to
- * configuring MCLK for the application, when the MCU power-up MCLK
- * frequency of 1 MHz is in effect.  If this is done, the nominal
- * value for this option should delay roughly 100msec, which should be
- * long enough to detect an unstable crystal.  Repeated checks are
- * required to detect a stable crystal, so to delay for up to one
- * second use:
+ * Crystal stabilization can take hundreds of milliseconds.  If this
+ * value is too short, #iBSP430clockConfigureXT1_ni may prematurely
+ * decide that the crystal is working; if it is too long, the return
+ * from #iBSP430clockConfigureXT1_ni is delayed.
  *
- * @code
- * if (0 >= iBSP430clockConfigureXT1_ni(1, 1000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES)) {
- *    // XT1 not available
- * }
- * @endcode
- *
- * Crystal stabilization can take hundreds of milliseconds; on some
- * platforms even the one second delay above is insufficient.
+ * The default value is chosen to reflect a 20msec delay at the PUC
+ * MCLK frequency of roughly 1MHz.  This allows
+ * #BSP430_CORE_WATCHDOG_CLEAR() to be invoked within the loop to
+ * prevent a watchdog reset while waiting for stabilization.  It does
+ * assume that an unstable crystal will indicate a fault within
+ * 10msec, which may not be true.
  *
  * @defaulted
  */
 #ifndef BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
-#define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES 100000UL
+#define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES (20000UL)
 #endif /* BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
 
 /** Check whether the LFXT1 crystal has a fault condition.
@@ -353,8 +345,9 @@ ulBSP430clockSMCLK_Hz (void)
  * should be repeated.  If stabilization has not been achieved after
  * this many loops, assume the crystal is absent and configure for
  * VLOCLK.  A negative value indicates the process should loop until
- * stabilization is detected.  The parameter is ignored if @a enablep
- * is zero.
+ * stabilization is detected.  A zero value indicates the function
+ * should assume the crystal is faulted without even checking.  The
+ * parameter is ignored if @a enablep is zero.
  *
  * @return Zero if XT1 was disabled by the call, and a positive value
  * if XT1 is stable on completion of the call (available as a clock
@@ -423,5 +416,14 @@ usBSP430clockACLK_Hz (void)
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ _BSP430_CLOCK_NOMINAL_VLOCLK_HZ
 #endif /* BSP430_CLOCK_NOMINAL_VLOCLK_HZ */
 
+/** @def BSP430_CLOCK_PUC_MCLK_HZ
+ *
+ * A constant representing the clock speed of the master clock at
+ * power-up.
+ *
+ * @defaulted  */
+#ifndef BSP430_CLOCK_PUC_MCLK_HZ
+#define BSP430_CLOCK_PUC_MCLK_HZ _BSP430_CLOCK_PUC_MCLK_HZ
+#endif /* BSP430_CLOCK_PUC_MCLK_HZ */
 
 #endif /* BSP430_CLOCK_H */

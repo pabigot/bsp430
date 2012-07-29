@@ -88,6 +88,9 @@
 /** Unconditional define for peripheral-specific constant */
 #define _BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
 
+/** Unconditional define for peripheral-specific constant */
+#define _BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
+
 /** Call this to configure MCLK and SMCLK via CS peripheral.
  *
  * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.  The

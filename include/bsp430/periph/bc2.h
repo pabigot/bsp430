@@ -84,6 +84,9 @@
 /** Unconditional define for peripheral-specific constant */
 #define _BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
 
+/** Unconditional define for peripheral-specific constant */
+#define _BSP430_CLOCK_PUC_MCLK_HZ 1100000UL
+
 /** Call this to reconfigure the BC2 peripheral.
  *
  * The relevant BC2 registers are configured as requested.  See the

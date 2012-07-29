@@ -54,7 +54,9 @@
  *
  * This routine will:
  * @li Disable the watchdog
- * @li Attempt to enable the platform crystal with iBSP430clockConfigureXT1_ni()
+ * @li Attempt to enable the platform crystal with
+ * iBSP430clockConfigureXT1_ni(); see
+ * #BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
  * @li Configure ACLK to use the crystal (if available and stable)
  * @li Configure the MCLK frequency based on
  * #BSP430_CLOCK_NOMINAL_MCLK_HZ if that is defined to a non-zero
@@ -199,5 +201,19 @@ void vBSP430platformSpinForJumper_ni (void);
 
 /* END AUTOMATICALLY GENERATED CODE [platform_decl] */
 /* !BSP430! end=platform_decl */
+
+/** @def BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
+ *
+ * The number of seconds that vBSP430platformSetup_ni() should
+ * use in calculating the loop count parameter to
+ * iBSP430clockConfigureXT1_ni() while attempting to stabilize the
+ * clock.
+ *
+ * Set this to zero on platforms that don't have a crystal.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
+#define BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC 1
+#endif /* BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC */
 
 #endif /* BSP430_PLATFORM_H */

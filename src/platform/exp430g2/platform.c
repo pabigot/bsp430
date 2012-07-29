@@ -91,9 +91,8 @@ void vBSP430platformSetup_ni (void)
   WDTCTL = WDTPW + WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
-  /* Assume up to one second for crystal to stabilize; boot MCLK is
-   * 1.1 MHz */
-  (void)iBSP430clockConfigureXT1_ni(1, 1100000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+  /* Attempt to stabilize the crystal */
+  (void)iBSP430clockConfigureXT1_ni(1, (BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 
 #if 0 < BSP430_CLOCK_NOMINAL_MCLK_HZ
   ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);

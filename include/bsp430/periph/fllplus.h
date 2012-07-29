@@ -104,6 +104,9 @@
 /** Unconditional define for peripheral-specific constant */
 #define _BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
 
+/** Unconditional define for peripheral-specific constant */
+#define _BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
+
 /** Structure used to configure the frequency-locked loop clock module.
  *
  * The structure fields are assigned in the listed order.  See the 4xx

@@ -141,9 +141,7 @@ void vBSP430platformSetup_ni (void)
   WDTCTL = WDTPW + WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
-  /* Note: Platform crystal requires more than one second to
-   * stabilize! */
-  rc = iBSP430clockConfigureXT1_ni(1, 2000000L / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+  rc = iBSP430clockConfigureXT1_ni(1, (BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
   iBSP430csConfigureACLK_ni(rc ? SELA__XT1CLK : SELA__VLOCLK);
 
 #if 0 < BSP430_CLOCK_NOMINAL_MCLK_HZ
