@@ -44,7 +44,7 @@
 #ifndef BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
 /** Unless overridden, this platform uses TB0 to trim the FLL
  * @defaulted */
-#define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE xBSP430periph_TB0
+#define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE BSP430_PERIPH_TB0
 /** TB0.6 CCI0B sources SMCLK
  * @defaulted */
 #define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX 6

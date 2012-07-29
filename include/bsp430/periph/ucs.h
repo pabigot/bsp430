@@ -177,13 +177,14 @@ unsigned long ulBSP430ucsTrimFLL_ni (void);
 
 /** @def BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
  *
- * #ulBSP430ucsTrimFLL_ni requires a timer that can be used while
- * the FLL is being trimmed.  The timer must have a capture/compare
- * block which can be configured to use ACLK as its input.  CCI0B on
- * TB0.6 is a candidate for at least some 5xx/6xx family MCUs.
+ * #ulBSP430ucsTrimFLL_ni requires a timer that can be used while the
+ * FLL is being trimmed.  The timer must have a capture/compare block
+ * which can be configured to use ACLK as its input.  CCI6B on TB0 is
+ * a candidate for at least some 5xx/6xx family MCUs; CCI2B on TAx is
+ * also frequently an option.
  *
- * The value of this parameter should be a reference to one of the
- * timer HPL handles, such as #xBSP43periph_TB0.  The corresponding
+ * The value of this parameter should be a timer peripheral handle,
+ * such as #BSP430_PERIPH_TB0.  The corresponding
  * #configBSP430_PERIPH_TB0 must also be set.
  *
  * @note The timer may be shared among other users.  It is the

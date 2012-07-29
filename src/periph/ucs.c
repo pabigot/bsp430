@@ -92,9 +92,12 @@ ulBSP430ucsTrimFLL_ni (void)
   unsigned short last_ctl0;
   uint16_t tolerance_tsp;
   uint16_t current_frequency_tsp = 0;
-  volatile xBSP430periphTIMER * tp = BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE;
+  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE);
   const int ccidx = BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX;
 
+  if (! tp) {
+    return 0;
+  }
   last_ctl0 = ~0;
   tolerance_tsp = targetFrequency_tsp_ / TRIM_TOLERANCE_DIVISOR;
   while (0 < taps_left--) {
