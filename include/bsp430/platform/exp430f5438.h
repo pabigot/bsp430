@@ -52,6 +52,9 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430F5438 1
 
+/** Where clocks are found on this platform */
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Labelled test points below JTAG header"
+
 /* Warn on reference to unsupported feature */
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
 #warning configBSP430_PLATFORM_SPIN_FOR_JUMPER set but vBSP430platformSpinForJumper_ni not supported
