@@ -127,6 +127,29 @@ typedef int xBSP430periphHandle;
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 0
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
+/** Get the peripheral handle corresponding to an HPL handle
+ *
+ * The Hardware Presentation Layer handle is a typed pointer to a
+ * structure of registers used to control the peripheral.  The
+ * peripheral handle is an integral value.  This routine translates
+ * from the HPL to the integral handle; the other direction is done by
+ * peripheral-specific functions like xBSP430periphLookupTIMER().
+ *
+ * @param hpl Hardware presentation layer handle.  This is generally a
+ * pointer to a volatile structure; the presence of the volatile
+ * qualifier would require that it be explicitly cast when used as
+ * this argument.
+ *
+ * @return The peripheral handle.  The result is undefined if what is
+ * passed is not a pointer to the HPL structure for an enabled
+ * peripheral. */
+static xBSP430periphHandle
+__inline__
+xBSP430periphFromHPL (void * hpl)
+{
+  return (xBSP430periphHandle)hpl;
+}
+
 /* Forward declarations */
 struct xBSP430periphISRCallbackVoid;
 struct xBSP430periphISRCallbackIndexed;
