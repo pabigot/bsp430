@@ -67,12 +67,10 @@
 
 /* The last calculated trim frequency of DCOCLKDIV.  Power-up to
  * 21MiHz/2. */
-static unsigned long lastTrimFrequency_Hz_ = (1UL << 20);
+static unsigned long lastTrimFrequency_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 
-#include <bsp430/utility/console.h>
+#if BSP430_CLOCK_TRIM_FLL - 0
 #include <bsp430/periph/timer_.h>
-
-#ifdef BSP430_TIMER_CCACLK_PERIPH_HANDLE
 
 /* The target frequency expressed as the number of SMCLK ticks
  * expected within a trim sample period. */
@@ -250,7 +248,7 @@ ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
   return ulReturn;
 }
 
-#endif /* BSP430_TIMER_CCACLK_PERIPH_HANDLE */
+#endif /* BSP430_CLOCK_TRIM_FLL */
 
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
@@ -328,7 +326,6 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   return rc;
 }
 
-
 int iBSP430ucsConfigureACLK_ni (unsigned int sela)
 {
   if (sela & ~SELA_MASK) {
@@ -342,10 +339,9 @@ unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
   if (0 == mclk_Hz) {
-    /* DCOCLKDIV = 2 * PUC MCLK */
-    mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ << 1;
+    mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
   }
-#ifdef BSP430_TIMER_CCACLK_PERIPH_HANDLE
+#if BSP430_CLOCK_TRIM_FLL - 0
   ulBSP430ucsConfigure_ni(mclk_Hz, -1);
 #endif
   return ulBSP430clockMCLK_Hz_ni();

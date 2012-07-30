@@ -86,7 +86,7 @@
 #endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
 
 
-/** @def BSP430_CLOCK_DISABLE_FLL
+/** @def configBSP430_CLOCK_DISABLE_FLL
  *
  * This macro may be defined to a true value to request that BSP430
  * attempt to ensure #SCG0 remain set, preventing the FLL from
@@ -108,9 +108,62 @@
  * cases where #SCG0 should not be cleared on wakeup.
  *
  * @defaulted  */
-#ifndef BSP430_CLOCK_DISABLE_FLL
-#define BSP430_CLOCK_DISABLE_FLL 0
-#endif /* BSP430_CLOCK_DISABLE_FLL */
+#ifndef configBSP430_CLOCK_DISABLE_FLL
+#define configBSP430_CLOCK_DISABLE_FLL 0
+#endif /* configBSP430_CLOCK_DISABLE_FLL */
+
+/** @def configBSP430_CLOCK_TRIM_FLL
+ *
+ * Define to a true value to request that ulBSP430clockTrimFLL_ni() be
+ * made available.
+ *
+ * <bsp430/bsp430_config.h> may default this to true.
+ *
+ * This implicitly adds a request for #configBSP430_TIMER_CCACLK, a
+ * feature on which this feature depends.
+ *
+ * This value represents an application or system request for the
+ * feature; availability of the feature must be tested using
+ * #BSP430_CLOCK_TRIM_FLL.
+ *
+ * @platformdefault
+ */
+#ifndef configBSP430_CLOCK_TRIM_FLL
+#define configBSP430_CLOCK_TRIM_FLL 0
+#endif /* configBSP430_CLOCK_TRIM_FLL */
+
+#if (configBSP430_CLOCK_TRIM_FLL - 0) && ! (configBSP430_TIMER_CCACLK - 0)
+#warning configBSP430_CLOCK_TRIM_FLL requested without configBSP430_TIMER_CCACLK
+#endif /* configBSP430_CLOCK_TRIM_FLL */
+
+/** @def BSP430_CLOCK_TRIM_FLL
+ *
+ * Defined to a true value if #configBSP430_CLOCK_TRIM_FLL was
+ * requested, #BSP430_TIMER_CCACLK is available on the platform, and
+ * the underlying clock peripheral provides an implementation of
+ * ulBSP430clockTrimFLL_ni().
+ *
+ * In the absence of this feature, ulBSP430clockTrimFLL_ni() will not
+ * be available.
+ *
+ * @dependency #configBSP430_CLOCK_TRIM_FLL
+ * @platformdefault
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_TRIM_FLL include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_CLOCK_TRIM_FLL - 0)
+/** Tune the FLL to the requested speed.
+ *
+ * @param fll_Hz the desired clock rate of the FLL.  This is normally
+ * the clock source for MCLK.
+ *
+ * @return the measured frequency after trimming.
+ * @dependency BSP430_CLOCK_TRIM_FLL
+ */
+unsigned long ulBSP430clockTrimFLL_ni (unsigned long fll_Hz);
+#endif /* configBSP430_CLOCK_TRIM_FLL */
 
 /** @def BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
  *

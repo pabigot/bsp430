@@ -61,7 +61,17 @@
 #ifndef BSP430_PLATFORM_BSP430_CONFIG_H
 #define BSP430_PLATFORM_BSP430_CONFIG_H
 
-/* Include the platform-specific overrides first */
+#include <msp430.h>
+
+#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
+#ifndef configBSP430_CLOCK_TRIM_FLL
+#define configBSP430_CLOCK_TRIM_FLL 1
+#ifndef configBSP430_TIMER_CCACLK
+#define configBSP430_TIMER_CCACLK 1
+#endif /* configBSP430_TIMER_CCACLK */
+#endif /* configBSP430_CLOCK_TRIM_FLL */
+#endif /* UCS */
+
 /* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */

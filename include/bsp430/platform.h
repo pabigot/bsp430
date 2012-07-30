@@ -250,6 +250,17 @@ void vBSP430platformSpinForJumper_ni (void);
 /* END AUTOMATICALLY GENERATED CODE [platform_decl] */
 /* !BSP430! end=platform_decl */
 
+/* If configBSP430_CLOCK_TRIM_FLL was requested, the feature is
+ * supported in principle by the peripheral, and the platform supports
+ * BSP430_TIMER_CCACLK, then mark the feature as available. */
+#if configBSP430_CLOCK_TRIM_FLL - 0
+#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_USC_RF__)
+#define BSP430_CLOCK_TRIM_FLL (BSP430_TIMER_CCACLK - 0)
+#else /* BSP430_CLOCK_TRIM_FLL supported by clock peripheral */
+#define BSP430_CLOCK_TRIM_FLL 0
+#endif /* BSP430_CLOCK_TRIM_FLL supported by clock peripheral */
+#endif /* configBSP430_CLOCK_TRIM_FLL */
+
 /** @def BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
  *
  * If defined to a true value, vBSP430platformInitialize_ni() will:
