@@ -120,7 +120,7 @@ usBSP430clockACLK_Hz_ni (void)
 }
 
 unsigned long
-ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz)
+ulBSP430clockConfigureMCLK_ni (unsigned long ulFrequency_Hz)
 {
   unsigned int csctl1 = 0x06;
   if ((5330000UL + 6670000UL) / 2 > ulFrequency_Hz) {
@@ -146,8 +146,8 @@ ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz)
 }
 
 int
-iBSP430clockConfigureXT1_ni (int enablep,
-                             int loop_limit)
+iBSP430clockConfigureLFXT1_ni (int enablep,
+                               int loop_limit)
 {
   int loop_delta;
   int rc = 0;
@@ -155,7 +155,7 @@ iBSP430clockConfigureXT1_ni (int enablep,
   CSCTL0_H = 0xA5;
   do {
     if (0 != loop_limit) {
-      rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, enablep);
+      rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, enablep);
       if ((0 != rc) || (! enablep)) {
         break;
       }
@@ -176,7 +176,7 @@ iBSP430clockConfigureXT1_ni (int enablep,
   } while (0);
   if (! rc) {
     CSCTL4 |= XT1OFF;
-    (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, 0);
+    (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
   }
   CSCTL0_H = !0xA5;
   return rc;

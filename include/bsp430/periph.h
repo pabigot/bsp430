@@ -80,7 +80,7 @@
  * Odd values are reserved for non-standard "peripherals" for which
  * some identifier is necessary to allow use in functions like
  * #iBSP430platformConfigurePeripheralPins_ni, such as
- * #BSP430_PERIPH_XT1.
+ * #BSP430_PERIPH_LFXT1.
  *
  * Negative values indicate an error. */
 typedef int xBSP430periphHandle;
@@ -93,7 +93,7 @@ typedef int xBSP430periphHandle;
  * This is used by platform-independent clock peripherals to request
  * that the pins related to XIN and XOUT be configured to their
  * peripheral function. */
-#define BSP430_PERIPH_XT1 ((xBSP430periphHandle)1)
+#define BSP430_PERIPH_LFXT1 ((xBSP430periphHandle)1)
 
 /** HPL handle identifying the ability to expose clock signals.
  *

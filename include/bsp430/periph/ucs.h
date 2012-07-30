@@ -127,7 +127,7 @@
  *
  * @note This function expects a valid 32 kiHz clock source on XT1,
  * and that this will be used as the source for ACLK.  It invokes
- * #iBSP430clockConfigureXT1_ni and #iBSP430ucsConfigureACLK_ni to ensure
+ * #iBSP430clockConfigureLFXT1_ni and #iBSP430ucsConfigureACLK_ni to ensure
  * the expectation is met.  A call to this function will not return if
  * XT1 cannot be stabilized. */
 unsigned long ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
@@ -135,7 +135,7 @@ unsigned long ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
 
 /** Call this to configure ACLK via the UCS peripheral.
  *
- * Prior to invoking this, use #iBSP430clockConfigureXT1_ni to check for
+ * Prior to invoking this, use #iBSP430clockConfigureLFXT1_ni to check for
  * crystal stability, if ACLK is to be sourced from XT1.
  *
  * @param sela The constant to assign to the SELA field of UCSCTL4.

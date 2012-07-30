@@ -79,7 +79,7 @@ int
 iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enablep)
 {
   unsigned int bits = 0;
-  if (BSP430_PERIPH_XT1 == device) {
+  if (BSP430_PERIPH_LFXT1 == device) {
     /* NB: Only XIN (PJ.4) needs to be configured; XOUT follows
      * it. */
     bits = BIT4;
@@ -134,23 +134,23 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
 
 void vBSP430platformInitialize_ni (void)
 {
-  int rc;
+  int crystal_ok = 0;
+  (void)crystal_ok;
 
 #if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
   /* Hold off watchdog */
   WDTCTL = WDTPW + WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
-  rc = iBSP430clockConfigureXT1_ni(1, (BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-  iBSP430csConfigureACLK_ni(rc ? SELA__XT1CLK : SELA__VLOCLK);
+#if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
+  crystal_ok = iBSP430clockConfigureLFXT1_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
 
-#if 0 < BSP430_CLOCK_NOMINAL_MCLK_HZ
-  ulBSP430csConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
-#endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
-
-#if 0 <= BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
+#if BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS - 0
+  iBSP430csConfigureACLK_ni(crystal_ok ? SELA__XT1CLK : SELA__VLOCLK);
+  ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
   iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
-#endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
 
 #if BSP430_UPTIME - 0
   vBSP430uptimeStart_ni();

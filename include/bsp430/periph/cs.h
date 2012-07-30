@@ -91,22 +91,9 @@
 /** Unconditional define for peripheral-specific constant */
 #define _BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
 
-/** Call this to configure MCLK and SMCLK via CS peripheral.
- *
- * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.  The
- * actual frequency will be the closest available factory-configured
- * frequency.  This may be higher or lower than the requested
- * frequency.
- *
- * @return an estimate of the actual running frequency.
- *
- * @note This function has no effect on ACLK configuration.
- */
-unsigned long ulBSP430csConfigureMCLK_ni (unsigned long ulFrequency_Hz);
-
 /** Call this to configure ACLK via the CS peripheral.
  *
- * Prior to invoking this, use #iBSP430clockConfigureXT1_ni to check for
+ * Prior to invoking this, use #iBSP430clockConfigureLFXT1_ni to check for
  * crystal stability, if ACLK is to be sourced from XT1.
  *
  * @param sela The constant to assign to the SELA field of CSCTL2.

@@ -50,9 +50,9 @@
 
 /** Platform does not support a crystal
  * @defaulted */
-#ifndef BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
-#define BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC 0
-#endif /* BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC */
+#ifndef BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
+#define BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC 0
+#endif /* BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC */
 
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */

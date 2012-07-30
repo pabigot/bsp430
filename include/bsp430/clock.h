@@ -140,15 +140,15 @@
 /** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
  *
  * Define this to the number of MCLK cycles that
- * #iBSP430clockConfigureXT1_ni should delay, after clearing
+ * #iBSP430clockConfigureLFXT1_ni should delay, after clearing
  * oscillator faults, before checking for oscillator stability.  This
  * must be a compile-time constant integer compatible with
  * <tt>unsigned long</tt>.
  *
  * Crystal stabilization can take hundreds of milliseconds.  If this
- * value is too short, #iBSP430clockConfigureXT1_ni may prematurely
+ * value is too short, #iBSP430clockConfigureLFXT1_ni may prematurely
  * decide that the crystal is working; if it is too long, the return
- * from #iBSP430clockConfigureXT1_ni is delayed.
+ * from #iBSP430clockConfigureLFXT1_ni is delayed.
  *
  * The default value is chosen to reflect a 20msec delay at the PUC
  * MCLK frequency of roughly 1MHz.  This allows
@@ -327,7 +327,7 @@ ulBSP430clockSMCLK_Hz (void)
 /** Configure (or deconfigure) XT1 as a clock source.
  *
  * The peripheral-specific implementation will use
- * #iBSP430platformConfigurePeripheralPins_ni with #BSP430_PERIPH_XT1 to
+ * #iBSP430platformConfigurePeripheralPins_ni with #BSP430_PERIPH_LFXT1 to
  * configure the crystal.  If crystal functionality has been
  * requested, it then clears oscillator faults, delays
  * #BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, then detects
@@ -354,8 +354,8 @@ ulBSP430clockSMCLK_Hz (void)
  * source).  A negative value indicates an error, such as inability to
  * configure XIN/XOUT pins.
  */
-int iBSP430clockConfigureXT1_ni (int enablep,
-                                 int loop_limit);
+int iBSP430clockConfigureLFXT1_ni (int enablep,
+                                   int loop_limit);
 
 /** Return the best available estimate of ACLK frequency.
  *

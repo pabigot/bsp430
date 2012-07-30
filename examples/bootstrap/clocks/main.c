@@ -66,6 +66,15 @@ void main ()
   iBSP430consoleConfigure(console_handle);
 
   cputtext_ni("\nSystem running\n");
+  cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1: ");
+  cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1, 10);
+  cputtext_ni("\nBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES: ");
+  cputul_ni(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, 10);
+  cputtext_ni("\nBSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC: ");
+  cputu_ni(BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC, 10);
+  cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS: ");
+  cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS, 10);
+
   cputtext_ni("\nBSP430_CLOCK_PUC_MCLK_HZ: ");
   cputul_ni(BSP430_CLOCK_PUC_MCLK_HZ, 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_MCLK_HZ: ");
@@ -79,10 +88,6 @@ void main ()
   cputtext_ni("\nulBSP430clockSMCLK_Hz_ni(): ");
   smclk_hz = ulBSP430clockSMCLK_Hz_ni();
   cputul_ni(smclk_hz, 10);
-  cputtext_ni("\nBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES: ");
-  cputul_ni(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, 10);
-  cputtext_ni("\nBSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC: ");
-  cputu_ni(BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC, 10);
   cputtext_ni("\nBSP430_CLOCK_LFXT1_IS_FAULTED(): ");
   cputu_ni(BSP430_CLOCK_LFXT1_IS_FAULTED(), 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
@@ -119,6 +124,7 @@ void main ()
     cputtext_ni(" ticks of ACLK produced ");
     cputu_ni(cc_delta, 10);
     cputtext_ni(" ticks of SMCLK");
+    cputtext_ni("\nComparison with NOMINAL values:");
     cputtext_ni("\n\tSMCLK (Hz) (if ACLK correct): ");
     smclk_rel_aclk_hz = (cc_delta * (unsigned long)aclk_hz) / SAMPLE_PERIOD_ACLK;
     cputul_ni(smclk_rel_aclk_hz, 10);

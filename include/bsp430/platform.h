@@ -65,25 +65,15 @@
  *
  * This routine will:
  * @li Disable the watchdog
- * @li Attempt to enable the platform crystal with
- * iBSP430clockConfigureXT1_ni(); see
- * #BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
- * @li Configure ACLK to use the crystal (if available and stable)
- * @li Configure the MCLK frequency based on
- * #BSP430_CLOCK_NOMINAL_MCLK_HZ if that is defined to a non-zero
- * value.  (If it is defined to zero or a negative value, the power-up
- * MCLK/FLL/DCO configuration is left unchanged.)
- * @li Configure the SMCLK to source from the same origin as MCLK and
- * divide based on #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT if that
- * is defined to a non-negative value.  (If it is a negative value,
- * the power-up SMCLK source and divider are left unchanged.)
+ * @li Crystal configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CRYSTAL)
+ * @li Clock configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
  * @li Start the system clock (if #BSP430_UPTIME)
  */
 void vBSP430platformInitialize_ni (void);
 
 /** Configure the pins associated with a given peripheral.
  *
- * @note All platforms should support #BSP430_PERIPH_XT1.
+ * @note All platforms should support #BSP430_PERIPH_LFXT1.
  *
  * Implementers should consult the MCU data sheet to determine the
  * appropriate port selection register configuration.  Note that in
@@ -260,18 +250,58 @@ void vBSP430platformSpinForJumper_ni (void);
 /* END AUTOMATICALLY GENERATED CODE [platform_decl] */
 /* !BSP430! end=platform_decl */
 
-/** @def BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
+/** @def BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
+ *
+ * If defined to a true value, vBSP430platformInitialize_ni() will:
+ * <ul>
+ * <li> configure ACLK to source from LFXT1 if a stable crystal is available
+ * <li> invoke ulBSP430clockConfigureMCLK_Hz_ni() using #BSP430_CLOCK_NOMINAL_MCLK_HZ
+ * <li> invoke iBSP430clockConfigureSMCLKDividingShift_ni() using #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
+ * </ul>
+ *
+ * If defined to a false value, vBSP430platformInitialize_ni() will
+ * leave the clocks in their power-up configuration.
+ *
+ * @see #BSP430_PLATFORM_BOOT_CONFIGURE_CRYSTAL
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
+#define BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS 1
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
+
+/** @def BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
+ *
+ * If defined to a true value, vBSP430platformInitialize_ni() will:
+ * <ul>
+ * <li> invoke iBSP430clockConfigureLFXT1_ni() to enable and stabilize the crystal
+ * </ul>
+ *
+ * If defined to a false value, vBSP430platformInitialize_ni() will
+ * leave the crystal in its power-up configuration.  For most clock
+ * peripherals this is a faulted mode because the XIN/XOUT pins are
+ * reset to digital I/O rather than peripheral function mode.
+ *
+ * @see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
+#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
+
+/** @def BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
  *
  * The number of seconds that vBSP430platformInitialize_ni() should
  * use in calculating the loop count parameter to
- * iBSP430clockConfigureXT1_ni() while attempting to stabilize the
+ * iBSP430clockConfigureLFXT1_ni() while attempting to stabilize the
  * clock.
  *
  * Set this to zero on platforms that don't have a crystal.
  *
+ * @see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
+ *
  * @defaulted */
-#ifndef BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
-#define BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC 1
-#endif /* BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC */
+#ifndef BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
+#define BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC 1
+#endif /* BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC */
 
 #endif /* BSP430_PLATFORM_H */
