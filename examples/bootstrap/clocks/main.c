@@ -37,10 +37,6 @@
  * enabled */
 #include <bsp430/lpm.h>
 
-#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-#include <bsp430/utility/led.h>
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
-
 #include <stdlib.h>
 
 void main ()
@@ -53,10 +49,9 @@ void main ()
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
 
-#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-  vBSP430ledInitialize_ni();
+#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
   vBSP430platformSpinForJumper_ni();
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 
   /* Configure the console to use the default UART handle, if we know that.
    * If something goes wrong, then nothing will show up on the serial port,

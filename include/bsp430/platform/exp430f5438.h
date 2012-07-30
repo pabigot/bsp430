@@ -55,11 +55,6 @@
 /** Where clocks are found on this platform */
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Labelled test points below JTAG header"
 
-/* Warn on reference to unsupported feature */
-#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-#warning configBSP430_PLATFORM_SPIN_FOR_JUMPER set but vBSP430platformSpinForJumper_ni not supported
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
-
 /** How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */

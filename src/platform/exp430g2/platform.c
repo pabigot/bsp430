@@ -118,6 +118,12 @@ vBSP430platformSpinForJumper_ni (void)
   P2DIR &= ~BIT6;
 
   /* Flash LEDs alternately while waiting */
+#if BSP430_LED
+  vBSP430ledInitialize_ni();
+#else /* BSP430_LED */
+  P1DIR |= BIT0 | BIT6;
+  P1SEL &= ~(BIT0 | BIT6);
+#endif /* BSP430_LED */
   P1OUT |= BIT0;
   while (! (P1IN & BIT5)) {
     __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 10);

@@ -57,6 +57,11 @@
 #define BSP430_CONSOLE_BAUD_RATE 2400
 #endif /* BSP430_CONSOLE_BAUD_RATE */
 
+/* Enable if requested */
+#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+
 /** How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */

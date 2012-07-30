@@ -101,9 +101,9 @@ void main ()
   /* Now initialize the LEDs */
   vBSP430ledInitialize_ni();
 
-#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
   vBSP430platformSpinForJumper_ni();
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 
   /* Configure the echo using the standard console handle */
 #ifndef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE

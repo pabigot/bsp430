@@ -54,6 +54,11 @@
 /** Where clocks are found on this platform */
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
 
+/* Enable if requested */
+#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+
 /** How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */

@@ -95,9 +95,13 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
 
 /** @def configBSP430_PLATFORM_SPIN_FOR_JUMPER
  *
- * Define to a true value to enable the
- * vBSP430platformSpinForJumper_ni() function, and to inform generic
- * applications that it should be used.
+ * Define to a true value to indicate that the application or
+ * infrastructure suggests use of the
+ * vBSP430platformSpinForJumper_ni() function.
+ *
+ * This value represents an application or system request for the
+ * feature; availability of the feature must be tested using
+ * #BSP430_PLATFORM_SPIN_FOR_JUMP.
  *
  * @defaulted */
 #ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
@@ -119,12 +123,11 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
  * The platform-specific header should document whether this function
  * is supported, and if it is what jumper configuration is recognized.
  *
- * @note vBSP430ledInitialize_ni() must have been invoked before this
- * function is called.
+ * @note This function will configure the LEDs and use them regardless
+ * of other configuration.
  *
- * @note This function is available only if
- * #configBSP430_PLATFORM_SPIN_FOR_JUMPER is defined to a true
- * value. */
+ * @note This function should only be referenced if
+ * #BSP430_PLATFORM_SPIN_FOR_JUMPER is true. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0)
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
@@ -260,6 +263,21 @@ void vBSP430platformSpinForJumper_ni (void);
 #define BSP430_CLOCK_TRIM_FLL 0
 #endif /* BSP430_CLOCK_TRIM_FLL supported by clock peripheral */
 #endif /* configBSP430_CLOCK_TRIM_FLL */
+
+/** @def BSP430_PLATFORM_SPIN_FOR_JUMPER
+ *
+ * Define to indicate that the application or infrastructure supports
+ * use of the vBSP430platformSpinForJumper_ni() function.  The value
+ * is defined only if #configBSP430_PLATFORM_SPIN_FOR_JUMPER is set,
+ * and is true only if the platform supports
+ * vBSP430platformSpinForJumper_ni().
+ *
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_SPIN_FOR_JUMPER)
+#ifndef BSP430_PLATFORM_SPIN_FOR_JUMPER
+#define BSP430_PLATFORM_SPIN_FOR_JUMPER 0
+#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
+#endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
  *

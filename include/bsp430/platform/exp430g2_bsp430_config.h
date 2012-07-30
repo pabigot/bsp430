@@ -41,13 +41,6 @@
 #ifndef BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H
 
-/** Enable spin-for-jumper
- *
- * @defaulted */
-#ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
-#define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
-
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */

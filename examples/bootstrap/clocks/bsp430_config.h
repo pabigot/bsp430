@@ -7,6 +7,9 @@ make realclean \
 
 */
 
+/* Application does output: support spin-for-jumper */
+#define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
+
 /* Expose the clocks */
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 1
 

@@ -41,13 +41,6 @@
 #ifndef BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H
 #define BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H
 
-/** Enable spin-for-jumper
- *
- * @defaulted */
-#ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
-#define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
-
 /** Platform does not support a crystal
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
