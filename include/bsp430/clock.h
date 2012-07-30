@@ -313,8 +313,8 @@ static unsigned long
 __inline__
 ulBSP430clockSMCLK_Hz_ni (void)
 {
-  unsigned long mclk_hz = ulBSP430clockMCLK_Hz_ni();
-  return mclk_hz >> iBSP430clockSMCLKDividingShift_ni();
+  unsigned long mclk_Hz = ulBSP430clockMCLK_Hz_ni();
+  return mclk_Hz >> iBSP430clockSMCLKDividingShift_ni();
 }
 
 /** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */

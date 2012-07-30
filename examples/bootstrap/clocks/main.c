@@ -45,8 +45,8 @@
 
 void main ()
 {
-  unsigned long smclk_hz;
-  unsigned short aclk_hz;
+  unsigned long smclk_Hz;
+  unsigned short aclk_Hz;
 
   xBSP430serialHandle console_handle = NULL;
 
@@ -86,8 +86,8 @@ void main ()
   cputtext_ni("\niBSP430clockSMCLKDividingShift_ni(): ");
   cputi_ni(iBSP430clockSMCLKDividingShift_ni(), 10);
   cputtext_ni("\nulBSP430clockSMCLK_Hz_ni(): ");
-  smclk_hz = ulBSP430clockSMCLK_Hz_ni();
-  cputul_ni(smclk_hz, 10);
+  smclk_Hz = ulBSP430clockSMCLK_Hz_ni();
+  cputul_ni(smclk_Hz, 10);
   cputtext_ni("\nBSP430_CLOCK_LFXT1_IS_FAULTED(): ");
   cputu_ni(BSP430_CLOCK_LFXT1_IS_FAULTED(), 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
@@ -95,16 +95,16 @@ void main ()
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_ACLK_HZ: ");
   cputu_ni(BSP430_CLOCK_NOMINAL_ACLK_HZ, 10);
   cputtext_ni("\nusBSP430clockACLK_Hz_ni(): ");
-  aclk_hz = usBSP430clockACLK_Hz_ni();
-  cputu_ni(aclk_hz, 10);
+  aclk_Hz = usBSP430clockACLK_Hz_ni();
+  cputu_ni(aclk_Hz, 10);
 
 #if BSP430_TIMER_CCACLK - 0
   do {
     const int SAMPLE_PERIOD_ACLK = 10;
     volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
     unsigned int cc_delta;
-    unsigned long aclk_rel_smclk_hz;
-    unsigned long smclk_rel_aclk_hz;
+    unsigned long aclk_rel_smclk_Hz;
+    unsigned long smclk_rel_aclk_Hz;
 
 
     if (! tp) {
@@ -126,20 +126,20 @@ void main ()
     cputtext_ni(" ticks of SMCLK");
     cputtext_ni("\nComparison with NOMINAL values:");
     cputtext_ni("\n\tSMCLK (Hz) (if ACLK correct): ");
-    smclk_rel_aclk_hz = (cc_delta * (unsigned long)aclk_hz) / SAMPLE_PERIOD_ACLK;
-    cputul_ni(smclk_rel_aclk_hz, 10);
+    smclk_rel_aclk_Hz = (cc_delta * (unsigned long)aclk_Hz) / SAMPLE_PERIOD_ACLK;
+    cputul_ni(smclk_rel_aclk_Hz, 10);
     cputtext_ni(" (error ");
-    cputl_ni(smclk_rel_aclk_hz - smclk_hz, 10);
+    cputl_ni(smclk_rel_aclk_Hz - smclk_Hz, 10);
     cputtext_ni(" = ");
-    cputl_ni(1000 * labs(smclk_rel_aclk_hz - smclk_hz) / smclk_hz, 10);
+    cputl_ni(1000 * labs(smclk_rel_aclk_Hz - smclk_Hz) / smclk_Hz, 10);
     cputtext_ni(" kHz/MHz)");
     cputtext_ni("\n\tACLK (Hz) (if SMCLK correct): ");
-    aclk_rel_smclk_hz = SAMPLE_PERIOD_ACLK * smclk_hz / cc_delta;
-    cputul_ni(aclk_rel_smclk_hz, 10);
+    aclk_rel_smclk_Hz = SAMPLE_PERIOD_ACLK * smclk_Hz / cc_delta;
+    cputul_ni(aclk_rel_smclk_Hz, 10);
     cputtext_ni(" (error ");
-    cputl_ni(aclk_rel_smclk_hz - aclk_hz, 10);
+    cputl_ni(aclk_rel_smclk_Hz - aclk_Hz, 10);
     cputtext_ni(" = ");
-    cputl_ni(1000 * labs(aclk_rel_smclk_hz - aclk_hz) / aclk_hz, 10);
+    cputl_ni(1000 * labs(aclk_rel_smclk_Hz - aclk_Hz) / aclk_Hz, 10);
     cputtext_ni(" Hz/kHz)");
   } while (0);
 #else
