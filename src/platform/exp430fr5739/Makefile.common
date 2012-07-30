@@ -4,13 +4,7 @@ MSPDEBUG_PROG=load
 
 SRC_PLATFORM = \
     $(BSP430_ROOT)/src/platform/$(PLATFORM)/platform.c \
-    $(BSP430_ROOT)/src/periph/timer.c \
-    $(BSP430_ROOT)/src/periph/cs.c \
-    $(BSP430_ROOT)/src/utility/uptime.c
+    $(BSP430_ROOT)/src/periph/cs.c
 
 SRC_SERIAL = \
     $(BSP430_ROOT)/src/periph/euscia.c
-
-SRC_CONSOLE = \
-    $(SRC_SERIAL) \
-    $(BSP430_ROOT)/src/utility/console.c

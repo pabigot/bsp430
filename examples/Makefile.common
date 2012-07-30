@@ -121,6 +121,20 @@ LDFLAGS += $(AUX_LDFLAGS) $(EXT_CFLAGS)
 %.o: %.S
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
+# Add-in if you want timers
+SRC_TIMER = \
+    $(BSP430_ROOT)/src/periph/timer.c
+
+# Add-in if you want uptime
+SRC_UPTIME = \
+    $(SRC_TIMER) \
+    $(BSP430_ROOT)/src/utility/uptime.c
+
+# Add-in if you want console
+SRC_CONSOLE = \
+    $(SRC_SERIAL) \
+    $(BSP430_ROOT)/src/utility/console.c
+
 # Object files derive from C source files and preprocessed assembly files
 OBJ += $(SRC:.c=.o) $(SRC_S:.S=.o)
 

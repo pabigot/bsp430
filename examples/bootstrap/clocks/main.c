@@ -142,7 +142,7 @@ void main ()
     cputl_ni(smclk_rel_aclk_hz - smclk_hz, 10);
     cputtext_ni(" = ");
     cputl_ni(1000 * labs(smclk_rel_aclk_hz - smclk_hz) / smclk_hz, 10);
-    cputtext_ni(" mHz/Hz)");
+    cputtext_ni(" kHz/MHz)");
     cputtext_ni("\n\tACLK (Hz) (if SMCLK correct): ");
     aclk_rel_smclk_hz = SAMPLE_PERIOD_ACLK * smclk_hz / cc_delta;
     cputul_ni(aclk_rel_smclk_hz, 10);
@@ -150,7 +150,7 @@ void main ()
     cputl_ni(aclk_rel_smclk_hz - aclk_hz, 10);
     cputtext_ni(" = ");
     cputl_ni(1000 * labs(aclk_rel_smclk_hz - aclk_hz) / aclk_hz, 10);
-    cputtext_ni(" mHz/Hz)");
+    cputtext_ni(" Hz/kHz)");
   } while (0);
 #else
   cputtext_ni("\nNo CCACLK timer available for ACLK/SMCLK comparison");

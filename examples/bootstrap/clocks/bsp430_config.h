@@ -21,7 +21,4 @@ make realclean \
 /* Request a differential timer for SMCLK/ACLK if available */
 #define configBSP430_PLATFORM_TIMER_CCACLK 1
 
-/* Disable uptime so we don't conflict with CCACLK if that uses TA0 */
-#define configBSP430_UPTIME 0
-
 #include <bsp430/platform/bsp430_config.h>

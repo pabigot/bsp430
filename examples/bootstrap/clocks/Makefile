@@ -1,6 +1,7 @@
 PLATFORM ?= exp430fr5739
 
 SRC = $(SRC_PLATFORM)
+SRC += $(SRC_TIMER)
 SRC += $(SRC_CONSOLE)
 SRC += main.c
 

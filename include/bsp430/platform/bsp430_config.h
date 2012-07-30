@@ -75,16 +75,13 @@
 /* END AUTOMATICALLY GENERATED CODE [platform_bsp430_config] */
 /* !BSP430! end=platform_bsp430_config */
 
-/** Platform support should normally include uptime
+/** Requirements to support default uptime resource (if that is enabled)
  * @defaulted */
-#ifndef configBSP430_UPTIME
-#define configBSP430_UPTIME 1
-#endif /* configBSP430_UPTIME */
-
-/** Requirements to support uptime (if that is enabled)
- * @defaulted */
-#if (configBSP430_UPTIME - 0) && !defined(configBSP430_HAL_TA0)
+#if (configBSP430_UPTIME - 0)                           \
+  && ! (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)
+#ifndef configBSP430_HAL_TA0
 #define configBSP430_HAL_TA0 1
+#endif /* TA0 is default uptime resource */
 #endif /* configBSP430_UPTIME */
 
 /** @def BSP430_CONSOLE_SERIAL_PERIPH_HANDLE

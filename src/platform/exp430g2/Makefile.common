@@ -8,14 +8,8 @@ MSPDEBUG_DRIVER ?= rf2500
 
 SRC_PLATFORM = \
     $(BSP430_ROOT)/src/platform/$(PLATFORM)/platform.c \
-    $(BSP430_ROOT)/src/periph/timer.c \
     $(BSP430_ROOT)/src/periph/bc2.c \
-    $(BSP430_ROOT)/src/utility/led.c \
-    $(BSP430_ROOT)/src/utility/uptime.c
+    $(BSP430_ROOT)/src/utility/led.c
 
 SRC_SERIAL = \
     $(BSP430_ROOT)/src/periph/usci.c
-
-SRC_CONSOLE = \
-    $(SRC_SERIAL) \
-    $(BSP430_ROOT)/src/utility/console.c

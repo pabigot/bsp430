@@ -65,18 +65,8 @@
 /** @def configBSP430_UPTIME
  *
  * Define to a true value to enable the uptime infrastructure to
- * maintain a continuous system clock.  Must be accompanied by the
- * required enabling of the HAL interrupt handler which monitors
- * counter overflows:
- *
- * @code
-
-#define configBSP430_UPTIME 1
-#define configBSP430_HAL_TA0 1
-
- * @endcode
- *
- * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE.
+ * maintain a continuous system clock.  A timer that will support this
+ * must be identified; see #configBSP430_UPTIME_USE_DEFAULT_RESOURCE.
  *
  * @defaulted
  */
@@ -106,18 +96,6 @@
 #define configBSP430_UPTIME_USE_DEFAULT_RESOURCE (configBSP430_UPTIME - 0)
 #endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
 
-#if configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0
-#if defined(BSP430_UPTIME_TIMER_HAL_HANDLE)
-#warning Override of BSP430_UPTIME_TIMER_HAL_HANDLE with true configBSP430_UPTIME_USE_DEFAULT_RESOURCE
-#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
-#if !(configBSP430_PERIPH_TA0 - 0)
-#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_PERIPH_TA0 not enabled
-#endif /* configBSP430_PERIPH_TA0 */
-#if !(configBSP430_HAL_TA0_ISR - 0)
-#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0_ISR not enabled
-#endif /* configBSP430_HAL_TA0_ISR */
-#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
-
 /** @def BSP430_UPTIME_TIMER_HAL_HANDLE
  *
  * Define to the handle of a HAL timer that can be used to maintain a
@@ -132,11 +110,27 @@
  * requirements cannot be enforced for non-default resources.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0)
-#ifndef BSP430_UPTIME_TIMER_HAL_HANDLE
+#ifdef BSP430_UPTIME_TIMER_HAL_HANDLE
+
+#if configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0
+#warning Override of BSP430_UPTIME_TIMER_HAL_HANDLE with true configBSP430_UPTIME_USE_DEFAULT_RESOURCE
+#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
+
+#else /* BSP430_UPTIME_TIMER_HAL_HANDLE */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
-#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
+#if ! defined(BSP430_DOXYGEN)
+#if !(configBSP430_PERIPH_TA0 - 0)
+#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_PERIPH_TA0 not enabled
+#endif /* configBSP430_PERIPH_TA0 */
+#if !(configBSP430_HAL_TA0_ISR - 0)
+#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0_ISR not enabled
+#endif /* configBSP430_HAL_TA0_ISR */
+#endif /* ! BSP430_DOXYGEN */
+
 #endif /* configBSP430_UPTIME */
+#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
 
 /** @def BSP430_UPTIME_SSEL
  *
