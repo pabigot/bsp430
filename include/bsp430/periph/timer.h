@@ -148,16 +148,10 @@
  * enabled due to availability of #BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * and the other relevant material required are defined.
  *
- * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value and the platform or another external source
- * provides a definition.
- *
- * @nodefault
- *
- * @dependency <bsp430/platform.h> must be normally be included to
- * obtain the platform-specific value */
+ * @dependency #configBSP430_TIMER_CCACLK
+ * @platformdefault */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK no default value
+#define BSP430_TIMER_CCACLK include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_IS_TA0
@@ -171,17 +165,10 @@
  * persistent system uptime) should check this value to determine
  * whether it is safe to reconfigure the timer.
  *
- * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value and the platform or another external source
- * provides a definition.
- *
- * @nodefault
- *
- * @dependency <bsp430/platform.h> must be normally be included to
- * obtain the platform-specific value
- */
+ * @dependency #configBSP430_TIMER_CCACLK
+ * @platformdefault */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_IS_TA0 no default value
+#define BSP430_TIMER_CCACLK_IS_TA0 include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_PERIPH_HANDLE
@@ -193,16 +180,10 @@
  * See #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE if you intend
  * to override the platform default.
  *
- * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value and the platform or another external source
- * provides a definition.
- *
- * @nodefault
- *
- * @dependency <bsp430/platform.h> must be normally be included to
- * obtain the platform-specific value */
+ * @dependency #configBSP430_TIMER_CCACLK
+ * @platformdefault */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_PERIPH_HANDLE no default value
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_CC_INDEX
@@ -211,16 +192,10 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
  * signal.
  *
- * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value and the platform or another external source
- * provides a definition.
- *
- * @nodefault
- *
- * @dependency <bsp430/platform.h> must be normally be included to
- * obtain the platform-specific value */
+ * @dependency #configBSP430_TIMER_CCACLK
+ * @platformdefault  */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_CC_INDEX no default value
+#define BSP430_TIMER_CCACLK_CC_INDEX include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_CCIS
@@ -229,16 +204,10 @@
  * control word for CC block #BSP430_TIMER_CCACLK_CC_INDEX of
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
- * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value and the platform or another external source
- * provides a definition.
- *
- * @nodefault
- *
- * @dependency <bsp430/platform.h> must be normally be included to
- * obtain the platform-specific value */
+ * @dependency #configBSP430_TIMER_CCACLK
+ * @platformdefault  */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_CCIS no default value
+#define BSP430_TIMER_CCACLK_CCIS include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_TIMER_CCACLK - 0)
@@ -269,10 +238,7 @@
  * stopped.  Otherwise the delta in the counter of the CCACLK timer
  * over a period of @a aclk_ticks ticks of ACLK.
  *
- * @dependency This function is not provided if #BSP430_TIMER_CCACLK
- * is false.  Include <bsp430/platform.h> to determine availability at
- * compile time.
- */
+ * @dependency #BSP430_TIMER_CCACLK */
 unsigned int uiBSP430timerCCACLKMeasureDelta_ni (unsigned int capture_mode,
     unsigned int aclk_ticks);
 #endif /* configBSP430_TIMER_CCACLK */
