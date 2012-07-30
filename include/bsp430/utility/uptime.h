@@ -79,16 +79,10 @@
  * Defined to a true value if #BSP430_UPTIME_TIMER_HAL_HANDLE has been
  * provided, making the uptime infrastructure available.
  *
- * The macro will be undefined unless #configBSP430_UPTIME is
- * defined to a true value and the platform or another external source
- * provides the necessary support infrastructure.
- *
- * @nodefault
- *
- * @dependency <bsp430/platform.h> must be normally be included to
- * obtain the platform-specific value */
+ * @dependency #configBSP430_UPTIME
+ * @platformdefault */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_UPTIME no default value
+#define BSP430_UPTIME include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def configBSP430_UPTIME_USE_DEFAULT_RESOURCE

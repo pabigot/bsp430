@@ -66,7 +66,7 @@
  * divide based on #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT if that
  * is defined to a non-negative value.  (If it is a negative value,
  * the power-up SMCLK source and divider are left unchanged.)
- * @li Start the system clock (if #configBSP430_UPTIME)
+ * @li Start the system clock (if #BSP430_UPTIME)
  */
 void vBSP430platformInitialize_ni (void);
 

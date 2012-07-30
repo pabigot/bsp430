@@ -115,7 +115,7 @@ void vBSP430platformInitialize_ni (void)
   iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
 #endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
 
-#if configBSP430_UPTIME - 0
+#if BSP430_UPTIME - 0
   vBSP430uptimeStart_ni();
-#endif /* configBSP430_UPTIME */
+#endif /* BSP430_UPTIME */
 }
