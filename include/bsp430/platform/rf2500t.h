@@ -58,9 +58,11 @@
 #endif /* BSP430_CONSOLE_BAUD_RATE */
 
 /** How to use ACLK as a capture/compare input source */
-#if defined(BSP430_DOXYGEN)                                             \
-  || ((configBSP430_TIMER_CCACLK - 0)                                   \
-      && ! (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0))
+#if ((configBSP430_TIMER_CCACLK - 0)                                    \
+     && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
+         || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
+/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
+#define BSP430_TIMER_CCACLK 1
 /** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TB0
 /** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */

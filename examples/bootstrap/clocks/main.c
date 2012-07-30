@@ -93,14 +93,10 @@ void main ()
   aclk_hz = usBSP430clockACLK_Hz_ni();
   cputu_ni(aclk_hz, 10);
 
-#if defined(BSP430_TIMER_CCACLK_PERIPH_HANDLE)
+#if BSP430_TIMER_CCACLK - 0
   do {
-    int i;
     const int SAMPLE_PERIOD_ACLK = 10;
     volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
-    const int ccidx = BSP430_TIMER_CCACLK_CC_INDEX;
-    unsigned int c0 = 0;
-    unsigned int c1;
     unsigned int cc_delta;
     unsigned long aclk_rel_smclk_hz;
     unsigned long smclk_rel_aclk_hz;
@@ -110,28 +106,14 @@ void main ()
       cputtext_ni("\nUnable to access configured CCACLK timer");
       break;
     }
-    BSP430_CORE_WATCHDOG_CLEAR();
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL_2 | MC_2 | TACLR;
-    tp->cctl[ccidx] = CM_2 | BSP430_TIMER_CCACLK_CCIS | CAP | SCS;
-    /* NOTE: CCIFG seems to be set immediately on the second and
-     * subsequent iterations.  Flush the first capture. */
-    while (! (tp->cctl[ccidx] & CCIFG)) {
-      ; /* nop */
-    }
-    for (i = 0; i <= SAMPLE_PERIOD_ACLK; ++i) {
-      tp->cctl[ccidx] &= ~CCIFG;
-      while (! (tp->cctl[ccidx] & CCIFG)) {
-        ; /* nop */
-      }
-      if (0 == i) {
-        c0 = tp->ccr[ccidx];
-      }
-    }
-    c1 = tp->ccr[ccidx];
+    cc_delta = uiBSP430timerCCACLKMeasureDelta_ni(CM_2, SAMPLE_PERIOD_ACLK);
     tp->ctl = 0;
-    tp->cctl[ccidx] = 0;
-    cc_delta = (c0 > c1) ? (c0 - c1) : (c1 - c0);
+    if (-1 == cc_delta) {
+      cputtext_ni("\nCCACLK measurement failed");
+      break;
+    }
     cputchar_ni('\n');
     cputu_ni(SAMPLE_PERIOD_ACLK, 10);
     cputtext_ni(" ticks of ACLK produced ");

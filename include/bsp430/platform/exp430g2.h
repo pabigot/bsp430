@@ -55,10 +55,12 @@
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
 
 /** How to use ACLK as a capture/compare input source */
-#if defined(BSP430_DOXYGEN)                                             \
-  || ((configBSP430_TIMER_CCACLK - 0)                                   \
-      && ! (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0))
-#if defined(BSP430_DOXYGEN) || defined(__MSP430G2553__)
+#if ((configBSP430_TIMER_CCACLK - 0)                                    \
+     && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
+         || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
+#if defined(__MSP430G2553__)
+/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
+#define BSP430_TIMER_CCACLK 1
 /** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA0
 /** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */

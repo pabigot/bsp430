@@ -142,6 +142,24 @@
 #define configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE (configBSP430_TIMER_CCACLK - 0)
 #endif /* configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE */
 
+/** @def BSP430_TIMER_CCACLK
+ *
+ * Defined to a true value if ACLK-triggered timer captures are
+ * enabled due to availability of #BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * and the other relevant material required are defined.
+ * 
+ * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value and the platform or another external source
+ * provides a definition.
+ *
+ * @nodefault
+ *
+ * @dependency <bsp430/platform.h> must be normally be included to
+ * obtain the platform-specific value */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK no default value
+#endif /* BSP430_DOXYGEN */
+
 /** @def BSP430_TIMER_CCACLK_IS_TA0
  *
  * Defined to a true value by default or external configuration when
@@ -153,8 +171,14 @@
  * persistent system uptime) should check this value to determine
  * whether it is safe to reconfigure the timer.
  *
- * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value.
+ * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value and the platform or another external source
+ * provides a definition.
+ *
+ * @nodefault
+ *
+ * @dependency <bsp430/platform.h> must be normally be included to
+ * obtain the platform-specific value
  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_IS_TA0 no default value
@@ -166,13 +190,17 @@
  * a capture/compare input.  Preferably this would not be TA0.  The
  * intended use of this timer is to measure ACLK against SMCLK.
  *
- * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value.
- *
  * See #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE if you intend
  * to override the platform default.
  *
- * @nodefault */
+ * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value and the platform or another external source
+ * provides a definition.
+ *
+ * @nodefault
+ *
+ * @dependency <bsp430/platform.h> must be normally be included to
+ * obtain the platform-specific value */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE no default value
 #endif /* BSP430_DOXYGEN */
@@ -183,10 +211,14 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
  * signal.
  *
- * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value.
+ * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value and the platform or another external source
+ * provides a definition.
  *
- * @nodefault */
+ * @nodefault
+ *
+ * @dependency <bsp430/platform.h> must be normally be included to
+ * obtain the platform-specific value */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC_INDEX no default value
 #endif /* BSP430_DOXYGEN */
@@ -197,13 +229,53 @@
  * control word for CC block #BSP430_TIMER_CCACLK_CC_INDEX of
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
- * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
- * defined to a true value.
+ * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value and the platform or another external source
+ * provides a definition.
  *
- * @nodefault */
+ * @nodefault
+ *
+ * @dependency <bsp430/platform.h> must be normally be included to
+ * obtain the platform-specific value */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CCIS no default value
 #endif /* BSP430_DOXYGEN */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_TIMER_CCACLK - 0)
+/** Count number of timer transitions over a span of ACLK ticks
+ *
+ * This function uses the #BSP430_TIMER_CCACLK infrastructure to count
+ * events on the clock source assigned to that timer.  The CCACLK
+ * capture/control block is configured based on @a capture_mode, and
+ * execution loops for @a aclk_ticks ACLK cycles.  The CCACLK timer
+ * counter is recorded at the start of the first and end of the last
+ * cycle.  The capture/control block control is reset, and the
+ * difference between counters is returned.
+ *
+ * @note The function does not modify the timer-level configuration;
+ * the timer source must be assigned and the timer started prior to
+ * invoking this function.
+ *
+ * @param capture_mode the edge detection capture specification.  The
+ * appropriate value is given by constants in the <msp430.h> header.
+ * CM_1 captures on rising edge, CM_2 on falling edge, CM_3 on both
+ * rising and falling edge.  If the provided value is not one of these
+ * three, the function returns immediately with a value of -1.
+ *
+ * @param aclk_ticks the number of ticks over which the events are
+ * counted.
+ *
+ * @return -1 if @a capture_mode is not valid or the CCACLK timer is
+ * stopped.  Otherwise the delta in the counter of the CCACLK timer
+ * over a period of @a aclk_ticks ticks of ACLK.
+ *
+ * @dependency This function is not provided if #BSP430_TIMER_CCACLK
+ * is false.  Include <bsp430/platform.h> to determine availability at
+ * compile time.
+ */ 
+unsigned int uiBSP430timerCCACLKMeasureDelta_ni (unsigned int capture_mode,
+                                                 unsigned int aclk_ticks);
+#endif /* configBSP430_TIMER_CCACLK */
 
 /** Layout for Timer_A and Timer_B peripherals.
  */

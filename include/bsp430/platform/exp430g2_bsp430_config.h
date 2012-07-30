@@ -49,13 +49,12 @@
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 /* Request timer CCACLK resource */
-#if defined(BSP430_DOXYGEN)                                             \
-  || ((configBSP430_TIMER_CCACLK - 0)                                   \
-      && ! (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0))
+#if ((configBSP430_TIMER_CCACLK - 0)                                    \
+     && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
+         || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
 #if defined(__MSP430G2553__)
 #if !defined(configBSP430_PERIPH_TA0)
 /** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
-/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
 #define configBSP430_PERIPH_TA0 1
 #endif /* configBSP430_PERIPH_TA0 */
 #endif /* MCU */

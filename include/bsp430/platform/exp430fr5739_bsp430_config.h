@@ -49,9 +49,9 @@
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 /* Request timer CCACLK resource */
-#if defined(BSP430_DOXYGEN)                                             \
-  || ((configBSP430_TIMER_CCACLK - 0)                                   \
-      && ! (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0))
+#if ((configBSP430_TIMER_CCACLK - 0)                                    \
+     && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
+         || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
 #if !defined(configBSP430_PERIPH_TA1)
 /** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define configBSP430_PERIPH_TA1 1

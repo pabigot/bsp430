@@ -30,6 +30,7 @@
  */
 
 #include <bsp430/periph/timer_.h>
+#include <bsp430/platform.h>    /* BSP430_PLATFORM_TIMER_CCACLK defined by this */
 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define TA_OVERFLOW 0x0E
@@ -169,6 +170,56 @@ static struct {
 
 xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
 #endif /* configBSP430_PERIPH_TB2 */
+
+#if BSP430_TIMER_CCACLK - 0
+/* That you requested it doesn't mean the platform provided it.  If
+ * it's not here, review the platform headers. */
+unsigned int
+uiBSP430timerCCACLKMeasureDelta_ni (unsigned int capture_mode,
+                                    unsigned int aclk_ticks)
+{
+  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  const int ccidx = BSP430_TIMER_CCACLK_CC_INDEX;
+  int i;
+  unsigned int c0 = 0;
+  unsigned int c1;
+
+  /* Eliminate stray bits from capture mode. */
+  capture_mode &= (CM0 | CM1);
+
+  /* Fail if no capture mode specified or timer is stopped */
+  if ((0 == capture_mode) || (0 == (tp->ctl & (MC0 | MC1)))) {
+    return -1;
+  }
+
+  /* Configure synchronous capture.  SCS is not defined on a small
+   * handful of 3xx chips, so the code won't build on those, but
+   * you're not using one of them anyway, are you? */
+  tp->cctl[ccidx] = capture_mode | BSP430_TIMER_CCACLK_CCIS | CAP | SCS;
+
+  /* Synchronize with an ACLK edge by discarding the first capture. */
+  BSP430_CORE_WATCHDOG_CLEAR();
+  while (! (tp->cctl[ccidx] & CCIFG)) {
+    ; /* nop */
+  }
+  for (i = 0; i <= aclk_ticks; ++i) {
+    tp->cctl[ccidx] &= ~CCIFG;
+    while (! (tp->cctl[ccidx] & CCIFG)) {
+      ; /* nop */
+    }
+    if (0 == i) {
+      c0 = tp->ccr[ccidx];
+    }
+    BSP430_CORE_WATCHDOG_CLEAR();
+  }
+  c1 = tp->ccr[ccidx];
+
+  /* Reset the CCTL */
+  tp->cctl[ccidx] = 0;
+  return (c0 > c1) ? (c0 - c1) : (c1 - c0);
+}
+  
+#endif /* BSP430_TIMER_CCACLK */
 
 unsigned long
 ulBSP430timerCounter_ni (xBSP430timerHandle timer,

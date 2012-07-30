@@ -49,4 +49,42 @@ FreeRTOS HAL handle global: extern xBSP430%(periph)sHandle const xBSP430%(periph
 
 FreeRTOS HAL configuration structure: struct xBSP430%(periph)sConfig
 
+
+Pattern for platform-specific features:
+
+configBSP430_MODULE_FEATURE -- in module.h header, serves to request
+feature, default to 0
+
+configBSP430_MODULE_USE_DEFAULT_FEATURE_RESOURCES -- in module.h header,
+default to (configBSP430_MODULE_FEATURE - 0)
+
+BSP430_MODULE_FEATURE -- documented in module.h header, used in application
+code to determine whether feature was enabled, @nodefault, @dependency
+<bsp430/platform.h>
+
+BSP430_MODULE_FEATURE_ATTRIBUTES -- as needed, documented in module.h
+header, @nodefault, @dependency <bsp430/platform.h>
+
+BSP430_MODULE_FEATURE_ATTRIBUTES -- defined in (specific) platform.h under
+test:
+#if ((configBSP430_MODULE_FEATURE - 0) \
+     && ((! defined(configBSP430_MODULE_USE_DEFAULT_FEATURE_RESOURCES)) \
+        || (configBSP430_MODULE_USE_DEFAULT_FEATURE_RESOURCES - 0)))
+/** Defined only if #configBSP430_MODULE_USE_DEFAULT_FEATURE_RESOURCE. @defaulted */
+#define BSP430_MODULE_FEATURE_ATTRIBUTES whatever
+#endif /* configBSP430_MODULE_FEATURE && need default */
+
+If the feature attributes introduce a dependency on a specific peripheral,
+default to enabling that peripheral with:
+
+configBSP430_PERIPH_WHATEVER -- defined in (specific) platform bsp430_config.h
+under test:
+#if ((configBSP430_MODULE_FEATURE - 0) \
+     && ((! defined(configBSP430_MODULE_USE_DEFAULT_FEATURE_RESOURCES)) \
+        || (configBSP430_MODULE_USE_DEFAULT_FEATURE_RESOURCES - 0)))
+#if !defined(configBSP430_PERIPH_WHATEVER)
+#define configBSP430_PERIPH_WHATEVER 1
+#endif /* configBSP430_PERIPH_WHATEVER */
+#endif /* configBSP430_MODULE_FEATURE && need default */
+
 */
