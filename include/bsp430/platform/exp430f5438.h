@@ -55,7 +55,23 @@
 /** Where clocks are found on this platform */
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Labelled test points below JTAG header"
 
-/** How to use ACLK as a capture/compare input source */
+/* What to use as a console */
+/* !BSP430! module=console subst=module instance=nop */
+/* !BSP430! insert=module_startif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_startif] */
+#if ((configBSP430_CONSOLE - 0)                                    \
+     && ((! defined(configBSP430_CONSOLE_USE_DEFAULT_RESOURCE))    \
+         || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
+/* END AUTOMATICALLY GENERATED CODE [module_startif] */
+/* !BSP430! end=module_startif */
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci5_USCI5_A1
+/* !BSP430! insert=module_endif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
+#endif /* configBSP430_CONSOLE && need default */
+/* END AUTOMATICALLY GENERATED CODE [module_endif] */
+/* !BSP430! end=module_endif */
+
+/* How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */

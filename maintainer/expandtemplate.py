@@ -310,7 +310,13 @@ isr_%(INSTANCE)s (void)
      && ((! defined(configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE))    \\
          || (configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE - 0)))''',
 
-    'feature_endif' : '''#endif /* configBSP430_%(MODULE)s_%(FEATURE)s && need default */'''
+    'feature_endif' : '''#endif /* configBSP430_%(MODULE)s_%(FEATURE)s && need default */''',
+
+    'module_startif' : '''#if ((configBSP430_%(MODULE)s - 0)                                    \\
+     && ((! defined(configBSP430_%(MODULE)s_USE_DEFAULT_RESOURCE))    \\
+         || (configBSP430_%(MODULE)s_USE_DEFAULT_RESOURCE - 0)))''',
+
+    'module_endif' : '''#endif /* configBSP430_%(MODULE)s && need default */''',
     }
 
 directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')

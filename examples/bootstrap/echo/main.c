@@ -30,7 +30,10 @@
 /* We want to know the nominal clock speed so we can delay. */
 #include <bsp430/clock.h>
 
-/* We're going to use a console. */
+/* We require console support as verified by <bsp430/platform.h> */
+#ifndef BSP430_CONSOLE
+#error No console UART PERIPH handle has been defined
+#endif /* BSP430_CONSOLE */
 #include <bsp430/utility/console.h>
 
 /* The buffer in which pending characters are placed.  A negative
@@ -106,10 +109,7 @@ void main ()
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 
   /* Configure the echo using the standard console handle */
-#ifndef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
-#error No console UART PERIPH handle has been defined
-#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
-  tty0 = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
+  tty0 = xBSP430consoleInitialize();
   if (! tty0) {
     return;
   }

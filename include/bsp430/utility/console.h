@@ -56,31 +56,76 @@
 #define BSP430_UTILITY_CONSOLE_H
 
 #include <bsp430/serial.h>
+#include <bsp430/platform.h>
 
-/** @def BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
+/** @def configBSP430_CONSOLE
  *
- * The HPL peripheral handle that should be used by platform-agnostic
- * programs to create the console.  Suggested possibilities are
- * #BSP430_PERIPH_USCI_A0, #BSP430_PERIPH_USCI5_A1 (sic), and
- * #BSP430_PERIPH_EUSCI_A0.  A potential default is often made
- * available by including <bsp430/platform/bsp430_config.h>.  If you
- * provide one yourself, remember to enable the HAL for the
- * peripheral.
+ * Define to a true value to request that a serial handle be
+ * identified to serve as a system console.
  *
- * If you want to disable the console for an application but are
- * getting a default assigned anyway, define this to
- * #BSP430_PERIPH_NONE.
+ * See #configBSP430_CONSOLE_USE_DEFAULT_RESOURCE.
  *
- * @nodefault */
+ * @defaulted
+ */
+#ifndef configBSP430_CONSOLE
+#define configBSP430_CONSOLE 0
+#endif /* configBSP430_CONSOLE */
+
+/** @def BSP430_CONSOLE
+ *
+ * Defined to a true value if #BSP430_CONSOLE_SERIAL_HAL_HANDLE has
+ * been provided, making the console infrastructure available.
+ *
+ * @dependency #configBSP430_CONSOLE 
+ * @platformdefault
+ */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE no default value
+#define BSP430_CONSOLE include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+/** @def configBSP430_CONSOLE_USE_DEFAULT_RESOURCE
+ *
+ * Define to a true value to use the default (platform-specific)
+ * serial HAL handle.  This is true by default if
+ * #configBSP430_CONSOLE is true.
+ *
+ * If you want to override the default, define this to a false value
+ * and provide definitions for:
+ * <ul>
+ * <li>#BSP430_CONSOLE_SERIAL_HAL_HANDLE
+ * <li>#BSP430_CONSOLE_BAUD_RATE (optional)
+ * </ul>
+ *
+ * You are also responsible for requesting the inclusion of the
+ * corresponding device and its HAL interface in the application,
+ * e.g. by setting #configBSP430_PERIPH_USCI5_A1.
+ *
+ * @defaulted */
+#ifndef configBSP430_CONSOLE_USE_DEFAULT_RESOURCE
+#define configBSP430_CONSOLE_USE_DEFAULT_RESOURCE (configBSP430_CONSOLE - 0)
+#endif /* configBSP430_CONSOLE_USE_DEFAULT_RESOURCE */
+
+/** @def BSP430_CONSOLE_SERIAL_HAL_HANDLE
+ *
+ * The HAL handle that should be used by platform-agnostic programs to
+ * create the console.  A default is provided based on available
+ * serial peripherals.
+ *
+ * If you override this, be sure to set
+ * #configBSP430_CONSOLE_USE_DEFAULT_RESOURCE to false and to
+ * explicitly request the HAL resource in your bsp430_config.h file
+ * (e.g., enable #configBSP430_HAL_USCI5_A0).
+ *
+ * @dependency #BSP430_CONSOLE
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_CONSOLE_BAUD_RATE
  *
  * The baud rate that should be used for the console.  This may be
- * overridden in a platform header (or by an application
- * configuration).
+ * overridden in a platform header or by an application configuration.
  *
  * @defaulted */
 #ifndef BSP430_CONSOLE_BAUD_RATE
@@ -278,24 +323,8 @@ int cputl_ni (long n, int radix);
  * @return the number of characters emitted */
 int cputul_ni (unsigned long n, int radix);
 
+xBSP430serialHandle xBSP430consoleInitialize (void);
 
-/** Configure a console device.
- *
- * @note Any errors returned by the underlying UART implementation
- * while writing are ignored.
- *
- * @note Although the interface permits changing the UART associated
- * with the console, nothing is done to prevent catastrophe if the
- * previous device is being actively used by a function in this
- * module.
- *
- * @param uart a serial device to be used for #cprintf.  Pass a null
- * handle to disable the console print infrastructure.  Attempts to
- * re-initialize with a new device do not produce a diagnostic; the
- * new device is used in subsequent operations.
- *
- * @return 1 if a valid console was passed; 0 if the console facility
- * was disabled by passing a null handle; -1 if an error occurred */
-int iBSP430consoleConfigure (xBSP430serialHandle uart);
+int xBSP430consoleConfigure (int enablep);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

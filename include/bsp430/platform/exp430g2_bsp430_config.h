@@ -41,6 +41,34 @@
 #ifndef BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H
 
+/* Use native USCI for genericized serial port unless told not to */
+#ifndef configBSP430_SERIAL_USE_USCI
+#if defined(__MSP430G2553__)
+#define configBSP430_SERIAL_USE_USCI 1
+#endif /* MCU */
+#endif /* configBSP430_SERIAL_USE_USCI */
+
+/* What to use as a console */
+/* !BSP430! module=console subst=module instance=nop */
+/* !BSP430! insert=module_startif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_startif] */
+#if ((configBSP430_CONSOLE - 0)                                    \
+     && ((! defined(configBSP430_CONSOLE_USE_DEFAULT_RESOURCE))    \
+         || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
+/* END AUTOMATICALLY GENERATED CODE [module_startif] */
+/* !BSP430! end=module_startif */
+#if !defined(configBSP430_HAL_USCI_A0)
+#if defined(__MSP430G2553__)
+#define configBSP430_HAL_USCI_A0 1
+#endif /* MCU */
+#endif /* configBSP430_HAL_USCI_A0 */
+/* !BSP430! insert=module_endif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
+#endif /* configBSP430_CONSOLE && need default */
+/* END AUTOMATICALLY GENERATED CODE [module_endif] */
+/* !BSP430! end=module_endif */
+
+/* How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */

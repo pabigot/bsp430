@@ -30,8 +30,10 @@
  * can */
 #include <bsp430/periph/timer.h>
 
-/* We're going to use a console. */
+/* We will use a console if we can. */
+#if BSP430_CONSOLE - 0
 #include <bsp430/utility/console.h>
+#endif /* BSP430_CONSOLE */
 
 /* LPM bits are relevant when figuring out what clocks might be
  * enabled */
@@ -44,8 +46,6 @@ void main ()
   unsigned long smclk_Hz;
   unsigned short aclk_Hz;
 
-  xBSP430serialHandle console_handle = NULL;
-
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
 
@@ -53,13 +53,10 @@ void main ()
   vBSP430platformSpinForJumper_ni();
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-  /* Configure the console to use the default UART handle, if we know that.
-   * If something goes wrong, then nothing will show up on the serial port,
-   * but the clocks should still be running. */
-#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
-  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
-  iBSP430consoleConfigure(console_handle);
-
+  /* If we support a console, dump out a bunch of configuration
+   * information. */
+#if BSP430_CONSOLE - 0
+  (void)xBSP430consoleInitialize();
   cputtext_ni("\nSystem running\n");
   cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1: ");
   cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1, 10);
@@ -137,14 +134,15 @@ void main ()
     cputl_ni(1000 * labs(aclk_rel_smclk_Hz - aclk_Hz) / aclk_Hz, 10);
     cputtext_ni(" Hz/kHz)");
   } while (0);
-#else
+#else /* BSP430_TIMER_CCACLK */
   cputtext_ni("\nNo CCACLK timer available for ACLK/SMCLK comparison");
-#endif
+#endif /* BSP430_TIMER_CCACLK */
 
   cputchar_ni('\n');
-#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
+#endif /* BSP430_CONSOLE */
+
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 1)) {
-#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
+#if BSP430_CONSOLE - 0
     cputtext_ni("\nClock signals exposed:\n\t");
 #ifdef BSP430_PERIPH_EXPOSED_CLOCKS_HELP
     cputtext_ni(BSP430_PERIPH_EXPOSED_CLOCKS_HELP);
@@ -154,7 +152,7 @@ void main ()
     cprintf("\nStatus register LPM bits: ");
     cputu_ni(__read_status_register() & BSP430_LPM_SR_MASK, 16);
     cputchar_ni('\n');
-#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
+#endif /* BSP430_CONSOLE */
     /* Spin here with CPU active.  In LPM0, MCLK is disabled.  Other
      * clocks get disabled at deeper sleep modes; if you fall off the
      * bottom, you might end up in LPM4 with all clocks disabled. */
@@ -162,8 +160,8 @@ void main ()
       ;
     }
   } else {
-#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
+#if BSP430_CONSOLE - 0
     cputtext_ni("\nFailed to expose clock signals\n");
-#endif /* BSP430_PERIPH_EXPOSED_CLOCKS_HELP */
+#endif /* BSP430_CONSOLE */
   }
 }

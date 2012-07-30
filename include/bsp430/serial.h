@@ -60,7 +60,7 @@
  *
  * @defaulted */
 #ifndef configBSP430_SERIAL_EXPOSE_STATE
-#define configBSP430_SERIAL_EXPOSE_STATE 0
+#define configBSP430_SERIAL_EXPOSE_STATE 1
 #endif /* configBSP430_SERIAL_EXPOSE_STATE */
 
 /** @def configBSP430_SERIAL_USE_USCI
@@ -113,8 +113,8 @@ typedef xBSP430serialHandle xBSP430serialHandle;
  * interrupts is as if those callbacks were associated during this
  * call.
  *
- * @param periph The peripheral HPL device identifier for the USCI
- * device that is being requested. E.g., BSP430_PERIPH_USCI_A0.
+ * @param periph The peripheral device identifier for the USCI device
+ * that is being requested. E.g., #BSP430_PERIPH_USCI_A0.
  *
  * @param control_word The configuration to be written to the device's
  * ctlw0 word.  If the device does not support a ctlw0 register, the
@@ -154,7 +154,7 @@ xBSP430serialHandle xBSP430serialOpenUART (xBSP430periphHandle periph,
 #endif /* BSP430_DOXYGEN */
 
 #if defined(BSP430_DOXYGEN)
-xBSP430serialHandle xBSP430serialOpenSPI (xBSP430periphHandle xPeriph,
+xBSP430serialHandle xBSP430serialOpenSPI (xBSP430periphHandle periph,
     unsigned int control_word,
     unsigned int prescaler);
 #endif /* BSP430_DOXYGEN */
@@ -324,14 +324,14 @@ int iBSP430serialTransmitASCIIZ_ni (xBSP430serialHandle device, const char * str
 #define _DELEGATE_HANDLE(_serial)                       \
   typedef xBSP430##_serial##Handle xBSP430serialHandle;
 
-#define _DELEGATE_OPEN(_serial)                                         \
+#define _DELEGATE_OPEN_UART(_serial)                                    \
   static __inline__                                                     \
   xBSP430serialHandle                                                   \
-  xBSP430serialOpen (xBSP430periphHandle xPeriph,                       \
-                     unsigned int control_word,                         \
-                     unsigned long baud)                                \
+  xBSP430serialOpenUART (xBSP430periphHandle periph,                    \
+                         unsigned int control_word,                     \
+                         unsigned long baud)                            \
   {                                                                     \
-    return xBSP430##_serial##OpenUART(xPeriph, control_word, baud);     \
+    return xBSP430##_serial##OpenUART(periph, control_word, baud);      \
   }
 
 #define _DELEGATE_CONFIGURE_CALLBACKS(_serial)                          \
@@ -396,7 +396,7 @@ int iBSP430serialTransmitASCIIZ_ni (xBSP430serialHandle device, const char * str
 
 #define _DELEGATE(_serial)                      \
   _DELEGATE_HANDLE(_serial)                     \
-  _DELEGATE_OPEN(_serial)                       \
+  _DELEGATE_OPEN_UART(_serial)                  \
   _DELEGATE_CONFIGURE_CALLBACKS(_serial)        \
   _DELEGATE_CLOSE(_serial)                      \
   _DELEGATE_WAKEUP_TRANSMIT_NI(_serial)         \

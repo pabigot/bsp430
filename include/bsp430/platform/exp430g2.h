@@ -47,11 +47,11 @@
 #ifndef BSP430_PLATFORM_EXP430G2_H
 #define BSP430_PLATFORM_EXP430G2_H
 
-/** Unconditionally define this, so as to produce errors if there is a
+/* Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430G2 1
 
-/** Where clocks are found on this platform */
+/* Where clocks are found on this platform */
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
 
 /* Enable if requested */
@@ -59,7 +59,25 @@
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/** How to use ACLK as a capture/compare input source */
+/* What to use as a console */
+/* !BSP430! module=console subst=module instance=nop */
+/* !BSP430! insert=module_startif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_startif] */
+#if ((configBSP430_CONSOLE - 0)                                    \
+     && ((! defined(configBSP430_CONSOLE_USE_DEFAULT_RESOURCE))    \
+         || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
+/* END AUTOMATICALLY GENERATED CODE [module_startif] */
+/* !BSP430! end=module_startif */
+#if defined(__MSP430G2553__)
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci_USCI_A0
+#endif /* MCU */
+/* !BSP430! insert=module_endif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
+#endif /* configBSP430_CONSOLE && need default */
+/* END AUTOMATICALLY GENERATED CODE [module_endif] */
+/* !BSP430! end=module_endif */
+
+/* How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
 /* !BSP430! insert=feature_startif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */

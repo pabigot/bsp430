@@ -305,7 +305,7 @@ unsigned long ulBSP430clockTrimFLL_ni (unsigned long fll_Hz);
 /** @def BSP430_CLOCK_PUC_MCLK_HZ
  *
  * Nominal frequency of MCLK at power-up, in Hz.
- *  
+ *
  * The value is constant for all platforms using a specific clock
  * peripheral, and is defined in the peripheral header.  It is usually
  * around 1 MHz. */

@@ -115,7 +115,6 @@ vBSP430platformSpinForJumper_ni (void)
   P1DIR &= ~BIT5;
   P1REN |= BIT5;
   P1OUT |= BIT5;
-  P2DIR &= ~BIT6;
 
   /* Flash LEDs alternately while waiting */
 #if BSP430_LED

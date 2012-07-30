@@ -36,7 +36,10 @@ make AUX_CPPFLAGS='-DconfigBSP430_CORE_SUPPORT_WATCHDOG=1 -DBSP430_CLOCK_LFXT1_S
 /* We want to know the nominal clock speed so we can delay. */
 #include <bsp430/clock.h>
 
-/* We're going to use a console. */
+/* We require console support as verified by <bsp430/platform.h> */
+#ifndef BSP430_CONSOLE
+#error No console UART PERIPH handle has been defined
+#endif /* BSP430_CONSOLE */
 #include <bsp430/utility/console.h>
 
 void main ()
@@ -57,10 +60,7 @@ void main ()
   vBSP430ledSet(0, 1);
 
   /* Configure the console to use the default UART handle */
-#ifndef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
-#error No console UART PERIPH handle has been defined
-#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
-  console_handle = xBSP430serialOpen(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
+  console_handle = xBSP430consoleInitialize();
 
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);
@@ -69,43 +69,38 @@ void main ()
     /* Failed to configure the UART HAL */
     vBSP430ledSet(0, 0);
   } else {
-    /* Attempt to assign this as a console.  It should work, once we
-     * have the HAL handle. */
-    if (0 < iBSP430consoleConfigure(console_handle)) {
-      unsigned int counter = 0;
+    unsigned int counter = 0;
 
-      /* Now blink and display a counter value every nominal half
-       * second.  The blink proves that the loop is running even if
-       * nothing's coming out the serial port. */
-      while (1) {
+    /* Now blink and display a counter value every nominal half
+     * second.  The blink proves that the loop is running even if
+     * nothing's coming out the serial port. */
+    while (1) {
 #if configBSP430_CORE_SUPPORT_WATCHDOG - 0
-        /* BSP430 should support a watchdog timer that will hold off
-         * at least 30 msec.  Any loop that exceeds that time needs to
-         * be broken up so the watchdog can be cleared.  To be
-         * conservative, we'll reset every millisecond, so a
-         * half-second loop has to be broken into 500 sections.
-         *
-         * Note that we need a compile-time constant for
-         * __delay_cycles(), so have to rely on
-         * BSP430_CLOCK_NOMINAL_MCLK_HZ instead of the actual clock
-         * speed. */
-        {
-          int iters = 500;
+      /* BSP430 should support a watchdog timer that will hold off
+       * at least 30 msec.  Any loop that exceeds that time needs to
+       * be broken up so the watchdog can be cleared.  To be
+       * conservative, we'll reset every millisecond, so a
+       * half-second loop has to be broken into 500 sections.
+       *
+       * Note that we need a compile-time constant for
+       * __delay_cycles(), so have to rely on
+       * BSP430_CLOCK_NOMINAL_MCLK_HZ instead of the actual clock
+       * speed. */
+      {
+        int iters = 500;
 #define MSEC_MCLK (BSP430_CLOCK_NOMINAL_MCLK_HZ / 1000UL)
-          while (0 < iters--) {
-            BSP430_CORE_WATCHDOG_CLEAR();
-            __delay_cycles(MSEC_MCLK);
-          }
+        while (0 < iters--) {
+          BSP430_CORE_WATCHDOG_CLEAR();
+          __delay_cycles(MSEC_MCLK);
         }
-#else /* configBSP430_CORE_SUPPORT_WATCHDOG */
-        __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
-#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
-        cputtext_ni("\nCounter ");
-        cputu_ni(counter, 10);
-        ++counter;
-        vBSP430ledSet(0, -1);
       }
+#else /* configBSP430_CORE_SUPPORT_WATCHDOG */
+      __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+      cputtext_ni("\nCounter ");
+      cputu_ni(counter, 10);
+      ++counter;
+      vBSP430ledSet(0, -1);
     }
   }
-
 }

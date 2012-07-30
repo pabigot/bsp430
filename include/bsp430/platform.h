@@ -264,6 +264,17 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_CLOCK_TRIM_FLL supported by clock peripheral */
 #endif /* configBSP430_CLOCK_TRIM_FLL */
 
+/* If configBSP430_CONSOLE was requested, then mark the feature as
+ * available or not based on whether the platform provided a serial
+ * HAL handle */
+#if configBSP430_CONSOLE - 0
+#ifdef BSP430_CONSOLE_SERIAL_HAL_HANDLE
+#define BSP430_CONSOLE 1
+#else /* BSP430_CONSOLE_SERIAL_HAL_HANDLE */
+#define BSP430_CONSOLE 0
+#endif /* BSP430_CONSOLE_SERIAL_HAL_HANDLE */
+#endif /* configBSP430_CONSOLE */
+
 /** @def BSP430_PLATFORM_SPIN_FOR_JUMPER
  *
  * Define to indicate that the application or infrastructure supports

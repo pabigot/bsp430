@@ -43,6 +43,15 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <bsp430/platform.h>
+
+#ifndef BSP430_SERIAL_H
+#error what
+#endif
+
+#if BSP430_CONSOLE - 0
+
+/* Inhibit definition if required components were not provided. */
 
 static xBSP430serialHandle console_uart;
 
@@ -189,9 +198,27 @@ cprintf (const char *fmt, ...)
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
-int
-iBSP430consoleConfigure (xBSP430serialHandle uart)
+xBSP430serialHandle
+xBSP430consoleInitialize (void)
 {
-  console_uart = uart;
-  return (NULL != console_uart);
+  xBSP430periphHandle periph = xBSP430periphFromHPL((void*)
+#if configBSP430_SERIAL_USE_USCI - 0
+                               BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci
+#endif /* configBSP430_SERIAL_USE_USCI */
+#if configBSP430_SERIAL_USE_USCI5 - 0
+                               BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci5
+#endif /* configBSP430_SERIAL_USE_USCI5 */
+#if configBSP430_SERIAL_USE_EUSCIA - 0
+                               BSP430_CONSOLE_SERIAL_HAL_HANDLE->euscia
+#endif /* configBSP430_SERIAL_USE_EUSCIA */
+                                                   );
+  xBSP430serialHandle hal;
+
+  hal = xBSP430serialOpenUART(periph, 0, BSP430_CONSOLE_BAUD_RATE);
+  if (NULL != hal) {
+    console_uart = hal;
+  }
+  return hal;
 }
+
+#endif /* BSP430_CONSOLE */
