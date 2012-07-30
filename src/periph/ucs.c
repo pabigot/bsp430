@@ -227,7 +227,7 @@ iBSP430clockConfigureXT1_ni (int enablep,
   int loop_delta;
   int rc = 0;
 
-  if (0 == loop_limit) {
+  if (0 != loop_limit) {
     rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT1, enablep);
     if ((0 != rc) || (! enablep)) {
       return rc;
