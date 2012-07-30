@@ -120,18 +120,23 @@ usBSP430clockACLK_Hz_ni (void)
 }
 
 unsigned long
-ulBSP430clockConfigureMCLK_ni (unsigned long ulFrequency_Hz)
+ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
   unsigned int csctl1 = 0x06;
-  if ((5330000UL + 6670000UL) / 2 > ulFrequency_Hz) {
+
+  if (0 == mclk_Hz) {
+    mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
+  }
+
+  if ((5330000UL + 6670000UL) / 2 > mclk_Hz) {
     csctl1 = 0;
-  } else if ((6670000UL + 8000000UL) / 2 > ulFrequency_Hz) {
+  } else if ((6670000UL + 8000000UL) / 2 > mclk_Hz) {
     csctl1 = 0x02;
-  } else if ((8000000UL + 16000000UL) / 2 < ulFrequency_Hz) {
+  } else if ((8000000UL + 16000000UL) / 2 < mclk_Hz) {
     csctl1 = 0x86;
-    if ((16000000UL + 20000000UL) / 2 > ulFrequency_Hz) {
+    if ((16000000UL + 20000000UL) / 2 > mclk_Hz) {
       csctl1 = 0x80;
-    } else if ((20000000UL + 24000000UL) / 2 > ulFrequency_Hz) {
+    } else if ((20000000UL + 24000000UL) / 2 > mclk_Hz) {
       csctl1 = 0x82;
     }
   }

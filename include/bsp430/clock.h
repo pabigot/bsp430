@@ -239,7 +239,14 @@
  * frequency as close as possible to the requested frequency.  The
  * actual frequency may be higher or lower than the requested one.
  *
- * @param mclk_Hz Desired frequency for the master clock, in Hz
+ * @note Although passing @a mclk_Hz zero is a short-hand for using
+ * #BSP430_CLOCK_PUC_MCLK_HZ, the result may not be to restore the
+ * clock to its power-up configuration.  To avoid manipulating the
+ * clocks during platform initialization, see
+ * #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS.
+ *
+ * @param mclk_Hz Desired frequency for the master clock, in Hz.  If
+ * zero, #BSP430_CLOCK_PUC_MCLK_HZ is used.
  *
  * @return Configured frequency in Hz.  This may be higher or lower
  * than the requested frequency.

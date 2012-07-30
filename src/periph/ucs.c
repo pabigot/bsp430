@@ -341,6 +341,10 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela)
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
+  if (0 == mclk_Hz) {
+    /* DCOCLKDIV = 2 * PUC MCLK */
+    mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ << 1;
+  }
 #ifdef BSP430_TIMER_CCACLK_PERIPH_HANDLE
   ulBSP430ucsConfigure_ni(mclk_Hz, -1);
 #endif

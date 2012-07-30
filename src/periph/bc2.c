@@ -33,7 +33,7 @@
 #include <bsp430/periph/bc2.h>
 
 /** The last frequency configured using #ulBSP430clockConfigureMCLK_ni */
-static unsigned long configuredMCLK_Hz = 1100000UL;
+static unsigned long configuredMCLK_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
 
 #define SELS_MASK (SELS)
 #define SELM_MASK (SELM0 | SELM1)
@@ -149,10 +149,13 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   unsigned long error_Hz;
   long freq_Hz;
 
+  if (0 == mclk_Hz) {
+    mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
+  }
   /* Power-up defaults */
   dcoctl = 0x60;
   bcsctl1 = 0x87;
-  freq_Hz = 1100000UL;
+  freq_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
 
   /* Calculate absolute error from _freq_Hz to target */
 #define ERROR_HZ(_freq_Hz) ((mclk_Hz < _freq_Hz) ? (_freq_Hz - mclk_Hz) : (mclk_Hz - _freq_Hz))
