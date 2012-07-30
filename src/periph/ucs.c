@@ -65,25 +65,18 @@
  * is enabled for a short duration.  512 is about 0.2% */
 #define TRIM_TOLERANCE_DIVISOR 512
 
-/* The target frequency expressed as the number of SMCLK ticks
- * expected within a trim sample period. */
-static uint16_t targetFrequency_tsp_;
-
-/* The last calculated trim frequency */
-static unsigned long lastTrimFrequency_Hz_;
+/* The last calculated trim frequency of DCOCLKDIV.  Power-up to
+ * 21MiHz/2. */
+static unsigned long lastTrimFrequency_Hz_ = (1UL << 20);
 
 #include <bsp430/utility/console.h>
 #include <bsp430/periph/timer_.h>
 
-#ifdef BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
+#ifdef BSP430_TIMER_CCACLK_PERIPH_HANDLE
 
-#ifndef BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX
-#error BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX must be defined
-#endif /* BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX */
-
-#ifndef BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS
-#error BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS must be defined
-#endif /* BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS */
+/* The target frequency expressed as the number of SMCLK ticks
+ * expected within a trim sample period. */
+static uint16_t targetFrequency_tsp_;
 
 unsigned long
 ulBSP430ucsTrimFLL_ni (void)
@@ -92,8 +85,8 @@ ulBSP430ucsTrimFLL_ni (void)
   unsigned short last_ctl0;
   uint16_t tolerance_tsp;
   uint16_t current_frequency_tsp = 0;
-  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE);
-  const int ccidx = BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX;
+  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  const int ccidx = BSP430_TIMER_CCACLK_CC_INDEX;
 
   if (! tp) {
     return 0;
@@ -109,7 +102,7 @@ ulBSP430ucsTrimFLL_ni (void)
     BSP430_CORE_WATCHDOG_CLEAR();
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL__SMCLK | MC__CONTINOUS | TBCLR;
-    tp->cctl[ccidx] = CM_2 | BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS | CAP | SCS;
+    tp->cctl[ccidx] = CM_2 | BSP430_TIMER_CCACLK_CCIS | CAP | SCS;
     /* NOTE: CCIFG seems to be set immediately on the second and
      * subsequent iterations.  Flush the first capture. */
     while (! (tp->cctl[ccidx] & CCIFG)) {
@@ -175,7 +168,89 @@ ulBSP430ucsTrimFLL_ni (void)
   lastTrimFrequency_Hz_ = current_frequency_tsp * (32768UL / TRIM_SAMPLE_PERIOD_ACLK);
   return lastTrimFrequency_Hz_;
 }
-#endif /* BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE */
+
+unsigned long
+ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
+                         int rsel)
+{
+  unsigned int divs_bits;
+  unsigned int sels_bits;
+  /* The values in this table should be roughly half the minimum
+   * frequency for the specified RSEL with DCOx=31 and MODx=0,
+   * as taken from the device-specific data sheet. */
+  static const unsigned long pulRSELCutoffs [] = {
+#if defined(__MSP430F5438__) || defined(__MSP430F5438A__)
+    700000UL / 2,			/* RSEL0 */
+    1470000UL / 2,			/* RSEL1 */
+    3170000UL / 2,			/* RSEL2 */
+    6070000UL / 2,			/* RSEL3 */
+    12300000UL / 2,			/* RSEL4 */
+    23700000UL / 2,			/* RSEL5 */
+    39000000UL / 2,			/* RSEL6 */
+#else
+#endif
+    UINT32_MAX
+  };
+  unsigned int ctl1;
+  unsigned int ctl2;
+  unsigned long ulReturn;
+
+  /* If not told what RSEL to use, pick the one appropriate for the
+   * target frequency. */
+  if ((0 > rsel) || (7 < rsel)) {
+    rsel = 0;
+    while (pulRSELCutoffs[rsel] < mclk_Hz) {
+      ++rsel;
+    }
+  }
+
+  /* Require XT1 valid and use it as ACLK source */
+  if (UCSCTL7 & XT1LFOFFG) {
+    (void)iBSP430clockConfigureXT1_ni (1, -1);
+  }
+  iBSP430ucsConfigureACLK_ni(SELA__XT1CLK);
+
+  /* All supported frequencies can be efficiently achieved using
+   * FFLD set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).
+   * FLLREFCLK will always be XT1CLK.  FLLN is calculated from
+   * mclk_Hz. */
+  ctl1 = (DCORSEL0 | DCORSEL1 | DCORSEL2) & (rsel * DCORSEL0);
+  ctl2 = FLLD_1 | ((((mclk_Hz << 1) / (32768 >> 0)) >> 1) - 1);
+
+  /* Disable FLL while manually trimming */
+  __bis_status_register(SCG0);
+  UCSCTL0 = 0;
+  UCSCTL1 = ctl1;
+  UCSCTL2 = ctl2;
+  UCSCTL3 = SELREF__XT1CLK | FLLREFDIV_0;
+  sels_bits = UCSCTL4 & SELS_MASK;
+  UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+  divs_bits = UCSCTL5 & DIVS_MASK;
+  UCSCTL5 &= ~(DIVS_MASK | DIVM_MASK);
+
+  targetFrequency_tsp_ = mclk_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
+  ulReturn = ulBSP430ucsTrimFLL_ni();
+
+  /* Restore SMCLK source and divisor */
+  UCSCTL5 |= divs_bits;
+  UCSCTL4 = (UCSCTL4 & ~SELS_MASK) | sels_bits;
+
+  /* Spin until DCO stabilized */
+  do {
+    UCSCTL7 &= ~(XT2OFFG + XT1LFOFFG + XT1HFOFFG + DCOFFG);
+    SFRIFG1 &= ~OFIFG;
+  } while (UCSCTL7 & DCOFFG);
+
+
+#if ! (BSP430_CLOCK_DISABLE_FLL - 0)
+  /* Turn FLL back on */
+  __bic_status_register(SCG0);
+#endif
+
+  return ulReturn;
+}
+
+#endif /* BSP430_TIMER_CCACLK_PERIPH_HANDLE */
 
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
@@ -264,82 +339,10 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela)
 }
 
 unsigned long
-ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
-                         short sRSEL)
+ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
-  unsigned int divs_bits;
-  unsigned int sels_bits;
-  /* The values in this table should be roughly half the minimum
-   * frequency for the specified RSEL with DCOx=31 and MODx=0,
-   * as taken from the device-specific data sheet. */
-  static const unsigned long pulRSELCutoffs [] = {
-#if defined(__MSP430F5438__) || defined(__MSP430F5438A__)
-    700000UL / 2,			/* RSEL0 */
-    1470000UL / 2,			/* RSEL1 */
-    3170000UL / 2,			/* RSEL2 */
-    6070000UL / 2,			/* RSEL3 */
-    12300000UL / 2,			/* RSEL4 */
-    23700000UL / 2,			/* RSEL5 */
-    39000000UL / 2,			/* RSEL6 */
-#else
+#ifdef BSP430_TIMER_CCACLK_PERIPH_HANDLE
+  ulBSP430ucsConfigure_ni(mclk_Hz, -1);
 #endif
-    UINT32_MAX
-  };
-  unsigned int ctl1;
-  unsigned int ctl2;
-  unsigned long ulReturn;
-
-  /* If not told what RSEL to use, pick the one appropriate for the
-   * target frequency. */
-  if ((0 > sRSEL) || (7 < sRSEL)) {
-    sRSEL = 0;
-    while (pulRSELCutoffs[ sRSEL ] < ulFrequency_Hz) {
-      ++sRSEL;
-    }
-  }
-
-  /* Require XT1 valid and use it as ACLK source */
-  if (UCSCTL7 & XT1LFOFFG) {
-    (void)iBSP430clockConfigureXT1_ni (1, -1);
-  }
-  iBSP430ucsConfigureACLK_ni(SELA__XT1CLK);
-
-  /* All supported frequencies can be efficiently achieved using
-   * FFLD set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).
-   * FLLREFCLK will always be XT1CLK.  FLLN is calculated from
-   * ulFrequency_Hz. */
-  ctl1 = sRSEL * DCORSEL0;
-  ctl2 = FLLD_1 | ((((ulFrequency_Hz << 1) / (32768 >> 0)) >> 1) - 1);
-
-  /* Disable FLL while manually trimming */
-  __bis_status_register(SCG0);
-  UCSCTL0 = 0;
-  UCSCTL1 = ctl1;
-  UCSCTL2 = ctl2;
-  UCSCTL3 = SELREF__XT1CLK | FLLREFDIV_0;
-  sels_bits = UCSCTL4 & SELS_MASK;
-  UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
-  divs_bits = UCSCTL5 & DIVS_MASK;
-  UCSCTL5 &= ~(DIVS_MASK | DIVM_MASK);
-
-  targetFrequency_tsp_ = ulFrequency_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
-  ulReturn = ulBSP430ucsTrimFLL_ni();
-
-  /* Restore SMCLK source and divisor */
-  UCSCTL5 |= divs_bits;
-  UCSCTL4 = (UCSCTL4 & ~SELS_MASK) | sels_bits;
-
-  /* Spin until DCO stabilized */
-  do {
-    UCSCTL7 &= ~(XT2OFFG + XT1LFOFFG + XT1HFOFFG + DCOFFG);
-    SFRIFG1 &= ~OFIFG;
-  } while (UCSCTL7 & DCOFFG);
-
-
-#if ! (BSP430_CLOCK_DISABLE_FLL - 0)
-  /* Turn FLL back on */
-  __bic_status_register(SCG0);
-#endif
-
-  return ulReturn;
+  return ulBSP430clockMCLK_Hz_ni();
 }

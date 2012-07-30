@@ -157,7 +157,7 @@
  * defined to a true value.
  */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_IS_TA0 0
+#define BSP430_TIMER_CCACLK_IS_TA0 no default value
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_PERIPH_HANDLE

@@ -41,21 +41,6 @@
 #ifndef BSP430_PLATFORM_EXP430F5438_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430F5438_BSP430_CONFIG_H
 
-#ifndef BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
-/** Unless overridden, this platform uses TB0 to trim the FLL
- * @defaulted */
-#define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE BSP430_PERIPH_TB0
-/** TB0.6 CCI0B sources SMCLK
- * @defaulted */
-#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX 6
-/** TB0.6 CCI0B sources SMCLK
- * @defaulted */
-#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS CCIS_1
-/** Require TB0 for FLL trim
- * @defaulted */
-#define configBSP430_PERIPH_TB0 1
-#endif /* BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE */
-
 /* Request timer CCACLK resource */
 #if defined(BSP430_DOXYGEN)                                             \
   || ((configBSP430_TIMER_CCACLK - 0)                                   \

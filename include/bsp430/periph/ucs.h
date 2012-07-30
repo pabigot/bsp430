@@ -113,9 +113,9 @@
 
 /** Call this to initially configure the UCS peripheral.
  *
- * @param ulFrequency_Hz The target frequency for DCOCLKDIV=MCLK.
+ * @param mclk_Hz The target frequency for DCOCLKDIV=MCLK.
  *
- * @param sRSEL The DCO frequency range selection.  The appropriate
+ * @param rsel The DCO frequency range selection.  The appropriate
  * value is frequency-dependent, and specified in the "DCO Frequency"
  * table in the device-specific data sheet.  The same target frequency
  * may be reachable with different RSELs but with different
@@ -130,8 +130,8 @@
  * #iBSP430clockConfigureXT1_ni and #iBSP430ucsConfigureACLK_ni to ensure
  * the expectation is met.  A call to this function will not return if
  * XT1 cannot be stabilized. */
-unsigned long ulBSP430ucsConfigure_ni (unsigned long ulFrequency_Hz,
-                                       short sRSEL);
+unsigned long ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
+                                       int rsel);
 
 /** Call this to configure ACLK via the UCS peripheral.
  *
@@ -155,7 +155,7 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela);
  * #BSP430_CLOCK_DISABLE_FLL.
  *
  * For this function to be provided a timer must be identified by
- * #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE.  The specified timer will be
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.  The specified timer will be
  * reconfigured in various ways while trimming occurs, and will be
  * left disabled on exit.  It may be used for other purposes when this
  * function is not being invoked.
@@ -174,51 +174,6 @@ int iBSP430ucsConfigureACLK_ni (unsigned int sela);
  * @return an estimate of the actual running frequency.
  */
 unsigned long ulBSP430ucsTrimFLL_ni (void);
-
-/** @def BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE
- *
- * #ulBSP430ucsTrimFLL_ni requires a timer that can be used while the
- * FLL is being trimmed.  The timer must have a capture/compare block
- * which can be configured to use ACLK as its input.  CCI6B on TB0 is
- * a candidate for at least some 5xx/6xx family MCUs; CCI2B on TAx is
- * also frequently an option.
- *
- * The value of this parameter should be a timer peripheral handle,
- * such as #BSP430_PERIPH_TB0.  The corresponding
- * #configBSP430_PERIPH_TB0 must also be set.
- *
- * @note The timer may be shared among other users.  It is the
- * caller's responsibility to ensure that no other users of the timer
- * are active while the clock is being trimmed.
- *
- * @nodefault */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE no default value
-#endif /* BSP430_DOXYGEN */
-
-/** @def BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX
- *
- * The index of a capture/compare block within
- * #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE that can take input from
- * ACLK.  The capability is MCU-specific.
- *
- * @nodefault */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX no default value
-#endif /* BSP430_DOXYGEN */
-
-/** @def BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS
- *
- * The value to be written to the CCIS field of the control register
- * for capture/compare block #BSP430_UCS_TRIMFLL_TIMER_ACLK_CC_INDEX
- * of timer #BSP430_UCS_TRIMFLL_TIMER_PERIPH_HANDLE in order to select
- * ACLK as the input source.  The capability is MCU-specific, but
- * consider CCI0B (CCIS_1) of TB0.6.
- *
- * @nodefault */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_UCS_TRIMFLL_TIMER_ACLK_CCIS no default value
-#endif /* BSP430_DOXYGEN */
 
 #endif /* BSP430_CLOCKS_UCS_H */
 
