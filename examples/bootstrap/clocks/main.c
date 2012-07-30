@@ -43,8 +43,10 @@
 
 void main ()
 {
+#if BSP430_CONSOLE - 0
   unsigned long smclk_Hz;
   unsigned short aclk_Hz;
+#endif /* BSP430_CONSOLE */
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
