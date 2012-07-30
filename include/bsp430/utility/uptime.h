@@ -74,6 +74,23 @@
 #define configBSP430_UPTIME 0
 #endif /* configBSP430_UPTIME */
 
+/** @def BSP430_UPTIME
+ *
+ * Defined to a true value if #BSP430_UPTIME_TIMER_HAL_HANDLE has been
+ * provided, making the uptime infrastructure available.
+ * 
+ * The macro will be undefined unless #configBSP430_UPTIME is
+ * defined to a true value and the platform or another external source
+ * provides the necessary support infrastructure.
+ *
+ * @nodefault
+ *
+ * @dependency <bsp430/platform.h> must be normally be included to
+ * obtain the platform-specific value */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UPTIME no default value
+#endif /* BSP430_DOXYGEN */
+
 /** @def configBSP430_UPTIME_USE_DEFAULT_RESOURCE
  *
  * In almost all cases, when #configBSP430_UPTIME is enabled
@@ -156,15 +173,8 @@
 #define BSP430_UPTIME_DIVIDING_SHIFT 0
 #endif /* BSP430_UPTIME_DIVIDING_SHIFT */
 
-/** @def BSP430_UPTIME_CLOCK_HZ
- *
- * Number of uptime clocks per second.
- *
- * @defaulted  */
-#ifndef BSP430_UPTIME_CLOCK_HZ
-#define BSP430_UPTIME_CLOCK_HZ (BSP430_CLOCK_NOMINAL_ACLK_HZ >> BSP430_UPTIME_DIVIDING_SHIFT)
-#endif /* BSP430_UPTIME_CLOCK_HZ */
-
+unsigned long ulBSP430uptimeCLK_Hz_ni (void);
+  
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0)
 /** Return system uptime in clock ticks with disabled interrupts. */
 static unsigned long

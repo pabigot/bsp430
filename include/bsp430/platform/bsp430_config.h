@@ -77,8 +77,9 @@
 
 /** Requirements to support default uptime resource (if that is enabled)
  * @defaulted */
-#if (configBSP430_UPTIME - 0)                           \
-  && ! (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)
+#if ((configBSP430_UPTIME - 0)                                  \
+     && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))  \
+         ||(configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
 #ifndef configBSP430_HAL_TA0
 #define configBSP430_HAL_TA0 1
 #endif /* TA0 is default uptime resource */

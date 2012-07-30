@@ -31,6 +31,10 @@
 
 #include <bsp430/utility/uptime.h>
 #include <bsp430/periph/timer_.h>
+#include <bsp430/platform.h>
+
+#if BSP430_UPTIME - 0
+/* Inhibit definition if required components were not provided. */
 
 void
 vBSP430uptimeStart_ni (void)
@@ -54,3 +58,5 @@ vBSP430uptimeResume_ni (void)
 {
   BSP430_UPTIME_TIMER_HAL_HANDLE->timer->ctl |= MC_2;
 }
+
+#endif /* BSP430_UPTIME */
