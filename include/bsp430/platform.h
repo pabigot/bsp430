@@ -33,10 +33,21 @@
  *
  * @brief Entrypoint for platform-specific capabilities.
  *
- * Mostly prototypes for functions that are implemented in the
- * platform source files.  If a recognized @c BSP430_PLATFORM_foo
- * macro is defined to a true value, the corresponding
- * platform-specific header will be included for you.
+ * This header defines prototypes for functions that are implemented
+ * in the platform-specific implementation file.
+ *
+ * Further, if a recognized @c BSP430_PLATFORM_foo macro is defined to
+ * a true value, the corresponding platform-specific header will be
+ * included for you.  Platform-specific headers are included based on
+ * the definitions of:
+ * <ul>
+ * <li>#BSP430_PLATFORM_EXP430G2</a>
+ * <li>#BSP430_PLATFORM_EXP430FG4619</a>
+ * <li>#BSP430_PLATFORM_EXP430F5438</a>
+ * <li>#BSP430_PLATFORM_EXP430F5529</a>
+ * <li>#BSP430_PLATFORM_EXP430FR5739</a>
+ * <li>#BSP430_PLATFORM_RF2500T</a>
+ * </ul>
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -128,91 +139,121 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
+/* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
 /** @def BSP430_PLATFORM_EXP430F5438
  * Define to a true value if application is being built for the
- * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430F5438</a> platform.
- * This causes <bsp430/platform.h> to include the corresponding
+ * <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
  * platform-specific header <bsp430/platform/exp430f5438.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430F5438 will be
  * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/exp430f5438_bsp430_config.h> for you.
+ * You should not include that header directly.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430F5438
 #define BSP430_PLATFORM_EXP430F5438 0
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
-#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430F5438 - 0)
+#if BSP430_PLATFORM_EXP430F5438 - 0
 #include <bsp430/platform/exp430f5438.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
 /** @def BSP430_PLATFORM_EXP430FR5739
  * Define to a true value if application is being built for the
- * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FR5739</a> platform.
- * This causes <bsp430/platform.h> to include the corresponding
+ * <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
  * platform-specific header <bsp430/platform/exp430fr5739.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430FR5739 will be
  * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/exp430fr5739_bsp430_config.h> for you.
+ * You should not include that header directly.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430FR5739
 #define BSP430_PLATFORM_EXP430FR5739 0
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
-#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430FR5739 - 0)
+#if BSP430_PLATFORM_EXP430FR5739 - 0
 #include <bsp430/platform/exp430fr5739.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
 /** @def BSP430_PLATFORM_EXP430FG4618
  * Define to a true value if application is being built for the
- * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430FG4618</a> platform.
- * This causes <bsp430/platform.h> to include the corresponding
+ * <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
  * platform-specific header <bsp430/platform/exp430fg4618.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430FG4618 will be
  * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/exp430fg4618_bsp430_config.h> for you.
+ * You should not include that header directly.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430FG4618
 #define BSP430_PLATFORM_EXP430FG4618 0
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
-#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430FG4618 - 0)
+#if BSP430_PLATFORM_EXP430FG4618 - 0
 #include <bsp430/platform/exp430fg4618.h>
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
 /** @def BSP430_PLATFORM_EXP430G2
  * Define to a true value if application is being built for the
- * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-EXP430G2</a> platform.
- * This causes <bsp430/platform.h> to include the corresponding
+ * <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
  * platform-specific header <bsp430/platform/exp430g2.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430G2 will be
  * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/exp430g2_bsp430_config.h> for you.
+ * You should not include that header directly.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430G2
 #define BSP430_PLATFORM_EXP430G2 0
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
-#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_EXP430G2 - 0)
+#if BSP430_PLATFORM_EXP430G2 - 0
 #include <bsp430/platform/exp430g2.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
+/* END AUTOMATICALLY GENERATED CODE [platform_decl] */
+/* !BSP430! end=platform_decl */
+/* !BSP430! tool=ez430 subst=tool instance=rf2500t */
+/* !BSP430! insert=platform_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
 /** @def BSP430_PLATFORM_RF2500T
  * Define to a true value if application is being built for the
- * <a href="http://www.ti.com/tool/msp-$(instance)s">MSP-RF2500T</a> platform.
- * This causes <bsp430/platform.h> to include the corresponding
+ * <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
  * platform-specific header <bsp430/platform/rf2500t.h>.
  * If you include that header directly, #BSP430_PLATFORM_RF2500T will be
  * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/rf2500t_bsp430_config.h> for you.
+ * You should not include that header directly.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_RF2500T
 #define BSP430_PLATFORM_RF2500T 0
 #endif /* BSP430_PLATFORM_RF2500T */
 
-#if defined(BSP430_DOXYGEN) || (BSP430_PLATFORM_RF2500T - 0)
+#if BSP430_PLATFORM_RF2500T - 0
 #include <bsp430/platform/rf2500t.h>
 #endif /* BSP430_PLATFORM_RF2500T */
 
