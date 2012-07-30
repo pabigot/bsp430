@@ -76,7 +76,7 @@
  * Defined to a true value if #BSP430_CONSOLE_SERIAL_HAL_HANDLE has
  * been provided, making the console infrastructure available.
  *
- * @dependency #configBSP430_CONSOLE 
+ * @dependency #configBSP430_CONSOLE
  * @platformdefault
  */
 #if defined(BSP430_DOXYGEN)

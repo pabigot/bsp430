@@ -74,12 +74,16 @@
 #endif /* configBSP430_CLOCK_TRIM_FLL */
 #endif /* UCS */
 
-/* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
+/* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */
 #if BSP430_PLATFORM_EXP430F5438 - 0
 #include <bsp430/platform/exp430f5438_bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
+
+#if BSP430_PLATFORM_EXP430F5529 - 0
+#include <bsp430/platform/exp430f5529_bsp430_config.h>
+#endif /* BSP430_PLATFORM_EXP430F5529 */
 
 #if BSP430_PLATFORM_EXP430FR5739 - 0
 #include <bsp430/platform/exp430fr5739_bsp430_config.h>

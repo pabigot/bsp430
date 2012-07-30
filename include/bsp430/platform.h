@@ -132,7 +132,7 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2 */
+/* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
 /** @def BSP430_PLATFORM_EXP430F5438
@@ -156,6 +156,28 @@ void vBSP430platformSpinForJumper_ni (void);
 #if BSP430_PLATFORM_EXP430F5438 - 0
 #include <bsp430/platform/exp430f5438.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
+
+/** @def BSP430_PLATFORM_EXP430F5529
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/exp430f5529.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EXP430F5529 will be
+ * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/exp430f5529_bsp430_config.h> for you.
+ * You should not include that header directly.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_EXP430F5529
+#define BSP430_PLATFORM_EXP430F5529 0
+#endif /* BSP430_PLATFORM_EXP430F5529 */
+
+#if BSP430_PLATFORM_EXP430F5529 - 0
+#include <bsp430/platform/exp430f5529.h>
+#endif /* BSP430_PLATFORM_EXP430F5529 */
 
 /** @def BSP430_PLATFORM_EXP430FR5739
  * Define to a true value if application is being built for the

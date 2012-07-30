@@ -177,7 +177,7 @@ ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
    * frequency for the specified RSEL with DCOx=31 and MODx=0,
    * as taken from the device-specific data sheet. */
   static const unsigned long pulRSELCutoffs [] = {
-#if defined(__MSP430F5438__) || defined(__MSP430F5438A__)
+#if defined(__MSP430F5438__) || defined(__MSP430F5438A__) || defined(__MSP430F5529__)
     700000UL / 2,			/* RSEL0 */
     1470000UL / 2,			/* RSEL1 */
     3170000UL / 2,			/* RSEL2 */
@@ -235,7 +235,14 @@ ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
 
   /* Spin until DCO stabilized */
   do {
-    UCSCTL7 &= ~(XT2OFFG + XT1LFOFFG + XT1HFOFFG + DCOFFG);
+    UCSCTL7 &= ~(XT1LFOFFG
+#if defined(XT2OFFG)
+                 + XT2OFFG
+#endif /* XT2OFFG */
+#if defined(XT1HFOFFG)
+                 + XT1HFOFFG
+#endif /* XT1HFOFFG */
+                 + DCOFFG);
     SFRIFG1 &= ~OFIFG;
   } while (UCSCTL7 & DCOFFG);
 
