@@ -78,7 +78,7 @@
  *
  * Defined to a true value if #BSP430_UPTIME_TIMER_HAL_HANDLE has been
  * provided, making the uptime infrastructure available.
- * 
+ *
  * The macro will be undefined unless #configBSP430_UPTIME is
  * defined to a true value and the platform or another external source
  * provides the necessary support infrastructure.
@@ -174,7 +174,7 @@
 #endif /* BSP430_UPTIME_DIVIDING_SHIFT */
 
 unsigned long ulBSP430uptimeCLK_Hz_ni (void);
-  
+
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0)
 /** Return system uptime in clock ticks with disabled interrupts. */
 static unsigned long

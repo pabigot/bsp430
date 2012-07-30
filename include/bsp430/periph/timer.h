@@ -147,7 +147,7 @@
  * Defined to a true value if ACLK-triggered timer captures are
  * enabled due to availability of #BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * and the other relevant material required are defined.
- * 
+ *
  * The macro will be undefined unless #configBSP430_TIMER_CCACLK is
  * defined to a true value and the platform or another external source
  * provides a definition.
@@ -272,9 +272,9 @@
  * @dependency This function is not provided if #BSP430_TIMER_CCACLK
  * is false.  Include <bsp430/platform.h> to determine availability at
  * compile time.
- */ 
+ */
 unsigned int uiBSP430timerCCACLKMeasureDelta_ni (unsigned int capture_mode,
-                                                 unsigned int aclk_ticks);
+    unsigned int aclk_ticks);
 #endif /* configBSP430_TIMER_CCACLK */
 
 /** Layout for Timer_A and Timer_B peripherals.

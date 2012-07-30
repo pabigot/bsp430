@@ -48,16 +48,24 @@
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/* Request timer CCACLK resource */
+/* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
+/* !BSP430! insert=feature_startif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
      && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
+/* END AUTOMATICALLY GENERATED CODE [feature_startif] */
+/* !BSP430! end=feature_startif */
 #if defined(__MSP430G2553__)
 #if !defined(configBSP430_PERIPH_TA0)
-/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define configBSP430_PERIPH_TA0 1
 #endif /* configBSP430_PERIPH_TA0 */
 #endif /* MCU */
+/* !BSP430! insert=feature_endif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
+/* END AUTOMATICALLY GENERATED CODE [feature_endif] */
+/* !BSP430! end=feature_endif */
+
 
 #endif /* BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H */

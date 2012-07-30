@@ -218,7 +218,7 @@ uiBSP430timerCCACLKMeasureDelta_ni (unsigned int capture_mode,
   tp->cctl[ccidx] = 0;
   return (c0 > c1) ? (c0 - c1) : (c1 - c0);
 }
-  
+
 #endif /* BSP430_TIMER_CCACLK */
 
 unsigned long

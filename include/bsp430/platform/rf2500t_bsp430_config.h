@@ -54,12 +54,21 @@
 #define BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC 0
 #endif /* BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC */
 
-/* Request timer CCACLK resource */
+/* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
+/* !BSP430! insert=feature_startif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
      && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
-/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
+/* END AUTOMATICALLY GENERATED CODE [feature_startif] */
+/* !BSP430! end=feature_startif */
+#if !defined(configBSP430_PERIPH_TB0)
 #define configBSP430_PERIPH_TB0 1
-#endif /* configBSP430_PLATFORM_TIMER_CCACLK && need default */
+#endif /* configBSP430_PERIPH_TB0 */
+/* !BSP430! insert=feature_endif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
+#endif /* configBSP430_TIMER_CCACLK && need default */
+/* END AUTOMATICALLY GENERATED CODE [feature_endif] */
+/* !BSP430! end=feature_endif */
 
 #endif /* BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H */

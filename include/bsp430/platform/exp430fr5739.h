@@ -59,20 +59,24 @@
 #define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Test points below LED1-3: SMCLK on TP10; MCLK on TP11; ACLK on TP12"
 
 /** How to use ACLK as a capture/compare input source */
+/* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
+/* !BSP430! insert=feature_startif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
      && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
-/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
+/* END AUTOMATICALLY GENERATED CODE [feature_startif] */
+/* !BSP430! end=feature_startif */
 #define BSP430_TIMER_CCACLK 1
-/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA1
-/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define BSP430_TIMER_CCACLK_IS_TA0 0
-/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define BSP430_TIMER_CCACLK_CC_INDEX 2
-/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define BSP430_TIMER_CCACLK_CCIS CCIS_1
+/* !BSP430! insert=feature_endif */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
+/* END AUTOMATICALLY GENERATED CODE [feature_endif] */
+/* !BSP430! end=feature_endif */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

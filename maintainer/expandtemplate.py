@@ -301,6 +301,11 @@ isr_%(INSTANCE)s (void)
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */
 ''',
 
+    'feature_startif' : '''#if ((configBSP430_%(MODULE)s_%(FEATURE)s - 0)                                    \\
+     && ((! defined(configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE))    \\
+         || (configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE - 0)))''',
+
+    'feature_endif' : '''#endif /* configBSP430_%(MODULE)s_%(FEATURE)s && need default */'''
     }
 
 directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')
@@ -310,14 +315,15 @@ def expandTemplate (tplname, idmap):
     global templates
 
     template = templates[tplname]
-    periph = idmap['periph']
-    subst_map = { 'template' : tplname,
-                  'periph': periph.lower(),
-                  'PERIPH': periph.upper() }
+    subst_map = { 'template' : tplname }
+    periph = idmap.get('periph', 'nop')
+    subst_map.update({ 'periph': periph.lower(),
+                       'PERIPH': periph.upper() })
     subst_keys = idmap.get('subst')
     if subst_keys is not None:
         for sm in subst_keys.split(','):
-            subst_map[sm] = idmap[sm]
+            subst_map[sm.lower()] = idmap[sm].lower()
+            subst_map[sm.upper()] = idmap[sm].upper()
     text = []
     text.append('/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [%(template)s] */' % subst_map)
 
@@ -382,6 +388,7 @@ for fn in args.files:
                     new_contents.append(insertable)
                 new_contents.append(line)
                 insertable = None
+                end_name = None
 
     (path, filename) = os.path.split(fn)
     bfn = os.path.join(path, filename + '.bak')
