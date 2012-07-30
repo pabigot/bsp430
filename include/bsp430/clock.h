@@ -286,6 +286,33 @@ unsigned long ulBSP430clockTrimFLL_ni (unsigned long fll_Hz);
 #define BSP430_CLOCK_NOMINAL_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : 32768U)
 #endif /* BSP430_CLOCK_NOMINAL_ACLK_HZ */
 
+/** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
+ *
+ * Nominal frequency of VLOCLK, in Hz.
+ *
+ * The value is constant for all platforms using a specific clock
+ * peripheral, and is defined in the peripheral header.  It is usually
+ * in the range of 10-12 kHz, but is highly sensitive to temperature
+ * and voltage.  The actual value may be off by as much as 20%, making
+ * the clock relatively useless for anything that requires accuracy
+ * (such as serial baud rates).
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ platform specific around 10-12 kHz
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_CLOCK_PUC_MCLK_HZ
+ *
+ * Nominal frequency of MCLK at power-up, in Hz.
+ *  
+ * The value is constant for all platforms using a specific clock
+ * peripheral, and is defined in the peripheral header.  It is usually
+ * around 1 MHz. */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_PUC_MCLK_HZ platform specific around 1 MHz
+#endif /* BSP430_DOXYGEN */
+
 /** Configure MCLK to a desired frequency.
  *
  * The peripheral-specific implementation will configure MCLK to a
@@ -461,29 +488,5 @@ usBSP430clockACLK_Hz (void)
 #if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)
 #include <bsp430/periph/cs.h>
 #endif /* __MSP430_HAS_CS__ */
-
-/** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
- *
- * Nominal frequency of VLOCLK, in Hz.
- *
- * This is a family-specific value normally somewhere near 10-12 kHz.
- * The value should be an unsigned integer constant.
- *
- * @note The value of this clock is often off by as much as 20%.
- *
- * @defaulted */
-#ifndef BSP430_CLOCK_NOMINAL_VLOCLK_HZ
-#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ _BSP430_CLOCK_NOMINAL_VLOCLK_HZ
-#endif /* BSP430_CLOCK_NOMINAL_VLOCLK_HZ */
-
-/** @def BSP430_CLOCK_PUC_MCLK_HZ
- *
- * A constant representing the clock speed of the master clock at
- * power-up.
- *
- * @defaulted  */
-#ifndef BSP430_CLOCK_PUC_MCLK_HZ
-#define BSP430_CLOCK_PUC_MCLK_HZ _BSP430_CLOCK_PUC_MCLK_HZ
-#endif /* BSP430_CLOCK_PUC_MCLK_HZ */
 
 #endif /* BSP430_CLOCK_H */

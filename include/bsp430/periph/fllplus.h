@@ -102,10 +102,10 @@
 #endif /* BSP430_FLLPLUS_XCAPxPF */
 
 /** Unconditional define for peripheral-specific constant */
-#define _BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
+#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U
 
 /** Unconditional define for peripheral-specific constant */
-#define _BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
+#define BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
 
 /** Structure used to configure the frequency-locked loop clock module.
  *
