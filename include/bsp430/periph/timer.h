@@ -87,6 +87,124 @@
 #warning Peripheral not supported by configured MCU
 #endif /* has Timer_A */
 
+/** @def configBSP430_TIMER
+ *
+ * Define to true to indicate that the timer infrastructure is
+ * desired.
+ *
+ * @defaulted */
+#ifndef configBSP430_TIMER
+#define configBSP430_TIMER 0
+#endif /* configBSP430_TIMER */
+
+/** @def configBSP430_TIMER_CCACLK
+ *
+ * Define to true to indicate that the application or infrastructure
+ * would like to use a timer that supports using ACLK as a
+ * capture/compare input signal.  The timer is identified by
+ * #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE, and that macro is
+ * defined only if such a timer is available on the platform.
+ *
+ * This timer is used by selecting an alternative clock source, then
+ * using the ACLK signal to capture the number of pulses on that
+ * source over a known period.  For example, this is used to measure
+ * the relative speed of SMCLK and ACLK when manually trimming the FLL
+ * in iBSP430ucsTrimFLL_ni().
+ *
+ * @note Where possible, a timer other than TA0 should be used, as TA0
+ * is the default for the uptime facility and other things that use an
+ * ACLK-sourced counter.  If this cannot be satisfied, the timer
+ * should still be made available but #BSP430_TIMER_CCACLK_IS_TA0
+ * should be defined to a true value.
+ *
+ * @defaulted */
+#ifndef configBSP430_TIMER_CCACLK
+#define configBSP430_TIMER_CCACLK 0
+#endif /* configBSP430_TIMER_CCACLK */
+
+/** @def configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE
+ *
+ * Define to a true value to use the default (platform-specific)
+ * CCACLK timer.  This is true by default if
+ * #configBSP430_TIMER_CCACLK is true.
+ *
+ * If you want to override the default, define this to a false value
+ * and provide definitions for:
+ * <ul>
+ * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * <li>#BSP430_TIMER_CCACLK_IS_TA0
+ * <li>#BSP430_TIMER_CCACLK_CC_INDEX
+ * <li>#BSP430_TIMER_CCACLK_CCIS
+ * </ul>
+ *
+ * @defaulted */
+#ifndef configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE
+#define configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE (configBSP430_TIMER_CCACLK - 0)
+#endif /* configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE */
+
+/** @def BSP430_TIMER_CCACLK_IS_TA0
+ *
+ * Defined to a true value by default or external configuration when
+ * the timer identified by #BSP430_TIMER_CCACLK_PERIPH_HANDLE is
+ * #BSP430_PERIPH_TA0.
+ *
+ * Applications making use of #BSP430_TIMER_CCACLK_PERIPH_HANDLE in a
+ * context where TA0 might be used for other purposes (such as a
+ * persistent system uptime) should check this value to determine
+ * whether it is safe to reconfigure the timer.
+ *
+ * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value.
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_IS_TA0 0
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ *
+ * The peripheral handle for a timer that is capable of using ACLK as
+ * a capture/compare input.  Preferably this would not be TA0.  The
+ * intended use of this timer is to measure ACLK against SMCLK.
+ *
+ * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value.
+ *
+ * See #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE if you intend
+ * to override the platform default.
+ *
+ * @nodefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE no default value
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_TIMER_CCACLK_CC_INDEX
+ *
+ * The capture/compare block index within
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
+ * signal.
+ *
+ * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value.
+ *
+ * @nodefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CC_INDEX no default value
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_TIMER_CCACLK_CCIS
+ *
+ * The capture/compare block input signal bits to be selected in the
+ * control word for CC block #BSP430_TIMER_CCACLK_CC_INDEX of
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
+ *
+ * The macro should be undefined unless #configBSP430_TIMER_CCACLK is
+ * defined to a true value.
+ *
+ * @nodefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CCIS no default value
+#endif /* BSP430_DOXYGEN */
+
 /** Layout for Timer_A and Timer_B peripherals.
  */
 typedef struct xBSP430periphTIMER {

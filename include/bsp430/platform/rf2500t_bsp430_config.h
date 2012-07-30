@@ -54,9 +54,10 @@
 #define BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC 0
 #endif /* BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC */
 
-#if defined(BSP430_DOXYGEN)                                     \
-  || ((configBSP430_PLATFORM_TIMER_CCACLK - 0)                  \
-      && ! defined(BSP430_BSP430_PLATFORM_TIMER_CCACLK))
+/* Request timer CCACLK resource */
+#if defined(BSP430_DOXYGEN)                                             \
+  || ((configBSP430_TIMER_CCACLK - 0)                                   \
+      && ! (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0))
 /** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
 #define configBSP430_PERIPH_TB0 1
 #endif /* configBSP430_PLATFORM_TIMER_CCACLK && need default */

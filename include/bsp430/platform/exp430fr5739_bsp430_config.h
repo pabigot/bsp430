@@ -48,10 +48,14 @@
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-#if ((configBSP430_PLATFORM_TIMER_CCACLK - 0)           \
-     && ! defined(BSP430_BSP430_PLATFORM_TIMER_CCACLK))
-/** Defined only if #configBSP430_PLATFORM_TIMER_CCACLK and using default #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE */
+/* Request timer CCACLK resource */
+#if defined(BSP430_DOXYGEN)                                             \
+  || ((configBSP430_TIMER_CCACLK - 0)                                   \
+      && ! (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0))
+#if !defined(configBSP430_PERIPH_TA1)
+/** Defined only if #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE. @defaulted */
 #define configBSP430_PERIPH_TA1 1
-#endif /* configBSP430_PLATFORM_TIMER_CCACLK && need default */
+#endif /* configBSP430_PERIPH_TA1 */
+#endif /* configBSP430_TIMER_CCACLK && need default */
 
 #endif /* BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H */

@@ -91,12 +91,12 @@ void main ()
   aclk_hz = usBSP430clockACLK_Hz_ni();
   cputu_ni(aclk_hz, 10);
 
-#if defined(BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE)
+#if defined(BSP430_TIMER_CCACLK_PERIPH_HANDLE)
   do {
     int i;
     const int SAMPLE_PERIOD_ACLK = 10;
-    volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE);
-    const int ccidx = BSP430_PLATFORM_TIMER_CCACLK_CC_INDEX;
+    volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+    const int ccidx = BSP430_TIMER_CCACLK_CC_INDEX;
     unsigned int c0 = 0;
     unsigned int c1;
     unsigned int cc_delta;
@@ -111,7 +111,7 @@ void main ()
     BSP430_CORE_WATCHDOG_CLEAR();
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL_2 | MC_2 | TACLR;
-    tp->cctl[ccidx] = CM_2 | BSP430_PLATFORM_TIMER_CCACLK_CCIS | CAP | SCS;
+    tp->cctl[ccidx] = CM_2 | BSP430_TIMER_CCACLK_CCIS | CAP | SCS;
     /* NOTE: CCIFG seems to be set immediately on the second and
      * subsequent iterations.  Flush the first capture. */
     while (! (tp->cctl[ccidx] & CCIFG)) {

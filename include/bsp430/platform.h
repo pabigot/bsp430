@@ -128,19 +128,6 @@ int iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int e
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/** @def configBSP430_PLATFORM_TIMER_CCACLK
- *
- * Define to true to indicate that the platform header should identify
- * and mark as enabled a timer for which ACLK can serve as a
- * capture/compare input signal.  The timer is identified by
- * #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE, and may be used to
- * measure the relative speed of SMCLK and ACLK.
- *
- * @defaulted */
-#ifndef configBSP430_PLATFORM_TIMER_CCACLK
-#define configBSP430_PLATFORM_TIMER_CCACLK 0
-#endif /* configBSP430_PLATFORM_TIMER_CCACLK */
-
 /* !BSP430! instance=exp430f5438,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
@@ -245,52 +232,5 @@ void vBSP430platformSpinForJumper_ni (void);
 #ifndef BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC
 #define BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC 1
 #endif /* BSP430_PLATFORM_LFXT1_BOOT_DELAY_SEC */
-
-/** @def BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE
- *
- * The peripheral handle for a timer that is capable of using ACLK as
- * a capture/compare input.  Preferably this would not be TA0.  The
- * intended use of this timer is to measure ACLK against SMCLK.
- *
- * The macro should be undefined unless
- * #configBSP430_PLATFORM_TIMER_CCACLK is defined to a true value.
- *
- * A prior definition for this macro will override the platform
- * default; in that case, #BSP430_PLATFORM_TIMER_CCACLK_CC_INDEX and
- * #BSP430_PLATFORM_TIMER_CCACLK_CCIS must also be defined externally.
- *
- * @nodefault */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA1
-#endif /* BSP430_DOXYGEN */
-
-/** @def BSP430_PLATFORM_TIMER_CCACLK_CC_INDEX
- *
- * The capture/compare block index within
- * #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an
- * input signal.
- *
- * The macro should be undefined unless
- * #configBSP430_PLATFORM_TIMER_CCACLK is defined to a true value.
- *
- * @nodefault */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_PLATFORM_TIMER_CCACLK_CC_INDEX 2
-#endif /* BSP430_DOXYGEN */
-
-/** @def BSP430_PLATFORM_TIMER_CCACLK_CCIS
- *
- * The capture/compare block input signal bits to be selected in the
- * control word for CC block #BSP430_PLATFORM_TIMER_CCACLK_CC_INDEX of
- * #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input
- * signal.
- *
- * The macro should be undefined unless
- * #configBSP430_PLATFORM_TIMER_CCACLK is defined to a true value.
- *
- * @nodefault */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_PLATFORM_TIMER_CCACLK_CCIS CCIS_1
-#endif /* BSP430_DOXYGEN */
 
 #endif /* BSP430_PLATFORM_H */
