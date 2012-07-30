@@ -189,8 +189,6 @@ ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
 #endif
     UINT32_MAX
   };
-  unsigned int ctl1;
-  unsigned int ctl2;
   unsigned long ulReturn;
 
   /* If not told what RSEL to use, pick the one appropriate for the
@@ -208,26 +206,36 @@ ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
   }
   iBSP430ucsConfigureACLK_ni(SELA__XT1CLK);
 
+  /* Disable FLL while manually trimming */
+  __bis_status_register(SCG0);
+  sels_bits = UCSCTL4 & SELS_MASK;
+  divs_bits = UCSCTL5 & DIVS_MASK;
+  targetFrequency_tsp_ = mclk_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
+  UCSCTL0 = 0;
+  UCSCTL3 = SELREF__XT1CLK | FLLREFDIV_0;
+  UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+  UCSCTL5 &= ~(DIVS_MASK | DIVM_MASK);
   /* All supported frequencies can be efficiently achieved using
    * FFLD set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).
    * FLLREFCLK will always be XT1CLK.  FLLN is calculated from
    * mclk_Hz. */
-  ctl1 = (DCORSEL0 | DCORSEL1 | DCORSEL2) & (rsel * DCORSEL0);
-  ctl2 = FLLD_1 | ((((mclk_Hz << 1) / (32768 >> 0)) >> 1) - 1);
+  UCSCTL2 = FLLD_1 | ((((mclk_Hz << 1) / (32768 >> 0)) >> 1) - 1);
+  while (1) {
+    unsigned int dco;
 
-  /* Disable FLL while manually trimming */
-  __bis_status_register(SCG0);
-  UCSCTL0 = 0;
-  UCSCTL1 = ctl1;
-  UCSCTL2 = ctl2;
-  UCSCTL3 = SELREF__XT1CLK | FLLREFDIV_0;
-  sels_bits = UCSCTL4 & SELS_MASK;
-  UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
-  divs_bits = UCSCTL5 & DIVS_MASK;
-  UCSCTL5 &= ~(DIVS_MASK | DIVM_MASK);
+    UCSCTL0 = 0x0F * DCO0;
+    UCSCTL1 = (DCORSEL0 | DCORSEL1 | DCORSEL2) & (rsel * DCORSEL0);
 
-  targetFrequency_tsp_ = mclk_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
-  ulReturn = ulBSP430ucsTrimFLL_ni();
+    ulReturn = ulBSP430ucsTrimFLL_ni();
+    dco = 0x1F & (UCSCTL0 / DCO0);
+    if (0 == dco) {
+      --rsel;
+    } else if (31 == dco) {
+      ++rsel;
+    } else {
+      break;
+    }
+  }
 
   /* Restore SMCLK source and divisor */
   UCSCTL5 |= divs_bits;

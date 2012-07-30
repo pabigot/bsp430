@@ -143,6 +143,15 @@ void main ()
   cputchar_ni('\n');
 #endif /* BSP430_CONSOLE */
 
+#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
+  cprintf("\nUCS RSEL %d DCO %d MOD %d:"
+          "\n\tCTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
+          "\n\tCTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x",
+          0x1F & (UCSCTL1 / DCORSEL0), 0x1F & (UCSCTL0 / DCO0), 0x1F & (UCSCTL0 / MOD0),
+          UCSCTL0, UCSCTL1, UCSCTL2, UCSCTL3,
+          UCSCTL4, UCSCTL5, UCSCTL6, UCSCTL7);
+#endif
+  
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 1)) {
 #if BSP430_CONSOLE - 0
     cputtext_ni("\nClock signals exposed:\n\t");
