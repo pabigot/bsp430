@@ -45,10 +45,11 @@
  * @li #ulBSP430clockMCLK_Hz_ni assumes that DCOCLK is the selected
  * source for MCLK, and returns the divided trimmed DCOCLK frequency.
  *
- * @li #usBSP430clockACLK_Hz_ni assumes returns 32768 if XT1CLK is the
- * selected source for ACLK and OFIFG is clear, and returns 10000 (the
- * nominal VLOCLK frequency) otherwise.  Be aware that the actual
- * VLOCLK frequency may be different by 10-20%.
+ * @li #usBSP430clockACLK_Hz_ni returns #BSP430_CLOCK_NOMINAL_LFXT1_HZ
+ * if XT1CLK is the selected source for ACLK and OFIFG is clear, and
+ * returns #BSP430_CLOCK_NOMINAL_VLOCLK_HZ otherwise.  VLOCLK for the
+ * CS module should be 10 kHz, but be aware that the actual VLOCLK
+ * frequency may be different by 10-20%.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc

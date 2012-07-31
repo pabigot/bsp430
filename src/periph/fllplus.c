@@ -84,7 +84,7 @@ usBSP430clockACLK_Hz_ni (void)
   if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
     return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
   }
-  return 32768U;
+  return BSP430_CLOCK_NOMINAL_LFXT1_HZ;
 }
 
 int

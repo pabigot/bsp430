@@ -281,6 +281,14 @@ unsigned long ulBSP430clockTrimFLL_ni (unsigned long fll_Hz);
 #define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { IFG1 &= ~OFIFG; } while (0)
 #endif /* 5xx */
 
+/** @def BSP430_CLOCK_NOMINAL_LFXT1_HZ
+ *
+ * Nominal rate of the external low-frequency crystal.  This is
+ * expected to be a 32 kiHz watch crystal, so that's what the default
+ * is. */
+#ifndef BSP430_CLOCK_NOMINAL_LFXT1_HZ
+#define BSP430_CLOCK_NOMINAL_LFXT1_HZ 32768U
+#endif /* BSP430_CLOCK_NOMINAL_LFXT1_HZ */
 
 /** @def BSP430_CLOCK_NOMINAL_ACLK_HZ
  *
@@ -288,15 +296,13 @@ unsigned long ulBSP430clockTrimFLL_ni (unsigned long fll_Hz);
  *
  * This value should be quickly calculatable, and be either a
  * compile-time constant or a selection between two compile-time
- * constants based on a single-instruction test.
- *
- * Note that the calculated value of this assumes that ACLK is
- * configured to source from a 32 kiHz watch crystal normally, but
- * deferring to VLOCLK if LFXT1 is faulted.
+ * constants based on a single-instruction test.  The likely
+ * alternatives are #BSP430_CLOCK_NOMINAL_VLOCLK_HZ and
+ * #BSP430_CLOCK_NOMINAL_LFXT1_HZ.
  *
  * @defaulted  */
 #ifndef BSP430_CLOCK_NOMINAL_ACLK_HZ
-#define BSP430_CLOCK_NOMINAL_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : 32768U)
+#define BSP430_CLOCK_NOMINAL_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : BSP430_CLOCK_NOMINAL_LFXT1_HZ)
 #endif /* BSP430_CLOCK_NOMINAL_ACLK_HZ */
 
 /** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
