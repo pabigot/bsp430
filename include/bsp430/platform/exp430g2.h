@@ -42,6 +42,11 @@
  * jumper across these pins.
  *
  * </ul>
+ *
+ * @author Peter A. Bigot <bigotp@acm.org>
+ * @date 2012
+ * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_PLATFORM_EXP430G2_H

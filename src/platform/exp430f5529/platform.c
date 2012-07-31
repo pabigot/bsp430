@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/platform/exp430f5438.h>
+#include <bsp430/platform/exp430f5529.h>
 #include <bsp430/periph/ucs.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/usci5.h>
@@ -60,6 +60,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
   }
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
+    /* P1.0 ACLK, P2.2 SMCLK, P7.7 MCLK */
     if (enablep) {
       P1SEL |= BIT0;
       P2SEL |= BIT2;
@@ -98,6 +99,36 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
   return 0;
 }
 
+void
+vBSP430platformSpinForJumper_ni (void)
+{
+  const unsigned char led_bits = BIT1 | BIT2 | BIT3 | BIT4 | BIT5;
+  /* P7.7 input configured with pullup */
+  P7DIR &= ~BIT7;
+  P7REN |= BIT7;
+  P7OUT |= BIT7;
+
+  /* Flash LEDs alternately while waiting */
+#if BSP430_LED
+  vBSP430ledInitialize_ni();
+#else /* BSP430_LED */
+  P1DIR |= led_bits;
+  P1SEL &= ~led_bits;
+#endif /* BSP430_LED */
+  P1OUT &= ~(BIT2 | BIT4);
+  P1OUT |= BIT1 | BIT3 | BIT5;
+  while (! (P7IN & BIT7)) {
+    BSP430_CORE_WATCHDOG_CLEAR();
+    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 10);
+    P1OUT ^= led_bits;
+  }
+
+  /* Restore P1.0 and LEDs */
+  P1OUT &= ~led_bits;
+  P7OUT &= ~BIT7;
+  P7DIR |= BIT7;
+  P7REN &= ~BIT7;
+}
 
 void vBSP430platformInitialize_ni (void)
 {
@@ -115,7 +146,7 @@ void vBSP430platformInitialize_ni (void)
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
 
 #if BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS - 0
-  iBSP430ucsConfigureACLK_ni(crystal_ok ? SELA__XT1CLK : SELA__VLOCLK);
+  iBSP430clockConfigureACLK_ni(crystal_ok ? SELA__XT1CLK : SELA__VLOCLK);
   ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
   iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
