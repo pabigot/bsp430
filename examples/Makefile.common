@@ -121,19 +121,55 @@ LDFLAGS += $(AUX_LDFLAGS) $(EXT_CFLAGS)
 %.o: %.S
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
-# Add-in if you want timers
-SRC_TIMER = \
-    $(BSP430_ROOT)/src/periph/timer.c
+# Since the same BSP430 capability (e.g., timer or serial) may be needed for
+# multiple purposes, the SRC variable cannot simply accrue each dependency
+# as it occurs, since doing so would result in the same source file being
+# listed multiple times.  We avoid that by passing accruing BSP430
+# capabilities as "modules".
+#
+# Sources from the BSP430 library are identified by a module tag, being the
+# relative path inclusive of the implementation file base name within the
+# BSP430 src directory.  For example, periph/usci results in
+# $(BSP430_ROOT)/src/periph/usci.c being added as a source dependency.
+#
+# The set of modules is defined by the application-specific Makefile, by
+# assigning them to the MODULES variable.  Platform-independence is
+# supported by pre-defining core capabilities in named module variables like
+# MODULES_UPTIME.  The listed modules are sorted, made unique, and added to
+# the SRC dependency prior to building the application.
+#
+# The infrastructure places nothing in MODULES itself.  You'll want at least
+# $(MODULES_PLATFORM), which should provides the platform and clocks code.
 
-# Add-in if you want uptime
-SRC_UPTIME = \
-    $(SRC_TIMER) \
-    $(BSP430_ROOT)/src/utility/uptime.c
+# MODULES_TIMER: The identifiers for basic timer functionality.  Primarily
+# exists for consistency in naming.
+MODULES_TIMER = periph/timer
 
-# Add-in if you want console
-SRC_CONSOLE = \
-    $(SRC_SERIAL) \
-    $(BSP430_ROOT)/src/utility/console.c
+# MODULES_UPTIME: The timer in combination with the uptime facility.
+MODULES_UPTIME = $(MODULES_TIMER) utility/uptime
+
+# MODULES_CLOCK: Platform specific, the module supplying the implementation
+# of the clock interface.
+
+# MODULES_SERIAL: Platform specific, the module supplying the implementation
+# of the serial interface.
+
+# MODULES_LED: Platform specific, the module supplying the implementation of
+# the LED interface.  If not set by the platform, this is assumed to be the
+# common implementation in the utility suite.  If the platform module
+# supplies the LEDs, then name it explicitly for this function.
+MODULES_LED ?= utility/led
+
+# MODULES_CONSOLE: The serial module in combination with the console
+# facility.
+MODULES_CONSOLE = $(MODULES_SERIAL) utility/console
+
+# MODULES_PLATFORM: The platform-specific platform module, together with the
+# clock module.  The combination is non-orthogonal, but convenient.
+MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK)
+
+# Add all selected modules to the SRC, eliminating any duplicates
+SRC += $(patsubst %,$(BSP430_ROOT)/src/%.c,$(sort $(MODULES)))
 
 # Object files derive from C source files and preprocessed assembly files
 OBJ += $(SRC:.c=.o) $(SRC_S:.S=.o)

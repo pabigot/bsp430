@@ -1,11 +1,5 @@
 MCU=msp430f5529
-
 MSPDEBUG_DRIVER=-j uif
-
-SRC_PLATFORM = \
-    $(BSP430_ROOT)/src/platform/$(PLATFORM)/platform.c \
-    $(BSP430_ROOT)/src/periph/ucs.c \
-    $(BSP430_ROOT)/src/utility/led.c
-
-SRC_SERIAL = \
-    $(BSP430_ROOT)/src/periph/usci5.c
+# UCS needs CCACLK for DCO configuration
+MODULES_CLOCK=periph/ucs periph/timer
+MODULES_SERIAL=periph/usci5

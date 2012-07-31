@@ -2,9 +2,6 @@ MCU=msp430fr5739
 MSPDEBUG_DRIVER=rf2500
 MSPDEBUG_PROG=load
 
-SRC_PLATFORM = \
-    $(BSP430_ROOT)/src/platform/$(PLATFORM)/platform.c \
-    $(BSP430_ROOT)/src/periph/cs.c
-
-SRC_SERIAL = \
-    $(BSP430_ROOT)/src/periph/euscia.c
+MODULES_LED=platform/$(PLATFORM)/platform
+MODULES_CLOCK=periph/cs
+MODULES_SERIAL=periph/euscia
