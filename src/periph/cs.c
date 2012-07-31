@@ -154,17 +154,13 @@ int
 iBSP430clockConfigureLFXT1_ni (int enablep,
                                int loop_limit)
 {
-  int loop_delta;
   int rc = 0;
 
   CSCTL0_H = 0xA5;
-  do {
-    if (0 != loop_limit) {
-      rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, enablep);
-      if ((0 != rc) || (! enablep)) {
-        break;
-      }
-      loop_delta = (0 < loop_limit) ? 1 : 0;
+  if (enablep && (0 != loop_limit)) {
+    rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, enablep);
+    if (0 == rc) {
+      int loop_delta = (0 < loop_limit) ? 1 : 0;
 
       /* Low frequency XT1 needed.  Spin at high drive to stability, then
        * drop back.  Preserve XT1 configuration. */
@@ -178,10 +174,11 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
       CSCTL4 = CSCTL4 & ~XT1DRIVE_3;
       rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
     }
-  } while (0);
+  }
   if (! rc) {
-    CSCTL4 |= XT1OFF;
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
+    CSCTL4 |= XT1OFF;
+    CSCTL4 &= ~(XT1DRIVE0 | XT1DRIVE1);
   }
   CSCTL0_H = !0xA5;
   return rc;

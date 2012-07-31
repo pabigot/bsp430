@@ -285,7 +285,8 @@ unsigned long ulBSP430clockTrimFLL_ni (unsigned long fll_Hz);
  *
  * Nominal rate of the external low-frequency crystal.  This is
  * expected to be a 32 kiHz watch crystal, so that's what the default
- * is. */
+ * is.
+ * @defaulted */
 #ifndef BSP430_CLOCK_NOMINAL_XT1CLK_HZ
 #define BSP430_CLOCK_NOMINAL_XT1CLK_HZ 32768U
 #endif /* BSP430_CLOCK_NOMINAL_XT1CLK_HZ */
@@ -430,20 +431,22 @@ ulBSP430clockSMCLK_Hz (void)
  * @param enablep Pass a nonzero value to configure XIN/XOUT for
  * crystal functionality and to loop until the crystal is stabilized
  * or has failed to stabilize.  Pass a zero value to turn off the
- * crystal function.
+ * crystal function: this reconfigures pins to their digital port
+ * function, disables the crystal, and clears any crystal capacitance
+ * setting.
  *
  * @param loop_limit The number of times the stabilization check
  * should be repeated.  If stabilization has not been achieved after
  * this many loops, assume the crystal is absent and configure for
  * VLOCLK.  A negative value indicates the process should loop until
- * stabilization is detected.  A zero value indicates the function
- * should assume the crystal is faulted without even checking.  The
- * parameter is ignored if @a enablep is zero.
+ * stabilization is detected.  A zero value is equivalent to passing a
+ * zero value as @a enablep..
  *
  * @return Zero if XT1 was disabled by the call, and a positive value
  * if XT1 is stable on completion of the call (available as a clock
  * source).  A negative value indicates an error, such as inability to
- * configure XIN/XOUT pins.
+ * configure XIN/XOUT pins.  Thus, the crystal is available and stable
+ * only if a positive value is returned.
  */
 int iBSP430clockConfigureLFXT1_ni (int enablep,
                                    int loop_limit);
