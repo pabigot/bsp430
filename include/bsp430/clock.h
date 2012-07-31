@@ -78,13 +78,26 @@
  * also compatible with as many serial baud rates as possible.
  *
  * @note Applications may wish to provide an alternative value better
- * suited to specific needs.
+ * suited to specific needs.  It is suggested that the value include
+ * the suffix L in case the compiler does not automatically promote
+ * constants as necessary.
  *
  * @defaulted  */
 #ifndef BSP430_CLOCK_NOMINAL_MCLK_HZ
-#define BSP430_CLOCK_NOMINAL_MCLK_HZ 7948800U
+#define BSP430_CLOCK_NOMINAL_MCLK_HZ 7948800UL
 #endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
 
+/** @def BSP430_CLOCK_US_TO_NOMINAL_MCLK
+ *
+ * A function macro that converts a value specified in microseconds to
+ * an approximate duration counted in MCLK cycles.  This is primarily
+ * used to provide the parameter to #BSP430_CORE_DELAY_CYCLES when the
+ * desired delay is specified by time rather than cycles.
+ *
+ * @param _delay_us the delay in microseconds.  Expected, but not
+ * required, to be a compile-time integer constant compatible with
+ * unsigned long. */
+#define BSP430_CLOCK_US_TO_NOMINAL_MCLK(_delay_us) (((_delay_us) * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL)
 
 /** @def configBSP430_CLOCK_DISABLE_FLL
  *

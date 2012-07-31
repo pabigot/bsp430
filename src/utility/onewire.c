@@ -66,11 +66,6 @@ enum {
   OWT_SLOT_us = 60,
 };
 
-/** Convert microseconds to cycles.
- *
- * Assumes clock is running at nominal speed. */
-#define US_TO_CYCLES(_us) (((_us) * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000)
-
 int
 iBSP430onewireReset_ni (const xBSP430onewireBus * bus)
 {
@@ -79,7 +74,7 @@ iBSP430onewireReset_ni (const xBSP430onewireBus * bus)
   /* Hold bus low for OWT_RESET_us */
   bus->port->out &= ~bus->bit;
   bus->port->dir |= bus->bit;
-  __delay_cycles(US_TO_CYCLES(OWT_RSTL_us));
+  __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_RSTL_us));
 
   /* Release bus and switch to input until presence pulse should be
    * visible. */
@@ -98,13 +93,13 @@ iBSP430onewireReset_ni (const xBSP430onewireBus * bus)
   bus->port->ren |= bus->bit;
   bus->port->out |= bus->bit;
 #endif /* __MSP430_HAS_PORT1_R__ */
-  __delay_cycles(US_TO_CYCLES(OWT_PDHIGH_us));
+  __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_PDHIGH_us));
 
   /* Record presence if bus is low (DS182x is holding it there) */
   present = !(bus->port->in & bus->bit);
 
   /* Wait for reset cycle to complete */
-  __delay_cycles(US_TO_CYCLES(OWT_RSTH_us - OWT_PDHIGH_us));
+  __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_RSTH_us - OWT_PDHIGH_us));
 
   return present;
 }
@@ -126,21 +121,21 @@ vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
     bus->port->out &= ~bus->bit;
     bus->port->dir |= bus->bit;
     if (byte & 0x01) {
-      __delay_cycles(US_TO_CYCLES(OWT_LOW1_us));
+      __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW1_us));
       bus->port->dir &= ~bus->bit;
 #if defined(__MSP430_HAS_PORT1_R__)
       /* Leave REN set from reset command, configure for pullup */
       bus->port->out |= bus->bit;
 #endif /* __MSP430_HAS_PORT1_R__ */
-      __delay_cycles(US_TO_CYCLES(OWT_SLOT_us - OWT_LOW1_us + OWT_REC_us));
+      __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_LOW1_us + OWT_REC_us));
     } else {
-      __delay_cycles(US_TO_CYCLES(OWT_LOW0_us));
+      __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW0_us));
       bus->port->dir &= ~bus->bit;
 #if defined(__MSP430_HAS_PORT1_R__)
       /* Leave REN set from reset command, configure for pullup */
       bus->port->out |= bus->bit;
 #endif /* __MSP430_HAS_PORT1_R__ */
-      __delay_cycles(US_TO_CYCLES(OWT_SLOT_us - OWT_LOW0_us + OWT_REC_us));
+      __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_LOW0_us + OWT_REC_us));
     }
     byte >>= 1;
   }
@@ -153,11 +148,11 @@ iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus)
 
   bus->port->out &= ~bus->bit;
   bus->port->dir |= bus->bit;
-  __delay_cycles(US_TO_CYCLES(OWT_INT_us));
+  __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_INT_us));
   bus->port->dir &= ~bus->bit;
-  __delay_cycles(US_TO_CYCLES(OWT_RDV_us));
+  __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_RDV_us));
   rv = !!(bus->port->in & bus->bit);
-  __delay_cycles(US_TO_CYCLES(OWT_SLOT_us - OWT_RDV_us - OWT_INT_us + OWT_REC_us));
+  __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_RDV_us - OWT_INT_us + OWT_REC_us));
   return rv;
 }
 
