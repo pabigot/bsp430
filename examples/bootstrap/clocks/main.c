@@ -122,8 +122,8 @@ void main ()
     cputtext_ni(" ticks of ACLK produced ");
     cputu_ni(cc_delta, 10);
     cputtext_ni(" ticks of SMCLK");
-    cputtext_ni("\nComparison with NOMINAL values:");
-    cputtext_ni("\n\tSMCLK (Hz) (if ACLK correct): ");
+    cputtext_ni("\nComparison with measured values:");
+    cputtext_ni("\n\tSMCLK (Hz) (if measured ACLK correct): ");
     smclk_rel_aclk_Hz = (cc_delta * (unsigned long)aclk_Hz) / SAMPLE_PERIOD_ACLK;
     cputul_ni(smclk_rel_aclk_Hz, 10);
     cputtext_ni(" (error ");
@@ -131,7 +131,7 @@ void main ()
     cputtext_ni(" = ");
     cputl_ni(1000 * labs(smclk_rel_aclk_Hz - smclk_Hz) / smclk_Hz, 10);
     cputtext_ni(" kHz/MHz)");
-    cputtext_ni("\n\tACLK (Hz) (if SMCLK correct): ");
+    cputtext_ni("\n\tACLK (Hz) (if measured SMCLK correct): ");
     aclk_rel_smclk_Hz = SAMPLE_PERIOD_ACLK * smclk_Hz / cc_delta;
     cputul_ni(aclk_rel_smclk_Hz, 10);
     cputtext_ni(" (error ");

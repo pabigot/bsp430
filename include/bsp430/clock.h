@@ -49,8 +49,10 @@
  * <li> <bsp430/periph/cs.h> for CS (Clock System)
  * </ul>
  *
- * @note Where LFXT1 is used in this module, it is assumed to refer to
- * an external 32 kiHz crystal.
+ * @note Some modules (such as BC2) use LFXT1 to denote the source for
+ * ACLK regardless of whether that is the external crystal or VLOCLK.
+ * Throughout BSP430 the term LFXT1 is exclusively used to denote an
+ * external low-frequency crystal.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -451,11 +453,35 @@ ulBSP430clockSMCLK_Hz (void)
 int iBSP430clockConfigureLFXT1_ni (int enablep,
                                    int loop_limit);
 
+/** Configure ACLK to a source clock.
+ *
+ * The peripheral-specific implementation will configure ACLK to
+ * source from the specified platform-specific value.
+ * 
+ * @param sela the configuration bits to be set to select the clock.
+ * Depending on the underlying clock peripheral, this may be a value
+ * like #SELA_0 or a value like #LFXT1S_0.  The configuration will be
+ * rejected if @a sela has bits set outside the region of the clock
+ * control word that selects the ACLK source.
+ *
+ * @return 0 if the configuration was accepted, a negative error if it
+ * was rejected.
+ */
+int iBSP430clockConfigureACLK_ni (unsigned int sela);
+
 /** Return the best available estimate of ACLK frequency.
  *
  * Depending on clock configuration, this will return one of
  * #BSP430_CLOCK_NOMINAL_XT1CLK_HZ, #BSP430_CLOCK_NOMINAL_VLOCLK_HZ, or
  * another constant or possibly measured value.
+ *
+ * A value of 0 may be returned if the clock is configured for an
+ * unidentified external source.
+ *
+ * @note If the ACLK is configured to source from LFXT1 but
+ * #BSP430_CLOCK_LFXT1_IS_FAULTED() is true this will return
+ * #BSP430_CLOCK_NOMINAL_VLOCLK_HZ instead of
+ * #BSP430_CLOCK_NOMINAL_XT1CLK_HZ.
  *
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned short usBSP430clockACLK_Hz_ni (void);

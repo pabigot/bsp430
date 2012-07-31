@@ -332,16 +332,6 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
   return iBSP430clockSMCLKDividingShift_ni();
 }
 
-unsigned short
-usBSP430clockACLK_Hz_ni (void)
-{
-  if ((SELA__XT1CLK == (UCSCTL4 & (SELA0 | SELA1 | SELA2)))
-      && !(BSP430_CLOCK_LFXT1_IS_FAULTED())) {
-    return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
-  }
-  return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
-}
-
 int
 iBSP430clockConfigureLFXT1_ni (int enablep,
                                int loop_limit)
@@ -376,7 +366,28 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   return rc;
 }
 
-int iBSP430ucsConfigureACLK_ni (unsigned int sela)
+unsigned short
+usBSP430clockACLK_Hz_ni (void)
+{
+  switch (UCSCTL4 & SELA_MASK) {
+    case SELA_0: /* XT1CLK */
+      if (! BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+        return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+      }
+      /*FALLTHRU*/
+    case SELA_1: /* VLOCLK */
+      return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+    case SELA_2: /* REFOCLK */
+      return BSP430_UCS_NOMINAL_REFOCLK_HZ;
+    case SELA_3: /* DCOCLK */
+      return 2 * lastTrimFrequency_Hz_;
+    default:
+    case SELA_4: /* DCOCLKDIV */
+      return lastTrimFrequency_Hz_;
+  }
+}
+
+int iBSP430clockConfigureACLK_ni (unsigned int sela)
 {
   if (sela & ~SELA_MASK) {
     return -1;

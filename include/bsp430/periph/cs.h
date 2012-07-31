@@ -92,17 +92,4 @@
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
 
-/** Call this to configure ACLK via the CS peripheral.
- *
- * Prior to invoking this, use #iBSP430clockConfigureLFXT1_ni to check for
- * crystal stability, if ACLK is to be sourced from XT1.
- *
- * @param sela The constant to assign to the SELA field of CSCTL2.
- * Standard values are @c SELA__XT1CLK and @c SELA_VLOCLK.
- *
- * @return Zero if the configuration was successful; -1 if the value
- * for @a sela was not valid.
- */
-int iBSP430csConfigureACLK_ni (unsigned int sela);
-
 #endif /* BSP430_PERIPH_CS_H */

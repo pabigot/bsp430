@@ -168,6 +168,21 @@
 #define CM_1                (0x4000) /**< Capture mode: 1 - pos. edge */
 #define CM_2                (0x8000) /**< Capture mode: 1 - neg. edge */
 #define CM_3                (0xC000) /**< Capture mode: 1 - both edges */
+
+#define SELA_0              (0x0000)   /**< ACLK Source Select 0 */
+#define SELA_1              (0x0100)   /**< ACLK Source Select 1 */
+#define SELA_2              (0x0200)   /**< ACLK Source Select 2 */
+#define SELA_3              (0x0300)   /**< ACLK Source Select 3 */
+#define SELA_4              (0x0400)   /**< ACLK Source Select 4 */
+#define SELA_5              (0x0500)   /**< ACLK Source Select 5 */
+#define SELA_6              (0x0600)   /**< ACLK Source Select 6 */
+#define SELA_7              (0x0700)   /**< ACLK Source Select 7 */
+
+#define LFXT1S_0            (0x00)   /**< Mode 0 for LFXT1 : Normal operation */
+#define LFXT1S_1            (0x10)   /**< Mode 1 for LFXT1 : Reserved */
+#define LFXT1S_2            (0x20)   /**< Mode 2 for LFXT1 : VLO */
+#define LFXT1S_3            (0x30)   /**< Mode 3 for LFXT1 : Digital input signal */
+
 #endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */

@@ -47,10 +47,9 @@
 /* Mask for DIVM bits in CSCTL3 */
 #define DIVM_MASK (DIVM0 | DIVM1 | DIVM2)
 
-unsigned long
-ulBSP430clockMCLK_Hz_ni (void)
+static unsigned long
+ulBSP430csDCOCLK_Hz_ni (void)
 {
-  unsigned int divm;
   unsigned long freq_Hz = 0;
 
   switch (CSCTL1 & 0x86) {
@@ -75,8 +74,14 @@ ulBSP430clockMCLK_Hz_ni (void)
       freq_Hz = 24000000UL;
       break;
   }
-  divm = (CSCTL3 & DIVM_MASK) / DIVM0;
-  return freq_Hz >> divm;
+  return freq_Hz;
+}
+
+unsigned long
+ulBSP430clockMCLK_Hz_ni (void)
+{  
+  unsigned int divm = (CSCTL3 & DIVM_MASK) / DIVM0;
+  return ulBSP430csDCOCLK_Hz_ni() >> divm;
 }
 
 int
@@ -107,16 +112,6 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
   CSCTL0_H = !0xA5;
 
   return iBSP430clockSMCLKDividingShift_ni();
-}
-
-unsigned short
-usBSP430clockACLK_Hz_ni (void)
-{
-  if ((SELA__XT1CLK == (CSCTL2 & SELA_MASK))
-      && !(BSP430_CLOCK_LFXT1_IS_FAULTED())) {
-    return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
-  }
-  return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
 }
 
 unsigned long
@@ -184,8 +179,26 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   return rc;
 }
 
+unsigned short
+usBSP430clockACLK_Hz_ni (void)
+{
+  switch (CSCTL2 & SELA_MASK) {
+    case SELA_0: /* XT1CLK */
+      if (! BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+        return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+      }
+      /*FALLTHRU*/
+    case SELA_1: /* VLOCLK */
+    case SELA_2: /* Reserved */
+      return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+    default:
+    case SELA_3: /* DCOCLK */
+      return ulBSP430csDCOCLK_Hz_ni();
+  }
+}
+
 int
-iBSP430csConfigureACLK_ni (unsigned int sela)
+iBSP430clockConfigureACLK_ni (unsigned int sela)
 {
   if (sela & ~SELA_MASK) {
     return -1;

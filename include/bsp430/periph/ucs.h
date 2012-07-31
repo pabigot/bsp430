@@ -175,19 +175,6 @@
 unsigned long ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
                                        int rsel);
 
-/** Call this to configure ACLK via the UCS peripheral.
- *
- * Prior to invoking this, use #iBSP430clockConfigureLFXT1_ni to check for
- * crystal stability, if ACLK is to be sourced from XT1.
- *
- * @param sela The constant to assign to the SELA field of UCSCTL4.
- * Standard values are @c SELA__XT1CLK and @c SELA__VLOCLK.
- *
- * @return Zero if the configuration was successful; -1 if the value
- * for @a sela was not valid.
- */
-int iBSP430ucsConfigureACLK_ni (unsigned int sela);
-
 /** Call this periodically to trim the FLL.
  *
  * The function uses the ratio of SMCLK to ACLK to determine the speed

@@ -39,6 +39,7 @@ static unsigned long configuredMCLK_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
 #define SELM_MASK (SELM0 | SELM1)
 #define DIVM_MASK (DIVM0 | DIVM1)
 #define DIVS_MASK (DIVS0 | DIVS1)
+#define SELA_MASK (LFXT1S0 | LFXT1S1)
 
 int
 iBSP430clockConfigureLFXT1_ni (int enablep,
@@ -129,10 +130,27 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
 unsigned short
 usBSP430clockACLK_Hz_ni (void)
 {
-  if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
-    return BSP430_CLOCK_NOMINAL_VLOCLK_HZ
+  switch (BCSCTL3 & SELA_MASK) {
+    default:
+    case LFXT1S_0:
+      if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+        return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+      }
+      return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+    case LFXT1S_2:
+      return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
   }
-  return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+  return 0;
+}
+
+int
+iBSP430clockConfigureACLK_ni (unsigned int sela)
+{
+  if (sela & ~SELA_MASK) {
+    return -1;
+  }
+  BCSCTL3 = (BCSCTL3 & ~SELA_MASK) | sela;
+  return 0;
 }
 
 unsigned long
