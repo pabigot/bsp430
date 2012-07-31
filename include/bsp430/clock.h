@@ -70,18 +70,19 @@
  * A constant representing the desired clock speed of the master
  * clock.
  *
- * If this macro is defined to a nonzero value,
- * vBSP430platformInitialize_ni() will use it to initialize the system
- * clocks.  If it is defined as zero, the power-up clock configuration
- * will be left unchanged.
+ * If #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true,
+ * vBSP430platformInitialize_ni() will use this value to initialize
+ * the system clocks.  The value should not be used after this point,
+ * as ulBSP430clockMCLK_Hz_ni() is more likely to reflect the actual
+ * MCLK rate.
  *
  * @note The default value is calculated from
  * 3*3*5*5*512*69=115200*69, and is the value nearest 8MHz which is
  * also compatible with as many serial baud rates as possible.
  *
- * @note Applications may wish to provide an alternative value better
- * suited to specific needs.  It is suggested that the value include
- * the suffix L in case the compiler does not automatically promote
+ * @note Applications may wish to provide an alternative value suited
+ * to specific needs.  It is suggested that the value include the
+ * suffix L in case the compiler does not automatically promote
  * constants as necessary.
  *
  * @defaulted  */
@@ -103,11 +104,12 @@
 
 /** @def configBSP430_CLOCK_DISABLE_FLL
  *
- * This macro may be defined to a true value to request that BSP430
- * attempt to ensure #SCG0 remain set, preventing the FLL from
- * changing the DCO configuration without application intervention.
- * Its primary effect is in the selection of bits cleared when leaving
- * interrupts.
+ * This macro may be defined to a true value to request that after
+ * vBSP430platformInitialize_ni() configures the clocks #SCG0 will be
+ * set, preventing the FLL from changing the DCO configuration without
+ * application intervention.  It may be referenced in other
+ * situations, such as leaving low-power mode, to determine whether
+ * the bit should remain set.
  *
  * The UCS peripheral has several errata which result in severe clock
  * instabilities when the FLL is allowed to run unmanaged.  These

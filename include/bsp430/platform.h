@@ -319,6 +319,7 @@ void vBSP430platformSpinForJumper_ni (void);
  * <li> configure ACLK to source from LFXT1 if a stable crystal is available
  * <li> invoke ulBSP430clockConfigureMCLK_Hz_ni() using #BSP430_CLOCK_NOMINAL_MCLK_HZ
  * <li> invoke iBSP430clockConfigureSMCLKDividingShift_ni() using #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
+ * <li> set #SCG0 if #configBSP430_CLOCK_DISABLE_FLL is true
  * </ul>
  *
  * If defined to a false value, vBSP430platformInitialize_ni() will
