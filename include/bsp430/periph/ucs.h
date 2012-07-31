@@ -153,27 +153,5 @@
  * populated. */
 #define BSP430_UCS_NOMINAL_REFOCLK_HZ 32768U
 
-/** Call this to initially configure the UCS peripheral.
- *
- * @param mclk_Hz The target frequency for DCOCLKDIV=MCLK.
- *
- * @param rsel The DCO frequency range selection.  The appropriate
- * value is frequency-dependent, and specified in the "DCO Frequency"
- * table in the device-specific data sheet.  The same target frequency
- * may be reachable with different RSELs but with different
- * accuracies.  If a negative value is given, the function may be able
- * to select a default from an internal table if that table has been
- * updated to include information on the relevant device.
- *
- * @return an estimate of the actual running frequency.
- *
- * @note This function expects a valid 32 kiHz clock source on XT1,
- * and that this will be used as the source for ACLK.  It invokes
- * #iBSP430clockConfigureLFXT1_ni and #iBSP430ucsConfigureACLK_ni to ensure
- * the expectation is met.  A call to this function will not return if
- * XT1 cannot be stabilized. */
-unsigned long ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
-                                       int rsel);
-
 #endif /* BSP430_CLOCKS_UCS_H */
 
