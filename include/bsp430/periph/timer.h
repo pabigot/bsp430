@@ -210,38 +210,54 @@
 #define BSP430_TIMER_CCACLK_CCIS include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-#if defined(BSP430_DOXYGEN) || (configBSP430_TIMER_CCACLK - 0)
 /** Count number of timer transitions over a span of ACLK ticks
  *
- * This function uses the #BSP430_TIMER_CCACLK infrastructure to count
- * events on the clock source assigned to that timer.  The CCACLK
- * capture/control block is configured based on @a capture_mode, and
- * execution loops for @a aclk_ticks ACLK cycles.  The CCACLK timer
- * counter is recorded at the start of the first and end of the last
- * cycle.  The capture/control block control is reset, and the
- * difference between counters is returned.
+ * This function uses the timer capture/compare infrastructure to
+ * count clock cycles.  The source for a timer is configured
+ * externally (for example, to SMCLK, or to an external source).  The
+ * CCACLK capture/control block is configured based on @a
+ * capture_mode.  The code synchronizes with a capture, then loops for
+ * @a period captures.  The CCACLK timer counter is recorded at the
+ * start of the first and end of the last cycle.  The capture/control
+ * block control is reset, and the difference between first and last
+ * counters is returned.
+ *
+ * The expectation is that the events triggered by the input selection
+ * are slow relative to the MCLK and timer sources.
  *
  * @note The function does not modify the timer-level configuration;
  * the timer source must be assigned and the timer started prior to
  * invoking this function.
  *
+ * @param periph the peripheral identifier for the timer on which the
+ * capture is to be made.
+ *
+ * @param ccidx the capture/compare block index to use.  No validity
+ * checks on this are made; you must be sure the index is in range for
+ * the provided timer.
+ *
  * @param capture_mode the edge detection capture specification.  The
- * appropriate value is given by constants in the <msp430.h> header.
- * CM_1 captures on rising edge, CM_2 on falling edge, CM_3 on both
- * rising and falling edge.  If the provided value is not one of these
- * three, the function returns immediately with a value of -1.
+ * appropriate value is given by constants in the <msp430.h> header,
+ * such as #CM_1.  The passed value is masked to eliminate extraneous
+ * bits; if the resulting value does not identify a capture, the
+ * function returns immediately with a value of -1.
  *
- * @param aclk_ticks the number of ticks over which the events are
- * counted.
+ * @param the capture/compare input selection.  The appropriate value
+ * is a constant from the <msp430.h> header, such as #CCIS_1.  Consult
+ * the MCU-specific datasheet to determine the functions of the input
+ * alternatives for each timer/CC-block pair.
  *
- * @return -1 if @a capture_mode is not valid or the CCACLK timer is
- * stopped.  Otherwise the delta in the counter of the CCACLK timer
- * over a period of @a aclk_ticks ticks of ACLK.
+ * @param count the number of capture events over which the delta is
+ * measured.
  *
- * @dependency #BSP430_TIMER_CCACLK */
-unsigned int uiBSP430timerCCACLKMeasureDelta_ni (unsigned int capture_mode,
-    unsigned int aclk_ticks);
-#endif /* configBSP430_TIMER_CCACLK */
+ * @return -1 if @a capture_mode is not valid or the timer is
+ * unrecognized or stopped.  Otherwise the delta in the counter of the
+ * timer over @a count captures. */
+unsigned int uiBSP430timerCaptureDelta_ni (xBSP430periphHandle periph,
+                                           int ccidx,
+                                           unsigned int capture_mode,
+                                           unsigned int ccis,
+                                           unsigned int count);
 
 /** Layout for Timer_A and Timer_B peripherals.
  */

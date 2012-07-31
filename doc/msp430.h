@@ -9,11 +9,18 @@
  * configuration.  For mspgcc, that is the @c -mmcu= target option.
  *
  * Documentation text is taken from the <msp430xgeneric.h> header
- * provided in the msp430mcu package at version 20120716, or from
- * slau208j (MSP430 5xx/6xx Family Users Guide).  The set of
- * peripherals identified as available modules in this example header
- * is both incomplete and generic: not all identified peripherals can
- * be found in an MSP430 MCU.
+ * provided in the <a
+ * href="https://sourceforge.net/projects/mspgcc/files/msp430mcu/">msp430mcu
+ * package</a> at version 20120716, or from the <a
+ * href="http://www.ti.com/general/docs/lit/getliterature.tsp?baseLiteratureNumber=SLAU208&track=no">MSP430
+ * 5xx/6xx Family Users Guide</a>.  The set of peripherals identified
+ * as available modules in this example header is both incomplete and
+ * generic: not all identified peripherals can be found in an MSP430
+ * MCU.
+ *
+ * @warning Do not assume the values in this documentation are
+ * correct.  The value for your MCU may be different, but the
+ * documentation will still apply.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -142,6 +149,26 @@
  * This is the defining characteristic for 5xx/6xx family devices
  * (including FR5xx devices). */
 #define __MSP430_HAS_MSP430XV2_CPU__
+
+/* Make sure nobody can accidently reference these values */
+#if defined(BSP430_DOXYGEN)
+#define MC_0                (0x0000)  /**< Timer mode control: 0 - Stop */
+#define MC_1                (0x0010)  /**< Timer mode control: 1 - Up to CCR0 */
+#define MC_2                (0x0020)  /**< Timer mode control: 2 - Continuous up */
+#define MC_3                (0x0030)  /**< Timer mode control: 3 - Up/Down */
+#define ID_0                (0x0000)  /**< Timer input divider: 0 - /1 */
+#define ID_1                (0x0040)  /**< Timer input divider: 1 - /2 */
+#define ID_2                (0x0080)  /**< Timer input divider: 2 - /4 */
+#define ID_3                (0x00C0)  /**< Timer input divider: 3 - /8 */
+#define CCIS_0              (0x0000) /**< Capture input select: 0 - CCIxA */
+#define CCIS_1              (0x1000) /**< Capture input select: 1 - CCIxB */
+#define CCIS_2              (0x2000) /**< Capture input select: 2 - GND */
+#define CCIS_3              (0x3000) /**< Capture input select: 3 - Vcc */
+#define CM_0                (0x0000) /**< Capture mode: 0 - disabled */
+#define CM_1                (0x4000) /**< Capture mode: 1 - pos. edge */
+#define CM_2                (0x8000) /**< Capture mode: 1 - neg. edge */
+#define CM_3                (0xC000) /**< Capture mode: 1 - both edges */
+#endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */
 /************************************************************

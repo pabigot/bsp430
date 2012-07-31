@@ -96,7 +96,11 @@ ulBSP430ucsTrimFLL_ni (void)
     BSP430_CORE_WATCHDOG_CLEAR();
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL__SMCLK | MC__CONTINOUS | TACLR;
-    current_frequency_tsp = uiBSP430timerCCACLKMeasureDelta_ni(CM_2, TRIM_SAMPLE_PERIOD_ACLK);
+    current_frequency_tsp = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
+                                                         BSP430_TIMER_CCACLK_CC_INDEX,
+                                                         CM_2,
+                                                         BSP430_TIMER_CCACLK_CCIS,
+                                                         TRIM_SAMPLE_PERIOD_ACLK);
     tp->ctl = 0;
     if (current_frequency_tsp > targetFrequency_tsp_) {
       abs_freq_err_tsp = current_frequency_tsp - targetFrequency_tsp_;

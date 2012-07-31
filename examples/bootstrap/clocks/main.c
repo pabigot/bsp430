@@ -107,7 +107,11 @@ void main ()
     }
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL_2 | MC_2 | TACLR;
-    cc_delta = uiBSP430timerCCACLKMeasureDelta_ni(CM_2, SAMPLE_PERIOD_ACLK);
+    cc_delta = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
+                                            BSP430_TIMER_CCACLK_CC_INDEX,
+                                            CM_2,
+                                            BSP430_TIMER_CCACLK_CCIS,
+                                            SAMPLE_PERIOD_ACLK);
     tp->ctl = 0;
     if (-1 == cc_delta) {
       cputtext_ni("\nCCACLK measurement failed");
