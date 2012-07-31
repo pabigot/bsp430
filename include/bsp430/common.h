@@ -136,6 +136,64 @@
 #define BSP430_CORE_WATCHDOG_CLEAR() do { } while (0)
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
+/** @def BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES
+ *
+ * The maximum number of delay cycles that can be executed without
+ * obliging BSP430 to execute #BSP430_CORE_WATCHDOG_CLEAR().
+ *
+ * If you know that <bsp430/clock.h> is available, you could define
+ * this in terms of #BSP430_CLOCK_NOMINAL_MCLK_HZ.
+ */
+#ifndef BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES
+#define BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES 10000U
+#endif /* BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES */
+
+/** @def BSP430_CORE_DELAY_CYCLES
+ *
+ * A function macro which requests a delay for a specific number of
+ * MCLK cycles.
+ *
+ * This macro could be used to abstract between the spelling used by
+ * different toolchains for the __delay_cycles() intrinsic, but its
+ * primary purpose is to succinctly support watchdog by allowing the
+ * loop to be broken or not depending on compile time capabilities.
+ *
+ * In most cases, this feature will be invoked with a duration that is
+ * far less than #BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES, but if not it
+ * will function.  The duration of the delay will be slightly extended
+ * as a result of the machinery supporting the watchdog.  For real
+ * applications, if you want to delay so long you should probably be
+ * using a timer.
+ *
+ * @note If the invocation of this macro is itself in a loop, you
+ * should invoke #BSP430_CORE_WATCHDOG_CLEAR() explicitly before or
+ * after the delay, to make it clear that the loop is watchdog-safe
+ * and in case somebody changes the constants so that the expansion of
+ * BSP430_CORE_DELAY_CYCLES in the loop doesn't involve a watchdog
+ * clear.
+ *
+ * @param _duration_mclk the number of MCLK cycles for which the delay
+ * is desired.  This must be a compile-time integer constant
+ * compatible with unsigned long.  #configBSP430_CORE_SUPPORT_WATCHDOG
+ * is enabled and the constant exceeds
+ * #BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES, a watchdog clear will be
+ * issued after every such period.
+ *
+ * @dependency #configBSP430_CORE_SUPPORT_WATCHDOG */
+#if configBSP430_CORE_SUPPORT_WATCHDOG - 0
+#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) do {                   \
+    if ((_duration_mclk) > BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES) {     \
+      unsigned int _watchdog_iterations = (_duration_mclk) / BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES; \
+      while (0 < _watchdog_iterations--) {                              \
+        __delay_cycles(BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES);          \
+        BSP430_CORE_WATCHDOG_CLEAR();                                   \
+      }                                                                 \
+    }                                                                   \
+    __delay_cycles((_duration_mclk) % BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES); \
+  } while (0)
+#else /* configBSP430_CORE_SUPPORT_WATCHDOG */
+#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) __delay_cycles(_duration_mclk)
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
 /** @def BSP430_CORE_INTERRUPT_STATE_T
  *

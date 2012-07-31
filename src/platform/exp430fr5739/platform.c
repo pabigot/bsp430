@@ -169,7 +169,8 @@ vBSP430platformSpinForJumper_ni (void)
   while (! (P4IN & BIT0)) {
     vBSP430ledSet(bit, -1);
     vBSP430ledSet(7-bit, -1);
-    __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 10);
+    BSP430_CORE_WATCHDOG_CLEAR();
+    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 10);
     vBSP430ledSet(bit, -1);
     vBSP430ledSet(7-bit, -1);
     if (4 == ++bit) {

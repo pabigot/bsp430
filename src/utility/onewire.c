@@ -32,7 +32,11 @@
 #include <bsp430/utility/onewire.h>
 #include <bsp430/clock.h>
 
-/** Define protocol state times in microseconds. */
+/** Define protocol state times in microseconds.
+ * 
+ * @note Since all these times are far less than any sane watchdog
+ * interval, and the timing can be important, BSP430_CORE_DELAY_CYCLES
+ * is not used in this module. */
 enum {
   /** Minimum time to hold bus low to ensure reset */
   OWT_RSTL_us = 480,

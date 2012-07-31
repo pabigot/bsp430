@@ -125,7 +125,7 @@ void main ()
   /* Now blink every nominal half second.  The blink proves that the
    * loop is running even if nothing's coming out the serial port. */
   while (1) {
-    __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
+    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
     vBSP430ledSet(0, -1);
   }
 

@@ -114,7 +114,8 @@ vBSP430platformSpinForJumper_ni (void)
 #endif /* BSP430_LED */
   P1OUT |= BIT0;
   while (! (P1IN & BIT2)) {
-    __delay_cycles(4000000);
+    BSP430_CORE_WATCHDOG_CLEAR();
+    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 10);
     P1OUT ^= BIT0 + BIT1;
   }
   /* Restore P1.2 */

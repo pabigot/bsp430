@@ -173,7 +173,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
         BSP430_CLOCK_LFXT1_CLEAR_FAULT();
         BSP430_CORE_WATCHDOG_CLEAR();
         loop_limit -= loop_delta;
-        __delay_cycles(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+        BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
       } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
       CSCTL4 = CSCTL4 & ~XT1DRIVE_3;
       rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();

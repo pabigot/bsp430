@@ -36,10 +36,14 @@ void main ()
   vBSP430ledInitialize_ni();
 
   while (1) {
+    /* A common complaint is that "blink doesn't work!" when the issue
+     * is that the watchdog is resetting the board.  Don't let that
+     * happen to you. */
+    BSP430_CORE_WATCHDOG_CLEAR();
     /* Turn each LED on in turn wait a half second, then turn it off
      * and move to the next LED */
     vBSP430ledSet(led, 1);
-    __delay_cycles(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
+    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
     vBSP430ledSet(led, -1);
     if (++led == ucBSP430leds) {
       led = 0;

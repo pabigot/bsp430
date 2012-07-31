@@ -168,7 +168,7 @@ void main ()
      * clocks get disabled at deeper sleep modes; if you fall off the
      * bottom, you might end up in LPM4 with all clocks disabled. */
     while (1) {
-      ;
+      BSP430_CORE_WATCHDOG_CLEAR();
     }
   } else {
 #if BSP430_CONSOLE - 0
