@@ -84,7 +84,6 @@ ulBSP430ucsTrimFLL_ni (void)
   uint16_t tolerance_tsp;
   uint16_t current_frequency_tsp = 0;
   volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
-  const int ccidx = BSP430_TIMER_CCACLK_CC_INDEX;
 
   if (! tp) {
     return 0;
@@ -92,33 +91,13 @@ ulBSP430ucsTrimFLL_ni (void)
   last_ctl0 = ~0;
   tolerance_tsp = targetFrequency_tsp_ / TRIM_TOLERANCE_DIVISOR;
   while (0 < taps_left--) {
-    int i;
-    unsigned int c0 = 0;
-    unsigned int c1;
     uint16_t abs_freq_err_tsp;
 
     BSP430_CORE_WATCHDOG_CLEAR();
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
-    tp->ctl = TASSEL__SMCLK | MC__CONTINOUS | TBCLR;
-    tp->cctl[ccidx] = CM_2 | BSP430_TIMER_CCACLK_CCIS | CAP | SCS;
-    /* NOTE: CCIFG seems to be set immediately on the second and
-     * subsequent iterations.  Flush the first capture. */
-    while (! (tp->cctl[ccidx] & CCIFG)) {
-      ; /* nop */
-    }
-    for (i = 0; i <= TRIM_SAMPLE_PERIOD_ACLK; ++i) {
-      tp->cctl[ccidx] &= ~CCIFG;
-      while (! (tp->cctl[ccidx] & CCIFG)) {
-        ; /* nop */
-      }
-      if (0 == i) {
-        c0 = tp->ccr[ccidx];
-      }
-    }
-    c1 = tp->ccr[ccidx];
+    tp->ctl = TASSEL__SMCLK | MC__CONTINOUS | TACLR;
+    current_frequency_tsp = uiBSP430timerCCACLKMeasureDelta_ni(CM_2, TRIM_SAMPLE_PERIOD_ACLK);
     tp->ctl = 0;
-    tp->cctl[ccidx] = 0;
-    current_frequency_tsp = (c0 > c1) ? (c0 - c1) : (c1 - c0);
     if (current_frequency_tsp > targetFrequency_tsp_) {
       abs_freq_err_tsp = current_frequency_tsp - targetFrequency_tsp_;
     } else {
