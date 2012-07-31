@@ -39,37 +39,36 @@
  * UCS_RF differs from UCS by adding support for XT2.  This difference
  * is currently ignored.
  *
- * @warning the documentation below on expectations is outdated
+ * The UCS peripheral is fairly powerful, supporting arbitrary MCLK
+ * frequencies with or without an external crystal.  The interface
+ * here enforces the following characteristics; see the UCS module
+ * description in the <a
+ * href="http://www.ti.com/general/docs/lit/getliterature.tsp?baseLiteratureNumber=SLAU208&track=no">MSP430
+ * 5xx/6xx Family Users Guide</a> for further details:
+ * <ul>
+ * 
+ * <li>The FLL reference clock may be LFXT1 or REFO; see
+ * #configBSP430_UCS_FLLREFCLK_IS_XT1CLK.  FLLREFDIV is /1.
  *
- * Based on experimentation, the following is assumed or enforced for
- * all supported clock configurations:
+ * <li>MCLK and SMCLK are sourced from DCOCLKDIV
  *
- * @li SELREF is XT1CLK running at 32768 Hz.  #ulBSP430ucsConfigure_ni
- * will enforce this.
+ * <li>DCOCLKDIV is DCOCLK/2 (the power-up value)
  *
- * @li FLLD is consistently set to /2, which is the PUC value and
- *     which is adequate to support speeds up to 32 MiHz with a 32768
- *     Hz REFCLK.
+ * <li>ACLK may source from VLOCLK, LFXT1CLK, or REFOCLK
  *
- * @li FLLREFDIV is consistently set to /1, which is the PUC value.
+ * <li>FLL trimming will leave the FLL disabled if it was disabled on
+ * entry; see #BSP430_CLOCK_DISABLE_FLL.
  *
- * @li MCLK and SMCLK are set to DCOCLKDIV, and ACLK to XT1CLK.
+ * <li>Executing an FLL trim (either directly or due to having invoked
+ * ulBSP430clockConfigureMCLK_ni()) will record in private state
+ * the measured clock frequency.
  *
- * @li Due to UCS10 and UCS7, normal practice on UCS-based MCUs is to
- *     leave the FLL disabled, and adjust it periodically when the
- *     clocks are otherwise unused.  Thus #SCG0 is expected to be set
- *     at all times except when trimming; see #BSP430_CLOCK_DISABLE_FLL.
+ * <li> ulBSP430clockMCLK_Hz_ni() and ulBSP430clockSMCLK_Hz_ni()
+ * return values are calculated by applying the relevant clock
+ * dividers as read from the UCS registers to the recorded measured
+ * clock frequency.
  *
- * Other refinements in this module:
- *
- * @li #ulBSP430clockMCLK_Hz_ni returns the most recent measured trimmed
- * frequency.
- *
- * @li #usBSP430clockACLK_Hz_ni assumes returns 32768 if XT1CLK is the
- * selected source for ACLK and OFIFG is clear, and returns 10000 (the
- * nominal VLOCLK frequency) otherwise.  Be aware that the actual
- * VLOCLK frequency may be different by 10-20%, and that if ACLK is
- * not actually based on XT1CLK the rest of this module may not work.
+ * </ul> 
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -85,6 +84,42 @@
 #if ! (defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__))
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_UCS__ */
+
+/** @def configBSP430_UCS_FLLREFCLK_IS_XT1CLK
+ *
+ * The UCS module supports a variety of potential sources for the FLL
+ * reference clock; the implementation here supports either LFXT1 or
+ * REFO.
+ *
+ * Define this to true if you want to use LFXT1; otherwise REFO is
+ * used.
+ *
+ * @warning If this is selected, FLL trim will hang if LFXT1 is
+ * faulted and cannot be cleared. */
+#ifndef configBSP430_UCS_FLLREFCLK_IS_XT1CLK
+#define configBSP430_UCS_FLLREFCLK_IS_XT1CLK 0
+#endif /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
+
+/** @def configBSP430_UCS_TRIM_ACLK_IS_XT1CLK
+ *
+ * When measuring the actual clock speed to determine whether the FLL
+ * has drifted, a reliable clock at a known frequency is required.
+ * The implementation here configures ACLK to source from that clock
+ * for the duration of the trim operation.
+ *
+ * Alternative sources supported here are LFXT1 and REFO, both of
+ * which are nominally 32 kiHz though LFXT1 could be a different
+ * speed.  As LFXT1 is likely more accurate than REFO, there may be
+ * some benefit in using it when FLLREFCLK is REFO.
+ *
+ * Define this to true if you want to use LFXT1; otherwise REFO is
+ * used.
+ *
+ * @warning If this is selected, FLL trim will hang if LFXT1 is
+ * faulted and cannot be cleared. */
+#ifndef configBSP430_UCS_TRIM_ACLK_IS_XT1CLK
+#define configBSP430_UCS_TRIM_ACLK_IS_XT1CLK 0
+#endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
 
 #undef BSP430_CLOCK_LFXT1_IS_FAULTED
 /** Check whether the LFXT1 crystal has a fault condition.
@@ -110,6 +145,13 @@
 
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
+
+/** @def BSP430_UCS_NOMINAL_REFOCLK_HZ
+ *
+ * The UCS module supports an internally trimmed reference oscillator
+ * running at a nominal 32 kiHz rate, for use where XT1 is not
+ * populated. */
+#define BSP430_UCS_NOMINAL_REFOCLK_HZ 32768U
 
 /** Call this to initially configure the UCS peripheral.
  *

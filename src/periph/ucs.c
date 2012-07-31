@@ -48,18 +48,53 @@
 /* Mask for DIVM bits in UCSCTL5 */
 #define DIVM_MASK (DIVM0 | DIVM1 | DIVM2)
 
+/** Range selection supports 3 bits.  Note that this mask is not for
+ * the RSEL field in the UCSCTL1 register, it's for the RSEL index in isolation. */
+#define RSEL_INDEX_MASK 0x07
+
+/** DCO selection supports 5 bits.  Note that this mask is not for the
+ * DCO field in the UCSCTL0 register, it's for the DCO index in
+ * isolation. */
+#define DCO_INDEX_MASK 0x1F
+
+/** Constant used in UCSCTL3/USCTL4 to select XT1CLK */
+#define CLOCKSEL_XT1CLK 0
+/** Constant used in UCSCTL3/USCTL4 to select REFOCLK */
+#define CLOCKSEL_REFOCLK 2
+/** Constant used in UCSCTL4 to select DCOCLKDIV */
+#define CLOCKSEL_DCOCLKDIV 4
+
+/** Frequency measurement will be done with ACLK, which will be
+ * configured to either XT1CLK or REFOCLK. */
+#if configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0
+#define TRIM_ACLK_HZ BSP430_CLOCK_NOMINAL_LFXT1_HZ
+#define CLOCKSEL_TRIM_ACLK CLOCKSEL_XT1CLK
+#else /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
+#define TRIM_ACLK_HZ BSP430_UCS_NOMINAL_REFOCLK_HZ
+#define CLOCKSEL_TRIM_ACLK CLOCKSEL_REFOCLK
+#endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
+
+/** The FLL reference clock may be either XT1 or REFOCLK. */
+#if configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0
+#define FLLREFCLK_HZ BSP430_CLOCK_NOMINAL_LFXT1_HZ
+#define CLOCKSEL_FLLREFCLK CLOCKSEL_XT1CLK
+#else /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
+#define FLLREFCLK_HZ BSP430_UCS_NOMINAL_REFOCLK_HZ
+#define CLOCKSEL_FLLREFCLK CLOCKSEL_REFOCLK
+#endif /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
+
 /* Frequency measurement occurs over this duration when determining
  * whether trim is required.  The number of SMCLK ticks in an ACLK
- * period is the target frequency divided by 32768; accumulating over
- * multiple ACLK periods decreases the measurement error.  At a target
- * frequency of 2^25 (32 MiHz) the tick count for a single period
- * might require 11 bits to represent, so do not exceed 32 lest the
- * 16-bit delta value overflow.  Select a value so that the number of
- * ticks within the sample period is some small (~3) multiple of
- * TRIM_TOLERANCE_DIVISOR. */
+ * period is the target frequency divided by ACLK_HZ (32768 kiHz);
+ * accumulating over multiple ACLK periods decreases the measurement
+ * error.  At a maximum target frequency of 2^25 (32 MiHz) the tick
+ * count for a single period might require 11 bits to represent, so do
+ * not exceed 32 (2^5) lest the 16-bit delta value overflow.  Select a
+ * value so that the number of ticks within the sample period is some
+ * small (~3) multiple of TRIM_TOLERANCE_DIVISOR. */
 #define TRIM_SAMPLE_PERIOD_ACLK 8
 
-/* Tolerance for SMCLK ticks within a trim sample period.  The target
+/** Tolerance for SMCLK ticks within a trim sample period.  The target
  * frequency count is divided by this number; if the measured
  * frequency count is not within that distance of the target, the FLL
  * is enabled for a short duration.  512 is about 0.2% */
@@ -69,11 +104,17 @@
  * 21MiHz/2. */
 static unsigned long lastTrimFrequency_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 
+/** Convert from Hz to Trim Sample Periods */
+#define HZ_TO_TSP(_clk_hz) ((_clk_hz) / (TRIM_ACLK_HZ / TRIM_SAMPLE_PERIOD_ACLK))
+
+/** Convert from Trim Sample Periods to Hz */
+#define TSP_TO_HZ(_clk_tsp) (((_clk_tsp) * (unsigned long)TRIM_ACLK_HZ) / TRIM_SAMPLE_PERIOD_ACLK)
+
 #if BSP430_CLOCK_TRIM_FLL - 0
 #include <bsp430/periph/timer_.h>
 
 /* The target frequency expressed as the number of SMCLK ticks
- * expected within a trim sample period. */
+ * expected within TRIM_SAMPLE_PERIOD ACLK ticks. */
 static uint16_t targetFrequency_tsp_;
 
 unsigned long
@@ -88,7 +129,11 @@ ulBSP430ucsTrimFLL_ni (void)
   if (! tp) {
     return 0;
   }
+  /* Almost-certainly-invalid UCSCTL0 value.  This includes reserved
+   * bits that read back as zero, so we "know" we won't terminate
+   * without trimming at least once. */
   last_ctl0 = ~0;
+
   tolerance_tsp = targetFrequency_tsp_ / TRIM_TOLERANCE_DIVISOR;
   while (0 < taps_left--) {
     uint16_t abs_freq_err_tsp;
@@ -125,15 +170,16 @@ ulBSP430ucsTrimFLL_ni (void)
     cprintf("running fll, error %u\n", abs_freq_err_tsp);
 #endif
     /* Save current DCO/MOD values, then let FLL run for 32 REFCLK
-     * ticks (potentially trying each modulation within one
-     * tap) */
+     * ticks (potentially trying each modulation within one tap).
+     * REFCLK here is probably XT1CLK so a tick is at most 100usec
+     * using VLOCLK. */
     last_ctl0 = UCSCTL0;
     tp->ctl = TASSEL__ACLK | MC__CONTINOUS | TBCLR;
     __bic_status_register(SCG0);
     tp->cctl0 = 0;
     tp->ccr0 = tp->r + 32;
     while (! (tp->cctl0 & CCIFG)) {
-      /* nop */
+      BSP430_CORE_WATCHDOG_CLEAR();
     }
     __bis_status_register(SCG0);
     /* Delay another 1..2 ACLK cycles for the integrator to fully
@@ -141,90 +187,99 @@ ulBSP430ucsTrimFLL_ni (void)
     tp->cctl0 &= ~CCIFG;
     tp->ccr0 = tp->r + 2;
     while (! (tp->cctl0 & CCIFG)) {
-      /* nop */
+      BSP430_CORE_WATCHDOG_CLEAR();
     }
     tp->ctl = 0;
     tp->cctl0 = 0;
   }
-  lastTrimFrequency_Hz_ = current_frequency_tsp * (32768UL / TRIM_SAMPLE_PERIOD_ACLK);
+  lastTrimFrequency_Hz_ = TSP_TO_HZ(current_frequency_tsp);
   return lastTrimFrequency_Hz_;
 }
 
+/* Preserve SELS and SELA */
+#define UCSCTL4_MASK (SELS_MASK | SELA_MASK)
+/* Preserve DIVS and DIVM */
+#define UCSCTL5_MASK (DIVS_MASK | DIVM_MASK)
+
 unsigned long
-ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
+ulBSP430ucsConfigure_ni (unsigned long dcoclkdiv_Hz,
                          int rsel)
 {
-  unsigned int divs_bits;
-  unsigned int sels_bits;
-  /* The values in this table should be roughly half the minimum
-   * frequency for the specified RSEL with DCOx=31 and MODx=0,
-   * as taken from the device-specific data sheet. */
-  static const unsigned long pulRSELCutoffs [] = {
-#if defined(__MSP430F5438__) || defined(__MSP430F5438A__) || defined(__MSP430F5529__)
-    700000UL / 2,			/* RSEL0 */
-    1470000UL / 2,			/* RSEL1 */
-    3170000UL / 2,			/* RSEL2 */
-    6070000UL / 2,			/* RSEL3 */
-    12300000UL / 2,			/* RSEL4 */
-    23700000UL / 2,			/* RSEL5 */
-    39000000UL / 2,			/* RSEL6 */
-#else
-#endif
-    UINT32_MAX
-  };
+  unsigned int ucsctl4;
+  unsigned int ucsctl5;
   unsigned long ulReturn;
+  unsigned long dcoclk_hz;
+  unsigned int dcoclk_refclk;
+  unsigned int scg0;
 
-  /* If not told what RSEL to use, pick the one appropriate for the
-   * target frequency. */
-  if ((0 > rsel) || (7 < rsel)) {
-    rsel = 0;
-    while (pulRSELCutoffs[rsel] < mclk_Hz) {
-      ++rsel;
-    }
+  /* Sanity check the RSEL.  If asked to provide a best-guess, pick
+   * the middle one. */
+  if (0 > rsel) {
+    rsel = RSEL_INDEX_MASK / 2;
   }
+  rsel &= RSEL_INDEX_MASK;
 
-  /* Require XT1 valid and use it as ACLK source */
+  /* Save clock source and divisor configuration */
+  ucsctl4 = UCSCTL4;
+  ucsctl5 = UCSCTL5;
+
+#if (configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0) || (configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0)
+  /* Require XT1 valid and use it as ACLK source.  If it can't be
+   * stabilized, this function call won't return. */
   if (UCSCTL7 & XT1LFOFFG) {
     (void)iBSP430clockConfigureLFXT1_ni (1, -1);
   }
-  iBSP430ucsConfigureACLK_ni(SELA__XT1CLK);
+#endif /* Require LFXT1 */
 
-  /* Disable FLL while manually trimming */
+  /* Preserve the incoming value of the SCG0 flag, and disable FLL
+   * while manually trimming */
+  scg0 = SCG0 & __read_status_register();
   __bis_status_register(SCG0);
-  sels_bits = UCSCTL4 & SELS_MASK;
-  divs_bits = UCSCTL5 & DIVS_MASK;
-  targetFrequency_tsp_ = mclk_Hz / (32768 / TRIM_SAMPLE_PERIOD_ACLK);
+
+  targetFrequency_tsp_ = HZ_TO_TSP(dcoclkdiv_Hz);
   UCSCTL0 = 0;
-  UCSCTL3 = SELREF__XT1CLK | FLLREFDIV_0;
-  UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
-  UCSCTL5 &= ~(DIVS_MASK | DIVM_MASK);
-  /* All supported frequencies can be efficiently achieved using
-   * FFLD set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).
-   * FLLREFCLK will always be XT1CLK.  FLLN is calculated from
-   * mclk_Hz. */
-  UCSCTL2 = FLLD_1 | ((((mclk_Hz << 1) / (32768 >> 0)) >> 1) - 1);
+  UCSCTL3 = (CLOCKSEL_FLLREFCLK * SELREF0) | FLLREFDIV_0;
+  UCSCTL4 = (CLOCKSEL_TRIM_ACLK * SELA0) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+  UCSCTL5 = 0;
+  /* All supported frequencies can be efficiently achieved using FFLD
+   * set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).  FLLN is
+   * calculated from dcoclkdiv_Hz. */
+  dcoclk_hz = dcoclkdiv_Hz << 1;
+  dcoclk_refclk = dcoclk_hz / (FLLREFCLK_HZ >> 0);
+  UCSCTL2 = FLLD_1 | ((dcoclk_refclk >> 1) - 1);
   while (1) {
     unsigned int dco;
 
-    UCSCTL0 = 0x0F * DCO0;
+    BSP430_CORE_WATCHDOG_CLEAR();
+
+    /* Select the desired range, enable modulation, and start at the
+     * middle tap and first modulation pattern */
+    UCSCTL0 = (DCO_INDEX_MASK / 2) * DCO0;
     UCSCTL1 = (DCORSEL0 | DCORSEL1 | DCORSEL2) & (rsel * DCORSEL0);
 
+    /* Execute the trim function. */
     ulReturn = ulBSP430ucsTrimFLL_ni();
-    dco = 0x1F & (UCSCTL0 / DCO0);
+
+    /* The first and last taps record a DCO fault in UCSCTL7.DCOFFG,
+     * so if we ended up there move to the next range and try
+     * again.  Otherwise we can stop. */
+    dco = (UCSCTL0 / DCO0) & DCO_INDEX_MASK;
     if (0 == dco) {
       --rsel;
-    } else if (31 == dco) {
+    } else if (DCO_INDEX_MASK == dco) {
       ++rsel;
     } else {
       break;
     }
   }
 
-  /* Restore SMCLK source and divisor */
-  UCSCTL5 |= divs_bits;
-  UCSCTL4 = (UCSCTL4 & ~SELS_MASK) | sels_bits;
+  /* Restore clock source and divisor configuration */
+  UCSCTL4 = ucsctl4;
+  UCSCTL5 = ucsctl5;
 
-  /* Spin until DCO stabilized */
+  /* Clear all the oscillator faults and spin until DCO stabilized.
+   * Not all fault sources are supported on all MCUs, so only include
+   * the ones that the header supports.  */
   do {
     UCSCTL7 &= ~(XT1LFOFFG
 #if defined(XT2OFFG)
@@ -237,11 +292,7 @@ ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
     SFRIFG1 &= ~OFIFG;
   } while (UCSCTL7 & DCOFFG);
 
-
-#if ! (BSP430_CLOCK_DISABLE_FLL - 0)
-  /* Turn FLL back on */
-  __bic_status_register(SCG0);
-#endif
+  __bic_status_register(scg0);
 
   return ulReturn;
 }

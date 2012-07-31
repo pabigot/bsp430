@@ -148,6 +148,16 @@ void main ()
 #endif /* BSP430_CONSOLE */
 
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
+#if configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0
+  cputtext_ni("\nconfigBSP430_UCS_FLLREFCLK_IS_XT1CLK: 1");
+#else /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
+  cputtext_ni("\nconfigBSP430_UCS_FLLREFCLK_IS_XT1CLK: 0");
+#endif /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
+#if configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0
+  cputtext_ni("\nconfigBSP430_UCS_TRIM_ACLK_IS_XT1CLK: 1");
+#else /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
+  cputtext_ni("\nconfigBSP430_UCS_TRIM_ACLK_IS_XT1CLK: 0");
+#endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
   cprintf("\nUCS RSEL %d DCO %d MOD %d:"
           "\n\tCTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
           "\n\tCTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x",
