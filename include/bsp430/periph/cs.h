@@ -41,15 +41,11 @@
  * devices the speed may also be set to 16, 20 and 24 MHz.
  *
  * Other refinements in this module:
- *
- * @li #ulBSP430clockMCLK_Hz_ni assumes that DCOCLK is the selected
+ * <ul>
+ * <li> ulBSP430clockMCLK_Hz_ni() assumes that DCOCLK is the selected
  * source for MCLK, and returns the divided trimmed DCOCLK frequency.
- *
- * @li #usBSP430clockACLK_Hz_ni returns #BSP430_CLOCK_NOMINAL_XT1CLK_HZ
- * if XT1CLK is the selected source for ACLK and OFIFG is clear, and
- * returns #BSP430_CLOCK_NOMINAL_VLOCLK_HZ otherwise.  VLOCLK for the
- * CS module should be 10 kHz, but be aware that the actual VLOCLK
- * frequency may be different by 10-20%.
+ * <li> ulBSP430clockTrimFLL_ni() is not supported on this peripheral
+ * </ul>
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc

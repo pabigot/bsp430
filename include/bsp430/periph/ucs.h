@@ -57,7 +57,7 @@
  * <li>ACLK may source from VLOCLK, LFXT1CLK, or REFOCLK
  *
  * <li>FLL trimming will leave the FLL disabled if it was disabled on
- * entry; see #BSP430_CLOCK_DISABLE_FLL.
+ * entry; see #configBSP430_CLOCK_DISABLE_FLL.
  *
  * <li>Executing an FLL trim (either directly or due to having invoked
  * ulBSP430clockConfigureMCLK_ni()) will record in private state
@@ -174,35 +174,6 @@
  * XT1 cannot be stabilized. */
 unsigned long ulBSP430ucsConfigure_ni (unsigned long mclk_Hz,
                                        int rsel);
-
-/** Call this periodically to trim the FLL.
- *
- * The function uses the ratio of SMCLK to ACLK to determine the speed
- * of SMCLK, and if it is "too far" from the value specified in the
- * last call to ulBSP430ucsConfigure_ni() enables the FLL for a short
- * period to see if accuracy can be improved.  See discussion at
- * #BSP430_CLOCK_DISABLE_FLL.
- *
- * For this function to be provided a timer must be identified by
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.  The specified timer will be
- * reconfigured in various ways while trimming occurs, and will be
- * left disabled on exit.  It may be used for other purposes when this
- * function is not being invoked.
- *
- * @warning MCLK, SMCLK, and any clocks derived from them are unstable
- * while this routine is being run, so UART, SPI, and other
- * peripherals should be turned off prior to invoking it.
- *
- * @note This function is named in accordance with the FreeRTOS
- * standards that indicate it should be called with interrupts
- * disabled and will not block or induce a context switch.  It will,
- * however, delay for as much as 32 milliseconds while waiting for the
- * FLL to settle.  The common case of delay is much less, but it would
- * still be wise not to invoke this from within an interrupt handler.
- *
- * @return an estimate of the actual running frequency.
- */
-unsigned long ulBSP430ucsTrimFLL_ni (void);
 
 #endif /* BSP430_CLOCKS_UCS_H */
 

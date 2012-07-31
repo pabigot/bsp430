@@ -42,6 +42,9 @@
 /* Mask for SELM bits in UCSCTL4 */
 #define SELM_MASK (SELM0 | SELM1 | SELM2)
 
+/* Mask for DIVA bits in UCSCTL5 */
+#define DIVA_MASK (DIVA0 | DIVA1 | DIVA2)
+
 /* Mask for DIVS bits in UCSCTL5 */
 #define DIVS_MASK (DIVS0 | DIVS1 | DIVS2)
 
@@ -102,7 +105,7 @@
 
 /* The last calculated trim frequency of DCOCLKDIV.  Power-up to
  * 21MiHz/2. */
-static unsigned long lastTrimFrequency_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
+static unsigned long lastTrimDCOCLKDIV_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 
 /** Convert from Hz to Trim Sample Periods */
 #define HZ_TO_TSP(_clk_hz) ((_clk_hz) / (TRIM_ACLK_HZ / TRIM_SAMPLE_PERIOD_ACLK))
@@ -114,21 +117,47 @@ static unsigned long lastTrimFrequency_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 #include <bsp430/periph/timer_.h>
 
 /* The target frequency expressed as the number of SMCLK ticks
- * expected within TRIM_SAMPLE_PERIOD ACLK ticks. */
+ * expected within TRIM_SAMPLE_PERIOD ACLK ticks, assuming that SMCLK
+ * is undivided DCOCLKDIV. */
 static uint16_t targetFrequency_tsp_;
 
-unsigned long
-ulBSP430ucsTrimFLL_ni (void)
+static int
+iBSP430ucsTrimFLL_ni (void)
 {
+  unsigned int ucsctl4;
+  unsigned int ucsctl5;
+  unsigned int scg0;
   short taps_left = 32;
   unsigned short last_ctl0;
   uint16_t tolerance_tsp;
   uint16_t current_frequency_tsp = 0;
   volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
-
+  
   if (! tp) {
-    return 0;
+    return -1;
   }
+
+  /* Save clock source and divisor configuration */
+  ucsctl4 = UCSCTL4;
+  ucsctl5 = UCSCTL5;
+
+#if (configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0) || (configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0)
+  /* Require XT1 valid and use it as ACLK source.  If it can't be
+   * stabilized, this function call won't return. */
+  if (UCSCTL7 & XT1LFOFFG) {
+    return -1;
+  }
+#endif /* Require LFXT1 */
+
+  /* Preserve the incoming value of the SCG0 flag, and disable FLL
+   * while assessing out-of-trim */
+  scg0 = SCG0 & __read_status_register();
+  __bis_status_register(SCG0);
+
+  /* Configure clock sources for trim analysis */
+  UCSCTL4 = (CLOCKSEL_TRIM_ACLK * SELA0) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+  UCSCTL5 = 0;
+
   /* Almost-certainly-invalid UCSCTL0 value.  This includes reserved
    * bits that read back as zero, so we "know" we won't terminate
    * without trimming at least once. */
@@ -192,25 +221,31 @@ ulBSP430ucsTrimFLL_ni (void)
     tp->ctl = 0;
     tp->cctl0 = 0;
   }
-  lastTrimFrequency_Hz_ = TSP_TO_HZ(current_frequency_tsp);
-  return lastTrimFrequency_Hz_;
+
+  /* Record the measured DCOCLKDIV */
+  lastTrimDCOCLKDIV_Hz_ = TSP_TO_HZ(current_frequency_tsp);
+
+  /* Restore clock source and divisor configuration */
+  UCSCTL4 = ucsctl4;
+  UCSCTL5 = ucsctl5;
+
+  /* Restore SCG0 (if was clear on entry, clear it now) */
+  if (! scg0) {
+    __bic_status_register(scg0);
+  }
+  return 0;
 }
 
-/* Preserve SELS and SELA */
-#define UCSCTL4_MASK (SELS_MASK | SELA_MASK)
-/* Preserve DIVS and DIVM */
-#define UCSCTL5_MASK (DIVS_MASK | DIVM_MASK)
-
-unsigned long
-ulBSP430ucsConfigure_ni (unsigned long dcoclkdiv_Hz,
-                         int rsel)
+/* Configure UCS to use DCOCLKDIV without further division for MCLK
+ * and SMCLK.  Configure FLL so DCOCLKDIV is the requested MCLK
+ * frequency. */
+static void
+vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
+                            int rsel)
 {
-  unsigned int ucsctl4;
-  unsigned int ucsctl5;
-  unsigned long ulReturn;
-  unsigned long dcoclk_hz;
+  unsigned long dcoclkdiv_Hz = mclk_Hz;
+  unsigned long dcoclk_Hz;
   unsigned int dcoclk_refclk;
-  unsigned int scg0;
 
   /* Sanity check the RSEL.  If asked to provide a best-guess, pick
    * the middle one. */
@@ -218,10 +253,6 @@ ulBSP430ucsConfigure_ni (unsigned long dcoclkdiv_Hz,
     rsel = RSEL_INDEX_MASK / 2;
   }
   rsel &= RSEL_INDEX_MASK;
-
-  /* Save clock source and divisor configuration */
-  ucsctl4 = UCSCTL4;
-  ucsctl5 = UCSCTL5;
 
 #if (configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0) || (configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0)
   /* Require XT1 valid and use it as ACLK source.  If it can't be
@@ -231,22 +262,25 @@ ulBSP430ucsConfigure_ni (unsigned long dcoclkdiv_Hz,
   }
 #endif /* Require LFXT1 */
 
-  /* Preserve the incoming value of the SCG0 flag, and disable FLL
-   * while manually trimming */
-  scg0 = SCG0 & __read_status_register();
-  __bis_status_register(SCG0);
-
+  /* Record where we're trying to get */
   targetFrequency_tsp_ = HZ_TO_TSP(dcoclkdiv_Hz);
-  UCSCTL0 = 0;
+
+  /* Set the FLL reference clock, and the FLL parameters required to
+   * obtain the desired DCOCLK. */
   UCSCTL3 = (CLOCKSEL_FLLREFCLK * SELREF0) | FLLREFDIV_0;
-  UCSCTL4 = (CLOCKSEL_TRIM_ACLK * SELA0) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
-  UCSCTL5 = 0;
   /* All supported frequencies can be efficiently achieved using FFLD
    * set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).  FLLN is
    * calculated from dcoclkdiv_Hz. */
-  dcoclk_hz = dcoclkdiv_Hz << 1;
-  dcoclk_refclk = dcoclk_hz / (FLLREFCLK_HZ >> 0);
+  dcoclk_Hz = dcoclkdiv_Hz << 1;
+  dcoclk_refclk = dcoclk_Hz / (FLLREFCLK_HZ >> 0);
   UCSCTL2 = FLLD_1 | ((dcoclk_refclk >> 1) - 1);
+
+  /* Set SMCLK and MCLK to be undivided DCOCLKDIV */
+  UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+  UCSCTL5 &= (UCSCTL4 & DIVA_MASK);
+
+  /* Stabilize on an RSEL where the trimmed frequency does not leave
+   * the DCO in a faulted state */
   while (1) {
     unsigned int dco;
 
@@ -257,8 +291,11 @@ ulBSP430ucsConfigure_ni (unsigned long dcoclkdiv_Hz,
     UCSCTL0 = (DCO_INDEX_MASK / 2) * DCO0;
     UCSCTL1 = (DCORSEL0 | DCORSEL1 | DCORSEL2) & (rsel * DCORSEL0);
 
-    /* Execute the trim function. */
-    ulReturn = ulBSP430ucsTrimFLL_ni();
+    /* Execute the trim function.  If something went wrong, just give
+     * up. */
+    if (0 > iBSP430ucsTrimFLL_ni()) {
+      break;
+    }
 
     /* The first and last taps record a DCO fault in UCSCTL7.DCOFFG,
      * so if we ended up there move to the next range and try
@@ -273,13 +310,12 @@ ulBSP430ucsConfigure_ni (unsigned long dcoclkdiv_Hz,
     }
   }
 
-  /* Restore clock source and divisor configuration */
-  UCSCTL4 = ucsctl4;
-  UCSCTL5 = ucsctl5;
-
   /* Clear all the oscillator faults and spin until DCO stabilized.
    * Not all fault sources are supported on all MCUs, so only include
-   * the ones that the header supports.  */
+   * the ones that the header supports.  Chances are this executes
+   * once; if there's an oscillator fault in the DCO here there's
+   * nothing that can be done to stabilize it unless the FLL is
+   * enabled and it happens by chance. */
   do {
     UCSCTL7 &= ~(XT1LFOFFG
 #if defined(XT2OFFG)
@@ -291,10 +327,6 @@ ulBSP430ucsConfigure_ni (unsigned long dcoclkdiv_Hz,
                  + DCOFFG);
     SFRIFG1 &= ~OFIFG;
   } while (UCSCTL7 & DCOFFG);
-
-  __bic_status_register(scg0);
-
-  return ulReturn;
 }
 
 #endif /* BSP430_CLOCK_TRIM_FLL */
@@ -303,7 +335,7 @@ unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
   unsigned int divm = (UCSCTL5 & DIVM_MASK) / DIVM0;
-  return lastTrimFrequency_Hz_ >> divm;
+  return lastTrimDCOCLKDIV_Hz_ >> divm;
 }
 
 int
@@ -380,10 +412,10 @@ usBSP430clockACLK_Hz_ni (void)
     case SELA_2: /* REFOCLK */
       return BSP430_UCS_NOMINAL_REFOCLK_HZ;
     case SELA_3: /* DCOCLK */
-      return 2 * lastTrimFrequency_Hz_;
+      return 2 * lastTrimDCOCLKDIV_Hz_;
     default:
     case SELA_4: /* DCOCLKDIV */
-      return lastTrimFrequency_Hz_;
+      return lastTrimDCOCLKDIV_Hz_;
   }
 }
 
@@ -403,7 +435,19 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
     mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
   }
 #if BSP430_CLOCK_TRIM_FLL - 0
-  ulBSP430ucsConfigure_ni(mclk_Hz, -1);
-#endif
+  vBSP430ucsConfigureMCLK_ni(mclk_Hz, -1);
+#endif /* BSP430_CLOCK_TRIM_FLL */
   return ulBSP430clockMCLK_Hz_ni();
 }
+
+unsigned long
+ulBSP430clockTrimFLL_ni (void)
+{
+#if BSP430_CLOCK_TRIM_FLL - 0
+  if (0 > iBSP430ucsTrimFLL_ni()) {
+    return 0;
+  }
+#endif /* BSP430_CLOCK_TRIM_FLL */
+  return ulBSP430clockMCLK_Hz_ni();
+}
+

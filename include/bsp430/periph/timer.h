@@ -102,8 +102,8 @@
  * Define to true to indicate that the application or infrastructure
  * would like to use a timer that supports using ACLK as a
  * capture/compare input signal.  The timer is identified by
- * #BSP430_PLATFORM_TIMER_CCACLK_PERIPH_HANDLE, and that macro is
- * defined only if such a timer is available on the platform.
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE, and that macro is defined only
+ * if such a timer is available on the platform.
  *
  * This timer is used by selecting an alternative clock source, then
  * using the ACLK signal to capture the number of pulses on that
@@ -145,8 +145,24 @@
 /** @def BSP430_TIMER_CCACLK
  *
  * Defined to a true value if ACLK-triggered timer captures are
- * enabled due to availability of #BSP430_TIMER_CCACLK_PERIPH_HANDLE
- * and the other relevant material required are defined.
+ * supported using the platform-specific values of:
+ * 
+ * <ul>
+ * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * <li>#BSP430_TIMER_CCACLK_IS_TA0
+ * <li>#BSP430_TIMER_CCACLK_CC_INDEX
+ * <li>#BSP430_TIMER_CCACLK_CCIS
+ * </ul>
+ *
+ * The values above should not be referenced if this macro is
+ * undefined or has a false value.
+ *
+ * @note It is recommended that application code use of this feature
+ * be done in a non-interruptible context that is run-to-completion,
+ * to be sure that no other user is active.  The configuration of the
+ * timer as a whole should be considered volatile.  Proper use
+ * requires initializing the timer before use and stopping it when
+ * finished.
  *
  * @dependency #configBSP430_TIMER_CCACLK
  * @platformdefault */
@@ -165,7 +181,7 @@
  * persistent system uptime) should check this value to determine
  * whether it is safe to reconfigure the timer.
  *
- * @dependency #configBSP430_TIMER_CCACLK
+ * @dependency #BSP430_TIMER_CCACLK
  * @platformdefault */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_IS_TA0 include <bsp430/platform.h>
@@ -180,7 +196,7 @@
  * See #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE if you intend
  * to override the platform default.
  *
- * @dependency #configBSP430_TIMER_CCACLK
+ * @dependency #BSP430_TIMER_CCACLK
  * @platformdefault */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE include <bsp430/platform.h>
@@ -192,7 +208,7 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
  * signal.
  *
- * @dependency #configBSP430_TIMER_CCACLK
+ * @dependency #BSP430_TIMER_CCACLK
  * @platformdefault  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC_INDEX include <bsp430/platform.h>
@@ -204,7 +220,7 @@
  * control word for CC block #BSP430_TIMER_CCACLK_CC_INDEX of
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
- * @dependency #configBSP430_TIMER_CCACLK
+ * @dependency #BSP430_TIMER_CCACLK
  * @platformdefault  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CCIS include <bsp430/platform.h>
@@ -242,10 +258,10 @@
  * bits; if the resulting value does not identify a capture, the
  * function returns immediately with a value of -1.
  *
- * @param the capture/compare input selection.  The appropriate value
- * is a constant from the <msp430.h> header, such as #CCIS_1.  Consult
- * the MCU-specific datasheet to determine the functions of the input
- * alternatives for each timer/CC-block pair.
+ * @param ccis the capture/compare input selection.  The appropriate
+ * value is a constant from the <msp430.h> header, such as #CCIS_1.
+ * Consult the MCU-specific datasheet to determine the functions of
+ * the input alternatives for each timer/CC-block pair.
  *
  * @param count the number of capture events over which the delta is
  * measured.
