@@ -106,12 +106,14 @@
 /** @def portACLK_FREQUENCY_HZ
  *
  * The FreeRTOS-BSP430 port needs to know the rate at which the
- * scheduler clock runs.  This is normally ACLK, but the speed depends
- * on the MCU family and whether LFXT1 is used.
+ * scheduler clock runs.  This is normally ACLK, but whether ACLK is
+ * XT1CLK, VLOCLK, or some other frequency isn't really known.
+ *
+ * @todo Refine this
  *
  * @defaulted */
 #ifndef portACLK_FREQUENCY_HZ
-#define portACLK_FREQUENCY_HZ BSP430_CLOCK_NOMINAL_ACLK_HZ
+#define portACLK_FREQUENCY_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : BSP430_CLOCK_NOMINAL_XT1CLK_HZ)
 #endif /* portACLK_FREQUENCY_HZ */
 
 /** FreeRTOS scheduler requires use of TA0.

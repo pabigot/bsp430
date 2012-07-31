@@ -86,8 +86,8 @@ void main ()
   cputu_ni(BSP430_CLOCK_LFXT1_IS_FAULTED(), 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
   cputu_ni(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
-  cputtext_ni("\nBSP430_CLOCK_NOMINAL_ACLK_HZ: ");
-  cputu_ni(BSP430_CLOCK_NOMINAL_ACLK_HZ, 10);
+  cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");
+  cputu_ni(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
   cputtext_ni("\nusBSP430clockACLK_Hz_ni(): ");
   aclk_Hz = usBSP430clockACLK_Hz_ni();
   cputu_ni(aclk_Hz, 10);

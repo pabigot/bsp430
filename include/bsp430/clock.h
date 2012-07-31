@@ -281,29 +281,14 @@ unsigned long ulBSP430clockTrimFLL_ni (unsigned long fll_Hz);
 #define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { IFG1 &= ~OFIFG; } while (0)
 #endif /* 5xx */
 
-/** @def BSP430_CLOCK_NOMINAL_LFXT1_HZ
+/** @def BSP430_CLOCK_NOMINAL_XT1CLK_HZ
  *
  * Nominal rate of the external low-frequency crystal.  This is
  * expected to be a 32 kiHz watch crystal, so that's what the default
  * is. */
-#ifndef BSP430_CLOCK_NOMINAL_LFXT1_HZ
-#define BSP430_CLOCK_NOMINAL_LFXT1_HZ 32768U
-#endif /* BSP430_CLOCK_NOMINAL_LFXT1_HZ */
-
-/** @def BSP430_CLOCK_NOMINAL_ACLK_HZ
- *
- * Nominal frequency of ACLK, in Hz.
- *
- * This value should be quickly calculatable, and be either a
- * compile-time constant or a selection between two compile-time
- * constants based on a single-instruction test.  The likely
- * alternatives are #BSP430_CLOCK_NOMINAL_VLOCLK_HZ and
- * #BSP430_CLOCK_NOMINAL_LFXT1_HZ.
- *
- * @defaulted  */
-#ifndef BSP430_CLOCK_NOMINAL_ACLK_HZ
-#define BSP430_CLOCK_NOMINAL_ACLK_HZ (BSP430_CLOCK_LFXT1_IS_FAULTED() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : BSP430_CLOCK_NOMINAL_LFXT1_HZ)
-#endif /* BSP430_CLOCK_NOMINAL_ACLK_HZ */
+#ifndef BSP430_CLOCK_NOMINAL_XT1CLK_HZ
+#define BSP430_CLOCK_NOMINAL_XT1CLK_HZ 32768U
+#endif /* BSP430_CLOCK_NOMINAL_XT1CLK_HZ */
 
 /** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
  *
@@ -465,17 +450,9 @@ int iBSP430clockConfigureLFXT1_ni (int enablep,
 
 /** Return the best available estimate of ACLK frequency.
  *
- * Depending on clock capabilities, this may simply return the
- * peripheral-specific value of #BSP430_CLOCK_NOMINAL_ACLK_HZ, or it
- * may return a value calculated from observations.
- *
- * @note When considering whether to use this function or the macro
- * #BSP430_CLOCK_NOMINAL_ACLK_HZ, recall that the generic definition
- * of the macro will defer to #BSP430_CLOCK_NOMINAL_VLOCLK_HZ if there
- * is an oscillator fault in the system, while this function will
- * check whether ACLK is sourced from LFXT1, and if so whether there
- * is a fault specific to that oscillator.  The two forms (function
- * versus macro) may yield different results.
+ * Depending on clock configuration, this will return one of
+ * #BSP430_CLOCK_NOMINAL_XT1CLK_HZ, #BSP430_CLOCK_NOMINAL_VLOCLK_HZ, or
+ * another constant or possibly measured value.
  *
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned short usBSP430clockACLK_Hz_ni (void);

@@ -129,7 +129,10 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
 unsigned short
 usBSP430clockACLK_Hz_ni (void)
 {
-  return BSP430_CLOCK_NOMINAL_ACLK_HZ;
+  if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+    return BSP430_CLOCK_NOMINAL_VLOCLK_HZ
+  }
+  return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
 }
 
 unsigned long
