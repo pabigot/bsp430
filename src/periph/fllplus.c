@@ -139,13 +139,24 @@ usBSP430clockACLK_Hz_ni (void)
 }
 
 int
-iBSP430clockConfigureACLK_ni (unsigned int sela)
+iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
 {
-  /* Varies by MCU, but generally must use XT1 */
-  if (0 != sela) {
-    return -1;
+  switch (sel) {
+    default:
+    case eBSP430clockSRC_NONE:
+      return -1;
+    case eBSP430clockSRC_XT1CLK:
+      return 0;
+    case eBSP430clockSRC_VLOCLK:
+    case eBSP430clockSRC_REFOCLK:
+    case eBSP430clockSRC_DCOCLK:
+    case eBSP430clockSRC_DCOCLKDIV:
+    case eBSP430clockSRC_XT2CLK:
+      return -1;
+    case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
+    case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
+      return 0;
   }
-  return 0;
 }
 
 int

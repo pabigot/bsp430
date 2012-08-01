@@ -99,22 +99,11 @@ void main ()
     unsigned int cc_delta;
     unsigned long aclk_rel_smclk_Hz;
     unsigned long smclk_rel_aclk_Hz;
-#if defined(__MSP430_HAS_BC2__)
-    unsigned int bcsctl3 = BCSCTL3;
-#endif /* __MSP430_HAS_BC2__ */
 
     if (! tp) {
       cputtext_ni("\nUnable to access configured CCACLK timer");
       break;
     }
-#if defined(__MSP430_HAS_BC2__)
-    /* Where ACLK sources from LFXT1 and LFXT1 is faulted, CCIS from
-     * ACLK will never trigger.  Temporarily revert to explicit
-     * VLOCLK. */
-    if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
-      iBSP430clockConfigureACLK_ni(LFXT1S_2);
-    }
-#endif /* __MSP430_HAS_BC2__ */
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL_2 | MC_2 | TACLR;
     cc_delta = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
@@ -123,9 +112,6 @@ void main ()
                                             BSP430_TIMER_CCACLK_CCIS,
                                             SAMPLE_PERIOD_ACLK);
     tp->ctl = 0;
-#if defined(__MSP430_HAS_BC2__)
-    BCSCTL3 = bcsctl3;
-#endif /* __MSP430_HAS_BC2__ */
     if (-1 == cc_delta) {
       cputtext_ni("\nCCACLK measurement failed");
       break;

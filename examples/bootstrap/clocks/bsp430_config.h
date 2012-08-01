@@ -11,7 +11,6 @@ make realclean \
  * time by providing an alternative definition on the compiler command
  * line */
 
-
 /* Application does output: support spin-for-jumper */
 #ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
@@ -43,4 +42,11 @@ make realclean \
 #define configBSP430_TIMER_CCACLK 1
 #endif /* configBSP430_TIMER_CCACLK */
 
+/* We really want the ACLK source to fall back to VLOCLK if XT1CLK is
+ * not stable.  Otherwise those CCACLK timings will hang. */
+#ifndef BSP430_PLATFORM_BOOT_ACLKSRC
+#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_OR_VLOCLK
+#endif /* BSP430_PLATFORM_BOOT_ACLKSRC */
+
 #include <bsp430/platform/bsp430_config.h>
+

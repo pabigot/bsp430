@@ -323,6 +323,16 @@ unsigned long ulBSP430clockTrimFLL_ni ();
 #define BSP430_CLOCK_NOMINAL_XT1CLK_HZ 32768U
 #endif /* BSP430_CLOCK_NOMINAL_XT1CLK_HZ */
 
+/** @def BSP430_CLOCK_NOMINAL_XT2CLK_HZ
+ *
+ * Nominal rate of a secondary external clock.  This must be defined
+ * externally if #eBSP430clockSEL_XT2CLK is to be used.
+ * 
+ * @nodefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_NOMINAL_XT2CLK_HZ must be externally provided
+#endif /* BSP430_DOXYGEN */
+
 /** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
  *
  * Nominal frequency of VLOCLK, in Hz.
@@ -349,6 +359,63 @@ unsigned long ulBSP430clockTrimFLL_ni ();
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CLOCK_PUC_MCLK_HZ platform specific around 1 MHz
 #endif /* BSP430_DOXYGEN */
+
+/** Constants used for MCU-independent specification of clocks.
+ *
+ * Use these instead of peripheral-specific values like #SELA_1 or
+ * #LFXT1S_2 to identify clock sources by their function.  This also
+ * permits finer control within iBSP430clockConfigureACLK_ni(),
+ * allowing that to select a secondary source given oscillator faults
+ * in the primary source. */
+typedef enum eBSP430clockSource {
+  /** A marker value indicating that no clock is selected.  Generally
+   * this is not an appropriate value to use as a parameter. */
+  eBSP430clockSRC_NONE,
+
+  /** XT1 is the primary external clock.  It is generally a
+   * low-frequency watch crystal running at 32 kiHz.  The nominal
+   * speed for this clock is #BSP430_CLOCK_NOMINAL_XT1CLK_HZ. */
+  eBSP430clockSRC_XT1CLK,
+
+  /** VLOCLK is a low-speed internal clock, normally around 10-12 kHz.
+   * It is relatively imprecise.  The nominal speed for this clock is
+   * #BSP430_CLOCK_NOMINAL_VLOCLK_HZ.  */
+  eBSP430clockSRC_VLOCLK,
+
+  /** REFOCLK is an internally low power trimmed 32 kiHz oscillator
+   * supported in the UCS peripheral */
+  eBSP430clockSRC_REFOCLK,
+
+  /** DCOCLK is whatever the DCO clock frequency is.  It's probably
+   * related to #BSP430_CLOCK_NOMINAL_MCLK_HZ, but may be a multiple
+   * of that. */
+  eBSP430clockSRC_DCOCLK,
+
+  /** DCOCLKDIV is a divided DCO clock.  It's probably
+   * #BSP430_CLOCK_NOMINAL_MCLK_HZ, but may be a multiple of that. */
+  eBSP430clockSRC_DCOCLKDIV,
+
+  /** A secondary external clock.  This is only recognized if
+   * #BSP430_CLOCK_NOMINAL_XT2CLK_HZ has been provided. */
+  eBSP430clockSRC_XT2CLK,
+
+  /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED() is
+   * false, otherwise use VLOCLK.
+   *
+   * The main value of this is in BC2-based clocks, where selecting
+   * XT1CLK as the source for ACLK will cause ACLK to fall back to
+   * VLOCLK if the crystal is faulted, but using the resulting ACLK as
+   * a timer source will not work. */
+  eBSP430clockSRC_XT1CLK_OR_VLOCLK,
+  
+  /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED() is
+   * false, otherwise use REFOCLK.
+   *
+   * Similar to #eBSP430clockSRC_XT1CLK_OR_VLOCLK for UCS-based
+   * systems. */
+  eBSP430clockSRC_XT1CLK_OR_REFOCLK,
+  
+} eBSP430clockSource;
 
 /** Configure MCLK to a desired frequency.
  *
@@ -486,18 +553,18 @@ int iBSP430clockConfigureLFXT1_ni (int enablep,
 /** Configure ACLK to a source clock.
  *
  * The peripheral-specific implementation will configure ACLK to
- * source from the specified platform-specific value.
+ * source from the requested clock.
  *
- * @param sela the configuration bits to be set to select the clock.
- * Depending on the underlying clock peripheral, this may be a value
- * like #SELA_0 or a value like #LFXT1S_0.  The configuration will be
- * rejected if @a sela has bits set outside the region of the clock
- * control word that selects the ACLK source.
+ * @param sel the source from which the clock should be selected.
+ * Note that the values permit an internal decision, e.g. to prefer
+ * LFXT1 but to use an alternative if that is faulted.  Configuration
+ * is rejected if the requested clock source does not exist on the
+ * platform.
  *
  * @return 0 if the configuration was accepted, a negative error if it
- * was rejected.
+ * was rejected.  
  */
-int iBSP430clockConfigureACLK_ni (unsigned int sela);
+int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel);
 
 /** Return the best available estimate of ACLK frequency.
  *

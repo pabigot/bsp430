@@ -413,16 +413,50 @@ usBSP430clockACLK_Hz_ni (void)
       return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
     case SELA_3: /* DCOCLK */
       return 2 * lastTrimDCOCLKDIV_Hz_;
+#if defined(SELA__XT2CLK) && defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)
+    case SELA__XT2CLK: /* XT2CLK */
+      return BSP430_CLOCK_NOMINAL_XT2CLK_HZ;
+#endif /* XT2CLK supported */
     default:
     case SELA_4: /* DCOCLKDIV */
       return lastTrimDCOCLKDIV_Hz_;
   }
 }
 
-int iBSP430clockConfigureACLK_ni (unsigned int sela)
+int
+iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
 {
-  if (sela & ~SELA_MASK) {
-    return -1;
+  unsigned int sela = 0;
+  switch (sel) {
+    default:
+    case eBSP430clockSRC_NONE:
+      return -1;
+    case eBSP430clockSRC_XT1CLK:
+      sela = SELA__XT1CLK;
+      break;
+    case eBSP430clockSRC_VLOCLK:
+      sela = SELA__VLOCLK;
+      break;
+    case eBSP430clockSRC_REFOCLK:
+      sela = SELA__REFOCLK;
+      break;
+    case eBSP430clockSRC_DCOCLK:
+      sela = SELA__DCOCLK;
+      break;
+    case eBSP430clockSRC_DCOCLKDIV:
+      sela = SELA__DCOCLKDIV;
+      break;
+#if defined(SELA__XT2CLK) && defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)
+    case eBSP430clockSRC_XT2CLK:
+      sela = SELA__XT2CLK;
+      break;
+#endif /* XT2CLK supported */
+    case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
+      sela = BSP430_CLOCK_LFXT1_IS_FAULTED() ? SELA__VLOCLK : SELA__XT1CLK;
+      break;
+    case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
+      sela = BSP430_CLOCK_LFXT1_IS_FAULTED() ? SELA__REFOCLK : SELA__XT1CLK;
+      break;
   }
   UCSCTL4 = (UCSCTL4 & ~SELA_MASK) | sela;
   return 0;

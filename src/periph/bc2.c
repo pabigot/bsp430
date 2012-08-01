@@ -120,10 +120,29 @@ usBSP430clockACLK_Hz_ni (void)
 }
 
 int
-iBSP430clockConfigureACLK_ni (unsigned int sela)
+iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
 {
-  if (sela & ~SELA_MASK) {
-    return -1;
+  unsigned int sela = 0;
+  switch (sel) {
+    default:
+    case eBSP430clockSRC_NONE:
+      return -1;
+    case eBSP430clockSRC_XT1CLK:
+      sela = LFXT1S_0;
+      break;
+    case eBSP430clockSRC_VLOCLK:
+      sela = LFXT1S_2;
+      break;
+    case eBSP430clockSRC_REFOCLK:
+    case eBSP430clockSRC_DCOCLK:
+    case eBSP430clockSRC_DCOCLKDIV:
+    case eBSP430clockSRC_XT2CLK:
+      return -1;
+    case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
+      sela = BSP430_CLOCK_LFXT1_IS_FAULTED() ? LFXT1S_2 : LFXT1S_0;
+      break;
+    case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
+      return -1;
   }
   BCSCTL3 = (BCSCTL3 & ~SELA_MASK) | sela;
   return 0;
