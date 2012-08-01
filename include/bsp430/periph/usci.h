@@ -190,9 +190,6 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
  *
  * @defaulted */
 #ifndef configBSP430_PERIPH_USCI_A0
-#if configBSP430_HAL_USCI_A0 - 0
-// #error yes
-#endif
 #define configBSP430_PERIPH_USCI_A0 (configBSP430_HAL_USCI_A0 - 0)
 #endif /* configBSP430_PERIPH_USCI_A0 */
 

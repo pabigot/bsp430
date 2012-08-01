@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/platform/exp430fg4618.h>
+#include <bsp430/platform/exp430fg4618/platform.h>
 #include <bsp430/periph/fllplus.h>
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/led.h>

@@ -36,17 +36,15 @@
  * This header defines prototypes for functions that are implemented
  * in the platform-specific implementation file.
  *
- * Further, if a recognized @c BSP430_PLATFORM_foo macro is defined to
- * a true value, the corresponding platform-specific header will be
+ * Further, if a recognized platform selection macro is defined to a
+ * true value, the corresponding platform-specific header will be
  * included for you.  Platform-specific headers are included based on
- * the definitions of:
- * <ul>
- * <li>#BSP430_PLATFORM_EXP430G2</a>
- * <li>#BSP430_PLATFORM_EXP430FG4619</a>
+ * the definitions of: <ul> <li>#BSP430_PLATFORM_EXP430G2</a>
+ * <li>#BSP430_PLATFORM_EXP430FG4618</a>
  * <li>#BSP430_PLATFORM_EXP430F5438</a>
  * <li>#BSP430_PLATFORM_EXP430F5529</a>
  * <li>#BSP430_PLATFORM_EXP430FR5739</a>
- * <li>#BSP430_PLATFORM_RF2500T</a>
+ * <li>#BSP430_PLATFORM_RF2500T</a> <li>#BSP430_PLATFORM_CUSTOM</a>
  * </ul>
  *
  * @author Peter A. Bigot <bigotp@acm.org>
@@ -140,13 +138,14 @@ void vBSP430platformSpinForJumper_ni (void);
  * <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
- * platform-specific header <bsp430/platform/exp430f5438.h>.
+ * platform-specific header <bsp430/platform/exp430f5438/platform.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430F5438 will be
  * defined for you.
  *
  * A true value also causes <bsp430/platform/bsp430_config.h> to
- * include <bsp430/platform/exp430f5438_bsp430_config.h> for you.
- * You should not include that header directly.
+ * include <bsp430/platform/exp430f5438/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430F5438
@@ -154,7 +153,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
 #if BSP430_PLATFORM_EXP430F5438 - 0
-#include <bsp430/platform/exp430f5438.h>
+#include <bsp430/platform/exp430f5438/platform.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
 /** @def BSP430_PLATFORM_EXP430F5529
@@ -162,13 +161,14 @@ void vBSP430platformSpinForJumper_ni (void);
  * <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
- * platform-specific header <bsp430/platform/exp430f5529.h>.
+ * platform-specific header <bsp430/platform/exp430f5529/platform.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430F5529 will be
  * defined for you.
  *
  * A true value also causes <bsp430/platform/bsp430_config.h> to
- * include <bsp430/platform/exp430f5529_bsp430_config.h> for you.
- * You should not include that header directly.
+ * include <bsp430/platform/exp430f5529/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430F5529
@@ -176,7 +176,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430F5529 */
 
 #if BSP430_PLATFORM_EXP430F5529 - 0
-#include <bsp430/platform/exp430f5529.h>
+#include <bsp430/platform/exp430f5529/platform.h>
 #endif /* BSP430_PLATFORM_EXP430F5529 */
 
 /** @def BSP430_PLATFORM_EXP430FR5739
@@ -184,13 +184,14 @@ void vBSP430platformSpinForJumper_ni (void);
  * <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
- * platform-specific header <bsp430/platform/exp430fr5739.h>.
+ * platform-specific header <bsp430/platform/exp430fr5739/platform.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430FR5739 will be
  * defined for you.
  *
  * A true value also causes <bsp430/platform/bsp430_config.h> to
- * include <bsp430/platform/exp430fr5739_bsp430_config.h> for you.
- * You should not include that header directly.
+ * include <bsp430/platform/exp430fr5739/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430FR5739
@@ -198,7 +199,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
 #if BSP430_PLATFORM_EXP430FR5739 - 0
-#include <bsp430/platform/exp430fr5739.h>
+#include <bsp430/platform/exp430fr5739/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
 /** @def BSP430_PLATFORM_EXP430FG4618
@@ -206,13 +207,14 @@ void vBSP430platformSpinForJumper_ni (void);
  * <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
- * platform-specific header <bsp430/platform/exp430fg4618.h>.
+ * platform-specific header <bsp430/platform/exp430fg4618/platform.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430FG4618 will be
  * defined for you.
  *
  * A true value also causes <bsp430/platform/bsp430_config.h> to
- * include <bsp430/platform/exp430fg4618_bsp430_config.h> for you.
- * You should not include that header directly.
+ * include <bsp430/platform/exp430fg4618/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430FG4618
@@ -220,7 +222,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
 #if BSP430_PLATFORM_EXP430FG4618 - 0
-#include <bsp430/platform/exp430fg4618.h>
+#include <bsp430/platform/exp430fg4618/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
 /** @def BSP430_PLATFORM_EXP430G2
@@ -228,13 +230,14 @@ void vBSP430platformSpinForJumper_ni (void);
  * <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
- * platform-specific header <bsp430/platform/exp430g2.h>.
+ * platform-specific header <bsp430/platform/exp430g2/platform.h>.
  * If you include that header directly, #BSP430_PLATFORM_EXP430G2 will be
  * defined for you.
  *
  * A true value also causes <bsp430/platform/bsp430_config.h> to
- * include <bsp430/platform/exp430g2_bsp430_config.h> for you.
- * You should not include that header directly.
+ * include <bsp430/platform/exp430g2/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_EXP430G2
@@ -242,7 +245,7 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
 #if BSP430_PLATFORM_EXP430G2 - 0
-#include <bsp430/platform/exp430g2.h>
+#include <bsp430/platform/exp430g2/platform.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_decl] */
@@ -255,13 +258,14 @@ void vBSP430platformSpinForJumper_ni (void);
  * <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
- * platform-specific header <bsp430/platform/rf2500t.h>.
+ * platform-specific header <bsp430/platform/rf2500t/platform.h>.
  * If you include that header directly, #BSP430_PLATFORM_RF2500T will be
  * defined for you.
  *
  * A true value also causes <bsp430/platform/bsp430_config.h> to
- * include <bsp430/platform/rf2500t_bsp430_config.h> for you.
- * You should not include that header directly.
+ * include <bsp430/platform/rf2500t/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_RF2500T
@@ -269,11 +273,44 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_PLATFORM_RF2500T */
 
 #if BSP430_PLATFORM_RF2500T - 0
-#include <bsp430/platform/rf2500t.h>
+#include <bsp430/platform/rf2500t/platform.h>
 #endif /* BSP430_PLATFORM_RF2500T */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_decl] */
 /* !BSP430! end=platform_decl */
+
+/** @def BSP430_PLATFORM_CUSTOM
+
+ * Define to a true value if application is being built for a custom
+ * (out-of-tree) platform.
+ *
+ * A true value causes <bsp430/platform.h> to include  corresponding
+ * platform-specific header <bsp430/platform/custom/platform.h>.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/custom/bsp430_config.h> for you.
+ *
+ * Custom platform files should not be placed within the BSP430 source
+ * or install area, but are included using a path that makes them
+ * appear to be there.  This is primarily to avoid any confusion due
+ * to accidental resolution of an unadorned include of @c "platform.h"
+ * or @c "bsp430_config.h" to the wrong file.  It is the
+ * responsibility of the application developer to ensure that the
+ * include directories provided to the compiler allow the custom
+ * platform headers to be located at the necessary paths.
+ *
+ * lLternatively, you could have your application include the custom
+ * platform files directly and bypass any reference to
+ * <bsp430/platform.h> or <bsp430/platform/bsp430_config.h>.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_CUSTOM
+#define BSP430_PLATFORM_CUSTOM 0
+#endif /* BSP430_PLATFORM_CUSTOM */
+
+#if BSP430_PLATFORM_CUSTOM - 0
+#include <bsp430/platform/custom/platform.h>
+#endif /* BSP430_PLATFORM_CUSTOM */
 
 /* If configBSP430_CLOCK_TRIM_FLL was requested, the feature is
  * supported in principle by the peripheral, and the platform supports

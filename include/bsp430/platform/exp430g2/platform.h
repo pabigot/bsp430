@@ -29,21 +29,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BSP430_PLATFORM_EXP430F5438_H
-#define BSP430_PLATFORM_EXP430F5438_H
-
 /** @file
  *
- * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a>
  *
- * The following platform-specific features are supported:
- * <ul>
+ * This board is also known as the "LaunchPad"
  *
- * <li> #vBSP430platformSpinForJumper_ni is not implemented on this
- * platform.
+ * The following platform-specific features are supported: <ul>
  *
- * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks are made available at
- * dedicated labelled test points below the JTAG header.
+ * <li> #vBSP430platformSpinForJumper_ni The jumper pair for this
+ * platform is P1.4 and P1.5, located in the left header.  Place the
+ * jumper across these pins.
  *
  * </ul>
  *
@@ -53,12 +49,20 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-/** Unconditionally define this, so as to produce errors if there is a
- * conflict in definition. */
-#define BSP430_PLATFORM_EXP430F5438 1
+#ifndef BSP430_PLATFORM_EXP430G2_PLATFORM_H
+#define BSP430_PLATFORM_EXP430G2_PLATFORM_H
 
-/** Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Labelled test points below JTAG header"
+/* Unconditionally define this, so as to produce errors if there is a
+ * conflict in definition. */
+#define BSP430_PLATFORM_EXP430G2 1
+
+/* Where clocks are found on this platform */
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
+
+/* Enable if requested */
+#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
@@ -69,7 +73,9 @@
          || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [module_startif] */
 /* !BSP430! end=module_startif */
-#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci5_USCI5_A1
+#if defined(__MSP430G2553__)
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci_USCI_A0
+#endif /* MCU */
 /* !BSP430! insert=module_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
 #endif /* configBSP430_CONSOLE && need default */
@@ -85,11 +91,13 @@
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
+#if defined(__MSP430G2553__)
 #define BSP430_TIMER_CCACLK 1
-#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TB0
-#define BSP430_TIMER_CCACLK_IS_TA0 0
-#define BSP430_TIMER_CCACLK_CC_INDEX 6
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA0
+#define BSP430_TIMER_CCACLK_IS_TA0 1
+#define BSP430_TIMER_CCACLK_CC_INDEX 0
 #define BSP430_TIMER_CCACLK_CCIS CCIS_1
+#endif /* MCU */
 /* !BSP430! insert=feature_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
@@ -99,4 +107,4 @@
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
-#endif /* BSP430_PLATFORM_EXP430F5438_H */
+#endif /* BSP430_PLATFORM_EXP430G2_H */

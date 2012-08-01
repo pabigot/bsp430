@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/platform/exp430g2.h>
+#include <bsp430/platform/exp430g2/platform.h>
 #include <bsp430/periph/bc2.h>
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/uptime.h>

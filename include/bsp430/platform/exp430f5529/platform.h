@@ -29,32 +29,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BSP430_PLATFORM_EXP430FG4618_H
-#define BSP430_PLATFORM_EXP430FG4618_H
+#ifndef BSP430_PLATFORM_EXP430F5529_PLATFORM_H
+#define BSP430_PLATFORM_EXP430F5529_PLATFORM_H
 
 /** @file
  *
- * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a>
  *
- * The following platform-specific features are supported:
- * <ul>
+ * The following platform-specific features are supported: <ul>
  *
- * <li> #vBSP430platformSpinForJumper_ni is not implemented on this
- * platform.
+ * <li> #vBSP430platformSpinForJumper_ni The jumper for this platform
+ * is P7.7, located at the bottom of header J5 on the right of the
+ * board below the JTAG header.  Place the jumper between GND and
+ * P7.7.
  *
- * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks are exposed on header H2,
- * just below the FG4618 JTAG header.  MCLK is available on H2.2
- * (P1.1), SMCLK on H2.5 (P1.4), and ACLK on H2.6 (P1.5)
+ * <li> #BSP430_PERIPH_EXPOSED_CLOCKS ACLK is made visible on P1.0
+ * which can be found on the J12 or RF1 header.  MCLK is made visible
+ * on P7.7 which is on header J5 below the JTAG header.  SMCLK is made
+ * visible on P2.2 which is not brought out to any accessible
+ * location.
  *
  * </ul>
+ *
+ * @author Peter A. Bigot <bigotp@acm.org>
+ * @date 2012
+ * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 /** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
-#define BSP430_PLATFORM_EXP430FG4618 1
+#define BSP430_PLATFORM_EXP430F5529 1
+
+/* Enable if requested (ez430 serial needs it) */
+#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 /** Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "H2 below FG4618 JTAG: MCLK on H2.2, SMCLK on H2.5, ACLK on H2.6"
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "ACLK on P1.0 (J12.1); MCLK on P7.7 (J5.2)"
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
@@ -65,7 +78,7 @@
          || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [module_startif] */
 /* !BSP430! end=module_startif */
-#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci_USCI_A0
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci5_USCI5_A1
 /* !BSP430! insert=module_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
 #endif /* configBSP430_CONSOLE && need default */
@@ -95,4 +108,4 @@
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
-#endif /* BSP430_PLATFORM_EXP430FG4618_H */
+#endif /* BSP430_PLATFORM_EXP430F5529_H */

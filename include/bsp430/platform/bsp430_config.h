@@ -41,11 +41,12 @@
  * definitions of:
  * <ul>
  * <li>#BSP430_PLATFORM_EXP430G2</a>
- * <li>#BSP430_PLATFORM_EXP430FG4619</a>
+ * <li>#BSP430_PLATFORM_EXP430FG4618</a>
  * <li>#BSP430_PLATFORM_EXP430F5438</a>
  * <li>#BSP430_PLATFORM_EXP430F5529</a>
  * <li>#BSP430_PLATFORM_EXP430FR5739</a>
  * <li>#BSP430_PLATFORM_RF2500T</a>
+ * <li>#BSP430_PLATFORM_CUSTOM</a>
  * </ul>
  * After platform-specific configuration has been read, this file may
  * provide additional BSP430-generic configuration.
@@ -78,31 +79,35 @@
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */
 #if BSP430_PLATFORM_EXP430F5438 - 0
-#include <bsp430/platform/exp430f5438_bsp430_config.h>
+#include <bsp430/platform/exp430f5438/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
 #if BSP430_PLATFORM_EXP430F5529 - 0
-#include <bsp430/platform/exp430f5529_bsp430_config.h>
+#include <bsp430/platform/exp430f5529/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430F5529 */
 
 #if BSP430_PLATFORM_EXP430FR5739 - 0
-#include <bsp430/platform/exp430fr5739_bsp430_config.h>
+#include <bsp430/platform/exp430fr5739/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
 #if BSP430_PLATFORM_EXP430FG4618 - 0
-#include <bsp430/platform/exp430fg4618_bsp430_config.h>
+#include <bsp430/platform/exp430fg4618/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
 #if BSP430_PLATFORM_EXP430G2 - 0
-#include <bsp430/platform/exp430g2_bsp430_config.h>
+#include <bsp430/platform/exp430g2/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
 #if BSP430_PLATFORM_RF2500T - 0
-#include <bsp430/platform/rf2500t_bsp430_config.h>
+#include <bsp430/platform/rf2500t/bsp430_config.h>
 #endif /* BSP430_PLATFORM_RF2500T */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_bsp430_config] */
 /* !BSP430! end=platform_bsp430_config */
+
+#if BSP430_PLATFORM_CUSTOM - 0
+#include <bsp430/platform/custom/bsp430_config.h>
+#endif /* BSP430_PLATFORM_CUSTOM */
 
 /** Requirements to support default uptime resource (if that is enabled)
  * @defaulted */

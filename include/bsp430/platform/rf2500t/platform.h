@@ -46,8 +46,8 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_PLATFORM_RF2500T_H
-#define BSP430_PLATFORM_RF2500T_H
+#ifndef BSP430_PLATFORM_RF2500T_PLATFORM_H
+#define BSP430_PLATFORM_RF2500T_PLATFORM_H
 
 /** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */

@@ -29,25 +29,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BSP430_PLATFORM_EXP430F5529_H
-#define BSP430_PLATFORM_EXP430F5529_H
+#ifndef BSP430_PLATFORM_EXP430F5438_PLATFORM_H
+#define BSP430_PLATFORM_EXP430F5438_PLATFORM_H
 
 /** @file
  *
- * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a>
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
  *
- * The following platform-specific features are supported: <ul>
+ * The following platform-specific features are supported:
+ * <ul>
  *
- * <li> #vBSP430platformSpinForJumper_ni The jumper for this platform
- * is P7.7, located at the bottom of header J5 on the right of the
- * board below the JTAG header.  Place the jumper between GND and
- * P7.7.
+ * <li> #vBSP430platformSpinForJumper_ni is not implemented on this
+ * platform.
  *
- * <li> #BSP430_PERIPH_EXPOSED_CLOCKS ACLK is made visible on P1.0
- * which can be found on the J12 or RF1 header.  MCLK is made visible
- * on P7.7 which is on header J5 below the JTAG header.  SMCLK is made
- * visible on P2.2 which is not brought out to any accessible
- * location.
+ * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks are made available at
+ * dedicated labelled test points below the JTAG header.
  *
  * </ul>
  *
@@ -59,15 +55,10 @@
 
 /** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
-#define BSP430_PLATFORM_EXP430F5529 1
-
-/* Enable if requested (ez430 serial needs it) */
-#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-#define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+#define BSP430_PLATFORM_EXP430F5438 1
 
 /** Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "ACLK on P1.0 (J12.1); MCLK on P7.7 (J5.2)"
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Labelled test points below JTAG header"
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
@@ -108,4 +99,4 @@
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
-#endif /* BSP430_PLATFORM_EXP430F5529_H */
+#endif /* BSP430_PLATFORM_EXP430F5438_H */

@@ -29,40 +29,32 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef BSP430_PLATFORM_EXP430FG4618_PLATFORM_H
+#define BSP430_PLATFORM_EXP430FG4618_PLATFORM_H
+
 /** @file
  *
- * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a>
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
  *
- * This board is also known as the "LaunchPad"
+ * The following platform-specific features are supported:
+ * <ul>
  *
- * The following platform-specific features are supported: <ul>
+ * <li> #vBSP430platformSpinForJumper_ni is not implemented on this
+ * platform.
  *
- * <li> #vBSP430platformSpinForJumper_ni The jumper pair for this
- * platform is P1.4 and P1.5, located in the left header.  Place the
- * jumper across these pins.
+ * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks are exposed on header H2,
+ * just below the FG4618 JTAG header.  MCLK is available on H2.2
+ * (P1.1), SMCLK on H2.5 (P1.4), and ACLK on H2.6 (P1.5)
  *
  * </ul>
- *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @date 2012
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_PLATFORM_EXP430G2_H
-#define BSP430_PLATFORM_EXP430G2_H
-
-/* Unconditionally define this, so as to produce errors if there is a
+/** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
-#define BSP430_PLATFORM_EXP430G2 1
+#define BSP430_PLATFORM_EXP430FG4618 1
 
-/* Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
-
-/* Enable if requested */
-#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-#define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+/** Where clocks are found on this platform */
+#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "H2 below FG4618 JTAG: MCLK on H2.2, SMCLK on H2.5, ACLK on H2.6"
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
@@ -73,9 +65,7 @@
          || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [module_startif] */
 /* !BSP430! end=module_startif */
-#if defined(__MSP430G2553__)
 #define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci_USCI_A0
-#endif /* MCU */
 /* !BSP430! insert=module_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
 #endif /* configBSP430_CONSOLE && need default */
@@ -91,13 +81,11 @@
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
-#if defined(__MSP430G2553__)
 #define BSP430_TIMER_CCACLK 1
-#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA0
-#define BSP430_TIMER_CCACLK_IS_TA0 1
-#define BSP430_TIMER_CCACLK_CC_INDEX 0
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TB0
+#define BSP430_TIMER_CCACLK_IS_TA0 0
+#define BSP430_TIMER_CCACLK_CC_INDEX 6
 #define BSP430_TIMER_CCACLK_CCIS CCIS_1
-#endif /* MCU */
 /* !BSP430! insert=feature_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
@@ -107,4 +95,4 @@
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
-#endif /* BSP430_PLATFORM_EXP430G2_H */
+#endif /* BSP430_PLATFORM_EXP430FG4618_H */

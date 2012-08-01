@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/platform/rf2500t.h>
+#include <bsp430/platform/rf2500t/platform.h>
 #include <bsp430/periph/bc2.h>
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/uptime.h>
