@@ -196,21 +196,21 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 #define configBSP430_UCS_TRIM_ACLK_IS_XT1CLK 0
 #endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
 
-#undef BSP430_CLOCK_LFXT1_IS_FAULTED
+#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
 /** Check whether the LFXT1 crystal has a fault condition.
  *
  * This definition overrides the generic definition to test the
  * crystal-specific flags.  Note that if somebody has turned off the
  * crystal by setting UCSCTL6.XT1OFF, the crystal is assumed to be
  * faulted.*/
-#define BSP430_CLOCK_LFXT1_IS_FAULTED() ((UCSCTL6 & XT1OFF) || (UCSCTL7 & XT1LFOFFG))
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((UCSCTL6 & XT1OFF) || (UCSCTL7 & XT1LFOFFG))
 
-#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
+#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
 /** Clear the fault associated with LFXT1.
  *
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {	\
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {	\
     UCSCTL7 &= ~XT1LFOFFG;                      \
     SFRIFG1 &= ~OFIFG;                          \
   } while (0)

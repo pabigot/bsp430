@@ -63,12 +63,12 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
      * where clock should be nominal 1 MHz. */
     BCSCTL3 = XCAP_1;
     do {
-      BSP430_CLOCK_LFXT1_CLEAR_FAULT();
+      BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
       BSP430_CORE_WATCHDOG_CLEAR();
       loop_limit -= loop_delta;
       BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-    } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
-    rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
+    } while ((BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) && (0 != loop_limit));
+    rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
   }
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
@@ -114,7 +114,7 @@ usBSP430clockACLK_Hz_ni (void)
   switch (BCSCTL3 & SELA_MASK) {
     default:
     case LFXT1S_0:
-      if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+      if (BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
         clk_hz = BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
       } else {
         clk_hz = BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
@@ -147,7 +147,7 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
     case eBSP430clockSRC_XT2CLK:
       return -1;
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
-      sela = BSP430_CLOCK_LFXT1_IS_FAULTED() ? LFXT1S_2 : LFXT1S_0;
+      sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? LFXT1S_2 : LFXT1S_0;
       break;
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
       return -1;
@@ -280,7 +280,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 
   if (use_trim_to_mclk) {
 #if BSP430_BC2_TRIM_TO_MCLK - 0
-    if (! BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+    if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
       (void)iBSP430bc2TrimToMCLK_ni(mclk_Hz);
     }
 #endif /* BSP430_BC2_TRIM_TO_MCLK */

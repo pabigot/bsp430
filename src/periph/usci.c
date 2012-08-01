@@ -299,7 +299,7 @@ isr_USCIAB0RX (void)
   if (usci) {
     rv = usciabrx_isr(usci);
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* HAL USCIAB0RX ISR */
 
@@ -355,7 +355,7 @@ isr_USCIAB0TX (void)
   if (usci) {
     rv = usciabtx_isr(usci);
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* HAL USCIAB0TX ISR */
 

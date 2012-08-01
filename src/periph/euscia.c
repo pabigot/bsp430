@@ -328,7 +328,7 @@ __attribute__((__interrupt__(USCI_A0_VECTOR)))
 isr_EUSCI_A0 (void)
 {
   int rv = euscia_isr(xBSP430euscia_EUSCI_A0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_EUSCI_A0_ISR */
 
@@ -338,7 +338,7 @@ __attribute__((__interrupt__(USCI_A1_VECTOR)))
 isr_EUSCI_A1 (void)
 {
   int rv = euscia_isr(xBSP430euscia_EUSCI_A1);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_EUSCI_A1_ISR */
 
@@ -348,7 +348,7 @@ __attribute__((__interrupt__(USCI_A2_VECTOR)))
 isr_EUSCI_A2 (void)
 {
   int rv = euscia_isr(xBSP430euscia_EUSCI_A2);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_EUSCI_A2_ISR */
 

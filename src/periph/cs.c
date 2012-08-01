@@ -164,13 +164,13 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
        * drop back.  Preserve XT1 configuration. */
       CSCTL4 = (CSCTL4 | XT1DRIVE_3) & ~(XTS | XT1BYPASS | XT1OFF);
       do {
-        BSP430_CLOCK_LFXT1_CLEAR_FAULT();
+        BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
         BSP430_CORE_WATCHDOG_CLEAR();
         loop_limit -= loop_delta;
         BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-      } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
+      } while ((BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) && (0 != loop_limit));
       CSCTL4 = CSCTL4 & ~XT1DRIVE_3;
-      rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
+      rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
     }
   }
   if (! rc) {
@@ -187,7 +187,7 @@ usBSP430clockACLK_Hz_ni (void)
 {
   switch (CSCTL2 & SELA_MASK) {
     case SELA__XT1CLK: /* XT1CLK */
-      if (! BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+      if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
         return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
       }
       /*FALLTHRU*/
@@ -231,7 +231,7 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
       break;
 #endif /* XT2CLK supported */
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
-      sela = BSP430_CLOCK_LFXT1_IS_FAULTED() ? SELA__VLOCLK : SELA__XT1CLK;
+      sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? SELA__VLOCLK : SELA__XT1CLK;
       break;
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
       return -1;

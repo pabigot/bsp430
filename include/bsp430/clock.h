@@ -203,14 +203,14 @@
  * the state of the system oscillator fault bit is not reflected in
  * the value for a peripheral-specific check.
  *
- * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT()
+ * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI()
  *
  * @defaulted
  * @overridable */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-#define BSP430_CLOCK_LFXT1_IS_FAULTED() (SFRIFG1 & OFIFG)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (SFRIFG1 & OFIFG)
 #else /* 5xx */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED() (IFG1 & OFIFG)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (IFG1 & OFIFG)
 #endif /* 5xx */
 
 /** Clear the fault associated with LFXT1.
@@ -219,21 +219,18 @@
  * crystal.  If the crystal still exhibits a fault condition, the bits
  * will be set again automatically.
  *
- * @note This function macro is implicitly FromISR: should be called
- * with interrupts disabled and will not induce a task switch.
- *
  * @note Where faults can be cleared on peripheral-specific registers,
  * the system oscillator fault is also cleared.  This is in contrast
- * to what is tested by #BSP430_CLOCK_LFXT1_IS_FAULTED().
+ * to what is tested by #BSP430_CLOCK_LFXT1_IS_FAULTED_NI().
  *
- * @see #BSP430_CLOCK_LFXT1_IS_FAULTED()
+ * @see #BSP430_CLOCK_LFXT1_IS_FAULTED_NI()
  *
  * @defaulted
  * @overridable */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { SFRIFG1 &= ~OFIFG; } while (0)
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do { SFRIFG1 &= ~OFIFG; } while (0)
 #else /* 5xx */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do { IFG1 &= ~OFIFG; } while (0)
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do { IFG1 &= ~OFIFG; } while (0)
 #endif /* 5xx */
 
 /** @def BSP430_CLOCK_NOMINAL_XT1CLK_HZ
@@ -322,7 +319,7 @@ typedef enum eBSP430clockSource {
    * #BSP430_CLOCK_NOMINAL_XT2CLK_HZ has been provided. */
   eBSP430clockSRC_XT2CLK,
 
-  /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED() is
+  /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED_NI() is
    * false, otherwise use VLOCLK.
    *
    * The main value of this is in BC2-based clocks, where selecting
@@ -331,7 +328,7 @@ typedef enum eBSP430clockSource {
    * a timer source will not work. */
   eBSP430clockSRC_XT1CLK_OR_VLOCLK,
 
-  /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED() is
+  /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED_NI() is
    * false, otherwise use REFOCLK.
    *
    * Similar to #eBSP430clockSRC_XT1CLK_OR_VLOCLK for UCS-based
@@ -531,7 +528,7 @@ int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel);
  * unidentified external source.
  *
  * @note If the ACLK is configured to source from LFXT1 but
- * #BSP430_CLOCK_LFXT1_IS_FAULTED() is true this will return
+ * #BSP430_CLOCK_LFXT1_IS_FAULTED_NI() is true this will return
  * #BSP430_CLOCK_NOMINAL_VLOCLK_HZ instead of
  * #BSP430_CLOCK_NOMINAL_XT1CLK_HZ.
  *

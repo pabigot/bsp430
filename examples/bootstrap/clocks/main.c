@@ -106,8 +106,8 @@ void main ()
   cputtext_ni("\nulBSP430clockSMCLK_Hz_ni(): ");
   smclk_Hz = ulBSP430clockSMCLK_Hz_ni();
   cputul_ni(smclk_Hz, 10);
-  cputtext_ni("\nBSP430_CLOCK_LFXT1_IS_FAULTED(): ");
-  cputu_ni(BSP430_CLOCK_LFXT1_IS_FAULTED(), 10);
+  cputtext_ni("\nBSP430_CLOCK_LFXT1_IS_FAULTED_NI(): ");
+  cputu_ni(BSP430_CLOCK_LFXT1_IS_FAULTED_NI(), 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
   cputu_ni(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");

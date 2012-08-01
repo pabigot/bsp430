@@ -62,21 +62,21 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_CS__ */
 
-#undef BSP430_CLOCK_LFXT1_IS_FAULTED
+#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
 /** Check whether the LFXT1 crystal has a fault condition.
  *
  * This definition overrides the generic definition to test the
  * crystal-specific flags.  Note that if somebody has turned off the
  * crystal by setting CSCTL4.XT1OFF, the crystal is assumed to be
  * faulted. */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED() ((CSCTL4 & XT1OFF) || (CSCTL5 & XT1OFFG))
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((CSCTL4 & XT1OFF) || (CSCTL5 & XT1OFFG))
 
-#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
+#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
 /** Clear the fault associated with LFXT1.
  *
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {	\
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {	\
     CSCTL5 &= ~XT1OFFG;                         \
     SFRIFG1 &= ~OFIFG;                          \
   } while (0)

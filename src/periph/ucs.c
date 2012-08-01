@@ -389,13 +389,13 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
      * drop back.  Preserve XT1 configuration. */
     UCSCTL6 = (UCSCTL6 | XT1DRIVE_3) & ~(XTS | XT1BYPASS | XT1OFF);
     do {
-      BSP430_CLOCK_LFXT1_CLEAR_FAULT();
+      BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
       loop_limit -= loop_delta;
       BSP430_CORE_WATCHDOG_CLEAR();
       BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-    } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
+    } while ((BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) && (0 != loop_limit));
     UCSCTL6 &= ~XT1DRIVE_3;
-    rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
+    rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
   }
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
@@ -410,7 +410,7 @@ usBSP430clockACLK_Hz_ni (void)
 {
   switch (UCSCTL4 & SELA_MASK) {
     case SELA_0: /* XT1CLK */
-      if (! BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+      if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
         return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
       }
       /*FALLTHRU*/
@@ -459,10 +459,10 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
       break;
 #endif /* XT2CLK supported */
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
-      sela = BSP430_CLOCK_LFXT1_IS_FAULTED() ? SELA__VLOCLK : SELA__XT1CLK;
+      sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? SELA__VLOCLK : SELA__XT1CLK;
       break;
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
-      sela = BSP430_CLOCK_LFXT1_IS_FAULTED() ? SELA__REFOCLK : SELA__XT1CLK;
+      sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? SELA__REFOCLK : SELA__XT1CLK;
       break;
   }
   UCSCTL4 = (UCSCTL4 & ~SELA_MASK) | sela;

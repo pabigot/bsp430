@@ -309,7 +309,7 @@ iBSP430callbackInvokeISRIndexed_ni (const struct xBSP430periphISRCallbackIndexed
  * @param _return_flags An expression denoting a return value from a
  * chain of callbacks, producing bits including (for example) @c
  * LPM_bits and/or #BSP430_PERIPH_ISR_CALLBACK_YIELD. */
-#define BSP430_PERIPH_ISR_CALLBACK_TAIL(_return_flags) do {             \
+#define BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(_return_flags) do {             \
     int return_flags_ = (_return_flags);                                \
     __bic_status_register_on_exit((return_flags_) & BSP430_PERIPH_ISR_CALLBACK_BIC_MASK); \
     if ((return_flags_) & BSP430_PERIPH_ISR_CALLBACK_YIELD) {           \

@@ -124,7 +124,7 @@
  * If ACLK derives from VLOCLK, that estimate may be off by several
  * percent, which will generally result in serial errors if SMCLK is
  * used to generate a baud rate clock.  You may wish to check
- * #BSP430_CLOCK_LFXT1_IS_FAULTED() prior to invoking this, as is done
+ * #BSP430_CLOCK_LFXT1_IS_FAULTED_NI() prior to invoking this, as is done
  * by ulBSP430clockConfigureMCLK_ni() for this peripheral.
  *
  * @dependency #BSP430_BC2_TRIM_TO_MCLK, #BSP430_TIMER_CCACLK
@@ -132,7 +132,7 @@
 int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
 
-#undef BSP430_CLOCK_LFXT1_IS_FAULTED
+#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
 /** Check whether the LFXT1 crystal has a fault condition.
  *
  * This definition overrides the generic definition to test the
@@ -140,14 +140,14 @@ int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
  * the external crystal only if the external crystal is the source for
  * LFXT1, so check that too: all is good only if LFXT1S is an external
  * crystal that is not faulted. */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED() (BCSCTL3 & (LFXT1S1 | LFXT1S0 | LFXT1OF))
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (BCSCTL3 & (LFXT1S1 | LFXT1S0 | LFXT1OF))
 
-#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT
+#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
 /** Clear the fault associated with LFXT1.
  *
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT() do {                   \
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {                   \
     /* User's guide says BCSCTL3.LFXT1OF is read-only. */	\
     IFG1 &= ~OFIFG;                                             \
   } while (0)

@@ -270,7 +270,7 @@ isr_cc0_TA0 (void)
 {
   xBSP430timerHandle timer = xBSP430timer_TA0;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
 
@@ -291,7 +291,7 @@ isr_TA0 (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA0_ISR */
 
@@ -302,7 +302,7 @@ isr_cc0_TA1 (void)
 {
   xBSP430timerHandle timer = xBSP430timer_TA1;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
 
@@ -323,7 +323,7 @@ isr_TA1 (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA1_ISR */
 
@@ -334,7 +334,7 @@ isr_cc0_TA2 (void)
 {
   xBSP430timerHandle timer = xBSP430timer_TA2;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
 
@@ -355,7 +355,7 @@ isr_TA2 (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA2_ISR */
 
@@ -366,7 +366,7 @@ isr_cc0_TA3 (void)
 {
   xBSP430timerHandle timer = xBSP430timer_TA3;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
 
@@ -387,7 +387,7 @@ isr_TA3 (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA3_ISR */
 
@@ -402,7 +402,7 @@ isr_cc0_TB0 (void)
 {
   xBSP430timerHandle timer = xBSP430timer_TB0;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
 
@@ -423,7 +423,7 @@ isr_TB0 (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB0_ISR */
 
@@ -434,7 +434,7 @@ isr_cc0_TB1 (void)
 {
   xBSP430timerHandle timer = xBSP430timer_TB1;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
 
@@ -455,7 +455,7 @@ isr_TB1 (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB1_ISR */
 
@@ -466,7 +466,7 @@ isr_cc0_TB2 (void)
 {
   xBSP430timerHandle timer = xBSP430timer_TB2;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
 
@@ -487,7 +487,7 @@ isr_TB2 (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL(rv);
+  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB2_ISR */
 

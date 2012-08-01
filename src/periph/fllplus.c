@@ -43,11 +43,11 @@ ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
   FLL_CTL0 = pxConfig->ucFLL_CTL0;
   FLL_CTL1 = pxConfig->ucFLL_CTL1;
   do {
-    BSP430_CLOCK_LFXT1_CLEAR_FAULT();
+    BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
     BSP430_CORE_WATCHDOG_CLEAR();
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-  } while (BSP430_CLOCK_LFXT1_IS_FAULTED());
-  ucReturnValue = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
+  } while (BSP430_CLOCK_LFXT1_IS_FAULTED_NI());
+  ucReturnValue = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
   SCFI0 = pxConfig->ucSCFI0;
   SCFQCTL = pxConfig->ucSCFQCTL;
 
@@ -144,7 +144,7 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
 unsigned short
 usBSP430clockACLK_Hz_ni (void)
 {
-  if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+  if (BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
     return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
   }
   return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;

@@ -269,7 +269,7 @@
  * Instruct the RTOS environment to execute a context switch.  This
  * should only be invoked from with the function that is the top-half
  * of an interrupt service routine, and is usually invoked within
- * #BSP430_PERIPH_ISR_CALLBACK_TAIL when
+ * #BSP430_PERIPH_ISR_CALLBACK_TAIL_NI when
  * #BSP430_PERIPH_ISR_CALLBACK_YIELD has been set.
  *
  * It is defined to a no-op in environments that do not support
