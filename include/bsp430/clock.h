@@ -443,6 +443,11 @@ unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
  * #BSP430_CLOCK_NOMINAL_MCLK_HZ, or it may return a value calculated
  * from observations.
  *
+ * @note This function will hang until any oscillator fault associated
+ * with the DCO or its peripheral-specific analogue has been cleared.
+ * If the clock configuration is not stable, this function may not
+ * return.
+ *
  * @return an estimate of the MCLK frequency, in Hz */
 unsigned long ulBSP430clockMCLK_Hz_ni (void);
 

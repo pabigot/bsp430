@@ -140,6 +140,9 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   CSCTL1 = csctl1;
   CSCTL2 = (CSCTL2 & (SELA_MASK | SELS_MASK)) | SELM__DCOCLK;
   CSCTL3 &= ~DIVM_MASK;
+
+  /* The CS peripheral does not support a DCO fault signal */
+
   CSCTL0_H = !0xA5;
 
   return ulBSP430clockMCLK_Hz_ni();

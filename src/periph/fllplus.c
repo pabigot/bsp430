@@ -94,6 +94,18 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   SCFQCTL = dcoclk_xt1 - 1;
   SCFI0 = (flld * FLLD0) | fn_x;
   
+  /* Spin until DCO faults cleared */
+  do {
+    IFG1 &= ~OFIFG;
+    BSP430_CORE_WATCHDOG_CLEAR();
+    /* Wait at least 50 usec, assuming speed does not exceed 16 MHz.
+     * Delay suggested by SLAU144I "2xx Family Users Guide" section
+     * 5.2.7.1 "Sourcing MCLK from a Crystal".  This applies to using
+     * XT2 and for a different MCU family, but we're guessing it's a
+     * sufficient delay to detect faults in other configurations. */
+    __delay_cycles(16 * 50);
+  } while (FLL_CTL0 & DCOF);
+
   return ulBSP430clockMCLK_Hz_ni();
 }
 
