@@ -32,6 +32,9 @@
 #include <bsp430/periph/fllplus.h>
 #include <bsp430/platform.h>
 
+/* Mask extracting the N bits from SCFQCTL */
+#define FLL_N_MASK 127
+
 unsigned char
 ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
 {
@@ -51,18 +54,57 @@ ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
   return ucReturnValue;
 }
 
-static unsigned long lastMCLK_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
-
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
-  return lastMCLK_Hz;
+  unsigned int flld = 0;
+  unsigned int fn_x = 0;
+  int dcoplus = 0;
+  unsigned int dcoclk_xt1 = (mclk_Hz + BSP430_CLOCK_NOMINAL_XT1CLK_HZ / 2) / BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+  
+  /* Convert a value in MHz to the same value in ticks of LXFT1 */
+#define MHZ_TO_XT1(_n) (((_n)*1000000UL) / BSP430_CLOCK_NOMINAL_XT1CLK_HZ)
+
+  /* Gross selection of DCO range.  We select the range if the target
+   * frequency is above the midpoint of the previous range. */
+  if (MHZ_TO_XT1(26/2) < dcoclk_xt1) {
+    fn_x = FN_8;
+  } else if (MHZ_TO_XT1(17/2) < dcoclk_xt1) {
+    fn_x = FN_4;
+  } else if (MHZ_TO_XT1(12/2) < dcoclk_xt1) {
+    fn_x = FN_3;
+  } else if (MHZ_TO_XT1(6/2) < dcoclk_xt1) {
+    fn_x = FN_2;
+  }
+
+#undef MHZ_TO_XT1
+
+  /* Need a divider if multiplier is too large. */
+  while (FLL_N_MASK < (dcoclk_xt1 - 1)) {
+    dcoplus = 1;
+    ++flld;
+    dcoclk_xt1 /= 2;
+  }
+
+  (void)iBSP430clockConfigureLFXT1_ni (1, -1);
+
+  if (dcoplus) {
+    FLL_CTL0 |= DCOPLUS;
+  }
+  SCFQCTL = dcoclk_xt1 - 1;
+  SCFI0 = (flld * FLLD0) | fn_x;
+  
+  return ulBSP430clockMCLK_Hz_ni();
 }
 
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
-  return lastMCLK_Hz;
+  unsigned int mclk_xt1 = 1 + (SCFQCTL & FLL_N_MASK);
+  if (FLL_CTL0 & DCOPLUS) {
+    mclk_xt1 <<= (SCFI0 & (FLLD0 | FLLD1)) / FLLD0;
+  }
+  return mclk_xt1 * (unsigned long) BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
 }
 
 int

@@ -171,6 +171,17 @@ void main ()
   cputu_ni(BCSCTL3, 16);
 #endif
 
+#if defined(__MSP430_HAS_FLL__) || defined(__MSP430_HAS_FLLPLUS__)
+  cprintf("\nFLL: SCF QCTL %02x I0 %02x I1 %02x ; CTL0 %02x CTL1 %02x CTL2 %02x\n",
+          SCFQCTL, SCFI0, SCFI1, FLL_CTL0, FLL_CTL1,
+#if defined(FLL_CTL2_)
+         FLL_CTL2
+#else /* FLL_CTL2 */
+         ~0
+#endif /* FLL_CTL2 */
+         );
+#endif /* FLL/PLUS */
+
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
 #if configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0
   cputtext_ni("\nconfigBSP430_UCS_FLLREFCLK_IS_XT1CLK: 1");

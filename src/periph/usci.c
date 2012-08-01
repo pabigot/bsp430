@@ -81,7 +81,7 @@ xBSP430usciOpenUART (xBSP430periphHandle periph,
 
   /* Reject if the pins can't be configured */
   if ((NULL != device)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni((xBSP430periphHandle)(uintptr_t)(device->usci), 1))) {
+      && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(device->usci), 1))) {
     device = NULL;
   }
 
