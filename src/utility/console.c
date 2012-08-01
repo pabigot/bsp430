@@ -201,7 +201,7 @@ cprintf (const char *fmt, ...)
 xBSP430serialHandle
 xBSP430consoleInitialize (void)
 {
-  xBSP430periphHandle periph = xBSP430periphFromHPL((void*)
+  xBSP430periphHandle periph = xBSP430periphFromHPL(
 #if configBSP430_SERIAL_USE_USCI - 0
                                BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci
 #endif /* configBSP430_SERIAL_USE_USCI */

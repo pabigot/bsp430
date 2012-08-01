@@ -136,7 +136,7 @@ typedef int xBSP430periphHandle;
  * peripheral-specific functions like xBSP430periphLookupTIMER().
  *
  * @param hpl Hardware presentation layer handle.  This is generally a
- * pointer to a volatile structure; the presence of the volatile
+ * pointer to a volatile structure; the absence of the volatile
  * qualifier would require that it be explicitly cast when used as
  * this argument.
  *
@@ -145,9 +145,9 @@ typedef int xBSP430periphHandle;
  * peripheral. */
 static xBSP430periphHandle
 __inline__
-xBSP430periphFromHPL (void * hpl)
+xBSP430periphFromHPL (volatile void * hpl)
 {
-  return (xBSP430periphHandle)hpl;
+  return (xBSP430periphHandle)(uintptr_t)hpl;
 }
 
 /* Forward declarations */
