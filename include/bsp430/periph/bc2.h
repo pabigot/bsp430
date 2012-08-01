@@ -61,6 +61,70 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_BC2__ */
 
+/** @def configBSP430_BC2_TRIM_TO_MCLK
+ *
+ * Define to a true value to request that ulBSP430bc2TrimToMCLK_ni()
+ * be made available.
+ *
+ * Because implementation of this function depends on
+ * #BSP430_TIMER_CCACLK, setting this option causes
+ * <bsp430/platform/bsp430_config.h> to default
+ * #configBSP430_TIMER_CCACLK to true.
+ *
+ * This value represents an application or system request for the
+ * feature; availability of the feature must be tested using
+ * #BSP430_BC2_TRIM_TO_MCLK before attempting to invoke the function.
+ *
+ * @default
+ */
+#ifndef configBSP430_BC2_TRIM_TO_MCLK
+#define configBSP430_BC2_TRIM_TO_MCLK 0
+#endif /* configBSP430_BC2_TRIM_TO_MCLK */
+
+#if (configBSP430_BC2_TRIM_TO_MCLK - 0) && ! (configBSP430_TIMER_CCACLK - 0)
+#warning configBSP430_BC2_TRIM_TO_MCLK requested without configBSP430_TIMER_CCACLK
+#endif /* configBSP430_BC2_TRIM_TO_MCLK */
+
+/** @def BSP430_BC2_TRIM_TO_MCLK
+ *
+ * Defined to a true value if #configBSP430_BC2_TRIM_TO_MCLK was requested
+ * and #BSP430_TIMER_CCACLK is available on the platform.
+ *
+ * In the absence of this flag, iBSP430bc2TrimToMCLK_ni() will not be
+ * available and must not be referenced.
+ *
+ * @dependency #configBSP430_BC2_TRIM_TO_MCLK, #BSP430_TIMER_CCACLK
+ * @platformdefault
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_BC2_TRIM_TO_MCLK include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_BC2_TRIM_TO_MCLK - 0)
+/** Adjust the DCO as necessary to reach the requested MCLK speed
+ *
+ * nThe BC2 peripheral supports only a small number of calibrated DCO
+ * clock frequencies, and it is not uncommon for them to be off by a
+ * significant amount for the cheaper ValueLine MCUs.  If an ACLK
+ * source at a trusted rate is available, the MCU can implement a loop
+ * to converge on a DCO configuration that supports a specific
+ * requested clock speed.
+ * 
+ * @return 0 if the requested speed could be reached, -1 if an error
+ * occurred.  Potential errors are inability to access
+ * #BSP430_TIMER_CACLK_PERIPH_HANDLE.
+ *
+ * @warning The accuracy of the resulting frequency is proportional to
+ * the accuracy of the returned value of #usBSP430clockACLK_Hz_ni().
+ * If ACLK derives from VLOCLK, that estimate may be off by several
+ * percent, which will generally result in serial errors if SMCLK is
+ * used to generate a baud rate clock.
+ *
+ * @dependency #BSP430_BC2_TRIM_TO_MCLK, #BSP430_TIMER_CCACLK
+ */
+int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
+#endif /* configBSP430_BC2_TRIM_TO_MCLK */
+
 #undef BSP430_CLOCK_LFXT1_IS_FAULTED
 /** Check whether the LFXT1 crystal has a fault condition.
  *

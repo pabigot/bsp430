@@ -68,6 +68,30 @@ void main ()
   cputu_ni(BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC, 10);
   cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS: ");
   cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS, 10);
+#if defined(__MSP430_HAS_BC2__)
+#if configBSP430_BC2_TRIM_TO_MCLK - 0
+  cputtext_ni("\nconfigBSP430_BC2_TRIM_TO_MCLK: 1");
+#else /* configBSP430_BC2_TRIM_TO_MCLK */
+  cputtext_ni("\nconfigBSP430_BC2_TRIM_TO_MCLK: 0");
+#endif /* configBSP430_BC2_TRIM_TO_MCLK */
+#if BSP430_BC2_TRIM_TO_MCLK - 0
+  cputtext_ni("\nBSP430_BC2_TRIM_TO_MCLK: 1");
+#else /* BSP430_BC2_TRIM_TO_MCLK */
+  cputtext_ni("\nBSP430_BC2_TRIM_TO_MCLK: 0");
+#endif /* BSP430_BC2_TRIM_TO_MCLK */
+#endif /* BC2 */
+#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
+#if configBSP430_UCS_TRIM_DCOCLKDIV - 0
+  cputtext_ni("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 1");
+#else /* configBSP430_UCS_TRIM_DCOCLKDIV */
+  cputtext_ni("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 0");
+#endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
+#if BSP430_UCS_TRIM_DCOCLKDIV - 0
+  cputtext_ni("\nBSP430_UCS_TRIM_DCOCLKDIV: 1");
+#else /* BSP430_UCS_TRIM_DCOCLKDIV */
+  cputtext_ni("\nBSP430_UCS_TRIM_DCOCLKDIV: 0");
+#endif /* BSP430_UCS_TRIM_DCOCLKDIV */
+#endif /* UCS */
 
   cputtext_ni("\nBSP430_CLOCK_PUC_MCLK_HZ: ");
   cputul_ni(BSP430_CLOCK_PUC_MCLK_HZ, 10);
@@ -155,6 +179,7 @@ void main ()
   cputu_ni(BCSCTL2, 16);
   cputtext_ni(" CTL3  ");
   cputu_ni(BCSCTL3, 16);
+
 #endif
 
 #if defined(__MSP430_HAS_FLL__) || defined(__MSP430_HAS_FLLPLUS__)

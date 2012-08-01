@@ -120,7 +120,7 @@
  * In the absence of this flag, ulBSP430uscTrimDCOCLKDIV_ni() will not be
  * available and must not be referenced.
  *
- * @dependency #configBSP430_UCS_TRIM_DCOCLKDIV
+ * @dependency #configBSP430_UCS_TRIM_DCOCLKDIV, #BSP430_TIMER_CCACLK
  * @platformdefault
  */
 #if defined(BSP430_DOXYGEN)
@@ -155,7 +155,7 @@
  * that is faulted and inability to access
  * #BSP430_TIMER_CACLK_PERIPH_HANDLE.
  *
- * @dependency #BSP430_UCS_TRIM_DCOCLKDIV, #BSP430_TIMER_CCACLK
+ * @dependency #BSP430_UCS_TRIM_DCOCLKDIV
  */
 int iBSP430ucsTrimDCOCLKDIV_ni ();
 #endif /* configBSP430_UCS_TRIM_DCOCLKDIV */

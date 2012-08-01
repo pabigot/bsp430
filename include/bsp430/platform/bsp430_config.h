@@ -75,6 +75,13 @@
 #endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
 #endif /* UCS */
 
+/* BC2 feature request also requires CCACLK be enabled */
+#if configBSP430_BC2_TRIM_TO_MCLK - 0
+#ifndef configBSP430_TIMER_CCACLK
+#define configBSP430_TIMER_CCACLK 1
+#endif /* configBSP430_TIMER_CCACLK */
+#endif /* configBSP430_BC2_TRIM_TO_MCLK */
+
 /* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */

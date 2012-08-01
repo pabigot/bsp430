@@ -346,6 +346,33 @@ typedef enum eBSP430clockSource {
  * frequency as close as possible to the requested frequency.  The
  * actual frequency may be higher or lower than the requested one.
  *
+ * Peripheral-specific notes:
+ * <ul>
+
+ * <li>The <bsp430/periph/bc2.h> implementation (2xx family) is
+ * normally limited to the calibrated DCO values recorded within the
+ * MCU, which are a subset of 1 MHz, 8 MHz, 12 MHz, and 16 MHz.  The
+ * peripheral will initially be configured to the closest available
+ * calibrated frequency.  Where a crystal is available
+ * #configBSP430_BC2_TRIM_TO_MCLK may be used to allow this routine to
+ * adjust the DCO to match the specific frequency as closely as
+ * possible.  The invocation of iBSP430bc2TrimToMCLK_ni() that is used
+ * to do this is inhibited if ACLK appears to derive from VLOCLK.
+ *
+ * <li>The <bsp430/periph/fllplus.h> implementation (4xx family)
+ * relies on presence of a stable LFXT1, and configures to the
+ * requested frequency.
+ *
+ * <li>The <bsp430/periph/ucs.h> implementation (5xx/6xx family) will
+ * set the configuration to the power-up defaults unless
+ * #BSP430_UCS_TRIM_DCOCLKDIV is available.  If it is, then any
+ * frequency supported by the MCU may be configured.
+ *
+ * <li>The <bsp430/periph/cs.h> implementation (FR5xx family) will
+ * select the closest calibrated frequency supported by the MCU.
+ * There is no facility for adjusting this to an arbitrary frequency.
+ * </ul>
+ *
  * @note Although passing @a mclk_Hz zero is a short-hand for using
  * #BSP430_CLOCK_PUC_MCLK_HZ, the result may not be to restore the
  * clock to its power-up configuration.  To avoid manipulating the

@@ -31,6 +31,9 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/periph/bc2.h>
+#if BSP430_BC2_TRIM_TO_MCLK - 0
+#include <bsp430/periph/timer_.h>
+#endif /* BSP430_BC2_TRIM_TO_MCLK */
 
 /** The last frequency configured using #ulBSP430clockConfigureMCLK_ni */
 static unsigned long configuredMCLK_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
@@ -106,17 +109,22 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
 unsigned short
 usBSP430clockACLK_Hz_ni (void)
 {
+  unsigned short clk_hz;
+  int diva = (BCSCTL1 & DIVA_3) / DIVA0;
   switch (BCSCTL3 & SELA_MASK) {
     default:
     case LFXT1S_0:
       if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
-        return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+        clk_hz = BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+      } else {
+        clk_hz = BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
       }
-      return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+      break;
     case LFXT1S_2:
-      return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+      clk_hz = BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+      break;
   }
-  return 0;
+  return clk_hz >> diva;
 }
 
 int
@@ -154,16 +162,76 @@ ulBSP430clockMCLK_Hz_ni (void)
   return configuredMCLK_Hz;
 }
 
+#if BSP430_BC2_TRIM_TO_MCLK - 0
+
+int
+iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
+{
+  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  const int MAX_ITERATIONS = 16 * 256;
+  int rv = -1;
+  unsigned int aclk_Hz;
+  int iter = 0;
+  const int SAMPLE_PERIOD_ACLK = 10;
+  unsigned int target_tsp;
+
+  if (! tp) {
+    return -1;
+  }
+
+  aclk_Hz = usBSP430clockACLK_Hz_ni();
+  target_tsp = (SAMPLE_PERIOD_ACLK * mclk_Hz) / aclk_Hz;
+  tp->ctl = TASSEL_2 | MC_2 | TACLR;
+  /* SELM = DCOCLK; DIVM = /1 */
+  BCSCTL2 &= ~(SELM_MASK | DIVM_MASK);
+  P1SEL &= ~(BIT0 | BIT6);
+  P1DIR |= BIT0 | BIT6 ;
+  P1OUT &= ~BIT0;
+  P1OUT |= BIT6;
+  while (iter++ < MAX_ITERATIONS) {
+    unsigned int freq_tsp;
+    P1OUT ^= BIT0 | BIT6;
+    freq_tsp = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
+                                            BSP430_TIMER_CCACLK_CC_INDEX,
+                                            CM_2,
+                                            BSP430_TIMER_CCACLK_CCIS,
+                                            SAMPLE_PERIOD_ACLK);
+    if (freq_tsp == target_tsp) {
+      configuredMCLK_Hz = mclk_Hz;
+      rv = 0;
+      break;
+    }
+    if (target_tsp < freq_tsp) {
+      /* DCO too fast.  Decrement modulator; if underflowed,
+       * decrement RSEL */
+      if (0xFF == --DCOCTL) {
+        --BCSCTL1;
+      }
+    } else {
+      /* DCO too slow.  Increment modulator; if overflowed,
+       * increment RSEL */
+      if (0 == ++DCOCTL) {
+        ++BCSCTL1;
+      }
+    }
+  }
+  tp->ctl = 0;
+  return rv;
+}
+#endif /* BSP430_BC2_TRIM_TO_MCLK */
+
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
   unsigned char dcoctl;
   unsigned char bcsctl1;
   unsigned long error_Hz;
+  int use_trim_to_mclk = 1;
   long freq_Hz;
 
   if (0 == mclk_Hz) {
     mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
+    use_trim_to_mclk = 0;
   }
   /* Power-up defaults */
   dcoctl = 0x60;
@@ -209,6 +277,14 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   /* SELM = DCOCLK; DIVM = /1 */
   BCSCTL2 &= ~(SELM_MASK | DIVM_MASK);
   configuredMCLK_Hz = freq_Hz;
+
+  if (use_trim_to_mclk) {
+#if BSP430_BC2_TRIM_TO_MCLK - 0
+    if (! BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+      (void)iBSP430bc2TrimToMCLK_ni(mclk_Hz);
+    }
+#endif /* BSP430_BC2_TRIM_TO_MCLK */
+  }
 
   /* Spin until DCO faults cleared */
   do {
