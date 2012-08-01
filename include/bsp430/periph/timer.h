@@ -341,37 +341,37 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
  * be unresolved at compile time, which is a fair error message.
  */
 #if defined(__MSP430_HAS_T0A3__)
-#define _BSP430_PERIPH_TA0_BASEADDRESS __MSP430_BASEADDRESS_T0A3__
+#define BSP430_PERIPH_TA0_BASEADDRESS_ __MSP430_BASEADDRESS_T0A3__
 #else /* TA0 */
-#define _BSP430_PERIPH_TA0_BASEADDRESS __MSP430_BASEADDRESS_T0A5__
+#define BSP430_PERIPH_TA0_BASEADDRESS_ __MSP430_BASEADDRESS_T0A5__
 #endif /* TA0 */
 
 #if defined(__MSP430_HAS_T1A2__)
-#define _BSP430_PERIPH_TA1_BASEADDRESS __MSP430_BASEADDRESS_T1A2__
+#define BSP430_PERIPH_TA1_BASEADDRESS_ __MSP430_BASEADDRESS_T1A2__
 #else /* TA1 */
-#define _BSP430_PERIPH_TA1_BASEADDRESS __MSP430_BASEADDRESS_T1A3__
+#define BSP430_PERIPH_TA1_BASEADDRESS_ __MSP430_BASEADDRESS_T1A3__
 #endif /* TA1 */
 
 #if defined(__MSP430_HAS_T2A2__)
-#define _BSP430_PERIPH_TA2_BASEADDRESS __MSP430_BASEADDRESS_T2A2__
+#define BSP430_PERIPH_TA2_BASEADDRESS_ __MSP430_BASEADDRESS_T2A2__
 #else /* TA2 */
-#define _BSP430_PERIPH_TA2_BASEADDRESS __MSP430_BASEADDRESS_T2A3__
+#define BSP430_PERIPH_TA2_BASEADDRESS_ __MSP430_BASEADDRESS_T2A3__
 #endif /* TA2 */
 
 #if defined(__MSP430_HAS_T3A2__)
-#define _BSP430_PERIPH_TA3_BASEADDRESS __MSP430_BASEADDRESS_T3A2__
+#define BSP430_PERIPH_TA3_BASEADDRESS_ __MSP430_BASEADDRESS_T3A2__
 #else /* TA3 */
-#define _BSP430_PERIPH_TA3_BASEADDRESS __MSP430_BASEADDRESS_T3A3__
+#define BSP430_PERIPH_TA3_BASEADDRESS_ __MSP430_BASEADDRESS_T3A3__
 #endif /* TA3 */
 
 #if defined(__MSP430_HAS_T0B3__)
-#define _BSP430_PERIPH_TB0_BASEADDRESS __MSP430_BASEADDRESS_T0B3__
+#define BSP430_PERIPH_TB0_BASEADDRESS_ __MSP430_BASEADDRESS_T0B3__
 #else /* TB0 */
-#define _BSP430_PERIPH_TB0_BASEADDRESS __MSP430_BASEADDRESS_T0B7__
+#define BSP430_PERIPH_TB0_BASEADDRESS_ __MSP430_BASEADDRESS_T0B7__
 #endif /* TB0 */
 
-#define _BSP430_PERIPH_TB1_BASEADDRESS __MSP430_BASEADDRESS_T1B3__
-#define _BSP430_PERIPH_TB2_BASEADDRESS __MSP430_BASEADDRESS_T2B3__
+#define BSP430_PERIPH_TB1_BASEADDRESS_ __MSP430_BASEADDRESS_T1B3__
+#define BSP430_PERIPH_TB2_BASEADDRESS_ __MSP430_BASEADDRESS_T2B3__
 
 #else /* MSP430XV2 */
 
@@ -379,12 +379,12 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
  * Fortunately, all the variants are at the same address in these
  * families (in 5xx there are a couple chips with different addresses
  * for TA0). */
-#define _BSP430_PERIPH_TA0_BASEADDRESS 0x0160
+#define BSP430_PERIPH_TA0_BASEADDRESS_ 0x0160
 /* In some chips (e.g., msp430g2553) there are two Timer_As, and the
  * second is located at the same address as Timer_B in other chips in
  * the family.  There are no MCUs of this type that have a Timer_B. */
-#define _BSP430_PERIPH_TA1_BASEADDRESS 0x0180
-#define _BSP430_PERIPH_TB0_BASEADDRESS 0x0180
+#define BSP430_PERIPH_TA1_BASEADDRESS_ 0x0180
+#define BSP430_PERIPH_TB0_BASEADDRESS_ 0x0180
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
@@ -632,7 +632,7 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA0 - 0)
-#define BSP430_PERIPH_TA0 ((xBSP430periphHandle)(_BSP430_PERIPH_TA0_BASEADDRESS))
+#define BSP430_PERIPH_TA0 ((xBSP430periphHandle)(BSP430_PERIPH_TA0_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_TA0 */
 
 /** Pointer to the peripheral register map for TA0.
@@ -642,7 +642,7 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA0 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS;
+static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA0_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_TA0 */
 
 /** @def configBSP430_PERIPH_TA1
@@ -671,7 +671,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA1 - 0)
-#define BSP430_PERIPH_TA1 ((xBSP430periphHandle)(_BSP430_PERIPH_TA1_BASEADDRESS))
+#define BSP430_PERIPH_TA1 ((xBSP430periphHandle)(BSP430_PERIPH_TA1_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_TA1 */
 
 /** Pointer to the peripheral register map for TA1.
@@ -681,7 +681,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA1 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS;
+static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA1_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_TA1 */
 
 /** @def configBSP430_PERIPH_TA2
@@ -710,7 +710,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA2 - 0)
-#define BSP430_PERIPH_TA2 ((xBSP430periphHandle)(_BSP430_PERIPH_TA2_BASEADDRESS))
+#define BSP430_PERIPH_TA2 ((xBSP430periphHandle)(BSP430_PERIPH_TA2_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_TA2 */
 
 /** Pointer to the peripheral register map for TA2.
@@ -720,7 +720,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA2 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS;
+static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA2_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_TA2 */
 
 /** @def configBSP430_PERIPH_TA3
@@ -749,7 +749,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA3 - 0)
-#define BSP430_PERIPH_TA3 ((xBSP430periphHandle)(_BSP430_PERIPH_TA3_BASEADDRESS))
+#define BSP430_PERIPH_TA3 ((xBSP430periphHandle)(BSP430_PERIPH_TA3_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_TA3 */
 
 /** Pointer to the peripheral register map for TA3.
@@ -759,7 +759,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA3 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS;
+static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA3_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_TA3 */
 
 /** @def configBSP430_PERIPH_TB0
@@ -788,7 +788,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB0 - 0)
-#define BSP430_PERIPH_TB0 ((xBSP430periphHandle)(_BSP430_PERIPH_TB0_BASEADDRESS))
+#define BSP430_PERIPH_TB0 ((xBSP430periphHandle)(BSP430_PERIPH_TB0_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_TB0 */
 
 /** Pointer to the peripheral register map for TB0.
@@ -798,7 +798,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB0 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS;
+static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TB0_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_TB0 */
 
 /** @def configBSP430_PERIPH_TB1
@@ -827,7 +827,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB1 - 0)
-#define BSP430_PERIPH_TB1 ((xBSP430periphHandle)(_BSP430_PERIPH_TB1_BASEADDRESS))
+#define BSP430_PERIPH_TB1 ((xBSP430periphHandle)(BSP430_PERIPH_TB1_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_TB1 */
 
 /** Pointer to the peripheral register map for TB1.
@@ -837,7 +837,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB1 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS;
+static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TB1_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_TB1 */
 
 /** @def configBSP430_PERIPH_TB2
@@ -866,7 +866,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB2 - 0)
-#define BSP430_PERIPH_TB2 ((xBSP430periphHandle)(_BSP430_PERIPH_TB2_BASEADDRESS))
+#define BSP430_PERIPH_TB2 ((xBSP430periphHandle)(BSP430_PERIPH_TB2_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_TB2 */
 
 /** Pointer to the peripheral register map for TB2.
@@ -876,7 +876,7 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB2 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS;
+static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TB2_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

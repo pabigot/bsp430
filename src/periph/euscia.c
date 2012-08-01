@@ -295,7 +295,7 @@ euscia_isr (xBSP430eusciaHandle device)
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_HAL_EUSCI_A0 - 0
 static struct xBSP430eusciaState state_EUSCI_A0_ = {
-  .euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A0_BASEADDRESS
+  .euscia = (xBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A0_BASEADDRESS_
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
@@ -303,7 +303,7 @@ xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
 
 #if configBSP430_HAL_EUSCI_A1 - 0
 static struct xBSP430eusciaState state_EUSCI_A1_ = {
-  .euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A1_BASEADDRESS
+  .euscia = (xBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A1_BASEADDRESS_
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
@@ -311,7 +311,7 @@ xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
 
 #if configBSP430_HAL_EUSCI_A2 - 0
 static struct xBSP430eusciaState state_EUSCI_A2_ = {
-  .euscia = (xBSP430periphEUSCIA *)_BSP430_PERIPH_EUSCI_A2_BASEADDRESS
+  .euscia = (xBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A2_BASEADDRESS_
 };
 
 xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;

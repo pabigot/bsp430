@@ -63,7 +63,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA0 */
 } state_TA0_ = {
-  .state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA0_BASEADDRESS }
+  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA0_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_.state;
@@ -81,7 +81,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA1 */
 } state_TA1_ = {
-  .state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA1_BASEADDRESS }
+  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA1_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_.state;
@@ -99,7 +99,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA2 */
 } state_TA2_ = {
-  .state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA2_BASEADDRESS }
+  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA2_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_.state;
@@ -117,7 +117,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA3 */
 } state_TA3_ = {
-  .state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TA3_BASEADDRESS }
+  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA3_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_.state;
@@ -133,7 +133,7 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB0 */
 } state_TB0_ = {
-  .state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB0_BASEADDRESS }
+  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TB0_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_.state;
@@ -149,7 +149,7 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB1 */
 } state_TB1_ = {
-  .state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB1_BASEADDRESS }
+  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TB1_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_.state;
@@ -165,7 +165,7 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB2 */
 } state_TB2_ = {
-  .state = { .timer = (xBSP430periphTIMER *)_BSP430_PERIPH_TB2_BASEADDRESS }
+  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TB2_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;

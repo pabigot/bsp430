@@ -53,7 +53,7 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_%(INSTANCE)s - 0)
-#define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS))
+#define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 
 /** Pointer to the peripheral register map for %(INSTANCE)s.
@@ -63,7 +63,7 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_%(INSTANCE)s - 0)
-static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS;
+static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile xBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
     
@@ -194,7 +194,7 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (vo
 
     'hal_ba_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
-  .%(periph)s = (xBSP430periph%(PERIPH)s *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS
+  .%(periph)s = (xBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_
 };
 
 xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
@@ -254,7 +254,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 
     'hal_port_5xx_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct xBSP430portState state_%(INSTANCE)s = {
-  .port = (volatile xBSP430periphPORTIE *)_BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS,
+  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_,
 };
 xBSP430portHandle const xBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */

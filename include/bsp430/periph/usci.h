@@ -71,10 +71,10 @@ typedef struct xBSP430periphUSCI {
 } xBSP430periphUSCI;
 
 /** @cond DOXYGEN_INTERNAL */
-#define _BSP430_PERIPH_USCI_A0_BASEADDRESS 0x0060
-#define _BSP430_PERIPH_USCI_A1_BASEADDRESS 0x00d0
-#define _BSP430_PERIPH_USCI_B0_BASEADDRESS 0x0068
-#define _BSP430_PERIPH_USCI_B1_BASEADDRESS 0x00d8
+#define BSP430_PERIPH_USCI_A0_BASEADDRESS_ 0x0060
+#define BSP430_PERIPH_USCI_A1_BASEADDRESS_ 0x00d0
+#define BSP430_PERIPH_USCI_B0_BASEADDRESS_ 0x0068
+#define BSP430_PERIPH_USCI_B1_BASEADDRESS_ 0x00d8
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
 /* Forward declaration to hardware abstraction layer state for USCI_A/USCI_B. */
@@ -204,7 +204,7 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_A0 - 0)
-#define BSP430_PERIPH_USCI_A0 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A0_BASEADDRESS))
+#define BSP430_PERIPH_USCI_A0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_A0_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_USCI_A0 */
 
 /** Pointer to the peripheral register map for USCI_A0.
@@ -214,7 +214,7 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_A0 - 0)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A0_BASEADDRESS;
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_A0_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_USCI_A0 */
 
 /** @def configBSP430_PERIPH_USCI_A1
@@ -243,7 +243,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_A1 - 0)
-#define BSP430_PERIPH_USCI_A1 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_A1_BASEADDRESS))
+#define BSP430_PERIPH_USCI_A1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_A1_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_USCI_A1 */
 
 /** Pointer to the peripheral register map for USCI_A1.
@@ -253,7 +253,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = (volatile xBSP
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_A1 - 0)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_A1_BASEADDRESS;
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_A1_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_USCI_A1 */
 
 /** @def configBSP430_PERIPH_USCI_B0
@@ -282,7 +282,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_B0 - 0)
-#define BSP430_PERIPH_USCI_B0 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B0_BASEADDRESS))
+#define BSP430_PERIPH_USCI_B0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_B0_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_USCI_B0 */
 
 /** Pointer to the peripheral register map for USCI_B0.
@@ -292,7 +292,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = (volatile xBSP
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_B0 - 0)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B0_BASEADDRESS;
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_B0_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_USCI_B0 */
 
 /** @def configBSP430_PERIPH_USCI_B1
@@ -321,7 +321,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_B1 - 0)
-#define BSP430_PERIPH_USCI_B1 ((xBSP430periphHandle)(_BSP430_PERIPH_USCI_B1_BASEADDRESS))
+#define BSP430_PERIPH_USCI_B1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_B1_BASEADDRESS_))
 #endif /* configBSP430_PERIPH_USCI_B1 */
 
 /** Pointer to the peripheral register map for USCI_B1.
@@ -331,7 +331,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = (volatile xBSP
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI_B1 - 0)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP430periphUSCI *)_BSP430_PERIPH_USCI_B1_BASEADDRESS;
+static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = (volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_B1_BASEADDRESS_;
 #endif /* configBSP430_PERIPH_USCI_B1 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
