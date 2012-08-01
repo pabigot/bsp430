@@ -146,7 +146,7 @@
  *
  * Defined to a true value if ACLK-triggered timer captures are
  * supported using the platform-specific values of:
- * 
+ *
  * <ul>
  * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * <li>#BSP430_TIMER_CCACLK_IS_TA0
@@ -275,10 +275,10 @@
  * unrecognized or stopped.  Otherwise the delta in the counter of the
  * timer over @a count captures. */
 unsigned int uiBSP430timerCaptureDelta_ni (xBSP430periphHandle periph,
-                                           int ccidx,
-                                           unsigned int capture_mode,
-                                           unsigned int ccis,
-                                           unsigned int count);
+    int ccidx,
+    unsigned int capture_mode,
+    unsigned int ccis,
+    unsigned int count);
 
 /** Layout for Timer_A and Timer_B peripherals.
  */

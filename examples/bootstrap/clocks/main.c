@@ -189,7 +189,7 @@ void main ()
           UCSCTL0, UCSCTL1, UCSCTL2, UCSCTL3,
           UCSCTL4, UCSCTL5, UCSCTL6, UCSCTL7);
 #endif
-  
+
 #if defined(__MSP430_HAS_CS__)
   cprintf("\nCS RSEL %d DCOFSEL %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"

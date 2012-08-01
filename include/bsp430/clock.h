@@ -203,7 +203,7 @@
  *
  * @return the value of ulBSP430clockMCLK_Hz_ni() after any trimming,
  * or zero if trimming could not be performed.
- * 
+ *
  * @dependency #BSP430_CLOCK_TRIM_FLL, #BSP430_TIMER_CCACLK
  */
 unsigned long ulBSP430clockTrimFLL_ni ();
@@ -487,7 +487,7 @@ int iBSP430clockConfigureLFXT1_ni (int enablep,
  *
  * The peripheral-specific implementation will configure ACLK to
  * source from the specified platform-specific value.
- * 
+ *
  * @param sela the configuration bits to be set to select the clock.
  * Depending on the underlying clock peripheral, this may be a value
  * like #SELA_0 or a value like #LFXT1S_0.  The configuration will be

@@ -46,7 +46,7 @@
  * href="http://www.ti.com/general/docs/lit/getliterature.tsp?baseLiteratureNumber=SLAU208&track=no">MSP430
  * 5xx/6xx Family Users Guide</a> for further details:
  * <ul>
- * 
+ *
  * <li>The FLL reference clock may be LFXT1 or REFO; see
  * #configBSP430_UCS_FLLREFCLK_IS_XT1CLK.  FLLREFDIV is /1.
  *
@@ -68,7 +68,7 @@
  * dividers as read from the UCS registers to the recorded measured
  * clock frequency.
  *
- * </ul> 
+ * </ul>
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc

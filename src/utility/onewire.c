@@ -33,7 +33,7 @@
 #include <bsp430/clock.h>
 
 /** Define protocol state times in microseconds.
- * 
+ *
  * @note Since all these times are far less than any sane watchdog
  * interval, and the timing can be important, BSP430_CORE_DELAY_CYCLES
  * is not used in this module. */

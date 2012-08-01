@@ -79,7 +79,7 @@ ulBSP430csDCOCLK_Hz_ni (void)
 
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
-{  
+{
   unsigned int divm = (CSCTL3 & DIVM_MASK) / DIVM0;
   return ulBSP430csDCOCLK_Hz_ni() >> divm;
 }
