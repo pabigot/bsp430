@@ -48,12 +48,26 @@
 
 #include <bsp430/periph/port.h>
 
+/** @def BSP430_ONEWIRE_PORT_TYPE
+ *
+ * The HPL structure used for ports to which onewire devices are attached.
+ *
+ * This should be defined to be one of #xBSP430periphPORT,
+ * #xBSP430periphPORTW, #xBSP430periphPORTIE.  Only one port type is
+ * supported for onewire devices within any application.
+ *
+ * @defaulted
+ */
+#ifndef BSP430_ONEWIRE_PORT_TYPE
+#define BSP430_ONEWIRE_PORT_TYPE xBSP430periphPORTIE
+#endif /* BSP430_ONEWIRE_PORT_TYPE */
+
 /** Structure identifying 1-wire bus information. */
 typedef struct xBSP430onewireBus {
   /** The peripheral port containing the bus */
-  volatile xBSP430periphPORT * const port;
+  volatile BSP430_ONEWIRE_PORT_TYPE * const port;
   /** The pin by which the bus is connected to the MCU */
-  unsigned char bit;
+  unsigned int bit;
 } xBSP430onewireBus;
 
 enum {
