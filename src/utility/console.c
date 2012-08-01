@@ -203,15 +203,15 @@ xBSP430consoleInitialize (void)
 {
   xBSP430periphHandle periph = xBSP430periphFromHPL(
 #if configBSP430_SERIAL_USE_USCI - 0
-                               BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci
+                                 BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci
 #endif /* configBSP430_SERIAL_USE_USCI */
 #if configBSP430_SERIAL_USE_USCI5 - 0
-                               BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci5
+                                 BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci5
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 #if configBSP430_SERIAL_USE_EUSCIA - 0
-                               BSP430_CONSOLE_SERIAL_HAL_HANDLE->euscia
+                                 BSP430_CONSOLE_SERIAL_HAL_HANDLE->euscia
 #endif /* configBSP430_SERIAL_USE_EUSCIA */
-                                                   );
+                               );
   xBSP430serialHandle hal;
 
   hal = xBSP430serialOpenUART(periph, 0, BSP430_CONSOLE_BAUD_RATE);

@@ -327,7 +327,7 @@ unsigned long ulBSP430clockTrimFLL_ni ();
  *
  * Nominal rate of a secondary external clock.  This must be defined
  * externally if #eBSP430clockSEL_XT2CLK is to be used.
- * 
+ *
  * @nodefault */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CLOCK_NOMINAL_XT2CLK_HZ must be externally provided
@@ -407,14 +407,14 @@ typedef enum eBSP430clockSource {
    * VLOCLK if the crystal is faulted, but using the resulting ACLK as
    * a timer source will not work. */
   eBSP430clockSRC_XT1CLK_OR_VLOCLK,
-  
+
   /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED() is
    * false, otherwise use REFOCLK.
    *
    * Similar to #eBSP430clockSRC_XT1CLK_OR_VLOCLK for UCS-based
    * systems. */
   eBSP430clockSRC_XT1CLK_OR_REFOCLK,
-  
+
 } eBSP430clockSource;
 
 /** Configure MCLK to a desired frequency.
@@ -567,7 +567,7 @@ int iBSP430clockConfigureLFXT1_ni (int enablep,
  * platform.
  *
  * @return 0 if the configuration was accepted, a negative error if it
- * was rejected.  
+ * was rejected.
  */
 int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel);
 

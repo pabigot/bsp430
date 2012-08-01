@@ -61,7 +61,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   unsigned int fn_x = 0;
   int dcoplus = 0;
   unsigned int dcoclk_xt1 = (mclk_Hz + BSP430_CLOCK_NOMINAL_XT1CLK_HZ / 2) / BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
-  
+
   /* Convert a value in MHz to the same value in ticks of LXFT1 */
 #define MHZ_TO_XT1(_n) (((_n)*1000000UL) / BSP430_CLOCK_NOMINAL_XT1CLK_HZ)
 
@@ -93,7 +93,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   }
   SCFQCTL = dcoclk_xt1 - 1;
   SCFI0 = (flld * FLLD0) | fn_x;
-  
+
   /* Spin until DCO faults cleared */
   do {
     IFG1 &= ~OFIFG;

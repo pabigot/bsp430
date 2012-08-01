@@ -161,9 +161,9 @@ void main ()
   cprintf("\nFLL: SCF QCTL %02x I0 %02x I1 %02x ; CTL0 %02x CTL1 %02x CTL2 %02x\n",
           SCFQCTL, SCFI0, SCFI1, FLL_CTL0, FLL_CTL1,
 #if defined(FLL_CTL2_)
-         FLL_CTL2
+          FLL_CTL2
 #else /* FLL_CTL2 */
-         ~0
+          ~0
 #endif /* FLL_CTL2 */
          );
 #endif /* FLL/PLUS */
