@@ -192,3 +192,34 @@ iBSP430onewireComputeCRC (const unsigned char * romp,
   }
   return crc;
 }
+
+int
+iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
+                                xBSP430onewireSerialNumber * snp)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv = -1;
+
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    int i;
+    uint8_t rom[8];
+    
+    if (! iBSP430onewireReset_ni(bus)) {
+      break;
+    }
+    vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_READ_ROM);
+    for (i = 0; i < sizeof(rom); ++i) {
+      rom[i] = iBSP430onewireReadByte_ni(bus);
+    }
+    if (0 == iBSP430onewireComputeCRC(rom, sizeof(rom))) {
+      for (i = 0; i < sizeof(snp->id); ++i) {
+        snp->id[i] = rom[sizeof(rom) - 2 - i];
+      }
+      rv = 0;
+    }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}

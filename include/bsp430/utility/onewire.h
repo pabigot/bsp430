@@ -70,6 +70,12 @@ typedef struct xBSP430onewireBus {
   unsigned int bit;
 } xBSP430onewireBus;
 
+/** Structure holding a 1-wire serial number. */
+typedef struct xBSP430onewireSerialNumber {
+  /** The serial number in order MSB to LSB */
+  uint8_t id[6];
+} xBSP430onewireSerialNumber;
+
 enum {
   /** Read 64-bit ROM code without using search procedure */
   BSP430_ONEWIRE_CMD_READ_ROM = 0x33,
@@ -157,5 +163,16 @@ int iBSP430onewireReadByte_ni (const xBSP430onewireBus * bus);
  *
  * @return the calculated CRC value */
 int iBSP430onewireComputeCRC (const unsigned char * data, int len);
+
+/** Read the serial number from a 1-wire device.
+ *
+ * @param bus The port and bit identifying the 1-wire bus
+ *
+ * @param snp Pointer to where the serial number should be stored
+ *
+ * @return 0 if the serial number was successfully read; -1 if an
+ * error occurred. */
+int iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
+                                    xBSP430onewireSerialNumber * snp);
 
 #endif /* BSP430_UTILITY_ONEWIRE_H */
