@@ -642,7 +642,9 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA0 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA0_BASEADDRESS_;
+/** Typed pointer to HPL structure for TA0 suitable for use in const initializers */
+#define BSP430_HPL_TA0 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA0)
+static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = BSP430_HPL_TA0;
 #endif /* configBSP430_PERIPH_TA0 */
 
 /** @def configBSP430_PERIPH_TA1
@@ -681,7 +683,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA1 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA1_BASEADDRESS_;
+/** Typed pointer to HPL structure for TA1 suitable for use in const initializers */
+#define BSP430_HPL_TA1 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA1)
+static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = BSP430_HPL_TA1;
 #endif /* configBSP430_PERIPH_TA1 */
 
 /** @def configBSP430_PERIPH_TA2
@@ -720,7 +724,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA2 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA2_BASEADDRESS_;
+/** Typed pointer to HPL structure for TA2 suitable for use in const initializers */
+#define BSP430_HPL_TA2 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA2)
+static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = BSP430_HPL_TA2;
 #endif /* configBSP430_PERIPH_TA2 */
 
 /** @def configBSP430_PERIPH_TA3
@@ -759,7 +765,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA3 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TA3_BASEADDRESS_;
+/** Typed pointer to HPL structure for TA3 suitable for use in const initializers */
+#define BSP430_HPL_TA3 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA3)
+static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = BSP430_HPL_TA3;
 #endif /* configBSP430_PERIPH_TA3 */
 
 /** @def configBSP430_PERIPH_TB0
@@ -798,7 +806,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB0 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TB0_BASEADDRESS_;
+/** Typed pointer to HPL structure for TB0 suitable for use in const initializers */
+#define BSP430_HPL_TB0 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TB0)
+static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = BSP430_HPL_TB0;
 #endif /* configBSP430_PERIPH_TB0 */
 
 /** @def configBSP430_PERIPH_TB1
@@ -837,7 +847,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB1 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TB1_BASEADDRESS_;
+/** Typed pointer to HPL structure for TB1 suitable for use in const initializers */
+#define BSP430_HPL_TB1 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TB1)
+static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = BSP430_HPL_TB1;
 #endif /* configBSP430_PERIPH_TB1 */
 
 /** @def configBSP430_PERIPH_TB2
@@ -876,7 +888,9 @@ static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = (volatile xBSP430
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB2 - 0)
-static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = (volatile xBSP430periphTIMER *)BSP430_PERIPH_TB2_BASEADDRESS_;
+/** Typed pointer to HPL structure for TB2 suitable for use in const initializers */
+#define BSP430_HPL_TB2 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TB2)
+static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = BSP430_HPL_TB2;
 #endif /* configBSP430_PERIPH_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

@@ -63,7 +63,9 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_%(INSTANCE)s - 0)
-static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = (volatile xBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_;
+/** Typed pointer to HPL structure for %(INSTANCE)s suitable for use in const initializers */
+#define BSP430_HPL_%(INSTANCE)s ((volatile xBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
+static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = BSP430_HPL_%(INSTANCE)s;
 #endif /* configBSP430_PERIPH_%(INSTANCE)s */
 ''',
     
