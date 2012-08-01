@@ -31,6 +31,7 @@
 
 #include <bsp430/platform/exp430fg4618.h>
 #include <bsp430/periph/fllplus.h>
+#include <bsp430/periph/usci.h>
 #include <bsp430/utility/led.h>
 
 const xBSP430led pxBSP430leds[] = {
@@ -62,6 +63,20 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+#if configBSP430_PERIPH_USCI_A0 - 0
+  else if (BSP430_PERIPH_USCI_A0 == device) {
+    bits = BIT4 | BIT5;
+    if (enablep) {
+      P2SEL |= bits;
+      P2DIR |= BIT4;
+      P2DIR &= BIT5;
+    } else {
+      P2SEL &= ~bits;
+      P2DIR |= bits;
+    }
+    return 0;
+  }
+#endif /* configBSP430_PERIPH_USCI_A0 */
   (void)bits;
   (void)pxsel;
   return -1;
