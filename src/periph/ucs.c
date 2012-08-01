@@ -407,10 +407,10 @@ usBSP430clockACLK_Hz_ni (void)
         return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
       }
       /*FALLTHRU*/
-    case SELA_1: /* VLOCLK */
-      return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
     case SELA_2: /* REFOCLK */
       return BSP430_UCS_NOMINAL_REFOCLK_HZ;
+    case SELA_1: /* VLOCLK */
+      return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
     case SELA_3: /* DCOCLK */
       return 2 * lastTrimDCOCLKDIV_Hz_;
     default:
