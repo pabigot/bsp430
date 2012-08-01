@@ -51,10 +51,18 @@ ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
   return ucReturnValue;
 }
 
+static unsigned long lastMCLK_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
+
+unsigned long
+ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
+{
+  return lastMCLK_Hz;
+}
+
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
-  return 0;
+  return lastMCLK_Hz;
 }
 
 int
@@ -75,6 +83,7 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
     FLL_CTL1 &= ~SELS;
   }
 #endif /* SELS */
+  /* Regardless, MCU doesn't support dividing SMCLK */
   return 0;
 }
 
@@ -85,6 +94,16 @@ usBSP430clockACLK_Hz_ni (void)
     return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
   }
   return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+}
+
+int
+iBSP430clockConfigureACLK_ni (unsigned int sela)
+{
+  /* Varies by MCU, but generally must use XT1 */
+  if (0 != sela) {
+    return -1;
+  }
+  return 0;
 }
 
 int
