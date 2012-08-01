@@ -102,7 +102,7 @@
  * @note This function is the only mechanism by which the UCS DCO can
  * be configured by BSP430.
  *
- * @default
+ * @defaulted
  */
 #ifndef configBSP430_UCS_TRIM_DCOCLKDIV
 #define configBSP430_UCS_TRIM_DCOCLKDIV 1
@@ -153,7 +153,7 @@
  * @return 0 if the trimming was completed successfully, -1 if an
  * error occurred.  Potential errors are a dependency on XT1CLK while
  * that is faulted and inability to access
- * #BSP430_TIMER_CACLK_PERIPH_HANDLE.
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
  * @dependency #BSP430_UCS_TRIM_DCOCLKDIV
  */

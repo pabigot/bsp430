@@ -35,15 +35,20 @@
  *
  * This module supports the BC2 ("Basic Clock Module+") peripheral,
  * which is present in 2xx-family devices.
+ * <ul>
  *
- * <li> For #ulBSP430clockConfigureMCLK_ni the only recognized
- * frequencies are 1 MHz, 8 MHz, 12 MHz, and 16 MHz.  Availability of a
- * given frequency depends on the specific MCU.  The selected
+ * <li>For #ulBSP430clockConfigureMCLK_ni the only recognized
+ * frequencies are 1 MHz, 8 MHz, 12 MHz, and 16 MHz.  Availability of
+ * a given frequency depends on the specific MCU.  The selected
  * frequency may be above or below the requested frequency, but will
- * be the closest supported by available calibrated clocks.
+ * be the closest supported by available calibrated clocks.  The
+ * selected frequency may also be refined if a stable crystal is
+ * available; see #configBSP430_BC2_TRIM_TO_MCLK.
  *
- * <li> The implementation assumes that MCLK and SMCLK are both
+ * <li>The implementation assumes that MCLK and SMCLK are both
  * sourced from DCOCLK.
+ *
+ * </ul>
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -75,7 +80,7 @@
  * feature; availability of the feature must be tested using
  * #BSP430_BC2_TRIM_TO_MCLK before attempting to invoke the function.
  *
- * @default
+ * @defaulted
  */
 #ifndef configBSP430_BC2_TRIM_TO_MCLK
 #define configBSP430_BC2_TRIM_TO_MCLK 0
@@ -109,16 +114,18 @@
  * source at a trusted rate is available, the MCU can implement a loop
  * to converge on a DCO configuration that supports a specific
  * requested clock speed.
- * 
+ *
  * @return 0 if the requested speed could be reached, -1 if an error
  * occurred.  Potential errors are inability to access
- * #BSP430_TIMER_CACLK_PERIPH_HANDLE.
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
  * @warning The accuracy of the resulting frequency is proportional to
  * the accuracy of the returned value of #usBSP430clockACLK_Hz_ni().
  * If ACLK derives from VLOCLK, that estimate may be off by several
  * percent, which will generally result in serial errors if SMCLK is
- * used to generate a baud rate clock.
+ * used to generate a baud rate clock.  You may wish to check
+ * #BSP430_CLOCK_LFXT1_IS_FAULTED() prior to invoking this, as is done
+ * by ulBSP430clockConfigureMCLK_ni() for this peripheral.
  *
  * @dependency #BSP430_BC2_TRIM_TO_MCLK, #BSP430_TIMER_CCACLK
  */

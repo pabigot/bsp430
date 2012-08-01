@@ -118,7 +118,7 @@
  * ("Modulation causes shift in DCO frequency").  The latter is
  * documented in <a href="http://www.ti.com/lit/pdf/SLAA489">UCS10
  * Guidance</a>.  The UCS implementation of
- * #ulBSP430ucsTrimDCOCLKDIV_ni() supports the UCS10 workaround.
+ * #iBSP430ucsTrimDCOCLKDIV_ni() supports the UCS10 workaround.
  *
  * Stability in the presence of UCS7 and UCS10 may be further enhanced
  * by setting this option.  It is made generic in case there are other
@@ -249,7 +249,7 @@
 /** @def BSP430_CLOCK_NOMINAL_XT2CLK_HZ
  *
  * Nominal rate of a secondary external clock.  This must be defined
- * externally if #eBSP430clockSEL_XT2CLK is to be used.
+ * externally if #eBSP430clockSRC_XT2CLK is to be used.
  *
  * @nodefault */
 #if defined(BSP430_DOXYGEN)
