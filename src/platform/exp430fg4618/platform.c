@@ -34,9 +34,10 @@
 #include <bsp430/utility/led.h>
 
 const xBSP430led pxBSP430leds[] = {
-  { .pucPxOUT = &P5OUT, .ucBIT = BIT1 }, /* Red */
-  { .pucPxOUT = &P2OUT, .ucBIT = BIT2 }, /* Green */
-  { .pucPxOUT = &P2OUT, .ucBIT = BIT1 }, /* Yellow */
+  { .pucPxOUT = &P2OUT, .ucBIT = BIT2 }, /* Green (LED1) */
+  { .pucPxOUT = &P2OUT, .ucBIT = BIT1 }, /* Yellow (LED2) */
+  /* LED3 is attached to msp430f2013 */
+  { .pucPxOUT = &P5OUT, .ucBIT = BIT1 }, /* Red (LED4) */
 };
 const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
 
@@ -61,6 +62,8 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+  (void)bits;
+  (void)pxsel;
   return -1;
 }
 

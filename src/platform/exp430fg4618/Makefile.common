@@ -1,0 +1,4 @@
+MCU=msp430fg4618
+MSPDEBUG_DRIVER=-j uif
+MODULES_CLOCK=periph/fllplus
+MODULES_SERIAL=periph/usci

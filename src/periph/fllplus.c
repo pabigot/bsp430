@@ -30,21 +30,20 @@
  */
 
 #include <bsp430/periph/fllplus.h>
+#include <bsp430/platform.h>
 
 unsigned char
 ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
 {
   unsigned char ucReturnValue;
-  unsigned int uxStableLoopsLeft = 100;
 
   FLL_CTL0 = pxConfig->ucFLL_CTL0;
   FLL_CTL1 = pxConfig->ucFLL_CTL1;
   do {
     BSP430_CLOCK_LFXT1_CLEAR_FAULT();
-    loop_limit -= loop_delta;
     BSP430_CORE_WATCHDOG_CLEAR();
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-  } while ((BSP430_CLOCK_LFXT1_IS_FAULTED()) && (0 != loop_limit));
+  } while (BSP430_CLOCK_LFXT1_IS_FAULTED());
   ucReturnValue = ! BSP430_CLOCK_LFXT1_IS_FAULTED();
   SCFI0 = pxConfig->ucSCFI0;
   SCFQCTL = pxConfig->ucSCFQCTL;
@@ -55,6 +54,7 @@ ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
+  return 0;
 }
 
 int
@@ -113,7 +113,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   }
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
-    FLL_CTL0 &= ~(OSCCAP0 | OSCCAP1)
+    FLL_CTL0 &= ~(OSCCAP0 | OSCCAP1);
   }
   return rc;
 }
