@@ -99,12 +99,22 @@ void main ()
     unsigned int cc_delta;
     unsigned long aclk_rel_smclk_Hz;
     unsigned long smclk_rel_aclk_Hz;
-
+#if defined(__MSP430_HAS_BC2__)
+    unsigned int bcsctl3 = BCSCTL3;
+#endif /* __MSP430_HAS_BC2__ */
 
     if (! tp) {
       cputtext_ni("\nUnable to access configured CCACLK timer");
       break;
     }
+#if defined(__MSP430_HAS_BC2__)
+    /* Where ACLK sources from LFXT1 and LFXT1 is faulted, CCIS from
+     * ACLK will never trigger.  Temporarily revert to explicit
+     * VLOCLK. */
+    if (BSP430_CLOCK_LFXT1_IS_FAULTED()) {
+      iBSP430clockConfigureACLK_ni(LFXT1S_2);
+    }
+#endif /* __MSP430_HAS_BC2__ */
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL_2 | MC_2 | TACLR;
     cc_delta = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
@@ -113,6 +123,9 @@ void main ()
                                             BSP430_TIMER_CCACLK_CCIS,
                                             SAMPLE_PERIOD_ACLK);
     tp->ctl = 0;
+#if defined(__MSP430_HAS_BC2__)
+    BCSCTL3 = bcsctl3;
+#endif /* __MSP430_HAS_BC2__ */
     if (-1 == cc_delta) {
       cputtext_ni("\nCCACLK measurement failed");
       break;
@@ -123,7 +136,7 @@ void main ()
     cputu_ni(cc_delta, 10);
     cputtext_ni(" ticks of SMCLK");
     cputtext_ni("\nComparison with measured values:");
-    cputtext_ni("\n\tSMCLK (Hz) (if measured ACLK correct): ");
+    cputtext_ni("\n SMCLK (Hz) (if measured ACLK correct): ");
     smclk_rel_aclk_Hz = (cc_delta * (unsigned long)aclk_Hz) / SAMPLE_PERIOD_ACLK;
     cputul_ni(smclk_rel_aclk_Hz, 10);
     cputtext_ni(" (error ");
@@ -131,7 +144,7 @@ void main ()
     cputtext_ni(" = ");
     cputl_ni(1000 * labs(smclk_rel_aclk_Hz - smclk_Hz) / smclk_Hz, 10);
     cputtext_ni(" kHz/MHz)");
-    cputtext_ni("\n\tACLK (Hz) (if measured SMCLK correct): ");
+    cputtext_ni("\n ACLK (Hz) (if measured SMCLK correct): ");
     aclk_rel_smclk_Hz = SAMPLE_PERIOD_ACLK * smclk_Hz / cc_delta;
     cputul_ni(aclk_rel_smclk_Hz, 10);
     cputtext_ni(" (error ");
@@ -147,6 +160,17 @@ void main ()
   cputchar_ni('\n');
 #endif /* BSP430_CONSOLE */
 
+#if defined(__MSP430_HAS_BC2__)
+  cputtext_ni("\nBC2: DCO ");
+  cputu_ni(DCOCTL, 16);
+  cputtext_ni(" CTL1  ");
+  cputu_ni(BCSCTL1, 16);
+  cputtext_ni(" CTL2  ");
+  cputu_ni(BCSCTL2, 16);
+  cputtext_ni(" CTL3  ");
+  cputu_ni(BCSCTL3, 16);
+#endif
+
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
 #if configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0
   cputtext_ni("\nconfigBSP430_UCS_FLLREFCLK_IS_XT1CLK: 1");
@@ -159,16 +183,25 @@ void main ()
   cputtext_ni("\nconfigBSP430_UCS_TRIM_ACLK_IS_XT1CLK: 0");
 #endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
   cprintf("\nUCS RSEL %d DCO %d MOD %d:"
-          "\n\tCTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
-          "\n\tCTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x",
+          "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
+          "\n CTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x",
           0x1F & (UCSCTL1 / DCORSEL0), 0x1F & (UCSCTL0 / DCO0), 0x1F & (UCSCTL0 / MOD0),
           UCSCTL0, UCSCTL1, UCSCTL2, UCSCTL3,
           UCSCTL4, UCSCTL5, UCSCTL6, UCSCTL7);
 #endif
   
+#if defined(__MSP430_HAS_CS__)
+  cprintf("\nCS RSEL %d DCOFSEL %d:"
+          "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
+          "\n CTL4 %04x CTL5 %04x CTL6 %04x",
+          !!(DCORSEL & CSCTL1), 0x03 & (CSCTL1 / DCOFSEL0),
+          CSCTL0, CSCTL1, CSCTL2, CSCTL3,
+          CSCTL4, CSCTL5, CSCTL6);
+#endif
+
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 1)) {
 #if BSP430_CONSOLE - 0
-    cputtext_ni("\nClock signals exposed:\n\t");
+    cputtext_ni("\n\nClock signals exposed:\n ");
 #ifdef BSP430_PERIPH_EXPOSED_CLOCKS_HELP
     cputtext_ni(BSP430_PERIPH_EXPOSED_CLOCKS_HELP);
 #else

@@ -74,30 +74,6 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   return rc;
 }
 
-unsigned char
-ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
-                         unsigned char ucBCSCTL1,
-                         unsigned char ucBCSCTL2,
-                         unsigned char ucBCSCTL3)
-{
-  unsigned char ucCrystalOK = 0;
-
-  BCSCTL3 = ucBCSCTL3;
-  if (! (BCSCTL3 & LFXT1S1)) {
-    ucCrystalOK = iBSP430clockConfigureLFXT1_ni(1, 10);
-  }
-  /* Select lowest DCOx and MODx prior to configuring */
-  DCOCTL = 0;
-  /* Set range */
-  BCSCTL1 = ucBCSCTL1;
-  /* Set DCO step and modulation */
-  DCOCTL = ucDCOCTL;
-  /* Set clock dividers */
-  BCSCTL2 = ucBCSCTL2;
-
-  return ucCrystalOK;
-}
-
 int
 iBSP430clockSMCLKDividingShift_ni (void)
 {
@@ -158,8 +134,6 @@ ulBSP430clockMCLK_Hz_ni (void)
 {
   return configuredMCLK_Hz;
 }
-
-#include <stdio.h>
 
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)

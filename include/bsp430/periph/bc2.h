@@ -87,32 +87,4 @@
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_PUC_MCLK_HZ 1100000UL
 
-/** Call this to reconfigure the BC2 peripheral.
- *
- * The relevant BC2 registers are configured as requested.  See the
- * 2xx Family User's Guide for details.
- *
- * @param ucDCOCTL This configures the frequency and modulator
- * selection.
- *
- * @param ucBCSCTL1 This configures the external crystal modes, ACLK
- * divider, and range selection.
- *
- * @param ucBCSCTL2 This sets clock dividers.
- *
- * @param ucBCSCTL3 This configures external crystals.  If bit LFXT1S1
- * is set, the configuration uses VLOCLK and presence/stabilization of
- * the crystal is not performed.  If bit LFXT1S1 is clear, the routine
- * will attempt to configure the crystal; if this fails, it will fall
- * back to VLOCLK.  The code invokes
- * #iBSP430platformConfigurePeripheralPins_ni as necessary.
- *
- * @return pdTrue if LFXT1 is enabled and has stabilized within the
- * default wait time, and pdFalse in all other cases. */
-unsigned char
-ucBSP430bc2Configure_ni (unsigned char ucDCOCTL,
-                         unsigned char ucBCSCTL1,
-                         unsigned char ucBCSCTL2,
-                         unsigned char ucBCSCTL3);
-
 #endif /* BSP430_CLOCKS_BC2_H */

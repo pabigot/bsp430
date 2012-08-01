@@ -132,34 +132,6 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
   return -1;
 }
 
-void vBSP430platformInitialize_ni (void)
-{
-  int crystal_ok = 0;
-  (void)crystal_ok;
-
-#if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
-  /* Hold off watchdog */
-  WDTCTL = WDTPW + WDTHOLD;
-#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
-
-#if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
-  crystal_ok = iBSP430clockConfigureLFXT1_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
-
-#if BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS - 0
-  iBSP430clockConfigureACLK_ni(crystal_ok ? SELA__XT1CLK : SELA__VLOCLK);
-  ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
-  iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
-#if configBSP430_CLOCK_DISABLE_FLL - 0
-  __bis_status_register(SCG0);
-#endif /* configBSP430_CLOCK_DISABLE_FLL */
-#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
-
-#if BSP430_UPTIME - 0
-  vBSP430uptimeStart_ni();
-#endif /* BSP430_UPTIME */
-}
-
 void
 vBSP430platformSpinForJumper_ni (void)
 {
@@ -183,4 +155,32 @@ vBSP430platformSpinForJumper_ni (void)
   /* Restore P4.0 */
   P4DIR |= BIT0;
   P4REN &= ~BIT0;
+}
+
+void vBSP430platformInitialize_ni (void)
+{
+  int crystal_ok = 0;
+  (void)crystal_ok;
+
+#if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
+  /* Hold off watchdog */
+  WDTCTL = WDTPW + WDTHOLD;
+#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+
+#if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
+  crystal_ok = iBSP430clockConfigureLFXT1_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
+
+#if BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS - 0
+  iBSP430clockConfigureACLK_ni(BSP430_PLATFORM_BOOT_CLOCKSEL_ACLK);
+  ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
+  iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
+#if configBSP430_CLOCK_DISABLE_FLL - 0
+  __bis_status_register(SCG0);
+#endif /* configBSP430_CLOCK_DISABLE_FLL */
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
+
+#if BSP430_UPTIME - 0
+  vBSP430uptimeStart_ni();
+#endif /* BSP430_UPTIME */
 }

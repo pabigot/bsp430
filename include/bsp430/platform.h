@@ -348,7 +348,7 @@ void vBSP430platformSpinForJumper_ni (void);
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
-#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
+#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 0
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
 
 /** @def BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
@@ -366,5 +366,31 @@ void vBSP430platformSpinForJumper_ni (void);
 #ifndef BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
 #define BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC 1
 #endif /* BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC */
+
+/** @def BSP430_PLATFORM_BOOT_CLOCKSEL_ACLK
+ *
+ * The parameter passed to iBSP430clockConfigureACLK_ni() during
+ * vBSP430platformInitialize_ni() if
+ * #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true.
+ *
+ * The default value of zero corresponds to selection of LFXT1 for all
+ * clock peripherals.  Be aware, though, that most MCUs access the
+ * watch crystal supplying LFXT1 through shared pins which may be
+ * configured either as general-purpose digital I/O pins or for their
+ * XIN/XOUT peripheral function.  Whether those pins power-up with the
+ * peripheral function selected is a family-specific decision: a
+ * populated LFXT1 is functional on power-up when the MCU uses BC2,
+ * but not when it uses UCS or CS.
+ *
+ * Thus, to reliably obtain the desired clock source when the default
+ * is LFXT1 it is necessary to also set
+ * #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1; otherwise, the faulted
+ * crystal may cause ACLK to fail back to
+ * #BSP430_CLOCK_NOMINAL_VLOCLK_HZ.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_CLOCKSEL_ACLK
+#define BSP430_PLATFORM_BOOT_CLOCKSEL_ACLK 0
+#endif /* BSP430_PLATFORM_BOOT_CLOCKSEL_ACLK */
 
 #endif /* BSP430_PLATFORM_H */

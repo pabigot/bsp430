@@ -164,6 +164,11 @@
  * requires initializing the timer before use and stopping it when
  * finished.
  *
+ * @warning If ACLK is configured to source from XT1CLK and the
+ * crystal is faulted resulting in an internal fallback to VLOCLK, the
+ * capture/compare input remains the LFXT1 signal and no events will
+ * occur.  This can be demonstrated on the EXP430G2 LaunchPad.
+ *
  * @dependency #configBSP430_TIMER_CCACLK
  * @platformdefault */
 #if defined(BSP430_DOXYGEN)
