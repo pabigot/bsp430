@@ -64,15 +64,15 @@
 
 #include <msp430.h>
 
-/* UCS has no facility other than BSP430_CLOCK_TRIM_FLL to set the
+/* UCS has no facility other than BSP430_UCS_TRIM_DCOCLKDIV to set the
  * MCLK, so enable it by default. */
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
-#ifndef configBSP430_CLOCK_TRIM_FLL
-#define configBSP430_CLOCK_TRIM_FLL 1
+#ifndef configBSP430_UCS_TRIM_DCOCLKDIV
+#define configBSP430_UCS_TRIM_DCOCLKDIV 1
 #ifndef configBSP430_TIMER_CCACLK
 #define configBSP430_TIMER_CCACLK 1
 #endif /* configBSP430_TIMER_CCACLK */
-#endif /* configBSP430_CLOCK_TRIM_FLL */
+#endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
 #endif /* UCS */
 
 /* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,rf2500t */

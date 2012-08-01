@@ -45,7 +45,11 @@ make realclean \
 /* We really want the ACLK source to fall back to VLOCLK if XT1CLK is
  * not stable.  Otherwise those CCACLK timings will hang. */
 #ifndef BSP430_PLATFORM_BOOT_ACLKSRC
+#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
+#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_OR_REFOCLK
+#else /* UCS */
 #define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_OR_VLOCLK
+#endif /* UCS */
 #endif /* BSP430_PLATFORM_BOOT_ACLKSRC */
 
 #include <bsp430/platform/bsp430_config.h>

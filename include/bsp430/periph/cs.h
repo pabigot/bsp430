@@ -44,7 +44,6 @@
  * <ul>
  * <li> ulBSP430clockMCLK_Hz_ni() assumes that DCOCLK is the selected
  * source for MCLK, and returns the divided trimmed DCOCLK frequency.
- * <li> ulBSP430clockTrimFLL_ni() is not supported on this peripheral
  * </ul>
  *
  * @author Peter A. Bigot <bigotp@acm.org>

@@ -85,6 +85,81 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_UCS__ */
 
+/** @def configBSP430_UCS_TRIM_DCOCLKDIV
+ *
+ * Define to a true value to request that
+ * ulBSP430ucsTrimDCOCLKDIV_ni() be made available.
+ *
+ * Because implementation of this function depends on
+ * #BSP430_TIMER_CCACLK, setting this option causes
+ * <bsp430/platform/bsp430_config.h> to default
+ * #configBSP430_TIMER_CCACLK to true.
+ *
+ * This value represents an application or system request for the
+ * feature; availability of the feature must be tested using
+ * #BSP430_UCS_TRIM_DCOCLKDIV before attempting to invoke the function.
+ *
+ * @note This function is the only mechanism by which the UCS DCO can
+ * be configured by BSP430.
+ *
+ * @default
+ */
+#ifndef configBSP430_UCS_TRIM_DCOCLKDIV
+#define configBSP430_UCS_TRIM_DCOCLKDIV 1
+#endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
+
+#if (configBSP430_UCS_TRIM_DCOCLKDIV - 0) && ! (configBSP430_TIMER_CCACLK - 0)
+#warning configBSP430_UCS_TRIM_DCOCLKDIV requested without configBSP430_TIMER_CCACLK
+#endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
+
+/** @def BSP430_UCS_TRIM_DCOCLKDIV
+ *
+ * Defined to a true value if #configBSP430_UCS_TRIM_DCOCLKDIV was requested
+ * and #BSP430_TIMER_CCACLK is available on the platform.
+ *
+ * In the absence of this flag, ulBSP430uscTrimDCOCLKDIV_ni() will not be
+ * available and must not be referenced.
+ *
+ * @dependency #configBSP430_UCS_TRIM_DCOCLKDIV
+ * @platformdefault
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UCS_TRIM_DCOCLKDIV include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_UCS_TRIM_DCOCLKDIV - 0)
+/** Adjust the FLL as necessary to maintain the last configured DCOCLKDIV speed
+ *
+ * This function is most likely to be used if
+ * #configBSP430_CLOCK_DISABLE_FLL is set, but is also a required
+ * subroutine of the UCS implementation of
+ * ulBSP430clockConfigureMCLK_ni().
+ *
+ * The function is expected to be used periodically to maintain an
+ * already configured clock in the face of varying voltage,
+ * temperature, and other factors such as chip errata that introduce
+ * clock drift.  The implementation is not entitled to reconfigure to
+ * a different DCO range selection, should that be supported by the
+ * clock.  Consequently, oscillator faults may result if the system
+ * drifts so far that the target frequency cannot be represented
+ * within the current range.  In such a situation,
+ * ulBSP430clockConfigureMCLK_ni() should be re-invoked to configure
+ * the clock.
+ *
+ * @warning This function will temporarily reconfigure MCLK, SMCLK,
+ * and ACLK.  Any peripherals that depend on those clocks should be
+ * disabled while the function is executing.
+ *
+ * @return 0 if the trimming was completed successfully, -1 if an
+ * error occurred.  Potential errors are a dependency on XT1CLK while
+ * that is faulted and inability to access
+ * #BSP430_TIMER_CACLK_PERIPH_HANDLE.
+ *
+ * @dependency #BSP430_UCS_TRIM_DCOCLKDIV, #BSP430_TIMER_CCACLK
+ */
+int iBSP430ucsTrimDCOCLKDIV_ni ();
+#endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
+
 /** @def configBSP430_UCS_FLLREFCLK_IS_XT1CLK
  *
  * The UCS module supports a variety of potential sources for the FLL
@@ -94,7 +169,7 @@
  * Define this to true if you want to use LFXT1; otherwise REFO is
  * used.
  *
- * @warning If this is selected, FLL trim will hang if LFXT1 is
+ * @warning If this is selected, DCOCLKDIV trim will hang if LFXT1 is
  * faulted and cannot be cleared. */
 #ifndef configBSP430_UCS_FLLREFCLK_IS_XT1CLK
 #define configBSP430_UCS_FLLREFCLK_IS_XT1CLK 0

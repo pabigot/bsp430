@@ -113,7 +113,7 @@ static unsigned long lastTrimDCOCLKDIV_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 /** Convert from Trim Sample Periods to Hz */
 #define TSP_TO_HZ(_clk_tsp) (((_clk_tsp) * (unsigned long)TRIM_ACLK_HZ) / TRIM_SAMPLE_PERIOD_ACLK)
 
-#if BSP430_CLOCK_TRIM_FLL - 0
+#if BSP430_UCS_TRIM_DCOCLKDIV - 0
 #include <bsp430/periph/timer_.h>
 
 /* The target frequency expressed as the number of SMCLK ticks
@@ -121,8 +121,8 @@ static unsigned long lastTrimDCOCLKDIV_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
  * is undivided DCOCLKDIV. */
 static uint16_t targetFrequency_tsp_;
 
-static int
-iBSP430ucsTrimFLL_ni (void)
+int
+iBSP430ucsTrimDCOCLKDIV_ni (void)
 {
   unsigned int ucsctl4;
   unsigned int ucsctl5;
@@ -293,7 +293,7 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
 
     /* Execute the trim function.  If something went wrong, just give
      * up. */
-    if (0 > iBSP430ucsTrimFLL_ni()) {
+    if (0 > iBSP430ucsTrimDCOCLKDIV_ni()) {
       break;
     }
 
@@ -336,7 +336,7 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
   } while (UCSCTL7 & DCOFFG);
 }
 
-#endif /* BSP430_CLOCK_TRIM_FLL */
+#endif /* BSP430_UCS_TRIM_DCOCLKDIV */
 
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
@@ -475,20 +475,8 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   if (0 == mclk_Hz) {
     mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
   }
-#if BSP430_CLOCK_TRIM_FLL - 0
+#if BSP430_UCS_TRIM_DCOCLKDIV - 0
   vBSP430ucsConfigureMCLK_ni(mclk_Hz, -1);
-#endif /* BSP430_CLOCK_TRIM_FLL */
+#endif /* BSP430_UCS_TRIM_DCOCLKDIV */
   return ulBSP430clockMCLK_Hz_ni();
 }
-
-unsigned long
-ulBSP430clockTrimFLL_ni (void)
-{
-#if BSP430_CLOCK_TRIM_FLL - 0
-  if (0 > iBSP430ucsTrimFLL_ni()) {
-    return 0;
-  }
-#endif /* BSP430_CLOCK_TRIM_FLL */
-  return ulBSP430clockMCLK_Hz_ni();
-}
-

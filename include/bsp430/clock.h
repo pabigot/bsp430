@@ -117,8 +117,8 @@
  * exiting active from ISRs for short periods of time" and UCS10
  * ("Modulation causes shift in DCO frequency").  The latter is
  * documented in <a href="http://www.ti.com/lit/pdf/SLAA489">UCS10
- * Guidance</a>.  The UCS implementation of #ulBSP430clockTrimFLL_ni()
- * supports the UCS10 workaround.
+ * Guidance</a>.  The UCS implementation of
+ * #ulBSP430ucsTrimDCOCLKDIV_ni() supports the UCS10 workaround.
  *
  * Stability in the presence of UCS7 and UCS10 may be further enhanced
  * by setting this option.  It is made generic in case there are other
@@ -131,83 +131,6 @@
 #ifndef configBSP430_CLOCK_DISABLE_FLL
 #define configBSP430_CLOCK_DISABLE_FLL 0
 #endif /* configBSP430_CLOCK_DISABLE_FLL */
-
-/** @def configBSP430_CLOCK_TRIM_FLL
- *
- * Define to a true value to request that ulBSP430clockTrimFLL_ni() be
- * made available.
- *
- * <bsp430/platform/bsp430_config.h> may default this to true based on
- * the available clock peripheral.  In particular, the UCS and UCS_RF
- * modules require this function to be able to set the clock to a
- * non-powerup rate.
- *
- * Because implementation of this function depends on
- * #BSP430_TIMER_CCACLK, setting this option causes
- * <bsp430/platform/bsp430_config.h> to default
- * #configBSP430_TIMER_CCACLK to true.
- *
- * This value represents an application or system request for the
- * feature; availability of the feature must be tested using
- * #BSP430_CLOCK_TRIM_FLL before attempting to invoke the function.
- *
- * @platformdefault
- */
-#ifndef configBSP430_CLOCK_TRIM_FLL
-#define configBSP430_CLOCK_TRIM_FLL 0
-#endif /* configBSP430_CLOCK_TRIM_FLL */
-
-#if (configBSP430_CLOCK_TRIM_FLL - 0) && ! (configBSP430_TIMER_CCACLK - 0)
-#warning configBSP430_CLOCK_TRIM_FLL requested without configBSP430_TIMER_CCACLK
-#endif /* configBSP430_CLOCK_TRIM_FLL */
-
-/** @def BSP430_CLOCK_TRIM_FLL
- *
- * Defined to a true value if #configBSP430_CLOCK_TRIM_FLL was
- * requested, #BSP430_TIMER_CCACLK is available on the platform, and
- * the underlying clock peripheral provides an implementation of
- * ulBSP430clockTrimFLL_ni().
- *
- * In the absence of this flag, ulBSP430clockTrimFLL_ni() will not be
- * available and must not be referenced.
- *
- * @dependency #configBSP430_CLOCK_TRIM_FLL
- * @platformdefault
- */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_CLOCK_TRIM_FLL include <bsp430/platform.h>
-#endif /* BSP430_DOXYGEN */
-
-#if defined(BSP430_DOXYGEN) || (configBSP430_CLOCK_TRIM_FLL - 0)
-/** Adjust the FLL as necessary to maintain the last configured MCLK speed
- *
- * This function is most likely to be used if
- * #configBSP430_CLOCK_DISABLE_FLL is set, but may also be used as a
- * subroutine by peripheral-specific implementations of
- * ulBSP430clockConfigureMCLK_ni().
- *
- * The function is expected to be used periodically to maintain an
- * already configured clock in the face of varying voltage,
- * temperature, and other factors such as chip errata that introduce
- * clock drift.  The implementation is not entitled to reconfigure to
- * a different DCO range selection, should that be supported by the
- * clock.  Consequently, oscillator faults may result if the system
- * drifts so far that the target frequency cannot be represented
- * within the current range.  In such a situation,
- * ulBSP430clockConfigureMCLK_ni() should be re-invoked to configure
- * the clock.
- *
- * @warning This function will affect the stability of MCLK and SMCLK,
- * and may temporarily reconfigure ACLK.  Any peripherals that depend
- * on those clocks should be disabled while the function is executing.
- *
- * @return the value of ulBSP430clockMCLK_Hz_ni() after any trimming,
- * or zero if trimming could not be performed.
- *
- * @dependency #BSP430_CLOCK_TRIM_FLL, #BSP430_TIMER_CCACLK
- */
-unsigned long ulBSP430clockTrimFLL_ni ();
-#endif /* configBSP430_CLOCK_TRIM_FLL */
 
 /** @def BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
  *

@@ -109,7 +109,7 @@
  * using the ACLK signal to capture the number of pulses on that
  * source over a known period.  For example, this is used to measure
  * the relative speed of SMCLK and ACLK when manually trimming the FLL
- * in iBSP430ucsTrimFLL_ni().
+ * in iBSP430ucsTrimDCOCLKDIV_ni().
  *
  * @note Where possible, a timer other than TA0 should be used, as TA0
  * is the default for the uptime facility and other things that use an

@@ -312,16 +312,16 @@ void vBSP430platformSpinForJumper_ni (void);
 #include <bsp430/platform/custom/platform.h>
 #endif /* BSP430_PLATFORM_CUSTOM */
 
-/* If configBSP430_CLOCK_TRIM_FLL was requested, the feature is
+/* If configBSP430_UCS_TRIM_DCOCLKDIV was requested, the feature is
  * supported in principle by the peripheral, and the platform supports
  * BSP430_TIMER_CCACLK, then mark the feature as available. */
-#if configBSP430_CLOCK_TRIM_FLL - 0
+#if configBSP430_UCS_TRIM_DCOCLKDIV - 0
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_USC_RF__)
-#define BSP430_CLOCK_TRIM_FLL (BSP430_TIMER_CCACLK - 0)
-#else /* BSP430_CLOCK_TRIM_FLL supported by clock peripheral */
-#define BSP430_CLOCK_TRIM_FLL 0
-#endif /* BSP430_CLOCK_TRIM_FLL supported by clock peripheral */
-#endif /* configBSP430_CLOCK_TRIM_FLL */
+#define BSP430_UCS_TRIM_DCOCLKDIV (BSP430_TIMER_CCACLK - 0)
+#else /* BSP430_UCS_TRIM_DCOCLKDIV supported by clock peripheral */
+#define BSP430_UCS_TRIM_DCOCLKDIV 0
+#endif /* BSP430_UCS_TRIM_DCOCLKDIV supported by clock peripheral */
+#endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
 
 /* If configBSP430_CONSOLE was requested, then mark the feature as
  * available or not based on whether the platform provided a serial
