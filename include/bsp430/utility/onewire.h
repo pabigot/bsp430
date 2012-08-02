@@ -63,18 +63,18 @@
 #endif /* BSP430_ONEWIRE_PORT_TYPE */
 
 /** Structure identifying 1-wire bus information. */
-typedef struct xBSP430onewireBus {
+typedef struct sBSP430onewireBus {
   /** The peripheral port containing the bus */
   volatile BSP430_ONEWIRE_PORT_TYPE * const port;
   /** The pin by which the bus is connected to the MCU */
   unsigned int bit;
-} xBSP430onewireBus;
+} sBSP430onewireBus;
 
 /** Structure holding a 1-wire serial number. */
-typedef struct xBSP430onewireSerialNumber {
+typedef struct sBSP430onewireSerialNumber {
   /** The serial number in order MSB to LSB */
   uint8_t id[6];
-} xBSP430onewireSerialNumber;
+} sBSP430onewireSerialNumber;
 
 enum {
   /** Read 64-bit ROM code without using search procedure */
@@ -116,7 +116,7 @@ enum {
  * @return 0 if no device was detected, 1 if a device responded to the
  * reset.
  */
-int iBSP430onewireReset_ni (const xBSP430onewireBus * bus);
+int iBSP430onewireReset_ni (const sBSP430onewireBus * bus);
 
 /** Configure the bus pin for low power mode.
  *
@@ -127,7 +127,7 @@ int iBSP430onewireReset_ni (const xBSP430onewireBus * bus);
  *
  * @param bus The port and bit identifying the 1-wire bus
  */
-void vBSP430onewireShutdown_ni (const xBSP430onewireBus * bus);
+void vBSP430onewireShutdown_ni (const sBSP430onewireBus * bus);
 
 /** Write a byte onto the 1-wire bus.
  *
@@ -135,7 +135,7 @@ void vBSP430onewireShutdown_ni (const xBSP430onewireBus * bus);
  *
  * @param byte The value to be written.  The low 8 bits are
  * transmitted LSB-first. */
-void vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
+void vBSP430onewireWriteByte_ni (const sBSP430onewireBus * bus,
                                  int byte);
 
 /** Read a bit from the 1-wire bus.
@@ -143,7 +143,7 @@ void vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
  * @param bus The port and bit identifying the 1-wire bus
  *
  * @return The value of the bit read (0 or 1). */
-int iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus);
+int iBSP430onewireReadBit_ni (const sBSP430onewireBus * bus);
 
 /** Read a byte from the 1-wire bus.
  *
@@ -153,7 +153,7 @@ int iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus);
  * @param bus The port and bit identifying the 1-wire bus
  *
  * @return The value of the byte read (0 to 255). */
-int iBSP430onewireReadByte_ni (const xBSP430onewireBus * bus);
+int iBSP430onewireReadByte_ni (const sBSP430onewireBus * bus);
 
 /** Calculate the CRC over the data.
  *
@@ -175,8 +175,8 @@ int iBSP430onewireComputeCRC (const unsigned char * data, int len);
  *
  * @return 0 if the serial number was successfully read; -1 if an
  * error occurred. */
-int iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
-                                    xBSP430onewireSerialNumber * snp);
+int iBSP430onewireReadSerialNumber (const sBSP430onewireBus * bus,
+                                    sBSP430onewireSerialNumber * snp);
 
 /** Send the command sequence to initiate a temperature measurement
  *
@@ -195,7 +195,7 @@ int iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
  *
  * @return 0 if the request was successfully submitted, -1 if an error
  * occured. */
-int iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus);
+int iBSP430onewireRequestTemperature_ni (const sBSP430onewireBus * bus);
 
 /** Test whether the device has completed measuring the temperature
  *
@@ -207,7 +207,7 @@ int iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus);
  * @return 0 if the device is still busy; 1 if the sample is ready. */
 static int
 __inline__
-iBSP430onewireTemperatureReady_ni (const xBSP430onewireBus * bus)
+iBSP430onewireTemperatureReady_ni (const sBSP430onewireBus * bus)
 {
   return iBSP430onewireReadBit_ni(bus);
 }
@@ -228,7 +228,7 @@ iBSP430onewireTemperatureReady_ni (const xBSP430onewireBus * bus)
  * @return 0 if the read was successful; -1 if an error occurred.  If
  * there was an error, the value pointed to by temp_xCel remains
  * unchanged. */
-int iBSP430onewireReadTemperature_ni (const xBSP430onewireBus * bus,
+int iBSP430onewireReadTemperature_ni (const sBSP430onewireBus * bus,
                                       int * temp_xCel);
 
 /** Convert temperature from 1/16th Cel to tenths Fahrhenheit (d[degF])

@@ -67,7 +67,7 @@ enum {
 };
 
 int
-iBSP430onewireReset_ni (const xBSP430onewireBus * bus)
+iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
 {
   int present;
 
@@ -105,14 +105,14 @@ iBSP430onewireReset_ni (const xBSP430onewireBus * bus)
 }
 
 void
-vBSP430onewireShutdown_ni (const xBSP430onewireBus * bus)
+vBSP430onewireShutdown_ni (const sBSP430onewireBus * bus)
 {
   bus->port->out &= ~bus->bit;
   bus->port->dir &= ~bus->bit;
 }
 
 void
-vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
+vBSP430onewireWriteByte_ni (const sBSP430onewireBus * bus,
                             int byte)
 {
   int bp;
@@ -142,7 +142,7 @@ vBSP430onewireWriteByte_ni (const xBSP430onewireBus * bus,
 }
 
 int
-iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus)
+iBSP430onewireReadBit_ni (const sBSP430onewireBus * bus)
 {
   int rv;
 
@@ -157,7 +157,7 @@ iBSP430onewireReadBit_ni (const xBSP430onewireBus * bus)
 }
 
 int
-iBSP430onewireReadByte_ni (const xBSP430onewireBus * bus)
+iBSP430onewireReadByte_ni (const sBSP430onewireBus * bus)
 {
   int byte = 0;
   int bit = 1;
@@ -194,8 +194,8 @@ iBSP430onewireComputeCRC (const unsigned char * romp,
 }
 
 int
-iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
-                                xBSP430onewireSerialNumber * snp)
+iBSP430onewireReadSerialNumber (const sBSP430onewireBus * bus,
+                                sBSP430onewireSerialNumber * snp)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rv = -1;
@@ -225,7 +225,7 @@ iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
 }
 
 int
-iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus)
+iBSP430onewireRequestTemperature_ni (const sBSP430onewireBus * bus)
 {
   if (! iBSP430onewireReset_ni(bus)) {
     return -1;
@@ -236,7 +236,7 @@ iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus)
 }
 
 int
-iBSP430onewireReadTemperature_ni (const xBSP430onewireBus * bus,
+iBSP430onewireReadTemperature_ni (const sBSP430onewireBus * bus,
                                   int * temp_xCel)
 {
   int t;
