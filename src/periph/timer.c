@@ -29,8 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/periph/timer_.h>
 #include <bsp430/platform.h>    /* BSP430_PLATFORM_TIMER_CCACLK defined by this */
+#include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
@@ -199,7 +199,7 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
                               unsigned int ccis,
                               unsigned int count)
 {
-  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(periph);
+  volatile sBSP430periphTIMER * tp = xBSP430periphLookupTIMER(periph);
   int i;
   unsigned int c0 = 0;
   unsigned int c1;
@@ -516,7 +516,7 @@ isr_TB2 (void)
 /* !BSP430! end=hal_timer_isr_defn */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
-volatile xBSP430periphTIMER *
+volatile sBSP430periphTIMER *
 xBSP430periphLookupTIMER (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_ba_hpl_demux */

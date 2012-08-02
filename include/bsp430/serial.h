@@ -50,19 +50,6 @@
 
 #include <bsp430/common.h>
 
-/** @def configBSP430_SERIAL_EXPOSE_STATE
- *
- * Define to a true value to include the protected header for the
- * selected serial peripheral, rather than the public header.
- *
- * You want to do this if you intend to implement interrupt callbacks
- * that need access to the underlying peripheral or other HAL state.
- *
- * @defaulted */
-#ifndef configBSP430_SERIAL_EXPOSE_STATE
-#define configBSP430_SERIAL_EXPOSE_STATE 1
-#endif /* configBSP430_SERIAL_EXPOSE_STATE */
-
 /** @def configBSP430_SERIAL_USE_USCI
  *
  * Define to true value to select #tBSP430usciHandle as the underlying
@@ -124,8 +111,8 @@ typedef tBSP430serialHandle tBSP430serialHandle;
  *
  * @note In almost all cases, a value of zero is appropriate.  If you
  * need to configure parity and other control word features, be aware
- * that #xBSP430periphUSCI5 and #xBSP430periphEUSCIA have the ctl0 and
- * ctl1 fields swapped relative to their order in #xBSP430periphUSCI.
+ * that #sBSP430periphUSCI5 and #sBSP430periphEUSCIA have the ctl0 and
+ * ctl1 fields swapped relative to their order in #sBSP430periphUSCI.
  * Since these peripherals have a ctlw0 field, that will be used,
  * resulting in the lower word being written to ctl1 and the upper
  * word to ctl0.  This can result in confusion, since constants like
@@ -406,37 +393,18 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
   _DELEGATE_TRANSMIT_ASCIIZ_NI(_serial)
 
 #if configBSP430_SERIAL_USE_USCI - 0
-#if configBSP430_SERIAL_EXPOSE_STATE - 0
-#include <bsp430/periph/usci_.h>
-#else /* configBSP430_SERIAL_EXPOSE_STATE */
 #include <bsp430/periph/usci.h>
-#endif /* configBSP430_SERIAL_EXPOSE_STATE */
-
 _DELEGATE(usci)
 #endif /* configBSP430_SERIAL_USE_USCI */
 
 #if configBSP430_SERIAL_USE_USCI5 - 0
-
-#if configBSP430_SERIAL_EXPOSE_STATE - 0
-#include <bsp430/periph/usci5_.h>
-#else /* configBSP430_SERIAL_EXPOSE_STATE */
 #include <bsp430/periph/usci5.h>
-#endif /* configBSP430_SERIAL_EXPOSE_STATE */
-
 _DELEGATE(usci5)
-
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 
 #if configBSP430_SERIAL_USE_EUSCIA - 0
-
-#if configBSP430_SERIAL_EXPOSE_STATE - 0
-#include <bsp430/periph/euscia_.h>
-#else /* configBSP430_SERIAL_EXPOSE_STATE */
 #include <bsp430/periph/euscia.h>
-#endif /* configBSP430_SERIAL_EXPOSE_STATE */
-
 _DELEGATE(euscia)
-
 #endif /* configBSP430_SERIAL_USE_EUSCI */
 
 #undef _DELEGATE

@@ -108,7 +108,7 @@ typedef struct sBSP430periphUSCI5 {
     };
   };
   unsigned int iv;			/**< UCtxIV */ /* 0x1E */
-} xBSP430periphUSCI5;
+} sBSP430periphUSCI5;
 
 /** @cond DOXYGEN_INTERNAL */
 #define BSP430_PERIPH_USCI5_A0_BASEADDRESS_ __MSP430_BASEADDRESS_USCI_A0__
@@ -121,8 +121,39 @@ typedef struct sBSP430periphUSCI5 {
 #define BSP430_PERIPH_USCI5_B3_BASEADDRESS_ __MSP430_BASEADDRESS_USCI_B3__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/* Forward declaration to hardware abstraction layer state for USCI_A/USCI_B. */
-struct sBSP430usci5State;
+/** Structure holding hardware abstraction layer state for eUSCI_A.
+ *
+ * This structure is internal state, for access by applications only
+ * when overriding BSP430 HAL capabilities. */
+typedef struct sBSP430usci5State {
+  /** Flags indicating various things: primarily, whether anybody is
+   * using the device. */
+  unsigned int flags;
+
+  /** Pointer to the peripheral register structure. */
+  volatile xBSP430periphUSCI5 * const usci5;
+
+  /** The callback chain to invoke when a byte is received */
+  const struct sBSP430periphISRCallbackVoid * rx_callback;
+
+  /** The callback chain to invoke when space is available in the
+   * transmission buffer */
+  const struct sBSP430periphISRCallbackVoid * tx_callback;
+
+  /** Location to store a single incoming character when #rx_queue
+   * is undefined. */
+  uint8_t rx_byte;
+
+  /** Location to store a single outgoing character when #tx_queue
+   * is undefined.  This is probably not very useful. */
+  uint8_t tx_byte;
+
+  /** Total number of received octets */
+  unsigned long num_rx;
+
+  /** Total number of transmitted octets */
+  unsigned long num_tx;
+} sBSP430usci5State;
 
 /** The USCI5 internal state is private to the implementation. */
 typedef struct sBSP430usci5State * tBSP430usci5Handle;
@@ -347,7 +378,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A0 - 0)
 /** Typed pointer to HPL structure for USCI5_A0 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_A0 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A0)
+#define BSP430_HPL_USCI5_A0 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A0)
 #endif /* configBSP430_HPL_USCI5_A0 */
 
 /** @def configBSP430_HPL_USCI5_A1
@@ -387,7 +418,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A1 - 0)
 /** Typed pointer to HPL structure for USCI5_A1 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_A1 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A1)
+#define BSP430_HPL_USCI5_A1 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A1)
 #endif /* configBSP430_HPL_USCI5_A1 */
 
 /** @def configBSP430_HPL_USCI5_A2
@@ -427,7 +458,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A2 - 0)
 /** Typed pointer to HPL structure for USCI5_A2 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_A2 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A2)
+#define BSP430_HPL_USCI5_A2 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A2)
 #endif /* configBSP430_HPL_USCI5_A2 */
 
 /** @def configBSP430_HPL_USCI5_A3
@@ -467,7 +498,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A3 - 0)
 /** Typed pointer to HPL structure for USCI5_A3 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_A3 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A3)
+#define BSP430_HPL_USCI5_A3 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A3)
 #endif /* configBSP430_HPL_USCI5_A3 */
 
 /** @def configBSP430_HPL_USCI5_B0
@@ -507,7 +538,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B0 - 0)
 /** Typed pointer to HPL structure for USCI5_B0 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_B0 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B0)
+#define BSP430_HPL_USCI5_B0 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B0)
 #endif /* configBSP430_HPL_USCI5_B0 */
 
 /** @def configBSP430_HPL_USCI5_B1
@@ -547,7 +578,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B1 - 0)
 /** Typed pointer to HPL structure for USCI5_B1 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_B1 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B1)
+#define BSP430_HPL_USCI5_B1 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B1)
 #endif /* configBSP430_HPL_USCI5_B1 */
 
 /** @def configBSP430_HPL_USCI5_B2
@@ -587,7 +618,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B2 - 0)
 /** Typed pointer to HPL structure for USCI5_B2 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_B2 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B2)
+#define BSP430_HPL_USCI5_B2 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B2)
 #endif /* configBSP430_HPL_USCI5_B2 */
 
 /** @def configBSP430_HPL_USCI5_B3
@@ -627,7 +658,7 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B3 - 0)
 /** Typed pointer to HPL structure for USCI5_B3 suitable for use in const initializers */
-#define BSP430_HPL_USCI5_B3 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B3)
+#define BSP430_HPL_USCI5_B3 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B3)
 #endif /* configBSP430_HPL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

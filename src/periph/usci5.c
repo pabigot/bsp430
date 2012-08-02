@@ -31,7 +31,7 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
-#include <bsp430/periph/usci5_.h>
+#include <bsp430/periph/usci5.h>
 
 /* !BSP430! periph=usci5 */
 /* !BSP430! instance=USCI5_A0,USCI5_A1,USCI5_A2,USCI5_A3,USCI5_B0,USCI5_B1,USCI5_B2,USCI5_B3 */

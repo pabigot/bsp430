@@ -30,7 +30,7 @@
  */
 
 #include <bsp430/utility/uptime.h>
-#include <bsp430/periph/timer_.h>
+#include <bsp430/periph/timer.h>
 #include <bsp430/platform.h>
 
 #if BSP430_UPTIME - 0

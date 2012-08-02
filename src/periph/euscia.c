@@ -31,7 +31,7 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
-#include <bsp430/periph/euscia_.h>
+#include <bsp430/periph/euscia.h>
 
 /* !BSP430! periph=euscia */
 /* !BSP430! instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
