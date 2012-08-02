@@ -294,25 +294,26 @@ typedef int (* iBSP430periphISRCallbackVoid) (const struct sBSP430periphISRCallb
 typedef int (* iBSP430periphISRCallbackIndexed) (const struct sBSP430periphISRCallbackIndexed * cb,
     void * context,
     int idx);
+
 /** Structure used to record #iBSP430periphISRCallbackVoid chains. */
-struct sBSP430periphISRCallbackVoid {
+typedef struct sBSP430periphISRCallbackVoid {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain. */
   const struct sBSP430periphISRCallbackVoid * next;
 
   /** The function to be invoked. */
   iBSP430periphISRCallbackVoid callback;
-};
+} sBSP430periphISRCallbackVoid;
 
 /** Structure used to record #iBSP430periphISRCallbackIndexed chains. */
-struct sBSP430periphISRCallbackIndexed {
+typedef struct sBSP430periphISRCallbackIndexed {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain. */
   const struct sBSP430periphISRCallbackIndexed * next;
 
   /** The function to be invoked. */
   iBSP430periphISRCallbackIndexed callback;
-};
+} sBSP430periphISRCallbackIndexed;
 
 /** Execute a chain of #iBSP430periphISRCallbackVoid callbacks.
  *
