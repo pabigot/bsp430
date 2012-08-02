@@ -365,29 +365,29 @@ static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_PERIPH_USCI_A0 - 0
+#if configBSP430_HAL_USCI_A0 - 0
   if (BSP430_PERIPH_USCI_A0 == periph) {
     return xBSP430usci_USCI_A0;
   }
-#endif /* configBSP430_PERIPH_USCI_A0 */
+#endif /* configBSP430_HAL_USCI_A0 */
 
-#if configBSP430_PERIPH_USCI_A1 - 0
+#if configBSP430_HAL_USCI_A1 - 0
   if (BSP430_PERIPH_USCI_A1 == periph) {
     return xBSP430usci_USCI_A1;
   }
-#endif /* configBSP430_PERIPH_USCI_A1 */
+#endif /* configBSP430_HAL_USCI_A1 */
 
-#if configBSP430_PERIPH_USCI_B0 - 0
+#if configBSP430_HAL_USCI_B0 - 0
   if (BSP430_PERIPH_USCI_B0 == periph) {
     return xBSP430usci_USCI_B0;
   }
-#endif /* configBSP430_PERIPH_USCI_B0 */
+#endif /* configBSP430_HAL_USCI_B0 */
 
-#if configBSP430_PERIPH_USCI_B1 - 0
+#if configBSP430_HAL_USCI_B1 - 0
   if (BSP430_PERIPH_USCI_B1 == periph) {
     return xBSP430usci_USCI_B1;
   }
-#endif /* configBSP430_PERIPH_USCI_B1 */
+#endif /* configBSP430_HAL_USCI_B1 */
 
   /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
   /* !BSP430! end=periph_hal_demux */

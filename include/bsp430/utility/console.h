@@ -98,7 +98,7 @@
  *
  * You are also responsible for requesting the inclusion of the
  * corresponding device and its HAL interface in the application,
- * e.g. by setting #configBSP430_PERIPH_USCI5_A1.
+ * e.g. by setting #configBSP430_HAL_USCI5_A1.
  *
  * @defaulted */
 #ifndef configBSP430_CONSOLE_USE_DEFAULT_RESOURCE

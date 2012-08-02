@@ -76,13 +76,13 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_PERIPH_USCI5_A0 - 0
+#if configBSP430_HPL_USCI5_A0 - 0
   else if (BSP430_PERIPH_USCI5_A0 == device) {
     bits = BIT3 | BIT4;
     pxsel = &P3SEL;
   }
 #endif
-#if configBSP430_PERIPH_USCI5_A1 - 0
+#if configBSP430_HPL_USCI5_A1 - 0
   else if (BSP430_PERIPH_USCI5_A1 == device) {
     bits = BIT4 | BIT5;
     pxsel = &P4SEL;

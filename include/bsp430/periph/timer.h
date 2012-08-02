@@ -384,7 +384,7 @@ typedef struct xBSP430periphTIMER {
  *
  * @return A typed pointer that can be used to manipulate the timer.
  * A null pointer is returned if the handle does not correspond to a
- * timer which has been enabled (e.g., with #configBSP430_PERIPH_TA0).
+ * timer which has been enabled (e.g., with #configBSP430_HPL_TA0).
  */
 volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHandle);
 
@@ -462,7 +462,7 @@ void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA0 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA0 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA0
@@ -471,7 +471,7 @@ void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
 
 /** BSP430 HAL handle for TA0.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA0
+ * The handle may be used only if #configBSP430_HAL_TA0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA0 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA0;
@@ -484,7 +484,7 @@ extern xBSP430timerHandle const xBSP430timer_TA0;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA1 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA1 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA1
@@ -493,7 +493,7 @@ extern xBSP430timerHandle const xBSP430timer_TA0;
 
 /** BSP430 HAL handle for TA1.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA1
+ * The handle may be used only if #configBSP430_HAL_TA1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA1 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA1;
@@ -506,7 +506,7 @@ extern xBSP430timerHandle const xBSP430timer_TA1;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA2 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA2 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA2
@@ -515,7 +515,7 @@ extern xBSP430timerHandle const xBSP430timer_TA1;
 
 /** BSP430 HAL handle for TA2.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA2
+ * The handle may be used only if #configBSP430_HAL_TA2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA2 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA2;
@@ -528,7 +528,7 @@ extern xBSP430timerHandle const xBSP430timer_TA2;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TA3 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA3 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA3
@@ -537,7 +537,7 @@ extern xBSP430timerHandle const xBSP430timer_TA2;
 
 /** BSP430 HAL handle for TA3.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA3
+ * The handle may be used only if #configBSP430_HAL_TA3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA3 - 0)
 extern xBSP430timerHandle const xBSP430timer_TA3;
@@ -550,7 +550,7 @@ extern xBSP430timerHandle const xBSP430timer_TA3;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TB0 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TB0 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TB0
@@ -559,7 +559,7 @@ extern xBSP430timerHandle const xBSP430timer_TA3;
 
 /** BSP430 HAL handle for TB0.
  *
- * The handle may be used only if #configBSP430_PERIPH_TB0
+ * The handle may be used only if #configBSP430_HAL_TB0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB0 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB0;
@@ -572,7 +572,7 @@ extern xBSP430timerHandle const xBSP430timer_TB0;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TB1 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TB1 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TB1
@@ -581,7 +581,7 @@ extern xBSP430timerHandle const xBSP430timer_TB0;
 
 /** BSP430 HAL handle for TB1.
  *
- * The handle may be used only if #configBSP430_PERIPH_TB1
+ * The handle may be used only if #configBSP430_HAL_TB1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB1 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB1;
@@ -594,7 +594,7 @@ extern xBSP430timerHandle const xBSP430timer_TB1;
  * object xBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_TB2 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TB2 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TB2
@@ -603,7 +603,7 @@ extern xBSP430timerHandle const xBSP430timer_TB1;
 
 /** BSP430 HAL handle for TB2.
  *
- * The handle may be used only if #configBSP430_PERIPH_TB2
+ * The handle may be used only if #configBSP430_HAL_TB2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB2 - 0)
 extern xBSP430timerHandle const xBSP430timer_TB2;
@@ -614,292 +614,292 @@ extern xBSP430timerHandle const xBSP430timer_TB2;
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
-/** @def configBSP430_PERIPH_TA0
+/** @def configBSP430_HPL_TA0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA0 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA0 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_TA0
-#define configBSP430_PERIPH_TA0 (configBSP430_HAL_TA0 - 0)
-#endif /* configBSP430_PERIPH_TA0 */
+#ifndef configBSP430_HPL_TA0
+#define configBSP430_HPL_TA0 (configBSP430_HAL_TA0 - 0)
+#endif /* configBSP430_HPL_TA0 */
 
-#if (configBSP430_HAL_TA0 - 0) && ! (configBSP430_PERIPH_TA0 - 0)
-#warning configBSP430_HAL_TA0 requested without configBSP430_PERIPH_TA0
+#if (configBSP430_HAL_TA0 - 0) && ! (configBSP430_HPL_TA0 - 0)
+#warning configBSP430_HAL_TA0 requested without configBSP430_HPL_TA0
 #endif /* HAL and not HPL */
 
 /** Handle for the raw TA0 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA0
+ * The handle may be used only if #configBSP430_HPL_TA0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
 #define BSP430_PERIPH_TA0 ((xBSP430periphHandle)(BSP430_PERIPH_TA0_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_TA0 */
+#endif /* configBSP430_HPL_TA0 */
 
 /** Pointer to the peripheral register map for TA0.
  *
- * The pointer may be used only if #configBSP430_PERIPH_TA0
+ * The pointer may be used only if #configBSP430_HPL_TA0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
 /** Typed pointer to HPL structure for TA0 suitable for use in const initializers */
 #define BSP430_HPL_TA0 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA0 = BSP430_HPL_TA0;
-#endif /* configBSP430_PERIPH_TA0 */
+#endif /* configBSP430_HPL_TA0 */
 
-/** @def configBSP430_PERIPH_TA1
+/** @def configBSP430_HPL_TA1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA1 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA1 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_TA1
-#define configBSP430_PERIPH_TA1 (configBSP430_HAL_TA1 - 0)
-#endif /* configBSP430_PERIPH_TA1 */
+#ifndef configBSP430_HPL_TA1
+#define configBSP430_HPL_TA1 (configBSP430_HAL_TA1 - 0)
+#endif /* configBSP430_HPL_TA1 */
 
-#if (configBSP430_HAL_TA1 - 0) && ! (configBSP430_PERIPH_TA1 - 0)
-#warning configBSP430_HAL_TA1 requested without configBSP430_PERIPH_TA1
+#if (configBSP430_HAL_TA1 - 0) && ! (configBSP430_HPL_TA1 - 0)
+#warning configBSP430_HAL_TA1 requested without configBSP430_HPL_TA1
 #endif /* HAL and not HPL */
 
 /** Handle for the raw TA1 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA1
+ * The handle may be used only if #configBSP430_HPL_TA1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
 #define BSP430_PERIPH_TA1 ((xBSP430periphHandle)(BSP430_PERIPH_TA1_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_TA1 */
+#endif /* configBSP430_HPL_TA1 */
 
 /** Pointer to the peripheral register map for TA1.
  *
- * The pointer may be used only if #configBSP430_PERIPH_TA1
+ * The pointer may be used only if #configBSP430_HPL_TA1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
 /** Typed pointer to HPL structure for TA1 suitable for use in const initializers */
 #define BSP430_HPL_TA1 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA1)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA1 = BSP430_HPL_TA1;
-#endif /* configBSP430_PERIPH_TA1 */
+#endif /* configBSP430_HPL_TA1 */
 
-/** @def configBSP430_PERIPH_TA2
+/** @def configBSP430_HPL_TA2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA2 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA2 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_TA2
-#define configBSP430_PERIPH_TA2 (configBSP430_HAL_TA2 - 0)
-#endif /* configBSP430_PERIPH_TA2 */
+#ifndef configBSP430_HPL_TA2
+#define configBSP430_HPL_TA2 (configBSP430_HAL_TA2 - 0)
+#endif /* configBSP430_HPL_TA2 */
 
-#if (configBSP430_HAL_TA2 - 0) && ! (configBSP430_PERIPH_TA2 - 0)
-#warning configBSP430_HAL_TA2 requested without configBSP430_PERIPH_TA2
+#if (configBSP430_HAL_TA2 - 0) && ! (configBSP430_HPL_TA2 - 0)
+#warning configBSP430_HAL_TA2 requested without configBSP430_HPL_TA2
 #endif /* HAL and not HPL */
 
 /** Handle for the raw TA2 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA2
+ * The handle may be used only if #configBSP430_HPL_TA2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
 #define BSP430_PERIPH_TA2 ((xBSP430periphHandle)(BSP430_PERIPH_TA2_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_TA2 */
+#endif /* configBSP430_HPL_TA2 */
 
 /** Pointer to the peripheral register map for TA2.
  *
- * The pointer may be used only if #configBSP430_PERIPH_TA2
+ * The pointer may be used only if #configBSP430_HPL_TA2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
 /** Typed pointer to HPL structure for TA2 suitable for use in const initializers */
 #define BSP430_HPL_TA2 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA2)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA2 = BSP430_HPL_TA2;
-#endif /* configBSP430_PERIPH_TA2 */
+#endif /* configBSP430_HPL_TA2 */
 
-/** @def configBSP430_PERIPH_TA3
+/** @def configBSP430_HPL_TA3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA3 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA3 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_TA3
-#define configBSP430_PERIPH_TA3 (configBSP430_HAL_TA3 - 0)
-#endif /* configBSP430_PERIPH_TA3 */
+#ifndef configBSP430_HPL_TA3
+#define configBSP430_HPL_TA3 (configBSP430_HAL_TA3 - 0)
+#endif /* configBSP430_HPL_TA3 */
 
-#if (configBSP430_HAL_TA3 - 0) && ! (configBSP430_PERIPH_TA3 - 0)
-#warning configBSP430_HAL_TA3 requested without configBSP430_PERIPH_TA3
+#if (configBSP430_HAL_TA3 - 0) && ! (configBSP430_HPL_TA3 - 0)
+#warning configBSP430_HAL_TA3 requested without configBSP430_HPL_TA3
 #endif /* HAL and not HPL */
 
 /** Handle for the raw TA3 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_TA3
+ * The handle may be used only if #configBSP430_HPL_TA3
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
 #define BSP430_PERIPH_TA3 ((xBSP430periphHandle)(BSP430_PERIPH_TA3_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_TA3 */
+#endif /* configBSP430_HPL_TA3 */
 
 /** Pointer to the peripheral register map for TA3.
  *
- * The pointer may be used only if #configBSP430_PERIPH_TA3
+ * The pointer may be used only if #configBSP430_HPL_TA3
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TA3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
 /** Typed pointer to HPL structure for TA3 suitable for use in const initializers */
 #define BSP430_HPL_TA3 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TA3)
 static volatile xBSP430periphTIMER * const xBSP430periph_TA3 = BSP430_HPL_TA3;
-#endif /* configBSP430_PERIPH_TA3 */
+#endif /* configBSP430_HPL_TA3 */
 
-/** @def configBSP430_PERIPH_TB0
+/** @def configBSP430_HPL_TB0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB0 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TB0 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_TB0
-#define configBSP430_PERIPH_TB0 (configBSP430_HAL_TB0 - 0)
-#endif /* configBSP430_PERIPH_TB0 */
+#ifndef configBSP430_HPL_TB0
+#define configBSP430_HPL_TB0 (configBSP430_HAL_TB0 - 0)
+#endif /* configBSP430_HPL_TB0 */
 
-#if (configBSP430_HAL_TB0 - 0) && ! (configBSP430_PERIPH_TB0 - 0)
-#warning configBSP430_HAL_TB0 requested without configBSP430_PERIPH_TB0
+#if (configBSP430_HAL_TB0 - 0) && ! (configBSP430_HPL_TB0 - 0)
+#warning configBSP430_HAL_TB0 requested without configBSP430_HPL_TB0
 #endif /* HAL and not HPL */
 
 /** Handle for the raw TB0 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_TB0
+ * The handle may be used only if #configBSP430_HPL_TB0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
 #define BSP430_PERIPH_TB0 ((xBSP430periphHandle)(BSP430_PERIPH_TB0_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_TB0 */
+#endif /* configBSP430_HPL_TB0 */
 
 /** Pointer to the peripheral register map for TB0.
  *
- * The pointer may be used only if #configBSP430_PERIPH_TB0
+ * The pointer may be used only if #configBSP430_HPL_TB0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
 /** Typed pointer to HPL structure for TB0 suitable for use in const initializers */
 #define BSP430_HPL_TB0 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TB0)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB0 = BSP430_HPL_TB0;
-#endif /* configBSP430_PERIPH_TB0 */
+#endif /* configBSP430_HPL_TB0 */
 
-/** @def configBSP430_PERIPH_TB1
+/** @def configBSP430_HPL_TB1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB1 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TB1 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_TB1
-#define configBSP430_PERIPH_TB1 (configBSP430_HAL_TB1 - 0)
-#endif /* configBSP430_PERIPH_TB1 */
+#ifndef configBSP430_HPL_TB1
+#define configBSP430_HPL_TB1 (configBSP430_HAL_TB1 - 0)
+#endif /* configBSP430_HPL_TB1 */
 
-#if (configBSP430_HAL_TB1 - 0) && ! (configBSP430_PERIPH_TB1 - 0)
-#warning configBSP430_HAL_TB1 requested without configBSP430_PERIPH_TB1
+#if (configBSP430_HAL_TB1 - 0) && ! (configBSP430_HPL_TB1 - 0)
+#warning configBSP430_HAL_TB1 requested without configBSP430_HPL_TB1
 #endif /* HAL and not HPL */
 
 /** Handle for the raw TB1 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_TB1
+ * The handle may be used only if #configBSP430_HPL_TB1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
 #define BSP430_PERIPH_TB1 ((xBSP430periphHandle)(BSP430_PERIPH_TB1_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_TB1 */
+#endif /* configBSP430_HPL_TB1 */
 
 /** Pointer to the peripheral register map for TB1.
  *
- * The pointer may be used only if #configBSP430_PERIPH_TB1
+ * The pointer may be used only if #configBSP430_HPL_TB1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
 /** Typed pointer to HPL structure for TB1 suitable for use in const initializers */
 #define BSP430_HPL_TB1 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TB1)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB1 = BSP430_HPL_TB1;
-#endif /* configBSP430_PERIPH_TB1 */
+#endif /* configBSP430_HPL_TB1 */
 
-/** @def configBSP430_PERIPH_TB2
+/** @def configBSP430_HPL_TB2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB2 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TB2 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_TB2
-#define configBSP430_PERIPH_TB2 (configBSP430_HAL_TB2 - 0)
-#endif /* configBSP430_PERIPH_TB2 */
+#ifndef configBSP430_HPL_TB2
+#define configBSP430_HPL_TB2 (configBSP430_HAL_TB2 - 0)
+#endif /* configBSP430_HPL_TB2 */
 
-#if (configBSP430_HAL_TB2 - 0) && ! (configBSP430_PERIPH_TB2 - 0)
-#warning configBSP430_HAL_TB2 requested without configBSP430_PERIPH_TB2
+#if (configBSP430_HAL_TB2 - 0) && ! (configBSP430_HPL_TB2 - 0)
+#warning configBSP430_HAL_TB2 requested without configBSP430_HPL_TB2
 #endif /* HAL and not HPL */
 
 /** Handle for the raw TB2 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_TB2
+ * The handle may be used only if #configBSP430_HPL_TB2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
 #define BSP430_PERIPH_TB2 ((xBSP430periphHandle)(BSP430_PERIPH_TB2_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_TB2 */
+#endif /* configBSP430_HPL_TB2 */
 
 /** Pointer to the peripheral register map for TB2.
  *
- * The pointer may be used only if #configBSP430_PERIPH_TB2
+ * The pointer may be used only if #configBSP430_HPL_TB2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_TB2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
 /** Typed pointer to HPL structure for TB2 suitable for use in const initializers */
 #define BSP430_HPL_TB2 ((volatile xBSP430periphTIMER *)BSP430_PERIPH_TB2)
 static volatile xBSP430periphTIMER * const xBSP430periph_TB2 = BSP430_HPL_TB2;
-#endif /* configBSP430_PERIPH_TB2 */
+#endif /* configBSP430_HPL_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 /* !BSP430! end=hpl_ba_decl */

@@ -190,11 +190,11 @@ int iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
  * parasitic power, the application should wait for at least the
  * maximum sample time before invoking
  * iBSP430onewireReadTemperature_ni().
- * 
+ *
  * @param bus The port and bit identifying the 1-wire bus
  *
  * @return 0 if the request was successfully submitted, -1 if an error
- * occured. */ 
+ * occured. */
 int iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus);
 
 /** Test whether the device has completed measuring the temperature
@@ -203,7 +203,7 @@ int iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus);
  *
  * @note Do not invoke this for parasitically-powered devices.  See
  * iBSP430onewireRequestTemperature_ni().
- * 
+ *
  * @return 0 if the device is still busy; 1 if the sample is ready. */
 static int
 __inline__
@@ -219,7 +219,7 @@ iBSP430onewireTemperatureReady_ni (const xBSP430onewireBus * bus)
  *
  * @note The accuracy and precision of the measurement are much more
  * coarse than its resolution.
- * 
+ *
  * @param bus The port and bit identifying the 1-wire bus
  *
  * @param temp_xCel Pointer to a location into which the temperature

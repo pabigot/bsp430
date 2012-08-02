@@ -63,7 +63,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_PERIPH_USCI_A0 - 0
+#if configBSP430_HPL_USCI_A0 - 0
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT4 | BIT5;
     if (enablep) {
@@ -76,7 +76,7 @@ iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enabl
     }
     return 0;
   }
-#endif /* configBSP430_PERIPH_USCI_A0 */
+#endif /* configBSP430_HPL_USCI_A0 */
   (void)bits;
   (void)pxsel;
   return -1;

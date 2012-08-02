@@ -205,7 +205,7 @@ iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
   do {
     int i;
     uint8_t rom[8];
-    
+
     if (! iBSP430onewireReset_ni(bus)) {
       break;
     }
@@ -240,7 +240,7 @@ iBSP430onewireReadTemperature_ni (const xBSP430onewireBus * bus,
                                   int * temp_xCel)
 {
   int t;
-  
+
   if (! iBSP430onewireReset_ni(bus)) {
     return -1;
   }

@@ -79,9 +79,9 @@
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
-#if !defined(configBSP430_PERIPH_TB0)
-#define configBSP430_PERIPH_TB0 1
-#endif /* configBSP430_PERIPH_TB0 */
+#if !defined(configBSP430_HPL_TB0)
+#define configBSP430_HPL_TB0 1
+#endif /* configBSP430_HPL_TB0 */
 /* !BSP430! insert=feature_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */

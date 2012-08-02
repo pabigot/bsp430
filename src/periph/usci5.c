@@ -287,7 +287,7 @@ usci5_isr (xBSP430usci5Handle device)
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_HAL_USCI5_A0 - 0
 static struct xBSP430usci5State state_USCI5_A0_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A0_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_A0
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_A0 = &state_USCI5_A0_;
@@ -295,7 +295,7 @@ xBSP430usci5Handle const xBSP430usci5_USCI5_A0 = &state_USCI5_A0_;
 
 #if configBSP430_HAL_USCI5_A1 - 0
 static struct xBSP430usci5State state_USCI5_A1_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A1_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_A1
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_A1 = &state_USCI5_A1_;
@@ -303,7 +303,7 @@ xBSP430usci5Handle const xBSP430usci5_USCI5_A1 = &state_USCI5_A1_;
 
 #if configBSP430_HAL_USCI5_A2 - 0
 static struct xBSP430usci5State state_USCI5_A2_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A2_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_A2
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_A2 = &state_USCI5_A2_;
@@ -311,7 +311,7 @@ xBSP430usci5Handle const xBSP430usci5_USCI5_A2 = &state_USCI5_A2_;
 
 #if configBSP430_HAL_USCI5_A3 - 0
 static struct xBSP430usci5State state_USCI5_A3_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A3_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_A3
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_A3 = &state_USCI5_A3_;
@@ -319,7 +319,7 @@ xBSP430usci5Handle const xBSP430usci5_USCI5_A3 = &state_USCI5_A3_;
 
 #if configBSP430_HAL_USCI5_B0 - 0
 static struct xBSP430usci5State state_USCI5_B0_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B0_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_B0
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_B0 = &state_USCI5_B0_;
@@ -327,7 +327,7 @@ xBSP430usci5Handle const xBSP430usci5_USCI5_B0 = &state_USCI5_B0_;
 
 #if configBSP430_HAL_USCI5_B1 - 0
 static struct xBSP430usci5State state_USCI5_B1_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B1_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_B1
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_B1 = &state_USCI5_B1_;
@@ -335,7 +335,7 @@ xBSP430usci5Handle const xBSP430usci5_USCI5_B1 = &state_USCI5_B1_;
 
 #if configBSP430_HAL_USCI5_B2 - 0
 static struct xBSP430usci5State state_USCI5_B2_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B2_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_B2
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_B2 = &state_USCI5_B2_;
@@ -343,7 +343,7 @@ xBSP430usci5Handle const xBSP430usci5_USCI5_B2 = &state_USCI5_B2_;
 
 #if configBSP430_HAL_USCI5_B3 - 0
 static struct xBSP430usci5State state_USCI5_B3_ = {
-  .usci5 = (xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B3_BASEADDRESS_
+  .usci5 = BSP430_HPL_USCI5_B3
 };
 
 xBSP430usci5Handle const xBSP430usci5_USCI5_B3 = &state_USCI5_B3_;
@@ -441,53 +441,53 @@ static xBSP430usci5Handle periphToDevice (xBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_PERIPH_USCI5_A0 - 0
+#if configBSP430_HAL_USCI5_A0 - 0
   if (BSP430_PERIPH_USCI5_A0 == periph) {
     return xBSP430usci5_USCI5_A0;
   }
-#endif /* configBSP430_PERIPH_USCI5_A0 */
+#endif /* configBSP430_HAL_USCI5_A0 */
 
-#if configBSP430_PERIPH_USCI5_A1 - 0
+#if configBSP430_HAL_USCI5_A1 - 0
   if (BSP430_PERIPH_USCI5_A1 == periph) {
     return xBSP430usci5_USCI5_A1;
   }
-#endif /* configBSP430_PERIPH_USCI5_A1 */
+#endif /* configBSP430_HAL_USCI5_A1 */
 
-#if configBSP430_PERIPH_USCI5_A2 - 0
+#if configBSP430_HAL_USCI5_A2 - 0
   if (BSP430_PERIPH_USCI5_A2 == periph) {
     return xBSP430usci5_USCI5_A2;
   }
-#endif /* configBSP430_PERIPH_USCI5_A2 */
+#endif /* configBSP430_HAL_USCI5_A2 */
 
-#if configBSP430_PERIPH_USCI5_A3 - 0
+#if configBSP430_HAL_USCI5_A3 - 0
   if (BSP430_PERIPH_USCI5_A3 == periph) {
     return xBSP430usci5_USCI5_A3;
   }
-#endif /* configBSP430_PERIPH_USCI5_A3 */
+#endif /* configBSP430_HAL_USCI5_A3 */
 
-#if configBSP430_PERIPH_USCI5_B0 - 0
+#if configBSP430_HAL_USCI5_B0 - 0
   if (BSP430_PERIPH_USCI5_B0 == periph) {
     return xBSP430usci5_USCI5_B0;
   }
-#endif /* configBSP430_PERIPH_USCI5_B0 */
+#endif /* configBSP430_HAL_USCI5_B0 */
 
-#if configBSP430_PERIPH_USCI5_B1 - 0
+#if configBSP430_HAL_USCI5_B1 - 0
   if (BSP430_PERIPH_USCI5_B1 == periph) {
     return xBSP430usci5_USCI5_B1;
   }
-#endif /* configBSP430_PERIPH_USCI5_B1 */
+#endif /* configBSP430_HAL_USCI5_B1 */
 
-#if configBSP430_PERIPH_USCI5_B2 - 0
+#if configBSP430_HAL_USCI5_B2 - 0
   if (BSP430_PERIPH_USCI5_B2 == periph) {
     return xBSP430usci5_USCI5_B2;
   }
-#endif /* configBSP430_PERIPH_USCI5_B2 */
+#endif /* configBSP430_HAL_USCI5_B2 */
 
-#if configBSP430_PERIPH_USCI5_B3 - 0
+#if configBSP430_HAL_USCI5_B3 - 0
   if (BSP430_PERIPH_USCI5_B3 == periph) {
     return xBSP430usci5_USCI5_B3;
   }
-#endif /* configBSP430_PERIPH_USCI5_B3 */
+#endif /* configBSP430_HAL_USCI5_B3 */
 
   /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
   /* !BSP430! end=periph_hal_demux */

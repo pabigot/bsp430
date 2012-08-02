@@ -10,7 +10,7 @@
 #define APP_DS18B20_BIT BIT5
 
 /* Request the corresponding HPL */
-#define configBSP430_PERIPH_PORT1 1
+#define configBSP430_HPL_PORT1 1
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

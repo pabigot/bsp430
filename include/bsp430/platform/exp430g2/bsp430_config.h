@@ -78,9 +78,9 @@
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
 #if defined(__MSP430G2553__)
-#if !defined(configBSP430_PERIPH_TA0)
-#define configBSP430_PERIPH_TA0 1
-#endif /* configBSP430_PERIPH_TA0 */
+#if !defined(configBSP430_HPL_TA0)
+#define configBSP430_HPL_TA0 1
+#endif /* configBSP430_HPL_TA0 */
 #endif /* MCU */
 /* !BSP430! insert=feature_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */

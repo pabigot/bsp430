@@ -93,7 +93,7 @@
  *
  * If defined to a true value, the FreeRTOS-BSP430 port.c file will
  * use the BSP430 timer infrastructure on TA0 for the task scheduler.
- * This requires that #configBSP430_PERIPH_TA0 be true and
+ * This requires that #configBSP430_HPL_TA0 be true and
  * #configBSP430_HAL_TA0_CC0_ISR be false.  Use of this feature is
  * compatible with #configBSP430_UPTIME, and allows the FreeRTOS
  * scheduler to co-exist with other users of TA0.
@@ -120,7 +120,7 @@
  *
  * @note If the setting here conflicts with a setting elsewhere, the
  * compiler should generate a warning. */
-#define configBSP430_PERIPH_TA0 1
+#define configBSP430_HPL_TA0 1
 
 /** FreeRTOS scheduler defines its own TA0 CC0 ISR.
  *

@@ -35,9 +35,9 @@
  *
  * This file, included by peripheral-specific include files, supports
  * handles to peripherals which in turn are used in application code.
- * Use of a given peripheral must be indicated by defining the
- * corresponding @c configBSP430_PERIPH_xx in the application @c
- * FreeRTOSConfig.h file.
+ * Use of a peripheral @c xx must be indicated by defining the
+ * corresponding @c configBSP430_HPL_xx or @c configBSP430_HAL_xx in
+ * the application @c bsp430_config.h file.
  *
  * Structures are defined in the peripheral-specific header for each
  * class of peripheral that may have multiple instances with the same

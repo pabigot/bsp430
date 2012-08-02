@@ -136,7 +136,7 @@ typedef struct xBSP430usci5State * xBSP430usci5Handle;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_A0 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_A0 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A0
@@ -145,7 +145,7 @@ typedef struct xBSP430usci5State * xBSP430usci5Handle;
 
 /** BSP430 HAL handle for USCI5_A0.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A0
+ * The handle may be used only if #configBSP430_HAL_USCI5_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A0 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_A0;
@@ -158,7 +158,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A0;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_A1 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_A1 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A1
@@ -167,7 +167,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A0;
 
 /** BSP430 HAL handle for USCI5_A1.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A1
+ * The handle may be used only if #configBSP430_HAL_USCI5_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A1 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_A1;
@@ -180,7 +180,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A1;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_A2 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_A2 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A2
@@ -189,7 +189,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A1;
 
 /** BSP430 HAL handle for USCI5_A2.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A2
+ * The handle may be used only if #configBSP430_HAL_USCI5_A2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A2 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_A2;
@@ -202,7 +202,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A2;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_A3 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_A3 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A3
@@ -211,7 +211,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A2;
 
 /** BSP430 HAL handle for USCI5_A3.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A3
+ * The handle may be used only if #configBSP430_HAL_USCI5_A3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A3 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_A3;
@@ -224,7 +224,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A3;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_B0 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_B0 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B0
@@ -233,7 +233,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_A3;
 
 /** BSP430 HAL handle for USCI5_B0.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B0
+ * The handle may be used only if #configBSP430_HAL_USCI5_B0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B0 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_B0;
@@ -246,7 +246,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B0;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_B1 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_B1 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B1
@@ -255,7 +255,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B0;
 
 /** BSP430 HAL handle for USCI5_B1.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B1
+ * The handle may be used only if #configBSP430_HAL_USCI5_B1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B1 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_B1;
@@ -268,7 +268,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B1;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_B2 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_B2 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B2
@@ -277,7 +277,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B1;
 
 /** BSP430 HAL handle for USCI5_B2.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B2
+ * The handle may be used only if #configBSP430_HAL_USCI5_B2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B2 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_B2;
@@ -290,7 +290,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B2;
  * object xBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_USCI5_B3 to true.
+ * @note Enabling this defaults #configBSP430_HPL_USCI5_B3 to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B3
@@ -299,7 +299,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B2;
 
 /** BSP430 HAL handle for USCI5_B3.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B3
+ * The handle may be used only if #configBSP430_HAL_USCI5_B3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B3 - 0)
 extern xBSP430usci5Handle const xBSP430usci5_USCI5_B3;
@@ -310,333 +310,333 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B3;
 
 /* !BSP430! insert=hpl_ba_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
-/** @def configBSP430_PERIPH_USCI5_A0
+/** @def configBSP430_HPL_USCI5_A0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A0 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_A0 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_A0
-#define configBSP430_PERIPH_USCI5_A0 (configBSP430_HAL_USCI5_A0 - 0)
-#endif /* configBSP430_PERIPH_USCI5_A0 */
+#ifndef configBSP430_HPL_USCI5_A0
+#define configBSP430_HPL_USCI5_A0 (configBSP430_HAL_USCI5_A0 - 0)
+#endif /* configBSP430_HPL_USCI5_A0 */
 
-#if (configBSP430_HAL_USCI5_A0 - 0) && ! (configBSP430_PERIPH_USCI5_A0 - 0)
-#warning configBSP430_HAL_USCI5_A0 requested without configBSP430_PERIPH_USCI5_A0
+#if (configBSP430_HAL_USCI5_A0 - 0) && ! (configBSP430_HPL_USCI5_A0 - 0)
+#warning configBSP430_HAL_USCI5_A0 requested without configBSP430_HPL_USCI5_A0
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_A0 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A0
+ * The handle may be used only if #configBSP430_HPL_USCI5_A0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A0 - 0)
 #define BSP430_PERIPH_USCI5_A0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A0_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_A0 */
+#endif /* configBSP430_HPL_USCI5_A0 */
 
 /** Pointer to the peripheral register map for USCI5_A0.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_A0
+ * The pointer may be used only if #configBSP430_HPL_USCI5_A0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A0 - 0)
 /** Typed pointer to HPL structure for USCI5_A0 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A0 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A0)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A0 = BSP430_HPL_USCI5_A0;
-#endif /* configBSP430_PERIPH_USCI5_A0 */
+#endif /* configBSP430_HPL_USCI5_A0 */
 
-/** @def configBSP430_PERIPH_USCI5_A1
+/** @def configBSP430_HPL_USCI5_A1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A1 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_A1 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_A1
-#define configBSP430_PERIPH_USCI5_A1 (configBSP430_HAL_USCI5_A1 - 0)
-#endif /* configBSP430_PERIPH_USCI5_A1 */
+#ifndef configBSP430_HPL_USCI5_A1
+#define configBSP430_HPL_USCI5_A1 (configBSP430_HAL_USCI5_A1 - 0)
+#endif /* configBSP430_HPL_USCI5_A1 */
 
-#if (configBSP430_HAL_USCI5_A1 - 0) && ! (configBSP430_PERIPH_USCI5_A1 - 0)
-#warning configBSP430_HAL_USCI5_A1 requested without configBSP430_PERIPH_USCI5_A1
+#if (configBSP430_HAL_USCI5_A1 - 0) && ! (configBSP430_HPL_USCI5_A1 - 0)
+#warning configBSP430_HAL_USCI5_A1 requested without configBSP430_HPL_USCI5_A1
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_A1 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A1
+ * The handle may be used only if #configBSP430_HPL_USCI5_A1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A1 - 0)
 #define BSP430_PERIPH_USCI5_A1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A1_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_A1 */
+#endif /* configBSP430_HPL_USCI5_A1 */
 
 /** Pointer to the peripheral register map for USCI5_A1.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_A1
+ * The pointer may be used only if #configBSP430_HPL_USCI5_A1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A1 - 0)
 /** Typed pointer to HPL structure for USCI5_A1 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A1 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A1)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A1 = BSP430_HPL_USCI5_A1;
-#endif /* configBSP430_PERIPH_USCI5_A1 */
+#endif /* configBSP430_HPL_USCI5_A1 */
 
-/** @def configBSP430_PERIPH_USCI5_A2
+/** @def configBSP430_HPL_USCI5_A2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A2 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_A2 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_A2
-#define configBSP430_PERIPH_USCI5_A2 (configBSP430_HAL_USCI5_A2 - 0)
-#endif /* configBSP430_PERIPH_USCI5_A2 */
+#ifndef configBSP430_HPL_USCI5_A2
+#define configBSP430_HPL_USCI5_A2 (configBSP430_HAL_USCI5_A2 - 0)
+#endif /* configBSP430_HPL_USCI5_A2 */
 
-#if (configBSP430_HAL_USCI5_A2 - 0) && ! (configBSP430_PERIPH_USCI5_A2 - 0)
-#warning configBSP430_HAL_USCI5_A2 requested without configBSP430_PERIPH_USCI5_A2
+#if (configBSP430_HAL_USCI5_A2 - 0) && ! (configBSP430_HPL_USCI5_A2 - 0)
+#warning configBSP430_HAL_USCI5_A2 requested without configBSP430_HPL_USCI5_A2
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_A2 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A2
+ * The handle may be used only if #configBSP430_HPL_USCI5_A2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A2 - 0)
 #define BSP430_PERIPH_USCI5_A2 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A2_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_A2 */
+#endif /* configBSP430_HPL_USCI5_A2 */
 
 /** Pointer to the peripheral register map for USCI5_A2.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_A2
+ * The pointer may be used only if #configBSP430_HPL_USCI5_A2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A2 - 0)
 /** Typed pointer to HPL structure for USCI5_A2 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A2 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A2)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A2 = BSP430_HPL_USCI5_A2;
-#endif /* configBSP430_PERIPH_USCI5_A2 */
+#endif /* configBSP430_HPL_USCI5_A2 */
 
-/** @def configBSP430_PERIPH_USCI5_A3
+/** @def configBSP430_HPL_USCI5_A3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A3 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_A3 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_A3
-#define configBSP430_PERIPH_USCI5_A3 (configBSP430_HAL_USCI5_A3 - 0)
-#endif /* configBSP430_PERIPH_USCI5_A3 */
+#ifndef configBSP430_HPL_USCI5_A3
+#define configBSP430_HPL_USCI5_A3 (configBSP430_HAL_USCI5_A3 - 0)
+#endif /* configBSP430_HPL_USCI5_A3 */
 
-#if (configBSP430_HAL_USCI5_A3 - 0) && ! (configBSP430_PERIPH_USCI5_A3 - 0)
-#warning configBSP430_HAL_USCI5_A3 requested without configBSP430_PERIPH_USCI5_A3
+#if (configBSP430_HAL_USCI5_A3 - 0) && ! (configBSP430_HPL_USCI5_A3 - 0)
+#warning configBSP430_HAL_USCI5_A3 requested without configBSP430_HPL_USCI5_A3
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_A3 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_A3
+ * The handle may be used only if #configBSP430_HPL_USCI5_A3
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A3 - 0)
 #define BSP430_PERIPH_USCI5_A3 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A3_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_A3 */
+#endif /* configBSP430_HPL_USCI5_A3 */
 
 /** Pointer to the peripheral register map for USCI5_A3.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_A3
+ * The pointer may be used only if #configBSP430_HPL_USCI5_A3
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_A3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A3 - 0)
 /** Typed pointer to HPL structure for USCI5_A3 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A3 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A3)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A3 = BSP430_HPL_USCI5_A3;
-#endif /* configBSP430_PERIPH_USCI5_A3 */
+#endif /* configBSP430_HPL_USCI5_A3 */
 
-/** @def configBSP430_PERIPH_USCI5_B0
+/** @def configBSP430_HPL_USCI5_B0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B0 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_B0 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_B0
-#define configBSP430_PERIPH_USCI5_B0 (configBSP430_HAL_USCI5_B0 - 0)
-#endif /* configBSP430_PERIPH_USCI5_B0 */
+#ifndef configBSP430_HPL_USCI5_B0
+#define configBSP430_HPL_USCI5_B0 (configBSP430_HAL_USCI5_B0 - 0)
+#endif /* configBSP430_HPL_USCI5_B0 */
 
-#if (configBSP430_HAL_USCI5_B0 - 0) && ! (configBSP430_PERIPH_USCI5_B0 - 0)
-#warning configBSP430_HAL_USCI5_B0 requested without configBSP430_PERIPH_USCI5_B0
+#if (configBSP430_HAL_USCI5_B0 - 0) && ! (configBSP430_HPL_USCI5_B0 - 0)
+#warning configBSP430_HAL_USCI5_B0 requested without configBSP430_HPL_USCI5_B0
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_B0 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B0
+ * The handle may be used only if #configBSP430_HPL_USCI5_B0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B0 - 0)
 #define BSP430_PERIPH_USCI5_B0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B0_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_B0 */
+#endif /* configBSP430_HPL_USCI5_B0 */
 
 /** Pointer to the peripheral register map for USCI5_B0.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_B0
+ * The pointer may be used only if #configBSP430_HPL_USCI5_B0
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B0 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B0 - 0)
 /** Typed pointer to HPL structure for USCI5_B0 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B0 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B0)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B0 = BSP430_HPL_USCI5_B0;
-#endif /* configBSP430_PERIPH_USCI5_B0 */
+#endif /* configBSP430_HPL_USCI5_B0 */
 
-/** @def configBSP430_PERIPH_USCI5_B1
+/** @def configBSP430_HPL_USCI5_B1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B1 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_B1 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_B1
-#define configBSP430_PERIPH_USCI5_B1 (configBSP430_HAL_USCI5_B1 - 0)
-#endif /* configBSP430_PERIPH_USCI5_B1 */
+#ifndef configBSP430_HPL_USCI5_B1
+#define configBSP430_HPL_USCI5_B1 (configBSP430_HAL_USCI5_B1 - 0)
+#endif /* configBSP430_HPL_USCI5_B1 */
 
-#if (configBSP430_HAL_USCI5_B1 - 0) && ! (configBSP430_PERIPH_USCI5_B1 - 0)
-#warning configBSP430_HAL_USCI5_B1 requested without configBSP430_PERIPH_USCI5_B1
+#if (configBSP430_HAL_USCI5_B1 - 0) && ! (configBSP430_HPL_USCI5_B1 - 0)
+#warning configBSP430_HAL_USCI5_B1 requested without configBSP430_HPL_USCI5_B1
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_B1 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B1
+ * The handle may be used only if #configBSP430_HPL_USCI5_B1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B1 - 0)
 #define BSP430_PERIPH_USCI5_B1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B1_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_B1 */
+#endif /* configBSP430_HPL_USCI5_B1 */
 
 /** Pointer to the peripheral register map for USCI5_B1.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_B1
+ * The pointer may be used only if #configBSP430_HPL_USCI5_B1
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B1 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B1 - 0)
 /** Typed pointer to HPL structure for USCI5_B1 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B1 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B1)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B1 = BSP430_HPL_USCI5_B1;
-#endif /* configBSP430_PERIPH_USCI5_B1 */
+#endif /* configBSP430_HPL_USCI5_B1 */
 
-/** @def configBSP430_PERIPH_USCI5_B2
+/** @def configBSP430_HPL_USCI5_B2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B2 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_B2 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_B2
-#define configBSP430_PERIPH_USCI5_B2 (configBSP430_HAL_USCI5_B2 - 0)
-#endif /* configBSP430_PERIPH_USCI5_B2 */
+#ifndef configBSP430_HPL_USCI5_B2
+#define configBSP430_HPL_USCI5_B2 (configBSP430_HAL_USCI5_B2 - 0)
+#endif /* configBSP430_HPL_USCI5_B2 */
 
-#if (configBSP430_HAL_USCI5_B2 - 0) && ! (configBSP430_PERIPH_USCI5_B2 - 0)
-#warning configBSP430_HAL_USCI5_B2 requested without configBSP430_PERIPH_USCI5_B2
+#if (configBSP430_HAL_USCI5_B2 - 0) && ! (configBSP430_HPL_USCI5_B2 - 0)
+#warning configBSP430_HAL_USCI5_B2 requested without configBSP430_HPL_USCI5_B2
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_B2 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B2
+ * The handle may be used only if #configBSP430_HPL_USCI5_B2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B2 - 0)
 #define BSP430_PERIPH_USCI5_B2 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B2_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_B2 */
+#endif /* configBSP430_HPL_USCI5_B2 */
 
 /** Pointer to the peripheral register map for USCI5_B2.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_B2
+ * The pointer may be used only if #configBSP430_HPL_USCI5_B2
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B2 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B2 - 0)
 /** Typed pointer to HPL structure for USCI5_B2 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B2 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B2)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B2 = BSP430_HPL_USCI5_B2;
-#endif /* configBSP430_PERIPH_USCI5_B2 */
+#endif /* configBSP430_HPL_USCI5_B2 */
 
-/** @def configBSP430_PERIPH_USCI5_B3
+/** @def configBSP430_HPL_USCI5_B3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B3 peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_USCI5_B3 defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_USCI5_B3
-#define configBSP430_PERIPH_USCI5_B3 (configBSP430_HAL_USCI5_B3 - 0)
-#endif /* configBSP430_PERIPH_USCI5_B3 */
+#ifndef configBSP430_HPL_USCI5_B3
+#define configBSP430_HPL_USCI5_B3 (configBSP430_HAL_USCI5_B3 - 0)
+#endif /* configBSP430_HPL_USCI5_B3 */
 
-#if (configBSP430_HAL_USCI5_B3 - 0) && ! (configBSP430_PERIPH_USCI5_B3 - 0)
-#warning configBSP430_HAL_USCI5_B3 requested without configBSP430_PERIPH_USCI5_B3
+#if (configBSP430_HAL_USCI5_B3 - 0) && ! (configBSP430_HPL_USCI5_B3 - 0)
+#warning configBSP430_HAL_USCI5_B3 requested without configBSP430_HPL_USCI5_B3
 #endif /* HAL and not HPL */
 
 /** Handle for the raw USCI5_B3 device.
  *
- * The handle may be used only if #configBSP430_PERIPH_USCI5_B3
+ * The handle may be used only if #configBSP430_HPL_USCI5_B3
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B3 - 0)
 #define BSP430_PERIPH_USCI5_B3 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B3_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_USCI5_B3 */
+#endif /* configBSP430_HPL_USCI5_B3 */
 
 /** Pointer to the peripheral register map for USCI5_B3.
  *
- * The pointer may be used only if #configBSP430_PERIPH_USCI5_B3
+ * The pointer may be used only if #configBSP430_HPL_USCI5_B3
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_USCI5_B3 - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B3 - 0)
 /** Typed pointer to HPL structure for USCI5_B3 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B3 ((volatile xBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B3)
 static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B3 = BSP430_HPL_USCI5_B3;
-#endif /* configBSP430_PERIPH_USCI5_B3 */
+#endif /* configBSP430_HPL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
 /* !BSP430! end=hpl_ba_decl */

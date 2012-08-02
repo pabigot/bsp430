@@ -52,7 +52,7 @@
 #define DECLARE_AUX_CCS(_n)                                     \
   struct xBSP430periphISRCallbackIndexed * _aux_cc_callback[_n]
 
-#if configBSP430_PERIPH_TA0 - 0
+#if configBSP430_HAL_TA0 - 0
 static struct {
   struct xBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
@@ -64,13 +64,13 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA0 */
 } state_TA0_ = {
-  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA0_BASEADDRESS_ }
+  .state = { .hpl = BSP430_HPL_TA0 }
 };
 
 xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_.state;
-#endif /* configBSP430_PERIPH_TA0 */
+#endif /* configBSP430_HAL_TA0 */
 
-#if configBSP430_PERIPH_TA1 - 0
+#if configBSP430_HAL_TA1 - 0
 static struct {
   struct xBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
@@ -82,13 +82,13 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA1 */
 } state_TA1_ = {
-  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA1_BASEADDRESS_ }
+  .state = { .hpl = BSP430_HPL_TA1 }
 };
 
 xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_.state;
-#endif /* configBSP430_PERIPH_TA1 */
+#endif /* configBSP430_HAL_TA1 */
 
-#if configBSP430_PERIPH_TA2 - 0
+#if configBSP430_HAL_TA2 - 0
 static struct {
   struct xBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
@@ -100,13 +100,13 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA2 */
 } state_TA2_ = {
-  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA2_BASEADDRESS_ }
+  .state = { .hpl = BSP430_HPL_TA2 }
 };
 
 xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_.state;
-#endif /* configBSP430_PERIPH_TA2 */
+#endif /* configBSP430_HAL_TA2 */
 
-#if configBSP430_PERIPH_TA3 - 0
+#if configBSP430_HAL_TA3 - 0
 static struct {
   struct xBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
@@ -118,13 +118,13 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA3 */
 } state_TA3_ = {
-  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA3_BASEADDRESS_ }
+  .state = { .hpl = BSP430_HPL_TA3 }
 };
 
 xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_.state;
-#endif /* configBSP430_PERIPH_TA3 */
+#endif /* configBSP430_HAL_TA3 */
 
-#if configBSP430_PERIPH_TB0 - 0
+#if configBSP430_HAL_TB0 - 0
 static struct {
   struct xBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
@@ -134,13 +134,13 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB0 */
 } state_TB0_ = {
-  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TB0_BASEADDRESS_ }
+  .state = { .hpl = BSP430_HPL_TB0 }
 };
 
 xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_.state;
-#endif /* configBSP430_PERIPH_TB0 */
+#endif /* configBSP430_HAL_TB0 */
 
-#if configBSP430_PERIPH_TB1 - 0
+#if configBSP430_HAL_TB1 - 0
 static struct {
   struct xBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
@@ -150,13 +150,13 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB1 */
 } state_TB1_ = {
-  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TB1_BASEADDRESS_ }
+  .state = { .hpl = BSP430_HPL_TB1 }
 };
 
 xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_.state;
-#endif /* configBSP430_PERIPH_TB1 */
+#endif /* configBSP430_HAL_TB1 */
 
-#if configBSP430_PERIPH_TB2 - 0
+#if configBSP430_HAL_TB2 - 0
 static struct {
   struct xBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
@@ -166,11 +166,11 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB2 */
 } state_TB2_ = {
-  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TB2_BASEADDRESS_ }
+  .state = { .hpl = BSP430_HPL_TB2 }
 };
 
 xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
-#endif /* configBSP430_PERIPH_TB2 */
+#endif /* configBSP430_HAL_TB2 */
 
 unsigned long
 ulBSP430timerFrequency_Hz_ni (xBSP430timerHandle timer)
@@ -521,47 +521,47 @@ xBSP430periphLookupTIMER (xBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_ba_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
-#if configBSP430_PERIPH_TA0 - 0
+#if configBSP430_HPL_TA0 - 0
   if (BSP430_PERIPH_TA0 == periph) {
     return xBSP430periph_TA0;
   }
-#endif /* configBSP430_PERIPH_TA0 */
+#endif /* configBSP430_HPL_TA0 */
 
-#if configBSP430_PERIPH_TA1 - 0
+#if configBSP430_HPL_TA1 - 0
   if (BSP430_PERIPH_TA1 == periph) {
     return xBSP430periph_TA1;
   }
-#endif /* configBSP430_PERIPH_TA1 */
+#endif /* configBSP430_HPL_TA1 */
 
-#if configBSP430_PERIPH_TA2 - 0
+#if configBSP430_HPL_TA2 - 0
   if (BSP430_PERIPH_TA2 == periph) {
     return xBSP430periph_TA2;
   }
-#endif /* configBSP430_PERIPH_TA2 */
+#endif /* configBSP430_HPL_TA2 */
 
-#if configBSP430_PERIPH_TA3 - 0
+#if configBSP430_HPL_TA3 - 0
   if (BSP430_PERIPH_TA3 == periph) {
     return xBSP430periph_TA3;
   }
-#endif /* configBSP430_PERIPH_TA3 */
+#endif /* configBSP430_HPL_TA3 */
 
-#if configBSP430_PERIPH_TB0 - 0
+#if configBSP430_HPL_TB0 - 0
   if (BSP430_PERIPH_TB0 == periph) {
     return xBSP430periph_TB0;
   }
-#endif /* configBSP430_PERIPH_TB0 */
+#endif /* configBSP430_HPL_TB0 */
 
-#if configBSP430_PERIPH_TB1 - 0
+#if configBSP430_HPL_TB1 - 0
   if (BSP430_PERIPH_TB1 == periph) {
     return xBSP430periph_TB1;
   }
-#endif /* configBSP430_PERIPH_TB1 */
+#endif /* configBSP430_HPL_TB1 */
 
-#if configBSP430_PERIPH_TB2 - 0
+#if configBSP430_HPL_TB2 - 0
   if (BSP430_PERIPH_TB2 == periph) {
     return xBSP430periph_TB2;
   }
-#endif /* configBSP430_PERIPH_TB2 */
+#endif /* configBSP430_HPL_TB2 */
 
   /* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_demux] */
   /* !BSP430! end=periph_ba_hpl_demux */

@@ -11,7 +11,7 @@ templates = {
  * object xBSP430%(periph)sHandle supporting enhanced functionality
  * for the peripheral.
  *
- * @note Enabling this defaults #configBSP430_PERIPH_%(INSTANCE)s to true.
+ * @note Enabling this defaults #configBSP430_HPL_%(INSTANCE)s to true.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s
@@ -20,53 +20,53 @@ templates = {
 
 /** BSP430 HAL handle for %(INSTANCE)s.
  *
- * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * The handle may be used only if #configBSP430_HAL_%(INSTANCE)s
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_%(INSTANCE)s - 0)
 extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
-    'hpl_ba_decl' : '''/** @def configBSP430_PERIPH_%(INSTANCE)s
+    'hpl_ba_decl' : '''/** @def configBSP430_HPL_%(INSTANCE)s
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c %(INSTANCE)s peripheral HPL interface.  Only do this if the MCU
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
- * true, so you only need to explicitly request if you want the HPL
+ * true, so you only need to explicitly request this if you want the HPL
  * interface without the HAL interface.
  *
  * @defaulted */
-#ifndef configBSP430_PERIPH_%(INSTANCE)s
-#define configBSP430_PERIPH_%(INSTANCE)s (configBSP430_HAL_%(INSTANCE)s - 0)
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+#ifndef configBSP430_HPL_%(INSTANCE)s
+#define configBSP430_HPL_%(INSTANCE)s (configBSP430_HAL_%(INSTANCE)s - 0)
+#endif /* configBSP430_HPL_%(INSTANCE)s */
 
-#if (configBSP430_HAL_%(INSTANCE)s - 0) && ! (configBSP430_PERIPH_%(INSTANCE)s - 0)
-#warning configBSP430_HAL_%(INSTANCE)s requested without configBSP430_PERIPH_%(INSTANCE)s
+#if (configBSP430_HAL_%(INSTANCE)s - 0) && ! (configBSP430_HPL_%(INSTANCE)s - 0)
+#warning configBSP430_HAL_%(INSTANCE)s requested without configBSP430_HPL_%(INSTANCE)s
 #endif /* HAL and not HPL */
 
 /** Handle for the raw %(INSTANCE)s device.
  *
- * The handle may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * The handle may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_%(INSTANCE)s - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 #define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_))
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+#endif /* configBSP430_HPL_%(INSTANCE)s */
 
 /** Pointer to the peripheral register map for %(INSTANCE)s.
  *
- * The pointer may be used only if #configBSP430_PERIPH_%(INSTANCE)s
+ * The pointer may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
  * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_%(INSTANCE)s - 0)
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 /** Typed pointer to HPL structure for %(INSTANCE)s suitable for use in const initializers */
 #define BSP430_HPL_%(INSTANCE)s ((volatile xBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
 static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = BSP430_HPL_%(INSTANCE)s;
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+#endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
     
     'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
@@ -196,7 +196,7 @@ static volatile xBSP430periph%(PERIPH)s * const xBSP430periph_%(INSTANCE)s = BSP
 
     'hal_ba_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
-  .%(periph)s = (xBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_
+  .%(periph)s = BSP430_HPL_%(INSTANCE)s
 };
 
 xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
@@ -247,11 +247,11 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
 ''',
     
-    'periph_hal_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+    'periph_hal_demux' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
     return xBSP430%(periph)s_%(INSTANCE)s;
   }
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+#endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
     'hal_port_5xx_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
@@ -273,11 +273,11 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
-    'periph_ba_hpl_demux' : '''#if configBSP430_PERIPH_%(INSTANCE)s - 0
+    'periph_ba_hpl_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
     return xBSP430periph_%(INSTANCE)s;
   }
-#endif /* configBSP430_PERIPH_%(INSTANCE)s */
+#endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
 
     'platform_decl' : '''/** @def BSP430_PLATFORM_%(INSTANCE)s

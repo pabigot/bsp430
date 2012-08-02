@@ -89,7 +89,7 @@
  *
  * In almost all cases, when #configBSP430_UPTIME is enabled
  * #xBSP430timer_TA0 will be used as #BSP430_UPTIME_TIMER_HAL_HANDLE.
- * Correct functioning requires that #configBSP430_PERIPH_TA0 and
+ * Correct functioning requires that #configBSP430_HAL_TA0 and
  * #configBSP430_HAL_TA0_ISR be set as well.  Although these are
  * enabled by default when #configBSP430_HAL_TA0 is enabled, it is
  * easy to forget this step.
@@ -115,7 +115,7 @@
  * @warning If you set this, you must also set
  * #configBSP430_UPTIME_USE_DEFAULT_RESOURCE to be a false value.  You
  * must also ensure the corresponding peripheral
- * (e.g. #configBSP430_PERIPH_TA1) and HAL interrupt that will count
+ * (e.g. #configBSP430_HAL_TA1) and HAL interrupt that will count
  * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled, for example
  * by enabling #configBSP430_HAL_TA1, as the check for these
  * requirements cannot be enforced for non-default resources.
@@ -132,9 +132,9 @@
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)
 #define BSP430_UPTIME_TIMER_HAL_HANDLE xBSP430timer_TA0
 #if ! defined(BSP430_DOXYGEN)
-#if !(configBSP430_PERIPH_TA0 - 0)
-#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_PERIPH_TA0 not enabled
-#endif /* configBSP430_PERIPH_TA0 */
+#if !(configBSP430_HAL_TA0 - 0)
+#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0 not enabled
+#endif /* configBSP430_HAL_TA0 */
 #if !(configBSP430_HAL_TA0_ISR - 0)
 #warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0_ISR not enabled
 #endif /* configBSP430_HAL_TA0_ISR */
@@ -180,14 +180,16 @@
  * Necesary for translating between tick measurements and durations.
  *
  * @return The nominal frequency of the uptime clock, in Hz. */
+#if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 static unsigned long
 __inline__
 ulBSP430uptimeResolution_Hz_ni (void)
 {
   return ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_HAL_HANDLE);
 }
-
-#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0)
+#endif /* DOXYGEN or function available */
+         
+#if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 /** Return system uptime in clock ticks with disabled interrupts. */
 static unsigned long
 __inline__
@@ -203,7 +205,7 @@ ulBSP430uptime (void)
 {
   return ulBSP430timerCounter(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
 }
-#endif /* configBSP430_UPTIME */
+#endif /* BSP430_UPTIME */
 
 /** Configure the system uptime clock.
  *
