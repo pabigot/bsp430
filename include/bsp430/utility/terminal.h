@@ -190,7 +190,7 @@ void vBSP430CommandAdd (xBSP430CommandGroup * pxCommandGroup,
 typedef struct xBSP430_TERMINAL_CONFIGURATION {
   /** TEMPORARY The device ID for the UART device that manages the
    * connection */
-  xBSP430periphHandle uart;
+  tBSP430periphHandle uart;
 
   /** Parameter to #xBSP430serialOpen */
   unsigned int control_word;

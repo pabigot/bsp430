@@ -76,7 +76,7 @@ void vBSP430ledSet (int led_idx,
 }
 
 int
-iBSP430platformConfigurePeripheralPins_ni (xBSP430periphHandle device, int enablep)
+iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
   unsigned int bits = 0;
   if (BSP430_PERIPH_LFXT1 == device) {

@@ -204,7 +204,7 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A0 - 0)
-#define BSP430_PERIPH_USCI_A0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_A0_BASEADDRESS_))
+#define BSP430_PERIPH_USCI_A0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_A0_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_A0 */
 
 /** Pointer to the peripheral register map for USCI_A0.
@@ -245,7 +245,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = BSP430_HPL_USC
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A1 - 0)
-#define BSP430_PERIPH_USCI_A1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_A1_BASEADDRESS_))
+#define BSP430_PERIPH_USCI_A1 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_A1_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_A1 */
 
 /** Pointer to the peripheral register map for USCI_A1.
@@ -286,7 +286,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = BSP430_HPL_USC
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B0 - 0)
-#define BSP430_PERIPH_USCI_B0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_B0_BASEADDRESS_))
+#define BSP430_PERIPH_USCI_B0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_B0_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_B0 */
 
 /** Pointer to the peripheral register map for USCI_B0.
@@ -327,7 +327,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = BSP430_HPL_USC
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B1 - 0)
-#define BSP430_PERIPH_USCI_B1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI_B1_BASEADDRESS_))
+#define BSP430_PERIPH_USCI_B1 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_B1_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_B1 */
 
 /** Pointer to the peripheral register map for USCI_B1.
@@ -457,12 +457,12 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = BSP430_HPL_USC
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
 /** USCI-specific implementation of xBSP430serialOpenUART() */
-xBSP430usciHandle xBSP430usciOpenUART (xBSP430periphHandle xPeriph,
+xBSP430usciHandle xBSP430usciOpenUART (tBSP430periphHandle xPeriph,
                                        unsigned int control_word,
                                        unsigned long baud);
 
 /** USCI-specific implementation of xBSP430serialOpenSPI() */
-xBSP430usciHandle xBSP430usciOpenSPI (xBSP430periphHandle xPeriph,
+xBSP430usciHandle xBSP430usciOpenSPI (tBSP430periphHandle xPeriph,
                                       unsigned int control_word,
                                       unsigned int prescaler);
 

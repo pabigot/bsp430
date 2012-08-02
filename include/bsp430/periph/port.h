@@ -266,7 +266,7 @@ typedef BSP430_PERIPH_PORTW_ xBSP430periphPORTW;
  * #configBSP430_HPL_PORT1), or if the specified port does not
  * support interrupts (see #xBSP430periphLookupPORT)
  */
-volatile xBSP430periphPORTIE * xBSP430periphLookupPORTIE (xBSP430periphHandle xHandle);
+volatile xBSP430periphPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xHandle);
 
 /** Get the peripheral register pointer for a non-interrupt-enabled port.
  *
@@ -278,7 +278,7 @@ volatile xBSP430periphPORTIE * xBSP430periphLookupPORTIE (xBSP430periphHandle xH
  * #configBSP430_HPL_PORT1), or if the specified port supports
  * interrupts (see #xBSP430periphLookupPORTIE)
  */
-volatile xBSP430periphPORT * xBSP430periphLookupPORT (xBSP430periphHandle xHandle);
+volatile xBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
 
 /** @cond DOXYGEN_INTERNAL */
 
@@ -609,7 +609,7 @@ extern xBSP430portHandle const xBSP430port_PORT11;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
-#define BSP430_PERIPH_PORT1 ((xBSP430periphHandle)(BSP430_PERIPH_PORT1_BASEADDRESS_))
+#define BSP430_PERIPH_PORT1 ((tBSP430periphHandle)(BSP430_PERIPH_PORT1_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT1 */
 
 /** Pointer to the peripheral register map for PORT1.
@@ -650,7 +650,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = BSP430_HPL_PORT1
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
-#define BSP430_PERIPH_PORT2 ((xBSP430periphHandle)(BSP430_PERIPH_PORT2_BASEADDRESS_))
+#define BSP430_PERIPH_PORT2 ((tBSP430periphHandle)(BSP430_PERIPH_PORT2_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT2 */
 
 /** Pointer to the peripheral register map for PORT2.
@@ -691,7 +691,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = BSP430_HPL_PORT2
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
-#define BSP430_PERIPH_PORT3 ((xBSP430periphHandle)(BSP430_PERIPH_PORT3_BASEADDRESS_))
+#define BSP430_PERIPH_PORT3 ((tBSP430periphHandle)(BSP430_PERIPH_PORT3_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT3 */
 
 /** Pointer to the peripheral register map for PORT3.
@@ -732,7 +732,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = BSP430_HPL_PORT3
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
-#define BSP430_PERIPH_PORT4 ((xBSP430periphHandle)(BSP430_PERIPH_PORT4_BASEADDRESS_))
+#define BSP430_PERIPH_PORT4 ((tBSP430periphHandle)(BSP430_PERIPH_PORT4_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT4 */
 
 /** Pointer to the peripheral register map for PORT4.
@@ -773,7 +773,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = BSP430_HPL_PORT4
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
-#define BSP430_PERIPH_PORT5 ((xBSP430periphHandle)(BSP430_PERIPH_PORT5_BASEADDRESS_))
+#define BSP430_PERIPH_PORT5 ((tBSP430periphHandle)(BSP430_PERIPH_PORT5_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT5 */
 
 /** Pointer to the peripheral register map for PORT5.
@@ -814,7 +814,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = BSP430_HPL_PORT5
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
-#define BSP430_PERIPH_PORT6 ((xBSP430periphHandle)(BSP430_PERIPH_PORT6_BASEADDRESS_))
+#define BSP430_PERIPH_PORT6 ((tBSP430periphHandle)(BSP430_PERIPH_PORT6_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT6 */
 
 /** Pointer to the peripheral register map for PORT6.
@@ -855,7 +855,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = BSP430_HPL_PORT6
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
-#define BSP430_PERIPH_PORT7 ((xBSP430periphHandle)(BSP430_PERIPH_PORT7_BASEADDRESS_))
+#define BSP430_PERIPH_PORT7 ((tBSP430periphHandle)(BSP430_PERIPH_PORT7_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT7 */
 
 /** Pointer to the peripheral register map for PORT7.
@@ -896,7 +896,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = BSP430_HPL_PORT7
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
-#define BSP430_PERIPH_PORT8 ((xBSP430periphHandle)(BSP430_PERIPH_PORT8_BASEADDRESS_))
+#define BSP430_PERIPH_PORT8 ((tBSP430periphHandle)(BSP430_PERIPH_PORT8_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT8 */
 
 /** Pointer to the peripheral register map for PORT8.
@@ -937,7 +937,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = BSP430_HPL_PORT8
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
-#define BSP430_PERIPH_PORT9 ((xBSP430periphHandle)(BSP430_PERIPH_PORT9_BASEADDRESS_))
+#define BSP430_PERIPH_PORT9 ((tBSP430periphHandle)(BSP430_PERIPH_PORT9_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT9 */
 
 /** Pointer to the peripheral register map for PORT9.
@@ -978,7 +978,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = BSP430_HPL_PORT9
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
-#define BSP430_PERIPH_PORT10 ((xBSP430periphHandle)(BSP430_PERIPH_PORT10_BASEADDRESS_))
+#define BSP430_PERIPH_PORT10 ((tBSP430periphHandle)(BSP430_PERIPH_PORT10_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT10 */
 
 /** Pointer to the peripheral register map for PORT10.
@@ -1019,7 +1019,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = BSP430_HPL_PORT
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
-#define BSP430_PERIPH_PORT11 ((xBSP430periphHandle)(BSP430_PERIPH_PORT11_BASEADDRESS_))
+#define BSP430_PERIPH_PORT11 ((tBSP430periphHandle)(BSP430_PERIPH_PORT11_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT11 */
 
 /** Pointer to the peripheral register map for PORT11.
@@ -1295,6 +1295,6 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = BSP430_HPL_PORT
  *
  * @return the HAL handle for the port, or NULL if either the HPL port
  * is unrecognized or the corresponding HAL port was not enabled. */
-xBSP430portHandle xBSP430portLookup (xBSP430periphHandle hpl);
+xBSP430portHandle xBSP430portLookup (tBSP430periphHandle hpl);
 
 #endif /* BSP430_PERIPH_PORT_H */

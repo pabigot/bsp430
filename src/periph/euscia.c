@@ -40,7 +40,7 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
-static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph);
+static xBSP430eusciaHandle periphToDevice (tBSP430periphHandle periph);
 
 #define WAKEUP_TRANSMIT_HPL_NI(_hpl) do {       \
     if (! (_hpl->ie & UCTXIE)) {                \
@@ -62,7 +62,7 @@ static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph);
   } while (0)
 
 xBSP430eusciaHandle
-xBSP430eusciaOpenUART (xBSP430periphHandle periph,
+xBSP430eusciaOpenUART (tBSP430periphHandle periph,
                        unsigned int control_word,
                        unsigned long baud)
 {
@@ -84,7 +84,7 @@ xBSP430eusciaOpenUART (xBSP430periphHandle periph,
 
   /* Reject if the pins can't be configured */
   if ((NULL != device)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni((xBSP430periphHandle)(device->euscia), 1))) {
+      && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(device->euscia), 1))) {
     device = NULL;
   }
 
@@ -174,7 +174,7 @@ iBSP430eusciaClose (xBSP430eusciaHandle device)
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   device->euscia->ctlw0 = UCSWRST;
-  rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(device->euscia), 0);
+  rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(device->euscia), 0);
   device->flags = 0;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rc;
@@ -355,7 +355,7 @@ isr_EUSCI_A2 (void)
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-static xBSP430eusciaHandle periphToDevice (xBSP430periphHandle periph)
+static xBSP430eusciaHandle periphToDevice (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

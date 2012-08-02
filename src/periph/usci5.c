@@ -40,7 +40,7 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI5
  * device handle. */
-static xBSP430usci5Handle periphToDevice (xBSP430periphHandle periph);
+static xBSP430usci5Handle periphToDevice (tBSP430periphHandle periph);
 
 #define WAKEUP_TRANSMIT_HPL_NI(_hpl) do {       \
     if (! (_hpl->ie & UCTXIE)) {                \
@@ -62,7 +62,7 @@ static xBSP430usci5Handle periphToDevice (xBSP430periphHandle periph);
   } while (0)
 
 xBSP430usci5Handle
-xBSP430usci5OpenUART (xBSP430periphHandle periph,
+xBSP430usci5OpenUART (tBSP430periphHandle periph,
                       unsigned int control_word,
                       unsigned long baud)
 {
@@ -81,7 +81,7 @@ xBSP430usci5OpenUART (xBSP430periphHandle periph,
 
   /* Reject if the pins can't be configured */
   if ((NULL != device)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni((xBSP430periphHandle)(uintptr_t)(device->usci5), 1))) {
+      && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(device->usci5), 1))) {
     device = NULL;
   }
 
@@ -159,7 +159,7 @@ iBSP430usci5Close (xBSP430usci5Handle device)
   BSP430_CORE_DISABLE_INTERRUPT();
   FLUSH_HPL_NI(device->usci5);
   device->usci5->ctlw0 = UCSWRST;
-  rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(uintptr_t)(device->usci5), 0);
+  rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(uintptr_t)(device->usci5), 0);
   device->flags = 0;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -437,7 +437,7 @@ isr_USCI5_B3 (void)
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-static xBSP430usci5Handle periphToDevice (xBSP430periphHandle periph)
+static xBSP430usci5Handle periphToDevice (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

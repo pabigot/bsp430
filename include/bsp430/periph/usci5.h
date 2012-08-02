@@ -336,7 +336,7 @@ extern xBSP430usci5Handle const xBSP430usci5_USCI5_B3;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A0 - 0)
-#define BSP430_PERIPH_USCI5_A0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A0_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_A0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_A0_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_A0 */
 
 /** Pointer to the peripheral register map for USCI5_A0.
@@ -377,7 +377,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A0 = BSP430_HPL_U
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A1 - 0)
-#define BSP430_PERIPH_USCI5_A1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A1_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_A1 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_A1_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_A1 */
 
 /** Pointer to the peripheral register map for USCI5_A1.
@@ -418,7 +418,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A1 = BSP430_HPL_U
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A2 - 0)
-#define BSP430_PERIPH_USCI5_A2 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A2_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_A2 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_A2_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_A2 */
 
 /** Pointer to the peripheral register map for USCI5_A2.
@@ -459,7 +459,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A2 = BSP430_HPL_U
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A3 - 0)
-#define BSP430_PERIPH_USCI5_A3 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_A3_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_A3 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_A3_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_A3 */
 
 /** Pointer to the peripheral register map for USCI5_A3.
@@ -500,7 +500,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_A3 = BSP430_HPL_U
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B0 - 0)
-#define BSP430_PERIPH_USCI5_B0 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B0_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_B0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_B0_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_B0 */
 
 /** Pointer to the peripheral register map for USCI5_B0.
@@ -541,7 +541,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B0 = BSP430_HPL_U
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B1 - 0)
-#define BSP430_PERIPH_USCI5_B1 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B1_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_B1 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_B1_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_B1 */
 
 /** Pointer to the peripheral register map for USCI5_B1.
@@ -582,7 +582,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B1 = BSP430_HPL_U
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B2 - 0)
-#define BSP430_PERIPH_USCI5_B2 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B2_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_B2 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_B2_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_B2 */
 
 /** Pointer to the peripheral register map for USCI5_B2.
@@ -623,7 +623,7 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B2 = BSP430_HPL_U
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B3 - 0)
-#define BSP430_PERIPH_USCI5_B3 ((xBSP430periphHandle)(BSP430_PERIPH_USCI5_B3_BASEADDRESS_))
+#define BSP430_PERIPH_USCI5_B3 ((tBSP430periphHandle)(BSP430_PERIPH_USCI5_B3_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI5_B3 */
 
 /** Pointer to the peripheral register map for USCI5_B3.
@@ -823,12 +823,12 @@ static volatile xBSP430periphUSCI5 * const xBSP430periph_USCI5_B3 = BSP430_HPL_U
 /* !BSP430! end=hal_isr_decl */
 
 /** USCI5-specific implementation of xBSP430serialOpenUART() */
-xBSP430usci5Handle xBSP430usci5OpenUART (xBSP430periphHandle xPeriph,
+xBSP430usci5Handle xBSP430usci5OpenUART (tBSP430periphHandle xPeriph,
     unsigned int control_word,
     unsigned long baud);
 
 /** USCI5-specific implementation of xBSP430serialOpenSPI() */
-xBSP430usci5Handle xBSP430usci5OpenSPI (xBSP430periphHandle xPeriph,
+xBSP430usci5Handle xBSP430usci5OpenSPI (tBSP430periphHandle xPeriph,
                                         unsigned int control_word,
                                         unsigned int prescaler);
 

@@ -193,7 +193,7 @@ ulBSP430timerFrequency_Hz_ni (xBSP430timerHandle timer)
 }
 
 unsigned int
-uiBSP430timerCaptureDelta_ni (xBSP430periphHandle periph,
+uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
                               int ccidx,
                               unsigned int capture_mode,
                               unsigned int ccis,
@@ -517,7 +517,7 @@ isr_TB2 (void)
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
 volatile xBSP430periphTIMER *
-xBSP430periphLookupTIMER (xBSP430periphHandle periph)
+xBSP430periphLookupTIMER (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_ba_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */

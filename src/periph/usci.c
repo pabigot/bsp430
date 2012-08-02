@@ -40,7 +40,7 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
-static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph);
+static xBSP430usciHandle periphToDevice (tBSP430periphHandle periph);
 
 #define WAKEUP_TRANSMIT_HAL_NI(_hal) do {               \
     if (! (*(_hal)->iep & (_hal)->tx_bit)) {            \
@@ -62,7 +62,7 @@ static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph);
   } while (0)
 
 xBSP430usciHandle
-xBSP430usciOpenUART (xBSP430periphHandle periph,
+xBSP430usciOpenUART (tBSP430periphHandle periph,
                      unsigned int control_word,
                      unsigned long baud)
 {
@@ -155,7 +155,7 @@ iBSP430usciClose (xBSP430usciHandle device)
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   device->usci->ctl1 = UCSWRST;
-  rc = iBSP430platformConfigurePeripheralPins_ni ((xBSP430periphHandle)(uintptr_t)(device->usci), 0);
+  rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(uintptr_t)(device->usci), 0);
   device->flags = 0;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -361,7 +361,7 @@ isr_USCIAB0TX (void)
 
 #endif  /* HAL USCIABxTX ISR */
 
-static xBSP430usciHandle periphToDevice (xBSP430periphHandle periph)
+static xBSP430usciHandle periphToDevice (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

@@ -261,7 +261,7 @@ isr_PORT11 (void)
 /* !BSP430! end=hal_port_5xx_isr_defn */
 
 volatile xBSP430periphPORTIE *
-xBSP430periphLookupPORTIE (xBSP430periphHandle periph)
+xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
 {
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
   /* !BSP430! insert=periph_ba_hpl_demux */
@@ -341,7 +341,7 @@ xBSP430periphLookupPORTIE (xBSP430periphHandle periph)
 }
 
 volatile xBSP430periphPORT *
-xBSP430periphLookupPORT (xBSP430periphHandle periph)
+xBSP430periphLookupPORT (tBSP430periphHandle periph)
 {
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
   return NULL;

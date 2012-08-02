@@ -148,13 +148,13 @@ typedef xBSP430serialHandle xBSP430serialHandle;
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-xBSP430serialHandle xBSP430serialOpenUART (xBSP430periphHandle periph,
+xBSP430serialHandle xBSP430serialOpenUART (tBSP430periphHandle periph,
     unsigned int control_word,
     unsigned long baud);
 #endif /* BSP430_DOXYGEN */
 
 #if defined(BSP430_DOXYGEN)
-xBSP430serialHandle xBSP430serialOpenSPI (xBSP430periphHandle periph,
+xBSP430serialHandle xBSP430serialOpenSPI (tBSP430periphHandle periph,
     unsigned int control_word,
     unsigned int prescaler);
 #endif /* BSP430_DOXYGEN */
@@ -327,7 +327,7 @@ int iBSP430serialTransmitASCIIZ_ni (xBSP430serialHandle device, const char * str
 #define _DELEGATE_OPEN_UART(_serial)                                    \
   static __inline__                                                     \
   xBSP430serialHandle                                                   \
-  xBSP430serialOpenUART (xBSP430periphHandle periph,                    \
+  xBSP430serialOpenUART (tBSP430periphHandle periph,                    \
                          unsigned int control_word,                     \
                          unsigned long baud)                            \
   {                                                                     \

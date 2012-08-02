@@ -53,7 +53,7 @@ extern xBSP430%(periph)sHandle const xBSP430%(periph)s_%(INSTANCE)s;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
-#define BSP430_PERIPH_%(INSTANCE)s ((xBSP430periphHandle)(BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_))
+#define BSP430_PERIPH_%(INSTANCE)s ((tBSP430periphHandle)(BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_))
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 
 /** Pointer to the peripheral register map for %(INSTANCE)s.

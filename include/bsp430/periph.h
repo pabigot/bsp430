@@ -83,17 +83,17 @@
  * #BSP430_PERIPH_LFXT1.
  *
  * Negative values indicate an error. */
-typedef int xBSP430periphHandle;
+typedef int tBSP430periphHandle;
 
 /** HPL handle specifying that no peripheral has been identified. */
-#define BSP430_PERIPH_NONE ((xBSP430periphHandle)0)
+#define BSP430_PERIPH_NONE ((tBSP430periphHandle)0)
 
 /** HPL handle identifying the XT1 crystal functionality.
  *
  * This is used by platform-independent clock peripherals to request
  * that the pins related to XIN and XOUT be configured to their
  * peripheral function. */
-#define BSP430_PERIPH_LFXT1 ((xBSP430periphHandle)1)
+#define BSP430_PERIPH_LFXT1 ((tBSP430periphHandle)1)
 
 /** HPL handle identifying the ability to expose clock signals.
  *
@@ -102,7 +102,7 @@ typedef int xBSP430periphHandle;
  * ACLK on pins where they may be monitored.  Its availability is
  * conditional on platform support and
  * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
-#define BSP430_PERIPH_EXPOSED_CLOCKS ((xBSP430periphHandle)3)
+#define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)3)
 
 /** @def BSP430_PERIPH_EXPOSED_CLOCKS_HELP
  *
@@ -143,11 +143,11 @@ typedef int xBSP430periphHandle;
  * @return The peripheral handle.  The result is undefined if what is
  * passed is not a pointer to the HPL structure for an enabled
  * peripheral. */
-static xBSP430periphHandle
+static tBSP430periphHandle
 __inline__
 xBSP430periphFromHPL (volatile void * hpl)
 {
-  return (xBSP430periphHandle)(uintptr_t)hpl;
+  return (tBSP430periphHandle)(uintptr_t)hpl;
 }
 
 /* Forward declarations */

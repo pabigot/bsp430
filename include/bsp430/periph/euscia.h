@@ -207,7 +207,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A0 - 0)
-#define BSP430_PERIPH_EUSCI_A0 ((xBSP430periphHandle)(BSP430_PERIPH_EUSCI_A0_BASEADDRESS_))
+#define BSP430_PERIPH_EUSCI_A0 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_A0_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_A0 */
 
 /** Pointer to the peripheral register map for EUSCI_A0.
@@ -248,7 +248,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = BSP430_HPL_
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A1 - 0)
-#define BSP430_PERIPH_EUSCI_A1 ((xBSP430periphHandle)(BSP430_PERIPH_EUSCI_A1_BASEADDRESS_))
+#define BSP430_PERIPH_EUSCI_A1 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_A1_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_A1 */
 
 /** Pointer to the peripheral register map for EUSCI_A1.
@@ -289,7 +289,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = BSP430_HPL_
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A2 - 0)
-#define BSP430_PERIPH_EUSCI_A2 ((xBSP430periphHandle)(BSP430_PERIPH_EUSCI_A2_BASEADDRESS_))
+#define BSP430_PERIPH_EUSCI_A2 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_A2_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_A2 */
 
 /** Pointer to the peripheral register map for EUSCI_A2.
@@ -379,12 +379,12 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = BSP430_HPL_
 /* !BSP430! end=hal_isr_decl */
 
 /** eUSCI(A)-specific implementation of xBSP430serialOpenUART() */
-xBSP430eusciaHandle xBSP430eusciaOpenUART (xBSP430periphHandle xPeriph,
+xBSP430eusciaHandle xBSP430eusciaOpenUART (tBSP430periphHandle xPeriph,
     unsigned int control_word,
     unsigned long baud);
 
 /** eUSCI(A)-specific implementation of xBSP430serialOpenSPI() */
-xBSP430eusciaHandle xBSP430eusciaOpenSPI (xBSP430periphHandle xPeriph,
+xBSP430eusciaHandle xBSP430eusciaOpenSPI (tBSP430periphHandle xPeriph,
     unsigned int control_word,
     unsigned int prescaler);
 
