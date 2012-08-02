@@ -174,12 +174,19 @@ typedef struct sBSP430usci5State * tBSP430usci5Handle;
 #define configBSP430_HAL_USCI5_A0 0
 #endif /* configBSP430_HAL_USCI5_A0 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_A0 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_A0_;
+#endif /* configBSP430_HAL_USCI5_A0 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_A0.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A0 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_A0;
+#define BSP430_HAL_USCI5_A0 (&xBSP430usci5_USCI5_A0_)
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 /** @def configBSP430_HAL_USCI5_A1
@@ -196,12 +203,19 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_A0;
 #define configBSP430_HAL_USCI5_A1 0
 #endif /* configBSP430_HAL_USCI5_A1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_A1 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_A1_;
+#endif /* configBSP430_HAL_USCI5_A1 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_A1.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A1 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_A1;
+#define BSP430_HAL_USCI5_A1 (&xBSP430usci5_USCI5_A1_)
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 /** @def configBSP430_HAL_USCI5_A2
@@ -218,12 +232,19 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_A1;
 #define configBSP430_HAL_USCI5_A2 0
 #endif /* configBSP430_HAL_USCI5_A2 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_A2 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_A2_;
+#endif /* configBSP430_HAL_USCI5_A2 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_A2.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_A2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A2 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_A2;
+#define BSP430_HAL_USCI5_A2 (&xBSP430usci5_USCI5_A2_)
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 /** @def configBSP430_HAL_USCI5_A3
@@ -240,12 +261,19 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_A2;
 #define configBSP430_HAL_USCI5_A3 0
 #endif /* configBSP430_HAL_USCI5_A3 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_A3 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_A3_;
+#endif /* configBSP430_HAL_USCI5_A3 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_A3.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_A3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A3 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_A3;
+#define BSP430_HAL_USCI5_A3 (&xBSP430usci5_USCI5_A3_)
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 /** @def configBSP430_HAL_USCI5_B0
@@ -262,12 +290,19 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_A3;
 #define configBSP430_HAL_USCI5_B0 0
 #endif /* configBSP430_HAL_USCI5_B0 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_B0 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_B0_;
+#endif /* configBSP430_HAL_USCI5_B0 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_B0.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_B0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B0 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_B0;
+#define BSP430_HAL_USCI5_B0 (&xBSP430usci5_USCI5_B0_)
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 /** @def configBSP430_HAL_USCI5_B1
@@ -284,12 +319,19 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B0;
 #define configBSP430_HAL_USCI5_B1 0
 #endif /* configBSP430_HAL_USCI5_B1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_B1 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_B1_;
+#endif /* configBSP430_HAL_USCI5_B1 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_B1.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_B1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B1 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_B1;
+#define BSP430_HAL_USCI5_B1 (&xBSP430usci5_USCI5_B1_)
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 /** @def configBSP430_HAL_USCI5_B2
@@ -306,12 +348,19 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B1;
 #define configBSP430_HAL_USCI5_B2 0
 #endif /* configBSP430_HAL_USCI5_B2 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_B2 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_B2_;
+#endif /* configBSP430_HAL_USCI5_B2 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_B2.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_B2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B2 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_B2;
+#define BSP430_HAL_USCI5_B2 (&xBSP430usci5_USCI5_B2_)
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 /** @def configBSP430_HAL_USCI5_B3
@@ -328,12 +377,19 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B2;
 #define configBSP430_HAL_USCI5_B3 0
 #endif /* configBSP430_HAL_USCI5_B3 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI5_B3 - 0
+/* You don't need to know about this */
+extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
+#endif /* configBSP430_HAL_USCI5_B3 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI5_B3.
  *
  * The handle may be used only if #configBSP430_HAL_USCI5_B3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B3 - 0)
-extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
+#define BSP430_HAL_USCI5_B3 (&xBSP430usci5_USCI5_B3_)
 #endif /* configBSP430_HAL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */

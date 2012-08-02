@@ -26,6 +26,10 @@
 #endif
 
 /* Where the device can be found */
+const struct sBSP430onewireBus ds18b20 = {
+  .port = APP_DS18B20_PORT,
+  .bit = APP_DS18B20_BIT
+};
 
 /* The serial number read from the device on startup */
 struct sBSP430onewireSerialNumber serial;
@@ -34,10 +38,6 @@ void main ()
 {
   int rc;
   unsigned long uptime_ticks_per_sec;
-  const struct sBSP430onewireBus ds18b20 = {
-    .port = APP_DS18B20_PORT,
-    .bit = APP_DS18B20_BIT
-  };
   const struct sBSP430onewireBus * bus = &ds18b20;
 
   vBSP430platformInitialize_ni();

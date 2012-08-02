@@ -155,12 +155,19 @@ typedef struct sBSP430eusciaState * tBSP430eusciaHandle;
 #define configBSP430_HAL_EUSCI_A0 0
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_A0 - 0
+/* You don't need to know about this */
+extern sBSP430eusciaState xBSP430euscia_EUSCI_A0_;
+#endif /* configBSP430_HAL_EUSCI_A0 */
+/** @endcond */
+
 /** BSP430 HAL handle for EUSCI_A0.
  *
  * The handle may be used only if #configBSP430_HAL_EUSCI_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A0 - 0)
-extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A0;
+#define BSP430_HAL_EUSCI_A0 (&xBSP430euscia_EUSCI_A0_)
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
 /** @def configBSP430_HAL_EUSCI_A1
@@ -177,12 +184,19 @@ extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A0;
 #define configBSP430_HAL_EUSCI_A1 0
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_A1 - 0
+/* You don't need to know about this */
+extern sBSP430eusciaState xBSP430euscia_EUSCI_A1_;
+#endif /* configBSP430_HAL_EUSCI_A1 */
+/** @endcond */
+
 /** BSP430 HAL handle for EUSCI_A1.
  *
  * The handle may be used only if #configBSP430_HAL_EUSCI_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A1 - 0)
-extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A1;
+#define BSP430_HAL_EUSCI_A1 (&xBSP430euscia_EUSCI_A1_)
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
 /** @def configBSP430_HAL_EUSCI_A2
@@ -199,12 +213,19 @@ extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A1;
 #define configBSP430_HAL_EUSCI_A2 0
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_A2 - 0
+/* You don't need to know about this */
+extern sBSP430eusciaState xBSP430euscia_EUSCI_A2_;
+#endif /* configBSP430_HAL_EUSCI_A2 */
+/** @endcond */
+
 /** BSP430 HAL handle for EUSCI_A2.
  *
  * The handle may be used only if #configBSP430_HAL_EUSCI_A2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A2 - 0)
-extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A2;
+#define BSP430_HAL_EUSCI_A2 (&xBSP430euscia_EUSCI_A2_)
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */

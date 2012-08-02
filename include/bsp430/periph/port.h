@@ -490,12 +490,19 @@ typedef struct sBSP430portState * tBSP430portHandle;
 #define configBSP430_HAL_PORT1 0
 #endif /* configBSP430_HAL_PORT1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT1 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT1_;
+#endif /* configBSP430_HAL_PORT1 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT1.
  *
  * The handle may be used only if #configBSP430_HAL_PORT1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT1 - 0)
-extern tBSP430portHandle const hBSP430port_PORT1;
+#define BSP430_HAL_PORT1 (&xBSP430port_PORT1_)
 #endif /* configBSP430_HAL_PORT1 */
 
 /** @def configBSP430_HAL_PORT2
@@ -512,12 +519,19 @@ extern tBSP430portHandle const hBSP430port_PORT1;
 #define configBSP430_HAL_PORT2 0
 #endif /* configBSP430_HAL_PORT2 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT2 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT2_;
+#endif /* configBSP430_HAL_PORT2 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT2.
  *
  * The handle may be used only if #configBSP430_HAL_PORT2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT2 - 0)
-extern tBSP430portHandle const hBSP430port_PORT2;
+#define BSP430_HAL_PORT2 (&xBSP430port_PORT2_)
 #endif /* configBSP430_HAL_PORT2 */
 
 /** @def configBSP430_HAL_PORT3
@@ -534,12 +548,19 @@ extern tBSP430portHandle const hBSP430port_PORT2;
 #define configBSP430_HAL_PORT3 0
 #endif /* configBSP430_HAL_PORT3 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT3 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT3_;
+#endif /* configBSP430_HAL_PORT3 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT3.
  *
  * The handle may be used only if #configBSP430_HAL_PORT3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT3 - 0)
-extern tBSP430portHandle const hBSP430port_PORT3;
+#define BSP430_HAL_PORT3 (&xBSP430port_PORT3_)
 #endif /* configBSP430_HAL_PORT3 */
 
 /** @def configBSP430_HAL_PORT4
@@ -556,12 +577,19 @@ extern tBSP430portHandle const hBSP430port_PORT3;
 #define configBSP430_HAL_PORT4 0
 #endif /* configBSP430_HAL_PORT4 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT4 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT4_;
+#endif /* configBSP430_HAL_PORT4 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT4.
  *
  * The handle may be used only if #configBSP430_HAL_PORT4
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT4 - 0)
-extern tBSP430portHandle const hBSP430port_PORT4;
+#define BSP430_HAL_PORT4 (&xBSP430port_PORT4_)
 #endif /* configBSP430_HAL_PORT4 */
 
 /** @def configBSP430_HAL_PORT5
@@ -578,12 +606,19 @@ extern tBSP430portHandle const hBSP430port_PORT4;
 #define configBSP430_HAL_PORT5 0
 #endif /* configBSP430_HAL_PORT5 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT5 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT5_;
+#endif /* configBSP430_HAL_PORT5 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT5.
  *
  * The handle may be used only if #configBSP430_HAL_PORT5
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT5 - 0)
-extern tBSP430portHandle const hBSP430port_PORT5;
+#define BSP430_HAL_PORT5 (&xBSP430port_PORT5_)
 #endif /* configBSP430_HAL_PORT5 */
 
 /** @def configBSP430_HAL_PORT6
@@ -600,12 +635,19 @@ extern tBSP430portHandle const hBSP430port_PORT5;
 #define configBSP430_HAL_PORT6 0
 #endif /* configBSP430_HAL_PORT6 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT6 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT6_;
+#endif /* configBSP430_HAL_PORT6 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT6.
  *
  * The handle may be used only if #configBSP430_HAL_PORT6
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT6 - 0)
-extern tBSP430portHandle const hBSP430port_PORT6;
+#define BSP430_HAL_PORT6 (&xBSP430port_PORT6_)
 #endif /* configBSP430_HAL_PORT6 */
 
 /** @def configBSP430_HAL_PORT7
@@ -622,12 +664,19 @@ extern tBSP430portHandle const hBSP430port_PORT6;
 #define configBSP430_HAL_PORT7 0
 #endif /* configBSP430_HAL_PORT7 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT7 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT7_;
+#endif /* configBSP430_HAL_PORT7 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT7.
  *
  * The handle may be used only if #configBSP430_HAL_PORT7
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT7 - 0)
-extern tBSP430portHandle const hBSP430port_PORT7;
+#define BSP430_HAL_PORT7 (&xBSP430port_PORT7_)
 #endif /* configBSP430_HAL_PORT7 */
 
 /** @def configBSP430_HAL_PORT8
@@ -644,12 +693,19 @@ extern tBSP430portHandle const hBSP430port_PORT7;
 #define configBSP430_HAL_PORT8 0
 #endif /* configBSP430_HAL_PORT8 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT8 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT8_;
+#endif /* configBSP430_HAL_PORT8 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT8.
  *
  * The handle may be used only if #configBSP430_HAL_PORT8
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT8 - 0)
-extern tBSP430portHandle const hBSP430port_PORT8;
+#define BSP430_HAL_PORT8 (&xBSP430port_PORT8_)
 #endif /* configBSP430_HAL_PORT8 */
 
 /** @def configBSP430_HAL_PORT9
@@ -666,12 +722,19 @@ extern tBSP430portHandle const hBSP430port_PORT8;
 #define configBSP430_HAL_PORT9 0
 #endif /* configBSP430_HAL_PORT9 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT9 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT9_;
+#endif /* configBSP430_HAL_PORT9 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT9.
  *
  * The handle may be used only if #configBSP430_HAL_PORT9
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT9 - 0)
-extern tBSP430portHandle const hBSP430port_PORT9;
+#define BSP430_HAL_PORT9 (&xBSP430port_PORT9_)
 #endif /* configBSP430_HAL_PORT9 */
 
 /** @def configBSP430_HAL_PORT10
@@ -688,12 +751,19 @@ extern tBSP430portHandle const hBSP430port_PORT9;
 #define configBSP430_HAL_PORT10 0
 #endif /* configBSP430_HAL_PORT10 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT10 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT10_;
+#endif /* configBSP430_HAL_PORT10 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT10.
  *
  * The handle may be used only if #configBSP430_HAL_PORT10
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT10 - 0)
-extern tBSP430portHandle const hBSP430port_PORT10;
+#define BSP430_HAL_PORT10 (&xBSP430port_PORT10_)
 #endif /* configBSP430_HAL_PORT10 */
 
 /** @def configBSP430_HAL_PORT11
@@ -710,12 +780,19 @@ extern tBSP430portHandle const hBSP430port_PORT10;
 #define configBSP430_HAL_PORT11 0
 #endif /* configBSP430_HAL_PORT11 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_PORT11 - 0
+/* You don't need to know about this */
+extern sBSP430portState xBSP430port_PORT11_;
+#endif /* configBSP430_HAL_PORT11 */
+/** @endcond */
+
 /** BSP430 HAL handle for PORT11.
  *
  * The handle may be used only if #configBSP430_HAL_PORT11
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT11 - 0)
-extern tBSP430portHandle const hBSP430port_PORT11;
+#define BSP430_HAL_PORT11 (&xBSP430port_PORT11_)
 #endif /* configBSP430_HAL_PORT11 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */

@@ -18,12 +18,19 @@ templates = {
 #define configBSP430_HAL_%(INSTANCE)s 0
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_%(INSTANCE)s - 0
+/* You don't need to know about this */
+extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
+#endif /* configBSP430_HAL_%(INSTANCE)s */
+/** @endcond */
+
 /** BSP430 HAL handle for %(INSTANCE)s.
  *
  * The handle may be used only if #configBSP430_HAL_%(INSTANCE)s
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_%(INSTANCE)s - 0)
-extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
+#define BSP430_HAL_%(INSTANCE)s (&xBSP430%(periph)s_%(INSTANCE)s_)
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
@@ -224,11 +231,9 @@ extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
 ''',
 
     'hal_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-static struct sBSP430%(periph)sState state_%(INSTANCE)s_ = {
+sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_ = {
   .%(periph)s = BSP430_HPL_%(INSTANCE)s
 };
-
-tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
@@ -237,7 +242,7 @@ static void
 __attribute__((__interrupt__(%(BASEINSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-  int rv = %(periph)s_isr(hBSP430%(periph)s_%(INSTANCE)s);
+  int rv = %(periph)s_isr(BSP430_HAL_%(INSTANCE)s);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
@@ -248,7 +253,7 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
 isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 {
-  tBSP430%(periph)sHandle timer = hBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+  tBSP430%(periph)sHandle timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -259,7 +264,7 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
 isr_T%(TYPE)s%(INSTANCE)s (void)
 {
-  tBSP430%(periph)sHandle timer = hBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+  tBSP430%(periph)sHandle timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
   int iv = T%(TYPE)s%(INSTANCE)sIV;
   int rv = 0;
   if (0 != iv) {
@@ -278,13 +283,13 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
     
     'periph_hal_demux' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
-    return hBSP430%(periph)s_%(INSTANCE)s;
+    return BSP430_HAL_%(INSTANCE)s;
   }
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
     'hal_port_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-static struct sBSP430portState state_%(INSTANCE)s = {
+struct sBSP430portState xBSP430port_%(INSTANCE)s_ = {
   .hal_state = { .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
@@ -307,7 +312,6 @@ static struct sBSP430portState state_%(INSTANCE)s = {
   .renp = &P%(#)sREN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
-tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
@@ -322,7 +326,7 @@ static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-  int rv = port_isr(hBSP430port_%(INSTANCE)s, P%(#)sIV);
+  int rv = port_isr(BSP430_HAL_%(INSTANCE)s, P%(#)sIV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */

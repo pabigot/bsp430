@@ -143,12 +143,19 @@ typedef struct sBSP430usciState * tBSP430usciHandle;
 #define configBSP430_HAL_USCI_A0 0
 #endif /* configBSP430_HAL_USCI_A0 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI_A0 - 0
+/* You don't need to know about this */
+extern sBSP430usciState xBSP430usci_USCI_A0_;
+#endif /* configBSP430_HAL_USCI_A0 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI_A0.
  *
  * The handle may be used only if #configBSP430_HAL_USCI_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_A0 - 0)
-extern tBSP430usciHandle const hBSP430usci_USCI_A0;
+#define BSP430_HAL_USCI_A0 (&xBSP430usci_USCI_A0_)
 #endif /* configBSP430_HAL_USCI_A0 */
 
 /** @def configBSP430_HAL_USCI_A1
@@ -165,12 +172,19 @@ extern tBSP430usciHandle const hBSP430usci_USCI_A0;
 #define configBSP430_HAL_USCI_A1 0
 #endif /* configBSP430_HAL_USCI_A1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI_A1 - 0
+/* You don't need to know about this */
+extern sBSP430usciState xBSP430usci_USCI_A1_;
+#endif /* configBSP430_HAL_USCI_A1 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI_A1.
  *
  * The handle may be used only if #configBSP430_HAL_USCI_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_A1 - 0)
-extern tBSP430usciHandle const hBSP430usci_USCI_A1;
+#define BSP430_HAL_USCI_A1 (&xBSP430usci_USCI_A1_)
 #endif /* configBSP430_HAL_USCI_A1 */
 
 /** @def configBSP430_HAL_USCI_B0
@@ -187,12 +201,19 @@ extern tBSP430usciHandle const hBSP430usci_USCI_A1;
 #define configBSP430_HAL_USCI_B0 0
 #endif /* configBSP430_HAL_USCI_B0 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI_B0 - 0
+/* You don't need to know about this */
+extern sBSP430usciState xBSP430usci_USCI_B0_;
+#endif /* configBSP430_HAL_USCI_B0 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI_B0.
  *
  * The handle may be used only if #configBSP430_HAL_USCI_B0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_B0 - 0)
-extern tBSP430usciHandle const hBSP430usci_USCI_B0;
+#define BSP430_HAL_USCI_B0 (&xBSP430usci_USCI_B0_)
 #endif /* configBSP430_HAL_USCI_B0 */
 
 /** @def configBSP430_HAL_USCI_B1
@@ -209,12 +230,19 @@ extern tBSP430usciHandle const hBSP430usci_USCI_B0;
 #define configBSP430_HAL_USCI_B1 0
 #endif /* configBSP430_HAL_USCI_B1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_USCI_B1 - 0
+/* You don't need to know about this */
+extern sBSP430usciState xBSP430usci_USCI_B1_;
+#endif /* configBSP430_HAL_USCI_B1 */
+/** @endcond */
+
 /** BSP430 HAL handle for USCI_B1.
  *
  * The handle may be used only if #configBSP430_HAL_USCI_B1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_B1 - 0)
-extern tBSP430usciHandle const hBSP430usci_USCI_B1;
+#define BSP430_HAL_USCI_B1 (&xBSP430usci_USCI_B1_)
 #endif /* configBSP430_HAL_USCI_B1 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */

@@ -500,12 +500,19 @@ void vBSP430timerResetCounter_ni (tBSP430timerHandle timer);
 #define configBSP430_HAL_TA0 0
 #endif /* configBSP430_HAL_TA0 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_TA0 - 0
+/* You don't need to know about this */
+extern sBSP430timerState xBSP430timer_TA0_;
+#endif /* configBSP430_HAL_TA0 */
+/** @endcond */
+
 /** BSP430 HAL handle for TA0.
  *
  * The handle may be used only if #configBSP430_HAL_TA0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA0 - 0)
-extern tBSP430timerHandle const hBSP430timer_TA0;
+#define BSP430_HAL_TA0 (&xBSP430timer_TA0_)
 #endif /* configBSP430_HAL_TA0 */
 
 /** @def configBSP430_HAL_TA1
@@ -522,12 +529,19 @@ extern tBSP430timerHandle const hBSP430timer_TA0;
 #define configBSP430_HAL_TA1 0
 #endif /* configBSP430_HAL_TA1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_TA1 - 0
+/* You don't need to know about this */
+extern sBSP430timerState xBSP430timer_TA1_;
+#endif /* configBSP430_HAL_TA1 */
+/** @endcond */
+
 /** BSP430 HAL handle for TA1.
  *
  * The handle may be used only if #configBSP430_HAL_TA1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA1 - 0)
-extern tBSP430timerHandle const hBSP430timer_TA1;
+#define BSP430_HAL_TA1 (&xBSP430timer_TA1_)
 #endif /* configBSP430_HAL_TA1 */
 
 /** @def configBSP430_HAL_TA2
@@ -544,12 +558,19 @@ extern tBSP430timerHandle const hBSP430timer_TA1;
 #define configBSP430_HAL_TA2 0
 #endif /* configBSP430_HAL_TA2 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_TA2 - 0
+/* You don't need to know about this */
+extern sBSP430timerState xBSP430timer_TA2_;
+#endif /* configBSP430_HAL_TA2 */
+/** @endcond */
+
 /** BSP430 HAL handle for TA2.
  *
  * The handle may be used only if #configBSP430_HAL_TA2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA2 - 0)
-extern tBSP430timerHandle const hBSP430timer_TA2;
+#define BSP430_HAL_TA2 (&xBSP430timer_TA2_)
 #endif /* configBSP430_HAL_TA2 */
 
 /** @def configBSP430_HAL_TA3
@@ -566,12 +587,19 @@ extern tBSP430timerHandle const hBSP430timer_TA2;
 #define configBSP430_HAL_TA3 0
 #endif /* configBSP430_HAL_TA3 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_TA3 - 0
+/* You don't need to know about this */
+extern sBSP430timerState xBSP430timer_TA3_;
+#endif /* configBSP430_HAL_TA3 */
+/** @endcond */
+
 /** BSP430 HAL handle for TA3.
  *
  * The handle may be used only if #configBSP430_HAL_TA3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA3 - 0)
-extern tBSP430timerHandle const hBSP430timer_TA3;
+#define BSP430_HAL_TA3 (&xBSP430timer_TA3_)
 #endif /* configBSP430_HAL_TA3 */
 
 /** @def configBSP430_HAL_TB0
@@ -588,12 +616,19 @@ extern tBSP430timerHandle const hBSP430timer_TA3;
 #define configBSP430_HAL_TB0 0
 #endif /* configBSP430_HAL_TB0 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_TB0 - 0
+/* You don't need to know about this */
+extern sBSP430timerState xBSP430timer_TB0_;
+#endif /* configBSP430_HAL_TB0 */
+/** @endcond */
+
 /** BSP430 HAL handle for TB0.
  *
  * The handle may be used only if #configBSP430_HAL_TB0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB0 - 0)
-extern tBSP430timerHandle const hBSP430timer_TB0;
+#define BSP430_HAL_TB0 (&xBSP430timer_TB0_)
 #endif /* configBSP430_HAL_TB0 */
 
 /** @def configBSP430_HAL_TB1
@@ -610,12 +645,19 @@ extern tBSP430timerHandle const hBSP430timer_TB0;
 #define configBSP430_HAL_TB1 0
 #endif /* configBSP430_HAL_TB1 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_TB1 - 0
+/* You don't need to know about this */
+extern sBSP430timerState xBSP430timer_TB1_;
+#endif /* configBSP430_HAL_TB1 */
+/** @endcond */
+
 /** BSP430 HAL handle for TB1.
  *
  * The handle may be used only if #configBSP430_HAL_TB1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB1 - 0)
-extern tBSP430timerHandle const hBSP430timer_TB1;
+#define BSP430_HAL_TB1 (&xBSP430timer_TB1_)
 #endif /* configBSP430_HAL_TB1 */
 
 /** @def configBSP430_HAL_TB2
@@ -632,12 +674,19 @@ extern tBSP430timerHandle const hBSP430timer_TB1;
 #define configBSP430_HAL_TB2 0
 #endif /* configBSP430_HAL_TB2 */
 
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_TB2 - 0
+/* You don't need to know about this */
+extern sBSP430timerState xBSP430timer_TB2_;
+#endif /* configBSP430_HAL_TB2 */
+/** @endcond */
+
 /** BSP430 HAL handle for TB2.
  *
  * The handle may be used only if #configBSP430_HAL_TB2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB2 - 0)
-extern tBSP430timerHandle const hBSP430timer_TB2;
+#define BSP430_HAL_TB2 (&xBSP430timer_TB2_)
 #endif /* configBSP430_HAL_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */

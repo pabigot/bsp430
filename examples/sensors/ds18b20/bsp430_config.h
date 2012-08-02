@@ -11,7 +11,7 @@
 #define configBSP430_UPTIME 1
 
 /* Specify placement on P1.7  */
-#define APP_DS18B20_PORT hBSP430port_PORT1
+#define APP_DS18B20_PORT BSP430_HAL_PORT1
 #define APP_DS18B20_BIT BIT7
 
 /* Request the corresponding HAL */

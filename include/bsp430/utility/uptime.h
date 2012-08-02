@@ -33,7 +33,7 @@
  * @brief Support for maintaining a system uptime counter.
  *
  * This module provides routines to initialize and query a long-term
- * clock, normally using #hBSP430timer_TA0 sourced by an undivided
+ * clock, normally using #BSP430_HAL_TA0 sourced by an undivided
  * ACLK.  The feature is enabled by adding the following to your
  * bsp430_config.h:
  *
@@ -49,7 +49,7 @@
  * #vBSP430platformInitialize_ni if #configBSP430_UPTIME is true.
  *
  * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to use
- * something other than #hBSP430timer_TA0 as the uptime clock source.
+ * something other than #BSP430_HAL_TA0 as the uptime clock source.
  *
  * @author Peter A. Bigot <bigotp@acm.org> @homepage
  * http://github.com/pabigot/freertos-mspgcc @date 2012 @copyright <a
@@ -88,7 +88,7 @@
 /** @def configBSP430_UPTIME_USE_DEFAULT_RESOURCE
  *
  * In almost all cases, when #configBSP430_UPTIME is enabled
- * #hBSP430timer_TA0 will be used as #BSP430_UPTIME_TIMER_HAL_HANDLE.
+ * #BSP430_HAL_TA0 will be used as #BSP430_UPTIME_TIMER_HAL_HANDLE.
  * Correct functioning requires that #configBSP430_HAL_TA0 and
  * #configBSP430_HAL_TA0_ISR be set as well.  Although these are
  * enabled by default when #configBSP430_HAL_TA0 is enabled, it is
@@ -130,7 +130,7 @@
 #else /* BSP430_UPTIME_TIMER_HAL_HANDLE */
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)
-#define BSP430_UPTIME_TIMER_HAL_HANDLE hBSP430timer_TA0
+#define BSP430_UPTIME_TIMER_HAL_HANDLE BSP430_HAL_TA0
 #if ! defined(BSP430_DOXYGEN)
 #if !(configBSP430_HAL_TA0 - 0)
 #warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0 not enabled

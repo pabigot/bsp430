@@ -104,11 +104,11 @@
 
 
 /* Forward declarations */
-struct hBSP430_COMMAND_DEFN;
-struct hBSP430_TERMINAL_STATE;
+struct BSP430_HAL_COMMAND_DEFN;
+struct BSP430_HAL_TERMINAL_STATE;
 
 /** The terminal state structure is private to the implementation. */
-typedef struct hBSP430_TERMINAL_STATE * xBSP430TerminalHandle;
+typedef struct BSP430_HAL_TERMINAL_STATE * xBSP430TerminalHandle;
 
 /** Prototype for functions that execute commands.
  *
@@ -121,7 +121,7 @@ typedef struct hBSP430_TERMINAL_STATE * xBSP430TerminalHandle;
  * Any remaining leading whitespace is not removed.
  */
 typedef void (* xBSP430CommandFunction) (xBSP430TerminalHandle terminal,
-    struct hBSP430_COMMAND_DEFN * pxCommandDefn,
+    struct BSP430_HAL_COMMAND_DEFN * pxCommandDefn,
     char * pcArgString);
 
 /** Definition of a command that is recognized by this
@@ -131,7 +131,7 @@ typedef void (* xBSP430CommandFunction) (xBSP430TerminalHandle terminal,
  * a larger structure in a fashion that allows the command processor
  * to access the remainder of the enclosing structure to obtain other
  * information related to processing the command. */
-typedef struct hBSP430_COMMAND_DEFN {
+typedef struct BSP430_HAL_COMMAND_DEFN {
   /** An identifier used to recognize this particular command.
    *
    * The value should be a sequence of characters that are not
@@ -145,7 +145,7 @@ typedef struct hBSP430_COMMAND_DEFN {
    * pointer is null for the last command in a set, and should be
    * null at all times when the command structure is not linked into
    * a set. */
-  struct hBSP430_COMMAND_DEFN * next;
+  struct BSP430_HAL_COMMAND_DEFN * next;
 
   /** Optional pointer to a string describing how the command works.
    * Appropriate contents would include a template for any arguments
@@ -161,7 +161,7 @@ typedef struct hBSP430_COMMAND_DEFN {
  * For example, a set of operations related to task management might
  * be aggregated into a "task" group and contain subcommands like
  * "start", "stop", "status". */
-typedef struct hBSP430_COMMAND_GROUP {
+typedef struct BSP430_HAL_COMMAND_GROUP {
   /** An identifier for the group.  This is used primarily for
    * diagnostic purposes. */
   char * group;
@@ -187,7 +187,7 @@ void vBSP430CommandAdd (xBSP430CommandGroup * pxCommandGroup,
 
 /** Structure holding the relevant information required to create a
  * terminal interface. */
-typedef struct hBSP430_TERMINAL_CONFIGURATION {
+typedef struct BSP430_HAL_TERMINAL_CONFIGURATION {
   /** TEMPORARY The device ID for the UART device that manages the
    * connection */
   tBSP430periphHandle uart;

@@ -58,12 +58,10 @@ static const sBSP430periphISRCallbackIndexed * cc_callback_TA0[
 #endif /* TA0 */
 ];
 
-static sBSP430timerState state_TA0_ = {
+sBSP430timerState xBSP430timer_TA0_ = {
   .hpl = BSP430_HPL_TA0,
   .cc_callback = cc_callback_TA0
 };
-
-tBSP430timerHandle const hBSP430timer_TA0 = &state_TA0_;
 #endif /* configBSP430_HAL_TA0 */
 
 #if configBSP430_HAL_TA1 - 0
@@ -78,12 +76,10 @@ static const sBSP430periphISRCallbackIndexed * cc_callback_TA1[
 #endif /* TA1 */
 ];
 
-static sBSP430timerState state_TA1_ = {
+sBSP430timerState xBSP430timerTA1_ = {
   .hpl = BSP430_HPL_TA1,
   .cc_callback = &cc_callback_TA1
 };
-
-tBSP430timerHandle const hBSP430timer_TA1 = &state_TA1_;
 #endif /* configBSP430_HAL_TA1 */
 
 #if configBSP430_HAL_TA2 - 0
@@ -98,32 +94,28 @@ static const sBSP430periphISRCallbackIndexed * cc_callback_TA2[
 #endif /* TA2 */
 ];
 
-static sBSP430timerState state_TA2_ = {
+sBSP430timerState xBSP430timerTA2_ = {
   .hpl = BSP430_HPL_TA2,
   .cc_callback = cc_callback_TA2
 };
-
-tBSP430timerHandle const hBSP430timer_TA2 = &state_TA2_
 #endif /* configBSP430_HAL_TA2 */
 
 #if configBSP430_HAL_TA3 - 0
 
-    static const sBSP430periphISRCallbackIndexed * cc_callback_TA3[
+static const sBSP430periphISRCallbackIndexed * cc_callback_TA3[
 #if defined(__MSP430_HAS_T3A2__)
-      2
+  2
 #elif defined(__MSP430_HAS_T3A3__)
-      3
+  3
 #else
-      5
+  5
 #endif /* TA3 */
-    ];
+];
 
-static sBSP430timerState state_TA3_ = {
+sBSP430timerState xBSP430timerTA3_ = {
   .hpl = BSP430_HPL_TA3,
   .cc_callback = cc_callback_TA3
 };
-
-tBSP430timerHandle const hBSP430timer_TA3 = &state_TA3_;
 #endif /* configBSP430_HAL_TA3 */
 
 #if configBSP430_HAL_TB0 - 0
@@ -136,12 +128,10 @@ static const sBSP430periphISRCallbackIndexed * cc_callback_TB0[
 #endif /* TB0 */
 ];
 
-static sBSP430timerState state_TB0_ = {
+sBSP430timerState xBSP430timerTB0_ = {
   .hpl = BSP430_HPL_TB0,
   .cc_callback = cc_callback_TB0
 };
-
-tBSP430timerHandle const hBSP430timer_TB0 = &state_TB0_;
 #endif /* configBSP430_HAL_TB0 */
 
 #if configBSP430_HAL_TB1 - 0
@@ -154,12 +144,10 @@ static const sBSP430periphISRCallbackIndexed * cc_callback_TB1[
 #endif /* TB1 */
 ];
 
-static sBSP430timerState state_TB1_ = {
+sBSP430timerState xBSP430timerTB1_ = {
   .hpl = BSP430_HPL_TB1,
   .cc_callback = cc_callback_TB1
 };
-
-tBSP430timerHandle const hBSP430timer_TB1 = &state_TB1_;
 #endif /* configBSP430_HAL_TB1 */
 
 #if configBSP430_HAL_TB2 - 0
@@ -172,12 +160,10 @@ static const sBSP430periphISRCallbackIndexed * cc_callback_TB2[
 #endif /* TB2 */
 ];
 
-static sBSP430timerState state_TB2_ = {
+sBSP430timerState xBSP430timerTB2_ = {
   .hpl = BSP430_HPL_TB2,
   .cc_callback = cc_callback_TB2
 };
-
-tBSP430timerHandle const hBSP430timer_TB2 = &state_TB2_;
 #endif /* configBSP430_HAL_TB2 */
 
 unsigned long
@@ -297,7 +283,7 @@ static void
 __attribute__((__interrupt__(TIMER0_A0_VECTOR)))
 isr_cc0_TA0 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA0;
+  tBSP430timerHandle timer = BSP430_HAL_TA0;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -308,7 +294,7 @@ static void
 __attribute__((__interrupt__(TIMER0_A1_VECTOR)))
 isr_TA0 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA0;
+  tBSP430timerHandle timer = BSP430_HAL_TA0;
   int iv = TA0IV;
   int rv = 0;
   if (0 != iv) {
@@ -329,7 +315,7 @@ static void
 __attribute__((__interrupt__(TIMER1_A0_VECTOR)))
 isr_cc0_TA1 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA1;
+  tBSP430timerHandle timer = BSP430_HAL_TA1;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -340,7 +326,7 @@ static void
 __attribute__((__interrupt__(TIMER1_A1_VECTOR)))
 isr_TA1 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA1;
+  tBSP430timerHandle timer = BSP430_HAL_TA1;
   int iv = TA1IV;
   int rv = 0;
   if (0 != iv) {
@@ -361,7 +347,7 @@ static void
 __attribute__((__interrupt__(TIMER2_A0_VECTOR)))
 isr_cc0_TA2 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA2;
+  tBSP430timerHandle timer = BSP430_HAL_TA2;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -372,7 +358,7 @@ static void
 __attribute__((__interrupt__(TIMER2_A1_VECTOR)))
 isr_TA2 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA2;
+  tBSP430timerHandle timer = BSP430_HAL_TA2;
   int iv = TA2IV;
   int rv = 0;
   if (0 != iv) {
@@ -393,7 +379,7 @@ static void
 __attribute__((__interrupt__(TIMER3_A0_VECTOR)))
 isr_cc0_TA3 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA3;
+  tBSP430timerHandle timer = BSP430_HAL_TA3;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -404,7 +390,7 @@ static void
 __attribute__((__interrupt__(TIMER3_A1_VECTOR)))
 isr_TA3 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TA3;
+  tBSP430timerHandle timer = BSP430_HAL_TA3;
   int iv = TA3IV;
   int rv = 0;
   if (0 != iv) {
@@ -429,7 +415,7 @@ static void
 __attribute__((__interrupt__(TIMER0_B0_VECTOR)))
 isr_cc0_TB0 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TB0;
+  tBSP430timerHandle timer = BSP430_HAL_TB0;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -440,7 +426,7 @@ static void
 __attribute__((__interrupt__(TIMER0_B1_VECTOR)))
 isr_TB0 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TB0;
+  tBSP430timerHandle timer = BSP430_HAL_TB0;
   int iv = TB0IV;
   int rv = 0;
   if (0 != iv) {
@@ -461,7 +447,7 @@ static void
 __attribute__((__interrupt__(TIMER1_B0_VECTOR)))
 isr_cc0_TB1 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TB1;
+  tBSP430timerHandle timer = BSP430_HAL_TB1;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -472,7 +458,7 @@ static void
 __attribute__((__interrupt__(TIMER1_B1_VECTOR)))
 isr_TB1 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TB1;
+  tBSP430timerHandle timer = BSP430_HAL_TB1;
   int iv = TB1IV;
   int rv = 0;
   if (0 != iv) {
@@ -493,7 +479,7 @@ static void
 __attribute__((__interrupt__(TIMER2_B0_VECTOR)))
 isr_cc0_TB2 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TB2;
+  tBSP430timerHandle timer = BSP430_HAL_TB2;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -504,7 +490,7 @@ static void
 __attribute__((__interrupt__(TIMER2_B1_VECTOR)))
 isr_TB2 (void)
 {
-  tBSP430timerHandle timer = hBSP430timer_TB2;
+  tBSP430timerHandle timer = BSP430_HAL_TB2;
   int iv = TB2IV;
   int rv = 0;
   if (0 != iv) {

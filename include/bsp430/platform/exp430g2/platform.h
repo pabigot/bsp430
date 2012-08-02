@@ -74,7 +74,7 @@
 /* END AUTOMATICALLY GENERATED CODE [module_startif] */
 /* !BSP430! end=module_startif */
 #if defined(__MSP430G2553__)
-#define BSP430_CONSOLE_SERIAL_HAL_HANDLE hBSP430usci_USCI_A0
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE BSP430_HAL_USCI_A0
 #endif /* MCU */
 /* !BSP430! insert=module_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */

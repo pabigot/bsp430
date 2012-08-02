@@ -90,7 +90,7 @@ void vBSP430ledSet (int led_idx,
  * explicitly; the PxSEL and PxDIR registers are inferred by comparing
  * that address with the known addresses of the PxOUT registers in the
  * initialization loop. */
-typedef struct hBSP430_LED_DEFN {
+typedef struct BSP430_HAL_LED_DEFN {
   /** Address of the PxOUT register used to control the LED */
   volatile unsigned char* pucPxOUT;
   /** The bit mask for the LED (not the bit position) */
