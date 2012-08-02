@@ -127,6 +127,69 @@ typedef int tBSP430periphHandle;
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 0
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
+
+/** Reserved value for #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT */
+#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0
+
+/** Mask used to isolate the HPL variant in the
+ * sBSP430periphHALStatePrefix structure @a cflags field */ 
+#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ 0x0F
+
+/** Extract HPL variant from a HAL state instance.
+ *
+ * This is used to interpret the HPL pointer that is stored in the
+ * state in situations where the HAL supports multiple types of
+ * underlying peripheral. */
+#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_p) (BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ & (_p)->cflags)
+
+/** Indication that an ISR is associated with a HAL instance
+ *
+ * This flag is set in a HAL instance state
+ * sBSP430periphHALStatePrefix cflags field to denote that an ISR
+ * implementation has been provided by the infrastructure.
+ *
+ * Where a peripheral supports multiple ISRs per instance:
+ * <ul>
+ * <li>A #sBSP430timerState instance specifies the CC0 ISR with this bit.
+ * <li>A #sBSP430usciState instance specifies the RX ISR with this bit.
+ * </ul>
+ */
+#define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR 0x80
+
+/** Indication that secondary ISR is associated with a HAL instance
+ *
+ * This flag is set in a HAL instance state
+ * sBSP430periphHALStatePrefix cflags field to denote that a secondary
+ * ISR implementation has been provided by the infrastructure.
+ *
+ * Where a peripheral supports multiple ISRs per instance:
+ * <ul>
+ * <li>A #sBSP430timerState instance specifies the CC1-CC6 and overflow ISR with this bit.
+ * <li>A #sBSP430usciState instance specifies the TX ISR with this bit.
+ * </ul>
+ */
+#define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2 0x40
+
+/** Common prefix for HAL state structures.
+ *
+ * Each state structure for a HAL instance begins with a field of this
+ * type named @c hal_state.
+ */
+typedef struct sBSP430periphHALStatePrefix {
+  /** Immutable flags recording information about the HAL interface.
+   *
+   * Information conveyed includes a selector for the underlying HPL
+   * structure type, and whether the HAL layer includes ISR support.
+   * See #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT. */
+  const unsigned char cflags;
+  /** HAL-specific flags recording peripheral state
+   *
+   * This primarily exists for alignment, though at some point there
+   * may be flags that are worth having at this level, such as a
+   * resource-in-use marker. */
+  unsigned char flags;
+} sBSP430periphHALStatePrefix;
+
 /** Get the peripheral handle corresponding to an HPL handle
  *
  * The Hardware Presentation Layer handle is a typed pointer to a

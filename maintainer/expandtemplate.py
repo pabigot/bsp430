@@ -255,10 +255,21 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 
     'hal_port_5xx_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct sBSP430portState state_%(INSTANCE)s = {
-  .port = (volatile sBSP430periphPORTIE *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_,
+  .hal_state = { .cflags = BSP430_PORT_HAL_HPL_VARIANT_%(VARIANT)s
+#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
+                           | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
+  },
+  .hpl = { .%(variant)s = BSP430_HPL_%(INSTANCE)s },
 };
 tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
+''',
+
+    'hal_port_get_hpl' : '''/** Get the HPL pointer if the HAL is a %(INSTANCE)s variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430PORT_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430PORT_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.%(instance)s : 0)
 ''',
 
     'hal_port_5xx_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0

@@ -326,14 +326,125 @@ volatile sBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandl
 
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to an sBSP430periph_PORT_IE_8. */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORT_IE_8 1
+
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to an sBSP430periph_PORT_8. */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORT_8 2
+
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to an sBSP430periph_PORT_16. */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORT_16 3
+
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to an sBSP430periph_PORT_5XX_8. */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8 4
+
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to an sBSP430periph_PORT_5XX_16. */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_16 5
+
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to a byte-accessed port without interrupt
+ * capabilities.
+ *
+ * This identifies the appropriate structure-specific variant value
+ * based on the MCU capabilities. */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define BSP430_PORT_HAL_HPL_VARIANT_PORTIE BSP430PORT_HAL_HPL_VARIANT_PORT_5XX_8
+#else /* MSP430XV2 */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORTIE BSP430PORT_HAL_HPL_VARIANT_PORT_IE_8
+#endif /* MSP430XV2 */
+
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to a byte-accessed port without interrupt
+ * capabilities.
+ *
+ * This identifies the appropriate structure-specific variant value
+ * based on the MCU capabilities. */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430PORT_HAL_HPL_VARIANT_PORT_5XX_8
+#else /* MSP430XV2 */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430PORT_HAL_HPL_VARIANT_PORT_8
+typedef sBSP430periphPORT_8 sBSP430periphPORT;
+#endif /* MSP430XV2 */
+
+/** Field value for variant stored in sBSP430portState.hal_state when
+ * HPL reference is to a byte-accessed port without interrupt
+ * capabilities.
+ *
+ * This identifies the appropriate structure-specific variant value
+ * based on the MCU capabilities. */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define BSP430_PORT_HAL_HPL_VARIANT_PORTW BSP430PORT_HAL_HPL_VARIANT_PORT_5XX_16
+#else /* MSP430XV2 */
+#define BSP430_PORT_HAL_HPL_VARIANT_PORTW BSP430PORT_HAL_HPL_VARIANT_PORT_16
+#endif /* MSP430XV2 */
+
+/* !BSP430! instance=port_ie_8,port_8,port_16,port_5xx_8,port_5xx_16 */
+/* !BSP430! insert=hal_port_get_hpl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_get_hpl] */
+/** Get the HPL pointer if the HAL is a PORT_IE_8 variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430PORT_HAL_GET_HPL_PORT_IE_8(_hal) ((BSP430PORT_HAL_HPL_VARIANT_PORT_IE_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.port_ie_8 : 0)
+
+/** Get the HPL pointer if the HAL is a PORT_8 variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430PORT_HAL_GET_HPL_PORT_8(_hal) ((BSP430PORT_HAL_HPL_VARIANT_PORT_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.port_8 : 0)
+
+/** Get the HPL pointer if the HAL is a PORT_16 variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430PORT_HAL_GET_HPL_PORT_16(_hal) ((BSP430PORT_HAL_HPL_VARIANT_PORT_16 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.port_16 : 0)
+
+/** Get the HPL pointer if the HAL is a PORT_5XX_8 variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430PORT_HAL_GET_HPL_PORT_5XX_8(_hal) ((BSP430PORT_HAL_HPL_VARIANT_PORT_5XX_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.port_5xx_8 : 0)
+
+/** Get the HPL pointer if the HAL is a PORT_5XX_16 variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430PORT_HAL_GET_HPL_PORT_5XX_16(_hal) ((BSP430PORT_HAL_HPL_VARIANT_PORT_5XX_16 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.port_5xx_16 : 0)
+
+/* END AUTOMATICALLY GENERATED CODE [hal_port_get_hpl] */
+/* !BSP430! end=hal_port_get_hpl */
+/* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
+
 /** Structure holding hardware abstraction layer state for Timer_A and Timer_B.
  *
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
-
 typedef struct sBSP430portState {
-  unsigned int flags;
-  volatile sBSP430periphPORTIE * const port;
+  /** Common header used to extract the correct HPL pointer type from
+   * the hpl union. */
+  sBSP430periphHALStatePrefix hal_state;
+  union {
+    /** Access to the HPL pointer ignoring its underlying type */
+    void * any;
+    /** Access to the HPL pointer as a pre-5xx 8-bit interrupt-enabled port */
+    volatile sBSP430periphPORT_IE_8 * port_ie_8;
+    /** Access to the HPL pointer as a pre-5xx 8-bit port not supporting interrupts */
+    volatile sBSP430periphPORT_8 * port_8;
+    /** Access to the HPL pointer as a pre-5xx 16-bit port not supporting interrupts */
+    volatile sBSP430periphPORT_16 * port_16;
+    /** Access to the HPL pointer as a 5xx 8-bit port */
+    volatile sBSP430periphPORT_5XX_8 * port_5xx_8;
+    /** Access to the HPL pointer as a 5xx 16-bit port */
+    volatile sBSP430periphPORT_5XX_16 * port_5xx_16;
+    /** Access to the HPL pointer as a MCU-dependent interrupt-enabled port */
+    volatile sBSP430periphPORTIE portie;
+    /** Access to the HPL pointer as a MCU-dependent port not supporting interrupts */
+    volatile sBSP430periphPORT port;
+    /** Access to the HPL pointer as a MCU-dependent word-access port */
+    volatile sBSP430periphPORTW portw;
+  } const hpl;
+  /** Callbacks invoked when the HAL ISR handler receives an event for
+   * the corresponding bit of the port. */
   const struct sBSP430periphISRCallbackIndexed * pin_callback[8];
 } sBSP430portState;
 
