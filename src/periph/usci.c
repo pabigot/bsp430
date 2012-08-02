@@ -217,7 +217,7 @@ iBSP430usciTransmitASCIIZ_ni (tBSP430usciHandle device, const char * str)
 
 #if configBSP430_HAL_USCI_A0 - 0
 static struct sBSP430usciState state_USCI_A0_ = {
-  .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_A0_BASEADDRESS_,
+  .usci = BSP430_HPL_USCI_A0,
   .iep = &IE2,
   .ifgp = &IFG2,
   .rx_bit = BIT0,
@@ -229,7 +229,7 @@ tBSP430usciHandle const hBSP430usci_USCI_A0 = &state_USCI_A0_;
 
 #if configBSP430_HAL_USCI_A1 - 0
 static struct sBSP430usciState state_USCI_A1_ = {
-  .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_A1_BASEADDRESS_
+  .usci = BSP430_HPL_USCI_A1
   .iep = &UC1IE,
   .ifgp = &UC1IFG,
   .rx_bit = BIT0,
@@ -241,7 +241,7 @@ tBSP430usciHandle const hBSP430usci_USCI_A1 = &state_USCI_A1_;
 
 #if configBSP430_HAL_USCI_B0 - 0
 static struct sBSP430usciState state_USCI_B0_ = {
-  .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_B0_BASEADDRESS_
+  .usci = BSP430_HPL_USCI_B0
   .iep = &IE2,
   .ifgp = &IFG2,
   .rx_bit = BIT2,
@@ -253,7 +253,7 @@ tBSP430usciHandle const hBSP430usci_USCI_B0 = &state_USCI_B0_;
 
 #if configBSP430_HAL_USCI_B1 - 0
 static struct sBSP430usciState state_USCI_B1_ = {
-  .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_B1_BASEADDRESS_
+  .usci = BSP430_HPL_USCI_B1
   .iep = &UC1IE,
   .ifgp = &UC1IFG,
   .rx_bit = BIT2,

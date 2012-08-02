@@ -131,7 +131,7 @@ typedef struct sBSP430usci5State {
   unsigned int flags;
 
   /** Pointer to the peripheral register structure. */
-  volatile xBSP430periphUSCI5 * const usci5;
+  volatile sBSP430periphUSCI5 * const usci5;
 
   /** The callback chain to invoke when a byte is received */
   const struct sBSP430periphISRCallbackVoid * rx_callback;

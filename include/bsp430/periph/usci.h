@@ -88,7 +88,7 @@ typedef struct sBSP430usciState {
   unsigned int flags;
 
   /** Pointer to the peripheral register structure. */
-  volatile xBSP430periphUSCI * const usci;
+  volatile sBSP430periphUSCI * const usci;
 
   /** Pointer to the interrupt enable register for the peripheral */
   volatile unsigned char * const iep;
