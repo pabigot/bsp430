@@ -35,7 +35,7 @@
 
 void main ()
 {
-  xBSP430serialHandle console_handle;
+  tBSP430serialHandle console_handle;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();

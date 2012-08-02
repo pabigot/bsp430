@@ -44,7 +44,7 @@ static int
 rx_callback (const struct xBSP430periphISRCallbackVoid * cb,
              void * context)
 {
-  xBSP430serialHandle device = (xBSP430serialHandle)context;
+  tBSP430serialHandle device = (tBSP430serialHandle)context;
   vBSP430ledSet(1, 1);
 
   /* If there's space, queue the received character for
@@ -67,7 +67,7 @@ static int
 tx_callback (const struct xBSP430periphISRCallbackVoid * cb,
              void * context)
 {
-  xBSP430serialHandle device = (xBSP430serialHandle)context;
+  tBSP430serialHandle device = (tBSP430serialHandle)context;
   int rv = 0;
 
   vBSP430ledSet(1, 0);
@@ -96,7 +96,7 @@ const struct xBSP430periphISRCallbackVoid tx_entry = {
 
 void main ()
 {
-  xBSP430serialHandle tty0 = NULL;
+  tBSP430serialHandle tty0 = NULL;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();

@@ -8,7 +8,7 @@ templates = {
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c %(INSTANCE)s peripheral HAL interface.  This defines a global
- * object xBSP430%(periph)sHandle supporting enhanced functionality
+ * object tBSP430%(periph)sHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_%(INSTANCE)s to true.
@@ -23,7 +23,7 @@ templates = {
  * The handle may be used only if #configBSP430_HAL_%(INSTANCE)s
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_%(INSTANCE)s - 0)
-extern xBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
+extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
@@ -199,7 +199,7 @@ static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
   .%(periph)s = BSP430_HPL_%(INSTANCE)s
 };
 
-xBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
+tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s = &state_%(INSTANCE)s_;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
@@ -219,7 +219,7 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
 isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 {
-  xBSP430%(periph)sHandle timer = hBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+  tBSP430%(periph)sHandle timer = hBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -230,7 +230,7 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
 isr_T%(TYPE)s%(INSTANCE)s (void)
 {
-  xBSP430%(periph)sHandle timer = hBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
+  tBSP430%(periph)sHandle timer = hBSP430%(periph)s_T%(TYPE)s%(INSTANCE)s;
   int iv = T%(TYPE)s%(INSTANCE)sIV;
   int rv = 0;
   if (0 != iv) {
@@ -258,7 +258,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 static struct xBSP430portState state_%(INSTANCE)s = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_,
 };
-xBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
+tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 

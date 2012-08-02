@@ -16,7 +16,7 @@
 /** The internal state necessary to manage a terminal task. */
 typedef struct hBSP430_TERMINAL_STATE {
   /** Device used to display results and receive commands. */
-  xBSP430serialHandle hsuart;
+  tBSP430serialHandle hsuart;
 
   /** Queue for receiving data.  The reader task pulls characters
    * from this and aggregates them for handling by the terminal
@@ -125,7 +125,7 @@ typedef struct event {
  * putchar function, so this has to live globally.  It's reasonably
  * unlikely that multiple terminal instances will be present; when
  * somebody needs them, then this has to be fixed. */
-static xBSP430serialHandle tprintf_uart;
+static tBSP430serialHandle tprintf_uart;
 
 static int
 tputchar (int c)

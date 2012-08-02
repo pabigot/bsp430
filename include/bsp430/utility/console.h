@@ -323,7 +323,7 @@ int cputl_ni (long n, int radix);
  * @return the number of characters emitted */
 int cputul_ni (unsigned long n, int radix);
 
-xBSP430serialHandle xBSP430consoleInitialize (void);
+tBSP430serialHandle xBSP430consoleInitialize (void);
 
 int xBSP430consoleConfigure (int enablep);
 

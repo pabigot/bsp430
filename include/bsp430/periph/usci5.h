@@ -125,7 +125,7 @@ typedef struct xBSP430periphUSCI5 {
 struct xBSP430usci5State;
 
 /** The USCI5 internal state is private to the implementation. */
-typedef struct xBSP430usci5State * xBSP430usci5Handle;
+typedef struct xBSP430usci5State * tBSP430usci5Handle;
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
@@ -133,7 +133,7 @@ typedef struct xBSP430usci5State * xBSP430usci5Handle;
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A0 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_A0 to true.
@@ -148,14 +148,14 @@ typedef struct xBSP430usci5State * xBSP430usci5Handle;
  * The handle may be used only if #configBSP430_HAL_USCI5_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A0 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_A0;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_A0;
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 /** @def configBSP430_HAL_USCI5_A1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A1 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_A1 to true.
@@ -170,14 +170,14 @@ extern xBSP430usci5Handle const hBSP430usci5_USCI5_A0;
  * The handle may be used only if #configBSP430_HAL_USCI5_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A1 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_A1;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_A1;
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 /** @def configBSP430_HAL_USCI5_A2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A2 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_A2 to true.
@@ -192,14 +192,14 @@ extern xBSP430usci5Handle const hBSP430usci5_USCI5_A1;
  * The handle may be used only if #configBSP430_HAL_USCI5_A2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A2 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_A2;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_A2;
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 /** @def configBSP430_HAL_USCI5_A3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_A3 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_A3 to true.
@@ -214,14 +214,14 @@ extern xBSP430usci5Handle const hBSP430usci5_USCI5_A2;
  * The handle may be used only if #configBSP430_HAL_USCI5_A3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_A3 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_A3;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_A3;
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 /** @def configBSP430_HAL_USCI5_B0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B0 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_B0 to true.
@@ -236,14 +236,14 @@ extern xBSP430usci5Handle const hBSP430usci5_USCI5_A3;
  * The handle may be used only if #configBSP430_HAL_USCI5_B0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B0 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_B0;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_B0;
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 /** @def configBSP430_HAL_USCI5_B1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B1 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_B1 to true.
@@ -258,14 +258,14 @@ extern xBSP430usci5Handle const hBSP430usci5_USCI5_B0;
  * The handle may be used only if #configBSP430_HAL_USCI5_B1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B1 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_B1;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_B1;
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 /** @def configBSP430_HAL_USCI5_B2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B2 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_B2 to true.
@@ -280,14 +280,14 @@ extern xBSP430usci5Handle const hBSP430usci5_USCI5_B1;
  * The handle may be used only if #configBSP430_HAL_USCI5_B2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B2 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_B2;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_B2;
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 /** @def configBSP430_HAL_USCI5_B3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI5_B3 peripheral HAL interface.  This defines a global
- * object xBSP430usci5Handle supporting enhanced functionality
+ * object tBSP430usci5Handle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI5_B3 to true.
@@ -302,7 +302,7 @@ extern xBSP430usci5Handle const hBSP430usci5_USCI5_B2;
  * The handle may be used only if #configBSP430_HAL_USCI5_B3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI5_B3 - 0)
-extern xBSP430usci5Handle const hBSP430usci5_USCI5_B3;
+extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
 #endif /* configBSP430_HAL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
@@ -823,36 +823,36 @@ static volatile xBSP430periphUSCI5 * const hBSP430periph_USCI5_B3 = BSP430_HPL_U
 /* !BSP430! end=hal_isr_decl */
 
 /** USCI5-specific implementation of xBSP430serialOpenUART() */
-xBSP430usci5Handle xBSP430usci5OpenUART (tBSP430periphHandle xPeriph,
+tBSP430usci5Handle xBSP430usci5OpenUART (tBSP430periphHandle xPeriph,
     unsigned int control_word,
     unsigned long baud);
 
 /** USCI5-specific implementation of xBSP430serialOpenSPI() */
-xBSP430usci5Handle xBSP430usci5OpenSPI (tBSP430periphHandle xPeriph,
+tBSP430usci5Handle xBSP430usci5OpenSPI (tBSP430periphHandle xPeriph,
                                         unsigned int control_word,
                                         unsigned int prescaler);
 
 /** USCI5-specific implementation of xBSP430serialConfigureCallbacks() */
-int iBSP430usci5ConfigureCallbacks (xBSP430usci5Handle device,
+int iBSP430usci5ConfigureCallbacks (tBSP430usci5Handle device,
                                     const struct xBSP430periphISRCallbackVoid * rx_callback,
                                     const struct xBSP430periphISRCallbackVoid * tx_callback);
 
 /** USCI5-specific implementation of xBSP430serialClose() */
-int iBSP430usci5Close (xBSP430usci5Handle xUSCI);
+int iBSP430usci5Close (tBSP430usci5Handle xUSCI);
 
 /** USCI5-specific implementation of xBSP430serialWakeupTransmit_ni() */
-void vBSP430usci5WakeupTransmit_ni (xBSP430usci5Handle device);
+void vBSP430usci5WakeupTransmit_ni (tBSP430usci5Handle device);
 
 /** USCI5-specific implementation of xBSP430serialFlush_ni() */
-void vBSP430usci5Flush_ni (xBSP430usci5Handle device);
+void vBSP430usci5Flush_ni (tBSP430usci5Handle device);
 
 /** USCI5-specific implementation of xBSP430serialTransmitByte_ni() */
-int iBSP430usci5TransmitByte_ni (xBSP430usci5Handle device, int c);
+int iBSP430usci5TransmitByte_ni (tBSP430usci5Handle device, int c);
 
 /** USCI5-specific implementation of xBSP430serialTransmitData_ni() */
-int iBSP430usci5TransmitData_ni (xBSP430usci5Handle device, const uint8_t * data, size_t len);
+int iBSP430usci5TransmitData_ni (tBSP430usci5Handle device, const uint8_t * data, size_t len);
 
 /** USCI5-specific implementation of xBSP430serialPutASCIIZ_ni() */
-int iBSP430usci5TransmitASCIIZ_ni (xBSP430usci5Handle device, const char * str);
+int iBSP430usci5TransmitASCIIZ_ni (tBSP430usci5Handle device, const char * str);
 
 #endif /* BSP430_PERIPH_USCI5_H */

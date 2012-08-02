@@ -40,7 +40,7 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI5
  * device handle. */
-static xBSP430usci5Handle periphToDevice (tBSP430periphHandle periph);
+static tBSP430usci5Handle periphToDevice (tBSP430periphHandle periph);
 
 #define WAKEUP_TRANSMIT_HPL_NI(_hpl) do {       \
     if (! (_hpl->ie & UCTXIE)) {                \
@@ -61,14 +61,14 @@ static xBSP430usci5Handle periphToDevice (tBSP430periphHandle periph);
     }                                           \
   } while (0)
 
-xBSP430usci5Handle
+tBSP430usci5Handle
 xBSP430usci5OpenUART (tBSP430periphHandle periph,
                       unsigned int control_word,
                       unsigned long baud)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   unsigned long brclk_Hz;
-  xBSP430usci5Handle device = periphToDevice(periph);
+  tBSP430usci5Handle device = periphToDevice(periph);
   uint16_t br;
   uint16_t brs;
 
@@ -119,7 +119,7 @@ xBSP430usci5OpenUART (tBSP430periphHandle periph,
 }
 
 int
-iBSP430usci5ConfigureCallbacks (xBSP430usci5Handle device,
+iBSP430usci5ConfigureCallbacks (tBSP430usci5Handle device,
                                 const struct xBSP430periphISRCallbackVoid * rx_callback,
                                 const struct xBSP430periphISRCallbackVoid * tx_callback)
 {
@@ -150,7 +150,7 @@ iBSP430usci5ConfigureCallbacks (xBSP430usci5Handle device,
 }
 
 int
-iBSP430usci5Close (xBSP430usci5Handle device)
+iBSP430usci5Close (tBSP430usci5Handle device)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc;
@@ -167,19 +167,19 @@ iBSP430usci5Close (xBSP430usci5Handle device)
 }
 
 void
-vBSP430usci5Flush_ni (xBSP430usci5Handle device)
+vBSP430usci5Flush_ni (tBSP430usci5Handle device)
 {
   FLUSH_HPL_NI(device->usci5);
 }
 
 void
-vBSP430usci5WakeupTransmit_ni (xBSP430usci5Handle device)
+vBSP430usci5WakeupTransmit_ni (tBSP430usci5Handle device)
 {
   WAKEUP_TRANSMIT_HPL_NI(device->usci5);
 }
 
 int
-iBSP430usci5TransmitByte_ni (xBSP430usci5Handle device, int c)
+iBSP430usci5TransmitByte_ni (tBSP430usci5Handle device, int c)
 {
   if (device->tx_callback) {
     return -1;
@@ -189,7 +189,7 @@ iBSP430usci5TransmitByte_ni (xBSP430usci5Handle device, int c)
 }
 
 int
-iBSP430usci5TransmitData_ni (xBSP430usci5Handle device,
+iBSP430usci5TransmitData_ni (tBSP430usci5Handle device,
                              const uint8_t * data,
                              size_t len)
 {
@@ -205,7 +205,7 @@ iBSP430usci5TransmitData_ni (xBSP430usci5Handle device,
 }
 
 int
-iBSP430usci5TransmitASCIIZ_ni (xBSP430usci5Handle device, const char * str)
+iBSP430usci5TransmitASCIIZ_ni (tBSP430usci5Handle device, const char * str)
 {
   const char * in_string = str;
 
@@ -247,7 +247,7 @@ static int
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usci5_isr (xBSP430usci5Handle device)
+usci5_isr (tBSP430usci5Handle device)
 {
   int rv = 0;
 
@@ -290,7 +290,7 @@ static struct xBSP430usci5State state_USCI5_A0_ = {
   .usci5 = BSP430_HPL_USCI5_A0
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_A0 = &state_USCI5_A0_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_A0 = &state_USCI5_A0_;
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 #if configBSP430_HAL_USCI5_A1 - 0
@@ -298,7 +298,7 @@ static struct xBSP430usci5State state_USCI5_A1_ = {
   .usci5 = BSP430_HPL_USCI5_A1
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_A1 = &state_USCI5_A1_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_A1 = &state_USCI5_A1_;
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 #if configBSP430_HAL_USCI5_A2 - 0
@@ -306,7 +306,7 @@ static struct xBSP430usci5State state_USCI5_A2_ = {
   .usci5 = BSP430_HPL_USCI5_A2
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_A2 = &state_USCI5_A2_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_A2 = &state_USCI5_A2_;
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 #if configBSP430_HAL_USCI5_A3 - 0
@@ -314,7 +314,7 @@ static struct xBSP430usci5State state_USCI5_A3_ = {
   .usci5 = BSP430_HPL_USCI5_A3
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_A3 = &state_USCI5_A3_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_A3 = &state_USCI5_A3_;
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 #if configBSP430_HAL_USCI5_B0 - 0
@@ -322,7 +322,7 @@ static struct xBSP430usci5State state_USCI5_B0_ = {
   .usci5 = BSP430_HPL_USCI5_B0
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_B0 = &state_USCI5_B0_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_B0 = &state_USCI5_B0_;
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 #if configBSP430_HAL_USCI5_B1 - 0
@@ -330,7 +330,7 @@ static struct xBSP430usci5State state_USCI5_B1_ = {
   .usci5 = BSP430_HPL_USCI5_B1
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_B1 = &state_USCI5_B1_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_B1 = &state_USCI5_B1_;
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 #if configBSP430_HAL_USCI5_B2 - 0
@@ -338,7 +338,7 @@ static struct xBSP430usci5State state_USCI5_B2_ = {
   .usci5 = BSP430_HPL_USCI5_B2
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_B2 = &state_USCI5_B2_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_B2 = &state_USCI5_B2_;
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 #if configBSP430_HAL_USCI5_B3 - 0
@@ -346,7 +346,7 @@ static struct xBSP430usci5State state_USCI5_B3_ = {
   .usci5 = BSP430_HPL_USCI5_B3
 };
 
-xBSP430usci5Handle const hBSP430usci5_USCI5_B3 = &state_USCI5_B3_;
+tBSP430usci5Handle const hBSP430usci5_USCI5_B3 = &state_USCI5_B3_;
 #endif /* configBSP430_HAL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
@@ -437,7 +437,7 @@ isr_USCI5_B3 (void)
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-static xBSP430usci5Handle periphToDevice (tBSP430periphHandle periph)
+static tBSP430usci5Handle periphToDevice (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

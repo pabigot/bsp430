@@ -330,7 +330,7 @@ volatile xBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandl
 struct xBSP430portState;
 
 /** The PORT internal state is protected. */
-typedef struct xBSP430portState * xBSP430portHandle;
+typedef struct xBSP430portState * tBSP430portHandle;
 
 #if 1 // defined(__MSP430_HAS_MSP430XV2_CPU__)
 
@@ -340,7 +340,7 @@ typedef struct xBSP430portState * xBSP430portHandle;
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT1 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT1 to true.
@@ -355,14 +355,14 @@ typedef struct xBSP430portState * xBSP430portHandle;
  * The handle may be used only if #configBSP430_HAL_PORT1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT1 - 0)
-extern xBSP430portHandle const hBSP430port_PORT1;
+extern tBSP430portHandle const hBSP430port_PORT1;
 #endif /* configBSP430_HAL_PORT1 */
 
 /** @def configBSP430_HAL_PORT2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT2 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT2 to true.
@@ -377,14 +377,14 @@ extern xBSP430portHandle const hBSP430port_PORT1;
  * The handle may be used only if #configBSP430_HAL_PORT2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT2 - 0)
-extern xBSP430portHandle const hBSP430port_PORT2;
+extern tBSP430portHandle const hBSP430port_PORT2;
 #endif /* configBSP430_HAL_PORT2 */
 
 /** @def configBSP430_HAL_PORT3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT3 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT3 to true.
@@ -399,14 +399,14 @@ extern xBSP430portHandle const hBSP430port_PORT2;
  * The handle may be used only if #configBSP430_HAL_PORT3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT3 - 0)
-extern xBSP430portHandle const hBSP430port_PORT3;
+extern tBSP430portHandle const hBSP430port_PORT3;
 #endif /* configBSP430_HAL_PORT3 */
 
 /** @def configBSP430_HAL_PORT4
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT4 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT4 to true.
@@ -421,14 +421,14 @@ extern xBSP430portHandle const hBSP430port_PORT3;
  * The handle may be used only if #configBSP430_HAL_PORT4
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT4 - 0)
-extern xBSP430portHandle const hBSP430port_PORT4;
+extern tBSP430portHandle const hBSP430port_PORT4;
 #endif /* configBSP430_HAL_PORT4 */
 
 /** @def configBSP430_HAL_PORT5
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT5 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT5 to true.
@@ -443,14 +443,14 @@ extern xBSP430portHandle const hBSP430port_PORT4;
  * The handle may be used only if #configBSP430_HAL_PORT5
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT5 - 0)
-extern xBSP430portHandle const hBSP430port_PORT5;
+extern tBSP430portHandle const hBSP430port_PORT5;
 #endif /* configBSP430_HAL_PORT5 */
 
 /** @def configBSP430_HAL_PORT6
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT6 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT6 to true.
@@ -465,14 +465,14 @@ extern xBSP430portHandle const hBSP430port_PORT5;
  * The handle may be used only if #configBSP430_HAL_PORT6
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT6 - 0)
-extern xBSP430portHandle const hBSP430port_PORT6;
+extern tBSP430portHandle const hBSP430port_PORT6;
 #endif /* configBSP430_HAL_PORT6 */
 
 /** @def configBSP430_HAL_PORT7
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT7 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT7 to true.
@@ -487,14 +487,14 @@ extern xBSP430portHandle const hBSP430port_PORT6;
  * The handle may be used only if #configBSP430_HAL_PORT7
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT7 - 0)
-extern xBSP430portHandle const hBSP430port_PORT7;
+extern tBSP430portHandle const hBSP430port_PORT7;
 #endif /* configBSP430_HAL_PORT7 */
 
 /** @def configBSP430_HAL_PORT8
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT8 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT8 to true.
@@ -509,14 +509,14 @@ extern xBSP430portHandle const hBSP430port_PORT7;
  * The handle may be used only if #configBSP430_HAL_PORT8
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT8 - 0)
-extern xBSP430portHandle const hBSP430port_PORT8;
+extern tBSP430portHandle const hBSP430port_PORT8;
 #endif /* configBSP430_HAL_PORT8 */
 
 /** @def configBSP430_HAL_PORT9
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT9 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT9 to true.
@@ -531,14 +531,14 @@ extern xBSP430portHandle const hBSP430port_PORT8;
  * The handle may be used only if #configBSP430_HAL_PORT9
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT9 - 0)
-extern xBSP430portHandle const hBSP430port_PORT9;
+extern tBSP430portHandle const hBSP430port_PORT9;
 #endif /* configBSP430_HAL_PORT9 */
 
 /** @def configBSP430_HAL_PORT10
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT10 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT10 to true.
@@ -553,14 +553,14 @@ extern xBSP430portHandle const hBSP430port_PORT9;
  * The handle may be used only if #configBSP430_HAL_PORT10
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT10 - 0)
-extern xBSP430portHandle const hBSP430port_PORT10;
+extern tBSP430portHandle const hBSP430port_PORT10;
 #endif /* configBSP430_HAL_PORT10 */
 
 /** @def configBSP430_HAL_PORT11
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c PORT11 peripheral HAL interface.  This defines a global
- * object xBSP430portHandle supporting enhanced functionality
+ * object tBSP430portHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_PORT11 to true.
@@ -575,7 +575,7 @@ extern xBSP430portHandle const hBSP430port_PORT10;
  * The handle may be used only if #configBSP430_HAL_PORT11
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT11 - 0)
-extern xBSP430portHandle const hBSP430port_PORT11;
+extern tBSP430portHandle const hBSP430port_PORT11;
 #endif /* configBSP430_HAL_PORT11 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
@@ -1295,6 +1295,6 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT11 = BSP430_HPL_PORT
  *
  * @return the HAL handle for the port, or NULL if either the HPL port
  * is unrecognized or the corresponding HAL port was not enabled. */
-xBSP430portHandle xBSP430portLookup (tBSP430periphHandle hpl);
+tBSP430portHandle xBSP430portLookup (tBSP430periphHandle hpl);
 
 #endif /* BSP430_PERIPH_PORT_H */

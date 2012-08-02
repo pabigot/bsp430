@@ -40,7 +40,7 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
-static xBSP430usciHandle periphToDevice (tBSP430periphHandle periph);
+static tBSP430usciHandle periphToDevice (tBSP430periphHandle periph);
 
 #define WAKEUP_TRANSMIT_HAL_NI(_hal) do {               \
     if (! (*(_hal)->iep & (_hal)->tx_bit)) {            \
@@ -61,14 +61,14 @@ static xBSP430usciHandle periphToDevice (tBSP430periphHandle periph);
     }                                           \
   } while (0)
 
-xBSP430usciHandle
+tBSP430usciHandle
 xBSP430usciOpenUART (tBSP430periphHandle periph,
                      unsigned int control_word,
                      unsigned long baud)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   unsigned long brclk_Hz = 0;
-  xBSP430usciHandle device = periphToDevice(periph);
+  tBSP430usciHandle device = periphToDevice(periph);
   uint16_t br = 0;
   uint16_t brs = 0;
 
@@ -120,7 +120,7 @@ xBSP430usciOpenUART (tBSP430periphHandle periph,
 }
 
 int
-iBSP430usciConfigureCallbacks (xBSP430usciHandle device,
+iBSP430usciConfigureCallbacks (tBSP430usciHandle device,
                                const struct xBSP430periphISRCallbackVoid * rx_callback,
                                const struct xBSP430periphISRCallbackVoid * tx_callback)
 {
@@ -147,7 +147,7 @@ iBSP430usciConfigureCallbacks (xBSP430usciHandle device,
 }
 
 int
-iBSP430usciClose (xBSP430usciHandle device)
+iBSP430usciClose (tBSP430usciHandle device)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc;
@@ -163,19 +163,19 @@ iBSP430usciClose (xBSP430usciHandle device)
 }
 
 void
-vBSP430usciFlush_ni (xBSP430usciHandle device)
+vBSP430usciFlush_ni (tBSP430usciHandle device)
 {
   FLUSH_HAL_NI(device);
 }
 
 void
-vBSP430usciWakeupTransmit_ni (xBSP430usciHandle device)
+vBSP430usciWakeupTransmit_ni (tBSP430usciHandle device)
 {
   WAKEUP_TRANSMIT_HAL_NI(device);
 }
 
 int
-iBSP430usciTransmitByte_ni (xBSP430usciHandle device, int c)
+iBSP430usciTransmitByte_ni (tBSP430usciHandle device, int c)
 {
   if (device->tx_callback) {
     return -1;
@@ -185,7 +185,7 @@ iBSP430usciTransmitByte_ni (xBSP430usciHandle device, int c)
 }
 
 int
-iBSP430usciTransmitData_ni (xBSP430usciHandle device,
+iBSP430usciTransmitData_ni (tBSP430usciHandle device,
                             const uint8_t * data,
                             size_t len)
 {
@@ -201,7 +201,7 @@ iBSP430usciTransmitData_ni (xBSP430usciHandle device,
 }
 
 int
-iBSP430usciTransmitASCIIZ_ni (xBSP430usciHandle device, const char * str)
+iBSP430usciTransmitASCIIZ_ni (tBSP430usciHandle device, const char * str)
 {
   const char * in_string = str;
 
@@ -224,7 +224,7 @@ static struct xBSP430usciState state_USCI_A0_ = {
   .tx_bit = BIT1,
 };
 
-xBSP430usciHandle const hBSP430usci_USCI_A0 = &state_USCI_A0_;
+tBSP430usciHandle const hBSP430usci_USCI_A0 = &state_USCI_A0_;
 #endif /* configBSP430_HAL_USCI_A0 */
 
 #if configBSP430_HAL_USCI_A1 - 0
@@ -236,7 +236,7 @@ static struct xBSP430usciState state_USCI_A1_ = {
   .tx_bit = BIT1,
 };
 
-xBSP430usciHandle const hBSP430usci_USCI_A1 = &state_USCI_A1_;
+tBSP430usciHandle const hBSP430usci_USCI_A1 = &state_USCI_A1_;
 #endif /* configBSP430_HAL_USCI_A1 */
 
 #if configBSP430_HAL_USCI_B0 - 0
@@ -248,7 +248,7 @@ static struct xBSP430usciState state_USCI_B0_ = {
   .tx_bit = BIT3,
 };
 
-xBSP430usciHandle const hBSP430usci_USCI_B0 = &state_USCI_B0_;
+tBSP430usciHandle const hBSP430usci_USCI_B0 = &state_USCI_B0_;
 #endif /* configBSP430_HAL_USCI_B0 */
 
 #if configBSP430_HAL_USCI_B1 - 0
@@ -260,7 +260,7 @@ static struct xBSP430usciState state_USCI_B1_ = {
   .tx_bit = BIT3,
 };
 
-xBSP430usciHandle const hBSP430usci_USCI_B1 = &state_USCI_B1_;
+tBSP430usciHandle const hBSP430usci_USCI_B1 = &state_USCI_B1_;
 #endif /* configBSP430_HAL_USCI_B1 */
 
 #if ((configBSP430_HAL_USCIAB0RX_ISR - 0) || (configBSP430_HAL_USCIAB1RX_ISR - 0))
@@ -269,7 +269,7 @@ static int
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usciabrx_isr (xBSP430usciHandle device)
+usciabrx_isr (tBSP430usciHandle device)
 {
   device->rx_byte = device->usci->rxbuf;
   ++device->num_rx;
@@ -281,7 +281,7 @@ static void
 __attribute__((__interrupt__(USCIAB0RX_VECTOR)))
 isr_USCIAB0RX (void)
 {
-  xBSP430usciHandle usci = NULL;
+  tBSP430usciHandle usci = NULL;
   int rv = 0;
 
   if (0) {
@@ -311,7 +311,7 @@ static int
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usciabtx_isr (xBSP430usciHandle device)
+usciabtx_isr (tBSP430usciHandle device)
 {
   int rv = iBSP430callbackInvokeISRVoid_ni(&device->tx_callback, device, 0);
   if (rv & BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN) {
@@ -338,7 +338,7 @@ __attribute__((__interrupt__(USCIAB0TX_VECTOR)))
 isr_USCIAB0TX (void)
 {
   int rv = 0;
-  xBSP430usciHandle usci = NULL;
+  tBSP430usciHandle usci = NULL;
 
   if (0) {
   }
@@ -361,7 +361,7 @@ isr_USCIAB0TX (void)
 
 #endif  /* HAL USCIABxTX ISR */
 
-static xBSP430usciHandle periphToDevice (tBSP430periphHandle periph)
+static tBSP430usciHandle periphToDevice (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

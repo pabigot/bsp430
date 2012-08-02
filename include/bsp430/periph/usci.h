@@ -81,7 +81,7 @@ typedef struct xBSP430periphUSCI {
 struct xBSP430usciState;
 
 /** The USCI internal state is private to the implementation. */
-typedef struct xBSP430usciState * xBSP430usciHandle;
+typedef struct xBSP430usciState * tBSP430usciHandle;
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
@@ -89,7 +89,7 @@ typedef struct xBSP430usciState * xBSP430usciHandle;
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI_A0 peripheral HAL interface.  This defines a global
- * object xBSP430usciHandle supporting enhanced functionality
+ * object tBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI_A0 to true.
@@ -104,14 +104,14 @@ typedef struct xBSP430usciState * xBSP430usciHandle;
  * The handle may be used only if #configBSP430_HAL_USCI_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_A0 - 0)
-extern xBSP430usciHandle const hBSP430usci_USCI_A0;
+extern tBSP430usciHandle const hBSP430usci_USCI_A0;
 #endif /* configBSP430_HAL_USCI_A0 */
 
 /** @def configBSP430_HAL_USCI_A1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI_A1 peripheral HAL interface.  This defines a global
- * object xBSP430usciHandle supporting enhanced functionality
+ * object tBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI_A1 to true.
@@ -126,14 +126,14 @@ extern xBSP430usciHandle const hBSP430usci_USCI_A0;
  * The handle may be used only if #configBSP430_HAL_USCI_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_A1 - 0)
-extern xBSP430usciHandle const hBSP430usci_USCI_A1;
+extern tBSP430usciHandle const hBSP430usci_USCI_A1;
 #endif /* configBSP430_HAL_USCI_A1 */
 
 /** @def configBSP430_HAL_USCI_B0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI_B0 peripheral HAL interface.  This defines a global
- * object xBSP430usciHandle supporting enhanced functionality
+ * object tBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI_B0 to true.
@@ -148,14 +148,14 @@ extern xBSP430usciHandle const hBSP430usci_USCI_A1;
  * The handle may be used only if #configBSP430_HAL_USCI_B0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_B0 - 0)
-extern xBSP430usciHandle const hBSP430usci_USCI_B0;
+extern tBSP430usciHandle const hBSP430usci_USCI_B0;
 #endif /* configBSP430_HAL_USCI_B0 */
 
 /** @def configBSP430_HAL_USCI_B1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c USCI_B1 peripheral HAL interface.  This defines a global
- * object xBSP430usciHandle supporting enhanced functionality
+ * object tBSP430usciHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_USCI_B1 to true.
@@ -170,7 +170,7 @@ extern xBSP430usciHandle const hBSP430usci_USCI_B0;
  * The handle may be used only if #configBSP430_HAL_USCI_B1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_B1 - 0)
-extern xBSP430usciHandle const hBSP430usci_USCI_B1;
+extern tBSP430usciHandle const hBSP430usci_USCI_B1;
 #endif /* configBSP430_HAL_USCI_B1 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
@@ -457,36 +457,36 @@ static volatile xBSP430periphUSCI * const hBSP430periph_USCI_B1 = BSP430_HPL_USC
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
 /** USCI-specific implementation of xBSP430serialOpenUART() */
-xBSP430usciHandle xBSP430usciOpenUART (tBSP430periphHandle xPeriph,
+tBSP430usciHandle xBSP430usciOpenUART (tBSP430periphHandle xPeriph,
                                        unsigned int control_word,
                                        unsigned long baud);
 
 /** USCI-specific implementation of xBSP430serialOpenSPI() */
-xBSP430usciHandle xBSP430usciOpenSPI (tBSP430periphHandle xPeriph,
+tBSP430usciHandle xBSP430usciOpenSPI (tBSP430periphHandle xPeriph,
                                       unsigned int control_word,
                                       unsigned int prescaler);
 
 /** USCI-specific implementation of xBSP430serialConfigureCallbacks() */
-int iBSP430usciConfigureCallbacks (xBSP430usciHandle device,
+int iBSP430usciConfigureCallbacks (tBSP430usciHandle device,
                                    const struct xBSP430periphISRCallbackVoid * rx_callback,
                                    const struct xBSP430periphISRCallbackVoid * tx_callback);
 
 /** USCI-specific implementation of xBSP430serialClose() */
-int iBSP430usciClose (xBSP430usciHandle xUSCI);
+int iBSP430usciClose (tBSP430usciHandle xUSCI);
 
 /** USCI-specific implementation of xBSP430serialWakeupTransmit_ni() */
-void vBSP430usciWakeupTransmit_ni (xBSP430usciHandle device);
+void vBSP430usciWakeupTransmit_ni (tBSP430usciHandle device);
 
 /** USCI-specific implementation of xBSP430serialFlush_ni() */
-void vBSP430usciFlush_ni (xBSP430usciHandle device);
+void vBSP430usciFlush_ni (tBSP430usciHandle device);
 
 /** USCI-specific implementation of xBSP430serialTransmitByte_ni() */
-int iBSP430usciTransmitByte_ni (xBSP430usciHandle device, int c);
+int iBSP430usciTransmitByte_ni (tBSP430usciHandle device, int c);
 
 /** USCI-specific implementation of xBSP430serialTransmitData_ni() */
-int iBSP430usciTransmitData_ni (xBSP430usciHandle device, const uint8_t * data, size_t len);
+int iBSP430usciTransmitData_ni (tBSP430usciHandle device, const uint8_t * data, size_t len);
 
 /** USCI-specific implementation of xBSP430serialPutASCIIZ_ni() */
-int iBSP430usciTransmitASCIIZ_ni (xBSP430usciHandle device, const char * str);
+int iBSP430usciTransmitASCIIZ_ni (tBSP430usciHandle device, const char * str);
 
 #endif /* BSP430_PERIPH_USCI_H */

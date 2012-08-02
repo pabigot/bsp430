@@ -393,7 +393,7 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (tBSP430periphHandle xHan
 struct xBSP430timerState;
 
 /** The timer internal state is protected. */
-typedef struct xBSP430timerState * xBSP430timerHandle;
+typedef struct xBSP430timerState * tBSP430timerHandle;
 
 /** Provide the frequency of the timer source, if that can be determined.
  *
@@ -401,7 +401,7 @@ typedef struct xBSP430timerState * xBSP430timerHandle;
  *
  * @return 0 if the timer is stopped; -1 if the frequency cannot be
  * determined, a positive value for a known source. */
-unsigned long ulBSP430timerFrequency_Hz_ni (xBSP430timerHandle timer);
+unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430timerHandle timer);
 
 /** Read the timer counter assuming interrupts are disabled.
  *
@@ -412,7 +412,7 @@ unsigned long ulBSP430timerFrequency_Hz_ni (xBSP430timerHandle timer);
  *
  * @return A 32-bit unsigned count of the number of clock ticks
  * observed since the timer was last reset. */
-unsigned long ulBSP430timerCounter_ni (xBSP430timerHandle timer,
+unsigned long ulBSP430timerCounter_ni (tBSP430timerHandle timer,
                                        unsigned int * overflowp);
 
 /** Read timer counter regardless of interrupt enable state.
@@ -423,7 +423,7 @@ unsigned long ulBSP430timerCounter_ni (xBSP430timerHandle timer,
  */
 static unsigned long
 __inline__
-ulBSP430timerCounter (xBSP430timerHandle timer,
+ulBSP430timerCounter (tBSP430timerHandle timer,
                       unsigned int * overflowp)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -444,14 +444,14 @@ ulBSP430timerCounter (xBSP430timerHandle timer,
  *
  * @return A 32-bit unsigned count of the number of clock ticks
  * observed since the timer was last reset. */
-unsigned long ulBSP430timerCounter (xBSP430timerHandle timer,
+unsigned long ulBSP430timerCounter (tBSP430timerHandle timer,
                                     unsigned int * overflowp);
 
 /** Reset the timer counter.
  *
  * This clears both the overflow count and the timer internal counter.
  * It does not start or stop the timer. */
-void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
+void vBSP430timerResetCounter_ni (tBSP430timerHandle timer);
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
@@ -459,7 +459,7 @@ void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA0 peripheral HAL interface.  This defines a global
- * object xBSP430timerHandle supporting enhanced functionality
+ * object tBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_TA0 to true.
@@ -474,14 +474,14 @@ void vBSP430timerResetCounter_ni (xBSP430timerHandle timer);
  * The handle may be used only if #configBSP430_HAL_TA0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA0 - 0)
-extern xBSP430timerHandle const hBSP430timer_TA0;
+extern tBSP430timerHandle const hBSP430timer_TA0;
 #endif /* configBSP430_HAL_TA0 */
 
 /** @def configBSP430_HAL_TA1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA1 peripheral HAL interface.  This defines a global
- * object xBSP430timerHandle supporting enhanced functionality
+ * object tBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_TA1 to true.
@@ -496,14 +496,14 @@ extern xBSP430timerHandle const hBSP430timer_TA0;
  * The handle may be used only if #configBSP430_HAL_TA1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA1 - 0)
-extern xBSP430timerHandle const hBSP430timer_TA1;
+extern tBSP430timerHandle const hBSP430timer_TA1;
 #endif /* configBSP430_HAL_TA1 */
 
 /** @def configBSP430_HAL_TA2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA2 peripheral HAL interface.  This defines a global
- * object xBSP430timerHandle supporting enhanced functionality
+ * object tBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_TA2 to true.
@@ -518,14 +518,14 @@ extern xBSP430timerHandle const hBSP430timer_TA1;
  * The handle may be used only if #configBSP430_HAL_TA2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA2 - 0)
-extern xBSP430timerHandle const hBSP430timer_TA2;
+extern tBSP430timerHandle const hBSP430timer_TA2;
 #endif /* configBSP430_HAL_TA2 */
 
 /** @def configBSP430_HAL_TA3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA3 peripheral HAL interface.  This defines a global
- * object xBSP430timerHandle supporting enhanced functionality
+ * object tBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_TA3 to true.
@@ -540,14 +540,14 @@ extern xBSP430timerHandle const hBSP430timer_TA2;
  * The handle may be used only if #configBSP430_HAL_TA3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA3 - 0)
-extern xBSP430timerHandle const hBSP430timer_TA3;
+extern tBSP430timerHandle const hBSP430timer_TA3;
 #endif /* configBSP430_HAL_TA3 */
 
 /** @def configBSP430_HAL_TB0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB0 peripheral HAL interface.  This defines a global
- * object xBSP430timerHandle supporting enhanced functionality
+ * object tBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_TB0 to true.
@@ -562,14 +562,14 @@ extern xBSP430timerHandle const hBSP430timer_TA3;
  * The handle may be used only if #configBSP430_HAL_TB0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB0 - 0)
-extern xBSP430timerHandle const hBSP430timer_TB0;
+extern tBSP430timerHandle const hBSP430timer_TB0;
 #endif /* configBSP430_HAL_TB0 */
 
 /** @def configBSP430_HAL_TB1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB1 peripheral HAL interface.  This defines a global
- * object xBSP430timerHandle supporting enhanced functionality
+ * object tBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_TB1 to true.
@@ -584,14 +584,14 @@ extern xBSP430timerHandle const hBSP430timer_TB0;
  * The handle may be used only if #configBSP430_HAL_TB1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB1 - 0)
-extern xBSP430timerHandle const hBSP430timer_TB1;
+extern tBSP430timerHandle const hBSP430timer_TB1;
 #endif /* configBSP430_HAL_TB1 */
 
 /** @def configBSP430_HAL_TB2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB2 peripheral HAL interface.  This defines a global
- * object xBSP430timerHandle supporting enhanced functionality
+ * object tBSP430timerHandle supporting enhanced functionality
  * for the peripheral.
  *
  * @note Enabling this defaults #configBSP430_HPL_TB2 to true.
@@ -606,7 +606,7 @@ extern xBSP430timerHandle const hBSP430timer_TB1;
  * The handle may be used only if #configBSP430_HAL_TB2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB2 - 0)
-extern xBSP430timerHandle const hBSP430timer_TB2;
+extern tBSP430timerHandle const hBSP430timer_TB2;
 #endif /* configBSP430_HAL_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
