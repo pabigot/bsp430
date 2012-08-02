@@ -34,13 +34,13 @@
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/led.h>
 
-const xBSP430led pxBSP430leds[] = {
-  { .pucPxOUT = &P2OUT, .ucBIT = BIT2 }, /* Green (LED1) */
-  { .pucPxOUT = &P2OUT, .ucBIT = BIT1 }, /* Yellow (LED2) */
+const sBSP430ledState xBSP430led_[] = {
+  { .outp = &P2OUT, .bit = BIT2 }, /* Green (LED1) */
+  { .outp = &P2OUT, .bit = BIT1 }, /* Yellow (LED2) */
   /* LED3 is attached to msp430f2013 */
-  { .pucPxOUT = &P5OUT, .ucBIT = BIT1 }, /* Red (LED4) */
+  { .outp = &P5OUT, .bit = BIT1 }, /* Red (LED4) */
 };
-const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
+const unsigned char nBSP430led = sizeof(xBSP430led_) / sizeof(*xBSP430led_);
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)

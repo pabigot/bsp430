@@ -37,12 +37,12 @@
  * for all, so we'll use the existings of P1SEL0 as the trigger for
  * the variation. */
 #if defined(P1SEL0)
-#define prvCLEAR_SEL_X(_x, _bit) do {           \
+#define CLEAR_SEL_X(_x, _bit) do {              \
     P##_x##SEL0 &= ~_bit;                       \
     P##_x##SEL1 &= ~_bit;                       \
   } while(0)
 #else /* P1SEL0 */
-#define prvCLEAR_SEL_X(_x, _bit) do {           \
+#define CLEAR_SEL_X(_x, _bit) do {              \
     P##_x##SEL &= ~_bit;                        \
   } while(0)
 #endif /* P1SEL0 */
@@ -51,12 +51,12 @@
  *
  * I'm sorry if this isn't MISRA compliant, but I'm not replicating
  * this code for each of the 11 potential ports. */
-#define prvCONFIG_PORT_X_LED(_x)                \
+#define CONFIG_PORT_X_LED(_x)                   \
   do {                                          \
-    if (&P##_x##OUT == pxLED->pucPxOUT)	{	\
-      P##_x##DIR |= pxLED->ucBIT;               \
-      prvCLEAR_SEL_X(_x, pxLED->ucBIT);         \
-      P##_x##OUT &= ~pxLED->ucBIT;		\
+    if (&P##_x##OUT == lp->outp) {              \
+      P##_x##DIR |= lp->bit;                    \
+      CLEAR_SEL_X(_x, lp->bit);                 \
+      P##_x##OUT &= ~lp->bit;                   \
       continue;                                 \
     }                                           \
   } while (0)
@@ -66,43 +66,43 @@ vBSP430ledInitialize_ni (void)
 {
   unsigned char ucLED;
 
-  for (ucLED = 0; ucLED < ucBSP430leds; ++ucLED) {
-    const xBSP430led * pxLED = pxBSP430leds + ucLED;
+  for (ucLED = 0; ucLED < nBSP430led; ++ucLED) {
+    const sBSP430ledState * lp = xBSP430led_ + ucLED;
 
     /* Only include the configuration checks if the target MCU has
      * the corresponding port supported. */
 #if defined( __MSP430_HAS_PORT1__ ) || defined( __MSP430_HAS_PORT1_R__ )
-    prvCONFIG_PORT_X_LED(1);
+    CONFIG_PORT_X_LED(1);
 #endif /* PORT1 */
 #if defined( __MSP430_HAS_PORT2__ ) || defined( __MSP430_HAS_PORT2_R__ )
-    prvCONFIG_PORT_X_LED(2);
+    CONFIG_PORT_X_LED(2);
 #endif /* PORT2 */
 #if defined( __MSP430_HAS_PORT3__ ) || defined( __MSP430_HAS_PORT3_R__ )
-    prvCONFIG_PORT_X_LED(3);
+    CONFIG_PORT_X_LED(3);
 #endif /* PORT3 */
 #if defined( __MSP430_HAS_PORT4__ ) || defined( __MSP430_HAS_PORT4_R__ )
-    prvCONFIG_PORT_X_LED(4);
+    CONFIG_PORT_X_LED(4);
 #endif /* PORT4 */
 #if defined( __MSP430_HAS_PORT5__ ) || defined( __MSP430_HAS_PORT5_R__ )
-    prvCONFIG_PORT_X_LED(5);
+    CONFIG_PORT_X_LED(5);
 #endif /* PORT5 */
 #if defined( __MSP430_HAS_PORT6__ ) || defined( __MSP430_HAS_PORT6_R__ )
-    prvCONFIG_PORT_X_LED(6);
+    CONFIG_PORT_X_LED(6);
 #endif /* PORT6 */
 #if defined( __MSP430_HAS_PORT7__ ) || defined( __MSP430_HAS_PORT7_R__ )
-    prvCONFIG_PORT_X_LED(7);
+    CONFIG_PORT_X_LED(7);
 #endif /* PORT7 */
 #if defined( __MSP430_HAS_PORT8__ ) || defined( __MSP430_HAS_PORT8_R__ )
-    prvCONFIG_PORT_X_LED(8);
+    CONFIG_PORT_X_LED(8);
 #endif /* PORT8 */
 #if defined( __MSP430_HAS_PORT9__ ) || defined( __MSP430_HAS_PORT9_R__ )
-    prvCONFIG_PORT_X_LED(9);
+    CONFIG_PORT_X_LED(9);
 #endif /* PORT9 */
 #if defined( __MSP430_HAS_PORT10__ ) || defined( __MSP430_HAS_PORT10_R__ )
-    prvCONFIG_PORT_X_LED(10);
+    CONFIG_PORT_X_LED(10);
 #endif /* PORT10 */
 #if defined( __MSP430_HAS_PORT11__ ) || defined( __MSP430_HAS_PORT11_R__ )
-    prvCONFIG_PORT_X_LED(11);
+    CONFIG_PORT_X_LED(11);
 #endif /* PORT10 */
   }
 }
@@ -111,15 +111,15 @@ void
 vBSP430ledSet (int led_idx,
                int value)
 {
-  if (led_idx < ucBSP430leds) {
-    const xBSP430led * pxLED = pxBSP430leds + led_idx;
+  if (led_idx < nBSP430led) {
+    const sBSP430ledState * lp = xBSP430led_ + led_idx;
 
     if (value > 0)	{
-      *pxLED->pucPxOUT |= pxLED->ucBIT;
+      *lp->outp |= lp->bit;
     } else if (value < 0) {
-      *pxLED->pucPxOUT ^= pxLED->ucBIT;
+      *lp->outp ^= lp->bit;
     } else {
-      *pxLED->pucPxOUT &= ~pxLED->ucBIT;
+      *lp->outp &= ~lp->bit;
     }
   }
 }

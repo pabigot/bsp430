@@ -35,11 +35,11 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/led.h>
 
-const xBSP430led pxBSP430leds[] = {
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT0 }, /* Red */
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT1 }, /* Green */
+const sBSP430ledState xBSP430led_[] = {
+  { .outp = &P1OUT, .bit = BIT0 }, /* Red */
+  { .outp = &P1OUT, .bit = BIT1 }, /* Green */
 };
-const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
+const unsigned char nBSP430led = sizeof(xBSP430led_) / sizeof(*xBSP430led_);
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)

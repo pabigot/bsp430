@@ -35,7 +35,7 @@
 #include <bsp430/periph/euscia.h>
 #include <bsp430/utility/uptime.h>
 
-const unsigned char ucBSP430leds = 8;
+const unsigned char nBSP430led = 8;
 
 /* exp430fr5739 LEDs are PJ.0 to PJ.3 and PB.4 to PB.7.  PJ is not
  * byte addressable, so we need to have a custom implementation of the

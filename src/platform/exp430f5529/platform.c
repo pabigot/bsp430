@@ -36,17 +36,17 @@
 #include <bsp430/utility/uptime.h>
 #include <stdint.h>
 
-const xBSP430led pxBSP430leds[] = {
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT0 }, /* Red */
-  { .pucPxOUT = &P8OUT, .ucBIT = BIT1 }, /* Orange */
-  { .pucPxOUT = &P8OUT, .ucBIT = BIT2 }, /* Green */
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT1 }, /* Blue */
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT2 }, /* Blue */
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT3 }, /* Blue */
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT4 }, /* Blue */
-  { .pucPxOUT = &P1OUT, .ucBIT = BIT5 }, /* Blue */
+const sBSP430ledState xBSP430led_[] = {
+  { .outp = &P1OUT, .bit = BIT0 }, /* Red */
+  { .outp = &P8OUT, .bit = BIT1 }, /* Orange */
+  { .outp = &P8OUT, .bit = BIT2 }, /* Green */
+  { .outp = &P1OUT, .bit = BIT1 }, /* Blue */
+  { .outp = &P1OUT, .bit = BIT2 }, /* Blue */
+  { .outp = &P1OUT, .bit = BIT3 }, /* Blue */
+  { .outp = &P1OUT, .bit = BIT4 }, /* Blue */
+  { .outp = &P1OUT, .bit = BIT5 }, /* Blue */
 };
-const unsigned char ucBSP430leds = sizeof(pxBSP430leds) / sizeof(*pxBSP430leds);
+const unsigned char nBSP430led = sizeof(xBSP430led_) / sizeof(*xBSP430led_);
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
