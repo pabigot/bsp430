@@ -149,9 +149,6 @@
  * storage into the TASSEL field of a timer control register.  (Note
  * that TASSEL and TBSSEL support the same values).
  *
- * @note If you select a source other than ACLK (@c TASSEL_1), update
- * #BSP430_UPTIME_CLOCK_HZ.
- *
  * @defaulted */
 #ifndef BSP430_UPTIME_SSEL
 #define BSP430_UPTIME_SSEL TASSEL_1 /* == TASSEL__ACLK */
@@ -167,7 +164,28 @@
 #define BSP430_UPTIME_DIVIDING_SHIFT 0
 #endif /* BSP430_UPTIME_DIVIDING_SHIFT */
 
-unsigned long ulBSP430uptimeCLK_Hz_ni (void);
+/* If configBSP430_UPTIME was requested then mark the feature as
+ * available or not based on whether somebody provided a timer HAL
+ * handle for the facility's use. */
+#if configBSP430_UPTIME - 0
+#ifdef BSP430_UPTIME_TIMER_HAL_HANDLE
+#define BSP430_UPTIME 1
+#else /* BSP430_UPTIME_TIMER_HAL_HANDLE */
+#define BSP430_UPTIME 0
+#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
+#endif /* configBSP430_UPTIME */
+
+/** Return the uptime clock resolution
+ *
+ * Necesary for translating between tick measurements and durations.
+ *
+ * @return The nominal frequency of the uptime clock, in Hz. */
+static unsigned long
+__inline__
+ulBSP430uptimeResolution_Hz_ni (void)
+{
+  return ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_HAL_HANDLE);
+}
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME - 0)
 /** Return system uptime in clock ticks with disabled interrupts. */
