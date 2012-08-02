@@ -121,8 +121,8 @@ xBSP430usciOpenUART (tBSP430periphHandle periph,
 
 int
 iBSP430usciConfigureCallbacks (tBSP430usciHandle device,
-                               const struct xBSP430periphISRCallbackVoid * rx_callback,
-                               const struct xBSP430periphISRCallbackVoid * tx_callback)
+                               const struct sBSP430periphISRCallbackVoid * rx_callback,
+                               const struct sBSP430periphISRCallbackVoid * tx_callback)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc = 0;
@@ -216,7 +216,7 @@ iBSP430usciTransmitASCIIZ_ni (tBSP430usciHandle device, const char * str)
 }
 
 #if configBSP430_HAL_USCI_A0 - 0
-static struct xBSP430usciState state_USCI_A0_ = {
+static struct sBSP430usciState state_USCI_A0_ = {
   .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_A0_BASEADDRESS_,
   .iep = &IE2,
   .ifgp = &IFG2,
@@ -228,7 +228,7 @@ tBSP430usciHandle const hBSP430usci_USCI_A0 = &state_USCI_A0_;
 #endif /* configBSP430_HAL_USCI_A0 */
 
 #if configBSP430_HAL_USCI_A1 - 0
-static struct xBSP430usciState state_USCI_A1_ = {
+static struct sBSP430usciState state_USCI_A1_ = {
   .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_A1_BASEADDRESS_
   .iep = &UC1IE,
   .ifgp = &UC1IFG,
@@ -240,7 +240,7 @@ tBSP430usciHandle const hBSP430usci_USCI_A1 = &state_USCI_A1_;
 #endif /* configBSP430_HAL_USCI_A1 */
 
 #if configBSP430_HAL_USCI_B0 - 0
-static struct xBSP430usciState state_USCI_B0_ = {
+static struct sBSP430usciState state_USCI_B0_ = {
   .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_B0_BASEADDRESS_
   .iep = &IE2,
   .ifgp = &IFG2,
@@ -252,7 +252,7 @@ tBSP430usciHandle const hBSP430usci_USCI_B0 = &state_USCI_B0_;
 #endif /* configBSP430_HAL_USCI_B0 */
 
 #if configBSP430_HAL_USCI_B1 - 0
-static struct xBSP430usciState state_USCI_B1_ = {
+static struct sBSP430usciState state_USCI_B1_ = {
   .usci = (xBSP430periphUSCI *)BSP430_PERIPH_USCI_B1_BASEADDRESS_
   .iep = &UC1IE,
   .ifgp = &UC1IFG,

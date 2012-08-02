@@ -37,78 +37,78 @@
 /* !BSP430! insert=hal_port_5xx_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_defn] */
 #if configBSP430_HAL_PORT1 - 0
-static struct xBSP430portState state_PORT1 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT1_BASEADDRESS_,
+static struct sBSP430portState state_PORT1 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT1_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT1 = &state_PORT1;
 #endif /* configBSP430_HAL_PORT1 */
 
 #if configBSP430_HAL_PORT2 - 0
-static struct xBSP430portState state_PORT2 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT2_BASEADDRESS_,
+static struct sBSP430portState state_PORT2 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT2_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT2 = &state_PORT2;
 #endif /* configBSP430_HAL_PORT2 */
 
 #if configBSP430_HAL_PORT3 - 0
-static struct xBSP430portState state_PORT3 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT3_BASEADDRESS_,
+static struct sBSP430portState state_PORT3 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT3_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT3 = &state_PORT3;
 #endif /* configBSP430_HAL_PORT3 */
 
 #if configBSP430_HAL_PORT4 - 0
-static struct xBSP430portState state_PORT4 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT4_BASEADDRESS_,
+static struct sBSP430portState state_PORT4 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT4_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT4 = &state_PORT4;
 #endif /* configBSP430_HAL_PORT4 */
 
 #if configBSP430_HAL_PORT5 - 0
-static struct xBSP430portState state_PORT5 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT5_BASEADDRESS_,
+static struct sBSP430portState state_PORT5 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT5_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT5 = &state_PORT5;
 #endif /* configBSP430_HAL_PORT5 */
 
 #if configBSP430_HAL_PORT6 - 0
-static struct xBSP430portState state_PORT6 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT6_BASEADDRESS_,
+static struct sBSP430portState state_PORT6 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT6_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT6 = &state_PORT6;
 #endif /* configBSP430_HAL_PORT6 */
 
 #if configBSP430_HAL_PORT7 - 0
-static struct xBSP430portState state_PORT7 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT7_BASEADDRESS_,
+static struct sBSP430portState state_PORT7 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT7_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT7 = &state_PORT7;
 #endif /* configBSP430_HAL_PORT7 */
 
 #if configBSP430_HAL_PORT8 - 0
-static struct xBSP430portState state_PORT8 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT8_BASEADDRESS_,
+static struct sBSP430portState state_PORT8 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT8_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT8 = &state_PORT8;
 #endif /* configBSP430_HAL_PORT8 */
 
 #if configBSP430_HAL_PORT9 - 0
-static struct xBSP430portState state_PORT9 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT9_BASEADDRESS_,
+static struct sBSP430portState state_PORT9 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT9_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT9 = &state_PORT9;
 #endif /* configBSP430_HAL_PORT9 */
 
 #if configBSP430_HAL_PORT10 - 0
-static struct xBSP430portState state_PORT10 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT10_BASEADDRESS_,
+static struct sBSP430portState state_PORT10 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT10_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT10 = &state_PORT10;
 #endif /* configBSP430_HAL_PORT10 */
 
 #if configBSP430_HAL_PORT11 - 0
-static struct xBSP430portState state_PORT11 = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT11_BASEADDRESS_,
+static struct sBSP430portState state_PORT11 = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_PORT11_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_PORT11 = &state_PORT11;
 #endif /* configBSP430_HAL_PORT11 */

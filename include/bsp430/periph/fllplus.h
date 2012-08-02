@@ -114,7 +114,7 @@
  * will be (N+1)*f_crystal, optionally scaled by a feedback
  * pre-divider (multiplying the output frequency).
  */
-typedef struct xBSP430fllplusConfig {
+typedef struct sBSP430fllplusConfig {
   /** Value for FLL_CTL0.  This configures the pre-divider DCOPLUS,
    * the LFTX1 mode XTS_FLL, and the oscilator capacitor.  Other
    * bits denote oscillator faults and are read-only. */

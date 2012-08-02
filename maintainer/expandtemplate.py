@@ -64,8 +64,8 @@ extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 /** Typed pointer to HPL structure for %(INSTANCE)s suitable for use in const initializers */
-#define BSP430_HPL_%(INSTANCE)s ((volatile xBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
-static volatile xBSP430periph%(PERIPH)s * const hBSP430periph_%(INSTANCE)s = BSP430_HPL_%(INSTANCE)s;
+#define BSP430_HPL_%(INSTANCE)s ((volatile struct sBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
+static volatile struct sBSP430periph%(PERIPH)s * const hBSP430periph_%(INSTANCE)s = BSP430_HPL_%(INSTANCE)s;
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
     
@@ -195,7 +195,7 @@ static volatile xBSP430periph%(PERIPH)s * const hBSP430periph_%(INSTANCE)s = BSP
 ''',
 
     'hal_ba_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-static struct xBSP430%(periph)sState state_%(INSTANCE)s_ = {
+static struct sBSP430%(periph)sState state_%(INSTANCE)s_ = {
   .%(periph)s = BSP430_HPL_%(INSTANCE)s
 };
 
@@ -255,8 +255,8 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 ''',
 
     'hal_port_5xx_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-static struct xBSP430portState state_%(INSTANCE)s = {
-  .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_,
+static struct sBSP430portState state_%(INSTANCE)s = {
+  .port = (volatile struct sBSP430periphPORTIE *)BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_,
 };
 tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */

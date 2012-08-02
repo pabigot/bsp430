@@ -137,8 +137,8 @@ xBSP430eusciaOpenUART (tBSP430periphHandle periph,
 
 int
 iBSP430eusciaConfigureCallbacks (tBSP430eusciaHandle device,
-                                 const struct xBSP430periphISRCallbackVoid * rx_callback,
-                                 const struct xBSP430periphISRCallbackVoid * tx_callback)
+                                 const struct sBSP430periphISRCallbackVoid * rx_callback,
+                                 const struct sBSP430periphISRCallbackVoid * tx_callback)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc = 0;
@@ -294,7 +294,7 @@ euscia_isr (tBSP430eusciaHandle device)
 /* !BSP430! insert=hal_ba_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_HAL_EUSCI_A0 - 0
-static struct xBSP430eusciaState state_EUSCI_A0_ = {
+static struct sBSP430eusciaState state_EUSCI_A0_ = {
   .euscia = BSP430_HPL_EUSCI_A0
 };
 
@@ -302,7 +302,7 @@ tBSP430eusciaHandle const hBSP430euscia_EUSCI_A0 = &state_EUSCI_A0_;
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
 #if configBSP430_HAL_EUSCI_A1 - 0
-static struct xBSP430eusciaState state_EUSCI_A1_ = {
+static struct sBSP430eusciaState state_EUSCI_A1_ = {
   .euscia = BSP430_HPL_EUSCI_A1
 };
 
@@ -310,7 +310,7 @@ tBSP430eusciaHandle const hBSP430euscia_EUSCI_A1 = &state_EUSCI_A1_;
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
 #if configBSP430_HAL_EUSCI_A2 - 0
-static struct xBSP430eusciaState state_EUSCI_A2_ = {
+static struct sBSP430eusciaState state_EUSCI_A2_ = {
   .euscia = BSP430_HPL_EUSCI_A2
 };
 

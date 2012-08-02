@@ -120,8 +120,8 @@ xBSP430usci5OpenUART (tBSP430periphHandle periph,
 
 int
 iBSP430usci5ConfigureCallbacks (tBSP430usci5Handle device,
-                                const struct xBSP430periphISRCallbackVoid * rx_callback,
-                                const struct xBSP430periphISRCallbackVoid * tx_callback)
+                                const struct sBSP430periphISRCallbackVoid * rx_callback,
+                                const struct sBSP430periphISRCallbackVoid * tx_callback)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc = 0;
@@ -286,7 +286,7 @@ usci5_isr (tBSP430usci5Handle device)
 /* !BSP430! insert=hal_ba_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
 #if configBSP430_HAL_USCI5_A0 - 0
-static struct xBSP430usci5State state_USCI5_A0_ = {
+static struct sBSP430usci5State state_USCI5_A0_ = {
   .usci5 = BSP430_HPL_USCI5_A0
 };
 
@@ -294,7 +294,7 @@ tBSP430usci5Handle const hBSP430usci5_USCI5_A0 = &state_USCI5_A0_;
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 #if configBSP430_HAL_USCI5_A1 - 0
-static struct xBSP430usci5State state_USCI5_A1_ = {
+static struct sBSP430usci5State state_USCI5_A1_ = {
   .usci5 = BSP430_HPL_USCI5_A1
 };
 
@@ -302,7 +302,7 @@ tBSP430usci5Handle const hBSP430usci5_USCI5_A1 = &state_USCI5_A1_;
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 #if configBSP430_HAL_USCI5_A2 - 0
-static struct xBSP430usci5State state_USCI5_A2_ = {
+static struct sBSP430usci5State state_USCI5_A2_ = {
   .usci5 = BSP430_HPL_USCI5_A2
 };
 
@@ -310,7 +310,7 @@ tBSP430usci5Handle const hBSP430usci5_USCI5_A2 = &state_USCI5_A2_;
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 #if configBSP430_HAL_USCI5_A3 - 0
-static struct xBSP430usci5State state_USCI5_A3_ = {
+static struct sBSP430usci5State state_USCI5_A3_ = {
   .usci5 = BSP430_HPL_USCI5_A3
 };
 
@@ -318,7 +318,7 @@ tBSP430usci5Handle const hBSP430usci5_USCI5_A3 = &state_USCI5_A3_;
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 #if configBSP430_HAL_USCI5_B0 - 0
-static struct xBSP430usci5State state_USCI5_B0_ = {
+static struct sBSP430usci5State state_USCI5_B0_ = {
   .usci5 = BSP430_HPL_USCI5_B0
 };
 
@@ -326,7 +326,7 @@ tBSP430usci5Handle const hBSP430usci5_USCI5_B0 = &state_USCI5_B0_;
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 #if configBSP430_HAL_USCI5_B1 - 0
-static struct xBSP430usci5State state_USCI5_B1_ = {
+static struct sBSP430usci5State state_USCI5_B1_ = {
   .usci5 = BSP430_HPL_USCI5_B1
 };
 
@@ -334,7 +334,7 @@ tBSP430usci5Handle const hBSP430usci5_USCI5_B1 = &state_USCI5_B1_;
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 #if configBSP430_HAL_USCI5_B2 - 0
-static struct xBSP430usci5State state_USCI5_B2_ = {
+static struct sBSP430usci5State state_USCI5_B2_ = {
   .usci5 = BSP430_HPL_USCI5_B2
 };
 
@@ -342,7 +342,7 @@ tBSP430usci5Handle const hBSP430usci5_USCI5_B2 = &state_USCI5_B2_;
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 #if configBSP430_HAL_USCI5_B3 - 0
-static struct xBSP430usci5State state_USCI5_B3_ = {
+static struct sBSP430usci5State state_USCI5_B3_ = {
   .usci5 = BSP430_HPL_USCI5_B3
 };
 

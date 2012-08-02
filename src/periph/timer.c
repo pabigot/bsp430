@@ -50,11 +50,11 @@
  * one in the base type.  This allows us to use only the amount of
  * space necessary to support the CC blocks on the target MCU. */
 #define DECLARE_AUX_CCS(_n)                                     \
-  struct xBSP430periphISRCallbackIndexed * _aux_cc_callback[_n]
+  struct sBSP430periphISRCallbackIndexed * _aux_cc_callback[_n]
 
 #if configBSP430_HAL_TA0 - 0
 static struct {
-  struct xBSP430timerState state;
+  struct sBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
 #if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
   DECLARE_AUX_CCS(1);			/* 2 total */
@@ -72,7 +72,7 @@ tBSP430timerHandle const hBSP430timer_TA0 = &state_TA0_.state;
 
 #if configBSP430_HAL_TA1 - 0
 static struct {
-  struct xBSP430timerState state;
+  struct sBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
 #if defined(__MSP430_HAS_T1A2__)
   DECLARE_AUX_CCS(1);			/* 2 total */
@@ -90,7 +90,7 @@ tBSP430timerHandle const hBSP430timer_TA1 = &state_TA1_.state;
 
 #if configBSP430_HAL_TA2 - 0
 static struct {
-  struct xBSP430timerState state;
+  struct sBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
 #if defined(__MSP430_HAS_T2A2__)
   DECLARE_AUX_CCS(1);			/* 2 total */
@@ -108,7 +108,7 @@ tBSP430timerHandle const hBSP430timer_TA2 = &state_TA2_.state;
 
 #if configBSP430_HAL_TA3 - 0
 static struct {
-  struct xBSP430timerState state;
+  struct sBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
 #if defined(__MSP430_HAS_T3A2__)
   DECLARE_AUX_CCS(1);			/* 2 total */
@@ -126,7 +126,7 @@ tBSP430timerHandle const hBSP430timer_TA3 = &state_TA3_.state;
 
 #if configBSP430_HAL_TB0 - 0
 static struct {
-  struct xBSP430timerState state;
+  struct sBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
 #if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
   DECLARE_AUX_CCS(2);			/* 3 total */
@@ -142,7 +142,7 @@ tBSP430timerHandle const hBSP430timer_TB0 = &state_TB0_.state;
 
 #if configBSP430_HAL_TB1 - 0
 static struct {
-  struct xBSP430timerState state;
+  struct sBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
 #if defined(__MSP430_HAS_T1B3__)
   DECLARE_AUX_CCS(2);			/* 3 total */
@@ -158,7 +158,7 @@ tBSP430timerHandle const hBSP430timer_TB1 = &state_TB1_.state;
 
 #if configBSP430_HAL_TB2 - 0
 static struct {
-  struct xBSP430timerState state;
+  struct sBSP430timerState state;
   /* State includes one CC record.  Add more as required. */
 #if defined(__MSP430_HAS_T2B3__)
   DECLARE_AUX_CCS(2);			/* 3 total */

@@ -49,7 +49,7 @@
  *
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
-struct xBSP430eusciaState {
+struct sBSP430eusciaState {
   /** Flags indicating various things: primarily, whether anybody is
    * using the device. */
   unsigned int flags;
@@ -66,11 +66,11 @@ struct xBSP430eusciaState {
   uint8_t tx_byte;
 
   /** The callback chain to invoke when a byte is received */
-  const struct xBSP430periphISRCallbackVoid * rx_callback;
+  const struct sBSP430periphISRCallbackVoid * rx_callback;
 
   /** The callback chain to invoke when space is available in the
    * transmission buffer */
-  const struct xBSP430periphISRCallbackVoid * tx_callback;
+  const struct sBSP430periphISRCallbackVoid * tx_callback;
 
   /** Total number of received octets */
   unsigned long num_rx;

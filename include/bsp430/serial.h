@@ -201,8 +201,8 @@ tBSP430serialHandle xBSP430serialOpenSPI (tBSP430periphHandle periph,
  */
 #if defined(BSP430_DOXYGEN)
 int iBSP430serialConfigureCallbacks (tBSP430serialHandle device,
-                                     const struct xBSP430periphISRCallbackVoid * rx_callback,
-                                     const struct xBSP430periphISRCallbackVoid * tx_callback);
+                                     const struct sBSP430periphISRCallbackVoid * rx_callback,
+                                     const struct sBSP430periphISRCallbackVoid * tx_callback);
 #endif /* BSP430_DOXYGEN */
 
 /** Release a serial device.
@@ -338,8 +338,8 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
   static __inline__                                                     \
   int                                                                   \
   iBSP430serialConfigureCallbacks (tBSP430serialHandle device,          \
-                                   const struct xBSP430periphISRCallbackVoid * rx_callback, \
-                                   const struct xBSP430periphISRCallbackVoid * tx_callback) \
+                                   const struct sBSP430periphISRCallbackVoid * rx_callback, \
+                                   const struct sBSP430periphISRCallbackVoid * tx_callback) \
   {                                                                     \
     return iBSP430##_serial##ConfigureCallbacks(device, rx_callback, tx_callback); \
   }

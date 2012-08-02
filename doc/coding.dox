@@ -46,11 +46,11 @@ HPL inline pointer: BSP430_HPL_%(INSTANCE)s
 HPL variable pointer: xBSP430periph%(INSTANCE)s
 HAL handle: xBSP430%(periph)s%(INSTANCE)s
 
-FreeRTOS HAL state structure: struct xBSP430%(periph)sState
-FreeRTOS HAL handle type: typedef struct xBSP430%(periph)sState * xBSP430%(periph)sHandle
+FreeRTOS HAL state structure: struct sBSP430%(periph)sState
+FreeRTOS HAL handle type: typedef struct sBSP430%(periph)sState * xBSP430%(periph)sHandle
 FreeRTOS HAL handle global: extern xBSP430%(periph)sHandle const xBSP430%(periph)_%(INSTANCE)
 
-FreeRTOS HAL configuration structure: struct xBSP430%(periph)sConfig
+FreeRTOS HAL configuration structure: struct sBSP430%(periph)sConfig
 
 Pattern for platform-specific features:
 

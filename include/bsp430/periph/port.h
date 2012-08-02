@@ -121,7 +121,7 @@
  *
  * Access to SEL2 capability for these ports is not available in the
  * hardware-presentation layer. */
-typedef struct xBSP430periphPORT_IE_8 {
+typedef struct sBSP430periphPORT_IE_8 {
   unsigned char in;			/* 0x00 */
   unsigned char out;			/* 0x01 */
   unsigned char dir;			/* 0x02 */
@@ -136,7 +136,7 @@ typedef struct xBSP430periphPORT_IE_8 {
  *
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
-typedef struct xBSP430periphPORT_8 {
+typedef struct sBSP430periphPORT_8 {
   unsigned char in;			/* 0x00 */
   unsigned char out;			/* 0x01 */
   unsigned char dir;			/* 0x02 */
@@ -157,7 +157,7 @@ typedef union xBSP430periphPORT_16_u {
  *
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
-typedef struct xBSP430periphPORT_16 {
+typedef struct sBSP430periphPORT_16 {
   xBSP430periphPORT_16_u in;	/* 0x00 */
   xBSP430periphPORT_16_u out;	/* 0x02 */
   xBSP430periphPORT_16_u dir;	/* 0x04 */
@@ -166,7 +166,7 @@ typedef struct xBSP430periphPORT_16 {
 
 /** Layout for 5xx family ports, 16-bit access
  */
-typedef struct xBSP430periphPORT_5XX_16 {
+typedef struct sBSP430periphPORT_5XX_16 {
   xBSP430periphPORT_16_u in;	/**< PxIN */ /* 0x00 */
   xBSP430periphPORT_16_u out;	/**< PxOUT */ /* 0x02 */
   xBSP430periphPORT_16_u dir;	/**< PxDIR (set for output) */ /* 0x04 */
@@ -192,7 +192,7 @@ typedef struct xBSP430periphPORT_5XX_16 {
  * This structure includes the necessary padding to maintain alignment
  * when referencing the second 8-bit register in a 16-bit bank.
  */
-typedef struct xBSP430periphPORT_5XX_8 {
+typedef struct sBSP430periphPORT_5XX_8 {
   unsigned char in;	/**< PxIN */ /* 0x00 */
   unsigned char _reserved_x01;
   unsigned char out;	/**< PxOUT */ /* 0x02 */
@@ -327,10 +327,10 @@ volatile xBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandl
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
 /* Forward declaration to hardware abstraction layer ports */
-struct xBSP430portState;
+struct sBSP430portState;
 
 /** The PORT internal state is protected. */
-typedef struct xBSP430portState * tBSP430portHandle;
+typedef struct sBSP430portState * tBSP430portHandle;
 
 #if 1 // defined(__MSP430_HAS_MSP430XV2_CPU__)
 
@@ -620,8 +620,8 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
 /** Typed pointer to HPL structure for PORT1 suitable for use in const initializers */
-#define BSP430_HPL_PORT1 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT1)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT1 = BSP430_HPL_PORT1;
+#define BSP430_HPL_PORT1 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT1)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT1 = BSP430_HPL_PORT1;
 #endif /* configBSP430_HPL_PORT1 */
 
 /** @def configBSP430_HPL_PORT2
@@ -661,8 +661,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT1 = BSP430_HPL_PORT1
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
 /** Typed pointer to HPL structure for PORT2 suitable for use in const initializers */
-#define BSP430_HPL_PORT2 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT2)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT2 = BSP430_HPL_PORT2;
+#define BSP430_HPL_PORT2 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT2)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT2 = BSP430_HPL_PORT2;
 #endif /* configBSP430_HPL_PORT2 */
 
 /** @def configBSP430_HPL_PORT3
@@ -702,8 +702,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT2 = BSP430_HPL_PORT2
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
 /** Typed pointer to HPL structure for PORT3 suitable for use in const initializers */
-#define BSP430_HPL_PORT3 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT3)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT3 = BSP430_HPL_PORT3;
+#define BSP430_HPL_PORT3 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT3)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT3 = BSP430_HPL_PORT3;
 #endif /* configBSP430_HPL_PORT3 */
 
 /** @def configBSP430_HPL_PORT4
@@ -743,8 +743,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT3 = BSP430_HPL_PORT3
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
 /** Typed pointer to HPL structure for PORT4 suitable for use in const initializers */
-#define BSP430_HPL_PORT4 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT4)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT4 = BSP430_HPL_PORT4;
+#define BSP430_HPL_PORT4 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT4)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT4 = BSP430_HPL_PORT4;
 #endif /* configBSP430_HPL_PORT4 */
 
 /** @def configBSP430_HPL_PORT5
@@ -784,8 +784,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT4 = BSP430_HPL_PORT4
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
 /** Typed pointer to HPL structure for PORT5 suitable for use in const initializers */
-#define BSP430_HPL_PORT5 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT5)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT5 = BSP430_HPL_PORT5;
+#define BSP430_HPL_PORT5 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT5)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT5 = BSP430_HPL_PORT5;
 #endif /* configBSP430_HPL_PORT5 */
 
 /** @def configBSP430_HPL_PORT6
@@ -825,8 +825,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT5 = BSP430_HPL_PORT5
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
 /** Typed pointer to HPL structure for PORT6 suitable for use in const initializers */
-#define BSP430_HPL_PORT6 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT6)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT6 = BSP430_HPL_PORT6;
+#define BSP430_HPL_PORT6 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT6)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT6 = BSP430_HPL_PORT6;
 #endif /* configBSP430_HPL_PORT6 */
 
 /** @def configBSP430_HPL_PORT7
@@ -866,8 +866,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT6 = BSP430_HPL_PORT6
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
 /** Typed pointer to HPL structure for PORT7 suitable for use in const initializers */
-#define BSP430_HPL_PORT7 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT7)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT7 = BSP430_HPL_PORT7;
+#define BSP430_HPL_PORT7 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT7)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT7 = BSP430_HPL_PORT7;
 #endif /* configBSP430_HPL_PORT7 */
 
 /** @def configBSP430_HPL_PORT8
@@ -907,8 +907,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT7 = BSP430_HPL_PORT7
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
 /** Typed pointer to HPL structure for PORT8 suitable for use in const initializers */
-#define BSP430_HPL_PORT8 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT8)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT8 = BSP430_HPL_PORT8;
+#define BSP430_HPL_PORT8 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT8)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT8 = BSP430_HPL_PORT8;
 #endif /* configBSP430_HPL_PORT8 */
 
 /** @def configBSP430_HPL_PORT9
@@ -948,8 +948,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT8 = BSP430_HPL_PORT8
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
 /** Typed pointer to HPL structure for PORT9 suitable for use in const initializers */
-#define BSP430_HPL_PORT9 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT9)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT9 = BSP430_HPL_PORT9;
+#define BSP430_HPL_PORT9 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT9)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT9 = BSP430_HPL_PORT9;
 #endif /* configBSP430_HPL_PORT9 */
 
 /** @def configBSP430_HPL_PORT10
@@ -989,8 +989,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT9 = BSP430_HPL_PORT9
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
 /** Typed pointer to HPL structure for PORT10 suitable for use in const initializers */
-#define BSP430_HPL_PORT10 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT10)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT10 = BSP430_HPL_PORT10;
+#define BSP430_HPL_PORT10 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT10)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT10 = BSP430_HPL_PORT10;
 #endif /* configBSP430_HPL_PORT10 */
 
 /** @def configBSP430_HPL_PORT11
@@ -1030,8 +1030,8 @@ static volatile xBSP430periphPORT * const hBSP430periph_PORT10 = BSP430_HPL_PORT
  * @defaulted */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
 /** Typed pointer to HPL structure for PORT11 suitable for use in const initializers */
-#define BSP430_HPL_PORT11 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT11)
-static volatile xBSP430periphPORT * const hBSP430periph_PORT11 = BSP430_HPL_PORT11;
+#define BSP430_HPL_PORT11 ((volatile struct sBSP430periphPORT *)BSP430_PERIPH_PORT11)
+static volatile struct sBSP430periphPORT * const hBSP430periph_PORT11 = BSP430_HPL_PORT11;
 #endif /* configBSP430_HPL_PORT11 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

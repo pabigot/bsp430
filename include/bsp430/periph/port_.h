@@ -49,10 +49,10 @@
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
 
-struct xBSP430portState {
+struct sBSP430portState {
   unsigned int flags;
   volatile xBSP430periphPORTIE * const port;
-  const struct xBSP430periphISRCallbackIndexed * pin_callback[8];
+  const struct sBSP430periphISRCallbackIndexed * pin_callback[8];
 };
 
 #endif /* BSP430_PERIPH_PORT__H */

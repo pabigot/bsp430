@@ -151,8 +151,8 @@ xBSP430periphFromHPL (volatile void * hpl)
 }
 
 /* Forward declarations */
-struct xBSP430periphISRCallbackVoid;
-struct xBSP430periphISRCallbackIndexed;
+struct sBSP430periphISRCallbackVoid;
+struct sBSP430periphISRCallbackIndexed;
 
 /** Mask for status register bits cleared in ISR top half.
  *
@@ -211,7 +211,7 @@ struct xBSP430periphISRCallbackIndexed;
  * should be a combination of bits like #LPM4_bits and
  * #BSP430_PERIPH_ISR_CALLBACK_YIELD.
  */
-typedef int (* iBSP430periphISRCallbackVoid) (const struct xBSP430periphISRCallbackVoid * cb,
+typedef int (* iBSP430periphISRCallbackVoid) (const struct sBSP430periphISRCallbackVoid * cb,
     void * context);
 
 /** Callback for ISR chains where the event includes an index
@@ -228,24 +228,24 @@ typedef int (* iBSP430periphISRCallbackVoid) (const struct xBSP430periphISRCallb
  *
  * @return As with #iBSP430periphISRCallbackVoid.
  */
-typedef int (* iBSP430periphISRCallbackIndexed) (const struct xBSP430periphISRCallbackIndexed * cb,
+typedef int (* iBSP430periphISRCallbackIndexed) (const struct sBSP430periphISRCallbackIndexed * cb,
     void * context,
     int idx);
 /** Structure used to record #iBSP430periphISRCallbackVoid chains. */
-struct xBSP430periphISRCallbackVoid {
+struct sBSP430periphISRCallbackVoid {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain. */
-  const struct xBSP430periphISRCallbackVoid * next;
+  const struct sBSP430periphISRCallbackVoid * next;
 
   /** The function to be invoked. */
   iBSP430periphISRCallbackVoid callback;
 };
 
 /** Structure used to record #iBSP430periphISRCallbackIndexed chains. */
-struct xBSP430periphISRCallbackIndexed {
+struct sBSP430periphISRCallbackIndexed {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain. */
-  const struct xBSP430periphISRCallbackIndexed * next;
+  const struct sBSP430periphISRCallbackIndexed * next;
 
   /** The function to be invoked. */
   iBSP430periphISRCallbackIndexed callback;
@@ -266,7 +266,7 @@ struct xBSP430periphISRCallbackIndexed {
  * of each callback */
 static int
 __inline__
-iBSP430callbackInvokeISRVoid_ni (const struct xBSP430periphISRCallbackVoid * const * cbpp,
+iBSP430callbackInvokeISRVoid_ni (const struct sBSP430periphISRCallbackVoid * const * cbpp,
                                  void * context,
                                  int basis)
 {
@@ -289,7 +289,7 @@ iBSP430callbackInvokeISRVoid_ni (const struct xBSP430periphISRCallbackVoid * con
  * @return As with #iBSP430callbackInvokeISRVoid_ni */
 static int
 __inline__
-iBSP430callbackInvokeISRIndexed_ni (const struct xBSP430periphISRCallbackIndexed * const * cbpp,
+iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430periphISRCallbackIndexed * const * cbpp,
                                     void * context,
                                     int idx,
                                     int basis)

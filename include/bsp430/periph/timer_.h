@@ -48,7 +48,7 @@
  *
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
-struct xBSP430timerState {
+struct sBSP430timerState {
   /** The underlying timer peripheral register structure */
   volatile xBSP430periphTIMER * const hpl;
 
@@ -65,18 +65,18 @@ struct xBSP430timerState {
 
   /** The callback chain to invoke when an overflow interrupt is
    * received. */
-  const struct xBSP430periphISRCallbackVoid * overflow_callback;
+  const struct sBSP430periphISRCallbackVoid * overflow_callback;
 
   /** The callback chain to invoke when a CC0 interrupt is
    * received. */
-  const struct xBSP430periphISRCallbackVoid * cc0_callback;
+  const struct sBSP430periphISRCallbackVoid * cc0_callback;
 
   /** The callback chain to invoke when a CCx interrupt is received.
    *
    * The chains are independent for each capture/compare block, but
    * the block index is passed into the chain so that a common
    * handler can be invoked if desired. */
-  const struct xBSP430periphISRCallbackIndexed * cc_callback[1];
+  const struct sBSP430periphISRCallbackIndexed * cc_callback[1];
 };
 
 #endif /* BSP430_PERIPH_TIMER__H */
