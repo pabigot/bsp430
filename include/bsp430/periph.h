@@ -132,7 +132,7 @@ typedef int tBSP430periphHandle;
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0
 
 /** Mask used to isolate the HPL variant in the
- * sBSP430periphHALStatePrefix structure @a cflags field */ 
+ * sBSP430periphHALStatePrefix structure @a cflags field */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ 0x0F
 
 /** Extract HPL variant from a HAL state instance.

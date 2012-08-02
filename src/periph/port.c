@@ -32,19 +32,31 @@
 #include <bsp430/periph/port_.h>
 
 /* !BSP430! periph=port */
-/* !BSP430! variant=port_5xx_8 subst=variant instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
+/* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
 
-/* !BSP430! insert=hal_port_5xx_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_defn] */
+/* !BSP430! insert=hal_port_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_defn] */
 #if configBSP430_HAL_PORT1 - 0
 static struct sBSP430portState state_PORT1 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT1_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT1_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT1_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT1 },
+  .hpl = {
+#if defined(PORT1_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT1
+  },
 };
 tBSP430portHandle const hBSP430port_PORT1 = &state_PORT1;
 #endif /* configBSP430_HAL_PORT1 */
@@ -52,12 +64,24 @@ tBSP430portHandle const hBSP430port_PORT1 = &state_PORT1;
 #if configBSP430_HAL_PORT2 - 0
 static struct sBSP430portState state_PORT2 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT2_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT2_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT2_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT2 },
+  .hpl = {
+#if defined(PORT2_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT2
+  },
 };
 tBSP430portHandle const hBSP430port_PORT2 = &state_PORT2;
 #endif /* configBSP430_HAL_PORT2 */
@@ -65,12 +89,24 @@ tBSP430portHandle const hBSP430port_PORT2 = &state_PORT2;
 #if configBSP430_HAL_PORT3 - 0
 static struct sBSP430portState state_PORT3 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT3_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT3_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT3_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT3 },
+  .hpl = {
+#if defined(PORT3_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT3
+  },
 };
 tBSP430portHandle const hBSP430port_PORT3 = &state_PORT3;
 #endif /* configBSP430_HAL_PORT3 */
@@ -78,12 +114,24 @@ tBSP430portHandle const hBSP430port_PORT3 = &state_PORT3;
 #if configBSP430_HAL_PORT4 - 0
 static struct sBSP430portState state_PORT4 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT4_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT4_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT4_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT4 },
+  .hpl = {
+#if defined(PORT4_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT4
+  },
 };
 tBSP430portHandle const hBSP430port_PORT4 = &state_PORT4;
 #endif /* configBSP430_HAL_PORT4 */
@@ -91,12 +139,24 @@ tBSP430portHandle const hBSP430port_PORT4 = &state_PORT4;
 #if configBSP430_HAL_PORT5 - 0
 static struct sBSP430portState state_PORT5 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT5_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT5_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT5_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT5 },
+  .hpl = {
+#if defined(PORT5_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT5
+  },
 };
 tBSP430portHandle const hBSP430port_PORT5 = &state_PORT5;
 #endif /* configBSP430_HAL_PORT5 */
@@ -104,12 +164,24 @@ tBSP430portHandle const hBSP430port_PORT5 = &state_PORT5;
 #if configBSP430_HAL_PORT6 - 0
 static struct sBSP430portState state_PORT6 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT6_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT6_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT6_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT6 },
+  .hpl = {
+#if defined(PORT6_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT6
+  },
 };
 tBSP430portHandle const hBSP430port_PORT6 = &state_PORT6;
 #endif /* configBSP430_HAL_PORT6 */
@@ -117,12 +189,24 @@ tBSP430portHandle const hBSP430port_PORT6 = &state_PORT6;
 #if configBSP430_HAL_PORT7 - 0
 static struct sBSP430portState state_PORT7 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT7_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT7_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT7_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT7 },
+  .hpl = {
+#if defined(PORT7_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT7
+  },
 };
 tBSP430portHandle const hBSP430port_PORT7 = &state_PORT7;
 #endif /* configBSP430_HAL_PORT7 */
@@ -130,12 +214,24 @@ tBSP430portHandle const hBSP430port_PORT7 = &state_PORT7;
 #if configBSP430_HAL_PORT8 - 0
 static struct sBSP430portState state_PORT8 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT8_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT8_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT8_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT8 },
+  .hpl = {
+#if defined(PORT8_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT8
+  },
 };
 tBSP430portHandle const hBSP430port_PORT8 = &state_PORT8;
 #endif /* configBSP430_HAL_PORT8 */
@@ -143,12 +239,24 @@ tBSP430portHandle const hBSP430port_PORT8 = &state_PORT8;
 #if configBSP430_HAL_PORT9 - 0
 static struct sBSP430portState state_PORT9 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT9_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT9_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT9_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT9 },
+  .hpl = {
+#if defined(PORT9_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT9
+  },
 };
 tBSP430portHandle const hBSP430port_PORT9 = &state_PORT9;
 #endif /* configBSP430_HAL_PORT9 */
@@ -156,12 +264,24 @@ tBSP430portHandle const hBSP430port_PORT9 = &state_PORT9;
 #if configBSP430_HAL_PORT10 - 0
 static struct sBSP430portState state_PORT10 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT10_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT10_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT10_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT10 },
+  .hpl = {
+#if defined(PORT10_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT10
+  },
 };
 tBSP430portHandle const hBSP430port_PORT10 = &state_PORT10;
 #endif /* configBSP430_HAL_PORT10 */
@@ -169,18 +289,30 @@ tBSP430portHandle const hBSP430port_PORT10 = &state_PORT10;
 #if configBSP430_HAL_PORT11 - 0
 static struct sBSP430portState state_PORT11 = {
   .hal_state = {
-    .cflags = BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
+    .cflags =
+#if defined(PORT11_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_PORT11_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT11_ISR */
   },
-  .hpl = { .port_5xx_8 = BSP430_HPL_PORT11 },
+  .hpl = {
+#if defined(PORT11_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+    = BSP430_HPL_PORT11
+  },
 };
 tBSP430portHandle const hBSP430port_PORT11 = &state_PORT11;
 #endif /* configBSP430_HAL_PORT11 */
 
-/* END AUTOMATICALLY GENERATED CODE [hal_port_5xx_defn] */
-/* !BSP430! end=hal_port_5xx_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_port_defn] */
+/* !BSP430! end=hal_port_defn */
 
 #if ((configBSP430_HAL_PORT1_ISR - 0)           \
      || (configBSP430_HAL_PORT2_ISR - 0)        \
@@ -211,8 +343,8 @@ port_isr (tBSP430portHandle device,
 }
 #endif /* PORT ISR */
 
-/* !BSP430! insert=hal_port_5xx_isr_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_5xx_isr_defn] */
+/* !BSP430! insert=hal_port_isr_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_isr_defn] */
 #if configBSP430_HAL_PORT1_ISR - 0
 static void
 __attribute__((__interrupt__(PORT1_VECTOR)))
@@ -323,8 +455,8 @@ isr_PORT11 (void)
 }
 #endif /* configBSP430_HAL_PORT11_ISR */
 
-/* END AUTOMATICALLY GENERATED CODE [hal_port_5xx_isr_defn] */
-/* !BSP430! end=hal_port_5xx_isr_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_port_isr_defn] */
+/* !BSP430! end=hal_port_isr_defn */
 
 volatile sBSP430periphPORTIE *
 xBSP430periphLookupPORTIE (tBSP430periphHandle periph)

@@ -253,14 +253,26 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
-    'hal_port_5xx_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
+    'hal_port_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct sBSP430portState state_%(INSTANCE)s = {
-  .hal_state = { .cflags = BSP430_PORT_HAL_HPL_VARIANT_%(VARIANT)s
+  .hal_state = { .cflags =
+#if defined(PORT%(#)s_VECTOR)
+    BSP430_PORT_HAL_HPL_VARIANT_PORTIE
+#else /* interrupt-enabled */
+    BSP430_PORT_HAL_HPL_VARIANT_PORT
+#endif /* MSP430XV2 */
 #if configBSP430_HAL_%(INSTANCE)s_ISR - 0
-                           | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
   },
-  .hpl = { .%(variant)s = BSP430_HPL_%(INSTANCE)s },
+  .hpl = {
+#if defined(PORT%(#)s_VECTOR)
+    .portie
+#else /* interrupt-enabled */
+    .port
+#endif /* MSP430XV2 */
+       = BSP430_HPL_%(INSTANCE)s
+  },
 };
 tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
@@ -272,7 +284,7 @@ tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #define BSP430PORT_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430PORT_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.%(instance)s : 0)
 ''',
 
-    'hal_port_5xx_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
+    'hal_port_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
 static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
