@@ -227,32 +227,32 @@ typedef struct sBSP430periphPORT_5XX_8 {
   unsigned char ifg;	 /**< PxIFG */ /* 0x1C */
 } sBSP430periphPORT_5XX_8;
 
-/** @cond DOXYGEN_INTERNAL */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
-#define BSP430_PERIPH_PORTIE_ sBSP430periphPORT_5XX_8
-#define BSP430_PERIPH_PORT_ sBSP430periphPORT_5XX_8
-#define BSP430_PERIPH_PORTW_ sBSP430periphPORT_5XX_16
-#else /* MSP430XV2 */
-#define BSP430_PERIPH_PORTIE_ sBSP430periphPORT_IE_8
-#define BSP430_PERIPH_PORT_ sBSP430periphPORT_8
-#define BSP430_PERIPH_PORTW_ sBSP430periphPORT_16
-#endif /* MSP430XV2 */
-/** @endcond */ /* DOXYGEN_INTERNAL */
-
 /** Structure used to access ports with interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-typedef BSP430_PERIPH_PORTIE_ sBSP430periphPORTIE;
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+typedef sBSP430periphPORT_5XX_8 sBSP430periphPORTIE;
+#else /* MSP430XV2 */
+typedef sBSP430periphPORT_IE_8 sBSP430periphPORTIE;
+#endif /* MSP430XV2 */
 
 /** Structure used to access ports without interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-typedef BSP430_PERIPH_PORT_ sBSP430periphPORT;
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+typedef sBSP430periphPORT_5XX_8 sBSP430periphPORT;
+#else /* MSP430XV2 */
+typedef sBSP430periphPORT_8 sBSP430periphPORT;
+#endif /* MSP430XV2 */
 
 /** Structure used to access 16-bit ports.
  *
  * The underlying structure selected depends on the MCU family. */
-typedef BSP430_PERIPH_PORTW_ sBSP430periphPORTW;
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+typedef sBSP430periphPORT_5XX_16 sBSP430periphPORTW;
+#else /* MSP430XV2 */
+typedef sBSP430periphPORT_16 sBSP430periphPORTW;
+#endif /* MSP430XV2 */
 
 /** Get the peripheral register pointer for an interrupt-enabled port.
  *
@@ -331,8 +331,6 @@ struct sBSP430portState;
 
 /** The PORT internal state is protected. */
 typedef struct sBSP430portState * tBSP430portHandle;
-
-#if 1 // defined(__MSP430_HAS_MSP430XV2_CPU__)
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
@@ -1283,11 +1281,6 @@ static volatile struct sBSP430periphPORT * const hBSP430periph_PORT11 = BSP430_H
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
-
-#else /* MSP430XV2 */
-/* 1xx through 4xx port management */
-#warning not yet implemented
-#endif /* MSP430XV2 */
 
 /** Translate a port HPL handle to its corresponding HAL handle.
  *
