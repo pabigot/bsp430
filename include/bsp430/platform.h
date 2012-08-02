@@ -63,6 +63,7 @@
  *
  * This routine will:
  * @li Disable the watchdog
+ * @li Configure the LEDs (see #BSP430_PLATFORM_BOOT_CONFIGURE_LEDS)
  * @li Crystal configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CRYSTAL)
  * @li Clock configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
  * @li Start the system clock (if #BSP430_UPTIME)
@@ -348,9 +349,23 @@ void vBSP430platformSpinForJumper_ni (void);
  * @platformdefault */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_SPIN_FOR_JUMPER)
 #ifndef BSP430_PLATFORM_SPIN_FOR_JUMPER
-#define BSP430_PLATFORM_SPIN_FOR_JUMPER 0
+#define BSP430_PLATFORM_SPIN_FOR_JUMPER 0 /* False unless platform explicitly enabled it */
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 #endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_PLATFORM_BOOT_CONFIGURE_LEDS
+ *
+ * If defined to a true value and #BSP430LED is also true,
+ * vBSP430platformInitialize_ni() will invoke
+ * vBSP430ledInitialize_ni() prior to the crystal stabilization phase
+ * of platform initialization.
+ *
+ * @see #BSP430_LED
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LEDS
+#define BSP430_PLATFORM_BOOT_CONFIGURE_LEDS 1
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LEDS */
 
 /** @def BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
  *

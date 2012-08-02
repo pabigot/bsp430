@@ -42,13 +42,46 @@
 #ifndef BSP430_UTILITY_LED_H
 #define BSP430_UTILITY_LED_H
 
-/** Call this once to initialize the hardware for all LEDs.
+/** @def configBSP430_LED
+ *
+ * Define to a true value to indicate intent to use the LED interface.
+ * Most platforms should support LEDs directly, bypassing any HAL/HPL
+ * interfaces.
+ *
+ * @defaulted
+ */
+#ifndef configBSP430_LED
+#define configBSP430_LED 1
+#endif /* configBSP430_LED */
+
+/** @def BSP430_LED
+ *
+ * Indicate that the LED interface is available on the platform.  This
+ * is normally set by <bsp430/platform.h> when #configBSP430_LED is
+ * true.  If it happens to be false, the LED interface functions are
+ * replaced by macros that do nothing.
+ *
+ * This flag is defined only if #configBSP430_LED is true.
+ *
+ * @dependency #configBSP430_LED
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN) || defined(configBSP430_LED)
+#ifndef BSP430_LED
+#define BSP430_LED (configBSP430_LED - 0)
+#endif /* BSP430_LED */
+#endif /* BSP430_DOXYGEN */
+
+/** Call to initialize the hardware for all LEDs.
  *
  * The common implementation uses the LEDs defined in #xBSP430led_.
  *
  * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
  * value, the application or platform must define this function. */
+#if defined(BSP430_DOXYGEN) || (configBSP430_LED - 0)
 void vBSP430ledInitialize_ni (void);
+#else /* BSP430_LED */
+#define vBSP430ledInitialize_ni() do {} while (0)
+#endif /* BSP430_LED */
 
 /** Invoke to change the state of a given LED.
  *
@@ -63,8 +96,12 @@ void vBSP430ledInitialize_ni (void);
  * the application or platform need not define this function, but must
  * provide the data structures described for
  * #configBSP430_LED_USE_COMMON. */
+#if defined(BSP430_DOXYGEN) || (configBSP430_LED - 0)
 void vBSP430ledSet (int led_idx,
                     int value);
+#else /* BSP430_LED */
+#define vBSP430ledSet(led_idx, value) do { (void)(led_idx); (void)(value); } while (0)
+#endif /* BSP430_LED */
 
 /** @def configBSP430_LED_USE_COMMON
  *

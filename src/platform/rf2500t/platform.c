@@ -35,11 +35,13 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/led.h>
 
+#if BSP430_LED - 0
 const sBSP430ledState xBSP430led_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Red */
   { .outp = &P1OUT, .bit = BIT1 }, /* Green */
 };
 const unsigned char nBSP430led = sizeof(xBSP430led_) / sizeof(*xBSP430led_);
+#endif /* BSP430_LED */
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
@@ -82,6 +84,10 @@ void vBSP430platformInitialize_ni (void)
   /* Hold off watchdog */
   WDTCTL = WDTPW + WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+
+#if (BSP430_PLATFORM_BOOT_CONFIGURE_LED - 0) && (BSP430_LED - 0)
+  vBSP430ledInitialize_ni();
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LED */
 
 #if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
   /* Attempt to stabilize the crystal */

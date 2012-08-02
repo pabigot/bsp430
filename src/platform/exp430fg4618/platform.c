@@ -34,6 +34,7 @@
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/led.h>
 
+#if BSP430_LED - 0
 const sBSP430ledState xBSP430led_[] = {
   { .outp = &P2OUT, .bit = BIT2 }, /* Green (LED1) */
   { .outp = &P2OUT, .bit = BIT1 }, /* Yellow (LED2) */
@@ -41,6 +42,7 @@ const sBSP430ledState xBSP430led_[] = {
   { .outp = &P5OUT, .bit = BIT1 }, /* Red (LED4) */
 };
 const unsigned char nBSP430led = sizeof(xBSP430led_) / sizeof(*xBSP430led_);
+#endif /* BSP430_LED */
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
@@ -88,6 +90,10 @@ void vBSP430platformInitialize_ni (void)
   /* Hold off watchdog */
   WDTCTL = WDTPW + WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+
+#if (BSP430_PLATFORM_BOOT_CONFIGURE_LED - 0) && (BSP430_LED - 0)
+  vBSP430ledInitialize_ni();
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LED */
 
 #if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
   /* Enable XT1 functions and clock */

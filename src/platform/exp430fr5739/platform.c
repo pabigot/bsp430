@@ -35,6 +35,7 @@
 #include <bsp430/periph/euscia.h>
 #include <bsp430/utility/uptime.h>
 
+#if BSP430_LED - 0
 const unsigned char nBSP430led = 8;
 
 /* exp430fr5739 LEDs are PJ.0 to PJ.3 and PB.4 to PB.7.  PJ is not
@@ -74,6 +75,7 @@ void vBSP430ledSet (int led_idx,
     *pxout &= ~bit;
   }
 }
+#endif /* BSP430_LED */
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
@@ -166,6 +168,10 @@ void vBSP430platformInitialize_ni (void)
   /* Hold off watchdog */
   WDTCTL = WDTPW + WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+
+#if (BSP430_PLATFORM_BOOT_CONFIGURE_LED - 0) && (BSP430_LED - 0)
+  vBSP430ledInitialize_ni();
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LED */
 
 #if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
   crystal_ok = iBSP430clockConfigureLFXT1_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
