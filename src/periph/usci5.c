@@ -283,8 +283,8 @@ usci5_isr (tBSP430usci5Handle device)
 }
 #endif  /* HAL ISR */
 
-/* !BSP430! insert=hal_ba_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
+/* !BSP430! insert=hal_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_defn] */
 #if configBSP430_HAL_USCI5_A0 - 0
 static struct sBSP430usci5State state_USCI5_A0_ = {
   .usci5 = BSP430_HPL_USCI5_A0
@@ -349,8 +349,8 @@ static struct sBSP430usci5State state_USCI5_B3_ = {
 tBSP430usci5Handle const hBSP430usci5_USCI5_B3 = &state_USCI5_B3_;
 #endif /* configBSP430_HAL_USCI5_B3 */
 
-/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
-/* !BSP430! end=hal_ba_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_defn] */
+/* !BSP430! end=hal_defn */
 
 /* !BSP430! uscifrom=usci5 insert=hal_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_defn] */

@@ -223,7 +223,7 @@ extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
 #endif /* HAL_ISR and not HAL */
 ''',
 
-    'hal_ba_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
+    'hal_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct sBSP430%(periph)sState state_%(INSTANCE)s_ = {
   .%(periph)s = BSP430_HPL_%(INSTANCE)s
 };
@@ -328,7 +328,7 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
-    'periph_ba_hpl_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
+    'periph_hpl_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
     return BSP430_HPL_%(INSTANCE)s;
   }

@@ -519,8 +519,8 @@ isr_TB2 (void)
 volatile sBSP430periphTIMER *
 xBSP430periphLookupTIMER (tBSP430periphHandle periph)
 {
-  /* !BSP430! insert=periph_ba_hpl_demux */
-  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
+  /* !BSP430! insert=periph_hpl_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
 #if configBSP430_HPL_TA0 - 0
   if (BSP430_PERIPH_TA0 == periph) {
     return BSP430_HPL_TA0;
@@ -563,7 +563,7 @@ xBSP430periphLookupTIMER (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_TB2 */
 
-  /* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_demux] */
-  /* !BSP430! end=periph_ba_hpl_demux */
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */
+  /* !BSP430! end=periph_hpl_demux */
   return NULL;
 }

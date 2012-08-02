@@ -291,8 +291,8 @@ euscia_isr (tBSP430eusciaHandle device)
 }
 #endif /* EUSCIA ISR */
 
-/* !BSP430! insert=hal_ba_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_ba_defn] */
+/* !BSP430! insert=hal_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_defn] */
 #if configBSP430_HAL_EUSCI_A0 - 0
 static struct sBSP430eusciaState state_EUSCI_A0_ = {
   .euscia = BSP430_HPL_EUSCI_A0
@@ -317,8 +317,8 @@ static struct sBSP430eusciaState state_EUSCI_A2_ = {
 tBSP430eusciaHandle const hBSP430euscia_EUSCI_A2 = &state_EUSCI_A2_;
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
-/* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
-/* !BSP430! end=hal_ba_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_defn] */
+/* !BSP430! end=hal_defn */
 
 /* !BSP430! uscifrom=eusci insert=hal_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_defn] */

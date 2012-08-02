@@ -495,8 +495,8 @@ volatile sBSP430periphPORTIE *
 xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
 {
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-  /* !BSP430! insert=periph_ba_hpl_demux */
-  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
+  /* !BSP430! insert=periph_hpl_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
 #if configBSP430_HPL_PORT1 - 0
   if (BSP430_PERIPH_PORT1 == periph) {
     return BSP430_HPL_PORT1;
@@ -563,8 +563,8 @@ xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_PORT11 */
 
-  /* END AUTOMATICALLY GENERATED CODE [periph_ba_hpl_demux] */
-  /* !BSP430! end=periph_ba_hpl_demux */
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */
+  /* !BSP430! end=periph_hpl_demux */
 #else /* 5xx */
 #error Not implemented
 #endif /* 5xx */
