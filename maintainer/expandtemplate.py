@@ -288,9 +288,9 @@ static struct sBSP430portState state_%(INSTANCE)s = {
   .hal_state = { .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_%(INSTANCE)s_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
@@ -303,6 +303,9 @@ static struct sBSP430portState state_%(INSTANCE)s = {
 #endif /* MSP430XV2 */
        = BSP430_HPL_%(INSTANCE)s
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P%(#)sREN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
@@ -311,7 +314,7 @@ tBSP430portHandle const hBSP430port_%(INSTANCE)s = &state_%(INSTANCE)s;
     'hal_port_get_hpl' : '''/** Get the HPL pointer if the HAL is a %(INSTANCE)s variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430PORT_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430PORT_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.%(instance)s : 0)
+#define BSP430_PORT_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.%(instance)s : (void *)0)
 ''',
 
     'hal_port_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0

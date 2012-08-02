@@ -29,10 +29,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/periph/port_.h>
-
 /* !BSP430! periph=port */
 /* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
+
+#include <bsp430/periph/port.h>
 
 /* !BSP430! insert=hal_port_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_defn] */
@@ -42,9 +42,9 @@ static struct sBSP430portState state_PORT1 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT1_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT1_ISR */
@@ -57,6 +57,9 @@ static struct sBSP430portState state_PORT1 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT1
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P1REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT1 = &state_PORT1;
 #endif /* configBSP430_HAL_PORT1 */
@@ -67,9 +70,9 @@ static struct sBSP430portState state_PORT2 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT2_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT2_ISR */
@@ -82,6 +85,9 @@ static struct sBSP430portState state_PORT2 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT2
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P2REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT2 = &state_PORT2;
 #endif /* configBSP430_HAL_PORT2 */
@@ -92,9 +98,9 @@ static struct sBSP430portState state_PORT3 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT3_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT3_ISR */
@@ -107,6 +113,9 @@ static struct sBSP430portState state_PORT3 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT3
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P3REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT3 = &state_PORT3;
 #endif /* configBSP430_HAL_PORT3 */
@@ -117,9 +126,9 @@ static struct sBSP430portState state_PORT4 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT4_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT4_ISR */
@@ -132,6 +141,9 @@ static struct sBSP430portState state_PORT4 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT4
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P4REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT4 = &state_PORT4;
 #endif /* configBSP430_HAL_PORT4 */
@@ -142,9 +154,9 @@ static struct sBSP430portState state_PORT5 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT5_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT5_ISR */
@@ -157,6 +169,9 @@ static struct sBSP430portState state_PORT5 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT5
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P5REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT5 = &state_PORT5;
 #endif /* configBSP430_HAL_PORT5 */
@@ -167,9 +182,9 @@ static struct sBSP430portState state_PORT6 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT6_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT6_ISR */
@@ -182,6 +197,9 @@ static struct sBSP430portState state_PORT6 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT6
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P6REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT6 = &state_PORT6;
 #endif /* configBSP430_HAL_PORT6 */
@@ -192,9 +210,9 @@ static struct sBSP430portState state_PORT7 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT7_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT7_ISR */
@@ -207,6 +225,9 @@ static struct sBSP430portState state_PORT7 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT7
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P7REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT7 = &state_PORT7;
 #endif /* configBSP430_HAL_PORT7 */
@@ -217,9 +238,9 @@ static struct sBSP430portState state_PORT8 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT8_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT8_ISR */
@@ -232,6 +253,9 @@ static struct sBSP430portState state_PORT8 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT8
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P8REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT8 = &state_PORT8;
 #endif /* configBSP430_HAL_PORT8 */
@@ -242,9 +266,9 @@ static struct sBSP430portState state_PORT9 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT9_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT9_ISR */
@@ -257,6 +281,9 @@ static struct sBSP430portState state_PORT9 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT9
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P9REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT9 = &state_PORT9;
 #endif /* configBSP430_HAL_PORT9 */
@@ -267,9 +294,9 @@ static struct sBSP430portState state_PORT10 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT10_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT10_ISR */
@@ -282,6 +309,9 @@ static struct sBSP430portState state_PORT10 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT10
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P10REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT10 = &state_PORT10;
 #endif /* configBSP430_HAL_PORT10 */
@@ -292,9 +322,9 @@ static struct sBSP430portState state_PORT11 = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* IE/
+#else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* IE/
+#endif /* IE */
 #if configBSP430_HAL_PORT11_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT11_ISR */
@@ -307,6 +337,9 @@ static struct sBSP430portState state_PORT11 = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT11
   },
+#if defined(__MSP430_HAS_PORT1_R__)
+  .renp = &P11REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 tBSP430portHandle const hBSP430port_PORT11 = &state_PORT11;
 #endif /* configBSP430_HAL_PORT11 */

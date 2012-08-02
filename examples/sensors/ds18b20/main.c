@@ -11,6 +11,7 @@
  */
 
 #include <bsp430/platform.h>
+#include <bsp430/periph/port.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/onewire.h>
@@ -25,10 +26,6 @@
 #endif
 
 /* Where the device can be found */
-const struct sBSP430onewireBus ds18b20 = {
-  .port = APP_DS18B20_PORT,
-  .bit = APP_DS18B20_BIT
-};
 
 /* The serial number read from the device on startup */
 struct sBSP430onewireSerialNumber serial;
@@ -37,9 +34,18 @@ void main ()
 {
   int rc;
   unsigned long uptime_ticks_per_sec;
+  const struct sBSP430onewireBus ds18b20 = {
+    .port = APP_DS18B20_PORT,
+    .bit = APP_DS18B20_BIT
+  };
   const struct sBSP430onewireBus * bus = &ds18b20;
 
   vBSP430platformInitialize_ni();
+
+#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+  vBSP430platformSpinForJumper_ni();
+#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
+
   (void)xBSP430consoleInitialize();
   cprintf("\nHere we go...\n");
 
@@ -47,11 +53,12 @@ void main ()
   cprintf("Uptime now %lu with resolution %lu\n",
           ulBSP430uptime_ni(), uptime_ticks_per_sec);
 
-  rc = iBSP430onewireReadSerialNumber(bus, &serial);
-  if (0 != rc) {
-    cprintf("ERROR: Failed to read serial number from DS18B20: %d\n", rc);
-    return;
-  }
+  do {
+    rc = iBSP430onewireReadSerialNumber(bus, &serial);
+    if (0 != rc) {
+      cprintf("ERROR: Failed to read serial number from DS18B20: %d\n", rc);
+    }
+  } while (0 != rc);
   cprintf("DS18B20 serial number: %02x%02x%02x%02x%02x%02x\n",
           serial.id[0], serial.id[1], serial.id[2],
           serial.id[3], serial.id[4], serial.id[5]);

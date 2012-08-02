@@ -140,7 +140,7 @@ typedef int tBSP430periphHandle;
  * This is used to interpret the HPL pointer that is stored in the
  * state in situations where the HAL supports multiple types of
  * underlying peripheral. */
-#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_p) (BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ & (_p)->cflags)
+#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_p) (BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ & (_p)->hal_state.cflags)
 
 /** Indication that an ISR is associated with a HAL instance
  *
