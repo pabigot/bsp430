@@ -43,14 +43,32 @@ Instance-specific HAL ISR: configBSP430_HAL_%(INSTANCE)s_ISR
 
 peripheral instance handles: BSP430_PERIPH_%(INSTANCE)s
 HPL inline pointer: BSP430_HPL_%(INSTANCE)s
-HPL variable pointer: xBSP430periph%(INSTANCE)s
-HAL handle: xBSP430%(periph)s%(INSTANCE)s
+HPL variable pointer: hBSP430periph%(INSTANCE)s
+HAL handle: hBSP430%(periph)s%(INSTANCE)s
+
+
+Global symbols indicate their purpose or flavor using a single prefix
+character.
+
+struct sBSP430foo is a structure type related to foo. sBSP430foo is a
+typedef to this struct.
+
+union uBSP430foo is a union type related to foo.  uBSP430foo is a typedef to
+this union.
+
+enum eBSP430foo is an enumeration type related to foo.  eBSP430foo is a
+typedef to this enum.
+
+tBSP430foo is a typedef related to foo that is not a struct, union, or enum.
+Exception: sBSP430periphPORTfoo is a platform-specific typedef to the
+variant port structure supported on the target MCU.
+
+hBSP430foo is an HPL (hBSP430periph%(INSTANCE)s) or HAL
+(hBSP430%(periph)s%(INSTANCE)s) handle for a peripheral.
 
 FreeRTOS HAL state structure: struct sBSP430%(periph)sState
-FreeRTOS HAL handle type: typedef struct sBSP430%(periph)sState * xBSP430%(periph)sHandle
-FreeRTOS HAL handle global: extern xBSP430%(periph)sHandle const xBSP430%(periph)_%(INSTANCE)
-
-FreeRTOS HAL configuration structure: struct sBSP430%(periph)sConfig
+FreeRTOS HAL handle type: typedef sBSP430%(periph)sState * tBSP430%(periph)sHandle
+FreeRTOS HAL handle global: extern tBSP430%(periph)sHandle const hBSP430%(periph)%(INSTANCE)
 
 Pattern for platform-specific features:
 
