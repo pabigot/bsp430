@@ -32,7 +32,7 @@
 #include <bsp430/platform.h>
 #include <bsp430/periph/bc2.h>
 #if BSP430_BC2_TRIM_TO_MCLK - 0
-#include <bsp430/periph/timer_.h>
+#include <bsp430/periph/timer.h>
 #endif /* BSP430_BC2_TRIM_TO_MCLK */
 
 /** The last frequency configured using #ulBSP430clockConfigureMCLK_ni */
@@ -167,7 +167,7 @@ ulBSP430clockMCLK_Hz_ni (void)
 int
 iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
 {
-  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  volatile sBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
   const int MAX_ITERATIONS = 16 * 256;
   int rv = -1;
   unsigned int aclk_Hz;

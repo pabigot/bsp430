@@ -114,7 +114,7 @@ static unsigned long lastTrimDCOCLKDIV_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 #define TSP_TO_HZ(_clk_tsp) (((_clk_tsp) * (unsigned long)TRIM_ACLK_HZ) / TRIM_SAMPLE_PERIOD_ACLK)
 
 #if BSP430_UCS_TRIM_DCOCLKDIV - 0
-#include <bsp430/periph/timer_.h>
+#include <bsp430/periph/timer.h>
 
 /* The target frequency expressed as the number of SMCLK ticks
  * expected within TRIM_SAMPLE_PERIOD ACLK ticks, assuming that SMCLK
@@ -131,7 +131,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
   unsigned short last_ctl0;
   uint16_t tolerance_tsp;
   uint16_t current_frequency_tsp = 0;
-  volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  volatile sBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
 
   if (! tp) {
     return -1;

@@ -38,7 +38,7 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#include <bsp430/periph/timer_.h>
+#include <bsp430/periph/timer.h>
 #include "FreeRTOS.h"
 
 #if configBSP430_HAL_TA0_CC0_ISR - 0
