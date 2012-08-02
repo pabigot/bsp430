@@ -70,7 +70,7 @@
          || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [module_startif] */
 /* !BSP430! end=module_startif */
-#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci_USCI_A0
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE hBSP430usci_USCI_A0
 /* Serial communications is unusable at 9600, but stable at 2400 */
 #ifndef BSP430_CONSOLE_BAUD_RATE
 #define BSP430_CONSOLE_BAUD_RATE 2400

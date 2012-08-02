@@ -65,7 +65,7 @@
          || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [module_startif] */
 /* !BSP430! end=module_startif */
-#define BSP430_CONSOLE_SERIAL_HAL_HANDLE xBSP430usci_USCI_A0
+#define BSP430_CONSOLE_SERIAL_HAL_HANDLE hBSP430usci_USCI_A0
 /* !BSP430! insert=module_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
 #endif /* configBSP430_CONSOLE && need default */

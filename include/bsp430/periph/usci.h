@@ -104,7 +104,7 @@ typedef struct xBSP430usciState * xBSP430usciHandle;
  * The handle may be used only if #configBSP430_HAL_USCI_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_A0 - 0)
-extern xBSP430usciHandle const xBSP430usci_USCI_A0;
+extern xBSP430usciHandle const hBSP430usci_USCI_A0;
 #endif /* configBSP430_HAL_USCI_A0 */
 
 /** @def configBSP430_HAL_USCI_A1
@@ -126,7 +126,7 @@ extern xBSP430usciHandle const xBSP430usci_USCI_A0;
  * The handle may be used only if #configBSP430_HAL_USCI_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_A1 - 0)
-extern xBSP430usciHandle const xBSP430usci_USCI_A1;
+extern xBSP430usciHandle const hBSP430usci_USCI_A1;
 #endif /* configBSP430_HAL_USCI_A1 */
 
 /** @def configBSP430_HAL_USCI_B0
@@ -148,7 +148,7 @@ extern xBSP430usciHandle const xBSP430usci_USCI_A1;
  * The handle may be used only if #configBSP430_HAL_USCI_B0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_B0 - 0)
-extern xBSP430usciHandle const xBSP430usci_USCI_B0;
+extern xBSP430usciHandle const hBSP430usci_USCI_B0;
 #endif /* configBSP430_HAL_USCI_B0 */
 
 /** @def configBSP430_HAL_USCI_B1
@@ -170,7 +170,7 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B0;
  * The handle may be used only if #configBSP430_HAL_USCI_B1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_USCI_B1 - 0)
-extern xBSP430usciHandle const xBSP430usci_USCI_B1;
+extern xBSP430usciHandle const hBSP430usci_USCI_B1;
 #endif /* configBSP430_HAL_USCI_B1 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
@@ -216,7 +216,7 @@ extern xBSP430usciHandle const xBSP430usci_USCI_B1;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A0 - 0)
 /** Typed pointer to HPL structure for USCI_A0 suitable for use in const initializers */
 #define BSP430_HPL_USCI_A0 ((volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_A0)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = BSP430_HPL_USCI_A0;
+static volatile xBSP430periphUSCI * const hBSP430periph_USCI_A0 = BSP430_HPL_USCI_A0;
 #endif /* configBSP430_HPL_USCI_A0 */
 
 /** @def configBSP430_HPL_USCI_A1
@@ -257,7 +257,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A0 = BSP430_HPL_USC
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A1 - 0)
 /** Typed pointer to HPL structure for USCI_A1 suitable for use in const initializers */
 #define BSP430_HPL_USCI_A1 ((volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_A1)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = BSP430_HPL_USCI_A1;
+static volatile xBSP430periphUSCI * const hBSP430periph_USCI_A1 = BSP430_HPL_USCI_A1;
 #endif /* configBSP430_HPL_USCI_A1 */
 
 /** @def configBSP430_HPL_USCI_B0
@@ -298,7 +298,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_A1 = BSP430_HPL_USC
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B0 - 0)
 /** Typed pointer to HPL structure for USCI_B0 suitable for use in const initializers */
 #define BSP430_HPL_USCI_B0 ((volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_B0)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = BSP430_HPL_USCI_B0;
+static volatile xBSP430periphUSCI * const hBSP430periph_USCI_B0 = BSP430_HPL_USCI_B0;
 #endif /* configBSP430_HPL_USCI_B0 */
 
 /** @def configBSP430_HPL_USCI_B1
@@ -339,7 +339,7 @@ static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B0 = BSP430_HPL_USC
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B1 - 0)
 /** Typed pointer to HPL structure for USCI_B1 suitable for use in const initializers */
 #define BSP430_HPL_USCI_B1 ((volatile xBSP430periphUSCI *)BSP430_PERIPH_USCI_B1)
-static volatile xBSP430periphUSCI * const xBSP430periph_USCI_B1 = BSP430_HPL_USCI_B1;
+static volatile xBSP430periphUSCI * const hBSP430periph_USCI_B1 = BSP430_HPL_USCI_B1;
 #endif /* configBSP430_HPL_USCI_B1 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

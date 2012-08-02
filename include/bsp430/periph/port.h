@@ -355,7 +355,7 @@ typedef struct xBSP430portState * xBSP430portHandle;
  * The handle may be used only if #configBSP430_HAL_PORT1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT1 - 0)
-extern xBSP430portHandle const xBSP430port_PORT1;
+extern xBSP430portHandle const hBSP430port_PORT1;
 #endif /* configBSP430_HAL_PORT1 */
 
 /** @def configBSP430_HAL_PORT2
@@ -377,7 +377,7 @@ extern xBSP430portHandle const xBSP430port_PORT1;
  * The handle may be used only if #configBSP430_HAL_PORT2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT2 - 0)
-extern xBSP430portHandle const xBSP430port_PORT2;
+extern xBSP430portHandle const hBSP430port_PORT2;
 #endif /* configBSP430_HAL_PORT2 */
 
 /** @def configBSP430_HAL_PORT3
@@ -399,7 +399,7 @@ extern xBSP430portHandle const xBSP430port_PORT2;
  * The handle may be used only if #configBSP430_HAL_PORT3
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT3 - 0)
-extern xBSP430portHandle const xBSP430port_PORT3;
+extern xBSP430portHandle const hBSP430port_PORT3;
 #endif /* configBSP430_HAL_PORT3 */
 
 /** @def configBSP430_HAL_PORT4
@@ -421,7 +421,7 @@ extern xBSP430portHandle const xBSP430port_PORT3;
  * The handle may be used only if #configBSP430_HAL_PORT4
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT4 - 0)
-extern xBSP430portHandle const xBSP430port_PORT4;
+extern xBSP430portHandle const hBSP430port_PORT4;
 #endif /* configBSP430_HAL_PORT4 */
 
 /** @def configBSP430_HAL_PORT5
@@ -443,7 +443,7 @@ extern xBSP430portHandle const xBSP430port_PORT4;
  * The handle may be used only if #configBSP430_HAL_PORT5
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT5 - 0)
-extern xBSP430portHandle const xBSP430port_PORT5;
+extern xBSP430portHandle const hBSP430port_PORT5;
 #endif /* configBSP430_HAL_PORT5 */
 
 /** @def configBSP430_HAL_PORT6
@@ -465,7 +465,7 @@ extern xBSP430portHandle const xBSP430port_PORT5;
  * The handle may be used only if #configBSP430_HAL_PORT6
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT6 - 0)
-extern xBSP430portHandle const xBSP430port_PORT6;
+extern xBSP430portHandle const hBSP430port_PORT6;
 #endif /* configBSP430_HAL_PORT6 */
 
 /** @def configBSP430_HAL_PORT7
@@ -487,7 +487,7 @@ extern xBSP430portHandle const xBSP430port_PORT6;
  * The handle may be used only if #configBSP430_HAL_PORT7
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT7 - 0)
-extern xBSP430portHandle const xBSP430port_PORT7;
+extern xBSP430portHandle const hBSP430port_PORT7;
 #endif /* configBSP430_HAL_PORT7 */
 
 /** @def configBSP430_HAL_PORT8
@@ -509,7 +509,7 @@ extern xBSP430portHandle const xBSP430port_PORT7;
  * The handle may be used only if #configBSP430_HAL_PORT8
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT8 - 0)
-extern xBSP430portHandle const xBSP430port_PORT8;
+extern xBSP430portHandle const hBSP430port_PORT8;
 #endif /* configBSP430_HAL_PORT8 */
 
 /** @def configBSP430_HAL_PORT9
@@ -531,7 +531,7 @@ extern xBSP430portHandle const xBSP430port_PORT8;
  * The handle may be used only if #configBSP430_HAL_PORT9
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT9 - 0)
-extern xBSP430portHandle const xBSP430port_PORT9;
+extern xBSP430portHandle const hBSP430port_PORT9;
 #endif /* configBSP430_HAL_PORT9 */
 
 /** @def configBSP430_HAL_PORT10
@@ -553,7 +553,7 @@ extern xBSP430portHandle const xBSP430port_PORT9;
  * The handle may be used only if #configBSP430_HAL_PORT10
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT10 - 0)
-extern xBSP430portHandle const xBSP430port_PORT10;
+extern xBSP430portHandle const hBSP430port_PORT10;
 #endif /* configBSP430_HAL_PORT10 */
 
 /** @def configBSP430_HAL_PORT11
@@ -575,7 +575,7 @@ extern xBSP430portHandle const xBSP430port_PORT10;
  * The handle may be used only if #configBSP430_HAL_PORT11
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_PORT11 - 0)
-extern xBSP430portHandle const xBSP430port_PORT11;
+extern xBSP430portHandle const hBSP430port_PORT11;
 #endif /* configBSP430_HAL_PORT11 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
@@ -621,7 +621,7 @@ extern xBSP430portHandle const xBSP430port_PORT11;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
 /** Typed pointer to HPL structure for PORT1 suitable for use in const initializers */
 #define BSP430_HPL_PORT1 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT1)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = BSP430_HPL_PORT1;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT1 = BSP430_HPL_PORT1;
 #endif /* configBSP430_HPL_PORT1 */
 
 /** @def configBSP430_HPL_PORT2
@@ -662,7 +662,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT1 = BSP430_HPL_PORT1
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
 /** Typed pointer to HPL structure for PORT2 suitable for use in const initializers */
 #define BSP430_HPL_PORT2 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT2)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = BSP430_HPL_PORT2;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT2 = BSP430_HPL_PORT2;
 #endif /* configBSP430_HPL_PORT2 */
 
 /** @def configBSP430_HPL_PORT3
@@ -703,7 +703,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT2 = BSP430_HPL_PORT2
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
 /** Typed pointer to HPL structure for PORT3 suitable for use in const initializers */
 #define BSP430_HPL_PORT3 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT3)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = BSP430_HPL_PORT3;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT3 = BSP430_HPL_PORT3;
 #endif /* configBSP430_HPL_PORT3 */
 
 /** @def configBSP430_HPL_PORT4
@@ -744,7 +744,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT3 = BSP430_HPL_PORT3
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
 /** Typed pointer to HPL structure for PORT4 suitable for use in const initializers */
 #define BSP430_HPL_PORT4 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT4)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = BSP430_HPL_PORT4;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT4 = BSP430_HPL_PORT4;
 #endif /* configBSP430_HPL_PORT4 */
 
 /** @def configBSP430_HPL_PORT5
@@ -785,7 +785,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT4 = BSP430_HPL_PORT4
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
 /** Typed pointer to HPL structure for PORT5 suitable for use in const initializers */
 #define BSP430_HPL_PORT5 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT5)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = BSP430_HPL_PORT5;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT5 = BSP430_HPL_PORT5;
 #endif /* configBSP430_HPL_PORT5 */
 
 /** @def configBSP430_HPL_PORT6
@@ -826,7 +826,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT5 = BSP430_HPL_PORT5
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
 /** Typed pointer to HPL structure for PORT6 suitable for use in const initializers */
 #define BSP430_HPL_PORT6 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT6)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = BSP430_HPL_PORT6;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT6 = BSP430_HPL_PORT6;
 #endif /* configBSP430_HPL_PORT6 */
 
 /** @def configBSP430_HPL_PORT7
@@ -867,7 +867,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT6 = BSP430_HPL_PORT6
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
 /** Typed pointer to HPL structure for PORT7 suitable for use in const initializers */
 #define BSP430_HPL_PORT7 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT7)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = BSP430_HPL_PORT7;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT7 = BSP430_HPL_PORT7;
 #endif /* configBSP430_HPL_PORT7 */
 
 /** @def configBSP430_HPL_PORT8
@@ -908,7 +908,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT7 = BSP430_HPL_PORT7
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
 /** Typed pointer to HPL structure for PORT8 suitable for use in const initializers */
 #define BSP430_HPL_PORT8 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT8)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = BSP430_HPL_PORT8;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT8 = BSP430_HPL_PORT8;
 #endif /* configBSP430_HPL_PORT8 */
 
 /** @def configBSP430_HPL_PORT9
@@ -949,7 +949,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT8 = BSP430_HPL_PORT8
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
 /** Typed pointer to HPL structure for PORT9 suitable for use in const initializers */
 #define BSP430_HPL_PORT9 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT9)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = BSP430_HPL_PORT9;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT9 = BSP430_HPL_PORT9;
 #endif /* configBSP430_HPL_PORT9 */
 
 /** @def configBSP430_HPL_PORT10
@@ -990,7 +990,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT9 = BSP430_HPL_PORT9
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
 /** Typed pointer to HPL structure for PORT10 suitable for use in const initializers */
 #define BSP430_HPL_PORT10 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT10)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = BSP430_HPL_PORT10;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT10 = BSP430_HPL_PORT10;
 #endif /* configBSP430_HPL_PORT10 */
 
 /** @def configBSP430_HPL_PORT11
@@ -1031,7 +1031,7 @@ static volatile xBSP430periphPORT * const xBSP430periph_PORT10 = BSP430_HPL_PORT
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
 /** Typed pointer to HPL structure for PORT11 suitable for use in const initializers */
 #define BSP430_HPL_PORT11 ((volatile xBSP430periphPORT *)BSP430_PERIPH_PORT11)
-static volatile xBSP430periphPORT * const xBSP430periph_PORT11 = BSP430_HPL_PORT11;
+static volatile xBSP430periphPORT * const hBSP430periph_PORT11 = BSP430_HPL_PORT11;
 #endif /* configBSP430_HPL_PORT11 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

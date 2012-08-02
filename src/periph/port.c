@@ -40,77 +40,77 @@
 static struct xBSP430portState state_PORT1 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT1_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT1 = &state_PORT1;
+xBSP430portHandle const hBSP430port_PORT1 = &state_PORT1;
 #endif /* configBSP430_HAL_PORT1 */
 
 #if configBSP430_HAL_PORT2 - 0
 static struct xBSP430portState state_PORT2 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT2_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT2 = &state_PORT2;
+xBSP430portHandle const hBSP430port_PORT2 = &state_PORT2;
 #endif /* configBSP430_HAL_PORT2 */
 
 #if configBSP430_HAL_PORT3 - 0
 static struct xBSP430portState state_PORT3 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT3_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT3 = &state_PORT3;
+xBSP430portHandle const hBSP430port_PORT3 = &state_PORT3;
 #endif /* configBSP430_HAL_PORT3 */
 
 #if configBSP430_HAL_PORT4 - 0
 static struct xBSP430portState state_PORT4 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT4_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT4 = &state_PORT4;
+xBSP430portHandle const hBSP430port_PORT4 = &state_PORT4;
 #endif /* configBSP430_HAL_PORT4 */
 
 #if configBSP430_HAL_PORT5 - 0
 static struct xBSP430portState state_PORT5 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT5_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT5 = &state_PORT5;
+xBSP430portHandle const hBSP430port_PORT5 = &state_PORT5;
 #endif /* configBSP430_HAL_PORT5 */
 
 #if configBSP430_HAL_PORT6 - 0
 static struct xBSP430portState state_PORT6 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT6_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT6 = &state_PORT6;
+xBSP430portHandle const hBSP430port_PORT6 = &state_PORT6;
 #endif /* configBSP430_HAL_PORT6 */
 
 #if configBSP430_HAL_PORT7 - 0
 static struct xBSP430portState state_PORT7 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT7_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT7 = &state_PORT7;
+xBSP430portHandle const hBSP430port_PORT7 = &state_PORT7;
 #endif /* configBSP430_HAL_PORT7 */
 
 #if configBSP430_HAL_PORT8 - 0
 static struct xBSP430portState state_PORT8 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT8_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT8 = &state_PORT8;
+xBSP430portHandle const hBSP430port_PORT8 = &state_PORT8;
 #endif /* configBSP430_HAL_PORT8 */
 
 #if configBSP430_HAL_PORT9 - 0
 static struct xBSP430portState state_PORT9 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT9_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT9 = &state_PORT9;
+xBSP430portHandle const hBSP430port_PORT9 = &state_PORT9;
 #endif /* configBSP430_HAL_PORT9 */
 
 #if configBSP430_HAL_PORT10 - 0
 static struct xBSP430portState state_PORT10 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT10_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT10 = &state_PORT10;
+xBSP430portHandle const hBSP430port_PORT10 = &state_PORT10;
 #endif /* configBSP430_HAL_PORT10 */
 
 #if configBSP430_HAL_PORT11 - 0
 static struct xBSP430portState state_PORT11 = {
   .port = (volatile xBSP430periphPORTIE *)BSP430_PERIPH_PORT11_BASEADDRESS_,
 };
-xBSP430portHandle const xBSP430port_PORT11 = &state_PORT11;
+xBSP430portHandle const hBSP430port_PORT11 = &state_PORT11;
 #endif /* configBSP430_HAL_PORT11 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_port_5xx_defn] */
@@ -152,7 +152,7 @@ static void
 __attribute__((__interrupt__(PORT1_VECTOR)))
 isr_PORT1 (void)
 {
-  int rv = port_isr(xBSP430port_PORT1, P1IV);
+  int rv = port_isr(hBSP430port_PORT1, P1IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT1_ISR */
@@ -162,7 +162,7 @@ static void
 __attribute__((__interrupt__(PORT2_VECTOR)))
 isr_PORT2 (void)
 {
-  int rv = port_isr(xBSP430port_PORT2, P2IV);
+  int rv = port_isr(hBSP430port_PORT2, P2IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT2_ISR */
@@ -172,7 +172,7 @@ static void
 __attribute__((__interrupt__(PORT3_VECTOR)))
 isr_PORT3 (void)
 {
-  int rv = port_isr(xBSP430port_PORT3, P3IV);
+  int rv = port_isr(hBSP430port_PORT3, P3IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT3_ISR */
@@ -182,7 +182,7 @@ static void
 __attribute__((__interrupt__(PORT4_VECTOR)))
 isr_PORT4 (void)
 {
-  int rv = port_isr(xBSP430port_PORT4, P4IV);
+  int rv = port_isr(hBSP430port_PORT4, P4IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT4_ISR */
@@ -192,7 +192,7 @@ static void
 __attribute__((__interrupt__(PORT5_VECTOR)))
 isr_PORT5 (void)
 {
-  int rv = port_isr(xBSP430port_PORT5, P5IV);
+  int rv = port_isr(hBSP430port_PORT5, P5IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT5_ISR */
@@ -202,7 +202,7 @@ static void
 __attribute__((__interrupt__(PORT6_VECTOR)))
 isr_PORT6 (void)
 {
-  int rv = port_isr(xBSP430port_PORT6, P6IV);
+  int rv = port_isr(hBSP430port_PORT6, P6IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT6_ISR */
@@ -212,7 +212,7 @@ static void
 __attribute__((__interrupt__(PORT7_VECTOR)))
 isr_PORT7 (void)
 {
-  int rv = port_isr(xBSP430port_PORT7, P7IV);
+  int rv = port_isr(hBSP430port_PORT7, P7IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT7_ISR */
@@ -222,7 +222,7 @@ static void
 __attribute__((__interrupt__(PORT8_VECTOR)))
 isr_PORT8 (void)
 {
-  int rv = port_isr(xBSP430port_PORT8, P8IV);
+  int rv = port_isr(hBSP430port_PORT8, P8IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT8_ISR */
@@ -232,7 +232,7 @@ static void
 __attribute__((__interrupt__(PORT9_VECTOR)))
 isr_PORT9 (void)
 {
-  int rv = port_isr(xBSP430port_PORT9, P9IV);
+  int rv = port_isr(hBSP430port_PORT9, P9IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT9_ISR */
@@ -242,7 +242,7 @@ static void
 __attribute__((__interrupt__(PORT10_VECTOR)))
 isr_PORT10 (void)
 {
-  int rv = port_isr(xBSP430port_PORT10, P10IV);
+  int rv = port_isr(hBSP430port_PORT10, P10IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT10_ISR */
@@ -252,7 +252,7 @@ static void
 __attribute__((__interrupt__(PORT11_VECTOR)))
 isr_PORT11 (void)
 {
-  int rv = port_isr(xBSP430port_PORT11, P11IV);
+  int rv = port_isr(hBSP430port_PORT11, P11IV);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT11_ISR */
@@ -268,67 +268,67 @@ xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
 #if configBSP430_HPL_PORT1 - 0
   if (BSP430_PERIPH_PORT1 == periph) {
-    return xBSP430periph_PORT1;
+    return hBSP430periph_PORT1;
   }
 #endif /* configBSP430_HPL_PORT1 */
 
 #if configBSP430_HPL_PORT2 - 0
   if (BSP430_PERIPH_PORT2 == periph) {
-    return xBSP430periph_PORT2;
+    return hBSP430periph_PORT2;
   }
 #endif /* configBSP430_HPL_PORT2 */
 
 #if configBSP430_HPL_PORT3 - 0
   if (BSP430_PERIPH_PORT3 == periph) {
-    return xBSP430periph_PORT3;
+    return hBSP430periph_PORT3;
   }
 #endif /* configBSP430_HPL_PORT3 */
 
 #if configBSP430_HPL_PORT4 - 0
   if (BSP430_PERIPH_PORT4 == periph) {
-    return xBSP430periph_PORT4;
+    return hBSP430periph_PORT4;
   }
 #endif /* configBSP430_HPL_PORT4 */
 
 #if configBSP430_HPL_PORT5 - 0
   if (BSP430_PERIPH_PORT5 == periph) {
-    return xBSP430periph_PORT5;
+    return hBSP430periph_PORT5;
   }
 #endif /* configBSP430_HPL_PORT5 */
 
 #if configBSP430_HPL_PORT6 - 0
   if (BSP430_PERIPH_PORT6 == periph) {
-    return xBSP430periph_PORT6;
+    return hBSP430periph_PORT6;
   }
 #endif /* configBSP430_HPL_PORT6 */
 
 #if configBSP430_HPL_PORT7 - 0
   if (BSP430_PERIPH_PORT7 == periph) {
-    return xBSP430periph_PORT7;
+    return hBSP430periph_PORT7;
   }
 #endif /* configBSP430_HPL_PORT7 */
 
 #if configBSP430_HPL_PORT8 - 0
   if (BSP430_PERIPH_PORT8 == periph) {
-    return xBSP430periph_PORT8;
+    return hBSP430periph_PORT8;
   }
 #endif /* configBSP430_HPL_PORT8 */
 
 #if configBSP430_HPL_PORT9 - 0
   if (BSP430_PERIPH_PORT9 == periph) {
-    return xBSP430periph_PORT9;
+    return hBSP430periph_PORT9;
   }
 #endif /* configBSP430_HPL_PORT9 */
 
 #if configBSP430_HPL_PORT10 - 0
   if (BSP430_PERIPH_PORT10 == periph) {
-    return xBSP430periph_PORT10;
+    return hBSP430periph_PORT10;
   }
 #endif /* configBSP430_HPL_PORT10 */
 
 #if configBSP430_HPL_PORT11 - 0
   if (BSP430_PERIPH_PORT11 == periph) {
-    return xBSP430periph_PORT11;
+    return hBSP430periph_PORT11;
   }
 #endif /* configBSP430_HPL_PORT11 */
 

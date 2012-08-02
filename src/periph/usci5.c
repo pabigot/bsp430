@@ -290,7 +290,7 @@ static struct xBSP430usci5State state_USCI5_A0_ = {
   .usci5 = BSP430_HPL_USCI5_A0
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_A0 = &state_USCI5_A0_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_A0 = &state_USCI5_A0_;
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 #if configBSP430_HAL_USCI5_A1 - 0
@@ -298,7 +298,7 @@ static struct xBSP430usci5State state_USCI5_A1_ = {
   .usci5 = BSP430_HPL_USCI5_A1
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_A1 = &state_USCI5_A1_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_A1 = &state_USCI5_A1_;
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 #if configBSP430_HAL_USCI5_A2 - 0
@@ -306,7 +306,7 @@ static struct xBSP430usci5State state_USCI5_A2_ = {
   .usci5 = BSP430_HPL_USCI5_A2
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_A2 = &state_USCI5_A2_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_A2 = &state_USCI5_A2_;
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 #if configBSP430_HAL_USCI5_A3 - 0
@@ -314,7 +314,7 @@ static struct xBSP430usci5State state_USCI5_A3_ = {
   .usci5 = BSP430_HPL_USCI5_A3
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_A3 = &state_USCI5_A3_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_A3 = &state_USCI5_A3_;
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 #if configBSP430_HAL_USCI5_B0 - 0
@@ -322,7 +322,7 @@ static struct xBSP430usci5State state_USCI5_B0_ = {
   .usci5 = BSP430_HPL_USCI5_B0
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_B0 = &state_USCI5_B0_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_B0 = &state_USCI5_B0_;
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 #if configBSP430_HAL_USCI5_B1 - 0
@@ -330,7 +330,7 @@ static struct xBSP430usci5State state_USCI5_B1_ = {
   .usci5 = BSP430_HPL_USCI5_B1
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_B1 = &state_USCI5_B1_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_B1 = &state_USCI5_B1_;
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 #if configBSP430_HAL_USCI5_B2 - 0
@@ -338,7 +338,7 @@ static struct xBSP430usci5State state_USCI5_B2_ = {
   .usci5 = BSP430_HPL_USCI5_B2
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_B2 = &state_USCI5_B2_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_B2 = &state_USCI5_B2_;
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 #if configBSP430_HAL_USCI5_B3 - 0
@@ -346,7 +346,7 @@ static struct xBSP430usci5State state_USCI5_B3_ = {
   .usci5 = BSP430_HPL_USCI5_B3
 };
 
-xBSP430usci5Handle const xBSP430usci5_USCI5_B3 = &state_USCI5_B3_;
+xBSP430usci5Handle const hBSP430usci5_USCI5_B3 = &state_USCI5_B3_;
 #endif /* configBSP430_HAL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_ba_defn] */
@@ -359,7 +359,7 @@ static void
 __attribute__((__interrupt__(USCI_A0_VECTOR)))
 isr_USCI5_A0 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_A0);
+  int rv = usci5_isr(hBSP430usci5_USCI5_A0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A0_ISR */
@@ -369,7 +369,7 @@ static void
 __attribute__((__interrupt__(USCI_A1_VECTOR)))
 isr_USCI5_A1 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_A1);
+  int rv = usci5_isr(hBSP430usci5_USCI5_A1);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A1_ISR */
@@ -379,7 +379,7 @@ static void
 __attribute__((__interrupt__(USCI_A2_VECTOR)))
 isr_USCI5_A2 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_A2);
+  int rv = usci5_isr(hBSP430usci5_USCI5_A2);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A2_ISR */
@@ -389,7 +389,7 @@ static void
 __attribute__((__interrupt__(USCI_A3_VECTOR)))
 isr_USCI5_A3 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_A3);
+  int rv = usci5_isr(hBSP430usci5_USCI5_A3);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_A3_ISR */
@@ -399,7 +399,7 @@ static void
 __attribute__((__interrupt__(USCI_B0_VECTOR)))
 isr_USCI5_B0 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_B0);
+  int rv = usci5_isr(hBSP430usci5_USCI5_B0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B0_ISR */
@@ -409,7 +409,7 @@ static void
 __attribute__((__interrupt__(USCI_B1_VECTOR)))
 isr_USCI5_B1 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_B1);
+  int rv = usci5_isr(hBSP430usci5_USCI5_B1);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B1_ISR */
@@ -419,7 +419,7 @@ static void
 __attribute__((__interrupt__(USCI_B2_VECTOR)))
 isr_USCI5_B2 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_B2);
+  int rv = usci5_isr(hBSP430usci5_USCI5_B2);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B2_ISR */
@@ -429,7 +429,7 @@ static void
 __attribute__((__interrupt__(USCI_B3_VECTOR)))
 isr_USCI5_B3 (void)
 {
-  int rv = usci5_isr(xBSP430usci5_USCI5_B3);
+  int rv = usci5_isr(hBSP430usci5_USCI5_B3);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_USCI5_B3_ISR */
@@ -443,49 +443,49 @@ static xBSP430usci5Handle periphToDevice (tBSP430periphHandle periph)
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
 #if configBSP430_HAL_USCI5_A0 - 0
   if (BSP430_PERIPH_USCI5_A0 == periph) {
-    return xBSP430usci5_USCI5_A0;
+    return hBSP430usci5_USCI5_A0;
   }
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 #if configBSP430_HAL_USCI5_A1 - 0
   if (BSP430_PERIPH_USCI5_A1 == periph) {
-    return xBSP430usci5_USCI5_A1;
+    return hBSP430usci5_USCI5_A1;
   }
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 #if configBSP430_HAL_USCI5_A2 - 0
   if (BSP430_PERIPH_USCI5_A2 == periph) {
-    return xBSP430usci5_USCI5_A2;
+    return hBSP430usci5_USCI5_A2;
   }
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 #if configBSP430_HAL_USCI5_A3 - 0
   if (BSP430_PERIPH_USCI5_A3 == periph) {
-    return xBSP430usci5_USCI5_A3;
+    return hBSP430usci5_USCI5_A3;
   }
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 #if configBSP430_HAL_USCI5_B0 - 0
   if (BSP430_PERIPH_USCI5_B0 == periph) {
-    return xBSP430usci5_USCI5_B0;
+    return hBSP430usci5_USCI5_B0;
   }
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 #if configBSP430_HAL_USCI5_B1 - 0
   if (BSP430_PERIPH_USCI5_B1 == periph) {
-    return xBSP430usci5_USCI5_B1;
+    return hBSP430usci5_USCI5_B1;
   }
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 #if configBSP430_HAL_USCI5_B2 - 0
   if (BSP430_PERIPH_USCI5_B2 == periph) {
-    return xBSP430usci5_USCI5_B2;
+    return hBSP430usci5_USCI5_B2;
   }
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 #if configBSP430_HAL_USCI5_B3 - 0
   if (BSP430_PERIPH_USCI5_B3 == periph) {
-    return xBSP430usci5_USCI5_B3;
+    return hBSP430usci5_USCI5_B3;
   }
 #endif /* configBSP430_HAL_USCI5_B3 */
 

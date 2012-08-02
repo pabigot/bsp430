@@ -67,7 +67,7 @@ static struct {
   .state = { .hpl = BSP430_HPL_TA0 }
 };
 
-xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_.state;
+xBSP430timerHandle const hBSP430timer_TA0 = &state_TA0_.state;
 #endif /* configBSP430_HAL_TA0 */
 
 #if configBSP430_HAL_TA1 - 0
@@ -85,7 +85,7 @@ static struct {
   .state = { .hpl = BSP430_HPL_TA1 }
 };
 
-xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_.state;
+xBSP430timerHandle const hBSP430timer_TA1 = &state_TA1_.state;
 #endif /* configBSP430_HAL_TA1 */
 
 #if configBSP430_HAL_TA2 - 0
@@ -103,7 +103,7 @@ static struct {
   .state = { .hpl = BSP430_HPL_TA2 }
 };
 
-xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_.state;
+xBSP430timerHandle const hBSP430timer_TA2 = &state_TA2_.state;
 #endif /* configBSP430_HAL_TA2 */
 
 #if configBSP430_HAL_TA3 - 0
@@ -121,7 +121,7 @@ static struct {
   .state = { .hpl = BSP430_HPL_TA3 }
 };
 
-xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_.state;
+xBSP430timerHandle const hBSP430timer_TA3 = &state_TA3_.state;
 #endif /* configBSP430_HAL_TA3 */
 
 #if configBSP430_HAL_TB0 - 0
@@ -137,7 +137,7 @@ static struct {
   .state = { .hpl = BSP430_HPL_TB0 }
 };
 
-xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_.state;
+xBSP430timerHandle const hBSP430timer_TB0 = &state_TB0_.state;
 #endif /* configBSP430_HAL_TB0 */
 
 #if configBSP430_HAL_TB1 - 0
@@ -153,7 +153,7 @@ static struct {
   .state = { .hpl = BSP430_HPL_TB1 }
 };
 
-xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_.state;
+xBSP430timerHandle const hBSP430timer_TB1 = &state_TB1_.state;
 #endif /* configBSP430_HAL_TB1 */
 
 #if configBSP430_HAL_TB2 - 0
@@ -169,7 +169,7 @@ static struct {
   .state = { .hpl = BSP430_HPL_TB2 }
 };
 
-xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
+xBSP430timerHandle const hBSP430timer_TB2 = &state_TB2_.state;
 #endif /* configBSP430_HAL_TB2 */
 
 unsigned long
@@ -289,7 +289,7 @@ static void
 __attribute__((__interrupt__(TIMER0_A0_VECTOR)))
 isr_cc0_TA0 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA0;
+  xBSP430timerHandle timer = hBSP430timer_TA0;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -300,7 +300,7 @@ static void
 __attribute__((__interrupt__(TIMER0_A1_VECTOR)))
 isr_TA0 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA0;
+  xBSP430timerHandle timer = hBSP430timer_TA0;
   int iv = TA0IV;
   int rv = 0;
   if (0 != iv) {
@@ -321,7 +321,7 @@ static void
 __attribute__((__interrupt__(TIMER1_A0_VECTOR)))
 isr_cc0_TA1 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA1;
+  xBSP430timerHandle timer = hBSP430timer_TA1;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -332,7 +332,7 @@ static void
 __attribute__((__interrupt__(TIMER1_A1_VECTOR)))
 isr_TA1 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA1;
+  xBSP430timerHandle timer = hBSP430timer_TA1;
   int iv = TA1IV;
   int rv = 0;
   if (0 != iv) {
@@ -353,7 +353,7 @@ static void
 __attribute__((__interrupt__(TIMER2_A0_VECTOR)))
 isr_cc0_TA2 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA2;
+  xBSP430timerHandle timer = hBSP430timer_TA2;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -364,7 +364,7 @@ static void
 __attribute__((__interrupt__(TIMER2_A1_VECTOR)))
 isr_TA2 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA2;
+  xBSP430timerHandle timer = hBSP430timer_TA2;
   int iv = TA2IV;
   int rv = 0;
   if (0 != iv) {
@@ -385,7 +385,7 @@ static void
 __attribute__((__interrupt__(TIMER3_A0_VECTOR)))
 isr_cc0_TA3 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA3;
+  xBSP430timerHandle timer = hBSP430timer_TA3;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -396,7 +396,7 @@ static void
 __attribute__((__interrupt__(TIMER3_A1_VECTOR)))
 isr_TA3 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TA3;
+  xBSP430timerHandle timer = hBSP430timer_TA3;
   int iv = TA3IV;
   int rv = 0;
   if (0 != iv) {
@@ -421,7 +421,7 @@ static void
 __attribute__((__interrupt__(TIMER0_B0_VECTOR)))
 isr_cc0_TB0 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TB0;
+  xBSP430timerHandle timer = hBSP430timer_TB0;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -432,7 +432,7 @@ static void
 __attribute__((__interrupt__(TIMER0_B1_VECTOR)))
 isr_TB0 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TB0;
+  xBSP430timerHandle timer = hBSP430timer_TB0;
   int iv = TB0IV;
   int rv = 0;
   if (0 != iv) {
@@ -453,7 +453,7 @@ static void
 __attribute__((__interrupt__(TIMER1_B0_VECTOR)))
 isr_cc0_TB1 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TB1;
+  xBSP430timerHandle timer = hBSP430timer_TB1;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -464,7 +464,7 @@ static void
 __attribute__((__interrupt__(TIMER1_B1_VECTOR)))
 isr_TB1 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TB1;
+  xBSP430timerHandle timer = hBSP430timer_TB1;
   int iv = TB1IV;
   int rv = 0;
   if (0 != iv) {
@@ -485,7 +485,7 @@ static void
 __attribute__((__interrupt__(TIMER2_B0_VECTOR)))
 isr_cc0_TB2 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TB2;
+  xBSP430timerHandle timer = hBSP430timer_TB2;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
   BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
 }
@@ -496,7 +496,7 @@ static void
 __attribute__((__interrupt__(TIMER2_B1_VECTOR)))
 isr_TB2 (void)
 {
-  xBSP430timerHandle timer = xBSP430timer_TB2;
+  xBSP430timerHandle timer = hBSP430timer_TB2;
   int iv = TB2IV;
   int rv = 0;
   if (0 != iv) {
@@ -523,43 +523,43 @@ xBSP430periphLookupTIMER (tBSP430periphHandle periph)
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
 #if configBSP430_HPL_TA0 - 0
   if (BSP430_PERIPH_TA0 == periph) {
-    return xBSP430periph_TA0;
+    return hBSP430periph_TA0;
   }
 #endif /* configBSP430_HPL_TA0 */
 
 #if configBSP430_HPL_TA1 - 0
   if (BSP430_PERIPH_TA1 == periph) {
-    return xBSP430periph_TA1;
+    return hBSP430periph_TA1;
   }
 #endif /* configBSP430_HPL_TA1 */
 
 #if configBSP430_HPL_TA2 - 0
   if (BSP430_PERIPH_TA2 == periph) {
-    return xBSP430periph_TA2;
+    return hBSP430periph_TA2;
   }
 #endif /* configBSP430_HPL_TA2 */
 
 #if configBSP430_HPL_TA3 - 0
   if (BSP430_PERIPH_TA3 == periph) {
-    return xBSP430periph_TA3;
+    return hBSP430periph_TA3;
   }
 #endif /* configBSP430_HPL_TA3 */
 
 #if configBSP430_HPL_TB0 - 0
   if (BSP430_PERIPH_TB0 == periph) {
-    return xBSP430periph_TB0;
+    return hBSP430periph_TB0;
   }
 #endif /* configBSP430_HPL_TB0 */
 
 #if configBSP430_HPL_TB1 - 0
   if (BSP430_PERIPH_TB1 == periph) {
-    return xBSP430periph_TB1;
+    return hBSP430periph_TB1;
   }
 #endif /* configBSP430_HPL_TB1 */
 
 #if configBSP430_HPL_TB2 - 0
   if (BSP430_PERIPH_TB2 == periph) {
-    return xBSP430periph_TB2;
+    return hBSP430periph_TB2;
   }
 #endif /* configBSP430_HPL_TB2 */
 

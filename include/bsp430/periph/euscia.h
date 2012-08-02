@@ -129,7 +129,7 @@ typedef struct xBSP430eusciaState * xBSP430eusciaHandle;
  * The handle may be used only if #configBSP430_HAL_EUSCI_A0
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A0 - 0)
-extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0;
+extern xBSP430eusciaHandle const hBSP430euscia_EUSCI_A0;
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
 /** @def configBSP430_HAL_EUSCI_A1
@@ -151,7 +151,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A0;
  * The handle may be used only if #configBSP430_HAL_EUSCI_A1
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A1 - 0)
-extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1;
+extern xBSP430eusciaHandle const hBSP430euscia_EUSCI_A1;
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
 /** @def configBSP430_HAL_EUSCI_A2
@@ -173,7 +173,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A1;
  * The handle may be used only if #configBSP430_HAL_EUSCI_A2
  * is defined to a true value. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A2 - 0)
-extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
+extern xBSP430eusciaHandle const hBSP430euscia_EUSCI_A2;
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
@@ -219,7 +219,7 @@ extern xBSP430eusciaHandle const xBSP430euscia_EUSCI_A2;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A0 - 0)
 /** Typed pointer to HPL structure for EUSCI_A0 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A0 ((volatile xBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A0)
-static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = BSP430_HPL_EUSCI_A0;
+static volatile xBSP430periphEUSCIA * const hBSP430periph_EUSCI_A0 = BSP430_HPL_EUSCI_A0;
 #endif /* configBSP430_HPL_EUSCI_A0 */
 
 /** @def configBSP430_HPL_EUSCI_A1
@@ -260,7 +260,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A0 = BSP430_HPL_
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A1 - 0)
 /** Typed pointer to HPL structure for EUSCI_A1 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A1 ((volatile xBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A1)
-static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = BSP430_HPL_EUSCI_A1;
+static volatile xBSP430periphEUSCIA * const hBSP430periph_EUSCI_A1 = BSP430_HPL_EUSCI_A1;
 #endif /* configBSP430_HPL_EUSCI_A1 */
 
 /** @def configBSP430_HPL_EUSCI_A2
@@ -301,7 +301,7 @@ static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A1 = BSP430_HPL_
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A2 - 0)
 /** Typed pointer to HPL structure for EUSCI_A2 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A2 ((volatile xBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A2)
-static volatile xBSP430periphEUSCIA * const xBSP430periph_EUSCI_A2 = BSP430_HPL_EUSCI_A2;
+static volatile xBSP430periphEUSCIA * const hBSP430periph_EUSCI_A2 = BSP430_HPL_EUSCI_A2;
 #endif /* configBSP430_HPL_EUSCI_A2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

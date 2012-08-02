@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 /** The internal state necessary to manage a terminal task. */
-typedef struct xBSP430_TERMINAL_STATE {
+typedef struct hBSP430_TERMINAL_STATE {
   /** Device used to display results and receive commands. */
   xBSP430serialHandle hsuart;
 

@@ -50,14 +50,14 @@
 void
 vBSP430freertosSuspendScheduler (void)
 {
-  xBSP430periph_TA0->cctl0 &= ~(CCIE | CCIFG);
+  hBSP430periph_TA0->cctl0 &= ~(CCIE | CCIFG);
 }
 
 void
 vBSP430freertosResumeScheduler (void)
 {
-  xBSP430periph_TA0->ccr0 = TIMESLICE_DURATION_tck + xBSP430periph_TA0->r;
-  xBSP430periph_TA0->cctl0 |= CCIE;
+  hBSP430periph_TA0->ccr0 = TIMESLICE_DURATION_tck + hBSP430periph_TA0->r;
+  hBSP430periph_TA0->cctl0 |= CCIE;
 }
 
 portBASE_TYPE
@@ -65,8 +65,8 @@ xPortStartScheduler (void)
 {
   /* If TA0 appears to be stopped, start it driving from ACLK in
    * continuous mode. */
-  if (0 == ((MC0 | MC1) & xBSP430periph_TA0->ctl)) {
-    xBSP430periph_TA0->ctl = TASSEL_1 | MC_2 | TACLR;
+  if (0 == ((MC0 | MC1) & hBSP430periph_TA0->ctl)) {
+    hBSP430periph_TA0->ctl = TASSEL_1 | MC_2 | TACLR;
   }
   vBSP430freertosResumeScheduler();
   portRESTORE_CONTEXT();
@@ -89,7 +89,7 @@ scheduler_isr (void)
   portSAVE_CONTEXT();
 #endif /* configUSE_PREEMPTION */
 
-  xBSP430periph_TA0->ccr0 += TIMESLICE_DURATION_tck;
+  hBSP430periph_TA0->ccr0 += TIMESLICE_DURATION_tck;
   vTaskIncrementTick();
 
 #if configUSE_PREEMPTION == 1
