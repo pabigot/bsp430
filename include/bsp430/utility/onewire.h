@@ -120,7 +120,10 @@ int iBSP430onewireReset_ni (const xBSP430onewireBus * bus);
 
 /** Configure the bus pin for low power mode.
  *
- * This reconfigures the port as output low.
+ * This reconfigures the port as output low.  Note that this affects
+ * the MCU power, not the device power.  It does remove power from
+ * parasitic devices, but externally powered devices will still draw
+ * some amount of current.
  *
  * @param bus The port and bit identifying the 1-wire bus
  */
@@ -174,5 +177,66 @@ int iBSP430onewireComputeCRC (const unsigned char * data, int len);
  * error occurred. */
 int iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
                                     xBSP430onewireSerialNumber * snp);
+
+/** Send the command sequence to initiate a temperature measurement
+ *
+ * Note that this simply requests that the device start to measure the
+ * temperature.  The measurement process may take up to 750 msec at
+ * the default 12-bit resolution.
+ *
+ * If the device is externally powered,
+ * iBSP430onewireTemperatureReady_ni() can be invoked to determine
+ * whether the requested measurement has completed.  If using
+ * parasitic power, the application should wait for at least the
+ * maximum sample time before invoking
+ * iBSP430onewireReadTemperature_ni().
+ * 
+ * @param bus The port and bit identifying the 1-wire bus
+ *
+ * @return 0 if the request was successfully submitted, -1 if an error
+ * occured. */ 
+int iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus);
+
+/** Test whether the device has completed measuring the temperature
+ *
+ * @param bus The port and bit identifying the 1-wire bus
+ *
+ * @note Do not invoke this for parasitically-powered devices.  See
+ * iBSP430onewireRequestTemperature_ni().
+ * 
+ * @return 0 if the device is still busy; 1 if the sample is ready. */
+static int
+__inline__
+iBSP430onewireTemperatureReady_ni (const xBSP430onewireBus * bus)
+{
+  return iBSP430onewireReadBit_ni(bus);
+}
+
+/** Read the most recent temperature measurement
+ *
+ * The temperature is a signed 16-bit value representing 1/16th
+ * degrees Celcius.  I.e., a value of 1 is 0.0625 Cel.
+ *
+ * @note The accuracy and precision of the measurement are much more
+ * coarse than its resolution.
+ * 
+ * @param bus The port and bit identifying the 1-wire bus
+ *
+ * @param temp_xCel Pointer to a location into which the temperature
+ * will be written.  This must not be null.
+ *
+ * @return 0 if the read was successful; -1 if an error occurred.  If
+ * there was an error, the value pointed to by temp_xCel remains
+ * unchanged. */
+int iBSP430onewireReadTemperature_ni (const xBSP430onewireBus * bus,
+                                      int * temp_xCel);
+
+/** Convert temperature from 1/16th Cel to tenths Fahrhenheit (d[degF])
+ *
+ * For those of us who live in the US.
+ *
+ * 9 * t / 8 == (9/5) * 10 * (t / 16) without incidental overflow
+ */
+#define BSP430_ONEWIRE_xCel_TO_ddegF(_xcel) (320 + ((9 * t_c) / 8))
 
 #endif /* BSP430_UTILITY_ONEWIRE_H */

@@ -223,3 +223,31 @@ iBSP430onewireReadSerialNumber (const xBSP430onewireBus * bus,
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
+
+int
+iBSP430onewireRequestTemperature_ni (const xBSP430onewireBus * bus)
+{
+  if (! iBSP430onewireReset_ni(bus)) {
+    return -1;
+  }
+  vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_SKIP_ROM);
+  vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_CONVERT_T);
+  return 0;
+}
+
+int
+iBSP430onewireReadTemperature_ni (const xBSP430onewireBus * bus,
+                                  int * temp_xCel)
+{
+  int t;
+  
+  if (! iBSP430onewireReset_ni(bus)) {
+    return -1;
+  }
+  vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_SKIP_ROM);
+  vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_READ_SCRATCHPAD);
+  t = iBSP430onewireReadByte_ni(bus);
+  t |= (iBSP430onewireReadByte_ni(bus) << 8);
+  *temp_xCel = t;
+  return 0;
+}
