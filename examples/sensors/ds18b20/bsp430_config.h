@@ -1,3 +1,7 @@
+/* Use a crystal if one is installed.  Much more accurate timing
+ * results. */
+#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
+
 #define configBSP430_CONSOLE 1
 #define configBSP430_UPTIME 1
 
