@@ -597,7 +597,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A0 - 0)
-/** Typed pointer to HPL structure for USCI5_A0 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A0 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A0)
 #endif /* configBSP430_HPL_USCI5_A0 */
 
@@ -612,7 +611,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A1 - 0)
-/** Typed pointer to HPL structure for USCI5_A1 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A1 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A1)
 #endif /* configBSP430_HPL_USCI5_A1 */
 
@@ -627,7 +625,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A2 - 0)
-/** Typed pointer to HPL structure for USCI5_A2 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A2 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A2)
 #endif /* configBSP430_HPL_USCI5_A2 */
 
@@ -642,7 +639,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A3 - 0)
-/** Typed pointer to HPL structure for USCI5_A3 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A3 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A3)
 #endif /* configBSP430_HPL_USCI5_A3 */
 
@@ -657,7 +653,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B0 - 0)
-/** Typed pointer to HPL structure for USCI5_B0 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B0 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B0)
 #endif /* configBSP430_HPL_USCI5_B0 */
 
@@ -672,7 +667,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B1 - 0)
-/** Typed pointer to HPL structure for USCI5_B1 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B1 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B1)
 #endif /* configBSP430_HPL_USCI5_B1 */
 
@@ -687,7 +681,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B2 - 0)
-/** Typed pointer to HPL structure for USCI5_B2 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B2 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B2)
 #endif /* configBSP430_HPL_USCI5_B2 */
 
@@ -702,7 +695,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B3 - 0)
-/** Typed pointer to HPL structure for USCI5_B3 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B3 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B3)
 #endif /* configBSP430_HPL_USCI5_B3 */
 

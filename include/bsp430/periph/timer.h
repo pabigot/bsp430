@@ -871,7 +871,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * @defaulted
  * @dependency #configBSP430_HPL_TA0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
-/** Typed pointer to HPL structure for TA0 suitable for use in const initializers */
 #define BSP430_HPL_TA0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA0)
 #endif /* configBSP430_HPL_TA0 */
 
@@ -886,7 +885,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * @defaulted
  * @dependency #configBSP430_HPL_TA1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
-/** Typed pointer to HPL structure for TA1 suitable for use in const initializers */
 #define BSP430_HPL_TA1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA1)
 #endif /* configBSP430_HPL_TA1 */
 
@@ -901,7 +899,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * @defaulted
  * @dependency #configBSP430_HPL_TA2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
-/** Typed pointer to HPL structure for TA2 suitable for use in const initializers */
 #define BSP430_HPL_TA2 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA2)
 #endif /* configBSP430_HPL_TA2 */
 
@@ -916,7 +913,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * @defaulted
  * @dependency #configBSP430_HPL_TA3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
-/** Typed pointer to HPL structure for TA3 suitable for use in const initializers */
 #define BSP430_HPL_TA3 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA3)
 #endif /* configBSP430_HPL_TA3 */
 
@@ -931,7 +927,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * @defaulted
  * @dependency #configBSP430_HPL_TB0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
-/** Typed pointer to HPL structure for TB0 suitable for use in const initializers */
 #define BSP430_HPL_TB0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB0)
 #endif /* configBSP430_HPL_TB0 */
 
@@ -946,7 +941,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * @defaulted
  * @dependency #configBSP430_HPL_TB1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
-/** Typed pointer to HPL structure for TB1 suitable for use in const initializers */
 #define BSP430_HPL_TB1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB1)
 #endif /* configBSP430_HPL_TB1 */
 
@@ -961,7 +955,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * @defaulted
  * @dependency #configBSP430_HPL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
-/** Typed pointer to HPL structure for TB2 suitable for use in const initializers */
 #define BSP430_HPL_TB2 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB2)
 #endif /* configBSP430_HPL_TB2 */
 

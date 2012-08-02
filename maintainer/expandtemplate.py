@@ -69,11 +69,35 @@ extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
  * @defaulted
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
-/** Typed pointer to HPL structure for %(INSTANCE)s suitable for use in const initializers */
 #define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
     
+    'port_hpl_decl' : '''/** HPL pointer for %(INSTANCE)s.
+ *
+ * Typed pointer to a volatile structure overlaying the %(INSTANCE)s
+ * peripheral register map.
+ * 
+ * The pointer may be used only if #configBSP430_HPL_%(INSTANCE)s
+ * is defined to a true value.
+ *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_%(INSTANCE)s */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
+#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_%(INSTANCE)s)
+#else /* IE */
+#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430periphPORT *)BSP430_PERIPH_%(INSTANCE)s)
+#endif /* IE */
+#endif /* configBSP430_HPL_%(INSTANCE)s */
+''',
+    
+
     'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
@@ -262,11 +286,11 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
     'hal_port_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 static struct sBSP430portState state_%(INSTANCE)s = {
   .hal_state = { .cflags =
-#if defined(PORT%(#)s_VECTOR)
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
-#else /* interrupt-enabled */
+#else /* IE/
     BSP430_PORT_HAL_HPL_VARIANT_PORT
-#endif /* MSP430XV2 */
+#endif /* IE/
 #if configBSP430_HAL_%(INSTANCE)s_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */

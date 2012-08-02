@@ -318,7 +318,6 @@ extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A2;
  * @defaulted
  * @dependency #configBSP430_HPL_EUSCI_A0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A0 - 0)
-/** Typed pointer to HPL structure for EUSCI_A0 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A0 ((volatile sBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A0)
 #endif /* configBSP430_HPL_EUSCI_A0 */
 
@@ -333,7 +332,6 @@ extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A2;
  * @defaulted
  * @dependency #configBSP430_HPL_EUSCI_A1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A1 - 0)
-/** Typed pointer to HPL structure for EUSCI_A1 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A1 ((volatile sBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A1)
 #endif /* configBSP430_HPL_EUSCI_A1 */
 
@@ -348,7 +346,6 @@ extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A2;
  * @defaulted
  * @dependency #configBSP430_HPL_EUSCI_A2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A2 - 0)
-/** Typed pointer to HPL structure for EUSCI_A2 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A2 ((volatile sBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A2)
 #endif /* configBSP430_HPL_EUSCI_A2 */
 

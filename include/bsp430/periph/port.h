@@ -1033,8 +1033,8 @@ extern tBSP430portHandle const hBSP430port_PORT11;
 /* END AUTOMATICALLY GENERATED CODE [periph_decl] */
 /* !BSP430! end=periph_decl */
 
-/* !BSP430! insert=hpl_decl */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
+/* !BSP430! insert=port_hpl_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [port_hpl_decl] */
 /** HPL pointer for PORT1.
  *
  * Typed pointer to a volatile structure overlaying the PORT1
@@ -1043,11 +1043,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT1
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
-/** Typed pointer to HPL structure for PORT1 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 <= 2)
+#define BSP430_HPL_PORT1 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT1)
+#else /* IE */
 #define BSP430_HPL_PORT1 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT1)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT1 */
 
 /** HPL pointer for PORT2.
@@ -1058,11 +1066,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT2
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
-/** Typed pointer to HPL structure for PORT2 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 <= 2)
+#define BSP430_HPL_PORT2 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT2)
+#else /* IE */
 #define BSP430_HPL_PORT2 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT2)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT2 */
 
 /** HPL pointer for PORT3.
@@ -1073,11 +1089,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT3
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
-/** Typed pointer to HPL structure for PORT3 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 <= 2)
+#define BSP430_HPL_PORT3 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT3)
+#else /* IE */
 #define BSP430_HPL_PORT3 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT3)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT3 */
 
 /** HPL pointer for PORT4.
@@ -1088,11 +1112,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT4
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT4 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
-/** Typed pointer to HPL structure for PORT4 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 <= 2)
+#define BSP430_HPL_PORT4 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT4)
+#else /* IE */
 #define BSP430_HPL_PORT4 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT4)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT4 */
 
 /** HPL pointer for PORT5.
@@ -1103,11 +1135,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT5
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT5 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
-/** Typed pointer to HPL structure for PORT5 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 <= 2)
+#define BSP430_HPL_PORT5 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT5)
+#else /* IE */
 #define BSP430_HPL_PORT5 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT5)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT5 */
 
 /** HPL pointer for PORT6.
@@ -1118,11 +1158,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT6
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT6 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
-/** Typed pointer to HPL structure for PORT6 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 <= 2)
+#define BSP430_HPL_PORT6 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT6)
+#else /* IE */
 #define BSP430_HPL_PORT6 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT6)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT6 */
 
 /** HPL pointer for PORT7.
@@ -1133,11 +1181,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT7
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT7 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
-/** Typed pointer to HPL structure for PORT7 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 <= 2)
+#define BSP430_HPL_PORT7 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT7)
+#else /* IE */
 #define BSP430_HPL_PORT7 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT7)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT7 */
 
 /** HPL pointer for PORT8.
@@ -1148,11 +1204,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT8
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT8 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
-/** Typed pointer to HPL structure for PORT8 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 <= 2)
+#define BSP430_HPL_PORT8 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT8)
+#else /* IE */
 #define BSP430_HPL_PORT8 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT8)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT8 */
 
 /** HPL pointer for PORT9.
@@ -1163,11 +1227,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT9
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT9 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
-/** Typed pointer to HPL structure for PORT9 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 <= 2)
+#define BSP430_HPL_PORT9 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT9)
+#else /* IE */
 #define BSP430_HPL_PORT9 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT9)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT9 */
 
 /** HPL pointer for PORT10.
@@ -1178,11 +1250,19 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT10
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT10 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
-/** Typed pointer to HPL structure for PORT10 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 <= 2)
+#define BSP430_HPL_PORT10 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT10)
+#else /* IE */
 #define BSP430_HPL_PORT10 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT10)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT10 */
 
 /** HPL pointer for PORT11.
@@ -1193,15 +1273,23 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The pointer may be used only if #configBSP430_HPL_PORT11
  * is defined to a true value.
  *
+ * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * and higher on pre-5xx MCUs.  The generated documentation may not
+ * reflect the correct structure.
+ *
  * @defaulted
  * @dependency #configBSP430_HPL_PORT11 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
-/** Typed pointer to HPL structure for PORT11 suitable for use in const initializers */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 <= 2)
+#define BSP430_HPL_PORT11 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT11)
+#else /* IE */
 #define BSP430_HPL_PORT11 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT11)
+#endif /* IE */
 #endif /* configBSP430_HPL_PORT11 */
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
-/* !BSP430! end=hpl_decl */
+/* END AUTOMATICALLY GENERATED CODE [port_hpl_decl] */
+/* !BSP430! end=port_hpl_decl */
 
 /* !BSP430! insert=hal_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
