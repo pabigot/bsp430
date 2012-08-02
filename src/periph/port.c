@@ -268,67 +268,67 @@ xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
 #if configBSP430_HPL_PORT1 - 0
   if (BSP430_PERIPH_PORT1 == periph) {
-    return hBSP430periph_PORT1;
+    return BSP430_HPL_PORT1;
   }
 #endif /* configBSP430_HPL_PORT1 */
 
 #if configBSP430_HPL_PORT2 - 0
   if (BSP430_PERIPH_PORT2 == periph) {
-    return hBSP430periph_PORT2;
+    return BSP430_HPL_PORT2;
   }
 #endif /* configBSP430_HPL_PORT2 */
 
 #if configBSP430_HPL_PORT3 - 0
   if (BSP430_PERIPH_PORT3 == periph) {
-    return hBSP430periph_PORT3;
+    return BSP430_HPL_PORT3;
   }
 #endif /* configBSP430_HPL_PORT3 */
 
 #if configBSP430_HPL_PORT4 - 0
   if (BSP430_PERIPH_PORT4 == periph) {
-    return hBSP430periph_PORT4;
+    return BSP430_HPL_PORT4;
   }
 #endif /* configBSP430_HPL_PORT4 */
 
 #if configBSP430_HPL_PORT5 - 0
   if (BSP430_PERIPH_PORT5 == periph) {
-    return hBSP430periph_PORT5;
+    return BSP430_HPL_PORT5;
   }
 #endif /* configBSP430_HPL_PORT5 */
 
 #if configBSP430_HPL_PORT6 - 0
   if (BSP430_PERIPH_PORT6 == periph) {
-    return hBSP430periph_PORT6;
+    return BSP430_HPL_PORT6;
   }
 #endif /* configBSP430_HPL_PORT6 */
 
 #if configBSP430_HPL_PORT7 - 0
   if (BSP430_PERIPH_PORT7 == periph) {
-    return hBSP430periph_PORT7;
+    return BSP430_HPL_PORT7;
   }
 #endif /* configBSP430_HPL_PORT7 */
 
 #if configBSP430_HPL_PORT8 - 0
   if (BSP430_PERIPH_PORT8 == periph) {
-    return hBSP430periph_PORT8;
+    return BSP430_HPL_PORT8;
   }
 #endif /* configBSP430_HPL_PORT8 */
 
 #if configBSP430_HPL_PORT9 - 0
   if (BSP430_PERIPH_PORT9 == periph) {
-    return hBSP430periph_PORT9;
+    return BSP430_HPL_PORT9;
   }
 #endif /* configBSP430_HPL_PORT9 */
 
 #if configBSP430_HPL_PORT10 - 0
   if (BSP430_PERIPH_PORT10 == periph) {
-    return hBSP430periph_PORT10;
+    return BSP430_HPL_PORT10;
   }
 #endif /* configBSP430_HPL_PORT10 */
 
 #if configBSP430_HPL_PORT11 - 0
   if (BSP430_PERIPH_PORT11 == periph) {
-    return hBSP430periph_PORT11;
+    return BSP430_HPL_PORT11;
   }
 #endif /* configBSP430_HPL_PORT11 */
 

@@ -523,43 +523,43 @@ xBSP430periphLookupTIMER (tBSP430periphHandle periph)
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_ba_hpl_demux] */
 #if configBSP430_HPL_TA0 - 0
   if (BSP430_PERIPH_TA0 == periph) {
-    return hBSP430periph_TA0;
+    return BSP430_HPL_TA0;
   }
 #endif /* configBSP430_HPL_TA0 */
 
 #if configBSP430_HPL_TA1 - 0
   if (BSP430_PERIPH_TA1 == periph) {
-    return hBSP430periph_TA1;
+    return BSP430_HPL_TA1;
   }
 #endif /* configBSP430_HPL_TA1 */
 
 #if configBSP430_HPL_TA2 - 0
   if (BSP430_PERIPH_TA2 == periph) {
-    return hBSP430periph_TA2;
+    return BSP430_HPL_TA2;
   }
 #endif /* configBSP430_HPL_TA2 */
 
 #if configBSP430_HPL_TA3 - 0
   if (BSP430_PERIPH_TA3 == periph) {
-    return hBSP430periph_TA3;
+    return BSP430_HPL_TA3;
   }
 #endif /* configBSP430_HPL_TA3 */
 
 #if configBSP430_HPL_TB0 - 0
   if (BSP430_PERIPH_TB0 == periph) {
-    return hBSP430periph_TB0;
+    return BSP430_HPL_TB0;
   }
 #endif /* configBSP430_HPL_TB0 */
 
 #if configBSP430_HPL_TB1 - 0
   if (BSP430_PERIPH_TB1 == periph) {
-    return hBSP430periph_TB1;
+    return BSP430_HPL_TB1;
   }
 #endif /* configBSP430_HPL_TB1 */
 
 #if configBSP430_HPL_TB2 - 0
   if (BSP430_PERIPH_TB2 == periph) {
-    return hBSP430periph_TB2;
+    return BSP430_HPL_TB2;
   }
 #endif /* configBSP430_HPL_TB2 */
 

@@ -348,7 +348,6 @@ extern tBSP430usci5Handle const hBSP430usci5_USCI5_B3;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A0 - 0)
 /** Typed pointer to HPL structure for USCI5_A0 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A0 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A0)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A0 = BSP430_HPL_USCI5_A0;
 #endif /* configBSP430_HPL_USCI5_A0 */
 
 /** @def configBSP430_HPL_USCI5_A1
@@ -389,7 +388,6 @@ static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A0 = BSP43
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A1 - 0)
 /** Typed pointer to HPL structure for USCI5_A1 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A1 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A1)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A1 = BSP430_HPL_USCI5_A1;
 #endif /* configBSP430_HPL_USCI5_A1 */
 
 /** @def configBSP430_HPL_USCI5_A2
@@ -430,7 +428,6 @@ static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A1 = BSP43
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A2 - 0)
 /** Typed pointer to HPL structure for USCI5_A2 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A2 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A2)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A2 = BSP430_HPL_USCI5_A2;
 #endif /* configBSP430_HPL_USCI5_A2 */
 
 /** @def configBSP430_HPL_USCI5_A3
@@ -471,7 +468,6 @@ static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A2 = BSP43
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A3 - 0)
 /** Typed pointer to HPL structure for USCI5_A3 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_A3 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A3)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A3 = BSP430_HPL_USCI5_A3;
 #endif /* configBSP430_HPL_USCI5_A3 */
 
 /** @def configBSP430_HPL_USCI5_B0
@@ -512,7 +508,6 @@ static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_A3 = BSP43
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B0 - 0)
 /** Typed pointer to HPL structure for USCI5_B0 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B0 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B0)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_B0 = BSP430_HPL_USCI5_B0;
 #endif /* configBSP430_HPL_USCI5_B0 */
 
 /** @def configBSP430_HPL_USCI5_B1
@@ -553,7 +548,6 @@ static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_B0 = BSP43
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B1 - 0)
 /** Typed pointer to HPL structure for USCI5_B1 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B1 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B1)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_B1 = BSP430_HPL_USCI5_B1;
 #endif /* configBSP430_HPL_USCI5_B1 */
 
 /** @def configBSP430_HPL_USCI5_B2
@@ -594,7 +588,6 @@ static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_B1 = BSP43
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B2 - 0)
 /** Typed pointer to HPL structure for USCI5_B2 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B2 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B2)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_B2 = BSP430_HPL_USCI5_B2;
 #endif /* configBSP430_HPL_USCI5_B2 */
 
 /** @def configBSP430_HPL_USCI5_B3
@@ -635,7 +628,6 @@ static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_B2 = BSP43
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B3 - 0)
 /** Typed pointer to HPL structure for USCI5_B3 suitable for use in const initializers */
 #define BSP430_HPL_USCI5_B3 ((volatile struct sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B3)
-static volatile struct sBSP430periphUSCI5 * const hBSP430periph_USCI5_B3 = BSP430_HPL_USCI5_B3;
 #endif /* configBSP430_HPL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

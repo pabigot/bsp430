@@ -652,7 +652,6 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
 /** Typed pointer to HPL structure for TA0 suitable for use in const initializers */
 #define BSP430_HPL_TA0 ((volatile struct sBSP430periphTIMER *)BSP430_PERIPH_TA0)
-static volatile struct sBSP430periphTIMER * const hBSP430periph_TA0 = BSP430_HPL_TA0;
 #endif /* configBSP430_HPL_TA0 */
 
 /** @def configBSP430_HPL_TA1
@@ -693,7 +692,6 @@ static volatile struct sBSP430periphTIMER * const hBSP430periph_TA0 = BSP430_HPL
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
 /** Typed pointer to HPL structure for TA1 suitable for use in const initializers */
 #define BSP430_HPL_TA1 ((volatile struct sBSP430periphTIMER *)BSP430_PERIPH_TA1)
-static volatile struct sBSP430periphTIMER * const hBSP430periph_TA1 = BSP430_HPL_TA1;
 #endif /* configBSP430_HPL_TA1 */
 
 /** @def configBSP430_HPL_TA2
@@ -734,7 +732,6 @@ static volatile struct sBSP430periphTIMER * const hBSP430periph_TA1 = BSP430_HPL
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
 /** Typed pointer to HPL structure for TA2 suitable for use in const initializers */
 #define BSP430_HPL_TA2 ((volatile struct sBSP430periphTIMER *)BSP430_PERIPH_TA2)
-static volatile struct sBSP430periphTIMER * const hBSP430periph_TA2 = BSP430_HPL_TA2;
 #endif /* configBSP430_HPL_TA2 */
 
 /** @def configBSP430_HPL_TA3
@@ -775,7 +772,6 @@ static volatile struct sBSP430periphTIMER * const hBSP430periph_TA2 = BSP430_HPL
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
 /** Typed pointer to HPL structure for TA3 suitable for use in const initializers */
 #define BSP430_HPL_TA3 ((volatile struct sBSP430periphTIMER *)BSP430_PERIPH_TA3)
-static volatile struct sBSP430periphTIMER * const hBSP430periph_TA3 = BSP430_HPL_TA3;
 #endif /* configBSP430_HPL_TA3 */
 
 /** @def configBSP430_HPL_TB0
@@ -816,7 +812,6 @@ static volatile struct sBSP430periphTIMER * const hBSP430periph_TA3 = BSP430_HPL
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
 /** Typed pointer to HPL structure for TB0 suitable for use in const initializers */
 #define BSP430_HPL_TB0 ((volatile struct sBSP430periphTIMER *)BSP430_PERIPH_TB0)
-static volatile struct sBSP430periphTIMER * const hBSP430periph_TB0 = BSP430_HPL_TB0;
 #endif /* configBSP430_HPL_TB0 */
 
 /** @def configBSP430_HPL_TB1
@@ -857,7 +852,6 @@ static volatile struct sBSP430periphTIMER * const hBSP430periph_TB0 = BSP430_HPL
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
 /** Typed pointer to HPL structure for TB1 suitable for use in const initializers */
 #define BSP430_HPL_TB1 ((volatile struct sBSP430periphTIMER *)BSP430_PERIPH_TB1)
-static volatile struct sBSP430periphTIMER * const hBSP430periph_TB1 = BSP430_HPL_TB1;
 #endif /* configBSP430_HPL_TB1 */
 
 /** @def configBSP430_HPL_TB2
@@ -898,7 +892,6 @@ static volatile struct sBSP430periphTIMER * const hBSP430periph_TB1 = BSP430_HPL
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
 /** Typed pointer to HPL structure for TB2 suitable for use in const initializers */
 #define BSP430_HPL_TB2 ((volatile struct sBSP430periphTIMER *)BSP430_PERIPH_TB2)
-static volatile struct sBSP430periphTIMER * const hBSP430periph_TB2 = BSP430_HPL_TB2;
 #endif /* configBSP430_HPL_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

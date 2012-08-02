@@ -43,7 +43,6 @@ Instance-specific HAL ISR: configBSP430_HAL_%(INSTANCE)s_ISR
 
 peripheral instance handles: BSP430_PERIPH_%(INSTANCE)s
 HPL inline pointer: BSP430_HPL_%(INSTANCE)s
-HPL variable pointer: hBSP430periph%(INSTANCE)s
 HAL handle: hBSP430%(periph)s%(INSTANCE)s
 
 
@@ -63,8 +62,7 @@ tBSP430foo is a typedef related to foo that is not a struct, union, or enum.
 Exception: sBSP430periphPORTfoo is a platform-specific typedef to the
 variant port structure supported on the target MCU.
 
-hBSP430foo is an HPL (hBSP430periph%(INSTANCE)s) or HAL
-(hBSP430%(periph)s%(INSTANCE)s) handle for a peripheral.
+hBSP430foo is a HAL (hBSP430%(periph)s%(INSTANCE)s) handle for a peripheral.
 
 FreeRTOS HAL state structure: struct sBSP430%(periph)sState
 FreeRTOS HAL handle type: typedef sBSP430%(periph)sState * tBSP430%(periph)sHandle

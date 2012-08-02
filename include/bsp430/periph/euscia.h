@@ -219,7 +219,6 @@ extern tBSP430eusciaHandle const hBSP430euscia_EUSCI_A2;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A0 - 0)
 /** Typed pointer to HPL structure for EUSCI_A0 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A0 ((volatile struct sBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A0)
-static volatile struct sBSP430periphEUSCIA * const hBSP430periph_EUSCI_A0 = BSP430_HPL_EUSCI_A0;
 #endif /* configBSP430_HPL_EUSCI_A0 */
 
 /** @def configBSP430_HPL_EUSCI_A1
@@ -260,7 +259,6 @@ static volatile struct sBSP430periphEUSCIA * const hBSP430periph_EUSCI_A0 = BSP4
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A1 - 0)
 /** Typed pointer to HPL structure for EUSCI_A1 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A1 ((volatile struct sBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A1)
-static volatile struct sBSP430periphEUSCIA * const hBSP430periph_EUSCI_A1 = BSP430_HPL_EUSCI_A1;
 #endif /* configBSP430_HPL_EUSCI_A1 */
 
 /** @def configBSP430_HPL_EUSCI_A2
@@ -301,7 +299,6 @@ static volatile struct sBSP430periphEUSCIA * const hBSP430periph_EUSCI_A1 = BSP4
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A2 - 0)
 /** Typed pointer to HPL structure for EUSCI_A2 suitable for use in const initializers */
 #define BSP430_HPL_EUSCI_A2 ((volatile struct sBSP430periphEUSCIA *)BSP430_PERIPH_EUSCI_A2)
-static volatile struct sBSP430periphEUSCIA * const hBSP430periph_EUSCI_A2 = BSP430_HPL_EUSCI_A2;
 #endif /* configBSP430_HPL_EUSCI_A2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */

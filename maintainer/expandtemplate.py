@@ -65,7 +65,6 @@ extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 /** Typed pointer to HPL structure for %(INSTANCE)s suitable for use in const initializers */
 #define BSP430_HPL_%(INSTANCE)s ((volatile struct sBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
-static volatile struct sBSP430periph%(PERIPH)s * const hBSP430periph_%(INSTANCE)s = BSP430_HPL_%(INSTANCE)s;
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
     
@@ -275,7 +274,7 @@ isr_%(INSTANCE)s (void)
 
     'periph_ba_hpl_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
-    return hBSP430periph_%(INSTANCE)s;
+    return BSP430_HPL_%(INSTANCE)s;
   }
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
