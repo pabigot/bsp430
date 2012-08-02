@@ -27,7 +27,7 @@ extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
-    'hpl_ba_decl' : '''/** @def configBSP430_HPL_%(INSTANCE)s
+    'periph_decl' : '''/** @def configBSP430_HPL_%(INSTANCE)s
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c %(INSTANCE)s peripheral HPL interface.  Only do this if the MCU
@@ -51,17 +51,23 @@ extern tBSP430%(periph)sHandle const hBSP430%(periph)s_%(INSTANCE)s;
  * The handle may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted 
+ * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 #define BSP430_PERIPH_%(INSTANCE)s ((tBSP430periphHandle)(BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_))
 #endif /* configBSP430_HPL_%(INSTANCE)s */
+''',
 
-/** Pointer to the peripheral register map for %(INSTANCE)s.
+    'hpl_decl' : '''/** HPL pointer for %(INSTANCE)s.
  *
+ * Typed pointer to a volatile structure overlaying the %(INSTANCE)s
+ * peripheral register map.
+ * 
  * The pointer may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 /** Typed pointer to HPL structure for %(INSTANCE)s suitable for use in const initializers */
 #define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)

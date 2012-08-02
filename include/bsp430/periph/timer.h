@@ -643,8 +643,8 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
 
-/* !BSP430! insert=hpl_ba_decl */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
+/* !BSP430! insert=periph_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
 /** @def configBSP430_HPL_TA0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
@@ -669,20 +669,10 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * The handle may be used only if #configBSP430_HPL_TA0
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
 #define BSP430_PERIPH_TA0 ((tBSP430periphHandle)(BSP430_PERIPH_TA0_BASEADDRESS_))
-#endif /* configBSP430_HPL_TA0 */
-
-/** Pointer to the peripheral register map for TA0.
- *
- * The pointer may be used only if #configBSP430_HPL_TA0
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
-/** Typed pointer to HPL structure for TA0 suitable for use in const initializers */
-#define BSP430_HPL_TA0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA0)
 #endif /* configBSP430_HPL_TA0 */
 
 /** @def configBSP430_HPL_TA1
@@ -709,20 +699,10 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * The handle may be used only if #configBSP430_HPL_TA1
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
 #define BSP430_PERIPH_TA1 ((tBSP430periphHandle)(BSP430_PERIPH_TA1_BASEADDRESS_))
-#endif /* configBSP430_HPL_TA1 */
-
-/** Pointer to the peripheral register map for TA1.
- *
- * The pointer may be used only if #configBSP430_HPL_TA1
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
-/** Typed pointer to HPL structure for TA1 suitable for use in const initializers */
-#define BSP430_HPL_TA1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA1)
 #endif /* configBSP430_HPL_TA1 */
 
 /** @def configBSP430_HPL_TA2
@@ -749,20 +729,10 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * The handle may be used only if #configBSP430_HPL_TA2
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
 #define BSP430_PERIPH_TA2 ((tBSP430periphHandle)(BSP430_PERIPH_TA2_BASEADDRESS_))
-#endif /* configBSP430_HPL_TA2 */
-
-/** Pointer to the peripheral register map for TA2.
- *
- * The pointer may be used only if #configBSP430_HPL_TA2
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
-/** Typed pointer to HPL structure for TA2 suitable for use in const initializers */
-#define BSP430_HPL_TA2 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA2)
 #endif /* configBSP430_HPL_TA2 */
 
 /** @def configBSP430_HPL_TA3
@@ -789,20 +759,10 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * The handle may be used only if #configBSP430_HPL_TA3
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
 #define BSP430_PERIPH_TA3 ((tBSP430periphHandle)(BSP430_PERIPH_TA3_BASEADDRESS_))
-#endif /* configBSP430_HPL_TA3 */
-
-/** Pointer to the peripheral register map for TA3.
- *
- * The pointer may be used only if #configBSP430_HPL_TA3
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
-/** Typed pointer to HPL structure for TA3 suitable for use in const initializers */
-#define BSP430_HPL_TA3 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA3)
 #endif /* configBSP430_HPL_TA3 */
 
 /** @def configBSP430_HPL_TB0
@@ -829,20 +789,10 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * The handle may be used only if #configBSP430_HPL_TB0
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TB0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
 #define BSP430_PERIPH_TB0 ((tBSP430periphHandle)(BSP430_PERIPH_TB0_BASEADDRESS_))
-#endif /* configBSP430_HPL_TB0 */
-
-/** Pointer to the peripheral register map for TB0.
- *
- * The pointer may be used only if #configBSP430_HPL_TB0
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
-/** Typed pointer to HPL structure for TB0 suitable for use in const initializers */
-#define BSP430_HPL_TB0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB0)
 #endif /* configBSP430_HPL_TB0 */
 
 /** @def configBSP430_HPL_TB1
@@ -869,20 +819,10 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * The handle may be used only if #configBSP430_HPL_TB1
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TB1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
 #define BSP430_PERIPH_TB1 ((tBSP430periphHandle)(BSP430_PERIPH_TB1_BASEADDRESS_))
-#endif /* configBSP430_HPL_TB1 */
-
-/** Pointer to the peripheral register map for TB1.
- *
- * The pointer may be used only if #configBSP430_HPL_TB1
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
-/** Typed pointer to HPL structure for TB1 suitable for use in const initializers */
-#define BSP430_HPL_TB1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB1)
 #endif /* configBSP430_HPL_TB1 */
 
 /** @def configBSP430_HPL_TB2
@@ -909,24 +849,124 @@ extern tBSP430timerHandle const hBSP430timer_TB2;
  * The handle may be used only if #configBSP430_HPL_TB2
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
 #define BSP430_PERIPH_TB2 ((tBSP430periphHandle)(BSP430_PERIPH_TB2_BASEADDRESS_))
 #endif /* configBSP430_HPL_TB2 */
 
-/** Pointer to the peripheral register map for TB2.
+/* END AUTOMATICALLY GENERATED CODE [periph_decl] */
+/* !BSP430! end=periph_decl */
+
+/* !BSP430! insert=hpl_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
+/** HPL pointer for TA0.
+ *
+ * Typed pointer to a volatile structure overlaying the TA0
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_TA0
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA0 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
+/** Typed pointer to HPL structure for TA0 suitable for use in const initializers */
+#define BSP430_HPL_TA0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA0)
+#endif /* configBSP430_HPL_TA0 */
+
+/** HPL pointer for TA1.
+ *
+ * Typed pointer to a volatile structure overlaying the TA1
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_TA1
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
+/** Typed pointer to HPL structure for TA1 suitable for use in const initializers */
+#define BSP430_HPL_TA1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA1)
+#endif /* configBSP430_HPL_TA1 */
+
+/** HPL pointer for TA2.
+ *
+ * Typed pointer to a volatile structure overlaying the TA2
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_TA2
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA2 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
+/** Typed pointer to HPL structure for TA2 suitable for use in const initializers */
+#define BSP430_HPL_TA2 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA2)
+#endif /* configBSP430_HPL_TA2 */
+
+/** HPL pointer for TA3.
+ *
+ * Typed pointer to a volatile structure overlaying the TA3
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_TA3
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_TA3 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
+/** Typed pointer to HPL structure for TA3 suitable for use in const initializers */
+#define BSP430_HPL_TA3 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA3)
+#endif /* configBSP430_HPL_TA3 */
+
+/** HPL pointer for TB0.
+ *
+ * Typed pointer to a volatile structure overlaying the TB0
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_TB0
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_TB0 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
+/** Typed pointer to HPL structure for TB0 suitable for use in const initializers */
+#define BSP430_HPL_TB0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB0)
+#endif /* configBSP430_HPL_TB0 */
+
+/** HPL pointer for TB1.
+ *
+ * Typed pointer to a volatile structure overlaying the TB1
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_TB1
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_TB1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
+/** Typed pointer to HPL structure for TB1 suitable for use in const initializers */
+#define BSP430_HPL_TB1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB1)
+#endif /* configBSP430_HPL_TB1 */
+
+/** HPL pointer for TB2.
+ *
+ * Typed pointer to a volatile structure overlaying the TB2
+ * peripheral register map.
  *
  * The pointer may be used only if #configBSP430_HPL_TB2
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
 /** Typed pointer to HPL structure for TB2 suitable for use in const initializers */
 #define BSP430_HPL_TB2 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB2)
 #endif /* configBSP430_HPL_TB2 */
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
-/* !BSP430! end=hpl_ba_decl */
+/* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
+/* !BSP430! end=hpl_decl */
 
 /* !BSP430! insert=hal_timer_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_decl] */

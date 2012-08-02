@@ -698,8 +698,8 @@ extern tBSP430portHandle const hBSP430port_PORT11;
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
 
-/* !BSP430! insert=hpl_ba_decl */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
+/* !BSP430! insert=periph_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
 /** @def configBSP430_HPL_PORT1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
@@ -724,20 +724,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT1
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
 #define BSP430_PERIPH_PORT1 ((tBSP430periphHandle)(BSP430_PERIPH_PORT1_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT1 */
-
-/** Pointer to the peripheral register map for PORT1.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT1
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
-/** Typed pointer to HPL structure for PORT1 suitable for use in const initializers */
-#define BSP430_HPL_PORT1 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT1)
 #endif /* configBSP430_HPL_PORT1 */
 
 /** @def configBSP430_HPL_PORT2
@@ -764,20 +754,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT2
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
 #define BSP430_PERIPH_PORT2 ((tBSP430periphHandle)(BSP430_PERIPH_PORT2_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT2 */
-
-/** Pointer to the peripheral register map for PORT2.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT2
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
-/** Typed pointer to HPL structure for PORT2 suitable for use in const initializers */
-#define BSP430_HPL_PORT2 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT2)
 #endif /* configBSP430_HPL_PORT2 */
 
 /** @def configBSP430_HPL_PORT3
@@ -804,20 +784,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT3
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
 #define BSP430_PERIPH_PORT3 ((tBSP430periphHandle)(BSP430_PERIPH_PORT3_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT3 */
-
-/** Pointer to the peripheral register map for PORT3.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT3
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
-/** Typed pointer to HPL structure for PORT3 suitable for use in const initializers */
-#define BSP430_HPL_PORT3 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT3)
 #endif /* configBSP430_HPL_PORT3 */
 
 /** @def configBSP430_HPL_PORT4
@@ -844,20 +814,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT4
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT4 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
 #define BSP430_PERIPH_PORT4 ((tBSP430periphHandle)(BSP430_PERIPH_PORT4_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT4 */
-
-/** Pointer to the peripheral register map for PORT4.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT4
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
-/** Typed pointer to HPL structure for PORT4 suitable for use in const initializers */
-#define BSP430_HPL_PORT4 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT4)
 #endif /* configBSP430_HPL_PORT4 */
 
 /** @def configBSP430_HPL_PORT5
@@ -884,20 +844,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT5
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT5 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
 #define BSP430_PERIPH_PORT5 ((tBSP430periphHandle)(BSP430_PERIPH_PORT5_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT5 */
-
-/** Pointer to the peripheral register map for PORT5.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT5
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
-/** Typed pointer to HPL structure for PORT5 suitable for use in const initializers */
-#define BSP430_HPL_PORT5 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT5)
 #endif /* configBSP430_HPL_PORT5 */
 
 /** @def configBSP430_HPL_PORT6
@@ -924,20 +874,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT6
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT6 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
 #define BSP430_PERIPH_PORT6 ((tBSP430periphHandle)(BSP430_PERIPH_PORT6_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT6 */
-
-/** Pointer to the peripheral register map for PORT6.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT6
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
-/** Typed pointer to HPL structure for PORT6 suitable for use in const initializers */
-#define BSP430_HPL_PORT6 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT6)
 #endif /* configBSP430_HPL_PORT6 */
 
 /** @def configBSP430_HPL_PORT7
@@ -964,20 +904,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT7
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT7 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
 #define BSP430_PERIPH_PORT7 ((tBSP430periphHandle)(BSP430_PERIPH_PORT7_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT7 */
-
-/** Pointer to the peripheral register map for PORT7.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT7
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
-/** Typed pointer to HPL structure for PORT7 suitable for use in const initializers */
-#define BSP430_HPL_PORT7 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT7)
 #endif /* configBSP430_HPL_PORT7 */
 
 /** @def configBSP430_HPL_PORT8
@@ -1004,20 +934,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT8
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT8 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
 #define BSP430_PERIPH_PORT8 ((tBSP430periphHandle)(BSP430_PERIPH_PORT8_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT8 */
-
-/** Pointer to the peripheral register map for PORT8.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT8
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
-/** Typed pointer to HPL structure for PORT8 suitable for use in const initializers */
-#define BSP430_HPL_PORT8 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT8)
 #endif /* configBSP430_HPL_PORT8 */
 
 /** @def configBSP430_HPL_PORT9
@@ -1044,20 +964,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT9
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT9 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
 #define BSP430_PERIPH_PORT9 ((tBSP430periphHandle)(BSP430_PERIPH_PORT9_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT9 */
-
-/** Pointer to the peripheral register map for PORT9.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT9
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
-/** Typed pointer to HPL structure for PORT9 suitable for use in const initializers */
-#define BSP430_HPL_PORT9 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT9)
 #endif /* configBSP430_HPL_PORT9 */
 
 /** @def configBSP430_HPL_PORT10
@@ -1084,20 +994,10 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT10
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT10 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
 #define BSP430_PERIPH_PORT10 ((tBSP430periphHandle)(BSP430_PERIPH_PORT10_BASEADDRESS_))
-#endif /* configBSP430_HPL_PORT10 */
-
-/** Pointer to the peripheral register map for PORT10.
- *
- * The pointer may be used only if #configBSP430_HPL_PORT10
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
-/** Typed pointer to HPL structure for PORT10 suitable for use in const initializers */
-#define BSP430_HPL_PORT10 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT10)
 #endif /* configBSP430_HPL_PORT10 */
 
 /** @def configBSP430_HPL_PORT11
@@ -1124,24 +1024,184 @@ extern tBSP430portHandle const hBSP430port_PORT11;
  * The handle may be used only if #configBSP430_HPL_PORT11
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT11 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
 #define BSP430_PERIPH_PORT11 ((tBSP430periphHandle)(BSP430_PERIPH_PORT11_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT11 */
 
-/** Pointer to the peripheral register map for PORT11.
+/* END AUTOMATICALLY GENERATED CODE [periph_decl] */
+/* !BSP430! end=periph_decl */
+
+/* !BSP430! insert=hpl_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
+/** HPL pointer for PORT1.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT1
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT1
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
+/** Typed pointer to HPL structure for PORT1 suitable for use in const initializers */
+#define BSP430_HPL_PORT1 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT1)
+#endif /* configBSP430_HPL_PORT1 */
+
+/** HPL pointer for PORT2.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT2
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT2
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT2 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
+/** Typed pointer to HPL structure for PORT2 suitable for use in const initializers */
+#define BSP430_HPL_PORT2 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT2)
+#endif /* configBSP430_HPL_PORT2 */
+
+/** HPL pointer for PORT3.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT3
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT3
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT3 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
+/** Typed pointer to HPL structure for PORT3 suitable for use in const initializers */
+#define BSP430_HPL_PORT3 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT3)
+#endif /* configBSP430_HPL_PORT3 */
+
+/** HPL pointer for PORT4.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT4
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT4
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT4 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
+/** Typed pointer to HPL structure for PORT4 suitable for use in const initializers */
+#define BSP430_HPL_PORT4 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT4)
+#endif /* configBSP430_HPL_PORT4 */
+
+/** HPL pointer for PORT5.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT5
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT5
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT5 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
+/** Typed pointer to HPL structure for PORT5 suitable for use in const initializers */
+#define BSP430_HPL_PORT5 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT5)
+#endif /* configBSP430_HPL_PORT5 */
+
+/** HPL pointer for PORT6.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT6
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT6
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT6 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
+/** Typed pointer to HPL structure for PORT6 suitable for use in const initializers */
+#define BSP430_HPL_PORT6 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT6)
+#endif /* configBSP430_HPL_PORT6 */
+
+/** HPL pointer for PORT7.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT7
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT7
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT7 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
+/** Typed pointer to HPL structure for PORT7 suitable for use in const initializers */
+#define BSP430_HPL_PORT7 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT7)
+#endif /* configBSP430_HPL_PORT7 */
+
+/** HPL pointer for PORT8.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT8
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT8
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT8 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
+/** Typed pointer to HPL structure for PORT8 suitable for use in const initializers */
+#define BSP430_HPL_PORT8 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT8)
+#endif /* configBSP430_HPL_PORT8 */
+
+/** HPL pointer for PORT9.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT9
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT9
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT9 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
+/** Typed pointer to HPL structure for PORT9 suitable for use in const initializers */
+#define BSP430_HPL_PORT9 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT9)
+#endif /* configBSP430_HPL_PORT9 */
+
+/** HPL pointer for PORT10.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT10
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_PORT10
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT10 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
+/** Typed pointer to HPL structure for PORT10 suitable for use in const initializers */
+#define BSP430_HPL_PORT10 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT10)
+#endif /* configBSP430_HPL_PORT10 */
+
+/** HPL pointer for PORT11.
+ *
+ * Typed pointer to a volatile structure overlaying the PORT11
+ * peripheral register map.
  *
  * The pointer may be used only if #configBSP430_HPL_PORT11
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_PORT11 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
 /** Typed pointer to HPL structure for PORT11 suitable for use in const initializers */
 #define BSP430_HPL_PORT11 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT11)
 #endif /* configBSP430_HPL_PORT11 */
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
-/* !BSP430! end=hpl_ba_decl */
+/* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
+/* !BSP430! end=hpl_decl */
 
 /* !BSP430! insert=hal_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */

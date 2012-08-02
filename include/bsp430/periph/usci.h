@@ -220,8 +220,8 @@ extern tBSP430usciHandle const hBSP430usci_USCI_B1;
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
 
-/* !BSP430! insert=hpl_ba_decl */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_ba_decl] */
+/* !BSP430! insert=periph_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
 /** @def configBSP430_HPL_USCI_A0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
@@ -246,20 +246,10 @@ extern tBSP430usciHandle const hBSP430usci_USCI_B1;
  * The handle may be used only if #configBSP430_HPL_USCI_A0
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_A0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A0 - 0)
 #define BSP430_PERIPH_USCI_A0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_A0_BASEADDRESS_))
-#endif /* configBSP430_HPL_USCI_A0 */
-
-/** Pointer to the peripheral register map for USCI_A0.
- *
- * The pointer may be used only if #configBSP430_HPL_USCI_A0
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A0 - 0)
-/** Typed pointer to HPL structure for USCI_A0 suitable for use in const initializers */
-#define BSP430_HPL_USCI_A0 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_A0)
 #endif /* configBSP430_HPL_USCI_A0 */
 
 /** @def configBSP430_HPL_USCI_A1
@@ -286,20 +276,10 @@ extern tBSP430usciHandle const hBSP430usci_USCI_B1;
  * The handle may be used only if #configBSP430_HPL_USCI_A1
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_A1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A1 - 0)
 #define BSP430_PERIPH_USCI_A1 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_A1_BASEADDRESS_))
-#endif /* configBSP430_HPL_USCI_A1 */
-
-/** Pointer to the peripheral register map for USCI_A1.
- *
- * The pointer may be used only if #configBSP430_HPL_USCI_A1
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A1 - 0)
-/** Typed pointer to HPL structure for USCI_A1 suitable for use in const initializers */
-#define BSP430_HPL_USCI_A1 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_A1)
 #endif /* configBSP430_HPL_USCI_A1 */
 
 /** @def configBSP430_HPL_USCI_B0
@@ -326,20 +306,10 @@ extern tBSP430usciHandle const hBSP430usci_USCI_B1;
  * The handle may be used only if #configBSP430_HPL_USCI_B0
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_B0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B0 - 0)
 #define BSP430_PERIPH_USCI_B0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_B0_BASEADDRESS_))
-#endif /* configBSP430_HPL_USCI_B0 */
-
-/** Pointer to the peripheral register map for USCI_B0.
- *
- * The pointer may be used only if #configBSP430_HPL_USCI_B0
- * is defined to a true value.
- *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B0 - 0)
-/** Typed pointer to HPL structure for USCI_B0 suitable for use in const initializers */
-#define BSP430_HPL_USCI_B0 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_B0)
 #endif /* configBSP430_HPL_USCI_B0 */
 
 /** @def configBSP430_HPL_USCI_B1
@@ -366,24 +336,79 @@ extern tBSP430usciHandle const hBSP430usci_USCI_B1;
  * The handle may be used only if #configBSP430_HPL_USCI_B1
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_B1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B1 - 0)
 #define BSP430_PERIPH_USCI_B1 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_B1_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_B1 */
 
-/** Pointer to the peripheral register map for USCI_B1.
+/* END AUTOMATICALLY GENERATED CODE [periph_decl] */
+/* !BSP430! end=periph_decl */
+
+/* !BSP430! insert=hpl_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
+/** HPL pointer for USCI_A0.
+ *
+ * Typed pointer to a volatile structure overlaying the USCI_A0
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_USCI_A0
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_A0 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A0 - 0)
+/** Typed pointer to HPL structure for USCI_A0 suitable for use in const initializers */
+#define BSP430_HPL_USCI_A0 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_A0)
+#endif /* configBSP430_HPL_USCI_A0 */
+
+/** HPL pointer for USCI_A1.
+ *
+ * Typed pointer to a volatile structure overlaying the USCI_A1
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_USCI_A1
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_A1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A1 - 0)
+/** Typed pointer to HPL structure for USCI_A1 suitable for use in const initializers */
+#define BSP430_HPL_USCI_A1 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_A1)
+#endif /* configBSP430_HPL_USCI_A1 */
+
+/** HPL pointer for USCI_B0.
+ *
+ * Typed pointer to a volatile structure overlaying the USCI_B0
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_USCI_B0
+ * is defined to a true value.
+ *
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_B0 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B0 - 0)
+/** Typed pointer to HPL structure for USCI_B0 suitable for use in const initializers */
+#define BSP430_HPL_USCI_B0 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_B0)
+#endif /* configBSP430_HPL_USCI_B0 */
+
+/** HPL pointer for USCI_B1.
+ *
+ * Typed pointer to a volatile structure overlaying the USCI_B1
+ * peripheral register map.
  *
  * The pointer may be used only if #configBSP430_HPL_USCI_B1
  * is defined to a true value.
  *
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HPL_USCI_B1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B1 - 0)
 /** Typed pointer to HPL structure for USCI_B1 suitable for use in const initializers */
 #define BSP430_HPL_USCI_B1 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_B1)
 #endif /* configBSP430_HPL_USCI_B1 */
 
-/* END AUTOMATICALLY GENERATED CODE [hpl_ba_decl] */
-/* !BSP430! end=hpl_ba_decl */
+/* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
+/* !BSP430! end=hpl_decl */
 
 /* !BSP430! instance=0,1 */
 /* !BSP430! insert=hal_usci_isr_decl */
