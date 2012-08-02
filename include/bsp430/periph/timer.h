@@ -311,16 +311,6 @@ typedef struct xBSP430periphTIMER {
   };
 } xBSP430periphTIMER;
 
-/** Get the peripheral register pointer for a specific timer.
- *
- * @param xHandle The handle identifier, such as #BSP430_PERIPH_TA0.
- *
- * @return A typed pointer that can be used to manipulate the timer.
- * A null pointer is returned if the handle does not correspond to a
- * timer which has been enabled (e.g., with #configBSP430_PERIPH_TA0).
- */
-volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHandle);
-
 /** @cond DOXYGEN_INTERNAL
  *
  * What we're doing here is providing the base addresses for the
@@ -388,12 +378,30 @@ volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHan
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
+/** Get the peripheral register pointer for a specific timer.
+ *
+ * @param xHandle The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return A typed pointer that can be used to manipulate the timer.
+ * A null pointer is returned if the handle does not correspond to a
+ * timer which has been enabled (e.g., with #configBSP430_PERIPH_TA0).
+ */
+volatile xBSP430periphTIMER * xBSP430periphLookupTIMER (xBSP430periphHandle xHandle);
+
 /* Forward declaration.  Structure declaration provided in
  * <bsp430/timer_.h>. */
 struct xBSP430timerState;
 
 /** The timer internal state is protected. */
 typedef struct xBSP430timerState * xBSP430timerHandle;
+
+/** Provide the frequency of the timer source, if that can be determined.
+ *
+ * @param timer The timer for which the source frequency is desired
+ *
+ * @return 0 if the timer is stopped; -1 if the frequency cannot be
+ * determined, a positive value for a known source. */
+unsigned long ulBSP430timerFrequency_Hz_ni (xBSP430timerHandle timer);
 
 /** Read the timer counter assuming interrupts are disabled.
  *

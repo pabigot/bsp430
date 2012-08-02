@@ -50,7 +50,7 @@
  * when overriding BSP430 HAL capabilities. */
 struct xBSP430timerState {
   /** The underlying timer peripheral register structure */
-  volatile xBSP430periphTIMER * const timer;
+  volatile xBSP430periphTIMER * const hpl;
 
   /** The number of times the timer has wrapped.
    *

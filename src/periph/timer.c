@@ -31,6 +31,7 @@
 
 #include <bsp430/periph/timer_.h>
 #include <bsp430/platform.h>    /* BSP430_PLATFORM_TIMER_CCACLK defined by this */
+#include <bsp430/clock.h>
 
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define TA_OVERFLOW 0x0E
@@ -63,7 +64,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA0 */
 } state_TA0_ = {
-  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA0_BASEADDRESS_ }
+  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA0_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA0 = &state_TA0_.state;
@@ -81,7 +82,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA1 */
 } state_TA1_ = {
-  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA1_BASEADDRESS_ }
+  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA1_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA1 = &state_TA1_.state;
@@ -99,7 +100,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA2 */
 } state_TA2_ = {
-  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA2_BASEADDRESS_ }
+  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA2_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA2 = &state_TA2_.state;
@@ -117,7 +118,7 @@ static struct {
   DECLARE_AUX_CCS(4);			/* 5 total */
 #endif /* TA3 */
 } state_TA3_ = {
-  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TA3_BASEADDRESS_ }
+  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TA3_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TA3 = &state_TA3_.state;
@@ -133,7 +134,7 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB0 */
 } state_TB0_ = {
-  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TB0_BASEADDRESS_ }
+  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TB0_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TB0 = &state_TB0_.state;
@@ -149,7 +150,7 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB1 */
 } state_TB1_ = {
-  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TB1_BASEADDRESS_ }
+  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TB1_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TB1 = &state_TB1_.state;
@@ -165,11 +166,31 @@ static struct {
   DECLARE_AUX_CCS(6);			/* 7 total */
 #endif /* TB2 */
 } state_TB2_ = {
-  .state = { .timer = (xBSP430periphTIMER *)BSP430_PERIPH_TB2_BASEADDRESS_ }
+  .state = { .hpl = (xBSP430periphTIMER *)BSP430_PERIPH_TB2_BASEADDRESS_ }
 };
 
 xBSP430timerHandle const xBSP430timer_TB2 = &state_TB2_.state;
 #endif /* configBSP430_PERIPH_TB2 */
+
+unsigned long
+ulBSP430timerFrequency_Hz_ni (xBSP430timerHandle timer)
+{
+  unsigned long freq_Hz;
+  switch (timer->hpl->ctl & TASSEL_3) {
+    case TASSEL_0:
+      return 0;
+    case TASSEL_1:
+      freq_Hz = usBSP430clockACLK_Hz_ni();
+      break;
+    case TASSEL_2:
+      freq_Hz = ulBSP430clockSMCLK_Hz_ni();
+      break;
+    default:
+    case TASSEL_3:
+      return -1;
+  }
+  return freq_Hz >> ((timer->hpl->ctl & ID_3) / ID0);
+}
 
 unsigned int
 uiBSP430timerCaptureDelta_ni (xBSP430periphHandle periph,
@@ -235,9 +256,9 @@ ulBSP430timerCounter_ni (xBSP430timerHandle timer,
    * value may be tied to SMCLK, it's not possible to expect to read
    * the same counter value twice.) */
   do {
-    ctla = timer->timer->ctl;
-    r = timer->timer->r;
-    ctlb = timer->timer->ctl;
+    ctla = timer->hpl->ctl;
+    r = timer->hpl->r;
+    ctlb = timer->hpl->ctl;
   } while (ctla != ctlb);
 
   /* If an overflow has occurred, register its effect.  Note that
@@ -245,7 +266,7 @@ ulBSP430timerCounter_ni (xBSP430timerHandle timer,
    * type of timer this is. */
   if (ctla & TAIFG) {
     ++timer->overflow_count;
-    timer->timer->ctl &= ~TAIFG;
+    timer->hpl->ctl &= ~TAIFG;
   }
   if (overflowp) {
     *overflowp = timer->overflow_count >> 16;
@@ -257,8 +278,8 @@ void
 vBSP430timerResetCounter_ni (xBSP430timerHandle timer)
 {
   timer->overflow_count = 0;
-  timer->timer->r = 0;
-  timer->timer->ctl &= ~TAIFG;
+  timer->hpl->r = 0;
+  timer->hpl->ctl &= ~TAIFG;
 }
 
 /* !BSP430! TYPE=A subst=TYPE instance=0,1,2,3 insert=hal_timer_isr_defn */
