@@ -46,130 +46,138 @@
 /* !BSP430! periph=timer */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
-/* Declares additional callback pointers that immediately follow the
- * one in the base type.  This allows us to use only the amount of
- * space necessary to support the CC blocks on the target MCU. */
-#define DECLARE_AUX_CCS(_n)                                     \
-  struct sBSP430periphISRCallbackIndexed * _aux_cc_callback[_n]
-
 #if configBSP430_HAL_TA0 - 0
-static struct {
-  struct sBSP430timerState state;
-  /* State includes one CC record.  Add more as required. */
+
+static const sBSP430periphISRCallbackIndexed * cc_callback_TA0[
 #if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
-  DECLARE_AUX_CCS(1);			/* 2 total */
+  2
 #elif defined(__MSP430_HAS_TA3__) || defined(__MSP430_HAS_T0A3__)
-  DECLARE_AUX_CCS(2);			/* 3 total */
+  3
 #else
-  DECLARE_AUX_CCS(4);			/* 5 total */
+  5
 #endif /* TA0 */
-} state_TA0_ = {
-  .state = { .hpl = BSP430_HPL_TA0 }
+];
+
+static sBSP430timerState state_TA0_ = {
+  .hpl = BSP430_HPL_TA0,
+  .cc_callback = cc_callback_TA0
 };
 
-tBSP430timerHandle const hBSP430timer_TA0 = &state_TA0_.state;
+tBSP430timerHandle const hBSP430timer_TA0 = &state_TA0_;
 #endif /* configBSP430_HAL_TA0 */
 
 #if configBSP430_HAL_TA1 - 0
-static struct {
-  struct sBSP430timerState state;
-  /* State includes one CC record.  Add more as required. */
+
+static const sBSP430periphISRCallbackIndexed * cc_callback_TA1[
 #if defined(__MSP430_HAS_T1A2__)
-  DECLARE_AUX_CCS(1);			/* 2 total */
+  2
 #elif defined(__MSP430_HAS_T1A3__)
-  DECLARE_AUX_CCS(2);			/* 3 total */
+  3
 #else
-  DECLARE_AUX_CCS(4);			/* 5 total */
+  5
 #endif /* TA1 */
-} state_TA1_ = {
-  .state = { .hpl = BSP430_HPL_TA1 }
+];
+
+static sBSP430timerState state_TA1_ = {
+  .hpl = BSP430_HPL_TA1,
+  .cc_callback = &cc_callback_TA1
 };
 
-tBSP430timerHandle const hBSP430timer_TA1 = &state_TA1_.state;
+tBSP430timerHandle const hBSP430timer_TA1 = &state_TA1_;
 #endif /* configBSP430_HAL_TA1 */
 
 #if configBSP430_HAL_TA2 - 0
-static struct {
-  struct sBSP430timerState state;
-  /* State includes one CC record.  Add more as required. */
+
+static const sBSP430periphISRCallbackIndexed * cc_callback_TA2[
 #if defined(__MSP430_HAS_T2A2__)
-  DECLARE_AUX_CCS(1);			/* 2 total */
+  2
 #elif defined(__MSP430_HAS_T2A3__)
-  DECLARE_AUX_CCS(2);			/* 3 total */
+  3
 #else
-  DECLARE_AUX_CCS(4);			/* 5 total */
+  5
 #endif /* TA2 */
-} state_TA2_ = {
-  .state = { .hpl = BSP430_HPL_TA2 }
+];
+
+static sBSP430timerState state_TA2_ = {
+  .hpl = BSP430_HPL_TA2,
+  .cc_callback = cc_callback_TA2
 };
 
-tBSP430timerHandle const hBSP430timer_TA2 = &state_TA2_.state;
+tBSP430timerHandle const hBSP430timer_TA2 = &state_TA2_
 #endif /* configBSP430_HAL_TA2 */
 
 #if configBSP430_HAL_TA3 - 0
-static struct {
-  struct sBSP430timerState state;
-  /* State includes one CC record.  Add more as required. */
+
+    static const sBSP430periphISRCallbackIndexed * cc_callback_TA3[
 #if defined(__MSP430_HAS_T3A2__)
-  DECLARE_AUX_CCS(1);			/* 2 total */
+      2
 #elif defined(__MSP430_HAS_T3A3__)
-  DECLARE_AUX_CCS(2);			/* 3 total */
+      3
 #else
-  DECLARE_AUX_CCS(4);			/* 5 total */
+      5
 #endif /* TA3 */
-} state_TA3_ = {
-  .state = { .hpl = BSP430_HPL_TA3 }
+    ];
+
+static sBSP430timerState state_TA3_ = {
+  .hpl = BSP430_HPL_TA3,
+  .cc_callback = cc_callback_TA3
 };
 
-tBSP430timerHandle const hBSP430timer_TA3 = &state_TA3_.state;
+tBSP430timerHandle const hBSP430timer_TA3 = &state_TA3_;
 #endif /* configBSP430_HAL_TA3 */
 
 #if configBSP430_HAL_TB0 - 0
-static struct {
-  struct sBSP430timerState state;
-  /* State includes one CC record.  Add more as required. */
+
+static const sBSP430periphISRCallbackIndexed * cc_callback_TB0[
 #if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
-  DECLARE_AUX_CCS(2);			/* 3 total */
+  3
 #else
-  DECLARE_AUX_CCS(6);			/* 7 total */
+  7
 #endif /* TB0 */
-} state_TB0_ = {
-  .state = { .hpl = BSP430_HPL_TB0 }
+];
+
+static sBSP430timerState state_TB0_ = {
+  .hpl = BSP430_HPL_TB0,
+  .cc_callback = cc_callback_TB0
 };
 
-tBSP430timerHandle const hBSP430timer_TB0 = &state_TB0_.state;
+tBSP430timerHandle const hBSP430timer_TB0 = &state_TB0_;
 #endif /* configBSP430_HAL_TB0 */
 
 #if configBSP430_HAL_TB1 - 0
-static struct {
-  struct sBSP430timerState state;
-  /* State includes one CC record.  Add more as required. */
+
+static const sBSP430periphISRCallbackIndexed * cc_callback_TB1[
 #if defined(__MSP430_HAS_T1B3__)
-  DECLARE_AUX_CCS(2);			/* 3 total */
+  3
 #else
-  DECLARE_AUX_CCS(6);			/* 7 total */
+  7
 #endif /* TB1 */
-} state_TB1_ = {
-  .state = { .hpl = BSP430_HPL_TB1 }
+];
+
+static sBSP430timerState state_TB1_ = {
+  .hpl = BSP430_HPL_TB1,
+  .cc_callback = cc_callback_TB1
 };
 
-tBSP430timerHandle const hBSP430timer_TB1 = &state_TB1_.state;
+tBSP430timerHandle const hBSP430timer_TB1 = &state_TB1_;
 #endif /* configBSP430_HAL_TB1 */
 
 #if configBSP430_HAL_TB2 - 0
-static struct {
-  struct sBSP430timerState state;
-  /* State includes one CC record.  Add more as required. */
+
+static const sBSP430periphISRCallbackIndexed * cc_callback_TB2[
 #if defined(__MSP430_HAS_T2B3__)
-  DECLARE_AUX_CCS(2);			/* 3 total */
+  3
 #else
-  DECLARE_AUX_CCS(6);			/* 7 total */
+  7
 #endif /* TB2 */
-} state_TB2_ = {
-  .state = { .hpl = BSP430_HPL_TB2 }
+];
+
+static sBSP430timerState state_TB2_ = {
+  .hpl = BSP430_HPL_TB2,
+  .cc_callback = cc_callback_TB2
 };
 
-tBSP430timerHandle const hBSP430timer_TB2 = &state_TB2_.state;
+tBSP430timerHandle const hBSP430timer_TB2 = &state_TB2_;
 #endif /* configBSP430_HAL_TB2 */
 
 unsigned long

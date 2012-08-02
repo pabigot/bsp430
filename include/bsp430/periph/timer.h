@@ -420,7 +420,7 @@ typedef struct sBSP430timerState {
    * The chains are independent for each capture/compare block, but
    * the block index is passed into the chain so that a common
    * handler can be invoked if desired. */
-  const struct sBSP430periphISRCallbackIndexed * cc_callback[1];
+  const struct sBSP430periphISRCallbackIndexed * * const cc_callback;
 } sBSP430timerState;
 
 /** The timer internal state is protected. */
