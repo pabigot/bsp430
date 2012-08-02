@@ -322,7 +322,7 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 /** @cond DOXYGEN_EXCLUDE */
 
 #define _DELEGATE_HANDLE(_serial)                       \
-  typedef xBSP430##_serial##Handle tBSP430serialHandle;
+  typedef tBSP430##_serial##Handle tBSP430serialHandle;
 
 #define _DELEGATE_OPEN_UART(_serial)                                    \
   static __inline__                                                     \
