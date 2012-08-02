@@ -52,14 +52,14 @@
  *
  * The HPL structure used for ports to which onewire devices are attached.
  *
- * This should be defined to be one of #xBSP430periphPORT,
- * #xBSP430periphPORTW, #xBSP430periphPORTIE.  Only one port type is
+ * This should be defined to be one of #sBSP430periphPORT,
+ * #sBSP430periphPORTW, #sBSP430periphPORTIE.  Only one port type is
  * supported for onewire devices within any application.
  *
  * @defaulted
  */
 #ifndef BSP430_ONEWIRE_PORT_TYPE
-#define BSP430_ONEWIRE_PORT_TYPE xBSP430periphPORTIE
+#define BSP430_ONEWIRE_PORT_TYPE sBSP430periphPORTIE
 #endif /* BSP430_ONEWIRE_PORT_TYPE */
 
 /** Structure identifying 1-wire bus information. */

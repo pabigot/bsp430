@@ -130,7 +130,7 @@ typedef struct sBSP430periphPORT_IE_8 {
   unsigned char ie;			/* 0x05 */
   unsigned char sel;			/* 0x06 */
   unsigned char ren;			/* 0x07 */
-} xBSP430periphPORT_IE_8;
+} sBSP430periphPORT_IE_8;
 
 /** Layout for pre-5xx--family 8-bit ports not supporting interrupts.
  *
@@ -141,51 +141,51 @@ typedef struct sBSP430periphPORT_8 {
   unsigned char out;			/* 0x01 */
   unsigned char dir;			/* 0x02 */
   unsigned char sel;			/* 0x03 */
-} xBSP430periphPORT_8;
+} sBSP430periphPORT_8;
 
 /** Helper for accessing 8-bit registers within 16-bit registers */
-typedef union xBSP430periphPORT_16_u {
+typedef union uBSP430periphPORT_16 {
   unsigned int w;				/**< Word access (e.g., PAIN) */
   unsigned char b[2];			/**< Byte access, indexed */
   struct {
     unsigned char l;		/**< Low byte access for odd members of pair (e.g., P1IN) */
     unsigned char h;		/**< High byte access for even members of pair (e.g., P2IN) */
   };
-} xBSP430periphPORT_16_u;
+} uBSP430periphPORT_16;
 
 /** Layout for 2xx/4xx family 16-bit ports not supporting interrupts.
  *
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
 typedef struct sBSP430periphPORT_16 {
-  xBSP430periphPORT_16_u in;	/* 0x00 */
-  xBSP430periphPORT_16_u out;	/* 0x02 */
-  xBSP430periphPORT_16_u dir;	/* 0x04 */
-  xBSP430periphPORT_16_u sel;	/* 0x08 */
-} xBSP430periphPORT_16;
+  uBSP430periphPORT_16 in;	/* 0x00 */
+  uBSP430periphPORT_16 out;	/* 0x02 */
+  uBSP430periphPORT_16 dir;	/* 0x04 */
+  uBSP430periphPORT_16 sel;	/* 0x08 */
+} sBSP430periphPORT_16;
 
 /** Layout for 5xx family ports, 16-bit access
  */
 typedef struct sBSP430periphPORT_5XX_16 {
-  xBSP430periphPORT_16_u in;	/**< PxIN */ /* 0x00 */
-  xBSP430periphPORT_16_u out;	/**< PxOUT */ /* 0x02 */
-  xBSP430periphPORT_16_u dir;	/**< PxDIR (set for output) */ /* 0x04 */
-  xBSP430periphPORT_16_u ren;	/**< PxREN (set to enable) */ /* 0x06 */
-  xBSP430periphPORT_16_u ds;	/**< PxDS (drive select, some devices) */ /* 0x08 */
+  uBSP430periphPORT_16 in;	/**< PxIN */ /* 0x00 */
+  uBSP430periphPORT_16 out;	/**< PxOUT */ /* 0x02 */
+  uBSP430periphPORT_16 dir;	/**< PxDIR (set for output) */ /* 0x04 */
+  uBSP430periphPORT_16 ren;	/**< PxREN (set to enable) */ /* 0x06 */
+  uBSP430periphPORT_16 ds;	/**< PxDS (drive select, some devices) */ /* 0x08 */
   union {
-    xBSP430periphPORT_16_u sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
-    xBSP430periphPORT_16_u sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
+    uBSP430periphPORT_16 sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
+    uBSP430periphPORT_16 sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
   };
-  xBSP430periphPORT_16_u sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
+  uBSP430periphPORT_16 sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
   unsigned int _reserved_x0E;
-  xBSP430periphPORT_16_u selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
+  uBSP430periphPORT_16 selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
   unsigned int _reserved_x12;
   unsigned int _reserved_x14;
   unsigned int _reserved_x16;
-  xBSP430periphPORT_16_u ies;	 /**< PxIES */ /* 0x18 */
-  xBSP430periphPORT_16_u ie;	 /**< PxIE */ /* 0x1A */
-  xBSP430periphPORT_16_u ifg;	 /**< PxIFG */ /* 0x1C */
-} xBSP430periphPORT_5XX_16;
+  uBSP430periphPORT_16 ies;	 /**< PxIES */ /* 0x18 */
+  uBSP430periphPORT_16 ie;	 /**< PxIE */ /* 0x1A */
+  uBSP430periphPORT_16 ifg;	 /**< PxIFG */ /* 0x1C */
+} sBSP430periphPORT_5XX_16;
 
 /** Layout for 5xx family ports, 8-bit access
  *
@@ -225,34 +225,34 @@ typedef struct sBSP430periphPORT_5XX_8 {
   unsigned char ie;	 /**< PxIE */ /* 0x1A */
   unsigned char _reserved_x1B;
   unsigned char ifg;	 /**< PxIFG */ /* 0x1C */
-} xBSP430periphPORT_5XX_8;
+} sBSP430periphPORT_5XX_8;
 
 /** @cond DOXYGEN_INTERNAL */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-#define BSP430_PERIPH_PORTIE_ xBSP430periphPORT_5XX_8
-#define BSP430_PERIPH_PORT_ xBSP430periphPORT_5XX_8
-#define BSP430_PERIPH_PORTW_ xBSP430periphPORT_5XX_16
+#define BSP430_PERIPH_PORTIE_ sBSP430periphPORT_5XX_8
+#define BSP430_PERIPH_PORT_ sBSP430periphPORT_5XX_8
+#define BSP430_PERIPH_PORTW_ sBSP430periphPORT_5XX_16
 #else /* MSP430XV2 */
-#define BSP430_PERIPH_PORTIE_ xBSP430periphPORT_IE_8
-#define BSP430_PERIPH_PORT_ xBSP430periphPORT_8
-#define BSP430_PERIPH_PORTW_ xBSP430periphPORT_16
+#define BSP430_PERIPH_PORTIE_ sBSP430periphPORT_IE_8
+#define BSP430_PERIPH_PORT_ sBSP430periphPORT_8
+#define BSP430_PERIPH_PORTW_ sBSP430periphPORT_16
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Structure used to access ports with interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-typedef BSP430_PERIPH_PORTIE_ xBSP430periphPORTIE;
+typedef BSP430_PERIPH_PORTIE_ sBSP430periphPORTIE;
 
 /** Structure used to access ports without interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-typedef BSP430_PERIPH_PORT_ xBSP430periphPORT;
+typedef BSP430_PERIPH_PORT_ sBSP430periphPORT;
 
 /** Structure used to access 16-bit ports.
  *
  * The underlying structure selected depends on the MCU family. */
-typedef BSP430_PERIPH_PORTW_ xBSP430periphPORTW;
+typedef BSP430_PERIPH_PORTW_ sBSP430periphPORTW;
 
 /** Get the peripheral register pointer for an interrupt-enabled port.
  *
@@ -266,7 +266,7 @@ typedef BSP430_PERIPH_PORTW_ xBSP430periphPORTW;
  * #configBSP430_HPL_PORT1), or if the specified port does not
  * support interrupts (see #xBSP430periphLookupPORT)
  */
-volatile xBSP430periphPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xHandle);
+volatile sBSP430periphPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xHandle);
 
 /** Get the peripheral register pointer for a non-interrupt-enabled port.
  *
@@ -278,7 +278,7 @@ volatile xBSP430periphPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xH
  * #configBSP430_HPL_PORT1), or if the specified port supports
  * interrupts (see #xBSP430periphLookupPORTIE)
  */
-volatile xBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
+volatile sBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
 
 /** @cond DOXYGEN_INTERNAL */
 
