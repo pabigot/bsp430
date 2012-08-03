@@ -514,26 +514,6 @@ int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * returned if the handle does not correspond to a serial peripheral
  * for which both the HAL interface has been enabled.
  */
-static __inline__
-hBSP430halSERIAL xBSP430halLookupSERIAL (tBSP430periphHandle periph)
-{
-  hBSP430halSERIAL rv = NULL;
-#if configBSP430_SERIAL_USE_USCI - 0
-  if (NULL == rv) {
-    rv = xBSP430halLookupUSCI(periph);
-  }
-#endif /* configBSP430_SERIAL_USE_USCI */
-#if configBSP430_SERIAL_USE_USCI5 - 0
-  if (NULL == rv) {
-    rv = xBSP430halLookupUSCI5(periph);
-  }
-#endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCIA - 0
-  if (NULL == rv) {
-    rv = xBSP430halLookupEUSCIA(periph);
-  }
-#endif /* configBSP430_SERIAL_USE_EUSCIA */
-  return rv;
-}
+hBSP430halSERIAL xBSP430halLookupSERIAL (tBSP430periphHandle periph);
 
 #endif /* BSP430_SERIAL_H */

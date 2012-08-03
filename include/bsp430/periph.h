@@ -197,7 +197,7 @@ typedef struct sBSP430hplHALStatePrefix {
  * structure of registers used to control the peripheral.  The
  * peripheral handle is an integral value.  This routine translates
  * from the HPL to the integral handle; the other direction is done by
- * peripheral-specific functions like xBSP430periphLookupTIMER().
+ * peripheral-specific functions like xBSP430hplLookupTIMER().
  *
  * @param hpl Hardware presentation layer handle.  This is generally a
  * pointer to a volatile structure; the absence of the volatile

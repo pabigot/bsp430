@@ -87,7 +87,7 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TA1[
 #endif /* TA1 */
 ];
 
-sBSP430halTIMER xBSP430timerTA1_ = {
+sBSP430halTIMER xBSP430hal_TA1_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
 #if configBSP430_HAL_TA1_ISR - 0
@@ -98,7 +98,7 @@ sBSP430halTIMER xBSP430timerTA1_ = {
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
   },
   .hpl = BSP430_HPL_TA1,
-  .cc_callback = &cc_callback_TA1
+  .cc_callback = cc_callback_TA1
 };
 #endif /* configBSP430_HAL_TA1 */
 
@@ -114,7 +114,7 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TA2[
 #endif /* TA2 */
 ];
 
-sBSP430halTIMER xBSP430timerTA2_ = {
+sBSP430halTIMER xBSP430hal_TA2_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
 #if configBSP430_HAL_TA2_ISR - 0
@@ -141,7 +141,7 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TA3[
 #endif /* TA3 */
 ];
 
-sBSP430halTIMER xBSP430timerTA3_ = {
+sBSP430halTIMER xBSP430hal_TA3_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
 #if configBSP430_HAL_TA3_ISR - 0
@@ -166,7 +166,7 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TB0[
 #endif /* TB0 */
 ];
 
-sBSP430halTIMER xBSP430timerTB0_ = {
+sBSP430halTIMER xBSP430hal_TB0_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
 #if configBSP430_HAL_TB0_ISR - 0
@@ -191,7 +191,7 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TB1[
 #endif /* TB1 */
 ];
 
-sBSP430halTIMER xBSP430timerTB1_ = {
+sBSP430halTIMER xBSP430hal_TB1_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
 #if configBSP430_HAL_TB1_ISR - 0
@@ -216,7 +216,7 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TB2[
 #endif /* TB2 */
 ];
 
-sBSP430halTIMER xBSP430timerTB2_ = {
+sBSP430halTIMER xBSP430hal_TB2_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
 #if configBSP430_HAL_TB2_ISR - 0
@@ -258,7 +258,7 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
                               unsigned int ccis,
                               unsigned int count)
 {
-  volatile sBSP430hplTIMER * tp = xBSP430periphLookupTIMER(periph);
+  volatile sBSP430hplTIMER * tp = xBSP430hplLookupTIMER(periph);
   int i;
   unsigned int c0 = 0;
   unsigned int c1;
