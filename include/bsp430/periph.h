@@ -132,7 +132,7 @@ typedef int tBSP430periphHandle;
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0
 
 /** Mask used to isolate the HPL variant in the
- * sBSP430periphHALStatePrefix structure @a cflags field */
+ * sBSP430hplHALStatePrefix structure @a cflags field */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ 0x0F
 
 /** Extract HPL variant from a HAL state instance.
@@ -145,7 +145,7 @@ typedef int tBSP430periphHandle;
 /** Indication that an ISR is associated with a HAL instance
  *
  * This flag is set in a HAL instance state
- * sBSP430periphHALStatePrefix cflags field to denote that an ISR
+ * sBSP430hplHALStatePrefix cflags field to denote that an ISR
  * implementation has been provided by the infrastructure.
  *
  * Where a peripheral supports multiple ISRs per instance:
@@ -159,7 +159,7 @@ typedef int tBSP430periphHandle;
 /** Indication that secondary ISR is associated with a HAL instance
  *
  * This flag is set in a HAL instance state
- * sBSP430periphHALStatePrefix cflags field to denote that a secondary
+ * sBSP430hplHALStatePrefix cflags field to denote that a secondary
  * ISR implementation has been provided by the infrastructure.
  *
  * Where a peripheral supports multiple ISRs per instance:
@@ -175,7 +175,7 @@ typedef int tBSP430periphHandle;
  * Each state structure for a HAL instance begins with a field of this
  * type named @c hal_state.
  */
-typedef struct sBSP430periphHALStatePrefix {
+typedef struct sBSP430hplHALStatePrefix {
   /** Immutable flags recording information about the HAL interface.
    *
    * Information conveyed includes a selector for the underlying HPL
@@ -188,7 +188,7 @@ typedef struct sBSP430periphHALStatePrefix {
    * may be flags that are worth having at this level, such as a
    * resource-in-use marker. */
   unsigned char flags;
-} sBSP430periphHALStatePrefix;
+} sBSP430hplHALStatePrefix;
 
 /** Get the peripheral handle corresponding to an HPL handle
  *
@@ -214,8 +214,8 @@ xBSP430periphFromHPL (volatile void * hpl)
 }
 
 /* Forward declarations */
-struct sBSP430periphISRCallbackVoid;
-struct sBSP430periphISRCallbackIndexed;
+struct sBSP430halISRCallbackVoid;
+struct sBSP430halISRCallbackIndexed;
 
 /** Mask for status register bits cleared in ISR top half.
  *
@@ -274,7 +274,7 @@ struct sBSP430periphISRCallbackIndexed;
  * should be a combination of bits like #LPM4_bits and
  * #BSP430_PERIPH_ISR_CALLBACK_YIELD.
  */
-typedef int (* iBSP430periphISRCallbackVoid) (const struct sBSP430periphISRCallbackVoid * cb,
+typedef int (* iBSP430periphISRCallbackVoid) (const struct sBSP430halISRCallbackVoid * cb,
     void * context);
 
 /** Callback for ISR chains where the event includes an index
@@ -291,29 +291,29 @@ typedef int (* iBSP430periphISRCallbackVoid) (const struct sBSP430periphISRCallb
  *
  * @return As with #iBSP430periphISRCallbackVoid.
  */
-typedef int (* iBSP430periphISRCallbackIndexed) (const struct sBSP430periphISRCallbackIndexed * cb,
+typedef int (* iBSP430periphISRCallbackIndexed) (const struct sBSP430halISRCallbackIndexed * cb,
     void * context,
     int idx);
 
 /** Structure used to record #iBSP430periphISRCallbackVoid chains. */
-typedef struct sBSP430periphISRCallbackVoid {
+typedef struct sBSP430halISRCallbackVoid {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain. */
-  const struct sBSP430periphISRCallbackVoid * next;
+  const struct sBSP430halISRCallbackVoid * next;
 
   /** The function to be invoked. */
   iBSP430periphISRCallbackVoid callback;
-} sBSP430periphISRCallbackVoid;
+} sBSP430halISRCallbackVoid;
 
 /** Structure used to record #iBSP430periphISRCallbackIndexed chains. */
-typedef struct sBSP430periphISRCallbackIndexed {
+typedef struct sBSP430halISRCallbackIndexed {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain. */
-  const struct sBSP430periphISRCallbackIndexed * next;
+  const struct sBSP430halISRCallbackIndexed * next;
 
   /** The function to be invoked. */
   iBSP430periphISRCallbackIndexed callback;
-} sBSP430periphISRCallbackIndexed;
+} sBSP430halISRCallbackIndexed;
 
 /** Execute a chain of #iBSP430periphISRCallbackVoid callbacks.
  *
@@ -330,7 +330,7 @@ typedef struct sBSP430periphISRCallbackIndexed {
  * of each callback */
 static int
 __inline__
-iBSP430callbackInvokeISRVoid_ni (const struct sBSP430periphISRCallbackVoid * const * cbpp,
+iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRCallbackVoid * const * cbpp,
                                  void * context,
                                  int basis)
 {
@@ -353,7 +353,7 @@ iBSP430callbackInvokeISRVoid_ni (const struct sBSP430periphISRCallbackVoid * con
  * @return As with #iBSP430callbackInvokeISRVoid_ni */
 static int
 __inline__
-iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430periphISRCallbackIndexed * const * cbpp,
+iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRCallbackIndexed * const * cbpp,
                                     void * context,
                                     int idx,
                                     int basis)

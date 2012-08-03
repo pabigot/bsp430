@@ -51,7 +51,7 @@
 #endif /* __MSP430_HAS_USCI_A0__ */
 
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
-typedef struct sBSP430periphUSCI5 {
+typedef struct sBSP430hplUSCI5 {
   union {						/* 0x00 */
     unsigned int ctlw0;		/**< UCtxCTLW0 */
     struct {
@@ -108,7 +108,7 @@ typedef struct sBSP430periphUSCI5 {
     };
   };
   unsigned int iv;			/**< UCtxIV */ /* 0x1E */
-} sBSP430periphUSCI5;
+} sBSP430hplUSCI5;
 
 /** @cond DOXYGEN_INTERNAL */
 #define BSP430_PERIPH_USCI5_A0_BASEADDRESS_ __MSP430_BASEADDRESS_USCI_A0__
@@ -131,14 +131,14 @@ typedef struct sBSP430usci5State {
   unsigned int flags;
 
   /** Pointer to the peripheral register structure. */
-  volatile sBSP430periphUSCI5 * const usci5;
+  volatile sBSP430hplUSCI5 * const usci5;
 
   /** The callback chain to invoke when a byte is received */
-  const struct sBSP430periphISRCallbackVoid * rx_callback;
+  const struct sBSP430halISRCallbackVoid * rx_callback;
 
   /** The callback chain to invoke when space is available in the
    * transmission buffer */
-  const struct sBSP430periphISRCallbackVoid * tx_callback;
+  const struct sBSP430halISRCallbackVoid * tx_callback;
 
   /** Location to store a single incoming character when #rx_queue
    * is undefined. */
@@ -653,7 +653,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A0 - 0)
-#define BSP430_HPL_USCI5_A0 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A0)
+#define BSP430_HPL_USCI5_A0 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_A0)
 #endif /* configBSP430_HPL_USCI5_A0 */
 
 /** HPL pointer for USCI5_A1.
@@ -667,7 +667,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A1 - 0)
-#define BSP430_HPL_USCI5_A1 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A1)
+#define BSP430_HPL_USCI5_A1 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_A1)
 #endif /* configBSP430_HPL_USCI5_A1 */
 
 /** HPL pointer for USCI5_A2.
@@ -681,7 +681,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A2 - 0)
-#define BSP430_HPL_USCI5_A2 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A2)
+#define BSP430_HPL_USCI5_A2 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_A2)
 #endif /* configBSP430_HPL_USCI5_A2 */
 
 /** HPL pointer for USCI5_A3.
@@ -695,7 +695,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_A3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_A3 - 0)
-#define BSP430_HPL_USCI5_A3 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_A3)
+#define BSP430_HPL_USCI5_A3 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_A3)
 #endif /* configBSP430_HPL_USCI5_A3 */
 
 /** HPL pointer for USCI5_B0.
@@ -709,7 +709,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B0 - 0)
-#define BSP430_HPL_USCI5_B0 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B0)
+#define BSP430_HPL_USCI5_B0 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_B0)
 #endif /* configBSP430_HPL_USCI5_B0 */
 
 /** HPL pointer for USCI5_B1.
@@ -723,7 +723,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B1 - 0)
-#define BSP430_HPL_USCI5_B1 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B1)
+#define BSP430_HPL_USCI5_B1 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_B1)
 #endif /* configBSP430_HPL_USCI5_B1 */
 
 /** HPL pointer for USCI5_B2.
@@ -737,7 +737,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B2 - 0)
-#define BSP430_HPL_USCI5_B2 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B2)
+#define BSP430_HPL_USCI5_B2 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_B2)
 #endif /* configBSP430_HPL_USCI5_B2 */
 
 /** HPL pointer for USCI5_B3.
@@ -751,7 +751,7 @@ extern sBSP430usci5State xBSP430usci5_USCI5_B3_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI5_B3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI5_B3 - 0)
-#define BSP430_HPL_USCI5_B3 ((volatile sBSP430periphUSCI5 *)BSP430_PERIPH_USCI5_B3)
+#define BSP430_HPL_USCI5_B3 ((volatile sBSP430hplUSCI5 *)BSP430_PERIPH_USCI5_B3)
 #endif /* configBSP430_HPL_USCI5_B3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
@@ -950,8 +950,8 @@ tBSP430usci5Handle xBSP430usci5OpenSPI (tBSP430periphHandle xPeriph,
 
 /** USCI5-specific implementation of xBSP430serialConfigureCallbacks() */
 int iBSP430usci5ConfigureCallbacks (tBSP430usci5Handle device,
-                                    const struct sBSP430periphISRCallbackVoid * rx_callback,
-                                    const struct sBSP430periphISRCallbackVoid * tx_callback);
+                                    const struct sBSP430halISRCallbackVoid * rx_callback,
+                                    const struct sBSP430halISRCallbackVoid * tx_callback);
 
 /** USCI5-specific implementation of xBSP430serialClose() */
 int iBSP430usci5Close (tBSP430usci5Handle xUSCI);

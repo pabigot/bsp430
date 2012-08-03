@@ -59,7 +59,7 @@ enum eBSP430foo is an enumeration type related to foo.  eBSP430foo is a
 typedef to this enum.
 
 tBSP430foo is a typedef related to foo that is not a struct, union, or enum.
-Exception: sBSP430periphPORTfoo is a platform-specific typedef to the
+Exception: sBSP430hplPORTfoo is a platform-specific typedef to the
 variant port structure supported on the target MCU.
 
 hBSP430foo is a HAL (hBSP430%(periph)s%(INSTANCE)s) handle for a peripheral.

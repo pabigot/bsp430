@@ -41,7 +41,7 @@
 int to_tx = -1;
 
 static int
-rx_callback (const struct sBSP430periphISRCallbackVoid * cb,
+rx_callback (const struct sBSP430halISRCallbackVoid * cb,
              void * context)
 {
   tBSP430serialHandle device = (tBSP430serialHandle)context;
@@ -58,13 +58,13 @@ rx_callback (const struct sBSP430periphISRCallbackVoid * cb,
   return 0;
 }
 
-const struct sBSP430periphISRCallbackVoid rx_entry = {
+const struct sBSP430halISRCallbackVoid rx_entry = {
   .next = NULL,
   .callback = rx_callback
 };
 
 static int
-tx_callback (const struct sBSP430periphISRCallbackVoid * cb,
+tx_callback (const struct sBSP430halISRCallbackVoid * cb,
              void * context)
 {
   tBSP430serialHandle device = (tBSP430serialHandle)context;
@@ -89,7 +89,7 @@ tx_callback (const struct sBSP430periphISRCallbackVoid * cb,
   return rv;
 }
 
-const struct sBSP430periphISRCallbackVoid tx_entry = {
+const struct sBSP430halISRCallbackVoid tx_entry = {
   .next = NULL,
   .callback = tx_callback
 };

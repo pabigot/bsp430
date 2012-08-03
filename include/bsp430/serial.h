@@ -111,8 +111,8 @@ typedef tBSP430serialHandle tBSP430serialHandle;
  *
  * @note In almost all cases, a value of zero is appropriate.  If you
  * need to configure parity and other control word features, be aware
- * that #sBSP430periphUSCI5 and #sBSP430periphEUSCIA have the ctl0 and
- * ctl1 fields swapped relative to their order in #sBSP430periphUSCI.
+ * that #sBSP430hplUSCI5 and #sBSP430hplEUSCIA have the ctl0 and
+ * ctl1 fields swapped relative to their order in #sBSP430hplUSCI.
  * Since these peripherals have a ctlw0 field, that will be used,
  * resulting in the lower word being written to ctl1 and the upper
  * word to ctl0.  This can result in confusion, since constants like
@@ -188,8 +188,8 @@ tBSP430serialHandle xBSP430serialOpenSPI (tBSP430periphHandle periph,
  */
 #if defined(BSP430_DOXYGEN)
 int iBSP430serialConfigureCallbacks (tBSP430serialHandle device,
-                                     const struct sBSP430periphISRCallbackVoid * rx_callback,
-                                     const struct sBSP430periphISRCallbackVoid * tx_callback);
+                                     const struct sBSP430halISRCallbackVoid * rx_callback,
+                                     const struct sBSP430halISRCallbackVoid * tx_callback);
 #endif /* BSP430_DOXYGEN */
 
 /** Release a serial device.
@@ -325,8 +325,8 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
   static __inline__                                                     \
   int                                                                   \
   iBSP430serialConfigureCallbacks (tBSP430serialHandle device,          \
-                                   const struct sBSP430periphISRCallbackVoid * rx_callback, \
-                                   const struct sBSP430periphISRCallbackVoid * tx_callback) \
+                                   const struct sBSP430halISRCallbackVoid * rx_callback, \
+                                   const struct sBSP430halISRCallbackVoid * tx_callback) \
   {                                                                     \
     return iBSP430##_serial##ConfigureCallbacks(device, rx_callback, tx_callback); \
   }

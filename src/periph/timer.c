@@ -48,7 +48,7 @@
 
 #if configBSP430_HAL_TA0 - 0
 
-static const sBSP430periphISRCallbackIndexed * cc_callback_TA0[
+static const sBSP430halISRCallbackIndexed * cc_callback_TA0[
 #if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
   2
 #elif defined(__MSP430_HAS_TA3__) || defined(__MSP430_HAS_T0A3__)
@@ -66,7 +66,7 @@ sBSP430timerState xBSP430timer_TA0_ = {
 
 #if configBSP430_HAL_TA1 - 0
 
-static const sBSP430periphISRCallbackIndexed * cc_callback_TA1[
+static const sBSP430halISRCallbackIndexed * cc_callback_TA1[
 #if defined(__MSP430_HAS_T1A2__)
   2
 #elif defined(__MSP430_HAS_T1A3__)
@@ -84,7 +84,7 @@ sBSP430timerState xBSP430timerTA1_ = {
 
 #if configBSP430_HAL_TA2 - 0
 
-static const sBSP430periphISRCallbackIndexed * cc_callback_TA2[
+static const sBSP430halISRCallbackIndexed * cc_callback_TA2[
 #if defined(__MSP430_HAS_T2A2__)
   2
 #elif defined(__MSP430_HAS_T2A3__)
@@ -102,7 +102,7 @@ sBSP430timerState xBSP430timerTA2_ = {
 
 #if configBSP430_HAL_TA3 - 0
 
-static const sBSP430periphISRCallbackIndexed * cc_callback_TA3[
+static const sBSP430halISRCallbackIndexed * cc_callback_TA3[
 #if defined(__MSP430_HAS_T3A2__)
   2
 #elif defined(__MSP430_HAS_T3A3__)
@@ -120,7 +120,7 @@ sBSP430timerState xBSP430timerTA3_ = {
 
 #if configBSP430_HAL_TB0 - 0
 
-static const sBSP430periphISRCallbackIndexed * cc_callback_TB0[
+static const sBSP430halISRCallbackIndexed * cc_callback_TB0[
 #if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
   3
 #else
@@ -136,7 +136,7 @@ sBSP430timerState xBSP430timerTB0_ = {
 
 #if configBSP430_HAL_TB1 - 0
 
-static const sBSP430periphISRCallbackIndexed * cc_callback_TB1[
+static const sBSP430halISRCallbackIndexed * cc_callback_TB1[
 #if defined(__MSP430_HAS_T1B3__)
   3
 #else
@@ -152,7 +152,7 @@ sBSP430timerState xBSP430timerTB1_ = {
 
 #if configBSP430_HAL_TB2 - 0
 
-static const sBSP430periphISRCallbackIndexed * cc_callback_TB2[
+static const sBSP430halISRCallbackIndexed * cc_callback_TB2[
 #if defined(__MSP430_HAS_T2B3__)
   3
 #else
@@ -193,7 +193,7 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
                               unsigned int ccis,
                               unsigned int count)
 {
-  volatile sBSP430periphTIMER * tp = xBSP430periphLookupTIMER(periph);
+  volatile sBSP430hplTIMER * tp = xBSP430periphLookupTIMER(periph);
   int i;
   unsigned int c0 = 0;
   unsigned int c1;
@@ -510,7 +510,7 @@ isr_TB2 (void)
 /* !BSP430! end=hal_timer_isr_defn */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
-volatile sBSP430periphTIMER *
+volatile sBSP430hplTIMER *
 xBSP430periphLookupTIMER (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hpl_demux */

@@ -121,7 +121,7 @@
  *
  * Access to SEL2 capability for these ports is not available in the
  * hardware-presentation layer. */
-typedef struct sBSP430periphPORT_IE_8 {
+typedef struct sBSP430hplPORT_IE_8 {
   unsigned char in;			/* 0x00 */
   unsigned char out;			/* 0x01 */
   unsigned char dir;			/* 0x02 */
@@ -130,18 +130,18 @@ typedef struct sBSP430periphPORT_IE_8 {
   unsigned char ie;			/* 0x05 */
   unsigned char sel;			/* 0x06 */
   unsigned char ren;			/* 0x07 */
-} sBSP430periphPORT_IE_8;
+} sBSP430hplPORT_IE_8;
 
 /** Layout for pre-5xx--family 8-bit ports not supporting interrupts.
  *
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
-typedef struct sBSP430periphPORT_8 {
+typedef struct sBSP430hplPORT_8 {
   unsigned char in;			/* 0x00 */
   unsigned char out;			/* 0x01 */
   unsigned char dir;			/* 0x02 */
   unsigned char sel;			/* 0x03 */
-} sBSP430periphPORT_8;
+} sBSP430hplPORT_8;
 
 /** Helper for accessing 8-bit registers within 16-bit registers */
 typedef union uBSP430periphPORT_16 {
@@ -157,16 +157,16 @@ typedef union uBSP430periphPORT_16 {
  *
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
-typedef struct sBSP430periphPORT_16 {
+typedef struct sBSP430hplPORT_16 {
   uBSP430periphPORT_16 in;	/* 0x00 */
   uBSP430periphPORT_16 out;	/* 0x02 */
   uBSP430periphPORT_16 dir;	/* 0x04 */
   uBSP430periphPORT_16 sel;	/* 0x08 */
-} sBSP430periphPORT_16;
+} sBSP430hplPORT_16;
 
 /** Layout for 5xx family ports, 16-bit access
  */
-typedef struct sBSP430periphPORT_5XX_16 {
+typedef struct sBSP430hplPORT_5XX_16 {
   uBSP430periphPORT_16 in;	/**< PxIN */ /* 0x00 */
   uBSP430periphPORT_16 out;	/**< PxOUT */ /* 0x02 */
   uBSP430periphPORT_16 dir;	/**< PxDIR (set for output) */ /* 0x04 */
@@ -185,14 +185,14 @@ typedef struct sBSP430periphPORT_5XX_16 {
   uBSP430periphPORT_16 ies;	 /**< PxIES */ /* 0x18 */
   uBSP430periphPORT_16 ie;	 /**< PxIE */ /* 0x1A */
   uBSP430periphPORT_16 ifg;	 /**< PxIFG */ /* 0x1C */
-} sBSP430periphPORT_5XX_16;
+} sBSP430hplPORT_5XX_16;
 
 /** Layout for 5xx family ports, 8-bit access
  *
  * This structure includes the necessary padding to maintain alignment
  * when referencing the second 8-bit register in a 16-bit bank.
  */
-typedef struct sBSP430periphPORT_5XX_8 {
+typedef struct sBSP430hplPORT_5XX_8 {
   unsigned char in;	/**< PxIN */ /* 0x00 */
   unsigned char _reserved_x01;
   unsigned char out;	/**< PxOUT */ /* 0x02 */
@@ -225,33 +225,33 @@ typedef struct sBSP430periphPORT_5XX_8 {
   unsigned char ie;	 /**< PxIE */ /* 0x1A */
   unsigned char _reserved_x1B;
   unsigned char ifg;	 /**< PxIFG */ /* 0x1C */
-} sBSP430periphPORT_5XX_8;
+} sBSP430hplPORT_5XX_8;
 
 /** Structure used to access ports with interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-typedef sBSP430periphPORT_5XX_8 sBSP430periphPORTIE;
+typedef sBSP430hplPORT_5XX_8 sBSP430hplPORTIE;
 #else /* MSP430XV2 */
-typedef sBSP430periphPORT_IE_8 sBSP430periphPORTIE;
+typedef sBSP430hplPORT_IE_8 sBSP430hplPORTIE;
 #endif /* MSP430XV2 */
 
 /** Structure used to access ports without interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-typedef sBSP430periphPORT_5XX_8 sBSP430periphPORT;
+typedef sBSP430hplPORT_5XX_8 sBSP430hplPORT;
 #else /* MSP430XV2 */
-typedef sBSP430periphPORT_8 sBSP430periphPORT;
+typedef sBSP430hplPORT_8 sBSP430hplPORT;
 #endif /* MSP430XV2 */
 
 /** Structure used to access 16-bit ports.
  *
  * The underlying structure selected depends on the MCU family. */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-typedef sBSP430periphPORT_5XX_16 sBSP430periphPORTW;
+typedef sBSP430hplPORT_5XX_16 sBSP430hplPORTW;
 #else /* MSP430XV2 */
-typedef sBSP430periphPORT_16 sBSP430periphPORTW;
+typedef sBSP430hplPORT_16 sBSP430hplPORTW;
 #endif /* MSP430XV2 */
 
 /** Get the peripheral register pointer for an interrupt-enabled port.
@@ -266,7 +266,7 @@ typedef sBSP430periphPORT_16 sBSP430periphPORTW;
  * #configBSP430_HPL_PORT1), or if the specified port does not
  * support interrupts (see #xBSP430periphLookupPORT)
  */
-volatile sBSP430periphPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xHandle);
+volatile sBSP430hplPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xHandle);
 
 /** Get the peripheral register pointer for a non-interrupt-enabled port.
  *
@@ -278,7 +278,7 @@ volatile sBSP430periphPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xH
  * #configBSP430_HPL_PORT1), or if the specified port supports
  * interrupts (see #xBSP430periphLookupPORTIE)
  */
-volatile sBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
+volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
 
 /** @cond DOXYGEN_INTERNAL */
 
@@ -327,23 +327,23 @@ volatile sBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandl
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Field value for variant stored in sBSP430portState.hal_state when
- * HPL reference is to an sBSP430periph_PORT_IE_8. */
+ * HPL reference is to an sBSP430hpl_PORT_IE_8. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_IE_8 1
 
 /** Field value for variant stored in sBSP430portState.hal_state when
- * HPL reference is to an sBSP430periph_PORT_8. */
+ * HPL reference is to an sBSP430hpl_PORT_8. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_8 2
 
 /** Field value for variant stored in sBSP430portState.hal_state when
- * HPL reference is to an sBSP430periph_PORT_16. */
+ * HPL reference is to an sBSP430hpl_PORT_16. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_16 3
 
 /** Field value for variant stored in sBSP430portState.hal_state when
- * HPL reference is to an sBSP430periph_PORT_5XX_8. */
+ * HPL reference is to an sBSP430hpl_PORT_5XX_8. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8 4
 
 /** Field value for variant stored in sBSP430portState.hal_state when
- * HPL reference is to an sBSP430periph_PORT_5XX_16. */
+ * HPL reference is to an sBSP430hpl_PORT_5XX_16. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_16 5
 
 /** Field value for variant stored in sBSP430portState.hal_state when
@@ -368,7 +368,7 @@ volatile sBSP430periphPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandl
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
 #else /* MSP430XV2 */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_8
-typedef sBSP430periphPORT_8 sBSP430periphPORT;
+typedef sBSP430hplPORT_8 sBSP430hplPORT;
 #endif /* MSP430XV2 */
 
 /** Field value for variant stored in sBSP430portState.hal_state when
@@ -437,30 +437,30 @@ typedef sBSP430periphPORT_8 sBSP430periphPORT;
 typedef struct sBSP430portState {
   /** Common header used to extract the correct HPL pointer type from
    * the hpl union. */
-  sBSP430periphHALStatePrefix hal_state;
+  sBSP430hplHALStatePrefix hal_state;
   union {
     /** Access to the HPL pointer ignoring its underlying type */
     void * any;
     /** Access to the HPL pointer as a pre-5xx 8-bit interrupt-enabled port */
-    volatile sBSP430periphPORT_IE_8 * port_ie_8;
+    volatile sBSP430hplPORT_IE_8 * port_ie_8;
     /** Access to the HPL pointer as a pre-5xx 8-bit port not supporting interrupts */
-    volatile sBSP430periphPORT_8 * port_8;
+    volatile sBSP430hplPORT_8 * port_8;
     /** Access to the HPL pointer as a pre-5xx 16-bit port not supporting interrupts */
-    volatile sBSP430periphPORT_16 * port_16;
+    volatile sBSP430hplPORT_16 * port_16;
     /** Access to the HPL pointer as a 5xx 8-bit port */
-    volatile sBSP430periphPORT_5XX_8 * port_5xx_8;
+    volatile sBSP430hplPORT_5XX_8 * port_5xx_8;
     /** Access to the HPL pointer as a 5xx 16-bit port */
-    volatile sBSP430periphPORT_5XX_16 * port_5xx_16;
+    volatile sBSP430hplPORT_5XX_16 * port_5xx_16;
     /** Access to the HPL pointer as a MCU-dependent interrupt-enabled port */
-    volatile sBSP430periphPORTIE * portie;
+    volatile sBSP430hplPORTIE * portie;
     /** Access to the HPL pointer as a MCU-dependent port not supporting interrupts */
-    volatile sBSP430periphPORT * port;
+    volatile sBSP430hplPORT * port;
     /** Access to the HPL pointer as a MCU-dependent word-access port */
-    volatile sBSP430periphPORTW * portw;
+    volatile sBSP430hplPORTW * portw;
   } const hpl;
   /** Callbacks invoked when the HAL ISR handler receives an event for
    * the corresponding bit of the port. */
-  const struct sBSP430periphISRCallbackIndexed * pin_callback[8];
+  const struct sBSP430halISRCallbackIndexed * pin_callback[8];
 #if defined(__MSP430_HAS_PORT1_R__)
   /** Pointer to the resistor enable register for this peripheral.
    *
@@ -1143,8 +1143,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT1
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1152,9 +1152,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 <= 2)
-#define BSP430_HPL_PORT1 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT1)
+#define BSP430_HPL_PORT1 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT1)
 #else /* IE */
-#define BSP430_HPL_PORT1 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT1)
+#define BSP430_HPL_PORT1 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT1)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT1 */
 
@@ -1166,8 +1166,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT2
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1175,9 +1175,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 <= 2)
-#define BSP430_HPL_PORT2 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT2)
+#define BSP430_HPL_PORT2 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT2)
 #else /* IE */
-#define BSP430_HPL_PORT2 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT2)
+#define BSP430_HPL_PORT2 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT2)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT2 */
 
@@ -1189,8 +1189,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT3
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1198,9 +1198,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 <= 2)
-#define BSP430_HPL_PORT3 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT3)
+#define BSP430_HPL_PORT3 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT3)
 #else /* IE */
-#define BSP430_HPL_PORT3 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT3)
+#define BSP430_HPL_PORT3 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT3)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT3 */
 
@@ -1212,8 +1212,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT4
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1221,9 +1221,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT4 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 <= 2)
-#define BSP430_HPL_PORT4 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT4)
+#define BSP430_HPL_PORT4 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT4)
 #else /* IE */
-#define BSP430_HPL_PORT4 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT4)
+#define BSP430_HPL_PORT4 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT4)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT4 */
 
@@ -1235,8 +1235,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT5
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1244,9 +1244,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT5 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 <= 2)
-#define BSP430_HPL_PORT5 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT5)
+#define BSP430_HPL_PORT5 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT5)
 #else /* IE */
-#define BSP430_HPL_PORT5 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT5)
+#define BSP430_HPL_PORT5 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT5)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT5 */
 
@@ -1258,8 +1258,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT6
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1267,9 +1267,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT6 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 <= 2)
-#define BSP430_HPL_PORT6 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT6)
+#define BSP430_HPL_PORT6 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT6)
 #else /* IE */
-#define BSP430_HPL_PORT6 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT6)
+#define BSP430_HPL_PORT6 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT6)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT6 */
 
@@ -1281,8 +1281,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT7
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1290,9 +1290,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT7 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 <= 2)
-#define BSP430_HPL_PORT7 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT7)
+#define BSP430_HPL_PORT7 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT7)
 #else /* IE */
-#define BSP430_HPL_PORT7 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT7)
+#define BSP430_HPL_PORT7 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT7)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT7 */
 
@@ -1304,8 +1304,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT8
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1313,9 +1313,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT8 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 <= 2)
-#define BSP430_HPL_PORT8 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT8)
+#define BSP430_HPL_PORT8 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT8)
 #else /* IE */
-#define BSP430_HPL_PORT8 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT8)
+#define BSP430_HPL_PORT8 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT8)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT8 */
 
@@ -1327,8 +1327,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT9
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1336,9 +1336,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT9 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 <= 2)
-#define BSP430_HPL_PORT9 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT9)
+#define BSP430_HPL_PORT9 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT9)
 #else /* IE */
-#define BSP430_HPL_PORT9 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT9)
+#define BSP430_HPL_PORT9 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT9)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT9 */
 
@@ -1350,8 +1350,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT10
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1359,9 +1359,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT10 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 <= 2)
-#define BSP430_HPL_PORT10 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT10)
+#define BSP430_HPL_PORT10 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT10)
 #else /* IE */
-#define BSP430_HPL_PORT10 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT10)
+#define BSP430_HPL_PORT10 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT10)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT10 */
 
@@ -1373,8 +1373,8 @@ extern sBSP430portState xBSP430port_PORT11_;
  * The pointer may be used only if #configBSP430_HPL_PORT11
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -1382,9 +1382,9 @@ extern sBSP430portState xBSP430port_PORT11_;
  * @dependency #configBSP430_HPL_PORT11 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 <= 2)
-#define BSP430_HPL_PORT11 ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_PORT11)
+#define BSP430_HPL_PORT11 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT11)
 #else /* IE */
-#define BSP430_HPL_PORT11 ((volatile sBSP430periphPORT *)BSP430_PERIPH_PORT11)
+#define BSP430_HPL_PORT11 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT11)
 #endif /* IE */
 #endif /* configBSP430_HPL_PORT11 */
 

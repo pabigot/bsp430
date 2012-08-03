@@ -59,7 +59,7 @@
 #endif /* __MSP430_HAS_USCI__ */
 
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 2xx/4xx MCU. */
-typedef struct sBSP430periphUSCI {
+typedef struct sBSP430hplUSCI {
   unsigned char ctl0;	/**< UCtxCTL0 */ /* 0x00 */
   unsigned char ctl1;	/**< UCtxCTL1 */ /* 0x01 */
   unsigned char br0;	/**< UCtxBR0 */ /* 0x02 */
@@ -68,7 +68,7 @@ typedef struct sBSP430periphUSCI {
   unsigned char stat;	/**< UCtxSTAT */ /* 0x05 */
   unsigned char rxbuf; /**< UCtxRXBUF */ /* 0x06 */
   unsigned char txbuf; /**< UCtxTXBUF */ /* 0x07 */
-} sBSP430periphUSCI;
+} sBSP430hplUSCI;
 
 /** @cond DOXYGEN_INTERNAL */
 #define BSP430_PERIPH_USCI_A0_BASEADDRESS_ 0x0060
@@ -88,7 +88,7 @@ typedef struct sBSP430usciState {
   unsigned int flags;
 
   /** Pointer to the peripheral register structure. */
-  volatile sBSP430periphUSCI * const usci;
+  volatile sBSP430hplUSCI * const usci;
 
   /** Pointer to the interrupt enable register for the peripheral */
   volatile unsigned char * const iep;
@@ -103,11 +103,11 @@ typedef struct sBSP430usciState {
   unsigned char const tx_bit;
 
   /** The callback chain to invoke when a byte is received */
-  const struct sBSP430periphISRCallbackVoid * rx_callback;
+  const struct sBSP430halISRCallbackVoid * rx_callback;
 
   /** The callback chain to invoke when space is available in the
    * transmission buffer */
-  const struct sBSP430periphISRCallbackVoid * tx_callback;
+  const struct sBSP430halISRCallbackVoid * tx_callback;
 
   /** Location to store a single incoming character when #rx_queue
    * is undefined. */
@@ -386,7 +386,7 @@ extern sBSP430usciState xBSP430usci_USCI_B1_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI_A0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A0 - 0)
-#define BSP430_HPL_USCI_A0 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_A0)
+#define BSP430_HPL_USCI_A0 ((volatile sBSP430hplUSCI *)BSP430_PERIPH_USCI_A0)
 #endif /* configBSP430_HPL_USCI_A0 */
 
 /** HPL pointer for USCI_A1.
@@ -400,7 +400,7 @@ extern sBSP430usciState xBSP430usci_USCI_B1_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI_A1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A1 - 0)
-#define BSP430_HPL_USCI_A1 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_A1)
+#define BSP430_HPL_USCI_A1 ((volatile sBSP430hplUSCI *)BSP430_PERIPH_USCI_A1)
 #endif /* configBSP430_HPL_USCI_A1 */
 
 /** HPL pointer for USCI_B0.
@@ -414,7 +414,7 @@ extern sBSP430usciState xBSP430usci_USCI_B1_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI_B0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B0 - 0)
-#define BSP430_HPL_USCI_B0 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_B0)
+#define BSP430_HPL_USCI_B0 ((volatile sBSP430hplUSCI *)BSP430_PERIPH_USCI_B0)
 #endif /* configBSP430_HPL_USCI_B0 */
 
 /** HPL pointer for USCI_B1.
@@ -428,7 +428,7 @@ extern sBSP430usciState xBSP430usci_USCI_B1_;
  * @defaulted
  * @dependency #configBSP430_HPL_USCI_B1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B1 - 0)
-#define BSP430_HPL_USCI_B1 ((volatile sBSP430periphUSCI *)BSP430_PERIPH_USCI_B1)
+#define BSP430_HPL_USCI_B1 ((volatile sBSP430hplUSCI *)BSP430_PERIPH_USCI_B1)
 #endif /* configBSP430_HPL_USCI_B1 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
@@ -557,8 +557,8 @@ tBSP430usciHandle xBSP430usciOpenSPI (tBSP430periphHandle xPeriph,
 
 /** USCI-specific implementation of xBSP430serialConfigureCallbacks() */
 int iBSP430usciConfigureCallbacks (tBSP430usciHandle device,
-                                   const struct sBSP430periphISRCallbackVoid * rx_callback,
-                                   const struct sBSP430periphISRCallbackVoid * tx_callback);
+                                   const struct sBSP430halISRCallbackVoid * rx_callback,
+                                   const struct sBSP430halISRCallbackVoid * tx_callback);
 
 /** USCI-specific implementation of xBSP430serialClose() */
 int iBSP430usciClose (tBSP430usciHandle xUSCI);

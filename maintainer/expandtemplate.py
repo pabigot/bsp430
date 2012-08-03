@@ -76,7 +76,7 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
  * @defaulted
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
-#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430periph%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
+#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430hpl%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
     
@@ -88,8 +88,8 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
  * The pointer may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
- * @note The underlying type is #sBSP430periphPORTIE for ports 1 and 2
- * and ports on 5xx/6xx MCUs, and is #sBSP430periphPORT for ports 3
+ * @note The underlying type is #sBSP430hplPORTIE for ports 1 and 2
+ * and ports on 5xx/6xx MCUs, and is #sBSP430hplPORT for ports 3
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
@@ -97,9 +97,9 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
-#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430periphPORTIE *)BSP430_PERIPH_%(INSTANCE)s)
+#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_%(INSTANCE)s)
 #else /* IE */
-#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430periphPORT *)BSP430_PERIPH_%(INSTANCE)s)
+#define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430hplPORT *)BSP430_PERIPH_%(INSTANCE)s)
 #endif /* IE */
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',

@@ -282,7 +282,7 @@ unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
 
 /** Layout for Timer_A and Timer_B peripherals.
  */
-typedef struct sBSP430periphTIMER {
+typedef struct sBSP430hplTIMER {
   unsigned int ctl;			/**< Control register (TA0CTL) */
   union {
     unsigned int cctl[7];		/**< Capture/Compare Control registers (indexed) */
@@ -309,7 +309,7 @@ typedef struct sBSP430periphTIMER {
       unsigned int ccr6;	/**< TB#CCR6 */
     };
   };
-} sBSP430periphTIMER;
+} sBSP430hplTIMER;
 
 /** @cond DOXYGEN_INTERNAL
  *
@@ -386,7 +386,7 @@ typedef struct sBSP430periphTIMER {
  * A null pointer is returned if the handle does not correspond to a
  * timer which has been enabled (e.g., with #configBSP430_HPL_TA0).
  */
-volatile sBSP430periphTIMER * xBSP430periphLookupTIMER (tBSP430periphHandle xHandle);
+volatile sBSP430hplTIMER * xBSP430periphLookupTIMER (tBSP430periphHandle xHandle);
 
 /** Structure holding hardware abstraction layer state for Timer_A and Timer_B.
  *
@@ -394,7 +394,7 @@ volatile sBSP430periphTIMER * xBSP430periphLookupTIMER (tBSP430periphHandle xHan
  * when overriding BSP430 HAL capabilities. */
 typedef struct sBSP430timerState {
   /** The underlying timer peripheral register structure */
-  volatile sBSP430periphTIMER * const hpl;
+  volatile sBSP430hplTIMER * const hpl;
 
   /** The number of times the timer has wrapped.
    *
@@ -409,18 +409,18 @@ typedef struct sBSP430timerState {
 
   /** The callback chain to invoke when an overflow interrupt is
    * received. */
-  const struct sBSP430periphISRCallbackVoid * overflow_callback;
+  const struct sBSP430halISRCallbackVoid * overflow_callback;
 
   /** The callback chain to invoke when a CC0 interrupt is
    * received. */
-  const struct sBSP430periphISRCallbackVoid * cc0_callback;
+  const struct sBSP430halISRCallbackVoid * cc0_callback;
 
   /** The callback chain to invoke when a CCx interrupt is received.
    *
    * The chains are independent for each capture/compare block, but
    * the block index is passed into the chain so that a common
    * handler can be invoked if desired. */
-  const struct sBSP430periphISRCallbackIndexed * * const cc_callback;
+  const struct sBSP430halISRCallbackIndexed * * const cc_callback;
 } sBSP430timerState;
 
 /** The timer internal state is protected. */
@@ -920,7 +920,7 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * @defaulted
  * @dependency #configBSP430_HPL_TA0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
-#define BSP430_HPL_TA0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA0)
+#define BSP430_HPL_TA0 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA0)
 #endif /* configBSP430_HPL_TA0 */
 
 /** HPL pointer for TA1.
@@ -934,7 +934,7 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * @defaulted
  * @dependency #configBSP430_HPL_TA1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
-#define BSP430_HPL_TA1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA1)
+#define BSP430_HPL_TA1 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA1)
 #endif /* configBSP430_HPL_TA1 */
 
 /** HPL pointer for TA2.
@@ -948,7 +948,7 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * @defaulted
  * @dependency #configBSP430_HPL_TA2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
-#define BSP430_HPL_TA2 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA2)
+#define BSP430_HPL_TA2 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA2)
 #endif /* configBSP430_HPL_TA2 */
 
 /** HPL pointer for TA3.
@@ -962,7 +962,7 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * @defaulted
  * @dependency #configBSP430_HPL_TA3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
-#define BSP430_HPL_TA3 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TA3)
+#define BSP430_HPL_TA3 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA3)
 #endif /* configBSP430_HPL_TA3 */
 
 /** HPL pointer for TB0.
@@ -976,7 +976,7 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * @defaulted
  * @dependency #configBSP430_HPL_TB0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
-#define BSP430_HPL_TB0 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB0)
+#define BSP430_HPL_TB0 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB0)
 #endif /* configBSP430_HPL_TB0 */
 
 /** HPL pointer for TB1.
@@ -990,7 +990,7 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * @defaulted
  * @dependency #configBSP430_HPL_TB1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
-#define BSP430_HPL_TB1 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB1)
+#define BSP430_HPL_TB1 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB1)
 #endif /* configBSP430_HPL_TB1 */
 
 /** HPL pointer for TB2.
@@ -1004,7 +1004,7 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * @defaulted
  * @dependency #configBSP430_HPL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
-#define BSP430_HPL_TB2 ((volatile sBSP430periphTIMER *)BSP430_PERIPH_TB2)
+#define BSP430_HPL_TB2 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB2)
 #endif /* configBSP430_HPL_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_decl] */

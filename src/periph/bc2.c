@@ -167,7 +167,7 @@ ulBSP430clockMCLK_Hz_ni (void)
 int
 iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
 {
-  volatile sBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  volatile sBSP430hplTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
   const int MAX_ITERATIONS = 16 * 256;
   int rv = -1;
   unsigned int aclk_Hz;

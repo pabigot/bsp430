@@ -131,7 +131,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
   unsigned short last_ctl0;
   uint16_t tolerance_tsp;
   uint16_t current_frequency_tsp = 0;
-  volatile sBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  volatile sBSP430hplTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
 
   if (! tp) {
     return -1;

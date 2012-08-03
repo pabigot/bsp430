@@ -120,8 +120,8 @@ xBSP430usci5OpenUART (tBSP430periphHandle periph,
 
 int
 iBSP430usci5ConfigureCallbacks (tBSP430usci5Handle device,
-                                const struct sBSP430periphISRCallbackVoid * rx_callback,
-                                const struct sBSP430periphISRCallbackVoid * tx_callback)
+                                const struct sBSP430halISRCallbackVoid * rx_callback,
+                                const struct sBSP430halISRCallbackVoid * tx_callback)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc = 0;
