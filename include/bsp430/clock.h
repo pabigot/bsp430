@@ -127,6 +127,7 @@
  * @note If the application manipulates the status register directly,
  * the effect of this option may not be preserved.
  *
+ * @cppflag
  * @defaulted  */
 #ifndef configBSP430_CLOCK_DISABLE_FLL
 #define configBSP430_CLOCK_DISABLE_FLL 0

@@ -48,6 +48,7 @@
  * Most platforms should support LEDs directly, bypassing any HAL/HPL
  * interfaces.
  *
+ * @cppflag
  * @defaulted
  */
 #ifndef configBSP430_LED
@@ -67,7 +68,11 @@
  * @platformdefault */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_LED)
 #ifndef BSP430_LED
-#define BSP430_LED (configBSP430_LED - 0)
+#if configBSP430_LED - 0
+#define BSP430_LED 1
+#else /* configBSP430_LED */
+#define BSP430_LED 0
+#endif /* configBSP430_LED */
 #endif /* BSP430_LED */
 #endif /* BSP430_DOXYGEN */
 
@@ -115,6 +120,7 @@ void vBSP430ledSet (int led_idx,
  * Since most platforms can benefit from the shared implementation,
  * those that do not should override the default value.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_LED_USE_COMMON
 #define configBSP430_LED_USE_COMMON 1

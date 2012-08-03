@@ -80,6 +80,7 @@
  * feature; availability of the feature must be tested using
  * #BSP430_BC2_TRIM_TO_MCLK before attempting to invoke the function.
  *
+ * @cppflag
  * @defaulted
  */
 #ifndef configBSP430_BC2_TRIM_TO_MCLK

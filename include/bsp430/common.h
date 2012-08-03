@@ -81,6 +81,7 @@
  * through @c -D arguments to the preprocessor) you can inhibit this
  * inclusion by defining #configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE to 0.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE
 #define configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE 1
@@ -102,6 +103,7 @@
  * @warning The above is described intent and has not been rigorously
  * validated.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CORE_SUPPORT_WATCHDOG
 #define configBSP430_CORE_SUPPORT_WATCHDOG 0

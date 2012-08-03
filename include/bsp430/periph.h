@@ -122,6 +122,7 @@ typedef int tBSP430periphHandle;
  * #BSP430_PERIPH_EXPOSED_CLOCKS in
  * #iBSP430platformConfigurePeripheralPins_ni.
  *
+ * @cppflag
  * @defaulted  */
 #ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 0

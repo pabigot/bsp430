@@ -83,6 +83,7 @@
  * 96.  You may need to increase it if you do a lot in the command
  * processing.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_TERMINAL_STACK_ADJUSTMENT
 #define configBSP430_TERMINAL_STACK_ADJUSTMENT (48 + 40 * sizeof(portSAVED_REGISTER_TYPE) / sizeof(portBASE_TYPE))
@@ -97,6 +98,7 @@
  * off to the terminal task, so you probably don't need to change
  * this.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_TERMINAL_READER_STACK_ADJUSTMENT
 #define configBSP430_TERMINAL_READER_STACK_ADJUSTMENT (12 + 4 * sizeof(portSAVED_REGISTER_TYPE) / sizeof(portBASE_TYPE))

@@ -102,6 +102,7 @@
  * @note This function is the only mechanism by which the UCS DCO can
  * be configured by BSP430.
  *
+ * @cppflag
  * @defaulted
  */
 #ifndef configBSP430_UCS_TRIM_DCOCLKDIV
@@ -170,7 +171,10 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
  * used.
  *
  * @warning If this is selected, DCOCLKDIV trim will hang if LFXT1 is
- * faulted and cannot be cleared. */
+ * faulted and cannot be cleared.
+ *
+ * @cppflag
+ */
 #ifndef configBSP430_UCS_FLLREFCLK_IS_XT1CLK
 #define configBSP430_UCS_FLLREFCLK_IS_XT1CLK 0
 #endif /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
@@ -191,7 +195,10 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
  * used.
  *
  * @warning If this is selected, FLL trim will hang if LFXT1 is
- * faulted and cannot be cleared. */
+ * faulted and cannot be cleared.
+ *
+ * @cppflag
+ */
 #ifndef configBSP430_UCS_TRIM_ACLK_IS_XT1CLK
 #define configBSP430_UCS_TRIM_ACLK_IS_XT1CLK 0
 #endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */

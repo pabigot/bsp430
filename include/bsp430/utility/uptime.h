@@ -68,6 +68,7 @@
  * maintain a continuous system clock.  A timer that will support this
  * must be identified; see #configBSP430_UPTIME_USE_DEFAULT_RESOURCE.
  *
+ * @cppflag
  * @defaulted
  */
 #ifndef configBSP430_UPTIME
@@ -102,6 +103,7 @@
  * #BSP430_UPTIME_TIMER_HAL_HANDLE is changed from its default
  * value.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_UPTIME_USE_DEFAULT_RESOURCE
 #define configBSP430_UPTIME_USE_DEFAULT_RESOURCE (configBSP430_UPTIME - 0)

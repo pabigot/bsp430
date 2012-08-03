@@ -171,6 +171,7 @@ typedef struct sBSP430halUSCI5 * hBSP430halUSCI5;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A0
 #define configBSP430_HAL_USCI5_A0 0
@@ -204,6 +205,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A0_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A1
 #define configBSP430_HAL_USCI5_A1 0
@@ -237,6 +239,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A1_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A2
 #define configBSP430_HAL_USCI5_A2 0
@@ -270,6 +273,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A2_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A3
 #define configBSP430_HAL_USCI5_A3 0
@@ -303,6 +307,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A3_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B0
 #define configBSP430_HAL_USCI5_B0 0
@@ -336,6 +341,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B0_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B1
 #define configBSP430_HAL_USCI5_B1 0
@@ -369,6 +375,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B1_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B2
 #define configBSP430_HAL_USCI5_B2 0
@@ -402,6 +409,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B2_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B3
 #define configBSP430_HAL_USCI5_B3 0
@@ -439,6 +447,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_A0
 #define configBSP430_HPL_USCI5_A0 (configBSP430_HAL_USCI5_A0 - 0)
@@ -468,6 +477,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_A1
 #define configBSP430_HPL_USCI5_A1 (configBSP430_HAL_USCI5_A1 - 0)
@@ -497,6 +507,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_A2
 #define configBSP430_HPL_USCI5_A2 (configBSP430_HAL_USCI5_A2 - 0)
@@ -526,6 +537,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_A3
 #define configBSP430_HPL_USCI5_A3 (configBSP430_HAL_USCI5_A3 - 0)
@@ -555,6 +567,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_B0
 #define configBSP430_HPL_USCI5_B0 (configBSP430_HAL_USCI5_B0 - 0)
@@ -584,6 +597,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_B1
 #define configBSP430_HPL_USCI5_B1 (configBSP430_HAL_USCI5_B1 - 0)
@@ -613,6 +627,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_B2
 #define configBSP430_HPL_USCI5_B2 (configBSP430_HAL_USCI5_B2 - 0)
@@ -642,6 +657,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_USCI5_B3
 #define configBSP430_HPL_USCI5_B3 (configBSP430_HAL_USCI5_B3 - 0)
@@ -788,6 +804,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_A0
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A0_ISR
 #define configBSP430_HAL_USCI5_A0_ISR (configBSP430_HAL_USCI5_A0 - 0)
@@ -810,6 +827,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_A1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A1_ISR
 #define configBSP430_HAL_USCI5_A1_ISR (configBSP430_HAL_USCI5_A1 - 0)
@@ -832,6 +850,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_A2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A2_ISR
 #define configBSP430_HAL_USCI5_A2_ISR (configBSP430_HAL_USCI5_A2 - 0)
@@ -854,6 +873,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_A3
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_A3_ISR
 #define configBSP430_HAL_USCI5_A3_ISR (configBSP430_HAL_USCI5_A3 - 0)
@@ -876,6 +896,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_B0
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B0_ISR
 #define configBSP430_HAL_USCI5_B0_ISR (configBSP430_HAL_USCI5_B0 - 0)
@@ -898,6 +919,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_B1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B1_ISR
 #define configBSP430_HAL_USCI5_B1_ISR (configBSP430_HAL_USCI5_B1 - 0)
@@ -920,6 +942,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_B2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B2_ISR
 #define configBSP430_HAL_USCI5_B2_ISR (configBSP430_HAL_USCI5_B2 - 0)
@@ -942,6 +965,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
  * @note Enabling this requires that #configBSP430_HAL_USCI5_B3
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCI5_B3_ISR
 #define configBSP430_HAL_USCI5_B3_ISR (configBSP430_HAL_USCI5_B3 - 0)

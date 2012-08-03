@@ -65,6 +65,7 @@
  *
  * See #configBSP430_CONSOLE_USE_DEFAULT_RESOURCE.
  *
+ * @cppflag
  * @defaulted
  */
 #ifndef configBSP430_CONSOLE
@@ -100,6 +101,7 @@
  * corresponding device and its HAL interface in the application,
  * e.g. by setting #configBSP430_HAL_USCI5_A1.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_USE_DEFAULT_RESOURCE
 #define configBSP430_CONSOLE_USE_DEFAULT_RESOURCE (configBSP430_CONSOLE - 0)
@@ -143,6 +145,7 @@
  * printf, @c puts, or any other library function that might invoke
  * this putchar implementation.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_PROVIDES_PUTCHAR
 #define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0
@@ -154,6 +157,7 @@
  * carriage return before a newline.  This provides compatibility with
  * standard terminal programs like minicom.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_USE_ONLCR
 #define configBSP430_CONSOLE_USE_ONLCR 1
@@ -165,6 +169,7 @@
  * msp430-libc does provide this, and it is used to implement
  * cprintf.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
 #define configBSP430_CONSOLE_LIBC_HAS_VUPRINTF 1
@@ -175,6 +180,7 @@
  * Define to false if your libc does not provide itoa.  msp430-libc
  * does provide this, and it is used to implement cputi.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_ITOA
 #define configBSP430_CONSOLE_LIBC_HAS_ITOA 1
@@ -185,6 +191,7 @@
  * Define to false if your libc does not provide utoa.  msp430-libc
  * does provide this, and it is used to implement cputu.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_UTOA
 #define configBSP430_CONSOLE_LIBC_HAS_UTOA 1
@@ -195,6 +202,7 @@
  * Define to false if your libc does not provide ltoa.  msp430-libc
  * does provide this, and it is used to implement cputl.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_LTOA
 #define configBSP430_CONSOLE_LIBC_HAS_LTOA 1
@@ -205,6 +213,7 @@
  * Define to false if your libc does not provide ultoa.  msp430-libc
  * does provide this, and it is used to implement cputul.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_LIBC_HAS_ULTOA
 #define configBSP430_CONSOLE_LIBC_HAS_ULTOA 1
@@ -223,7 +232,9 @@
  *
  * @return Number of characters printed if the console is enabled; 0
  * if it is disabled; a negative error code if an error is
- * encountered */
+ * encountered
+ *
+ * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 int
 cprintf (const char * format, ...)
 #if __GNUC__ - 0
@@ -265,9 +276,6 @@ int cputtext_ni (const char * s);
 
 /** Format an int using itoa and emit it to the console.
  *
- * @note This function is unimplemented if
- * #configBSP430_CONSOLE_LIBC_HAS_ITOA is false.
- *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
@@ -275,14 +283,13 @@ int cputtext_ni (const char * s);
  * 10.  Passing a smaller radix will likely result in stack
  * corruption.
  *
- * @return the number of characters emitted */
+ * @return the number of characters emitted
+ *
+ * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_ITOA */
 int cputi_ni (int n, int radix);
 
 /** Format an int using utoa and emit it to the console.
  *
- * @note This function is unimplemented if
- * #configBSP430_CONSOLE_LIBC_HAS_UTOA is false.
- *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
@@ -290,14 +297,13 @@ int cputi_ni (int n, int radix);
  * 10.  Passing a smaller radix will likely result in stack
  * corruption.
  *
- * @return the number of characters emitted */
+ * @return the number of characters emitted
+ *
+ * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_UTOA */
 int cputu_ni (unsigned int n, int radix);
 
 /** Format an int using ltoa and emit it to the console.
  *
- * @note This function is unimplemented if
- * #configBSP430_CONSOLE_LIBC_HAS_LTOA is false.
- *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
@@ -305,14 +311,13 @@ int cputu_ni (unsigned int n, int radix);
  * 10.  Passing a smaller radix will likely result in stack
  * corruption.
  *
- * @return the number of characters emitted */
+ * @return the number of characters emitted
+ *
+ * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_LTOA */
 int cputl_ni (long n, int radix);
 
 /** Format an int using itoa and emit it to the console.
  *
- * @note This function is unimplemented if
- * #configBSP430_CONSOLE_LIBC_HAS_ULTOA is false.
- *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
 
@@ -320,7 +325,9 @@ int cputl_ni (long n, int radix);
  * 10.  Passing a smaller radix will likely result in stack
  * corruption.
  *
- * @return the number of characters emitted */
+ * @return the number of characters emitted
+ *
+ * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_ULTOA */
 int cputul_ni (unsigned long n, int radix);
 
 hBSP430halSERIAL xBSP430consoleInitialize (void);

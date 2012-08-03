@@ -15,6 +15,7 @@ templates = {
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s
 #define configBSP430_HAL_%(INSTANCE)s 0
@@ -48,6 +49,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_%(INSTANCE)s
 #define configBSP430_HPL_%(INSTANCE)s (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -119,6 +121,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -145,9 +148,10 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * #configBSP430_HAL_USCI_A%(INSTANCE)s and
  * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR
-#define configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
+#define configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) || (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
 #endif /* configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR */
 
 #if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \\
@@ -171,6 +175,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * #configBSP430_HAL_USCI_A%(INSTANCE)s and
  * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR
 #define configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
@@ -197,6 +202,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_CC0_ISR
 #define configBSP430_HAL_%(INSTANCE)s_CC0_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -221,6 +227,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)

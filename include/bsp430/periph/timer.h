@@ -92,6 +92,7 @@
  * Define to true to indicate that the timer infrastructure is
  * desired.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_TIMER
 #define configBSP430_TIMER 0
@@ -117,6 +118,7 @@
  * should still be made available but #BSP430_TIMER_CCACLK_IS_TA0
  * should be defined to a true value.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_TIMER_CCACLK
 #define configBSP430_TIMER_CCACLK 0
@@ -137,6 +139,7 @@
  * <li>#BSP430_TIMER_CCACLK_CCIS
  * </ul>
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE
 #define configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE (configBSP430_TIMER_CCACLK - 0)
@@ -497,6 +500,7 @@ void vBSP430timerResetCounter_ni (hBSP430halTIMER timer);
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA0
 #define configBSP430_HAL_TA0 0
@@ -530,6 +534,7 @@ extern sBSP430halTIMER xBSP430hal_TA0_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA1
 #define configBSP430_HAL_TA1 0
@@ -563,6 +568,7 @@ extern sBSP430halTIMER xBSP430hal_TA1_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA2
 #define configBSP430_HAL_TA2 0
@@ -596,6 +602,7 @@ extern sBSP430halTIMER xBSP430hal_TA2_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA3
 #define configBSP430_HAL_TA3 0
@@ -629,6 +636,7 @@ extern sBSP430halTIMER xBSP430hal_TA3_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB0
 #define configBSP430_HAL_TB0 0
@@ -662,6 +670,7 @@ extern sBSP430halTIMER xBSP430hal_TB0_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB1
 #define configBSP430_HAL_TB1 0
@@ -695,6 +704,7 @@ extern sBSP430halTIMER xBSP430hal_TB1_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB2
 #define configBSP430_HAL_TB2 0
@@ -732,6 +742,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_TA0
 #define configBSP430_HPL_TA0 (configBSP430_HAL_TA0 - 0)
@@ -761,6 +772,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_TA1
 #define configBSP430_HPL_TA1 (configBSP430_HAL_TA1 - 0)
@@ -790,6 +802,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_TA2
 #define configBSP430_HPL_TA2 (configBSP430_HAL_TA2 - 0)
@@ -819,6 +832,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_TA3
 #define configBSP430_HPL_TA3 (configBSP430_HAL_TA3 - 0)
@@ -848,6 +862,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_TB0
 #define configBSP430_HPL_TB0 (configBSP430_HAL_TB0 - 0)
@@ -877,6 +892,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_TB1
 #define configBSP430_HPL_TB1 (configBSP430_HAL_TB1 - 0)
@@ -906,6 +922,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_TB2
 #define configBSP430_HPL_TB2 (configBSP430_HAL_TB2 - 0)
@@ -1041,6 +1058,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA0
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA0_CC0_ISR
 #define configBSP430_HAL_TA0_CC0_ISR (configBSP430_HAL_TA0 - 0)
@@ -1065,6 +1083,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA0
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA0_ISR
 #define configBSP430_HAL_TA0_ISR (configBSP430_HAL_TA0 - 0)
@@ -1089,6 +1108,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA1_CC0_ISR
 #define configBSP430_HAL_TA1_CC0_ISR (configBSP430_HAL_TA1 - 0)
@@ -1113,6 +1133,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA1_ISR
 #define configBSP430_HAL_TA1_ISR (configBSP430_HAL_TA1 - 0)
@@ -1137,6 +1158,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA2_CC0_ISR
 #define configBSP430_HAL_TA2_CC0_ISR (configBSP430_HAL_TA2 - 0)
@@ -1161,6 +1183,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA2_ISR
 #define configBSP430_HAL_TA2_ISR (configBSP430_HAL_TA2 - 0)
@@ -1185,6 +1208,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA3
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA3_CC0_ISR
 #define configBSP430_HAL_TA3_CC0_ISR (configBSP430_HAL_TA3 - 0)
@@ -1209,6 +1233,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TA3
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TA3_ISR
 #define configBSP430_HAL_TA3_ISR (configBSP430_HAL_TA3 - 0)
@@ -1233,6 +1258,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TB0
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB0_CC0_ISR
 #define configBSP430_HAL_TB0_CC0_ISR (configBSP430_HAL_TB0 - 0)
@@ -1257,6 +1283,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TB0
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB0_ISR
 #define configBSP430_HAL_TB0_ISR (configBSP430_HAL_TB0 - 0)
@@ -1281,6 +1308,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TB1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB1_CC0_ISR
 #define configBSP430_HAL_TB1_CC0_ISR (configBSP430_HAL_TB1 - 0)
@@ -1305,6 +1333,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TB1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB1_ISR
 #define configBSP430_HAL_TB1_ISR (configBSP430_HAL_TB1 - 0)
@@ -1329,6 +1358,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TB2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB2_CC0_ISR
 #define configBSP430_HAL_TB2_CC0_ISR (configBSP430_HAL_TB2 - 0)
@@ -1353,6 +1383,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * @note Enabling this requires that #configBSP430_HAL_TB2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_TB2_ISR
 #define configBSP430_HAL_TB2_ISR (configBSP430_HAL_TB2 - 0)

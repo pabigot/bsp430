@@ -102,6 +102,7 @@ int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int e
  * feature; availability of the feature must be tested using
  * #BSP430_PLATFORM_SPIN_FOR_JUMP.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 0
@@ -317,14 +318,22 @@ void vBSP430platformSpinForJumper_ni (void);
  * supports BSP430_TIMER_CCACLK, then mark the feature as
  * available. */
 #if configBSP430_UCS_TRIM_DCOCLKDIV - 0
-#define BSP430_UCS_TRIM_DCOCLKDIV (BSP430_TIMER_CCACLK - 0)
+#if BSP430_TIMER_CCACLK - 0
+#define BSP430_UCS_TRIM_DCOCLKDIV 1
+#else /* BSP430_TIMER_CCACLK */
+#define BSP430_UCS_TRIM_DCOCLKDIV 0
+#endif /* BSP430_TIMER_CCACLK */
 #endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
 
 /* If configBSP430_BC2_TRIM_TO_MCLK was requested and the platform
  * supports BSP430_TIMER_CCACLK, then mark the feature as
  * available. */
 #if configBSP430_BC2_TRIM_TO_MCLK - 0
-#define BSP430_BC2_TRIM_TO_MCLK (BSP430_TIMER_CCACLK - 0)
+#if BSP430_TIMER_CCACLK - 0
+#define BSP430_BC2_TRIM_TO_MCLK 1
+#else /* BSP430_TIMER_CCACLK */
+#define BSP430_BC2_TRIM_TO_MCLK 0
+#endif /* BSP430_TIMER_CCACLK */
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
 
 /* If configBSP430_CONSOLE was requested, then mark the feature as

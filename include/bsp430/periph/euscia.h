@@ -152,6 +152,7 @@ typedef struct sBSP430halEUSCIA * hBSP430halEUSCIA;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A0
 #define configBSP430_HAL_EUSCI_A0 0
@@ -185,6 +186,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A0_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A1
 #define configBSP430_HAL_EUSCI_A1 0
@@ -218,6 +220,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A1_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A2
 #define configBSP430_HAL_EUSCI_A2 0
@@ -255,6 +258,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_A0
 #define configBSP430_HPL_EUSCI_A0 (configBSP430_HAL_EUSCI_A0 - 0)
@@ -284,6 +288,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_A1
 #define configBSP430_HPL_EUSCI_A1 (configBSP430_HAL_EUSCI_A1 - 0)
@@ -313,6 +318,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_A2
 #define configBSP430_HPL_EUSCI_A2 (configBSP430_HAL_EUSCI_A2 - 0)
@@ -394,6 +400,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
  * @note Enabling this requires that #configBSP430_HAL_EUSCI_A0
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A0_ISR
 #define configBSP430_HAL_EUSCI_A0_ISR (configBSP430_HAL_EUSCI_A0 - 0)
@@ -416,6 +423,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
  * @note Enabling this requires that #configBSP430_HAL_EUSCI_A1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A1_ISR
 #define configBSP430_HAL_EUSCI_A1_ISR (configBSP430_HAL_EUSCI_A1 - 0)
@@ -438,6 +446,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
  * @note Enabling this requires that #configBSP430_HAL_EUSCI_A2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A2_ISR
 #define configBSP430_HAL_EUSCI_A2_ISR (configBSP430_HAL_EUSCI_A2 - 0)

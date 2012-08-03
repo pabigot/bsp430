@@ -555,6 +555,7 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT1
 #define configBSP430_HAL_PORT1 0
@@ -588,6 +589,7 @@ extern sBSP430halPORT xBSP430hal_PORT1_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT2
 #define configBSP430_HAL_PORT2 0
@@ -621,6 +623,7 @@ extern sBSP430halPORT xBSP430hal_PORT2_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT3
 #define configBSP430_HAL_PORT3 0
@@ -654,6 +657,7 @@ extern sBSP430halPORT xBSP430hal_PORT3_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT4
 #define configBSP430_HAL_PORT4 0
@@ -687,6 +691,7 @@ extern sBSP430halPORT xBSP430hal_PORT4_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT5
 #define configBSP430_HAL_PORT5 0
@@ -720,6 +725,7 @@ extern sBSP430halPORT xBSP430hal_PORT5_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT6
 #define configBSP430_HAL_PORT6 0
@@ -753,6 +759,7 @@ extern sBSP430halPORT xBSP430hal_PORT6_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT7
 #define configBSP430_HAL_PORT7 0
@@ -786,6 +793,7 @@ extern sBSP430halPORT xBSP430hal_PORT7_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT8
 #define configBSP430_HAL_PORT8 0
@@ -819,6 +827,7 @@ extern sBSP430halPORT xBSP430hal_PORT8_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT9
 #define configBSP430_HAL_PORT9 0
@@ -852,6 +861,7 @@ extern sBSP430halPORT xBSP430hal_PORT9_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT10
 #define configBSP430_HAL_PORT10 0
@@ -885,6 +895,7 @@ extern sBSP430halPORT xBSP430hal_PORT10_;
  * true, since the HAL infrastructure requires the underlying HPL
  * infrastructure.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT11
 #define configBSP430_HAL_PORT11 0
@@ -922,6 +933,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT1
 #define configBSP430_HPL_PORT1 (configBSP430_HAL_PORT1 - 0)
@@ -951,6 +963,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT2
 #define configBSP430_HPL_PORT2 (configBSP430_HAL_PORT2 - 0)
@@ -980,6 +993,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT3
 #define configBSP430_HPL_PORT3 (configBSP430_HAL_PORT3 - 0)
@@ -1009,6 +1023,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT4
 #define configBSP430_HPL_PORT4 (configBSP430_HAL_PORT4 - 0)
@@ -1038,6 +1053,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT5
 #define configBSP430_HPL_PORT5 (configBSP430_HAL_PORT5 - 0)
@@ -1067,6 +1083,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT6
 #define configBSP430_HPL_PORT6 (configBSP430_HAL_PORT6 - 0)
@@ -1096,6 +1113,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT7
 #define configBSP430_HPL_PORT7 (configBSP430_HAL_PORT7 - 0)
@@ -1125,6 +1143,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT8
 #define configBSP430_HPL_PORT8 (configBSP430_HAL_PORT8 - 0)
@@ -1154,6 +1173,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT9
 #define configBSP430_HPL_PORT9 (configBSP430_HAL_PORT9 - 0)
@@ -1183,6 +1203,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT10
 #define configBSP430_HPL_PORT10 (configBSP430_HAL_PORT10 - 0)
@@ -1212,6 +1233,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * true, so you only need to explicitly request this if you want the
  * HPL interface without the HAL interface.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HPL_PORT11
 #define configBSP430_HPL_PORT11 (configBSP430_HAL_PORT11 - 0)
@@ -1496,6 +1518,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT1
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT1_ISR
 #define configBSP430_HAL_PORT1_ISR (configBSP430_HAL_PORT1 - 0)
@@ -1518,6 +1541,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT2
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT2_ISR
 #define configBSP430_HAL_PORT2_ISR (configBSP430_HAL_PORT2 - 0)
@@ -1540,6 +1564,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT3
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT3_ISR
 #define configBSP430_HAL_PORT3_ISR (configBSP430_HAL_PORT3 - 0)
@@ -1562,6 +1587,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT4
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT4_ISR
 #define configBSP430_HAL_PORT4_ISR (configBSP430_HAL_PORT4 - 0)
@@ -1584,6 +1610,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT5
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT5_ISR
 #define configBSP430_HAL_PORT5_ISR (configBSP430_HAL_PORT5 - 0)
@@ -1606,6 +1633,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT6
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT6_ISR
 #define configBSP430_HAL_PORT6_ISR (configBSP430_HAL_PORT6 - 0)
@@ -1628,6 +1656,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT7
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT7_ISR
 #define configBSP430_HAL_PORT7_ISR (configBSP430_HAL_PORT7 - 0)
@@ -1650,6 +1679,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT8
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT8_ISR
 #define configBSP430_HAL_PORT8_ISR (configBSP430_HAL_PORT8 - 0)
@@ -1672,6 +1702,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT9
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT9_ISR
 #define configBSP430_HAL_PORT9_ISR (configBSP430_HAL_PORT9 - 0)
@@ -1694,6 +1725,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT10
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT10_ISR
 #define configBSP430_HAL_PORT10_ISR (configBSP430_HAL_PORT10 - 0)
@@ -1716,6 +1748,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @note Enabling this requires that #configBSP430_HAL_PORT11
  * also be true.
  *
+ * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT11_ISR
 #define configBSP430_HAL_PORT11_ISR (configBSP430_HAL_PORT11 - 0)

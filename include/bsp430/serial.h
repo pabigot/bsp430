@@ -56,6 +56,7 @@
  * serial implementation.  This defaults to true iff the MCU supports
  * the USCI device.
  *
+ * @cppflag
  * @defaulted  */
 #ifndef configBSP430_SERIAL_USE_USCI
 #define configBSP430_SERIAL_USE_USCI defined(__MSP430_HAS_USCI__)
@@ -67,6 +68,7 @@
  * underlying serial implementation.  This defaults to true iff the
  * MCU supports the USCI5 device.
  *
+ * @cppflag
  * @defaulted  */
 #ifndef configBSP430_SERIAL_USE_USCI5
 #define configBSP430_SERIAL_USE_USCI5 defined(__MSP430_HAS_USCI_A0__)
@@ -78,6 +80,7 @@
  * underlying serial implementation.  This defaults to true iff the
  * MCU supports the eUSCI device.
  *
+ * @cppflag
  * @defaulted  */
 #ifndef configBSP430_SERIAL_USE_EUSCIA
 #define configBSP430_SERIAL_USE_EUSCIA defined(__MSP430_HAS_EUSCI_A0__)
