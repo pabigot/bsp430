@@ -57,7 +57,7 @@ struct sBSP430halPORT xBSP430hal_PORT1_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT1
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P1REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -84,7 +84,7 @@ struct sBSP430halPORT xBSP430hal_PORT2_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT2
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P2REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -111,7 +111,7 @@ struct sBSP430halPORT xBSP430hal_PORT3_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT3
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P3REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -138,7 +138,7 @@ struct sBSP430halPORT xBSP430hal_PORT4_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT4
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P4REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -165,7 +165,7 @@ struct sBSP430halPORT xBSP430hal_PORT5_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT5
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P5REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -192,7 +192,7 @@ struct sBSP430halPORT xBSP430hal_PORT6_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT6
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P6REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -219,7 +219,7 @@ struct sBSP430halPORT xBSP430hal_PORT7_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT7
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P7REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -246,7 +246,7 @@ struct sBSP430halPORT xBSP430hal_PORT8_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT8
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P8REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -273,7 +273,7 @@ struct sBSP430halPORT xBSP430hal_PORT9_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT9
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P9REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -300,7 +300,7 @@ struct sBSP430halPORT xBSP430hal_PORT10_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT10
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P10REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -327,7 +327,7 @@ struct sBSP430halPORT xBSP430hal_PORT11_ = {
 #endif /* MSP430XV2 */
     = BSP430_HPL_PORT11
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P11REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };

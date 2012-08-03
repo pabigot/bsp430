@@ -72,13 +72,13 @@ iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
   int present;
 
   /* Hold bus low for OWT_RESET_us */
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->out &= ~bus->bit;
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir |= bus->bit;
+  BSP430_PORT_HAL_HPL_OUT(bus->port) &= ~bus->bit;
+  BSP430_PORT_HAL_HPL_DIR(bus->port) |= bus->bit;
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_RSTL_us));
 
   /* Release bus and switch to input until presence pulse should be
    * visible. */
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir &= ~bus->bit;
+  BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
 #if defined(__MSP430_HAS_PORT1_R__)
   /* If PORT1 has resistor capability, all ports do.  In case the
    * device isn't wired correctly, pull up the bus so the device
@@ -90,13 +90,13 @@ iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
    * however, reconfigure the PxOUT register to pull-up if the last
    * setting would cause a pulldown configuration, as it would
    * here. */
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->ren |= bus->bit;
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->out |= bus->bit;
+  BSP430_PORT_HAL_HPL_REN(bus->port) |= bus->bit;
+  BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
 #endif /* __MSP430_HAS_PORT1_R__ */
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_PDHIGH_us));
 
   /* Record presence if bus is low (DS182x is holding it there) */
-  present = !(BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->in & bus->bit);
+  present = !(BSP430_PORT_HAL_HPL_IN(bus->port) & bus->bit);
 
   /* Wait for reset cycle to complete */
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_RSTH_us - OWT_PDHIGH_us));
@@ -107,8 +107,8 @@ iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
 void
 vBSP430onewireShutdown_ni (const sBSP430onewireBus * bus)
 {
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->out &= ~bus->bit;
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir &= ~bus->bit;
+  BSP430_PORT_HAL_HPL_OUT(bus->port) &= ~bus->bit;
+  BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
 }
 
 void
@@ -118,22 +118,22 @@ vBSP430onewireWriteByte_ni (const sBSP430onewireBus * bus,
   int bp;
 
   for (bp = 0; bp < 8; ++bp) {
-    BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->out &= ~bus->bit;
-    BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir |= bus->bit;
+    BSP430_PORT_HAL_HPL_OUT(bus->port) &= ~bus->bit;
+    BSP430_PORT_HAL_HPL_DIR(bus->port) |= bus->bit;
     if (byte & 0x01) {
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW1_us));
-      BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir &= ~bus->bit;
+      BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
 #if defined(__MSP430_HAS_PORT1_R__)
       /* Leave REN set from reset command, configure for pullup */
-      BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->out |= bus->bit;
+      BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
 #endif /* __MSP430_HAS_PORT1_R__ */
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_LOW1_us + OWT_REC_us));
     } else {
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW0_us));
-      BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir &= ~bus->bit;
+      BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
 #if defined(__MSP430_HAS_PORT1_R__)
       /* Leave REN set from reset command, configure for pullup */
-      BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->out |= bus->bit;
+      BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
 #endif /* __MSP430_HAS_PORT1_R__ */
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_LOW0_us + OWT_REC_us));
     }
@@ -146,12 +146,12 @@ iBSP430onewireReadBit_ni (const sBSP430onewireBus * bus)
 {
   int rv;
 
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->out &= ~bus->bit;
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir |= bus->bit;
+  BSP430_PORT_HAL_HPL_OUT(bus->port) &= ~bus->bit;
+  BSP430_PORT_HAL_HPL_DIR(bus->port) |= bus->bit;
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_INT_us));
-  BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->dir &= ~bus->bit;
+  BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_RDV_us));
-  rv = !!(BSP430_PORT_HAL_GET_HPL_PORTIE(bus->port)->in & bus->bit);
+  rv = !!(BSP430_PORT_HAL_HPL_IN(bus->port) & bus->bit);
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_RDV_us - OWT_INT_us + OWT_REC_us));
   return rv;
 }

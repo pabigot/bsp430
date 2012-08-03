@@ -309,17 +309,20 @@ struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
 #endif /* MSP430XV2 */
        = BSP430_HPL_%(INSTANCE)s
   },
-#if defined(__MSP430_HAS_PORT1_R__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
   .renp = &P%(#)sREN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
-    'hal_port_get_hpl' : '''/** Get the HPL pointer if the HAL is a %(INSTANCE)s variant.
+    'hal_port_hpl_macro' : '''/** True iff the HPL pointer of the HAL is a %(INSTANCE)s variant. */
+#define BSP430_PORT_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal) (BSP430_PORT_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
+
+/** Get the HPL pointer if the HAL is a %(INSTANCE)s variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal)) ? (_hal)->hpl.%(instance)s : (void *)0)
+#define BSP430_PORT_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal)) ? (_hal)->hpl.%(instance)s : (void *)0)
 ''',
 
     'hal_port_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
