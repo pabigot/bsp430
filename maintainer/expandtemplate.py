@@ -323,6 +323,19 @@ struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
+    'hal_serial_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
+struct sBSP430halSERIAL xBSP430hal_%(INSTANCE)s_ = {
+  .hal_state = { .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_%(PERIPH)s
+#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
+  },
+  .hpl = { .%(periph)s = BSP430_HPL_%(INSTANCE)s },
+  .dispatch = &dispatch_
+};
+#endif /* configBSP430_HAL_%(INSTANCE)s */
+''',
+
     'hal_variant_hpl_macro' : '''/** True iff the HPL pointer of the %(periph)s HAL is a %(INSTANCE)s variant. */
 #define BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal) (BSP430_%(PERIPH)s_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 

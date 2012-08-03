@@ -46,6 +46,8 @@
 #define BSP430_PERIPH_USCI5_H
 
 #include <bsp430/periph.h>
+#include <bsp430/serial.h>
+
 #if ! defined(__MSP430_HAS_USCI_A0__)
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_USCI_A0__ */
@@ -121,44 +123,7 @@ typedef struct sBSP430hplUSCI5 {
 #define BSP430_PERIPH_USCI5_B3_BASEADDRESS_ __MSP430_BASEADDRESS_USCI_B3__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/** Structure holding hardware abstraction layer state for eUSCI_A.
- *
- * This structure is internal state, for access by applications only
- * when overriding BSP430 HAL capabilities. */
-typedef struct sBSP430halUSCI5 {
-  /** Flags indicating various things: primarily, whether anybody is
-   * using the device. */
-  unsigned int flags;
-
-  /** Pointer to the peripheral register structure. */
-  volatile sBSP430hplUSCI5 * const usci5;
-
-  /** The callback chain to invoke when a byte is received */
-  const struct sBSP430halISRCallbackVoid * rx_callback;
-
-  /** The callback chain to invoke when space is available in the
-   * transmission buffer */
-  const struct sBSP430halISRCallbackVoid * tx_callback;
-
-  /** Location to store a single incoming character when #rx_queue
-   * is undefined. */
-  uint8_t rx_byte;
-
-  /** Location to store a single outgoing character when #tx_queue
-   * is undefined.  This is probably not very useful. */
-  uint8_t tx_byte;
-
-  /** Total number of received octets */
-  unsigned long num_rx;
-
-  /** Total number of transmitted octets */
-  unsigned long num_tx;
-} sBSP430halUSCI5;
-
-/** The USCI5 internal state is private to the implementation. */
-typedef struct sBSP430halUSCI5 * hBSP430halUSCI5;
-
-/* !BSP430! insert=hal_decl */
+/* !BSP430! periph=serial insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** @def configBSP430_HAL_USCI5_A0
  *
@@ -180,7 +145,7 @@ typedef struct sBSP430halUSCI5 * hBSP430halUSCI5;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A0 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_A0_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_A0_;
 #endif /* configBSP430_HAL_USCI5_A0 */
 /** @endcond */
 
@@ -214,7 +179,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A0_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A1 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_A1_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_A1_;
 #endif /* configBSP430_HAL_USCI5_A1 */
 /** @endcond */
 
@@ -248,7 +213,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A1_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A2 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_A2_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_A2_;
 #endif /* configBSP430_HAL_USCI5_A2 */
 /** @endcond */
 
@@ -282,7 +247,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A2_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A3 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_A3_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_A3_;
 #endif /* configBSP430_HAL_USCI5_A3 */
 /** @endcond */
 
@@ -316,7 +281,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_A3_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B0 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_B0_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_B0_;
 #endif /* configBSP430_HAL_USCI5_B0 */
 /** @endcond */
 
@@ -350,7 +315,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B0_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B1 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_B1_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_B1_;
 #endif /* configBSP430_HAL_USCI5_B1 */
 /** @endcond */
 
@@ -384,7 +349,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B1_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B2 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_B2_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_B2_;
 #endif /* configBSP430_HAL_USCI5_B2 */
 /** @endcond */
 
@@ -418,7 +383,7 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B2_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B3 - 0
 /* You don't need to know about this */
-extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
+extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 #endif /* configBSP430_HAL_USCI5_B3 */
 /** @endcond */
 
@@ -434,6 +399,8 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
+/* !BSP430! periph=usci5 */
+
 
 /* !BSP430! insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
@@ -979,36 +946,36 @@ extern sBSP430halUSCI5 xBSP430hal_USCI5_B3_;
 /* !BSP430! end=hal_isr_decl */
 
 /** USCI5-specific implementation of xBSP430serialOpenUART() */
-hBSP430halUSCI5 xBSP430usci5OpenUART (tBSP430periphHandle xPeriph,
-                                      unsigned int control_word,
-                                      unsigned long baud);
+hBSP430halSERIAL xBSP430usci5OpenUART (hBSP430halSERIAL hal,
+                                       unsigned int control_word,
+                                       unsigned long baud);
 
 /** USCI5-specific implementation of xBSP430serialOpenSPI() */
-hBSP430halUSCI5 xBSP430usci5OpenSPI (tBSP430periphHandle xPeriph,
-                                     unsigned int control_word,
-                                     unsigned int prescaler);
+hBSP430halSERIAL xBSP430usci5OpenSPI (hBSP430halSERIAL hal,
+                                      unsigned int control_word,
+                                      unsigned int prescaler);
 
 /** USCI5-specific implementation of xBSP430serialConfigureCallbacks() */
-int iBSP430usci5ConfigureCallbacks (hBSP430halUSCI5 device,
+int iBSP430usci5ConfigureCallbacks (hBSP430halSERIAL device,
                                     const struct sBSP430halISRCallbackVoid * rx_callback,
                                     const struct sBSP430halISRCallbackVoid * tx_callback);
 
 /** USCI5-specific implementation of xBSP430serialClose() */
-int iBSP430usci5Close (hBSP430halUSCI5 xUSCI);
+int iBSP430usci5Close (hBSP430halSERIAL xUSCI);
 
 /** USCI5-specific implementation of xBSP430serialWakeupTransmit_ni() */
-void vBSP430usci5WakeupTransmit_ni (hBSP430halUSCI5 device);
+void vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL device);
 
 /** USCI5-specific implementation of xBSP430serialFlush_ni() */
-void vBSP430usci5Flush_ni (hBSP430halUSCI5 device);
+void vBSP430usci5Flush_ni (hBSP430halSERIAL device);
 
 /** USCI5-specific implementation of xBSP430serialTransmitByte_ni() */
-int iBSP430usci5TransmitByte_ni (hBSP430halUSCI5 device, int c);
+int iBSP430usci5TransmitByte_ni (hBSP430halSERIAL device, int c);
 
 /** USCI5-specific implementation of xBSP430serialTransmitData_ni() */
-int iBSP430usci5TransmitData_ni (hBSP430halUSCI5 device, const uint8_t * data, size_t len);
+int iBSP430usci5TransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
 /** USCI5-specific implementation of xBSP430serialPutASCIIZ_ni() */
-int iBSP430usci5TransmitASCIIZ_ni (hBSP430halUSCI5 device, const char * str);
+int iBSP430usci5TransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 #endif /* BSP430_PERIPH_USCI5_H */

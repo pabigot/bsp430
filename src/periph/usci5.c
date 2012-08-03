@@ -38,9 +38,9 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI5
  * device handle. */
-static hBSP430halUSCI5 periphToDevice (tBSP430periphHandle periph);
+hBSP430halSERIAL periphToDevice (tBSP430periphHandle periph);
 
-#define SERIAL_HAL_HPL(_hal) ((_hal)->usci5)
+#define SERIAL_HAL_HPL(_hal) ((_hal)->hpl.usci5)
 
 #define SERIAL_HPL_WAKEUP_TRANSMIT_NI(_hpl) do {        \
     if (! (_hpl->ie & UCTXIE)) {                        \
@@ -92,14 +92,13 @@ hplSetBaudRate (volatile struct sBSP430hplUSCI5 * hpl,
   hpl->mctl = (0 * UCBRF0) | (brs * UCBRS0);
 }
 
-hBSP430halUSCI5
-xBSP430usci5OpenUART (tBSP430periphHandle periph,
+hBSP430halSERIAL
+xBSP430usci5OpenUART (hBSP430halSERIAL hal,
                       unsigned int control_word,
                       unsigned long baud)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   unsigned long brclk_Hz;
-  hBSP430halUSCI5 hal = periphToDevice(periph);
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -141,7 +140,7 @@ xBSP430usci5OpenUART (tBSP430periphHandle periph,
 }
 
 int
-iBSP430usci5ConfigureCallbacks (hBSP430halUSCI5 hal,
+iBSP430usci5ConfigureCallbacks (hBSP430halSERIAL hal,
                                 const struct sBSP430halISRCallbackVoid * rx_callback,
                                 const struct sBSP430halISRCallbackVoid * tx_callback)
 {
@@ -168,7 +167,7 @@ iBSP430usci5ConfigureCallbacks (hBSP430halUSCI5 hal,
 }
 
 int
-iBSP430usci5Close (hBSP430halUSCI5 hal)
+iBSP430usci5Close (hBSP430halSERIAL hal)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc;
@@ -185,19 +184,19 @@ iBSP430usci5Close (hBSP430halUSCI5 hal)
 }
 
 void
-vBSP430usci5Flush_ni (hBSP430halUSCI5 hal)
+vBSP430usci5Flush_ni (hBSP430halSERIAL hal)
 {
   SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
 }
 
 void
-vBSP430usci5WakeupTransmit_ni (hBSP430halUSCI5 hal)
+vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL hal)
 {
   SERIAL_HPL_WAKEUP_TRANSMIT_NI(SERIAL_HAL_HPL(hal));
 }
 
 int
-iBSP430usci5TransmitByte_ni (hBSP430halUSCI5 hal, int c)
+iBSP430usci5TransmitByte_ni (hBSP430halSERIAL hal, int c)
 {
   if (hal->tx_callback) {
     return -1;
@@ -207,7 +206,7 @@ iBSP430usci5TransmitByte_ni (hBSP430halUSCI5 hal, int c)
 }
 
 int
-iBSP430usci5TransmitData_ni (hBSP430halUSCI5 hal,
+iBSP430usci5TransmitData_ni (hBSP430halSERIAL hal,
                              const uint8_t * data,
                              size_t len)
 {
@@ -223,7 +222,7 @@ iBSP430usci5TransmitData_ni (hBSP430halUSCI5 hal,
 }
 
 int
-iBSP430usci5TransmitASCIIZ_ni (hBSP430halUSCI5 hal, const char * str)
+iBSP430usci5TransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
@@ -265,20 +264,20 @@ static int
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-usci5_isr (hBSP430halUSCI5 device)
+usci5_isr (hBSP430halSERIAL hal)
 {
   int rv = 0;
 
-  switch (device->usci5->iv) {
+  switch (SERIAL_HAL_HPL(hal)->iv) {
     default:
     case USCI_NONE:
       break;
     case USCI_UCTXIFG:
-      rv = iBSP430callbackInvokeISRVoid_ni(&device->tx_callback, device, 0);
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_callback, hal, 0);
       if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
         /* Found some data; send it out */
-        ++device->num_tx;
-        device->usci5->txbuf = device->tx_byte;
+        ++hal->num_tx;
+        SERIAL_HAL_HPL(hal)->txbuf = hal->tx_byte;
       } else {
         /* No data; disable transmission interrupt */
         rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
@@ -287,72 +286,140 @@ usci5_isr (hBSP430halUSCI5 device)
        * function is ready so when the interrupt is next set it will
        * fire. */
       if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
-        device->usci5->ie &= ~UCTXIE;
-        device->usci5->ifg |= UCTXIFG;
+        SERIAL_HAL_HPL(hal)->ie &= ~UCTXIE;
+        SERIAL_HAL_HPL(hal)->ifg |= UCTXIFG;
       }
       break;
     case USCI_UCRXIFG:
-      device->rx_byte = device->usci5->rxbuf;
-      ++device->num_rx;
-      rv = iBSP430callbackInvokeISRVoid_ni(&device->rx_callback, device, 0);
+      hal->rx_byte = SERIAL_HAL_HPL(hal)->rxbuf;
+      ++hal->num_rx;
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->rx_callback, hal, 0);
       break;
   }
   return rv;
 }
 #endif  /* HAL ISR */
 
-/* !BSP430! insert=hal_defn */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_defn] */
+static struct sBSP430serialDispatch dispatch_ = {
+  .openUART = xBSP430usci5OpenUART,
+  //  .openSPI = xBSP430usci5OpenSPI,
+  .configureCallbacks = iBSP430usci5ConfigureCallbacks,
+  .close = iBSP430usci5Close,
+  .wakeupTransmit_ni = vBSP430usci5WakeupTransmit_ni,
+  .flush_ni = vBSP430usci5Flush_ni,
+  .transmitByte_ni = iBSP430usci5TransmitByte_ni,
+  .transmitData_ni = iBSP430usci5TransmitData_ni,
+  .transmitASCIIZ_ni = iBSP430usci5TransmitASCIIZ_ni
+};
+
+/* !BSP430! insert=hal_serial_defn */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_serial_defn] */
 #if configBSP430_HAL_USCI5_A0 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_A0_ = {
-  .usci5 = BSP430_HPL_USCI5_A0
+struct sBSP430halSERIAL xBSP430hal_USCI5_A0_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_A0_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_A0_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_A0 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 #if configBSP430_HAL_USCI5_A1 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_A1_ = {
-  .usci5 = BSP430_HPL_USCI5_A1
+struct sBSP430halSERIAL xBSP430hal_USCI5_A1_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_A1_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_A1_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_A1 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 #if configBSP430_HAL_USCI5_A2 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_A2_ = {
-  .usci5 = BSP430_HPL_USCI5_A2
+struct sBSP430halSERIAL xBSP430hal_USCI5_A2_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_A2_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_A2_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_A2 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 #if configBSP430_HAL_USCI5_A3 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_A3_ = {
-  .usci5 = BSP430_HPL_USCI5_A3
+struct sBSP430halSERIAL xBSP430hal_USCI5_A3_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_A3_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_A3_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_A3 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 #if configBSP430_HAL_USCI5_B0 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_B0_ = {
-  .usci5 = BSP430_HPL_USCI5_B0
+struct sBSP430halSERIAL xBSP430hal_USCI5_B0_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_B0_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_B0_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_B0 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 #if configBSP430_HAL_USCI5_B1 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_B1_ = {
-  .usci5 = BSP430_HPL_USCI5_B1
+struct sBSP430halSERIAL xBSP430hal_USCI5_B1_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_B1_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_B1_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_B1 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 #if configBSP430_HAL_USCI5_B2 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_B2_ = {
-  .usci5 = BSP430_HPL_USCI5_B2
+struct sBSP430halSERIAL xBSP430hal_USCI5_B2_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_B2_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_B2_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_B2 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 #if configBSP430_HAL_USCI5_B3 - 0
-sBSP430halUSCI5 xBSP430hal_USCI5_B3_ = {
-  .usci5 = BSP430_HPL_USCI5_B3
+struct sBSP430halSERIAL xBSP430hal_USCI5_B3_ = {
+  .hal_state = {
+    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI5
+#if configBSP430_HAL_USCI5_B3_ISR - 0
+    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_USCI5_B3_ISR */
+  },
+  .hpl = { .usci5 = BSP430_HPL_USCI5_B3 },
+  .dispatch = &dispatch_
 };
 #endif /* configBSP430_HAL_USCI5_B3 */
 
-/* END AUTOMATICALLY GENERATED CODE [hal_defn] */
-/* !BSP430! end=hal_defn */
+/* END AUTOMATICALLY GENERATED CODE [hal_serial_defn] */
+/* !BSP430! end=hal_serial_defn */
 
 /* !BSP430! uscifrom=usci5 insert=hal_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_defn] */
@@ -439,7 +506,7 @@ isr_USCI5_B3 (void)
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-static hBSP430halUSCI5 periphToDevice (tBSP430periphHandle periph)
+hBSP430halSERIAL periphToDevice (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

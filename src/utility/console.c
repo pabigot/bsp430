@@ -45,10 +45,6 @@
 #include <stdlib.h>
 #include <bsp430/platform.h>
 
-#ifndef BSP430_SERIAL_H
-#error what
-#endif
-
 #if BSP430_CONSOLE - 0
 
 /* Inhibit definition if required components were not provided. */
@@ -201,20 +197,9 @@ cprintf (const char *fmt, ...)
 hBSP430halSERIAL
 xBSP430consoleInitialize (void)
 {
-  tBSP430periphHandle periph = xBSP430periphFromHPL(
-#if configBSP430_SERIAL_USE_USCI - 0
-                                 BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci
-#endif /* configBSP430_SERIAL_USE_USCI */
-#if configBSP430_SERIAL_USE_USCI5 - 0
-                                 BSP430_CONSOLE_SERIAL_HAL_HANDLE->usci5
-#endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCIA - 0
-                                 BSP430_CONSOLE_SERIAL_HAL_HANDLE->euscia
-#endif /* configBSP430_SERIAL_USE_EUSCIA */
-                               );
   hBSP430halSERIAL hal;
 
-  hal = xBSP430serialOpenUART(periph, 0, BSP430_CONSOLE_BAUD_RATE);
+  hal = xBSP430serialOpenUART(BSP430_CONSOLE_SERIAL_HAL_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
   if (NULL != hal) {
     console_uart = hal;
   }

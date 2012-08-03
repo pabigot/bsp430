@@ -48,6 +48,7 @@
 #define BSP430_PERIPH_EUSCIA_H
 
 #include <bsp430/periph.h>
+#include <bsp430/serial.h>
 
 #if ! defined(__MSP430_HAS_EUSCI_A0__)
 #warning Peripheral not supported by configured MCU
@@ -102,44 +103,7 @@ typedef struct sBSP430hplEUSCIA {
 #define BSP430_PERIPH_EUSCI_B3_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_B3__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/** Structure holding hardware abstraction layer state for eUSCI_A.
- *
- * This structure is internal state, for access by applications only
- * when overriding BSP430 HAL capabilities. */
-typedef struct sBSP430halEUSCIA {
-  /** Flags indicating various things: primarily, whether anybody is
-   * using the device. */
-  unsigned int flags;
-
-  /** Pointer to the peripheral register structure. */
-  volatile sBSP430hplEUSCIA * const euscia;
-
-  /** Location to store a single incoming character when #rx_queue
-   * is undefined. */
-  uint8_t rx_byte;
-
-  /** Location to store a single outgoing character when #tx_queue
-   * is undefined.  This is probably not very useful. */
-  uint8_t tx_byte;
-
-  /** The callback chain to invoke when a byte is received */
-  const struct sBSP430halISRCallbackVoid * rx_callback;
-
-  /** The callback chain to invoke when space is available in the
-   * transmission buffer */
-  const struct sBSP430halISRCallbackVoid * tx_callback;
-
-  /** Total number of received octets */
-  unsigned long num_rx;
-
-  /** Total number of transmitted octets */
-  unsigned long num_tx;
-} sBSP430halEUSCIA;
-
-/** The USCI internal state is private to the implementation. */
-typedef struct sBSP430halEUSCIA * hBSP430halEUSCIA;
-
-/* !BSP430! insert=hal_decl */
+/* !BSP430! periph=serial insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** @def configBSP430_HAL_EUSCI_A0
  *
@@ -161,7 +125,7 @@ typedef struct sBSP430halEUSCIA * hBSP430halEUSCIA;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_A0 - 0
 /* You don't need to know about this */
-extern sBSP430halEUSCIA xBSP430hal_EUSCI_A0_;
+extern sBSP430halSERIAL xBSP430hal_EUSCI_A0_;
 #endif /* configBSP430_HAL_EUSCI_A0 */
 /** @endcond */
 
@@ -195,7 +159,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A0_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_A1 - 0
 /* You don't need to know about this */
-extern sBSP430halEUSCIA xBSP430hal_EUSCI_A1_;
+extern sBSP430halSERIAL xBSP430hal_EUSCI_A1_;
 #endif /* configBSP430_HAL_EUSCI_A1 */
 /** @endcond */
 
@@ -229,7 +193,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A1_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_A2 - 0
 /* You don't need to know about this */
-extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
+extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #endif /* configBSP430_HAL_EUSCI_A2 */
 /** @endcond */
 
@@ -245,6 +209,7 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
+/* !BSP430! periph=euscia */
 
 /* !BSP430! insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
@@ -460,37 +425,37 @@ extern sBSP430halEUSCIA xBSP430hal_EUSCI_A2_;
 /* !BSP430! end=hal_isr_decl */
 
 /** eUSCI(A)-specific implementation of xBSP430serialOpenUART() */
-hBSP430halEUSCIA xBSP430eusciaOpenUART (tBSP430periphHandle xPeriph,
+hBSP430halSERIAL xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
                                         unsigned int control_word,
                                         unsigned long baud);
 
 /** eUSCI(A)-specific implementation of xBSP430serialOpenSPI() */
-hBSP430halEUSCIA xBSP430eusciaOpenSPI (tBSP430periphHandle xPeriph,
+hBSP430halSERIAL xBSP430eusciaOpenSPI (hBSP430halSERIAL hal,
                                        unsigned int control_word,
                                        unsigned int prescaler);
 
 /** eUSCI(A)-specific implementation of xBSP430serialConfigureCallbacks() */
-int iBSP430eusciaConfigureCallbacks (hBSP430halEUSCIA device,
+int iBSP430eusciaConfigureCallbacks (hBSP430halSERIAL device,
                                      const struct sBSP430halISRCallbackVoid * rx_callback,
                                      const struct sBSP430halISRCallbackVoid * tx_callback);
 
 /** eUSCI(A)-specific implementation of xBSP430serialClose() */
-int iBSP430eusciaClose (hBSP430halEUSCIA xUSCI);
+int iBSP430eusciaClose (hBSP430halSERIAL xUSCI);
 
 /** eUSCI(A)-specific implementation of xBSP430serialWakeupTransmit_ni() */
-void vBSP430eusciaWakeupTransmit_ni (hBSP430halEUSCIA device);
+void vBSP430eusciaWakeupTransmit_ni (hBSP430halSERIAL device);
 
 /** eUSCI(A)-specific implementation of xBSP430serialFlush_ni() */
-void vBSP430eusciaFlush_ni (hBSP430halEUSCIA device);
+void vBSP430eusciaFlush_ni (hBSP430halSERIAL device);
 
 /** eUSCI(A)-specific implementation of xBSP430serialTransmitByte_ni() */
-int iBSP430eusciaTransmitByte_ni (hBSP430halEUSCIA device, int c);
+int iBSP430eusciaTransmitByte_ni (hBSP430halSERIAL device, int c);
 
 /** eUSCI(A)-specific implementation of xBSP430serialTransmitData_ni() */
-int iBSP430eusciaTransmitData_ni (hBSP430halEUSCIA device, const uint8_t * data, size_t len);
+int iBSP430eusciaTransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
 /** eUSCI(A)-specific implementation of xBSP430serialPutASCIIZ_ni() */
-int iBSP430eusciaTransmitASCIIZ_ni (hBSP430halEUSCIA device, const char * str);
+int iBSP430eusciaTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 #endif /* BSP430_PERIPH_EUSCIA_H */
 
