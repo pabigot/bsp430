@@ -404,80 +404,78 @@ typedef sBSP430hplPORT_8 sBSP430hplPORT;
 #endif /* 5XX */
 
 /* !BSP430! instance=port_ie_8,port_8,port_16,port_5xx_8,port_5xx_16,port,portie,portw */
-/* !BSP430! insert=hal_port_hpl_macro */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_hpl_macro] */
-/** True iff the HPL pointer of the HAL is a PORT_IE_8 variant. */
+/* !BSP430! insert=hal_variant_hpl_macro */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_variant_hpl_macro] */
+/** True iff the HPL pointer of the port HAL is a PORT_IE_8 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_IE_8(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_IE_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORT_IE_8 variant.
+/** Get the port HPL pointer if the HAL is a PORT_IE_8 variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_IE_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_IE_8(_hal)) ? (_hal)->hpl.port_ie_8 : (void *)0)
 
-/** True iff the HPL pointer of the HAL is a PORT_8 variant. */
+/** True iff the HPL pointer of the port HAL is a PORT_8 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_8(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORT_8 variant.
+/** Get the port HPL pointer if the HAL is a PORT_8 variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_8(_hal)) ? (_hal)->hpl.port_8 : (void *)0)
 
-/** True iff the HPL pointer of the HAL is a PORT_16 variant. */
+/** True iff the HPL pointer of the port HAL is a PORT_16 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_16(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_16 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORT_16 variant.
+/** Get the port HPL pointer if the HAL is a PORT_16 variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_16(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_16(_hal)) ? (_hal)->hpl.port_16 : (void *)0)
 
-/** True iff the HPL pointer of the HAL is a PORT_5XX_8 variant. */
+/** True iff the HPL pointer of the port HAL is a PORT_5XX_8 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_8(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORT_5XX_8 variant.
+/** Get the port HPL pointer if the HAL is a PORT_5XX_8 variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_5XX_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_8(_hal)) ? (_hal)->hpl.port_5xx_8 : (void *)0)
 
-/** True iff the HPL pointer of the HAL is a PORT_5XX_16 variant. */
+/** True iff the HPL pointer of the port HAL is a PORT_5XX_16 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_16(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_16 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORT_5XX_16 variant.
+/** Get the port HPL pointer if the HAL is a PORT_5XX_16 variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_5XX_16(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_16(_hal)) ? (_hal)->hpl.port_5xx_16 : (void *)0)
 
-/** True iff the HPL pointer of the HAL is a PORT variant. */
+/** True iff the HPL pointer of the port HAL is a PORT variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORT variant.
+/** Get the port HPL pointer if the HAL is a PORT variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT(_hal)) ? (_hal)->hpl.port : (void *)0)
 
-/** True iff the HPL pointer of the HAL is a PORTIE variant. */
+/** True iff the HPL pointer of the port HAL is a PORTIE variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORTIE == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORTIE variant.
+/** Get the port HPL pointer if the HAL is a PORTIE variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORTIE(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal)) ? (_hal)->hpl.portie : (void *)0)
 
-/** True iff the HPL pointer of the HAL is a PORTW variant. */
+/** True iff the HPL pointer of the port HAL is a PORTW variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORTW == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
-/** Get the HPL pointer if the HAL is a PORTW variant.
+/** Get the port HPL pointer if the HAL is a PORTW variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORTW(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW(_hal)) ? (_hal)->hpl.portw : (void *)0)
 
-/* END AUTOMATICALLY GENERATED CODE [hal_port_hpl_macro] */
-/* !BSP430! end=hal_port_hpl_macro */
+/* END AUTOMATICALLY GENERATED CODE [hal_variant_hpl_macro] */
+/* !BSP430! end=hal_variant_hpl_macro */
 /* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
 
-/** Structure holding hardware abstraction layer state for Timer_A and Timer_B.
- *
- * This structure is internal state, for access by applications only
- * when overriding BSP430 HAL capabilities. */
+/** Structure holding hardware abstraction layer state for digital I/O
+ * ports. */
 typedef struct sBSP430halPORT {
   /** Common header used to extract the correct HPL pointer type from
    * the hpl union. */
@@ -487,7 +485,7 @@ typedef struct sBSP430halPORT {
    * In practice, a valid pointer here will be compatible with either
    * @a port or @a portie, both in the case of the 5xx port peripheral
    * where a single layout is used.  Use
-   * #BSP430PERIPH_HAL_STATE_CFLAGS_VARIANT() to introspect a HAL
+   * #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT() to introspect a HAL
    * instance to determine which pointer is appropriate. */
   union {
     /** Access to the HPL pointer ignoring its underlying type */
