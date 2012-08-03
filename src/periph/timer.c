@@ -297,7 +297,7 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
 
   /* Reset the CCTL */
   tp->cctl[ccidx] = 0;
-  return (c0 > c1) ? (c0 - c1) : (c1 - c0);
+  return c1 - c0;
 }
 
 unsigned long
