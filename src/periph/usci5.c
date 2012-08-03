@@ -36,30 +36,61 @@
 /* !BSP430! periph=usci5 */
 /* !BSP430! instance=USCI5_A0,USCI5_A1,USCI5_A2,USCI5_A3,USCI5_B0,USCI5_B1,USCI5_B2,USCI5_B3 */
 
-#define COM_PORT_ACTIVE  0x01
-
 /** Convert from a raw peripheral handle to the corresponding USCI5
  * device handle. */
 static hBSP430halUSCI5 periphToDevice (tBSP430periphHandle periph);
 
-#define WAKEUP_TRANSMIT_HPL_NI(_hpl) do {       \
-    if (! (_hpl->ie & UCTXIE)) {                \
-      _hpl->ie |= (_hpl->ifg & UCTXIFG);        \
-    }                                           \
+#define SERIAL_HAL_HPL(_hal) ((_hal)->usci5)
+
+#define SERIAL_HPL_WAKEUP_TRANSMIT_NI(_hpl) do {        \
+    if (! (_hpl->ie & UCTXIE)) {                        \
+      _hpl->ie |= (_hpl->ifg & UCTXIFG);                \
+    }                                                   \
   } while (0)
 
-#define RAW_TRANSMIT_HPL_NI(_hpl, _c) do {      \
-    while (! (_hpl->ifg & UCTXIFG)) {           \
-      ;                                         \
-    }                                           \
-    _hpl->txbuf = _c;                           \
+#define SERIAL_HPL_RAW_TRANSMIT_NI(_hpl, _c) do {       \
+    while (! (_hpl->ifg & UCTXIFG)) {                   \
+      ;                                                 \
+    }                                                   \
+    _hpl->txbuf = _c;                                   \
   } while (0)
 
-#define FLUSH_HPL_NI(_hpl) do {                 \
+#define SERIAL_HPL_FLUSH_NI(_hpl) do {          \
     while (_hpl->stat & UCBUSY) {               \
       ;                                         \
     }                                           \
   } while (0)
+
+#define SERIAL_HPL_RESET_NI(_hpl) do {          \
+    (_hpl)->ctlw0 = UCSWRST;                    \
+  } while (0)
+
+#define SERIAL_HPL_SET_CLKSOURCE(_hpl, _cssel) do {     \
+    (_hpl)->ctlw0 |= (_cssel);                          \
+  } while (0)
+
+#define SERIAL_HPL_HOLD_HPL_NI(_hpl) do {       \
+    (_hpl)->ctlw0 |= UCSWRST;                   \
+  } while (0)
+
+#define SERIAL_HPL_RELEASE_HPL_NI(_hal,_hpl) do {       \
+    (_hpl)->ctlw0 &= ~UCSWRST;                          \
+    if ((_hal)->rx_callback) {                          \
+      (_hpl)->ie |= UCRXIE;                             \
+    }                                                   \
+  } while (0)
+
+static void
+hplSetBaudRate (volatile struct sBSP430hplUSCI5 * hpl,
+                unsigned long baud,
+                unsigned long brclk_Hz)
+{
+  uint16_t br = (brclk_Hz / baud);
+  uint16_t brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;
+
+  hpl->brw = br;
+  hpl->mctl = (0 * UCBRF0) | (brs * UCBRS0);
+}
 
 hBSP430halUSCI5
 xBSP430usci5OpenUART (tBSP430periphHandle periph,
@@ -68,58 +99,49 @@ xBSP430usci5OpenUART (tBSP430periphHandle periph,
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   unsigned long brclk_Hz;
-  hBSP430halUSCI5 device = periphToDevice(periph);
-  uint16_t br;
-  uint16_t brs;
+  hBSP430halUSCI5 hal = periphToDevice(periph);
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   /* Reject invalid baud rates */
   if ((0 == baud) || (1000000UL < baud)) {
-    device = NULL;
+    hal = NULL;
   }
 
   /* Reject if the pins can't be configured */
-  if ((NULL != device)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(device->usci5), 1))) {
-    device = NULL;
+  if ((NULL != hal)
+      && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 1))) {
+    hal = NULL;
   }
 
-  if (NULL != device) {
+  if (NULL != hal) {
     /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
      * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
      * anything larger.  */
     brclk_Hz = usBSP430clockACLK_Hz_ni();
+    SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
     if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
-      device->usci5->ctlw0 = UCSWRST | UCSSEL__ACLK;
+      SERIAL_HPL_SET_CLKSOURCE(SERIAL_HAL_HPL(hal), UCSSEL__ACLK);
     } else {
-      device->usci5->ctlw0 = UCSWRST | UCSSEL__SMCLK;
+      SERIAL_HPL_SET_CLKSOURCE(SERIAL_HAL_HPL(hal), UCSSEL__SMCLK);
       brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
     }
-    br = (brclk_Hz / baud);
-    brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;
+    hplSetBaudRate(SERIAL_HAL_HPL(hal), baud, brclk_Hz);
 
-    device->usci5->brw = br;
-    device->usci5->mctl = (0 * UCBRF0) | (brs * UCBRS0);
-
-    /* Mark the device active */
-    device->num_rx = device->num_tx = 0;
-    device->flags |= COM_PORT_ACTIVE;
+    /* Reset device statistics */
+    hal->num_rx = hal->num_tx = 0;
 
     /* Release the USCI5 and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
-    device->usci5->ctlw0 &= ~UCSWRST;
-    if (device->rx_callback) {
-      device->usci5->ie |= UCRXIE;
-    }
+    SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
   }
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
-  return device;
+  return hal;
 }
 
 int
-iBSP430usci5ConfigureCallbacks (hBSP430halUSCI5 device,
+iBSP430usci5ConfigureCallbacks (hBSP430halUSCI5 hal,
                                 const struct sBSP430halISRCallbackVoid * rx_callback,
                                 const struct sBSP430halISRCallbackVoid * tx_callback)
 {
@@ -130,90 +152,86 @@ iBSP430usci5ConfigureCallbacks (hBSP430halUSCI5 device,
   BSP430_CORE_DISABLE_INTERRUPT();
   /* Finish any current activity, inhibiting the start of new activity
    * due to !GIE. */
-  FLUSH_HPL_NI(device->usci5);
-  device->usci5->ctlw0 |= UCSWRST;
-  if (device->rx_callback || device->tx_callback) {
+  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
+  SERIAL_HPL_HOLD_HPL_NI(SERIAL_HAL_HPL(hal));
+  if (hal->rx_callback || hal->tx_callback) {
     rc = -1;
   } else {
-    device->rx_callback = rx_callback;
-    device->tx_callback = tx_callback;
+    hal->rx_callback = rx_callback;
+    hal->tx_callback = tx_callback;
   }
   /* Release the USCI5 and enable the interrupts.  Interrupts are
    * disabled and cleared when UCSWRST is set. */
-  device->usci5->ctlw0 &= ~UCSWRST;
-  if (device->rx_callback) {
-    device->usci5->ie |= UCRXIE;
-  }
+  SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-
   return rc;
 }
 
 int
-iBSP430usci5Close (hBSP430halUSCI5 device)
+iBSP430usci5Close (hBSP430halUSCI5 hal)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc;
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  FLUSH_HPL_NI(device->usci5);
-  device->usci5->ctlw0 = UCSWRST;
-  rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(uintptr_t)(device->usci5), 0);
-  device->flags = 0;
+  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
+  SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
+  rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 0);
+  hal->flags = 0;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return rc;
 }
 
 void
-vBSP430usci5Flush_ni (hBSP430halUSCI5 device)
+vBSP430usci5Flush_ni (hBSP430halUSCI5 hal)
 {
-  FLUSH_HPL_NI(device->usci5);
+  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
 }
 
 void
-vBSP430usci5WakeupTransmit_ni (hBSP430halUSCI5 device)
+vBSP430usci5WakeupTransmit_ni (hBSP430halUSCI5 hal)
 {
-  WAKEUP_TRANSMIT_HPL_NI(device->usci5);
+  SERIAL_HPL_WAKEUP_TRANSMIT_NI(SERIAL_HAL_HPL(hal));
 }
 
 int
-iBSP430usci5TransmitByte_ni (hBSP430halUSCI5 device, int c)
+iBSP430usci5TransmitByte_ni (hBSP430halUSCI5 hal, int c)
 {
-  if (device->tx_callback) {
+  if (hal->tx_callback) {
     return -1;
   }
-  RAW_TRANSMIT_HPL_NI(device->usci5, c);
+  SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), c);
   return c;
 }
 
 int
-iBSP430usci5TransmitData_ni (hBSP430halUSCI5 device,
+iBSP430usci5TransmitData_ni (hBSP430halUSCI5 hal,
                              const uint8_t * data,
                              size_t len)
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;
-  if (device->tx_callback) {
+  if (hal->tx_callback) {
     return -1;
   }
   while (p < edata) {
-    RAW_TRANSMIT_HPL_NI(device->usci5, *p++);
+    SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), *p++);
   }
   return p - data;
 }
 
 int
-iBSP430usci5TransmitASCIIZ_ni (hBSP430halUSCI5 device, const char * str)
+iBSP430usci5TransmitASCIIZ_ni (hBSP430halUSCI5 hal, const char * str)
 {
   const char * in_string = str;
 
-  if (device->tx_callback) {
+  if (hal->tx_callback) {
     return -1;
   }
   while (*str) {
-    RAW_TRANSMIT_HPL_NI(device->usci5, *str);
+    SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), *str);
     ++str;
   }
   return str - in_string;
