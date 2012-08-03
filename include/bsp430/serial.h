@@ -129,6 +129,11 @@
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_SERIAL_HAL_GET_HPL_USCI(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(_hal)) ? (_hal)->hpl.usci : (void *)0)
 
+/** Get the serial HPL auxiliary pointer if the HAL is a USCI variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(_hal)) ? (_hal)->hpl_aux.usci : (void *)0)
+
 /** True iff the HPL pointer of the serial HAL is a USCI5 variant. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(_hal) (BSP430_SERIAL_HAL_HPL_VARIANT_USCI5 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
@@ -136,6 +141,11 @@
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_SERIAL_HAL_GET_HPL_USCI5(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(_hal)) ? (_hal)->hpl.usci5 : (void *)0)
+
+/** Get the serial HPL auxiliary pointer if the HAL is a USCI5 variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI5(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(_hal)) ? (_hal)->hpl_aux.usci5 : (void *)0)
 
 /** True iff the HPL pointer of the serial HAL is a EUSCIA variant. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(_hal) (BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
@@ -145,11 +155,17 @@
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_SERIAL_HAL_GET_HPL_EUSCIA(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(_hal)) ? (_hal)->hpl.euscia : (void *)0)
 
+/** Get the serial HPL auxiliary pointer if the HAL is a EUSCIA variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIA(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(_hal)) ? (_hal)->hpl_aux.euscia : (void *)0)
+
 /* END AUTOMATICALLY GENERATED CODE [hal_variant_hpl_macro] */
 /* !BSP430! end=hal_variant_hpl_macro */
 
 /* Forward declarations */
 struct sBSP430hplUSCI;
+struct sBSP430usciHPLAux;
 struct sBSP430hplUSCI5;
 struct sBSP430hplEUSCIA;
 struct sBSP430serialDispatch;
@@ -183,7 +199,27 @@ typedef struct sBSP430halSERIAL {
 
     /** Access to the HPL pointer as a 5xx/6xx eUSCI type A peripheral */
     volatile struct sBSP430hplEUSCIA * euscia;
-  } hpl;
+  } const hpl;
+
+  /** Support for additional data specific to the HPL that is not part
+   * of the standard HPL structure.
+   *
+   * This is necessary for 2xx/4xx USCI, where the interrupt enable
+   * and flag registers are outside the #sBSP430hplUSCI structure.
+   * Future HPL implementations (e.g., USART) might need a similar
+   * facility.
+   *
+   * Use #BSP430_SERIAL_HAL_GET_HPLAUX_USCI() to access the
+   * corresponding structure, which is defined internally to the
+   * implementation. */
+  union {
+    /** Access to the HPL auxiliary pointer ignoring its underlying
+     * type */
+    void * any;
+    /** Access to the HPL auxiliary pointer for the 2xx/4xx USCI
+     * peripheral */
+    struct sBSP430usciHPLAux * usci;
+  } const hpl_aux;
 
   /** Location to store a single incoming character when #rx_queue
    * is undefined. */

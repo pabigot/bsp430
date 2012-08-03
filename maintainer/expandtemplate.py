@@ -343,6 +343,11 @@ struct sBSP430halSERIAL xBSP430hal_%(INSTANCE)s_ = {
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_%(PERIPH)s_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal)) ? (_hal)->hpl.%(instance)s : (void *)0)
+
+/** Get the %(periph)s HPL auxiliary pointer if the HAL is a %(INSTANCE)s variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430_%(PERIPH)s_HAL_GET_HPLAUX_%(INSTANCE)s(_hal) ((BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal)) ? (_hal)->hpl_aux.%(instance)s : (void *)0)
 ''',
 
     'hal_port_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
