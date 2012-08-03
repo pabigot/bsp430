@@ -203,6 +203,11 @@
  * the state of the system oscillator fault bit is not reflected in
  * the value for a peripheral-specific check.
  *
+ * @warning If the underlying peripheral requires that its register
+ * bank be unlocked for modification, this macro will do so then
+ * re-lock them.  This will result in unexpected behavior if the macro
+ * is invoked in a context where the registers are already unlocked.
+ *
  * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI()
  *
  * @defaulted

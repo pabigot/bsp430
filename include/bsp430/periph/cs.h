@@ -75,7 +75,12 @@
 /** Clear the fault associated with LFXT1.
  *
  * This definition overrides the generic definition to clear the
- * crystal-specific flags as well as the system flag. */
+ * crystal-specific flags as well as the system flag.
+ *
+ * @warning Because the CS registers must be unlocked when being
+ * modified, this macro will unlock and then re-lock them.  It should
+ * not be invoked in a situation where the CS registers are already
+ * locked. */
 #define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {	\
     CSCTL0_H = 0xA5;                                    \
     CSCTL5 &= ~XT1OFFG;                                 \

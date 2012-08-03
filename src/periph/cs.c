@@ -164,7 +164,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
        * drop back.  Preserve XT1 configuration. */
       CSCTL4 = (CSCTL4 | XT1DRIVE_3) & ~(XTS | XT1BYPASS | XT1OFF);
       do {
-        BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
+        CSCTL5 &= ~XT1OFFG;
         BSP430_CORE_WATCHDOG_CLEAR();
         loop_limit -= loop_delta;
         BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
