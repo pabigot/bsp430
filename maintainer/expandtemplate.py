@@ -330,11 +330,36 @@ static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-  int rv = port_isr(BSP430_HAL_%(INSTANCE)s, P%(#)sIV);
+  int iv;
+  int rv;
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+  iv = P%(#)sIV;
+#else /* CPUX */
+  unsigned char bit = 1;
+
+  iv = 0;
+  while (bit && !(bit & P%(#)sIFG)) {
+    ++iv;
+    bit <<= 1;
+  }
+  if (! bit) {
+    return;
+  }
+  P%(#)sIFG &= ~bit;
+#endif /* CPUX */
+  rv = port_isr(BSP430_HAL_%(INSTANCE)s, iv);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
+
+    'periph_hpl_port_demux' : '''#if (configBSP430_HPL_%(INSTANCE)s - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s %(IE_TEST)s 2))
+  if (BSP430_PERIPH_%(INSTANCE)s == periph) {
+    return BSP430_HPL_%(INSTANCE)s;
+  }
+#endif /* configBSP430_HPL_%(INSTANCE)s */
+''',
+
 
     'periph_hpl_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
