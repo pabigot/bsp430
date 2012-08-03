@@ -169,7 +169,6 @@ iBSP430usciClose (hBSP430halSERIAL hal)
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
   rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 0);
-  hal->flags = 0;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return rc;

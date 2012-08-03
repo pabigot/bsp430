@@ -151,8 +151,8 @@ typedef int tBSP430periphHandle;
  *
  * Where a peripheral supports multiple ISRs per instance:
  * <ul>
- * <li>A #sBSP430halTIMER instance specifies the CC0 ISR with this bit.
- * <li>A #sBSP430halUSCI instance specifies the RX ISR with this bit.
+ * <li>A #sBSP430halTIMER instance specifies the CC1-CC6 and overflow ISR with this bit.
+ * <li>A #sBSP430halSERIAL instance based on #sBSP430hplUSCI specifies the RX ISR with this bit.
  * </ul>
  */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR 0x80
@@ -165,8 +165,8 @@ typedef int tBSP430periphHandle;
  *
  * Where a peripheral supports multiple ISRs per instance:
  * <ul>
- * <li>A #sBSP430halTIMER instance specifies the CC1-CC6 and overflow ISR with this bit.
- * <li>A #sBSP430halUSCI instance specifies the TX ISR with this bit.
+ * <li>A #sBSP430halTIMER instance specifies the CC0 ISR with this bit.
+ * <li>A #sBSP430halSERIAL instance based on #sBSP430hplUSCI specifies the TX ISR with this bit.
  * </ul>
  */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2 0x40

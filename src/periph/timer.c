@@ -61,6 +61,14 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TA0[
 ];
 
 sBSP430halTIMER xBSP430hal_TA0_ = {
+  .hal_state = { .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
+#if configBSP430_HAL_TA0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_TA0_ISR */
+#if configBSP430_HAL_TA0_CC0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
+#endif /* configBSP430_HAL_TA0_CC0_ISR */
+  },                 
   .hpl = BSP430_HPL_TA0,
   .cc_callback = cc_callback_TA0
 };
@@ -79,6 +87,14 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TA1[
 ];
 
 sBSP430halTIMER xBSP430timerTA1_ = {
+  .hal_state = { .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
+#if configBSP430_HAL_TA1_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_TA1_ISR */
+#if configBSP430_HAL_TA1_CC0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
+#endif /* configBSP430_HAL_TA1_CC0_ISR */
+  },                 
   .hpl = BSP430_HPL_TA1,
   .cc_callback = &cc_callback_TA1
 };
@@ -97,6 +113,14 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TA2[
 ];
 
 sBSP430halTIMER xBSP430timerTA2_ = {
+  .hal_state = { .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
+#if configBSP430_HAL_TA2_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_TA2_ISR */
+#if configBSP430_HAL_TA2_CC0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
+#endif /* configBSP430_HAL_TA2_CC0_ISR */
+  },                 
   .hpl = BSP430_HPL_TA2,
   .cc_callback = cc_callback_TA2
 };
@@ -115,6 +139,14 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TA3[
 ];
 
 sBSP430halTIMER xBSP430timerTA3_ = {
+  .hal_state = { .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
+#if configBSP430_HAL_TA3_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_TA3_ISR */
+#if configBSP430_HAL_TA3_CC0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
+#endif /* configBSP430_HAL_TA3_CC0_ISR */
+  },                 
   .hpl = BSP430_HPL_TA3,
   .cc_callback = cc_callback_TA3
 };
@@ -131,6 +163,14 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TB0[
 ];
 
 sBSP430halTIMER xBSP430timerTB0_ = {
+  .hal_state = { .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
+#if configBSP430_HAL_TB0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_TB0_ISR */
+#if configBSP430_HAL_TB0_CC0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
+#endif /* configBSP430_HAL_TB0_CC0_ISR */
+  },                 
   .hpl = BSP430_HPL_TB0,
   .cc_callback = cc_callback_TB0
 };
@@ -147,6 +187,14 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TB1[
 ];
 
 sBSP430halTIMER xBSP430timerTB1_ = {
+  .hal_state = { .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
+#if configBSP430_HAL_TB1_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_TB1_ISR */
+#if configBSP430_HAL_TB1_CC0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
+#endif /* configBSP430_HAL_TB1_CC0_ISR */
+  },                 
   .hpl = BSP430_HPL_TB1,
   .cc_callback = cc_callback_TB1
 };
@@ -163,6 +211,14 @@ static const sBSP430halISRCallbackIndexed * cc_callback_TB2[
 ];
 
 sBSP430halTIMER xBSP430timerTB2_ = {
+  .hal_state = { .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
+#if configBSP430_HAL_TB2_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
+#endif /* configBSP430_HAL_TB2_ISR */
+#if configBSP430_HAL_TB2_CC0_ISR - 0
+                 | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
+#endif /* configBSP430_HAL_TB2_CC0_ISR */
+  },                 
   .hpl = BSP430_HPL_TB2,
   .cc_callback = cc_callback_TB2
 };

@@ -52,17 +52,17 @@
 #include <bsp430/periph.h>
 
 /** Field value for variant stored in
- * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplUSCI. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_USCI 1
 
 /** Field value for variant stored in
- * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplUSCI5. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_USCI5 1
 
 /** Field value for variant stored in
- * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplEUSCIA. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA 1
 
@@ -173,10 +173,6 @@ struct sBSP430serialDispatch;
 /** Structure holding hardware abstraction layer state for serial
  * devices. */
 typedef struct sBSP430halSERIAL {
-  /** Flags indicating various things: primarily, whether anybody is
-   * using the device. */
-  unsigned int flags;
-
   /** Common header used to extract the correct HPL pointer type from
    * the hpl union. */
   sBSP430hplHALStatePrefix hal_state;

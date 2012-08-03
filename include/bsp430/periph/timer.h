@@ -391,11 +391,19 @@ typedef struct sBSP430hplTIMER {
  */
 volatile sBSP430hplTIMER * xBSP430periphLookupTIMER (tBSP430periphHandle xHandle);
 
+/** Field value for variant stored in sBSP430halTIMER.hal_state.cflags
+ * when HPL reference is to an #sBSP430hplTIMER. */
+#define BSP430_TIMER_HAL_HPL_VARIANT_TIMER 1
+
 /** Structure holding hardware abstraction layer state for Timer_A and Timer_B.
  *
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
 typedef struct sBSP430halTIMER {
+  /** Common header used to extract the correct HPL pointer type from
+   * the hpl union. */
+  sBSP430hplHALStatePrefix hal_state;
+
   /** The underlying timer peripheral register structure */
   volatile sBSP430hplTIMER * const hpl;
 

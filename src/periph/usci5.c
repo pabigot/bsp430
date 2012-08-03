@@ -177,7 +177,6 @@ iBSP430usci5Close (hBSP430halSERIAL hal)
   SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
   rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 0);
-  hal->flags = 0;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return rc;
