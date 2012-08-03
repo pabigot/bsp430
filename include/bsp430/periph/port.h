@@ -347,28 +347,28 @@ volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
 
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to an sBSP430hpl_PORT_IE_8. */
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to an #sBSP430hplPORT_IE_8. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_IE_8 1
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to an sBSP430hpl_PORT_8. */
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to an #sBSP430hplPORT_8. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_8 2
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to an sBSP430hpl_PORT_16. */
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to an #sBSP430hplPORT_16. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_16 3
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to an sBSP430hpl_PORT_5XX_8. */
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to an #sBSP430hplPORT_5XX_8. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8 4
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to an sBSP430hpl_PORT_5XX_16. */
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to an #sBSP430hplPORT_5XX_16. */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_16 5
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to a byte-accessed port without interrupt
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to a byte-accessed port without interrupt
  * capabilities.
  *
  * This identifies the appropriate structure-specific variant value
@@ -379,8 +379,8 @@ volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTIE BSP430_PORT_HAL_HPL_VARIANT_PORT_IE_8
 #endif /* 5XX */
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to a byte-accessed port without interrupt
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to a byte-accessed port without interrupt
  * capabilities.
  *
  * This identifies the appropriate structure-specific variant value
@@ -392,9 +392,8 @@ volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
 typedef sBSP430hplPORT_8 sBSP430hplPORT;
 #endif /* 5XX */
 
-/** Field value for variant stored in sBSP430halPORT.hal_state when
- * HPL reference is to a byte-accessed port without interrupt
- * capabilities.
+/** Field value for variant stored in sBSP430halPORT.hal_state.cflags
+ * when HPL reference is to a word-accessed port.
  *
  * This identifies the appropriate structure-specific variant value
  * based on the MCU capabilities. */
