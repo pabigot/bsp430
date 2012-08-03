@@ -272,6 +272,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 #undef TRY_FREQ
 #undef ERROR_HZ
 
+  /* Clearing DCO bits first supports workaround for erratum BCL12 */
   DCOCTL = 0;
   BCSCTL1 = bcsctl1;
   DCOCTL = dcoctl;
