@@ -52,7 +52,7 @@
 
 /** @def configBSP430_SERIAL_USE_USCI
  *
- * Define to true value to select #tBSP430usciHandle as the underlying
+ * Define to true value to select #hBSP430halUSCI as the underlying
  * serial implementation.  This defaults to true iff the MCU supports
  * the USCI device.
  *
@@ -63,7 +63,7 @@
 
 /** @def configBSP430_SERIAL_USE_USCI5
  *
- * Define to true value to select #tBSP430usci5Handle as the
+ * Define to true value to select #hBSP430halUSCI5 as the
  * underlying serial implementation.  This defaults to true iff the
  * MCU supports the USCI5 device.
  *
@@ -74,7 +74,7 @@
 
 /** @def configBSP430_SERIAL_USE_EUSCIA
  *
- * Define to true value to select #tBSP430eusciaHandle as the
+ * Define to true value to select #hBSP430halEUSCIA as the
  * underlying serial implementation.  This defaults to true iff the
  * MCU supports the eUSCI device.
  *
@@ -87,10 +87,10 @@
 /** An alias for the peripheral-specific HAL handle that supports the
  * serial HAL abstraction on this platform.
  *
- * @delegated This typedef selects #tBSP430usciHandle,
- * #tBSP430usci5Handle, #tBSP430eusciaHandle, or another
+ * @delegated This typedef selects #hBSP430halUSCI,
+ * #hBSP430halUSCI5, #hBSP430halEUSCIA, or another
  * implementation based on peripheral availability. */
-typedef tBSP430serialHandle tBSP430serialHandle;
+typedef hBSP430halSERIAL hBSP430halSERIAL;
 #endif
 
 /** Request and configure a serial device in UART mode.
@@ -135,15 +135,15 @@ typedef tBSP430serialHandle tBSP430serialHandle;
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-tBSP430serialHandle xBSP430serialOpenUART (tBSP430periphHandle periph,
-    unsigned int control_word,
-    unsigned long baud);
+hBSP430halSERIAL xBSP430serialOpenUART (tBSP430periphHandle periph,
+                                        unsigned int control_word,
+                                        unsigned long baud);
 #endif /* BSP430_DOXYGEN */
 
 #if defined(BSP430_DOXYGEN)
-tBSP430serialHandle xBSP430serialOpenSPI (tBSP430periphHandle periph,
-    unsigned int control_word,
-    unsigned int prescaler);
+hBSP430halSERIAL xBSP430serialOpenSPI (tBSP430periphHandle periph,
+                                       unsigned int control_word,
+                                       unsigned int prescaler);
 #endif /* BSP430_DOXYGEN */
 
 /** Assign callbacks for transmission and reception.
@@ -170,8 +170,8 @@ tBSP430serialHandle xBSP430serialOpenSPI (tBSP430periphHandle periph,
  * can enable the interrupt that will request the data through the
  * callback.  This is done using vBSP430serialWakeupTransmit_ni().
  * The callback function should return
- * #BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN if data to transmit is
- * available, and #BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT if it
+ * #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN if data to transmit is
+ * available, and #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT if it
  * is known that there will not be data available after the
  * transmission.
  *
@@ -187,7 +187,7 @@ tBSP430serialHandle xBSP430serialOpenSPI (tBSP430periphHandle periph,
  * peripheral-specific implementation.
  */
 #if defined(BSP430_DOXYGEN)
-int iBSP430serialConfigureCallbacks (tBSP430serialHandle device,
+int iBSP430serialConfigureCallbacks (hBSP430halSERIAL device,
                                      const struct sBSP430halISRCallbackVoid * rx_callback,
                                      const struct sBSP430halISRCallbackVoid * tx_callback);
 #endif /* BSP430_DOXYGEN */
@@ -206,7 +206,7 @@ int iBSP430serialConfigureCallbacks (tBSP430serialHandle device,
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-int iBSP430serialClose (tBSP430serialHandle device);
+int iBSP430serialClose (hBSP430halSERIAL device);
 #endif /* BSP430_DOXYGEN */
 
 /** Wake up the interrupt-driven transmission if necessary.
@@ -226,7 +226,7 @@ int iBSP430serialClose (tBSP430serialHandle device);
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-void vBSP430serialWakeupTransmit_ni (tBSP430serialHandle device);
+void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL device);
 #endif /* BSP430_DOXYGEN */
 
 /** Spin until any in-progress transmission or reception is complete.
@@ -238,7 +238,7 @@ void vBSP430serialWakeupTransmit_ni (tBSP430serialHandle device);
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-void vBSP430serialFlush_ni (tBSP430serialHandle device);
+void vBSP430serialFlush_ni (hBSP430halSERIAL device);
 #endif /* BSP430_DOXYGEN */
 
 /** Transmit a byte over the device.
@@ -258,7 +258,7 @@ void vBSP430serialFlush_ni (tBSP430serialHandle device);
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-int iBSP430serialTransmitByte_ni (tBSP430serialHandle device, int c);
+int iBSP430serialTransmitByte_ni (hBSP430halSERIAL device, int c);
 #endif /* BSP430_DOXYGEN */
 
 /** Transmit a block of data over the device.
@@ -279,7 +279,7 @@ int iBSP430serialTransmitByte_ni (tBSP430serialHandle device, int c);
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-int iBSP430serialTransmitData_ni (tBSP430serialHandle device,
+int iBSP430serialTransmitData_ni (hBSP430halSERIAL device,
                                   const uint8_t * data,
                                   size_t len);
 #endif /* BSP430_DOXYGEN */
@@ -303,17 +303,17 @@ int iBSP430serialTransmitData_ni (tBSP430serialHandle device,
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 #if defined(BSP430_DOXYGEN)
-int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str);
+int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 #endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */
 
-#define _DELEGATE_HANDLE(_serial)                       \
-  typedef tBSP430##_serial##Handle tBSP430serialHandle;
+#define _DELEGATE_HANDLE(_SERIAL)                       \
+  typedef hBSP430hal##_SERIAL hBSP430halSERIAL;
 
 #define _DELEGATE_OPEN_UART(_serial)                                    \
   static __inline__                                                     \
-  tBSP430serialHandle                                                   \
+  hBSP430halSERIAL                                                   \
   xBSP430serialOpenUART (tBSP430periphHandle periph,                    \
                          unsigned int control_word,                     \
                          unsigned long baud)                            \
@@ -324,7 +324,7 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 #define _DELEGATE_CONFIGURE_CALLBACKS(_serial)                          \
   static __inline__                                                     \
   int                                                                   \
-  iBSP430serialConfigureCallbacks (tBSP430serialHandle device,          \
+  iBSP430serialConfigureCallbacks (hBSP430halSERIAL device,          \
                                    const struct sBSP430halISRCallbackVoid * rx_callback, \
                                    const struct sBSP430halISRCallbackVoid * tx_callback) \
   {                                                                     \
@@ -334,7 +334,7 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 #define _DELEGATE_CLOSE(_serial)                        \
   static __inline__                                     \
   int                                                   \
-  iBSP430serialClose (tBSP430serialHandle device)       \
+  iBSP430serialClose (hBSP430halSERIAL device)       \
   {                                                     \
     return iBSP430##_serial##Close(device);             \
   }
@@ -342,7 +342,7 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 #define _DELEGATE_WAKEUP_TRANSMIT_NI(_serial)                   \
   static __inline__                                             \
   void                                                          \
-  vBSP430serialWakeupTransmit_ni (tBSP430serialHandle device)   \
+  vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL device)   \
   {                                                             \
     vBSP430##_serial##WakeupTransmit_ni(device);                \
   }
@@ -350,7 +350,7 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 #define _DELEGATE_FLUSH_NI(_serial)                     \
   static __inline__                                     \
   void                                                  \
-  vBSP430serialFlush_ni (tBSP430serialHandle device)    \
+  vBSP430serialFlush_ni (hBSP430halSERIAL device)    \
   {                                                     \
     vBSP430##_serial##Flush_ni(device);                 \
   }
@@ -358,7 +358,7 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 #define _DELEGATE_TRANSMIT_BYTE_NI(_serial)                             \
   static __inline__                                                     \
   int                                                                   \
-  iBSP430serialTransmitByte_ni (tBSP430serialHandle device, int c)      \
+  iBSP430serialTransmitByte_ni (hBSP430halSERIAL device, int c)      \
   {                                                                     \
     return iBSP430##_serial##TransmitByte_ni(device, c);                \
   }
@@ -366,7 +366,7 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 #define _DELEGATE_TRANSMIT_DATA_NI(_serial)                             \
   static __inline__                                                     \
   int                                                                   \
-  iBSP430serialTransmitData_ni (tBSP430serialHandle device,             \
+  iBSP430serialTransmitData_ni (hBSP430halSERIAL device,             \
                                 const uint8_t * data,                   \
                                 size_t len)                             \
   {                                                                     \
@@ -376,13 +376,13 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 #define _DELEGATE_TRANSMIT_ASCIIZ_NI(_serial)                           \
   static __inline__                                                     \
   int                                                                   \
-  iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str) \
+  iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str) \
   {                                                                     \
     return iBSP430##_serial##TransmitASCIIZ_ni(device, str);            \
   }
 
-#define _DELEGATE(_serial)                      \
-  _DELEGATE_HANDLE(_serial)                     \
+#define _DELEGATE(_serial,_SERIAL)              \
+  _DELEGATE_HANDLE(_SERIAL)                     \
   _DELEGATE_OPEN_UART(_serial)                  \
   _DELEGATE_CONFIGURE_CALLBACKS(_serial)        \
   _DELEGATE_CLOSE(_serial)                      \
@@ -394,17 +394,17 @@ int iBSP430serialTransmitASCIIZ_ni (tBSP430serialHandle device, const char * str
 
 #if configBSP430_SERIAL_USE_USCI - 0
 #include <bsp430/periph/usci.h>
-_DELEGATE(usci)
+_DELEGATE(usci,USCI)
 #endif /* configBSP430_SERIAL_USE_USCI */
 
 #if configBSP430_SERIAL_USE_USCI5 - 0
 #include <bsp430/periph/usci5.h>
-_DELEGATE(usci5)
+_DELEGATE(usci5,USCI5)
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 
 #if configBSP430_SERIAL_USE_EUSCIA - 0
 #include <bsp430/periph/euscia.h>
-_DELEGATE(euscia)
+_DELEGATE(euscia,EUSCIA)
 #endif /* configBSP430_SERIAL_USE_EUSCI */
 
 #undef _DELEGATE

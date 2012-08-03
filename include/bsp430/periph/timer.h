@@ -392,7 +392,7 @@ volatile sBSP430hplTIMER * xBSP430periphLookupTIMER (tBSP430periphHandle xHandle
  *
  * This structure is internal state, for access by applications only
  * when overriding BSP430 HAL capabilities. */
-typedef struct sBSP430timerState {
+typedef struct sBSP430halTIMER {
   /** The underlying timer peripheral register structure */
   volatile sBSP430hplTIMER * const hpl;
 
@@ -421,10 +421,10 @@ typedef struct sBSP430timerState {
    * the block index is passed into the chain so that a common
    * handler can be invoked if desired. */
   const struct sBSP430halISRCallbackIndexed * * const cc_callback;
-} sBSP430timerState;
+} sBSP430halTIMER;
 
 /** The timer internal state is protected. */
-typedef struct sBSP430timerState * tBSP430timerHandle;
+typedef struct sBSP430halTIMER * hBSP430halTIMER;
 
 /** Provide the frequency of the timer source, if that can be determined.
  *
@@ -432,7 +432,7 @@ typedef struct sBSP430timerState * tBSP430timerHandle;
  *
  * @return 0 if the timer is stopped; -1 if the frequency cannot be
  * determined, a positive value for a known source. */
-unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430timerHandle timer);
+unsigned long ulBSP430timerFrequency_Hz_ni (hBSP430halTIMER timer);
 
 /** Read the timer counter assuming interrupts are disabled.
  *
@@ -443,7 +443,7 @@ unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430timerHandle timer);
  *
  * @return A 32-bit unsigned count of the number of clock ticks
  * observed since the timer was last reset. */
-unsigned long ulBSP430timerCounter_ni (tBSP430timerHandle timer,
+unsigned long ulBSP430timerCounter_ni (hBSP430halTIMER timer,
                                        unsigned int * overflowp);
 
 /** Read timer counter regardless of interrupt enable state.
@@ -454,7 +454,7 @@ unsigned long ulBSP430timerCounter_ni (tBSP430timerHandle timer,
  */
 static unsigned long
 __inline__
-ulBSP430timerCounter (tBSP430timerHandle timer,
+ulBSP430timerCounter (hBSP430halTIMER timer,
                       unsigned int * overflowp)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -475,14 +475,14 @@ ulBSP430timerCounter (tBSP430timerHandle timer,
  *
  * @return A 32-bit unsigned count of the number of clock ticks
  * observed since the timer was last reset. */
-unsigned long ulBSP430timerCounter (tBSP430timerHandle timer,
+unsigned long ulBSP430timerCounter (hBSP430halTIMER timer,
                                     unsigned int * overflowp);
 
 /** Reset the timer counter.
  *
  * This clears both the overflow count and the timer internal counter.
  * It does not start or stop the timer. */
-void vBSP430timerResetCounter_ni (tBSP430timerHandle timer);
+void vBSP430timerResetCounter_ni (hBSP430halTIMER timer);
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
@@ -490,10 +490,12 @@ void vBSP430timerResetCounter_ni (tBSP430timerHandle timer);
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA0 peripheral HAL interface.  This defines a global
- * object tBSP430timerHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_TA0 that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA0 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA0 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA0
@@ -503,26 +505,30 @@ void vBSP430timerResetCounter_ni (tBSP430timerHandle timer);
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA0 - 0
 /* You don't need to know about this */
-extern sBSP430timerState xBSP430timer_TA0_;
+extern sBSP430halTIMER xBSP430hal_TA0_;
 #endif /* configBSP430_HAL_TA0 */
 /** @endcond */
 
 /** BSP430 HAL handle for TA0.
  *
  * The handle may be used only if #configBSP430_HAL_TA0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_TA0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA0 - 0)
-#define BSP430_HAL_TA0 (&xBSP430timer_TA0_)
+#define BSP430_HAL_TA0 (&xBSP430hal_TA0_)
 #endif /* configBSP430_HAL_TA0 */
 
 /** @def configBSP430_HAL_TA1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA1 peripheral HAL interface.  This defines a global
- * object tBSP430timerHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_TA1 that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA1 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA1 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA1
@@ -532,26 +538,30 @@ extern sBSP430timerState xBSP430timer_TA0_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA1 - 0
 /* You don't need to know about this */
-extern sBSP430timerState xBSP430timer_TA1_;
+extern sBSP430halTIMER xBSP430hal_TA1_;
 #endif /* configBSP430_HAL_TA1 */
 /** @endcond */
 
 /** BSP430 HAL handle for TA1.
  *
  * The handle may be used only if #configBSP430_HAL_TA1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_TA1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA1 - 0)
-#define BSP430_HAL_TA1 (&xBSP430timer_TA1_)
+#define BSP430_HAL_TA1 (&xBSP430hal_TA1_)
 #endif /* configBSP430_HAL_TA1 */
 
 /** @def configBSP430_HAL_TA2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA2 peripheral HAL interface.  This defines a global
- * object tBSP430timerHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_TA2 that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA2 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA2 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA2
@@ -561,26 +571,30 @@ extern sBSP430timerState xBSP430timer_TA1_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA2 - 0
 /* You don't need to know about this */
-extern sBSP430timerState xBSP430timer_TA2_;
+extern sBSP430halTIMER xBSP430hal_TA2_;
 #endif /* configBSP430_HAL_TA2 */
 /** @endcond */
 
 /** BSP430 HAL handle for TA2.
  *
  * The handle may be used only if #configBSP430_HAL_TA2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_TA2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA2 - 0)
-#define BSP430_HAL_TA2 (&xBSP430timer_TA2_)
+#define BSP430_HAL_TA2 (&xBSP430hal_TA2_)
 #endif /* configBSP430_HAL_TA2 */
 
 /** @def configBSP430_HAL_TA3
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TA3 peripheral HAL interface.  This defines a global
- * object tBSP430timerHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_TA3 that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA3 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TA3 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TA3
@@ -590,26 +604,30 @@ extern sBSP430timerState xBSP430timer_TA2_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA3 - 0
 /* You don't need to know about this */
-extern sBSP430timerState xBSP430timer_TA3_;
+extern sBSP430halTIMER xBSP430hal_TA3_;
 #endif /* configBSP430_HAL_TA3 */
 /** @endcond */
 
 /** BSP430 HAL handle for TA3.
  *
  * The handle may be used only if #configBSP430_HAL_TA3
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_TA3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TA3 - 0)
-#define BSP430_HAL_TA3 (&xBSP430timer_TA3_)
+#define BSP430_HAL_TA3 (&xBSP430hal_TA3_)
 #endif /* configBSP430_HAL_TA3 */
 
 /** @def configBSP430_HAL_TB0
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB0 peripheral HAL interface.  This defines a global
- * object tBSP430timerHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_TB0 that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_TB0 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TB0 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TB0
@@ -619,26 +637,30 @@ extern sBSP430timerState xBSP430timer_TA3_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TB0 - 0
 /* You don't need to know about this */
-extern sBSP430timerState xBSP430timer_TB0_;
+extern sBSP430halTIMER xBSP430hal_TB0_;
 #endif /* configBSP430_HAL_TB0 */
 /** @endcond */
 
 /** BSP430 HAL handle for TB0.
  *
  * The handle may be used only if #configBSP430_HAL_TB0
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_TB0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB0 - 0)
-#define BSP430_HAL_TB0 (&xBSP430timer_TB0_)
+#define BSP430_HAL_TB0 (&xBSP430hal_TB0_)
 #endif /* configBSP430_HAL_TB0 */
 
 /** @def configBSP430_HAL_TB1
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB1 peripheral HAL interface.  This defines a global
- * object tBSP430timerHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_TB1 that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_TB1 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TB1 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TB1
@@ -648,26 +670,30 @@ extern sBSP430timerState xBSP430timer_TB0_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TB1 - 0
 /* You don't need to know about this */
-extern sBSP430timerState xBSP430timer_TB1_;
+extern sBSP430halTIMER xBSP430hal_TB1_;
 #endif /* configBSP430_HAL_TB1 */
 /** @endcond */
 
 /** BSP430 HAL handle for TB1.
  *
  * The handle may be used only if #configBSP430_HAL_TB1
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_TB1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB1 - 0)
-#define BSP430_HAL_TB1 (&xBSP430timer_TB1_)
+#define BSP430_HAL_TB1 (&xBSP430hal_TB1_)
 #endif /* configBSP430_HAL_TB1 */
 
 /** @def configBSP430_HAL_TB2
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c TB2 peripheral HAL interface.  This defines a global
- * object tBSP430timerHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_TB2 that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_TB2 to true.
+ * @note Enabling this defaults #configBSP430_HPL_TB2 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_TB2
@@ -677,16 +703,18 @@ extern sBSP430timerState xBSP430timer_TB1_;
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TB2 - 0
 /* You don't need to know about this */
-extern sBSP430timerState xBSP430timer_TB2_;
+extern sBSP430halTIMER xBSP430hal_TB2_;
 #endif /* configBSP430_HAL_TB2 */
 /** @endcond */
 
 /** BSP430 HAL handle for TB2.
  *
  * The handle may be used only if #configBSP430_HAL_TB2
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_TB2 - 0)
-#define BSP430_HAL_TB2 (&xBSP430timer_TB2_)
+#define BSP430_HAL_TB2 (&xBSP430hal_TB2_)
 #endif /* configBSP430_HAL_TB2 */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
@@ -701,8 +729,8 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA0 defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_TA0
@@ -718,7 +746,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The handle may be used only if #configBSP430_HPL_TA0
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
 #define BSP430_PERIPH_TA0 ((tBSP430periphHandle)(BSP430_PERIPH_TA0_BASEADDRESS_))
@@ -731,8 +758,8 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA1 defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_TA1
@@ -748,7 +775,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The handle may be used only if #configBSP430_HPL_TA1
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
 #define BSP430_PERIPH_TA1 ((tBSP430periphHandle)(BSP430_PERIPH_TA1_BASEADDRESS_))
@@ -761,8 +787,8 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA2 defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_TA2
@@ -778,7 +804,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The handle may be used only if #configBSP430_HPL_TA2
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
 #define BSP430_PERIPH_TA2 ((tBSP430periphHandle)(BSP430_PERIPH_TA2_BASEADDRESS_))
@@ -791,8 +816,8 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TA3 defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_TA3
@@ -808,7 +833,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The handle may be used only if #configBSP430_HPL_TA3
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
 #define BSP430_PERIPH_TA3 ((tBSP430periphHandle)(BSP430_PERIPH_TA3_BASEADDRESS_))
@@ -821,8 +845,8 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TB0 defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_TB0
@@ -838,7 +862,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The handle may be used only if #configBSP430_HPL_TB0
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TB0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
 #define BSP430_PERIPH_TB0 ((tBSP430periphHandle)(BSP430_PERIPH_TB0_BASEADDRESS_))
@@ -851,8 +874,8 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TB1 defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_TB1
@@ -868,7 +891,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The handle may be used only if #configBSP430_HPL_TB1
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TB1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
 #define BSP430_PERIPH_TB1 ((tBSP430periphHandle)(BSP430_PERIPH_TB1_BASEADDRESS_))
@@ -881,8 +903,8 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_TB2 defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_TB2
@@ -898,7 +920,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The handle may be used only if #configBSP430_HPL_TB2
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
 #define BSP430_PERIPH_TB2 ((tBSP430periphHandle)(BSP430_PERIPH_TB2_BASEADDRESS_))
@@ -917,7 +938,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The pointer may be used only if #configBSP430_HPL_TA0
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
 #define BSP430_HPL_TA0 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA0)
@@ -931,7 +951,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The pointer may be used only if #configBSP430_HPL_TA1
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
 #define BSP430_HPL_TA1 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA1)
@@ -945,7 +964,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The pointer may be used only if #configBSP430_HPL_TA2
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
 #define BSP430_HPL_TA2 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA2)
@@ -959,7 +977,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The pointer may be used only if #configBSP430_HPL_TA3
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TA3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
 #define BSP430_HPL_TA3 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA3)
@@ -973,7 +990,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The pointer may be used only if #configBSP430_HPL_TB0
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TB0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
 #define BSP430_HPL_TB0 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB0)
@@ -987,7 +1003,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The pointer may be used only if #configBSP430_HPL_TB1
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TB1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
 #define BSP430_HPL_TB1 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB1)
@@ -1001,7 +1016,6 @@ extern sBSP430timerState xBSP430timer_TB2_;
  * The pointer may be used only if #configBSP430_HPL_TB2
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
 #define BSP430_HPL_TB2 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB2)

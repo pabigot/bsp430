@@ -37,11 +37,11 @@
 #include <stdint.h>
 
 #if BSP430_LED - 0
-const sBSP430ledState xBSP430led_[] = {
+const sBSP430halLED xBSP430hal_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Red */
   { .outp = &P1OUT, .bit = BIT1 }, /* Orange */
 };
-const unsigned char nBSP430led = sizeof(xBSP430led_) / sizeof(*xBSP430led_);
+const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
 #endif /* BSP430_LED */
 
 int

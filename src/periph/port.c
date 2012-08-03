@@ -37,7 +37,7 @@
 /* !BSP430! insert=hal_port_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_defn] */
 #if configBSP430_HAL_PORT1 - 0
-struct sBSP430portState xBSP430port_PORT1_ = {
+struct sBSP430halPORT xBSP430hal_PORT1_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 <= 2)
@@ -64,7 +64,7 @@ struct sBSP430portState xBSP430port_PORT1_ = {
 #endif /* configBSP430_HAL_PORT1 */
 
 #if configBSP430_HAL_PORT2 - 0
-struct sBSP430portState xBSP430port_PORT2_ = {
+struct sBSP430halPORT xBSP430hal_PORT2_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 <= 2)
@@ -91,7 +91,7 @@ struct sBSP430portState xBSP430port_PORT2_ = {
 #endif /* configBSP430_HAL_PORT2 */
 
 #if configBSP430_HAL_PORT3 - 0
-struct sBSP430portState xBSP430port_PORT3_ = {
+struct sBSP430halPORT xBSP430hal_PORT3_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 <= 2)
@@ -118,7 +118,7 @@ struct sBSP430portState xBSP430port_PORT3_ = {
 #endif /* configBSP430_HAL_PORT3 */
 
 #if configBSP430_HAL_PORT4 - 0
-struct sBSP430portState xBSP430port_PORT4_ = {
+struct sBSP430halPORT xBSP430hal_PORT4_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 <= 2)
@@ -145,7 +145,7 @@ struct sBSP430portState xBSP430port_PORT4_ = {
 #endif /* configBSP430_HAL_PORT4 */
 
 #if configBSP430_HAL_PORT5 - 0
-struct sBSP430portState xBSP430port_PORT5_ = {
+struct sBSP430halPORT xBSP430hal_PORT5_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 <= 2)
@@ -172,7 +172,7 @@ struct sBSP430portState xBSP430port_PORT5_ = {
 #endif /* configBSP430_HAL_PORT5 */
 
 #if configBSP430_HAL_PORT6 - 0
-struct sBSP430portState xBSP430port_PORT6_ = {
+struct sBSP430halPORT xBSP430hal_PORT6_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 <= 2)
@@ -199,7 +199,7 @@ struct sBSP430portState xBSP430port_PORT6_ = {
 #endif /* configBSP430_HAL_PORT6 */
 
 #if configBSP430_HAL_PORT7 - 0
-struct sBSP430portState xBSP430port_PORT7_ = {
+struct sBSP430halPORT xBSP430hal_PORT7_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 <= 2)
@@ -226,7 +226,7 @@ struct sBSP430portState xBSP430port_PORT7_ = {
 #endif /* configBSP430_HAL_PORT7 */
 
 #if configBSP430_HAL_PORT8 - 0
-struct sBSP430portState xBSP430port_PORT8_ = {
+struct sBSP430halPORT xBSP430hal_PORT8_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 <= 2)
@@ -253,7 +253,7 @@ struct sBSP430portState xBSP430port_PORT8_ = {
 #endif /* configBSP430_HAL_PORT8 */
 
 #if configBSP430_HAL_PORT9 - 0
-struct sBSP430portState xBSP430port_PORT9_ = {
+struct sBSP430halPORT xBSP430hal_PORT9_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 <= 2)
@@ -280,7 +280,7 @@ struct sBSP430portState xBSP430port_PORT9_ = {
 #endif /* configBSP430_HAL_PORT9 */
 
 #if configBSP430_HAL_PORT10 - 0
-struct sBSP430portState xBSP430port_PORT10_ = {
+struct sBSP430halPORT xBSP430hal_PORT10_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 <= 2)
@@ -307,7 +307,7 @@ struct sBSP430portState xBSP430port_PORT10_ = {
 #endif /* configBSP430_HAL_PORT10 */
 
 #if configBSP430_HAL_PORT11 - 0
-struct sBSP430portState xBSP430port_PORT11_ = {
+struct sBSP430halPORT xBSP430hal_PORT11_ = {
   .hal_state = {
     .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 <= 2)
@@ -353,7 +353,7 @@ static int
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-port_isr (tBSP430portHandle device,
+port_isr (hBSP430halPORT device,
           int iv)
 {
   int rv = 0;
@@ -373,7 +373,7 @@ __attribute__((__interrupt__(PORT1_VECTOR)))
 isr_PORT1 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT1, P1IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT1_ISR */
 
@@ -383,7 +383,7 @@ __attribute__((__interrupt__(PORT2_VECTOR)))
 isr_PORT2 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT2, P2IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT2_ISR */
 
@@ -393,7 +393,7 @@ __attribute__((__interrupt__(PORT3_VECTOR)))
 isr_PORT3 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT3, P3IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT3_ISR */
 
@@ -403,7 +403,7 @@ __attribute__((__interrupt__(PORT4_VECTOR)))
 isr_PORT4 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT4, P4IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT4_ISR */
 
@@ -413,7 +413,7 @@ __attribute__((__interrupt__(PORT5_VECTOR)))
 isr_PORT5 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT5, P5IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT5_ISR */
 
@@ -423,7 +423,7 @@ __attribute__((__interrupt__(PORT6_VECTOR)))
 isr_PORT6 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT6, P6IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT6_ISR */
 
@@ -433,7 +433,7 @@ __attribute__((__interrupt__(PORT7_VECTOR)))
 isr_PORT7 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT7, P7IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT7_ISR */
 
@@ -443,7 +443,7 @@ __attribute__((__interrupt__(PORT8_VECTOR)))
 isr_PORT8 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT8, P8IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT8_ISR */
 
@@ -453,7 +453,7 @@ __attribute__((__interrupt__(PORT9_VECTOR)))
 isr_PORT9 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT9, P9IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT9_ISR */
 
@@ -463,7 +463,7 @@ __attribute__((__interrupt__(PORT10_VECTOR)))
 isr_PORT10 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT10, P10IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT10_ISR */
 
@@ -473,7 +473,7 @@ __attribute__((__interrupt__(PORT11_VECTOR)))
 isr_PORT11 (void)
 {
   int rv = port_isr(BSP430_HAL_PORT11, P11IV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT11_ISR */
 

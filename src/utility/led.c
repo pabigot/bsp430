@@ -67,7 +67,7 @@ vBSP430ledInitialize_ni (void)
   unsigned char ucLED;
 
   for (ucLED = 0; ucLED < nBSP430led; ++ucLED) {
-    const sBSP430ledState * lp = xBSP430led_ + ucLED;
+    const sBSP430halLED * lp = xBSP430hal_ + ucLED;
 
     /* Only include the configuration checks if the target MCU has
      * the corresponding port supported. */
@@ -112,7 +112,7 @@ vBSP430ledSet (int led_idx,
                int value)
 {
   if (led_idx < nBSP430led) {
-    const sBSP430ledState * lp = xBSP430led_ + led_idx;
+    const sBSP430halLED * lp = xBSP430hal_ + led_idx;
 
     if (value > 0)	{
       *lp->outp |= lp->bit;

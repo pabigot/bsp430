@@ -42,8 +42,13 @@ Instance-specific HAL support: configBSP430_HAL_%(INSTANCE)s
 Instance-specific HAL ISR: configBSP430_HAL_%(INSTANCE)s_ISR
 
 peripheral instance handles: BSP430_PERIPH_%(INSTANCE)s
+HPL structure sBSP430hpl%(PERIPH)s
 HPL inline pointer: BSP430_HPL_%(INSTANCE)s
-HAL handle: hBSP430%(periph)s%(INSTANCE)s
+HAL structure sBSP430hal%(PERIPH)s
+HAL handle typedef hBSP430hal%(PERIPH)s
+Non-public HAL instance xBSP430hal_%(INSTANCE)s_
+HAL inline pointer: BSP430_HAL_%(INSTANCE)s
+HAL handle: hBSP430hal_%(INSTANCE)s
 
 
 Global symbols indicate their purpose or flavor using a single prefix
@@ -61,6 +66,7 @@ typedef to this enum.
 tBSP430foo is a typedef related to foo that is not a struct, union, or enum.
 Exception: sBSP430hplPORTfoo is a platform-specific typedef to the
 variant port structure supported on the target MCU.
+Exception: hBSP430halPERIPH is a typedef for a pointer to sBSP430halPERIPH.
 
 hBSP430foo is a HAL (hBSP430%(periph)s%(INSTANCE)s) handle for a peripheral.
 

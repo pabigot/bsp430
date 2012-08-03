@@ -53,14 +53,14 @@
 
 /* Inhibit definition if required components were not provided. */
 
-static tBSP430serialHandle console_uart;
+static hBSP430halSERIAL console_uart;
 
 /* Optimized version used inline.  Assumes that the uart is not
  * null. */
 static
 __inline__
 int
-emit_char2_ni (int c, tBSP430serialHandle uart)
+emit_char2_ni (int c, hBSP430halSERIAL uart)
 {
 #if configBSP430_CONSOLE_USE_ONLCR - 0
   if ('\n' == c) {
@@ -77,7 +77,7 @@ __inline__
 int
 emit_char_ni (int c)
 {
-  tBSP430serialHandle uart = console_uart;
+  hBSP430halSERIAL uart = console_uart;
   if (NULL == uart) {
     return -1;
   }
@@ -101,7 +101,7 @@ cputchar_ni (int c)
  * characters emitted. */
 static int
 emit_text_ni (const char * s,
-              tBSP430serialHandle uart)
+              hBSP430halSERIAL uart)
 {
   int rv = 0;
   if (uart) {
@@ -117,7 +117,7 @@ int
 cputs (const char * s)
 {
   int rv = 0;
-  tBSP430serialHandle uart = console_uart;
+  hBSP430halSERIAL uart = console_uart;
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
   if (! uart) {
@@ -198,7 +198,7 @@ cprintf (const char *fmt, ...)
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
-tBSP430serialHandle
+hBSP430halSERIAL
 xBSP430consoleInitialize (void)
 {
   tBSP430periphHandle periph = xBSP430periphFromHPL(
@@ -212,7 +212,7 @@ xBSP430consoleInitialize (void)
                                  BSP430_CONSOLE_SERIAL_HAL_HANDLE->euscia
 #endif /* configBSP430_SERIAL_USE_EUSCIA */
                                );
-  tBSP430serialHandle hal;
+  hBSP430halSERIAL hal;
 
   hal = xBSP430serialOpenUART(periph, 0, BSP430_CONSOLE_BAUD_RATE);
   if (NULL != hal) {

@@ -73,7 +73,7 @@
 
 /** Call to initialize the hardware for all LEDs.
  *
- * The common implementation uses the LEDs defined in #xBSP430led_.
+ * The common implementation uses the LEDs defined in #xBSP430hal_.
  *
  * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
  * value, the application or platform must define this function. */
@@ -106,11 +106,11 @@ void vBSP430ledSet (int led_idx,
 /** @def configBSP430_LED_USE_COMMON
  *
  * If the development board has LEDs that can be expressed using
- * #sBSP430ledState (i.e., controlled through 8-bit digital I/O ports with
+ * #sBSP430halLED (i.e., controlled through 8-bit digital I/O ports with
  * a single selection register) then the common implementation of the
  * LED interface can be used.  In that case, define this to a true
  * value, and provide within a platform file or the application
- * definitions of the #xBSP430led_ and #nBSP430led variables.
+ * definitions of the #xBSP430hal_ and #nBSP430led variables.
  *
  * Since most platforms can benefit from the shared implementation,
  * those that do not should override the default value.
@@ -127,7 +127,7 @@ void vBSP430ledSet (int led_idx,
  * explicitly; the PxSEL and PxDIR registers are inferred by comparing
  * that address with the known addresses of the PxOUT registers in the
  * initialization loop. */
-typedef struct sBSP430ledState {
+typedef struct sBSP430halLED {
   /** Address of the PxOUT register used to control the LED */
   volatile unsigned char * const outp;
   /** The bit mask for the LED (not the bit position) */
@@ -137,14 +137,14 @@ typedef struct sBSP430ledState {
    * to be on when low, this is where that would be communicated to
    * the infrastructure. */
   unsigned char const flags;
-} sBSP430ledState;
+} sBSP430halLED;
 
 #if configBSP430_LED_USE_COMMON - 0
 
 /** Platform should define the LED configuration available to it. */
-extern const sBSP430ledState xBSP430led_[];
+extern const sBSP430halLED xBSP430hal_[];
 
-/** Platform should define the length of the xBSP430led_
+/** Platform should define the length of the xBSP430hal_
  * configuration array.  We'll assume there can't be more than 255
  * LEDs. */
 extern const unsigned char nBSP430led;

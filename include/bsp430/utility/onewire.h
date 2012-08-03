@@ -65,7 +65,7 @@
 /** Structure identifying 1-wire bus information. */
 typedef struct sBSP430onewireBus {
   /** The peripheral port containing the bus. */
-  tBSP430portHandle port;
+  hBSP430halPORT port;
   /** The pin by which the bus is connected to the MCU */
   unsigned int bit;
 } sBSP430onewireBus;

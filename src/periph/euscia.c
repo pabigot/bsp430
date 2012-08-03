@@ -40,7 +40,7 @@
 
 /** Convert from a raw peripheral handle to the corresponding USCI
  * device handle. */
-static tBSP430eusciaHandle periphToDevice (tBSP430periphHandle periph);
+static hBSP430halEUSCIA periphToDevice (tBSP430periphHandle periph);
 
 #define WAKEUP_TRANSMIT_HPL_NI(_hpl) do {       \
     if (! (_hpl->ie & UCTXIE)) {                \
@@ -61,14 +61,14 @@ static tBSP430eusciaHandle periphToDevice (tBSP430periphHandle periph);
     }                                           \
   } while (0)
 
-tBSP430eusciaHandle
+hBSP430halEUSCIA
 xBSP430eusciaOpenUART (tBSP430periphHandle periph,
                        unsigned int control_word,
                        unsigned long baud)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   unsigned long brclk_Hz;
-  tBSP430eusciaHandle device = periphToDevice(periph);
+  hBSP430halEUSCIA device = periphToDevice(periph);
   unsigned long n;
   uint16_t br;
   uint16_t os16 = 0;
@@ -136,7 +136,7 @@ xBSP430eusciaOpenUART (tBSP430periphHandle periph,
 }
 
 int
-iBSP430eusciaConfigureCallbacks (tBSP430eusciaHandle device,
+iBSP430eusciaConfigureCallbacks (hBSP430halEUSCIA device,
                                  const struct sBSP430halISRCallbackVoid * rx_callback,
                                  const struct sBSP430halISRCallbackVoid * tx_callback)
 {
@@ -166,7 +166,7 @@ iBSP430eusciaConfigureCallbacks (tBSP430eusciaHandle device,
 }
 
 int
-iBSP430eusciaClose (tBSP430eusciaHandle device)
+iBSP430eusciaClose (hBSP430halEUSCIA device)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc;
@@ -181,19 +181,19 @@ iBSP430eusciaClose (tBSP430eusciaHandle device)
 }
 
 void
-vBSP430eusciaFlush_ni (tBSP430eusciaHandle device)
+vBSP430eusciaFlush_ni (hBSP430halEUSCIA device)
 {
   FLUSH_HPL_NI(device->euscia);
 }
 
 void
-vBSP430eusciaWakeupTransmit_ni (tBSP430eusciaHandle device)
+vBSP430eusciaWakeupTransmit_ni (hBSP430halEUSCIA device)
 {
   WAKEUP_TRANSMIT_HPL_NI(device->euscia);
 }
 
 int
-iBSP430eusciaTransmitByte_ni (tBSP430eusciaHandle device, int c)
+iBSP430eusciaTransmitByte_ni (hBSP430halEUSCIA device, int c)
 {
   if (device->tx_callback) {
     return -1;
@@ -203,7 +203,7 @@ iBSP430eusciaTransmitByte_ni (tBSP430eusciaHandle device, int c)
 }
 
 int
-iBSP430eusciaTransmitData_ni (tBSP430eusciaHandle device,
+iBSP430eusciaTransmitData_ni (hBSP430halEUSCIA device,
                               const uint8_t * data,
                               size_t len)
 {
@@ -219,7 +219,7 @@ iBSP430eusciaTransmitData_ni (tBSP430eusciaHandle device,
 }
 
 int
-iBSP430eusciaTransmitASCIIZ_ni (tBSP430eusciaHandle device, const char * str)
+iBSP430eusciaTransmitASCIIZ_ni (hBSP430halEUSCIA device, const char * str)
 {
   const char * in_string = str;
 
@@ -255,7 +255,7 @@ static int
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
-euscia_isr (tBSP430eusciaHandle device)
+euscia_isr (hBSP430halEUSCIA device)
 {
   int rv = 0;
 
@@ -265,18 +265,18 @@ euscia_isr (tBSP430eusciaHandle device)
       break;
     case USCI_UART_UCTXIFG: /* == USCI_SPI_UCTXIFG */
       rv = iBSP430callbackInvokeISRVoid_ni(&device->tx_callback, device, 0);
-      if (rv & BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN) {
+      if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
         /* Found some data; send it out */
         ++device->num_tx;
         device->euscia->txbuf = device->tx_byte;
       } else {
         /* No data; mark transmission disabled */
-        rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
+        rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
       }
       /* If no more is expected, clear the interrupt but mark that the
        * function is ready so when the interrupt is next set it will
        * fire. */
-      if (rv & BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT) {
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
         device->euscia->ie &= ~UCTXIE;
         device->euscia->ifg |= UCTXIFG;
       }
@@ -294,19 +294,19 @@ euscia_isr (tBSP430eusciaHandle device)
 /* !BSP430! insert=hal_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_defn] */
 #if configBSP430_HAL_EUSCI_A0 - 0
-sBSP430eusciaState xBSP430euscia_EUSCI_A0_ = {
+sBSP430halEUSCIA xBSP430hal_EUSCI_A0_ = {
   .euscia = BSP430_HPL_EUSCI_A0
 };
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
 #if configBSP430_HAL_EUSCI_A1 - 0
-sBSP430eusciaState xBSP430euscia_EUSCI_A1_ = {
+sBSP430halEUSCIA xBSP430hal_EUSCI_A1_ = {
   .euscia = BSP430_HPL_EUSCI_A1
 };
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
 #if configBSP430_HAL_EUSCI_A2 - 0
-sBSP430eusciaState xBSP430euscia_EUSCI_A2_ = {
+sBSP430halEUSCIA xBSP430hal_EUSCI_A2_ = {
   .euscia = BSP430_HPL_EUSCI_A2
 };
 #endif /* configBSP430_HAL_EUSCI_A2 */
@@ -322,7 +322,7 @@ __attribute__((__interrupt__(USCI_A0_VECTOR)))
 isr_EUSCI_A0 (void)
 {
   int rv = euscia_isr(BSP430_HAL_EUSCI_A0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_EUSCI_A0_ISR */
 
@@ -332,7 +332,7 @@ __attribute__((__interrupt__(USCI_A1_VECTOR)))
 isr_EUSCI_A1 (void)
 {
   int rv = euscia_isr(BSP430_HAL_EUSCI_A1);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_EUSCI_A1_ISR */
 
@@ -342,14 +342,14 @@ __attribute__((__interrupt__(USCI_A2_VECTOR)))
 isr_EUSCI_A2 (void)
 {
   int rv = euscia_isr(BSP430_HAL_EUSCI_A2);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_EUSCI_A2_ISR */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-static tBSP430eusciaHandle periphToDevice (tBSP430periphHandle periph)
+static hBSP430halEUSCIA periphToDevice (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

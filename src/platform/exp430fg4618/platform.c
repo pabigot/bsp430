@@ -35,13 +35,13 @@
 #include <bsp430/utility/led.h>
 
 #if BSP430_LED - 0
-const sBSP430ledState xBSP430led_[] = {
+const sBSP430halLED xBSP430hal_[] = {
   { .outp = &P2OUT, .bit = BIT2 }, /* Green (LED1) */
   { .outp = &P2OUT, .bit = BIT1 }, /* Yellow (LED2) */
   /* LED3 is attached to msp430f2013 */
   { .outp = &P5OUT, .bit = BIT1 }, /* Red (LED4) */
 };
-const unsigned char nBSP430led = sizeof(xBSP430led_) / sizeof(*xBSP430led_);
+const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
 #endif /* BSP430_LED */
 
 int

@@ -8,10 +8,12 @@ templates = {
  *
  * Define to a true value in @c bsp430_config.h to enable use of the
  * @c %(INSTANCE)s peripheral HAL interface.  This defines a global
- * object tBSP430%(periph)sHandle supporting enhanced functionality
- * for the peripheral.
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_%(INSTANCE)s that is a reference to that object.
  *
- * @note Enabling this defaults #configBSP430_HPL_%(INSTANCE)s to true.
+ * @note Enabling this defaults #configBSP430_HPL_%(INSTANCE)s to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
  *
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s
@@ -21,16 +23,18 @@ templates = {
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_%(INSTANCE)s - 0
 /* You don't need to know about this */
-extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
+extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 /** @endcond */
 
 /** BSP430 HAL handle for %(INSTANCE)s.
  *
  * The handle may be used only if #configBSP430_HAL_%(INSTANCE)s
- * is defined to a true value. */
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_%(INSTANCE)s - 0)
-#define BSP430_HAL_%(INSTANCE)s (&xBSP430%(periph)s_%(INSTANCE)s_)
+#define BSP430_HAL_%(INSTANCE)s (&xBSP430hal_%(INSTANCE)s_)
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
@@ -41,8 +45,8 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
  * supports this device.
  *
  * @note Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
- * true, so you only need to explicitly request this if you want the HPL
- * interface without the HAL interface.
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
  *
  * @defaulted */
 #ifndef configBSP430_HPL_%(INSTANCE)s
@@ -58,7 +62,6 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
  * The handle may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
- * @defaulted 
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 #define BSP430_PERIPH_%(INSTANCE)s ((tBSP430periphHandle)(BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_))
@@ -73,7 +76,6 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
  * The pointer may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 #define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430hpl%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
@@ -93,7 +95,6 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
  * and higher on pre-5xx MCUs.  The generated documentation may not
  * reflect the correct structure.
  *
- * @defaulted
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
@@ -231,7 +232,7 @@ extern sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_;
 ''',
 
     'hal_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-sBSP430%(periph)sState xBSP430%(periph)s_%(INSTANCE)s_ = {
+sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_ = {
   .%(periph)s = BSP430_HPL_%(INSTANCE)s
 };
 #endif /* configBSP430_HAL_%(INSTANCE)s */
@@ -243,7 +244,7 @@ __attribute__((__interrupt__(%(BASEINSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
   int rv = %(periph)s_isr(BSP430_HAL_%(INSTANCE)s);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
@@ -253,9 +254,9 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
 isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 {
-  tBSP430%(periph)sHandle timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
+  hBSP430hal%(PERIPH)s timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
   int rv = iBSP430callbackInvokeISRVoid_ni(&timer->cc0_callback, timer, 0);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR */
 
@@ -264,7 +265,7 @@ static void
 __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
 isr_T%(TYPE)s%(INSTANCE)s (void)
 {
-  tBSP430%(periph)sHandle timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
+  hBSP430hal%(PERIPH)s timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
   int iv = T%(TYPE)s%(INSTANCE)sIV;
   int rv = 0;
   if (0 != iv) {
@@ -276,7 +277,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, 1+cc, rv);
     }
   }
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
 ''',
@@ -289,7 +290,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 ''',
 
     'hal_port_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-struct sBSP430portState xBSP430port_%(INSTANCE)s_ = {
+struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
   .hal_state = { .cflags =
 #if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
@@ -327,7 +328,7 @@ __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
   int rv = port_isr(BSP430_HAL_%(INSTANCE)s, P%(#)sIV);
-  BSP430_PERIPH_ISR_CALLBACK_TAIL_NI(rv);
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',

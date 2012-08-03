@@ -44,7 +44,7 @@ static int
 rx_callback (const struct sBSP430halISRCallbackVoid * cb,
              void * context)
 {
-  tBSP430serialHandle device = (tBSP430serialHandle)context;
+  hBSP430halSERIAL device = (hBSP430halSERIAL)context;
   vBSP430ledSet(1, 1);
 
   /* If there's space, queue the received character for
@@ -67,7 +67,7 @@ static int
 tx_callback (const struct sBSP430halISRCallbackVoid * cb,
              void * context)
 {
-  tBSP430serialHandle device = (tBSP430serialHandle)context;
+  hBSP430halSERIAL device = (hBSP430halSERIAL)context;
   int rv = 0;
 
   vBSP430ledSet(1, 0);
@@ -78,14 +78,14 @@ tx_callback (const struct sBSP430halISRCallbackVoid * cb,
   if (0 <= to_tx) {
     device->tx_byte = to_tx;
     to_tx = -1;
-    rv |= BSP430_PERIPH_ISR_CALLBACK_BREAK_CHAIN;
+    rv |= BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN;
   }
 
   /* If we permitted multiple characters to be queued, we might want
    * to leave the interrupt enabled so this would be reinvoked when
    * the one we're about to submit got out the door. But we don't, so
    * we don't. */
-  rv |= BSP430_PERIPH_ISR_CALLBACK_DISABLE_INTERRUPT;
+  rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
   return rv;
 }
 
@@ -96,7 +96,7 @@ const struct sBSP430halISRCallbackVoid tx_entry = {
 
 void main ()
 {
-  tBSP430serialHandle tty0 = NULL;
+  hBSP430halSERIAL tty0 = NULL;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
