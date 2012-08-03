@@ -36,10 +36,6 @@
 /* !BSP430! periph=usci5 */
 /* !BSP430! instance=USCI5_A0,USCI5_A1,USCI5_A2,USCI5_A3,USCI5_B0,USCI5_B1,USCI5_B2,USCI5_B3 */
 
-/** Convert from a raw peripheral handle to the corresponding USCI5
- * device handle. */
-hBSP430halSERIAL periphToDevice (tBSP430periphHandle periph);
-
 #define SERIAL_HAL_HPL(_hal) ((_hal)->hpl.usci5)
 
 #define SERIAL_HPL_WAKEUP_TRANSMIT_NI(_hpl) do {        \
@@ -505,7 +501,66 @@ isr_USCI5_B3 (void)
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-hBSP430halSERIAL periphToDevice (tBSP430periphHandle periph)
+volatile sBSP430hplUSCI5 *
+xBSP430hplLookupUSCI5 (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hpl_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
+#if configBSP430_HPL_USCI5_A0 - 0
+  if (BSP430_PERIPH_USCI5_A0 == periph) {
+    return BSP430_HPL_USCI5_A0;
+  }
+#endif /* configBSP430_HPL_USCI5_A0 */
+
+#if configBSP430_HPL_USCI5_A1 - 0
+  if (BSP430_PERIPH_USCI5_A1 == periph) {
+    return BSP430_HPL_USCI5_A1;
+  }
+#endif /* configBSP430_HPL_USCI5_A1 */
+
+#if configBSP430_HPL_USCI5_A2 - 0
+  if (BSP430_PERIPH_USCI5_A2 == periph) {
+    return BSP430_HPL_USCI5_A2;
+  }
+#endif /* configBSP430_HPL_USCI5_A2 */
+
+#if configBSP430_HPL_USCI5_A3 - 0
+  if (BSP430_PERIPH_USCI5_A3 == periph) {
+    return BSP430_HPL_USCI5_A3;
+  }
+#endif /* configBSP430_HPL_USCI5_A3 */
+
+#if configBSP430_HPL_USCI5_B0 - 0
+  if (BSP430_PERIPH_USCI5_B0 == periph) {
+    return BSP430_HPL_USCI5_B0;
+  }
+#endif /* configBSP430_HPL_USCI5_B0 */
+
+#if configBSP430_HPL_USCI5_B1 - 0
+  if (BSP430_PERIPH_USCI5_B1 == periph) {
+    return BSP430_HPL_USCI5_B1;
+  }
+#endif /* configBSP430_HPL_USCI5_B1 */
+
+#if configBSP430_HPL_USCI5_B2 - 0
+  if (BSP430_PERIPH_USCI5_B2 == periph) {
+    return BSP430_HPL_USCI5_B2;
+  }
+#endif /* configBSP430_HPL_USCI5_B2 */
+
+#if configBSP430_HPL_USCI5_B3 - 0
+  if (BSP430_PERIPH_USCI5_B3 == periph) {
+    return BSP430_HPL_USCI5_B3;
+  }
+#endif /* configBSP430_HPL_USCI5_B3 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */
+  /* !BSP430! end=periph_hpl_demux */
+  return NULL;
+}
+
+hBSP430halSERIAL
+xBSP430halLookupUSCI5 (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

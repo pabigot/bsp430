@@ -457,5 +457,26 @@ int iBSP430eusciaTransmitData_ni (hBSP430halSERIAL device, const uint8_t * data,
 /** eUSCI(A)-specific implementation of xBSP430serialPutASCIIZ_ni() */
 int iBSP430eusciaTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
+/** Get the HPL handle for a specific EUSCIA instance.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_EUSCI_A0.
+ *
+ * @return A typed pointer that can be used to manipulate the
+ * peripheral.  A null pointer is returned if the handle does not
+ * correspond to a timer for which the HPL interface been enabled
+ * (e.g., with #configBSP430_HPL_EUSCI_A0).
+ */
+volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph);
+
+/** Get the HAL handle for a specific EUSCIA instance.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_EUSCI_A0.
+ *
+ * @return the HAL handle for the peripheral.  A null pointer is
+ * returned if the handle does not correspond to a timer for which the
+ * HAL interface has been enabled (e.g., with #configBSP430_HAL_EUSCI_A0).
+ */
+hBSP430halSERIAL xBSP430halLookupEUSCIA (tBSP430periphHandle periph);
+
 #endif /* BSP430_PERIPH_EUSCIA_H */
 

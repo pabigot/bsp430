@@ -381,15 +381,16 @@ typedef struct sBSP430hplTIMER {
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/** Get the peripheral register pointer for a specific timer.
+/** Get the HPL handle for a specific timer.
  *
- * @param xHandle The handle identifier, such as #BSP430_PERIPH_TA0.
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
  *
  * @return A typed pointer that can be used to manipulate the timer.
  * A null pointer is returned if the handle does not correspond to a
- * timer which has been enabled (e.g., with #configBSP430_HPL_TA0).
+ * timer for which the HPL interface been enabled (e.g., with
+ * #configBSP430_HPL_TA0).
  */
-volatile sBSP430hplTIMER * xBSP430periphLookupTIMER (tBSP430periphHandle xHandle);
+volatile sBSP430hplTIMER * xBSP430hplLookupTIMER (tBSP430periphHandle periph);
 
 /** Field value for variant stored in sBSP430halTIMER.hal_state.cflags
  * when HPL reference is to an #sBSP430hplTIMER. */
@@ -436,6 +437,16 @@ typedef struct sBSP430halTIMER {
 
 /** The timer internal state is protected. */
 typedef struct sBSP430halTIMER * hBSP430halTIMER;
+
+/** Get the HAL handle for a specific timer.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return the HAL handle for the timer.  A null pointer is returned
+ * if the handle does not correspond to a timer for which the HAL
+ * interface has been enabled (e.g., with #configBSP430_HAL_TA0).
+ */
+hBSP430halTIMER xBSP430halLookupTIMER (tBSP430periphHandle periph);
 
 /** Provide the frequency of the timer source, if that can be determined.
  *

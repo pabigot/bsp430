@@ -668,7 +668,7 @@ isr_PORT11 (void)
 /* !BSP430! end=hal_port_isr_defn */
 
 volatile sBSP430hplPORTIE *
-xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
+xBSP430hplLookupPORTIE (tBSP430periphHandle periph)
 {
   /* !BSP430! ie_test=<= subst=ie_test insert=periph_hpl_port_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
@@ -744,7 +744,7 @@ xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
 }
 
 volatile sBSP430hplPORT *
-xBSP430periphLookupPORT (tBSP430periphHandle periph)
+xBSP430hplLookupPORT (tBSP430periphHandle periph)
 {
   /* !BSP430! ie_test=> subst=ie_test insert=periph_hpl_port_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
@@ -819,3 +819,78 @@ xBSP430periphLookupPORT (tBSP430periphHandle periph)
   return NULL;
 }
 
+hBSP430halPORT
+xBSP430halLookupPORT (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hal_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
+#if configBSP430_HAL_PORT1 - 0
+  if (BSP430_PERIPH_PORT1 == periph) {
+    return BSP430_HAL_PORT1;
+  }
+#endif /* configBSP430_HAL_PORT1 */
+
+#if configBSP430_HAL_PORT2 - 0
+  if (BSP430_PERIPH_PORT2 == periph) {
+    return BSP430_HAL_PORT2;
+  }
+#endif /* configBSP430_HAL_PORT2 */
+
+#if configBSP430_HAL_PORT3 - 0
+  if (BSP430_PERIPH_PORT3 == periph) {
+    return BSP430_HAL_PORT3;
+  }
+#endif /* configBSP430_HAL_PORT3 */
+
+#if configBSP430_HAL_PORT4 - 0
+  if (BSP430_PERIPH_PORT4 == periph) {
+    return BSP430_HAL_PORT4;
+  }
+#endif /* configBSP430_HAL_PORT4 */
+
+#if configBSP430_HAL_PORT5 - 0
+  if (BSP430_PERIPH_PORT5 == periph) {
+    return BSP430_HAL_PORT5;
+  }
+#endif /* configBSP430_HAL_PORT5 */
+
+#if configBSP430_HAL_PORT6 - 0
+  if (BSP430_PERIPH_PORT6 == periph) {
+    return BSP430_HAL_PORT6;
+  }
+#endif /* configBSP430_HAL_PORT6 */
+
+#if configBSP430_HAL_PORT7 - 0
+  if (BSP430_PERIPH_PORT7 == periph) {
+    return BSP430_HAL_PORT7;
+  }
+#endif /* configBSP430_HAL_PORT7 */
+
+#if configBSP430_HAL_PORT8 - 0
+  if (BSP430_PERIPH_PORT8 == periph) {
+    return BSP430_HAL_PORT8;
+  }
+#endif /* configBSP430_HAL_PORT8 */
+
+#if configBSP430_HAL_PORT9 - 0
+  if (BSP430_PERIPH_PORT9 == periph) {
+    return BSP430_HAL_PORT9;
+  }
+#endif /* configBSP430_HAL_PORT9 */
+
+#if configBSP430_HAL_PORT10 - 0
+  if (BSP430_PERIPH_PORT10 == periph) {
+    return BSP430_HAL_PORT10;
+  }
+#endif /* configBSP430_HAL_PORT10 */
+
+#if configBSP430_HAL_PORT11 - 0
+  if (BSP430_PERIPH_PORT11 == periph) {
+    return BSP430_HAL_PORT11;
+  }
+#endif /* configBSP430_HAL_PORT11 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
+  /* !BSP430! end=periph_hal_demux */
+  return NULL;
+}

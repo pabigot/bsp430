@@ -506,4 +506,34 @@ int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 #include <bsp430/periph/euscia.h>
 #endif /* configBSP430_SERIAL_USE_EUSCIA */
 
+/** Get the HAL handle for a specific serial peripheral.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_USCI_A0.
+ *
+ * @return the HAL handle for the peripheral.  A null pointer is
+ * returned if the handle does not correspond to a serial peripheral
+ * for which both the HAL interface has been enabled.
+ */
+static __inline__
+hBSP430halSERIAL xBSP430halLookupSERIAL (tBSP430periphHandle periph)
+{
+  hBSP430halSERIAL rv = NULL;
+#if configBSP430_SERIAL_USE_USCI - 0
+  if (NULL == rv) {
+    rv = xBSP430halLookupUSCI(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_USCI */
+#if configBSP430_SERIAL_USE_USCI5 - 0
+  if (NULL == rv) {
+    rv = xBSP430halLookupUSCI5(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_USCI5 */
+#if configBSP430_SERIAL_USE_EUSCIA - 0
+  if (NULL == rv) {
+    rv = xBSP430halLookupEUSCIA(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_EUSCIA */
+  return rv;
+}
+
 #endif /* BSP430_SERIAL_H */

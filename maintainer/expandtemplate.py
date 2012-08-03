@@ -289,13 +289,6 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
 ''',
     
-    'periph_hal_demux' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
-  if (BSP430_PERIPH_%(INSTANCE)s == periph) {
-    return BSP430_HAL_%(INSTANCE)s;
-  }
-#endif /* configBSP430_HAL_%(INSTANCE)s */
-''',
-
     'hal_port_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
   .hal_state = { .cflags =
@@ -385,12 +378,18 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
 
-
     'periph_hpl_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
     return BSP430_HPL_%(INSTANCE)s;
   }
 #endif /* configBSP430_HPL_%(INSTANCE)s */
+''',
+
+    'periph_hal_demux' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
+  if (BSP430_PERIPH_%(INSTANCE)s == periph) {
+    return BSP430_HAL_%(INSTANCE)s;
+  }
+#endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
     'platform_decl' : '''/** @def BSP430_PLATFORM_%(INSTANCE)s

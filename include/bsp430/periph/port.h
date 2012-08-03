@@ -279,27 +279,27 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * @note All ports on 5xx-family devices are interrupt-enabled.
  *
- * @param xHandle The handle identifier, such as #BSP430_PERIPH_PORT1.
+ * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
  *
  * @return A typed pointer that can be used to manipulate the port.  A
  * null pointer is returned if the handle does not correspond to a
  * timer which has been enabled (e.g., with
  * #configBSP430_HPL_PORT1), or if the specified port does not
- * support interrupts (see #xBSP430periphLookupPORT)
+ * support interrupts (see #xBSP430hplLookupPORT)
  */
-volatile sBSP430hplPORTIE * xBSP430periphLookupPORTIE (tBSP430periphHandle xHandle);
+volatile sBSP430hplPORTIE * xBSP430hplLookupPORTIE (tBSP430periphHandle periph);
 
 /** Get the peripheral register pointer for a non-interrupt-enabled port.
  *
- * @param xHandle The handle identifier, such as #BSP430_PERIPH_PORT1.
+ * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
  *
  * @return A typed pointer that can be used to manipulate the port.  A
  * null pointer is returned if the handle does not correspond to a
  * timer which has been enabled (e.g., with
  * #configBSP430_HPL_PORT1), or if the specified port supports
- * interrupts (see #xBSP430periphLookupPORTIE)
+ * interrupts (see #xBSP430hplLookupPORTIE)
  */
-volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
+volatile sBSP430hplPORT * xBSP430hplLookupPORT (tBSP430periphHandle periph);
 
 /** @cond DOXYGEN_INTERNAL */
 
@@ -564,6 +564,16 @@ typedef struct sBSP430halPORT {
 
 /** Handle for a port HAL instance */
 typedef struct sBSP430halPORT * hBSP430halPORT;
+
+/** Get the HAL handle for a specific port.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return the HAL handle for the port.  A null pointer is returned
+ * if the handle does not correspond to a port for which the HAL
+ * interface has been enabled (e.g., with #configBSP430_HAL_PORT1).
+ */
+hBSP430halPORT xBSP430halLookupPORT (tBSP430periphHandle periph);
 
 /** Macro to reference a port IN register regardless of HPL layout. */
 #if BSP430_CORE_FAMILY_IS_5XX - 0

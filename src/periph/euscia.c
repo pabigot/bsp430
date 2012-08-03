@@ -36,10 +36,6 @@
 /* !BSP430! periph=euscia */
 /* !BSP430! instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
 
-/** Convert from a raw peripheral handle to the corresponding USCI
- * device handle. */
-hBSP430halSERIAL periphToDevice (tBSP430periphHandle periph);
-
 #define SERIAL_HAL_HPL(_hal) BSP430_SERIAL_HAL_GET_HPL_EUSCIA(_hal)
 
 #define SERIAL_HPL_WAKEUP_TRANSMIT_NI(_hpl) do {        \
@@ -402,7 +398,36 @@ isr_EUSCI_A2 (void)
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-hBSP430halSERIAL periphToDevice (tBSP430periphHandle periph)
+volatile sBSP430hplEUSCIA *
+xBSP430hplLookupEUSCIA (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hpl_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
+#if configBSP430_HPL_EUSCI_A0 - 0
+  if (BSP430_PERIPH_EUSCI_A0 == periph) {
+    return BSP430_HPL_EUSCI_A0;
+  }
+#endif /* configBSP430_HPL_EUSCI_A0 */
+
+#if configBSP430_HPL_EUSCI_A1 - 0
+  if (BSP430_PERIPH_EUSCI_A1 == periph) {
+    return BSP430_HPL_EUSCI_A1;
+  }
+#endif /* configBSP430_HPL_EUSCI_A1 */
+
+#if configBSP430_HPL_EUSCI_A2 - 0
+  if (BSP430_PERIPH_EUSCI_A2 == periph) {
+    return BSP430_HPL_EUSCI_A2;
+  }
+#endif /* configBSP430_HPL_EUSCI_A2 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */
+  /* !BSP430! end=periph_hpl_demux */
+  return NULL;
+}
+
+hBSP430halSERIAL
+xBSP430halLookupEUSCIA (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
