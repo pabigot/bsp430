@@ -231,6 +231,12 @@ void main ()
 #endif /* BSP430_PERIPH_EXPOSED_CLOCKS_HELP */
     cprintf("\nStatus register LPM bits: ");
     cputu_ni(__read_status_register() & BSP430_LPM_SR_MASK, 16);
+    cprintf("\nIFG1 bits: ");
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+    cputu_ni(SFRIRG1, 16);
+#else /* CPUX */
+    cputu_ni(IFG1, 16);
+#endif /* CPUX */
     cputchar_ni('\n');
 #endif /* BSP430_CONSOLE */
     /* Spin here with CPU active.  In LPM0, MCLK is disabled.  Other
