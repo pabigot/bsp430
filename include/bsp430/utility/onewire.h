@@ -48,20 +48,6 @@
 
 #include <bsp430/periph/port.h>
 
-/** @def BSP430_ONEWIRE_PORT_TYPE
- *
- * The HPL structure used for ports to which onewire devices are attached.
- *
- * This should be defined to be one of #sBSP430hplPORT,
- * #sBSP430hplPORTW, #sBSP430hplPORTIE.  Only one port type is
- * supported for onewire devices within any application.
- *
- * @defaulted
- */
-#ifndef BSP430_ONEWIRE_PORT_TYPE
-#define BSP430_ONEWIRE_PORT_TYPE sBSP430hplPORTIE
-#endif /* BSP430_ONEWIRE_PORT_TYPE */
-
 /** Structure identifying 1-wire bus information. */
 typedef struct sBSP430onewireBus {
   /** The peripheral port containing the bus. */
@@ -107,9 +93,6 @@ enum {
  * 1-wire device is present.  The protocol requires that the bus be
  * held low for a given period, then returns it to pullup input.  A
  * device present on the bus will respond by pulling the bus low.
- *
- * If the port supports pullup resistors, the resistor is enabled by
- * this command and is left so configured.
  *
  * @param bus The port and bit identifying the 1-wire bus
  *

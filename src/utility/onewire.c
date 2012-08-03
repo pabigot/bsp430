@@ -79,20 +79,6 @@ iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
   /* Release bus and switch to input until presence pulse should be
    * visible. */
   BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
-#if defined(__MSP430_HAS_PORT1_R__)
-  /* If PORT1 has resistor capability, all ports do.  In case the
-   * device isn't wired correctly, pull up the bus so the device
-   * detection is correct.
-   *
-   * Since the protocol requires that the reset command be issued
-   * before any other command, we're going to assume any resistor
-   * enable bit remains set for the subsequent commands.  We do,
-   * however, reconfigure the PxOUT register to pull-up if the last
-   * setting would cause a pulldown configuration, as it would
-   * here. */
-  BSP430_PORT_HAL_HPL_REN(bus->port) |= bus->bit;
-  BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
-#endif /* __MSP430_HAS_PORT1_R__ */
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_PDHIGH_us));
 
   /* Record presence if bus is low (DS182x is holding it there) */
@@ -123,18 +109,10 @@ vBSP430onewireWriteByte_ni (const sBSP430onewireBus * bus,
     if (byte & 0x01) {
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW1_us));
       BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
-#if defined(__MSP430_HAS_PORT1_R__)
-      /* Leave REN set from reset command, configure for pullup */
-      BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
-#endif /* __MSP430_HAS_PORT1_R__ */
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_LOW1_us + OWT_REC_us));
     } else {
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW0_us));
       BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
-#if defined(__MSP430_HAS_PORT1_R__)
-      /* Leave REN set from reset command, configure for pullup */
-      BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
-#endif /* __MSP430_HAS_PORT1_R__ */
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_SLOT_us - OWT_LOW0_us + OWT_REC_us));
     }
     byte >>= 1;
