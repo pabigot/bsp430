@@ -216,51 +216,43 @@ iBSP430usciTransmitASCIIZ_ni (hBSP430halUSCI device, const char * str)
 }
 
 #if configBSP430_HAL_USCI_A0 - 0
-static struct sBSP430halUSCI state_USCI_A0_ = {
+struct sBSP430halUSCI xBSP430hal_USCI_A0_ = {
   .usci = BSP430_HPL_USCI_A0,
   .iep = &IE2,
   .ifgp = &IFG2,
   .rx_bit = BIT0,
   .tx_bit = BIT1,
 };
-
-hBSP430halUSCI const BSP430_HAL_USCI_A0 = &state_USCI_A0_;
 #endif /* configBSP430_HAL_USCI_A0 */
 
 #if configBSP430_HAL_USCI_A1 - 0
-static struct sBSP430halUSCI state_USCI_A1_ = {
+struct sBSP430halUSCI xBSP430hal_USCI_A1_ = {
   .usci = BSP430_HPL_USCI_A1
   .iep = &UC1IE,
   .ifgp = &UC1IFG,
   .rx_bit = BIT0,
   .tx_bit = BIT1,
 };
-
-hBSP430halUSCI const BSP430_HAL_USCI_A1 = &state_USCI_A1_;
 #endif /* configBSP430_HAL_USCI_A1 */
 
 #if configBSP430_HAL_USCI_B0 - 0
-static struct sBSP430halUSCI state_USCI_B0_ = {
+struct sBSP430halUSCI xBSP430hal_USCI_B0_ = {
   .usci = BSP430_HPL_USCI_B0
   .iep = &IE2,
   .ifgp = &IFG2,
   .rx_bit = BIT2,
   .tx_bit = BIT3,
 };
-
-hBSP430halUSCI const BSP430_HAL_USCI_B0 = &state_USCI_B0_;
 #endif /* configBSP430_HAL_USCI_B0 */
 
 #if configBSP430_HAL_USCI_B1 - 0
-static struct sBSP430halUSCI state_USCI_B1_ = {
+struct sBSP430halUSCI xBSP430hal_USCI_B1_ = {
   .usci = BSP430_HPL_USCI_B1
   .iep = &UC1IE,
   .ifgp = &UC1IFG,
   .rx_bit = BIT2,
   .tx_bit = BIT3,
 };
-
-hBSP430halUSCI const BSP430_HAL_USCI_B1 = &state_USCI_B1_;
 #endif /* configBSP430_HAL_USCI_B1 */
 
 #if ((configBSP430_HAL_USCIAB0RX_ISR - 0) || (configBSP430_HAL_USCIAB1RX_ISR - 0))

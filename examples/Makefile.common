@@ -165,8 +165,8 @@ MODULES_LED ?= utility/led
 MODULES_CONSOLE = $(MODULES_SERIAL) utility/console
 
 # MODULES_PLATFORM: The platform-specific platform module, together with the
-# clock module.  The combination is non-orthogonal, but convenient.
-MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK)
+# clock and LED modules.  The combination is non-orthogonal, but convenient.
+MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED)
 
 # Add all selected modules to the SRC, eliminating any duplicates
 SRC += $(patsubst %,$(BSP430_ROOT)/src/%.c,$(sort $(MODULES)))

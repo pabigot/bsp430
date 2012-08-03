@@ -119,7 +119,7 @@ void main ()
 #if BSP430_TIMER_CCACLK - 0
   do {
     const int SAMPLE_PERIOD_ACLK = 10;
-    volatile xBSP430periphTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+    volatile sBSP430hplTIMER * tp = xBSP430periphLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
     unsigned int cc_delta;
     unsigned long aclk_rel_smclk_Hz;
     unsigned long smclk_rel_aclk_Hz;
