@@ -117,6 +117,27 @@
  * HPL based on the 16-bit alphabetic register names is presented.
  */
 
+/** @def BSP430_PORT_SUPPORTS_REN
+ *
+ * A macro that is defined to a true value if the port peripheral
+ * supports a resistor-enable register, and to a false value if it
+ * does not.
+ *
+ * This can be used in application and library code to use or avoid
+ * reference to the @a ren field of HPL structures, either directly or
+ * though the #BSP430_PORT_HAL_HPL_REN() macro.
+ *
+ * Support for the PxREN register is determined by the @c
+ * __MSP430_HAS_PORT1_R__ functional presence indicator for
+ * <msp430.h>; in all MCUs, if P1 has the feature, so do any other
+ * ports.
+ */
+#if defined(__MSP430_HAS_PORT1_R__)
+#define BSP430_PORT_SUPPORTS_REN 1
+#else /* P1REN */
+#define BSP430_PORT_SUPPORTS_REN 0
+#endif /* P1REN */
+
 /** Layout for pre-5xx--family ports supporting interrupts.
  *
  * Access to SEL2 capability for these ports is not available in the
@@ -492,7 +513,7 @@ typedef struct sBSP430halPORT {
   /** Callbacks invoked when the HAL ISR handler receives an event for
    * the corresponding bit of the port. */
   const struct sBSP430halISRCallbackIndexed * pin_callback[8];
-#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
+#if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   /** Pointer to the resistor enable register for this peripheral.
    *
    * On 2xx/4xx MCUs where this register exists, it is outside the
@@ -534,7 +555,7 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
 /** Macro to reference a port REN register regardless of HPL layout.
  *
  * @dependency Selected MCU must support REN function */
-#if defined(BSP430_DOXYGEN) || defined(__MSP430_HAS_PORT1_R__)
+#if defined(BSP430_DOXYGEN) || (BSP430_PORT_SUPPORTS_REN - 0)
 #if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_REN(_hal) ((_hal)->hpl.portie->ren)
 #else /* 5XX */

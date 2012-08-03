@@ -316,7 +316,7 @@ struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
 #endif /* interrupt-enabled */
        = BSP430_HPL_%(INSTANCE)s
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
+#if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P%(#)sREN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
