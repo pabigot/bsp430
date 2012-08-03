@@ -179,6 +179,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
     CSCTL4 &= ~(XT1DRIVE0 | XT1DRIVE1);
   }
   CSCTL0_H = !0xA5;
+  BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
   return rc;
 }
 

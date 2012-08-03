@@ -325,6 +325,7 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
                  + XT1HFOFFG
 #endif /* XT1HFOFFG */
                  + DCOFFG);
+    BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
     SFRIFG1 &= ~OFIFG;
     BSP430_CORE_WATCHDOG_CLEAR();
     /* Wait at least 50 usec, assuming speed does not exceed 32 MHz.
@@ -402,6 +403,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
     UCSCTL6 |= XT1OFF;
     UCSCTL6 &= XT1DRIVE0 | XT1DRIVE1;
   }
+  BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
   return rc;
 }
 

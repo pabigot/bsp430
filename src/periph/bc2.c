@@ -74,6 +74,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
     BCSCTL3 = LFXT1S_2;
   }
+  BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
   return rc;
 }
 
@@ -288,6 +289,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 
   /* Spin until DCO faults cleared */
   do {
+    BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
     IFG1 &= ~OFIFG;
     BSP430_CORE_WATCHDOG_CLEAR();
     /* Wait at least 50 usec, assuming speed does not exceed 16 MHz.

@@ -229,14 +229,16 @@ void main ()
 #else
     cputtext_ni("Go look, cuz I don't know where they are");
 #endif /* BSP430_PERIPH_EXPOSED_CLOCKS_HELP */
-    cprintf("\nStatus register LPM bits: ");
+    cputtext_ni("\nStatus register LPM bits: ");
     cputu_ni(__read_status_register() & BSP430_LPM_SR_MASK, 16);
-    cprintf("\nIFG1 bits: ");
+    cputtext_ni("\nIFG1 bits: ");
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-    cputu_ni(SFRIRG1, 16);
+    cputu_ni(SFRIFG1, 16);
 #else /* CPUX */
     cputu_ni(IFG1, 16);
 #endif /* CPUX */
+    cputtext_ni(" with OFIFG ");
+    cputu_ni(OFIFG, 16);
     cputchar_ni('\n');
 #endif /* BSP430_CONSOLE */
     /* Spin here with CPU active.  In LPM0, MCLK is disabled.  Other

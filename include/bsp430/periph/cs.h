@@ -77,8 +77,10 @@
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag. */
 #define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {	\
-    CSCTL5 &= ~XT1OFFG;                         \
-    SFRIFG1 &= ~OFIFG;                          \
+    CSCTL0_H = 0xA5;                                    \
+    CSCTL5 &= ~XT1OFFG;                                 \
+    CSCTL0_H = !0xA5;                                   \
+    SFRIFG1 &= ~OFIFG;                                  \
   } while (0)
 
 /** Unconditional define for peripheral-specific constant */

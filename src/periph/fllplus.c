@@ -96,8 +96,9 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 
   /* Spin until DCO faults cleared */
   do {
-    IFG1 &= ~OFIFG;
+    BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
     BSP430_CORE_WATCHDOG_CLEAR();
+    IFG1 &= ~OFIFG;
     /* Wait at least 50 usec, assuming speed does not exceed 16 MHz.
      * Delay suggested by SLAU144I "2xx Family Users Guide" section
      * 5.2.7.1 "Sourcing MCLK from a Crystal".  This applies to using
