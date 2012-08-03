@@ -91,6 +91,25 @@
 #include "bsp430_config.h"
 #endif /* configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE */
 
+/** @def BSP430_CORE_FAMILY_IS_5XX
+ *
+ * Defined to a value that is true if the build target is an MCU in
+ * the 5xx/FR5xx/6xx family.  These MCUs have incompatible HPL
+ * structures compared with the same peripheral in earlier families;
+ * where user or library code must take into account those
+ * differences, this flag may be used in a prepropcessor condition to
+ * detect the situation.
+ *
+ * In the future it may be necessary to distinguish membership in this
+ * family from the CPU architecture, but for now the presence of the
+ * @c __MSP430_HAS_MSP430XV2_CPU__ preprocessor symbol in <msp430.h>
+ * is what controls the value of this flag.  */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define BSP430_CORE_FAMILY_IS_5XX 1
+#else /* 5xx == CPUXv2*/
+#define BSP430_CORE_FAMILY_IS_5XX 0
+#endif /* 5xx == CPUXv2 */
+
 /** @def configBSP430_CORE_SUPPORT_WATCHDOG
  *
  * Control use of the watchdog infrastructure by BSP430.

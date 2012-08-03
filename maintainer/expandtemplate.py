@@ -99,7 +99,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  *
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (%(#)s <= 2)
 #define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_%(INSTANCE)s)
 #else /* IE */
 #define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430hplPORT *)BSP430_PERIPH_%(INSTANCE)s)
@@ -299,7 +299,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
     'hal_port_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
   .hal_state = { .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (%(#)s <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -309,14 +309,14 @@ struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
   },
   .hpl = {
-#if defined(PORT%(#)s_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (%(#)s <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
        = BSP430_HPL_%(INSTANCE)s
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P%(#)sREN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -339,7 +339,7 @@ isr_%(INSTANCE)s (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P%(#)sIV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -360,7 +360,7 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 ''',
 
-    'periph_hpl_port_demux' : '''#if (configBSP430_HPL_%(INSTANCE)s - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (%(#)s %(IE_TEST)s 2))
+    'periph_hpl_port_demux' : '''#if (configBSP430_HPL_%(INSTANCE)s - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (%(#)s %(IE_TEST)s 2))
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
     return BSP430_HPL_%(INSTANCE)s;
   }

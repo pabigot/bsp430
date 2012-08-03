@@ -40,7 +40,7 @@
 struct sBSP430halPORT xBSP430hal_PORT1_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (1 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -50,14 +50,14 @@ struct sBSP430halPORT xBSP430hal_PORT1_ = {
 #endif /* configBSP430_HAL_PORT1_ISR */
   },
   .hpl = {
-#if defined(PORT1_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (1 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT1
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P1REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -67,7 +67,7 @@ struct sBSP430halPORT xBSP430hal_PORT1_ = {
 struct sBSP430halPORT xBSP430hal_PORT2_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (2 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -77,14 +77,14 @@ struct sBSP430halPORT xBSP430hal_PORT2_ = {
 #endif /* configBSP430_HAL_PORT2_ISR */
   },
   .hpl = {
-#if defined(PORT2_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (2 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT2
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P2REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -94,7 +94,7 @@ struct sBSP430halPORT xBSP430hal_PORT2_ = {
 struct sBSP430halPORT xBSP430hal_PORT3_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (3 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -104,14 +104,14 @@ struct sBSP430halPORT xBSP430hal_PORT3_ = {
 #endif /* configBSP430_HAL_PORT3_ISR */
   },
   .hpl = {
-#if defined(PORT3_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (3 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT3
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P3REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -121,7 +121,7 @@ struct sBSP430halPORT xBSP430hal_PORT3_ = {
 struct sBSP430halPORT xBSP430hal_PORT4_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (4 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -131,14 +131,14 @@ struct sBSP430halPORT xBSP430hal_PORT4_ = {
 #endif /* configBSP430_HAL_PORT4_ISR */
   },
   .hpl = {
-#if defined(PORT4_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (4 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT4
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P4REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -148,7 +148,7 @@ struct sBSP430halPORT xBSP430hal_PORT4_ = {
 struct sBSP430halPORT xBSP430hal_PORT5_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (5 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -158,14 +158,14 @@ struct sBSP430halPORT xBSP430hal_PORT5_ = {
 #endif /* configBSP430_HAL_PORT5_ISR */
   },
   .hpl = {
-#if defined(PORT5_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (5 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT5
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P5REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -175,7 +175,7 @@ struct sBSP430halPORT xBSP430hal_PORT5_ = {
 struct sBSP430halPORT xBSP430hal_PORT6_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (6 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -185,14 +185,14 @@ struct sBSP430halPORT xBSP430hal_PORT6_ = {
 #endif /* configBSP430_HAL_PORT6_ISR */
   },
   .hpl = {
-#if defined(PORT6_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (6 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT6
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P6REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -202,7 +202,7 @@ struct sBSP430halPORT xBSP430hal_PORT6_ = {
 struct sBSP430halPORT xBSP430hal_PORT7_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (7 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -212,14 +212,14 @@ struct sBSP430halPORT xBSP430hal_PORT7_ = {
 #endif /* configBSP430_HAL_PORT7_ISR */
   },
   .hpl = {
-#if defined(PORT7_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (7 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT7
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P7REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -229,7 +229,7 @@ struct sBSP430halPORT xBSP430hal_PORT7_ = {
 struct sBSP430halPORT xBSP430hal_PORT8_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (8 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -239,14 +239,14 @@ struct sBSP430halPORT xBSP430hal_PORT8_ = {
 #endif /* configBSP430_HAL_PORT8_ISR */
   },
   .hpl = {
-#if defined(PORT8_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (8 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT8
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P8REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -256,7 +256,7 @@ struct sBSP430halPORT xBSP430hal_PORT8_ = {
 struct sBSP430halPORT xBSP430hal_PORT9_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (9 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -266,14 +266,14 @@ struct sBSP430halPORT xBSP430hal_PORT9_ = {
 #endif /* configBSP430_HAL_PORT9_ISR */
   },
   .hpl = {
-#if defined(PORT9_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (9 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT9
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P9REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -283,7 +283,7 @@ struct sBSP430halPORT xBSP430hal_PORT9_ = {
 struct sBSP430halPORT xBSP430hal_PORT10_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (10 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -293,14 +293,14 @@ struct sBSP430halPORT xBSP430hal_PORT10_ = {
 #endif /* configBSP430_HAL_PORT10_ISR */
   },
   .hpl = {
-#if defined(PORT10_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (10 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT10
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P10REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -310,7 +310,7 @@ struct sBSP430halPORT xBSP430hal_PORT10_ = {
 struct sBSP430halPORT xBSP430hal_PORT11_ = {
   .hal_state = {
     .cflags =
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (11 <= 2)
     BSP430_PORT_HAL_HPL_VARIANT_PORTIE
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
@@ -320,14 +320,14 @@ struct sBSP430halPORT xBSP430hal_PORT11_ = {
 #endif /* configBSP430_HAL_PORT11_ISR */
   },
   .hpl = {
-#if defined(PORT11_VECTOR)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (11 <= 2)
     .portie
 #else /* interrupt-enabled */
     .port
-#endif /* MSP430XV2 */
+#endif /* interrupt-enabled */
     = BSP430_HPL_PORT11
   },
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P11REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
@@ -374,7 +374,7 @@ isr_PORT1 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P1IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -401,7 +401,7 @@ isr_PORT2 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P2IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -428,7 +428,7 @@ isr_PORT3 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P3IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -455,7 +455,7 @@ isr_PORT4 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P4IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -482,7 +482,7 @@ isr_PORT5 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P5IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -509,7 +509,7 @@ isr_PORT6 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P6IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -536,7 +536,7 @@ isr_PORT7 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P7IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -563,7 +563,7 @@ isr_PORT8 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P8IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -590,7 +590,7 @@ isr_PORT9 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P9IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -617,7 +617,7 @@ isr_PORT10 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P10IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -644,7 +644,7 @@ isr_PORT11 (void)
 {
   int iv;
   int rv;
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
   iv = P11IV;
 #else /* CPUX */
   unsigned char bit = 1;
@@ -672,67 +672,67 @@ xBSP430periphLookupPORTIE (tBSP430periphHandle periph)
 {
   /* !BSP430! ie_test=<= subst=ie_test insert=periph_hpl_port_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
-#if (configBSP430_HPL_PORT1 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 <= 2))
+#if (configBSP430_HPL_PORT1 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (1 <= 2))
   if (BSP430_PERIPH_PORT1 == periph) {
     return BSP430_HPL_PORT1;
   }
 #endif /* configBSP430_HPL_PORT1 */
 
-#if (configBSP430_HPL_PORT2 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 <= 2))
+#if (configBSP430_HPL_PORT2 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (2 <= 2))
   if (BSP430_PERIPH_PORT2 == periph) {
     return BSP430_HPL_PORT2;
   }
 #endif /* configBSP430_HPL_PORT2 */
 
-#if (configBSP430_HPL_PORT3 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 <= 2))
+#if (configBSP430_HPL_PORT3 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (3 <= 2))
   if (BSP430_PERIPH_PORT3 == periph) {
     return BSP430_HPL_PORT3;
   }
 #endif /* configBSP430_HPL_PORT3 */
 
-#if (configBSP430_HPL_PORT4 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 <= 2))
+#if (configBSP430_HPL_PORT4 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (4 <= 2))
   if (BSP430_PERIPH_PORT4 == periph) {
     return BSP430_HPL_PORT4;
   }
 #endif /* configBSP430_HPL_PORT4 */
 
-#if (configBSP430_HPL_PORT5 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 <= 2))
+#if (configBSP430_HPL_PORT5 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (5 <= 2))
   if (BSP430_PERIPH_PORT5 == periph) {
     return BSP430_HPL_PORT5;
   }
 #endif /* configBSP430_HPL_PORT5 */
 
-#if (configBSP430_HPL_PORT6 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 <= 2))
+#if (configBSP430_HPL_PORT6 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (6 <= 2))
   if (BSP430_PERIPH_PORT6 == periph) {
     return BSP430_HPL_PORT6;
   }
 #endif /* configBSP430_HPL_PORT6 */
 
-#if (configBSP430_HPL_PORT7 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 <= 2))
+#if (configBSP430_HPL_PORT7 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (7 <= 2))
   if (BSP430_PERIPH_PORT7 == periph) {
     return BSP430_HPL_PORT7;
   }
 #endif /* configBSP430_HPL_PORT7 */
 
-#if (configBSP430_HPL_PORT8 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 <= 2))
+#if (configBSP430_HPL_PORT8 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (8 <= 2))
   if (BSP430_PERIPH_PORT8 == periph) {
     return BSP430_HPL_PORT8;
   }
 #endif /* configBSP430_HPL_PORT8 */
 
-#if (configBSP430_HPL_PORT9 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 <= 2))
+#if (configBSP430_HPL_PORT9 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (9 <= 2))
   if (BSP430_PERIPH_PORT9 == periph) {
     return BSP430_HPL_PORT9;
   }
 #endif /* configBSP430_HPL_PORT9 */
 
-#if (configBSP430_HPL_PORT10 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 <= 2))
+#if (configBSP430_HPL_PORT10 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (10 <= 2))
   if (BSP430_PERIPH_PORT10 == periph) {
     return BSP430_HPL_PORT10;
   }
 #endif /* configBSP430_HPL_PORT10 */
 
-#if (configBSP430_HPL_PORT11 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 <= 2))
+#if (configBSP430_HPL_PORT11 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (11 <= 2))
   if (BSP430_PERIPH_PORT11 == periph) {
     return BSP430_HPL_PORT11;
   }
@@ -748,67 +748,67 @@ xBSP430periphLookupPORT (tBSP430periphHandle periph)
 {
   /* !BSP430! ie_test=> subst=ie_test insert=periph_hpl_port_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
-#if (configBSP430_HPL_PORT1 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 > 2))
+#if (configBSP430_HPL_PORT1 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (1 > 2))
   if (BSP430_PERIPH_PORT1 == periph) {
     return BSP430_HPL_PORT1;
   }
 #endif /* configBSP430_HPL_PORT1 */
 
-#if (configBSP430_HPL_PORT2 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 > 2))
+#if (configBSP430_HPL_PORT2 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (2 > 2))
   if (BSP430_PERIPH_PORT2 == periph) {
     return BSP430_HPL_PORT2;
   }
 #endif /* configBSP430_HPL_PORT2 */
 
-#if (configBSP430_HPL_PORT3 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 > 2))
+#if (configBSP430_HPL_PORT3 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (3 > 2))
   if (BSP430_PERIPH_PORT3 == periph) {
     return BSP430_HPL_PORT3;
   }
 #endif /* configBSP430_HPL_PORT3 */
 
-#if (configBSP430_HPL_PORT4 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 > 2))
+#if (configBSP430_HPL_PORT4 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (4 > 2))
   if (BSP430_PERIPH_PORT4 == periph) {
     return BSP430_HPL_PORT4;
   }
 #endif /* configBSP430_HPL_PORT4 */
 
-#if (configBSP430_HPL_PORT5 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 > 2))
+#if (configBSP430_HPL_PORT5 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (5 > 2))
   if (BSP430_PERIPH_PORT5 == periph) {
     return BSP430_HPL_PORT5;
   }
 #endif /* configBSP430_HPL_PORT5 */
 
-#if (configBSP430_HPL_PORT6 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 > 2))
+#if (configBSP430_HPL_PORT6 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (6 > 2))
   if (BSP430_PERIPH_PORT6 == periph) {
     return BSP430_HPL_PORT6;
   }
 #endif /* configBSP430_HPL_PORT6 */
 
-#if (configBSP430_HPL_PORT7 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 > 2))
+#if (configBSP430_HPL_PORT7 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (7 > 2))
   if (BSP430_PERIPH_PORT7 == periph) {
     return BSP430_HPL_PORT7;
   }
 #endif /* configBSP430_HPL_PORT7 */
 
-#if (configBSP430_HPL_PORT8 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 > 2))
+#if (configBSP430_HPL_PORT8 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (8 > 2))
   if (BSP430_PERIPH_PORT8 == periph) {
     return BSP430_HPL_PORT8;
   }
 #endif /* configBSP430_HPL_PORT8 */
 
-#if (configBSP430_HPL_PORT9 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 > 2))
+#if (configBSP430_HPL_PORT9 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (9 > 2))
   if (BSP430_PERIPH_PORT9 == periph) {
     return BSP430_HPL_PORT9;
   }
 #endif /* configBSP430_HPL_PORT9 */
 
-#if (configBSP430_HPL_PORT10 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 > 2))
+#if (configBSP430_HPL_PORT10 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (10 > 2))
   if (BSP430_PERIPH_PORT10 == periph) {
     return BSP430_HPL_PORT10;
   }
 #endif /* configBSP430_HPL_PORT10 */
 
-#if (configBSP430_HPL_PORT11 - 0) && (defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 > 2))
+#if (configBSP430_HPL_PORT11 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (11 > 2))
   if (BSP430_PERIPH_PORT11 == periph) {
     return BSP430_HPL_PORT11;
   }

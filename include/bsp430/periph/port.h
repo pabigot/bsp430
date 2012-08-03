@@ -230,29 +230,29 @@ typedef struct sBSP430hplPORT_5XX_8 {
 /** Structure used to access ports with interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 typedef sBSP430hplPORT_5XX_8 sBSP430hplPORTIE;
-#else /* MSP430XV2 */
+#else /* 5XX */
 typedef sBSP430hplPORT_IE_8 sBSP430hplPORTIE;
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 
 /** Structure used to access ports without interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 typedef sBSP430hplPORT_5XX_8 sBSP430hplPORT;
-#else /* MSP430XV2 */
+#else /* 5XX */
 typedef sBSP430hplPORT_8 sBSP430hplPORT;
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 
 /** Structure used to access 16-bit ports.
  *
  * The underlying structure selected depends on the MCU family. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 typedef sBSP430hplPORT_5XX_16 sBSP430hplPORTW;
-#else /* MSP430XV2 */
+#else /* 5XX */
 typedef sBSP430hplPORT_16 sBSP430hplPORTW;
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 
 /** Get the peripheral register pointer for an interrupt-enabled port.
  *
@@ -282,7 +282,7 @@ volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
 
 /** @cond DOXYGEN_INTERNAL */
 
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 /* All 5xx ports are resistor enabled */
 #define BSP430_PERIPH_PORTA_BASEADDRESS_ __MSP430_BASEADDRESS_PORTA_R__
 #define BSP430_PERIPH_PORTB_BASEADDRESS_ __MSP430_BASEADDRESS_PORTB_R__
@@ -352,11 +352,11 @@ volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
  *
  * This identifies the appropriate structure-specific variant value
  * based on the MCU capabilities. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTIE BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTIE BSP430_PORT_HAL_HPL_VARIANT_PORT_IE_8
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 
 /** Field value for variant stored in sBSP430halPORT.hal_state when
  * HPL reference is to a byte-accessed port without interrupt
@@ -364,12 +364,12 @@ volatile sBSP430hplPORT * xBSP430periphLookupPORT (tBSP430periphHandle xHandle);
  *
  * This identifies the appropriate structure-specific variant value
  * based on the MCU capabilities. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_8
 typedef sBSP430hplPORT_8 sBSP430hplPORT;
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 
 /** Field value for variant stored in sBSP430halPORT.hal_state when
  * HPL reference is to a byte-accessed port without interrupt
@@ -377,11 +377,11 @@ typedef sBSP430hplPORT_8 sBSP430hplPORT;
  *
  * This identifies the appropriate structure-specific variant value
  * based on the MCU capabilities. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTW BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_16
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTW BSP430_PORT_HAL_HPL_VARIANT_PORT_16
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 
 /* !BSP430! instance=port_ie_8,port_8,port_16,port_5xx_8,port_5xx_16,port,portie,portw */
 /* !BSP430! insert=hal_port_hpl_macro */
@@ -492,7 +492,7 @@ typedef struct sBSP430halPORT {
   /** Callbacks invoked when the HAL ISR handler receives an event for
    * the corresponding bit of the port. */
   const struct sBSP430halISRCallbackIndexed * pin_callback[8];
-#if defined(__MSP430_HAS_PORT1_R__) && ! defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if defined(__MSP430_HAS_PORT1_R__) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   /** Pointer to the resistor enable register for this peripheral.
    *
    * On 2xx/4xx MCUs where this register exists, it is outside the
@@ -508,38 +508,38 @@ typedef struct sBSP430halPORT {
 typedef struct sBSP430halPORT * hBSP430halPORT;
 
 /** Macro to reference a port IN register regardless of HPL layout. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_IN(_hal) ((_hal)->hpl.portie->in)
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_IN(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->in : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->in))
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 /** Macro to reference a port OUT register regardless of HPL layout. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_OUT(_hal) ((_hal)->hpl.portie->out)
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_OUT(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->out : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->out))
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 /** Macro to reference a port DIR register regardless of HPL layout. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_DIR(_hal) ((_hal)->hpl.portie->dir)
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_DIR(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->dir : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->dir))
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 /** Macro to reference a port SEL register regardless of HPL layout. */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_SEL(_hal) ((_hal)->hpl.portie->sel)
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_SEL(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->sel : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->sel))
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 /** Macro to reference a port REN register regardless of HPL layout.
  *
  * @dependency Selected MCU must support REN function */
 #if defined(BSP430_DOXYGEN) || defined(__MSP430_HAS_PORT1_R__)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_REN(_hal) ((_hal)->hpl.portie->ren)
-#else /* MSP430XV2 */
+#else /* 5XX */
 #define BSP430_PORT_HAL_HPL_REN(_hal) (*(_hal)->renp)
-#endif /* MSP430XV2 */
+#endif /* 5XX */
 #endif /* REN support */
 
 /* !BSP430! insert=hal_decl */
@@ -1273,7 +1273,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT1 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (1 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (1 <= 2)
 #define BSP430_HPL_PORT1 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT1)
 #else /* IE */
 #define BSP430_HPL_PORT1 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT1)
@@ -1295,7 +1295,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT2 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (2 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (2 <= 2)
 #define BSP430_HPL_PORT2 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT2)
 #else /* IE */
 #define BSP430_HPL_PORT2 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT2)
@@ -1317,7 +1317,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT3 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (3 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (3 <= 2)
 #define BSP430_HPL_PORT3 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT3)
 #else /* IE */
 #define BSP430_HPL_PORT3 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT3)
@@ -1339,7 +1339,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT4 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT4 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (4 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (4 <= 2)
 #define BSP430_HPL_PORT4 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT4)
 #else /* IE */
 #define BSP430_HPL_PORT4 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT4)
@@ -1361,7 +1361,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT5 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT5 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (5 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (5 <= 2)
 #define BSP430_HPL_PORT5 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT5)
 #else /* IE */
 #define BSP430_HPL_PORT5 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT5)
@@ -1383,7 +1383,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT6 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT6 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (6 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (6 <= 2)
 #define BSP430_HPL_PORT6 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT6)
 #else /* IE */
 #define BSP430_HPL_PORT6 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT6)
@@ -1405,7 +1405,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT7 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT7 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (7 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (7 <= 2)
 #define BSP430_HPL_PORT7 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT7)
 #else /* IE */
 #define BSP430_HPL_PORT7 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT7)
@@ -1427,7 +1427,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT8 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT8 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (8 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (8 <= 2)
 #define BSP430_HPL_PORT8 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT8)
 #else /* IE */
 #define BSP430_HPL_PORT8 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT8)
@@ -1449,7 +1449,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT9 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT9 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (9 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (9 <= 2)
 #define BSP430_HPL_PORT9 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT9)
 #else /* IE */
 #define BSP430_HPL_PORT9 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT9)
@@ -1471,7 +1471,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT10 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT10 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (10 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (10 <= 2)
 #define BSP430_HPL_PORT10 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT10)
 #else /* IE */
 #define BSP430_HPL_PORT10 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT10)
@@ -1493,7 +1493,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  *
  * @dependency #configBSP430_HPL_PORT11 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_PORT11 - 0)
-#if defined(__MSP430_HAS_MSP430XV2_CPU__) || (11 <= 2)
+#if (BSP430_CORE_FAMILY_IS_5XX - 0) || (11 <= 2)
 #define BSP430_HPL_PORT11 ((volatile sBSP430hplPORTIE *)BSP430_PERIPH_PORT11)
 #else /* IE */
 #define BSP430_HPL_PORT11 ((volatile sBSP430hplPORT *)BSP430_PERIPH_PORT11)

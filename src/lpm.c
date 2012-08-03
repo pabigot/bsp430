@@ -47,7 +47,7 @@ vBSP430lpmConfigurePortsForLPM_ni (void)
     P##_p##OUT = 0;                             \
   } while (0)
 
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
 #if defined(__MSP430_HAS_PORTA__) || defined(__MSP430_HAS_PORTA_R__)
   CONFIGURE_FOR_LPM(A);
 #endif /* PORTA */
@@ -66,7 +66,7 @@ vBSP430lpmConfigurePortsForLPM_ni (void)
 #if defined(__MSP430_HAS_PORTF__) || defined(__MSP430_HAS_PORTF_R__)
   CONFIGURE_FOR_LPM(F);
 #endif /* PORTF */
-#else /* CPUXV2 */
+#else /* 5XX */
 #if defined(__MSP430_HAS_PORT1__) || defined(__MSP430_HAS_PORT1_R__)
   CONFIGURE_FOR_LPM(1);
 #endif /* PORT1 */
@@ -103,7 +103,7 @@ vBSP430lpmConfigurePortsForLPM_ni (void)
 #if defined(__MSP430_HAS_PORT12__) || defined(__MSP430_HAS_PORT12_R__)
   CONFIGURE_FOR_LPM(12);
 #endif /* PORT12 */
-#endif /* CPUXV2 */
+#endif /* 5XX */
 #if defined(__MSP430_HAS_PORTJ__)
   CONFIGURE_FOR_LPM(J);
 #endif /* PORTJ */

@@ -33,7 +33,9 @@
 #include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
 
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#if BSP430_CORE_FAMILY_IS_5XX - 0
+/* In 5xx Timer_A and Timer_B use the same layout with 0x0E denoting
+ * overflow */
 #define TA_OVERFLOW 0x0E
 #else /* 5xx */
 /* Pre-5xx Timer_A only supported 5 CCs and used 0x0A to denote
