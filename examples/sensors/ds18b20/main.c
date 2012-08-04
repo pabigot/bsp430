@@ -27,7 +27,7 @@
 
 /* Where the device can be found */
 const struct sBSP430onewireBus ds18b20 = {
-  .port = APP_DS18B20_PORT,
+  .port = APP_DS18B20_PORT_HAL,
   .bit = APP_DS18B20_BIT
 };
 
@@ -53,10 +53,16 @@ void main ()
   cprintf("Uptime now %lu with resolution %lu\n",
           ulBSP430uptime_ni(), uptime_ticks_per_sec);
 
+  cprintf("Monitoring DS18xx on %s.%u bit %x\n",
+          xBSP430portName(BSP430_PORT_HAL_GET_PERIPH_HANDLE(APP_DS18B20_PORT_HAL)) ?: "P?",
+          iBSP430portBitPosition(APP_DS18B20_BIT),
+          APP_DS18B20_BIT);
+
   do {
     rc = iBSP430onewireReadSerialNumber(bus, &serial);
     if (0 != rc) {
       cprintf("ERROR: Failed to read serial number from DS18B20: %d\n", rc);
+      BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ);
     }
   } while (0 != rc);
   cprintf("DS18B20 serial number: %02x%02x%02x%02x%02x%02x\n",
