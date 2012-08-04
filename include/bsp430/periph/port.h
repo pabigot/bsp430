@@ -75,8 +75,9 @@
  * 2xx: P1/P2 are uniform contiguous inclusive of REN but exclusive of
  * SEL2, which is contiguous at a distinct base address, and have
  * interrupt capability.  P3-P6 are uniform 8-bit and P7-P8 are
- * uniform 16-bit contiguous, exclusive of REN and SEL2.  PA=(P7,P8)
- * in the headers, but is not named as such in the user's guide.
+ * uniform 16-bit contiguous, exclusive of REN and SEL2.  If any port
+ * has SEL2, all ports have SEL2.  PA=(P7,P8) in the headers, but is
+ * not named as such in the user's guide.
  *
  * 3xx: P1/P2 are uniform contiguous with interrupt capability.  P3-P4
  * are uniform contiguous without interrupt capability.  There is no
@@ -85,11 +86,12 @@
  * 4xx: P1/P2 are uniform contiguous including REN capability, and
  * have interrupt capability.  P3-P6 are uniform 8-bit and P7-P10 are
  * uniform 16-bit contiguous; these are exclusive of REN, which is
- * contiguous at a distinct base address.  PA=(P7,P8), PB=(P9,P10).
+ * contiguous at a distinct base address.  Some MCUs have SEL2 on P1,
+ * but no other ports have SEL2.  PA=(P7,P8), PB=(P9,P10).
  *
  * 5xx: All ports uniform 16-bit contiguous.  PA=(P1,P2), PB=(P3,P4),
  * and so forth.  All registers have space reserved for interrupt
- * support.
+ * support.  Only FR5XX has PxSELC.
  *
  * In the above, "8-bit" means that the register fields are
  * immediately adjacent with byte addresses.  "16-bit" means that
