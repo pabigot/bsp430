@@ -73,14 +73,16 @@
 /* !BSP430! end=module_endif */
 
 /* How to use ACLK as a capture/compare input source */
-/* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
-/* !BSP430! insert=feature_startif */
+/* !BSP430! module=timer feature=ccaclk timer=TB0 is_ta0=0 cc_index=6 ccis=1 clk_port=PORT1 clk_pin=BIT4 */
+/* !BSP430! insert=feature_startif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
      && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
+/* !BSP430! insert=feature_ccaclk_decl subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_decl] */
 #define BSP430_TIMER_CCACLK 1
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TB0
 #define BSP430_TIMER_CCACLK_IS_TA0 0
@@ -88,7 +90,9 @@
 #define BSP430_TIMER_CCACLK_CCIS CCIS_1
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 #define BSP430_TIMER_CCACLK_CLK_PORT_PIN BIT4
-/* !BSP430! insert=feature_endif */
+/* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_decl] */
+/* !BSP430! end=feature_ccaclk_decl */
+/* !BSP430! insert=feature_endif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
 /* END AUTOMATICALLY GENERATED CODE [feature_endif] */

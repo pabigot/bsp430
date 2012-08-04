@@ -428,6 +428,22 @@ isr_%(INSTANCE)s (void)
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */
 ''',
 
+
+    'feature_ccaclk_decl' : '''#define BSP430_TIMER_CCACLK 1
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_%(TIMER)s
+#define BSP430_TIMER_CCACLK_IS_TA0 %(IS_TA0)s
+#define BSP430_TIMER_CCACLK_CC_INDEX %(CC_INDEX)s
+#define BSP430_TIMER_CCACLK_CCIS CCIS_%(CCIS)s
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_%(CLK_PORT)s
+#define BSP430_TIMER_CCACLK_CLK_PORT_PIN %(CLK_PIN)s''',
+
+    'feature_ccaclk_cfg' : '''#if !defined(configBSP430_HPL_%(TIMER)s)
+#define configBSP430_HPL_%(TIMER)s 1
+#endif /* configBSP430_HPL_%(TIMER)s */
+#if !defined(configBSP430_HPL_%(CLK_PORT)s)
+#define configBSP430_HPL_%(CLK_PORT)s 1
+#endif /* configBSP430_HPL_%(CLK_PORT)s */''',
+
     'feature_startif' : '''#if ((configBSP430_%(MODULE)s_%(FEATURE)s - 0)                                    \\
      && ((! defined(configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE))    \\
          || (configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE - 0)))''',
@@ -439,6 +455,7 @@ isr_%(INSTANCE)s (void)
          || (configBSP430_%(MODULE)s_USE_DEFAULT_RESOURCE - 0)))''',
 
     'module_endif' : '''#endif /* configBSP430_%(MODULE)s && need default */''',
+
     }
 
 directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')

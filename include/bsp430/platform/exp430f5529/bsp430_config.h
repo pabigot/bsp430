@@ -65,21 +65,25 @@
 /* !BSP430! end=module_endif */
 
 /* How to use ACLK as a capture/compare input source */
-/* !BSP430! module=timer feature=ccaclk subst=module,feature instance=nop */
-/* !BSP430! insert=feature_startif */
+/* !BSP430! module=timer feature=ccaclk timer=TB0 is_ta0=0 cc_index=6 ccis=1 clk_port=PORT7 clk_pin=BIT7 */
+/* !BSP430! insert=feature_startif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
      && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
          || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
+/* !BSP430! insert=feature_ccaclk_cfg subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_cfg] */
 #if !defined(configBSP430_HPL_TB0)
 #define configBSP430_HPL_TB0 1
 #endif /* configBSP430_HPL_TB0 */
 #if !defined(configBSP430_HPL_PORT7)
 #define configBSP430_HPL_PORT7 1
 #endif /* configBSP430_HPL_PORT7 */
-/* !BSP430! insert=feature_endif */
+/* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_cfg] */
+/* !BSP430! end=feature_ccaclk_cfg */
+/* !BSP430! insert=feature_endif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
 /* END AUTOMATICALLY GENERATED CODE [feature_endif] */
