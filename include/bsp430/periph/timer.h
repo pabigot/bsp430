@@ -473,7 +473,7 @@ typedef struct sBSP430halTIMER * hBSP430halTIMER;
  * if the handle does not correspond to a timer for which the HAL
  * interface has been enabled (e.g., with #configBSP430_HAL_TA0).
  */
-hBSP430halTIMER xBSP430halLookupTIMER (tBSP430periphHandle periph);
+hBSP430halTIMER xBSP430timerLookup (tBSP430periphHandle periph);
 
 /** Get a human-readable identifier for the timer
  *

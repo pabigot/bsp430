@@ -573,7 +573,7 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
  * if the handle does not correspond to a port for which the HAL
  * interface has been enabled (e.g., with #configBSP430_HAL_PORT1).
  */
-hBSP430halPORT xBSP430halLookupPORT (tBSP430periphHandle periph);
+hBSP430halPORT xBSP430portLookup (tBSP430periphHandle periph);
 
 /** Get a human-readable identifier for the port
  *

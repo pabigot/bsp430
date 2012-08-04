@@ -560,7 +560,7 @@ xBSP430hplLookupUSCI5 (tBSP430periphHandle periph)
 }
 
 hBSP430halSERIAL
-xBSP430halLookupUSCI5 (tBSP430periphHandle periph)
+xBSP430usciLookup5 (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */

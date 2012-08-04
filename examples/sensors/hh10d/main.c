@@ -86,7 +86,7 @@ static int bitToPin (int v)
 
 void main ()
 {
-  sBSP430halPORT * hh10d_port = xBSP430halLookupPORT(APP_HH10D_PORT_PERIPH_HANDLE);
+  sBSP430halPORT * hh10d_port = xBSP430portLookup(APP_HH10D_PORT_PERIPH_HANDLE);
 
   vBSP430platformInitialize_ni();
 
