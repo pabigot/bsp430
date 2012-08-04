@@ -894,3 +894,79 @@ xBSP430halLookupPORT (tBSP430periphHandle periph)
   /* !BSP430! end=periph_hal_demux */
   return NULL;
 }
+
+const char *
+xBSP430portName (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_name_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_name_demux] */
+#if configBSP430_HPL_PORT1 - 0
+  if (BSP430_PERIPH_PORT1 == periph) {
+    return "PORT1";
+  }
+#endif /* configBSP430_HPL_PORT1 */
+
+#if configBSP430_HPL_PORT2 - 0
+  if (BSP430_PERIPH_PORT2 == periph) {
+    return "PORT2";
+  }
+#endif /* configBSP430_HPL_PORT2 */
+
+#if configBSP430_HPL_PORT3 - 0
+  if (BSP430_PERIPH_PORT3 == periph) {
+    return "PORT3";
+  }
+#endif /* configBSP430_HPL_PORT3 */
+
+#if configBSP430_HPL_PORT4 - 0
+  if (BSP430_PERIPH_PORT4 == periph) {
+    return "PORT4";
+  }
+#endif /* configBSP430_HPL_PORT4 */
+
+#if configBSP430_HPL_PORT5 - 0
+  if (BSP430_PERIPH_PORT5 == periph) {
+    return "PORT5";
+  }
+#endif /* configBSP430_HPL_PORT5 */
+
+#if configBSP430_HPL_PORT6 - 0
+  if (BSP430_PERIPH_PORT6 == periph) {
+    return "PORT6";
+  }
+#endif /* configBSP430_HPL_PORT6 */
+
+#if configBSP430_HPL_PORT7 - 0
+  if (BSP430_PERIPH_PORT7 == periph) {
+    return "PORT7";
+  }
+#endif /* configBSP430_HPL_PORT7 */
+
+#if configBSP430_HPL_PORT8 - 0
+  if (BSP430_PERIPH_PORT8 == periph) {
+    return "PORT8";
+  }
+#endif /* configBSP430_HPL_PORT8 */
+
+#if configBSP430_HPL_PORT9 - 0
+  if (BSP430_PERIPH_PORT9 == periph) {
+    return "PORT9";
+  }
+#endif /* configBSP430_HPL_PORT9 */
+
+#if configBSP430_HPL_PORT10 - 0
+  if (BSP430_PERIPH_PORT10 == periph) {
+    return "PORT10";
+  }
+#endif /* configBSP430_HPL_PORT10 */
+
+#if configBSP430_HPL_PORT11 - 0
+  if (BSP430_PERIPH_PORT11 == periph) {
+    return "PORT11";
+  }
+#endif /* configBSP430_HPL_PORT11 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_name_demux] */
+  /* !BSP430! end=periph_name_demux */
+  return NULL;
+}

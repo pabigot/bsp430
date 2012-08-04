@@ -475,6 +475,15 @@ typedef struct sBSP430halTIMER * hBSP430halTIMER;
  */
 hBSP430halTIMER xBSP430halLookupTIMER (tBSP430periphHandle periph);
 
+/** Get a human-readable identifier for the timer
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return The name of the timer, e.g. "TA0".  If the peripheral is
+ * not recognized as a timer, a null pointer is returned.
+ */
+const char * xBSP430timerName (tBSP430periphHandle periph);
+
 /** Provide the frequency of the timer source, if that can be determined.
  *
  * @param timer The timer for which the source frequency is desired

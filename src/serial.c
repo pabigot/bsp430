@@ -59,3 +59,25 @@ hBSP430halSERIAL xBSP430halLookupSERIAL (tBSP430periphHandle periph)
 #endif /* configBSP430_SERIAL_USE_EUSCIA */
   return rv;
 }
+
+const char *
+xBSP430serialName (tBSP430periphHandle periph)
+{
+  const char * rv = NULL;
+#if configBSP430_SERIAL_USE_USCI - 0
+  if (NULL == rv) {
+    rv = xBSP430usciName(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_USCI */
+#if configBSP430_SERIAL_USE_USCI5 - 0
+  if (NULL == rv) {
+    rv = xBSP430usci5Name(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_USCI5 */
+#if configBSP430_SERIAL_USE_EUSCIA - 0
+  if (NULL == rv) {
+    rv = xBSP430eusciaName(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_EUSCIA */
+  return rv;
+}

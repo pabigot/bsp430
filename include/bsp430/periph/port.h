@@ -575,6 +575,14 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
  */
 hBSP430halPORT xBSP430halLookupPORT (tBSP430periphHandle periph);
 
+/** Get a human-readable identifier for the port
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
+ *
+ * @return The short name of the port, e.g. "P1".  If the peripheral
+ * is not recognized as a port, a null pointer is returned. */
+const char * xBSP430portName (tBSP430periphHandle periph);
+
 /** Macro to reference a port IN register regardless of HPL layout. */
 #if BSP430_CORE_FAMILY_IS_5XX - 0
 #define BSP430_PORT_HAL_HPL_IN(_hal) ((_hal)->hpl.portie->in)
@@ -1828,13 +1836,5 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
-
-/** Translate a port HPL handle to its corresponding HAL handle.
- *
- * @param hpl the hardware presentation layer handle for a port
- *
- * @return the HAL handle for the port, or NULL if either the HPL port
- * is unrecognized or the corresponding HAL port was not enabled. */
-hBSP430halPORT xBSP430portLookup (tBSP430periphHandle hpl);
 
 #endif /* BSP430_PERIPH_PORT_H */

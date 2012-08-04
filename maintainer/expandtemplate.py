@@ -378,6 +378,13 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
 
+    'periph_name_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
+  if (BSP430_PERIPH_%(INSTANCE)s == periph) {
+    return "%(INSTANCE)s";
+  }
+#endif /* configBSP430_HPL_%(INSTANCE)s */
+''',
+
     'periph_hpl_demux' : '''#if configBSP430_HPL_%(INSTANCE)s - 0
   if (BSP430_PERIPH_%(INSTANCE)s == periph) {
     return BSP430_HPL_%(INSTANCE)s;

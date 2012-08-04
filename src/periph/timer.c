@@ -678,3 +678,55 @@ xBSP430halLookupTIMER (tBSP430periphHandle periph)
   /* !BSP430! end=periph_hal_demux */
   return NULL;
 }
+
+const char *
+xBSP430timerName (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_name_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_name_demux] */
+#if configBSP430_HPL_TA0 - 0
+  if (BSP430_PERIPH_TA0 == periph) {
+    return "TA0";
+  }
+#endif /* configBSP430_HPL_TA0 */
+
+#if configBSP430_HPL_TA1 - 0
+  if (BSP430_PERIPH_TA1 == periph) {
+    return "TA1";
+  }
+#endif /* configBSP430_HPL_TA1 */
+
+#if configBSP430_HPL_TA2 - 0
+  if (BSP430_PERIPH_TA2 == periph) {
+    return "TA2";
+  }
+#endif /* configBSP430_HPL_TA2 */
+
+#if configBSP430_HPL_TA3 - 0
+  if (BSP430_PERIPH_TA3 == periph) {
+    return "TA3";
+  }
+#endif /* configBSP430_HPL_TA3 */
+
+#if configBSP430_HPL_TB0 - 0
+  if (BSP430_PERIPH_TB0 == periph) {
+    return "TB0";
+  }
+#endif /* configBSP430_HPL_TB0 */
+
+#if configBSP430_HPL_TB1 - 0
+  if (BSP430_PERIPH_TB1 == periph) {
+    return "TB1";
+  }
+#endif /* configBSP430_HPL_TB1 */
+
+#if configBSP430_HPL_TB2 - 0
+  if (BSP430_PERIPH_TB2 == periph) {
+    return "TB2";
+  }
+#endif /* configBSP430_HPL_TB2 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_name_demux] */
+  /* !BSP430! end=periph_name_demux */
+  return NULL;
+}

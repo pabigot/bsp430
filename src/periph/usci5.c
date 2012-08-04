@@ -616,3 +616,61 @@ xBSP430halLookupUSCI5 (tBSP430periphHandle periph)
   /* !BSP430! end=periph_hal_demux */
   return NULL;
 }
+
+const char *
+xBSP430usci5Name (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_name_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_name_demux] */
+#if configBSP430_HPL_USCI5_A0 - 0
+  if (BSP430_PERIPH_USCI5_A0 == periph) {
+    return "USCI5_A0";
+  }
+#endif /* configBSP430_HPL_USCI5_A0 */
+
+#if configBSP430_HPL_USCI5_A1 - 0
+  if (BSP430_PERIPH_USCI5_A1 == periph) {
+    return "USCI5_A1";
+  }
+#endif /* configBSP430_HPL_USCI5_A1 */
+
+#if configBSP430_HPL_USCI5_A2 - 0
+  if (BSP430_PERIPH_USCI5_A2 == periph) {
+    return "USCI5_A2";
+  }
+#endif /* configBSP430_HPL_USCI5_A2 */
+
+#if configBSP430_HPL_USCI5_A3 - 0
+  if (BSP430_PERIPH_USCI5_A3 == periph) {
+    return "USCI5_A3";
+  }
+#endif /* configBSP430_HPL_USCI5_A3 */
+
+#if configBSP430_HPL_USCI5_B0 - 0
+  if (BSP430_PERIPH_USCI5_B0 == periph) {
+    return "USCI5_B0";
+  }
+#endif /* configBSP430_HPL_USCI5_B0 */
+
+#if configBSP430_HPL_USCI5_B1 - 0
+  if (BSP430_PERIPH_USCI5_B1 == periph) {
+    return "USCI5_B1";
+  }
+#endif /* configBSP430_HPL_USCI5_B1 */
+
+#if configBSP430_HPL_USCI5_B2 - 0
+  if (BSP430_PERIPH_USCI5_B2 == periph) {
+    return "USCI5_B2";
+  }
+#endif /* configBSP430_HPL_USCI5_B2 */
+
+#if configBSP430_HPL_USCI5_B3 - 0
+  if (BSP430_PERIPH_USCI5_B3 == periph) {
+    return "USCI5_B3";
+  }
+#endif /* configBSP430_HPL_USCI5_B3 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_name_demux] */
+  /* !BSP430! end=periph_name_demux */
+  return NULL;
+}

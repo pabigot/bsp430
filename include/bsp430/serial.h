@@ -512,8 +512,16 @@ int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  *
  * @return the HAL handle for the peripheral.  A null pointer is
  * returned if the handle does not correspond to a serial peripheral
- * for which both the HAL interface has been enabled.
+ * for which the HAL interface has been enabled.
  */
 hBSP430halSERIAL xBSP430halLookupSERIAL (tBSP430periphHandle periph);
+
+/** Get a human-readable identifier for the serial peripheral
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_USCI_A0.
+ *
+ * @return The short name of the port, e.g. "USCI_A0".  If the peripheral
+ * is not recognized as a serial device, a null pointer is returned. */
+const char * xBSP430serialName (tBSP430periphHandle periph);
 
 #endif /* BSP430_SERIAL_H */

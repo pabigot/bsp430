@@ -478,5 +478,13 @@ volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph);
  */
 hBSP430halSERIAL xBSP430halLookupEUSCIA (tBSP430periphHandle periph);
 
+/** Get a human-readable identifier for the EUSCI-A peripheral
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_EUSCI_A0.
+ *
+ * @return The short name of the port, e.g. "EUSCI_A0".  If the peripheral
+ * is not recognized as a EUSCI-A device, a null pointer is returned. */
+const char * xBSP430eusciaName (tBSP430periphHandle periph);
+
 #endif /* BSP430_PERIPH_EUSCIA_H */
 
