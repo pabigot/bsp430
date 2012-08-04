@@ -28,8 +28,6 @@
 #error No HH10D port specified
 #endif /* APP_HH10D_PORT_PERIPH_HANDLE */
 
-static int uptime_Hz;
-
 struct sHH10D {
   sBSP430halISRCallbackIndexed cb;
   volatile sBSP430hplTIMER * freq_timer;
@@ -87,6 +85,7 @@ static int bitToPin (int v)
 void main ()
 {
   sBSP430halPORT * hh10d_port = xBSP430portLookup(APP_HH10D_PORT_PERIPH_HANDLE);
+  int uptime_Hz;
 
   vBSP430platformInitialize_ni();
 
@@ -98,24 +97,23 @@ void main ()
   cprintf("\nApplication starting\n");
   BSP430_CORE_DELAY_CYCLES(10000);
 
-  cprintf("\n\nMonitoring HH10D on %s.%u using timer %s\n",
-          xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
-          bitToPin(APP_HH10D_PORT_PIN),
-          xBSP430timerName(APP_HH10D_TIMER_PERIPH_HANDLE) ?: "T?");
-
   if (NULL == hh10d_port) {
     cprintf("\nERROR: No port HAL; did you enable configBSP430_HAL_%s?\n", xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "whatever");
     return;
   }
 
-  uptime_Hz = ulBSP430uptimeResolution_Hz_ni();
-  cprintf("Uptime now %lu with resolution %u\n",
-          ulBSP430uptime_ni(), uptime_Hz);
-
   /* Initialize the state information used in the HH10D ISR */
   hh10d.freq_timer = xBSP430hplLookupTIMER(APP_HH10D_TIMER_PERIPH_HANDLE);
   hh10d.uptime_ccidx = APP_HH10D_UPTIME_CC_INDEX;
-  hh10d.sample_duration_utt = (unsigned int) ulBSP430uptimeResolution_Hz_ni();
+  uptime_Hz = ulBSP430uptimeResolution_Hz_ni();
+  hh10d.sample_duration_utt = uptime_Hz;
+
+  cprintf("Monitoring HH10D on %s.%u using timer %s\n",
+          xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
+          bitToPin(APP_HH10D_PORT_PIN),
+          xBSP430timerName(APP_HH10D_TIMER_PERIPH_HANDLE) ?: "T?");
+  cprintf("Uptime CC block %u at %u Hz sample duration %u ticks\n",
+          APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);
 
   /* Select input port mode for CCACLK timer clock signal, which is
    * where the HH10D's frequency signal should be found, and configure

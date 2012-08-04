@@ -26,7 +26,7 @@
 
 /* And we need a CC block on the uptime counter that we can use to
  * determine the frequency of the HH10D signal. */
-#define APP_HH10D_UPTIME_CC_INDEX 1
+#define APP_HH10D_UPTIME_CC_INDEX 0
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>
