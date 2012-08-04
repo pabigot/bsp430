@@ -341,6 +341,17 @@ typedef enum eBSP430clockSource {
    * systems. */
   eBSP430clockSRC_XT1CLK_OR_REFOCLK,
 
+  /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED_NI() is
+   * false, otherwise use the most precise available internal
+   * reference clock.
+   *
+   * Generally this will be equivalent to
+   * #eBSP430clockSRC_XT1CLK_OR_VLOCLK or
+   * #eBSP430clockSRC_XT1CLK_OR_REFOCLK, depending on what clock
+   * peripheral is available.  Use usBSP430clockACLK_Hz_ni() to
+   * determine what the actual (nominal) speed is. */
+  eBSP430clockSRC_XT1CLK_FALLBACK,
+
 } eBSP430clockSource;
 
 /** Configure MCLK to a desired frequency.

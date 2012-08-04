@@ -463,6 +463,7 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
       sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? SELA__VLOCLK : SELA__XT1CLK;
       break;
+    case eBSP430clockSRC_XT1CLK_FALLBACK:
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
       sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? SELA__REFOCLK : SELA__XT1CLK;
       break;
