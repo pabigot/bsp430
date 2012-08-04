@@ -1127,22 +1127,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA0, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c TA0, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_TA0 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_TA0_ISR, enabling #configBSP430_HAL_TA0
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_TA0
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_TA0_CC0_ISR
-#define configBSP430_HAL_TA0_CC0_ISR (configBSP430_HAL_TA0 - 0)
-#endif /* configBSP430_HAL_TA0_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_TA0 */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_TA0_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_TA0_CC0_ISR - 0) && ! (configBSP430_HAL_TA0 - 0)
 #warning configBSP430_HAL_TA0_CC0_ISR requested without configBSP430_HAL_TA0
@@ -1152,19 +1150,16 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_TA0 is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c TA0, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_TA0 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_TA0
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_TA0 */
 #ifndef configBSP430_HAL_TA0_ISR
 #define configBSP430_HAL_TA0_ISR (configBSP430_HAL_TA0 - 0)
 #endif /* configBSP430_HAL_TA0_ISR */
@@ -1177,22 +1172,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA1, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c TA1, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_TA1 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_TA1_ISR, enabling #configBSP430_HAL_TA1
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_TA1
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_TA1_CC0_ISR
-#define configBSP430_HAL_TA1_CC0_ISR (configBSP430_HAL_TA1 - 0)
-#endif /* configBSP430_HAL_TA1_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_TA1 */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_TA1_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_TA1_CC0_ISR - 0) && ! (configBSP430_HAL_TA1 - 0)
 #warning configBSP430_HAL_TA1_CC0_ISR requested without configBSP430_HAL_TA1
@@ -1202,19 +1195,16 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_TA1 is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c TA1, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_TA1 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_TA1
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_TA1 */
 #ifndef configBSP430_HAL_TA1_ISR
 #define configBSP430_HAL_TA1_ISR (configBSP430_HAL_TA1 - 0)
 #endif /* configBSP430_HAL_TA1_ISR */
@@ -1227,22 +1217,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA2, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c TA2, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_TA2 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_TA2_ISR, enabling #configBSP430_HAL_TA2
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_TA2
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_TA2_CC0_ISR
-#define configBSP430_HAL_TA2_CC0_ISR (configBSP430_HAL_TA2 - 0)
-#endif /* configBSP430_HAL_TA2_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_TA2 */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_TA2_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_TA2_CC0_ISR - 0) && ! (configBSP430_HAL_TA2 - 0)
 #warning configBSP430_HAL_TA2_CC0_ISR requested without configBSP430_HAL_TA2
@@ -1252,19 +1240,16 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_TA2 is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c TA2, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_TA2 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_TA2
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_TA2 */
 #ifndef configBSP430_HAL_TA2_ISR
 #define configBSP430_HAL_TA2_ISR (configBSP430_HAL_TA2 - 0)
 #endif /* configBSP430_HAL_TA2_ISR */
@@ -1277,22 +1262,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA3, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c TA3, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_TA3 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_TA3_ISR, enabling #configBSP430_HAL_TA3
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_TA3
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_TA3_CC0_ISR
-#define configBSP430_HAL_TA3_CC0_ISR (configBSP430_HAL_TA3 - 0)
-#endif /* configBSP430_HAL_TA3_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_TA3 */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_TA3_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_TA3_CC0_ISR - 0) && ! (configBSP430_HAL_TA3 - 0)
 #warning configBSP430_HAL_TA3_CC0_ISR requested without configBSP430_HAL_TA3
@@ -1302,19 +1285,16 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_TA3 is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c TA3, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_TA3 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_TA3
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_TA3 */
 #ifndef configBSP430_HAL_TA3_ISR
 #define configBSP430_HAL_TA3_ISR (configBSP430_HAL_TA3 - 0)
 #endif /* configBSP430_HAL_TA3_ISR */
@@ -1327,22 +1307,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB0, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c TB0, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_TB0 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_TB0_ISR, enabling #configBSP430_HAL_TB0
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_TB0
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_TB0_CC0_ISR
-#define configBSP430_HAL_TB0_CC0_ISR (configBSP430_HAL_TB0 - 0)
-#endif /* configBSP430_HAL_TB0_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_TB0 */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_TB0_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_TB0_CC0_ISR - 0) && ! (configBSP430_HAL_TB0 - 0)
 #warning configBSP430_HAL_TB0_CC0_ISR requested without configBSP430_HAL_TB0
@@ -1352,19 +1330,16 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_TB0 is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c TB0, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_TB0 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_TB0
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_TB0 */
 #ifndef configBSP430_HAL_TB0_ISR
 #define configBSP430_HAL_TB0_ISR (configBSP430_HAL_TB0 - 0)
 #endif /* configBSP430_HAL_TB0_ISR */
@@ -1377,22 +1352,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB1, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c TB1, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_TB1 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_TB1_ISR, enabling #configBSP430_HAL_TB1
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_TB1
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_TB1_CC0_ISR
-#define configBSP430_HAL_TB1_CC0_ISR (configBSP430_HAL_TB1 - 0)
-#endif /* configBSP430_HAL_TB1_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_TB1 */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_TB1_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_TB1_CC0_ISR - 0) && ! (configBSP430_HAL_TB1 - 0)
 #warning configBSP430_HAL_TB1_CC0_ISR requested without configBSP430_HAL_TB1
@@ -1402,19 +1375,16 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_TB1 is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c TB1, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_TB1 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_TB1
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_TB1 */
 #ifndef configBSP430_HAL_TB1_ISR
 #define configBSP430_HAL_TB1_ISR (configBSP430_HAL_TB1 - 0)
 #endif /* configBSP430_HAL_TB1_ISR */
@@ -1427,22 +1397,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB2, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c TB2, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_TB2 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_TB2_ISR, enabling #configBSP430_HAL_TB2
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_TB2
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_TB2_CC0_ISR
-#define configBSP430_HAL_TB2_CC0_ISR (configBSP430_HAL_TB2 - 0)
-#endif /* configBSP430_HAL_TB2_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_TB2 */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_TB2_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_TB2_CC0_ISR - 0) && ! (configBSP430_HAL_TB2 - 0)
 #warning configBSP430_HAL_TB2_CC0_ISR requested without configBSP430_HAL_TB2
@@ -1452,19 +1420,16 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_TB2 is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c TB2, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_TB2 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_TB2
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_TB2 */
 #ifndef configBSP430_HAL_TB2_ISR
 #define configBSP430_HAL_TB2_ISR (configBSP430_HAL_TB2 - 0)
 #endif /* configBSP430_HAL_TB2_ISR */

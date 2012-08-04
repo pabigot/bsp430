@@ -120,6 +120,28 @@
 #define BSP430_UPTIME_TIMER_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
+/** @def configBSP430_UPTIME_USE_DEFAULT_CC0_ISR
+ *
+ * The dedicated CC0 ISR associated with the uptime timer is an ideal
+ * place to support timeslicing for an RTOS.  Normally, when the HAL
+ * timer infrastructure used for uptime management is enabled, the CC0
+ * interrupt HAL ISR is left unmanaged by BSP430 (see
+ * #configBSP430_HAL_TA1_CC0_ISR).
+ *
+ * Set this flag to 1 if you want BSP430 to provide an implementation for
+ * the CC0 interrupt for the HAL timer that underlies the
+ * implementation, thereby allowing BSP430 to dispatch CC0 events to
+ * callbacks registered in #sBSP430halTIMER.
+ *
+ * Set this flag to 0 if you intend to implement your own CC0 ISR.
+ *
+ * @cppflag
+ * @nodefault
+ * @dependency #configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_UPTIME_USE_DEFAULT_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
+
 /** @def BSP430_UPTIME_SSEL
  *
  * Source selector for uptime clock.  This should be bits suitable for

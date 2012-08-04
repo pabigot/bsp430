@@ -191,22 +191,20 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s, but want to define your
- * own interrupt service routine for CC0 interrupts.
+ * Define to a true value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c %(INSTANCE)s, and want to BSP430 to provide
+ * an interrupt service routine that dispatches CC0 events.
  *
- * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * @note Unlike #configBSP430_HAL_%(INSTANCE)s_ISR, enabling #configBSP430_HAL_%(INSTANCE)s
+ * does not default to enable this feature.
  *
- * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
- * also be true.
  *
  * @cppflag
- * @defaulted */
-#ifndef configBSP430_HAL_%(INSTANCE)s_CC0_ISR
-#define configBSP430_HAL_%(INSTANCE)s_CC0_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
-#endif /* configBSP430_HAL_%(INSTANCE)s_CC0_ISR */
+ * @nodefault
+ * @dependency #configBSP430_HAL_%(INSTANCE)s */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 #if (configBSP430_HAL_%(INSTANCE)s_CC0_ISR - 0) && ! (configBSP430_HAL_%(INSTANCE)s - 0)
 #warning configBSP430_HAL_%(INSTANCE)s_CC0_ISR requested without configBSP430_HAL_%(INSTANCE)s
@@ -216,19 +214,16 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * Define to a false value in @c bsp430_config.h if you are using the
+ * This option defaults to true when #configBSP430_HAL_%(INSTANCE)s is
+ * enabled.
+ *
+ * Define it a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c %(INSTANCE)s, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
- * also be true.
- *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @dependency #configBSP430_HAL_%(INSTANCE)s */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */

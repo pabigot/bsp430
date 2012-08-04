@@ -121,9 +121,10 @@
 #if ((configBSP430_UPTIME - 0)                                  \
      && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))  \
          || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
-#ifndef configBSP430_HAL_TA0
 #define configBSP430_HAL_TA0 1
-#endif /* TA0 is default uptime resource */
+#if configBSP430_UPTIME_USE_DEFAULT_CC0_ISR - 0
+#define configBSP430_HAL_TA0_CC0_ISR 1
+#endif /* enable uptime CC0 ISR */
 #endif /* configBSP430_UPTIME */
 
 #endif /* BSP430_PLATFORM_BSP430_CONFIG_H */

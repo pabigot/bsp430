@@ -154,6 +154,9 @@ typedef int tBSP430periphHandle;
  * <li>A #sBSP430halTIMER instance specifies the CC1-CC6 and overflow ISR with this bit.
  * <li>A #sBSP430halSERIAL instance based on #sBSP430hplUSCI specifies the RX ISR with this bit.
  * </ul>
+ *
+ * @note As a general rule, when the HAL interface for a peripheral
+ * instance is enabled, the corresponding primary ISR is also enabled.
  */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR 0x80
 
@@ -168,6 +171,11 @@ typedef int tBSP430periphHandle;
  * <li>A #sBSP430halTIMER instance specifies the CC0 ISR with this bit.
  * <li>A #sBSP430halSERIAL instance based on #sBSP430hplUSCI specifies the TX ISR with this bit.
  * </ul>
+ *
+ * @note As a general rule the secondary ISR for a HAL interface
+ * is not implicitly enabled when the HAL interface is enabled.
+ * An exception is made for #sBSP430halSERIAL where the TX and RX
+ * ISRs are both enabled.
  */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2 0x40
 
