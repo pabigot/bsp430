@@ -199,7 +199,8 @@
  *
  * The peripheral handle for a timer that is capable of using ACLK as
  * a capture/compare input.  Preferably this would not be TA0.  The
- * intended use of this timer is to measure ACLK against SMCLK.
+ * intended use of this timer is to measure pulses of some fast clock
+ * (SMCLK or an external clock) against ACLK.
  *
  * See #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE if you intend
  * to override the platform default.
@@ -247,8 +248,10 @@
  * counters is returned.
  *
  * The expectation is that the events triggered by the input selection
- * are slow relative to the MCLK and timer sources.
- *
+ * are slow relative to the MCLK and timer sources.  If the timer is
+ * slower than the input, the use of the #SCS flag in the
+ * implementation will result in the function returning @a count.
+ * 
  * @note The function does not modify the timer-level configuration;
  * the timer source must be assigned and the timer started prior to
  * invoking this function.
@@ -278,10 +281,10 @@
  * unrecognized or stopped.  Otherwise the delta in the counter of the
  * timer over @a count captures. */
 unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
-    int ccidx,
-    unsigned int capture_mode,
-    unsigned int ccis,
-    unsigned int count);
+                                           int ccidx,
+                                           unsigned int capture_mode,
+                                           unsigned int ccis,
+                                           unsigned int count);
 
 /** Layout for Timer_A and Timer_B peripherals.
  */
