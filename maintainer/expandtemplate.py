@@ -445,8 +445,8 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HPL_%(CLK_PORT)s */''',
 
     'feature_startif' : '''#if ((configBSP430_%(MODULE)s_%(FEATURE)s - 0)                                    \\
-     && ((! defined(configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE))    \\
-         || (configBSP430_%(MODULE)s_USE_DEFAULT_%(FEATURE)s_RESOURCE - 0)))''',
+     && ((! defined(configBSP430_%(MODULE)s_%(FEATURE)s_USE_DEFAULT_RESOURCE))    \\
+         || (configBSP430_%(MODULE)s_%(FEATURE)s_USE_DEFAULT_RESOURCE - 0)))''',
 
     'feature_endif' : '''#endif /* configBSP430_%(MODULE)s_%(FEATURE)s && need default */''',
 

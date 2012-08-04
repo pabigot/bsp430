@@ -87,8 +87,8 @@
 /* !BSP430! insert=feature_startif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
-     && ((! defined(configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE))    \
-         || (configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE - 0)))
+     && ((! defined(configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE))    \
+         || (configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
 #if defined(__MSP430G2553__)

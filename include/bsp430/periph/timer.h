@@ -124,7 +124,7 @@
 #define configBSP430_TIMER_CCACLK 0
 #endif /* configBSP430_TIMER_CCACLK */
 
-/** @def configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE
+/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE
  *
  * Define to a true value to use the default (platform-specific)
  * CCACLK timer.  This is true by default if
@@ -149,9 +149,9 @@
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE
-#define configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE (configBSP430_TIMER_CCACLK - 0)
-#endif /* configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE */
+#ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE
+#define configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE (configBSP430_TIMER_CCACLK - 0)
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE */
 
 /** @def BSP430_TIMER_CCACLK
  *
@@ -210,7 +210,7 @@
  * intended use of this timer is to measure pulses of some fast clock
  * (SMCLK or an external clock) against ACLK.
  *
- * See #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE if you intend
+ * See #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE if you intend
  * to override the platform default.
  *
  * @dependency #BSP430_TIMER_CCACLK
@@ -248,7 +248,7 @@
  * The BSP430 port peripheral on which the external clock source for
  * BSP430_TIMER_CCACLK_PERIPH_HANDLE can be found.
  *
- * @note If #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE is true,
+ * @note If #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE is true,
  * the corresponding HAL interface will default to enabled. */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE include <bsp430/platform.h>
