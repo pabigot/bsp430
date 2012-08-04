@@ -75,12 +75,25 @@
 /* !BSP430! end=feature_startif */
 /* !BSP430! insert=feature_ccaclk_cfg subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_cfg] */
+#if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
+#if !defined(configBSP430_HAL_TB0)
+#define configBSP430_HAL_TB0 1
+#endif /* configBSP430_HAL_TB0 */
+#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
 #if !defined(configBSP430_HPL_TB0)
 #define configBSP430_HPL_TB0 1
 #endif /* configBSP430_HPL_TB0 */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
+
+#if configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL - 0
+#if !defined(configBSP430_HAL_PORT7)
+#define configBSP430_HAL_PORT7 1
+#endif /* configBSP430_HAL_PORT7 */
+#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
 #if !defined(configBSP430_HPL_PORT7)
 #define configBSP430_HPL_PORT7 1
 #endif /* configBSP430_HPL_PORT7 */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
 /* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_cfg] */
 /* !BSP430! end=feature_ccaclk_cfg */
 /* !BSP430! insert=feature_endif subst=module,feature */

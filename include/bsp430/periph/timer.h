@@ -153,6 +153,31 @@
 #define configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE (configBSP430_TIMER_CCACLK - 0)
 #endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE */
 
+/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL
+ *
+ * Define to a true value to automatically request the HAL support for
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE when the latter is defaulted.
+ * When false, only the HPL support for the peripheral is enabled.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL
+#define configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL 0
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
+
+/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL
+ *
+ * Define to a true value to automatically request the HAL support for
+ * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE when the latter is
+ * defaulted.  When false, only the HPL support for the peripheral is
+ * enabled.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL
+#define configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL 0
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
+
 /** @def BSP430_TIMER_CCACLK
  *
  * Defined to a true value if ACLK-triggered timer captures are

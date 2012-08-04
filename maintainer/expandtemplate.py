@@ -437,12 +437,25 @@ isr_%(INSTANCE)s (void)
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_%(CLK_PORT)s
 #define BSP430_TIMER_CCACLK_CLK_PORT_PIN %(CLK_PIN)s''',
 
-    'feature_ccaclk_cfg' : '''#if !defined(configBSP430_HPL_%(TIMER)s)
+    'feature_ccaclk_cfg' : '''#if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
+#if !defined(configBSP430_HAL_%(TIMER)s)
+#define configBSP430_HAL_%(TIMER)s 1
+#endif /* configBSP430_HAL_%(TIMER)s */
+#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
+#if !defined(configBSP430_HPL_%(TIMER)s)
 #define configBSP430_HPL_%(TIMER)s 1
 #endif /* configBSP430_HPL_%(TIMER)s */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
+
+#if configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL - 0
+#if !defined(configBSP430_HAL_%(CLK_PORT)s)
+#define configBSP430_HAL_%(CLK_PORT)s 1
+#endif /* configBSP430_HAL_%(CLK_PORT)s */
+#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
 #if !defined(configBSP430_HPL_%(CLK_PORT)s)
 #define configBSP430_HPL_%(CLK_PORT)s 1
-#endif /* configBSP430_HPL_%(CLK_PORT)s */''',
+#endif /* configBSP430_HPL_%(CLK_PORT)s */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */''',
 
     'feature_startif' : '''#if ((configBSP430_%(MODULE)s_%(FEATURE)s - 0)                                    \\
      && ((! defined(configBSP430_%(MODULE)s_%(FEATURE)s_USE_DEFAULT_RESOURCE))    \\

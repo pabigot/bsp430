@@ -81,12 +81,25 @@
 /* !BSP430! module=timer feature=ccaclk timer=TA0 is_ta0=1 cc_index=0 ccis=1 clk_port=PORT1 clk_pin=BIT0 */
 /* !BSP430! insert=feature_ccaclk_cfg subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_cfg] */
+#if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
+#if !defined(configBSP430_HAL_TA0)
+#define configBSP430_HAL_TA0 1
+#endif /* configBSP430_HAL_TA0 */
+#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
 #if !defined(configBSP430_HPL_TA0)
 #define configBSP430_HPL_TA0 1
 #endif /* configBSP430_HPL_TA0 */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
+
+#if configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL - 0
+#if !defined(configBSP430_HAL_PORT1)
+#define configBSP430_HAL_PORT1 1
+#endif /* configBSP430_HAL_PORT1 */
+#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
 #if !defined(configBSP430_HPL_PORT1)
 #define configBSP430_HPL_PORT1 1
 #endif /* configBSP430_HPL_PORT1 */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
 /* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_cfg] */
 /* !BSP430! end=feature_ccaclk_cfg */
 #endif /* MCU */
