@@ -48,6 +48,15 @@
 #endif /* MCU */
 #endif /* configBSP430_SERIAL_USE_USCI */
 
+/** Use the platform default for the uptime timer */
+#if ((configBSP430_UPTIME - 0)                                  \
+     && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))  \
+         || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
+#if defined(__MSP430G2553__)
+#define configBSP430_HAL_TA1 1
+#endif /* MCU */
+#endif /* configBSP430_UPTIME && need default */
+
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */

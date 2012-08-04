@@ -36,12 +36,15 @@
 #if BSP430_UPTIME - 0
 /* Inhibit definition if required components were not provided. */
 
+hBSP430halTIMER xBSP430uptimeTIMER_;
+
 void
 vBSP430uptimeStart_ni (void)
 {
-  BSP430_UPTIME_TIMER_HAL_HANDLE->hpl->ctl = 0;
-  vBSP430timerResetCounter_ni(BSP430_UPTIME_TIMER_HAL_HANDLE);
-  BSP430_UPTIME_TIMER_HAL_HANDLE->hpl->ctl =
+  xBSP430uptimeTIMER_ = xBSP430timerLookup(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
+  xBSP430uptimeTIMER_->hpl->ctl = 0;
+  vBSP430timerResetCounter_ni(xBSP430uptimeTIMER_);
+  xBSP430uptimeTIMER_->hpl->ctl =
     ((TASSEL0 | TASSEL1) & (BSP430_UPTIME_SSEL))
     | ((ID0 | ID1) & (BSP430_UPTIME_DIVIDING_SHIFT))
     | MC_2 | TACLR | TAIE;
@@ -50,13 +53,13 @@ vBSP430uptimeStart_ni (void)
 void
 vBSP430uptimeSuspend_ni (void)
 {
-  BSP430_UPTIME_TIMER_HAL_HANDLE->hpl->ctl &= ~(MC0 | MC1);
+  xBSP430uptimeTIMER_->hpl->ctl &= ~(MC0 | MC1);
 }
 
 void
 vBSP430uptimeResume_ni (void)
 {
-  BSP430_UPTIME_TIMER_HAL_HANDLE->hpl->ctl |= MC_2;
+  xBSP430uptimeTIMER_->hpl->ctl |= MC_2;
 }
 
 #endif /* BSP430_UPTIME */

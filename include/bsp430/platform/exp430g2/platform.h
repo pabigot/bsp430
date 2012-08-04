@@ -64,6 +64,17 @@
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
+/* What to use as the uptime timer.  If we're going to pick TA0 for
+   CCACLK, try to pick a different timer for uptime. */
+#if ((configBSP430_UPTIME - 0)                                  \
+     && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))  \
+         || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
+#if defined(__MSP430G2553__)
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA1
+#define BSP430_UPTIME 1
+#endif /* MCU */
+#endif /* configBSP430_UPTIME && need default */
+
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */

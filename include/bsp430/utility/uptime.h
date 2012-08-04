@@ -33,14 +33,13 @@
  * @brief Support for maintaining a system uptime counter.
  *
  * This module provides routines to initialize and query a long-term
- * clock, normally using #BSP430_HAL_TA0 sourced by an undivided
+ * clock, using a platform-selected timer sourced by an undivided
  * ACLK.  The feature is enabled by adding the following to your
  * bsp430_config.h:
  *
  * @code
 
 #define configBSP430_UPTIME 1
-#define configBSP430_HAL_TA0 1
 
  * @endcode
  *
@@ -48,8 +47,8 @@
  * after configuring the system clocks.  This is done for you in
  * #vBSP430platformInitialize_ni if #configBSP430_UPTIME is true.
  *
- * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to use
- * something other than #BSP430_HAL_TA0 as the uptime clock source.
+ * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to
+ * control the timer that will be used.
  *
  * @author Peter A. Bigot <bigotp@acm.org> @homepage
  * http://github.com/pabigot/freertos-mspgcc @date 2012 @copyright <a
@@ -77,8 +76,8 @@
 
 /** @def BSP430_UPTIME
  *
- * Defined to a true value if #BSP430_UPTIME_TIMER_HAL_HANDLE has been
- * provided, making the uptime infrastructure available.
+ * Defined to a true value if #BSP430_UPTIME_TIMER_PERIPH_HANDLE has
+ * been provided, making the uptime infrastructure available.
  *
  * @dependency #configBSP430_UPTIME
  * @platformdefault */
@@ -88,20 +87,15 @@
 
 /** @def configBSP430_UPTIME_USE_DEFAULT_RESOURCE
  *
- * In almost all cases, when #configBSP430_UPTIME is enabled
- * #BSP430_HAL_TA0 will be used as #BSP430_UPTIME_TIMER_HAL_HANDLE.
- * Correct functioning requires that #configBSP430_HAL_TA0 and
- * #configBSP430_HAL_TA0_ISR be set as well.  Although these are
- * enabled by default when #configBSP430_HAL_TA0 is enabled, it is
- * easy to forget this step.
+ * The "best" timer to use for uptime management is probably
+ * #BSP430_PERIPH_TA0, but if that time is the only one that can use
+ * ACLK as a source another might be preferable, so that
+ * #BSP430_TIMER_CCACLK can be used without conflicting with
+ * #BSP430_UPTIME.  Where possible, selections of compatible timers
+ * are made in the platform-specific headers.
  *
- * While it is not possible within the uptime header to correct a
- * misconfigured system, if the selected peripheral can be identified
- * by the C preprocessor it is possible to detect the misconfiguration
- * and emit a warning.  Setting this option to a false value will
- * inhibit that check, and must be done if
- * #BSP430_UPTIME_TIMER_HAL_HANDLE is changed from its default
- * value.
+ * If you want control over the timer used for uptime monitoring, set
+ * this to false.
  *
  * @cppflag
  * @defaulted */
@@ -109,41 +103,22 @@
 #define configBSP430_UPTIME_USE_DEFAULT_RESOURCE (configBSP430_UPTIME - 0)
 #endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
 
-/** @def BSP430_UPTIME_TIMER_HAL_HANDLE
+/** @def BSP430_UPTIME_TIMER_PERIPH_HANDLE
  *
- * Define to the handle of a HAL timer that can be used to maintain a
- * continuous system clock sourced from ACLK.
+ * Define to the peripheral identifier for a timer that can be used to
+ * maintain a continuous system clock sourced from ACLK.
  *
  * @warning If you set this, you must also set
  * #configBSP430_UPTIME_USE_DEFAULT_RESOURCE to be a false value.  You
- * must also ensure the corresponding peripheral
+ * must also ensure the corresponding peripheral HAL interface
  * (e.g. #configBSP430_HAL_TA1) and HAL interrupt that will count
- * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled, for example
- * by enabling #configBSP430_HAL_TA1, as the check for these
- * requirements cannot be enforced for non-default resources.
+ * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled.
  *
- * @defaulted */
-#ifdef BSP430_UPTIME_TIMER_HAL_HANDLE
-
-#if configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0
-#warning Override of BSP430_UPTIME_TIMER_HAL_HANDLE with true configBSP430_UPTIME_USE_DEFAULT_RESOURCE
-#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
-
-#else /* BSP430_UPTIME_TIMER_HAL_HANDLE */
-
-#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)
-#define BSP430_UPTIME_TIMER_HAL_HANDLE BSP430_HAL_TA0
-#if ! defined(BSP430_DOXYGEN)
-#if !(configBSP430_HAL_TA0 - 0)
-#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0 not enabled
-#endif /* configBSP430_HAL_TA0 */
-#if !(configBSP430_HAL_TA0_ISR - 0)
-#warning configBSP430_UPTIME_USE_DEFAULT_RESOURCE but configBSP430_HAL_TA0_ISR not enabled
-#endif /* configBSP430_HAL_TA0_ISR */
-#endif /* ! BSP430_DOXYGEN */
-
-#endif /* configBSP430_UPTIME */
-#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
+ * @defaulted
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_UPTIME_SSEL
  *
@@ -166,16 +141,24 @@
 #define BSP430_UPTIME_DIVIDING_SHIFT 0
 #endif /* BSP430_UPTIME_DIVIDING_SHIFT */
 
-/* If configBSP430_UPTIME was requested then mark the feature as
- * available or not based on whether somebody provided a timer HAL
- * handle for the facility's use. */
-#if configBSP430_UPTIME - 0
-#ifdef BSP430_UPTIME_TIMER_HAL_HANDLE
-#define BSP430_UPTIME 1
-#else /* BSP430_UPTIME_TIMER_HAL_HANDLE */
-#define BSP430_UPTIME 0
-#endif /* BSP430_UPTIME_TIMER_HAL_HANDLE */
-#endif /* configBSP430_UPTIME */
+/** @cond DOXYGEN_EXCLUDE */
+extern hBSP430halTIMER xBSP430uptimeTIMER_;
+/** @endcond */
+
+/** Get access to the timer controlling the uptime infrastructure.
+ *
+ * You might need this if you want to hook into its callbacks.
+ *
+ * Don't hook into the overflow callback, please.
+ */
+#if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
+static hBSP430halTIMER
+__inline__
+xBSP430uptimeTimer (void)
+{
+  return xBSP430uptimeTIMER_;
+}
+#endif /* DOXYGEN or function available */
 
 /** Return the uptime clock resolution
  *
@@ -187,7 +170,7 @@ static unsigned long
 __inline__
 ulBSP430uptimeResolution_Hz_ni (void)
 {
-  return ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_HAL_HANDLE);
+  return ulBSP430timerFrequency_Hz_ni(xBSP430uptimeTimer());
 }
 #endif /* DOXYGEN or function available */
 
@@ -197,7 +180,7 @@ static unsigned long
 __inline__
 ulBSP430uptime_ni (void)
 {
-  return ulBSP430timerCounter_ni(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
+  return ulBSP430timerCounter_ni(xBSP430uptimeTimer(), 0);
 }
 
 /** Return the system uptime in clock ticks. */
@@ -205,7 +188,7 @@ static unsigned long
 __inline__
 ulBSP430uptime (void)
 {
-  return ulBSP430timerCounter(BSP430_UPTIME_TIMER_HAL_HANDLE, 0);
+  return ulBSP430timerCounter(xBSP430uptimeTimer(), 0);
 }
 #endif /* BSP430_UPTIME */
 

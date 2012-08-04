@@ -347,6 +347,19 @@ void vBSP430platformSpinForJumper_ni (void);
 #endif /* BSP430_CONSOLE_SERIAL_HAL_HANDLE */
 #endif /* configBSP430_CONSOLE */
 
+/* If configBSP430_UPTIME was requested, then mark the feature as
+ * available or not based on whether the platform provided a timer for
+ * its use. */
+#if (configBSP430_UPTIME - 0) && !defined(BSP430_UPTIME)
+#if ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))      \
+     || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0))
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA0
+#define BSP430_UPTIME 1
+#else /* default uptime timer */
+#define BSP430_UPTIME 0
+#endif /* default uptime timer */
+#endif /* configBSP430_UPTIME */
+
 /** @def BSP430_PLATFORM_SPIN_FOR_JUMPER
  *
  * Define to indicate that the application or infrastructure supports
