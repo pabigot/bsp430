@@ -43,9 +43,9 @@ register_hh10d_ni (struct sHH10D * sp)
   /* Hook into the uptime infrastructure and have the HH10D callback
    * invoked once per second, starting as soon as interrupts are
    * enabled. */
-  sp->cb.next = BSP430_UPTIME_TIMER_HAL_HANDLE->cc_callback[sp->uptime_ccidx];
-  BSP430_UPTIME_TIMER_HAL_HANDLE->cc_callback[sp->uptime_ccidx] = &sp->cb;
-  BSP430_UPTIME_TIMER_HAL_HANDLE->hpl->cctl[sp->uptime_ccidx] = CCIFG | CCIE;
+  sp->cb.next = xBSP430uptimeTimer()->cc_callback[sp->uptime_ccidx];
+  xBSP430uptimeTimer()->cc_callback[sp->uptime_ccidx] = &sp->cb;
+  xBSP430uptimeTimer()->hpl->cctl[sp->uptime_ccidx] = CCIFG | CCIE;
 }
 
 static int
@@ -112,13 +112,16 @@ void main ()
           xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
           bitToPin(APP_HH10D_PORT_PIN),
           xBSP430timerName(APP_HH10D_TIMER_PERIPH_HANDLE) ?: "T?");
-  cprintf("Uptime CC block %u at %u Hz sample duration %u ticks\n",
+  cprintf("Uptime CC block %s.%u at %u Hz sample duration %u ticks\n",
+          xBSP430timerName(BSP430_UPTIME_TIMER_PERIPH_HANDLE),
           APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);
 
-  /* Select input port mode for CCACLK timer clock signal, which is
-   * where the HH10D's frequency signal should be found, and configure
-   * the assigned timer to count that input continuously. */
+  /* Select input peripheral function mode for CCACLK timer clock
+   * signal, which is where the HH10D's frequency signal should be
+   * found, and configure the assigned timer to count that input
+   * continuously. */
   BSP430_PORT_HAL_HPL_SEL(hh10d_port) |= APP_HH10D_PORT_PIN;
+  BSP430_PORT_HAL_HPL_DIR(hh10d_port) &= ~APP_HH10D_PORT_PIN;
   hh10d.freq_timer->ctl = TASSEL_0 | MC_2 | TACLR;
 
   /* Hook into the uptime infrastructure and have the HH10D callback
@@ -131,6 +134,6 @@ void main ()
 
   while (1) {
     __bis_status_register(LPM0_bits | GIE);
-    cprintf("Sample %u in %u uptime ticks\n", hh10d.last_period_count, hh10d.sample_duration_utt);
+    cprintf("%lu: Sample %u in %u uptime ticks\n", ulBSP430uptime_ni(), hh10d.last_period_count, hh10d.sample_duration_utt);
   }
 }
