@@ -24,37 +24,69 @@
 #error Uptime is not configured correctly
 #endif /* BSP430_UPTIME */
 /* Sanity check that we have the HH10D interface */
-#ifndef APP_HH10D_PORT_HPL
+#ifndef APP_HH10D_PORT_PERIPH_HANDLE
 #error No HH10D port specified
-#endif /* APP_HH10D_PORT_HPL */
+#endif /* APP_HH10D_PORT_PERIPH_HANDLE */
 
 static int uptime_Hz;
 
-volatile unsigned int hh10d_counter;
+struct sHH10D {
+  sBSP430halISRCallbackIndexed cb;
+  volatile sBSP430hplTIMER * freq_timer;
+  int uptime_ccidx;
+  unsigned int sample_duration_utt;
+  unsigned int last_capture;
+  unsigned int last_period_count;
+};
+
+static void
+register_hh10d_ni (struct sHH10D * sp)
+{
+  /* Hook into the uptime infrastructure and have the HH10D callback
+   * invoked once per second, starting as soon as interrupts are
+   * enabled. */
+  sp->cb.next = BSP430_UPTIME_TIMER_HAL_HANDLE->cc_callback[sp->uptime_ccidx];
+  BSP430_UPTIME_TIMER_HAL_HANDLE->cc_callback[sp->uptime_ccidx] = &sp->cb;
+  BSP430_UPTIME_TIMER_HAL_HANDLE->hpl->cctl[sp->uptime_ccidx] = CCIFG | CCIE;
+}
+
 static int
 hh10d_1Hz_isr (const struct sBSP430halISRCallbackIndexed *cb,
                void *context,
                int idx)
 {
+  volatile struct sHH10D * hh10d = (struct sHH10D *)cb;
+  unsigned int capture;
   hBSP430halTIMER timer = (hBSP430halTIMER)context;
   vBSP430ledSet(0, -1);
 
   /* Record the HH10D counter, schedule the next wakeup, then return
-   * waking the MCU but inhibiting further interrupts. */
-  hh10d_counter = APP_HH10D_TIMER_HPL->r;
-  timer->hpl->ccr[idx] += uptime_Hz;
+   * waking the MCU and inhibiting further interrupts when active. */
+  capture = hh10d->freq_timer->r;
+  hh10d->last_period_count = capture - hh10d->last_capture;
+  hh10d->last_capture = capture;
+  timer->hpl->ccr[idx] += hh10d->sample_duration_utt;
   return LPM4_bits | GIE;
 }
 
-static sBSP430halISRCallbackIndexed hh10d_isr_cb = {
-  .callback = hh10d_1Hz_isr
+static struct sHH10D hh10d = {
+  .cb = { .callback = hh10d_1Hz_isr },
 };
+
+static int bitToPin (int v)
+{
+  int pin = 0;
+  unsigned int bit = 1;
+  while (bit && !(v & bit)) {
+    ++pin;
+    bit <<= 1;
+  }
+  return bit ? pin : -1;
+}
 
 void main ()
 {
-  int puc_sr = __read_status_register();
-  unsigned int last_hh10d_counter;
-  volatile sBSP430hplTIMER * uptime_hpl = BSP430_UPTIME_TIMER_HAL_HANDLE->hpl;
+  sBSP430halPORT * hh10d_port = xBSP430halLookupPORT(APP_HH10D_PORT_PERIPH_HANDLE);
 
   vBSP430platformInitialize_ni();
 
@@ -63,33 +95,44 @@ void main ()
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 
   (void)xBSP430consoleInitialize();
-  cprintf("\nHere we go...puc %x now %x\n", puc_sr, __read_status_register());
+  cprintf("\nApplication starting\n");
+  BSP430_CORE_DELAY_CYCLES(10000);
+
+  cprintf("\n\nMonitoring HH10D on %s.%u using timer %s\n",
+          xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
+          bitToPin(APP_HH10D_PORT_PIN),
+          xBSP430timerName(APP_HH10D_TIMER_PERIPH_HANDLE) ?: "T?");
+
+  if (NULL == hh10d_port) {
+    cprintf("\nERROR: No port HAL; did you enable configBSP430_HAL_%s?\n", xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "whatever");
+    return;
+  }
 
   uptime_Hz = ulBSP430uptimeResolution_Hz_ni();
   cprintf("Uptime now %lu with resolution %u\n",
           ulBSP430uptime_ni(), uptime_Hz);
 
+  /* Initialize the state information used in the HH10D ISR */
+  hh10d.freq_timer = xBSP430hplLookupTIMER(APP_HH10D_TIMER_PERIPH_HANDLE);
+  hh10d.uptime_ccidx = APP_HH10D_UPTIME_CC_INDEX;
+  hh10d.sample_duration_utt = (unsigned int) ulBSP430uptimeResolution_Hz_ni();
+
   /* Select input port mode for CCACLK timer clock signal, which is
    * where the HH10D's frequency signal should be found, and configure
    * the assigned timer to count that input continuously. */
-  APP_HH10D_PORT_HPL->sel |= APP_HH10D_PORT_PIN;
-  APP_HH10D_TIMER_HPL->ctl = TASSEL_0 | MC_2 | TACLR;
+  BSP430_PORT_HAL_HPL_SEL(hh10d_port) |= APP_HH10D_PORT_PIN;
+  hh10d.freq_timer->ctl = TASSEL_0 | MC_2 | TACLR;
 
   /* Hook into the uptime infrastructure and have the HH10D callback
    * invoked once per second, starting one second from now */
-  hh10d_isr_cb.next = BSP430_UPTIME_TIMER_HAL_HANDLE->cc_callback[APP_HH10D_UPTIME_CC_INDEX];
-  BSP430_UPTIME_TIMER_HAL_HANDLE->cc_callback[APP_HH10D_UPTIME_CC_INDEX] = &hh10d_isr_cb;
-  uptime_hpl->ccr[APP_HH10D_UPTIME_CC_INDEX] = uptime_hpl->r + uptime_Hz;
-  uptime_hpl->cctl[APP_HH10D_UPTIME_CC_INDEX] = CCIE;
+  register_hh10d_ni(&hh10d);
 
   /* Go to low power mode with interrupts enabled */
   __bis_status_register(LPM1_bits | GIE);
-  last_hh10d_counter = hh10d_counter;
-  cprintf("Initial %u\n", last_hh10d_counter);
+  cprintf("Initial %u\n", hh10d.last_capture);
 
   while (1) {
     __bis_status_register(LPM0_bits | GIE);
-    cprintf("%u\n", hh10d_counter - last_hh10d_counter);
-    last_hh10d_counter = hh10d_counter;
+    cprintf("Sample %u in %u uptime ticks\n", hh10d.last_period_count, hh10d.sample_duration_utt);
   }
 }

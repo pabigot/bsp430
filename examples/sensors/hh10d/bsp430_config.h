@@ -2,10 +2,12 @@
  * results. */
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
 
+/* Then pick the best available source for ACLK, allowing for an
+ * absent crystal */
+#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_FALLBACK
+
 /* Application does output: support spin-for-jumper */
-#ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 #define configBSP430_CONSOLE 1
 #define configBSP430_UPTIME 1
@@ -14,20 +16,15 @@
  * BSP430_TIMER_CCACLK does. */
 #define configBSP430_TIMER_CCACLK 1
 
-/* We need to know the port and pin for the clock source for
- */
-#if __MSP430FR5739__ - 0
-/* Pick P1.1 == TA1CLK */
-#define APP_HH10D_PORT_HPL BSP430_HPL_PORT1
-#define configBSP430_HPL_PORT1 1
-#define APP_HH10D_PORT_PIN BIT1
-#define APP_HH10D_TIMER_HPL BSP430_HPL_TA1
-#define configBSP430_HPL_TA1 1
-#else
-#define APP_HH10D_PORT_HPL xBSP430hplLookupPORT(BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE)
+/* We need to know the port and pin to attach the HH10D to, which is
+ * the clock source for the timer we're going to use. */
+#define APP_HH10D_PORT_PERIPH_HANDLE BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
 #define APP_HH10D_PORT_PIN BSP430_TIMER_CCACLK_CLK_PORT_PIN
-#define APP_HH10D_TIMER_HPL xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE)
-#endif /* msp430fr5739 */
+#define APP_HH10D_TIMER_PERIPH_HANDLE BSP430_TIMER_CCACLK_PERIPH_HANDLE
+#define configBSP430_HAL_PORT1 1
+
+/* And we need a CC block on the uptime counter that we can use to
+ * determine the frequency of the HH10D signal. */
 #define APP_HH10D_UPTIME_CC_INDEX 1
 
 /* Get platform defaults */
