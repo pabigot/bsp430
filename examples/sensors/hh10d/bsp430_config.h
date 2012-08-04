@@ -25,8 +25,9 @@
 #define APP_HH10D_TIMER_PERIPH_HANDLE BSP430_TIMER_CCACLK_PERIPH_HANDLE
 
 /* And we need a CC block on the uptime counter that we can use to
- * determine the frequency of the HH10D signal. */
-#define APP_HH10D_UPTIME_CC_INDEX 0
+ * determine the frequency of the HH10D signal.  Don't use CC0; we
+ * didn't ask for configBSP430_UPTIME_USE_DEFAULT_CC0_ISR. */
+#define APP_HH10D_UPTIME_CC_INDEX 1
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>
