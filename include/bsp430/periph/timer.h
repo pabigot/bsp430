@@ -251,7 +251,7 @@
  * are slow relative to the MCLK and timer sources.  If the timer is
  * slower than the input, the use of the #SCS flag in the
  * implementation will result in the function returning @a count.
- * 
+ *
  * @note The function does not modify the timer-level configuration;
  * the timer source must be assigned and the timer started prior to
  * invoking this function.
@@ -281,10 +281,10 @@
  * unrecognized or stopped.  Otherwise the delta in the counter of the
  * timer over @a count captures. */
 unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
-                                           int ccidx,
-                                           unsigned int capture_mode,
-                                           unsigned int ccis,
-                                           unsigned int count);
+    int ccidx,
+    unsigned int capture_mode,
+    unsigned int ccis,
+    unsigned int count);
 
 /** Layout for Timer_A and Timer_B peripherals.
  */
@@ -425,10 +425,6 @@ typedef struct sBSP430halTIMER {
   /** The callback chain to invoke when an overflow interrupt is
    * received. */
   const struct sBSP430halISRCallbackVoid * overflow_callback;
-
-  /** The callback chain to invoke when a CC0 interrupt is
-   * received. */
-  const struct sBSP430halISRCallbackVoid * cc0_callback;
 
   /** The callback chain to invoke when a CCx interrupt is received.
    *
