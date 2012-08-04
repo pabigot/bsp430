@@ -169,6 +169,10 @@
 #define CM_2                (0x8000) /**< Capture mode: 1 - neg. edge */
 #define CM_3                (0xC000) /**< Capture mode: 1 - both edges */
 
+#define SCS                 (0x0800)  /**< Capture sychronize */
+#define SCCI                (0x0400)  /**< Latched capture signal (read) */
+#define CAP                 (0x0100)  /**< Capture mode: 1 /Compare mode : 0 */
+
 #define SELA_0              (0x0000)   /**< ACLK Source Select 0 (XT1CLK) */
 #define SELA_1              (0x0100)   /**< ACLK Source Select 1 (VLOCLK) */
 #define SELA_2              (0x0200)   /**< ACLK Source Select 2 (REFOCLK?)*/

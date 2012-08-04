@@ -81,6 +81,9 @@
 #if !defined(configBSP430_HPL_TA0)
 #define configBSP430_HPL_TA0 1
 #endif /* configBSP430_HPL_TA0 */
+#if !defined(configBSP430_HPL_PORT1)
+#define configBSP430_HPL_PORT1 1
+#endif /* configBSP430_HPL_PORT1 */
 #endif /* MCU */
 /* !BSP430! insert=feature_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */

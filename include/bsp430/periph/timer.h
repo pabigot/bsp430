@@ -128,7 +128,10 @@
  *
  * Define to a true value to use the default (platform-specific)
  * CCACLK timer.  This is true by default if
- * #configBSP430_TIMER_CCACLK is true.
+ * #configBSP430_TIMER_CCACLK is true.  If it remains true, the HPL
+ * resources corresponding to #BSP430_TIMER_CCACLK_PERIPH_HANDLE and
+ * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE will also be enabled
+ * by default.
  *
  * If you want to override the default, define this to a false value
  * and provide definitions for:
@@ -137,7 +140,12 @@
  * <li>#BSP430_TIMER_CCACLK_IS_TA0
  * <li>#BSP430_TIMER_CCACLK_CC_INDEX
  * <li>#BSP430_TIMER_CCACLK_CCIS
+ * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
+ * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PIN BIT1
  * </ul>
+ *
+ * Also be sure you enable the HAL or HPL resources for the timer and
+ * the port.
  *
  * @cppflag
  * @defaulted */
@@ -233,6 +241,26 @@
  * @platformdefault  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CCIS include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
+ *
+ * The BSP430 port peripheral on which the external clock source for
+ * BSP430_TIMER_CCACLK_PERIPH_HANDLE can be found.
+ *
+ * @note If #configBSP430_TIMER_USE_DEFAULT_CCACLK_RESOURCE is true,
+ * the corresponding HAL interface will default to enabled. */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_TIMER_CCACLK_CLK_PORT_PIN
+ *
+ * The pin on BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE to which the
+ * external clock source for BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
+ * provided. */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CLK_PORT_PIN include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** Count number of timer transitions over a span of ACLK ticks

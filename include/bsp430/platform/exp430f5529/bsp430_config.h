@@ -76,6 +76,9 @@
 #if !defined(configBSP430_HPL_TB0)
 #define configBSP430_HPL_TB0 1
 #endif /* configBSP430_HPL_TB0 */
+#if !defined(configBSP430_HPL_PORT7)
+#define configBSP430_HPL_PORT7 1
+#endif /* configBSP430_HPL_PORT7 */
 /* !BSP430! insert=feature_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
