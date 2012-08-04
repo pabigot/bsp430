@@ -514,6 +514,13 @@ typedef sBSP430hplPORT_8 sBSP430hplPORT;
 /* !BSP430! end=hal_variant_hpl_macro */
 /* !BSP430! instance=PORT1,PORT2,PORT3,PORT4,PORT5,PORT6,PORT7,PORT8,PORT9,PORT10,PORT11 */
 
+/** Get the port HPL peripheral handle.
+ *
+ * This bypasses any structural interpretation of the HPL pointer,
+ * converting it to the underlying #tBSP430periphHandle value
+ * directly. */
+#define BSP430_PORT_HAL_GET_PERIPH_HANDLE(_hal) xBSP430periphFromHPL((_hal)->hpl.any)
+
 /** Structure holding hardware abstraction layer state for digital I/O
  * ports. */
 typedef struct sBSP430halPORT {
@@ -529,7 +536,7 @@ typedef struct sBSP430halPORT {
    * instance to determine which pointer is appropriate. */
   union {
     /** Access to the HPL pointer ignoring its underlying type */
-    void * any;
+    volatile void * any;
     /** Access to the HPL pointer as a pre-5xx 8-bit interrupt-enabled port */
     volatile sBSP430hplPORT_IE_8 * port_ie_8;
     /** Access to the HPL pointer as a pre-5xx 8-bit port not supporting interrupts */
@@ -1836,5 +1843,31 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
+
+/** Convert from a bit value to a pin value.
+ *
+ * Mostly used for informational messages, but also for ISR IFG
+ * queries.  The reverse operation is simply a left shift.
+ *
+ * @param bitx The value of a bit within a byte-addressed port @return
+ * the index of the first bit that is set within bitx; 0 for a bitx
+ * value of 0x01, 3 for a bitx value of 0x08, etc.  The return value
+ * is -1 if no bit is set in the low byte of @a bitx.
+ *
+ * @warning This function is explicitly intended for support of 8-bit
+ * ports, and cannot be used to detect the position of the lowest set
+ * bit in a wider integer. */
+static int
+__inline__
+iBSP430portBitPosition (unsigned int bitx)
+{
+  unsigned char bit = 0x01;
+  int rv = 0;
+  while (bit && !(bit & bitx)) {
+    bit <<= 1;
+    ++rv;
+  }
+  return bit ? rv : -1;
+}
 
 #endif /* BSP430_PERIPH_PORT_H */
