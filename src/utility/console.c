@@ -203,6 +203,13 @@ hBSP430consoleInitialize (void)
     hal = hBSP430serialOpenUART(hal, 0, BSP430_CONSOLE_BAUD_RATE);
   }
   if (NULL != hal) {
+#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+    BSP430_CORE_INTERRUPT_STATE_T istate;
+    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+    BSP430_CORE_DISABLE_INTERRUPT();
+    vBSP430platformSpinForJumper_ni();
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
     console_uart = hal;
   }
   return hal;

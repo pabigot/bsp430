@@ -89,10 +89,6 @@ void main ()
 
   vBSP430platformInitialize_ni();
 
-#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-  vBSP430platformSpinForJumper_ni();
-#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
-
   (void)hBSP430consoleInitialize();
   cprintf("\nApplication starting\n");
   BSP430_CORE_DELAY_CYCLES(10000);

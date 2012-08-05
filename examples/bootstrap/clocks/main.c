@@ -51,10 +51,6 @@ void main ()
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
 
-#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-  vBSP430platformSpinForJumper_ni();
-#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
-
   /* If we support a console, dump out a bunch of configuration
    * information. */
 #if BSP430_CONSOLE - 0

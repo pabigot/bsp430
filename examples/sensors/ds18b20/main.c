@@ -53,10 +53,6 @@ void main ()
 
   vBSP430platformInitialize_ni();
 
-#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-  vBSP430platformSpinForJumper_ni();
-#endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
-
   (void)hBSP430consoleInitialize();
   cprintf("\nHere we go...\n");
 
