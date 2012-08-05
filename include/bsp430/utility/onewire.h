@@ -229,6 +229,6 @@ int iBSP430onewireReadTemperature_ni (const sBSP430onewireBus * bus,
  *
  * 9 * t / 8 == (9/5) * 10 * (t / 16) without incidental overflow
  */
-#define BSP430_ONEWIRE_xCel_TO_ddegF(_xcel) (320 + ((9 * t_c) / 8))
+#define BSP430_ONEWIRE_xCel_TO_ddegF(xcel_) (320 + ((9 * xcel_) / 8))
 
 #endif /* BSP430_UTILITY_ONEWIRE_H */
