@@ -1,0 +1,7 @@
+PLATFORM ?= rf2500t
+MODULES=$(MODULES_PLATFORM)
+MODULES += $(MODULES_UPTIME)
+MODULES += $(MODULES_CONSOLE)
+MODULES += periph/port
+SRC=main.c
+include $(BSP430_ROOT)/examples/Makefile.common
