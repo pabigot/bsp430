@@ -35,7 +35,7 @@
 
 void main ()
 {
-  hBSP430halSERIAL console_handle;
+  int rv;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
@@ -47,12 +47,12 @@ void main ()
   vBSP430ledSet(0, 1);
 
   /* Configure the console to use the default UART handle */
-  console_handle = hBSP430consoleInitialize();
+  rv = iBSP430consoleInitialize();
 
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);
 
-  if (NULL == console_handle) {
+  if (0 > rv) {
     /* Failed to configure the UART HAL */
     vBSP430ledSet(0, 0);
   } else {

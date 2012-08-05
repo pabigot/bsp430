@@ -33,18 +33,22 @@
  *
  * @brief A generic console print capability.
  *
- * #cprintf is like @c printf.  It disables interrupts while operating
- * to ensure that interleaved messages do not occur.  It is "safe" for
- * call from within interrupt handlers.
+ * cprintf() is like @c printf.  It disables interrupts while
+ * operating to ensure that interleaved messages do not occur.  It is
+ * "safe" for call from within interrupt handlers. cputs() is provided
+ * where the complexity of printf is not required but atomic output is
+ * desired.
  *
- * A companion #cputs is provided where the complexity of printf is
- * not required but atomic output is desired.
+ * Other routines permit display of plain text (cputtext_ni()), single
+ * characters (cputchar_ni()), and integers (cputi_ni(), cputu_ni(),
+ * cputl_ni(), cputul_ni()) without incurring the stack overhead of
+ * printf, which can be quite high (on the order of 100 bytes if
+ * 64-bit integer support is included).  These assume that interrupts
+ * are disabled when called.
  *
- * Other routines permit display of plain text, single characters, and
- * integers without incurring the stack overhead of printf, which can
- * be quite high (on the order of 100 bytes if 64-bit integer support
- * is included).  These assume that interrupts are disabled when
- * called.
+ * All these routines are safe to call even if the console was not
+ * initialized, or its initialization failed, or it is temporarily
+ * disabled: in that situation, they simply return immediately.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -338,13 +342,22 @@ int cputul_ni (unsigned long n, int radix);
  * true, it will invoke vBSP430platformSpinForJumper_ni().  Once the
  * console is configured and any required delays completed it will
  * return, allowing use of cprintf() and related functions.
- * 
+ *
+ * If this function is invoked multiple times, the existing
+ * configuration is unchanged.
+ *
+ * @return 0 if the console was successfully initialized, -1 if an
+ * error occurred. */
+int iBSP430consoleInitialize (void);
+
+/** Return a reference to the console device.
+ *
  * @return the serial HAL instance used for console interaction.  A
- * null pointer is returned if the console could not be
+ * null pointer is returned if the console has not been successfully
  * initialized. */
+hBSP430halSERIAL hBSP430console (void);
 
-hBSP430halSERIAL hBSP430consoleInitialize (void);
-
-int xBSP430consoleConfigure (int enablep);
+/* Enable or disable the console. */
+int xBSP430consoleSetEnabled_ni (int enablep);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

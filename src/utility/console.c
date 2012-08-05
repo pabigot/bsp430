@@ -49,7 +49,7 @@
 
 /* Inhibit definition if required components were not provided. */
 
-static hBSP430halSERIAL console_uart;
+static hBSP430halSERIAL console_hal_;
 
 /* Optimized version used inline.  Assumes that the uart is not
  * null. */
@@ -66,14 +66,14 @@ emit_char2_ni (int c, hBSP430halSERIAL uart)
   return iBSP430serialTransmitByte_ni(uart, c);
 }
 
-/* Base version used by cprintf.  This has to re-read the console_uart
+/* Base version used by cprintf.  This has to re-read the console_hal_
  * variable each time. */
 static
 __inline__
 int
 emit_char_ni (int c)
 {
-  hBSP430halSERIAL uart = console_uart;
+  hBSP430halSERIAL uart = console_hal_;
   if (NULL == uart) {
     return -1;
   }
@@ -113,7 +113,7 @@ int
 cputs (const char * s)
 {
   int rv = 0;
-  hBSP430halSERIAL uart = console_uart;
+  hBSP430halSERIAL uart = console_hal_;
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
   if (! uart) {
@@ -130,7 +130,7 @@ cputs (const char * s)
 int
 cputtext_ni (const char * s)
 {
-  return emit_text_ni(s, console_uart);
+  return emit_text_ni(s, console_hal_);
 }
 
 #if configBSP430_CONSOLE_LIBC_HAS_ITOA - 0
@@ -138,7 +138,7 @@ int
 cputi_ni (int n, int radix)
 {
   char buffer[sizeof("-32767")];
-  return emit_text_ni(itoa(n, buffer, radix), console_uart);
+  return emit_text_ni(itoa(n, buffer, radix), console_hal_);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_ITOA */
 
@@ -147,7 +147,7 @@ int
 cputu_ni (unsigned int n, int radix)
 {
   char buffer[sizeof("65535")];
-  return emit_text_ni(utoa(n, buffer, radix), console_uart);
+  return emit_text_ni(utoa(n, buffer, radix), console_hal_);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_UTOA */
 
@@ -156,7 +156,7 @@ int
 cputl_ni (long n, int radix)
 {
   char buffer[sizeof("-2147483647")];
-  return emit_text_ni(ltoa(n, buffer, radix), console_uart);
+  return emit_text_ni(ltoa(n, buffer, radix), console_hal_);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_LTOA */
 
@@ -165,7 +165,7 @@ int
 cputul_ni (unsigned long n, int radix)
 {
   char buffer[sizeof("4294967295")];
-  return emit_text_ni(ultoa(n, buffer, radix), console_uart);
+  return emit_text_ni(ultoa(n, buffer, radix), console_hal_);
 }
 #endif /* configBSP430_CONSOLE_LIBC_HAS_ULTOA */
 
@@ -181,7 +181,7 @@ cprintf (const char *fmt, ...)
   int rv;
 
   /* Fail fast if printing is disabled */
-  if (! console_uart) {
+  if (! console_hal_) {
     return 0;
   }
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
@@ -195,14 +195,26 @@ cprintf (const char *fmt, ...)
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
 hBSP430halSERIAL
-hBSP430consoleInitialize (void)
+hBSP430console (void)
 {
-  hBSP430halSERIAL hal = hBSP430serialLookup(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE);
+  return console_hal_;
+}
 
-  if (NULL != hal) {
-    hal = hBSP430serialOpenUART(hal, 0, BSP430_CONSOLE_BAUD_RATE);
+int
+iBSP430consoleInitialize (void)
+{
+  if (console_hal_) {
+    return 0;
   }
-  if (NULL != hal) {
+  do {
+    hBSP430halSERIAL hal = hBSP430serialLookup(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE);
+    if (NULL == hal) {
+      break;
+    }
+    hal = hBSP430serialOpenUART(hal, 0, BSP430_CONSOLE_BAUD_RATE);
+    if (NULL == hal) {
+      break;
+    }
 #if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
     BSP430_CORE_INTERRUPT_STATE_T istate;
     BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
@@ -210,9 +222,10 @@ hBSP430consoleInitialize (void)
     vBSP430platformSpinForJumper_ni();
     BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
-    console_uart = hal;
-  }
-  return hal;
+    console_hal_ = hal;
+    return 0;
+  } while (0);
+  return -1;
 }
 
 #endif /* BSP430_CONSOLE */

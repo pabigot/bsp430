@@ -53,7 +53,7 @@ void main ()
 
   vBSP430platformInitialize_ni();
 
-  (void)hBSP430consoleInitialize();
+  (void)iBSP430consoleInitialize();
   cprintf("\nHere we go...\n");
 
   uptime_ticks_per_sec = ulBSP430uptimeResolution_Hz_ni();

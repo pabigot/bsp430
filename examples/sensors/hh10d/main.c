@@ -89,7 +89,7 @@ void main ()
 
   vBSP430platformInitialize_ni();
 
-  (void)hBSP430consoleInitialize();
+  (void)iBSP430consoleInitialize();
   cprintf("\nApplication starting\n");
   BSP430_CORE_DELAY_CYCLES(10000);
 

@@ -96,7 +96,7 @@ const struct sBSP430halISRCallbackVoid tx_entry = {
 
 void main ()
 {
-  hBSP430halSERIAL tty0 = NULL;
+  hBSP430halSERIAL tty0;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
@@ -105,8 +105,9 @@ void main ()
   vBSP430ledInitialize_ni();
 
   /* Configure the echo using the standard console handle */
-  tty0 = hBSP430consoleInitialize();
-  if (! tty0) {
+  (void)iBSP430consoleInitialize();
+  tty0 = hBSP430console();
+  if (NULL == tty0) {
     return;
   }
 
