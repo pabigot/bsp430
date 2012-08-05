@@ -570,7 +570,7 @@ volatile sBSP430hplUSCI * xBSP430hplLookupUSCI (tBSP430periphHandle periph);
  * returned if the handle does not correspond to a timer for which the
  * HAL interface has been enabled (e.g., with #configBSP430_HAL_USCI_A0).
  */
-hBSP430halSERIAL xBSP430usciLookup (tBSP430periphHandle periph);
+hBSP430halSERIAL hBSP430usciLookup (tBSP430periphHandle periph);
 
 /** Get a human-readable identifier for the USCI peripheral
  *

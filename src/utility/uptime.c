@@ -41,7 +41,7 @@ hBSP430halTIMER xBSP430uptimeTIMER_;
 void
 vBSP430uptimeStart_ni (void)
 {
-  xBSP430uptimeTIMER_ = xBSP430timerLookup(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
+  xBSP430uptimeTIMER_ = hBSP430timerLookup(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
   xBSP430uptimeTIMER_->hpl->ctl = 0;
   vBSP430timerResetCounter_ni(xBSP430uptimeTIMER_);
   xBSP430uptimeTIMER_->hpl->ctl =

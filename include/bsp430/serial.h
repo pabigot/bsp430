@@ -514,7 +514,7 @@ int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * returned if the handle does not correspond to a serial peripheral
  * for which the HAL interface has been enabled.
  */
-hBSP430halSERIAL xBSP430serialLookup (tBSP430periphHandle periph);
+hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph);
 
 /** Get a human-readable identifier for the serial peripheral
  *

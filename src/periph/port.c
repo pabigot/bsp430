@@ -820,7 +820,7 @@ xBSP430hplLookupPORT (tBSP430periphHandle periph)
 }
 
 hBSP430halPORT
-xBSP430portLookup (tBSP430periphHandle periph)
+hBSP430portLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
