@@ -84,6 +84,36 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     pxsel = &P10SEL;
   }
 #endif
+#if configBSP430_HPL_USCI5_B0 - 0
+  else if (BSP430_PERIPH_USCI5_B0 == device) {
+    bits = BIT1 | BIT2 | BIT3;
+    pxsel = &P3SEL;
+  }
+#endif
+#if configBSP430_HPL_USCI5_B1 - 0
+  else if (BSP430_PERIPH_USCI5_B1 == device) {
+    if (enablep) {
+      P3SEL |= BIT6 | BIT7;
+      P5SEL |= BIT4;
+    } else {
+      P3SEL &= ~(BIT6 | BIT7);
+      P5SEL &= ~BIT4;
+    }
+    return 0;
+  }
+#endif
+#if configBSP430_HPL_USCI5_B2 - 0
+  else if (BSP430_PERIPH_USCI5_B2 == device) {
+    bits = BIT1 | BIT2 | BIT3;
+    pxsel = &P9SEL;
+  }
+#endif
+#if configBSP430_HPL_USCI5_B3 - 0
+  else if (BSP430_PERIPH_USCI5_B3 == device) {
+    bits = BIT1 | BIT2 | BIT3;
+    pxsel = &P10SEL;
+  }
+#endif
   else {
     return -1;
   }

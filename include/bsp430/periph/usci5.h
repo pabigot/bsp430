@@ -946,13 +946,13 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /* !BSP430! end=hal_isr_decl */
 
 /** USCI5-specific implementation of hBSP430serialOpenUART() */
-hBSP430halSERIAL xBSP430usci5OpenUART (hBSP430halSERIAL hal,
+hBSP430halSERIAL hBSP430usci5OpenUART (hBSP430halSERIAL hal,
                                        unsigned char ctl0_byte,
                                        unsigned char ctl1_byte,
                                        unsigned long baud);
 
 /** USCI5-specific implementation of hBSP430serialOpenSPI() */
-hBSP430halSERIAL xBSP430usci5OpenSPI (hBSP430halSERIAL hal,
+hBSP430halSERIAL hBSP430usci5OpenSPI (hBSP430halSERIAL hal,
                                       unsigned char ctl0_byte,
                                       unsigned char ctl1_byte,
                                       unsigned int prescaler);
@@ -979,6 +979,13 @@ int iBSP430usci5TransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, 
 
 /** USCI5-specific implementation of iBSP430serialTransmitASCIIZ_ni() */
 int iBSP430usci5TransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
+
+/** USCI5-specific implementation of iBSP430serialSynchronousTransmitReceive_ni() */
+int iBSP430usci5SynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
+                                               const uint8_t * tx_data,
+                                               size_t tx_len,
+                                               size_t rx_len,
+                                               uint8_t * rx_data);
 
 /** Get the HPL handle for a specific USCI5 instance.
  *
