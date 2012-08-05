@@ -424,37 +424,37 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
 
-/** eUSCI(A)-specific implementation of xBSP430serialOpenUART() */
+/** eUSCI(A)-specific implementation of hBSP430serialOpenUART() */
 hBSP430halSERIAL xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
                                         unsigned int control_word,
                                         unsigned long baud);
 
-/** eUSCI(A)-specific implementation of xBSP430serialOpenSPI() */
+/** eUSCI(A)-specific implementation of hBSP430serialOpenSPI() */
 hBSP430halSERIAL xBSP430eusciaOpenSPI (hBSP430halSERIAL hal,
                                        unsigned int control_word,
                                        unsigned int prescaler);
 
-/** eUSCI(A)-specific implementation of xBSP430serialConfigureCallbacks() */
+/** eUSCI(A)-specific implementation of iBSP430serialConfigureCallbacks() */
 int iBSP430eusciaConfigureCallbacks (hBSP430halSERIAL device,
                                      const struct sBSP430halISRCallbackVoid * rx_callback,
                                      const struct sBSP430halISRCallbackVoid * tx_callback);
 
-/** eUSCI(A)-specific implementation of xBSP430serialClose() */
+/** eUSCI(A)-specific implementation of iBSP430serialClose() */
 int iBSP430eusciaClose (hBSP430halSERIAL xUSCI);
 
-/** eUSCI(A)-specific implementation of xBSP430serialWakeupTransmit_ni() */
+/** eUSCI(A)-specific implementation of vBSP430serialWakeupTransmit_ni() */
 void vBSP430eusciaWakeupTransmit_ni (hBSP430halSERIAL device);
 
-/** eUSCI(A)-specific implementation of xBSP430serialFlush_ni() */
+/** eUSCI(A)-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430eusciaFlush_ni (hBSP430halSERIAL device);
 
-/** eUSCI(A)-specific implementation of xBSP430serialTransmitByte_ni() */
+/** eUSCI(A)-specific implementation of iBSP430serialTransmitByte_ni() */
 int iBSP430eusciaTransmitByte_ni (hBSP430halSERIAL device, int c);
 
-/** eUSCI(A)-specific implementation of xBSP430serialTransmitData_ni() */
+/** eUSCI(A)-specific implementation of iBSP430serialTransmitData_ni() */
 int iBSP430eusciaTransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** eUSCI(A)-specific implementation of xBSP430serialPutASCIIZ_ni() */
+/** eUSCI(A)-specific implementation of iBSP430serialTransmitASCIIZ_ni() */
 int iBSP430eusciaTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 /** Get the HPL handle for a specific EUSCIA instance.

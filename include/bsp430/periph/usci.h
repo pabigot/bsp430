@@ -518,37 +518,37 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 /* !BSP430! end=hal_usci_isr_decl */
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
-/** USCI-specific implementation of xBSP430serialOpenUART() */
+/** USCI-specific implementation of hBSP430serialOpenUART() */
 hBSP430halSERIAL xBSP430usciOpenUART (hBSP430halSERIAL hal,
                                       unsigned int control_word,
                                       unsigned long baud);
 
-/** USCI-specific implementation of xBSP430serialOpenSPI() */
+/** USCI-specific implementation of hBSP430serialOpenSPI() */
 hBSP430halSERIAL xBSP430usciOpenSPI (hBSP430halSERIAL hal,
                                      unsigned int control_word,
                                      unsigned int prescaler);
 
-/** USCI-specific implementation of xBSP430serialConfigureCallbacks() */
+/** USCI-specific implementation of iBSP430serialConfigureCallbacks() */
 int iBSP430usciConfigureCallbacks (hBSP430halSERIAL device,
                                    const struct sBSP430halISRCallbackVoid * rx_callback,
                                    const struct sBSP430halISRCallbackVoid * tx_callback);
 
-/** USCI-specific implementation of xBSP430serialClose() */
+/** USCI-specific implementation of iBSP430serialClose() */
 int iBSP430usciClose (hBSP430halSERIAL xUSCI);
 
-/** USCI-specific implementation of xBSP430serialWakeupTransmit_ni() */
+/** USCI-specific implementation of vBSP430serialWakeupTransmit_ni() */
 void vBSP430usciWakeupTransmit_ni (hBSP430halSERIAL device);
 
-/** USCI-specific implementation of xBSP430serialFlush_ni() */
+/** USCI-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430usciFlush_ni (hBSP430halSERIAL device);
 
-/** USCI-specific implementation of xBSP430serialTransmitByte_ni() */
+/** USCI-specific implementation of iBSP430serialTransmitByte_ni() */
 int iBSP430usciTransmitByte_ni (hBSP430halSERIAL device, int c);
 
-/** USCI-specific implementation of xBSP430serialTransmitData_ni() */
+/** USCI-specific implementation of iBSP430serialTransmitData_ni() */
 int iBSP430usciTransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** USCI-specific implementation of xBSP430serialPutASCIIZ_ni() */
+/** USCI-specific implementation of iBSP430serialTransmitASCIIZ_ni() */
 int iBSP430usciTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 /** Get the HPL handle for a specific USCI instance.

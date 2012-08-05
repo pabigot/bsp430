@@ -200,7 +200,7 @@ hBSP430consoleInitialize (void)
   hBSP430halSERIAL hal = hBSP430serialLookup(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE);
 
   if (NULL != hal) {
-    hal = xBSP430serialOpenUART(hal, 0, BSP430_CONSOLE_BAUD_RATE);
+    hal = hBSP430serialOpenUART(hal, 0, BSP430_CONSOLE_BAUD_RATE);
   }
   if (NULL != hal) {
     console_uart = hal;

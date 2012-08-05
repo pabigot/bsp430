@@ -310,14 +310,14 @@ struct sBSP430serialDispatch {
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-hBSP430halSERIAL xBSP430serialOpenUART (hBSP430halSERIAL hal,
+hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
                                         unsigned int control_word,
                                         unsigned long baud)
 {
   return hal->dispatch->openUART(hal, control_word, baud);
 }
 
-hBSP430halSERIAL xBSP430serialOpenSPI (hBSP430halSERIAL hal,
+hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
                                        unsigned int control_word,
                                        unsigned int prescaler);
 
@@ -376,7 +376,7 @@ int iBSP430serialConfigureCallbacks (hBSP430halSERIAL hal,
  * queues that were provided through #iBSP430usciConfigureQueues.
  *
  * @param hal a serial HAL handle previously obtained through
- * xBSP430serialOpenUART() or xBSP430serialOpenSPI()
+ * hBSP430serialOpenUART() or hBSP430serialOpenSPI()
  *
  * @return 0 if the close occurred without error.
  *

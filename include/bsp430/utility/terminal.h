@@ -194,10 +194,10 @@ typedef struct BSP430_HAL_TERMINAL_CONFIGURATION {
    * connection */
   tBSP430periphHandle uart;
 
-  /** Parameter to #xBSP430serialOpen */
+  /** Parameter to #hBSP430serialOpen */
   unsigned int control_word;
 
-  /** Parameter to #xBSP430serialOpen */
+  /** Parameter to #hBSP430serialOpen */
   unsigned long baud;
 
   /** Priority of the terminal task.  Processing of commands

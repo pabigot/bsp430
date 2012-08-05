@@ -945,37 +945,37 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
 
-/** USCI5-specific implementation of xBSP430serialOpenUART() */
+/** USCI5-specific implementation of hBSP430serialOpenUART() */
 hBSP430halSERIAL xBSP430usci5OpenUART (hBSP430halSERIAL hal,
                                        unsigned int control_word,
                                        unsigned long baud);
 
-/** USCI5-specific implementation of xBSP430serialOpenSPI() */
+/** USCI5-specific implementation of hBSP430serialOpenSPI() */
 hBSP430halSERIAL xBSP430usci5OpenSPI (hBSP430halSERIAL hal,
                                       unsigned int control_word,
                                       unsigned int prescaler);
 
-/** USCI5-specific implementation of xBSP430serialConfigureCallbacks() */
+/** USCI5-specific implementation of iBSP430serialConfigureCallbacks() */
 int iBSP430usci5ConfigureCallbacks (hBSP430halSERIAL device,
                                     const struct sBSP430halISRCallbackVoid * rx_callback,
                                     const struct sBSP430halISRCallbackVoid * tx_callback);
 
-/** USCI5-specific implementation of xBSP430serialClose() */
+/** USCI5-specific implementation of iBSP430serialClose() */
 int iBSP430usci5Close (hBSP430halSERIAL xUSCI);
 
-/** USCI5-specific implementation of xBSP430serialWakeupTransmit_ni() */
+/** USCI5-specific implementation of vBSP430serialWakeupTransmit_ni() */
 void vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL device);
 
-/** USCI5-specific implementation of xBSP430serialFlush_ni() */
+/** USCI5-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430usci5Flush_ni (hBSP430halSERIAL device);
 
-/** USCI5-specific implementation of xBSP430serialTransmitByte_ni() */
+/** USCI5-specific implementation of iBSP430serialTransmitByte_ni() */
 int iBSP430usci5TransmitByte_ni (hBSP430halSERIAL device, int c);
 
-/** USCI5-specific implementation of xBSP430serialTransmitData_ni() */
+/** USCI5-specific implementation of iBSP430serialTransmitData_ni() */
 int iBSP430usci5TransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** USCI5-specific implementation of xBSP430serialPutASCIIZ_ni() */
+/** USCI5-specific implementation of iBSP430serialTransmitASCIIZ_ni() */
 int iBSP430usci5TransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 /** Get the HPL handle for a specific USCI5 instance.

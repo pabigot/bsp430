@@ -463,7 +463,7 @@ xBSP430TerminalCreate (const xBSP430TerminalConfiguration * configp)
       goto failed;
     }
   }
-  terminal->hsuart = xBSP430serialOpen(configp->uart, configp->control_word, configp->baud);
+  terminal->hsuart = hBSP430serialOpen(configp->uart, configp->control_word, configp->baud);
   if (! terminal->hsuart) {
     goto failed;
   }
