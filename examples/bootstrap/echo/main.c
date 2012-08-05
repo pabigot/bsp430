@@ -109,7 +109,7 @@ void main ()
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 
   /* Configure the echo using the standard console handle */
-  tty0 = xBSP430consoleInitialize();
+  tty0 = hBSP430consoleInitialize();
   if (! tty0) {
     return;
   }

@@ -74,7 +74,7 @@
 
 /** @def BSP430_CONSOLE
  *
- * Defined to a true value if #BSP430_CONSOLE_SERIAL_HAL_HANDLE has
+ * Defined to a true value if #BSP430_CONSOLE_SERIAL_PERIPH_HANDLE has
  * been provided, making the console infrastructure available.
  *
  * @dependency #configBSP430_CONSOLE
@@ -93,8 +93,7 @@
  * If you want to override the default, define this to a false value
  * and provide definitions for:
  * <ul>
- * <li>#BSP430_CONSOLE_SERIAL_HAL_HANDLE
- * <li>#BSP430_CONSOLE_BAUD_RATE (optional)
+ * <li>#BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
  * </ul>
  *
  * You are also responsible for requesting the inclusion of the
@@ -107,11 +106,12 @@
 #define configBSP430_CONSOLE_USE_DEFAULT_RESOURCE (configBSP430_CONSOLE - 0)
 #endif /* configBSP430_CONSOLE_USE_DEFAULT_RESOURCE */
 
-/** @def BSP430_CONSOLE_SERIAL_HAL_HANDLE
+/** @def BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
  *
- * The HAL handle that should be used by platform-agnostic programs to
- * create the console.  A default is provided based on available
- * serial peripherals.
+ * The peripheral handle that should be used by platform-agnostic
+ * programs to create the console, for example #BSP430_PERIPH_UART_A0.
+ * A default is provided based on the platform or available serial
+ * peripherals.
  *
  * If you override this, be sure to set
  * #configBSP430_CONSOLE_USE_DEFAULT_RESOURCE to false and to
@@ -121,7 +121,7 @@
  * @dependency #BSP430_CONSOLE
  * @platformdefault */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_CONSOLE_SERIAL_HAL_HANDLE include <bsp430/platform.h>
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_CONSOLE_BAUD_RATE
@@ -330,7 +330,20 @@ int cputl_ni (long n, int radix);
  * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_ULTOA */
 int cputul_ni (unsigned long n, int radix);
 
-hBSP430halSERIAL xBSP430consoleInitialize (void);
+/** Initialize and return the console serial HAL instance.
+ *
+ * This configures the platform-specified serial HAL instance
+ * identified by #BSP430_CONSOLE_SERIAL_PERIPH_HANDLE as specified by
+ * #BSP430_CONSOLE_BAUD_RATE.  If #BSP430_PLATFORM_SPIN_FOR_JUMPER is
+ * true, it will invoke vBSP430platformSpinForJumper_ni().  Once the
+ * console is configured and any required delays completed it will
+ * return, allowing use of cprintf() and related functions.
+ * 
+ * @return the serial HAL instance used for console interaction.  A
+ * null pointer is returned if the console could not be
+ * initialized. */
+
+hBSP430halSERIAL hBSP430consoleInitialize (void);
 
 int xBSP430consoleConfigure (int enablep);
 

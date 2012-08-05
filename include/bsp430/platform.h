@@ -338,13 +338,13 @@ void vBSP430platformSpinForJumper_ni (void);
 
 /* If configBSP430_CONSOLE was requested, then mark the feature as
  * available or not based on whether the platform provided a serial
- * HAL handle for the console's use. */
+ * peripheral handle for the console's use. */
 #if configBSP430_CONSOLE - 0
-#ifdef BSP430_CONSOLE_SERIAL_HAL_HANDLE
+#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
 #define BSP430_CONSOLE 1
-#else /* BSP430_CONSOLE_SERIAL_HAL_HANDLE */
+#else /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
 #define BSP430_CONSOLE 0
-#endif /* BSP430_CONSOLE_SERIAL_HAL_HANDLE */
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
 #endif /* configBSP430_CONSOLE */
 
 /* If configBSP430_UPTIME was requested, then mark the feature as

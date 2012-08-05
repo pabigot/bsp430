@@ -57,7 +57,7 @@ void main ()
   vBSP430platformSpinForJumper_ni();
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-  (void)xBSP430consoleInitialize();
+  (void)hBSP430consoleInitialize();
   cprintf("\nHere we go...\n");
 
   uptime_ticks_per_sec = ulBSP430uptimeResolution_Hz_ni();

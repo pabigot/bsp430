@@ -51,7 +51,7 @@ void main ()
   vBSP430ledSet(0, 1);
 
   /* Configure the console to use the default UART handle */
-  console_handle = xBSP430consoleInitialize();
+  console_handle = hBSP430consoleInitialize();
 
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);

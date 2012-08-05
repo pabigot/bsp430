@@ -58,7 +58,7 @@ void main ()
   /* If we support a console, dump out a bunch of configuration
    * information. */
 #if BSP430_CONSOLE - 0
-  (void)xBSP430consoleInitialize();
+  (void)hBSP430consoleInitialize();
   cputtext_ni("\nSystem running\n");
   cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1: ");
   cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1, 10);

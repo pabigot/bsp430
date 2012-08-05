@@ -195,11 +195,13 @@ cprintf (const char *fmt, ...)
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
 hBSP430halSERIAL
-xBSP430consoleInitialize (void)
+hBSP430consoleInitialize (void)
 {
-  hBSP430halSERIAL hal;
+  hBSP430halSERIAL hal = hBSP430serialLookup(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE);
 
-  hal = xBSP430serialOpenUART(BSP430_CONSOLE_SERIAL_HAL_HANDLE, 0, BSP430_CONSOLE_BAUD_RATE);
+  if (NULL != hal) {
+    hal = xBSP430serialOpenUART(hal, 0, BSP430_CONSOLE_BAUD_RATE);
+  }
   if (NULL != hal) {
     console_uart = hal;
   }
