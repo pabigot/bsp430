@@ -36,10 +36,6 @@
 /* !BSP430! periph=usci */
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
-/** Convert from a raw peripheral handle to the corresponding USCI
- * device handle. */
-hBSP430halSERIAL xBSP430usciPeriphToHal (tBSP430periphHandle periph);
-
 #define SERIAL_HAL_HPL(_hal) BSP430_SERIAL_HAL_GET_HPL_USCI(_hal)
 #define SERIAL_HAL_HPLAUX(_hal) BSP430_SERIAL_HAL_GET_HPLAUX_USCI(_hal)
 
@@ -55,6 +51,14 @@ hBSP430halSERIAL xBSP430usciPeriphToHal (tBSP430periphHandle periph);
     }                                                   \
     SERIAL_HAL_HPL(_hal)->txbuf = _c;                   \
   } while (0)
+
+#define RAW_RECEIVE_HAL_NI(_hal, _c) do {              \
+    while (! (SERIAL_HAL_HPLAUX(_hal)->rx_bit & *SERIAL_HAL_HPLAUX(_hal)->ifgp)) {	\
+      ;                                                 \
+    }                                                   \
+    _c = SERIAL_HAL_HPL(_hal)->rxbuf;                   \
+  } while (0)
+
 
 #define FLUSH_HAL_NI(_hal) do {                 \
     while (SERIAL_HAL_HPL(_hal)->stat & UCBUSY) {       \
@@ -77,7 +81,7 @@ struct sBSP430usciHPLAux {
 };
 
 hBSP430halSERIAL
-xBSP430usciOpenUART (hBSP430halSERIAL hal,
+hBSP430usciOpenUART (hBSP430halSERIAL hal,
                      unsigned char ctl0_byte,
                      unsigned char ctl1_byte,
                      unsigned long baud)
@@ -122,6 +126,55 @@ xBSP430usciOpenUART (hBSP430halSERIAL hal,
     SERIAL_HAL_HPL(hal)->br0 = br % 256;
     SERIAL_HAL_HPL(hal)->br1 = br / 256;
     SERIAL_HAL_HPL(hal)->mctl = (0 * UCBRF0) | (brs * UCBRS0);
+
+    /* Mark the hal active */
+    hal->num_rx = hal->num_tx = 0;
+
+    /* Release the USCI and enable the interrupts.  Interrupts are
+     * disabled and cleared when UCSWRST is set. */
+    SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
+    if (0 != hal->rx_callback) {
+      *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
+    }
+  }
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
+  return hal;
+}
+
+hBSP430halSERIAL
+hBSP430usciOpenSPI (hBSP430halSERIAL hal,
+                    unsigned char ctl0_byte,
+                    unsigned char ctl1_byte,
+                    unsigned int prescaler)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+
+  /* Reject invalid mode */
+  if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
+    hal = NULL;
+  }
+  /* Reject invalid prescaler */
+  if (0 == prescaler) {
+    hal = NULL;
+  }
+  /* Reject if the pins can't be configured */
+  if ((NULL != hal)
+      && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
+    hal = NULL;
+  }
+
+  if (NULL != hal) {
+    /* SPI is synchronous; hold USCI in reset during configuration */
+    ctl0_byte |= UCSYNC;
+    ctl1_byte |= UCSWRST;
+    SERIAL_HAL_HPL(hal)->ctl1 = ctl1_byte;
+    SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;    
+    SERIAL_HAL_HPL(hal)->br0 = prescaler % 256;
+    SERIAL_HAL_HPL(hal)->br1 = prescaler / 256;
 
     /* Mark the hal active */
     hal->num_rx = hal->num_tx = 0;
@@ -233,16 +286,39 @@ iBSP430usciTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
   return str - in_string;
 }
 
+int
+iBSP430usciSynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
+                                          const uint8_t * tx_data,
+                                          size_t tx_len,
+                                          size_t rx_len,
+                                          uint8_t * rx_data)
+{
+  size_t transaction_length = tx_len + rx_len;
+  size_t i = 0;
+  
+  if (hal->tx_callback) {
+    return -1;
+  }
+  while (i < transaction_length) {
+    RAW_TRANSMIT_HAL_NI(hal, (i < tx_len) ? tx_data[i] : i);
+    RAW_RECEIVE_HAL_NI(hal, *rx_data);
+    ++rx_data;
+    ++i;
+  }
+  return i;
+}
+
 static struct sBSP430serialDispatch dispatch_ = {
-  .openUART = xBSP430usciOpenUART,
-  //  .openSPI = xBSP430usciOpenSPI,
+  .openUART = hBSP430usciOpenUART,
+  .openSPI = hBSP430usciOpenSPI,
   .configureCallbacks = iBSP430usciConfigureCallbacks,
   .close = iBSP430usciClose,
   .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,
   .flush_ni = vBSP430usciFlush_ni,
   .transmitByte_ni = iBSP430usciTransmitByte_ni,
   .transmitData_ni = iBSP430usciTransmitData_ni,
-  .transmitASCIIZ_ni = iBSP430usciTransmitASCIIZ_ni
+  .transmitASCIIZ_ni = iBSP430usciTransmitASCIIZ_ni,
+  .synchronousTransmitReceive_ni = iBSP430usciSynchronousTransmitReceive_ni,
 };
 
 #if configBSP430_HAL_USCI_A0 - 0

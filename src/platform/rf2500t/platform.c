@@ -47,6 +47,8 @@ int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
   unsigned int bits;
+  int rv = -1;
+  volatile unsigned char * pxsel = NULL;
 
   /* This platform does not support a crystal */
   if (0) {
@@ -54,29 +56,30 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT0 | BIT1;
-    if (enablep) {
-      P2SEL |= bits;
-    } else {
-      P2SEL &= ~bits;
-    }
-    P2DIR |= bits;
-    return 0;
+    pxsel = &P2SEL;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI_A0 - 0
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT4 | BIT5;
-    if (enablep) {
-      P3SEL |= bits;
-    } else {
-      P3SEL &= ~bits;
-    }
-    return 0;
+    pxsel = &P3SEL;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
-  (void)bits;
-
-  return -1;
+#if configBSP430_HPL_USCI_B0 - 0
+  else if (BSP430_PERIPH_USCI_B0 == device) {
+    bits = BIT1 | BIT2 | BIT3;
+    pxsel = &P3SEL;
+  }
+#endif /* configBSP430_HPL_USCI_B0 */
+  if (NULL != pxsel) {
+    if (enablep) {
+      *pxsel |= bits;
+    } else {
+      *pxsel &= ~bits;
+    }
+    rv = 0;
+  }
+  return rv;
 }
 
 void vBSP430platformInitialize_ni (void)

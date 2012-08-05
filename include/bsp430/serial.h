@@ -267,6 +267,7 @@ struct sBSP430serialDispatch {
                            const uint8_t * data,
                            size_t len);
   int (* transmitASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
+  int (* synchronousTransmitReceive_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
 };
 /** @endcond */
 
@@ -324,10 +325,58 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
   return hal->dispatch->openUART(hal, ctl0_byte, ctl1_byte, baud);
 }
 
+/** Request and configure a serial device in SPI mode.
+ *
+ * If callbacks had been associated with this device using
+ * #iBSP430serialConfigureCallbacks(), behavior with respect to
+ * interrupts is as if those callbacks were associated during this
+ * call.
+ *
+ * @warning When the underlying implementation is an EUSCI device (as
+ * on FR5xx chips), the header defines used to construct the value @a
+ * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
+ * upper byte of the ctlw0 word that comprises @a ctl0 and @a ctl1 on
+ * these MCUs, so on those devices you must use the @c _H suffix to
+ * select the high-byte version of these constants or divide your
+ * configured value by 256 to place it in the low byte of the
+ * argument.
+ *
+ * @param periph The peripheral device identifier for the USCI device
+ * that is being requested. E.g., #BSP430_PERIPH_USCI_A0.
+ *
+ * @param ctl0_byte The configuration to be written to the device's
+ * ctl0 byte.  For SPI mode, potential values specified in the
+ * <msp430.h> header include #UCCKPH, #UCCKPL, #UCMSB, #UC7BIT,
+ * #UCMST, and #UCMODE_0 or #UCMODE_1 or #UCMODE_2 (but <b>see the
+ * warning above</b>).  The UCSYNC field is cleared before being
+ * written.  Selection of #UCMODE_3 (I2C mode) will result in this
+ * function returning an error.
+ *
+ * @param ctl1_byte The configuration to be written to the device's
+ * ctl1 byte.  For SPI mode, potential values specified in the
+ * <msp430.h> header are only configuration of the clock: #UCSSEL_0,
+ * #UCSSEL_1, #UCSSEL_2, #UCSSEL_3.  The #UCSWRST field is controlled
+ * by the function.
+ *
+ * @param prescaler The value by which the clock selected in @a
+ * ctl1_byte is divided to produce the SPI clock.  A value of zero
+ * will result in this function returning an error.
+ *
+ * @return @a A peripheral-specific HAL handle if the allocation and
+ * configuration is successful, and a null handle if something went
+ * wrong (e.g., absence of the requested @a periph, an invalid mode in
+ * @a ctl0_byte or a zero-valued @a prescaler).
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static __inline__
 hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
                                        unsigned char ctl0_byte,
                                        unsigned char ctl1_byte,
-                                       unsigned int prescaler);
+                                       unsigned int prescaler)
+{
+  return hal->dispatch->openSPI(hal, ctl0_byte, ctl1_byte, prescaler);
+}
 
 /** Assign callbacks for transmission and reception.
  *
@@ -503,6 +552,45 @@ int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   return hal->dispatch->transmitASCIIZ_ni(hal, str);
 }
+
+/** Transmit and receive using synchronous serial (SPI or I2C)
+ *
+ * This routine transmits @a tx_len octets from @a tx_data, storing
+ * the octets received in response into @a rx_data.  It then transmits
+ * @a rx_len dummy bytes, appending the resulting response into @a
+ * rx_data.
+ *
+ * @param hal the serial device over which the data is transmitted and
+ * received
+ *
+ * @param tx_data the data to be transmitted (generally, a command).
+ * The pointer may be null only if @a tx_len is zero.
+ *
+ * @param tx_len the number of bytes to transmit as the command.  The
+ * value may be zero if this call is reading additional data resulting
+ * from a previous command.
+ *
+ * @param rx_len the number of additional bytes expected in response,
+ * exclusive of the synchronous responses to bytes transmitted from @a
+ * tx_data.
+ *
+ * @param rx_data where to store the responses received during the
+ * transmit and receive phases.  The space available must be at least
+ * @a tx_len + @a rx_len.
+ *
+ * @return the total number of bytes stored in @a rx_data, or -1 if an
+ * error occcured.
+ */
+static __inline__
+int iBSP430serialSynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
+                                                const uint8_t * tx_data,
+                                                size_t tx_len,
+                                                size_t rx_len,
+                                                uint8_t * rx_data)
+{
+  return hal->dispatch->synchronousTransmitReceive_ni(hal, tx_data, tx_len, rx_len, rx_data);
+}
+
 
 #if configBSP430_SERIAL_USE_USCI - 0
 #include <bsp430/periph/usci.h>

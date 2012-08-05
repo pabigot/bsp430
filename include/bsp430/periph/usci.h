@@ -519,13 +519,13 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
 /** USCI-specific implementation of hBSP430serialOpenUART() */
-hBSP430halSERIAL xBSP430usciOpenUART (hBSP430halSERIAL hal,
+hBSP430halSERIAL hBSP430usciOpenUART (hBSP430halSERIAL hal,
                                       unsigned char ctl0_byte,
                                       unsigned char ctl1_byte,
                                       unsigned long baud);
 
 /** USCI-specific implementation of hBSP430serialOpenSPI() */
-hBSP430halSERIAL xBSP430usciOpenSPI (hBSP430halSERIAL hal,
+hBSP430halSERIAL hBSP430usciOpenSPI (hBSP430halSERIAL hal,
                                      unsigned char ctl0_byte,
                                      unsigned char ctl1_byte,
                                      unsigned int prescaler);
@@ -552,6 +552,13 @@ int iBSP430usciTransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, s
 
 /** USCI-specific implementation of iBSP430serialTransmitASCIIZ_ni() */
 int iBSP430usciTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
+
+/** USCI-specific implementation of iBSP430serialSynchronousTransmitReceive_ni() */
+int iBSP430usciSynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
+                                              const uint8_t * tx_data,
+                                              size_t tx_len,
+                                              size_t rx_len,
+                                              uint8_t * rx_data);
 
 /** Get the HPL handle for a specific USCI instance.
  *
