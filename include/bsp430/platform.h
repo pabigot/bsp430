@@ -463,7 +463,7 @@ void vBSP430platformSpinForJumper_ni (void);
  * Also consider #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 since 5xx/6xx
  * family MCUs do not automatically configure the peripheral pins to
  * enable XIN/XOUT to function even if the crystal is present.
- * 
+ *
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_ACLKSRC
 #define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_FALLBACK

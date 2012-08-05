@@ -30,11 +30,11 @@ const struct sBSP430onewireBus ds18b20 = {
   .port = APP_DS18B20_PORT_HAL,
   .bit = APP_DS18B20_BIT,
   .use_ren =
-/* The Fraunchpad can read the sensor whether or not REN is enabled,
- * but can't detect absence of the sensor unless it's enabled.  For
- * undiagnosed reasons but possibly due to capacitive sense support on
- * P1.7, using REN on onewire prevents the LaunchPad from reading from
- * the sensor; we'll live with it not being able to detect absence. */
+  /* The Fraunchpad can read the sensor whether or not REN is enabled,
+   * but can't detect absence of the sensor unless it's enabled.  For
+   * undiagnosed reasons but possibly due to capacitive sense support on
+   * P1.7, using REN on onewire prevents the LaunchPad from reading from
+   * the sensor; we'll live with it not being able to detect absence. */
 #if BSP430_PLATFORM_EXP430G2 - 0
   0
 #else /* BSP430_PLATFORM_EXP430G2 */
