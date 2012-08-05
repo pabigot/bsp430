@@ -93,18 +93,19 @@ hBSP430usciOpenUART (hBSP430halSERIAL hal,
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  /* Reject invalid baud rates */
-  if ((0 == baud) || (1000000UL < baud)) {
-    hal = NULL;
-  }
-
-  /* Reject if the pins can't be configured */
-  if ((NULL != hal)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
-    hal = NULL;
-  }
-
-  if (NULL != hal) {
+  SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
+  do {
+    /* Reject invalid baud rates */
+    if ((0 == baud) || (1000000UL < baud)) {
+      hal = NULL;
+    }
+    if (NULL == hal) {
+      break;
+    }
+    if (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1)) {
+      hal = NULL;
+      break;
+    }
     /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
      * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
      * anything larger.  */
@@ -136,7 +137,7 @@ hBSP430usciOpenUART (hBSP430halSERIAL hal,
     if (0 != hal->rx_callback) {
       *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
     }
-  }
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return hal;
@@ -152,22 +153,25 @@ hBSP430usciOpenSPI (hBSP430halSERIAL hal,
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
+  SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
+  do {
+    /* Reject invalid mode */
+    if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
+      hal = NULL;
+    }
+    /* Reject invalid prescaler */
+    if (0 == prescaler) {
+      hal = NULL;
+    }
+    /* Reject if the pins can't be configured */
+    if ((NULL != hal)
+        && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
+      hal = NULL;
+    }
+    if (NULL == hal) {
+      break;
+    }
 
-  /* Reject invalid mode */
-  if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
-    hal = NULL;
-  }
-  /* Reject invalid prescaler */
-  if (0 == prescaler) {
-    hal = NULL;
-  }
-  /* Reject if the pins can't be configured */
-  if ((NULL != hal)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
-    hal = NULL;
-  }
-
-  if (NULL != hal) {
     /* SPI is synchronous; hold USCI in reset during configuration */
     ctl0_byte |= UCSYNC;
     ctl1_byte |= UCSWRST;
@@ -185,7 +189,7 @@ hBSP430usciOpenSPI (hBSP430halSERIAL hal,
     if (0 != hal->rx_callback) {
       *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
     }
-  }
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return hal;

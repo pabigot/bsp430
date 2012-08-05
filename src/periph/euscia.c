@@ -115,23 +115,24 @@ xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  /* Reject invalid baud rates */
-  if ((0 == baud) || (1000000UL < baud)) {
-    hal = NULL;
-  }
-
-  /* Reject if the pins can't be configured */
-  if ((NULL != hal)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(SERIAL_HAL_HPL(hal)), 1))) {
-    hal = NULL;
-  }
-
-  if (NULL != hal) {
+  SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
+  do {
+    /* Reject invalid baud rates */
+    if ((0 == baud) || (1000000UL < baud)) {
+      hal = NULL;
+    }
+    /* Reject if the pins can't be configured */
+    if ((NULL != hal)
+        && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(SERIAL_HAL_HPL(hal)), 1))) {
+      hal = NULL;
+    }
+    if (NULL == hal) {
+      break;
+    }
     /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
      * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
      * anything larger.  */
     brclk_Hz = usBSP430clockACLK_Hz_ni();
-    SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
     ctl0_byte &= ~(UCMODE1_H | UCMODE0_H | UCSYNC_H);
     ctl1_byte &= ~(UCSSEL1_L | UCSSEL0_L);
     ctl1_byte |= UCSWRST_L;
@@ -150,7 +151,7 @@ xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
     /* Release the EUSCIA and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
-  }
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return hal;

@@ -102,23 +102,25 @@ hBSP430usci5OpenUART (hBSP430halSERIAL hal,
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  /* Reject invalid baud rates */
-  if ((0 == baud) || (1000000UL < baud)) {
-    hal = NULL;
-  }
+  SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
+  do {
+    /* Reject invalid baud rates */
+    if ((0 == baud) || (1000000UL < baud)) {
+      hal = NULL;
+    }
 
-  /* Reject if the pins can't be configured */
-  if ((NULL != hal)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 1))) {
-    hal = NULL;
-  }
-
-  if (NULL != hal) {
+    /* Reject if the pins can't be configured */
+    if ((NULL != hal)
+        && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 1))) {
+      hal = NULL;
+    }
+    if (NULL == hal) {
+      break;
+    }
     /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
      * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
      * anything larger.  */
     brclk_Hz = usBSP430clockACLK_Hz_ni();
-    SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
     ctl0_byte &= ~(UCMODE1 | UCMODE0 | UCSYNC);
     ctl1_byte &= ~(UCSSEL1 | UCSSEL0);
     ctl1_byte |= UCSWRST;
@@ -137,7 +139,7 @@ hBSP430usci5OpenUART (hBSP430halSERIAL hal,
     /* Release the USCI5 and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
-  }
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return hal;
@@ -153,22 +155,26 @@ hBSP430usci5OpenSPI (hBSP430halSERIAL hal,
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
+  SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
+  do {
+    /* Reject invalid mode */
+    if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
+      hal = NULL;
+    }
+    /* Reject invalid prescaler */
+    if (0 == prescaler) {
+      hal = NULL;
+    }
+    /* Reject if the pins can't be configured */
+    if ((NULL != hal)
+        && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
+      hal = NULL;
+    }
 
-  /* Reject invalid mode */
-  if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
-    hal = NULL;
-  }
-  /* Reject invalid prescaler */
-  if (0 == prescaler) {
-    hal = NULL;
-  }
-  /* Reject if the pins can't be configured */
-  if ((NULL != hal)
-      && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
-    hal = NULL;
-  }
-
-  if (NULL != hal) {
+    if (NULL == hal) {
+      break;
+    }
+    
     /* SPI is synchronous; hold USCI in reset during configuration */
     ctl0_byte |= UCSYNC;
     ctl1_byte |= UCSWRST;
@@ -183,7 +189,7 @@ hBSP430usci5OpenSPI (hBSP430halSERIAL hal,
     /* Release the USCI and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
-  }
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return hal;
