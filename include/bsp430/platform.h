@@ -450,18 +450,23 @@ void vBSP430platformSpinForJumper_ni (void);
  * vBSP430platformInitialize_ni() if
  * #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true.
  *
- * Although the default value matches standard the power-up default
- * for most MCUs, consider using #eBSP430clockSRC_XT1CLK_OR_VLOCLK
- * instead, since absence of a crystal will cause some references to
- * ACLK sourced from XT1CLK to be non-functional while other
- * references fall back to VLOCLK internally.
+ * On most MCUs, the power-up-clear default would be equivalent to
+ * using #eBSP430clockSRC_XT1CLK.  However, on MCUs that use BC2 the
+ * absence of a crystal will cause this setting to leave the LFXT1
+ * fault present, which causes ulBSP430clockConfigureMCLK_ni() to hang
+ * because it cannot distinguish that fault from a DCO fault.
+ * Consequently, the BSP430 default will fall back to a non-crystal
+ * source if the crystal is unstable.  This is particularly important
+ * for pre-5xx MCUs where the peripheral pins associated with the
+ * crystal power-up in their peripheral mode enabling the crystal.
  *
  * Also consider #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 since 5xx/6xx
  * family MCUs do not automatically configure the peripheral pins to
  * enable XIN/XOUT to function even if the crystal is present.
+ * 
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_ACLKSRC
-#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK
+#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_FALLBACK
 #endif /* BSP430_PLATFORM_BOOT_ACLKSRC */
 
 #endif /* BSP430_PLATFORM_H */

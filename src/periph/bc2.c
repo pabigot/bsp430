@@ -186,13 +186,8 @@ iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
   tp->ctl = TASSEL_2 | MC_2 | TACLR;
   /* SELM = DCOCLK; DIVM = /1 */
   BCSCTL2 &= ~(SELM_MASK | DIVM_MASK);
-  P1SEL &= ~(BIT0 | BIT6);
-  P1DIR |= BIT0 | BIT6 ;
-  P1OUT &= ~BIT0;
-  P1OUT |= BIT6;
   while (iter++ < MAX_ITERATIONS) {
     unsigned int freq_tsp;
-    P1OUT ^= BIT0 | BIT6;
     freq_tsp = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
                                             BSP430_TIMER_CCACLK_CC_INDEX,
                                             CM_2,

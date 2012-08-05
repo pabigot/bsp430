@@ -74,6 +74,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     return 0;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
+  (void)bits;
 
   return -1;
 }
