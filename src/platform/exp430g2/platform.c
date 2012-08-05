@@ -82,6 +82,19 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     return 0;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
+#if configBSP430_HPL_USCI_B0 - 0
+  else if (BSP430_PERIPH_USCI_B0 == device) {
+    bits = BIT5 | BIT6 | BIT7;
+    if (enablep) {
+      P1SEL2 |= bits;
+      P1SEL |= bits;
+    } else {
+      P1SEL &= ~bits;
+      P1SEL2 &= ~bits;
+    }
+    return 0;
+  }
+#endif /* configBSP430_HPL_USCI_B0 */
 
   return -1;
 }

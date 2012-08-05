@@ -3,6 +3,17 @@
  * Basic validation of SPI using the RF2500T to query the CC2500 for its
  * part number and version.
  *
+ * Recognized MCUs/platforms are:
+ *
+ * | MCU            | EXP          | GDO0 | GDO2 | CSn  | SCL  | MOSI | MISO/GDO1 | 
+ * | -------------- | ------------ | ---- | ---- | ---- | ---- | ---- | --------- |
+ * |                |  RF1 Header  |  P10 |  P12 |  P14 |  P16 |  P18 |  P20      | 
+ * | msp430f2274    | RF2500T      | P2.6 | P2.7 | P3.0 | P3.3 | P3.1 | P3.2      |
+ * | msp430f5438(a) | EXP430F5438  | P1.7 | P1.3 | P3.0 | P3.3 | P3.1 | P3.2      |
+ * | msp430fr5739   | EXP430FR5739 | P4.1 | P2.3 | P1.3 | P2.2 | P1.6 | P1.7      | 
+ * | msp430f5529    | EXP430F5529  | P2.3 | P2.4 | P2.6 | P3.2 | P3.0 | P3.1      | 
+ * | msp430g2553    | Anaren Air   | P2.6 | P1.0 | P2.7 | P1.5 | P1.7 | P1.6      | 
+ *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
  * @date 2012
@@ -44,30 +55,37 @@ readRegister (uint8_t reg)
 void main ()
 {
   uint8_t rc;
+  volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(APP_GDO0_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * gdo1 = xBSP430hplLookupPORTIE(APP_GDO1_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(APP_GDO2_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * csn = xBSP430hplLookupPORTIE(APP_CSn_PORT_PERIPH_HANDLE);
+  spi = hBSP430serialLookup(APP_SPI_PERIPH_HANDLE);
   
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-  cprintf("Initializing port for USCI_B0 and CSn\n");
+  cprintf("GDO0 %p at %s.%u\n", gdo0, xBSP430portName(APP_GDO0_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO0_PORT_BIT));
+  cprintf("GDO1 %p at %s.%u\n", gdo1, xBSP430portName(APP_GDO1_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO1_PORT_BIT));
+  cprintf("GDO2 %p at %s.%u\n", gdo2, xBSP430portName(APP_GDO2_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO2_PORT_BIT));
+  cprintf("CSn %p at %s.%u\n", csn, xBSP430portName(APP_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_CSn_PORT_BIT));
+  cprintf("SPI %p is %s\n", spi, xBSP430serialName(APP_SPI_PERIPH_HANDLE));
   cprintf(__DATE__ " " __TIME__ "\n");
-  spi = hBSP430serialLookup(BSP430_PERIPH_USCI_B0);
-  cprintf("SPI device originally %p\n", spi);
   spi = hBSP430serialOpenSPI(spi, UCCKPH | UCMSB | UCMST, UCSSEL_2, 1);
-  cprintf("SPI device %p: CTL0 %02x ; CTL1 %02x ; P3SEL %02x\n", spi, UCB0CTL0, UCB0CTL1, P3SEL);
+  cprintf("SPI device %p: CTL0 %02x ; CTL1 %02x\n", spi, UCB0CTL0, UCB0CTL1);
   
   /* Configure for GPIO use: CS=P3.0 */
-  P3SEL &= ~BIT0;
-  P3DIR |= BIT0;
-  P3OUT |= BIT0;
+  csn->sel &= ~APP_CSn_PORT_BIT;
+  csn->dir |= APP_CSn_PORT_BIT;
+  csn->out |= APP_CSn_PORT_BIT;
   
   /* Configure USCI_B0 */
   
   /* Release USCI_B0 to run */
   cprintf("Resetting radio\n");
-  P3OUT &= ~BIT0;
+  csn->out &= ~APP_CSn_PORT_BIT;
 
   /* Spin until MISO (CHP_RDYn) is clear */
-  while (P3IN & BIT2) {
+  while (gdo1->in & APP_GDO1_PORT_BIT) {
     cprintf("Waiting for radio ready\n");
   }
   cprintf("Radio is up; sending SRES strobe\n");
