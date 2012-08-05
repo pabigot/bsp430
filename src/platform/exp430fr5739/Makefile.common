@@ -4,4 +4,4 @@ MSPDEBUG_PROG=load
 
 MODULES_LED=platform/$(PLATFORM)/platform
 MODULES_CLOCK=periph/cs
-MODULES_SERIAL=periph/euscia
+MODULES_PLATFORM_SERIAL=periph/euscia

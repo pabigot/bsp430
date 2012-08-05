@@ -151,8 +151,12 @@ MODULES_UPTIME = $(MODULES_TIMER) utility/uptime
 # MODULES_CLOCK: Platform specific, the module supplying the implementation
 # of the clock interface.
 
-# MODULES_SERIAL: Platform specific, the module supplying the implementation
-# of the serial interface.
+# MODULES_PLATFORM_SERIAL: Platform specific, the module supplying the
+# platform peripheral implementations supporting serial interface.
+
+# MODULES_SERIAL: The platform-specific serial modules in combination with
+# the common serial model for generic serial communication.
+MODULES_SERIAL ?= $(MODULES_PLATFORM_SERIAL) serial
 
 # MODULES_LED: Platform specific, the module supplying the implementation of
 # the LED interface.  If not set by the platform, this is assumed to be the
