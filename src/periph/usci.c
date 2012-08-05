@@ -78,7 +78,8 @@ struct sBSP430usciHPLAux {
 
 hBSP430halSERIAL
 xBSP430usciOpenUART (hBSP430halSERIAL hal,
-                     unsigned int control_word,
+                     unsigned char ctl0_byte,
+                     unsigned char ctl1_byte,
                      unsigned long baud)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -104,12 +105,17 @@ xBSP430usciOpenUART (hBSP430halSERIAL hal,
      * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
      * anything larger.  */
     brclk_Hz = usBSP430clockACLK_Hz_ni();
+    ctl0_byte &= ~(UCMODE1 | UCMODE0 | UCSYNC);
+    ctl1_byte &= ~(UCSSEL1 | UCSSEL0);
+    ctl1_byte |= UCSWRST;
     if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
-      SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST | UCSSEL_1;
+      ctl1_byte |= UCSSEL_1;
     } else {
-      SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST | UCSSEL_2;
+      ctl1_byte |= UCSSEL_2;
       brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
     }
+    SERIAL_HAL_HPL(hal)->ctl1 = ctl1_byte;
+    SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;    
     br = (brclk_Hz / baud);
     brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;
 

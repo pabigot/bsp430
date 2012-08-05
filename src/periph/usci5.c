@@ -61,10 +61,6 @@
     (_hpl)->ctlw0 = UCSWRST;                    \
   } while (0)
 
-#define SERIAL_HPL_SET_CLKSOURCE(_hpl, _cssel) do {     \
-    (_hpl)->ctlw0 |= (_cssel);                          \
-  } while (0)
-
 #define SERIAL_HPL_HOLD_HPL_NI(_hpl) do {       \
     (_hpl)->ctlw0 |= UCSWRST;                   \
   } while (0)
@@ -90,7 +86,8 @@ hplSetBaudRate (volatile struct sBSP430hplUSCI5 * hpl,
 
 hBSP430halSERIAL
 xBSP430usci5OpenUART (hBSP430halSERIAL hal,
-                      unsigned int control_word,
+                      unsigned char ctl0_byte,
+                      unsigned char ctl1_byte,
                       unsigned long baud)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -115,12 +112,16 @@ xBSP430usci5OpenUART (hBSP430halSERIAL hal,
      * anything larger.  */
     brclk_Hz = usBSP430clockACLK_Hz_ni();
     SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
+    ctl0_byte &= ~(UCMODE1 | UCMODE0 | UCSYNC);
+    ctl1_byte &= ~(UCSSEL1 | UCSSEL0);
+    ctl1_byte |= UCSWRST;
     if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
-      SERIAL_HPL_SET_CLKSOURCE(SERIAL_HAL_HPL(hal), UCSSEL__ACLK);
+      ctl1_byte |= UCSSEL__ACLK;
     } else {
-      SERIAL_HPL_SET_CLKSOURCE(SERIAL_HAL_HPL(hal), UCSSEL__SMCLK);
+      ctl1_byte |= UCSSEL__SMCLK;
       brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
     }
+    SERIAL_HAL_HPL(hal)->ctlw0 = (ctl0_byte << 8) | ctl1_byte;
     hplSetBaudRate(SERIAL_HAL_HPL(hal), baud, brclk_Hz);
 
     /* Reset device statistics */

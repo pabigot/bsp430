@@ -249,10 +249,12 @@ typedef struct sBSP430halSERIAL * hBSP430halSERIAL;
 /** @cond DOXYGEN_EXCLUDE */
 struct sBSP430serialDispatch {
   hBSP430halSERIAL (* openUART) (hBSP430halSERIAL hal,
-                                 unsigned int control_word,
+                                 unsigned char ctl0_byte,
+                                 unsigned char ctl1_byte,
                                  unsigned long baud);
   hBSP430halSERIAL (* openSPI) (hBSP430halSERIAL hal,
-                                unsigned int control_word,
+                                unsigned char ctl0_byte,
+                                unsigned char ctl1_byte,
                                 unsigned int prescaler);
   int (* configureCallbacks) (hBSP430halSERIAL hal,
                               const struct sBSP430halISRCallbackVoid * rx_callback,
@@ -275,26 +277,30 @@ struct sBSP430serialDispatch {
  * interrupts is as if those callbacks were associated during this
  * call.
  *
+ * @warning When the underlying implementation is an EUSCI device (as
+ * on FR5xx chips), the header defines used to construct the value @a
+ * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
+ * upper byte of the ctlw0 word that comprises @a ctl0 and @a ctl1 on
+ * these MCUs, so on those devices you must use the @c _H suffix to
+ * select the high-byte version of these constants or divide your
+ * configured value by 256 to place it in the low byte of the
+ * argument.
+ *
  * @param periph The peripheral device identifier for the USCI device
  * that is being requested. E.g., #BSP430_PERIPH_USCI_A0.
  *
- * @param control_word The configuration to be written to the device's
- * ctlw0 word.  If the device does not support a ctlw0 register, the
- * lower byte is written to ctl0 and the upper byte to ctl1.  Most bit
- * fields will be assigned from this value, but UCSYNC will be
- * cleared, and UCSSELx will be set based on baud rate.
+ * @param ctl0_byte The configuration to be written to the device's
+ * ctl0 byte.  For UART mode, potential values specified in the
+ * <msp430.h> header include #UCPEN, #UCPAR, #UCMSB, #UC7BIT, #UCSPB
+ * (but <b>see the warning above</b>).  The UCMODE and UCSYNC elements
+ * of the byte are ignored.  In most cases for UART mode a value of 0
+ * producing 8N1 serial communications is appropriate.
  *
- * @note In almost all cases, a value of zero is appropriate.  If you
- * need to configure parity and other control word features, be aware
- * that #sBSP430hplUSCI5 and #sBSP430hplEUSCIA have the ctl0 and
- * ctl1 fields swapped relative to their order in #sBSP430hplUSCI.
- * Since these peripherals have a ctlw0 field, that will be used,
- * resulting in the lower word being written to ctl1 and the upper
- * word to ctl0.  This can result in confusion, since constants like
- * @c UCSYNC are relative to ctl0 for the USCI and USCI5 variants, but
- * are defined for the ctlw0 position in eUSCI.  Take this up with
- * Texas Instruments; they defined the register map and the header
- * constants.
+ * @param ctl1_byte The configuration to be written to the device's
+ * ctl1 byte.  For UART mode, potential values specified in the
+ * <msp430.h> header include #UCRXEIE, #UCBRKIE, and #UCDORM.  The
+ * UCSSEL and UCSWRST elements of the byte are cleared as the function
+ * configures those.  In most cases a value of 0 is appropriate.
  *
  * @param baud The desired baud rate.  This will be configured
  * automatically.  ACLK will be used as the baud rate clock if ACLK is
@@ -311,14 +317,16 @@ struct sBSP430serialDispatch {
  * peripheral-specific implementation. */
 static __inline__
 hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
-                                        unsigned int control_word,
+                                        unsigned char ctl0_byte,
+                                        unsigned char ctl1_byte,
                                         unsigned long baud)
 {
-  return hal->dispatch->openUART(hal, control_word, baud);
+  return hal->dispatch->openUART(hal, ctl0_byte, ctl1_byte, baud);
 }
 
 hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
-                                       unsigned int control_word,
+                                       unsigned char ctl0_byte,
+                                       unsigned char ctl1_byte,
                                        unsigned int prescaler);
 
 /** Assign callbacks for transmission and reception.

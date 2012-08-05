@@ -947,12 +947,14 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 
 /** USCI5-specific implementation of hBSP430serialOpenUART() */
 hBSP430halSERIAL xBSP430usci5OpenUART (hBSP430halSERIAL hal,
-                                       unsigned int control_word,
+                                       unsigned char ctl0_byte,
+                                       unsigned char ctl1_byte,
                                        unsigned long baud);
 
 /** USCI5-specific implementation of hBSP430serialOpenSPI() */
 hBSP430halSERIAL xBSP430usci5OpenSPI (hBSP430halSERIAL hal,
-                                      unsigned int control_word,
+                                      unsigned char ctl0_byte,
+                                      unsigned char ctl1_byte,
                                       unsigned int prescaler);
 
 /** USCI5-specific implementation of iBSP430serialConfigureCallbacks() */

@@ -187,6 +187,46 @@
 #define LFXT1S_2            (0x20)   /**< Mode 2 for LFXT1 : VLO */
 #define LFXT1S_3            (0x30)   /**< Mode 3 for LFXT1 : Digital input signal */
 
+
+#define UCPEN               (0x80)    /**< UART ctl0 : Async. Mode: Parity enable */
+#define UCCKPH              (0x80)    /**< SPI ctl0 : Sync. Mode: Clock Phase */
+#define UCA10               (0x80)    /**< I2C ctl0 : 10-bit Address Mode */
+#define UCPAR               (0x40)    /**< UART ctl0 : Async. Mode: Parity     0:odd / 1:even */
+#define UCCKPL              (0x40)    /**< SPI ctl0 : Sync. Mode: Clock Polarity */
+#define UCSLA10             (0x40)    /**< I2C ctl0 :  10-bit Slave Address Mode */
+#define UCMSB               (0x20)    /**< UART/SPI ctl0 : Async. Mode: MSB first  0:LSB / 1:MSB */
+#define UCMM                (0x20)    /**< I2C ctl0 :  Multi-Master Environment */
+#define UC7BIT              (0x10)    /**< UART/SPI ctl0 : Async. Mode: Data Bits  0:8-bits / 1:7-bits */
+#define UCSPB               (0x08)    /**< UART ctl0 : Async. Mode: Stop Bits  0:one / 1: two */
+#define UCMST               (0x08)    /**< SPI ctl0 : Sync. Mode: Master Select */
+
+#define UCSYNC              (0x01)    /**< ctl0 : Sync-Mode  0:UART-Mode / 1:SPI-Mode */
+
+// I2C-Mode Bits
+//#define res               (0x10)    /* reserved */
+#define UCMODE_0            (0x00)    /**< ctl0 : Sync. Mode: USCI Mode: 0 (3-pin SPI) */
+#define UCMODE_1            (0x02)    /**< ctl0 : Sync. Mode: USCI Mode: 1 (4-pin SPI, m/s if STE) */
+#define UCMODE_2            (0x04)    /**< ctl0 : Sync. Mode: USCI Mode: 2 (4-pin SPI, m/s if !STE) */
+#define UCMODE_3            (0x06)    /**< ctl0 : Sync. Mode: USCI Mode: 3 (I2C)*/
+
+// UART-Mode Bits
+#define UCRXEIE             (0x20)    /**< UART ctl1 : RX Error interrupt enable */
+#define UCBRKIE             (0x10)    /**< UART ctl1 : Break interrupt enable */
+#define UCTR                (0x10)    /**< I2C ctl1 : Transmit/Receive Select/Flag */
+#define UCDORM              (0x08)    /**< UART ctl1 : Dormant (Sleep) Mode */
+#define UCTXNACK            (0x08)    /**< I2C ctl1 : Transmit NACK */
+#define UCTXADDR            (0x04)    /**< UART ctl1 : Send next Data as Address */
+#define UCTXSTP             (0x04)    /**< I2C ctl1 : Transmit STOP */
+#define UCTXBRK             (0x02)    /**< UART ctl1 : Send next Data as Break */
+#define UCTXSTT             (0x02)    /**< I2C ctl1 : Transmit START */
+
+#define UCSWRST             (0x01)    /**< ctl1 : USCI Software Reset */
+
+#define UCSSEL_0            (0x00)    /**< ctl1 : USCI 0 Clock Source: 0 (NA, UCLK) */
+#define UCSSEL_1            (0x40)    /**< ctl1 : USCI 0 Clock Source: 1 (ACLK) */
+#define UCSSEL_2            (0x80)    /**< ctl1 : USCI 0 Clock Source: 2 (SMCLK) */
+#define UCSSEL_3            (0xC0)    /**< ctl1 : USCI 0 Clock Source: 3 (SMCLK) */
+
 #endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */

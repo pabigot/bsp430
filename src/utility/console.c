@@ -211,7 +211,7 @@ iBSP430consoleInitialize (void)
     if (NULL == hal) {
       break;
     }
-    hal = hBSP430serialOpenUART(hal, 0, BSP430_CONSOLE_BAUD_RATE);
+    hal = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
     if (NULL == hal) {
       break;
     }
