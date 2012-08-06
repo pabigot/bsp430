@@ -350,6 +350,20 @@ iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
 }
 
 int
+iBSP430usciI2CsetAddresses_ni (hBSP430halSERIAL hal,
+                               int own_address,
+                               int slave_address)
+{
+  if (0 <= own_address) {
+    *SERIAL_HAL_HPLAUX(hal)->i2coap = own_address;
+  }
+  if (0 <= slave_address) {
+    *SERIAL_HAL_HPLAUX(hal)->i2csap = slave_address;
+  }
+  return 0;
+}
+
+int
 iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
                          uint8_t * data,
                          size_t len)
@@ -416,6 +430,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .uartTxData_ni = iBSP430usciUARTtxData_ni,
   .uartTxASCIIZ_ni = iBSP430usciUARTtxASCIIZ_ni,
   .spiTxRx_ni = iBSP430usciSPITxRx_ni,
+  .i2cSetAddresses_ni = iBSP430usciI2CsetAddresses_ni,
   .i2cRxData_ni = iBSP430usciI2CrxData_ni,
   .i2cTxData_ni = iBSP430usciI2CtxData_ni,
 };

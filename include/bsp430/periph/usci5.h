@@ -998,6 +998,10 @@ int iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
                             size_t rx_len,
                             uint8_t * rx_data);
 
+/** USCI5-specific implementation of iBSP430serialI2CsetAddresses_ni() */
+int iBSP430usci5I2CsetAddresses_ni (hBSP430halSERIAL hal,
+                                    int own_address,
+                                    int slave_address);
 
 /** USCI5-specific implementation of iBSP430serialI2CrxData_ni() */
 int iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,

@@ -577,6 +577,11 @@ int iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
                            size_t rx_len,
                            uint8_t * rx_data);
 
+/** USCI-specific implementation of iBSP430serialI2CsetAddresses_ni() */
+int iBSP430usciI2CsetAddresses_ni (hBSP430halSERIAL hal,
+                                   int own_address,
+                                   int slave_address);
+
 /** USCI-specific implementation of iBSP430serialI2CrxData_ni() */
 int iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
                              uint8_t * rx_data,

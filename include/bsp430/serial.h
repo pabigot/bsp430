@@ -274,6 +274,7 @@ struct sBSP430serialDispatch {
                          size_t len);
   int (* uartTxASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
   int (* spiTxRx_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
+  int (* i2cSetAddresses_ni) (hBSP430halSERIAL hal, int own_address, int slave_address);
   int (* i2cRxData_ni) (hBSP430halSERIAL hal, uint8_t * rx_data, size_t rx_len);
   int (* i2cTxData_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len);
 };
@@ -691,6 +692,30 @@ int iBSP430serialI2CtxData_ni (hBSP430halSERIAL hal,
                                size_t tx_len)
 {
   return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
+}
+
+/** Configure I2C addresses
+ *
+ * This routine sets the own-address and slave-address registers of an
+ * I2C peripheral.  The device should have been opened as an I2C
+ * device prior to invoking this function.
+ * 
+ * @param hal the serial device to be configured
+ *
+ * @param own_address the value to use as this device's address.  A
+ * negative value leaves the current configured own address unchanged.
+ *
+ * @param slave_address the value to use as the slave address.  A
+ * negative value leaves the current configured slave address
+ * unchanged.
+ *
+ * @return 0 if successfully set, -1 if an error occurs. */
+static __inline__
+int iBSP430serialI2CsetAddresses_ni (hBSP430halSERIAL hal,
+                                     int own_address,
+                                     int slave_address)
+{
+  return hal->dispatch->i2cSetAddresses_ni(hal, own_address, slave_address);
 }
 
 /** Receive using an I2C-configured device
