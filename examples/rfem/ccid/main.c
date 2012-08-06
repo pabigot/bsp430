@@ -82,10 +82,14 @@ void main ()
 
   cprintf("SPI device %p: CTL0 %02x ; CTL1 %02x\n", spi, UCB0CTL0, UCB0CTL1);
 
-  /* Configure for enable and enable the radio */
+  /* Configure for enable with radio disabled to ensure we have a
+   * falling edge. */
   csn->sel &= ~APP_CSn_PORT_BIT;
-  csn->out &= ~APP_CSn_PORT_BIT;
+  csn->out |= APP_CSn_PORT_BIT;
   csn->dir |= APP_CSn_PORT_BIT;
+
+  /* Now enable the radio */
+  csn->out &= ~APP_CSn_PORT_BIT;
 
   /* Spin until MISO (CHP_RDYn) is clear */
   while (gdo1->in & APP_GDO1_PORT_BIT) {
