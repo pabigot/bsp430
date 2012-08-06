@@ -42,9 +42,9 @@
 #define BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H
 
 /* Use native EUSCI for genericized serial port unless told not to */
-#ifndef configBSP430_SERIAL_USE_EUSCIA
-#define configBSP430_SERIAL_USE_EUSCIA 1
-#endif /* configBSP430_SERIAL_USE_EUSCIA */
+#ifndef configBSP430_SERIAL_USE_EUSCI
+#define configBSP430_SERIAL_USE_EUSCI 1
+#endif /* configBSP430_SERIAL_USE_EUSCI */
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */

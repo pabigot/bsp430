@@ -5,14 +5,14 @@
  *
  * Recognized MCUs/platforms are:
  *
- * | MCU            | EXP          | GDO0 | GDO2 | CSn  | SCL  | MOSI | MISO/GDO1 | 
+ * | MCU            | EXP          | GDO0 | GDO2 | CSn  | SCL  | MOSI | MISO/GDO1 |
  * | -------------- | ------------ | ---- | ---- | ---- | ---- | ---- | --------- |
- * |                |  RF1 Header  |  P10 |  P12 |  P14 |  P16 |  P18 |  P20      | 
+ * |                |  RF1 Header  |  P10 |  P12 |  P14 |  P16 |  P18 |  P20      |
  * | msp430f2274    | RF2500T      | P2.6 | P2.7 | P3.0 | P3.3 | P3.1 | P3.2      |
  * | msp430f5438(a) | EXP430F5438  | P1.7 | P1.3 | P3.0 | P3.3 | P3.1 | P3.2      |
- * | msp430fr5739   | EXP430FR5739 | P4.1 | P2.3 | P1.3 | P2.2 | P1.6 | P1.7      | 
- * | msp430f5529    | EXP430F5529  | P2.3 | P2.4 | P2.6 | P3.2 | P3.0 | P3.1      | 
- * | msp430g2553    | Anaren Air   | P2.6 | P1.0 | P2.7 | P1.5 | P1.7 | P1.6      | 
+ * | msp430fr5739   | EXP430FR5739 | P4.1 | P2.3 | P1.3 | P2.2 | P1.6 | P1.7      |
+ * | msp430f5529    | EXP430F5529  | P2.3 | P2.4 | P2.6 | P3.2 | P3.0 | P3.1      |
+ * | msp430g2553    | Anaren Air   | P2.6 | P1.0 | P2.7 | P1.5 | P1.7 | P1.6      |
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -33,7 +33,7 @@ static uint8_t
 sendStrobe (uint8_t reg)
 {
   uint8_t rc;
-  
+
   (void)iBSP430serialSPITxRx_ni(spi, &reg, 1, 0, &rc);
   return rc;
 }
@@ -60,7 +60,7 @@ void main ()
   volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(APP_GDO2_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * csn = xBSP430hplLookupPORTIE(APP_CSn_PORT_PERIPH_HANDLE);
   spi = hBSP430serialLookup(APP_SPI_PERIPH_HANDLE);
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
@@ -72,14 +72,14 @@ void main ()
   cprintf(__DATE__ " " __TIME__ "\n");
   spi = hBSP430serialOpenSPI(spi, UCCKPH | UCMSB | UCMST, UCSSEL_2, 1);
   cprintf("SPI device %p: CTL0 %02x ; CTL1 %02x\n", spi, UCB0CTL0, UCB0CTL1);
-  
+
   /* Configure for GPIO use: CS=P3.0 */
   csn->sel &= ~APP_CSn_PORT_BIT;
   csn->dir |= APP_CSn_PORT_BIT;
   csn->out |= APP_CSn_PORT_BIT;
-  
+
   /* Configure USCI_B0 */
-  
+
   /* Release USCI_B0 to run */
   cprintf("Resetting radio\n");
   csn->out &= ~APP_CSn_PORT_BIT;

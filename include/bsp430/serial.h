@@ -92,31 +92,18 @@
 #define configBSP430_SERIAL_USE_USCI5 defined(__MSP430_HAS_USCI_A0__)
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 
-/** @def configBSP430_SERIAL_USE_EUSCIA
+/** @def configBSP430_SERIAL_USE_EUSCI
  *
  * Define to true value to allow the generic serial dispatches to
- * recognize #sBSP430hplEUSCIA as an underlying serial implementation.
- * This defaults to true iff the MCU supports the eUSCI device as
- * implemented on 5xx MCUs.
+ * recognize #sBSP430hplEUSCIA and #sBSP430hplEUSCIB as underlying
+ * serial implementation.  This defaults to true iff the MCU supports
+ * the eUSCI device as implemented on 5xx MCUs.
  *
  * @cppflag
  * @defaulted  */
-#ifndef configBSP430_SERIAL_USE_EUSCIA
-#define configBSP430_SERIAL_USE_EUSCIA defined(__MSP430_HAS_EUSCI_A0__)
-#endif /* configBSP430_SERIAL_USE_EUSCIA */
-
-/** @def configBSP430_SERIAL_USE_EUSCIB
- *
- * Define to true value to allow the generic serial dispatches to
- * recognize #sBSP430hplEUSCIB as an underlying serial implementation.
- * This defaults to true iff the MCU supports the eUSCI device as
- * implemented on 5xx MCUs.
- *
- * @cppflag
- * @defaulted  */
-#ifndef configBSP430_SERIAL_USE_EUSCIB
-#define configBSP430_SERIAL_USE_EUSCIB defined(__MSP430_HAS_EUSCI_B0__)
-#endif /* configBSP430_SERIAL_USE_EUSCIB */
+#ifndef configBSP430_SERIAL_USE_EUSCI
+#define configBSP430_SERIAL_USE_EUSCI (defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_B0__))
+#endif /* configBSP430_SERIAL_USE_EUSCI */
 
 /* !BSP430! instance=usci,usci5,euscia */
 /* !BSP430! periph=serial insert=hal_variant_hpl_macro */
@@ -699,7 +686,7 @@ int iBSP430serialI2CtxData_ni (hBSP430halSERIAL hal,
  * This routine sets the own-address and slave-address registers of an
  * I2C peripheral.  The device should have been opened as an I2C
  * device prior to invoking this function.
- * 
+ *
  * @param hal the serial device to be configured
  *
  * @param own_address the value to use as this device's address.  A
@@ -747,9 +734,9 @@ int iBSP430serialI2CrxData_ni (hBSP430halSERIAL hal,
 #if configBSP430_SERIAL_USE_USCI5 - 0
 #include <bsp430/periph/usci5.h>
 #endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCIA - 0
-#include <bsp430/periph/euscia.h>
-#endif /* configBSP430_SERIAL_USE_EUSCIA */
+#if configBSP430_SERIAL_USE_EUSCI - 0
+#include <bsp430/periph/eusci.h>
+#endif /* configBSP430_SERIAL_USE_EUSCI */
 
 /** Get the HAL handle for a specific serial peripheral.
  *

@@ -32,7 +32,7 @@
 #include <bsp430/platform/exp430fr5739/platform.h>
 #include <bsp430/periph/cs.h>
 #include <bsp430/utility/led.h>
-#include <bsp430/periph/euscia.h>
+#include <bsp430/periph/eusci.h>
 #include <bsp430/utility/uptime.h>
 
 #if BSP430_LED - 0

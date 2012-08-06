@@ -52,11 +52,11 @@ hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph)
     rv = xBSP430usciLookup5(periph);
   }
 #endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCIA - 0
+#if configBSP430_SERIAL_USE_EUSCI - 0
   if (NULL == rv) {
-    rv = hBSP430eusciaLookup(periph);
+    rv = hBSP430eusciLookup(periph);
   }
-#endif /* configBSP430_SERIAL_USE_EUSCIA */
+#endif /* configBSP430_SERIAL_USE_EUSCI */
   return rv;
 }
 
@@ -74,10 +74,10 @@ xBSP430serialName (tBSP430periphHandle periph)
     rv = xBSP430usci5Name(periph);
   }
 #endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCIA - 0
+#if configBSP430_SERIAL_USE_EUSCI - 0
   if (NULL == rv) {
-    rv = xBSP430eusciaName(periph);
+    rv = xBSP430eusciName(periph);
   }
-#endif /* configBSP430_SERIAL_USE_EUSCIA */
+#endif /* configBSP430_SERIAL_USE_EUSCI */
   return rv;
 }

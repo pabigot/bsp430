@@ -100,6 +100,46 @@ typedef struct sBSP430hplEUSCIA {
   unsigned int iv;			/**< UCAxIV */ /* 0x1E */
 } sBSP430hplEUSCIA;
 
+/** Register map for eUSCI_B peripheral hardware presentation layer. */
+typedef struct sBSP430hplEUSCIB {
+  union {						/* 0x00 */
+    unsigned int ctlw0;		/**< UCBxCTLW0 */
+    struct {
+      unsigned char ctl1; /**< UCBxCTL1 */
+      unsigned char ctl0; /**< UCBxCTL0 */
+    };
+  };
+  unsigned int ctlw1;			/**< UCBxCTLW1 */ /* 0x02 */
+  unsigned int _unused_0x04;
+  union {						/* 0x06 */
+    unsigned int brw;		/**< UCBxBRW */
+    struct {
+      unsigned char br0;	/**< UCBxBR0 */
+      unsigned char br1;	/**< UCBxBR1 */
+    };
+  };
+  unsigned int statw;			/**< UCBxSTATW */ /* 0x08 */
+  unsigned int tbcnt;                   /**< UCBxTBCNT */ /* 0x0A */
+  unsigned int rxbuf;			/**< UCAxRXBUF */ /* 0x0C */
+  unsigned int txbuf;			/**< UCAxTXBUF */ /* 0x0E */
+  unsigned int _unused_0x10;
+  unsigned int _unused_0x12;
+  unsigned int i2coa0;          /**< UCBxI2COA0 */ /* 0x14 */
+  unsigned int i2coa1;          /**< UCBxI2COA1 */ /* 0x16 */
+  unsigned int i2coa2;          /**< UCBxI2COA2 */ /* 0x18 */
+  unsigned int i2coa3;          /**< UCBxI2COA3 */ /* 0x1A */
+  unsigned int addrx;           /**< UCBxADDRX */ /* 0x1C */
+  unsigned int addmask;         /**< UCBxADDMASK */ /* 0x1E */
+  unsigned int i2csa;           /**< UCBxI2CSA */ /* 0x20 */
+  unsigned int _unused_0x22;
+  unsigned int _unused_0x24;
+  unsigned int _unused_0x26;
+  unsigned int _unused_0x28;
+  unsigned int ie;              /**< UCAxIE */ /* 0x2A */
+  unsigned int ifg;             /**< UCAxIFG */ /* 0x2C */
+  unsigned int iv;              /**< UCAxIV */ /* 0x2E */
+} sBSP430hplEUSCIB;
+
 /** @cond DOXYGEN_INTERNAL */
 #define BSP430_PERIPH_EUSCI_A0_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_A0__
 #define BSP430_PERIPH_EUSCI_A1_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_A1__
@@ -111,7 +151,7 @@ typedef struct sBSP430hplEUSCIA {
 #define BSP430_PERIPH_EUSCI_B3_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_B3__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/* !BSP430! periph=serial insert=hal_decl */
+/* !BSP430! periph=serial instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_B0,EUSCI_B1,EUSCI_B2 insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** @def configBSP430_HAL_EUSCI_A0
  *
@@ -215,11 +255,112 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #define BSP430_HAL_EUSCI_A2 (&xBSP430hal_EUSCI_A2_)
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
+/** @def configBSP430_HAL_EUSCI_B0
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_B0 peripheral HAL interface.  This defines a global
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_EUSCI_B0 that is a reference to that object.
+ *
+ * @note Enabling this defaults #configBSP430_HPL_EUSCI_B0 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B0
+#define configBSP430_HAL_EUSCI_B0 0
+#endif /* configBSP430_HAL_EUSCI_B0 */
+
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_B0 - 0
+/* You don't need to know about this */
+extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
+#endif /* configBSP430_HAL_EUSCI_B0 */
+/** @endcond */
+
+/** BSP430 HAL handle for EUSCI_B0.
+ *
+ * The handle may be used only if #configBSP430_HAL_EUSCI_B0
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_EUSCI_B0 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_B0 - 0)
+#define BSP430_HAL_EUSCI_B0 (&xBSP430hal_EUSCI_B0_)
+#endif /* configBSP430_HAL_EUSCI_B0 */
+
+/** @def configBSP430_HAL_EUSCI_B1
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_B1 peripheral HAL interface.  This defines a global
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_EUSCI_B1 that is a reference to that object.
+ *
+ * @note Enabling this defaults #configBSP430_HPL_EUSCI_B1 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B1
+#define configBSP430_HAL_EUSCI_B1 0
+#endif /* configBSP430_HAL_EUSCI_B1 */
+
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_B1 - 0
+/* You don't need to know about this */
+extern sBSP430halSERIAL xBSP430hal_EUSCI_B1_;
+#endif /* configBSP430_HAL_EUSCI_B1 */
+/** @endcond */
+
+/** BSP430 HAL handle for EUSCI_B1.
+ *
+ * The handle may be used only if #configBSP430_HAL_EUSCI_B1
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_EUSCI_B1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_B1 - 0)
+#define BSP430_HAL_EUSCI_B1 (&xBSP430hal_EUSCI_B1_)
+#endif /* configBSP430_HAL_EUSCI_B1 */
+
+/** @def configBSP430_HAL_EUSCI_B2
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_B2 peripheral HAL interface.  This defines a global
+ * object supporting enhanced functionality for the peripheral, and a
+ * macro BSP430_HAL_EUSCI_B2 that is a reference to that object.
+ *
+ * @note Enabling this defaults #configBSP430_HPL_EUSCI_B2 to
+ * true, since the HAL infrastructure requires the underlying HPL
+ * infrastructure.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B2
+#define configBSP430_HAL_EUSCI_B2 0
+#endif /* configBSP430_HAL_EUSCI_B2 */
+
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_B2 - 0
+/* You don't need to know about this */
+extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
+#endif /* configBSP430_HAL_EUSCI_B2 */
+/** @endcond */
+
+/** BSP430 HAL handle for EUSCI_B2.
+ *
+ * The handle may be used only if #configBSP430_HAL_EUSCI_B2
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_EUSCI_B2 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_B2 - 0)
+#define BSP430_HAL_EUSCI_B2 (&xBSP430hal_EUSCI_B2_)
+#endif /* configBSP430_HAL_EUSCI_B2 */
+
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
-/* !BSP430! periph=euscia */
 
-/* !BSP430! insert=periph_decl */
+/* !BSP430! periph=euscia instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
 /** @def configBSP430_HPL_EUSCI_A0
  *
@@ -432,6 +573,145 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
 
+/* !BSP430! periph=euscib instance=EUSCI_B0,EUSCI_B1,EUSCI_B2 insert=periph_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
+/** @def configBSP430_HPL_EUSCI_B0
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_B0 peripheral HPL interface.  Only do this if the MCU
+ * supports this device.
+ *
+ * @note Enabling #configBSP430_HAL_EUSCI_B0 defaults this to
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HPL_EUSCI_B0
+#define configBSP430_HPL_EUSCI_B0 (configBSP430_HAL_EUSCI_B0 - 0)
+#endif /* configBSP430_HPL_EUSCI_B0 */
+
+#if (configBSP430_HAL_EUSCI_B0 - 0) && ! (configBSP430_HPL_EUSCI_B0 - 0)
+#warning configBSP430_HAL_EUSCI_B0 requested without configBSP430_HPL_EUSCI_B0
+#endif /* HAL and not HPL */
+
+/** Handle for the raw EUSCI_B0 device.
+ *
+ * The handle may be used only if #configBSP430_HPL_EUSCI_B0
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B0 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B0 - 0)
+#define BSP430_PERIPH_EUSCI_B0 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_B0_BASEADDRESS_))
+#endif /* configBSP430_HPL_EUSCI_B0 */
+
+/** @def configBSP430_HPL_EUSCI_B1
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_B1 peripheral HPL interface.  Only do this if the MCU
+ * supports this device.
+ *
+ * @note Enabling #configBSP430_HAL_EUSCI_B1 defaults this to
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HPL_EUSCI_B1
+#define configBSP430_HPL_EUSCI_B1 (configBSP430_HAL_EUSCI_B1 - 0)
+#endif /* configBSP430_HPL_EUSCI_B1 */
+
+#if (configBSP430_HAL_EUSCI_B1 - 0) && ! (configBSP430_HPL_EUSCI_B1 - 0)
+#warning configBSP430_HAL_EUSCI_B1 requested without configBSP430_HPL_EUSCI_B1
+#endif /* HAL and not HPL */
+
+/** Handle for the raw EUSCI_B1 device.
+ *
+ * The handle may be used only if #configBSP430_HPL_EUSCI_B1
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B1 - 0)
+#define BSP430_PERIPH_EUSCI_B1 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_B1_BASEADDRESS_))
+#endif /* configBSP430_HPL_EUSCI_B1 */
+
+/** @def configBSP430_HPL_EUSCI_B2
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of the
+ * @c EUSCI_B2 peripheral HPL interface.  Only do this if the MCU
+ * supports this device.
+ *
+ * @note Enabling #configBSP430_HAL_EUSCI_B2 defaults this to
+ * true, so you only need to explicitly request this if you want the
+ * HPL interface without the HAL interface.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HPL_EUSCI_B2
+#define configBSP430_HPL_EUSCI_B2 (configBSP430_HAL_EUSCI_B2 - 0)
+#endif /* configBSP430_HPL_EUSCI_B2 */
+
+#if (configBSP430_HAL_EUSCI_B2 - 0) && ! (configBSP430_HPL_EUSCI_B2 - 0)
+#warning configBSP430_HAL_EUSCI_B2 requested without configBSP430_HPL_EUSCI_B2
+#endif /* HAL and not HPL */
+
+/** Handle for the raw EUSCI_B2 device.
+ *
+ * The handle may be used only if #configBSP430_HPL_EUSCI_B2
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B2 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B2 - 0)
+#define BSP430_PERIPH_EUSCI_B2 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_B2_BASEADDRESS_))
+#endif /* configBSP430_HPL_EUSCI_B2 */
+
+/* END AUTOMATICALLY GENERATED CODE [periph_decl] */
+/* !BSP430! end=periph_decl */
+
+/* !BSP430! insert=hpl_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
+/** HPL pointer for EUSCI_B0.
+ *
+ * Typed pointer to a volatile structure overlaying the EUSCI_B0
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_EUSCI_B0
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B0 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B0 - 0)
+#define BSP430_HPL_EUSCI_B0 ((volatile sBSP430hplEUSCIB *)BSP430_PERIPH_EUSCI_B0)
+#endif /* configBSP430_HPL_EUSCI_B0 */
+
+/** HPL pointer for EUSCI_B1.
+ *
+ * Typed pointer to a volatile structure overlaying the EUSCI_B1
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_EUSCI_B1
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B1 - 0)
+#define BSP430_HPL_EUSCI_B1 ((volatile sBSP430hplEUSCIB *)BSP430_PERIPH_EUSCI_B1)
+#endif /* configBSP430_HPL_EUSCI_B1 */
+
+/** HPL pointer for EUSCI_B2.
+ *
+ * Typed pointer to a volatile structure overlaying the EUSCI_B2
+ * peripheral register map.
+ *
+ * The pointer may be used only if #configBSP430_HPL_EUSCI_B2
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B2 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B2 - 0)
+#define BSP430_HPL_EUSCI_B2 ((volatile sBSP430hplEUSCIB *)BSP430_PERIPH_EUSCI_B2)
+#endif /* configBSP430_HPL_EUSCI_B2 */
+
+/* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
+/* !BSP430! end=hpl_decl */
+
 /** eUSCI(A)-specific implementation of hBSP430serialOpenUART() */
 hBSP430halSERIAL xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
                                         unsigned char ctl0_byte,
@@ -504,7 +784,18 @@ int iBSP430eusciaI2CtxData_ni (hBSP430halSERIAL hal,
  */
 volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph);
 
-/** Get the HAL handle for a specific EUSCIA instance.
+/** Get the HPL handle for a specific EUSCIB instance.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_EUSCI_B0.
+ *
+ * @return A typed pointer that can be used to manipulate the
+ * peripheral.  A null pointer is returned if the handle does not
+ * correspond to a timer for which the HPL interface been enabled
+ * (e.g., with #configBSP430_HPL_EUSCI_B0).
+ */
+volatile sBSP430hplEUSCIB * xBSP430hplLookupEUSCIB (tBSP430periphHandle periph);
+
+/** Get the HAL handle for a specific EUSCI (A or B) instance.
  *
  * @param periph The handle identifier, such as #BSP430_PERIPH_EUSCI_A0.
  *
@@ -512,15 +803,15 @@ volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph);
  * returned if the handle does not correspond to a timer for which the
  * HAL interface has been enabled (e.g., with #configBSP430_HAL_EUSCI_A0).
  */
-hBSP430halSERIAL hBSP430eusciaLookup (tBSP430periphHandle periph);
+hBSP430halSERIAL hBSP430eusciLookup (tBSP430periphHandle periph);
 
-/** Get a human-readable identifier for the EUSCI-A peripheral
+/** Get a human-readable identifier for the EUSCI (A or B) peripheral
  *
  * @param periph The handle identifier, such as #BSP430_PERIPH_EUSCI_A0.
  *
  * @return The short name of the port, e.g. "EUSCI_A0".  If the peripheral
  * is not recognized as a EUSCI-A device, a null pointer is returned. */
-const char * xBSP430eusciaName (tBSP430periphHandle periph);
+const char * xBSP430eusciName (tBSP430periphHandle periph);
 
 #endif /* BSP430_PERIPH_EUSCIA_H */
 

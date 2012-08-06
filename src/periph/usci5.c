@@ -337,8 +337,8 @@ iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
 
 int
 iBSP430usci5I2CsetAddresses_ni (hBSP430halSERIAL hal,
-                               int own_address,
-                               int slave_address)
+                                int own_address,
+                                int slave_address)
 {
   if (0 <= own_address) {
     SERIAL_HAL_HPL(hal)->i2coa = own_address;
@@ -351,8 +351,8 @@ iBSP430usci5I2CsetAddresses_ni (hBSP430halSERIAL hal,
 
 int
 iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
-                         uint8_t * data,
-                         size_t len)
+                          uint8_t * data,
+                          size_t len)
 {
   volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
   const uint8_t * dpe = data + len;
@@ -391,8 +391,8 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
 
 int
 iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
-                         const uint8_t * data,
-                         size_t len)
+                          const uint8_t * data,
+                          size_t len)
 {
   volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
   int i = 0;

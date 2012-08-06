@@ -36,10 +36,8 @@
  * If you're interested in the USCI_A or USCI_B from 5xx/6xx devices,
  * you want <bsp430/periph/usci5.h>.
  *
- * If you're interested in the eUSCI_A from FRAM 5xx devices, you want
- * <bsp430/periph/euscia.h>.
- *
- * If you're interested in the eUSCI_B from FRAM 5xx devices, wait.
+ * If you're interested in the eUSCI_A or eUSCI_B from FRAM 5xx
+ * devices, you want <bsp430/periph/eusci.h>.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
