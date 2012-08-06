@@ -266,6 +266,7 @@ struct sBSP430serialDispatch {
   int (* close) (hBSP430halSERIAL hal);
   void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
   void (* flush_ni) (hBSP430halSERIAL hal);
+  int (* uartRxByte_ni) (hBSP430halSERIAL hal);
   int (* uartTxByte_ni) (hBSP430halSERIAL hal,
                          uint8_t c);
   int (* uartTxData_ni) (hBSP430halSERIAL hal,
@@ -538,16 +539,36 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
   return hal->dispatch->flush_ni(hal);
 }
 
+/** Receive a byte over the device.
+ *
+ * This routine should only be invoked when there is no receive
+ * callback registered.  If a callback is present, it is expected to
+ * be used to accept data on reception.
+ *
+ * @param hal the serial device over which the data should be
+ * transmitted
+ *
+ * @return the character received if any is ready to return, or -1 if
+ * the device has no data available
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static __inline__
+int iBSP430serialUARTrxByte_ni (hBSP430halSERIAL hal)
+{
+  return hal->dispatch->uartRxByte_ni(hal);
+}
+
 /** Transmit a byte over the device.
  *
  * This routine should only be invoked when there is no transmit
  * callback registered.  If a callback is present, it is expected to
  * be used to provide data for transmission.
  *
- * @param c a data byte to be transmitted
- *
  * @param hal the serial device over which the data should be
  * transmitted
+ *
+ * @param c a data byte to be transmitted
  *
  * @return the input character @a c if transmitted, or -1 if an error
  * occurred

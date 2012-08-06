@@ -240,6 +240,18 @@ vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL hal)
 }
 
 int
+iBSP430usci5UARTrxByte_ni (hBSP430halSERIAL hal)
+{
+  if (hal->rx_callback) {
+    return -1;
+  }
+  if (SERIAL_HAL_HPL(hal)->ifg & UCRXIFG) {
+    return SERIAL_HAL_HPL(hal)->rxbuf;
+  }
+  return -1;
+}
+
+int
 iBSP430usci5UARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
   if (hal->tx_callback) {
@@ -373,6 +385,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .close = iBSP430usci5Close,
   .wakeupTransmit_ni = vBSP430usci5WakeupTransmit_ni,
   .flush_ni = vBSP430usci5Flush_ni,
+  .uartRxByte_ni = iBSP430usci5UARTrxByte_ni,
   .uartTxByte_ni = iBSP430usci5UARTtxByte_ni,
   .uartTxData_ni = iBSP430usci5UARTtxData_ni,
   .uartTxASCIIZ_ni = iBSP430usci5UARTtxASCIIZ_ni,

@@ -979,6 +979,9 @@ void vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL device);
 /** USCI5-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430usci5Flush_ni (hBSP430halSERIAL device);
 
+/** USCI5-specific implementation of iBSP430serialUARTrxByte_ni() */
+int iBSP430usci5UARTrxByte_ni (hBSP430halSERIAL device);
+
 /** USCI5-specific implementation of iBSP430serialUARTtxByte_ni() */
 int iBSP430usci5UARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
 

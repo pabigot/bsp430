@@ -458,6 +458,9 @@ void vBSP430eusciaWakeupTransmit_ni (hBSP430halSERIAL device);
 /** eUSCI(A)-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430eusciaFlush_ni (hBSP430halSERIAL device);
 
+/** eUSCI(A)-specific implementation of iBSP430serialUARTrxByte_ni() */
+int iBSP430eusciaUARTrxByte_ni (hBSP430halSERIAL device);
+
 /** eUSCI(A)-specific implementation of iBSP430serialUARTtxByte_ni() */
 int iBSP430eusciaUARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
 

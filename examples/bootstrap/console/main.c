@@ -60,10 +60,21 @@ void main ()
 
     /* Now blink and display a counter value every nominal half
      * second.  The blink proves that the loop is running even if
-     * nothing's coming out the serial port. */
+     * nothing's coming out the serial port.  On each iteration,
+     * attempt to read a character and display it if one is
+     * present. */
     while (1) {
+      int rc;
       BSP430_CORE_WATCHDOG_CLEAR();
       BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
+      rc = iBSP430serialUARTrxByte_ni(hBSP430console());
+      if (0 <= rc) {
+        cputtext_ni(" rx char ");
+        cputu_ni(rc, 10);
+        cputtext_ni(" '");
+        cputchar_ni(rc);
+        cputtext_ni("'");
+      }
       cputtext_ni("\nCounter ");
       cputu_ni(counter, 10);
       ++counter;
