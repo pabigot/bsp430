@@ -9,8 +9,13 @@
 #define configBSP430_CONSOLE 1
 
 /* What we use to access the TMP102 */
+#if BSP430_PLATFORM_EXP430F5438 - 0
+#define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3
+#define configBSP430_HAL_USCI5_B3 1
+#else
 #define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
 #define configBSP430_HAL_USCI_B0 1
+#endif
 /* Use SMCLK/40 (=100 kHz) for the I2C speed */
 #define APP_TMP102_I2C_PRESCALER 40
 /* Address for the thing.  0x48 when ADD0 is shorted to GND. */

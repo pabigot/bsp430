@@ -184,6 +184,27 @@ hBSP430usci5OpenSPI (hBSP430halSERIAL hal,
   return usci5Configure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
 }
 
+hBSP430halSERIAL
+hBSP430usci5OpenI2C (hBSP430halSERIAL hal,
+                     unsigned char ctl0_byte,
+                     unsigned char ctl1_byte,
+                     unsigned int prescaler)
+{
+  /* Reject unsupported HALs */
+  if (NULL == hal) {
+    return NULL;
+  }
+  /* Reject invalid prescaler */
+  if (0 == prescaler) {
+    return NULL;
+  }
+
+  /* I2C is synchronous mode 3 */
+  ctl0_byte |= UCMODE_3 | UCSYNC;
+
+  return usci5Configure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
+}
+
 int
 iBSP430usci5ConfigureCallbacks (hBSP430halSERIAL hal,
                                 const struct sBSP430halISRCallbackVoid * rx_callback,
@@ -314,6 +335,74 @@ iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
   return i;
 }
 
+int
+iBSP430usci5I2CsetAddresses_ni (hBSP430halSERIAL hal,
+                               int own_address,
+                               int slave_address)
+{
+  if (0 <= own_address) {
+    SERIAL_HAL_HPL(hal)->i2coa = own_address;
+  }
+  if (0 <= slave_address) {
+    SERIAL_HAL_HPL(hal)->i2csa = slave_address;
+  }
+  return 0;
+}
+
+int
+iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
+                         uint8_t * data,
+                         size_t len)
+{
+  volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
+  const uint8_t * dpe = data + len;
+  int i = 0;
+
+  /* Set for receive */
+  hpl->ctl1 &= ~UCTR;
+  /* Delay for any in-progress stop to complete */
+  while (hpl->ctl1 & UCTXSTP) {
+  }
+  /* Issue a start */
+  hpl->ctl1 |= UCTXSTT;
+  while (data < dpe) {
+    if (dpe == (data+1)) {
+      /* This will be last character: wait for any in-progress start
+       * to complete then issue stop */
+      while (hpl->ctl1 & UCTXSTT) {
+      }
+      hpl->ctl1 |= UCTXSTP;
+    }
+    SERIAL_HPL_RAW_RECEIVE_NI(hpl, *data);
+    ++data;
+  }
+  return i;
+}
+
+int
+iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
+                         const uint8_t * data,
+                         size_t len)
+{
+  volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
+  int i = 0;
+
+  /* Delay for any in-progress stop to complete */
+  while (hpl->ctl1 & UCTXSTP) {
+  }
+  /* Issue a start for transmit */
+  hpl->ctl1 |= UCTR | UCTXSTT;
+  while (i < len) {
+    SERIAL_HPL_RAW_TRANSMIT_NI(hpl, data[i]);
+    ++i;
+  }
+  /* Wait for any in-progress start to complete then issue stop */
+  while (hpl->ctl1 & UCTXSTT) {
+  }
+  hpl->ctl1 |= UCTXSTP;
+  return i;
+}
+
 /* Since the interrupt code is the same for all peripherals, on MCUs
  * with multiple USCI5 devices it is more space efficient to share it.
  * This does add an extra call/return for some minor cost in stack
@@ -381,6 +470,7 @@ usci5_isr (hBSP430halSERIAL hal)
 static struct sBSP430serialDispatch dispatch_ = {
   .openUART = hBSP430usci5OpenUART,
   .openSPI = hBSP430usci5OpenSPI,
+  .openI2C = hBSP430usci5OpenI2C,
   .configureCallbacks = iBSP430usci5ConfigureCallbacks,
   .close = iBSP430usci5Close,
   .wakeupTransmit_ni = vBSP430usci5WakeupTransmit_ni,
@@ -390,6 +480,9 @@ static struct sBSP430serialDispatch dispatch_ = {
   .uartTxData_ni = iBSP430usci5UARTtxData_ni,
   .uartTxASCIIZ_ni = iBSP430usci5UARTtxASCIIZ_ni,
   .spiTxRx_ni = iBSP430usci5SPITxRx_ni,
+  .i2cSetAddresses_ni = iBSP430usci5I2CsetAddresses_ni,
+  .i2cRxData_ni = iBSP430usci5I2CrxData_ni,
+  .i2cTxData_ni = iBSP430usci5I2CtxData_ni,
 };
 
 /* !BSP430! insert=hal_serial_defn */

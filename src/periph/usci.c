@@ -212,7 +212,7 @@ hBSP430usciOpenI2C (hBSP430halSERIAL hal,
   }
   /* Reject invalid prescaler */
   if (0 == prescaler) {
-    hal = NULL;
+    return NULL;
   }
 
   /* I2C is synchronous mode 3 */

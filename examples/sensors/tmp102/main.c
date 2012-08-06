@@ -22,7 +22,7 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-  cprintf("I2C interface on %s\n", xBSP430serialName(APP_TMP102_I2C_PERIPH_HANDLE));
+  cprintf("I2C interface on %s is %p\n", xBSP430serialName(APP_TMP102_I2C_PERIPH_HANDLE), i2c);
   i2c = hBSP430serialOpenI2C(i2c, UCMST, UCSSEL_2, APP_TMP102_I2C_PRESCALER);
   if (! i2c) {
     cprintf("I2C open failed.\n");
@@ -36,8 +36,7 @@ void main ()
     uint8_t data[2];
     uint16_t temp_xCel;
 
-    iBSP430serialI2CtxData_ni(i2c, &pr, 1);
-
+    (void)iBSP430serialI2CtxData_ni(i2c, &pr, 1);
     memset(data, 0, sizeof(data));
     iBSP430serialI2CrxData_ni(i2c, data, sizeof(data));
 
