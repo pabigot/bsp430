@@ -89,58 +89,31 @@ struct sBSP430usciHPLAux {
 #define HAL_HPL_IS_USCI_A(hal_) (NULL == SERIAL_HAL_HPLAUX(hal_)->i2coap)
 #define HAL_HPL_IS_USCI_B(hal_) (NULL != SERIAL_HAL_HPLAUX(hal_)->i2coap)
 
+static
 hBSP430halSERIAL
-hBSP430usciOpenUART (hBSP430halSERIAL hal,
-                     unsigned char ctl0_byte,
-                     unsigned char ctl1_byte,
-                     unsigned long baud)
+usciConfigure (hBSP430halSERIAL hal,
+               unsigned char ctl0_byte,
+               unsigned char ctl1_byte,
+               unsigned int brw,
+               int mctl)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
-  unsigned long brclk_Hz = 0;
-  uint16_t br = 0;
-  uint16_t brs = 0;
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
   do {
-    /* Reject use of USCI_Bx peripherals */
-    if ((NULL == SERIAL_HAL_HPLAUX(hal))
-        || HAL_HPL_IS_USCI_B(hal)) {
-      hal = NULL;
-    }
-    /* Reject invalid baud rates */
-    if ((0 == baud) || (1000000UL < baud)) {
-      hal = NULL;
-    }
-    if (NULL == hal) {
-      break;
-    }
     if (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1)) {
       hal = NULL;
       break;
     }
-    /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
-     * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
-     * anything larger.  */
-    brclk_Hz = usBSP430clockACLK_Hz_ni();
-    ctl0_byte &= ~(UCMODE1 | UCMODE0 | UCSYNC);
-    ctl1_byte &= ~(UCSSEL1 | UCSSEL0);
-    ctl1_byte |= UCSWRST;
-    if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
-      ctl1_byte |= UCSSEL_1;
-    } else {
-      ctl1_byte |= UCSSEL_2;
-      brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
+    SERIAL_HAL_HPL(hal)->ctl1 |= ctl1_byte;
+    SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;
+    SERIAL_HAL_HPL(hal)->br0 = brw % 256;
+    SERIAL_HAL_HPL(hal)->br1 = brw / 256;
+    if (0 <= mctl) {
+      SERIAL_HAL_HPL(hal)->mctl = mctl;
     }
-    SERIAL_HAL_HPL(hal)->ctl1 = ctl1_byte;
-    SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;    
-    br = (brclk_Hz / baud);
-    brs = (1 + 16 * (brclk_Hz - baud * br) / baud) / 2;
-
-    SERIAL_HAL_HPL(hal)->br0 = br % 256;
-    SERIAL_HAL_HPL(hal)->br1 = br / 256;
-    SERIAL_HAL_HPL(hal)->mctl = (0 * UCBRF0) | (brs * UCBRS0);
 
     /* Mark the hal active */
     hal->num_rx = hal->num_tx = 0;
@@ -155,6 +128,49 @@ hBSP430usciOpenUART (hBSP430halSERIAL hal,
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return hal;
+}
+
+
+hBSP430halSERIAL
+hBSP430usciOpenUART (hBSP430halSERIAL hal,
+                     unsigned char ctl0_byte,
+                     unsigned char ctl1_byte,
+                     unsigned long baud)
+{
+  unsigned long brclk_Hz = 0;
+  uint16_t brw = 0;
+  uint16_t brs = 0;
+
+  /* Reject unsupported HALs */
+  if ((NULL == hal)
+      || (NULL == SERIAL_HAL_HPLAUX(hal))
+      || HAL_HPL_IS_USCI_B(hal)) {
+    return NULL;
+  }
+  /* Reject invalid baud rates */
+  if ((0 == baud) || (BSP430_USCI_UART_MAX_BAUD < baud)) {
+    return NULL;
+  }
+
+  /* Force to UART async and wipe out the clock select fields */
+  ctl0_byte &= ~(UCMODE1 | UCMODE0 | UCSYNC);
+  ctl1_byte &= ~(UCSSEL1 | UCSSEL0);
+
+  /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
+   * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
+   * anything larger.  */
+  brclk_Hz = usBSP430clockACLK_Hz_ni();
+  if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
+    ctl1_byte |= UCSSEL_1;
+  } else {
+    ctl1_byte |= UCSSEL_2;
+    brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
+  }
+  
+  brw = (brclk_Hz / baud);
+  brs = (1 + 16 * (brclk_Hz - baud * brw) / baud) / 2;
+
+  return usciConfigure(hal, ctl0_byte, ctl1_byte, brw, (0 * UCBRF0) | (brs * UCBRS0));
 }
 
 hBSP430halSERIAL
@@ -163,50 +179,23 @@ hBSP430usciOpenSPI (hBSP430halSERIAL hal,
                     unsigned char ctl1_byte,
                     unsigned int prescaler)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  /* Reject unsupported HALs */
+  if (NULL == hal) {
+    return NULL;
+  }
+  /* Reject invalid mode */
+  if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
+    return NULL;
+  }
+  /* Reject invalid prescaler */
+  if (0 == prescaler) {
+    return NULL;
+  }
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
-  do {
-    /* Reject invalid mode */
-    if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
-      hal = NULL;
-    }
-    /* Reject invalid prescaler */
-    if (0 == prescaler) {
-      hal = NULL;
-    }
-    /* Reject if the pins can't be configured */
-    if ((NULL != hal)
-        && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
-      hal = NULL;
-    }
-    if (NULL == hal) {
-      break;
-    }
+  /* SPI is synchronous */
+  ctl0_byte |= UCSYNC;
 
-    /* SPI is synchronous; hold USCI in reset during configuration */
-    ctl0_byte |= UCSYNC;
-    ctl1_byte |= UCSWRST;
-    SERIAL_HAL_HPL(hal)->ctl1 = ctl1_byte;
-    SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;    
-    SERIAL_HAL_HPL(hal)->br0 = prescaler % 256;
-    SERIAL_HAL_HPL(hal)->br1 = prescaler / 256;
-
-    /* Mark the hal active */
-    hal->num_rx = hal->num_tx = 0;
-
-    /* Release the USCI and enable the interrupts.  Interrupts are
-     * disabled and cleared when UCSWRST is set. */
-    SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
-    if (0 != hal->rx_callback) {
-      *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
-    }
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-
-  return hal;
+  return usciConfigure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
 }
 
 hBSP430halSERIAL
@@ -215,51 +204,21 @@ hBSP430usciOpenI2C (hBSP430halSERIAL hal,
                     unsigned char ctl1_byte,
                     unsigned int prescaler)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  /* Reject unsupported HALs */
+  if ((NULL == hal)
+      || (NULL == SERIAL_HAL_HPLAUX(hal))
+      || HAL_HPL_IS_USCI_A(hal)) {
+    return NULL;
+  }
+  /* Reject invalid prescaler */
+  if (0 == prescaler) {
+    hal = NULL;
+  }
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
-  do {
-    /* Reject use of USCI_Ax peripherals */
-    if ((NULL == SERIAL_HAL_HPLAUX(hal))
-        || HAL_HPL_IS_USCI_A(hal)) {
-      hal = NULL;
-    }
-    /* Reject invalid prescaler */
-    if (0 == prescaler) {
-      hal = NULL;
-    }
-    /* Reject if the pins can't be configured */
-    if ((NULL != hal)
-        && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
-      hal = NULL;
-    }
-    if (NULL == hal) {
-      break;
-    }
+  /* I2C is synchronous mode 3 */
+  ctl0_byte |= UCMODE_3 | UCSYNC;
 
-    /* I2C is synchronous; hold USCI in reset during configuration */
-    ctl0_byte |= UCMODE_3 | UCSYNC;
-    ctl1_byte |= UCSWRST;
-    SERIAL_HAL_HPL(hal)->ctl1 = ctl1_byte;
-    SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;    
-    SERIAL_HAL_HPL(hal)->br0 = prescaler % 256;
-    SERIAL_HAL_HPL(hal)->br1 = prescaler / 256;
-
-    /* Mark the hal active */
-    hal->num_rx = hal->num_tx = 0;
-
-    /* Release the USCI and enable the interrupts.  Interrupts are
-     * disabled and cleared when UCSWRST is set. */
-    SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
-    if (0 != hal->rx_callback) {
-      *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
-    }
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-
-  return hal;
+  return usciConfigure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
 }
 
 int

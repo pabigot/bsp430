@@ -72,17 +72,84 @@
     }                                                   \
   } while (0)
 
-static void
-hplSetBaudRate (volatile struct sBSP430hplEUSCIA * hpl,
-                unsigned long baud,
-                unsigned long brclk_Hz)
+static
+hBSP430halSERIAL
+eusciaConfigure (hBSP430halSERIAL hal,
+                 unsigned int ctlw0,
+                 unsigned int brw,
+                 unsigned int mctlw,
+                 int set_mctl)
 {
-  unsigned long n;
-  uint16_t br;
-  uint16_t os16 = 0;
-  uint16_t brf = 0;
-  uint16_t brs;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
 
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  SERIAL_HAL_HPL(hal)->ctlw0 = UCSWRST;
+  do {
+    /* Reject if the pins can't be configured */
+    if ((NULL != hal)
+        && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 1))) {
+      hal = NULL;
+      break;
+    }
+    SERIAL_HAL_HPL(hal)->ctlw0 |= ctlw0;
+    SERIAL_HAL_HPL(hal)->brw = brw;
+    if (set_mctl) {
+      SERIAL_HAL_HPL(hal)->mctlw = mctlw;
+    }
+
+    /* Reset device statistics */
+    hal->num_rx = hal->num_tx = 0;
+
+    /* Release the USCI5 and enable the interrupts.  Interrupts are
+     * disabled and cleared when UCSWRST is set. */
+    SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
+  return hal;
+}
+
+hBSP430halSERIAL
+xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
+                       unsigned char ctl0_byte,
+                       unsigned char ctl1_byte,
+                       unsigned long baud)
+{
+  unsigned long brclk_Hz;
+  unsigned long n;
+  unsigned int ctlw0;
+  unsigned int brw;
+  unsigned int mctlw;
+  unsigned int os16 = 0;
+  unsigned int brf = 0;
+  unsigned int brs;
+
+  /* Reject unsupported HALs */
+  if (NULL == hal) {
+    return NULL;
+  }
+
+  /* Reject invalid baud rates */
+  if ((0 == baud) || (BSP430_EUSCIA_UART_MAX_BAUD < baud)) {
+    return NULL;
+  }
+
+  /* Force to UART async and wipe out the clock select fields */
+  ctlw0 = (ctl0_byte << 8) | ctl1_byte;
+  ctlw0 &= ~(UCMODE1 | UCMODE0 | UCSYNC | UCSSEL1 | UCSSEL0);
+
+  /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
+   * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
+   * anything larger.  */
+  brclk_Hz = usBSP430clockACLK_Hz_ni();
+  if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
+    ctlw0 |= UCSSEL__ACLK;
+  } else {
+    ctlw0 |= UCSSEL__SMCLK;
+    brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
+  }
+  
 #define BR_FRACTION_SHIFT 6
   /* The value for BRS is supposed to be a table lookup based on the
    * fractional part of f_brclk / baud.  Rather than replicate the
@@ -94,67 +161,15 @@ hplSetBaudRate (volatile struct sBSP430hplEUSCIA * hpl,
   n >>= BR_FRACTION_SHIFT;
   brs <<= 8 - BR_FRACTION_SHIFT;
 #undef BR_FRACTION_SHIFT
-  br = n;
-  if (16 <= br) {
-    br = br / 16;
+  brw = n;
+  if (16 <= brw) {
+    brw = brw / 16;
     os16 = UCOS16;
-    brf = n - 16 * br;
+    brf = n - 16 * brw;
   }
-  hpl->brw = br;
-  hpl->mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
-}
+  mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
 
-hBSP430halSERIAL
-xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
-                       unsigned char ctl0_byte,
-                       unsigned char ctl1_byte,
-                       unsigned long baud)
-{
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  unsigned long brclk_Hz;
-
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
-  do {
-    /* Reject invalid baud rates */
-    if ((0 == baud) || (1000000UL < baud)) {
-      hal = NULL;
-    }
-    /* Reject if the pins can't be configured */
-    if ((NULL != hal)
-        && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(SERIAL_HAL_HPL(hal)), 1))) {
-      hal = NULL;
-    }
-    if (NULL == hal) {
-      break;
-    }
-    /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
-     * 32 kiHz ACLK for rates that are low enough.  Use SMCLK for
-     * anything larger.  */
-    brclk_Hz = usBSP430clockACLK_Hz_ni();
-    ctl0_byte &= ~(UCMODE1_H | UCMODE0_H | UCSYNC_H);
-    ctl1_byte &= ~(UCSSEL1_L | UCSSEL0_L);
-    ctl1_byte |= UCSWRST_L;
-    if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
-      ctl1_byte |= UCSSEL__ACLK;
-    } else {
-      ctl1_byte |= UCSSEL__SMCLK;
-      brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
-    }
-    SERIAL_HAL_HPL(hal)->ctlw0 = (ctl0_byte << 8) | ctl1_byte;
-    hplSetBaudRate(SERIAL_HAL_HPL(hal), baud, brclk_Hz);
-
-    /* Reset device statistics */
-    hal->num_rx = hal->num_tx = 0;
-
-    /* Release the EUSCIA and enable the interrupts.  Interrupts are
-     * disabled and cleared when UCSWRST is set. */
-    SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-
-  return hal;
+  return eusciaConfigure(hal, ctlw0, brw, mctlw, 1);
 }
 
 int

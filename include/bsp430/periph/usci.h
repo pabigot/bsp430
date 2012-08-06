@@ -60,6 +60,14 @@
 #warning Peripheral not supported by configured MCU
 #endif /* __MSP430_HAS_USCI__ */
 
+/** Maximum baud rate acceptable for UART mode.
+ *
+ * Not to say you can actually get this to work, but the API will reject
+ * configuration of a UART rate above this. */
+#ifndef BSP430_USCI_UART_MAX_BAUD
+#define BSP430_USCI_UART_MAX_BAUD 1000000UL
+#endif /* BSP430_USCI_UART_MAX_BAUD */
+
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 2xx/4xx MCU. */
 typedef struct sBSP430hplUSCI {
   unsigned char ctl0;	/**< UCtxCTL0 */ /* 0x00 */
