@@ -81,6 +81,9 @@ int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
   unsigned int bits = 0;
+  volatile unsigned char * pxsel0 = NULL;
+  volatile unsigned char * pxsel1 = NULL;
+  
   if (BSP430_PERIPH_LFXT1 == device) {
     /* NB: Only XIN (PJ.4) needs to be configured; XOUT follows
      * it. */
@@ -109,28 +112,37 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #if configBSP430_HPL_EUSCI_A0 - 0
   else if (BSP430_PERIPH_EUSCI_A0 == device) {
     bits = BIT0 | BIT1;
-    if (enablep) {
-      P2SEL0 &= ~bits;
-      P2SEL1 |= bits;
-    } else {
-      P2SEL0 &= ~bits;
-      P2SEL1 &= ~bits;
-      P2DIR |= bits;
-    }
-    return 0;
+    pxsel0 = &P2SEL0;
+    pxsel1 = &P2SEL1;
   }
 #endif
   (void)bits;
 #if configBSP430_HPL_EUSCI_A1 - 0
 #error Platform pins not configured
   else if (BSP430_PERIPH_EUSCI_A1 == device) {
+    bits = BIT5 | BIT6;
+    pxsel0 = &P2SEL0;
+    pxsel1 = &P2SEL1;
+    return 0;
   }
 #endif
 #if configBSP430_HPL_EUSCI_B0 - 0
 #error Platform pins not configured
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
+    bits = BIT6 | BIT7;
+    pxsel0 = &P1SEL0;
+    pxsel1 = &P1SEL1;
   }
 #endif
+  if (NULL != pxsel0) {
+    *pxsel0 &= ~bits;
+    if (enablep) {
+      *pxsel1 |= bits;
+    } else {
+      *pxsel1 &= ~bits;
+    }
+    return 0;
+  }
   return -1;
 }
 
