@@ -530,6 +530,12 @@ hBSP430halSERIAL hBSP430usciOpenSPI (hBSP430halSERIAL hal,
                                      unsigned char ctl1_byte,
                                      unsigned int prescaler);
 
+/** USCI-specific implementation of hBSP430serialOpenI2C() */
+hBSP430halSERIAL hBSP430usciOpenI2C (hBSP430halSERIAL hal,
+                                     unsigned char ctl0_byte,
+                                     unsigned char ctl1_byte,
+                                     unsigned int prescaler);
+
 /** USCI-specific implementation of iBSP430serialConfigureCallbacks() */
 int iBSP430usciConfigureCallbacks (hBSP430halSERIAL device,
                                    const struct sBSP430halISRCallbackVoid * rx_callback,

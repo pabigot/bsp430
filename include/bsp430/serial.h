@@ -185,7 +185,7 @@ typedef struct sBSP430halSERIAL {
    * instance. */
   union {
     /** Access to the HPL pointer ignoring its underlying type */
-    void * any;
+    volatile void * any;
 
     /** Access to the HPL pointer as a 2xx/4xx USCI peripheral */
     volatile struct sBSP430hplUSCI * usci;
@@ -253,6 +253,10 @@ struct sBSP430serialDispatch {
                                  unsigned char ctl1_byte,
                                  unsigned long baud);
   hBSP430halSERIAL (* openSPI) (hBSP430halSERIAL hal,
+                                unsigned char ctl0_byte,
+                                unsigned char ctl1_byte,
+                                unsigned int prescaler);
+  hBSP430halSERIAL (* openI2C) (hBSP430halSERIAL hal,
                                 unsigned char ctl0_byte,
                                 unsigned char ctl1_byte,
                                 unsigned int prescaler);
@@ -378,6 +382,57 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
   return hal->dispatch->openSPI(hal, ctl0_byte, ctl1_byte, prescaler);
 }
 
+/** Request and configure a serial device in I2C mode.
+ *
+ * If callbacks had been associated with this device using
+ * #iBSP430serialConfigureCallbacks(), behavior with respect to
+ * interrupts is as if those callbacks were associated during this
+ * call.
+ *
+ * @warning When the underlying implementation is an EUSCI device (as
+ * on FR5xx chips), the header defines used to construct the value @a
+ * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
+ * upper byte of the ctlw0 word that comprises @a ctl0 and @a ctl1 on
+ * these MCUs, so on those devices you must use the @c _H suffix to
+ * select the high-byte version of these constants or divide your
+ * configured value by 256 to place it in the low byte of the
+ * argument.
+ *
+ * @param periph The peripheral device identifier for the USCI device
+ * that is being requested. E.g., #BSP430_PERIPH_USCI_B0.
+ *
+ * @param ctl0_byte The configuration to be written to the device's
+ * ctl0 byte.  For I2C mode, potential values specified in the
+ * <msp430.h> header include #UCA10, #UCSLA10, #UCMMM, and #UCMST (but
+ * <b>see the warning above</b>).  The UCSYNC field is cleared and the
+ * UCMODE field is configured for I2C before being written.
+ *
+ * @param ctl1_byte The configuration to be written to the device's
+ * ctl1 byte.  For I2C mode, potential values specified in the
+ * <msp430.h> header are configuration of the clock (#UCSSEL_0,
+ * #UCSSEL_1, #UCSSEL_2, or #UCSSEL_3) and perhaps #UCTR.  The
+ * #UCSWRST field is controlled by the function.
+ *
+ * @param prescaler The value by which the clock selected in @a
+ * ctl1_byte is divided to produce the I2C clock.  A value of zero
+ * will result in this function returning an error.
+ *
+ * @return @a A peripheral-specific HAL handle if the allocation and
+ * configuration is successful, and a null handle if something went
+ * wrong (e.g., absence of the requested @a periph or a zero-valued @a
+ * prescaler).
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static __inline__
+hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
+                                       unsigned char ctl0_byte,
+                                       unsigned char ctl1_byte,
+                                       unsigned int prescaler)
+{
+  return hal->dispatch->openI2C(hal, ctl0_byte, ctl1_byte, prescaler);
+}
+
 /** Assign callbacks for transmission and reception.
  *
  * Callbacks are assigned within a critical section.  The code waits
@@ -433,7 +488,8 @@ int iBSP430serialConfigureCallbacks (hBSP430halSERIAL hal,
  * queues that were provided through #iBSP430usciConfigureQueues.
  *
  * @param hal a serial HAL handle previously obtained through
- * hBSP430serialOpenUART() or hBSP430serialOpenSPI()
+ * hBSP430serialOpenUART(), hBSP430serialOpenSPI(), or
+ * hBSP430serialOpenI2C().
  *
  * @return 0 if the close occurred without error.
  *

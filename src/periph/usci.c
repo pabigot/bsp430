@@ -78,7 +78,16 @@ struct sBSP430usciHPLAux {
 
   /** Bit within *iep and *ifgp used to denote a TX interrupt */
   unsigned char const tx_bit;
+
+  /** I2C own address register (USCI_Bx only) */
+  volatile unsigned int * i2coap;
+  
+  /** I2C slave address register (USCI_Bx only) */
+  volatile unsigned int * i2csap;
 };
+
+#define HAL_HPL_IS_USCI_A(hal_) (NULL == SERIAL_HAL_HPLAUX(hal_)->i2coap)
+#define HAL_HPL_IS_USCI_B(hal_) (NULL != SERIAL_HAL_HPLAUX(hal_)->i2coap)
 
 hBSP430halSERIAL
 hBSP430usciOpenUART (hBSP430halSERIAL hal,
@@ -95,6 +104,11 @@ hBSP430usciOpenUART (hBSP430halSERIAL hal,
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
   do {
+    /* Reject use of USCI_Bx peripherals */
+    if ((NULL == SERIAL_HAL_HPLAUX(hal))
+        || HAL_HPL_IS_USCI_B(hal)) {
+      hal = NULL;
+    }
     /* Reject invalid baud rates */
     if ((0 == baud) || (1000000UL < baud)) {
       hal = NULL;
@@ -174,6 +188,59 @@ hBSP430usciOpenSPI (hBSP430halSERIAL hal,
 
     /* SPI is synchronous; hold USCI in reset during configuration */
     ctl0_byte |= UCSYNC;
+    ctl1_byte |= UCSWRST;
+    SERIAL_HAL_HPL(hal)->ctl1 = ctl1_byte;
+    SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;    
+    SERIAL_HAL_HPL(hal)->br0 = prescaler % 256;
+    SERIAL_HAL_HPL(hal)->br1 = prescaler / 256;
+
+    /* Mark the hal active */
+    hal->num_rx = hal->num_tx = 0;
+
+    /* Release the USCI and enable the interrupts.  Interrupts are
+     * disabled and cleared when UCSWRST is set. */
+    SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
+    if (0 != hal->rx_callback) {
+      *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
+    }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
+  return hal;
+}
+
+hBSP430halSERIAL
+hBSP430usciOpenI2C (hBSP430halSERIAL hal,
+                    unsigned char ctl0_byte,
+                    unsigned char ctl1_byte,
+                    unsigned int prescaler)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
+  do {
+    /* Reject use of USCI_Ax peripherals */
+    if ((NULL == SERIAL_HAL_HPLAUX(hal))
+        || HAL_HPL_IS_USCI_A(hal)) {
+      hal = NULL;
+    }
+    /* Reject invalid prescaler */
+    if (0 == prescaler) {
+      hal = NULL;
+    }
+    /* Reject if the pins can't be configured */
+    if ((NULL != hal)
+        && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(SERIAL_HAL_HPL(hal)), 1))) {
+      hal = NULL;
+    }
+    if (NULL == hal) {
+      break;
+    }
+
+    /* I2C is synchronous; hold USCI in reset during configuration */
+    ctl0_byte |= UCMODE_3 | UCSYNC;
     ctl1_byte |= UCSWRST;
     SERIAL_HAL_HPL(hal)->ctl1 = ctl1_byte;
     SERIAL_HAL_HPL(hal)->ctl0 = ctl0_byte;    
@@ -315,6 +382,7 @@ iBSP430usciSynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
 static struct sBSP430serialDispatch dispatch_ = {
   .openUART = hBSP430usciOpenUART,
   .openSPI = hBSP430usciOpenSPI,
+  .openI2C = hBSP430usciOpenI2C,
   .configureCallbacks = iBSP430usciConfigureCallbacks,
   .close = iBSP430usciClose,
   .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,
@@ -377,6 +445,8 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
   .ifgp = &IFG2,
   .rx_bit = BIT2,
   .tx_bit = BIT3,
+  .i2coap = &UCB0I2COA,
+  .i2csap = &UCB0I2CSA,
 };
 struct sBSP430halSERIAL xBSP430hal_USCI_B0_ = {
   .hal_state = {
@@ -400,6 +470,8 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
   .ifgp = &UC1IFG,
   .rx_bit = BIT2,
   .tx_bit = BIT3,
+  .i2coap = &UCB1I2COA,
+  .i2csap = &UCB1I2CSA,
 };
 struct sBSP430halSERIAL xBSP430hal_USCI_B1_ = {
   .hal_state = {
