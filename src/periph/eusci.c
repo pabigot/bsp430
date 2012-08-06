@@ -43,11 +43,11 @@
     }                                                                   \
   } while (0)
 
-#define SERIAL_HAL_RAW_TRANSMIT_NI(_hal, _c) do {       \
-    while (! (HAL_HPL_FIELD(_hal,ifg) & UCTXIFG)) {     \
+#define UART_RAW_TRANSMIT_NI(_hal, _c) do {             \
+    while (! (SERIAL_HAL_HPL_A(_hal)->ifg & UCTXIFG)) { \
       ;                                                 \
     }                                                   \
-    HAL_HPL_FIELD(_hal,txbuf) = _c;                     \
+    SERIAL_HAL_HPL_A(_hal)->txbuf = _c;                 \
   } while (0)
 
 #define SERIAL_HAL_FLUSH_NI(_hal) do {                  \
@@ -102,7 +102,7 @@ eusciConfigure (hBSP430halSERIAL hal,
     /* Reset device statistics */
     hal->num_rx = hal->num_tx = 0;
 
-    /* Release the USCI5 and enable the interrupts.  Interrupts are
+    /* Release the eUSCI and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     SERIAL_HAL_RELEASE_NI(hal);
   } while (0);
@@ -175,6 +175,36 @@ hBSP430eusciOpenUART (hBSP430halSERIAL hal,
 }
 
 hBSP430halSERIAL
+hBSP430eusciOpenSPI (hBSP430halSERIAL hal,
+                     unsigned char ctl0_byte,
+                     unsigned char ctl1_byte,
+                     unsigned int prescaler)
+{
+  unsigned int ctlw0;
+
+  /* Reject unsupported HALs */
+  if (NULL == hal) {
+    return NULL;
+  }
+
+  /* Reject invalid mode */
+  ctlw0 = (ctl0_byte << 8) | ctl1_byte;
+  if (UCMODE_3 == (ctlw0 & (UCMODE0 | UCMODE1))) {
+    return NULL;
+  }
+
+  /* Reject invalid prescaler */
+  if (0 == prescaler) {
+    return NULL;
+  }
+
+  /* SPI is synchronous */
+  ctlw0 |= UCSYNC;
+
+  return eusciConfigure(hal, ctlw0, 0, prescaler, 0, 0);
+}
+
+hBSP430halSERIAL
 hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
                      unsigned char ctl0_byte,
                      unsigned char ctl1_byte,
@@ -200,7 +230,8 @@ hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
    * it can't be reconfigured without putting the device in reset,
    * we'll use it for everything.  Which means the spinning receive
    * and transmit are limited to 255-byte transactions. */
-  return eusciConfigure(hal, ctlw0, UCASTP_2, prescaler, 0, 0); }
+  return eusciConfigure(hal, ctlw0, UCASTP_2, prescaler, 0, 0);
+}
 
 int
 iBSP430eusciConfigureCallbacks (hBSP430halSERIAL hal,
@@ -273,7 +304,7 @@ iBSP430eusciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
   if (hal->tx_callback) {
     return -1;
   }
-  SERIAL_HAL_RAW_TRANSMIT_NI(hal, c);
+  UART_RAW_TRANSMIT_NI(hal, c);
   return c;
 }
 
@@ -288,7 +319,7 @@ iBSP430eusciUARTtxData_ni (hBSP430halSERIAL hal,
     return -1;
   }
   while (p < edata) {
-    SERIAL_HAL_RAW_TRANSMIT_NI(hal, *p++);
+    UART_RAW_TRANSMIT_NI(hal, *p++);
   }
   return p - data;
 }
@@ -302,10 +333,40 @@ iBSP430eusciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
     return -1;
   }
   while (*str) {
-    SERIAL_HAL_RAW_TRANSMIT_NI(hal, *str);
+    UART_RAW_TRANSMIT_NI(hal, *str);
     ++str;
   }
   return str - in_string;
+}
+
+int
+iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
+                        const uint8_t * tx_data,
+                        size_t tx_len,
+                        size_t rx_len,
+                        uint8_t * rx_data)
+{
+  size_t transaction_length = tx_len + rx_len;
+  size_t i = 0;
+  volatile unsigned int * ifgp = &HAL_HPL_FIELD(hal, ifg);
+  volatile unsigned int * txbp = &HAL_HPL_FIELD(hal, txbuf);
+  volatile unsigned int * rxbp = &HAL_HPL_FIELD(hal, rxbuf);
+
+  if (hal->tx_callback) {
+    return -1;
+  }
+  while (i < transaction_length) {
+    while (! (UCTXIFG & *ifgp)) {
+      ;
+    }
+    *txbp = (i < tx_len) ? tx_data[i] : i;
+    while (! (UCRXIFG & *ifgp)) {
+      ;
+    }
+    *rx_data++ = *rxbp;
+    ++i;
+  }
+  return i;
 }
 
 int
@@ -463,7 +524,7 @@ euscia_isr (hBSP430halSERIAL hal)
 
 static struct sBSP430serialDispatch dispatch_ = {
   .openUART = hBSP430eusciOpenUART,
-  //  .openSPI = hBSP430eusciOpenSPI,
+  .openSPI = hBSP430eusciOpenSPI,
   .openI2C = hBSP430eusciOpenI2C,
   .configureCallbacks = iBSP430eusciConfigureCallbacks,
   .close = iBSP430eusciClose,
@@ -473,6 +534,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .uartTxByte_ni = iBSP430eusciUARTtxByte_ni,
   .uartTxData_ni = iBSP430eusciUARTtxData_ni,
   .uartTxASCIIZ_ni = iBSP430eusciUARTtxASCIIZ_ni,
+  .spiTxRx_ni = iBSP430eusciSPITxRx_ni,
   .i2cSetAddresses_ni = iBSP430eusciI2CsetAddresses_ni,
   .i2cRxData_ni = iBSP430eusciI2CrxData_ni,
   .i2cTxData_ni = iBSP430eusciI2CtxData_ni,

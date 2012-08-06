@@ -126,6 +126,12 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #endif
 #if configBSP430_HPL_EUSCI_B0 - 0
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
+    P2SEL0 &= ~BIT2;
+    if (enablep) {
+      P2SEL1 |= BIT2;
+    } else {
+      P2SEL1 &= ~BIT2;
+    }
     bits = BIT6 | BIT7;
     pxsel0 = &P1SEL0;
     pxsel1 = &P1SEL1;
