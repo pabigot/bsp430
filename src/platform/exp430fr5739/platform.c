@@ -83,7 +83,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
   unsigned int bits = 0;
   volatile unsigned char * pxsel0 = NULL;
   volatile unsigned char * pxsel1 = NULL;
-  
+
   if (BSP430_PERIPH_LFXT1 == device) {
     /* NB: Only XIN (PJ.4) needs to be configured; XOUT follows
      * it. */

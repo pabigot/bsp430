@@ -59,12 +59,17 @@
 /** Field value for variant stored in
  * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplUSCI5. */
-#define BSP430_SERIAL_HAL_HPL_VARIANT_USCI5 1
+#define BSP430_SERIAL_HAL_HPL_VARIANT_USCI5 2
 
 /** Field value for variant stored in
  * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplEUSCIA. */
-#define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA 1
+#define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA 3
+
+/** Field value for variant stored in
+ * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * #sBSP430hplEUSCIA. */
+#define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB 4
 
 /** @def configBSP430_SERIAL_USE_USCI
  *
@@ -105,7 +110,7 @@
 #define configBSP430_SERIAL_USE_EUSCI (defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_B0__))
 #endif /* configBSP430_SERIAL_USE_EUSCI */
 
-/* !BSP430! instance=usci,usci5,euscia */
+/* !BSP430! instance=usci,usci5,euscia,euscib */
 /* !BSP430! periph=serial insert=hal_variant_hpl_macro */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_variant_hpl_macro] */
 /** True iff the HPL pointer of the serial HAL is a USCI variant. */
@@ -147,6 +152,19 @@
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIA(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(_hal)) ? (_hal)->hpl_aux.euscia : (void *)0)
 
+/** True iff the HPL pointer of the serial HAL is a EUSCIB variant. */
+#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal) (BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
+
+/** Get the serial HPL pointer if the HAL is a EUSCIB variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430_SERIAL_HAL_GET_HPL_EUSCIB(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal)) ? (_hal)->hpl.euscib : (void *)0)
+
+/** Get the serial HPL auxiliary pointer if the HAL is a EUSCIB variant.
+ *
+ * Value is a null pointer if the HAL references a different HPL type. */
+#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIB(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal)) ? (_hal)->hpl_aux.euscib : (void *)0)
+
 /* END AUTOMATICALLY GENERATED CODE [hal_variant_hpl_macro] */
 /* !BSP430! end=hal_variant_hpl_macro */
 
@@ -155,6 +173,7 @@ struct sBSP430hplUSCI;
 struct sBSP430usciHPLAux;
 struct sBSP430hplUSCI5;
 struct sBSP430hplEUSCIA;
+struct sBSP430hplEUSCIB;
 struct sBSP430serialDispatch;
 
 /** Structure holding hardware abstraction layer state for serial
@@ -182,6 +201,9 @@ typedef struct sBSP430halSERIAL {
 
     /** Access to the HPL pointer as a 5xx/6xx eUSCI type A peripheral */
     volatile struct sBSP430hplEUSCIA * euscia;
+
+    /** Access to the HPL pointer as a 5xx/6xx eUSCI type B peripheral */
+    volatile struct sBSP430hplEUSCIB * euscib;
   } const hpl;
 
   /** Support for additional data specific to the HPL that is not part

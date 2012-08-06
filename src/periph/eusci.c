@@ -33,40 +33,42 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph/eusci.h>
 
-#define SERIAL_HAL_HPL(_hal) BSP430_SERIAL_HAL_GET_HPL_EUSCIA(_hal)
+#define SERIAL_HAL_HPL_A(_hal) (_hal)->hpl.euscia
+#define SERIAL_HAL_HPL_B(_hal) (_hal)->hpl.euscib
+#define HAL_HPL_FIELD(_hal,_fld) (*(BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal) ? &(_hal)->hpl.euscib->_fld : &(_hal)->hpl.euscia->_fld))
 
-#define SERIAL_HPL_WAKEUP_TRANSMIT_NI(_hpl) do {        \
-    if (! (_hpl->ie & UCTXIE)) {                        \
-      _hpl->ie |= (_hpl->ifg & UCTXIFG);                \
-    }                                                   \
+#define SERIAL_HAL_WAKEUP_TRANSMIT_NI(_hal) do {                        \
+    if (! (HAL_HPL_FIELD(_hal,ie) & UCTXIE)) {                          \
+      HAL_HPL_FIELD(_hal,ie) |= (HAL_HPL_FIELD(_hal,ifg) & UCTXIFG);    \
+    }                                                                   \
   } while (0)
 
-#define SERIAL_HPL_RAW_TRANSMIT_NI(_hpl, _c) do {       \
-    while (! (_hpl->ifg & UCTXIFG)) {                   \
+#define SERIAL_HAL_RAW_TRANSMIT_NI(_hal, _c) do {       \
+    while (! (HAL_HPL_FIELD(_hal,ifg) & UCTXIFG)) {     \
       ;                                                 \
     }                                                   \
-    _hpl->txbuf = _c;                                   \
+    HAL_HPL_FIELD(_hal,txbuf) = _c;                     \
   } while (0)
 
-#define SERIAL_HPL_FLUSH_NI(_hpl) do {          \
-    while (_hpl->statw & UCBUSY) {              \
-      ;                                         \
-    }                                           \
-  } while (0)
-
-#define SERIAL_HPL_RESET_NI(_hpl) do {          \
-    (_hpl)->ctlw0 = UCSWRST;                    \
-  } while (0)
-
-#define SERIAL_HPL_HOLD_HPL_NI(_hpl) do {       \
-    (_hpl)->ctlw0 |= UCSWRST;                   \
-  } while (0)
-
-#define SERIAL_HPL_RELEASE_HPL_NI(_hal,_hpl) do {       \
-    (_hpl)->ctlw0 &= ~UCSWRST;                          \
-    if ((_hal)->rx_callback) {                          \
-      (_hpl)->ie |= UCRXIE;                             \
+#define SERIAL_HAL_FLUSH_NI(_hal) do {                  \
+    while (HAL_HPL_FIELD(_hal,statw) & UCBUSY) {        \
+      ;                                                 \
     }                                                   \
+  } while (0)
+
+#define SERIAL_HAL_RESET_NI(_hal) do {          \
+    HAL_HPL_FIELD(_hal,ctlw0) = UCSWRST;        \
+  } while (0)
+
+#define SERIAL_HAL_HOLD_NI(_hal) do {       \
+    HAL_HPL_FIELD(_hal,ctlw0) |= UCSWRST;       \
+  } while (0)
+
+#define SERIAL_HAL_RELEASE_NI(_hal) do {        \
+    HAL_HPL_FIELD(_hal,ctlw0) &= ~UCSWRST;      \
+    if ((_hal)->rx_callback) {                  \
+      HAL_HPL_FIELD(_hal,ie) |= UCRXIE;         \
+    }                                           \
   } while (0)
 
 static
@@ -81,18 +83,18 @@ eusciaConfigure (hBSP430halSERIAL hal,
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  SERIAL_HAL_HPL(hal)->ctlw0 = UCSWRST;
+  HAL_HPL_FIELD(hal,ctlw0) = UCSWRST;
   do {
     /* Reject if the pins can't be configured */
     if ((NULL != hal)
-        && (0 != iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)), 1))) {
+        && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), 1))) {
       hal = NULL;
       break;
     }
-    SERIAL_HAL_HPL(hal)->ctlw0 |= ctlw0;
-    SERIAL_HAL_HPL(hal)->brw = brw;
+    HAL_HPL_FIELD(hal, ctlw0) |= ctlw0;
+    HAL_HPL_FIELD(hal, brw) = brw;
     if (set_mctl) {
-      SERIAL_HAL_HPL(hal)->mctlw = mctlw;
+      SERIAL_HAL_HPL_A(hal)->mctlw = mctlw;
     }
 
     /* Reset device statistics */
@@ -100,7 +102,7 @@ eusciaConfigure (hBSP430halSERIAL hal,
 
     /* Release the USCI5 and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
-    SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
+    SERIAL_HAL_RELEASE_NI(hal);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -181,8 +183,8 @@ iBSP430eusciaConfigureCallbacks (hBSP430halSERIAL hal,
   BSP430_CORE_DISABLE_INTERRUPT();
   /* Finish any current activity, inhibiting the start of new activity
    * due to !GIE. */
-  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
-  SERIAL_HPL_HOLD_HPL_NI(SERIAL_HAL_HPL(hal));
+  SERIAL_HAL_FLUSH_NI(hal);
+  SERIAL_HAL_HOLD_NI(hal);
   if (hal->rx_callback || hal->tx_callback) {
     rc = -1;
   } else {
@@ -191,7 +193,7 @@ iBSP430eusciaConfigureCallbacks (hBSP430halSERIAL hal,
   }
   /* Release the EUSCIA and enable the interrupts.  Interrupts are
    * disabled and cleared when UCSWRST is set. */
-  SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
+  SERIAL_HAL_RELEASE_NI(hal);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rc;
 }
@@ -204,8 +206,8 @@ iBSP430eusciaClose (hBSP430halSERIAL hal)
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
-  rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(SERIAL_HAL_HPL(hal)), 0);
+  SERIAL_HAL_RESET_NI(hal);
+  rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rc;
 }
@@ -213,13 +215,13 @@ iBSP430eusciaClose (hBSP430halSERIAL hal)
 void
 vBSP430eusciaFlush_ni (hBSP430halSERIAL hal)
 {
-  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
+  SERIAL_HAL_FLUSH_NI(hal);
 }
 
 void
 vBSP430eusciaWakeupTransmit_ni (hBSP430halSERIAL hal)
 {
-  SERIAL_HPL_WAKEUP_TRANSMIT_NI(SERIAL_HAL_HPL(hal));
+  SERIAL_HAL_WAKEUP_TRANSMIT_NI(hal);
 }
 
 int
@@ -228,8 +230,8 @@ iBSP430eusciaUARTrxByte_ni (hBSP430halSERIAL hal)
   if (hal->rx_callback) {
     return -1;
   }
-  if (SERIAL_HAL_HPL(hal)->ifg & UCRXIFG) {
-    return SERIAL_HAL_HPL(hal)->rxbuf;
+  if (SERIAL_HAL_HPL_A(hal)->ifg & UCRXIFG) {
+    return SERIAL_HAL_HPL_A(hal)->rxbuf;
   }
   return -1;
 }
@@ -240,7 +242,7 @@ iBSP430eusciaUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
   if (hal->tx_callback) {
     return -1;
   }
-  SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), c);
+  SERIAL_HAL_RAW_TRANSMIT_NI(hal, c);
   return c;
 }
 
@@ -255,7 +257,7 @@ iBSP430eusciaUARTtxData_ni (hBSP430halSERIAL hal,
     return -1;
   }
   while (p < edata) {
-    SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), *p++);
+    SERIAL_HAL_RAW_TRANSMIT_NI(hal, *p++);
   }
   return p - data;
 }
@@ -269,7 +271,7 @@ iBSP430eusciaUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
     return -1;
   }
   while (*str) {
-    SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), *str);
+    SERIAL_HAL_RAW_TRANSMIT_NI(hal, *str);
     ++str;
   }
   return str - in_string;
@@ -301,7 +303,7 @@ euscia_isr (hBSP430halSERIAL hal)
 {
   int rv = 0;
 
-  switch (SERIAL_HAL_HPL(hal)->iv) {
+  switch (SERIAL_HAL_HPL_A(hal)->iv) {
     default:
     case USCI_NONE:
       break;
@@ -310,7 +312,7 @@ euscia_isr (hBSP430halSERIAL hal)
       if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
         /* Found some data; send it out */
         ++hal->num_tx;
-        SERIAL_HAL_HPL(hal)->txbuf = hal->tx_byte;
+        SERIAL_HAL_HPL_A(hal)->txbuf = hal->tx_byte;
       } else {
         /* No data; mark transmission disabled */
         rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
@@ -319,12 +321,12 @@ euscia_isr (hBSP430halSERIAL hal)
        * function is ready so when the interrupt is next set it will
        * fire. */
       if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
-        SERIAL_HAL_HPL(hal)->ie &= ~UCTXIE;
-        SERIAL_HAL_HPL(hal)->ifg |= UCTXIFG;
+        SERIAL_HAL_HPL_A(hal)->ie &= ~UCTXIE;
+        SERIAL_HAL_HPL_A(hal)->ifg |= UCTXIFG;
       }
       break;
     case USCI_UART_UCRXIFG: /* == USCI_SPI_UCRXIFG */
-      hal->rx_byte = SERIAL_HAL_HPL(hal)->rxbuf;
+      hal->rx_byte = SERIAL_HAL_HPL_A(hal)->rxbuf;
       ++hal->num_rx;
       rv = iBSP430callbackInvokeISRVoid_ni(&hal->rx_callback, hal, 0);
       break;
