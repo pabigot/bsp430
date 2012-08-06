@@ -33,13 +33,21 @@ void main ()
 #define BSP430_TMP_xCel_TO_ddegF(xcel_) (320 + ((9 * (xcel_ >> 1)) / (4 >> (1 & (xcel_)))))
 
   while (1) {
+    int rc;
     uint8_t data[2];
     uint16_t temp_xCel;
 
-    (void)iBSP430serialI2CtxData_ni(i2c, &pr, 1);
+    rc = iBSP430serialI2CtxData_ni(i2c, &pr, 1);
+    if (0 > rc) {
+      cprintf("I2C TX ERROR\n");
+      continue;
+    }
     memset(data, 0, sizeof(data));
-    iBSP430serialI2CrxData_ni(i2c, data, sizeof(data));
-
+    rc = iBSP430serialI2CrxData_ni(i2c, data, sizeof(data));
+    if (0 > rc) {
+      cprintf("I2C RX ERROR\n");
+      continue;
+    }
     temp_xCel = data[1] | (data[0] << 8);
     if (0 == pr) {
       cprintf("temp 0x%04x = %d d[degF]\n", temp_xCel, BSP430_TMP_xCel_TO_ddegF(temp_xCel));

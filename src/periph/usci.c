@@ -36,8 +36,8 @@
 /* !BSP430! periph=usci */
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
-#define SERIAL_HAL_HPL(_hal) BSP430_SERIAL_HAL_GET_HPL_USCI(_hal)
-#define SERIAL_HAL_HPLAUX(_hal) BSP430_SERIAL_HAL_GET_HPLAUX_USCI(_hal)
+#define SERIAL_HAL_HPL(_hal) (_hal)->hpl.usci
+#define SERIAL_HAL_HPLAUX(_hal) (_hal)->hpl_aux.usci
 
 #define WAKEUP_TRANSMIT_HAL_NI(_hal) do {               \
     if (! (*SERIAL_HAL_HPLAUX(_hal)->iep & SERIAL_HAL_HPLAUX(_hal)->tx_bit)) {            \
@@ -369,6 +369,7 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
                          size_t len)
 {
   volatile struct sBSP430hplUSCI * hpl = SERIAL_HAL_HPL(hal);
+  struct sBSP430usciHPLAux * aux = SERIAL_HAL_HPLAUX(hal);
   const uint8_t * dpe = data + len;
   int i = 0;
 
@@ -376,6 +377,9 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
   hpl->ctl1 &= ~UCTR;
   /* Delay for any in-progress stop to complete */
   while (hpl->ctl1 & UCTXSTP) {
+    if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+      return -1;
+    }
   }
   /* Issue a start */
   hpl->ctl1 |= UCTXSTT;
@@ -384,11 +388,18 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
       /* This will be last character: wait for any in-progress start
        * to complete then issue stop */
       while (hpl->ctl1 & UCTXSTT) {
+        if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+          return -1;
+        }
       }
       hpl->ctl1 |= UCTXSTP;
     }
-    RAW_RECEIVE_HAL_NI(hal, *data);
-    ++data;
+    while (! (aux->rx_bit & *aux->ifgp)) {
+      if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+        return -1;
+      }
+    }
+    *data++ = hpl->rxbuf;
   }
   return i;
 }
@@ -399,19 +410,30 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
                          size_t len)
 {
   volatile struct sBSP430hplUSCI * hpl = SERIAL_HAL_HPL(hal);
+  struct sBSP430usciHPLAux * aux = SERIAL_HAL_HPLAUX(hal);
   int i = 0;
 
   /* Delay for any in-progress stop to complete */
   while (hpl->ctl1 & UCTXSTP) {
+    if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+      return -1;
+    }
   }
   /* Issue a start for transmit */
   hpl->ctl1 |= UCTR | UCTXSTT;
   while (i < len) {
-    RAW_TRANSMIT_HAL_NI(hal, data[i]);
-    ++i;
+    while (! (aux->tx_bit & *aux->ifgp)) {
+      if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+        return -1;
+      }
+    }
+    hpl->txbuf = data[i++];
   }
   /* Wait for any in-progress start to complete then issue stop */
   while (hpl->ctl1 & UCTXSTT) {
+    if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+      return -1;
+    }
   }
   hpl->ctl1 |= UCTXSTP;
   return i;
