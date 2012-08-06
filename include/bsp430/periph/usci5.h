@@ -979,17 +979,17 @@ void vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL device);
 /** USCI5-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430usci5Flush_ni (hBSP430halSERIAL device);
 
-/** USCI5-specific implementation of iBSP430serialTransmitByte_ni() */
-int iBSP430usci5TransmitByte_ni (hBSP430halSERIAL device, int c);
+/** USCI5-specific implementation of iBSP430serialUARTtxByte_ni() */
+int iBSP430usci5UARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
 
-/** USCI5-specific implementation of iBSP430serialTransmitData_ni() */
-int iBSP430usci5TransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
+/** USCI5-specific implementation of iBSP430serialUARTtxData_ni() */
+int iBSP430usci5UARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** USCI5-specific implementation of iBSP430serialTransmitASCIIZ_ni() */
-int iBSP430usci5TransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
+/** USCI5-specific implementation of iBSP430serialUARTtxASCIIZ_ni() */
+int iBSP430usci5UARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
-/** USCI5-specific implementation of iBSP430serialSynchronousTransmitReceive_ni() */
-int iBSP430usci5SynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
+/** USCI5-specific implementation of iBSP430serialSPITxRx_ni() */
+int iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
                                                const uint8_t * tx_data,
                                                size_t tx_len,
                                                size_t rx_len,

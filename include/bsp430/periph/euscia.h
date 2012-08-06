@@ -458,14 +458,14 @@ void vBSP430eusciaWakeupTransmit_ni (hBSP430halSERIAL device);
 /** eUSCI(A)-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430eusciaFlush_ni (hBSP430halSERIAL device);
 
-/** eUSCI(A)-specific implementation of iBSP430serialTransmitByte_ni() */
-int iBSP430eusciaTransmitByte_ni (hBSP430halSERIAL device, int c);
+/** eUSCI(A)-specific implementation of iBSP430serialUARTtxByte_ni() */
+int iBSP430eusciaUARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
 
-/** eUSCI(A)-specific implementation of iBSP430serialTransmitData_ni() */
-int iBSP430eusciaTransmitData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
+/** eUSCI(A)-specific implementation of iBSP430serialUARTtxData_ni() */
+int iBSP430eusciaUARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** eUSCI(A)-specific implementation of iBSP430serialTransmitASCIIZ_ni() */
-int iBSP430eusciaTransmitASCIIZ_ni (hBSP430halSERIAL device, const char * str);
+/** eUSCI(A)-specific implementation of iBSP430serialUARTtxASCIIZ_ni() */
+int iBSP430eusciaUARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 /** Get the HPL handle for a specific EUSCIA instance.
  *

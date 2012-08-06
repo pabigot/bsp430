@@ -276,7 +276,7 @@ vBSP430usciWakeupTransmit_ni (hBSP430halSERIAL hal)
 }
 
 int
-iBSP430usciTransmitByte_ni (hBSP430halSERIAL hal, int c)
+iBSP430usciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
   if (hal->tx_callback) {
     return -1;
@@ -286,7 +286,7 @@ iBSP430usciTransmitByte_ni (hBSP430halSERIAL hal, int c)
 }
 
 int
-iBSP430usciTransmitData_ni (hBSP430halSERIAL hal,
+iBSP430usciUARTtxData_ni (hBSP430halSERIAL hal,
                             const uint8_t * data,
                             size_t len)
 {
@@ -302,7 +302,7 @@ iBSP430usciTransmitData_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430usciTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+iBSP430usciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
@@ -317,7 +317,7 @@ iBSP430usciTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 }
 
 int
-iBSP430usciSynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
+iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
                                           const uint8_t * tx_data,
                                           size_t tx_len,
                                           size_t rx_len,
@@ -346,10 +346,10 @@ static struct sBSP430serialDispatch dispatch_ = {
   .close = iBSP430usciClose,
   .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,
   .flush_ni = vBSP430usciFlush_ni,
-  .transmitByte_ni = iBSP430usciTransmitByte_ni,
-  .transmitData_ni = iBSP430usciTransmitData_ni,
-  .transmitASCIIZ_ni = iBSP430usciTransmitASCIIZ_ni,
-  .synchronousTransmitReceive_ni = iBSP430usciSynchronousTransmitReceive_ni,
+  .uartTxByte_ni = iBSP430usciUARTtxByte_ni,
+  .uartTxData_ni = iBSP430usciUARTtxData_ni,
+  .uartTxASCIIZ_ni = iBSP430usciUARTtxASCIIZ_ni,
+  .spiTxRx_ni = iBSP430usciSPITxRx_ni,
 };
 
 #if configBSP430_HAL_USCI_A0 - 0

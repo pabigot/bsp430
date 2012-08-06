@@ -266,12 +266,13 @@ struct sBSP430serialDispatch {
   int (* close) (hBSP430halSERIAL hal);
   void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
   void (* flush_ni) (hBSP430halSERIAL hal);
-  int (* transmitByte_ni) (hBSP430halSERIAL hal, int c);
-  int (* transmitData_ni) (hBSP430halSERIAL hal,
-                           const uint8_t * data,
-                           size_t len);
-  int (* transmitASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
-  int (* synchronousTransmitReceive_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
+  int (* uartTxByte_ni) (hBSP430halSERIAL hal,
+                         uint8_t c);
+  int (* uartTxData_ni) (hBSP430halSERIAL hal,
+                         const uint8_t * data,
+                         size_t len);
+  int (* uartTxASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
+  int (* spiTxRx_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
 };
 /** @endcond */
 
@@ -554,9 +555,9 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-int iBSP430serialTransmitByte_ni (hBSP430halSERIAL hal, int c)
+int iBSP430serialUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
-  return hal->dispatch->transmitByte_ni(hal, c);
+  return hal->dispatch->uartTxByte_ni(hal, c);
 }
 
 /** Transmit a block of data over the device.
@@ -577,11 +578,11 @@ int iBSP430serialTransmitByte_ni (hBSP430halSERIAL hal, int c)
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-int iBSP430serialTransmitData_ni (hBSP430halSERIAL hal,
-                                  const uint8_t * data,
-                                  size_t len)
+int iBSP430serialUARTtxData_ni (hBSP430halSERIAL hal,
+                                const uint8_t * data,
+                                size_t len)
 {
-  return hal->dispatch->transmitData_ni(hal, data, len);
+  return hal->dispatch->uartTxData_ni(hal, data, len);
 }
 
 
@@ -604,9 +605,9 @@ int iBSP430serialTransmitData_ni (hBSP430halSERIAL hal,
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+int iBSP430serialUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
-  return hal->dispatch->transmitASCIIZ_ni(hal, str);
+  return hal->dispatch->uartTxASCIIZ_ni(hal, str);
 }
 
 /** Transmit and receive using synchronous serial (SPI or I2C)
@@ -638,13 +639,13 @@ int iBSP430serialTransmitASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * error occcured.
  */
 static __inline__
-int iBSP430serialSynchronousTransmitReceive_ni (hBSP430halSERIAL hal,
+int iBSP430serialSPITxRx_ni (hBSP430halSERIAL hal,
                                                 const uint8_t * tx_data,
                                                 size_t tx_len,
                                                 size_t rx_len,
                                                 uint8_t * rx_data)
 {
-  return hal->dispatch->synchronousTransmitReceive_ni(hal, tx_data, tx_len, rx_len, rx_data);
+  return hal->dispatch->spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);
 }
 
 
