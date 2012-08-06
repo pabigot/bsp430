@@ -23,11 +23,14 @@ void main ()
   (void)iBSP430consoleInitialize();
 
   cprintf("I2C interface on %s is %p\n", xBSP430serialName(APP_TMP102_I2C_PERIPH_HANDLE), i2c);
-  i2c = hBSP430serialOpenI2C(i2c, UCMST, UCSSEL_2, APP_TMP102_I2C_PRESCALER);
+  /* Ugliness to accomodate value change in UCMST with eUSCI */
+  i2c = hBSP430serialOpenI2C(i2c, (0x100 <= UCMST) ? (UCMST >> 8) : UCMST,
+                             UCSSEL_2, APP_TMP102_I2C_PRESCALER);
   if (! i2c) {
     cprintf("I2C open failed.\n");
     return;
   }
+
   (void)iBSP430serialI2CsetAddresses_ni(i2c, -1, APP_TMP102_I2C_ADDRESS);
 
 #define BSP430_TMP_xCel_TO_ddegF(xcel_) (320 + ((9 * (xcel_ >> 1)) / (4 >> (1 & (xcel_)))))

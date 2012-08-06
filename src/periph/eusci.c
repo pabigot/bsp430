@@ -73,11 +73,12 @@
 
 static
 hBSP430halSERIAL
-eusciaConfigure (hBSP430halSERIAL hal,
-                 unsigned int ctlw0,
-                 unsigned int brw,
-                 unsigned int mctlw,
-                 int set_mctl)
+eusciConfigure (hBSP430halSERIAL hal,
+                unsigned int ctlw0,
+                unsigned int ctlw1,
+                unsigned int brw,
+                unsigned int mctlw,
+                int set_mctl)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
@@ -92,6 +93,7 @@ eusciaConfigure (hBSP430halSERIAL hal,
       break;
     }
     HAL_HPL_FIELD(hal, ctlw0) |= ctlw0;
+    HAL_HPL_FIELD(hal, ctlw1) = ctlw1;
     HAL_HPL_FIELD(hal, brw) = brw;
     if (set_mctl) {
       SERIAL_HAL_HPL_A(hal)->mctlw = mctlw;
@@ -110,10 +112,10 @@ eusciaConfigure (hBSP430halSERIAL hal,
 }
 
 hBSP430halSERIAL
-xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
-                       unsigned char ctl0_byte,
-                       unsigned char ctl1_byte,
-                       unsigned long baud)
+hBSP430eusciOpenUART (hBSP430halSERIAL hal,
+                      unsigned char ctl0_byte,
+                      unsigned char ctl1_byte,
+                      unsigned long baud)
 {
   unsigned long brclk_Hz;
   unsigned long n;
@@ -125,12 +127,13 @@ xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
   unsigned int brs;
 
   /* Reject unsupported HALs */
-  if (NULL == hal) {
+  if ((NULL == hal)
+      || (! BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(hal))) {
     return NULL;
   }
 
   /* Reject invalid baud rates */
-  if ((0 == baud) || (BSP430_EUSCIA_UART_MAX_BAUD < baud)) {
+  if ((0 == baud) || (BSP430_EUSCI_UART_MAX_BAUD < baud)) {
     return NULL;
   }
 
@@ -168,13 +171,41 @@ xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
   }
   mctlw = (brf * UCBRF0) | (brs * UCBRS0) | os16;
 
-  return eusciaConfigure(hal, ctlw0, brw, mctlw, 1);
+  return eusciConfigure(hal, ctlw0, 0, brw, mctlw, 1);
 }
 
+hBSP430halSERIAL
+hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
+                     unsigned char ctl0_byte,
+                     unsigned char ctl1_byte,
+                     unsigned int prescaler)
+{
+  unsigned int ctlw0;
+
+  /* Reject unsupported HALs */
+  if ((NULL == hal)
+      || (! BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(hal))) {
+    return NULL;
+  }
+  /* Reject invalid prescaler */
+  if (0 == prescaler) {
+    return NULL;
+  }
+
+  /* I2C is synchronous mode 3 */
+  ctlw0 = (ctl0_byte << 8) | ctl1_byte;
+  ctlw0 |= UCMODE_3 | UCSYNC;
+
+  /* Using UCASTP_2 is recommended for single-byte writes, but since
+   * it can't be reconfigured without putting the device in reset,
+   * we'll use it for everything.  Which means the spinning receive
+   * and transmit are limited to 255-byte transactions. */
+  return eusciConfigure(hal, ctlw0, UCASTP_2, prescaler, 0, 0); }
+
 int
-iBSP430eusciaConfigureCallbacks (hBSP430halSERIAL hal,
-                                 const struct sBSP430halISRCallbackVoid * rx_callback,
-                                 const struct sBSP430halISRCallbackVoid * tx_callback)
+iBSP430eusciConfigureCallbacks (hBSP430halSERIAL hal,
+                                const struct sBSP430halISRCallbackVoid * rx_callback,
+                                const struct sBSP430halISRCallbackVoid * tx_callback)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc = 0;
@@ -199,7 +230,7 @@ iBSP430eusciaConfigureCallbacks (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430eusciaClose (hBSP430halSERIAL hal)
+iBSP430eusciClose (hBSP430halSERIAL hal)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rc;
@@ -213,19 +244,19 @@ iBSP430eusciaClose (hBSP430halSERIAL hal)
 }
 
 void
-vBSP430eusciaFlush_ni (hBSP430halSERIAL hal)
+vBSP430eusciFlush_ni (hBSP430halSERIAL hal)
 {
   SERIAL_HAL_FLUSH_NI(hal);
 }
 
 void
-vBSP430eusciaWakeupTransmit_ni (hBSP430halSERIAL hal)
+vBSP430eusciWakeupTransmit_ni (hBSP430halSERIAL hal)
 {
   SERIAL_HAL_WAKEUP_TRANSMIT_NI(hal);
 }
 
 int
-iBSP430eusciaUARTrxByte_ni (hBSP430halSERIAL hal)
+iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL hal)
 {
   if (hal->rx_callback) {
     return -1;
@@ -237,7 +268,7 @@ iBSP430eusciaUARTrxByte_ni (hBSP430halSERIAL hal)
 }
 
 int
-iBSP430eusciaUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
+iBSP430eusciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
   if (hal->tx_callback) {
     return -1;
@@ -247,9 +278,9 @@ iBSP430eusciaUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 }
 
 int
-iBSP430eusciaUARTtxData_ni (hBSP430halSERIAL hal,
-                            const uint8_t * data,
-                            size_t len)
+iBSP430eusciUARTtxData_ni (hBSP430halSERIAL hal,
+                           const uint8_t * data,
+                           size_t len)
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;
@@ -263,7 +294,7 @@ iBSP430eusciaUARTtxData_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430eusciaUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+iBSP430eusciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
@@ -275,6 +306,101 @@ iBSP430eusciaUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
     ++str;
   }
   return str - in_string;
+}
+
+int
+iBSP430eusciI2CsetAddresses_ni (hBSP430halSERIAL hal,
+                                int own_address,
+                                int slave_address)
+{
+  if (0 <= own_address) {
+    SERIAL_HAL_HPL_B(hal)->i2coa0 = own_address;
+  }
+  if (0 <= slave_address) {
+    SERIAL_HAL_HPL_B(hal)->i2csa = slave_address;
+  }
+  return 0;
+}
+
+int
+iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
+                          uint8_t * data,
+                          size_t len)
+{
+  volatile struct sBSP430hplEUSCIB * hpl = SERIAL_HAL_HPL_B(hal);
+  const uint8_t * dpe = data + len;
+  int i = 0;
+
+  /* UCBxTBCNT is only 8 bits. */
+  if (255 < len) {
+    return -1;
+  }
+
+  /* Wait for previous activity to complete */
+  while (hpl->statw & UCBBUSY) {
+    if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+      return -1;
+    }
+  }
+
+  /* Set for receive and store length */
+  hpl->ctlw0 &= ~UCTR;
+  hpl->tbcnt = len;
+
+  /* Issue a start */
+  hpl->ctlw0 |= UCTXSTT;
+
+  /* Read it in as soon as it arrives.  Device handles stop. */
+  while (data < dpe) {
+    while (! (hpl->ifg & UCRXIFG)) {
+      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+        return -1;
+      }
+    }
+    *data++ = hpl->rxbuf;
+  }
+  return i;
+}
+
+int
+iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
+                          const uint8_t * data,
+                          size_t len)
+{
+  volatile struct sBSP430hplEUSCIB * hpl = SERIAL_HAL_HPL_B(hal);
+  int i = 0;
+
+  /* UCBxTBCNT is only 8 bits. */
+  if (255 < len) {
+    return -1;
+  }
+
+  /* Wait for previous activity to complete */
+  while (hpl->statw & UCBBUSY) {
+    if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+      return -1;
+    }
+  }
+
+  /* Set the transaction length */
+  hpl->tbcnt = len;
+
+  /* Issue a start for transmit */
+  hpl->ctlw0 |= UCTR | UCTXSTT;
+
+  /* Spit it all out as soon as there's space */
+  while (i < len) {
+    while (! (hpl->ifg & UCTXIFG)) {
+      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+        return -1;
+      }
+    }
+    hpl->txbuf = data[i];
+    ++i;
+  }
+
+  /* eUSCI module handles stop */
+  return i;
 }
 
 /* Since the interrupt code is the same for all peripherals, on MCUs
@@ -336,16 +462,20 @@ euscia_isr (hBSP430halSERIAL hal)
 #endif /* EUSCIA ISR */
 
 static struct sBSP430serialDispatch dispatch_ = {
-  .openUART = xBSP430eusciaOpenUART,
-  //  .openSPI = xBSP430eusciaOpenSPI,
-  .configureCallbacks = iBSP430eusciaConfigureCallbacks,
-  .close = iBSP430eusciaClose,
-  .wakeupTransmit_ni = vBSP430eusciaWakeupTransmit_ni,
-  .flush_ni = vBSP430eusciaFlush_ni,
-  .uartRxByte_ni = iBSP430eusciaUARTrxByte_ni,
-  .uartTxByte_ni = iBSP430eusciaUARTtxByte_ni,
-  .uartTxData_ni = iBSP430eusciaUARTtxData_ni,
-  .uartTxASCIIZ_ni = iBSP430eusciaUARTtxASCIIZ_ni
+  .openUART = hBSP430eusciOpenUART,
+  //  .openSPI = hBSP430eusciOpenSPI,
+  .openI2C = hBSP430eusciOpenI2C,
+  .configureCallbacks = iBSP430eusciConfigureCallbacks,
+  .close = iBSP430eusciClose,
+  .wakeupTransmit_ni = vBSP430eusciWakeupTransmit_ni,
+  .flush_ni = vBSP430eusciFlush_ni,
+  .uartRxByte_ni = iBSP430eusciUARTrxByte_ni,
+  .uartTxByte_ni = iBSP430eusciUARTtxByte_ni,
+  .uartTxData_ni = iBSP430eusciUARTtxData_ni,
+  .uartTxASCIIZ_ni = iBSP430eusciUARTtxASCIIZ_ni,
+  .i2cSetAddresses_ni = iBSP430eusciI2CsetAddresses_ni,
+  .i2cRxData_ni = iBSP430eusciI2CrxData_ni,
+  .i2cTxData_ni = iBSP430eusciI2CtxData_ni,
 };
 
 /* !BSP430! periph=euscia instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 insert=hal_serial_defn */

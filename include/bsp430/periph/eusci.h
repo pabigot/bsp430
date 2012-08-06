@@ -58,9 +58,9 @@
  *
  * Not to say you can actually get this to work, but the API will reject
  * configuration of a UART rate above this. */
-#ifndef BSP430_EUSCIA_UART_MAX_BAUD
-#define BSP430_EUSCIA_UART_MAX_BAUD 1000000UL
-#endif /* BSP430_EUSCIA_UART_MAX_BAUD */
+#ifndef BSP430_EUSCI_UART_MAX_BAUD
+#define BSP430_EUSCI_UART_MAX_BAUD 1000000UL
+#endif /* BSP430_EUSCI_UART_MAX_BAUD */
 
 /** Register map for eUSCI_A peripheral hardware presentation layer. */
 typedef struct sBSP430hplEUSCIA {
@@ -118,7 +118,13 @@ typedef struct sBSP430hplEUSCIB {
       unsigned char br1;	/**< UCBxBR1 */
     };
   };
-  unsigned int statw;			/**< UCBxSTATW */ /* 0x08 */
+  union {
+    unsigned int statw;			/**< UCBxSTATW */ /* 0x08 */
+    struct {
+      unsigned char stat;	/**< UCBxSTAT */
+      unsigned char bcnt;	/**< UCBxBCNT */
+    };
+  };
   unsigned int tbcnt;                   /**< UCBxTBCNT */ /* 0x0A */
   unsigned int rxbuf;			/**< UCAxRXBUF */ /* 0x0C */
   unsigned int txbuf;			/**< UCAxTXBUF */ /* 0x0E */
@@ -713,65 +719,71 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 /* !BSP430! end=hpl_decl */
 
 /** eUSCI(A)-specific implementation of hBSP430serialOpenUART() */
-hBSP430halSERIAL xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
-                                        unsigned char ctl0_byte,
-                                        unsigned char ctl1_byte,
-                                        unsigned long baud);
-
-/** eUSCI(A)-specific implementation of hBSP430serialOpenSPI() */
-hBSP430halSERIAL xBSP430eusciaOpenSPI (hBSP430halSERIAL hal,
+hBSP430halSERIAL hBSP430eusciOpenUART (hBSP430halSERIAL hal,
                                        unsigned char ctl0_byte,
                                        unsigned char ctl1_byte,
-                                       unsigned int prescaler);
+                                       unsigned long baud);
+
+/** eUSCI(A)-specific implementation of hBSP430serialOpenSPI() */
+hBSP430halSERIAL hBSP430eusciOpenSPI (hBSP430halSERIAL hal,
+                                      unsigned char ctl0_byte,
+                                      unsigned char ctl1_byte,
+                                      unsigned int prescaler);
+
+/** eUSCI(A)-specific implementation of hBSP430serialOpenI2C() */
+hBSP430halSERIAL hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
+                                      unsigned char ctl0_byte,
+                                      unsigned char ctl1_byte,
+                                      unsigned int prescaler);
 
 /** eUSCI(A)-specific implementation of iBSP430serialConfigureCallbacks() */
-int iBSP430eusciaConfigureCallbacks (hBSP430halSERIAL device,
-                                     const struct sBSP430halISRCallbackVoid * rx_callback,
-                                     const struct sBSP430halISRCallbackVoid * tx_callback);
+int iBSP430eusciConfigureCallbacks (hBSP430halSERIAL device,
+                                    const struct sBSP430halISRCallbackVoid * rx_callback,
+                                    const struct sBSP430halISRCallbackVoid * tx_callback);
 
 /** eUSCI(A)-specific implementation of iBSP430serialClose() */
-int iBSP430eusciaClose (hBSP430halSERIAL xUSCI);
+int iBSP430eusciClose (hBSP430halSERIAL xUSCI);
 
 /** eUSCI(A)-specific implementation of vBSP430serialWakeupTransmit_ni() */
-void vBSP430eusciaWakeupTransmit_ni (hBSP430halSERIAL device);
+void vBSP430eusciWakeupTransmit_ni (hBSP430halSERIAL device);
 
 /** eUSCI(A)-specific implementation of vBSP430serialFlush_ni() */
-void vBSP430eusciaFlush_ni (hBSP430halSERIAL device);
+void vBSP430eusciFlush_ni (hBSP430halSERIAL device);
 
 /** eUSCI(A)-specific implementation of iBSP430serialUARTrxByte_ni() */
-int iBSP430eusciaUARTrxByte_ni (hBSP430halSERIAL device);
+int iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL device);
 
 /** eUSCI(A)-specific implementation of iBSP430serialUARTtxByte_ni() */
-int iBSP430eusciaUARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
+int iBSP430eusciUARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
 
 /** eUSCI(A)-specific implementation of iBSP430serialUARTtxData_ni() */
-int iBSP430eusciaUARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
+int iBSP430eusciUARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
 /** eUSCI(A)-specific implementation of iBSP430serialUARTtxASCIIZ_ni() */
-int iBSP430eusciaUARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
+int iBSP430eusciUARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 /** eUSCI(A)-specific implementation of iBSP430serialSPITxRx_ni() */
-int iBSP430eusciaSPITxRx_ni (hBSP430halSERIAL hal,
-                             const uint8_t * tx_data,
-                             size_t tx_len,
-                             size_t rx_len,
-                             uint8_t * rx_data);
+int iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
+                            const uint8_t * tx_data,
+                            size_t tx_len,
+                            size_t rx_len,
+                            uint8_t * rx_data);
 
 
 /** eUSCI(A)-specific implementation of iBSP430serialI2CsetAddresses_ni() */
-int iBSP430eusciaI2CsetAddresses_ni (hBSP430halSERIAL hal,
-                                     int own_address,
-                                     int slave_address);
+int iBSP430eusciI2CsetAddresses_ni (hBSP430halSERIAL hal,
+                                    int own_address,
+                                    int slave_address);
 
 /** eUSCI(A)-specific implementation of iBSP430serialI2CrxData_ni() */
-int iBSP430eusciaI2CrxData_ni (hBSP430halSERIAL hal,
-                               uint8_t * rx_data,
-                               size_t rx_len);
+int iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
+                              uint8_t * rx_data,
+                              size_t rx_len);
 
 /** eUSCI(A)-specific implementation of iBSP430serialI2CtxData_ni() */
-int iBSP430eusciaI2CtxData_ni (hBSP430halSERIAL hal,
-                               const uint8_t * tx_data,
-                               size_t tx_len);
+int iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
+                              const uint8_t * tx_data,
+                              size_t tx_len);
 
 /** Get the HPL handle for a specific EUSCIA instance.
  *

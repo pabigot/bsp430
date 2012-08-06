@@ -116,9 +116,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     pxsel1 = &P2SEL1;
   }
 #endif
-  (void)bits;
 #if configBSP430_HPL_EUSCI_A1 - 0
-#error Platform pins not configured
   else if (BSP430_PERIPH_EUSCI_A1 == device) {
     bits = BIT5 | BIT6;
     pxsel0 = &P2SEL0;
@@ -127,7 +125,6 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
   }
 #endif
 #if configBSP430_HPL_EUSCI_B0 - 0
-#error Platform pins not configured
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
     bits = BIT6 | BIT7;
     pxsel0 = &P1SEL0;

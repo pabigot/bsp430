@@ -681,28 +681,6 @@ int iBSP430serialSPITxRx_ni (hBSP430halSERIAL hal,
   return hal->dispatch->spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);
 }
 
-/** Transmit using an I2C-configured device
- *
- * This routine transmits @a tx_len octets from @a tx_data
- *
- * @param hal the serial device over which the data is transmitted and
- * received
- *
- * @param tx_data the data to be transmitted
- *
- * @param tx_len the number of bytes to transmit
- *
- * @return the total number of bytes transmitted, or -1 if an error
- * occcured.
- */
-static __inline__
-int iBSP430serialI2CtxData_ni (hBSP430halSERIAL hal,
-                               const uint8_t * tx_data,
-                               size_t tx_len)
-{
-  return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
-}
-
 /** Configure I2C addresses
  *
  * This routine sets the own-address and slave-address registers of an
@@ -727,17 +705,44 @@ int iBSP430serialI2CsetAddresses_ni (hBSP430halSERIAL hal,
   return hal->dispatch->i2cSetAddresses_ni(hal, own_address, slave_address);
 }
 
+/** Transmit using an I2C-configured device
+ *
+ * This routine transmits @a tx_len octets from @a tx_data.  It will
+ * return an error if the device is configured with a transmit
+ * callback.
+ *
+ * @param hal the serial device over which the data is transmitted and
+ * received
+ *
+ * @param tx_data the data to be transmitted
+ *
+ * @param tx_len the number of bytes to transmit.  A transaction
+ * writing more than 255 bytes may be rejected.
+ *
+ * @return the total number of bytes transmitted, or -1 if an error
+ * occcured.
+ */
+static __inline__
+int iBSP430serialI2CtxData_ni (hBSP430halSERIAL hal,
+                               const uint8_t * tx_data,
+                               size_t tx_len)
+{
+  return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
+}
+
 /** Receive using an I2C-configured device
  *
- * This routine receives @a rx_len octets into @a rx_data, storing
- * the octets received in response into @a rx_data.
+ * This routine receives @a rx_len octets into @a rx_data, storing the
+ * octets received in response into @a rx_data.  It will return an
+ * error if the device is configured with a receive callback.
  *
  * @param hal the serial device from which the data is received
  *
  * @param rx_data where to store the data.  The space available must
  * be at least @a rx_len octets.
  *
- * @param rx_len the number of bytes expected in response
+ * @param rx_len the number of bytes expected in response.  A
+ * transaction reading more than 255 bytes may be rejected.
  *
  * @return the total number of bytes stored in @a rx_data, or -1 if an
  * error occcured.
