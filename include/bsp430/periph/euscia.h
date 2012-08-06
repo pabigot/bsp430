@@ -470,6 +470,24 @@ int iBSP430eusciaUARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, s
 /** eUSCI(A)-specific implementation of iBSP430serialUARTtxASCIIZ_ni() */
 int iBSP430eusciaUARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
+/** eUSCI(A)-specific implementation of iBSP430serialSPITxRx_ni() */
+int iBSP430eusciaSPITxRx_ni (hBSP430halSERIAL hal,
+                             const uint8_t * tx_data,
+                             size_t tx_len,
+                             size_t rx_len,
+                             uint8_t * rx_data);
+
+
+/** eUSCI(A)-specific implementation of iBSP430serialI2CrxData_ni() */
+int iBSP430eusciaI2CrxData_ni (hBSP430halSERIAL hal,
+                               uint8_t * rx_data,
+                               size_t rx_len);
+
+/** eUSCI(A)-specific implementation of iBSP430serialI2CtxData_ni() */
+int iBSP430eusciaI2CtxData_ni (hBSP430halSERIAL hal,
+                               const uint8_t * tx_data,
+                               size_t tx_len);
+
 /** Get the HPL handle for a specific EUSCIA instance.
  *
  * @param periph The handle identifier, such as #BSP430_PERIPH_EUSCI_A0.

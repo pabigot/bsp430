@@ -149,7 +149,7 @@ xBSP430eusciaOpenUART (hBSP430halSERIAL hal,
     ctlw0 |= UCSSEL__SMCLK;
     brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
   }
-  
+
 #define BR_FRACTION_SHIFT 6
   /* The value for BRS is supposed to be a table lookup based on the
    * fractional part of f_brclk / baud.  Rather than replicate the
@@ -249,8 +249,8 @@ iBSP430eusciaUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 
 int
 iBSP430eusciaUARTtxData_ni (hBSP430halSERIAL hal,
-                              const uint8_t * data,
-                              size_t len)
+                            const uint8_t * data,
+                            size_t len)
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;

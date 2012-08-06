@@ -274,6 +274,8 @@ struct sBSP430serialDispatch {
                          size_t len);
   int (* uartTxASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
   int (* spiTxRx_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
+  int (* i2cRxData_ni) (hBSP430halSERIAL hal, uint8_t * rx_data, size_t rx_len);
+  int (* i2cTxData_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len);
 };
 /** @endcond */
 
@@ -539,7 +541,7 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
   return hal->dispatch->flush_ni(hal);
 }
 
-/** Receive a byte over the device.
+/** Receive a byte from a UART-configured device.
  *
  * This routine should only be invoked when there is no receive
  * callback registered.  If a callback is present, it is expected to
@@ -559,7 +561,7 @@ int iBSP430serialUARTrxByte_ni (hBSP430halSERIAL hal)
   return hal->dispatch->uartRxByte_ni(hal);
 }
 
-/** Transmit a byte over the device.
+/** Transmit a byte over a UART-configured device.
  *
  * This routine should only be invoked when there is no transmit
  * callback registered.  If a callback is present, it is expected to
@@ -581,7 +583,7 @@ int iBSP430serialUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
   return hal->dispatch->uartTxByte_ni(hal, c);
 }
 
-/** Transmit a block of data over the device.
+/** Transmit a block of data over a UART-configured device.
  *
  * This routine should only be invoked when there is no transmit
  * callback registered.  If a callback is present, it is expected to
@@ -607,7 +609,7 @@ int iBSP430serialUARTtxData_ni (hBSP430halSERIAL hal,
 }
 
 
-/** Transmit a sequence of characters over the device.
+/** Transmit a sequence of characters over a UART-configured device.
  *
  * This routine should only be invoked when there is no transmit
  * callback registered.  If a callback is present, it is expected to
@@ -631,7 +633,7 @@ int iBSP430serialUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
   return hal->dispatch->uartTxASCIIZ_ni(hal, str);
 }
 
-/** Transmit and receive using synchronous serial (SPI or I2C)
+/** Transmit and receive using a SPI-configured device
  *
  * This routine transmits @a tx_len octets from @a tx_data, storing
  * the octets received in response into @a rx_data.  It then transmits
@@ -661,14 +663,58 @@ int iBSP430serialUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  */
 static __inline__
 int iBSP430serialSPITxRx_ni (hBSP430halSERIAL hal,
-                                                const uint8_t * tx_data,
-                                                size_t tx_len,
-                                                size_t rx_len,
-                                                uint8_t * rx_data)
+                             const uint8_t * tx_data,
+                             size_t tx_len,
+                             size_t rx_len,
+                             uint8_t * rx_data)
 {
   return hal->dispatch->spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);
 }
 
+/** Transmit using an I2C-configured device
+ *
+ * This routine transmits @a tx_len octets from @a tx_data
+ *
+ * @param hal the serial device over which the data is transmitted and
+ * received
+ *
+ * @param tx_data the data to be transmitted
+ *
+ * @param tx_len the number of bytes to transmit
+ *
+ * @return the total number of bytes transmitted, or -1 if an error
+ * occcured.
+ */
+static __inline__
+int iBSP430serialI2CtxData_ni (hBSP430halSERIAL hal,
+                               const uint8_t * tx_data,
+                               size_t tx_len)
+{
+  return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
+}
+
+/** Receive using an I2C-configured device
+ *
+ * This routine receives @a rx_len octets into @a rx_data, storing
+ * the octets received in response into @a rx_data.
+ *
+ * @param hal the serial device from which the data is received
+ *
+ * @param rx_data where to store the data.  The space available must
+ * be at least @a rx_len octets.
+ *
+ * @param rx_len the number of bytes expected in response
+ *
+ * @return the total number of bytes stored in @a rx_data, or -1 if an
+ * error occcured.
+ */
+static __inline__
+int iBSP430serialI2CrxData_ni (hBSP430halSERIAL hal,
+                               uint8_t * rx_data,
+                               size_t rx_len)
+{
+  return hal->dispatch->i2cRxData_ni(hal, rx_data, rx_len);
+}
 
 #if configBSP430_SERIAL_USE_USCI - 0
 #include <bsp430/periph/usci.h>

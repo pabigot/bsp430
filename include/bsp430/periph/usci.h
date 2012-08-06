@@ -572,10 +572,20 @@ int iBSP430usciUARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
 /** USCI-specific implementation of iBSP430serialSPITxRx_ni() */
 int iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
-                                              const uint8_t * tx_data,
-                                              size_t tx_len,
-                                              size_t rx_len,
-                                              uint8_t * rx_data);
+                           const uint8_t * tx_data,
+                           size_t tx_len,
+                           size_t rx_len,
+                           uint8_t * rx_data);
+
+/** USCI-specific implementation of iBSP430serialI2CrxData_ni() */
+int iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
+                             uint8_t * rx_data,
+                             size_t rx_len);
+
+/** USCI-specific implementation of iBSP430serialI2CtxData_ni() */
+int iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
+                             const uint8_t * tx_data,
+                             size_t tx_len);
 
 /** Get the HPL handle for a specific USCI instance.
  *

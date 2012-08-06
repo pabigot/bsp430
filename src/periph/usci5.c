@@ -152,7 +152,7 @@ hBSP430usci5OpenUART (hBSP430halSERIAL hal,
     ctl1_byte |= UCSSEL_2;
     brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
   }
-  
+
   brw = (brclk_Hz / baud);
   brs = (1 + 16 * (brclk_Hz - baud * brw) / baud) / 2;
 
@@ -263,8 +263,8 @@ iBSP430usci5UARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 
 int
 iBSP430usci5UARTtxData_ni (hBSP430halSERIAL hal,
-                             const uint8_t * data,
-                             size_t len)
+                           const uint8_t * data,
+                           size_t len)
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;
@@ -294,14 +294,14 @@ iBSP430usci5UARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 
 int
 iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
-                                           const uint8_t * tx_data,
-                                           size_t tx_len,
-                                           size_t rx_len,
-                                           uint8_t * rx_data)
+                        const uint8_t * tx_data,
+                        size_t tx_len,
+                        size_t rx_len,
+                        uint8_t * rx_data)
 {
   size_t transaction_length = tx_len + rx_len;
   size_t i = 0;
-  
+
   if (hal->tx_callback) {
     return -1;
   }

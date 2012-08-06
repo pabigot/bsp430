@@ -81,7 +81,7 @@ struct sBSP430usciHPLAux {
 
   /** I2C own address register (USCI_Bx only) */
   volatile unsigned int * i2coap;
-  
+
   /** I2C slave address register (USCI_Bx only) */
   volatile unsigned int * i2csap;
 };
@@ -166,7 +166,7 @@ hBSP430usciOpenUART (hBSP430halSERIAL hal,
     ctl1_byte |= UCSSEL_2;
     brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
   }
-  
+
   brw = (brclk_Hz / baud);
   brs = (1 + 16 * (brclk_Hz - baud * brw) / baud) / 2;
 
@@ -298,8 +298,8 @@ iBSP430usciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 
 int
 iBSP430usciUARTtxData_ni (hBSP430halSERIAL hal,
-                            const uint8_t * data,
-                            size_t len)
+                          const uint8_t * data,
+                          size_t len)
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;
@@ -329,14 +329,14 @@ iBSP430usciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 
 int
 iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
-                                          const uint8_t * tx_data,
-                                          size_t tx_len,
-                                          size_t rx_len,
-                                          uint8_t * rx_data)
+                       const uint8_t * tx_data,
+                       size_t tx_len,
+                       size_t rx_len,
+                       uint8_t * rx_data)
 {
   size_t transaction_length = tx_len + rx_len;
   size_t i = 0;
-  
+
   if (hal->tx_callback) {
     return -1;
   }
@@ -346,6 +346,60 @@ iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
     ++rx_data;
     ++i;
   }
+  return i;
+}
+
+int
+iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
+                         uint8_t * data,
+                         size_t len)
+{
+  volatile struct sBSP430hplUSCI * hpl = SERIAL_HAL_HPL(hal);
+  const uint8_t * dpe = data + len;
+  int i = 0;
+
+  /* Set for receive */
+  hpl->ctl1 &= ~UCTR;
+  /* Delay for any in-progress stop to complete */
+  while (hpl->ctl1 & UCTXSTP) {
+  }
+  /* Issue a start */
+  hpl->ctl1 |= UCTXSTT;
+  while (data < dpe) {
+    if (dpe == (data+1)) {
+      /* This will be last character: wait for any in-progress start
+       * to complete then issue stop */
+      while (hpl->ctl1 & UCTXSTT) {
+      }
+      hpl->ctl1 |= UCTXSTP;
+    }
+    RAW_RECEIVE_HAL_NI(hal, *data);
+    ++data;
+  }
+  return i;
+}
+
+int
+iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
+                         const uint8_t * data,
+                         size_t len)
+{
+  volatile struct sBSP430hplUSCI * hpl = SERIAL_HAL_HPL(hal);
+  int i = 0;
+
+  /* Delay for any in-progress stop to complete */
+  while (hpl->ctl1 & UCTXSTP) {
+  }
+  /* Issue a start for transmit */
+  hpl->ctl1 |= UCTR | UCTXSTT;
+  while (i < len) {
+    RAW_TRANSMIT_HAL_NI(hal, data[i]);
+    ++i;
+  }
+  /* Wait for any in-progress start to complete then issue stop */
+  while (hpl->ctl1 & UCTXSTT) {
+  }
+  hpl->ctl1 |= UCTXSTP;
   return i;
 }
 
@@ -362,6 +416,8 @@ static struct sBSP430serialDispatch dispatch_ = {
   .uartTxData_ni = iBSP430usciUARTtxData_ni,
   .uartTxASCIIZ_ni = iBSP430usciUARTtxASCIIZ_ni,
   .spiTxRx_ni = iBSP430usciSPITxRx_ni,
+  .i2cRxData_ni = iBSP430usciI2CrxData_ni,
+  .i2cTxData_ni = iBSP430usciI2CtxData_ni,
 };
 
 #if configBSP430_HAL_USCI_A0 - 0
