@@ -32,8 +32,8 @@ hBSP430halSERIAL spi;
 static uint8_t
 sendStrobe (uint8_t reg)
 {
-  uint8_t rc;
-
+  uint8_t rc = 0;
+  
   (void)iBSP430serialSPITxRx_ni(spi, &reg, 1, 0, &rc);
   return rc;
 }
@@ -55,6 +55,8 @@ readRegister (uint8_t reg)
 void main ()
 {
   uint8_t rc;
+  unsigned int ctl0_byte;
+  
   volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(APP_GDO0_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * gdo1 = xBSP430hplLookupPORTIE(APP_GDO1_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(APP_GDO2_PORT_PERIPH_HANDLE);
@@ -70,24 +72,28 @@ void main ()
   cprintf("CSn %p at %s.%u\n", csn, xBSP430portName(APP_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_CSn_PORT_BIT));
   cprintf("SPI %p is %s\n", spi, xBSP430serialName(APP_SPI_PERIPH_HANDLE));
   cprintf(__DATE__ " " __TIME__ "\n");
-  spi = hBSP430serialOpenSPI(spi, UCCKPH | UCMSB | UCMST, UCSSEL_2, 1);
+  ctl0_byte = UCCKPH | UCMSB | UCMST;
+  cprintf("Initial ctl0 %04x\n", ctl0_byte);
+  if (0x100 <= ctl0_byte) {
+    ctl0_byte >>= 8;
+  }
+
+  spi = hBSP430serialOpenSPI(spi, ctl0_byte, UCSSEL_2, 1);
+
   cprintf("SPI device %p: CTL0 %02x ; CTL1 %02x\n", spi, UCB0CTL0, UCB0CTL1);
 
-  /* Configure for GPIO use: CS=P3.0 */
+  /* Configure for enable and enable the radio */
   csn->sel &= ~APP_CSn_PORT_BIT;
-  csn->dir |= APP_CSn_PORT_BIT;
-  csn->out |= APP_CSn_PORT_BIT;
-
-  /* Configure USCI_B0 */
-
-  /* Release USCI_B0 to run */
-  cprintf("Resetting radio\n");
   csn->out &= ~APP_CSn_PORT_BIT;
+  csn->dir |= APP_CSn_PORT_BIT;
 
   /* Spin until MISO (CHP_RDYn) is clear */
   while (gdo1->in & APP_GDO1_PORT_BIT) {
     cprintf("Waiting for radio ready\n");
   }
+
+  /* Enable SPI */
+  UCB0CTL1 &= ~UCSWRST;
   cprintf("Radio is up; sending SRES strobe\n");
 
   /* Send a reset */
