@@ -115,7 +115,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     pxsel0 = &P2SEL0;
     pxsel1 = &P2SEL1;
   }
-#endif
+#endif /* configBSP430_HPL_EUSCI_A0 */
 #if configBSP430_HPL_EUSCI_A1 - 0
   else if (BSP430_PERIPH_EUSCI_A1 == device) {
     bits = BIT5 | BIT6;
@@ -123,7 +123,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     pxsel1 = &P2SEL1;
     return 0;
   }
-#endif
+#endif /* configBSP430_HPL_EUSCI_A1 */
 #if configBSP430_HPL_EUSCI_B0 - 0
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
     P2SEL0 &= ~BIT2;
@@ -136,7 +136,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     pxsel0 = &P1SEL0;
     pxsel1 = &P1SEL1;
   }
-#endif
+#endif /* configBSP430_HPL_EUSCI_B0 */
   if (NULL != pxsel0) {
     *pxsel0 &= ~bits;
     if (enablep) {
@@ -147,6 +147,35 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     return 0;
   }
   return -1;
+}
+
+const char *
+xBSP430platformPeripheralHelp (tBSP430periphHandle device)
+{
+  if (BSP430_PERIPH_LFXT1 == device) {
+    return "XIN=PJ.4, XOUT=PJ.5";
+  }
+#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+  if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
+    return "Test points below LED1-3: SMCLK on TP10; MCLK on TP11; ACLK on TP12";
+  }
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+#if configBSP430_HPL_EUSCI_A0 - 0
+  if (BSP430_PERIPH_EUSCI_A0 == device) {
+    return "MOSI/TXD=P2.0; MISO/RXD=P2.1";
+  }
+#endif /* configBSP430_HPL_EUSCI_A0 */
+#if configBSP430_HPL_EUSCI_A1 - 0
+  if (BSP430_PERIPH_EUSCI_A1 == device) {
+    return "MOSI/TXD=P2.5; MISO/RXD=P2.6";
+  }
+#endif /* configBSP430_HPL_EUSCI_A1 */
+#if configBSP430_HPL_EUSCI_B0 - 0
+  if (BSP430_PERIPH_EUSCI_B0 == device) {
+    return "MOSI/SDA=P1.6; MISO/SCL=P1.7; CLK=P2.2";
+  }
+#endif /* configBSP430_HPL_EUSCI_B0 */
+  return NULL;
 }
 
 void

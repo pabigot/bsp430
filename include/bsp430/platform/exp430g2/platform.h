@@ -56,9 +56,6 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430G2 1
 
-/* Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P1.4; ACLK on P1.0 (red LED)"
-
 /* Enable if requested */
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1

@@ -53,9 +53,6 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_RF2500T 1
 
-/* Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "SMCLK on P2.1 (P4); ACLK on P2.0 (P3)"
-
 /* Enable if requested */
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1

@@ -57,9 +57,6 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430F5438 1
 
-/** Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "Labelled test points below JTAG header"
-
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */

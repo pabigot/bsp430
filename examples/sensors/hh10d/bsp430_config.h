@@ -9,6 +9,9 @@
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 
+/* Request help for figuring out where I2C connects */
+#define configBSP430_PLATFORM_PERIPHERAL_HELP 1
+
 #define configBSP430_CONSOLE 1
 #define configBSP430_UPTIME 1
 

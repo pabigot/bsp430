@@ -44,6 +44,7 @@
 void main ()
 {
 #if BSP430_CONSOLE - 0
+  const char * help;
   unsigned long smclk_Hz;
   unsigned short aclk_Hz;
 #endif /* BSP430_CONSOLE */
@@ -220,11 +221,14 @@ void main ()
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 1)) {
 #if BSP430_CONSOLE - 0
     cputtext_ni("\n\nClock signals exposed:\n ");
-#ifdef BSP430_PERIPH_EXPOSED_CLOCKS_HELP
-    cputtext_ni(BSP430_PERIPH_EXPOSED_CLOCKS_HELP);
-#else
-    cputtext_ni("Go look, cuz I don't know where they are");
-#endif /* BSP430_PERIPH_EXPOSED_CLOCKS_HELP */
+    help = NULL;
+#ifdef BSP430_PLATFORM_PERIPHERAL_HELP
+    help = xBSP430platformPeripheralHelp(BSP430_PERIPH_EXPOSED_CLOCKS);
+#endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
+    if (NULL == help) {
+      help = "Go look at the data sheet and source, because nobody told me where they are";
+    }
+    cputtext_ni(help);
     cputtext_ni("\nStatus register LPM bits: ");
     cputu_ni(__read_status_register() & BSP430_LPM_SR_MASK, 16);
     cputtext_ni("\nIFG1 bits: ");

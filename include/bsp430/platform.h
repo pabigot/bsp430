@@ -81,7 +81,7 @@ void vBSP430platformInitialize_ni (void);
  * In some cases it is not necessary to configure XOUT if XIN is
  * configured.
  *
- * @param device Raw peripheral device for which pins should be
+ * @param periph Raw peripheral device for which pins should be
  * configured.
  *
  * @param enablep TRUE to enable for peripheral use; FALSE to disable
@@ -90,7 +90,7 @@ void vBSP430platformInitialize_ni (void);
  * @return 0 if configuration was successful, -1 if the device was not
  * recognized.
  */
-int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep);
+int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int enablep);
 
 /** @def configBSP430_PLATFORM_SPIN_FOR_JUMPER
  *
@@ -131,6 +131,38 @@ int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int e
 #if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0)
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
+
+/** @def configBSP430_PLATFORM_PERIPH_HELP
+ *
+ * Define to a true value if the application will want to invoke
+ * xBSP430platformPeripheralHelp().
+ *
+ * @cppflag 
+ * @defaulted
+ */
+#ifndef configBSP430_PLATFORM_PERIPHERAL_HELP
+#define configBSP430_PLATFORM_PERIPHERAL_HELP 0
+#endif /* configBSP430_PLATFORM_PERIPHERAL_HELP */
+
+/** Provide peripheral-specific help strings for application integration
+ *
+ * For cross-platform applications it is helpful if the startup text
+ * describes any external connections.  Since, for example, pins
+ * associated with an I2C interface are platform-specific, that
+ * information belongs in the platform rather than the application.
+ * 
+ * This routine should be implemented on all platforms, and any
+ * peripheral supported by vBSP430platformConfigurePeripheralPins_ni()
+ * should produce a help string.
+ *
+ * @param periph Raw peripheral device for which help is desired
+ *
+ * @return A pointer to a help string suitable for display.  A null
+ * pointer is returned if the peripheral was not enabled.
+ *
+ * @dependency #BSP430_PLATFORM_PERIPHERAL_HELP
+ */
+const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
 
 /* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */
@@ -362,7 +394,7 @@ void vBSP430platformSpinForJumper_ni (void);
 
 /** @def BSP430_PLATFORM_SPIN_FOR_JUMPER
  *
- * Define to indicate that the application or infrastructure supports
+ * Defined to indicate that the application or infrastructure supports
  * use of the vBSP430platformSpinForJumper_ni() function.  The value
  * is defined only if #configBSP430_PLATFORM_SPIN_FOR_JUMPER is set,
  * and is true only if the platform supports
@@ -373,6 +405,22 @@ void vBSP430platformSpinForJumper_ni (void);
 #ifndef BSP430_PLATFORM_SPIN_FOR_JUMPER
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 0 /* False unless platform explicitly enabled it */
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_PLATFORM_PERIPHERAL_HELP
+ *
+ * Defined to indicate that the application or infrastructure supports
+ * use of the vBSP430platformSpinForJumper_ni() function.  The value
+ * is defined only if #configBSP430_PLATFORM_PERIPHERAL_HELP is set,
+ * and is true only if the platform supports
+ * xBSP430platformPeripheralHelp().
+ *
+ * @dependency #configBSP430_PLATFORM_PERIPHERAL_HELP 
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_PERIPHERAL_HELP)
+#ifndef BSP430_PLATFORM_PERIPHERAL_HELP
+#define BSP430_PLATFORM_PERIPHERAL_HELP 1 /* True unless platform explicitly disabled it */
+#endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_PLATFORM_BOOT_CONFIGURE_LEDS

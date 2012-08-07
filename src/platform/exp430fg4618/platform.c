@@ -48,7 +48,7 @@ int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
   uint8_t bits = 0;
-  volatile uint8_t* pxsel = 0;
+  volatile unsigned char * pxsel = 0;
   if (BSP430_PERIPH_LFXT1 == device) {
     /* XIN/XOUT are dedicated pins on this device. */
     return 0;
@@ -56,32 +56,55 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT1 | BIT4 | BIT5;
+    pxsel = &P1SEL;
     P1DIR |= bits;
-    if (enablep) {
-      P1SEL |= bits;
-    } else {
-      P1SEL &= ~bits;
-    }
-    return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI_A0 - 0
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT4 | BIT5;
+    pxsel = &P2SEL;
+  }
+#endif /* configBSP430_HPL_USCI_A0 */
+#if configBSP430_HPL_USCI_B0 - 0
+  else if (BSP430_PERIPH_USCI_B0 == device) {
+    bits = BIT0 | BIT1 | BIT2;
+    pxsel = &P2SEL;
+  }
+#endif /* configBSP430_HPL_USCI_B0 */
+  if (pxsel) {
     if (enablep) {
-      P2SEL |= bits;
-      P2DIR |= BIT4;
-      P2DIR &= ~BIT5;
+      *pxsel |= bits;
     } else {
-      P2SEL &= ~bits;
-      P2DIR |= bits;
+      *pxsel &= ~bits;
     }
     return 0;
   }
-#endif /* configBSP430_HPL_USCI_A0 */
-  (void)bits;
-  (void)pxsel;
   return -1;
+}
+
+const char *
+xBSP430platformPeripheralHelp (tBSP430periphHandle device)
+{
+  if (BSP430_PERIPH_LFXT1 == device) {
+    return "Dedicated";
+  }
+#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+  if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
+    return "H2 below FG4618 JTAG: MCLK on H2.2, SMCLK on H2.5, ACLK on H2.6";
+  }
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+#if configBSP430_HPL_USCI_A0 - 0
+  if (BSP430_PERIPH_USCI_A0 == device) {
+    return "MOSI/TXD=P2.4; MISO/RXD=P2.5";
+  }
+#endif /* configBSP430_HPL_USCI_A0 */
+#if configBSP430_HPL_USCI_B0 - 0
+  else if (BSP430_PERIPH_USCI_B0 == device) {
+    return "MOSI/SDA=P3.1; MISO/SCL=P3.2; STE=P3.0";
+  }
+#endif /* configBSP430_HPL_USCI_B0 */
+  return NULL;
 }
 
 void vBSP430platformInitialize_ni (void)

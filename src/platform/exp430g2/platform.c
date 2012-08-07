@@ -84,7 +84,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   else if (BSP430_PERIPH_USCI_B0 == device) {
-    bits = BIT5 | BIT6 | BIT7;
+    bits = BIT4 | BIT6 | BIT7;
     if (enablep) {
       P1SEL2 |= bits;
       P1SEL |= bits;
@@ -95,8 +95,36 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     return 0;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
-
   return -1;
+}
+
+const char *
+xBSP430platformPeripheralHelp (tBSP430periphHandle device)
+{
+  if (BSP430_PERIPH_LFXT1 == device) {
+    return "XIN=P2.6; XOUT=P2.7";
+  }
+#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+  if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
+    return "SMCLK on P1.4; ACLK on P1.0 (red LED)";
+  }
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+#if configBSP430_HPL_USCI_A0 - 0
+  if (BSP430_PERIPH_USCI_A0 == device) {
+    return "MOSI/TXD=P1.2; MISO/RXD=P1.1";
+  }
+#endif /* configBSP430_HPL_USCI_A0 */
+#if configBSP430_HPL_USCI_B0 - 0
+  if (BSP430_PERIPH_USCI_B0 == device) {
+    return "MOSI/SDA=P1.7; MISO/SCL=P1.6; STE=P1.4";
+  }
+#endif /* configBSP430_HPL_USCI_B0 */
+#if configBSP430_HPL_TA0 - 0
+  if (BSP430_PERIPH_TA0 == device) {
+    return "INCLK=P1.0";
+  }
+#endif /* configBSP430_HPL_TA0 */
+  return NULL;
 }
 
 void vBSP430platformInitialize_ni (void)

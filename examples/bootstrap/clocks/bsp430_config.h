@@ -21,6 +21,9 @@ make realclean \
 #define configBSP430_CONSOLE 1
 #endif /* configBSP430_CONSOLE */
 
+/* Allow application to tell user where things are connected */
+#define configBSP430_PLATFORM_PERIPHERAL_HELP 1
+
 /* Expose the clocks */
 #ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 1

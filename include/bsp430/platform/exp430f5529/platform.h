@@ -66,9 +66,6 @@
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/** Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "ACLK on P1.0 (J12.1); MCLK on P7.7 (J5.2)"
-
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */

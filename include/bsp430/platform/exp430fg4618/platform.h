@@ -53,9 +53,6 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FG4618 1
 
-/** Where clocks are found on this platform */
-#define BSP430_PERIPH_EXPOSED_CLOCKS_HELP "H2 below FG4618 JTAG: MCLK on H2.2, SMCLK on H2.5, ACLK on H2.6"
-
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */
