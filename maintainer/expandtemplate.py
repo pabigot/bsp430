@@ -147,7 +147,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
-#define configBSP430_HAL_%(INSTANCE)s_ISR ((configBSP430_HAL_%(INSTANCE)s - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (%(#)s <= 2)))
+#define configBSP430_HAL_%(INSTANCE)s_ISR ((configBSP430_HAL_%(INSTANCE)s - 0) && defined(PORT%(#)s_VECTOR))
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 
 #if (configBSP430_HAL_%(INSTANCE)s_ISR - 0) && ! (configBSP430_HAL_%(INSTANCE)s - 0)
