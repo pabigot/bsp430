@@ -970,6 +970,9 @@ int iBSP430usci5ConfigureCallbacks (hBSP430halSERIAL device,
                                     const struct sBSP430halISRCallbackVoid * rx_callback,
                                     const struct sBSP430halISRCallbackVoid * tx_callback);
 
+/** USCI5-specific implementation of iBSP430serialSetHold() */
+int iBSP430usci5SetHold (hBSP430halSERIAL hal, int holdp);
+
 /** USCI5-specific implementation of iBSP430serialClose() */
 int iBSP430usci5Close (hBSP430halSERIAL xUSCI);
 

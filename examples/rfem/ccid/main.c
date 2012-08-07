@@ -54,7 +54,7 @@ readRegister (uint8_t reg)
 
 void main ()
 {
-  uint8_t rc;
+  int rc = 0;
   unsigned int ctl0_byte;
 
   volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(APP_GDO0_PORT_PERIPH_HANDLE);
@@ -72,18 +72,31 @@ void main ()
   cprintf("CSn %p at %s.%u\n", csn, xBSP430portName(APP_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_CSn_PORT_BIT));
   cprintf("SPI %p is %s\n", spi, xBSP430serialName(APP_SPI_PERIPH_HANDLE));
   cprintf(__DATE__ " " __TIME__ "\n");
+
+
+  /* Configure the SPI interface, but immediately put it into hold
+   * mode so we can check CHIP_RDYn on the MISO/GDO1 input */
   ctl0_byte = UCCKPH | UCMSB | UCMST;
   cprintf("Initial ctl0 %04x\n", ctl0_byte);
   if (0x100 <= ctl0_byte) {
     ctl0_byte >>= 8;
   }
-
   spi = hBSP430serialOpenSPI(spi, ctl0_byte, UCSSEL_2, 1);
+  if (spi) {
+    rc = iBSP430serialSetHold(spi, 1);
+    /* GDO1 to input, pull-up */
+    gdo1->dir &= ~APP_GDO1_PORT_BIT;
+    gdo1->ren |= APP_GDO1_PORT_BIT;
+    gdo1->out |= APP_GDO1_PORT_BIT;
+  }
 
-  cprintf("SPI device %p: CTL0 %02x ; CTL1 %02x\n", spi, UCB0CTL0, UCB0CTL1);
+  cprintf("SPI device %p hold returned %d\n", spi, rc);
+  if (! spi) {
+    return;
+  }
 
-  /* Configure for enable with radio disabled to ensure we have a
-   * falling edge. */
+  /* Configure CSn initial high to ensure we have a falling edge when
+   * we first enable the radio. */
   csn->sel &= ~APP_CSn_PORT_BIT;
   csn->out |= APP_CSn_PORT_BIT;
   csn->dir |= APP_CSn_PORT_BIT;
@@ -91,19 +104,23 @@ void main ()
   /* Now enable the radio */
   csn->out &= ~APP_CSn_PORT_BIT;
 
-  /* Spin until MISO (CHP_RDYn) is clear */
+  /* Spin until GDO1 (CHP_RDYn) is clear indicating radio is responsive */
   while (gdo1->in & APP_GDO1_PORT_BIT) {
     cprintf("Waiting for radio ready\n");
+    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ);
   }
 
   /* Enable SPI */
-  UCB0CTL1 &= ~UCSWRST;
-  cprintf("Radio is up; sending SRES strobe\n");
+  rc = iBSP430serialSetHold(spi, 0);
+  cprintf("Radio is up, hold release %d; sending SRES strobe\n", rc);
 
   /* Send a reset */
   do {
     rc = sendStrobe(0x30);
     cprintf("Strobe response %#02x\n", rc);
+    if (0x0F != rc) {
+      BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ);
+    }
   } while (0x0F != rc);
 
   cprintf("PARTNUM response %#02x\n", readRegister(0x30));

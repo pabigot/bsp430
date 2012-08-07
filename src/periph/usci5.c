@@ -233,6 +233,21 @@ iBSP430usci5ConfigureCallbacks (hBSP430halSERIAL hal,
 }
 
 int
+iBSP430usci5SetHold (hBSP430halSERIAL hal,
+                     int holdp)
+{
+  int rc;
+  if (holdp) {
+    SERIAL_HAL_HPL(hal)->ctlw0 |= UCSWRST;
+    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
+  } else {
+    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 1);
+    SERIAL_HAL_HPL(hal)->ctlw0 &= ~UCSWRST;
+  }
+  return rc;
+}
+
+int
 iBSP430usci5Close (hBSP430halSERIAL hal)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -493,6 +508,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .openSPI = hBSP430usci5OpenSPI,
   .openI2C = hBSP430usci5OpenI2C,
   .configureCallbacks = iBSP430usci5ConfigureCallbacks,
+  .setHold = iBSP430usci5SetHold,
   .close = iBSP430usci5Close,
   .wakeupTransmit_ni = vBSP430usci5WakeupTransmit_ni,
   .flush_ni = vBSP430usci5Flush_ni,

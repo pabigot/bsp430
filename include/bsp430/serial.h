@@ -272,6 +272,7 @@ struct sBSP430serialDispatch {
   int (* configureCallbacks) (hBSP430halSERIAL hal,
                               const struct sBSP430halISRCallbackVoid * rx_callback,
                               const struct sBSP430halISRCallbackVoid * tx_callback);
+  int (* setHold) (hBSP430halSERIAL hal, int holdp);
   int (* close) (hBSP430halSERIAL hal);
   void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
   void (* flush_ni) (hBSP430halSERIAL hal);
@@ -493,6 +494,35 @@ int iBSP430serialConfigureCallbacks (hBSP430halSERIAL hal,
                                      const struct sBSP430halISRCallbackVoid * tx_callback)
 {
   return hal->dispatch->configureCallbacks(hal, rx_callback, tx_callback);
+}
+
+/** Place a serial device in hold mode
+ *
+ * When placed in hold mode, the #UCSWRST bit (or peripheral-specific
+ * analog) is set, clearing all errors and stopping all activity but
+ * retaining all configuration information.  In addition, the function
+ * reconfigures the associated port pins to their digital I/O
+ * function.  When the hold is released, the port pins are
+ * reconfigured to their peripheral function, the #UCSWRST bit is
+ * cleared, and any interrupts for which callbacks are registered are
+ * re-enabled.
+ *
+ * @note Placing a serial peripheral into hold mode prior to entering
+ * a low power mode will often reduce current consumption.
+ *
+ * @param hal a serial HAL handle to a peripheral that has been
+ * opened
+ *
+ * @param holdp a nonzero value if the peripheral is to be placed into
+ * hold mode, and a zero value to release it from hold mode
+ *
+ * @return 0 if the transition was successful, -1 if an error occurred.
+ */
+static __inline__
+int iBSP430serialSetHold (hBSP430halSERIAL hal,
+                          int holdp)
+{
+  return hal->dispatch->setHold(hal, holdp);
 }
 
 /** Release a serial device.
