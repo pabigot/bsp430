@@ -39,7 +39,7 @@
 #define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
 #define configBSP430_HAL_USCI_B0 1
 #endif
-/* Use SMCLK/40 (=100 kHz) for the I2C speed */
+/* Use SMCLK/100 (=80 kHz) for the I2C speed */
 #define APP_HH10D_I2C_PRESCALER 100
 /* Address for the thing. */
 #define APP_HH10D_I2C_ADDRESS 0x51
