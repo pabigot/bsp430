@@ -1590,8 +1590,8 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /* END AUTOMATICALLY GENERATED CODE [port_hpl_decl] */
 /* !BSP430! end=port_hpl_decl */
 
-/* !BSP430! insert=hal_isr_decl */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
+/* !BSP430! insert=hal_port_isr_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_isr_decl] */
 /** @def configBSP430_HAL_PORT1_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
@@ -1608,7 +1608,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT1_ISR
-#define configBSP430_HAL_PORT1_ISR (configBSP430_HAL_PORT1 - 0)
+#define configBSP430_HAL_PORT1_ISR ((configBSP430_HAL_PORT1 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (1 <= 2)))
 #endif /* configBSP430_HAL_PORT1_ISR */
 
 #if (configBSP430_HAL_PORT1_ISR - 0) && ! (configBSP430_HAL_PORT1 - 0)
@@ -1631,7 +1631,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT2_ISR
-#define configBSP430_HAL_PORT2_ISR (configBSP430_HAL_PORT2 - 0)
+#define configBSP430_HAL_PORT2_ISR ((configBSP430_HAL_PORT2 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (2 <= 2)))
 #endif /* configBSP430_HAL_PORT2_ISR */
 
 #if (configBSP430_HAL_PORT2_ISR - 0) && ! (configBSP430_HAL_PORT2 - 0)
@@ -1654,7 +1654,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT3_ISR
-#define configBSP430_HAL_PORT3_ISR (configBSP430_HAL_PORT3 - 0)
+#define configBSP430_HAL_PORT3_ISR ((configBSP430_HAL_PORT3 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (3 <= 2)))
 #endif /* configBSP430_HAL_PORT3_ISR */
 
 #if (configBSP430_HAL_PORT3_ISR - 0) && ! (configBSP430_HAL_PORT3 - 0)
@@ -1677,7 +1677,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT4_ISR
-#define configBSP430_HAL_PORT4_ISR (configBSP430_HAL_PORT4 - 0)
+#define configBSP430_HAL_PORT4_ISR ((configBSP430_HAL_PORT4 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (4 <= 2)))
 #endif /* configBSP430_HAL_PORT4_ISR */
 
 #if (configBSP430_HAL_PORT4_ISR - 0) && ! (configBSP430_HAL_PORT4 - 0)
@@ -1700,7 +1700,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT5_ISR
-#define configBSP430_HAL_PORT5_ISR (configBSP430_HAL_PORT5 - 0)
+#define configBSP430_HAL_PORT5_ISR ((configBSP430_HAL_PORT5 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (5 <= 2)))
 #endif /* configBSP430_HAL_PORT5_ISR */
 
 #if (configBSP430_HAL_PORT5_ISR - 0) && ! (configBSP430_HAL_PORT5 - 0)
@@ -1723,7 +1723,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT6_ISR
-#define configBSP430_HAL_PORT6_ISR (configBSP430_HAL_PORT6 - 0)
+#define configBSP430_HAL_PORT6_ISR ((configBSP430_HAL_PORT6 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (6 <= 2)))
 #endif /* configBSP430_HAL_PORT6_ISR */
 
 #if (configBSP430_HAL_PORT6_ISR - 0) && ! (configBSP430_HAL_PORT6 - 0)
@@ -1746,7 +1746,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT7_ISR
-#define configBSP430_HAL_PORT7_ISR (configBSP430_HAL_PORT7 - 0)
+#define configBSP430_HAL_PORT7_ISR ((configBSP430_HAL_PORT7 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (7 <= 2)))
 #endif /* configBSP430_HAL_PORT7_ISR */
 
 #if (configBSP430_HAL_PORT7_ISR - 0) && ! (configBSP430_HAL_PORT7 - 0)
@@ -1769,7 +1769,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT8_ISR
-#define configBSP430_HAL_PORT8_ISR (configBSP430_HAL_PORT8 - 0)
+#define configBSP430_HAL_PORT8_ISR ((configBSP430_HAL_PORT8 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (8 <= 2)))
 #endif /* configBSP430_HAL_PORT8_ISR */
 
 #if (configBSP430_HAL_PORT8_ISR - 0) && ! (configBSP430_HAL_PORT8 - 0)
@@ -1792,7 +1792,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT9_ISR
-#define configBSP430_HAL_PORT9_ISR (configBSP430_HAL_PORT9 - 0)
+#define configBSP430_HAL_PORT9_ISR ((configBSP430_HAL_PORT9 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (9 <= 2)))
 #endif /* configBSP430_HAL_PORT9_ISR */
 
 #if (configBSP430_HAL_PORT9_ISR - 0) && ! (configBSP430_HAL_PORT9 - 0)
@@ -1815,7 +1815,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT10_ISR
-#define configBSP430_HAL_PORT10_ISR (configBSP430_HAL_PORT10 - 0)
+#define configBSP430_HAL_PORT10_ISR ((configBSP430_HAL_PORT10 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (10 <= 2)))
 #endif /* configBSP430_HAL_PORT10_ISR */
 
 #if (configBSP430_HAL_PORT10_ISR - 0) && ! (configBSP430_HAL_PORT10 - 0)
@@ -1838,15 +1838,15 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_HAL_PORT11_ISR
-#define configBSP430_HAL_PORT11_ISR (configBSP430_HAL_PORT11 - 0)
+#define configBSP430_HAL_PORT11_ISR ((configBSP430_HAL_PORT11 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (11 <= 2)))
 #endif /* configBSP430_HAL_PORT11_ISR */
 
 #if (configBSP430_HAL_PORT11_ISR - 0) && ! (configBSP430_HAL_PORT11 - 0)
 #warning configBSP430_HAL_PORT11_ISR requested without configBSP430_HAL_PORT11
 #endif /* HAL_ISR and not HAL */
 
-/* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
-/* !BSP430! end=hal_isr_decl */
+/* END AUTOMATICALLY GENERATED CODE [hal_port_isr_decl] */
+/* !BSP430! end=hal_port_isr_decl */
 
 /** Convert from a bit value to a pin value.
  *

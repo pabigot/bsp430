@@ -107,7 +107,6 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
     
-
     'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
@@ -125,6 +124,30 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
+#endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
+
+#if (configBSP430_HAL_%(INSTANCE)s_ISR - 0) && ! (configBSP430_HAL_%(INSTANCE)s - 0)
+#warning configBSP430_HAL_%(INSTANCE)s_ISR requested without configBSP430_HAL_%(INSTANCE)s
+#endif /* HAL_ISR and not HAL */
+''',
+
+    'hal_port_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
+ *
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c %(INSTANCE)s, but want to define your
+ * own interrupt service routine for the peripheral.
+ *
+ * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
+ * true, so you only need to explicitly set it if you do not want to
+ * use the standard ISR provided by BSP430.
+ *
+ * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
+ * also be true.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HAL_%(INSTANCE)s_ISR
+#define configBSP430_HAL_%(INSTANCE)s_ISR ((configBSP430_HAL_%(INSTANCE)s - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (%(#)s <= 2)))
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
 
 #if (configBSP430_HAL_%(INSTANCE)s_ISR - 0) && ! (configBSP430_HAL_%(INSTANCE)s - 0)

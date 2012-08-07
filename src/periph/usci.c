@@ -250,7 +250,7 @@ iBSP430usciConfigureCallbacks (hBSP430halSERIAL hal,
 
 int
 iBSP430usciSetHold (hBSP430halSERIAL hal,
-                     int holdp)
+                    int holdp)
 {
   int rc;
   if (holdp) {
