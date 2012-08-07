@@ -229,7 +229,7 @@ typedef struct sBSP430hplPORT_5XX_8 {
   union {
     unsigned char sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
     unsigned char sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
-  };
+  } __attribute__((__packed__));
   unsigned char _reserved_x0B;
   unsigned char sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
   unsigned char _reserved_x0D;
