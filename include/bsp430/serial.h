@@ -778,7 +778,7 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * error occcured.
  */
 static __inline__
-int iBSP430i2xRxData_ni (hBSP430halSERIAL hal,
+int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
                          uint8_t * rx_data,
                          size_t rx_len)
 {

@@ -1006,7 +1006,7 @@ int iBSP430usci5I2CsetAddresses_ni (hBSP430halSERIAL hal,
                                     int own_address,
                                     int slave_address);
 
-/** USCI5-specific implementation of iBSP430i2xRxData_ni() */
+/** USCI5-specific implementation of iBSP430i2cRxData_ni() */
 int iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
                               uint8_t * rx_data,
                               size_t rx_len);

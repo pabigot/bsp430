@@ -46,7 +46,7 @@ void main ()
       continue;
     }
     memset(data, 0, sizeof(data));
-    rc = iBSP430i2xRxData_ni(i2c, data, sizeof(data));
+    rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
     if (0 > rc) {
       cprintf("I2C RX ERROR\n");
       continue;

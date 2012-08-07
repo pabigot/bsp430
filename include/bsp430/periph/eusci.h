@@ -778,7 +778,7 @@ int iBSP430eusciI2CsetAddresses_ni (hBSP430halSERIAL hal,
                                     int own_address,
                                     int slave_address);
 
-/** eUSCI(A)-specific implementation of iBSP430i2xRxData_ni() */
+/** eUSCI(A)-specific implementation of iBSP430i2cRxData_ni() */
 int iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
                               uint8_t * rx_data,
                               size_t rx_len);
