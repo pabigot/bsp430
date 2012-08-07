@@ -64,7 +64,7 @@
  * This routine will:
  * @li Disable the watchdog
  * @li Configure the LEDs (see #BSP430_PLATFORM_BOOT_CONFIGURE_LEDS)
- * @li Crystal configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CRYSTAL)
+ * @li Crystal configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1)
  * @li Clock configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
  * @li Start the system clock (if #BSP430_UPTIME)
  */
@@ -100,7 +100,7 @@ int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int e
  *
  * This value represents an application or system request for the
  * feature; availability of the feature must be tested using
- * #BSP430_PLATFORM_SPIN_FOR_JUMP.
+ * #BSP430_PLATFORM_SPIN_FOR_JUMPER.
  *
  * @cppflag
  * @defaulted */
@@ -132,12 +132,12 @@ int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int e
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/** @def configBSP430_PLATFORM_PERIPH_HELP
+/** @def configBSP430_PLATFORM_PERIPHERAL_HELP
  *
  * Define to a true value if the application will want to invoke
  * xBSP430platformPeripheralHelp().
  *
- * @cppflag 
+ * @cppflag
  * @defaulted
  */
 #ifndef configBSP430_PLATFORM_PERIPHERAL_HELP
@@ -150,7 +150,7 @@ void vBSP430platformSpinForJumper_ni (void);
  * describes any external connections.  Since, for example, pins
  * associated with an I2C interface are platform-specific, that
  * information belongs in the platform rather than the application.
- * 
+ *
  * This routine should be implemented on all platforms, and any
  * peripheral supported by vBSP430platformConfigurePeripheralPins_ni()
  * should produce a help string.
@@ -163,6 +163,79 @@ void vBSP430platformSpinForJumper_ni (void);
  * @dependency #BSP430_PLATFORM_PERIPHERAL_HELP
  */
 const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
+
+/** @def configBSP430_PLATFORM_BUTTON0
+ *
+ * Define to a true value if the application will want to use the
+ * primary button (if any) supported by a platform.
+ *
+ * @note If the platform supports more than one button, the
+ * corresponding macros (e.g., @c configBSP430_PLATFORM_BUTTON1) are
+ * also defined with default values of 0, up to button 3.
+ *
+ * @cppflag
+ */
+#ifndef configBSP430_PLATFORM_BUTTON0
+#define configBSP430_PLATFORM_BUTTON0 0
+#endif /* configBSP430_PLATFORM_BUTTON0 */
+
+/** @def BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE
+ *
+ * A platform-specific identification of a port device handle through
+ * which the platform's primary button is controlled.
+ *
+ * The value is defined if the platform supports a button, regardless
+ * of whether #configBSP430_PLATFORM_BUTTON0 is set.  The latter must
+ * be set in order for the HAL interface to the button to be enabled
+ * automatically.
+ *
+ * @note If the platform supports more than one button, the
+ * corresponding macros (e.g., @c
+ * BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE) may also be defined, up
+ * to button 3.
+ *
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_PLATFORM_BUTTON0_PORT_BIT
+ *
+ * A platform-specific identification of the bit on
+ * #BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE that is associated with
+ * the platform's primary button.
+ *
+ * The value is defined if the platform supports a button, regardless
+ * of whether #configBSP430_PLATFORM_BUTTON0 is set.  The latter must
+ * be set in order for the HAL interface to the button to be enabled
+ * automatically.
+ *
+ * @note If the platform supports more than one button, the
+ * corresponding macros (e.g., @c BSP430_PLATFORM_BUTTON1_PORT_BIT)
+ * may also be defined, up to button 3.
+ *
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_PLATFORM_BUTTON0_PORT_BIT include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_PLATFORM_BUTTON0
+ *
+ * Defined by the infrastructure if #configBSP430_PLATFORM_BUTTON0 is
+ * true.  The defined value evaluates to true if the button is
+ * supported by the platform, and to false if the button is not
+ * supported.
+ *
+ * @note If the platform supports more than one button, the
+ * corresponding macros (e.g., @c BSP430_PLATFORM_BUTTON1) are
+ * also defined, up to button 3.
+ *
+ * @cppflag
+ * @dependency #configBSP430_PLATFORM_BUTTON0 */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_PLATFORM_BUTTON0 include <bsp430/platform.h>
+#endif /* configBSP430_PLATFORM_BUTTON0 */
+
 
 /* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */
@@ -392,6 +465,21 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
 #endif /* default uptime timer */
 #endif /* configBSP430_UPTIME */
 
+/* If configBSP430_PLATFORM_BUTTON0 was requested, then mark the
+ * feature as available or not based on whether the platform provided
+ * a peripheral handle for the button's use.
+ *
+ * NOTE: This file is responsible only for processing button 0.
+ * Additional buttons must be handled in the platform-specific
+ * header. */
+#if configBSP430_PLATFORM_BUTTON0 - 0
+#ifdef BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE
+#define BSP430_PLATFORM_BUTTON0 1
+#else /* BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE */
+#define BSP430_PLATFORM_BUTTON0 0
+#endif /* BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE */
+#endif /* configBSP430_PLATFORM_BUTTON0 */
+
 /** @def BSP430_PLATFORM_SPIN_FOR_JUMPER
  *
  * Defined to indicate that the application or infrastructure supports
@@ -415,7 +503,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
  * and is true only if the platform supports
  * xBSP430platformPeripheralHelp().
  *
- * @dependency #configBSP430_PLATFORM_PERIPHERAL_HELP 
+ * @dependency #configBSP430_PLATFORM_PERIPHERAL_HELP
  * @platformdefault */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_PERIPHERAL_HELP)
 #ifndef BSP430_PLATFORM_PERIPHERAL_HELP
@@ -425,7 +513,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
 
 /** @def BSP430_PLATFORM_BOOT_CONFIGURE_LEDS
  *
- * If defined to a true value and #BSP430LED is also true,
+ * If defined to a true value and #BSP430_LED is also true,
  * vBSP430platformInitialize_ni() will invoke
  * vBSP430ledInitialize_ni() prior to the crystal stabilization phase
  * of platform initialization.
@@ -450,7 +538,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
  * If defined to a false value, vBSP430platformInitialize_ni() will
  * leave the clocks in their power-up configuration.
  *
- * @see #BSP430_PLATFORM_BOOT_CONFIGURE_CRYSTAL
+ * @see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS

@@ -61,6 +61,10 @@
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
+/* Available button definitions */
+#define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT3
+
 /* What to use as the uptime timer.  If we're going to pick TA0 for
    CCACLK, try to pick a different timer for uptime. */
 #if ((configBSP430_UPTIME - 0)                                  \
@@ -109,7 +113,7 @@
 #define BSP430_TIMER_CCACLK_CC_INDEX 0
 #define BSP430_TIMER_CCACLK_CCIS CCIS_1
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
-#define BSP430_TIMER_CCACLK_CLK_PORT_PIN BIT0
+#define BSP430_TIMER_CCACLK_CLK_PORT_BIT BIT0
 /* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_decl] */
 /* !BSP430! end=feature_ccaclk_decl */
 #endif /* MCU */

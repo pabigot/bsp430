@@ -141,7 +141,7 @@
  * <li>#BSP430_TIMER_CCACLK_CC_INDEX
  * <li>#BSP430_TIMER_CCACLK_CCIS
  * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PIN BIT1
+ * <li>#BSP430_TIMER_CCACLK_CLK_PORT_BIT BIT1
  * </ul>
  *
  * Also be sure you enable the HAL or HPL resources for the timer and
@@ -279,13 +279,13 @@
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_CLK_PORT_PIN
+/** @def BSP430_TIMER_CCACLK_CLK_PORT_BIT
  *
  * The pin on BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE to which the
  * external clock source for BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
  * provided. */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_CLK_PORT_PIN include <bsp430/platform.h>
+#define BSP430_TIMER_CCACLK_CLK_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** Count number of timer transitions over a span of ACLK ticks

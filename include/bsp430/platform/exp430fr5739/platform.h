@@ -65,6 +65,12 @@
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
+/* Available button definitions */
+#define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT4
+#define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT0
+#define BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT4
+#define BSP430_PLATFORM_BUTTON1_PORT_BIT BIT1
+
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */
@@ -98,7 +104,7 @@
 #define BSP430_TIMER_CCACLK_CC_INDEX 2
 #define BSP430_TIMER_CCACLK_CCIS CCIS_1
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
-#define BSP430_TIMER_CCACLK_CLK_PORT_PIN BIT1
+#define BSP430_TIMER_CCACLK_CLK_PORT_BIT BIT1
 /* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_decl] */
 /* !BSP430! end=feature_ccaclk_decl */
 /* !BSP430! insert=feature_endif subst=module,feature */

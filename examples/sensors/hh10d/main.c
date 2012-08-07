@@ -116,7 +116,7 @@ void main ()
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf("Monitoring HH10D on %s.%u using timer %s\n",
           xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
-          bitToPin(APP_HH10D_PORT_PIN),
+          bitToPin(APP_HH10D_PORT_BIT),
           xBSP430timerName(APP_HH10D_TIMER_PERIPH_HANDLE) ?: "T?");
   cprintf("Uptime CC block %s.%u at %u Hz sample duration %u ticks\n",
           xBSP430timerName(BSP430_UPTIME_TIMER_PERIPH_HANDLE),
@@ -156,8 +156,8 @@ void main ()
    * signal, which is where the HH10D's frequency signal should be
    * found, and configure the assigned timer to count that input
    * continuously. */
-  BSP430_PORT_HAL_HPL_SEL(hh10d_port) |= APP_HH10D_PORT_PIN;
-  BSP430_PORT_HAL_HPL_DIR(hh10d_port) &= ~APP_HH10D_PORT_PIN;
+  BSP430_PORT_HAL_HPL_SEL(hh10d_port) |= APP_HH10D_PORT_BIT;
+  BSP430_PORT_HAL_HPL_DIR(hh10d_port) &= ~APP_HH10D_PORT_BIT;
   hh10d.freq_timer->ctl = TASSEL_0 | MC_2 | TACLR;
 
   /* Hook into the uptime infrastructure and have the HH10D callback

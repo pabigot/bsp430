@@ -24,7 +24,7 @@
 /* We need to know the port and pin to attach the HH10D to, which is
  * the clock source for the timer we're going to use. */
 #define APP_HH10D_PORT_PERIPH_HANDLE BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
-#define APP_HH10D_PORT_PIN BSP430_TIMER_CCACLK_CLK_PORT_PIN
+#define APP_HH10D_PORT_BIT BSP430_TIMER_CCACLK_CLK_PORT_BIT
 #define APP_HH10D_TIMER_PERIPH_HANDLE BSP430_TIMER_CCACLK_PERIPH_HANDLE
 
 /* And we need a CC block on the uptime counter that we can use to

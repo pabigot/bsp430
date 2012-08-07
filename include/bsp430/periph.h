@@ -93,7 +93,7 @@ typedef int tBSP430periphHandle;
  * This is used by platform-independent clock peripherals to request
  * that the pins related to XIN and XOUT be configured to their
  * peripheral function. */
-#define BSP430_PERIPH_LFXT1 ((tBSP430periphHandle)1)
+#define BSP430_PERIPH_LFXT1 ((tBSP430periphHandle)0x4001)
 
 /** HPL handle identifying the ability to expose clock signals.
  *
@@ -102,11 +102,32 @@ typedef int tBSP430periphHandle;
  * ACLK on pins where they may be monitored.  Its availability is
  * conditional on platform support and
  * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
-#define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)3)
+#define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)0x4003)
+
+/** HPL handle identifying the platform primary button.
+ *
+ * @dependency #BSP430_PLATFORM_BUTTON0
+ */
+#define BSP430_PERIPH_BUTTON0 ((tBSP430periphHandle)0x4101)
+
+/** HPL handle identifying the platform secondary button.
+ * @dependency @link #BSP430_PLATFORM_BUTTON0 BSP430_PLATFORM_BUTTON1 @endlink
+ */
+#define BSP430_PERIPH_BUTTON1 ((tBSP430periphHandle)0x4103)
+
+/** HPL handle identifying the platform tertiary button.
+ * @dependency @link #BSP430_PLATFORM_BUTTON0 BSP430_PLATFORM_BUTTON2 @endlink
+ */
+#define BSP430_PERIPH_BUTTON2 ((tBSP430periphHandle)0x4105)
+
+/** HPL handle identifying the platform quaternary button.
+ * @dependency @link #BSP430_PLATFORM_BUTTON0 BSP430_PLATFORM_BUTTON3 @endlink
+ */
+#define BSP430_PERIPH_BUTTON3 ((tBSP430periphHandle)0x4107)
 
 /** @def configBSP430_PERIPH_EXPOSED_CLOCKS
  *
- * Define to a true value in @c FreeRTOSConfig.h to enable use of
+ * Define to a true value in @c bsp430_config.h to enable use of
  * #BSP430_PERIPH_EXPOSED_CLOCKS in
  * #iBSP430platformConfigurePeripheralPins_ni.
  *
@@ -115,7 +136,6 @@ typedef int tBSP430periphHandle;
 #ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 0
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-
 
 /** Reserved value for #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0
