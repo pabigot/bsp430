@@ -505,7 +505,9 @@ int iBSP430serialConfigureCallbacks (hBSP430halSERIAL hal,
  * function.  When the hold is released, the port pins are
  * reconfigured to their peripheral function, the #UCSWRST bit is
  * cleared, and any interrupts for which callbacks are registered are
- * re-enabled.
+ * re-enabled.  (Note that enabling the interrupts at the peripheral
+ * level does not change the #GIE state, which should be cleared while
+ * this function is executing.)
  *
  * @note Placing a serial peripheral into hold mode prior to entering
  * a low power mode will often reduce current consumption.
@@ -516,7 +518,9 @@ int iBSP430serialConfigureCallbacks (hBSP430halSERIAL hal,
  * @param holdp a nonzero value if the peripheral is to be placed into
  * hold mode, and a zero value to release it from hold mode
  *
- * @return 0 if the transition was successful, -1 if an error occurred.
+ * @return 0 if the transition was successful, -1 if an error
+ * occurred.  Potential errors include inability to configure the
+ * peripheral pins.  On error, the peripheral is left in reset mode.
  */
 static __inline__
 int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,

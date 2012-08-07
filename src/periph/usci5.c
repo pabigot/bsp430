@@ -108,9 +108,12 @@ usci5Configure (hBSP430halSERIAL hal,
     /* Reset device statistics */
     hal->num_rx = hal->num_tx = 0;
 
-    /* Release the USCI5 and enable the interrupts.  Interrupts are
-     * disabled and cleared when UCSWRST is set. */
-    SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
+    /* Attempt to release the device for use; if that failed, reset it
+     * and return an error */
+    if (0 != iBSP430usci5SetHold_ni(hal, 0)) {
+      SERIAL_HAL_HPL(hal)->ctlw0 = UCSWRST;
+      hal = NULL;
+    }
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -242,7 +245,10 @@ iBSP430usci5SetHold_ni (hBSP430halSERIAL hal,
     rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 1);
-    SERIAL_HAL_HPL(hal)->ctlw0 &= ~UCSWRST;
+    if (0 == rc) {
+      SERIAL_HAL_HPL(hal)->ctlw0 &= ~UCSWRST;
+      SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
+    }
   }
   return rc;
 }

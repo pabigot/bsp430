@@ -118,11 +118,11 @@ usciConfigure (hBSP430halSERIAL hal,
     /* Mark the hal active */
     hal->num_rx = hal->num_tx = 0;
 
-    /* Release the USCI and enable the interrupts.  Interrupts are
-     * disabled and cleared when UCSWRST is set. */
-    SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
-    if (0 != hal->rx_callback) {
-      *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
+    /* Attempt to release the device for use; if that failed, reset it
+     * and return an error */
+    if (0 != iBSP430usciSetHold_ni(hal, 0)) {
+      SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
+      hal = NULL;
     }
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -258,7 +258,15 @@ iBSP430usciSetHold_ni (hBSP430halSERIAL hal,
     rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 1);
-    SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
+    if (0 == rc) {
+      SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
+      /* Release the USCI and enable the interrupts.  Interrupts are
+       * disabled and cleared when UCSWRST is set. */
+      SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
+      if (hal->rx_callback) {
+        *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
+      }
+    }
   }
   return rc;
 }

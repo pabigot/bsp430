@@ -102,9 +102,12 @@ eusciConfigure (hBSP430halSERIAL hal,
     /* Reset device statistics */
     hal->num_rx = hal->num_tx = 0;
 
-    /* Release the eUSCI and enable the interrupts.  Interrupts are
-     * disabled and cleared when UCSWRST is set. */
-    SERIAL_HAL_RELEASE_NI(hal);
+    /* Attempt to release the device for use; if that failed, reset it
+     * and return an error */
+    if (0 != iBSP430eusciSetHold_ni(hal, 0)) {
+      HAL_HPL_FIELD(hal, ctlw0) = UCSWRST;
+      hal = NULL;
+    }
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -270,7 +273,10 @@ iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
     rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 1);
-    HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
+    if (0 == rc) {
+      HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
+      SERIAL_HAL_RELEASE_NI(hal);
+    }
   }
   return rc;
 }
