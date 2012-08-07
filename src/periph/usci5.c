@@ -372,7 +372,6 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
   volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
   uint8_t * dp = data;
   const uint8_t * dpe = data + len;
-  int i = 0;
 
   /* Set for receive */
   hpl->ctl1 &= ~UCTR;

@@ -387,7 +387,6 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
   struct sBSP430usciHPLAux * aux = SERIAL_HAL_HPLAUX(hal);
   uint8_t * dp = data;
   const uint8_t * dpe = data + len;
-  int i = 0;
 
   /* Set for receive */
   hpl->ctl1 &= ~UCTR;
