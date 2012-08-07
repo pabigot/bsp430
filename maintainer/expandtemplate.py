@@ -137,9 +137,9 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * BSP430 HAL interface for @c %(INSTANCE)s, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
  * also be true.

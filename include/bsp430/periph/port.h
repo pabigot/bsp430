@@ -1598,9 +1598,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT1, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT1 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT1 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT1
  * also be true.
@@ -1621,9 +1621,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT2, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT2 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT2 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT2
  * also be true.
@@ -1644,9 +1644,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT3, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT3 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT3 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT3
  * also be true.
@@ -1667,9 +1667,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT4, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT4 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT4 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT4
  * also be true.
@@ -1690,9 +1690,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT5, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT5 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT5 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT5
  * also be true.
@@ -1713,9 +1713,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT6, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT6 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT6 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT6
  * also be true.
@@ -1736,9 +1736,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT7, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT7 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT7 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT7
  * also be true.
@@ -1759,9 +1759,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT8, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT8 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT8 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT8
  * also be true.
@@ -1782,9 +1782,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT9, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT9 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT9 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT9
  * also be true.
@@ -1805,9 +1805,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT10, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT10 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT10 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT10
  * also be true.
@@ -1828,9 +1828,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * BSP430 HAL interface for @c PORT11, but want to define your
  * own interrupt service routine for the peripheral.
  *
- * Enabling #configBSP430_HAL_PORT11 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
+ * Enabling #configBSP430_HAL_PORT11 defaults this to true if
+ * the port supports interrupts, so you only need to explicitly set it
+ * if you do not want to use the standard ISR provided by BSP430.
  *
  * @note Enabling this requires that #configBSP430_HAL_PORT11
  * also be true.
