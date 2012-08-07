@@ -38,7 +38,7 @@
 #if BSP430_LED - 0
 const unsigned char nBSP430led = 8;
 
-/* exp430fr5739 LEDs are PJ.0 to PJ.3 and PB.4 to PB.7.  PJ is not
+/* exp430fr5739 LEDs are PJ.0 to PJ.3 and P4.4 to P4.7.  PJ is not
  * byte addressable, so we need to have a custom implementation of the
  * LED interface. */
 void vBSP430ledInitialize_ni (void)
@@ -47,10 +47,10 @@ void vBSP430ledInitialize_ni (void)
   PJOUT &= ~0x0F;
   PJSEL0 &= ~0x0F;
   PJSEL1 &= ~0x0F;
-  PBDIR |= 0xF0;
-  PBOUT &= ~0xF0;
-  PBSEL0 &= ~0xF0;
-  PBSEL1 &= ~0xF0;
+  P3DIR |= 0xF0;
+  P3OUT &= ~0xF0;
+  P3SEL0 &= ~0xF0;
+  P3SEL1 &= ~0xF0;
 }
 
 void vBSP430ledSet (int led_idx,
