@@ -35,25 +35,6 @@
 /* Mask extracting the N bits from SCFQCTL */
 #define FLL_N_MASK 127
 
-unsigned char
-ucBSP430fllplusConfigure_ni (const xBSP430fllplusConfig * pxConfig)
-{
-  unsigned char ucReturnValue;
-
-  FLL_CTL0 = pxConfig->ucFLL_CTL0;
-  FLL_CTL1 = pxConfig->ucFLL_CTL1;
-  do {
-    BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
-    BSP430_CORE_WATCHDOG_CLEAR();
-    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-  } while (BSP430_CLOCK_LFXT1_IS_FAULTED_NI());
-  ucReturnValue = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
-  SCFI0 = pxConfig->ucSCFI0;
-  SCFQCTL = pxConfig->ucSCFQCTL;
-
-  return ucReturnValue;
-}
-
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
