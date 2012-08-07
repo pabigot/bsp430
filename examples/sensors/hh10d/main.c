@@ -85,7 +85,10 @@ static int bitToPin (int v)
 void main ()
 {
   sBSP430halPORT * hh10d_port = hBSP430portLookup(APP_HH10D_PORT_PERIPH_HANDLE);
+  hBSP430halSERIAL i2c = hBSP430serialLookup(APP_HH10D_I2C_PERIPH_HANDLE);
   int uptime_Hz;
+  int hh10d_offs;
+  int hh10d_sens;
 
   vBSP430platformInitialize_ni();
 
@@ -104,6 +107,10 @@ void main ()
   uptime_Hz = ulBSP430uptimeResolution_Hz_ni();
   hh10d.sample_duration_utt = uptime_Hz;
 
+  cprintf("HH10D I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n",
+          xBSP430serialName(APP_HH10D_I2C_PERIPH_HANDLE) ?: "UNKNOWN",
+          i2c, ulBSP430clockSMCLK_Hz_ni() / APP_HH10D_I2C_PRESCALER,
+          APP_HH10D_I2C_ADDRESS);
   cprintf("Monitoring HH10D on %s.%u using timer %s\n",
           xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
           bitToPin(APP_HH10D_PORT_PIN),
@@ -111,6 +118,36 @@ void main ()
   cprintf("Uptime CC block %s.%u at %u Hz sample duration %u ticks\n",
           xBSP430timerName(BSP430_UPTIME_TIMER_PERIPH_HANDLE),
           APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);
+
+
+  i2c = hBSP430serialOpenI2C(i2c, (0x100 <= UCMST) ? (UCMST >> 8) : UCMST,
+                             UCSSEL_2, APP_HH10D_I2C_PRESCALER);
+  if (! i2c) {
+    cprintf("I2C open failed.\n");
+    return;
+  }
+
+  (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_HH10D_I2C_ADDRESS);
+
+  hh10d_sens = 0;
+  {
+    int rc;
+    uint8_t addr = 10;
+    uint8_t data[4];
+    rc = iBSP430i2cTxData_ni(i2c, &addr, sizeof(addr));
+    if (sizeof(addr) == rc) {
+      rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+      if (sizeof(data) == rc) {
+        hh10d_sens = (data[0] << 8) | data[1];
+        hh10d_offs = (data[2] << 8) | data[3];
+      }
+    }
+  }
+  if (hh10d_sens) {
+    cprintf("I2C read offset %u sensitivity %u\n", hh10d_offs, hh10d_sens);
+  } else {
+    cprintf("I2C read of offset and sensitivity failed\n");
+  }
 
   /* Select input peripheral function mode for CCACLK timer clock
    * signal, which is where the HH10D's frequency signal should be
@@ -130,6 +167,10 @@ void main ()
 
   while (1) {
     __bis_status_register(LPM0_bits | GIE);
-    cprintf("%lu: Sample %u in %u uptime ticks\n", ulBSP430uptime_ni(), hh10d.last_period_count, hh10d.sample_duration_utt);
+    cprintf("%lu: Sample %u in %u uptime ticks", ulBSP430uptime_ni(), hh10d.last_period_count, hh10d.sample_duration_utt);
+    if (0 != hh10d_sens) {
+      cprintf(": RH %u%%", (unsigned int)(((hh10d_offs - hh10d.last_period_count) * (unsigned long) hh10d_sens) / 4096));
+    }
+    cputchar_ni('\n');
   }
 }

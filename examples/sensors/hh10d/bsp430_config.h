@@ -29,5 +29,20 @@
  * didn't ask for configBSP430_UPTIME_USE_DEFAULT_CC0_ISR. */
 #define APP_HH10D_UPTIME_CC_INDEX 1
 
+#if BSP430_PLATFORM_EXP430F5438 - 0
+#define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3
+#define configBSP430_HAL_USCI5_B3 1
+#elif BSP430_PLATFORM_EXP430FR5739 - 0
+#define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B0
+#define configBSP430_HAL_EUSCI_B0 1
+#else
+#define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
+#define configBSP430_HAL_USCI_B0 1
+#endif
+/* Use SMCLK/40 (=100 kHz) for the I2C speed */
+#define APP_HH10D_I2C_PRESCALER 100
+/* Address for the thing. */
+#define APP_HH10D_I2C_ADDRESS 0x51
+
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>
