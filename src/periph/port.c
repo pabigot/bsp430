@@ -349,8 +349,6 @@ struct sBSP430halPORT xBSP430hal_PORT11_ = {
      || (configBSP430_HAL_PORT12_ISR - 0)       \
      )
 
-#include <bsp430/utility/console.h>
-
 static int
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
@@ -359,7 +357,6 @@ __attribute__ ( ( __c16__ ) )
 port_isr (hBSP430halPORT device,
           int idx)
 {
-  cprintf("isr idx %u cb %p\n", idx, device->pin_callback[idx]);
   return iBSP430callbackInvokeISRIndexed_ni(device->pin_callback + idx, device, idx, 0);
 }
 #endif /* PORT ISR */
