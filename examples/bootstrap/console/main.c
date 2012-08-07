@@ -67,7 +67,7 @@ void main ()
       int rc;
       BSP430_CORE_WATCHDOG_CLEAR();
       BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
-      rc = iBSP430serialUARTrxByte_ni(hBSP430console());
+      rc = iBSP430uartRxByte_ni(hBSP430console());
       if (0 <= rc) {
         cputtext_ni(" rx char ");
         cputu_ni(rc, 10);

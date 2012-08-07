@@ -979,36 +979,36 @@ void vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL device);
 /** USCI5-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430usci5Flush_ni (hBSP430halSERIAL device);
 
-/** USCI5-specific implementation of iBSP430serialUARTrxByte_ni() */
+/** USCI5-specific implementation of iBSP430uartRxByte_ni() */
 int iBSP430usci5UARTrxByte_ni (hBSP430halSERIAL device);
 
-/** USCI5-specific implementation of iBSP430serialUARTtxByte_ni() */
+/** USCI5-specific implementation of iBSP430uartTxByte_ni() */
 int iBSP430usci5UARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
 
-/** USCI5-specific implementation of iBSP430serialUARTtxData_ni() */
+/** USCI5-specific implementation of iBSP430uartTxData_ni() */
 int iBSP430usci5UARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** USCI5-specific implementation of iBSP430serialUARTtxASCIIZ_ni() */
+/** USCI5-specific implementation of iBSP430uartTxASCIIZ_ni() */
 int iBSP430usci5UARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
-/** USCI5-specific implementation of iBSP430serialSPITxRx_ni() */
+/** USCI5-specific implementation of iBSP430spiTxRx_ni() */
 int iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
                             const uint8_t * tx_data,
                             size_t tx_len,
                             size_t rx_len,
                             uint8_t * rx_data);
 
-/** USCI5-specific implementation of iBSP430serialI2CsetAddresses_ni() */
+/** USCI5-specific implementation of iBSP430i2cSetAddresses_ni() */
 int iBSP430usci5I2CsetAddresses_ni (hBSP430halSERIAL hal,
                                     int own_address,
                                     int slave_address);
 
-/** USCI5-specific implementation of iBSP430serialI2CrxData_ni() */
+/** USCI5-specific implementation of iBSP430i2xRxData_ni() */
 int iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
                               uint8_t * rx_data,
                               size_t rx_len);
 
-/** USCI5-specific implementation of iBSP430serialI2CtxData_ni() */
+/** USCI5-specific implementation of iBSP430i2cTxData_ni() */
 int iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
                               const uint8_t * tx_data,
                               size_t tx_len);

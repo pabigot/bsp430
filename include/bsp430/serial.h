@@ -566,7 +566,7 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-int iBSP430serialUARTrxByte_ni (hBSP430halSERIAL hal)
+int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
 {
   return hal->dispatch->uartRxByte_ni(hal);
 }
@@ -588,7 +588,7 @@ int iBSP430serialUARTrxByte_ni (hBSP430halSERIAL hal)
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-int iBSP430serialUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
+int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
   return hal->dispatch->uartTxByte_ni(hal, c);
 }
@@ -611,9 +611,9 @@ int iBSP430serialUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-int iBSP430serialUARTtxData_ni (hBSP430halSERIAL hal,
-                                const uint8_t * data,
-                                size_t len)
+int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
+                          const uint8_t * data,
+                          size_t len)
 {
   return hal->dispatch->uartTxData_ni(hal, data, len);
 }
@@ -638,7 +638,7 @@ int iBSP430serialUARTtxData_ni (hBSP430halSERIAL hal,
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
 static __inline__
-int iBSP430serialUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   return hal->dispatch->uartTxASCIIZ_ni(hal, str);
 }
@@ -672,11 +672,11 @@ int iBSP430serialUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * error occcured.
  */
 static __inline__
-int iBSP430serialSPITxRx_ni (hBSP430halSERIAL hal,
-                             const uint8_t * tx_data,
-                             size_t tx_len,
-                             size_t rx_len,
-                             uint8_t * rx_data)
+int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
+                       const uint8_t * tx_data,
+                       size_t tx_len,
+                       size_t rx_len,
+                       uint8_t * rx_data)
 {
   return hal->dispatch->spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);
 }
@@ -698,9 +698,9 @@ int iBSP430serialSPITxRx_ni (hBSP430halSERIAL hal,
  *
  * @return 0 if successfully set, -1 if an error occurs. */
 static __inline__
-int iBSP430serialI2CsetAddresses_ni (hBSP430halSERIAL hal,
-                                     int own_address,
-                                     int slave_address)
+int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
+                               int own_address,
+                               int slave_address)
 {
   return hal->dispatch->i2cSetAddresses_ni(hal, own_address, slave_address);
 }
@@ -723,9 +723,9 @@ int iBSP430serialI2CsetAddresses_ni (hBSP430halSERIAL hal,
  * occcured.
  */
 static __inline__
-int iBSP430serialI2CtxData_ni (hBSP430halSERIAL hal,
-                               const uint8_t * tx_data,
-                               size_t tx_len)
+int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
+                         const uint8_t * tx_data,
+                         size_t tx_len)
 {
   return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
 }
@@ -748,9 +748,9 @@ int iBSP430serialI2CtxData_ni (hBSP430halSERIAL hal,
  * error occcured.
  */
 static __inline__
-int iBSP430serialI2CrxData_ni (hBSP430halSERIAL hal,
-                               uint8_t * rx_data,
-                               size_t rx_len)
+int iBSP430i2xRxData_ni (hBSP430halSERIAL hal,
+                         uint8_t * rx_data,
+                         size_t rx_len)
 {
   return hal->dispatch->i2cRxData_ni(hal, rx_data, rx_len);
 }

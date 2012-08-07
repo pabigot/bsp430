@@ -750,19 +750,19 @@ void vBSP430eusciWakeupTransmit_ni (hBSP430halSERIAL device);
 /** eUSCI(A)-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430eusciFlush_ni (hBSP430halSERIAL device);
 
-/** eUSCI(A)-specific implementation of iBSP430serialUARTrxByte_ni() */
+/** eUSCI(A)-specific implementation of iBSP430uartRxByte_ni() */
 int iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL device);
 
-/** eUSCI(A)-specific implementation of iBSP430serialUARTtxByte_ni() */
+/** eUSCI(A)-specific implementation of iBSP430uartTxByte_ni() */
 int iBSP430eusciUARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
 
-/** eUSCI(A)-specific implementation of iBSP430serialUARTtxData_ni() */
+/** eUSCI(A)-specific implementation of iBSP430uartTxData_ni() */
 int iBSP430eusciUARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** eUSCI(A)-specific implementation of iBSP430serialUARTtxASCIIZ_ni() */
+/** eUSCI(A)-specific implementation of iBSP430uartTxASCIIZ_ni() */
 int iBSP430eusciUARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
 
-/** eUSCI(A)-specific implementation of iBSP430serialSPITxRx_ni() */
+/** eUSCI(A)-specific implementation of iBSP430spiTxRx_ni() */
 int iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
                             const uint8_t * tx_data,
                             size_t tx_len,
@@ -770,17 +770,17 @@ int iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
                             uint8_t * rx_data);
 
 
-/** eUSCI(A)-specific implementation of iBSP430serialI2CsetAddresses_ni() */
+/** eUSCI(A)-specific implementation of iBSP430i2cSetAddresses_ni() */
 int iBSP430eusciI2CsetAddresses_ni (hBSP430halSERIAL hal,
                                     int own_address,
                                     int slave_address);
 
-/** eUSCI(A)-specific implementation of iBSP430serialI2CrxData_ni() */
+/** eUSCI(A)-specific implementation of iBSP430i2xRxData_ni() */
 int iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
                               uint8_t * rx_data,
                               size_t rx_len);
 
-/** eUSCI(A)-specific implementation of iBSP430serialI2CtxData_ni() */
+/** eUSCI(A)-specific implementation of iBSP430i2cTxData_ni() */
 int iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
                               const uint8_t * tx_data,
                               size_t tx_len);

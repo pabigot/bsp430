@@ -31,7 +31,7 @@ void main ()
     return;
   }
 
-  (void)iBSP430serialI2CsetAddresses_ni(i2c, -1, APP_TMP102_I2C_ADDRESS);
+  (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_TMP102_I2C_ADDRESS);
 
 #define BSP430_TMP_xCel_TO_ddegF(xcel_) (320 + ((9 * (xcel_ >> 1)) / (4 >> (1 & (xcel_)))))
 
@@ -40,13 +40,13 @@ void main ()
     uint8_t data[2];
     uint16_t temp_xCel;
 
-    rc = iBSP430serialI2CtxData_ni(i2c, &pr, 1);
+    rc = iBSP430i2cTxData_ni(i2c, &pr, 1);
     if (0 > rc) {
       cprintf("I2C TX ERROR\n");
       continue;
     }
     memset(data, 0, sizeof(data));
-    rc = iBSP430serialI2CrxData_ni(i2c, data, sizeof(data));
+    rc = iBSP430i2xRxData_ni(i2c, data, sizeof(data));
     if (0 > rc) {
       cprintf("I2C RX ERROR\n");
       continue;

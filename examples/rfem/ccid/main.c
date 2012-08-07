@@ -33,8 +33,8 @@ static uint8_t
 sendStrobe (uint8_t reg)
 {
   uint8_t rc = 0;
-  
-  (void)iBSP430serialSPITxRx_ni(spi, &reg, 1, 0, &rc);
+
+  (void)iBSP430spiTxRx_ni(spi, &reg, 1, 0, &rc);
   return rc;
 }
 
@@ -48,7 +48,7 @@ readRegister (uint8_t reg)
   if (0x30 <= reg) {
     reg |= 0x40;
   }
-  (void)iBSP430serialSPITxRx_ni(spi, &reg, 1, 1, rxbuf);
+  (void)iBSP430spiTxRx_ni(spi, &reg, 1, 1, rxbuf);
   return rxbuf[1];
 }
 
@@ -56,7 +56,7 @@ void main ()
 {
   uint8_t rc;
   unsigned int ctl0_byte;
-  
+
   volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(APP_GDO0_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * gdo1 = xBSP430hplLookupPORTIE(APP_GDO1_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(APP_GDO2_PORT_PERIPH_HANDLE);

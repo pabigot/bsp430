@@ -60,10 +60,10 @@ emit_char2_ni (int c, hBSP430halSERIAL uart)
 {
 #if configBSP430_CONSOLE_USE_ONLCR - 0
   if ('\n' == c) {
-    iBSP430serialUARTtxByte_ni(uart, '\r');
+    iBSP430uartTxByte_ni(uart, '\r');
   }
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
-  return iBSP430serialUARTtxByte_ni(uart, c);
+  return iBSP430uartTxByte_ni(uart, c);
 }
 
 /* Base version used by cprintf.  This has to re-read the console_hal_
