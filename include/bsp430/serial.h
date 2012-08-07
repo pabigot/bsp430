@@ -272,7 +272,7 @@ struct sBSP430serialDispatch {
   int (* configureCallbacks) (hBSP430halSERIAL hal,
                               const struct sBSP430halISRCallbackVoid * rx_callback,
                               const struct sBSP430halISRCallbackVoid * tx_callback);
-  int (* setHold) (hBSP430halSERIAL hal, int holdp);
+  int (* setHold_ni) (hBSP430halSERIAL hal, int holdp);
   int (* close) (hBSP430halSERIAL hal);
   void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
   void (* flush_ni) (hBSP430halSERIAL hal);
@@ -519,10 +519,10 @@ int iBSP430serialConfigureCallbacks (hBSP430halSERIAL hal,
  * @return 0 if the transition was successful, -1 if an error occurred.
  */
 static __inline__
-int iBSP430serialSetHold (hBSP430halSERIAL hal,
-                          int holdp)
+int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
+                             int holdp)
 {
-  return hal->dispatch->setHold(hal, holdp);
+  return hal->dispatch->setHold_ni(hal, holdp);
 }
 
 /** Release a serial device.

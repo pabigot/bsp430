@@ -261,8 +261,8 @@ iBSP430eusciConfigureCallbacks (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430eusciSetHold (hBSP430halSERIAL hal,
-                     int holdp)
+iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
+                        int holdp)
 {
   int rc;
   if (holdp) {
@@ -542,7 +542,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .openSPI = hBSP430eusciOpenSPI,
   .openI2C = hBSP430eusciOpenI2C,
   .configureCallbacks = iBSP430eusciConfigureCallbacks,
-  .setHold = iBSP430eusciSetHold,
+  .setHold_ni = iBSP430eusciSetHold_ni,
   .close = iBSP430eusciClose,
   .wakeupTransmit_ni = vBSP430eusciWakeupTransmit_ni,
   .flush_ni = vBSP430eusciFlush_ni,

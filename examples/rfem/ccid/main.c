@@ -84,7 +84,7 @@ void main ()
   }
   spi = hBSP430serialOpenSPI(spi, ctl0_byte, UCSSEL_2, 1);
   if (spi) {
-    rc = iBSP430serialSetHold(spi, 1);
+    rc = iBSP430serialSetHold_ni(spi, 1);
     /* GDO1 to input, pull-up */
     BSP430_PORT_HAL_HPL_DIR(hgdo1) &= ~APP_GDO1_PORT_BIT;
     BSP430_PORT_HAL_HPL_REN(hgdo1) |= APP_GDO1_PORT_BIT;
@@ -112,7 +112,7 @@ void main ()
   }
 
   /* Enable SPI */
-  rc = iBSP430serialSetHold(spi, 0);
+  rc = iBSP430serialSetHold_ni(spi, 0);
   cprintf("Radio is up, hold release %d; sending SRES strobe\n", rc);
 
   /* Send a reset */

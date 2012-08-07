@@ -741,8 +741,8 @@ int iBSP430eusciConfigureCallbacks (hBSP430halSERIAL device,
                                     const struct sBSP430halISRCallbackVoid * rx_callback,
                                     const struct sBSP430halISRCallbackVoid * tx_callback);
 
-/** eUSCI(A)-specific implementation of iBSP430serialSetHold() */
-int iBSP430eusciSetHold (hBSP430halSERIAL hal, int holdp);
+/** eUSCI(A)-specific implementation of iBSP430serialSetHold_ni() */
+int iBSP430eusciSetHold_ni (hBSP430halSERIAL hal, int holdp);
 
 /** eUSCI(A)-specific implementation of iBSP430serialClose() */
 int iBSP430eusciClose (hBSP430halSERIAL hal);
