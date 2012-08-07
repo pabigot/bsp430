@@ -366,24 +366,28 @@ static void
 __attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
 isr_%(INSTANCE)s (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P%(#)sIV;
+  int iv = P%(#)sIV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P%(#)sIFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P%(#)sIFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_%(INSTANCE)s, iv);
+  rv = port_isr(BSP430_HAL_%(INSTANCE)s, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
@@ -453,7 +457,7 @@ isr_%(INSTANCE)s (void)
 #define BSP430_TIMER_CCACLK_CC_INDEX %(CC_INDEX)s
 #define BSP430_TIMER_CCACLK_CCIS CCIS_%(CCIS)s
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_%(CLK_PORT)s
-#define BSP430_TIMER_CCACLK_CLK_PORT_PIN %(CLK_PIN)s''',
+#define BSP430_TIMER_CCACLK_CLK_PORT_BIT %(CLK_PIN)s''',
 
     'feature_ccaclk_cfg' : '''#if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
 #if !defined(configBSP430_HAL_%(TIMER)s)

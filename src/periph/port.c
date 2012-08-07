@@ -348,20 +348,19 @@ struct sBSP430halPORT xBSP430hal_PORT11_ = {
      || (configBSP430_HAL_PORT10_ISR - 0)       \
      || (configBSP430_HAL_PORT12_ISR - 0)       \
      )
+
+#include <bsp430/utility/console.h>
+
 static int
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
 port_isr (hBSP430halPORT device,
-          int iv)
+          int idx)
 {
-  int rv = 0;
-  if (0 != iv) {
-    int bit = (iv - 2) / 2;
-    rv = iBSP430callbackInvokeISRIndexed_ni(device->pin_callback + bit, device, bit, rv);
-  }
-  return rv;
+  cprintf("isr idx %u cb %p\n", idx, device->pin_callback[idx]);
+  return iBSP430callbackInvokeISRIndexed_ni(device->pin_callback + idx, device, idx, 0);
 }
 #endif /* PORT ISR */
 
@@ -372,24 +371,28 @@ static void
 __attribute__((__interrupt__(PORT1_VECTOR)))
 isr_PORT1 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P1IV;
+  int iv = P1IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P1IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P1IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT1, iv);
+  rv = port_isr(BSP430_HAL_PORT1, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT1_ISR */
@@ -399,24 +402,28 @@ static void
 __attribute__((__interrupt__(PORT2_VECTOR)))
 isr_PORT2 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P2IV;
+  int iv = P2IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P2IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P2IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT2, iv);
+  rv = port_isr(BSP430_HAL_PORT2, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT2_ISR */
@@ -426,24 +433,28 @@ static void
 __attribute__((__interrupt__(PORT3_VECTOR)))
 isr_PORT3 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P3IV;
+  int iv = P3IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P3IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P3IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT3, iv);
+  rv = port_isr(BSP430_HAL_PORT3, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT3_ISR */
@@ -453,24 +464,28 @@ static void
 __attribute__((__interrupt__(PORT4_VECTOR)))
 isr_PORT4 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P4IV;
+  int iv = P4IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P4IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P4IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT4, iv);
+  rv = port_isr(BSP430_HAL_PORT4, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT4_ISR */
@@ -480,24 +495,28 @@ static void
 __attribute__((__interrupt__(PORT5_VECTOR)))
 isr_PORT5 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P5IV;
+  int iv = P5IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P5IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P5IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT5, iv);
+  rv = port_isr(BSP430_HAL_PORT5, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT5_ISR */
@@ -507,24 +526,28 @@ static void
 __attribute__((__interrupt__(PORT6_VECTOR)))
 isr_PORT6 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P6IV;
+  int iv = P6IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P6IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P6IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT6, iv);
+  rv = port_isr(BSP430_HAL_PORT6, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT6_ISR */
@@ -534,24 +557,28 @@ static void
 __attribute__((__interrupt__(PORT7_VECTOR)))
 isr_PORT7 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P7IV;
+  int iv = P7IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P7IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P7IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT7, iv);
+  rv = port_isr(BSP430_HAL_PORT7, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT7_ISR */
@@ -561,24 +588,28 @@ static void
 __attribute__((__interrupt__(PORT8_VECTOR)))
 isr_PORT8 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P8IV;
+  int iv = P8IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P8IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P8IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT8, iv);
+  rv = port_isr(BSP430_HAL_PORT8, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT8_ISR */
@@ -588,24 +619,28 @@ static void
 __attribute__((__interrupt__(PORT9_VECTOR)))
 isr_PORT9 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P9IV;
+  int iv = P9IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P9IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P9IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT9, iv);
+  rv = port_isr(BSP430_HAL_PORT9, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT9_ISR */
@@ -615,24 +650,28 @@ static void
 __attribute__((__interrupt__(PORT10_VECTOR)))
 isr_PORT10 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P10IV;
+  int iv = P10IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P10IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P10IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT10, iv);
+  rv = port_isr(BSP430_HAL_PORT10, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT10_ISR */
@@ -642,24 +681,28 @@ static void
 __attribute__((__interrupt__(PORT11_VECTOR)))
 isr_PORT11 (void)
 {
-  int iv;
+  int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  iv = P11IV;
+  int iv = P11IV;
+
+  if (0 == iv) {
+    return;
+  }
+  idx = (iv - 2) / 2;
 #else /* CPUX */
   unsigned char bit = 1;
 
-  iv = 0;
   while (bit && !(bit & P11IFG)) {
-    ++iv;
     bit <<= 1;
+    ++idx;
   }
   if (! bit) {
     return;
   }
   P11IFG &= ~bit;
 #endif /* CPUX */
-  rv = port_isr(BSP430_HAL_PORT11, iv);
+  rv = port_isr(BSP430_HAL_PORT11, idx);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_PORT11_ISR */
