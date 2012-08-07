@@ -56,20 +56,21 @@ void main ()
 {
   int rc = 0;
   unsigned int ctl0_byte;
-
+  /* GDO0 and GDO2 are always interrupt-capable. */
   volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(APP_GDO0_PORT_PERIPH_HANDLE);
-  volatile sBSP430hplPORTIE * gdo1 = xBSP430hplLookupPORTIE(APP_GDO1_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(APP_GDO2_PORT_PERIPH_HANDLE);
-  volatile sBSP430hplPORTIE * csn = xBSP430hplLookupPORTIE(APP_CSn_PORT_PERIPH_HANDLE);
+  hBSP430halPORT hgdo1 = hBSP430portLookup(APP_GDO1_PORT_PERIPH_HANDLE);
+  hBSP430halPORT hcsn = hBSP430portLookup(APP_CSn_PORT_PERIPH_HANDLE);
+
   spi = hBSP430serialLookup(APP_SPI_PERIPH_HANDLE);
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
   cprintf("GDO0 %p at %s.%u\n", gdo0, xBSP430portName(APP_GDO0_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO0_PORT_BIT));
-  cprintf("GDO1 %p at %s.%u\n", gdo1, xBSP430portName(APP_GDO1_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO1_PORT_BIT));
+  cprintf("GDO1 HAL %p HPL %p at %s.%u\n", hgdo1, hgdo1->hpl.any, xBSP430portName(APP_GDO1_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO1_PORT_BIT));
   cprintf("GDO2 %p at %s.%u\n", gdo2, xBSP430portName(APP_GDO2_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO2_PORT_BIT));
-  cprintf("CSn %p at %s.%u\n", csn, xBSP430portName(APP_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_CSn_PORT_BIT));
+  cprintf("CSn HAL %p HPL %p at %s.%u\n", hcsn, hcsn->hpl.any, xBSP430portName(APP_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_CSn_PORT_BIT));
   cprintf("SPI %p is %s\n", spi, xBSP430serialName(APP_SPI_PERIPH_HANDLE));
   cprintf(__DATE__ " " __TIME__ "\n");
 
@@ -85,9 +86,9 @@ void main ()
   if (spi) {
     rc = iBSP430serialSetHold(spi, 1);
     /* GDO1 to input, pull-up */
-    gdo1->dir &= ~APP_GDO1_PORT_BIT;
-    gdo1->ren |= APP_GDO1_PORT_BIT;
-    gdo1->out |= APP_GDO1_PORT_BIT;
+    BSP430_PORT_HAL_HPL_DIR(hgdo1) &= ~APP_GDO1_PORT_BIT;
+    BSP430_PORT_HAL_HPL_REN(hgdo1) |= APP_GDO1_PORT_BIT;
+    BSP430_PORT_HAL_HPL_OUT(hgdo1) |= APP_GDO1_PORT_BIT;
   }
 
   cprintf("SPI device %p hold returned %d\n", spi, rc);
@@ -97,15 +98,15 @@ void main ()
 
   /* Configure CSn initial high to ensure we have a falling edge when
    * we first enable the radio. */
-  csn->sel &= ~APP_CSn_PORT_BIT;
-  csn->out |= APP_CSn_PORT_BIT;
-  csn->dir |= APP_CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_SEL(hcsn) &= ~APP_CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_OUT(hcsn) |= APP_CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_DIR(hcsn) |= APP_CSn_PORT_BIT;
 
   /* Now enable the radio */
-  csn->out &= ~APP_CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_OUT(hcsn) &= ~APP_CSn_PORT_BIT;
 
   /* Spin until GDO1 (CHP_RDYn) is clear indicating radio is responsive */
-  while (gdo1->in & APP_GDO1_PORT_BIT) {
+  while (BSP430_PORT_HAL_HPL_IN(hgdo1) & APP_GDO1_PORT_BIT) {
     cprintf("Waiting for radio ready\n");
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ);
   }

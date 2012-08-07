@@ -15,13 +15,22 @@
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1
 
-/* We're going to use USCI_B0 to access the radio */
-/* We're going to use P3.0 for chip select, and P3.2 for GDO1. */
+/* We need to know the USCI device that supplies the SPI interface to
+ * the radio, as well as the port and pins for the three GDO lines to
+ * the radio and the CSn line.
+ *
+ * Because this application is cross-family and the RF headers are not
+ * consistent on whether pins use interrupt-enabled (P1/P2) or
+ * non-enabled (P3+) ports for CSn and GDO1, we have to enable the HAL
+ * interface for ports associated with those pins.  The GDO0 and GDO2
+ * lines are always on interrupt-capable ports, so we would need only
+ * ask for the HPL interface on those, except that at some point we'd
+ * like to have interrupts from the radio. */
 
 #if BSP430_PLATFORM_EXP430G2 - 0
 #define configBSP430_HAL_USCI_B0 1
-#define configBSP430_HPL_PORT1 1
-#define configBSP430_HPL_PORT2 1
+#define configBSP430_HAL_PORT1 1
+#define configBSP430_HAL_PORT2 1
 #define APP_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
 #define APP_GDO0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
 #define APP_GDO0_PORT_BIT BIT6
@@ -35,8 +44,8 @@
 #if BSP430_PLATFORM_EXP430F5438 - 0
 #define APP_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0
 #define configBSP430_HAL_USCI5_B0 1
-#define configBSP430_HPL_PORT1 1
-#define configBSP430_HPL_PORT3 1
+#define configBSP430_HAL_PORT1 1
+#define configBSP430_HAL_PORT3 1
 #define APP_GDO0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 #define APP_GDO0_PORT_BIT BIT7
 #define APP_GDO1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
@@ -49,10 +58,10 @@
 #if BSP430_PLATFORM_EXP430FR5739 - 0
 #define APP_SPI_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B0
 #define configBSP430_HAL_EUSCI_B0 1
-#define configBSP430_HPL_PORT1 1
-#define configBSP430_HPL_PORT2 1
-#define configBSP430_HPL_PORT3 1
-#define configBSP430_HPL_PORT4 1
+#define configBSP430_HAL_PORT1 1
+#define configBSP430_HAL_PORT2 1
+#define configBSP430_HAL_PORT3 1
+#define configBSP430_HAL_PORT4 1
 #define APP_GDO0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT4
 #define APP_GDO0_PORT_BIT BIT1
 #define APP_GDO1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
@@ -62,6 +71,20 @@
 #define APP_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 #define APP_CSn_PORT_BIT BIT3
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
+#if BSP430_PLATFORM_RF2500T - 0
+#define APP_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
+#define configBSP430_HAL_USCI_B0 1
+#define configBSP430_HAL_PORT2 1
+#define configBSP430_HAL_PORT3 1
+#define APP_GDO0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+#define APP_GDO0_PORT_BIT BIT6
+#define APP_GDO1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
+#define APP_GDO1_PORT_BIT BIT2
+#define APP_GDO2_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+#define APP_GDO2_PORT_BIT BIT7
+#define APP_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
+#define APP_CSn_PORT_BIT BIT0
+#endif /* BSP430_PLATFORM_RF2500T */
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>
