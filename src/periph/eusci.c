@@ -404,8 +404,8 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
                           size_t len)
 {
   volatile struct sBSP430hplEUSCIB * hpl = SERIAL_HAL_HPL_B(hal);
+  uint8_t * dp = data;
   const uint8_t * dpe = data + len;
-  int i = 0;
 
   /* UCBxTBCNT is only 8 bits. */
   if (255 < len) {
@@ -427,15 +427,15 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
   hpl->ctlw0 |= UCTXSTT;
 
   /* Read it in as soon as it arrives.  Device handles stop. */
-  while (data < dpe) {
+  while (dp < dpe) {
     while (! (hpl->ifg & UCRXIFG)) {
       if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
         return -1;
       }
     }
-    *data++ = hpl->rxbuf;
+    *dp++ = hpl->rxbuf;
   }
-  return i;
+  return dp - data;
 }
 
 int

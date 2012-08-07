@@ -370,6 +370,7 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
                           size_t len)
 {
   volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
+  uint8_t * dp = data;
   const uint8_t * dpe = data + len;
   int i = 0;
 
@@ -383,8 +384,8 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
   }
   /* Issue a start */
   hpl->ctl1 |= UCTXSTT;
-  while (data < dpe) {
-    if (dpe == (data+1)) {
+  while (dp < dpe) {
+    if (dpe == (dp+1)) {
       /* This will be last character: wait for any in-progress start
        * to complete then issue stop */
       while (hpl->ctl1 & UCTXSTT) {
@@ -399,9 +400,9 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
         return -1;
       }
     }
-    *data++ = hpl->rxbuf;
+    *dp++ = hpl->rxbuf;
   }
-  return i;
+  return dp - data;
 }
 
 int
