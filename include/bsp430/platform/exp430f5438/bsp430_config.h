@@ -46,6 +46,20 @@
 #define configBSP430_SERIAL_USE_USCI5 1
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 
+/* Enable buttons as requested */
+#if (configBSP430_PLATFORM_BUTTON0 - 0) || (configBSP430_PLATFORM_BUTTON1 - 0)
+#if !defined(configBSP430_HAL_PORT2)
+#define configBSP430_HAL_PORT2 1
+#else /* configBSP430_HAL_PORT2 */
+#if (configBSP430_PLATFORM_BUTTON0 - 0) && ! defined(configBSP430_HPL_PORT2)
+#define configBSP430_HPL_PORT2 1
+#endif /* BUTTON0 */
+#if (configBSP430_PLATFORM_BUTTON1 - 0) && ! defined(configBSP430_HPL_PORT2)
+#define configBSP430_HPL_PORT2 1
+#endif /* BUTTON1 */
+#endif /* configBSP430_HAL_PORT2 */
+#endif /* configBSP430_PLATFORM_BUTTON[01] */
+
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */

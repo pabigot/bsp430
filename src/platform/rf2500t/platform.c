@@ -34,6 +34,7 @@
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/led.h>
+#include <bsp430/periph/port.h>
 
 #if BSP430_LED - 0
 const sBSP430halLED xBSP430hal_[] = {
@@ -47,8 +48,8 @@ int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
   unsigned int bits;
-  int rv = -1;
-  volatile unsigned char * pxsel = NULL;
+  volatile sBSP430hplPORT_IE_8 * hplie = NULL;
+  volatile sBSP430hplPORT_8 * hpl = NULL;
 
   /* This platform does not support a crystal */
   if (0) {
@@ -56,30 +57,42 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT0 | BIT1;
-    pxsel = &P2SEL;
+    hplie = (volatile sBSP430hplPORT_IE_8 *)BSP430_PERIPH_PORT2_BASEADDRESS_;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI_A0 - 0
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT4 | BIT5;
-    pxsel = &P3SEL;
+    hpl = (volatile sBSP430hplPORT_8 *)BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   else if (BSP430_PERIPH_USCI_B0 == device) {
     bits = BIT0 | BIT1 | BIT2;
-    pxsel = &P3SEL;
+    hpl = (volatile sBSP430hplPORT_8 *)BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
-  if (NULL != pxsel) {
+  if (NULL != hplie) {
     if (enablep) {
-      *pxsel |= bits;
+      hplie->sel |= bits;
     } else {
-      *pxsel &= ~bits;
+      hplie->out &= ~bits;
+      hplie->dir |= bits;
+      hplie->sel &= ~bits;
     }
-    rv = 0;
+    return 0;
   }
-  return rv;
+  if (NULL != hpl) {
+    if (enablep) {
+      hpl->sel |= bits;
+    } else {
+      hpl->out &= ~bits;
+      hpl->dir |= bits;
+      hpl->sel &= ~bits;
+    }
+    return 0;
+  }
+  return -1;
 }
 
 const char *

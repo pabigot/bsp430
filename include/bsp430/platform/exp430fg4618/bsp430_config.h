@@ -102,4 +102,18 @@
 /* END AUTOMATICALLY GENERATED CODE [feature_endif] */
 /* !BSP430! end=feature_endif */
 
+/* Enable buttons as requested */
+#if (configBSP430_PLATFORM_BUTTON0 - 0) || (configBSP430_PLATFORM_BUTTON1 - 0)
+#if !defined(configBSP430_HAL_PORT1)
+#define configBSP430_HAL_PORT1 1
+#else /* configBSP430_HAL_PORT1 */
+#if (configBSP430_PLATFORM_BUTTON0 - 0) && ! defined(configBSP430_HPL_PORT1)
+#define configBSP430_HPL_PORT1 1
+#endif /* BUTTON0 */
+#if (configBSP430_PLATFORM_BUTTON1 - 0) && ! defined(configBSP430_HPL_PORT1)
+#define configBSP430_HPL_PORT1 1
+#endif /* BUTTON1 */
+#endif /* configBSP430_HAL_PORT1 */
+#endif /* configBSP430_PLATFORM_BUTTON[01] */
+
 #endif /* BSP430_PLATFORM_EXP430FG4618_BSP430_CONFIG_H */

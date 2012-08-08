@@ -33,6 +33,8 @@
 #include <bsp430/periph/fllplus.h>
 #include <bsp430/periph/usci.h>
 #include <bsp430/utility/led.h>
+#include <bsp430/utility/uptime.h>
+#include <bsp430/periph/port.h>
 
 #if BSP430_LED - 0
 const sBSP430halLED xBSP430hal_[] = {
@@ -47,8 +49,10 @@ const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
-  uint8_t bits = 0;
-  volatile unsigned char * pxsel = 0;
+  unsigned char bits = 0;
+  unsigned int pba = 0;
+  volatile sBSP430hplPORT_IE_8 * hpl;
+
   if (BSP430_PERIPH_LFXT1 == device) {
     /* XIN/XOUT are dedicated pins on this device. */
     return 0;
@@ -56,31 +60,33 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT1 | BIT4 | BIT5;
-    pxsel = &P1SEL;
-    P1DIR |= bits;
+    pba = BSP430_PERIPH_PORT1_BASEADDRESS_;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI_A0 - 0
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT4 | BIT5;
-    pxsel = &P2SEL;
+    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   else if (BSP430_PERIPH_USCI_B0 == device) {
     bits = BIT0 | BIT1 | BIT2;
-    pxsel = &P2SEL;
+    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
-  if (pxsel) {
-    if (enablep) {
-      *pxsel |= bits;
-    } else {
-      *pxsel &= ~bits;
-    }
-    return 0;
+  if (0 == pba) {
+    return -1;
   }
-  return -1;
+  hpl = (volatile sBSP430hplPORT_IE_8 *)pba;
+  if (enablep) {
+    hpl->sel |= bits;
+  } else {
+    hpl->out &= ~bits;
+    hpl->dir |= bits;
+    hpl->sel &= ~bits;
+  }
+  return 0;
 }
 
 const char *

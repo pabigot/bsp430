@@ -33,6 +33,7 @@
 #include <bsp430/periph/cs.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/eusci.h>
+#include <bsp430/periph/port.h>
 #include <bsp430/utility/uptime.h>
 
 #if BSP430_LED - 0
@@ -81,8 +82,8 @@ int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
   unsigned int bits = 0;
-  volatile unsigned char * pxsel0 = NULL;
-  volatile unsigned char * pxsel1 = NULL;
+  unsigned int pba = 0;
+  volatile sBSP430hplPORT_5XX_8 * hpl;
 
   if (BSP430_PERIPH_LFXT1 == device) {
     /* NB: Only XIN (PJ.4) needs to be configured; XOUT follows
@@ -91,6 +92,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     if (enablep) {
       PJSEL0 |= bits;
     } else {
+      PJOUT &= ~bits;
+      PJDIR |= bits;
       PJSEL0 &= ~bits;
     }
     PJSEL1 &= ~bits;
@@ -104,6 +107,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     if (enablep) {
       PJSEL0 |= bits;
     } else {
+      PJOUT &= ~bits;
       PJSEL0 &= ~bits;
     }
     return 0;
@@ -112,41 +116,47 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #if configBSP430_HPL_EUSCI_A0 - 0
   else if (BSP430_PERIPH_EUSCI_A0 == device) {
     bits = BIT0 | BIT1;
-    pxsel0 = &P2SEL0;
-    pxsel1 = &P2SEL1;
+    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
+    if (! enablep) {
+      P2DIR |= bits;
+      P2OUT &= ~bits;
+    }
   }
 #endif /* configBSP430_HPL_EUSCI_A0 */
 #if configBSP430_HPL_EUSCI_A1 - 0
   else if (BSP430_PERIPH_EUSCI_A1 == device) {
     bits = BIT5 | BIT6;
-    pxsel0 = &P2SEL0;
-    pxsel1 = &P2SEL1;
+    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
     return 0;
   }
 #endif /* configBSP430_HPL_EUSCI_A1 */
 #if configBSP430_HPL_EUSCI_B0 - 0
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
+    bits = BIT6 | BIT7;
+    pba = BSP430_PERIPH_PORT1_BASEADDRESS_;
     P2SEL0 &= ~BIT2;
     if (enablep) {
       P2SEL1 |= BIT2;
     } else {
-      P2SEL1 &= ~BIT2;
+      P2OUT &= ~BIT2;
+      P2DIR |= BIT2;
+      P2SE1L &= ~BIT2;
     }
-    bits = BIT6 | BIT7;
-    pxsel0 = &P1SEL0;
-    pxsel1 = &P1SEL1;
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
-  if (NULL != pxsel0) {
-    *pxsel0 &= ~bits;
-    if (enablep) {
-      *pxsel1 |= bits;
-    } else {
-      *pxsel1 &= ~bits;
-    }
-    return 0;
+  if (0 == pba) {
+    return -1;
   }
-  return -1;
+  hpl = (volatile sBSP430hplPORT_5XX_8 *)pba;
+  hpl->sel0 &= ~bits;
+  if (enablep) {
+    hpl->sel1 |= bits;
+  } else {
+    hpl->out &= ~bits;
+    hpl->dir |= bits;
+    hpl->sel1 &= ~bits;
+  }
+  return 0;
 }
 
 const char *

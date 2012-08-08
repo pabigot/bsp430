@@ -34,7 +34,7 @@
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/usci5.h>
 #include <bsp430/utility/uptime.h>
-#include <stdint.h>
+#include <bsp430/periph/port.h>
 
 #if BSP430_LED - 0
 const sBSP430halLED xBSP430hal_[] = {
@@ -53,64 +53,72 @@ const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
 {
-  uint8_t bits = 0;
-  volatile uint8_t * pxsel = 0;
+  unsigned char bits = 0;
+  unsigned int pba = 0;
+  volatile sBSP430hplPORT_5XX_8 * hpl;
+
   if (BSP430_PERIPH_LFXT1 == device) {
     /* Setting P5.4 is sufficient for both XIN and XOUT */
     bits = BIT4;
-    pxsel = &P5SEL;
+    pba = BSP430_PERIPH_PORT5_BASEADDRESS_;
   }
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     /* P1.0 ACLK, P2.2 SMCLK, P7.7 MCLK */
+    P1DIR |= BIT0;
+    P2DIR |= BIT2;
+    P7DIR |= BIT7;
     if (enablep) {
       P1SEL |= BIT0;
       P2SEL |= BIT2;
       P7SEL |= BIT7;
     } else {
+      P1OUT &= ~BIT0;
+      P2OUT &= ~BIT2;
+      P7OUT &= ~BIT7;
       P1SEL &= ~BIT0;
       P2SEL &= ~BIT2;
       P7SEL &= ~BIT7;
     }
-    P1DIR |= BIT0;
-    P2DIR |= BIT2;
-    P7DIR |= BIT7;
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI5_A0 - 0
   else if (BSP430_PERIPH_USCI5_A0 == device) {
     bits = BIT3 | BIT4;
-    pxsel = &P3SEL;
+    pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_A0 */
 #if configBSP430_HPL_USCI5_A1 - 0
   else if (BSP430_PERIPH_USCI5_A1 == device) {
     /* NOTE: Default port-mapped */
     bits = BIT4 | BIT5;
-    pxsel = &P4SEL;
+    pba = BSP430_PERIPH_PORT4_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_A1 */
 #if configBSP430_HPL_USCI5_B0 - 0
   else if (BSP430_PERIPH_USCI5_B0 == device) {
     bits = BIT0 | BIT1 | BIT2;
-    pxsel = &P3SEL;
+    pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_B0 */
 #if configBSP430_HPL_USCI5_B1 - 0
   else if (BSP430_PERIPH_USCI5_B1 == device) {
     /* NOTE: Default port-mapped */
     bits = BIT0 | BIT1 | BIT2;
-    pxsel = &P4SEL;
+    pba = BSP430_PERIPH_PORT4_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_B1 */
-  else {
+  if (0 == pba) {
     return -1;
   }
+  hpl = (volatile sBSP430hplPORT_5XX_8 *)pba;
   if (enablep) {
-    *pxsel |= bits;
+    hpl->sel |= bits;
   } else {
-    *pxsel &= ~bits;
+    hpl->out &= ~bits;
+    hpl->dir |= bits;
+    hpl->sel &= ~bits;
   }
   return 0;
 }

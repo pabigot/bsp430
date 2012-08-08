@@ -305,6 +305,13 @@ volatile sBSP430hplPORT * xBSP430hplLookupPORT (tBSP430periphHandle periph);
 
 /** @cond DOXYGEN_INTERNAL */
 
+/* Port address constants are not defined for use outside the BSP430
+ * implementation, but are used outside the port HPL and HAL feature.
+ * In particular these constants are used to simplify the
+ * implementation of iBSP430platformConfigurePeripheralPins_ni without
+ * requiring access to the "real" HPL handles for the peripheral
+ * ports. */
+
 #if BSP430_CORE_FAMILY_IS_5XX - 0
 /* All 5xx ports are resistor enabled */
 #define BSP430_PERIPH_PORTA_BASEADDRESS_ __MSP430_BASEADDRESS_PORTA_R__

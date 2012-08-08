@@ -53,6 +53,12 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FG4618 1
 
+/* Available button definitions */
+#define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT0
+#define BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#define BSP430_PLATFORM_BUTTON1_PORT_BIT BIT2
+
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */

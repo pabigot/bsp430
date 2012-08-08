@@ -54,6 +54,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
       P2SEL |= bits;
     } else {
       P2SEL &= ~bits;
+      P2DIR |= bits;
+      P2OUT &= ~bits;
     }
     return 0;
   }
@@ -64,6 +66,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
       P1SEL |= bits;
     } else {
       P1SEL &= ~bits;
+      P1OUT &= ~bits;
     }
     P1DIR |= bits;
     return 0;
@@ -78,6 +81,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     } else {
       P1SEL &= ~bits;
       P1SEL2 &= ~bits;
+      P1DIR |= bits;
+      P1OUT &= ~bits;
     }
     return 0;
   }
@@ -91,6 +96,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     } else {
       P1SEL &= ~bits;
       P1SEL2 &= ~bits;
+      P1DIR |= bits;
+      P1OUT &= ~bits;
     }
     return 0;
   }
