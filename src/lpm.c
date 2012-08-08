@@ -104,7 +104,7 @@ vBSP430lpmConfigurePortsForLPM_ni (void)
   CONFIGURE_FOR_LPM(12);
 #endif /* PORT12 */
 #endif /* 5XX */
-#if defined(__MSP430_HAS_PORTJ__)
+#if defined(__MSP430_HAS_PORTJ__) || defined(__MSP430_HAS_PORTJ_R__)
   CONFIGURE_FOR_LPM(J);
 #endif /* PORTJ */
 #undef CONFIGURE_FOR_LPM
