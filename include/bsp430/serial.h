@@ -306,8 +306,9 @@ struct sBSP430serialDispatch {
  * configured value by 256 to place it in the low byte of the
  * argument.
  *
- * @param periph The peripheral device identifier for the USCI device
- * that is being requested. E.g., #BSP430_PERIPH_USCI_A0.
+ * @param hal the handle for the HAL interface for the serial device
+ * to be configured.  These are found from the peripheral handle using
+ * hBSP430serialLookup().
  *
  * @param ctl0_byte The configuration to be written to the device's
  * ctl0 byte.  For UART mode, potential values specified in the
@@ -360,8 +361,9 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
  * configured value by 256 to place it in the low byte of the
  * argument.
  *
- * @param periph The peripheral device identifier for the USCI device
- * that is being requested. E.g., #BSP430_PERIPH_USCI_A0.
+ * @param hal the handle for the HAL interface for the serial device
+ * to be configured.  These are found from the peripheral handle using
+ * hBSP430serialLookup().
  *
  * @param ctl0_byte The configuration to be written to the device's
  * ctl0 byte.  For SPI mode, potential values specified in the
@@ -413,8 +415,9 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
  * configured value by 256 to place it in the low byte of the
  * argument.
  *
- * @param periph The peripheral device identifier for the USCI device
- * that is being requested. E.g., #BSP430_PERIPH_USCI_B0.
+ * @param hal the handle for the HAL interface for the serial device
+ * to be configured.  These are found from the peripheral handle using
+ * hBSP430serialLookup().
  *
  * @param ctl0_byte The configuration to be written to the device's
  * ctl0 byte.  For I2C mode, potential values specified in the
