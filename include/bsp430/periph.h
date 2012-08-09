@@ -276,6 +276,22 @@ struct sBSP430halISRCallbackIndexed;
  * loop.) */
 #define BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN 0x0001
 
+/** Indicate that LPM mode should be exited
+ *
+ * This flag may be marked in the return value of
+ * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
+ * callbacks to indicate that the top-half should clear the standard
+ * LPM bits prior to exit, causing the MCU to return to active mode.
+ *
+ * Use of this flag is preferred to use of #LPM4_bits or a similar
+ * value because #configBSP430_CLOCK_DISABLE_FLL can influence the
+ * selection of the bits to be cleared.
+ *
+ * (The value of this flag is specifically selected to be a value
+ * supported by the constant generator, to optimize the callback
+ * loop.) */
+#define BSP430_HAL_ISR_CALLBACK_EXIT_LPM 0x0002
+
 /** Callback for ISR chains that require no special arguments.
  *
  * @param cb A reference to the callback structure.  In most cases,
@@ -392,8 +408,11 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRCallbackIndexed * 
  * LPM_bits and/or #BSP430_HAL_ISR_CALLBACK_YIELD. */
 #define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {             \
     int return_flags_ = (_return_flags);                                \
+    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {             \
+      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;                       \
+    }                                                                   \
     __bic_status_register_on_exit((return_flags_) & BSP430_HAL_ISR_CALLBACK_BIC_MASK); \
-    if ((return_flags_) & BSP430_HAL_ISR_CALLBACK_YIELD) {           \
+    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_YIELD) {                \
       BSP430_RTOS_YIELD_FROM_ISR();                                     \
     }                                                                   \
   } while (0)
