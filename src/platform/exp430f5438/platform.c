@@ -192,7 +192,7 @@ void vBSP430platformInitialize_ni (void)
 
 #if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
   /* Hold off watchdog */
-  WDTCTL = WDTPW + WDTHOLD;
+  WDTCTL = WDTPW | WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
 #if (BSP430_PLATFORM_BOOT_CONFIGURE_LEDS - 0) && (BSP430_LED - 0)

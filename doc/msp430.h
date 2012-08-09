@@ -133,13 +133,13 @@
 /** Bits set in status register to enter LPM0 */
 #define LPM0_bits           (CPUOFF)
 /** Bits set in status register to enter LPM1 */
-#define LPM1_bits           (SCG0+CPUOFF)
+#define LPM1_bits           (SCG0|CPUOFF)
 /** Bits set in status register to enter LPM2 */
-#define LPM2_bits           (SCG1+CPUOFF)
+#define LPM2_bits           (SCG1|CPUOFF)
 /** Bits set in status register to enter LPM3 */
-#define LPM3_bits           (SCG1+SCG0+CPUOFF)
+#define LPM3_bits           (SCG1|SCG0|CPUOFF)
 /** Bits set in status register to enter LPM4 */
-#define LPM4_bits           (SCG1+SCG0+OSCOFF+CPUOFF)
+#define LPM4_bits           (SCG1|SCG0|OSCOFF|CPUOFF)
 
 /************************************************************
 * CPU

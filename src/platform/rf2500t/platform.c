@@ -123,7 +123,7 @@ void vBSP430platformInitialize_ni (void)
 {
 #if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
   /* Hold off watchdog */
-  WDTCTL = WDTPW + WDTHOLD;
+  WDTCTL = WDTPW | WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
 #if (BSP430_PLATFORM_BOOT_CONFIGURE_LEDS - 0) && (BSP430_LED - 0)
@@ -167,7 +167,7 @@ vBSP430platformSpinForJumper_ni (void)
   while (! (P1IN & BIT2)) {
     BSP430_CORE_WATCHDOG_CLEAR();
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 10);
-    P1OUT ^= BIT0 + BIT1;
+    P1OUT ^= BIT0 | BIT1;
   }
   /* Restore P1.2 */
   P1OUT &= ~(BIT0 | BIT1 | BIT2);
