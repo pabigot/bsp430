@@ -140,7 +140,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
     } else {
       P2OUT &= ~BIT2;
       P2DIR |= BIT2;
-      P2SE1L &= ~BIT2;
+      P2SEL1 &= ~BIT2;
     }
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
