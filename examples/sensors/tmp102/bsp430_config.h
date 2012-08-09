@@ -8,6 +8,9 @@
 /* Support console output */
 #define configBSP430_CONSOLE 1
 
+/* We need serial I2C for the TMP102 access */
+#define configBSP430_SERIAL_ENABLE_I2C 1
+
 /* What we use to access the TMP102 */
 #if BSP430_PLATFORM_EXP430F5438 - 0
 #define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3

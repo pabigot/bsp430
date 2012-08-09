@@ -71,6 +71,13 @@
  * #sBSP430hplEUSCIA. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB 4
 
+/* NOTE TO MAINTAINER: You will be tempted to refactor the boolean
+ * configBSP430_SERIAL_USE_FOO flag to a valued
+ * configBSP430_SERIAL_USE_VARIANT==BSP430_SERIAL_HAL_HPL_VARIANT_FOO
+ * flag.  Don't.  There are MCUs (such as msp430fg4618) that provide
+ * serial capabilities through multiple modules (USART+USCI) where SPI
+ * might come from one and UART from another. */
+
 /** @def configBSP430_SERIAL_USE_USCI
  *
  * Define to true value to allow the generic serial dispatches to
@@ -109,6 +116,57 @@
 #ifndef configBSP430_SERIAL_USE_EUSCI
 #define configBSP430_SERIAL_USE_EUSCI (defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_B0__))
 #endif /* configBSP430_SERIAL_USE_EUSCI */
+
+/** @def configBSP430_SERIAL_ENABLE_UART
+ *
+ * Define to a true value to allow the general serial layer to
+ * recognize and dispatch UART-related functions.  If left false,
+ * UART-related functions will not be added to the serial abstraction
+ * dispatch table.
+ *
+ * @note This flag does not control the availabilty of UART-related
+ * functions within the peripheral implementation, only access to them
+ * through the serial abstraction.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_SERIAL_ENABLE_UART
+#define configBSP430_SERIAL_ENABLE_UART (configBSP430_CONSOLE - 0)
+#endif /* configBSP430_SERIAL_ENABLE_UART */
+
+/** @def configBSP430_SERIAL_ENABLE_SPI
+ *
+ * Define to a true value to allow the general serial layer to
+ * recognize and dispatch SPI-related functions.  If left false,
+ * SPI-related functions will not be added to the serial abstraction
+ * dispatch table.
+ *
+ * @note This flag does not control the availabilty of SPI-related
+ * functions within the peripheral implementation, only access to them
+ * through the serial abstraction.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_SERIAL_ENABLE_SPI
+#define configBSP430_SERIAL_ENABLE_SPI 0
+#endif /* configBSP430_SERIAL_ENABLE_SPI */
+
+/** @def configBSP430_SERIAL_ENABLE_I2C
+ *
+ * Define to a true value to allow the general serial layer to
+ * recognize and dispatch I2C-related functions.  If left false,
+ * I2C-related functions will not be added to the serial abstraction
+ * dispatch table.
+ *
+ * @note This flag does not control the availabilty of I2C-related
+ * functions within the peripheral implementation, only access to them
+ * through the serial abstraction.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_SERIAL_ENABLE_I2C
+#define configBSP430_SERIAL_ENABLE_I2C 0
+#endif /* configBSP430_SERIAL_ENABLE_I2C */
 
 /* !BSP430! instance=usci,usci5,euscia,euscib */
 /* !BSP430! periph=serial insert=hal_variant_hpl_macro */
@@ -270,22 +328,11 @@ typedef struct sBSP430halSERIAL * hBSP430halSERIAL;
 
 /** @cond DOXYGEN_EXCLUDE */
 struct sBSP430serialDispatch {
+#if configBSP430_SERIAL_ENABLE_UART - 0
   hBSP430halSERIAL (* openUART) (hBSP430halSERIAL hal,
                                  unsigned char ctl0_byte,
                                  unsigned char ctl1_byte,
                                  unsigned long baud);
-  hBSP430halSERIAL (* openSPI) (hBSP430halSERIAL hal,
-                                unsigned char ctl0_byte,
-                                unsigned char ctl1_byte,
-                                unsigned int prescaler);
-  hBSP430halSERIAL (* openI2C) (hBSP430halSERIAL hal,
-                                unsigned char ctl0_byte,
-                                unsigned char ctl1_byte,
-                                unsigned int prescaler);
-  int (* setHold_ni) (hBSP430halSERIAL hal, int holdp);
-  int (* close) (hBSP430halSERIAL hal);
-  void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
-  void (* flush_ni) (hBSP430halSERIAL hal);
   int (* uartRxByte_ni) (hBSP430halSERIAL hal);
   int (* uartTxByte_ni) (hBSP430halSERIAL hal,
                          uint8_t c);
@@ -293,12 +340,31 @@ struct sBSP430serialDispatch {
                          const uint8_t * data,
                          size_t len);
   int (* uartTxASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
+#endif /* configBSP430_SERIAL_ENABLE_UART */
+#if configBSP430_SERIAL_ENABLE_SPI - 0
+  hBSP430halSERIAL (* openSPI) (hBSP430halSERIAL hal,
+                                unsigned char ctl0_byte,
+                                unsigned char ctl1_byte,
+                                unsigned int prescaler);
   int (* spiTxRx_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
+#endif /* configBSP430_SERIAL_ENABLE_SPI */
+#if configBSP430_SERIAL_ENABLE_I2C - 0
+  hBSP430halSERIAL (* openI2C) (hBSP430halSERIAL hal,
+                                unsigned char ctl0_byte,
+                                unsigned char ctl1_byte,
+                                unsigned int prescaler);
   int (* i2cSetAddresses_ni) (hBSP430halSERIAL hal, int own_address, int slave_address);
   int (* i2cRxData_ni) (hBSP430halSERIAL hal, uint8_t * rx_data, size_t rx_len);
   int (* i2cTxData_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len);
+#endif /* configBSP430_SERIAL_ENABLE_I2C */
+  int (* setHold_ni) (hBSP430halSERIAL hal, int holdp);
+  int (* close) (hBSP430halSERIAL hal);
+  void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
+  void (* flush_ni) (hBSP430halSERIAL hal);
 };
 /** @endcond */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_UART - 0)
 
 /** Request and configure a serial device in UART mode.
  *
@@ -340,7 +406,9 @@ struct sBSP430serialDispatch {
  * wrong.
  *
  * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * peripheral-specific implementation.
+ *
+ * @dependency #configBSP430_SERIAL_ENABLE_UART */
 static __inline__
 hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
                                         unsigned char ctl0_byte,
@@ -349,6 +417,104 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
 {
   return hal->dispatch->openUART(hal, ctl0_byte, ctl1_byte, baud);
 }
+
+/** Receive a byte from a UART-configured device.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to accept data
+ * on reception.
+ *
+ * @param hal the serial device over which the data should be
+ * transmitted
+ *
+ * @return the character received if any is ready to return, or -1 if
+ * the device has no data available
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static __inline__
+int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
+{
+  return hal->dispatch->uartRxByte_ni(hal);
+}
+
+/** Transmit a byte over a UART-configured device.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.
+ *
+ * @param hal the serial device over which the data should be
+ * transmitted
+ *
+ * @param c a data byte to be transmitted
+ *
+ * @return the input character @a c if transmitted, or -1 if an error
+ * occurred
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static __inline__
+int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
+{
+  return hal->dispatch->uartTxByte_ni(hal, c);
+}
+
+/** Transmit a block of data over a UART-configured device.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.
+ *
+ * @param hal the serial device over which the data should be
+ * transmitted
+ *
+ * @param data pointer to the start of a sequence of data to transmit
+ *
+ * @param len the number of octets to be transmitted
+ *
+ * @return the number of octets successfully transmitted
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static __inline__
+int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
+                          const uint8_t * data,
+                          size_t len)
+{
+  return hal->dispatch->uartTxData_ni(hal, data, len);
+}
+
+/** Transmit a sequence of characters over a UART-configured device.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.
+ *
+ * @param hal the serial device over which the data should be
+ * transmitted
+ *
+ * @param str a NUL-terminated sequence of character data to be
+ * transmitted.  The NUL serves only as a termination marker, and is
+ * not transmitted.
+ *
+ * @return the number of bytes transmitted, or -1 if an error
+ * occurs
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static __inline__
+int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+{
+  return hal->dispatch->uartTxASCIIZ_ni(hal, str);
+}
+#endif /* configBSP430_SERIAL_ENABLE_UART */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_SPI - 0)
 
 /** Request and configure a serial device in SPI mode.
  *
@@ -399,6 +565,54 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
   return hal->dispatch->openSPI(hal, ctl0_byte, ctl1_byte, prescaler);
 }
 
+/** Transmit and receive using a SPI-configured device
+ *
+ * This routine transmits @a tx_len octets from @a tx_data, storing
+ * the octets received in response into @a rx_data.  It then transmits
+ * @a rx_len dummy bytes, appending the resulting response into @a
+ * rx_data.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink and @link
+ * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink are null.
+ * If callbacks are present, they are expected to be used to provide
+ * data for transmission and to process received data.
+ *
+ * @param hal the serial device over which the data is transmitted and
+ * received
+ *
+ * @param tx_data the data to be transmitted (generally, a command).
+ * The pointer may be null only if @a tx_len is zero.
+ *
+ * @param tx_len the number of bytes to transmit as the command.  The
+ * value may be zero if this call is reading additional data resulting
+ * from a previous command.
+ *
+ * @param rx_len the number of additional bytes expected in response,
+ * exclusive of the synchronous responses to bytes transmitted from @a
+ * tx_data.
+ *
+ * @param rx_data where to store the responses received during the
+ * transmit and receive phases.  The space available must be at least
+ * @a tx_len + @a rx_len.
+ *
+ * @return the total number of bytes stored in @a rx_data, or -1 if an
+ * error occcured.
+ */
+static __inline__
+int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
+                       const uint8_t * tx_data,
+                       size_t tx_len,
+                       size_t rx_len,
+                       uint8_t * rx_data)
+{
+  return hal->dispatch->spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);
+}
+
+#endif /* configBSP430_SERIAL_ENABLE_SPI */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_I2C - 0)
+
 /** Request and configure a serial device in I2C mode.
  *
  * @warning When the underlying implementation is an EUSCI device (as
@@ -445,6 +659,93 @@ hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
 {
   return hal->dispatch->openI2C(hal, ctl0_byte, ctl1_byte, prescaler);
 }
+
+/** Configure I2C addresses
+ *
+ * This routine sets the own-address and slave-address registers of an
+ * I2C peripheral.  The device should have been opened as an I2C
+ * device prior to invoking this function.
+ *
+ * @param hal the serial device to be configured
+ *
+ * @param own_address the value to use as this device's address.  A
+ * negative value leaves the current configured own address unchanged.
+ *
+ * @param slave_address the value to use as the slave address.  A
+ * negative value leaves the current configured slave address
+ * unchanged.
+ *
+ * @return 0 if successfully set, -1 if an error occurs. */
+static __inline__
+int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
+                               int own_address,
+                               int slave_address)
+{
+  return hal->dispatch->i2cSetAddresses_ni(hal, own_address, slave_address);
+}
+
+/** Transmit using an I2C-configured device
+ *
+ * This routine transmits @a tx_len octets from @a tx_data.  It will
+ * return an error if the device is configured with a transmit
+ * callback.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.  Note that such a callback must handle I2C start
+ * and stop conditions, which are peripheral-specific.
+ *
+ * @param hal the serial device over which the data is transmitted and
+ * received
+ *
+ * @param tx_data the data to be transmitted
+ *
+ * @param tx_len the number of bytes to transmit.  A transaction
+ * writing more than 255 bytes may be rejected.
+ *
+ * @return the total number of bytes transmitted, or -1 if an error
+ * occcured.
+ */
+static __inline__
+int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
+                         const uint8_t * tx_data,
+                         size_t tx_len)
+{
+  return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
+}
+
+/** Receive using an I2C-configured device
+ *
+ * This routine receives @a rx_len octets into @a rx_data, storing the
+ * octets received in response into @a rx_data.  It will return an
+ * error if the device is configured with a receive callback.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.  Note that such a callback must handle I2C start
+ * and stop conditions, which are peripheral-specific.
+ *
+ * @param hal the serial device from which the data is received
+ *
+ * @param rx_data where to store the data.  The space available must
+ * be at least @a rx_len octets.
+ *
+ * @param rx_len the number of bytes expected in response.  A
+ * transaction reading more than 255 bytes may be rejected.
+ *
+ * @return the total number of bytes stored in @a rx_data, or -1 if an
+ * error occcured.
+ */
+static __inline__
+int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
+                         uint8_t * rx_data,
+                         size_t rx_len)
+{
+  return hal->dispatch->i2cRxData_ni(hal, rx_data, rx_len);
+}
+#endif /* configBSP430_SERIAL_ENABLE_I2C */
 
 /** Place a serial device in hold mode
  *
@@ -533,232 +834,6 @@ static __inline__
 void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
 {
   return hal->dispatch->flush_ni(hal);
-}
-
-/** Receive a byte from a UART-configured device.
- *
- * This routine should only be invoked when @link
- * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink is null.
- * If a callback is present, it is expected to be used to accept data
- * on reception.
- *
- * @param hal the serial device over which the data should be
- * transmitted
- *
- * @return the character received if any is ready to return, or -1 if
- * the device has no data available
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
-static __inline__
-int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
-{
-  return hal->dispatch->uartRxByte_ni(hal);
-}
-
-/** Transmit a byte over a UART-configured device.
- *
- * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.
- *
- * @param hal the serial device over which the data should be
- * transmitted
- *
- * @param c a data byte to be transmitted
- *
- * @return the input character @a c if transmitted, or -1 if an error
- * occurred
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
-static __inline__
-int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
-{
-  return hal->dispatch->uartTxByte_ni(hal, c);
-}
-
-/** Transmit a block of data over a UART-configured device.
- *
- * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.
- *
- * @param hal the serial device over which the data should be
- * transmitted
- *
- * @param data pointer to the start of a sequence of data to transmit
- *
- * @param len the number of octets to be transmitted
- *
- * @return the number of octets successfully transmitted
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
-static __inline__
-int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
-                          const uint8_t * data,
-                          size_t len)
-{
-  return hal->dispatch->uartTxData_ni(hal, data, len);
-}
-
-
-/** Transmit a sequence of characters over a UART-configured device.
- *
- * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.
- *
- * @param hal the serial device over which the data should be
- * transmitted
- *
- * @param str a NUL-terminated sequence of character data to be
- * transmitted.  The NUL serves only as a termination marker, and is
- * not transmitted.
- *
- * @return the number of bytes transmitted, or -1 if an error
- * occurs
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
-static __inline__
-int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
-{
-  return hal->dispatch->uartTxASCIIZ_ni(hal, str);
-}
-
-/** Transmit and receive using a SPI-configured device
- *
- * This routine transmits @a tx_len octets from @a tx_data, storing
- * the octets received in response into @a rx_data.  It then transmits
- * @a rx_len dummy bytes, appending the resulting response into @a
- * rx_data.
- *
- * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink and @link
- * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink are null.
- * If callbacks are present, they are expected to be used to provide
- * data for transmission and to process received data.
- *
- * @param hal the serial device over which the data is transmitted and
- * received
- *
- * @param tx_data the data to be transmitted (generally, a command).
- * The pointer may be null only if @a tx_len is zero.
- *
- * @param tx_len the number of bytes to transmit as the command.  The
- * value may be zero if this call is reading additional data resulting
- * from a previous command.
- *
- * @param rx_len the number of additional bytes expected in response,
- * exclusive of the synchronous responses to bytes transmitted from @a
- * tx_data.
- *
- * @param rx_data where to store the responses received during the
- * transmit and receive phases.  The space available must be at least
- * @a tx_len + @a rx_len.
- *
- * @return the total number of bytes stored in @a rx_data, or -1 if an
- * error occcured.
- */
-static __inline__
-int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
-                       const uint8_t * tx_data,
-                       size_t tx_len,
-                       size_t rx_len,
-                       uint8_t * rx_data)
-{
-  return hal->dispatch->spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);
-}
-
-/** Configure I2C addresses
- *
- * This routine sets the own-address and slave-address registers of an
- * I2C peripheral.  The device should have been opened as an I2C
- * device prior to invoking this function.
- *
- * @param hal the serial device to be configured
- *
- * @param own_address the value to use as this device's address.  A
- * negative value leaves the current configured own address unchanged.
- *
- * @param slave_address the value to use as the slave address.  A
- * negative value leaves the current configured slave address
- * unchanged.
- *
- * @return 0 if successfully set, -1 if an error occurs. */
-static __inline__
-int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
-                               int own_address,
-                               int slave_address)
-{
-  return hal->dispatch->i2cSetAddresses_ni(hal, own_address, slave_address);
-}
-
-/** Transmit using an I2C-configured device
- *
- * This routine transmits @a tx_len octets from @a tx_data.  It will
- * return an error if the device is configured with a transmit
- * callback.
- *
- * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.  Note that such a callback must handle I2C start
- * and stop conditions, which are peripheral-specific.
- *
- * @param hal the serial device over which the data is transmitted and
- * received
- *
- * @param tx_data the data to be transmitted
- *
- * @param tx_len the number of bytes to transmit.  A transaction
- * writing more than 255 bytes may be rejected.
- *
- * @return the total number of bytes transmitted, or -1 if an error
- * occcured.
- */
-static __inline__
-int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
-                         const uint8_t * tx_data,
-                         size_t tx_len)
-{
-  return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
-}
-
-/** Receive using an I2C-configured device
- *
- * This routine receives @a rx_len octets into @a rx_data, storing the
- * octets received in response into @a rx_data.  It will return an
- * error if the device is configured with a receive callback.
- *
- * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.  Note that such a callback must handle I2C start
- * and stop conditions, which are peripheral-specific.
- *
- * @param hal the serial device from which the data is received
- *
- * @param rx_data where to store the data.  The space available must
- * be at least @a rx_len octets.
- *
- * @param rx_len the number of bytes expected in response.  A
- * transaction reading more than 255 bytes may be rejected.
- *
- * @return the total number of bytes stored in @a rx_data, or -1 if an
- * error occcured.
- */
-static __inline__
-int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
-                         uint8_t * rx_data,
-                         size_t rx_len)
-{
-  return hal->dispatch->i2cRxData_ni(hal, rx_data, rx_len);
 }
 
 #if configBSP430_SERIAL_USE_USCI - 0

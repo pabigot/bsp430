@@ -438,21 +438,27 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
 }
 
 static struct sBSP430serialDispatch dispatch_ = {
+#if configBSP430_SERIAL_ENABLE_UART - 0
   .openUART = hBSP430usciOpenUART,
-  .openSPI = hBSP430usciOpenSPI,
-  .openI2C = hBSP430usciOpenI2C,
-  .setHold_ni = iBSP430usciSetHold_ni,
-  .close = iBSP430usciClose,
-  .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,
-  .flush_ni = vBSP430usciFlush_ni,
   .uartRxByte_ni = iBSP430usciUARTrxByte_ni,
   .uartTxByte_ni = iBSP430usciUARTtxByte_ni,
   .uartTxData_ni = iBSP430usciUARTtxData_ni,
   .uartTxASCIIZ_ni = iBSP430usciUARTtxASCIIZ_ni,
+#endif /* configBSP430_SERIAL_ENABLE_UART */
+#if configBSP430_SERIAL_ENABLE_SPI - 0
+  .openSPI = hBSP430usciOpenSPI,
   .spiTxRx_ni = iBSP430usciSPITxRx_ni,
+#endif /* configBSP430_SERIAL_ENABLE_SPI */
+#if configBSP430_SERIAL_ENABLE_I2C - 0
+  .openI2C = hBSP430usciOpenI2C,
   .i2cSetAddresses_ni = iBSP430usciI2CsetAddresses_ni,
   .i2cRxData_ni = iBSP430usciI2CrxData_ni,
   .i2cTxData_ni = iBSP430usciI2CtxData_ni,
+#endif /* configBSP430_SERIAL_ENABLE_I2C */
+  .setHold_ni = iBSP430usciSetHold_ni,
+  .close = iBSP430usciClose,
+  .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,
+  .flush_ni = vBSP430usciFlush_ni,
 };
 
 #if configBSP430_HAL_USCI_A0 - 0

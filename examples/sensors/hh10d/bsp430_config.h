@@ -32,6 +32,9 @@
  * didn't ask for configBSP430_UPTIME_USE_DEFAULT_CC0_ISR. */
 #define APP_HH10D_UPTIME_CC_INDEX 1
 
+/* Need I2C to access the calibration constants */
+#define configBSP430_SERIAL_ENABLE_I2C 1
+
 #if BSP430_PLATFORM_EXP430F5438 - 0
 #define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3
 #define configBSP430_HAL_USCI5_B3 1

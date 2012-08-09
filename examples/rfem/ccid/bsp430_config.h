@@ -26,7 +26,7 @@
  * lines are always on interrupt-capable ports, so we would need only
  * ask for the HPL interface on those, except that at some point we'd
  * like to have interrupts from the radio. */
-
+#define configBSP430_SERIAL_ENABLE_SPI 1
 #if BSP430_PLATFORM_EXP430G2 - 0
 #define configBSP430_HAL_USCI_B0 1
 #define configBSP430_HAL_PORT1 1
