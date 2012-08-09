@@ -37,6 +37,7 @@ void main ()
      * and move to the next LED */
     vBSP430ledSet(led, 1);
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
+    /* -1 means "invert state", which in this case will turn it off */
     vBSP430ledSet(led, -1);
     if (++led == nBSP430led) {
       led = 0;
