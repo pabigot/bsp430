@@ -1,0 +1,16 @@
+/** \page ex_bootstrap_nop Bootstrapping a New Platform: The Null Program
+
+The first bootstrap program confirms that the platform builds to an
+installable executable.  That executable doesn't do anything visible.
+
+\section ex_bootstrap_nop_main main.c
+\include bootstrap/nop/main.c
+
+\section ex_bootstrap_nop_confic bsp430_config.h
+\include bootstrap/nop/bsp430_config.h
+
+\section ex_bootstrap_nop_make Makefile
+\include bootstrap/nop/Makefile
+
+\example bootstrap/nop/main.c
+*/

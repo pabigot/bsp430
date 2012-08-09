@@ -1,0 +1,14 @@
+/** \page ex_sensors_ds18b20 Bootstrapping a New Platform: The Null Program
+@brief The first sensors program confirms that the platform files link
+
+\section ex_sensors_ds18b20_main main.c
+\include sensors/ds18b20/main.c
+
+\section ex_sensors_ds18b20_confic bsp430_config.h
+\include sensors/ds18b20/bsp430_config.h
+
+\section ex_sensors_ds18b20_make Makefile
+\include sensors/ds18b20/Makefile
+
+\example sensors/ds18b20/main.c
+*/

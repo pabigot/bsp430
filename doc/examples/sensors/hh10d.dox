@@ -1,0 +1,14 @@
+/** \page ex_sensors_hh10d Bootstrapping a New Platform: The Null Program
+@brief The first sensors program confirms that the platform files link
+
+\section ex_sensors_hh10d_main main.c
+\include sensors/hh10d/main.c
+
+\section ex_sensors_hh10d_confic bsp430_config.h
+\include sensors/hh10d/bsp430_config.h
+
+\section ex_sensors_hh10d_make Makefile
+\include sensors/hh10d/Makefile
+
+\example sensors/hh10d/main.c
+*/

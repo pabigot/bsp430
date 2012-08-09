@@ -1,0 +1,23 @@
+/** \page ex_bootstrap_console Bootstrapping a New Platform: Console Output
+
+BSP430 provides a @link configBSP430_CONSOLE standard console facility
+@endlink which gives you a 9600 baud 8N1 terminal along with cprintf() and
+related routines to output formatted text.  It also supports input with
+cgetchar_ni().
+
+This application loops forever, printing a counter and blinking an LED every
+half second, and displaying any input characters that were received between
+outputs.  The LEDs are a visual cue that the program is running even if
+something's wrong with the serial output.
+
+\section ex_bootstrap_console_main main.c
+\include bootstrap/console/main.c
+
+\section ex_bootstrap_console_confic bsp430_config.h
+\include bootstrap/console/bsp430_config.h
+
+\section ex_bootstrap_console_make Makefile
+\include bootstrap/console/Makefile
+
+\example bootstrap/console/main.c
+*/

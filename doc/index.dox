@@ -53,4 +53,41 @@ euscib    FR5xx     enhanced USCI                                EUSCI_B#
 sys       5xx/6xx   system                                       SYS
 pmm	  5xx/6xx   power management module			 PMM, PMM_FR5xx, PMM_FRAM
 
+\subsection examples Examples
+\subsubsection ex_bootstrap Bootstrap Support Programs
+The following examples lead you through the basic capabilities of BSP430,
+following the same path that you would use if you were adding support for a
+new platform.
+
+\li \ref ex_bootstrap_nop confirms that your environment is prepared to
+build an application for a particular platform
+\li \ref ex_bootstrap_blink confirms that your platform can blink LEDs
+\li \ref ex_bootstrap_clocks brings out clock signals to test points
+\li \ref ex_bootstrap_console prints output to the platform serial
+connection at 9600 baud 8N1
+\li \ref ex_bootstrap_echo confirms that you can provide input through the
+serial port, by echoing back the characters you type
+\li \ref ex_bootstrap_button validates the secondary input path using a
+button on the board
+\li \ref ex_bootstrap_lpm is used to configure the board into low power
+mode, verifying that the numbers in the data sheet are achievable
+\li \ref ex_bootstrap_applpm is used to interactively evaluate different low
+power modes with and without the peripherals being disabled
+</ul> 
+
+\subsubsection ex_sensors Sensors
+
+\li \ref ex_sensors_ds18b20 demonstrates temperature measurement with the
+DS18B20 (or similar) 1-wire temperature sensor
+\li \ref ex_sensors_tmp102 demonstrates the I2C interface with a TI TMP102
+temperature sensor
+\li \ref ex_sensors_hh10d demonstrates measuring the frequency of an input
+signal using the Hope RF Humidity Sensor
+
+\subsubsection ex_misc Miscellaneous Capabilities
+
+\li \ref ex_rfem_ccid demonstrates the SPI interface by reading the
+identification information from a ChipCon evalation module inserted into the
+RF-EVM socket on any of a number of TI experimenter boards
+</ul>
 */

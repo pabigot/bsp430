@@ -1,0 +1,14 @@
+/** \page ex_bootstrap_applpm Bootstrapping a New Platform: The Null Program
+@brief The first bootstrap program confirms that the platform files link
+
+\section ex_bootstrap_applpm_main main.c
+\include bootstrap/applpm/main.c
+
+\section ex_bootstrap_applpm_confic bsp430_config.h
+\include bootstrap/applpm/bsp430_config.h
+
+\section ex_bootstrap_applpm_make Makefile
+\include bootstrap/applpm/Makefile
+
+\example bootstrap/applpm/main.c
+*/

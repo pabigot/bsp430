@@ -1,0 +1,19 @@
+/** \page ex_bootstrap_clocks Bootstrapping a New Platform: Clock Signals
+
+If the platform is already stable, you can just build this.  If you're
+bootstrapping a platform you might need to build this with
+#configBSP430_CONSOLE set to 0 so that the clock signals are exposed without
+attempting to create a serial port (which probably won't work if the clocks
+aren't what you expect).
+
+\section ex_bootstrap_clocks_main main.c
+\include bootstrap/clocks/main.c
+
+\section ex_bootstrap_clocks_confic bsp430_config.h
+\include bootstrap/clocks/bsp430_config.h
+
+\section ex_bootstrap_clocks_make Makefile
+\include bootstrap/clocks/Makefile
+
+\example bootstrap/clocks/main.c
+*/

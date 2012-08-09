@@ -1,0 +1,14 @@
+/** \page ex_bootstrap_blink Bootstrapping a New Platform: Blink
+@brief The second bootstrap program confirms that you can control LEDs
+
+\section ex_bootstrap_blink_main main.c
+\include bootstrap/blink/main.c
+
+\section ex_bootstrap_blink_confic bsp430_config.h
+\include bootstrap/blink/bsp430_config.h
+
+\section ex_bootstrap_blink_make Makefile
+\include bootstrap/blink/Makefile
+
+\example bootstrap/blink/main.c
+*/
