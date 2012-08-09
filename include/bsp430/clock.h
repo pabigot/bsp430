@@ -102,37 +102,6 @@
  * unsigned long. */
 #define BSP430_CLOCK_US_TO_NOMINAL_MCLK(_delay_us) (((_delay_us) * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL)
 
-/** @def configBSP430_CLOCK_DISABLE_FLL
- *
- * This macro may be defined to a true value to request that #SCG0 ben
- * set after vBSP430platformInitialize_ni() configures the clocks,
- * preventing the FLL from changing the DCO configuration without
- * application intervention.  It may be referenced in other
- * situations, such as leaving low-power mode, to determine whether
- * the bit should remain set.
- *
- * The UCS peripheral has several errata which result in severe clock
- * instabilities when the FLL is allowed to run unmanaged.  These
- * include UCS7 ("DCO drifts when servicing short ISRs when in LPM0 or
- * exiting active from ISRs for short periods of time" and UCS10
- * ("Modulation causes shift in DCO frequency").  The latter is
- * documented in <a href="http://www.ti.com/lit/pdf/SLAA489">UCS10
- * Guidance</a>.  The UCS implementation of
- * #iBSP430ucsTrimDCOCLKDIV_ni() supports the UCS10 workaround.
- *
- * Stability in the presence of UCS7 and UCS10 may be further enhanced
- * by setting this option.  It is made generic in case there are other
- * cases where #SCG0 should left set throughout application execution.
- *
- * @note If the application manipulates the status register directly,
- * the effect of this option may not be preserved.
- *
- * @cppflag
- * @defaulted  */
-#ifndef configBSP430_CLOCK_DISABLE_FLL
-#define configBSP430_CLOCK_DISABLE_FLL 0
-#endif /* configBSP430_CLOCK_DISABLE_FLL */
-
 /** @def BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
  *
  * SMCLK is normally configured to divide another clock by shifting it

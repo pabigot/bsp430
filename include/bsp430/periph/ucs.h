@@ -57,7 +57,7 @@
  * <li>ACLK may source from VLOCLK, LFXT1CLK, or REFOCLK
  *
  * <li>FLL trimming will leave the FLL disabled if it was disabled on
- * entry; see #configBSP430_CLOCK_DISABLE_FLL.
+ * entry; see #configBSP430_CORE_DISABLE_FLL.
  *
  * <li>Executing an FLL trim (either directly or due to having invoked
  * ulBSP430clockConfigureMCLK_ni()) will record in private state
@@ -132,7 +132,7 @@
 /** Adjust the FLL as necessary to maintain the last configured DCOCLKDIV speed
  *
  * This function is most likely to be used if
- * #configBSP430_CLOCK_DISABLE_FLL is set, but is also a required
+ * #configBSP430_CORE_DISABLE_FLL is set, but is also a required
  * subroutine of the UCS implementation of
  * ulBSP430clockConfigureMCLK_ni().
  *

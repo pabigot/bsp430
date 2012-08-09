@@ -30,9 +30,9 @@ make realclean \
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
 /* Do not disable the FLL. */
-#ifndef configBSP430_CLOCK_DISABLE_FLL
-#define configBSP430_CLOCK_DISABLE_FLL 0
-#endif /* configBSP430_CLOCK_DISABLE_FLL */
+#ifndef configBSP430_CORE_DISABLE_FLL
+#define configBSP430_CORE_DISABLE_FLL 0
+#endif /* configBSP430_CORE_DISABLE_FLL */
 
 /* By default, ensure MCLK and SMCLK can be distinguished at the test
  * points. */

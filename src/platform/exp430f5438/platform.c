@@ -208,9 +208,9 @@ void vBSP430platformInitialize_ni (void)
   iBSP430clockConfigureACLK_ni(BSP430_PLATFORM_BOOT_ACLKSRC);
   ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
   iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
-#if configBSP430_CLOCK_DISABLE_FLL - 0
+#if configBSP430_CORE_DISABLE_FLL - 0
   __bis_status_register(SCG0);
-#endif /* configBSP430_CLOCK_DISABLE_FLL */
+#endif /* configBSP430_CORE_DISABLE_FLL */
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
 
 #if BSP430_UPTIME - 0
