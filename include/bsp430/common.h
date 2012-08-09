@@ -112,7 +112,7 @@
 
 /** @def configBSP430_CORE_DISABLE_FLL
  *
- * This macro may be defined to a true value to request that #SCG0 ben
+ * This macro may be defined to a true value to request that #SCG0 be
  * set after vBSP430platformInitialize_ni() configures the clocks,
  * preventing the FLL from changing the DCO configuration without
  * application intervention.  It may be referenced in other
@@ -140,6 +140,24 @@
 #ifndef configBSP430_CORE_DISABLE_FLL
 #define configBSP430_CORE_DISABLE_FLL 0
 #endif /* configBSP430_CORE_DISABLE_FLL */
+
+/** @def BSP430_CORE_LPM_EXIT_MASK
+ *
+ * The bits cleared in the stored status word to exit from low power
+ * mode in an interrupt.
+ *
+ * This is either #LPM4_bits or (#LPM4_bits & ~#SCG0), depending on
+ * #configBSP430_CORE_DISABLE_FLL.
+ *
+ * @dependency #configBSP430_CORE_DISABLE_FLL
+ */
+#ifndef BSP430_CORE_LPM_EXIT_MASK
+#if configBSP430_CORE_DISABLE_FLL - 0
+#define BSP430_CORE_LPM_EXIT_MASK (LPM4_bits & ~SCG0)
+#else /* configBSP430_CORE_DISABLE_FLL */
+#define BSP430_CORE_LPM_EXIT_MASK LPM4_bits
+#endif /* configBSP430_CORE_DISABLE_FLL */
+#endif /* BSP430_CORE_LPM_EXIT_MASK */
 
 /** @def configBSP430_CORE_SUPPORT_WATCHDOG
  *
