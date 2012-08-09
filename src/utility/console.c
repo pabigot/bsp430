@@ -200,21 +200,103 @@ hBSP430console (void)
   return console_hal_;
 }
 
+#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+#if ((BSP430_CONSOLE_RX_BUFFER_SIZE) & ((BSP430_CONSOLE_RX_BUFFER_SIZE) - 1))
+#error BSP430_CONSOLE_RX_BUFFER_SIZE is not a power of two
+#endif /* validate BSP430_CONSOLE_RX_BUFFER_SIZE */
+#if 128 < (BSP430_CONSOLE_RX_BUFFER_SIZE)
+#error BSP430_CONSOLE_RX_BUFFER_SIZE is too large
+#endif /* validate BSP430_CONSOLE_RX_BUFFER_SIZE */
+
+typedef struct sConsoleRxBuffer {
+  sBSP430halISRCallbackVoid cb_node;
+  char buffer[BSP430_CONSOLE_RX_BUFFER_SIZE];
+  unsigned char head;
+  unsigned char tail;
+} sConsoleRxBuffer;
+
+static int
+console_rx_isr_ (const struct sBSP430halISRCallbackVoid * cb,
+                 void * context)
+{
+  sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;
+  sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
+
+  bufp->buffer[bufp->head] = hal->rx_byte;
+  bufp->head = (bufp->head + 1) & ((sizeof(bufp->buffer) / sizeof(*bufp->buffer)) - 1);
+  if (bufp->head == bufp->tail) {
+    bufp->tail = (bufp->tail + 1) & ((sizeof(bufp->buffer) / sizeof(*bufp->buffer)) - 1);
+  }
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+}
+
+static sConsoleRxBuffer rx_buffer_ = {
+  .cb_node = { .callback = console_rx_isr_ },
+};
+
+static int
+console_getchar_ (int do_pop)
+{
+  int rv = -1;
+  if (rx_buffer_.head != rx_buffer_.tail) {
+    rv = rx_buffer_.buffer[rx_buffer_.tail];
+    if (do_pop) {
+      rx_buffer_.tail = (rx_buffer_.tail + 1) & ((sizeof(rx_buffer_.buffer) / sizeof(*rx_buffer_.buffer)) - 1);
+    }
+  }
+  return rv;
+}
+
+int
+cpeekchar_ni (void)
+{
+  return console_getchar_(0);
+}
+
+int
+cgetchar_ni (void)
+{
+  return console_getchar_(1);
+}
+
+#else /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+
+int
+cgetchar_ni (void)
+{
+  int rv = -1;
+  if (NULL != console_hal_) {
+    rv = iBSP430uartRxByte_ni(console_hal_);
+  }
+  return rv;
+}
+
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+
 int
 iBSP430consoleInitialize (void)
 {
+  hBSP430halSERIAL hal;
+
   if (console_hal_) {
     return 0;
   }
-  do {
-    hBSP430halSERIAL hal = hBSP430serialLookup(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE);
-    if (NULL == hal) {
-      break;
-    }
-    hal = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
-    if (NULL == hal) {
-      break;
-    }
+
+  hal = hBSP430serialLookup(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE);
+  if (NULL == hal) {
+    return -1;
+  }
+
+#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+  /* Associate the callback before opening the device, so the
+   * interrupts are enabled properly. */
+  rx_buffer_.head = rx_buffer_.tail = 0;
+  rx_buffer_.cb_node.next = hal->rx_callback;
+  hal->rx_callback = &rx_buffer_.cb_node;
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+
+  console_hal_ = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
+  if (console_hal_) {
 #if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
     BSP430_CORE_INTERRUPT_STATE_T istate;
     BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
@@ -222,10 +304,36 @@ iBSP430consoleInitialize (void)
     vBSP430platformSpinForJumper_ni();
     BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
-    console_hal_ = hal;
     return 0;
-  } while (0);
+  }
+
+  /* Open failed, revert the callback association */
+#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+  hal->rx_callback = rx_buffer_.cb_node.next;
+  rx_buffer_.cb_node.next = 0;
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+  
   return -1;
+}
+
+int
+iBSP430consoleDeconfigure (void)
+{
+  int rv = 0;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+
+  if (! console_hal_) {
+    return rv;
+  }
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430serialClose(console_hal_);
+#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+  console_hal_->rx_callback = rx_buffer_.cb_node.next;
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+  console_hal_ = NULL;
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 #endif /* BSP430_CONSOLE */

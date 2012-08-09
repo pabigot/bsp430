@@ -49,6 +49,12 @@ void main ()
   /* Configure the console to use the default UART handle */
   rv = iBSP430consoleInitialize();
 
+#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+  /* If we're using interrupt-driven reception, we'd better enable
+   * interrupts. */
+  BSP430_CORE_ENABLE_INTERRUPT();
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);
 
@@ -67,8 +73,7 @@ void main ()
       int rc;
       BSP430_CORE_WATCHDOG_CLEAR();
       BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
-      rc = iBSP430uartRxByte_ni(hBSP430console());
-      if (0 <= rc) {
+      while (0 <= ((rc = cgetchar_ni()))) {
         cputtext_ni(" rx char ");
         cputu_ni(rc, 10);
         cputtext_ni(" '");

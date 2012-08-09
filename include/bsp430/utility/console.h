@@ -138,6 +138,44 @@
 #define BSP430_CONSOLE_BAUD_RATE 9600
 #endif /* BSP430_CONSOLE_BAUD_RATE */
 
+/** @def BSP430_CONSOLE_RX_BUFFER_SIZE
+ *
+ * Define this to a non-zero power of 2 to allow the console
+ * infrastructure to buffer input in an ISR.  The value must not
+ * exceed 128.
+ *
+ * If this has a value of zero, character input is not interrupt
+ * driven. cgetchar_ni() will return the most recently received
+ * character, if any, and cpeekchar_ni() will not be available.
+ * @defaulted */
+#ifndef BSP430_CONSOLE_RX_BUFFER_SIZE
+#define BSP430_CONSOLE_RX_BUFFER_SIZE 0
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+
+/** Return a character that was input to the console.
+ *
+ * @return the next character that was input to the console, or -1 if
+ * no characters are available.
+ *
+ * @note This function is available even if
+ * #BSP430_CONSOLE_RX_BUFFER_SIZE is zero.
+ */
+int cgetchar_ni (void);
+
+/** Peek at the next character input to the console
+ *
+ * Use this to determine whether there's any data ready to be read,
+ * without actually consuming it yet.
+ *
+ * @return the value that would be returned by invoking cgetchar_ni(),
+ * but without consuming any pending input.
+ * 
+ * @warning This function is not available if
+ * #BSP430_CONSOLE_RX_BUFFER_SIZE is zero.
+ *
+ * @dependency #BSP430_CONSOLE_RX_BUFFER_SIZE */
+int cpeekchar_ni (void);
+
 /** @def configBSP430_CONSOLE_PROVIDES_PUTCHAR
  *
  * If defined to a true value, the individual character display
@@ -343,12 +381,26 @@ int cputul_ni (unsigned long n, int radix);
  * console is configured and any required delays completed it will
  * return, allowing use of cprintf() and related functions.
  *
- * If this function is invoked multiple times, the existing
- * configuration is unchanged.
+ * If this function is invoked multiple times without an intervening
+ * call to iBSP430consoleDeconfigure(), the existing configuration is
+ * unchanged.
  *
  * @return 0 if the console was successfully initialized, -1 if an
  * error occurred. */
 int iBSP430consoleInitialize (void);
+
+/** Deconfigure the console serial HAL instance
+ *
+ * This routine closes the HAL serial instance, decoupling it from any
+ * callbacks and turning it off.  The instance may be re-enabled by
+ * re-invoking iBSP430consoleInitialize().
+ *
+ * You might need this function if you change the rate of the clock on
+ * which the console baud generator depends.
+ *
+ * @return 0 if the deconfiguration was successful, -1 if an error
+ * occurred. */
+int iBSP430consoleDeconfigure (void);
 
 /** Return a reference to the console device.
  *
@@ -357,7 +409,7 @@ int iBSP430consoleInitialize (void);
  * initialized. */
 hBSP430halSERIAL hBSP430console (void);
 
-/* Enable or disable the console. */
+/** Enable or disable the console. */
 int xBSP430consoleSetEnabled_ni (int enablep);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */
