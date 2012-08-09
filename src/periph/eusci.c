@@ -518,6 +518,7 @@ euscia_isr (hBSP430halSERIAL hal)
 }
 #endif /* EUSCIA ISR */
 
+#if BSP430_SERIAL - 0
 static struct sBSP430serialDispatch dispatch_ = {
 #if configBSP430_SERIAL_ENABLE_UART - 0
   .openUART = hBSP430eusciOpenUART,
@@ -541,6 +542,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .wakeupTransmit_ni = vBSP430eusciWakeupTransmit_ni,
   .flush_ni = vBSP430eusciFlush_ni,
 };
+#endif /* BSP430_SERIAL */
 
 /* !BSP430! periph=euscia instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 insert=hal_serial_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_serial_defn] */
@@ -553,7 +555,9 @@ struct sBSP430halSERIAL xBSP430hal_EUSCI_A0_ = {
 #endif /* configBSP430_HAL_EUSCI_A0_ISR */
   },
   .hpl = { .euscia = BSP430_HPL_EUSCI_A0 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
@@ -566,7 +570,9 @@ struct sBSP430halSERIAL xBSP430hal_EUSCI_A1_ = {
 #endif /* configBSP430_HAL_EUSCI_A1_ISR */
   },
   .hpl = { .euscia = BSP430_HPL_EUSCI_A1 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
@@ -579,7 +585,9 @@ struct sBSP430halSERIAL xBSP430hal_EUSCI_A2_ = {
 #endif /* configBSP430_HAL_EUSCI_A2_ISR */
   },
   .hpl = { .euscia = BSP430_HPL_EUSCI_A2 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
@@ -659,7 +667,9 @@ struct sBSP430halSERIAL xBSP430hal_EUSCI_B0_ = {
 #endif /* configBSP430_HAL_EUSCI_B0_ISR */
   },
   .hpl = { .euscib = BSP430_HPL_EUSCI_B0 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_EUSCI_B0 */
 
@@ -672,7 +682,9 @@ struct sBSP430halSERIAL xBSP430hal_EUSCI_B1_ = {
 #endif /* configBSP430_HAL_EUSCI_B1_ISR */
   },
   .hpl = { .euscib = BSP430_HPL_EUSCI_B1 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_EUSCI_B1 */
 
@@ -685,7 +697,9 @@ struct sBSP430halSERIAL xBSP430hal_EUSCI_B2_ = {
 #endif /* configBSP430_HAL_EUSCI_B2_ISR */
   },
   .hpl = { .euscib = BSP430_HPL_EUSCI_B2 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_EUSCI_B2 */
 

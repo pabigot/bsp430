@@ -75,8 +75,8 @@ button_isr (const struct sBSP430halISRCallbackIndexed * cb,
   (void)idx;
   ++button;
   return BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT
-    | BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN
-    | LPM4_bits;
+         | BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN
+         | LPM4_bits;
 }
 
 const sBSP430halISRCallbackIndexed button_cb = {
@@ -179,7 +179,7 @@ void main ()
     unsigned long int wake_utt;
     do {
       int c;
-      
+
       while (0 <= ((c = consume_rx()))) {
         const sCommand * cmdp = commands;
         const sCommand * const commands_end = commands + sizeof(commands) / sizeof(*commands);
@@ -245,7 +245,7 @@ void main ()
         } else {
           cprintf("Unrecognized command: %c\n", c);
         }
-        
+
       }
     } while (! enter_sleep);
     BSP430_CORE_DISABLE_INTERRUPT();

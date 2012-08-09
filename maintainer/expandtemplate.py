@@ -342,7 +342,9 @@ struct sBSP430halSERIAL xBSP430hal_%(INSTANCE)s_ = {
 #endif /* configBSP430_HAL_%(INSTANCE)s_ISR */
   },
   .hpl = { .%(periph)s = BSP430_HPL_%(INSTANCE)s },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',

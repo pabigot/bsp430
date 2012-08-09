@@ -484,6 +484,7 @@ usci5_isr (hBSP430halSERIAL hal)
 }
 #endif  /* HAL ISR */
 
+#if BSP430_SERIAL - 0
 static struct sBSP430serialDispatch dispatch_ = {
 #if configBSP430_SERIAL_ENABLE_UART - 0
   .openUART = hBSP430usci5OpenUART,
@@ -507,6 +508,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .wakeupTransmit_ni = vBSP430usci5WakeupTransmit_ni,
   .flush_ni = vBSP430usci5Flush_ni,
 };
+#endif /* BSP430_SERIAL */
 
 /* !BSP430! insert=hal_serial_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_serial_defn] */
@@ -519,7 +521,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_A0_ = {
 #endif /* configBSP430_HAL_USCI5_A0_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_A0 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_A0 */
 
@@ -532,7 +536,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_A1_ = {
 #endif /* configBSP430_HAL_USCI5_A1_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_A1 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_A1 */
 
@@ -545,7 +551,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_A2_ = {
 #endif /* configBSP430_HAL_USCI5_A2_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_A2 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_A2 */
 
@@ -558,7 +566,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_A3_ = {
 #endif /* configBSP430_HAL_USCI5_A3_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_A3 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_A3 */
 
@@ -571,7 +581,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_B0_ = {
 #endif /* configBSP430_HAL_USCI5_B0_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_B0 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_B0 */
 
@@ -584,7 +596,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_B1_ = {
 #endif /* configBSP430_HAL_USCI5_B1_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_B1 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_B1 */
 
@@ -597,7 +611,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_B2_ = {
 #endif /* configBSP430_HAL_USCI5_B2_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_B2 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_B2 */
 
@@ -610,7 +626,9 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_B3_ = {
 #endif /* configBSP430_HAL_USCI5_B3_ISR */
   },
   .hpl = { .usci5 = BSP430_HPL_USCI5_B3 },
-  .dispatch = &dispatch_
+#if BSP430_SERIAL - 0
+  .dispatch = &dispatch_,
+#endif /* BSP430_SERIAL */
 };
 #endif /* configBSP430_HAL_USCI5_B3 */
 

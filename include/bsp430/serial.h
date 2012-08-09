@@ -168,6 +168,19 @@
 #define configBSP430_SERIAL_ENABLE_I2C 0
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
 
+/** @def BSP430_SERIAL
+ *
+ * Defined by the infrastructure to a true expression in the case
+ * where at least one protocol is to be supported by the serial
+ * abstraction.  If it evaluates to false, the serial abstraction will
+ * be absent from the compiled infrastructure code.
+ *
+ * @cppflag */
+#define BSP430_SERIAL                           \
+  ((configBSP430_SERIAL_ENABLE_UART - 0)        \
+   || (configBSP430_SERIAL_ENABLE_SPI - 0)      \
+   || (configBSP430_SERIAL_ENABLE_I2C - 0))
+
 /* !BSP430! instance=usci,usci5,euscia,euscib */
 /* !BSP430! periph=serial insert=hal_variant_hpl_macro */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_variant_hpl_macro] */
@@ -318,9 +331,11 @@ typedef struct sBSP430halSERIAL {
   /** Total number of transmitted octets */
   unsigned long num_tx;
 
+#if BSP430_SERIAL - 0
   /** @cond DOXYGEN_EXCLUDE */
   const struct sBSP430serialDispatch * const dispatch;
   /** @endcond */
+#endif /* BSP430_SERIAL */
 } sBSP430halSERIAL;
 
 /** Handle for a serial HAL instance */
@@ -363,6 +378,8 @@ struct sBSP430serialDispatch {
   void (* flush_ni) (hBSP430halSERIAL hal);
 };
 /** @endcond */
+
+#if defined(BSP430_DOXYGEN) || (BSP430_SERIAL - 0)
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_UART - 0)
 
@@ -836,6 +853,8 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
   return hal->dispatch->flush_ni(hal);
 }
 
+#endif /* BSP430_SERIAL - 0 */
+
 #if configBSP430_SERIAL_USE_USCI - 0
 #include <bsp430/periph/usci.h>
 #endif /* configBSP430_SERIAL_USE_USCI */
@@ -863,5 +882,6 @@ hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph);
  * @return The short name of the port, e.g. "USCI_A0".  If the peripheral
  * is not recognized as a serial device, a null pointer is returned. */
 const char * xBSP430serialName (tBSP430periphHandle periph);
+
 
 #endif /* BSP430_SERIAL_H */

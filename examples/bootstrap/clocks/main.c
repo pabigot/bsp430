@@ -165,7 +165,6 @@ void main ()
 #endif /* BSP430_TIMER_CCACLK */
 
   cputchar_ni('\n');
-#endif /* BSP430_CONSOLE */
 
 #if defined(__MSP430_HAS_BC2__)
   cputtext_ni("\nBC2: DCO ");
@@ -207,7 +206,7 @@ void main ()
           0x1F & (UCSCTL1 / DCORSEL0), 0x1F & (UCSCTL0 / DCO0), 0x1F & (UCSCTL0 / MOD0),
           UCSCTL0, UCSCTL1, UCSCTL2, UCSCTL3,
           UCSCTL4, UCSCTL5, UCSCTL6, UCSCTL7);
-#endif
+#endif /* UCS */
 
 #if defined(__MSP430_HAS_CS__)
   cprintf("\nCS RSEL %d DCOFSEL %d:"
@@ -216,7 +215,9 @@ void main ()
           !!(DCORSEL & CSCTL1), 0x03 & (CSCTL1 / DCOFSEL0),
           CSCTL0, CSCTL1, CSCTL2, CSCTL3,
           CSCTL4, CSCTL5, CSCTL6);
-#endif
+#endif /* CS */
+
+#endif /* BSP430_CONSOLE */
 
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 1)) {
 #if BSP430_CONSOLE - 0

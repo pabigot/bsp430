@@ -11,7 +11,7 @@
  * Rev 1.5: 125 nA when powered by battery.  The TXD/RXD and TEST
  * jumpers may be present in this mode, but RST and VCC should be
  * removed.  97 nA when powered by USB.
- * 
+ *
  * EXP430G2r1.5: Active=434; L0=85; L1=85; L2=28; L3=5.4; L4=?
  *
  * @author Peter A. Bigot <bigotp@acm.org>
@@ -41,7 +41,7 @@ void main ()
   vBSP430ledInitialize_ni();
   {
     int i;
-    
+
     vBSP430ledSet(0, 1);
     for (i = 0; i < 20; ++i) {
       vBSP430ledSet(0, -1);

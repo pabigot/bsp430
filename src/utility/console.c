@@ -312,7 +312,7 @@ iBSP430consoleInitialize (void)
   hal->rx_callback = rx_buffer_.cb_node.next;
   rx_buffer_.cb_node.next = 0;
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
-  
+
   return -1;
 }
 

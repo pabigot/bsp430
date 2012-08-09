@@ -437,6 +437,7 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
   return i;
 }
 
+#if BSP430_SERIAL - 0
 static struct sBSP430serialDispatch dispatch_ = {
 #if configBSP430_SERIAL_ENABLE_UART - 0
   .openUART = hBSP430usciOpenUART,
@@ -460,6 +461,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,
   .flush_ni = vBSP430usciFlush_ni,
 };
+#endif /* BSP430_SERIAL */
 
 #if configBSP430_HAL_USCI_A0 - 0
 static struct sBSP430usciHPLAux xBSP430hplaux_USCI_A0_ = {

@@ -169,7 +169,7 @@ int cgetchar_ni (void);
  *
  * @return the value that would be returned by invoking cgetchar_ni(),
  * but without consuming any pending input.
- * 
+ *
  * @warning This function is not available if
  * #BSP430_CONSOLE_RX_BUFFER_SIZE is zero.
  *
