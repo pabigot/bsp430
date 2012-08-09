@@ -12,14 +12,9 @@
  *
  */
 
-/* Include the generic platform header.  This assumes that
- * #BSP430_PLATFORM_EXP430FR5739 (or another marker that identifies a
- * platform BSP430 supports) has been defined for the preprocessor.
- * If not, you may include the platform-specific version,
- * e.g. <bsp430/platform/exp430g2.h>. */
 #include <bsp430/platform.h>
 
-/* We're going to use LEDs.  Enable them. */
+/* We're going to use LEDs so we need the interface file */
 #include <bsp430/utility/led.h>
 
 /* We want to know the nominal clock speed so we can delay. */
@@ -29,11 +24,9 @@ void main ()
 {
   int led = 0;
 
-  /* First thing you do in main is configure the platform. */
+  /* First thing you do in main is configure the platform.
+   * Note that this configures the LEDs. */
   vBSP430platformInitialize_ni();
-
-  /* Now initialize the LEDs */
-  vBSP430ledInitialize_ni();
 
   while (1) {
     /* A common complaint is that "blink doesn't work!" when the issue

@@ -141,9 +141,9 @@ void vBSP430platformInitialize_ni (void)
   WDTCTL = WDTPW + WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
-#if (BSP430_PLATFORM_BOOT_CONFIGURE_LED - 0) && (BSP430_LED - 0)
+#if (BSP430_PLATFORM_BOOT_CONFIGURE_LEDS - 0) && (BSP430_LED - 0)
   vBSP430ledInitialize_ni();
-#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LED */
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LEDS */
 
 #if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
   /* Attempt to stabilize the crystal */
