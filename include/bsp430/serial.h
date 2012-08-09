@@ -234,11 +234,24 @@ typedef struct sBSP430halSERIAL {
    * is undefined.  This is probably not very useful. */
   uint8_t tx_byte;
 
-  /** The callback chain to invoke when a byte is received */
+  /** The callback chain to invoke when a byte is received.
+   *
+   * A non-null value enables interrupt-driven reception, and data
+   * will be provided to the callbacks on receiption. */
   const struct sBSP430halISRCallbackVoid * rx_callback;
 
   /** The callback chain to invoke when space is available in the
-   * transmission buffer */
+   * transmission buffer
+   *
+   * A non-null value enables interrupt-driven transmission, and the
+   * chain will be invoked as necessary.  The infrastructure must be
+   * made aware of data to be transmitted, so it can enable the
+   * interrupt that will request the data through the callback.  This
+   * is done using vBSP430serialWakeupTransmit_ni().  The callback
+   * function should return #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN if
+   * data to transmit is available, and
+   * #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT if it is known that
+   * there will not be data available after the transmission.*/
   const struct sBSP430halISRCallbackVoid * tx_callback;
 
   /** Total number of received octets */
@@ -269,9 +282,6 @@ struct sBSP430serialDispatch {
                                 unsigned char ctl0_byte,
                                 unsigned char ctl1_byte,
                                 unsigned int prescaler);
-  int (* configureCallbacks) (hBSP430halSERIAL hal,
-                              const struct sBSP430halISRCallbackVoid * rx_callback,
-                              const struct sBSP430halISRCallbackVoid * tx_callback);
   int (* setHold_ni) (hBSP430halSERIAL hal, int holdp);
   int (* close) (hBSP430halSERIAL hal);
   void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
@@ -291,11 +301,6 @@ struct sBSP430serialDispatch {
 /** @endcond */
 
 /** Request and configure a serial device in UART mode.
- *
- * If callbacks had been associated with this device using
- * #iBSP430serialConfigureCallbacks(), behavior with respect to
- * interrupts is as if those callbacks were associated during this
- * call.
  *
  * @warning When the underlying implementation is an EUSCI device (as
  * on FR5xx chips), the header defines used to construct the value @a
@@ -347,11 +352,6 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
 
 /** Request and configure a serial device in SPI mode.
  *
- * If callbacks had been associated with this device using
- * #iBSP430serialConfigureCallbacks(), behavior with respect to
- * interrupts is as if those callbacks were associated during this
- * call.
- *
  * @warning When the underlying implementation is an EUSCI device (as
  * on FR5xx chips), the header defines used to construct the value @a
  * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
@@ -401,11 +401,6 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
 
 /** Request and configure a serial device in I2C mode.
  *
- * If callbacks had been associated with this device using
- * #iBSP430serialConfigureCallbacks(), behavior with respect to
- * interrupts is as if those callbacks were associated during this
- * call.
- *
  * @warning When the underlying implementation is an EUSCI device (as
  * on FR5xx chips), the header defines used to construct the value @a
  * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
@@ -449,54 +444,6 @@ hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
                                        unsigned int prescaler)
 {
   return hal->dispatch->openI2C(hal, ctl0_byte, ctl1_byte, prescaler);
-}
-
-/** Assign callbacks for transmission and reception.
- *
- * Callbacks are assigned within a critical section.  The code waits
- * until the device becomes idle, then places it in reset mode.  After
- * configuration, the receive interrupt is enabled if a receive
- * callback is registered.  The critical section restores
- * interruptibility state to its entry state on exit.
- *
- * @param hal a serial HAL handle.  If (non-null) callbacks are
- * already associated with this device, an error will be returned and
- * the previous configuration left unchanged.
- *
- * @param rx_callback a pointer to the head of a callback chain to be
- * used for receiving.  A non-null value enables interrupt-driven
- * reception, and data will be provided to the callbacks on
- * receiption.
- *
- * @param tx_callback a pointer to the head of a callback chain to be
- * used for transmission.  A non-null value enables interrupt-driven
- * transmission, and the chain will be invoked as necessary.  The
- * infrastructure must be made aware of data to be transmitted, so it
- * can enable the interrupt that will request the data through the
- * callback.  This is done using vBSP430serialWakeupTransmit_ni().
- * The callback function should return
- * #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN if data to transmit is
- * available, and #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT if it
- * is known that there will not be data available after the
- * transmission.
- *
- * @return zero if the configuration was successful, a negative value
- * if something went wrong.
- *
- * @note #iBSP430serialClose() does not disassociate the callbacks
- * from the device.  If the disassociation is desired, it can be done
- * manually either before or after closing the device by invoking this
- * function with null callback pointers.
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation.
- */
-static __inline__
-int iBSP430serialConfigureCallbacks (hBSP430halSERIAL hal,
-                                     const struct sBSP430halISRCallbackVoid * rx_callback,
-                                     const struct sBSP430halISRCallbackVoid * tx_callback)
-{
-  return hal->dispatch->configureCallbacks(hal, rx_callback, tx_callback);
 }
 
 /** Place a serial device in hold mode
@@ -590,9 +537,10 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
 
 /** Receive a byte from a UART-configured device.
  *
- * This routine should only be invoked when there is no receive
- * callback registered.  If a callback is present, it is expected to
- * be used to accept data on reception.
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to accept data
+ * on reception.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -610,9 +558,10 @@ int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
 
 /** Transmit a byte over a UART-configured device.
  *
- * This routine should only be invoked when there is no transmit
- * callback registered.  If a callback is present, it is expected to
- * be used to provide data for transmission.
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -632,9 +581,10 @@ int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 
 /** Transmit a block of data over a UART-configured device.
  *
- * This routine should only be invoked when there is no transmit
- * callback registered.  If a callback is present, it is expected to
- * be used to provide data for transmission.
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -658,9 +608,10 @@ int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
 
 /** Transmit a sequence of characters over a UART-configured device.
  *
- * This routine should only be invoked when there is no transmit
- * callback registered.  If a callback is present, it is expected to
- * be used to provide data for transmission.
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -686,6 +637,12 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * the octets received in response into @a rx_data.  It then transmits
  * @a rx_len dummy bytes, appending the resulting response into @a
  * rx_data.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink and @link
+ * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink are null.
+ * If callbacks are present, they are expected to be used to provide
+ * data for transmission and to process received data.
  *
  * @param hal the serial device over which the data is transmitted and
  * received
@@ -748,6 +705,12 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
  * return an error if the device is configured with a transmit
  * callback.
  *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.  Note that such a callback must handle I2C start
+ * and stop conditions, which are peripheral-specific.
+ *
  * @param hal the serial device over which the data is transmitted and
  * received
  *
@@ -772,6 +735,12 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * This routine receives @a rx_len octets into @a rx_data, storing the
  * octets received in response into @a rx_data.  It will return an
  * error if the device is configured with a receive callback.
+ *
+ * This routine should only be invoked when @link
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
+ * If a callback is present, it is expected to be used to provide data
+ * for transmission.  Note that such a callback must handle I2C start
+ * and stop conditions, which are peripheral-specific.
  *
  * @param hal the serial device from which the data is received
  *

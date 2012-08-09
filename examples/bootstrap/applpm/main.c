@@ -132,8 +132,7 @@ rx_callback (const struct sBSP430halISRCallbackVoid * cb,
   return LPM4_bits;
 }
 
-const struct sBSP430halISRCallbackVoid rx_cb = {
-  .next = NULL,
+struct sBSP430halISRCallbackVoid rx_cb = {
   .callback = rx_callback
 };
 
@@ -165,7 +164,10 @@ void main ()
   rx_head = rx_tail = rx_buffer;
   /* A careful coder would check to return values in the following */
   tty = hBSP430console();
-  (void)iBSP430serialConfigureCallbacks(tty, &rx_cb, NULL);
+  (void)iBSP430serialSetHold_ni(tty, 1);
+  rx_cb.next = tty->rx_callback;
+  tty->rx_callback = &rx_cb;
+  (void)iBSP430serialSetHold_ni(tty, 0);
   *rx_head++ = CMD_MODE_ACTIVE;
   *rx_head++ = CMD_STATE;
 

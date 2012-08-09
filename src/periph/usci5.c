@@ -209,37 +209,12 @@ hBSP430usci5OpenI2C (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430usci5ConfigureCallbacks (hBSP430halSERIAL hal,
-                                const struct sBSP430halISRCallbackVoid * rx_callback,
-                                const struct sBSP430halISRCallbackVoid * tx_callback)
-{
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  int rc = 0;
-
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
-  /* Finish any current activity, inhibiting the start of new activity
-   * due to !GIE. */
-  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
-  SERIAL_HPL_HOLD_HPL_NI(SERIAL_HAL_HPL(hal));
-  if (hal->rx_callback || hal->tx_callback) {
-    rc = -1;
-  } else {
-    hal->rx_callback = rx_callback;
-    hal->tx_callback = tx_callback;
-  }
-  /* Release the USCI5 and enable the interrupts.  Interrupts are
-   * disabled and cleared when UCSWRST is set. */
-  SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rc;
-}
-
-int
 iBSP430usci5SetHold_ni (hBSP430halSERIAL hal,
                         int holdp)
 {
   int rc;
+
+  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   if (holdp) {
     SERIAL_HAL_HPL(hal)->ctlw0 |= UCSWRST;
     rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
@@ -513,7 +488,6 @@ static struct sBSP430serialDispatch dispatch_ = {
   .openUART = hBSP430usci5OpenUART,
   .openSPI = hBSP430usci5OpenSPI,
   .openI2C = hBSP430usci5OpenI2C,
-  .configureCallbacks = iBSP430usci5ConfigureCallbacks,
   .setHold_ni = iBSP430usci5SetHold_ni,
   .close = iBSP430usci5Close,
   .wakeupTransmit_ni = vBSP430usci5WakeupTransmit_ni,

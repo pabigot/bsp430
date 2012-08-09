@@ -58,8 +58,7 @@ rx_callback (const struct sBSP430halISRCallbackVoid * cb,
   return 0;
 }
 
-const struct sBSP430halISRCallbackVoid rx_entry = {
-  .next = NULL,
+struct sBSP430halISRCallbackVoid rx_entry = {
   .callback = rx_callback
 };
 
@@ -89,14 +88,13 @@ tx_callback (const struct sBSP430halISRCallbackVoid * cb,
   return rv;
 }
 
-const struct sBSP430halISRCallbackVoid tx_entry = {
-  .next = NULL,
+struct sBSP430halISRCallbackVoid tx_entry = {
   .callback = tx_callback
 };
 
 void main ()
 {
-  hBSP430halSERIAL tty0;
+  hBSP430halSERIAL con;
 
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
@@ -106,15 +104,32 @@ void main ()
 
   /* Configure the echo using the standard console handle */
   (void)iBSP430consoleInitialize();
-  tty0 = hBSP430console();
-  if (NULL == tty0) {
+  con = hBSP430console();
+  if (NULL == con) {
+    return;
+  }
+  cprintf("Basic console up\n");
+
+  /* Place the console into hold while configuring the callbacks. */
+  cprintf("Initializing for interrupt-driven I/O\nType to see echo: ");
+  (void)iBSP430serialSetHold_ni(con, 1);
+
+  /* Add the local handlers to the head of the chain.  The previous
+   * ones are probably NULL. */
+  rx_entry.next = con->rx_callback;
+  con->rx_callback = &rx_entry;
+  tx_entry.next = con->tx_callback;
+  con->tx_callback = &tx_entry;
+
+  /* Releasing the hold will enable the interrupt-driven
+   * communications. */
+  if (0 != iBSP430serialSetHold_ni(con, 0)) {
+    cprintf("\nOh bother, ISR configuration failed.  Dying now...");
     return;
   }
 
-  /* Register the callback handlers */
-  if (0 != iBSP430serialConfigureCallbacks(tty0, &rx_entry, &tx_entry)) {
-    return;
-  }
+  /* At this point, you can't use cprintf anymore because the
+   * console's transmit ISR has been co-opted. */
 
   /* Enable interrupts, which releases the tty to echo */
   __enable_interrupt();
