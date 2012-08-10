@@ -65,8 +65,6 @@ build an application for a particular platform
 \li \ref ex_bootstrap_clocks brings out clock signals to test points
 \li \ref ex_bootstrap_console prints output to the platform serial
 connection at 9600 baud 8N1
-\li \ref ex_bootstrap_echo confirms that you can provide input through the
-serial port, by echoing back the characters you type
 \li \ref ex_bootstrap_button validates the secondary input path using a
 button on the board
 \li \ref ex_bootstrap_lpm is used to configure the board into low power

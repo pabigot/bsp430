@@ -18,13 +18,11 @@
 #error No button available on this platform
 #endif /* BSP430_PLATFORM_BUTTON0 */
 
-#define LPM_BITS (LPM0_bits | GIE)
-
 typedef struct sButtonState {
-  sBSP430halISRCallbackIndexed button_cb;
-  unsigned char bit;
-  volatile int in_mask;
-  volatile int count;
+  sBSP430halISRCallbackIndexed button_cb; /* Callback structure */
+  const unsigned char bit;      /* Bit for button */
+  volatile int in_mask;         /* Bit set if button is pressed */
+  volatile int count;           /* Number of interrupts occured */
 } sButtonState;
 
 static int
@@ -33,12 +31,28 @@ button_isr (const struct sBSP430halISRCallbackIndexed * cb,
             int idx)
 {
   hBSP430halPORT hal = (hBSP430halPORT)context;
+  volatile sBSP430hplPORTIE * hpl = BSP430_PORT_HAL_GET_HPL_PORTIE(hal);
   sButtonState * sp = (sButtonState *)cb;
+
   ++sp->count;
-  sp->in_mask = BSP430_PORT_HAL_HPL_IN(hal) & sp->bit;
-  BSP430_PORT_HAL_GET_HPL_PORTIE(hal)->ies ^= sp->bit;
+
+  /* Record whether the button is currently pressed based on the edge
+   * type we captured (1 means transition to 0 = released, 0 means
+   * transition to 1 = pressed).  Configure to detect a state change
+   * opposite of the one we just captured, regardless of what that
+   * state might be.  This algorithm coupled with interrupts being
+   * disabled outside of LPM helps ensure we interleave
+   * pressed/released notifications even in the presence of
+   * bounces. */
+  sp->in_mask = (hpl->ies & sp->bit) ^ sp->bit;
+  hpl->ies ^= sp->bit;
   vBSP430ledSet(0, -1);
-  return LPM_BITS;
+
+  /* We let the infrastructure identify what LPM bits to clear, but
+   * also disable GIE on exit.  This ensures we don't overwrite the
+   * interrupt state due to a subsequent interrupt before we can print
+   * what we just stored. */
+  return GIE | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
 static sButtonState button_state = {
@@ -51,15 +65,11 @@ void main ()
   hBSP430halPORT b0hal = hBSP430portLookup(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * b0hpl;
   int b0pin = iBSP430portBitPosition(BSP430_PLATFORM_BUTTON0_PORT_BIT);
-  int i;
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-  for (i = 0; i < 5; ++i) {
-    cprintf("Up\n");
-    __delay_cycles(10000);
-  }
+  cprintf("And we're up\n");
   cprintf("There's supposed to be a button at %s.%u\n",
           xBSP430portName(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE),
           b0pin);
@@ -77,8 +87,10 @@ void main ()
   BSP430_PORT_HAL_HPL_OUT(b0hal) |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
 #endif /* BSP430_PORT_SUPPORTS_REN */
   if (b0hpl->in & BSP430_PLATFORM_BUTTON0_PORT_BIT) {
+    button_state.in_mask = BSP430_PLATFORM_BUTTON0_PORT_BIT;
     b0hpl->ies |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
   } else {
+    button_state.in_mask = 0;
     b0hpl->ies &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   }
   b0hpl->ifg &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
@@ -91,6 +103,10 @@ void main ()
     static const char * state_str[] = { "released", "pressed" };
 
     cprintf("Count %u, in mask 0x%02x: %s\n", button_state.count, button_state.in_mask, state_str[!button_state.in_mask]);
-    __bis_status_register(LPM_BITS);
+
+    /* Note that we've never turned interrupts on, so we do so now
+       when entering LPM.  The ISR will turn them off again before
+       waking the MCU. */
+    __bis_status_register(LPM4_bits | GIE);
   }
 }

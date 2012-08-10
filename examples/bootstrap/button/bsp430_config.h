@@ -14,9 +14,5 @@
 /* Request a button */
 #define configBSP430_PLATFORM_BUTTON0 1
 
-/* And LEDs, configured at boot */
-#define configBSP430_LED 1
-#define BSP430_PLATFORM_BOOT_CONFIGURE_LEDS 1
-
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

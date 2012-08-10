@@ -48,8 +48,8 @@ void main ()
       vBSP430ledSet(1, -1);
       __delay_cycles(BSP430_CLOCK_PUC_MCLK_HZ / 10);
     }
-    vBSP430ledSet(0, 0);
-    vBSP430ledSet(0, 0);
+    /* The subsequent vBSP430lpmConfigurePortsForLPM_ni() call should
+     * turn off the LED that's still lit. */
   }
 #endif
 

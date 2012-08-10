@@ -1,5 +1,44 @@
-/** \page ex_bootstrap_lpm Bootstrapping a New Platform: The Null Program
-@brief The first bootstrap program confirms that the platform files link
+/** \page ex_bootstrap_lpm Bootstrapping a New Platform: Basic LPM
+
+This program disables the watchdog, configures for LPM, then enters LPM,
+bypassing all BSP430 initialization code.  As an exception, if requested the
+board will flash the first two LEDs for a few seconds when it starts, to
+confirm that the application board is running.
+
+If everything goes right, you can measure the board power consumption and
+compare that to what's on the data sheet.  It's likely that you'll have to
+remove jumpers and/or disconnect any USB or RS232 connection in order to get
+power consumption all the way down to where it needs to be.  Some
+platform-specific notes:
+
+\section EXP430-G2
+
+LaunchPad board revisions prior to 1.5 cannot achieve the lowest power mode
+without hardware modifications.  To do the best you can, remove the TXD,
+RXD, and TEST jumpers connecting the emulation side of the board from the
+EXP430G2 side of the board (you can leave or remove RST).  Measure the
+current across the Vcc jumper using an ammeter.  The lowest current
+measurement you are likely to see is 76 uA in LPM4 when powering from the
+emulation USB port.
+
+If you completely disconnect the emulation side and power from battery, you
+can get down to 65 uA on this revision of the hardware.
+
+If you have revision 1.5 of the hardware, following the same process should
+get you around 0.1 uA with LPM4.  The TXD/RXD and TEST jumpers may be left
+in place, but RST and VCC should be removed.
+
+\section Enhanced Compile-time Configuration
+
+Note that this example includes infrastructure that allows configuring the
+build through the command line.  For example, to enter LPM mode 2 with the
+LED notification, use the following as your build command:
+
+@code
+make LPM=2 LED=1 realclean install
+@endcode
+
+By default, LEDs are disabled and LPM4 will be entered.
 
 \section ex_bootstrap_lpm_main main.c
 \include bootstrap/lpm/main.c

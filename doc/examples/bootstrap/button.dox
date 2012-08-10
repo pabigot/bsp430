@@ -1,5 +1,7 @@
-/** \page ex_bootstrap_button Bootstrapping a New Platform: The Null Program
-@brief The first bootstrap program confirms that the platform files link
+/** \page ex_bootstrap_button Bootstrapping a New Platform: Button
+
+This example shows how to use the BSP430 standard button definitions to
+track button presses and releases.
 
 \section ex_bootstrap_button_main main.c
 \include bootstrap/button/main.c
