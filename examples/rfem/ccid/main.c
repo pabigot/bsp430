@@ -43,12 +43,26 @@ readRegister (uint8_t reg)
 {
   uint8_t rxbuf[2];
 
-  /* Add the READ bit, and if this is a status register the BURST bit */
-  reg |= 0x80;
+  /* If this is a status register add the BURST bit */
   if (0x30 <= reg) {
     reg |= 0x40;
   }
+  /* Add the READ bit */
+  reg |= 0x80;
   (void)iBSP430spiTxRx_ni(spi, &reg, 1, 1, rxbuf);
+  return rxbuf[1];
+}
+
+static int
+writeRegister (uint8_t reg,
+               uint8_t val)
+{
+  uint8_t txbuf[2];
+  uint8_t rxbuf[2];
+
+  txbuf[0] = reg;
+  txbuf[1] = val;
+  (void)iBSP430spiTxRx_ni(spi, txbuf, 2, 0, rxbuf);
   return rxbuf[1];
 }
 
@@ -126,4 +140,32 @@ void main ()
 
   cprintf("PARTNUM response %#02x\n", readRegister(0x30));
   cprintf("VERSION response %#02x\n", readRegister(0x31));
+  cprintf("IOCFG2 read %#02x\n", readRegister(0x00));
+  cprintf("IOCFG1 read %#02x\n", readRegister(0x01));
+  cprintf("IOCFG0 read %#02x\n", readRegister(0x02));
+
+  /* ChipCon radios consume 1.4mA when idle.  That goes down to
+   * nominally 400 nA if the GDOs are configured to "HW to 0" and the
+   * chip is told to power-down on loss of CSn.  On the EXP430F5438
+   * the RF PWR header indicates that a CC1101 is using 40 nA in this
+   * mode.*/
+  rc = writeRegister(0x00, 0x2f);
+  rc = writeRegister(0x01, 0x2f);
+  rc = writeRegister(0x02, 0x2f);
+  cprintf("Cleared IOCFG\n");
+  cprintf("IOCFG2 read %#02x\n", readRegister(0x00));
+  cprintf("IOCFG1 read %#02x\n", readRegister(0x01));
+  cprintf("IOCFG0 read %#02x\n", readRegister(0x02));
+
+  /* SPWD */
+  rc = sendStrobe(0x39);
+  cprintf("SPWD got %d\n", rc);
+
+  /* Disable SPI before removing CSn otherwise the sequence isn't
+   * right. */
+  rc = iBSP430serialSetHold_ni(spi, 1);
+  BSP430_PORT_HAL_HPL_OUT(hcsn) |= APP_CSn_PORT_BIT;
+
+  /* This gets the RF2500T power down to about 120 nA. */
+  __bis_status_register(LPM4_bits);
 }
