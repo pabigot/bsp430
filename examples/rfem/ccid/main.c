@@ -167,5 +167,5 @@ void main ()
   BSP430_PORT_HAL_HPL_OUT(hcsn) |= APP_CSn_PORT_BIT;
 
   /* This gets the RF2500T power down to about 120 nA. */
-  __bis_status_register(LPM4_bits);
+  BSP430_CORE_LPM_ENTER_NI(LPM4_bits);
 }

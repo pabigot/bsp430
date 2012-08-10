@@ -13,9 +13,10 @@ and Timer_A-based uptime clock are left enabled.  In the second (-S, +U),
 the USCI serial is placed in reset mode prior to entering LPM.  In the third
 (-S, -U) the uptime clock is also placed in reset mode.
 
-Some platforsm support LPMx.5 modes, which are very low power and require
-something like the <a href="http://www.adafruit.com/products/882">EEVblog
-uCurrent</a> to measure.  
+Some platforms support LPMx.5 modes, which are very low power and require
+something like the <a href="http://www.eevblog.com/projects/ucurrent/">EEVblog uCurrent</a> to
+measure.  LPM3 and LPM4 for the MSP430G2553 is also sub-100nA and cannot be
+measured with a standard ammeter.
 
 \note I am not an electrical engineer, so cannot explain any anomalies in
 the measurements below.  But they check out as consistent using different
@@ -62,26 +63,6 @@ uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
 
 I don't know why it's lower power to keep USCI and Timer_A enabled in
 LPMx.5.  That's just what the measurements show.
-
-\subsection EXP430F5438
-
-Place the ammeter on the <c>430 PWR</c> test header.
-
-uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
----------: | ---------: | ---------: | -----------
-283        | 282        | 281        | active mode with CPU running (reading USCI)
-288        | 290        | 289        | in active mode "idle"
- 81.4      |  83        |  82        | LPM0
- 80.4      |  81.7      |  82        | LPM1
-  6.9      |   8.9	|   8.8      | LPM2
-  2.4      |   4.4      |   4.2      | LPM3
-  2.4      |   4.4      |   1.0      | LPM4
-  2.4      |   4.4      |   4.2      | LPM3.5
-  2.4      |   4.4      |   0.051    | LPM4.5
-
-Note that LPM3.5 doesn't seem to be different from LPM3, and unlike the
-FR5739 LPM4.5 is not entered if either the serial or the timer are left
-enabled.
 
 \subsection EXP430F5438
 

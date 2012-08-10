@@ -159,6 +159,53 @@
 #endif /* configBSP430_CORE_DISABLE_FLL */
 #endif /* BSP430_CORE_LPM_EXIT_MASK */
 
+/** Bitmask isolating LPM-related bits recorded in status register.
+ *
+ * These are #SCG1, #SCG0, #OSCOFF, #CPUOFF, and (just in case) #GIE.
+ * Other bits are eliminated from any LPM bit value before mutating a
+ * status register setting in either #BSP430_CORE_LPM_ENTER_NI() or
+ * #BSP430_CORE_LPM_EXIT_FROM_ISR(). */
+#define BSP430_CORE_LPM_SR_MASK (SCG1 | SCG0 | OSCOFF | CPUOFF | GIE)
+
+/** Bit indicating that LPMx.5 should be entered.
+ *
+ * Where an integer value represents a low power mode configuration,
+ * this bit may be set along with #LPM3_bits or #LPM4_bits to specify
+ * that the LPMx.5 mode feature supported by the Power Management
+ * Module should also apply.
+ *
+ * @note #BSP430_CORE_LPM_ENTER_NI() does not pay attention to this
+ * bit. */
+#define BSP430_CORE_LPM_LPMXp5 0x0100
+
+/** Enter a low-power mode
+ *
+ * This sets the status register bits in accordance to the bits
+ * specified in @a lpm_bits_.
+ *
+ * @param lpm_bits_ bits to be set in the status register.  The value
+ * is masked by #BSP430_CORE_LPM_SR_MASK before being written.
+ */
+#define BSP430_CORE_LPM_ENTER_NI(lpm_bits_) __bis_status_register(BSP430_CORE_LPM_SR_MASK & (lpm_bits_))
+
+/** Exit low-power mode on return from ISR
+ *
+ * This clears the status register bits provided in @a lpm_bits from
+ * the saved status register value stored in the stack by the
+ * interrupt invocation, so that when the interrupt returns the change
+ * will take effect.
+ *
+ * @warning This macro is only usable within the top-half of an
+ * interrupt service routine, meaning the function that is registered
+ * in the MCU interrupt table.  If you are using the HAL interrupt
+ * capabilities of BSP430, you won't use this macro.
+ *
+ * @param lpm_bits_ bits to be cleared in the stored status register.
+ * The value is masked by #BSP430_CORE_LPM_SR_MASK before being
+ * written.
+ */
+#define BSP430_CORE_LPM_EXIT_FROM_ISR(lpm_bits_) __bic_status_register_on_exit(BSP430_CORE_LPM_SR_MASK & (lpm_bits_))
+
 /** @def configBSP430_CORE_SUPPORT_WATCHDOG
  *
  * Control use of the watchdog infrastructure by BSP430.

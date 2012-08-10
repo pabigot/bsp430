@@ -65,35 +65,6 @@
 #include <bsp430/common.h>
 #include <msp430.h>
 
-/** Bitmask isolating LPM-related bits recorded in status register.
- *
- * These are #SCG1, #SCG0, #OSCOFF, #CPUOFF, and (just in case) #GIE.
- * Other bits are eliminated from any LPM bit value before mutating a
- * status register setting. */
-#define BSP430_LPM_SR_MASK (SCG1 | SCG0 | OSCOFF | CPUOFF | GIE)
-
-/** Bit indicating that LPMx.5 should be entered.
- *
- * This bit is set along with #LPM3_bits or #LPM4_bits to define a low
- * power mode. */
-#define BSP430_LPM_LPM5_BIT 0x1000
-
-/** Bit indicating that the scheduler should be suspended.
- *
- * This bit may be set along with the other LPM bits to indicate that
- * the infrastructure should disable the periodic tick that controls
- * task switching.  It should only be set when it is known that all
- * tasks are woken only as a result of an external interrupt.
- *
- * In FreeRTOS, this bit should not be set if the application uses a
- * blocking semaphore or queue operation with a timeout specified as
- * something other than @c portMAX_DELAY.
- *
- * @note This only disables the interval interrupt that wakes the
- * scheduler.  It does not inhibit the low frequency clock counters
- * that retain time-since-boot. */
-#define BSP430_LPM_SUSPEND_BIT 0x2000
-
 /** Reset all port pins for low power applications.
  *
  * This function should be invoked at application power-up so that

@@ -165,11 +165,11 @@ void main ()
   register_hh10d_ni(&hh10d);
 
   /* Go to low power mode with interrupts enabled */
-  __bis_status_register(LPM1_bits | GIE);
+  BSP430_CORE_LPM_ENTER_NI(LPM1_bits | GIE);
   cprintf("Initial %u\n", hh10d.last_capture);
 
   while (1) {
-    __bis_status_register(LPM0_bits | GIE);
+    BSP430_CORE_LPM_ENTER_NI(LPM1_bits | GIE);
     cprintf("%lu: Sample %u in %u uptime ticks", ulBSP430uptime_ni(), hh10d.last_period_count, hh10d.sample_duration_utt);
     if (0 != hh10d_sens) {
       cprintf(": RH %u%%", (unsigned int)(((hh10d_offs - hh10d.last_period_count) * (unsigned long) hh10d_sens) / 4096));

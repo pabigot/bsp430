@@ -58,7 +58,7 @@ void main ()
   __delay_cycles(BSP430_CLOCK_PUC_MCLK_HZ);
   while (1) {
 #if (0 <= APP_LPM) && (APP_LPM <= 4)
-    __bis_status_register(GIE | lpm_bits[APP_LPM]);
+    BSP430_CORE_LPM_ENTER_NI(lpm_bits[APP_LPM] | GIE);
 #endif
   }
 }

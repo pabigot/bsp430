@@ -105,8 +105,8 @@ void main ()
     cprintf("Count %u, in mask 0x%02x: %s\n", button_state.count, button_state.in_mask, state_str[!button_state.in_mask]);
 
     /* Note that we've never turned interrupts on, so we do so now
-       when entering LPM.  The ISR will turn them off again before
-       waking the MCU. */
-    __bis_status_register(LPM4_bits | GIE);
+     * when entering LPM.  The ISR will turn them off again before
+     * waking the MCU. */
+    BSP430_CORE_LPM_ENTER_NI(LPM4_bits | GIE);
   }
 }

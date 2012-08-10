@@ -22,9 +22,6 @@
 #error No button available on this platform
 #endif /* BSP430_PLATFORM_BUTTON0 */
 
-/* Bit set in the LPM mask to indicate that LPMx.5 should be entered */
-#define LPMX5_FLAG 0x8000
-
 typedef struct sCommand {
   char cmd;
   const char * description;
@@ -280,11 +277,11 @@ void main ()
               break;
 #if BSP430_MODULE_PMM - 0
             case CMD_MODE_LPM3p5:
-              state.lpm_bits = LPMX5_FLAG | LPM3_bits;
+              state.lpm_bits = BSP430_CORE_LPM_LPMXp5 | LPM3_bits;
               state.lpm_description = "LPM3.5";
               break;
             case CMD_MODE_LPM4p5:
-              state.lpm_bits = LPMX5_FLAG | LPM4_bits;
+              state.lpm_bits = BSP430_CORE_LPM_LPMXp5 | LPM4_bits;
               state.lpm_description = "LPM4.5";
               break;
 #endif /* BSP430_MODULE_PMM */
@@ -326,7 +323,7 @@ void main ()
     BSP430_CORE_DISABLE_INTERRUPT();
     sleep_utt = ulBSP430uptime_ni();
     cprintf("Entering idle mode at %lu: %s\n", sleep_utt, state.lpm_description);
-    if (state.lpm_bits & LPMX5_FLAG) {
+    if (state.lpm_bits & BSP430_CORE_LPM_LPMXp5) {
       cprintf("NOTE: Will use LPMx.5: press button to exit\n");
     }
     if (state.hold_clock) {
@@ -351,12 +348,13 @@ void main ()
       }
     } else {
 #if BSP430_MODULE_PMM - 0
-      if (state.lpm_bits & LPMX5_FLAG) {
+      if (state.lpm_bits & BSP430_CORE_LPM_LPMXp5) {
         PMMCTL0_H = PMMPW_H;
         PMMCTL0 = PMMPW | PMMREGOFF;
+        PMMCTL0_H = !PMMPW_H;
       }
 #endif /* BSP430_MODULE_PMM */
-      __bis_status_register((BSP430_LPM_SR_MASK & state.lpm_bits) | GIE);
+      BSP430_CORE_LPM_ENTER_NI(state.lpm_bits | GIE);
     }
     BSP430_CORE_DISABLE_INTERRUPT();
     wake_utt = ulBSP430uptime_ni();

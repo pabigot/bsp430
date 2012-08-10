@@ -234,14 +234,6 @@ xBSP430periphFromHPL (volatile void * hpl)
 struct sBSP430halISRCallbackVoid;
 struct sBSP430halISRCallbackIndexed;
 
-/** Mask for status register bits cleared in ISR top half.
- *
- * This is used to prevent corrupting the status register when the
- * return value of #iBSP430halISRCallbackVoid and
- * #iBSP430halISRCallbackIndexed includes bits that are not relevant to
- * status register bits. */
-#define BSP430_HAL_ISR_CALLBACK_BIC_MASK 0x00F8
-
 /** Indicate ISR top half should yield on return.
  *
  * In some cases, a chained ISR handler might perform an operation
@@ -406,15 +398,15 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRCallbackIndexed * 
  * @param _return_flags An expression denoting a return value from a
  * chain of callbacks, producing bits including (for example) @c
  * LPM_bits and/or #BSP430_HAL_ISR_CALLBACK_YIELD. */
-#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {             \
-    int return_flags_ = (_return_flags);                                \
-    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {             \
-      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;                       \
-    }                                                                   \
-    __bic_status_register_on_exit((return_flags_) & BSP430_HAL_ISR_CALLBACK_BIC_MASK); \
-    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_YIELD) {                \
-      BSP430_RTOS_YIELD_FROM_ISR();                                     \
-    }                                                                   \
+#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {     \
+    int return_flags_ = (_return_flags);                        \
+    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {     \
+      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;               \
+    }                                                           \
+    BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);               \
+    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_YIELD) {        \
+      BSP430_RTOS_YIELD_FROM_ISR();                             \
+    }                                                           \
   } while (0)
 
 #endif /* BSP430_PERIPH_H */
