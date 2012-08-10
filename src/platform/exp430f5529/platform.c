@@ -98,6 +98,13 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #endif /* configBSP430_HPL_USCI5_A1 */
 #if configBSP430_HPL_USCI5_B0 - 0
   else if (BSP430_PERIPH_USCI5_B0 == device) {
+    if (enablep) {
+      P2SEL |= BIT7;
+    } else {
+      P2OUT &= ~BIT7;
+      P2DIR |= BIT7;
+      P2SEL &= ~BIT7;
+    }
     bits = BIT0 | BIT1 | BIT2;
     pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
@@ -105,7 +112,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #if configBSP430_HPL_USCI5_B1 - 0
   else if (BSP430_PERIPH_USCI5_B1 == device) {
     /* NOTE: Default port-mapped */
-    bits = BIT0 | BIT1 | BIT2;
+    bits = BIT0 | BIT1 | BIT2 | BIT3;
     pba = BSP430_PERIPH_PORT4_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_B1 */
@@ -146,12 +153,12 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device)
 #endif /* configBSP430_HPL_USCI5_A1 */
 #if configBSP430_HPL_USCI5_B0 - 0
   if (BSP430_PERIPH_USCI5_B0 == device) {
-    return "MOSI/SDA=P3.0; MISO/SCL=P3.1; CLK=P3.2";
+    return "STE=P2.7; MOSI/SDA=P3.0; MISO/SCL=P3.1; CLK=P3.2";
   }
 #endif /* configBSP430_HPL_USCI5_B0 */
 #if configBSP430_HPL_USCI5_B1 - 0
   if (BSP430_PERIPH_USCI5_B1 == device) {
-    return "MOSI/SDA=P4.1; MISO/SCL=P4.2; STE=P4.0";
+    return "STE=P4.0; MOSI/SDA=P4.1; MISO/SCL=P4.2; CLK=P4.3";
   }
 #endif /* configBSP430_HPL_USCI5_B1 */
   return NULL;

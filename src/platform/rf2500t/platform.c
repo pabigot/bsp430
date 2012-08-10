@@ -68,7 +68,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   else if (BSP430_PERIPH_USCI_B0 == device) {
-    bits = BIT0 | BIT1 | BIT2;
+    bits = BIT0 | BIT1 | BIT2 | BIT3;
     hpl = (volatile sBSP430hplPORT_8 *)BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
@@ -113,7 +113,7 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device)
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   if (BSP430_PERIPH_USCI_B0 == device) {
-    return "MOSI/SDA=P3.1; MISO/SCL=P3.2; STE=P3.0";
+    return "STE=P3.0; MOSI/SDA=P3.1; MISO/SCL=P3.2; CLK=P3.3";
   }
 #endif /* configBSP430_HPL_USCI_B0 */
   return NULL;

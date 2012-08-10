@@ -134,12 +134,17 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
     bits = BIT6 | BIT7;
     pba = BSP430_PERIPH_PORT1_BASEADDRESS_;
+    P1SEL0 &= ~BIT3;
     P2SEL0 &= ~BIT2;
     if (enablep) {
+      P1SEL1 |= BIT3;
       P2SEL1 |= BIT2;
     } else {
+      P1OUT &= ~BIT3;
       P2OUT &= ~BIT2;
+      P1DIR |= BIT3;
       P2DIR |= BIT2;
+      P1SEL1 &= ~BIT3;
       P2SEL1 &= ~BIT2;
     }
   }
@@ -182,7 +187,7 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device)
 #endif /* configBSP430_HPL_EUSCI_A1 */
 #if configBSP430_HPL_EUSCI_B0 - 0
   if (BSP430_PERIPH_EUSCI_B0 == device) {
-    return "MOSI/SDA=P1.6; MISO/SCL=P1.7; CLK=P2.2";
+    return "STE=P1.3; MOSI/SDA=P1.6; MISO/SCL=P1.7; CLK=P2.2";
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
   return NULL;
