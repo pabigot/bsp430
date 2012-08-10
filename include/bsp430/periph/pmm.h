@@ -61,6 +61,22 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)
 
+/** Macro to enter LPMx.5 mode
+ *
+ * This should be invoked when #BSP430_CORE_LPM_LPMXp5 or some other
+ * cue indicates that ultra-low-power sleep is desired.
+ *
+ * @warning The implementation assumes that the PMM control registers
+ * are locked.  The macro will unlock the registers, set the bit for
+ * LPMx.5, then lock the registers again.  If used in a context where
+ * the PMM registers are already unlocked, this will probably not be
+ * what you want. */
+#define BSP430_PMM_ENTER_LPMXp5_NI() do {       \
+    PMMCTL0_H = PMMPW_H;                        \
+    PMMCTL0 = PMMPW | PMMREGOFF;                \
+    PMMCTL0_H = !PMMPW_H;                       \
+  } while (0)
+
 /** Cause a brown-out reset */
 static void
 __inline__

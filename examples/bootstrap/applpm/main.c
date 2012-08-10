@@ -349,9 +349,7 @@ void main ()
     } else {
 #if BSP430_MODULE_PMM - 0
       if (state.lpm_bits & BSP430_CORE_LPM_LPMXp5) {
-        PMMCTL0_H = PMMPW_H;
-        PMMCTL0 = PMMPW | PMMREGOFF;
-        PMMCTL0_H = !PMMPW_H;
+        BSP430_PMM_ENTER_LPMXp5_NI();
       }
 #endif /* BSP430_MODULE_PMM */
       BSP430_CORE_LPM_ENTER_NI(state.lpm_bits | GIE);

@@ -175,7 +175,9 @@
  * Module should also apply.
  *
  * @note #BSP430_CORE_LPM_ENTER_NI() does not pay attention to this
- * bit. */
+ * bit.  Use it and #BSP430_MODULE_PMM to determine whether it is
+ * necessary to invoke #BSP430_PMM_ENTER_LPMXp5_NI() prior to invoking
+ * #BSP430_CORE_LPM_ENTER_NI(). */
 #define BSP430_CORE_LPM_LPMXp5 0x0100
 
 /** Enter a low-power mode
