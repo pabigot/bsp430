@@ -14,11 +14,16 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/periph/port.h>
+#include <bsp430/periph/pmm.h>
+#include <bsp430/periph/sys.h>
 #include <string.h>
 
 #if ! (BSP430_PLATFORM_BUTTON0 - 0)
 #error No button available on this platform
 #endif /* BSP430_PLATFORM_BUTTON0 */
+
+/* Bit set in the LPM mask to indicate that LPMx.5 should be entered */
+#define LPMX5_FLAG 0x8000
 
 typedef struct sCommand {
   char cmd;
@@ -38,16 +43,16 @@ const sCommand commands[] = {
   { CMD_MODE_LPM3, "Set mode to enter LPM3" },
 #define CMD_MODE_LPM4 '4'
   { CMD_MODE_LPM4, "Set mode to enter LPM4" },
-#if 0
+#if BSP430_MODULE_PMM - 0
 #define CMD_MODE_LPM3p5 '5'
   { CMD_MODE_LPM3p5, "Set mode to enter LPM3.5" },
 #define CMD_MODE_LPM4p5 '6'
   { CMD_MODE_LPM4p5, "Set mode to enter LPM4.5" },
-#endif
+#endif /* BSP430_MODULE_PMM */
 #define CMD_HOLD_SERIAL 's'
   { CMD_HOLD_SERIAL, "Toggle whether serial is placed on hold during LPM" },
-#define CMD_HOLD_CLOCK 'c'
-  { CMD_HOLD_CLOCK, "Toggle whether clock is placed on hold during LPM" },
+#define CMD_HOLD_CLOCK 'u'
+  { CMD_HOLD_CLOCK, "Toggle whether uptime clock is placed on hold during LPM" },
 #define CMD_HELP '?'
   { CMD_HELP, "Display help" },
 #define CMD_STATE '='
@@ -143,12 +148,72 @@ void main ()
   volatile sBSP430hplPORTIE * b0hpl;
   int b0pin;
   sState state;
+#if BSP430_MODULE_SYS - 0
+  unsigned long reset_causes = 0;
+  unsigned int reset_flags = 0;
+#endif /* BSP430_MODULE_SYS */
+
+#if BSP430_MODULE_SYS - 0
+  {
+    unsigned int sysrstiv;
+
+    /* Record all the reset causes */
+    while (0 != ((sysrstiv = uiBSP430sysSYSRSTGenerator_ni(&reset_flags)))) {
+      reset_causes |= 1UL << (sysrstiv / 2);
+    }
+
+#if BSP430_MODULE_PMM - 0
+    /* If we woke from LPMx.5, we need to clear the lock in PM5CTL0.
+     * We'll do it early, since we're not really interested in
+     * retaining the current IFG settings. */
+    if (reset_flags & BSP430_SYS_FLAG_SYSRST_LPM5WU) {
+      PMMCTL0_H = PMMPW_H;
+      PM5CTL0 = 0;
+      PMMCTL0_H = 0;
+    }
+#endif /* BSP430_MODULE_PMM */
+  }
+#endif /* BSP430_MODULE_SYS */
 
 #if APP_CONFIGURE_PORTS_FOR_LPM
   vBSP430lpmConfigurePortsForLPM_ni();
 #endif /* APP_CONFIGURE_PORTS_FOR_LPM */
   vBSP430platformInitialize_ni();
+
+
   (void)iBSP430consoleInitialize();
+
+  cprintf("Application is running\n");
+#if BSP430_MODULE_SYS - 0
+  cprintf("System reset bitmask %lx; causes:\n", reset_causes);
+  {
+    int bit = 0;
+    while (bit < (8 * sizeof(reset_causes))) {
+      if (reset_causes & (1UL << bit)) {
+        cprintf("\t%s\n", xBSP430sysSYSRSTIVDescription(2*bit));
+      }
+      ++bit;
+    }
+  }
+  
+  cputtext_ni("System reset included:");
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_BOR) {
+    cputtext_ni(" BOR");
+  }
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_LPM5WU) {
+    cputtext_ni(" LPM5WU");
+  }
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_POR) {
+    cputtext_ni(" POR");
+  }
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_PUC) {
+    cputtext_ni(" PUC");
+  }
+  cputchar_ni('\n');
+
+  cprintf("On entry, PMMCTL0 is %04x\n", PMMCTL0);
+
+#endif  
 
   b0hal = hBSP430portLookup(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE);
   b0pin = iBSP430portBitPosition(BSP430_PLATFORM_BUTTON0_PORT_BIT);
@@ -213,6 +278,16 @@ void main ()
               state.lpm_bits = LPM4_bits;
               state.lpm_description = "LPM4";
               break;
+#if BSP430_MODULE_PMM - 0
+            case CMD_MODE_LPM3p5:
+              state.lpm_bits = LPMX5_FLAG | LPM3_bits;
+              state.lpm_description = "LPM3.5";
+              break;
+            case CMD_MODE_LPM4p5:
+              state.lpm_bits = LPMX5_FLAG | LPM4_bits;
+              state.lpm_description = "LPM4.5";
+              break;
+#endif /* BSP430_MODULE_PMM */
             case CMD_HELP: {
               cmdp = commands;
               cprintf("Available commands:\n");
@@ -251,6 +326,9 @@ void main ()
     BSP430_CORE_DISABLE_INTERRUPT();
     sleep_utt = ulBSP430uptime_ni();
     cprintf("Entering idle mode at %lu: %s\n", sleep_utt, state.lpm_description);
+    if (state.lpm_bits & LPMX5_FLAG) {
+      cprintf("NOTE: Will use LPMx.5: press button to exit\n");
+    }
     if (state.hold_clock) {
       cprintf("Suspending clock\n");
       vBSP430uptimeSuspend_ni();
@@ -272,7 +350,13 @@ void main ()
       while ((rx_head == rx_tail) && (! button)) {
       }
     } else {
-      __bis_status_register(state.lpm_bits | GIE);
+#if BSP430_MODULE_PMM - 0
+      if (state.lpm_bits & LPMX5_FLAG) {
+        PMMCTL0_H = PMMPW_H;
+        PMMCTL0 = PMMPW | PMMREGOFF;
+      }
+#endif /* BSP430_MODULE_PMM */
+      __bis_status_register((BSP430_LPM_SR_MASK & state.lpm_bits) | GIE);
     }
     BSP430_CORE_DISABLE_INTERRUPT();
     wake_utt = ulBSP430uptime_ni();

@@ -1,5 +1,118 @@
-/** \page ex_bootstrap_applpm Bootstrapping a New Platform: The Null Program
-@brief The first bootstrap program confirms that the platform files link
+/** \page ex_bootstrap_applpm Bootstrapping a New Platform: Application LPM
+
+This program gives an example of using LPM within an application, where
+there are timers, serial peripherals, and other things that need to be
+disabled and enabled around the low power transition.
+
+\section Per Platform Results
+
+Measurements using this application for different platforms and different
+configurations are below.  The power values are in microamps; the boards
+were powered by USB at 3.6V.  In the first column (+S, +U) the USCI serial
+and Timer_A-based uptime clock are left enabled.  In the second (-S, +U),
+the USCI serial is placed in reset mode prior to entering LPM.  In the third
+(-S, -U) the uptime clock is also placed in reset mode.
+
+Some platforsm support LPMx.5 modes, which are very low power and require
+something like the <a href="http://www.adafruit.com/products/882">EEVblog
+uCurrent</a> to measure.  
+
+\note I am not an electrical engineer, so cannot explain any anomalies in
+the measurements below.  But they check out as consistent using different
+ammeters and are within range of the datasheet values, so I call them
+plausible.
+
+\subsection EXP430G2
+
+Use a revision 1.5 board; earlier ones do poorly.  Place the ammeter across
+the Vcc pair on the header connecting the emulation and MSP430 sides of the
+board.
+
+uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
+---------: | ---------: | ---------: | -----------
+386        | 385        | 385        | active mode with CPU running (reading USCI)
+396        | 396        | 396        | in active mode "idle"
+ 77.1      |  77.0      |  76.8      | LPM0
+ 77.1      |  77.1      |  76.8      | LPM1
+ 23.1      |  23.1	|  22.9      | LPM2
+  0.40     |   0.550    |   0.393    | LPM3
+  0.098    |   0.062    |   0.060    | LPM4
+
+Current costs are slightly higher in LPM3 and LPM4 if the crystal is
+populated.
+
+\subsection EXP430FR5739
+
+Place the ammeter on the <c>MSP PWR</c> test header.  Note that this board's
+lowest MCLK rate is 5.3MHz, unlike the others which are configured to run at
+1MHz for this test.  Since active-mode power consumption is proportional to
+MCLK rate, this may explain why the 
+
+uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
+---------: | ---------: | ---------: | -----------
+649        | 650        | 650        | active mode with CPU running (reading USCI)
+431        | 425        | 425        | in active mode "idle"
+167        | 176        | 176        | LPM0
+166        | 124        | 123        | LPM1
+140        |  64	|  63.6      | LPM2
+136        |   5.8      |   5.8      | LPM3
+137        |   5.8      |   5.8      | LPM4
+  0.254    |   0.290    |   0.290    | LPM3.5
+  0.254    |   0.290    |   0.290    | LPM4.5
+
+I don't know why it's lower power to keep USCI and Timer_A enabled in
+LPMx.5.  That's just what the measurements show.
+
+\subsection EXP430F5438
+
+Place the ammeter on the <c>430 PWR</c> test header.
+
+uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
+---------: | ---------: | ---------: | -----------
+283        | 282        | 281        | active mode with CPU running (reading USCI)
+288        | 290        | 289        | in active mode "idle"
+ 81.4      |  83        |  82        | LPM0
+ 80.4      |  81.7      |  82        | LPM1
+  6.9      |   8.9	|   8.8      | LPM2
+  2.4      |   4.4      |   4.2      | LPM3
+  2.4      |   4.4      |   1.0      | LPM4
+  2.4      |   4.4      |   4.2      | LPM3.5
+  2.4      |   4.4      |   0.051    | LPM4.5
+
+Note that LPM3.5 doesn't seem to be different from LPM3, and unlike the
+FR5739 LPM4.5 is not entered if either the serial or the timer are left
+enabled.
+
+\subsection EXP430F5438
+
+Place the ammeter on the <c>430 PWR</c> test header.
+
+uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
+---------: | ---------: | ---------: | -----------
+283        | 282        | 281        | active mode with CPU running (reading USCI)
+288        | 290        | 289        | in active mode "idle"
+ 81.4      |  83        |  82        | LPM0
+ 80.4      |  81.7      |  82        | LPM1
+  6.9      |   8.9	|   8.8      | LPM2
+  2.4      |   4.4      |   4.2      | LPM3
+  2.4      |   4.4      |   1.0      | LPM4
+  2.4      |   4.4      |   4.2      | LPM3.5
+  2.4      |   4.4      |   0.051    | LPM4.5
+
+Note that LPM3.5 doesn't seem to be different from LPM3, and unlike the
+FR5739 LPM4.5 is not entered if either the serial or the timer are left
+enabled.
+
+@cond DOXYGEN_EXCLUDE
+
+RF2500T idles at 1.42 mA, and is lowest at 1.17 mA with clock and serial
+left enabled and connected.  Turning off clock and serial does not reduce
+current below active mode; similarly, when at 1.17 mA removing either the
+ground or RX pin connections restores consumption to 1.42 mA.
+
+EXP430F5529 is similarly a mess.
+
+@endcond
 
 \section ex_bootstrap_applpm_main main.c
 \include bootstrap/applpm/main.c
