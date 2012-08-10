@@ -76,16 +76,48 @@
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
 #include <bsp430/periph.h>
+
+/** @def BSP430_MODULE_TIMER_A
+ *
+ * Defined on inclusion of <bsp430/periph/timer.h>.  The value
+ * evaluates to true if the target MCU supports the Timer_A Module,
+ * and false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_TIMER_A (defined(__MSP430_HAS_TA2__)      \
+                               || defined(__MSP430_HAS_TA3__)   \
+                               || defined(__MSP430_HAS_TA5__)   \
+                               || defined(__MSP430_HAS_T0A3__)  \
+                               || defined(__MSP430_HAS_T0A5__))
+
+/** @def BSP430_MODULE_TIMER_B
+ *
+ * Defined on inclusion of <bsp430/periph/timer.h>.  The value
+ * evaluates to true if the target MCU supports the Timer_B Module,
+ * and false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_TIMER_B (defined(__MSP430_HAS_TB3__)      \
+                               || defined(__MSP430_HAS_TB7__)   \
+                               || defined(__MSP430_HAS_T0B3__)  \
+                               || defined(__MSP430_HAS_T0B7__))
+
+
+/** @def BSP430_MODULE_TIMER
+ *
+ * Defined on inclusion of <bsp430/periph/timer.h>.  The value
+ * evaluates to true if the target MCU supports the Timer_A or
+ * Timer_B, and false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_TIMER (BSP430_MODULE_TIMER_A || BSP430_MODULE_TIMER_B)
+
 /* Surprisingly, not every MCU has a Timer_A.  Some have only a Basic
  * Timer (BT). */
-#if ! (defined(__MSP430_HAS_TA2__)              \
-       || defined(__MSP430_HAS_TA3__)           \
-       || defined(__MSP430_HAS_TA5__)           \
-       || defined(__MSP430_HAS_T0A3__)          \
-       || defined(__MSP430_HAS_T0A5__)          \
-       )
-#warning Peripheral not supported by configured MCU
-#endif /* has Timer_A */
+#if BSP430_MODULE_TIMER - 0
 
 /** @def configBSP430_TIMER
  *
@@ -1440,5 +1472,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_timer_isr_decl] */
 /* !BSP430! end=hal_timer_isr_decl */
+
+#endif /* BSP430_MODULE_TIMER */
 
 #endif /* BSP430_PERIPH_TIMER_H */

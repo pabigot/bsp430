@@ -58,9 +58,18 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
-#if ! (defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__))
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_CS__ */
+/** @def BSP430_MODULE_CS
+ *
+ * Defined on inclusion of <bsp430/periph/cs.h>.  The value evaluates
+ * to true if the target MCU supports the Clock System peripheral, and
+ * false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_CS (defined(__MSP430_HAS_CS__)            \
+                          || defined(__MSP430_HAS_CS_A__))      \
+
+#if BSP430_MODULE_CS - 0
 
 #undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
 /** Check whether the LFXT1 crystal has a fault condition.
@@ -93,5 +102,7 @@
 
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
+
+#endif /* BSP430_MODULE_CS */
 
 #endif /* BSP430_PERIPH_CS_H */

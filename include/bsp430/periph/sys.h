@@ -46,9 +46,18 @@
 #define BSP430_PERIPH_SYS_H
 
 #include <bsp430/periph.h>
-#if ! defined(__MSP430_HAS_SYS__)
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_SYS__ */
+
+/** @def BSP430_MODULE_SYS
+ *
+ * Defined on inclusion of <bsp430/periph/sys.h>.  The value evaluates
+ * to true if the target MCU supports the System Control Module, and
+ * false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_SYS defined(__MSP430_HAS_SYS__)
+
+#if BSP430_MODULE_SYS - 0
 
 /** @def configBSP430_SYS_USE_SYSRST_DESCRIPTION
  *
@@ -113,5 +122,7 @@
  * values have been returned. */
 unsigned int uiBSP430sysSYSRSTGenerator_ni (unsigned int * puiResetFlags,
     const char ** ppcDescription);
+
+#endif /* BSP430_MODULE_SYS */
 
 #endif /* BSP430_PERIPH_SYS_H */

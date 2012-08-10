@@ -76,14 +76,24 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_CLOCKS_UCS_H
-#define BSP430_CLOCKS_UCS_H
+#ifndef BSP430_PERIPH_UCS_H
+#define BSP430_PERIPH_UCS_H
 
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
-#if ! (defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__))
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_UCS__ */
+
+/** @def BSP430_MODULE_UCS
+ *
+ * Defined on inclusion of <bsp430/periph/ucs.h>.  The value evaluates
+ * to true if the target MCU supports the Unified Clock System, and
+ * false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_UCS (defined(__MSP430_HAS_UCS__)          \
+                           || defined(__MSP430_HAS_UCS_RF__))
+
+#if BSP430_MODULE_UCS - 0
 
 /** @def configBSP430_UCS_TRIM_DCOCLKDIV
  *
@@ -235,5 +245,7 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
  * populated. */
 #define BSP430_UCS_NOMINAL_REFOCLK_HZ 32768U
 
-#endif /* BSP430_CLOCKS_UCS_H */
+#endif /* BSP430_MODULE_UCS */
+
+#endif /* BSP430_PERIPH_UCS_H */
 

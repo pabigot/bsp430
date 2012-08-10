@@ -56,15 +56,23 @@
  * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_CLOCKS_BC2_H
-#define BSP430_CLOCKS_BC2_H
+#ifndef BSP430_PERIPH_BC2_H
+#define BSP430_PERIPH_BC2_H
 
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
-#if ! defined(__MSP430_HAS_BC2__)
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_BC2__ */
+/** @def BSP430_MODULE_BC2
+ *
+ * Defined on inclusion of <bsp430/periph/bc2.h>.  The value evaluates
+ * to true if the target MCU supports the Basic Clock Module+, and
+ * false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_BC2 defined(__MSP430_HAS_BC2__)
+
+#if BSP430_MODULE_BC2 - 0
 
 /** @def configBSP430_BC2_TRIM_TO_MCLK
  *
@@ -159,4 +167,6 @@ int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_PUC_MCLK_HZ 1100000UL
 
-#endif /* BSP430_CLOCKS_BC2_H */
+#endif /* BSP430_MODULE_BC2 */
+
+#endif /* BSP430_PERIPH_BC2_H */

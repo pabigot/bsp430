@@ -44,15 +44,25 @@
 /* !BSP430! periph=euscia */
 /* !BSP430! instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
 
-#ifndef BSP430_PERIPH_EUSCIA_H
-#define BSP430_PERIPH_EUSCIA_H
+#ifndef BSP430_PERIPH_EUSCI_H
+#define BSP430_PERIPH_EUSCI_H
 
 #include <bsp430/periph.h>
 #include <bsp430/serial.h>
 
-#if ! defined(__MSP430_HAS_EUSCI_A0__)
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_EUSCI_A0__ */
+/** @def BSP430_MODULE_EUSCI
+ *
+ * Defined on inclusion of <bsp430/periph/eusci.h>.  The value
+ * evaluates to true if the target MCU supports the Enhanced Universal
+ * Serial Communcations Interface peripheral, and false if it does
+ * not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_EUSCI (defined(__MSP430_HAS_EUSCI_A0__)           \
+                             || defined(__MSP430_HAS_EUSCI_B0__))       \
+
+#if BSP430_MODULE_EUSCI - 0
 
 /** Maximum baud rate acceptable for UART mode.
  *
@@ -823,5 +833,7 @@ hBSP430halSERIAL hBSP430eusciLookup (tBSP430periphHandle periph);
  * is not recognized as a EUSCI-A device, a null pointer is returned. */
 const char * xBSP430eusciName (tBSP430periphHandle periph);
 
-#endif /* BSP430_PERIPH_EUSCIA_H */
+#endif /* BSP430_MODULE_EUSCI */
+
+#endif /* BSP430_PERIPH_EUSCI_H */
 

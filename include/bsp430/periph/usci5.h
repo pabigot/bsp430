@@ -48,9 +48,19 @@
 #include <bsp430/periph.h>
 #include <bsp430/serial.h>
 
-#if ! defined(__MSP430_HAS_USCI_A0__)
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_USCI_A0__ */
+/** @def BSP430_MODULE_USCI
+ *
+ * Defined on inclusion of <bsp430/periph/usci5.h>.  The value
+ * evaluates to true if the target MCU supports the Universal Serial
+ * Communications Interface (5xx/6xx version), and false if it does
+ * not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_USCI5 (defined(__MSP430_HAS_USCI_A0__)     \
+                            || defined(__MSP430_HAS_USCI_B0__)) \
+
+#if BSP430_MODULE_USCI5 - 0
 
 /** Maximum baud rate acceptable for UART mode.
  *
@@ -1039,5 +1049,7 @@ hBSP430halSERIAL xBSP430usciLookup5 (tBSP430periphHandle periph);
  * @return The short name of the port, e.g. "USCI5_A0".  If the peripheral
  * is not recognized as a USCI5 device, a null pointer is returned. */
 const char * xBSP430usci5Name (tBSP430periphHandle periph);
+
+#endif /* BSP430_MODULE_USCI5 */
 
 #endif /* BSP430_PERIPH_USCI5_H */

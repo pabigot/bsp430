@@ -62,9 +62,19 @@
 #define BSP430_PERIPH_PORT_H
 
 #include <bsp430/periph.h>
-#if ! (defined(__MSP430_HAS_PORT1__) || defined(__MSP430_HAS_PORT1_R__))
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_PORT1__ */
+
+/** @def BSP430_MODULE_PORT
+ *
+ * Defined on inclusion of <bsp430/periph/port.h>.  The value
+ * evaluates to true if the target MCU supports the Digital I/O
+ * Module, and false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_PORT (defined(__MSP430_HAS_PORT1__)       \
+                            || defined(__MSP430_HAS_PORT1_R__))
+
+#if BSP430_MODULE_PORT - 0
 
 /* Analysis of port capabilities:
  *
@@ -1880,5 +1890,7 @@ iBSP430portBitPosition (unsigned int bitx)
   }
   return bit ? rv : -1;
 }
+
+#endif /* BSP430_MODULE_PORT */
 
 #endif /* BSP430_PERIPH_PORT_H */

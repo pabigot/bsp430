@@ -46,9 +46,20 @@
 #define BSP430_PERIPH_PMM_H
 
 #include <bsp430/periph.h>
-#if ! defined(__MSP430_HAS_PMM__)
-#warning Peripheral not supported by configured MCU
-#endif /* __MSP430_HAS_PMM__ */
+
+/** @def BSP430_MODULE_PMM
+ *
+ * Defined on inclusion of <bsp430/periph/pmm.h>.  The value evaluates
+ * to true if the target MCU supports the Power Management Module, and
+ * false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_PMM (defined(__MSP430_HAS_PMM__)          \
+                           || defined(__MSP430_HAS_PMM_FR5xx__) \
+                           || defined(__MSP430_HAS_PMM_FRAM__))
+
+#if BSP430_MODULE_PMM - 0
 
 /** Cause a brown-out reset */
 static void
@@ -65,5 +76,7 @@ vBSP430pmmInducePOR (void)
 {
   PMMCTL0 = PMMPW | PMMSWPOR;
 }
+
+#endif /* BSP430_MODULE_PMM */
 
 #endif /* BSP430_PERIPH_PMM_H */
