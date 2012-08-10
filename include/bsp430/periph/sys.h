@@ -59,18 +59,6 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_SYS - 0)
 
-/** @def configBSP430_SYS_USE_SYSRST_DESCRIPTION
- *
- * Define to a true value to enable text descriptions of reset causes.
- * If left undefined, the text descriptions are dropped reducing
- * application size by several hundred bytes.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_SYS_USE_SYSRST_DESCRIPTION
-#define configBSP430_SYS_USE_SYSRST_DESCRIPTION 0
-#endif /* configBSP430_SYS_USE_SYSRST_DESCRIPTION */
-
 /** Flag indicating a BOR occurred during the last reset.
  *
  * Set in the output reset flags parameter by
@@ -98,13 +86,32 @@
  * #uiBSP430sysSYSRSTGenerator_ni when any reset cause was recorded. */
 #define BSP430_SYS_FLAG_SYSRST_PUC 0x0008
 
+/** Get the text describing the reset cause
+ *
+ * The integer value returned by uiBSP430sysSYSRSTGenerator_ni()
+ * identifies an MCU-specific constant such as #SYSRSTIV_WDTTO, but
+ * the value of that constant is different on different MCUs.  This
+ * routine will map the integer value to the text description of the
+ * reset cause.
+ *
+ * @param sysrstiv an integer reset cause value returned from
+ * uiBSP430sysSYSRSTGenerator_ni()
+ *
+ * @return a text description of the reset cause that is being
+ * returned, or a null pointer if @a sysrstiv is not recognized.
+ */
+const char * xBSP430sysSYSRSTIVDescription (unsigned int sysrstiv);
+
 /** Generate the events recorded within the system reset vector.
  *
  * This routine can be used to determine the cause of a reset.  It can
  * also detect whether the reset involves a brownout reset (BOR),
- * which restores everything to its power-on condition.  Recall that
- * an MSP430 power on reset (POR) does not in fact return all values
- * to power on defaults, nor does a power up clear (PUC).
+ * which restores everything to its power-on condition, or is a result
+ * of an LPMx.5 wakeup, or several other classes of reset.
+ *
+ * Recall that an MSP430 power on reset (POR) does not in fact return
+ * all values to power on defaults, nor does a power up clear (PUC).
+ * See vBSP430pmmInduceBOR().
  *
  * @param puiResetFlags Optional pointer to a variable that indicates
  * the class of reset causes encountered.  On initial call, the value
@@ -112,16 +119,11 @@
  * #BSP430_SYS_FLAG_SYSRST_BOR and related flags as each reset cause
  * is returned.
  *
- * @param ppcDescription Optional parameter that returns a text
- * description of the reset cause that is being returned.  If
- * requested but #configBSP430_SYS_USE_SYSRST_DESCRIPTION is
- * not enabled a single character string "?" will be returned.
- *
  * @return A positive integer value corresponding to a SYSRST_type
  * supported on the current microcontroller, or zero if all such
- * values have been returned. */
-unsigned int uiBSP430sysSYSRSTGenerator_ni (unsigned int * puiResetFlags,
-    const char ** ppcDescription);
+ * values have been returned.  Values are even and constrained to be
+ * no greater than 31. */
+unsigned int uiBSP430sysSYSRSTGenerator_ni (unsigned int * puiResetFlags);
 
 #endif /* BSP430_MODULE_SYS */
 
