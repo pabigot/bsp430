@@ -117,7 +117,7 @@
 
 /* Surprisingly, not every MCU has a Timer_A.  Some have only a Basic
  * Timer (BT). */
-#if BSP430_MODULE_TIMER - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_TIMER - 0)
 
 /** @def configBSP430_TIMER
  *

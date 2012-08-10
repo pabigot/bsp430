@@ -72,7 +72,7 @@
  */
 #define BSP430_MODULE_BC2 defined(__MSP430_HAS_BC2__)
 
-#if BSP430_MODULE_BC2 - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_BC2 - 0)
 
 /** @def configBSP430_BC2_TRIM_TO_MCLK
  *

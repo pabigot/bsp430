@@ -74,7 +74,7 @@
 #define BSP430_MODULE_PORT (defined(__MSP430_HAS_PORT1__)       \
                             || defined(__MSP430_HAS_PORT1_R__))
 
-#if BSP430_MODULE_PORT - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PORT - 0)
 
 /* Analysis of port capabilities:
  *

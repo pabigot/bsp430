@@ -59,7 +59,7 @@
                            || defined(__MSP430_HAS_PMM_FR5xx__) \
                            || defined(__MSP430_HAS_PMM_FRAM__))
 
-#if BSP430_MODULE_PMM - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)
 
 /** Cause a brown-out reset */
 static void

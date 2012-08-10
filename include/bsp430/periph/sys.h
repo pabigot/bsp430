@@ -57,7 +57,7 @@
  */
 #define BSP430_MODULE_SYS defined(__MSP430_HAS_SYS__)
 
-#if BSP430_MODULE_SYS - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_SYS - 0)
 
 /** @def configBSP430_SYS_USE_SYSRST_DESCRIPTION
  *

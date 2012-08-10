@@ -93,7 +93,7 @@
 #define BSP430_MODULE_UCS (defined(__MSP430_HAS_UCS__)          \
                            || defined(__MSP430_HAS_UCS_RF__))
 
-#if BSP430_MODULE_UCS - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_UCS - 0)
 
 /** @def configBSP430_UCS_TRIM_DCOCLKDIV
  *

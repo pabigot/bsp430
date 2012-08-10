@@ -65,7 +65,7 @@
  */
 #define BSP430_MODULE_USCI defined(__MSP430_HAS_USCI__)
 
-#if BSP430_MODULE_USCI - 0
+#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_USCI - 0)
 
 /** Maximum baud rate acceptable for UART mode.
  *
