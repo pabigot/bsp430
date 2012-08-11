@@ -14,7 +14,7 @@ the <bsp430/periph.h> header.
 
 Two types of callback function are declared:
 
-\li iBSP430halISRCallbackVoid is used for normal callbacks, and provides a
+\li #iBSP430halISRCallbackVoid is used for normal callbacks, and provides a
 facility to identify the HAL structure that is handling the interrupt along
 with a structure specific to the callback.  A stub handler definition
 consistent with this type is:
@@ -33,7 +33,7 @@ handle_rx (const sBSP430halISRVoidChainNode * cb,
 
 @endcode
 
-\li iBSP430halISRCallbackIndexed is used for callbacks that must identify a
+\li #iBSP430halISRCallbackIndexed is used for callbacks that must identify a
 sub-resource within the peripheral, such as a port pin or a timer
 capture/compare block.  It adds a third argument which is the sub-resource
 index.  A stub handler definition consistent with this type is:
