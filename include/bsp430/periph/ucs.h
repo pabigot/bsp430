@@ -113,6 +113,8 @@
  * be configured by BSP430.
  *
  * @cppflag
+ * @affects #BSP430_UCS_TRIM_DCOCLKDVI
+ * @dependency #BSP430_TIMER_CCACLK
  * @defaulted
  */
 #ifndef configBSP430_UCS_TRIM_DCOCLKDIV

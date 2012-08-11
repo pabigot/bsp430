@@ -1,3 +1,103 @@
 /*! @page bsp430_config BSP430 Configuration
+\tableofcontents
+
+The BSP430 configuration structure is implemented using the standard C
+preprocessor.  As a general rule, if an application wishes to use a
+peripheral, it specifies this by defining a macro to 1.  The specific
+peripheral, and the desired capability, are reflected in the macro name.
+
+For example, to use the @link hpl HPL @endlink interface to digital I/O port
+1 it is necessary to define #configBSP430_HPL_PORT1:
+
+@code
+#define configBSP430_HPL_PORT1 1
+@endcode
+
+If the @link hal HAL @endlink interface is desired, that must be requested
+using:
+
+@code
+#define configBSP430_HAL_PORT1 1
+@endcode
+
+The HAL interface will always depend on the corresponding HPL interface, but
+BSP430 will automatically enable the underlying capabilities by default, so
+you don't need to ask for them explicitly.
+
+Failure to correctly request a resource that your application depends on
+will result in either compile-time or link-time errors.
+
+\section cfg_placement Placement of Configuration Information
+
+Because the BSP430 infrastructure enables and disables features within
+separate object files based on the flags presented at the time the source
+file is compiled, it is critical that all object files in an application
+have consistent flag definitions.
+
+Each header in BSP430 that does not include another BSP430 file includes the
+file bsp430/common.h.  Subject to
+#configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE, the first thing this file
+does is:
+
+@code
+#include "bsp430_config.h"
+@endcode
+
+Unlike all other BSP430 headers, this file is not accessed with a path that
+places it within the BSP430 hierarchy, and is assumed to exist within the
+application source area.  It is in this file that application-specific
+configuration information should be placed.
+
+The application-specific configuration file should end with:
+
+@code
+/* Include platform defaults */
+#include <bsp430/platform/bsp430_config.h>
+@endcode
+
+This file consults the existing definitions (e.g. #BSP430_PLATFORM_EXP430G2
+or #BSP430_PLATFORM_CUSTOM) to identify a platform-specific configuration
+file, which it then includes.  In that file any previous requests for
+specific features, such as #configBSP430_TIMER_CCACLK, are translated to
+requests for the underlying peripheral supported on that platform.
+
+Finally, each header that specifies a configuration option sets a default
+for that option if no previous header or the environment provided an
+explicit request for or rejection of the option.
+
+\section cfg_use Use of Configuration-Dependent Information
+
+As a general rule, an option <b>configBSP430_FOO</b> serves as an indication
+that an application or library function requests that the named feature be
+made available.  It is @b not a guarantee that the feature could be
+provided; for example, #configBSP430_TIMER_CCACLK requests a timer be
+assigned that supports capturing events when an ACLK-based timer tick
+occurs, but whether such a timer is available is dependent on whether the
+platform headers define one.
+
+When this general rule applies, application code should check
+<b>BSP430_FOO</b> to see whether the request made through
+<b>configBSP430_FOO</b> could be satisfied.  In the documentation, there
+will be (for example) an @b Affects link from #configBSP430_TIMER_CCACLK
+to #BSP430_TIMER_CCACLK and a @b Dependency link in the reverse direction.
+In cases where the affected macro is a C preprocessor symbol it should be
+checked following the standard for those macros:
+
+@code
+#if BSP430_TIMER_CCACLK - 0
+/* The capture/compare-on-aclk feature is available */
+#endif /* BSP430_TIMER_CCACLK */
+@endcode
+
+In other cases like #configBSP430_HPL_PORT7 simple use of the feature (viz.,
+reference to #BSP430_HPL_PORT7) will produce a compile-time error if the
+requested feature is not available on the target, so it is generally not
+necessary to explicitly check for success.
+
+Some configuration macros such as
+#configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE serve only to influence a
+choice of solution, and there is no specific facility to determine whether
+the setting was successful.  For these macros there is no @b Affects
+annotation in the documentation.
 
 */

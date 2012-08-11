@@ -70,6 +70,7 @@
  * See #configBSP430_CONSOLE_USE_DEFAULT_RESOURCE.
  *
  * @cppflag
+ * @affects #BSP430_CONSOLE
  * @defaulted
  */
 #ifndef configBSP430_CONSOLE
@@ -113,7 +114,7 @@
 /** @def BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
  *
  * The peripheral handle that should be used by platform-agnostic
- * programs to create the console, for example #BSP430_PERIPH_UART_A0.
+ * programs to create the console, for example #BSP430_PERIPH_USCI5_A0.
  * A default is provided based on the platform or available serial
  * peripherals.
  *
@@ -267,7 +268,7 @@ int cpeekchar_ni (void);
  * exit, interruptibility state is restored (if entered with
  * interrupts disabled, they remain disabled).
  *
- * If #xBSP430consoleConfigure has not assigned a UART device, the
+ * If xBSP430consoleInitialize() has not assigned a UART device, the
  * call is a no-op.
  *
  * @param format A printf(3) format string

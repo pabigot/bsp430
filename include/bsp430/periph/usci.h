@@ -425,7 +425,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A0 or @c
- * USCI_B0, but want to define your own interrupt service
+ * USCI_B0 but want to define your own interrupt service
  * routine for receive operations for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI_A0 or
@@ -452,7 +452,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A0 or @c
- * USCI_B0, but want to define your own interrupt service
+ * USCI_B0 but want to define your own interrupt service
  * routine for transmit operations for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI_A0 or
@@ -479,7 +479,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A1 or @c
- * USCI_B1, but want to define your own interrupt service
+ * USCI_B1 but want to define your own interrupt service
  * routine for receive operations for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI_A1 or
@@ -506,7 +506,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A1 or @c
- * USCI_B1, but want to define your own interrupt service
+ * USCI_B1 but want to define your own interrupt service
  * routine for transmit operations for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI_A1 or

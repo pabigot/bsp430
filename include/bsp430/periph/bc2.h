@@ -89,6 +89,8 @@
  * #BSP430_BC2_TRIM_TO_MCLK before attempting to invoke the function.
  *
  * @cppflag
+ * @affects #BSP430_BC2_TRIM_TO_MCLK
+ * @dependency #BSP430_TIMER_CCACLK
  * @defaulted
  */
 #ifndef configBSP430_BC2_TRIM_TO_MCLK

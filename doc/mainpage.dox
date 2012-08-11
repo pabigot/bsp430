@@ -1,4 +1,5 @@
 /*! \mainpage BSP430 Board Support Package for MSP430 Microcontrollers
+\tableofcontents
 
 BSP430 is a set of C language adaptation layers simplifying cross-MCU
 library and application development on Texas Instruments MSP430
@@ -48,7 +49,7 @@ bsp430/periph/cs.h FR5xx @endlink families;
 
 \li A @link bsp430/serial.h standard serial interface @endlink supporting
 UART, SPI, and I2C using the USCI variants in the @link bsp430/periph/usci.h
-2xx/4xx @endlink, @link bsp430/periph/usci5 5xx/6xx @endlink, and @link
+2xx/4xx @endlink, @link bsp430/periph/usci5.h 5xx/6xx @endlink, and @link
 bsp430/periph/eusci.h FR5xx @endlink families;
 
 \li Access to the @link bsp430/periph/sys.h SYS @endlink and @link
@@ -89,7 +90,6 @@ button on the board
 mode, verifying that the numbers in the data sheet are achievable
 \li \ref ex_bootstrap_applpm is used to interactively evaluate different low
 power modes with and without the peripherals being disabled
-</ul> 
 
 \subsection ex_sensors Sensors
 
@@ -99,12 +99,5 @@ DS18B20 (or similar) 1-wire temperature sensor
 temperature sensor
 \li \ref ex_sensors_hh10d demonstrates measuring the frequency of an input
 signal using the Hope RF Humidity Sensor
-
-\subsection ex_misc Miscellaneous Capabilities
-
-\li \ref ex_rfem_ccid demonstrates the SPI interface by reading the
-identification information from a ChipCon evalation module inserted into the
-RF-EVM socket on any of a number of TI experimenter boards
-</ul>
 
 */

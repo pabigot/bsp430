@@ -95,6 +95,19 @@ typedef int tBSP430periphHandle;
  * peripheral function. */
 #define BSP430_PERIPH_LFXT1 ((tBSP430periphHandle)0x4001)
 
+/** @def configBSP430_PERIPH_EXPOSED_CLOCKS
+ *
+ * Define to a true value in @c bsp430_config.h to enable use of
+ * #BSP430_PERIPH_EXPOSED_CLOCKS in
+ * #iBSP430platformConfigurePeripheralPins_ni.
+ *
+ * @cppflag
+ * @affects #BSP430_PERIPH_EXPOSED_CLOCKS
+ * @defaulted  */
+#ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
+#define configBSP430_PERIPH_EXPOSED_CLOCKS 0
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
+
 /** HPL handle identifying the ability to expose clock signals.
  *
  * This is used by application code as a debug facility, invoking
@@ -102,7 +115,9 @@ typedef int tBSP430periphHandle;
  * ACLK on pins where they may be monitored.  Its availability is
  * conditional on platform support and
  * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
+#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
 #define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)0x4003)
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
 /** HPL handle identifying the platform primary button.
  *
@@ -124,18 +139,6 @@ typedef int tBSP430periphHandle;
  * @dependency @link #BSP430_PLATFORM_BUTTON0 BSP430_PLATFORM_BUTTON3 @endlink
  */
 #define BSP430_PERIPH_BUTTON3 ((tBSP430periphHandle)0x4107)
-
-/** @def configBSP430_PERIPH_EXPOSED_CLOCKS
- *
- * Define to a true value in @c bsp430_config.h to enable use of
- * #BSP430_PERIPH_EXPOSED_CLOCKS in
- * #iBSP430platformConfigurePeripheralPins_ni.
- *
- * @cppflag
- * @defaulted  */
-#ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
-#define configBSP430_PERIPH_EXPOSED_CLOCKS 0
-#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
 /** Reserved value for #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0
@@ -276,7 +279,7 @@ struct sBSP430halISRCallbackIndexed;
  * LPM bits prior to exit, causing the MCU to return to active mode.
  *
  * Use of this flag is preferred to use of #LPM4_bits or a similar
- * value because #configBSP430_CLOCK_DISABLE_FLL can influence the
+ * value because #configBSP430_CORE_DISABLE_FLL can influence the
  * selection of the bits to be cleared.
  *
  * (The value of this flag is specifically selected to be a value

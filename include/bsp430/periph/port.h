@@ -42,12 +42,47 @@
  * for each 8-bit port, and for the 16-bit port interfaces on MCUs
  * that support them.
  *
- * A hardware abstraction layer is defined that allows registering
- * callbacks to be invoked when port interrupts occur.  This is
- * necessary when a library provides support for an external component
- * that signals events through an interrupt, but is not permitted to
- * define the interrupt handler for the entire port.  The abstraction
- * layer is supported only for the 8-bit port interface.
+ * Because different MCUs use different layouts, aliases are created:
+ * use #sBSP430hplPORTIE for the register overlay suited for ports
+ * with interrupt capability, and #sBSP430hplPORT for the register
+ * overlay suited for ports that do not have interrupt capability.
+ *
+ * Not all register features can be accessed through the HPL
+ * interface; in particular, for some chips the resistor capability
+ * and a secondary function selector register are not co-located with
+ * the basic register set.  To access those features, or to use the
+ * provided interrupt infrastructure, you need the hardware
+ * abstraction layer provided by #sBSP430halPORT.  This layer also
+ * obscures the distinction between ports that are and are not capable
+ * of supporting interrupts.
+ *
+ * \section h_periph_port_cna Configuration and Access
+ *
+ * The underlying peripheral handle for PORT1 is #BSP430_PERIPH_PORT1.
+ * The peripheral handle can be used with xBSP430hplLookupPORT() and
+ * xBSP430hplLookupPORTIE() to obtain the HPL handles, and with
+ * hBSP430halPORT() to obtain the HAL handle.
+ *
+ * To allow access to the HPL capability of PORT1, define
+ * #configBSP430_HPL_PORT1.  Use #BSP430_HPL_PORT1 as the HPL handle
+ * (i.e., pointer to a typed register map).
+ *
+ * To allow access to the HAL capability of PORT1, define
+ * #configBSP430_HAL_PORT1.  Use #BSP430_HAL_PORT1 as the HAL handle.
+ *
+ * To control whether the HAL capability of PORT1 includes an
+ * interrupt handler, define #configBSP430_HAL_PORT1_ISR.  The feature
+ * is enabled by default if the HAL interface is requested and the
+ * target MCU supports an interrupt for that port.  If you intend to
+ * provide your own definition for a PORT1 interrupt handler, use:
+ *
+ * @code
+ * #define configBSP430_HAL_PORT1_ISR 0
+ * @endcode
+ *
+ * to exclude the BSP430 implementation.
+ *
+ * Other ports are configured similarly.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -1612,7 +1647,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT1_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT1, but want to define your
+ * BSP430 HAL interface for @c PORT1 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT1 defaults this to true if
@@ -1635,7 +1670,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT2_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT2, but want to define your
+ * BSP430 HAL interface for @c PORT2 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT2 defaults this to true if
@@ -1658,7 +1693,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT3_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT3, but want to define your
+ * BSP430 HAL interface for @c PORT3 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT3 defaults this to true if
@@ -1681,7 +1716,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT4_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT4, but want to define your
+ * BSP430 HAL interface for @c PORT4 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT4 defaults this to true if
@@ -1704,7 +1739,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT5_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT5, but want to define your
+ * BSP430 HAL interface for @c PORT5 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT5 defaults this to true if
@@ -1727,7 +1762,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT6_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT6, but want to define your
+ * BSP430 HAL interface for @c PORT6 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT6 defaults this to true if
@@ -1750,7 +1785,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT7_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT7, but want to define your
+ * BSP430 HAL interface for @c PORT7 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT7 defaults this to true if
@@ -1773,7 +1808,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT8_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT8, but want to define your
+ * BSP430 HAL interface for @c PORT8 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT8 defaults this to true if
@@ -1796,7 +1831,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT9_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT9, but want to define your
+ * BSP430 HAL interface for @c PORT9 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT9 defaults this to true if
@@ -1819,7 +1854,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT10_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT10, but want to define your
+ * BSP430 HAL interface for @c PORT10 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT10 defaults this to true if
@@ -1842,7 +1877,7 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /** @def configBSP430_HAL_PORT11_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT11, but want to define your
+ * BSP430 HAL interface for @c PORT11 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_PORT11 defaults this to true if

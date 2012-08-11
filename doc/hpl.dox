@@ -1,8 +1,16 @@
 /*! @page hpl Hardware Presentation Layer
+@tableofcontents
+
+The Hardware Presentation Layer abstracts the interface to a specific
+capability such as an interrupt-enabled digital I/O port on a 2xx-family MCU.
+
 
 \section hpl_periph Peripheral Handles
 
-\sectioh hpl_hpl Register Structures
+Peripheral handles are not 
+
+
+\section hpl_hpl Register Structures
 
 The hardware presentation layer is a minimal abstraction of the underlying
 peripheral registers.  No attempt is made to provide functions that do what

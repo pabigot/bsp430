@@ -48,7 +48,7 @@
 #include <bsp430/periph.h>
 #include <bsp430/serial.h>
 
-/** @def BSP430_MODULE_USCI
+/** @def BSP430_MODULE_USCI5
  *
  * Defined on inclusion of <bsp430/periph/usci5.h>.  The value
  * evaluates to true if the target MCU supports the Universal Serial
@@ -779,7 +779,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_A0_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_A0, but want to define your
+ * BSP430 HAL interface for @c USCI5_A0 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_A0 defaults this to
@@ -802,7 +802,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_A1_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_A1, but want to define your
+ * BSP430 HAL interface for @c USCI5_A1 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_A1 defaults this to
@@ -825,7 +825,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_A2_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_A2, but want to define your
+ * BSP430 HAL interface for @c USCI5_A2 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_A2 defaults this to
@@ -848,7 +848,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_A3_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_A3, but want to define your
+ * BSP430 HAL interface for @c USCI5_A3 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_A3 defaults this to
@@ -871,7 +871,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_B0_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_B0, but want to define your
+ * BSP430 HAL interface for @c USCI5_B0 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_B0 defaults this to
@@ -894,7 +894,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_B1_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_B1, but want to define your
+ * BSP430 HAL interface for @c USCI5_B1 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_B1 defaults this to
@@ -917,7 +917,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_B2_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_B2, but want to define your
+ * BSP430 HAL interface for @c USCI5_B2 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_B2 defaults this to
@@ -940,7 +940,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 /** @def configBSP430_HAL_USCI5_B3_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI5_B3, but want to define your
+ * BSP430 HAL interface for @c USCI5_B3 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI5_B3 defaults this to

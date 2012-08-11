@@ -49,6 +49,7 @@
  * interfaces.
  *
  * @cppflag
+ * @affects #BSP430_LED
  * @defaulted
  */
 #ifndef configBSP430_LED

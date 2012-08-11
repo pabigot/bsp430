@@ -110,7 +110,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
     'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s, but want to define your
+ * BSP430 HAL interface for @c %(INSTANCE)s but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
@@ -134,7 +134,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
     'hal_port_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s, but want to define your
+ * BSP430 HAL interface for @c %(INSTANCE)s but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to true if
@@ -159,7 +159,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
- * USCI_B%(INSTANCE)s, but want to define your own interrupt service
+ * USCI_B%(INSTANCE)s but want to define your own interrupt service
  * routine for receive operations for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI_A%(INSTANCE)s or
@@ -186,7 +186,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
- * USCI_B%(INSTANCE)s, but want to define your own interrupt service
+ * USCI_B%(INSTANCE)s but want to define your own interrupt service
  * routine for transmit operations for the peripheral.
  *
  * Enabling #configBSP430_HAL_USCI_A%(INSTANCE)s or
@@ -241,7 +241,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s, but want to define your
+ * BSP430 HAL interface for @c %(INSTANCE)s but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag

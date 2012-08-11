@@ -520,7 +520,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 /** @def configBSP430_HAL_EUSCI_A0_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_A0, but want to define your
+ * BSP430 HAL interface for @c EUSCI_A0 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_EUSCI_A0 defaults this to
@@ -543,7 +543,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 /** @def configBSP430_HAL_EUSCI_A1_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_A1, but want to define your
+ * BSP430 HAL interface for @c EUSCI_A1 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_EUSCI_A1 defaults this to
@@ -566,7 +566,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 /** @def configBSP430_HAL_EUSCI_A2_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_A2, but want to define your
+ * BSP430 HAL interface for @c EUSCI_A2 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * Enabling #configBSP430_HAL_EUSCI_A2 defaults this to

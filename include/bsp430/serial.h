@@ -297,18 +297,19 @@ typedef struct sBSP430halSERIAL {
     struct sBSP430usciHPLAux * usci;
   } const hpl_aux;
 
-  /** Location to store a single incoming character when #rx_queue
-   * is undefined. */
+  /** Location in which an incoming character is stored when an
+   * #rx_callback is defined. */
   uint8_t rx_byte;
 
-  /** Location to store a single outgoing character when #tx_queue
-   * is undefined.  This is probably not very useful. */
+  /** Location in which an outgoing character is stored when a
+   * #tx_callback is defined. */
   uint8_t tx_byte;
 
   /** The callback chain to invoke when a byte is received.
    *
    * A non-null value enables interrupt-driven reception, and data
-   * will be provided to the callbacks on receiption. */
+   * will be provided to the callbacks on receiption.  The received
+   * character will be stored in #rx_byte */
   const struct sBSP430halISRCallbackVoid * rx_callback;
 
   /** The callback chain to invoke when space is available in the
@@ -318,11 +319,13 @@ typedef struct sBSP430halSERIAL {
    * chain will be invoked as necessary.  The infrastructure must be
    * made aware of data to be transmitted, so it can enable the
    * interrupt that will request the data through the callback.  This
-   * is done using vBSP430serialWakeupTransmit_ni().  The callback
-   * function should return #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN if
-   * data to transmit is available, and
-   * #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT if it is known that
-   * there will not be data available after the transmission.*/
+   * is done using vBSP430serialWakeupTransmit_ni().  If the callback
+   * has data to transmit, it should store it in #tx_byte and include
+   * #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN in its return value.  It
+   * should also include #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT if
+   * it is known that there will not be data available after the
+   * transmission.  If the callback has no data to transmit, it should
+   * return zero. */
   const struct sBSP430halISRCallbackVoid * tx_callback;
 
   /** Total number of received octets */
@@ -801,7 +804,7 @@ int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
  *
  * This places the device into reset mode and resets the peripheral
  * pins to port function.  It does not release or disassociate any
- * queues that were provided through #iBSP430usciConfigureQueues.
+ * callbacks.
  *
  * @param hal a serial HAL handle previously obtained through
  * hBSP430serialOpenUART(), hBSP430serialOpenSPI(), or
@@ -821,13 +824,13 @@ int iBSP430serialClose (hBSP430halSERIAL hal)
  *
  * Normally the transmission infrastructure transmits data as soon as
  * space is available in the transmission buffer.  The infrastructure
- * is disabled when the transmit queue is emptied.  When this has
- * happened, it must be told that more data has been added and the
- * infrastructure re-enabled.
+ * is disabled when the sBSP430halSERIAL.tx_callback indicates that no
+ * more data is available.  When this has happened, it must be told
+ * that more data has been added and the infrastructure re-enabled.
  *
  * For efficiency, this should only be called if it is believed that
- * data is present in the transmit queue but that the transmission
- * infrastructure may be idle.
+ * data is ready to be presented in a transmission callback, but that
+ * the transmission infrastructure may be idle.
  *
  * @param hal a serial HAL handle
  *

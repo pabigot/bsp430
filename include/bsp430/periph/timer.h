@@ -119,17 +119,6 @@
  * Timer (BT). */
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_TIMER - 0)
 
-/** @def configBSP430_TIMER
- *
- * Define to true to indicate that the timer infrastructure is
- * desired.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_TIMER
-#define configBSP430_TIMER 0
-#endif /* configBSP430_TIMER */
-
 /** @def configBSP430_TIMER_CCACLK
  *
  * Define to true to indicate that the application or infrastructure
@@ -151,6 +140,7 @@
  * should be defined to a true value.
  *
  * @cppflag
+ * @affects #BSP430_TIMER_CCACLK
  * @defaulted */
 #ifndef configBSP430_TIMER_CCACLK
 #define configBSP430_TIMER_CCACLK 0
@@ -1186,7 +1176,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA0, but want to define your
+ * BSP430 HAL interface for @c TA0 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag
@@ -1231,7 +1221,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA1, but want to define your
+ * BSP430 HAL interface for @c TA1 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag
@@ -1276,7 +1266,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA2, but want to define your
+ * BSP430 HAL interface for @c TA2 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag
@@ -1321,7 +1311,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA3, but want to define your
+ * BSP430 HAL interface for @c TA3 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag
@@ -1366,7 +1356,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB0, but want to define your
+ * BSP430 HAL interface for @c TB0 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag
@@ -1411,7 +1401,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB1, but want to define your
+ * BSP430 HAL interface for @c TB1 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag
@@ -1456,7 +1446,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * enabled.
  *
  * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB2, but want to define your
+ * BSP430 HAL interface for @c TB2 but want to define your
  * own interrupt service routine for the peripheral.
  *
  * @cppflag

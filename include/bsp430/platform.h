@@ -105,6 +105,7 @@ int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int e
  * #BSP430_PLATFORM_SPIN_FOR_JUMPER.
  *
  * @cppflag
+ * @affects #BSP430_PLATFORM_SPIN_FOR_JUMPER
  * @defaulted */
 #ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 0
@@ -128,8 +129,7 @@ int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int e
  * @note This function will configure the LEDs and use them regardless
  * of other configuration.
  *
- * @note This function should only be referenced if
- * #BSP430_PLATFORM_SPIN_FOR_JUMPER is true. */
+ * @dependency #BSP430_PLATFORM_SPIN_FOR_JUMPER */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0)
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
@@ -176,6 +176,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
  * also defined with default values of 0, up to button 3.
  *
  * @cppflag
+ * @affects #BSP430_PLATFORM_BUTTON0
  */
 #ifndef configBSP430_PLATFORM_BUTTON0
 #define configBSP430_PLATFORM_BUTTON0 0

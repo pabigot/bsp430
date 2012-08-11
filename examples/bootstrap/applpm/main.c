@@ -192,7 +192,7 @@ void main ()
       ++bit;
     }
   }
-  
+
   cputtext_ni("System reset included:");
   if (reset_flags & BSP430_SYS_FLAG_SYSRST_BOR) {
     cputtext_ni(" BOR");
@@ -210,7 +210,7 @@ void main ()
 
   cprintf("On entry, PMMCTL0 is %04x\n", PMMCTL0);
 
-#endif  
+#endif
 
   b0hal = hBSP430portLookup(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE);
   b0pin = iBSP430portBitPosition(BSP430_PLATFORM_BUTTON0_PORT_BIT);

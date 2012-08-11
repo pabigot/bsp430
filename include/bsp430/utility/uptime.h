@@ -34,18 +34,11 @@
  *
  * This module provides routines to initialize and query a long-term
  * clock, using a platform-selected timer sourced by an undivided
- * ACLK.  The feature is enabled by adding the following to your
- * bsp430_config.h:
+ * ACLK.
  *
- * @code
-
-#define configBSP430_UPTIME 1
-
- * @endcode
- *
- * #vBSP430uptimeStart_ni must be invoked on hardware initialization
+ * vBSP430uptimeStart_ni() must be invoked on hardware initialization
  * after configuring the system clocks.  This is done for you in
- * #vBSP430platformInitialize_ni if #configBSP430_UPTIME is true.
+ * vBSP430platformInitialize_ni() if #configBSP430_UPTIME is true.
  *
  * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to
  * control the timer that will be used.
@@ -68,6 +61,7 @@
  * must be identified; see #configBSP430_UPTIME_USE_DEFAULT_RESOURCE.
  *
  * @cppflag
+ * @affects #BSP430_UPTIME
  * @defaulted
  */
 #ifndef configBSP430_UPTIME
