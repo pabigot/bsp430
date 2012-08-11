@@ -4,26 +4,29 @@ BSP430 is a set of C language adaptation layers simplifying cross-MCU
 library and application development on Texas Instruments MSP430
 microcontrollers.  It features:
 
-\li A standardized configuration infrastructure allowing you to include only
-those resources required by your application;
+\li A @link bsp430_config configuration infrastructure @endlink allowing you
+to include only those resources and capabilities required by your
+application;
 
-\li A @ref hpl enabling efficient manipulation of peripheral and module
-registers without tight coupling to specific peripheral instances;
+\li A @link hpl Hardware Presentation Layer @endlink enabling efficient
+manipulation of peripheral and module registers without tight coupling to
+specific peripheral instances;
 
-\li A @ref hal that provides a consistent interface for common functions
-like setting clock rates or configuring a UART;
+\li A @link hal Hardware Adaptation Layer @endlink that provides a
+consistent interface for common functions like setting clock rates or
+configuring a UART;
 
-\li A callback infrastructure allowing unrelated capabilities to share
-resources including port and timer interrupt handlers;
+\li A @link callbacks callback infrastructure @endlink allowing unrelated
+capabilities to share resources including port and timer interrupt handlers;
 
 \li A platform model that enables rapid development on common hardware
-solutions including six TI experimenter boards;
+solutions including six TI experimenter boards as well as custom boards;
 
 \li Support for watchdog, low power mode execution
 
-\li A build infrastructure designed to simplify creating new applications,
-currently focused on the MSPGCC toolchain in a POSIX command-line
-environment supported by GNU Make
+\li A @link buildenv build infrastructure @endlink designed to simplify
+creating new applications, currently focused on the MSPGCC toolchain in a
+POSIX command-line environment supported by GNU Make
 
 BSP430 is released as open source under the <a
 href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>

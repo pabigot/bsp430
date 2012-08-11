@@ -1,6 +1,4 @@
-/** @file
-
-@brief Support for chained callback registrations.
+/*! \page callback Callback Infrastructure
 
 Applications often need to perform specific operations when events occur.
 Encoding those operations directly into the event infrastructure can
