@@ -31,13 +31,55 @@
 
 /** @file
  *
- * @brief Genericized UCSI (USCI_A/USCI_B) for 2xx/4xx devices.
+ * @brief Hardware presentation/abstraction for USCI_A/USCI_B on 2xx/4xx devices.
  *
- * If you're interested in the USCI_A or USCI_B from 5xx/6xx devices,
- * you want <bsp430/periph/usci5.h>.
+ * This version of the Universial Serial Communications Interface is
+ * available in the 2xx and 4xx families.  See bsp430/periph/usci5.h
+ * and bsp430/periph/eusci.h for related peripherals in other
+ * families.
  *
- * If you're interested in the eUSCI_A or eUSCI_B from FRAM 5xx
- * devices, you want <bsp430/periph/eusci.h>.
+ * Conventional peripheral handles are #BSP430_PERIPH_USCI_A0,
+ * #BSP430_PERIPH_USCI_B0, and others dependent on availability.
+ *
+ * @section h_periph_usci_opt Module Configuration Options
+ *
+ * @li #configBSP430_HPL_USCI_A0 to enable the HPL handle declarations
+ *
+ * @li #configBSP430_HAL_USCI_A0 to enable the HAL infrastructure
+ *
+ * @li #configBSP430_HAL_USCI_AB0RX_ISR to control inclusion of the HAL
+ * ISR for interrupt-driven reception operations on
+ * #BSP430_PERIPH_USCI_A0 or #BSP430_PERIPH_USCI_B0
+ *
+ * @li #configBSP430_HAL_USCI_AB0TX_ISR to control inclusion of the HAL
+ * ISR for interrupt-driven transmission operations on
+ * #BSP430_PERIPH_USCI_A0 or #BSP430_PERIPH_USCI_B0
+ *
+ * Substitute other instance names (e.g., @b B0 or @b AB1) as
+ * necessary.
+ *
+ * @section h_periph_usci_hpl Hardware Presentation Layer
+ *
+ * USCI supports an @b A variant with UART and SPI capabilities, and a
+ * @b B variant with SPI and I2C capabilities.  The register maps for
+ * the two variants are compatible, and #sBSP430hplUSCI is used for
+ * both variants.  This structure is not compatible with the @link
+ * bsp430/periph/usci5.h next generation USCI module@endlink.
+ *
+ * @section h_periph_usci_hal Hardware Adaptation Layer
+ *
+ * The USCI @hal uses the #sBSP430halSERIAL structure from the @link
+ * bsp430/serial.h generic serial adaptation layer@endlink.  It can
+ * also be accessed directly using the functions defined in this
+ * module.  Both @b A and @b B variants are supported by the same @hal
+ * structure.
+ *
+ * Enabling the HAL layer for a USCI instance enables both the
+ * transmission and reception interrupt service routines by default.
+ * Although transmission and receiption interrupts are distinct and
+ * shared by both the @b A and @b B variants of a specific instance,
+ * this is obscured by the generic serial adaptation layer, with
+ * distinct callbacks for each event on each instance.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012
@@ -421,7 +463,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 /* !BSP430! instance=0,1 */
 /* !BSP430! insert=hal_usci_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_usci_isr_decl] */
-/** @def configBSP430_HAL_USCIAB0RX_ISR
+/** @def configBSP430_HAL_USCI_AB0RX_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A0 or @c
@@ -439,16 +481,16 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_HAL_USCIAB0RX_ISR
-#define configBSP430_HAL_USCIAB0RX_ISR ((configBSP430_HAL_USCI_A0 - 0) || (configBSP430_HAL_USCI_B0 - 0))
-#endif /* configBSP430_HAL_USCIAB0RX_ISR */
+#ifndef configBSP430_HAL_USCI_AB0RX_ISR
+#define configBSP430_HAL_USCI_AB0RX_ISR ((configBSP430_HAL_USCI_A0 - 0) || (configBSP430_HAL_USCI_B0 - 0))
+#endif /* configBSP430_HAL_USCI_AB0RX_ISR */
 
 #if ((configBSP430_HAL_0_ISR - 0) \
      && ! ((configBSP430_HAL_USCI_A0RX - 0) | (configBSP430_HAL_USCI_B0 - 0)))
-#warning configBSP430_HAL_USCIAB0RX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
+#warning configBSP430_HAL_USCI_AB0RX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCIAB0TX_ISR
+/** @def configBSP430_HAL_USCI_AB0TX_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A0 or @c
@@ -466,16 +508,16 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_HAL_USCIAB0TX_ISR
-#define configBSP430_HAL_USCIAB0TX_ISR ((configBSP430_HAL_USCI_A0 - 0) | (configBSP430_HAL_USCI_B0 - 0))
-#endif /* configBSP430_HAL_USCIAB0TX_ISR */
+#ifndef configBSP430_HAL_USCI_AB0TX_ISR
+#define configBSP430_HAL_USCI_AB0TX_ISR ((configBSP430_HAL_USCI_A0 - 0) | (configBSP430_HAL_USCI_B0 - 0))
+#endif /* configBSP430_HAL_USCI_AB0TX_ISR */
 
 #if ((configBSP430_HAL_0_ISR - 0) \
      && ! ((configBSP430_HAL_USCI_A0TX - 0) | (configBSP430_HAL_USCI_B0 - 0)))
-#warning configBSP430_HAL_USCIAB0TX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
+#warning configBSP430_HAL_USCI_AB0TX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCIAB1RX_ISR
+/** @def configBSP430_HAL_USCI_AB1RX_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A1 or @c
@@ -493,16 +535,16 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_HAL_USCIAB1RX_ISR
-#define configBSP430_HAL_USCIAB1RX_ISR ((configBSP430_HAL_USCI_A1 - 0) || (configBSP430_HAL_USCI_B1 - 0))
-#endif /* configBSP430_HAL_USCIAB1RX_ISR */
+#ifndef configBSP430_HAL_USCI_AB1RX_ISR
+#define configBSP430_HAL_USCI_AB1RX_ISR ((configBSP430_HAL_USCI_A1 - 0) || (configBSP430_HAL_USCI_B1 - 0))
+#endif /* configBSP430_HAL_USCI_AB1RX_ISR */
 
 #if ((configBSP430_HAL_1_ISR - 0) \
      && ! ((configBSP430_HAL_USCI_A1RX - 0) | (configBSP430_HAL_USCI_B1 - 0)))
-#warning configBSP430_HAL_USCIAB1RX_ISR requested without configBSP430_HAL_USCI_A1 or configBSP430_HAL_USCI_B1
+#warning configBSP430_HAL_USCI_AB1RX_ISR requested without configBSP430_HAL_USCI_A1 or configBSP430_HAL_USCI_B1
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCIAB1TX_ISR
+/** @def configBSP430_HAL_USCI_AB1TX_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A1 or @c
@@ -520,13 +562,13 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_HAL_USCIAB1TX_ISR
-#define configBSP430_HAL_USCIAB1TX_ISR ((configBSP430_HAL_USCI_A1 - 0) | (configBSP430_HAL_USCI_B1 - 0))
-#endif /* configBSP430_HAL_USCIAB1TX_ISR */
+#ifndef configBSP430_HAL_USCI_AB1TX_ISR
+#define configBSP430_HAL_USCI_AB1TX_ISR ((configBSP430_HAL_USCI_A1 - 0) | (configBSP430_HAL_USCI_B1 - 0))
+#endif /* configBSP430_HAL_USCI_AB1TX_ISR */
 
 #if ((configBSP430_HAL_1_ISR - 0) \
      && ! ((configBSP430_HAL_USCI_A1TX - 0) | (configBSP430_HAL_USCI_B1 - 0)))
-#warning configBSP430_HAL_USCIAB1TX_ISR requested without configBSP430_HAL_USCI_A1 or configBSP430_HAL_USCI_B1
+#warning configBSP430_HAL_USCI_AB1TX_ISR requested without configBSP430_HAL_USCI_A1 or configBSP430_HAL_USCI_B1
 #endif /* HAL_ISR and not HAL */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_usci_isr_decl] */

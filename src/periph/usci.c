@@ -473,12 +473,12 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_A0_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_A0_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCIAB0RX_ISR - 0
+#if configBSP430_HAL_USCI_AB0RX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
-#endif /* configBSP430_HAL_USCIAB0RX_ISR */
-#if configBSP430_HAL_USCIAB0TX_ISR - 0
+#endif /* configBSP430_HAL_USCI_AB0RX_ISR */
+#if configBSP430_HAL_USCI_AB0TX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
-#endif /* configBSP430_HAL_USCIAB0TX_ISR */
+#endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
   .hpl = { .usci = BSP430_HPL_USCI_A0 },
   .hpl_aux = { .usci = &xBSP430hplaux_USCI_A0_ },
@@ -496,12 +496,12 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_A1_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_A1_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCIAB1RX_ISR - 0
+#if configBSP430_HAL_USCI_AB1RX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
-#endif /* configBSP430_HAL_USCIAB0RX_ISR */
-#if configBSP430_HAL_USCIAB1TX_ISR - 0
+#endif /* configBSP430_HAL_USCI_AB0RX_ISR */
+#if configBSP430_HAL_USCI_AB1TX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
-#endif /* configBSP430_HAL_USCIAB0TX_ISR */
+#endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
   .hpl = { .usci = BSP430_HPL_USCI_A1 },
   .hpl_aux = { .usci = &xBSP430hplaux_USCI_A1_ },
@@ -521,12 +521,12 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_B0_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCIAB0RX_ISR - 0
+#if configBSP430_HAL_USCI_AB0RX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
-#endif /* configBSP430_HAL_USCIAB0RX_ISR */
-#if configBSP430_HAL_USCIAB0TX_ISR - 0
+#endif /* configBSP430_HAL_USCI_AB0RX_ISR */
+#if configBSP430_HAL_USCI_AB0TX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
-#endif /* configBSP430_HAL_USCIAB0TX_ISR */
+#endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
   .hpl = { .usci = BSP430_HPL_USCI_B0 },
   .hpl_aux = { .usci = &xBSP430hplaux_USCI_B0_ },
@@ -546,12 +546,12 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_B1_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCIAB1RX_ISR - 0
+#if configBSP430_HAL_USCI_AB1RX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
-#endif /* configBSP430_HAL_USCIAB0RX_ISR */
-#if configBSP430_HAL_USCIAB1TX_ISR - 0
+#endif /* configBSP430_HAL_USCI_AB0RX_ISR */
+#if configBSP430_HAL_USCI_AB1TX_ISR - 0
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
-#endif /* configBSP430_HAL_USCIAB0TX_ISR */
+#endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
   .hpl = { .usci = BSP430_HPL_USCI_B1 },
   .hpl_aux = { .usci = &xBSP430hplaux_USCI_B1_ },
@@ -559,7 +559,7 @@ struct sBSP430halSERIAL xBSP430hal_USCI_B1_ = {
 };
 #endif /* configBSP430_HAL_USCI_B1 */
 
-#if ((configBSP430_HAL_USCIAB0RX_ISR - 0) || (configBSP430_HAL_USCIAB1RX_ISR - 0))
+#if ((configBSP430_HAL_USCI_AB0RX_ISR - 0) || (configBSP430_HAL_USCI_AB1RX_ISR - 0))
 static int
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
@@ -572,10 +572,10 @@ usciabrx_isr (hBSP430halSERIAL hal)
   return iBSP430callbackInvokeISRVoid_ni(&hal->rx_callback, hal, 0);
 }
 
-#if configBSP430_HAL_USCIAB0RX_ISR - 0
+#if configBSP430_HAL_USCI_AB0RX_ISR - 0
 static void
-__attribute__((__interrupt__(USCIAB0RX_VECTOR)))
-isr_USCIAB0RX (void)
+__attribute__((__interrupt__(USCI_AB0RX_VECTOR)))
+isr_USCI_AB0RX (void)
 {
   hBSP430halSERIAL usci = NULL;
   int rv = 0;
@@ -597,11 +597,11 @@ isr_USCIAB0RX (void)
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
-#endif /* HAL USCIAB0RX ISR */
+#endif /* HAL USCI_AB0RX ISR */
 
-#endif  /* HAL USCIABxRX ISR */
+#endif  /* HAL USCI_ABxRX ISR */
 
-#if ((configBSP430_HAL_USCIAB0TX_ISR - 0) || (configBSP430_HAL_USCIAB1TX_ISR - 0))
+#if ((configBSP430_HAL_USCI_AB0TX_ISR - 0) || (configBSP430_HAL_USCI_AB1TX_ISR - 0))
 static int
 #if __MSP430X__
 __attribute__ ( ( __c16__ ) )
@@ -628,10 +628,10 @@ usciabtx_isr (hBSP430halSERIAL hal)
   return rv;
 }
 
-#if configBSP430_HAL_USCIAB0TX_ISR - 0
+#if configBSP430_HAL_USCI_AB0TX_ISR - 0
 static void
-__attribute__((__interrupt__(USCIAB0TX_VECTOR)))
-isr_USCIAB0TX (void)
+__attribute__((__interrupt__(USCI_AB0TX_VECTOR)))
+isr_USCI_AB0TX (void)
 {
   int rv = 0;
   hBSP430halSERIAL usci = NULL;
@@ -653,9 +653,9 @@ isr_USCIAB0TX (void)
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
-#endif /* HAL USCIAB0TX ISR */
+#endif /* HAL USCI_AB0TX ISR */
 
-#endif  /* HAL USCIABxTX ISR */
+#endif  /* HAL USCI_ABxTX ISR */
 
 volatile sBSP430hplUSCI *
 xBSP430hplLookupUSCI (tBSP430periphHandle periph)

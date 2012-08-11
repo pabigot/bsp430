@@ -33,19 +33,42 @@
  *
  * @brief Hardware presentation/abstraction for FLL Plus (FLLPLUS).
  *
- * This module supports the FLLPLUS and FLLPLUS_SMALL peripherals,
- * which are present in 4xx-family devices.
+ * The FLLPLUS and FLLPLUS_SMALL peripherals are present in 4xx-family
+ * devices.
  *
  * FLLPLUS_SMALL differs from FLLPLUS in lack of support for XT2 and
- * for SELM/SELS; this difference is irrelevant to the implementation
- * supported here.
+ * for SELM/SELS.  The difference is not reflected in this
+ * implementation.
  *
- * @note This implementation currently does not support configuring
- * ACLK.  ACLK is always assumed to follow LFXT1 running at 32 kiHz.
- * (The issue is not all chips with FLLPLUS support selecting the low
- * frequency clock.)
+ * @section h_periph_fllplus_opt Module Configuration Options
  *
- * @note This peripheral does not support dividing SMCLK.
+ * None supported.
+ *
+ * @section h_periph_fllplus_hpl Hardware Presentation Layer
+ *
+ * As there can be only one instance of FLLPLUS on any MCU, there is no
+ * structure supporting a FLLPLUS @hpl.  Manipulate the peripheral through its
+ * registers directly.
+ *
+ * @section h_periph_fllplus_hal Hardware Adaptation Layer
+ *
+ * As there can be only one instance of FLLPLUS on any MCU, there is no
+ * structure supporting a FLLPLUS @hal.
+ *
+ * The standard set of capabilities in the bsp430/clocks.h header are
+ * supported, with the following details:
+ *
+ * @li The peripheral requires LFXT1 be available and running at a
+ * stable #BSP430_CLOCK_NOMINAL_XT1CLK_HZ.  The value for that crystal
+ * rate defaults to 32 kiHz.
+ *
+ * @li This peripheral does not support dividing SMCLK.  Attempts to
+ * configure an alternative divisor will result in a zero divisor.
+
+ * @li The implementation does not support configuring ACLK to
+ * anything other than #eBSP430clockSRC_XT1CLK or a fallback from that
+ * clock.  (The issue is that not all chips with FLLPLUS support
+ * selecting the #eBSP430clockSRC_VLOCLK.)
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc
@@ -61,9 +84,9 @@
 
 /** @def BSP430_MODULE_FLLPLUS
  *
- * Defined on inclusion of <bsp430/periph/sys.h>.  The value evaluates
- * to true if the target MCU supports the System Control Module, and
- * false if it does not.
+ * Defined on inclusion of <bsp430/periph/fllplus.h>.  The value
+ * evaluates to true if the target MCU supports the FLL Plus module,
+ * and false if it does not.
  *
  * @cppflag
  */

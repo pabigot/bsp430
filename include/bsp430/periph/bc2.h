@@ -33,22 +33,40 @@
  *
  * @brief Hardware presentation/abstraction for Basic Clock Module+ (BC2).
  *
- * This module supports the BC2 ("Basic Clock Module+") peripheral,
- * which is present in 2xx-family devices.
- * <ul>
+ * The BC2 ("Basic Clock Module+") peripheral is present in 2xx-family
+ * devices.
  *
- * <li>For #ulBSP430clockConfigureMCLK_ni the only recognized
+ * @section h_periph_bc2_opt Module Configuration Options
+ *
+ * @li #configBSP430_BC2_TRIM_TO_MCLK
+ *
+ * @section h_periph_bc2_hpl Hardware Presentation Layer
+ *
+ * As there can be only one instance of BC2 on any MCU, there is no
+ * structure supporting a BC2 HPL.  Manipulate the peripheral through its
+ * registers directly.
+ *
+ * @section h_periph_bc2_hal Hardware Adaptation Layer
+ *
+ * As there can be only one instance of BC2 on any MCU, there is no
+ * structure supporting a BC2 HAL.
+ *
+ * The standard set of capabilities in the bsp430/clocks.h header are
+ * supported, with the following details:
+ *
+ * @li For ulBSP430clockConfigureMCLK_ni() the only recognized
  * frequencies are 1 MHz, 8 MHz, 12 MHz, and 16 MHz.  Availability of
- * a given frequency depends on the specific MCU.  The selected
- * frequency may be above or below the requested frequency, but will
- * be the closest supported by available calibrated clocks.  The
- * selected frequency may also be refined if a stable crystal is
- * available; see #configBSP430_BC2_TRIM_TO_MCLK.
+# * a given frequency depends on the specific MCU having
+ * factory-calibrated constants supporting that frequency.  The
+ * selected frequency may be above or below the requested frequency,
+ * but will be the closest supported by available calibrated clocks.
  *
- * <li>The implementation assumes that MCLK and SMCLK are both
+ * @li Dependent on #configBSP430_BC2_TRIM_TO_MCLK the requested
+ * frequency may be reached through calibration process executed
+ * during ulBSP430clockConfigureMCLK_ni().
+ *
+ * @li The implementation assumes that MCLK and SMCLK are both
  * sourced from DCOCLK.
- *
- * </ul>
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc

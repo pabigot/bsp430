@@ -33,8 +33,27 @@
  *
  * @brief Hardware presentation/abstraction for SYS peripheral (SYS).
  *
- * This exists on 5xx/6xx family devices, and is primarily an
- * interface to reset causes.
+ * The System Control Module (SYS) is present on 5xx/6xx/FR5xx
+ * devices.
+ *
+ * @section h_periph_sys_opt Module Configuration Options
+ *
+ * None supported.
+ *
+ * @section h_periph_sys_hpl Hardware Presentation Layer
+ *
+ * As there can be only one instance of SYS on any MCU, there is no
+ * structure supporting a SYS @hpl.  Manipulate the peripheral through its
+ * registers directly.
+ *
+ * @section h_periph_sys_hal Hardware Adaptation Layer
+ *
+ * As there can be only one instance of SYS on any MCU, there is no
+ * structure supporting a SYS @hal.
+ *
+ * The functions provided by this module simplify the extraction of
+ * reset causes, notification of type of reset, and translation from
+ * MCU-specific reset codes to text cause descriptions.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

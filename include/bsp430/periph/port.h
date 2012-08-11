@@ -33,56 +33,78 @@
  *
  * @brief Genericized digital I/O port (PORTX/PORTX_R) for MSP430 MCUs
  *
- * A hardware presentation layer is defined that provides a structure
- * definition associated with a port-specific address, to allow
- * manipulation of standard port registers like @c PxDIR and @c PxSEL
- * through a single pointer.  This would be useful when an external
- * component such as a DS18B20 may be placed on one of several ports
- * depending on platform.  Presentation layer structures are defined
- * for each 8-bit port, and for the 16-bit port interfaces on MCUs
- * that support them.
+ * A Digital I/O port capability exists on every MSP430 MCU.
+ * Differences between families are reflected in the HPL structures
+ * below.
  *
- * Because different MCUs use different layouts, aliases are created:
- * use #sBSP430hplPORTIE for the register overlay suited for ports
- * with interrupt capability, and #sBSP430hplPORT for the register
- * overlay suited for ports that do not have interrupt capability.
+ * Conventional peripheral handles are #BSP430_PERIPH_PORT1.  The
+ * handles are available only when the corresponding @hpl is
+ * requested.  The peripheral handle can be used with
+ * xBSP430hplLookupPORT() and xBSP430hplLookupPORTIE() to obtain the
+ * HPL handles, and with hBSP430halPORT() to obtain the HAL handle.
  *
- * Not all register features can be accessed through the HPL
- * interface; in particular, for some chips the resistor capability
- * and a secondary function selector register are not co-located with
- * the basic register set.  To access those features, or to use the
- * provided interrupt infrastructure, you need the hardware
- * abstraction layer provided by #sBSP430halPORT.  This layer also
- * obscures the distinction between ports that are and are not capable
- * of supporting interrupts.
+ * @section h_periph_port_opt Module Configuration Options
  *
- * \section h_periph_port_cna Configuration and Access
+ * @li #configBSP430_HPL_PORT1 to enable the HPL handle declarations
+ * @li #configBSP430_HAL_PORT1 to enable the HAL infrastructure
+ * @li #configBSP430_HAL_PORT1_ISR to control inclusion of the HAL ISR
+ * for the port
  *
- * The underlying peripheral handle for PORT1 is #BSP430_PERIPH_PORT1.
- * The peripheral handle can be used with xBSP430hplLookupPORT() and
- * xBSP430hplLookupPORTIE() to obtain the HPL handles, and with
- * hBSP430halPORT() to obtain the HAL handle.
+ * Substitute other 8-bit port identifiers (e.g., @b PORT7) as necessary.
  *
- * To allow access to the HPL capability of PORT1, define
- * #configBSP430_HPL_PORT1.  Use #BSP430_HPL_PORT1 as the HPL handle
- * (i.e., pointer to a typed register map).
+ * @section h_periph_port_hpl Hardware Presentation Layer
  *
- * To allow access to the HAL capability of PORT1, define
- * #configBSP430_HAL_PORT1.  Use #BSP430_HAL_PORT1 as the HAL handle.
+ * The module defines five distinct @hpl structures:
  *
- * To control whether the HAL capability of PORT1 includes an
- * interrupt handler, define #configBSP430_HAL_PORT1_ISR.  The feature
- * is enabled by default if the HAL interface is requested and the
- * target MCU supports an interrupt for that port.  If you intend to
- * provide your own definition for a PORT1 interrupt handler, use:
+ * @li #sBSP430hplPORT_8 is an 8-bit port lacking interrupt support on a
+ * pre-5xx family device
  *
- * @code
- * #define configBSP430_HAL_PORT1_ISR 0
- * @endcode
+ * @li #sBSP430hplPORT_IE_8 is an 8-bit port supporting interrupts on
+ * a pre-5xx family device
  *
- * to exclude the BSP430 implementation.
+ * @li #sBSP430hplPORT_16 is a 16-bit port lacking interrupt support
+ * on a pre-5xx family device
  *
- * Other ports are configured similarly.
+ * @li #sBSP430hplPORT_5XX_8 is an 8-bit port supporting interrupts on
+ * a 5xx/6xx/FR5xx family device
+ *
+ * @li #sBSP430hplPORT_5XX_16 is a 16-bit port lacking interrupt
+ * support on a 5xx/6xx/FR5xx family device
+ *
+ * The 16 bit port structures are provided for reference only.  All
+ * HPL and HAL access in BSP430 is done using the 8-bit structures.
+ *
+ * @note On pre-5xx targets not all register capabilities may be
+ * accessible through the HPL structures.  Specifically, the ability
+ * to control pullup/pulldown resistors and to select secondary or
+ * tertiary peripheral functions may require registers that are not
+ * contiguous with the remaining registers.  That functionality must
+ * be accessed through the HAL structure.
+ *
+ * As a convenience, the following two typedefs are provided and
+ * resolve to the appropriate underlying structure supported by the
+ * target MCU:
+ *
+ * @li #sBSP430hplPORT denotes the @hpl for an 8-bit port that lacks
+ * interrupt support (generally ports 3 and higher)
+ *
+ * @li #sBSP430hplPORTIE denotes the @hpl for an 8-bit port that does
+ * support interrupts (generally ports 1 and 2, but higher ports on
+ * some MCUs)
+ *
+ * @section h_periph_port_hal Hardware Adaptation Layer
+ *
+ * The port @hal uses the sBSP430halPORT structure.  All variant HPL
+ * structures are accessible through this structure.
+ *
+ * When enabled by #configBSP430_HAL_PORT1_ISR the
+ * sBSP430halPORT.pin_callback array is used by a provided HAL ISR is
+ * enabled to notify application and library code of events that occur
+ * on a particular port pin.  It is the responsibility of that code to
+ * @link callbacks register a callback @endlink and to configure the
+ * corresponding interrupt enable and edge select bits (e.g. using
+ * #BSP430_PORT_HAL_GET_HPL_PORTIE to get the #sBSP430hplPORTIE
+ * handle).
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

@@ -32,37 +32,80 @@
 /** @file
  * @brief Hardware presentation/abstraction for generic timers (Timer_A/Timer_B)
  *
- * A hardware presentation layer is defined that provides a structure
- * definition associated with an MCU-specific address to allow
- * manipulation of standard timer registers.  This abstraction
- * supports timers by type (Timer_A or Timer_B) and instance number
- * within the MCU.
+ * Timer functionality exists on most MSP430 MCUs.  This module
+ * supports both Timer_A and Timer_B, but does not provide any
+ * distinction between them.  At this time, Timer_D is not supported
+ * by BSP430.
  *
- * The number of capture/compare registers supported by an instance is
- * not an identifying characteristic.  The HPL peripheral register
- * structure provides access to these as both named and indexed
- * elements.
+ * Conventional peripheral handles are #BSP430_PERIPH_TA0 and
+ * #BSP430_PERIPH_TB0.  The handles are available only when the
+ * corresponding @hpl is requested.  The number of capture/compare
+ * blocks supported by the MCU is not an identifying characteristic of
+ * the peripheral instance.
  *
- * The original nomenclature for MSP430 timers in MSP430 has proven to
- * be inconsistent as the number of instances grew.  While the
- * identifier @c TA3 in early MCUs specified the presence of a Timer_A
- * instance with 3 CCs, this led to the need to denote a second
- * Timer_A instance with 5 CCs as T1A5 within the MCU-specific
+ * @note The original nomenclature for MSP430 timers in MSP430 has
+ * proven to be inconsistent as the number of instances grew.  While
+ * the identifier @c TA3 in early MCUs specified the presence of a
+ * Timer_A instance with 3 CCs, this led to the need to denote a
+ * second Timer_A instance with 5 CCs as T1A5 within the MCU-specific
  * headers.  The data sheets, however, refer to that same instance as
  * TA1, with a dot-separated CC number where necessary (e.g., TA1.4
  * refers to the fifth CC on the second Timer_A instance, and is
  * controlled via TA1CCTL4).
  *
- * For this interface, instance names uniformly begin with instance
+ * @note In BSP430 timer instance names uniformly begin with instance
  * zero, even on MCUs where the documented peripheral name does not
  * include an instance.  For example, peripheral called @c TA2 on the
- * MSP430G2231 is simply the first Timer_A instance and has 2 CCs.
- * It is identified here as @c TA0, with the number of CCs left
- * implicit.
+ * MSP430G2231 is simply the first Timer_A instance and has 2 CCs.  It
+ * is identified here as @c TA0, with the number of CCs left implicit.
  *
- * This module specifically does not support Timer_D, which has an
- * incompatible peripheral register map at the hardware presentation
- * layer.
+ * @section h_periph_timer_opt Module Configuration Options
+ *
+ * @li #configBSP430_HPL_TA0 to enable the HPL handle declarations
+ *
+ * @li #configBSP430_HAL_TA0 to enable the HAL infrastructure
+ *
+ * @li #configBSP430_HAL_TA0_ISR to enable the HAL ISR for
+ * overflow and capture/compare blocks 1 and higher
+ *
+ * @li #configBSP430_HAL_TA0_CC0_ISR to enable the HAL ISR for
+ * capture/compare block 0
+ *
+ * @li #configBSP430_TIMER_CCACLK to request a platform-specific clock
+ * with certain capture/compare capabilities be identified
+ *
+ * Substitute other instance names (e.g., @b TB1) as necessary.
+ *
+ * @section h_periph_timer_hpl Hardware Presentation Layer
+ *
+ * Though Timer_A and Timer_B have distinct capabilities, their
+ * underlying register maps are compatible and #sBSP430hplTIMER is
+ * used for both.  The structure includes space for all eight
+ * potential capture/compare registers, but only the ones supported by
+ * the device should be accessed.
+ *
+ * @section h_periph_timer_hal Hardware Adaptation Layer
+ *
+ * The timer @hal uses the sBSP430halTIMER structure.
+ *
+ * Enabling #configBSP430_HAL_TA0 also enables
+ * #configBSP430_HAL_TA0_ISR unless previously disabled.  When this
+ * primary ISR is enabled an interrupt service routine is provided
+ * supporting interrupts related to timer overflow and capture/compare
+ * events in CC blocks 1 and higher.  The corresponding interrupts
+ * must be enabled by the application.  On an overflow interrupt, the
+ * sBSP430halTIMER.overflow_count is incremented and the
+ * sBSP430halTIMER.overflow_callback callback chain is invoked.  On a
+ * capture/compare interrupt, the corresponding chain from
+ * sBSP430halTIMER.cc_callback is invoked.  (Note that the index in
+ * this array is the CC number.)
+ *
+ * The secondary ISR controlled by #configBSP430_HAL_TA0_CC0_ISR is
+ * left disabled unless explicitly enabled.  If enabled, an interrupt
+ * service routine is provided supporting capture/compare interrupts
+ * related to CC0.  The first chain in the sBSP430halTIMER.cc_callback
+ * array is invoked by this ISR.  The interrupt enable bit is
+ * controlled by the application.
  *
  * @author Peter A. Bigot <bigotp@acm.org> @homepage
  * http://github.com/pabigot/freertos-mspgcc @date 2012 @copyright <a
@@ -488,12 +531,13 @@ typedef struct sBSP430halTIMER {
 
   /** The number of times the timer has wrapped.
    *
-   * The value is maintained only if the overflow interrupt is
-   * enabled (TxIE in the timer control word).
+   * The value is maintained only if the corresponding HAL ISR is
+   * enabled for the timer and the overflow interrupt is explicitly
+   * enabled by the application.
    *
    * @note This field is not marked volatile because doing so costs
-   * several extra instructions as it is not an atomic type.  It
-   * should be read and written only when interrupts are
+   * several extra instructions due to it being a multi-word value.
+   * It should be read and written only when interrupts are
    * disabled. */
   unsigned long overflow_count;
 
@@ -504,8 +548,10 @@ typedef struct sBSP430halTIMER {
   /** The callback chain to invoke when a CCx interrupt is received.
    *
    * The chains are independent for each capture/compare block, but
-   * the block index is passed into the chain so that a common
-   * handler can be invoked if desired. */
+   * the block index is passed into the chain so that a common handler
+   * can be invoked if desired.  The chain for CC0 is accessed only if
+   * the corresponding ISR is enabled (e.g.,
+   * #configBSP430_HAL_TA0_CC0_ISR) */
   const struct sBSP430halISRCallbackIndexed * * const cc_callback;
 } sBSP430halTIMER;
 

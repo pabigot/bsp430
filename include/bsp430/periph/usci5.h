@@ -31,7 +31,45 @@
 
 /** @file
  *
- * @brief Genericized UCSI (USCI_A/USCI_B) for 5xx/6xx devices.
+ * @brief Hardware presentation/abstraction for USCI_A/USCI_B on 5xx/6xx devices.
+ *
+ * This version of the Universal Serial Communication Interface is
+ * available in the 5xx/6xx family.  See bsp430/periph/usci.h and
+ * bsp430/periph/eusci.h for related peripherals in other families.
+ *
+ * Conventional peripheral handles are #BSP430_PERIPH_USCI5_A0,
+ * #BSP430_PERIPH_USCI5_B0, and others dependent on availability.
+ *
+ * @section h_periph_usci5_opt Module Configuration Options
+ *
+ * @li #configBSP430_HPL_USCI5_A0 to enable the HPL handle declarations
+ *
+ * @li #configBSP430_HAL_USCI5_A0 to enable the HAL infrastructure
+ *
+ * @li #configBSP430_HAL_USCI5_A0_ISR to control inclusion of the HAL
+ * ISR for the peripheral instance
+ *
+ * Substitute other instance names (e.g., @b B0) as necessary.
+ *
+ * @section h_periph_usci5_hpl Hardware Presentation Layer
+ *
+ * USCI supports an @b A variant with UART and SPI capabilities, and a
+ * @b B variant with SPI and I2C capabilities.  The register maps for
+ * the two variants are compatible, and #sBSP430hplUSCI5 is used for
+ * both variants.  This structure is not compatible with the @link
+ * bsp430/periph/usci.h previous generation USCI module@endlink.
+
+ * @section h_periph_usci5_hal Hardware Adaptation Layer
+ *
+ * The USCI5 hardware adaptation layer uses the #sBSP430halSERIAL
+ * structure from the @link bsp430/serial.h generic serial adaptation
+ * layer@endlink.  It can also be accessed directly using the
+ * functions defined in this module.  Both @b A and @b B variants are
+ * supported by the same @hal structure.
+ *
+ * Enabling the HAL layer for a USCI5 instance enables the
+ * corresponding interrupt structure by default.  USCI5 does not
+ * support a secondary ISR.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

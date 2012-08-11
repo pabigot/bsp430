@@ -115,7 +115,7 @@ typedef int tBSP430periphHandle;
  * ACLK on pins where they may be monitored.  Its availability is
  * conditional on platform support and
  * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
 #define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)0x4003)
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 

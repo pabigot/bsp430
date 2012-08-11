@@ -155,7 +155,7 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* HAL_ISR and not HAL */
 ''',
 
-    'hal_usci_isr_decl' : '''/** @def configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR
+    'hal_usci_isr_decl' : '''/** @def configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
@@ -173,16 +173,16 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR
-#define configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) || (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
-#endif /* configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR */
+#ifndef configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR
+#define configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) || (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
+#endif /* configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR */
 
 #if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \\
      && ! ((configBSP430_HAL_USCI_A%(INSTANCE)sRX - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0)))
-#warning configBSP430_HAL_USCIAB%(INSTANCE)sRX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
+#warning configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR
+/** @def configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR
  *
  * Define to a false value in @c bsp430_config.h if you are using the
  * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
@@ -200,13 +200,13 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR
-#define configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
-#endif /* configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR */
+#ifndef configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR
+#define configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
+#endif /* configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR */
 
 #if ((configBSP430_HAL_%(INSTANCE)s_ISR - 0) \\
      && ! ((configBSP430_HAL_USCI_A%(INSTANCE)sTX - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0)))
-#warning configBSP430_HAL_USCIAB%(INSTANCE)sTX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
+#warning configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
 #endif /* HAL_ISR and not HAL */
 ''',
 

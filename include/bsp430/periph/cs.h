@@ -33,18 +33,34 @@
  *
  * @brief Hardware presentation/abstraction for Clock System (CS).
  *
- * This module supports the Clock System (CS) peripheral present in
- * FR5xx-family devices.
+ * The Clock System (CS) peripheral is present in FR5xx-family devices.
  *
- * The peripheral supports only a few factory-trimmed frequencies:
+ * @section h_periph_cs_opt Module Configuration Options
+ *
+ * None supported.
+ *
+ * @section h_periph_cs_hpl Hardware Presentation Layer
+ *
+ * As there can be only one instance of CS on any MCU, there is no
+ * structure supporting a CS HPL.  Manipulate the peripheral through
+ * its registers directly.
+ *
+ * @section h_periph_cs_hal Hardware Adaptation Layer
+ *
+ * As there can be only one instance of CS on any MCU, there is no
+ * structure supporting a CS HAL.
+ *
+ * The standard set of capabilities in the bsp430/clocks.h header are
+ * supported, with the following details:
+ *
+ * @li The peripheral supports only a few factory-trimmed frequencies:
  * 5.33, 6.67, and 8 MHz on low-speed devices.  On high-speed--capable
- * devices the speed may also be set to 16, 20 and 24 MHz.
+ * devices the speed may also be set to 16, 20, and 24 MHz.
+ * ulBSP430clockConfigureMCLK_ni() will select and return the closest
+ * available frequency.
  *
- * Other refinements in this module:
- * <ul>
- * <li> ulBSP430clockMCLK_Hz_ni() assumes that DCOCLK is the selected
- * source for MCLK, and returns the divided trimmed DCOCLK frequency.
- * </ul>
+ * @li The implementation assumes that MCLK and SMCLK are both sourced
+ * from DCOCLK.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc

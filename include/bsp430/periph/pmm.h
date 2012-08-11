@@ -33,8 +33,28 @@
  *
  * @brief Hardware presentation/abstraction for Power Management Module (PMM).
  *
- * The behavior of this module is modified with the following
- * configuration options:
+ * The Power Management Module is present on 5xx/6xx/FR5xx devices,
+ * and has differences in FRAM devices that are not reflected by this
+ * interface.
+ *
+ * @section h_periph_pmm_opt Module Configuration Options
+ *
+ * None supported.
+ *
+ * @section h_periph_pmm_hpl Hardware Presentation Layer
+ *
+ * As there can be only one instance of PMM on any MCU, there is no
+ * structure supporting a PMM @hpl.  Manipulate the peripheral through its
+ * registers directly.
+ *
+ * @section h_periph_pmm_hal Hardware Adaptation Layer
+ *
+ * As there can be only one instance of PMM on any MCU, there is no
+ * structure supporting a PMM @hal.
+ *
+ * Inline functions defined in this module support forcing processor
+ * resets that include a complete reset of all registers and
+ * peripherals.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

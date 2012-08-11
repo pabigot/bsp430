@@ -33,42 +33,59 @@
  *
  * @brief Hardware presentation/abstraction for Unified Clock System (UCS).
  *
- * This module supports the Unified Clock System (UCS) and UCS_RF
- * peripherals, which are present in 5xx/6xx-family devices.
+ * The Unified Clock System (UCS) is present in 5xx/6xx-family
+ * devices.  A variant UCS_RF differs from UCS by adding support for
+ * XT2.  This difference is currently ignored.
  *
- * UCS_RF differs from UCS by adding support for XT2.  This difference
- * is currently ignored.
+ * @section h_periph_ucs_opt Module Configuration Options
  *
- * The UCS peripheral is fairly powerful, supporting arbitrary MCLK
- * frequencies with or without an external crystal.  The interface
- * here enforces the following characteristics; see the UCS module
- * description in the <a
- * href="http://www.ti.com/general/docs/lit/getliterature.tsp?baseLiteratureNumber=SLAU208&track=no">MSP430
- * 5xx/6xx Family Users Guide</a> for further details:
- * <ul>
+ * @li #configBSP430_UCS_TRIM_DCOCLKDIV enables specific MCLK
+ * frequencies to be configured
  *
- * <li>The FLL reference clock may be LFXT1 or REFO; see
- * #configBSP430_UCS_FLLREFCLK_IS_XT1CLK.  FLLREFDIV is /1.
+ * @li #configBSP430_UCS_FLLREFCLK_IS_XT1CLK controls the selection of
+ * clock used for the FLL
  *
- * <li>MCLK and SMCLK are sourced from DCOCLKDIV
+ * @li #configBSP430_UCS_TRIM_ACLK_IS_XT1CLK controls the selection of
+ * clock used for DCO trimming
  *
- * <li>DCOCLKDIV is DCOCLK/2 (the power-up value)
+ * @section h_periph_ucs_hpl Hardware Presentation Layer
  *
- * <li>ACLK may source from VLOCLK, LFXT1CLK, or REFOCLK
+ * As there can be only one instance of UCS on any MCU, there is no
+ * structure supporting a UCS @hpl.  Manipulate the peripheral through its
+ * registers directly.
  *
- * <li>FLL trimming will leave the FLL disabled if it was disabled on
+ * @section h_periph_ucs_hal Hardware Adaptation Layer
+ *
+ * As there can be only one instance of UCS on any MCU, there is no
+ * structure supporting a UCS @hal.
+ *
+ * The standard set of capabilities in the bsp430/clocks.h header are
+ * supported, with the following details:
+ *
+ * @li Comparison of SMCLK against a clock of known frequency is
+ * required to set MCLK frequencies as there are no DCO calibration
+ * constants for this peripheral.  bsp430/platform/bsp430_config.h
+ * will automatically request the required #configBSP430_TIMER_CCACLK
+ * in support of this unless #configBSP430_UCS_TRIM_DCOCLKDIV is
+ * explicitly disabled.
+ *
+ * @li FLLREFDIV is /1.
+ *
+ * @li MCLK and SMCLK are sourced from DCOCLKDIV
+ *
+ * @li DCOCLKDIV is DCOCLK/2 (the power-up value)
+ *
+ * @li FLL trimming will leave the FLL disabled if it was disabled on
  * entry; see #configBSP430_CORE_DISABLE_FLL.
  *
- * <li>Executing an FLL trim (either directly or due to having invoked
+ * @li Executing an FLL trim (either directly or due to having invoked
  * ulBSP430clockConfigureMCLK_ni()) will record in private state
  * the measured clock frequency.
  *
- * <li> ulBSP430clockMCLK_Hz_ni() and ulBSP430clockSMCLK_Hz_ni()
- * return values are calculated by applying the relevant clock
- * dividers as read from the UCS registers to the recorded measured
- * clock frequency.
- *
- * </ul>
+ * @li ulBSP430clockMCLK_Hz_ni() and ulBSP430clockSMCLK_Hz_ni() return
+ * values are calculated by applying the relevant clock dividers as
+ * read from the UCS registers to the recorded measured clock
+ * frequency.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @homepage http://github.com/pabigot/freertos-mspgcc

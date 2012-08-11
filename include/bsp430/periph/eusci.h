@@ -31,9 +31,51 @@
 
 /** @file
  *
- * @brief Hardware presentation/abstraction for eUSCI_A.
+ * @brief Hardware presentation/abstraction for eUSCI.
  *
- * Genericized eUCSI_A on 5xx/6xx devices
+ * The Enhanced Universal Serial Communication Interface is available
+ * in the 5xx/6xx/FR5xx family, primarily on FRAM devices.  See
+ * bsp430/periph/usci.h and bsp430/periph/usci5.h for related
+ * peripherals in other families.
+ *
+ * Conventional peripheral handles are #BSP430_PERIPH_EUSCI_A0,
+ * #BSP430_PERIPH_EUSCI_B0, and others dependent on availability.
+ *
+ * @section h_periph_eusci_opt Module Configuration Options
+ *
+ * @li #configBSP430_HPL_EUSCI_A0 to enable the HPL handle declarations
+ *
+ * @li #configBSP430_HAL_EUSCI_A0 to enable the HAL infrastructure
+ *
+ * @li #configBSP430_HAL_EUSCI_A0_ISR to control inclusion of the HAL
+ * ISR for the peripheral instance
+ *
+ * Substitute other instance names (e.g., @b B0) as necessary.
+ *
+ * @section h_periph_eusci_hpl Hardware Presentation Layer
+ *
+ * Like previous USCI modules, eUSCI supports an @b A variant with
+ * UART and SPI capabilities, and a @b B variant with SPI and I2C
+ * capabilities.  Unlike previous modules the register maps for the
+ * two variants are not compatible; in particular introduction of
+ * certain I2C capabilities causes some SPI registers to be placed at
+ * different offsets in the @b A and @b B variables.
+ *
+ * This module defines #sBSP430hplEUSCIA as the HPL structure for the
+ * @b A variant, and #sBSP430hplEUSCIB as the HPL structure for the @b
+ * B variant.
+ *
+ * @section h_periph_eusci_hal Hardware Adaptation Layer
+ *
+ * The eUSCI hardware adaptation layer uses the #sBSP430halSERIAL
+ * structure from the @link bsp430/serial.h generic serial adaptation
+ * layer@endlink.  It can also be accessed directly using the
+ * functions defined in this module.  Both @b A and @b B variants are
+ * supported by the same @hal structure.
+ *
+ * Enabling the HAL layer for an eUSCI instance enables the
+ * corresponding interrupt structure by default.  eUSCI does not
+ * support a secondary ISR.
  *
  * @author Peter A. Bigot <bigotp@acm.org>
  * @date 2012

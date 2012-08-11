@@ -100,4 +100,25 @@ choice of solution, and there is no specific facility to determine whether
 the setting was successful.  For these macros there is no @b Affects
 annotation in the documentation.
 
+\section cfg_module Checking for Module Capabilities
+
+Internally BSP430 checks functional presence macro definitions that are
+internal to the MCU-specific headers provided by Texas Instruments.  In some
+cases, it may be desirable to detect whether a feature is present without
+hard-coding checks of those internal macros.
+
+As an example, the Power Management Module is only available on certain
+5xx/6xx family MCUs.  Rather than attempting to detect that situation and
+conditionally including bsp430/periph/pmm.h, the module header will do this
+and define a macro #BSP430_MODULE_PMM that has a non-zero value only if the
+module is available.  Thus you may use:
+
+@code
+#include <bsp430/periph/pmm.h>
+#if BSP430_MODULE_PMM - 0
+/* Include declarations related to LPMx.5 mode */
+#endif /* BSP430_MODULE_PMM */
+
+@endcode
+
 */
