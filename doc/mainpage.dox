@@ -9,13 +9,9 @@ microcontrollers.  It features:
 to include only those resources and capabilities required by your
 application;
 
-\li A @link hpl Hardware Presentation Layer @endlink enabling efficient
-manipulation of peripheral and module registers without tight coupling to
-specific peripheral instances;
-
-\li A @link hal Hardware Adaptation Layer @endlink that provides a
-consistent interface for common functions like setting clock rates or
-configuring a UART;
+\li A @link layer set of abstraction layers @endlink enabling efficient
+identification and manipulation of peripheral capabilities at both register
+and functional levels;
 
 \li A @link callbacks callback infrastructure @endlink allowing unrelated
 capabilities to share resources including port and timer interrupt handlers;
@@ -49,23 +45,22 @@ bsp430/periph/cs.h FR5xx @endlink families;
 
 \li A @link bsp430/serial.h standard serial interface @endlink supporting
 UART, SPI, and I2C using the USCI variants in the @link bsp430/periph/usci.h
-2xx/4xx @endlink, @link bsp430/periph/usci5.h 5xx/6xx @endlink, and @link
+2xx/4xx@endlink, @link bsp430/periph/usci5.h 5xx/6xx@endlink, and @link
 bsp430/periph/eusci.h FR5xx @endlink families;
 
-\li Access to the @link bsp430/periph/sys.h SYS @endlink and @link
-bsp430/periph/pmm.h PMM @endlink modules for 5xx/6xx/FR5xx devices allowing
+\li Access to the @link bsp430/periph/sys.h SYS@endlink and @link
+bsp430/periph/pmm.h PMM@endlink modules for 5xx/6xx/FR5xx devices allowing
 detection of reboot cause and control of ultra-low-power LPMx.5 modes;
 
 \li Utilities supporting a bi-direction @link bsp430/utility/console.h serial
-console @endlink, @link bsp430/utility/led.h LEDs @endlink, @link
-bsp430/utility/uptime.h ACLK-driven system timer @endlink, and demonstration
-@link bsp430/utility/onewire.h 1-Wire bus @endlink
+console@endlink, @link bsp430/utility/led.h LEDs@endlink, @link
+bsp430/utility/uptime.h ACLK-driven system timer@endlink, and demonstration
+@link bsp430/utility/onewire.h 1-Wire bus@endlink
 
 \section mp_platforms Hardware Platforms Currently Supported
 
 \li <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a>
 \li <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739 ("Fraunchpad")</a>
-\li <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
 \li <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
 \li <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a>
 \li <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
@@ -82,8 +77,8 @@ new platform.
 build an application for a particular platform
 \li \ref ex_bootstrap_blink confirms that your platform can blink LEDs
 \li \ref ex_bootstrap_clocks brings out clock signals to test points
-\li \ref ex_bootstrap_console prints output to the platform serial
-connection at 9600 baud 8N1
+\li \ref ex_bootstrap_console prints output to and captures input from the platform serial
+connection
 \li \ref ex_bootstrap_button validates the secondary input path using a
 button on the board
 \li \ref ex_bootstrap_lpm is used to configure the board into low power

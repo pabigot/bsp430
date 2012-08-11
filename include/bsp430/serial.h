@@ -286,8 +286,8 @@ typedef struct sBSP430halSERIAL {
    * facility.
    *
    * Use #BSP430_SERIAL_HAL_GET_HPLAUX_USCI() to access the
-   * corresponding structure, which is defined internally to the
-   * implementation. */
+   * corresponding structure, which is declared within the
+   * peripheral-specific header. */
   union {
     /** Access to the HPL auxiliary pointer ignoring its underlying
      * type */

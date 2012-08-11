@@ -33,7 +33,32 @@
  *
  * @brief Generic peripheral support for MSP430 MCUs.
  *
- * This file, included by peripheral-specific include files, supports
+ * This file provides generic support for referencing peripherals and
+ * distinct capabilities symbolicly through a unique integer
+ * identifier.  It also defines structures that are used for interrupt
+ * callbacks across peripherals.
+ *
+ * \section h_periph__handles Peripheral Handles
+ *
+ * A peripheral (instance) handle, such as #BSP430_PERIPH_PORT1, is a
+ * constant that identifies the peripheral instance and distinguishes
+ * it from other instances of the same peripheral (e.g.,
+ * #BSP430_PERIPH_PORT2) and from different peripherals
+ * (e.g. #BSP430_PERIPH_USCI_A0).  For internal simplicity the value
+ * of a peripheral is often related to the physical address of its
+ * corresponding control registers within the standard 16-bit address
+ * space of the MSP430, but this fact should never be used by a BSP430
+ * application.
+ *
+ * Other denotable capabilities are technically not peripherals but
+ * require similar configuration support, such as #BSP430_PERIPH_LFXT1
+ * and #BSP430_PERIPH_EXPOSED_CLOCKS, are also given handles so that
+ * they can be used in routines like
+ * iBSP430platformConfigurePeripheral_ni().
+ * 
+ * 
+
+, included by peripheral-specific include files, supports
  * handles to peripherals which in turn are used in application code.
  * Use of a peripheral @c xx must be indicated by defining the
  * corresponding @c configBSP430_HPL_xx or @c configBSP430_HAL_xx in

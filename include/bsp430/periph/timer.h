@@ -517,10 +517,8 @@ volatile sBSP430hplTIMER * xBSP430hplLookupTIMER (tBSP430periphHandle periph);
  * when HPL reference is to an #sBSP430hplTIMER. */
 #define BSP430_TIMER_HAL_HPL_VARIANT_TIMER 1
 
-/** Structure holding hardware abstraction layer state for Timer_A and Timer_B.
- *
- * This structure is internal state, for access by applications only
- * when overriding BSP430 HAL capabilities. */
+/** Structure holding hardware abstraction layer state for Timer_A and
+ * Timer_B. */
 typedef struct sBSP430halTIMER {
   /** Common header used to extract the correct HPL pointer type from
    * the hpl union. */

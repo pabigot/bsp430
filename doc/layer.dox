@@ -1,0 +1,105 @@
+/*! @page layer Abstraction Layers
+@tableofcontents
+
+BSP430 provides several layers of abstraction allowing reference to and
+manipulation of peripherals generically, at the hardware register level, and
+based on peripheral and generic function.
+
+\section layer_periph Peripheral Handles
+
+Peripheral handles are integral values that uniquely identify a single
+peripheral or core capability within a target microcontroller.  Where it is
+necessary to refer to a generic peripheral in BSP430, a peripheral handle is
+used.
+
+For clarity, the type #tBSP430periphHandle is used to denote these
+references.  Handles are defined for instances of peripheral modules, such
+as #BSP430_PERIPH_PORT1, as well as for capabilities like
+#BSP430_PERIPH_EXPOSED_CLOCKS which must be configured in a similar manner.
+
+A more detailed description of peripheral handles is in <bsp430/periph.h>.
+
+\anchor HPL
+\section layer_hpl Hardware Presentation Layer (HPL)
+
+The hardware presentation layer, frequently abbreviated as HPL in BSP430
+documentation and interface, is a minimal abstraction of the underlying
+peripheral registers, in the form of a C structure defining the layout of
+registers that control a peripheral.
+
+A hardware presentation layer is defined only for peripherals that normally
+have multiple instances within a single MCU, such as @link
+bsp430/periph/timer.h timers@endlink and @link bsp430/periph/port.h
+ports@endlink.  Peripherals such as clocks that normally exist in only one
+instance per MCU are not abstracted into an HPL.
+
+The primary purpose of the HPL is to allow code to be written that is
+decoupled from the specific peripheral instance (e.g., PORT1 or PORT2).  No
+attempt is made to provide functions that do what is normally done by
+setting and clearing bits in peripheral registers.  An application that
+intends to use a peripheral instance through its HPL must enable it through
+the @link bsp430_config configuration interface@endlink (e.g.,
+#configBSP430_HPL_PORT1).  The application may then reference the HPL
+through a constant expression such as #BSP430_HPL_PORT1.  HPL references are
+normally pointers to volatile structures.  The structure tags correspond to
+the standard register names, excluding any prefix that identifies a specific
+peripheral instance.  For example, the register @c P1IFG may be accessed as
+<c>BSP430_HPL_PORT1->ifg</c>.
+
+\anchor HAL
+\section layer_hal Hardware Abstraction Layer (HAL)
+
+Where complete control and interaction with a peripheral cannot be
+accomplished solely through a pointer to its registers, a hardware
+abstraction layer is defined.  A HAL reference is a pointer to a structure
+which contains identification data, the underlying HPL reference, and in
+many cases information supporting use of peripheral interrupts.  Existing
+HAL interfaces include:
+
+\li the @link bsp430/periph/port.h Digital I/O Port@endlink HAL which allows
+generic access to digital I/O port capabilities, adding pin-specific
+callback configuration and a shared interrupt infrastructure;
+
+\li the @link bsp430/periph/timer.h Timer@endlink HAL which provides a
+shared interrupt structure adding callback support for counter overflow and
+capture/compare blocks;
+
+\li the @link bsp430/serial.h serial communications@endlink HAL which
+provides functions supporting UART, SPI, and I2C protocols over (currently)
+three distinct peripheral implementations, also with interrupt management.
+
+The primary purpose of the HAL interface is to decouple code that requires
+interrupt capabilities from the interrupt handler, allowing independent
+modules to share a handler implementation without requiring modification of
+the handler itself if it is necessary to move functionality between pins or
+peripheral instances.
+
+\section layer_func Functional Abstraction Layers
+
+BSP430 also provides interfaces that are independent of the underlying
+peripheral implementation, and that provide core functionality that is
+useful in generic MSP430 applications.  Existing functional interfaces
+include:
+
+@li the @link bsp430/serial.h serial abstraction@endlink supports UART, SPI,
+and I2C communications channels;
+
+@li the @link bsp430/clock.h clock abstraction@endlink provides a common
+interface for configuring the various clocks, configuring a low-frequency
+crystal, checking for clock stability, etc.  The functions are standard,
+though each MSP430 family has at least one underlying clock peripheral that
+supports them, and they have different capabilities;
+
+@li the @link bsp430/utility/led.h LED@endlink interface;
+
+@li the @link bsp430/utility/console.h console@endlink supporting
+bi-directional serial communications over a platform-identified UART at a
+nominal standard 9600 baud rate;
+
+@li the @link bsp430/utility/uptime.h uptime@endlink abstraction that
+maintains a continous ACLK-based timer including overflow counter support to
+determine system uptime and time-of-event measurement.
+
+@li the @link bsp430/utility/onewire.h 1-Wire@endlink interface
+
+*/
