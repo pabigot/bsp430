@@ -56,14 +56,11 @@
  * they can be used in routines like
  * iBSP430platformConfigurePeripheral_ni().
  * 
- * 
-
-, included by peripheral-specific include files, supports
- * handles to peripherals which in turn are used in application code.
- * Use of a peripheral @c xx must be indicated by defining the
- * corresponding @c configBSP430_HPL_xx or @c configBSP430_HAL_xx in
- * the application @c bsp430_config.h file.
+ * \section h_periph__callbacks Callback Infrastructure
  *
+ *  NOT YET FINISHED
+ *
+ * 
  * Structures are defined in the peripheral-specific header for each
  * class of peripheral that may have multiple instances with the same
  * register set, to simplify access by converting the periphal address
@@ -351,8 +348,10 @@ typedef int (* iBSP430halISRCallbackIndexed) (const struct sBSP430halISRCallback
 /** Structure used to record #iBSP430halISRCallbackVoid chains. */
 typedef struct sBSP430halISRCallbackVoid {
   /** The next callback in the chain.  Assign a null pointer to
-   * terminate the chain. */
-  const struct sBSP430halISRCallbackVoid * next;
+   * terminate the chain.  @note This field must only be mutated when
+   * interrupts are disabled, or if the node is not within a callback
+   * chain installed in a HAL instance. */
+  const struct sBSP430halISRCallbackVoid * next_ni;
 
   /** The function to be invoked. */
   iBSP430halISRCallbackVoid callback;
@@ -361,8 +360,10 @@ typedef struct sBSP430halISRCallbackVoid {
 /** Structure used to record #iBSP430halISRCallbackIndexed chains. */
 typedef struct sBSP430halISRCallbackIndexed {
   /** The next callback in the chain.  Assign a null pointer to
-   * terminate the chain. */
-  const struct sBSP430halISRCallbackIndexed * next;
+   * terminate the chain.  @note This field must only be mutated when
+   * interrupts are disabled, or if the node is not within a callback
+   * chain installed in a HAL instance. */
+  const struct sBSP430halISRCallbackIndexed * next_ni;
 
   /** The function to be invoked. */
   iBSP430halISRCallbackIndexed callback;
@@ -389,7 +390,7 @@ iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRCallbackVoid * const 
 {
   while (*cbpp && ! (basis & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN)) {
     basis |= (*cbpp)->callback(*cbpp, context);
-    cbpp = &(*cbpp)->next;
+    cbpp = &(*cbpp)->next_ni;
   }
   return basis;
 }
@@ -413,7 +414,7 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRCallbackIndexed * 
 {
   while (*cbpp && ! (basis & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN)) {
     basis |= (*cbpp)->callback(*cbpp, context, idx);
-    cbpp = &(*cbpp)->next;
+    cbpp = &(*cbpp)->next_ni;
   }
   return basis;
 }

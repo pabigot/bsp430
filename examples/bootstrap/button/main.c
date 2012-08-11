@@ -78,7 +78,7 @@ void main ()
     return;
   }
   b0hpl = BSP430_PORT_HAL_GET_HPL_PORTIE(b0hal);
-  button_state.button_cb.next = b0hal->pin_callback[b0pin];
+  button_state.button_cb.next_ni = b0hal->pin_callback[b0pin];
   b0hal->pin_callback[b0pin] = &button_state.button_cb;
   b0hpl->sel &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   b0hpl->dir &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;

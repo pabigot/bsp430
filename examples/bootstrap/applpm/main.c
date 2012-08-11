@@ -78,11 +78,11 @@ button_isr (const struct sBSP430halISRCallbackIndexed * cb,
   ++button;
   return BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT
          | BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN
-         | LPM4_bits;
+         | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
 const sBSP430halISRCallbackIndexed button_cb = {
-  .next = NULL,
+  .next_ni = NULL,
   .callback = button_isr,
 };
 
@@ -225,7 +225,7 @@ void main ()
   /* A careful coder would check to return values in the following */
   tty = hBSP430console();
   (void)iBSP430serialSetHold_ni(tty, 1);
-  rx_cb.next = tty->rx_callback;
+  rx_cb.next_ni = tty->rx_callback;
   tty->rx_callback = &rx_cb;
   (void)iBSP430serialSetHold_ni(tty, 0);
   *rx_head++ = CMD_MODE_ACTIVE;

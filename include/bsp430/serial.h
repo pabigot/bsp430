@@ -298,11 +298,11 @@ typedef struct sBSP430halSERIAL {
   } const hpl_aux;
 
   /** Location in which an incoming character is stored when an
-   * #rx_callback is defined. */
+   * #rx_callback is non-null. */
   uint8_t rx_byte;
 
   /** Location in which an outgoing character is stored when a
-   * #tx_callback is defined. */
+   * #tx_callback is non-null. */
   uint8_t tx_byte;
 
   /** The callback chain to invoke when a byte is received.
@@ -441,9 +441,9 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
 /** Receive a byte from a UART-configured device.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink is null.
- * If a callback is present, it is expected to be used to accept data
- * on reception.
+ * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink is
+ * null.  If a callback is present, it is expected to be used to
+ * accept data on reception.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -462,9 +462,9 @@ int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
 /** Transmit a byte over a UART-configured device.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is
+ * null.  If a callback is present, it is expected to be used to
+ * provide data for transmission.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -485,9 +485,9 @@ int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 /** Transmit a block of data over a UART-configured device.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is
+ * null.  If a callback is present, it is expected to be used to
+ * provide data for transmission.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -511,9 +511,9 @@ int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
 /** Transmit a sequence of characters over a UART-configured device.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is
+ * null.  If a callback is present, it is expected to be used to
+ * provide data for transmission.
  *
  * @param hal the serial device over which the data should be
  * transmitted
@@ -593,10 +593,11 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
  * rx_data.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink and @link
- * sBSP430halSERIAL.rx_callback @a hal->rx_callback @endlink are null.
- * If callbacks are present, they are expected to be used to provide
- * data for transmission and to process received data.
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink and
+ * @link sBSP430halSERIAL.rx_callback @a hal->rx_callback
+ * @endlink are null.  If callbacks are present, they are expected to
+ * be used to provide data for transmission and to process received
+ * data.
  *
  * @param hal the serial device over which the data is transmitted and
  * received
@@ -711,10 +712,11 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
  * callback.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.  Note that such a callback must handle I2C start
- * and stop conditions, which are peripheral-specific.
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is
+ * null.  If a callback is present, it is expected to be used to
+ * provide data for transmission.  Note that such a callback must
+ * handle I2C start and stop conditions, which are
+ * peripheral-specific.
  *
  * @param hal the serial device over which the data is transmitted and
  * received
@@ -742,10 +744,11 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * error if the device is configured with a receive callback.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is null.
- * If a callback is present, it is expected to be used to provide data
- * for transmission.  Note that such a callback must handle I2C start
- * and stop conditions, which are peripheral-specific.
+ * sBSP430halSERIAL.tx_callback @a hal->tx_callback @endlink is
+ * null.  If a callback is present, it is expected to be used to
+ * provide data for transmission.  Note that such a callback must
+ * handle I2C start and stop conditions, which are
+ * peripheral-specific.
  *
  * @param hal the serial device from which the data is received
  *
@@ -824,8 +827,8 @@ int iBSP430serialClose (hBSP430halSERIAL hal)
  *
  * Normally the transmission infrastructure transmits data as soon as
  * space is available in the transmission buffer.  The infrastructure
- * is disabled when the sBSP430halSERIAL.tx_callback indicates that no
- * more data is available.  When this has happened, it must be told
+ * is disabled when the sBSP430halSERIAL.tx_callback indicates that
+ * no more data is available.  When this has happened, it must be told
  * that more data has been added and the infrastructure re-enabled.
  *
  * For efficiency, this should only be called if it is believed that

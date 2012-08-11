@@ -276,6 +276,8 @@ cgetchar_ni (void)
 int
 iBSP430consoleInitialize (void)
 {
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv;
   hBSP430halSERIAL hal;
 
   if (console_hal_) {
@@ -287,33 +289,37 @@ iBSP430consoleInitialize (void)
     return -1;
   }
 
+  rv = -1;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+
 #if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
-  /* Associate the callback before opening the device, so the
-   * interrupts are enabled properly. */
-  rx_buffer_.head = rx_buffer_.tail = 0;
-  rx_buffer_.cb_node.next = hal->rx_callback;
-  hal->rx_callback = &rx_buffer_.cb_node;
+    /* Associate the callback before opening the device, so the
+     * interrupts are enabled properly. */
+    rx_buffer_.head = rx_buffer_.tail = 0;
+    rx_buffer_.cb_node.next_ni = hal->rx_callback;
+    hal->rx_callback = &rx_buffer_.cb_node;
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
-  console_hal_ = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
-  if (console_hal_) {
+    /* Attempt to configure and install the console */
+    console_hal_ = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
+    if (! console_hal_) {
+      /* Open failed, revert the callback association. */
+#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+      hal->rx_callback = rx_buffer_.cb_node.next_ni;
+      rx_buffer_.cb_node.next_ni = 0;
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+      break;
+    }
 #if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
-    BSP430_CORE_INTERRUPT_STATE_T istate;
-    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-    BSP430_CORE_DISABLE_INTERRUPT();
     vBSP430platformSpinForJumper_ni();
-    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
-    return 0;
-  }
-
-  /* Open failed, revert the callback association */
-#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
-  hal->rx_callback = rx_buffer_.cb_node.next;
-  rx_buffer_.cb_node.next = 0;
-#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
-
-  return -1;
+    /* All is good */
+    rv = 0;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 int
@@ -329,7 +335,7 @@ iBSP430consoleDeconfigure (void)
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430serialClose(console_hal_);
 #if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
-  console_hal_->rx_callback = rx_buffer_.cb_node.next;
+  console_hal_->rx_callback = rx_buffer_.cb_node.next_ni;
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
   console_hal_ = NULL;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
