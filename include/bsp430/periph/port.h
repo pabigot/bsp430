@@ -31,7 +31,7 @@
 
 /** @file
  *
- * @brief Genericized digital I/O port (PORTX/PORTX_R) for MSP430 MCUs
+ * @brief Hardware presentation/abstraction for Digital I/O Port (PORT\#/PORT\#_R)
  *
  * A Digital I/O port capability exists on every MSP430 MCU.
  * Differences between families are reflected in the HPL structures
@@ -293,10 +293,10 @@ typedef struct sBSP430hplPORT_5XX_8 {
   unsigned char _reserved_x07;
   unsigned char ds; /**< PxDS (drive select, some devices) */ /* 0x08 */
   unsigned char _reserved_x09;
-  union {
+  union __attribute__((__packed__)) {
     unsigned char sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
     unsigned char sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
-  } __attribute__((__packed__));
+  };
   unsigned char _reserved_x0B;
   unsigned char sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
   unsigned char _reserved_x0D;
