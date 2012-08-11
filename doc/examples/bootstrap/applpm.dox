@@ -84,6 +84,17 @@ Note that LPM3.5 doesn't seem to be different from LPM3, and unlike the
 FR5739 LPM4.5 is not entered if either the serial or the timer are left
 enabled.
 
+\section ex_bootstrap_applpm_main main.c
+\include bootstrap/applpm/main.c
+
+\section ex_bootstrap_applpm_config bsp430_config.h
+\include bootstrap/applpm/bsp430_config.h
+
+\section ex_bootstrap_applpm_make Makefile
+\include bootstrap/applpm/Makefile
+
+\example bootstrap/applpm/main.c
+
 @cond DOXYGEN_EXCLUDE
 
 RF2500T idles at 1.42 mA, and is lowest at 1.17 mA with clock and serial
@@ -95,14 +106,4 @@ EXP430F5529 is similarly a mess.
 
 @endcond
 
-\section ex_bootstrap_applpm_main main.c
-\include bootstrap/applpm/main.c
-
-\section ex_bootstrap_applpm_confic bsp430_config.h
-\include bootstrap/applpm/bsp430_config.h
-
-\section ex_bootstrap_applpm_make Makefile
-\include bootstrap/applpm/Makefile
-
-\example bootstrap/applpm/main.c
 */

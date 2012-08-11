@@ -1,60 +1,75 @@
-/*! \mainpage BSP430
+/*! \mainpage BSP430 Board Support Package for MSP430 Microcontrollers
 
-\section Introduction
+BSP430 is a set of C language adaptation layers simplifying cross-MCU
+library and application development on Texas Instruments MSP430
+microcontrollers.  It features:
 
-BSP430 is a library of routines coded to provide both a hardware
-presentation layer and a hardware abstraction layer to interface MSP430
-processors to FreeRTOS applications.
+\li A standardized configuration infrastructure allowing you to include only
+those resources required by your application;
 
-See \ref coding.
+\li A @ref hpl enabling efficient manipulation of peripheral and module
+registers without tight coupling to specific peripheral instances;
 
-\subsection hpl Hardware Presentation Layer
+\li A @ref hal that provides a consistent interface for common functions
+like setting clock rates or configuring a UART;
 
-The hardware presentation layer is a minimal abstraction of the underlying
-peripheral registers.  No attempt is made to provide functions that do what
-is normally done by setting and clearing bits in peripheral registers.
+\li A callback infrastructure allowing unrelated capabilities to share
+resources including port and timer interrupt handlers;
 
-The only generic abstraction is for peripherals that commonly have multiple
-instances on a single device (timers, UARTs, digital i/o ports).  The
-abstraction comprises a structure definition which overlays an
-instance-specific region of the peripheral address space, allowing the same
-code to operate on any instance of the peripheral on that device.
+\li A platform model that enables rapid development on common hardware
+solutions including six TI experimenter boards;
 
-Where the correct configuration for the registers of a peripheral is a
-complex calculation that is specific to a peripheral variant, the HPL
-includes functions to accomplish this configuration.  Examples include
-calculation of register settings to achieve a particular system clock
-frequency or to communicate over a UART at a particular baud rate.
+\li Support for watchdog, low power mode execution
 
-\subsection hal Hardware Abstraction Layer
+\li A build infrastructure designed to simplify creating new applications,
+currently focused on the MSPGCC toolchain in a POSIX command-line
+environment supported by GNU Make
 
-Where a common function uses peripheral-specific implementations, an
-abstraction layer hides this from application code.  An example is serial
-communication on a UART, whether that UART be provided by a USART, USI,
-USCI, USCI_AB, USCI_A, or eUSCI_A peripheral.
+BSP430 is released as open source under the <a
+href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+license.
 
+For further details, please see the Background, Philosophy, Coding Style,
+and Maintenance pages.
 
-clocks:
+\section mp_capabilities Capabilities Currently Supported
 
-bc2       2xx       basic clock module+                          BC2
-cs	  FR5xx     clock system                                 CS
-fllplus   4xx       frequency-locked loop clock system           FLLPLUS, FLLPLUS_SMALL
-ucs	  5xx/6xx   universal clock system                       UCS, UCS_RF
+\li @link bsp430/periph/timer.h Timers @endlink supporting both Timer_A and
+Timer_B supported in a common interface;
 
-timer     all	    Timer_A and Timer_B                          TA#, TB#, T#A#, T#B#
+\li A @link bsp430/clock.h standard clock interface @endlink supporting MCLK,
+SMCLK, ACLK, and LFXT1 crystal configuration in the clock systems in the
+@link bsp430/periph/bc2.h 2xx @endlink, @link bsp430/periph/fllplus.h 4xx
+@endlink, @link bsp430/periph/ucs.h 5xx/6xx @endlink, and @link
+bsp430/periph/cs.h FR5xx @endlink families;
 
-usart     2xx       universal sync/async receive/transmit        USART
-usi       2xx       universal serial interface                   USI
-usci_ab	  2xx/4xx   universal serial communications interface    USCI, USCI_AB#
-usci      5xx/6xx   universal serial communications interface    USCI_A#, USCI_B#
-euscia    FR5xx     enhanced USCI                                EUSCI_A#
-euscib    FR5xx     enhanced USCI                                EUSCI_B#
+\li A @link bsp430/serial.h standard serial interface @endlink supporting
+UART, SPI, and I2C using the USCI variants in the @link bsp430/periph/usci.h
+2xx/4xx @endlink, @link bsp430/periph/usci5 5xx/6xx @endlink, and @link
+bsp430/periph/eusci.h FR5xx @endlink families;
 
-sys       5xx/6xx   system                                       SYS
-pmm	  5xx/6xx   power management module			 PMM, PMM_FR5xx, PMM_FRAM
+\li Access to the @link bsp430/periph/sys.h SYS @endlink and @link
+bsp430/periph/pmm.h PMM @endlink modules for 5xx/6xx/FR5xx devices allowing
+detection of reboot cause and control of ultra-low-power LPMx.5 modes;
 
-\subsection examples Examples
-\subsubsection ex_bootstrap Bootstrap Support Programs
+\li Utilities supporting a bi-direction @link bsp430/utility/console.h serial
+console @endlink, @link bsp430/utility/led.h LEDs @endlink, @link
+bsp430/utility/uptime.h ACLK-driven system timer @endlink, and demonstration
+@link bsp430/utility/onewire.h 1-Wire bus @endlink
+
+\section mp_platforms Hardware Platforms Currently Supported
+
+\li <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a>
+\li <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739 ("Fraunchpad")</a>
+\li <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
+\li <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
+\li <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a>
+\li <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
+\li <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a>
+
+\section mp_examples Provided Examples
+
+\subsection ex_bootstrap Bootstrap Support Programs
 The following examples lead you through the basic capabilities of BSP430,
 following the same path that you would use if you were adding support for a
 new platform.
@@ -73,7 +88,7 @@ mode, verifying that the numbers in the data sheet are achievable
 power modes with and without the peripherals being disabled
 </ul> 
 
-\subsubsection ex_sensors Sensors
+\subsection ex_sensors Sensors
 
 \li \ref ex_sensors_ds18b20 demonstrates temperature measurement with the
 DS18B20 (or similar) 1-wire temperature sensor
@@ -82,10 +97,11 @@ temperature sensor
 \li \ref ex_sensors_hh10d demonstrates measuring the frequency of an input
 signal using the Hope RF Humidity Sensor
 
-\subsubsection ex_misc Miscellaneous Capabilities
+\subsection ex_misc Miscellaneous Capabilities
 
 \li \ref ex_rfem_ccid demonstrates the SPI interface by reading the
 identification information from a ChipCon evalation module inserted into the
 RF-EVM socket on any of a number of TI experimenter boards
 </ul>
+
 */

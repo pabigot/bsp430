@@ -1,0 +1,18 @@
+/*! @page hal Hardware Adaptation Layer
+
+\section Peripheral Abstraction Layers
+
+Where the correct configuration for the registers of a peripheral is a
+complex calculation that is specific to a peripheral variant, the HPL
+includes functions to accomplish this configuration.  Examples include
+calculation of register settings to achieve a particular system clock
+frequency or to communicate over a UART at a particular baud rate.
+
+\section Functional Abstraction Layers
+
+Where a common function uses peripheral-specific implementations, an
+abstraction layer hides this from application code.  An example is serial
+communication on a UART, whether that UART be provided by a USART, USI,
+USCI, USCI_AB, USCI_A, or eUSCI_A peripheral.
+
+*/

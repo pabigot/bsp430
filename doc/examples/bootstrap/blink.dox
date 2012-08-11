@@ -10,4 +10,6 @@ The second bootstrap program confirms that you can control LEDs.
 
 \section ex_bootstrap_blink_make Makefile
 \include bootstrap/blink/Makefile
+
+\example bootstrap/blink/main.c
 */
