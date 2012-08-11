@@ -410,7 +410,4 @@ int iBSP430consoleDeconfigure (void);
  * initialized. */
 hBSP430halSERIAL hBSP430console (void);
 
-/** Enable or disable the console. */
-int xBSP430consoleSetEnabled_ni (int enablep);
-
 #endif /* BSP430_UTILITY_CONSOLE_H */
