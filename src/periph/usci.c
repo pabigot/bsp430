@@ -238,7 +238,7 @@ iBSP430usciSetHold_ni (hBSP430halSERIAL hal,
       /* Release the USCI and enable the interrupts.  Interrupts are
        * disabled and cleared when UCSWRST is set. */
       SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
-      if (hal->rx_callback) {
+      if (hal->rx_cbchain_ni) {
         *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
       }
     }
@@ -276,7 +276,7 @@ vBSP430usciWakeupTransmit_ni (hBSP430halSERIAL hal)
 int
 iBSP430usciUARTrxByte_ni (hBSP430halSERIAL hal)
 {
-  if (hal->rx_callback) {
+  if (hal->rx_cbchain_ni) {
     return -1;
   }
   if (*SERIAL_HAL_HPLAUX(hal)->ifgp & SERIAL_HAL_HPLAUX(hal)->rx_bit) {
@@ -287,7 +287,7 @@ iBSP430usciUARTrxByte_ni (hBSP430halSERIAL hal)
 int
 iBSP430usciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   RAW_TRANSMIT_HAL_NI(hal, c);
@@ -301,7 +301,7 @@ iBSP430usciUARTtxData_ni (hBSP430halSERIAL hal,
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (p < edata) {
@@ -315,7 +315,7 @@ iBSP430usciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (*str) {
@@ -335,7 +335,7 @@ iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
   size_t transaction_length = tx_len + rx_len;
   size_t i = 0;
 
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (i < transaction_length) {
@@ -569,7 +569,7 @@ usciabrx_isr (hBSP430halSERIAL hal)
 {
   hal->rx_byte = SERIAL_HAL_HPL(hal)->rxbuf;
   ++hal->num_rx;
-  return iBSP430callbackInvokeISRVoid_ni(&hal->rx_callback, hal, 0);
+  return iBSP430callbackInvokeISRVoid_ni(&hal->rx_cbchain_ni, hal, 0);
 }
 
 #if configBSP430_HAL_USCI_AB0RX_ISR - 0
@@ -609,7 +609,7 @@ __attribute__ ( ( __c16__ ) )
 /* __attribute__((__always_inline__)) */
 usciabtx_isr (hBSP430halSERIAL hal)
 {
-  int rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_callback, hal, 0);
+  int rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_cbchain_ni, hal, 0);
   if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
     /* Found some data; send it out */
     ++hal->num_tx;

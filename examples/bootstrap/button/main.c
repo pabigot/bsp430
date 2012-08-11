@@ -19,14 +19,14 @@
 #endif /* BSP430_PLATFORM_BUTTON0 */
 
 typedef struct sButtonState {
-  sBSP430halISRCallbackIndexed button_cb; /* Callback structure */
+  sBSP430halISRIndexedChainNode button_cb; /* Callback structure */
   const unsigned char bit;      /* Bit for button */
   volatile int in_mask;         /* Bit set if button is pressed */
   volatile int count;           /* Number of interrupts occured */
 } sButtonState;
 
 static int
-button_isr (const struct sBSP430halISRCallbackIndexed * cb,
+button_isr (const struct sBSP430halISRIndexedChainNode * cb,
             void * context,
             int idx)
 {
@@ -78,8 +78,8 @@ void main ()
     return;
   }
   b0hpl = BSP430_PORT_HAL_GET_HPL_PORTIE(b0hal);
-  button_state.button_cb.next_ni = b0hal->pin_callback[b0pin];
-  b0hal->pin_callback[b0pin] = &button_state.button_cb;
+  button_state.button_cb.next_ni = b0hal->pin_cbchain_ni[b0pin];
+  b0hal->pin_cbchain_ni[b0pin] = &button_state.button_cb;
   b0hpl->sel &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   b0hpl->dir &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
 #if BSP430_PORT_SUPPORTS_REN - 0

@@ -95,16 +95,16 @@
  * events in CC blocks 1 and higher.  The corresponding interrupts
  * must be enabled by the application.  On an overflow interrupt, the
  * sBSP430halTIMER.overflow_count is incremented and the
- * sBSP430halTIMER.overflow_callback callback chain is invoked.  On
+ * sBSP430halTIMER.overflow_cbchain_ni callback chain is invoked.  On
  * a capture/compare interrupt, the corresponding chain from
- * sBSP430halTIMER.cc_callback is invoked.  (Note that the index in
+ * sBSP430halTIMER.cc_cbchain_ni is invoked.  (Note that the index in
  * this array is the CC number.)
  *
  * The secondary ISR controlled by #configBSP430_HAL_TA0_CC0_ISR is
  * left disabled unless explicitly enabled.  If enabled, an interrupt
  * service routine is provided supporting capture/compare interrupts
  * related to CC0.  The first chain in the
- * sBSP430halTIMER.cc_callback array is invoked by this ISR.  The
+ * sBSP430halTIMER.cc_cbchain_ni array is invoked by this ISR.  The
  * interrupt enable bit is controlled by the application.
  *
  * @author Peter A. Bigot <bigotp@acm.org> @homepage
@@ -541,9 +541,9 @@ typedef struct sBSP430halTIMER {
 
   /** The callback chain to invoke when an overflow interrupt is
    * received.  @note This pointer, and the pointers for any
-   * #sBSP430halISRCallbackVoid.next_ni fields in chain nodes accessed
+   * #sBSP430halISRVoidChainNode.next_ni fields in chain nodes accessed
    * through it, must be mutated only when interrupts are disabled. */
-  const struct sBSP430halISRCallbackVoid * overflow_callback;
+  const struct sBSP430halISRVoidChainNode * overflow_cbchain_ni;
 
   /** The callback chain to invoke when a CCx interrupt is received.
    *
@@ -552,7 +552,7 @@ typedef struct sBSP430halTIMER {
    * can be invoked if desired.  The chain for CC0 is accessed only if
    * the corresponding ISR is enabled (e.g.,
    * #configBSP430_HAL_TA0_CC0_ISR) */
-  const struct sBSP430halISRCallbackIndexed * * const cc_callback;
+  const struct sBSP430halISRIndexedChainNode * * const cc_cbchain_ni;
 } sBSP430halTIMER;
 
 /** The timer internal state is protected. */

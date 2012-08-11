@@ -68,7 +68,7 @@ typedef struct sState {
 volatile int button;
 
 static int
-button_isr (const struct sBSP430halISRCallbackIndexed * cb,
+button_isr (const struct sBSP430halISRIndexedChainNode * cb,
             void * context,
             int idx)
 {
@@ -81,7 +81,7 @@ button_isr (const struct sBSP430halISRCallbackIndexed * cb,
          | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
-const sBSP430halISRCallbackIndexed button_cb = {
+const sBSP430halISRIndexedChainNode button_cb = {
   .next_ni = NULL,
   .callback = button_isr,
 };
@@ -119,7 +119,7 @@ consume_rx ()
 }
 
 static int
-rx_callback (const struct sBSP430halISRCallbackVoid * cb,
+rx_cbchain_ni (const struct sBSP430halISRVoidChainNode * cb,
              void * context)
 {
   hBSP430halSERIAL device = (hBSP430halSERIAL)context;
@@ -134,8 +134,8 @@ rx_callback (const struct sBSP430halISRCallbackVoid * cb,
   return LPM4_bits;
 }
 
-struct sBSP430halISRCallbackVoid rx_cb = {
-  .callback = rx_callback
+struct sBSP430halISRVoidChainNode rx_cb = {
+  .callback = rx_cbchain_ni
 };
 
 void main ()
@@ -212,10 +212,10 @@ void main ()
   b0hal = hBSP430portLookup(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE);
   b0pin = iBSP430portBitPosition(BSP430_PLATFORM_BUTTON0_PORT_BIT);
   b0hpl = BSP430_PORT_HAL_GET_HPL_PORTIE(b0hal);
-  b0hal->pin_callback[b0pin] = &button_cb;
+  b0hal->pin_cbchain_ni[b0pin] = &button_cb;
   b0hpl->sel &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   b0hpl->dir &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
-  
+
 #if BSP430_PORT_SUPPORTS_REN - 0
   BSP430_PORT_HAL_HPL_REN(b0hal) |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
   BSP430_PORT_HAL_HPL_OUT(b0hal) |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
@@ -225,8 +225,8 @@ void main ()
   /* A careful coder would check to return values in the following */
   tty = hBSP430console();
   (void)iBSP430serialSetHold_ni(tty, 1);
-  rx_cb.next_ni = tty->rx_callback;
-  tty->rx_callback = &rx_cb;
+  rx_cb.next_ni = tty->rx_cbchain_ni;
+  tty->rx_cbchain_ni = &rx_cb;
   (void)iBSP430serialSetHold_ni(tty, 0);
   *rx_head++ = CMD_MODE_ACTIVE;
   *rx_head++ = CMD_STATE;

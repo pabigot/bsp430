@@ -357,7 +357,7 @@ __attribute__ ( ( __c16__ ) )
 port_isr (hBSP430halPORT device,
           int idx)
 {
-  return iBSP430callbackInvokeISRIndexed_ni(device->pin_callback + idx, device, idx, 0);
+  return iBSP430callbackInvokeISRIndexed_ni(device->pin_cbchain_ni + idx, device, idx, 0);
 }
 #endif /* PORT ISR */
 

@@ -98,7 +98,7 @@
  * structures are accessible through this structure.
  *
  * When enabled by #configBSP430_HAL_PORT1_ISR the
- * sBSP430halPORT.pin_callback array is used by a provided HAL ISR is
+ * sBSP430halPORT.pin_cbchain_ni array is used by a provided HAL ISR is
  * enabled to notify application and library code of events that occur
  * on a particular port pin.  It is the responsibility of that code to
  * @link callbacks register a callback @endlink and to configure the
@@ -634,7 +634,7 @@ typedef struct sBSP430halPORT {
   } const hpl;
   /** Callbacks invoked when the HAL ISR handler receives an event for
    * the corresponding bit of the port. */
-  const struct sBSP430halISRCallbackIndexed * pin_callback[8];
+  const struct sBSP430halISRIndexedChainNode * pin_cbchain_ni[8];
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   /** Pointer to the resistor enable register for this peripheral.
    *

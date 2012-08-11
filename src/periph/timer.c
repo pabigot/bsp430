@@ -50,7 +50,7 @@
 
 #if configBSP430_HAL_TA0 - 0
 
-static const sBSP430halISRCallbackIndexed * cc_callback_TA0[
+static const sBSP430halISRIndexedChainNode * cc_callback_TA0[
 #if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
   2
 #elif defined(__MSP430_HAS_TA3__) || defined(__MSP430_HAS_T0A3__)
@@ -71,13 +71,13 @@ sBSP430halTIMER xBSP430hal_TA0_ = {
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
   },
   .hpl = BSP430_HPL_TA0,
-  .cc_callback = cc_callback_TA0
+  .cc_cbchain_ni = cc_callback_TA0
 };
 #endif /* configBSP430_HAL_TA0 */
 
 #if configBSP430_HAL_TA1 - 0
 
-static const sBSP430halISRCallbackIndexed * cc_callback_TA1[
+static const sBSP430halISRIndexedChainNode * cc_callback_TA1[
 #if defined(__MSP430_HAS_T1A2__)
   2
 #elif defined(__MSP430_HAS_T1A3__)
@@ -98,13 +98,13 @@ sBSP430halTIMER xBSP430hal_TA1_ = {
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
   },
   .hpl = BSP430_HPL_TA1,
-  .cc_callback = cc_callback_TA1
+  .cc_cbchain_ni = cc_callback_TA1
 };
 #endif /* configBSP430_HAL_TA1 */
 
 #if configBSP430_HAL_TA2 - 0
 
-static const sBSP430halISRCallbackIndexed * cc_callback_TA2[
+static const sBSP430halISRIndexedChainNode * cc_callback_TA2[
 #if defined(__MSP430_HAS_T2A2__)
   2
 #elif defined(__MSP430_HAS_T2A3__)
@@ -125,13 +125,13 @@ sBSP430halTIMER xBSP430hal_TA2_ = {
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
   },
   .hpl = BSP430_HPL_TA2,
-  .cc_callback = cc_callback_TA2
+  .cc_cbchain_ni = cc_callback_TA2
 };
 #endif /* configBSP430_HAL_TA2 */
 
 #if configBSP430_HAL_TA3 - 0
 
-static const sBSP430halISRCallbackIndexed * cc_callback_TA3[
+static const sBSP430halISRIndexedChainNode * cc_callback_TA3[
 #if defined(__MSP430_HAS_T3A2__)
   2
 #elif defined(__MSP430_HAS_T3A3__)
@@ -152,13 +152,13 @@ sBSP430halTIMER xBSP430hal_TA3_ = {
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
   },
   .hpl = BSP430_HPL_TA3,
-  .cc_callback = cc_callback_TA3
+  .cc_cbchain_ni = cc_callback_TA3
 };
 #endif /* configBSP430_HAL_TA3 */
 
 #if configBSP430_HAL_TB0 - 0
 
-static const sBSP430halISRCallbackIndexed * cc_callback_TB0[
+static const sBSP430halISRIndexedChainNode * cc_callback_TB0[
 #if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
   3
 #else
@@ -177,13 +177,13 @@ sBSP430halTIMER xBSP430hal_TB0_ = {
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
   },
   .hpl = BSP430_HPL_TB0,
-  .cc_callback = cc_callback_TB0
+  .cc_cbchain_ni = cc_callback_TB0
 };
 #endif /* configBSP430_HAL_TB0 */
 
 #if configBSP430_HAL_TB1 - 0
 
-static const sBSP430halISRCallbackIndexed * cc_callback_TB1[
+static const sBSP430halISRIndexedChainNode * cc_callback_TB1[
 #if defined(__MSP430_HAS_T1B3__)
   3
 #else
@@ -202,13 +202,13 @@ sBSP430halTIMER xBSP430hal_TB1_ = {
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
   },
   .hpl = BSP430_HPL_TB1,
-  .cc_callback = cc_callback_TB1
+  .cc_cbchain_ni = cc_callback_TB1
 };
 #endif /* configBSP430_HAL_TB1 */
 
 #if configBSP430_HAL_TB2 - 0
 
-static const sBSP430halISRCallbackIndexed * cc_callback_TB2[
+static const sBSP430halISRIndexedChainNode * cc_callback_TB2[
 #if defined(__MSP430_HAS_T2B3__)
   3
 #else
@@ -227,7 +227,7 @@ sBSP430halTIMER xBSP430hal_TB2_ = {
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
   },
   .hpl = BSP430_HPL_TB2,
-  .cc_callback = cc_callback_TB2
+  .cc_cbchain_ni = cc_callback_TB2
 };
 #endif /* configBSP430_HAL_TB2 */
 
@@ -349,7 +349,7 @@ __attribute__((__interrupt__(TIMER0_A0_VECTOR)))
 isr_cc0_TA0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA0;
-  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_callback, timer, 0, 0);
+  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
@@ -365,10 +365,10 @@ isr_TA0 (void)
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
-      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
     } else {
       int cc = iv / 2;
-      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, cc, rv);
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -381,7 +381,7 @@ __attribute__((__interrupt__(TIMER1_A0_VECTOR)))
 isr_cc0_TA1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA1;
-  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_callback, timer, 0, 0);
+  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
@@ -397,10 +397,10 @@ isr_TA1 (void)
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
-      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
     } else {
       int cc = iv / 2;
-      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, cc, rv);
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -413,7 +413,7 @@ __attribute__((__interrupt__(TIMER2_A0_VECTOR)))
 isr_cc0_TA2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA2;
-  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_callback, timer, 0, 0);
+  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
@@ -429,10 +429,10 @@ isr_TA2 (void)
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
-      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
     } else {
       int cc = iv / 2;
-      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, cc, rv);
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -445,7 +445,7 @@ __attribute__((__interrupt__(TIMER3_A0_VECTOR)))
 isr_cc0_TA3 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA3;
-  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_callback, timer, 0, 0);
+  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
@@ -461,10 +461,10 @@ isr_TA3 (void)
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
-      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
     } else {
       int cc = iv / 2;
-      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, cc, rv);
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -481,7 +481,7 @@ __attribute__((__interrupt__(TIMER0_B0_VECTOR)))
 isr_cc0_TB0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB0;
-  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_callback, timer, 0, 0);
+  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
@@ -497,10 +497,10 @@ isr_TB0 (void)
   if (0 != iv) {
     if (TB_OVERFLOW == iv) {
       ++timer->overflow_count;
-      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
     } else {
       int cc = iv / 2;
-      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, cc, rv);
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -513,7 +513,7 @@ __attribute__((__interrupt__(TIMER1_B0_VECTOR)))
 isr_cc0_TB1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB1;
-  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_callback, timer, 0, 0);
+  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
@@ -529,10 +529,10 @@ isr_TB1 (void)
   if (0 != iv) {
     if (TB_OVERFLOW == iv) {
       ++timer->overflow_count;
-      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
     } else {
       int cc = iv / 2;
-      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, cc, rv);
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -545,7 +545,7 @@ __attribute__((__interrupt__(TIMER2_B0_VECTOR)))
 isr_cc0_TB2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB2;
-  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_callback, timer, 0, 0);
+  int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
@@ -561,10 +561,10 @@ isr_TB2 (void)
   if (0 != iv) {
     if (TB_OVERFLOW == iv) {
       ++timer->overflow_count;
-      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_callback, timer, rv);
+      rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
     } else {
       int cc = iv / 2;
-      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_callback, timer, cc, rv);
+      rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);

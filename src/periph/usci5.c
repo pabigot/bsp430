@@ -74,7 +74,7 @@
 
 #define SERIAL_HPL_RELEASE_HPL_NI(_hal,_hpl) do {       \
     (_hpl)->ctlw0 &= ~UCSWRST;                          \
-    if ((_hal)->rx_callback) {                          \
+    if ((_hal)->rx_cbchain_ni) {                          \
       (_hpl)->ie |= UCRXIE;                             \
     }                                                   \
   } while (0)
@@ -259,7 +259,7 @@ vBSP430usci5WakeupTransmit_ni (hBSP430halSERIAL hal)
 int
 iBSP430usci5UARTrxByte_ni (hBSP430halSERIAL hal)
 {
-  if (hal->rx_callback) {
+  if (hal->rx_cbchain_ni) {
     return -1;
   }
   if (SERIAL_HAL_HPL(hal)->ifg & UCRXIFG) {
@@ -271,7 +271,7 @@ iBSP430usci5UARTrxByte_ni (hBSP430halSERIAL hal)
 int
 iBSP430usci5UARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), c);
@@ -285,7 +285,7 @@ iBSP430usci5UARTtxData_ni (hBSP430halSERIAL hal,
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (p < edata) {
@@ -299,7 +299,7 @@ iBSP430usci5UARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (*str) {
@@ -319,7 +319,7 @@ iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
   size_t transaction_length = tx_len + rx_len;
   size_t i = 0;
 
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (i < transaction_length) {
@@ -457,7 +457,7 @@ usci5_isr (hBSP430halSERIAL hal)
     case USCI_NONE:
       break;
     case USCI_UCTXIFG:
-      rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_callback, hal, 0);
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_cbchain_ni, hal, 0);
       if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
         /* Found some data; send it out */
         ++hal->num_tx;
@@ -477,7 +477,7 @@ usci5_isr (hBSP430halSERIAL hal)
     case USCI_UCRXIFG:
       hal->rx_byte = SERIAL_HAL_HPL(hal)->rxbuf;
       ++hal->num_rx;
-      rv = iBSP430callbackInvokeISRVoid_ni(&hal->rx_callback, hal, 0);
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->rx_cbchain_ni, hal, 0);
       break;
   }
   return rv;

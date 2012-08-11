@@ -66,7 +66,7 @@
 
 #define SERIAL_HAL_RELEASE_NI(_hal) do {        \
     HAL_HPL_FIELD(_hal,ctlw0) &= ~UCSWRST;      \
-    if ((_hal)->rx_callback) {                  \
+    if ((_hal)->rx_cbchain_ni) {                  \
       HAL_HPL_FIELD(_hal,ie) |= UCRXIE;         \
     }                                           \
   } while (0)
@@ -285,7 +285,7 @@ vBSP430eusciWakeupTransmit_ni (hBSP430halSERIAL hal)
 int
 iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL hal)
 {
-  if (hal->rx_callback) {
+  if (hal->rx_cbchain_ni) {
     return -1;
   }
   if (SERIAL_HAL_HPL_A(hal)->ifg & UCRXIFG) {
@@ -297,7 +297,7 @@ iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL hal)
 int
 iBSP430eusciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   UART_RAW_TRANSMIT_NI(hal, c);
@@ -311,7 +311,7 @@ iBSP430eusciUARTtxData_ni (hBSP430halSERIAL hal,
 {
   const uint8_t * p = data;
   const uint8_t * edata = data + len;
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (p < edata) {
@@ -325,7 +325,7 @@ iBSP430eusciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (*str) {
@@ -348,7 +348,7 @@ iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
   volatile unsigned int * txbp = &HAL_HPL_FIELD(hal, txbuf);
   volatile unsigned int * rxbp = &HAL_HPL_FIELD(hal, rxbuf);
 
-  if (hal->tx_callback) {
+  if (hal->tx_cbchain_ni) {
     return -1;
   }
   while (i < transaction_length) {
@@ -491,7 +491,7 @@ euscia_isr (hBSP430halSERIAL hal)
     case USCI_NONE:
       break;
     case USCI_UART_UCTXIFG: /* == USCI_SPI_UCTXIFG */
-      rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_callback, hal, 0);
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_cbchain_ni, hal, 0);
       if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
         /* Found some data; send it out */
         ++hal->num_tx;
@@ -511,7 +511,7 @@ euscia_isr (hBSP430halSERIAL hal)
     case USCI_UART_UCRXIFG: /* == USCI_SPI_UCRXIFG */
       hal->rx_byte = SERIAL_HAL_HPL_A(hal)->rxbuf;
       ++hal->num_rx;
-      rv = iBSP430callbackInvokeISRVoid_ni(&hal->rx_callback, hal, 0);
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->rx_cbchain_ni, hal, 0);
       break;
   }
   return rv;

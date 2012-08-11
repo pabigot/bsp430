@@ -29,7 +29,7 @@
 #endif /* APP_HH10D_PORT_PERIPH_HANDLE */
 
 struct sHH10D {
-  sBSP430halISRCallbackIndexed cb;
+  sBSP430halISRIndexedChainNode cb;
   volatile sBSP430hplTIMER * freq_timer;
   int uptime_ccidx;
   unsigned int sample_duration_utt;
@@ -43,13 +43,13 @@ register_hh10d_ni (struct sHH10D * sp)
   /* Hook into the uptime infrastructure and have the HH10D callback
    * invoked once per second, starting as soon as interrupts are
    * enabled. */
-  sp->cb.next_ni = xBSP430uptimeTimer()->cc_callback[sp->uptime_ccidx];
-  xBSP430uptimeTimer()->cc_callback[sp->uptime_ccidx] = &sp->cb;
+  sp->cb.next_ni = xBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx];
+  xBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx] = &sp->cb;
   xBSP430uptimeTimer()->hpl->cctl[sp->uptime_ccidx] = CCIFG | CCIE;
 }
 
 static int
-hh10d_1Hz_isr (const struct sBSP430halISRCallbackIndexed *cb,
+hh10d_1Hz_isr (const struct sBSP430halISRIndexedChainNode *cb,
                void *context,
                int idx)
 {
