@@ -177,7 +177,6 @@ void main ()
 #endif /* APP_CONFIGURE_PORTS_FOR_LPM */
   vBSP430platformInitialize_ni();
 
-
   (void)iBSP430consoleInitialize();
 
   cprintf("Application is running\n");
@@ -208,8 +207,6 @@ void main ()
   }
   cputchar_ni('\n');
 
-  cprintf("On entry, PMMCTL0 is %04x\n", PMMCTL0);
-
 #endif
 
   b0hal = hBSP430portLookup(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE);
@@ -218,6 +215,7 @@ void main ()
   b0hal->pin_callback[b0pin] = &button_cb;
   b0hpl->sel &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   b0hpl->dir &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
+  
 #if BSP430_PORT_SUPPORTS_REN - 0
   BSP430_PORT_HAL_HPL_REN(b0hal) |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
   BSP430_PORT_HAL_HPL_OUT(b0hal) |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
