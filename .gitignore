@@ -1,3 +1,9 @@
+# Generated HTML files from Doxygen
 /html/
+# Object files and executables
 *.o
 *.elf
+# Generated dependency files
+*.d
+# Generated listing files
+*.lst
