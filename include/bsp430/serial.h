@@ -50,22 +50,22 @@
 #include <bsp430/periph.h>
 
 /** Field value for variant stored in
- * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplUSCI. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_USCI 1
 
 /** Field value for variant stored in
- * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplUSCI5. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_USCI5 2
 
 /** Field value for variant stored in
- * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplEUSCIA. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA 3
 
 /** Field value for variant stored in
- * #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
+ * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplEUSCIA. */
 #define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB 4
 
@@ -649,7 +649,7 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  *
  * @param ctl0_byte The configuration to be written to the device's
  * ctl0 byte.  For I2C mode, potential values specified in the
- * <msp430.h> header include #UCA10, #UCSLA10, #UCMMM, and #UCMST (but
+ * <msp430.h> header include #UCA10, #UCSLA10, #UCMM, and #UCMST (but
  * <b>see the warning above</b>).  The UCSYNC field is cleared and the
  * UCMODE field is configured for I2C before being written.
  *
