@@ -137,7 +137,7 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device)
 
 void vBSP430platformInitialize_ni (void)
 {
-#if ! (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
+#if BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG - 0
   /* Hold off watchdog */
   WDTCTL = WDTPW | WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */

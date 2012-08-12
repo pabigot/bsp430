@@ -210,10 +210,18 @@
  *
  * Control use of the watchdog infrastructure by BSP430.
  *
- * If defined to a true value, the watchdog will not be inhibited by
- * vBSP430platformInitialize_ni(), and any code where BSP430 executes a
- * loop will invoke #BSP430_CORE_WATCHDOG_CLEAR() at a frequency of at
- * least once every 30 milliseconds.
+ * If defined to a true value, the function macros
+ * #BSP430_CORE_WATCHDOG_CLEAR() and #BSP430_CORE_DELAY_CYCLES() will
+ * reset the watchdog in accordance with their descriptions.  If
+ * false, those macros will not manipulate the watchdog register.
+ *
+ * When watchdog support is enabled, all BSP430 functions that might
+ * execute for more than 30 milliseconds with an MCLK frequency of at
+ * least 1 MHz will invoke #BSP430_CORE_WATCHDOG_CLEAR() at a
+ * frequency of at least once every 30 milliseconds.
+ *
+ * See #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG, which defaults to true
+ * if and only if #configBSP430_CORE_SUPPORT_WATCHDOG is false.
  *
  * @warning The above is described intent and has not been rigorously
  * validated.
@@ -236,10 +244,11 @@
  * __watchdog_clear() after manually halting the watchdog will restart
  * it in its last active configuration.
  *
- * @warning To reduce preprocessor conditionals in the core library,
- * this macro is unconditionally bound to a no-op if
- * #configBSP430_CORE_SUPPORT_WATCHDOG is false, even if it has been
- * previously defined to a different value.
+ * It is safe to use this macro regardless of whether
+ * #configBSP430_CORE_SUPPORT_WATCHDOG is true.  When the watchdog is
+ * not supported, it evalutes to an empty statement.
+ *
+ * @see #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG
  *
  * @defaulted */
 #if configBSP430_CORE_SUPPORT_WATCHDOG - 0

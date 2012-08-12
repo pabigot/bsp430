@@ -60,7 +60,7 @@
 /** Basic configuration for the platform.
  *
  * This routine will:
- * @li Disable the watchdog
+ * @li Disable the watchdog (see #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG)
  * @li Configure the LEDs (see #BSP430_PLATFORM_BOOT_CONFIGURE_LEDS)
  * @li Crystal configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1)
  * @li Clock configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
@@ -511,6 +511,26 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
 #define BSP430_PLATFORM_PERIPHERAL_HELP 1 /* True unless platform explicitly disabled it */
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
 #endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG
+ *
+ * If defined to a true value vBSP430platformInitialize_ni() will set
+ * the watchdog infrastructure into a reset state prior to any other
+ * activities.
+ *
+ * If #configBSP430_CORE_SUPPORT_WATCHDOG is true then this is
+ * defaulted to false; otherwise it is defaulted to true.
+ *
+ * @warning If #configBSP430_CORE_SUPPORT_WATCHDOG is true and
+ * #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG is also true, the watchdog
+ * will be disabled, but subsequent invocations of
+ * #BSP430_CORE_WATCHDOG_CLEAR() are likely to re-enable it, possibly
+ * before control returns from vBSP430platformInitialize_ni().
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG
+#define BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG (! (configBSP430_CORE_SUPPORT_WATCHDOG - 0))
+#endif /* BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG */
 
 /** @def BSP430_PLATFORM_BOOT_CONFIGURE_LEDS
  *
