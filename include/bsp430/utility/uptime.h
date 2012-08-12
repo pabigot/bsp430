@@ -43,9 +43,10 @@
  * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to
  * control the timer that will be used.
  *
- * @author Peter A. Bigot <bigotp@acm.org> @homepage
- * http://github.com/pabigot/freertos-mspgcc @date 2012 @copyright <a
- * href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @author Peter A. Bigot <bigotp@acm.org>
+ * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @date 2012
+ * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_UTILITY_UPTIME_H
