@@ -47,9 +47,9 @@ register_hh10d_ni (struct sHH10D * sp)
 }
 
 static int
-hh10d_1Hz_isr (const struct sBSP430halISRIndexedChainNode *cb,
-               void *context,
-               int idx)
+hh10d_1Hz_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
+                  void *context,
+                  int idx)
 {
   volatile struct sHH10D * hh10d = (struct sHH10D *)cb;
   unsigned int capture;
@@ -66,7 +66,7 @@ hh10d_1Hz_isr (const struct sBSP430halISRIndexedChainNode *cb,
 }
 
 static struct sHH10D hh10d = {
-  .cb = { .callback = hh10d_1Hz_isr },
+  .cb = { .callback = hh10d_1Hz_isr_ni },
 };
 
 static int bitToPin (int v)

@@ -214,8 +214,8 @@ typedef struct sConsoleRxBuffer {
 } sConsoleRxBuffer;
 
 static int
-console_rx_isr_ (const struct sBSP430halISRVoidChainNode * cb,
-                 void * context)
+console_rx_isr_ni_ (const struct sBSP430halISRVoidChainNode * cb,
+                    void * context)
 {
   sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;
   sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
@@ -229,7 +229,7 @@ console_rx_isr_ (const struct sBSP430halISRVoidChainNode * cb,
 }
 
 static sConsoleRxBuffer rx_buffer_ = {
-  .cb_node = { .callback = console_rx_isr_ },
+  .cb_node = { .callback = console_rx_isr_ni },
 };
 
 static int

@@ -53,8 +53,8 @@ consistent with this type is:
 @code
 
 static int
-handle_rx (const sBSP430halISRVoidChainNode * cb,
-           void * context)
+handle_rx_ni (const sBSP430halISRVoidChainNode * cb,
+              void * context)
 {
   hBSP430halSERIAL * hal = (hBSP430halSERIAL *)context;
   (void)cb;
@@ -74,9 +74,9 @@ index.  A stub handler definition consistent with this type is:
 volatile int last_button;
 
 static int
-button_isr (const struct sBSP430halISRIndexedChainNode * cb,
-            void * context,
-            int idx)
+button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
+               void * context,
+               int idx)
 {
   (void)cb;
   (void)context;
@@ -106,10 +106,10 @@ mutated while interrupts are disabled.  The steps required to add or remove
 a valid from the chain are straightforward:
 
 @code
-static sBSP430halISRVoidChainNode cb_node = { .callback = handle_rx };
+static sBSP430halISRVoidChainNode cb_node = { .callback = handle_rx_ni };
 /* ... */
-    cb_node.next_ni = hal->rx_callback;
-    hal->rx_callback = &cb_node;
+    cb_node.next_ni = hal->rx_cbchain_ni;
+    hal->rx_cbchain_ni = &cb_node;
 @endcode
 
 \section callback_retval Influencing Callback Chain Execution
@@ -164,8 +164,8 @@ typedef struct sConsoleRxBuffer {
 } sConsoleRxBuffer;
 
 static int
-console_rx_isr_ (const struct sBSP430halISRVoidChainNode * cb,
-                 void * context)
+console_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
+                   void * context)
 {
   sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;
   sBSP430halSERIAL * hal = (sBSP430halSERIAL *)context;
@@ -179,7 +179,7 @@ console_rx_isr_ (const struct sBSP430halISRVoidChainNode * cb,
 }
 
 static sConsoleRxBuffer rx_buffer_ = {
-  .cb_node = { .callback = console_rx_isr_ },
+  .cb_node = { .callback = console_rx_isr_ni },
 };
 
 @endcode

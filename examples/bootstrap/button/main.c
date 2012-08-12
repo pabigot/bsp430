@@ -24,9 +24,9 @@ typedef struct sButtonState {
 } sButtonState;
 
 static int
-button_isr (const struct sBSP430halISRIndexedChainNode * cb,
-            void * context,
-            int idx)
+button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
+               void * context,
+               int idx)
 {
   hBSP430halPORT hal = (hBSP430halPORT)context;
   volatile sBSP430hplPORTIE * hpl = BSP430_PORT_HAL_GET_HPL_PORTIE(hal);
@@ -54,7 +54,7 @@ button_isr (const struct sBSP430halISRIndexedChainNode * cb,
 }
 
 static sButtonState button_state = {
-  .button_cb = { .callback = button_isr },
+  .button_cb = { .callback = button_isr_ni },
   .bit = BSP430_PLATFORM_BUTTON0_PORT_BIT
 };
 

@@ -66,9 +66,9 @@ typedef struct sState {
 volatile int button;
 
 static int
-button_isr (const struct sBSP430halISRIndexedChainNode * cb,
-            void * context,
-            int idx)
+button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
+               void * context,
+               int idx)
 {
   (void)cb;
   (void)context;
@@ -81,7 +81,7 @@ button_isr (const struct sBSP430halISRIndexedChainNode * cb,
 
 const sBSP430halISRIndexedChainNode button_cb = {
   .next_ni = NULL,
-  .callback = button_isr,
+  .callback = button_isr_ni,
 };
 
 char rx_buffer[16];
