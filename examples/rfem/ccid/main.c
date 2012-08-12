@@ -14,9 +14,7 @@
  * | msp430f5529    | EXP430F5529  | P2.3 | P2.4 | P2.6 | P3.2 | P3.0 | P3.1      |
  * | msp430g2553    | Anaren Air   | P2.6 | P1.0 | P2.7 | P1.5 | P1.7 | P1.6      |
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 

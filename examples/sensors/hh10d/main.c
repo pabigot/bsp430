@@ -1,9 +1,7 @@
 /** This file is in the public domain.
  *
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 

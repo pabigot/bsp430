@@ -10,9 +10,7 @@
  * that a calibrated value is consistent, or to reveal exactly how far
  * off nominal the VLOCLK frequency really is.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 

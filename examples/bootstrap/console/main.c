@@ -8,9 +8,7 @@
  * platform: the third step is to support printf.  (Though printf is
  * heavy-weight, so we're using the console print routines.)
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 

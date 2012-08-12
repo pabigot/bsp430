@@ -14,9 +14,7 @@
  *
  * EXP430G2r1.5: Active=434; L0=85; L1=85; L2=28; L3=5.4; L4=?
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 

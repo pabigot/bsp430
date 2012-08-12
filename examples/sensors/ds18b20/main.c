@@ -4,9 +4,7 @@
  * temperature from an externally-powered Maxim DS18B20 (or similar)
  * digital thermometer.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 

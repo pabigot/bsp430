@@ -22,9 +22,7 @@
  * correct.  The value for your MCU may be different, but the
  * documentation will still apply.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @date 2012
- * @homepage http://github.com/pabigot/freertos-mspgcc
+ * @homepage http://github.com/pabigot/bsp430
  */
 *
 /* ============================================================================ */

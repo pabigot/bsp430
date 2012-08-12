@@ -6,9 +6,7 @@
  * Its role is primarily as a sanity check when bootstrapping a new
  * platform: the second step is to make LEDs blink.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 

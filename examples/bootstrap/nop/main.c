@@ -5,9 +5,7 @@
  * check when bootstrapping a new platform: the first step is to make
  * this build and link.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
+ * @homepage http://github.com/pabigot/bsp430
  *
  */
 
