@@ -180,7 +180,7 @@
 #define SELA_6              (0x0600)   /**< ACLK Source Select 6 */
 #define SELA_7              (0x0700)   /**< ACLK Source Select 7 */
 
-#define LFXT1S_0            (0x00)   /**< Mode 0 for LFXT1 : Normal operation (32 kiHz watch) */
+#define LFXT1S_0            (0x00)   /**< Mode 0 for LFXT1 : Normal operation (32 KiHz watch) */
 #define LFXT1S_1            (0x10)   /**< Mode 1 for LFXT1 : Reserved */
 #define LFXT1S_2            (0x20)   /**< Mode 2 for LFXT1 : VLO */
 #define LFXT1S_3            (0x30)   /**< Mode 3 for LFXT1 : Digital input signal */

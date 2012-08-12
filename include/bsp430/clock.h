@@ -165,7 +165,7 @@
  * should be implemented where possible as a single instruction test.
  *
  * @note This test is intended specifically to validate an external
- * watch crystal running at 32 kiHz.  Where LFXT1 is sourced from
+ * watch crystal running at 32 KiHz.  Where LFXT1 is sourced from
  * other means, it is assumed that the (missing) crystal is faulted
  * even if the peripheral-specific bit suggests it is not.  Similarly,
  * the state of the system oscillator fault bit is not reflected in
@@ -209,7 +209,7 @@
 /** @def BSP430_CLOCK_NOMINAL_XT1CLK_HZ
  *
  * Nominal rate of the external low-frequency crystal.  This is
- * expected to be a 32 kiHz watch crystal, so that's what the default
+ * expected to be a 32 KiHz watch crystal, so that's what the default
  * is.
  * @defaulted */
 #ifndef BSP430_CLOCK_NOMINAL_XT1CLK_HZ
@@ -266,7 +266,7 @@ typedef enum eBSP430clockSource {
   eBSP430clockSRC_NONE,
 
   /** XT1 is the primary external clock.  It is generally a
-   * low-frequency watch crystal running at 32 kiHz.  The nominal
+   * low-frequency watch crystal running at 32 KiHz.  The nominal
    * speed for this clock is #BSP430_CLOCK_NOMINAL_XT1CLK_HZ. */
   eBSP430clockSRC_XT1CLK,
 
@@ -275,7 +275,7 @@ typedef enum eBSP430clockSource {
    * #BSP430_CLOCK_NOMINAL_VLOCLK_HZ.  */
   eBSP430clockSRC_VLOCLK,
 
-  /** REFOCLK is an internally low power trimmed 32 kiHz oscillator
+  /** REFOCLK is an internally low power trimmed 32 KiHz oscillator
    * supported in the UCS peripheral */
   eBSP430clockSRC_REFOCLK,
 

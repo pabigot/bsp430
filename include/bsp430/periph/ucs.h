@@ -214,7 +214,7 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
  * for the duration of the trim operation.
  *
  * Alternative sources supported here are LFXT1 and REFO, both of
- * which are nominally 32 kiHz though LFXT1 could be a different
+ * which are nominally 32 KiHz though LFXT1 could be a different
  * speed.  As LFXT1 is likely more accurate than REFO, there may be
  * some benefit in using it when FLLREFCLK is REFO.
  *
@@ -258,7 +258,7 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 /** @def BSP430_UCS_NOMINAL_REFOCLK_HZ
  *
  * The UCS module supports an internally trimmed reference oscillator
- * running at a nominal 32 kiHz rate, for use where XT1 is not
+ * running at a nominal 32 KiHz rate, for use where XT1 is not
  * populated. */
 #define BSP430_UCS_NOMINAL_REFOCLK_HZ 32768U
 

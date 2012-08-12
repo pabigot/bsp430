@@ -60,7 +60,7 @@
  *
  * @li The peripheral requires LFXT1 be available and running at a
  * stable #BSP430_CLOCK_NOMINAL_XT1CLK_HZ.  The value for that crystal
- * rate defaults to 32 kiHz.
+ * rate defaults to 32 KiHz.
  *
  * @li This peripheral does not support dividing SMCLK.  Attempts to
  * configure an alternative divisor will result in a zero divisor.

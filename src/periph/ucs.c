@@ -88,7 +88,7 @@
 
 /* Frequency measurement occurs over this duration when determining
  * whether trim is required.  The number of SMCLK ticks in an ACLK
- * period is the target frequency divided by ACLK_HZ (32768 kiHz);
+ * period is the target frequency divided by ACLK_HZ (32768 KiHz);
  * accumulating over multiple ACLK periods decreases the measurement
  * error.  At a maximum target frequency of 2^25 (32 MiHz) the tick
  * count for a single period might require 11 bits to represent, so do
