@@ -1,6 +1,8 @@
-/* Use a crystal if one is installed.  Much more accurate timing
- * results. */
+/* Although a crystal supports more accurate timing, it does increase
+ * current.  Disable it unless otherwise requested */
+#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 0
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
 
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1

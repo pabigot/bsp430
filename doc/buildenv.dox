@@ -31,5 +31,90 @@
 
 /*! \page buildenv The BSP430 Build Environment
 
+The current BSP430 build environment is based on GNU make, and uses a fairly
+complex shared Makefile.common to reduce the amount of boilerplate that's
+required in application-specific Makefiles.
+
+First, the environment variable @c BSP430_ROOT should be set to point to the
+root of your BSP430 installation: that is the directory containing the @c
+include, @c src, and @c examples directories.
+
+Consider the following basic Makefile, taken from @link ex_bootstrap_nop the
+null program@endlink:
+
+\include bootstrap/nop/Makefile
+
+This specifies all you need:
+
+@li The @c PLATFORM variable identifies the target for the application.  In
+this case, the default is for the EXP430FR5739 "Fraunchpad", but the syntax
+indicates that prior definitions including ones passed on the command line
+take precedence.
+
+@li The @c MODULES variable specifies the elements of BSP430 that must be
+compiled and linked to produce the executable.  @c MODULES_PLATFORM is
+defined by the infrastructure based on the value of @c PLATFORM, and
+contains the platform-specific source along with the modules that provide
+the uptime timer and LED support.   Other modules are specified by their root file name within the
+BSP430 src directory, e.g. @c utility/onewire.
+
+@li The @c SRC variable lists the C source files that are application
+specific.
+
+@li The @c include directive loads in the standard infrastructure that
+actually builds the application
+
+The make infrastructure will build a list of sources by combining
+information from @c MODULES and @c SRC, scan them and create dependency
+files based on what headers they require, build the application, and
+download it to the target board.  It supports these standard rules:
+
+@li @c app.elf builds the application into an ELF executable
+
+@li @c clean removes all object files, leaving the application and any
+dependency files
+
+@li @c realclean removes the object files and application along with any
+dependency files that were created
+
+@li @c install builds @c app.elf then programs it onto the board using rules
+determined by the @c PLATFORM
+
+There are a large number of other options and features including:
+
+@li Ability to modify @c CPPFLAGS, @c LDFLAGS, @c CFLAGS, and
+target-specific flags such as memory model both from the application
+Makefile (e.g., @c AUX_CPPFLAGS) and from the command-line (e.g., @c
+EXT_CPPFLAGS);
+
+@li Pre-defined variables supplying core functionality in a
+platform-independent manner, such as @c MODULES_SERIAL, @c MODULES_CONSOLE,
+and other common generic features;
+
+@li A target @c foo.lst which produces an interleaved source/assembler
+listing for the source file @c foo.c;
+
+@li Full control over how applications are downloaded into devices
+
+All of which are documented in
+<c>${BSP430_ROOT}/examples/Makefile.common</c>.  For more details read that
+file and review the Makefiles in the examples directories.
+
+Here is one last example, the Makefile for the @link ex_bootstrap_applpm the
+application LPM program@endlink:
+
+\include bootstrap/applpm/Makefile
+
+Using this, if you wanted to build a version that configured the clocks at
+16 MHz and used the crystal, and immediately download it to the target, you
+would use:
+
+@code
+make \
+   EXT_CPPFLAGS=-DBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1=1 \
+   MCLK=16000000 \
+   realclean install
+@endcode
+
 @copyright_doc
 */

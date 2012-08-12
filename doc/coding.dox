@@ -123,8 +123,9 @@ Except where a data type is used as part of an interface to an external
 system or to reflect a specific intent, native types are used.
 
 @li @c int is the native type.  Anybody using an MSP430 should know that
-this is a 16-bit value.  <c>unsigned int</c> is the type for any 16-bit
-peripheral registers.
+this is a 16-bit value.
+
+@li <c>unsigned int</c> is the type for any 16-bit peripheral registers.
 
 @li <c>unsigned char</c> is the type for any 8-bit peripheral registers.
 
@@ -133,6 +134,9 @@ peripheral registers.
 @li Data transmitted to and from an external system using the @link
 bsp430/serial.h serial abstraction@endlink uses @c uint8_t as codified in
 <c><stdint.h></c>.
+
+@li Any parameter that is a pointer to data the function is expected not to
+modify should include the appropriate @c const qualifier.
 
 \section coding_misc Miscellaneous
 
@@ -148,9 +152,9 @@ if (4 <= len) {
 @endcode
 
 Yes, even if the conditional operator "couldn't possibly be mistyped" as an
-assignment operator.
-
-<a href="http://www.dodgycoder.net/2011/11/yoda-conditions-pokemon-exception.html">Up with it you must put.</a>
+assignment operator.  <a
+href="http://www.dodgycoder.net/2011/11/yoda-conditions-pokemon-exception.html">Up
+with it you must put.</a>
 
 \subsection coding_misc_rv Function Return Values
 
@@ -207,7 +211,9 @@ symbols such as <c>\__MSP430_HAS_ADC12__</c>, but is required to allow use of:
 to denote that the feature is being explicitly disabled.  BSP430 should
 ensure that any feature test flag has a definition to either 1 or 0 (or to
 an expression that will evaluate to either a true or false value when used
-within a preprocessor condition).
+within a preprocessor condition).  (The subtraction of 0 is to allow
+syntactic correctness when somebody inappropriately defines the feature flag
+with no value: such a case is equivalent to setting it false.)
 
 @copyright_doc
 */
