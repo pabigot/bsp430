@@ -61,7 +61,7 @@
 #ifndef BSP430_CLOCK_H
 #define BSP430_CLOCK_H
 
-#include <bsp430/common.h>
+#include <bsp430/core.h>
 
 /** @def BSP430_CLOCK_NOMINAL_MCLK_HZ
  *

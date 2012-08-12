@@ -82,7 +82,7 @@
 #ifndef BSP430_PERIPH_H
 #define BSP430_PERIPH_H
 
-#include <bsp430/common.h>
+#include <bsp430/core.h>
 #include <msp430.h>
 
 /** An integral type used to uniquely identify a raw MCU peripheral.

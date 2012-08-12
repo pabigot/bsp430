@@ -48,7 +48,7 @@
  * defaults for the FreeRTOS port.
  *
  * The @c FreeRTOS.h header is similarly included by @c
- * bsp430/common.h when #configBSP430_RTOS_FREERTOS is defined to a
+ * bsp430/core.h when #configBSP430_RTOS_FREERTOS is defined to a
  * true value by the compilation environment.  This ensures that the
  * BSP430 infrastructure uses FreeRTOS-compatible mechanisms for
  * critical sections and interrupt management.
@@ -60,7 +60,7 @@
 #ifndef BSP430_RTOS_FREERTOS_H
 #define BSP430_RTOS_FREERTOS_H
 
-#include <bsp430/common.h>
+#include <bsp430/core.h>
 #include <bsp430/clock.h>
 
 /** Mark that BSP430 will be running under FreeRTOS.
@@ -68,13 +68,13 @@
  * Defining this macro to a true value externally to the system will:
  * <ul>
  *
- * <li> Cause the inclusion of bsp430/common.h to also include
+ * <li> Cause the inclusion of bsp430/core.h to also include
  * "FreeRTOS.h", making available the standard FreeRTOS environment to
  * BSP430 library code and defining RTOS-related macros to use the
  * FreeRTOS implementation.
  *
  * <li> Cause the inclusion of "FreeRTOS.h" to include
- * <bsp430/common.h>, make standard BSP430 configuration data
+ * <bsp430/core.h>, make standard BSP430 configuration data
  * available to the FreeRTOS application code.
  *
  * </ul> This cascading effect should be initiated by adding

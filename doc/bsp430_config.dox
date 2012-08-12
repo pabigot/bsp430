@@ -65,8 +65,8 @@ file is compiled, it is critical that all object files in an application
 have consistent flag definitions.
 
 Each header in BSP430 that does not include another BSP430 file includes the
-file bsp430/common.h.  Subject to
-#configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE, the first thing this file
+file bsp430/core.h.  Subject to
+#configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE, the first thing this file
 does is:
 
 @code

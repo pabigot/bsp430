@@ -43,8 +43,8 @@
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
-#ifndef BSP430_COMMON_H
-#define BSP430_COMMON_H
+#ifndef BSP430_CORE_H
+#define BSP430_CORE_H
 
 #include <msp430.h>             /* MSP430 MCU-specific information */
 #include <stdint.h>             /* Size-annotated integral types (uint8_t) */
@@ -58,16 +58,16 @@
  * number. */
 #define BSP430_VERSION 20120811
 
-/** @def configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE
+/** @def configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE
  *
  * BSP430 depends heavily on configuration specified by preprocessor
  * tokens defined to true or false values.  Proper application
  * behavior requires that all object files be built using the same
  * configuration settings.
  *
- * All BSP430 implementation files include <bsp430/common.h>, either
+ * All BSP430 implementation files include <bsp430/core.h>, either
  * directly or through other headers.  Defining
- * #configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE to a true value
+ * #configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE to a true value
  * (which is its default) will cause this header to include a file
  * named "bsp430_config.h", which is presumed to be in the compiler's
  * include path.  All application configuration may be placed into
@@ -77,17 +77,17 @@
  *
  * If you provide configuration solely through external means (e.g.,
  * through @c -D arguments to the preprocessor) you can inhibit this
- * inclusion by defining #configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE to 0.
+ * inclusion by defining #configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE to 0.
  *
  * @cppflag
  * @defaulted */
-#ifndef configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE
-#define configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE 1
-#endif /* configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE */
+#ifndef configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE
+#define configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE 1
+#endif /* configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE */
 
-#if configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE - 0
+#if configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE - 0
 #include "bsp430_config.h"
-#endif /* configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE */
+#endif /* configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE */
 
 /** @def BSP430_CORE_FAMILY_IS_5XX
  *
@@ -406,4 +406,4 @@
 #define BSP430_RTOS_YIELD_FROM_ISR() do { } while (0)
 #endif /* BSP430_RTOS_YIELD_FROM_ISR */
 
-#endif /* BSP430_COMMON_H */
+#endif /* BSP430_CORE_H */

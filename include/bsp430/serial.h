@@ -46,7 +46,7 @@
 #ifndef BSP430_SERIAL_H
 #define BSP430_SERIAL_H
 
-#include <bsp430/common.h>
+#include <bsp430/core.h>
 #include <bsp430/periph.h>
 
 /** Field value for variant stored in

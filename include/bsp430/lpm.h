@@ -60,7 +60,7 @@
 #ifndef BSP430_LPM_H
 #define BSP430_LPM_H
 
-#include <bsp430/common.h>
+#include <bsp430/core.h>
 #include <msp430.h>
 
 /** Reset all port pins for low power applications.
