@@ -29,9 +29,17 @@ BSP430 features:
   currently focused on the `MSPGCC`_ toolchain in a POSIX command-line
   environment supported by GNU Make
 
+Please see the `documentation`_, `issue tracker`_, and
+`homepage`_ on github.  Get a copy using git::
+
+ git clone git://github.com/pabigot/bsp430.git
+
+or by downloading the master branch via: https://github.com/pabigot/bsp430/tarball/master
+
 Copyright 2012, Peter A. Bigot, and licensed under `BSD-3-Clause`_.
 
-.. _giturl:
-.. _homepage: 
+.. _documentation: http://pabigot.github.com/bsp430/
+.. _issue tracker: http://github.com/pabigot/bsp430/issues
+.. _homepage: http://github.com/pabigot/bsp430
 .. _BSD-3-Clause: http://www.opensource.org/licenses/BSD-3-Clause
 .. _MSPGCC: http://sourceforge.net/projects/mspgcc/

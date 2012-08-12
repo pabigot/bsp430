@@ -71,6 +71,18 @@ license.
 For further details, please see the Background, Philosophy, @link coding
 Coding Style@endlink, and Maintenance pages.
 
+Please download using git:
+
+@code
+git clone git://github.com/pabigot/bsp430.git
+@endcode
+
+or get a <a href="https://github.com/pabigot/bsp430/tarball/master">tar
+file</a> of the complete source.
+
+Please file support requests and bug reports on the <a
+href="http://github.com/pabigot/bsp430/issues">issue tracker</a>.
+
 \section mp_capabilities Capabilities Currently Supported
 
 \li @link bsp430/periph/timer.h Timers @endlink supporting both Timer_A and
