@@ -574,7 +574,7 @@ usciabrx_isr (hBSP430halSERIAL hal)
 
 #if configBSP430_HAL_USCI_AB0RX_ISR - 0
 static void
-__attribute__((__interrupt__(USCI_AB0RX_VECTOR)))
+__attribute__((__interrupt__(USCIAB0RX_VECTOR)))
 isr_USCI_AB0RX (void)
 {
   hBSP430halSERIAL usci = NULL;
@@ -598,6 +598,33 @@ isr_USCI_AB0RX (void)
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* HAL USCI_AB0RX ISR */
+
+#if configBSP430_HAL_USCI_AB1RX_ISR - 0
+static void
+__attribute__((__interrupt__(USCIAB1RX_VECTOR)))
+isr_USCI_AB1RX (void)
+{
+  hBSP430halSERIAL usci = NULL;
+  int rv = 0;
+
+  if (0) {
+  }
+#if configBSP430_HAL_USCI_A1 - 0
+  else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->rx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->ifgp)) {
+    usci = BSP430_HAL_USCI_A1;
+  }
+#endif /* configBSP430_HAL_USCI_A1 */
+#if configBSP430_HAL_USCI_B1 - 0
+  else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->rx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->ifgp)) {
+    usci = BSP430_HAL_USCI_B1;
+  }
+#endif /* configBSP430_HAL_USCI_B1 */
+  if (usci) {
+    rv = usciabrx_isr(usci);
+  }
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
+}
+#endif /* HAL USCI_AB1RX ISR */
 
 #endif  /* HAL USCI_ABxRX ISR */
 
@@ -630,7 +657,7 @@ usciabtx_isr (hBSP430halSERIAL hal)
 
 #if configBSP430_HAL_USCI_AB0TX_ISR - 0
 static void
-__attribute__((__interrupt__(USCI_AB0TX_VECTOR)))
+__attribute__((__interrupt__(USCIAB0TX_VECTOR)))
 isr_USCI_AB0TX (void)
 {
   int rv = 0;
@@ -654,6 +681,33 @@ isr_USCI_AB0TX (void)
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* HAL USCI_AB0TX ISR */
+
+#if configBSP430_HAL_USCI_AB1TX_ISR - 0
+static void
+__attribute__((__interrupt__(USCIAB1TX_VECTOR)))
+isr_USCI_AB1TX (void)
+{
+  int rv = 0;
+  hBSP430halSERIAL usci = NULL;
+
+  if (0) {
+  }
+#if configBSP430_HAL_USCI_A1 - 0
+  else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->tx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->ifgp)) {
+    usci = BSP430_HAL_USCI_A1;
+  }
+#endif /* configBSP430_HAL_USCI_A1 */
+#if configBSP430_HAL_USCI_B1 - 0
+  else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->tx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->ifgp)) {
+    usci = BSP430_HAL_USCI_B1;
+  }
+#endif /* configBSP430_HAL_USCI_B1 */
+  if (usci) {
+    rv = usciabtx_isr(usci);
+  }
+  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
+}
+#endif /* HAL USCI_AB1TX ISR */
 
 #endif  /* HAL USCI_ABxTX ISR */
 
