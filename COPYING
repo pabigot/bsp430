@@ -1,0 +1,12 @@
+The majority of files in this package are copyright Peter A. Bigot, are
+released under the BSD-3-Clause license, and are so-marked in the source.
+Docy
+
+Most material in the examples subdirectory is placed in the public domain
+and is so-marked.
+
+Exceptions to this are listed below.
+
+File          License        Copyright                  Comment
+------------  ------------   ----------------------     ---------------
+doc/msp430.h  BSD-3-Clause   2012 Texas Instruments     Derivative work
