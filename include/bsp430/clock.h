@@ -315,7 +315,7 @@ typedef enum eBSP430clockSource {
    * Generally this will be equivalent to
    * #eBSP430clockSRC_XT1CLK_OR_VLOCLK or
    * #eBSP430clockSRC_XT1CLK_OR_REFOCLK, depending on what clock
-   * peripheral is available.  Use usBSP430clockACLK_Hz_ni() to
+   * peripheral is available.  Use uiBSP430clockACLK_Hz_ni() to
    * determine what the actual (nominal) speed is. */
   eBSP430clockSRC_XT1CLK_FALLBACK,
 
@@ -517,18 +517,18 @@ int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel);
  * #BSP430_CLOCK_NOMINAL_XT1CLK_HZ.
  *
  * @return an estimate of the ACLK frequency, in Hz */
-unsigned short usBSP430clockACLK_Hz_ni (void);
+unsigned int uiBSP430clockACLK_Hz_ni (void);
 
-/** Interruptible-preserving wrapper for usBSP430clockACLK_Hz_ni() */
-static unsigned short
+/** Interruptible-preserving wrapper for uiBSP430clockACLK_Hz_ni() */
+static unsigned int
 __inline__
-usBSP430clockACLK_Hz (void)
+uiBSP430clockACLK_Hz (void)
 {
-  unsigned short rv;
+  unsigned int rv;
   BSP430_CORE_INTERRUPT_STATE_T istate;
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = usBSP430clockACLK_Hz_ni();
+  rv = uiBSP430clockACLK_Hz_ni();
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }

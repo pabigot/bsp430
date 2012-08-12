@@ -183,8 +183,8 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   return rc;
 }
 
-unsigned short
-usBSP430clockACLK_Hz_ni (void)
+unsigned int
+uiBSP430clockACLK_Hz_ni (void)
 {
   switch (CSCTL2 & SELA_MASK) {
     case SELA__XT1CLK: /* XT1CLK */

@@ -239,7 +239,7 @@ ulBSP430timerFrequency_Hz_ni (hBSP430halTIMER timer)
     case TASSEL_0:
       return 0;
     case TASSEL_1:
-      freq_Hz = usBSP430clockACLK_Hz_ni();
+      freq_Hz = uiBSP430clockACLK_Hz_ni();
       break;
     case TASSEL_2:
       freq_Hz = ulBSP430clockSMCLK_Hz_ni();

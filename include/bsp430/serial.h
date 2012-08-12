@@ -416,7 +416,7 @@ struct sBSP430serialDispatch {
  * automatically.  ACLK will be used as the baud rate clock if ACLK is
  * both at least 20 kHz and at least three times faster than the
  * requested baud rate; otherwise SMCLK will be used.  The function
- * invokes ulBSP430clockSMCLK_Hz() and usBSP430clockACLK_Hz() as
+ * invokes ulBSP430clockSMCLK_Hz() and uiBSP430clockACLK_Hz() as
  * necessary to determine the actual speed of the baud rate clock.
  *
  * @return @a A peripheral-specific HAL handle if the allocation and

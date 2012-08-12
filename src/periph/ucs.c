@@ -127,8 +127,8 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
   unsigned int ucsctl4;
   unsigned int ucsctl5;
   unsigned int scg0;
-  short taps_left = 32;
-  unsigned short last_ctl0;
+  int taps_left = 32;
+  unsigned int last_ctl0;
   uint16_t tolerance_tsp;
   uint16_t current_frequency_tsp = 0;
   volatile sBSP430hplTIMER * tp = xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
@@ -407,8 +407,8 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   return rc;
 }
 
-unsigned short
-usBSP430clockACLK_Hz_ni (void)
+unsigned int
+uiBSP430clockACLK_Hz_ni (void)
 {
   switch (UCSCTL4 & SELA_MASK) {
     case SELA_0: /* XT1CLK */

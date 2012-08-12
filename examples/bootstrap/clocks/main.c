@@ -44,7 +44,7 @@ void main ()
 #if BSP430_CONSOLE - 0
   const char * help;
   unsigned long smclk_Hz;
-  unsigned short aclk_Hz;
+  unsigned int aclk_Hz;
 #endif /* BSP430_CONSOLE */
 
   /* First thing you do in main is configure the platform. */
@@ -107,8 +107,8 @@ void main ()
   cputu_ni(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");
   cputu_ni(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
-  cputtext_ni("\nusBSP430clockACLK_Hz_ni(): ");
-  aclk_Hz = usBSP430clockACLK_Hz_ni();
+  cputtext_ni("\nuiBSP430clockACLK_Hz_ni(): ");
+  aclk_Hz = uiBSP430clockACLK_Hz_ni();
   cputu_ni(aclk_Hz, 10);
 
 #if BSP430_TIMER_CCACLK - 0

@@ -147,7 +147,7 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
  * @warning The accuracy of the resulting frequency is proportional to
- * the accuracy of the returned value of #usBSP430clockACLK_Hz_ni().
+ * the accuracy of the returned value of #uiBSP430clockACLK_Hz_ni().
  * If ACLK derives from VLOCLK, that estimate may be off by several
  * percent, which will generally result in serial errors if SMCLK is
  * used to generate a baud rate clock.  You may wish to check
