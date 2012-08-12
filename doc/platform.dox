@@ -1,0 +1,103 @@
+/* Copyright (c) 2012, Peter A. Bigot
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*! \page platform Platform Model
+\tableofcontents
+
+Definition of a platform for BSP430 requires three files be created and
+placed in a standard location.  For out-of-tree platforms, the
+#BSP430_PLATFORM_CUSTOM feature can be used to allow BSP430 to access the
+platform without source code modifications.  For in-tree platforms, you
+should define a platform identifier (e.g., @c em430f5137 or @c chronos),
+create the files below in the source tree, and modify the dispatch headers
+bsp430/platform.h and bsp430/platform/bsp430_config.h so that the platform
+is included in the template expansion.
+
+\section platform_header platform.h
+
+This file, placed to be found at <c>bsp430/platform/custom/platform.h</c>
+should contain a documentation block describing the platform, as well as
+default assignments for core features like:
+
+@li the platform identifier (#BSP430_PLATFORM_EXP430G2);
+@li whether #BSP430_PLATFORM_SPIN_FOR_JUMPER is supported;
+@li the #BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE and
+#BSP430_PLATFORM_BUTTON0_PORT_BIT if supported; 
+@li the #BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
+@li the #BSP430_TIMER_CCACLK details
+
+There are expansion templates that help generate the correct C preprocessor
+directives to allow user override of default values defined in the platform
+header.  See any of the in-tree examples.
+
+Remember to add the following at the end:
+
+@code
+/* Include generic file, in case this is being included directly */
+#include <bsp430/platform.h>
+@endcode
+
+\section platform_config bsp430_config.h
+
+This file, placed to be found at
+<c>bsp430/platform/custom/bsp430_config.h</c>, parallels <c>platform.h</c>
+and adds configuration defaults for resources that were default-identified
+in that header.  Here too you will want to use the expansion templates.
+
+\section platform_impl platform.c
+
+In this file, located in <c>src/platform/custom/custom.c</c> or another
+location specified in your platform-specific Makefile, you will place:
+
+@li the data structures associated with #configBSP430_LED_USE_COMMON, if you
+are using the default LED utility implementation;
+
+@li the implementation of iBSP430platformConfigurePeripheralPins_ni();
+
+@li the implementation of xBSP430platformPeripheralHelp();
+
+@li the implementation of vBSP430platformInitialize_ni();
+
+@li the implementation of vBSP430platformSpinForJumper_ni() (if enabled)
+
+\section platform_build Makefile.common
+
+In this file, located in <c>src/platform/custom/Makefile.common</c>, you
+will place:
+
+@li a default definition for the supported @c MCU;
+@li definitions for the utility used to program images onto the target
+@li identification of the clock and serial modules used by the platform
+
+Again see the in-tree platforms for examples.
+
+@copyright_doc
+*/

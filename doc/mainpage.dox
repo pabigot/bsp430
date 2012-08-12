@@ -53,8 +53,9 @@ and functional levels;
 \li A @link callbacks callback infrastructure @endlink allowing unrelated
 capabilities to share resources including port and timer interrupt handlers;
 
-\li A platform model that enables rapid development on common hardware
-solutions including six TI experimenter boards as well as custom boards;
+\li A @link platform platform model @endlink that enables rapid development
+on common hardware solutions including six TI experimenter boards as well as
+custom boards;
 
 \li @link enhanced Enhanced support @endlink for watchdog, low power mode
 execution, and interrupt management;
