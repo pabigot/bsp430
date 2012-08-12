@@ -120,7 +120,7 @@ consume_rx ()
 
 static int
 rx_cbchain_ni (const struct sBSP430halISRVoidChainNode * cb,
-             void * context)
+               void * context)
 {
   hBSP430halSERIAL device = (hBSP430halSERIAL)context;
 

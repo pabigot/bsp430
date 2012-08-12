@@ -54,6 +54,9 @@
          || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
 #if defined(__MSP430G2553__)
 #define configBSP430_HAL_TA1 1
+#if configBSP430_UPTIME_USE_DEFAULT_CC0_ISR - 0
+#define configBSP430_HAL_TA1_CC0_ISR 1
+#endif /* enable uptime CC0 ISR */
 #endif /* MCU */
 #endif /* configBSP430_UPTIME && need default */
 

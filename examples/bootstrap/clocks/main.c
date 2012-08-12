@@ -231,7 +231,7 @@ void main ()
     }
     cputtext_ni(help);
     cputtext_ni("\nStatus register LPM bits: ");
-    cputu_ni(__read_status_register() & BSP430_LPM_SR_MASK, 16);
+    cputu_ni(__read_status_register() & BSP430_CORE_LPM_SR_MASK, 16);
     cputtext_ni("\nIFG1 bits: ");
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
     cputu_ni(SFRIFG1, 16);
