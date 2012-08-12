@@ -21,6 +21,9 @@ void main ()
   (void)iBSP430consoleInitialize();
 
   cprintf("I2C interface on %s is %p\n", xBSP430serialName(APP_TMP102_I2C_PERIPH_HANDLE), i2c);
+#if BSP430_PLATFORM_PERIPHERAL_HELP
+  cprintf("TMP102 I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_TMP102_I2C_PERIPH_HANDLE));
+#endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   /* Ugliness to accomodate value change in UCMST with eUSCI */
   i2c = hBSP430serialOpenI2C(i2c, (0x100 <= UCMST) ? (UCMST >> 8) : UCMST,
                              UCSSEL_2, APP_TMP102_I2C_PRESCALER);

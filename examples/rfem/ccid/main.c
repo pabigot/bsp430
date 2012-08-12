@@ -84,6 +84,9 @@ void main ()
   cprintf("GDO2 %p at %s.%u\n", gdo2, xBSP430portName(APP_GDO2_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_GDO2_PORT_BIT));
   cprintf("CSn HAL %p HPL %p at %s.%u\n", hcsn, hcsn->hpl.any, xBSP430portName(APP_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(APP_CSn_PORT_BIT));
   cprintf("SPI %p is %s\n", spi, xBSP430serialName(APP_SPI_PERIPH_HANDLE));
+#if BSP430_PLATFORM_PERIPHERAL_HELP
+  cprintf("SPI Pins: %s\n", xBSP430platformPeripheralHelp(APP_SPI_PERIPH_HANDLE));
+#endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf(__DATE__ " " __TIME__ "\n");
 
 
