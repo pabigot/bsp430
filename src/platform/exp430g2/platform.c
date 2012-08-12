@@ -50,6 +50,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 
   if (BSP430_PERIPH_LFXT1 == device) {
     bits = BIT6 | BIT7;
+    P2SEL2 &= ~bits;
     if (enablep) {
       P2SEL |= bits;
     } else {
@@ -76,11 +77,11 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT1 | BIT2;
     if (enablep) {
-      P1SEL2 |= bits;
       P1SEL |= bits;
+      P1SEL2 |= bits;
     } else {
-      P1SEL &= ~bits;
       P1SEL2 &= ~bits;
+      P1SEL &= ~bits;
       P1DIR |= bits;
       P1OUT &= ~bits;
     }
@@ -91,11 +92,11 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
   else if (BSP430_PERIPH_USCI_B0 == device) {
     bits = BIT4 | BIT5 | BIT6 | BIT7;
     if (enablep) {
-      P1SEL2 |= bits;
       P1SEL |= bits;
+      P1SEL2 |= bits;
     } else {
-      P1SEL &= ~bits;
       P1SEL2 &= ~bits;
+      P1SEL &= ~bits;
       P1DIR |= bits;
       P1OUT &= ~bits;
     }
