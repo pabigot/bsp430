@@ -1,0 +1,144 @@
+/* Copyright (c) 2012, Peter A. Bigot
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/** \page enhanced Watchdogs, LPM, Interrupts, and All That
+@tableofcontents
+
+\section enh_watchdog Watchdog Support
+
+BSP430 is implemented to support having the watchdog timer enabled from the
+moment the chip receives power.
+
+Defining #configBSP430_CORE_SUPPORT_WATCHDOG to a true value will cause
+#BSP430_CORE_WATCHDOG_CLEAR() to reload the watchdog with a reset value each
+time it is executed.  It will also cause #BSP430_CORE_DELAY_CYCLES() to do
+so at least once every #BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES MCLK ticks.
+
+For convenience, the default value of #configBSP430_CORE_SUPPORT_WATCHDOG is
+false, which causes #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG to default to
+true, and the watchdog will be disabled as the first action taken by
+vBSP430platformInitialize_ni().
+
+Where BSP430 provides a function that might execute for more than 30
+milliseconds at 1 MHz, it will internally invoke
+#BSP430_CORE_WATCHDOG_CLEAR() at least once every 30 milliseconds
+(potentially more frequently if so configured by
+#BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES).  Otherwise application code is
+responsible for clearing the watchdog.
+
+There is no penalty for using #BSP430_CORE_WATCHDOG_CLEAR() and
+#BSP430_CORE_DELAY_CYCLES() when the watchdog is disabled.
+
+BSP430 currently does not provide infrastructure abstracting the watchdog
+timer as an interval timer.  You are, of course, free to use it in such a
+way so long as you do not enable #configBSP430_CORE_SUPPORT_WATCHDOG.
+
+\section enh_lpm Low Power Mode
+
+As the intrinsics used to enter and leave low power mode are not entirely
+consistent across MSP430 toolchains, BSP430 provides several macros to
+assist with this.
+
+#BSP430_CORE_LPM_ENTER_NI(@c lpm_bits) places the CPU into a low power mode as
+specified by @c lpm_bits.  The bits are the same ones that are normally used
+in @c \__bis_status_register() in MSPGCC, but BSP430 will mask them using
+#BSP430_CORE_LPM_SR_MASK to ensure that other bits are not set.
+
+#BSP430_CORE_LPM_EXIT_FROM_ISR(@c lpm_bits) serves as an abstraction of @c
+\__bic_status_tegister_on_exit() in MSPGCC, again filtering the bits for
+validity.
+
+The flag #BSP430_CORE_LPM_LPMXp5 is defined as a way of consistently
+representing a desire to enter the ultra-low-power LPMx.5 modes.  The macros
+above do not examine this bit; see #BSP430_PMM_ENTER_LPMXp5_NI() and the
+@link ex_bootstrap_applpm application LPM example@endlink for a
+demonstration of how to enter these modes on MCUs that support them.
+
+\section enh_interrupts Interrupts and Critical Sections
+
+BSP430 provides several function macros that support interrupt management in
+a toolchain-independent manner.  A core promise of BSP430 is that BSP430 it
+will never enable interrupts on its own.  The application code must do so
+after all configuration, if it desires to receive interrupts.
+
+Recall that on a power-up-clear ("PUC", i.e. any reset condition), the
+status register is reset, meaning that all interrupts are disabled when
+<c>main()</c> begins executing.
+
+Many function names have a suffix @c _ni.  This indicates that the function
+is intended to be called in a context where interrupts are disabled.
+Failure to disable interrupts may result in non-deterministic behavior
+including application lockup.  Functions that do not have this suffix are
+either considered to be robust in the presence of interrupts, or will
+temporarily disable them in a critical section prior to restoring the
+incoming interrupt state before returning.
+
+The function macro #BSP430_CORE_ENABLE_INTERRUPT() will invoke the toolchain
+intrinsic to enable interrupts by setting the #GIE bit in the MSP430 status
+register.  The function macro #BSP430_CORE_ENABLE_INTERRUPT() will invoke
+the toolchain intrinsic to disable interrupts by clearing the #GIE bit in
+the MSP430 status register.
+
+Critical sections may be implemented by saving the current interrupt state,
+disabling interrupts, performing the critical operations, then restoring
+interrupt state.  The recommended pattern for this is:
+
+@code
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv;
+
+  /* ... */
+  /* non-critical code */
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = 0; /* assume success */
+  do {
+    /* critical code */
+    if (something_went_wrong) {
+      rv = -1; /* error */
+      break;
+    }
+    /* more critical code */
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  if (0 != rv) {
+    /* handle failure from critical section */
+  }
+  /* non-critical code */
+@endcode
+
+See the @link ex_bootstrap_button button example@endlink for an interesting
+application architecture that leaves interrupts disabled at all times that
+the MCU is active, simplifying the application logic by eliminating
+non-deterministic signals.
+
+@copyright_doc
+*/

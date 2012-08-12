@@ -56,7 +56,8 @@ capabilities to share resources including port and timer interrupt handlers;
 \li A platform model that enables rapid development on common hardware
 solutions including six TI experimenter boards as well as custom boards;
 
-\li Support for watchdog, low power mode execution
+\li @link enhanced Enhanced support @endlink for watchdog, low power mode
+execution, and interrupt management;
 
 \li A @link buildenv build infrastructure @endlink designed to simplify
 creating new applications, currently focused on the MSPGCC toolchain in a

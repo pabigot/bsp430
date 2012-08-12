@@ -34,6 +34,14 @@
 This example shows how to use the BSP430 standard button definitions to
 track button presses and releases.
 
+Note that this application uses a model where interrupts are only enabled
+when the MCU enters a low-power mode, i.e. inactive, and are disabled when
+the MCU becomes active again.  It is this feature that ensures that
+interrupts correctly reflect press and release events in the presence of
+"bounce" in the button.  ("Bounce" here means that momentary contact and
+release causes multiple high/low transitions in the port input signal on a
+signal press/release event.)
+
 \section ex_bootstrap_button_main main.c
 \include bootstrap/button/main.c
 
