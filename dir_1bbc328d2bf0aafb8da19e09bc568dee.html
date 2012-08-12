@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>BSP430: Interrupts, Critical Sections, and All That</title>
+<title>BSP430: include/bsp430/platform/exp430fr5739/ Directory Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -38,7 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li><a href="examples.html"><span>Examples</span></a></li>
@@ -74,19 +74,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_3c10c8f91572428b0af8a5fe468add4e.html">platform</a></li><li class="navelem"><a class="el" href="dir_1bbc328d2bf0aafb8da19e09bc568dee.html">exp430fr5739</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">Interrupts, Critical Sections, and All That </div>  </div>
+<div class="title">exp430fr5739 Directory Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>On a BOR, the status register is reset, meaning that all interrupts are disabled.</p>
-<p>_ni : Not interruptible. Caller must have disabled interrupts prior to invoking this; failure to do so permits "bad" behavior possibly including system deadlocks.</p>
-<p>In the absence of the _ni suffix, functions will complete in accordance with their documented behavior. That behavior may include yielding control in a cooperative or preemptive multitasking environment. The implementation may internally block interrupts as necessary to complete its work safely; if it does, the interrupt state on entry will be restored on exit. If the function is documented to depend on an external resource (such as a UART), it may assume that no activity that might occur while it is executing will interfere with that resource.</p>
-</div></div><!-- contents -->
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:exp430fr5739_2bsp430__config_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exp430fr5739_2bsp430__config_8h.html">bsp430_config.h</a> <a href="exp430fr5739_2bsp430__config_8h_source.html">[code]</a></td></tr>
+<tr class="memdesc:exp430fr5739_2bsp430__config_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific BSP430 configuration directives for <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739 ("Fraunchpad")</a> <br/></td></tr>
+<tr class="memitem:platform_2exp430fr5739_2platform_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_2exp430fr5739_2platform_8h.html">platform.h</a> <a href="platform_2exp430fr5739_2platform_8h_source.html">[code]</a></td></tr>
+<tr class="memdesc:platform_2exp430fr5739_2platform_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739 ("Fraunchpad")</a> <br/></td></tr>
+</table>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

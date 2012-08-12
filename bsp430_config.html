@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h1><a class="anchor" id="cfg_placement"></a>
 Placement of Configuration Information</h1>
 <p>Because the BSP430 infrastructure enables and disables features within separate object files based on the flags presented at the time the source file is compiled, it is critical that all object files in an application have consistent flag definitions.</p>
-<p>Each header in BSP430 that does not include another BSP430 file includes the file <a class="el" href="common_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/common.h</a>. Subject to <a class="el" href="common_8h.html#a0e3e058ef42b1b2e0c08b40fd299d5c6">configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE</a>, the first thing this file does is:</p>
+<p>Each header in BSP430 that does not include another BSP430 file includes the file <a class="el" href="core_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/core.h</a>. Subject to <a class="el" href="core_8h.html#ab63537e5c8c1fa94b5d3cbdfc53d9220">configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE</a>, the first thing this file does is:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;bsp430_config.h&quot;</span></div>
 </div><!-- fragment --><p>Unlike all other BSP430 headers, this file is not accessed with a path that places it within the BSP430 hierarchy, and is assumed to exist within the application source area. It is in this file that application-specific configuration information should be placed.</p>
 <p>The application-specific configuration file should end with:</p>
@@ -121,10 +121,11 @@ Checking for Module Capabilities</h1>
 <div class="line"><span class="preprocessor">#if BSP430_MODULE_PMM - 0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="comment">/* Include declarations related to LPMx.5 mode */</span></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
-</div><!-- fragment --></div></div><!-- contents -->
+</div><!-- fragment --><p>Copyright 2012, Peter A. Bigot </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

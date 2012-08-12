@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -101,7 +101,10 @@ main.c</h1>
 <div class="line">  (void)<a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C interface on %s is %p\n&quot;</span>, <a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(APP_TMP102_I2C_PERIPH_HANDLE), i2c);</div>
-<div class="line">  <span class="comment">/* Ugliness to accomodate value change in UCMST with eUSCI */</span></div>
+<div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
+<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;TMP102 I2C Pins: %s\n&quot;</span>, <a class="code" href="platform_8h.html#a2df452ec53e3f7d4b4372cb1333f265e">xBSP430platformPeripheralHelp</a>(APP_TMP102_I2C_PERIPH_HANDLE));</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>  <span class="comment">/* Ugliness to accomodate value change in UCMST with eUSCI */</span></div>
 <div class="line">  i2c = <a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a>(i2c, (0x100 &lt;= <a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>) ? (<a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a> &gt;&gt; 8) : <a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>,</div>
 <div class="line">                             <a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, APP_TMP102_I2C_PRESCALER);</div>
 <div class="line">  <span class="keywordflow">if</span> (! i2c) {</div>
@@ -136,7 +139,7 @@ main.c</h1>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;reg %d is 0x%04x\n&quot;</span>, pr, temp_xCel);</div>
 <div class="line">    }</div>
 <div class="line">    pr = (pr + 1) &amp; 0x03;</div>
-<div class="line">    <a class="code" href="common_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
+<div class="line">    <a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_sensors_tmp102_confic"></a>
@@ -183,7 +186,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -96,8 +96,8 @@ Application Callback Functions</h1>
 <li><a class="el" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid</a> is used for normal callbacks, and provides a facility to identify the HAL structure that is handling the interrupt along with a structure specific to the callback. A stub handler definition consistent with this type is:</li>
 </ul>
 <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line">handle_rx (<span class="keyword">const</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * cb,</div>
-<div class="line">           <span class="keywordtype">void</span> * context)</div>
+<div class="line">handle_rx_ni (<span class="keyword">const</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * cb,</div>
+<div class="line">              <span class="keywordtype">void</span> * context)</div>
 <div class="line">{</div>
 <div class="line">  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> * hal = (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> *)context;</div>
 <div class="line">  (void)cb;</div>
@@ -110,9 +110,9 @@ Application Callback Functions</h1>
 <div class="fragment"><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">int</span> last_button;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line">button_isr (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * cb,</div>
-<div class="line">            <span class="keywordtype">void</span> * context,</div>
-<div class="line">            <span class="keywordtype">int</span> idx)</div>
+<div class="line">button_isr_ni (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * cb,</div>
+<div class="line">               <span class="keywordtype">void</span> * context,</div>
+<div class="line">               <span class="keywordtype">int</span> idx)</div>
 <div class="line">{</div>
 <div class="line">  (void)cb;</div>
 <div class="line">  (void)context;</div>
@@ -124,10 +124,10 @@ Application Callback Functions</h1>
 Callback Chain Nodes</h1>
 <p>A HAL structure supporting interrupts will include pointers to structures that define a chain of callbacks to be invoked in particular events. There is one structure for each callback style, those being <a class="el" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> and <a class="el" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a>. These structures contain only two fields: <a class="el" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">sBSP430halISRVoidChainNode.next_ni</a> is a pointer to the next callback in the chain, while <a class="el" href="structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2">sBSP430halISRVoidChainNode.callback</a> is the pointer to the function that will service the callback.</p>
 <p>The HAL structure tags holding the start of the callback chain, as well as the <a class="el" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">sBSP430halISRVoidChainNode.next_ni</a> tags within chain nodes, must only be mutated while interrupts are disabled. The steps required to add or remove a valid from the chain are straightforward:</p>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> cb_node = { .<a class="code" href="structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2">callback</a> = handle_rx };</div>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> cb_node = { .<a class="code" href="structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2">callback</a> = handle_rx_ni };</div>
 <div class="line"><span class="comment">/* ... */</span></div>
-<div class="line">    cb_node.<a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">next_ni</a> = hal-&gt;rx_callback;</div>
-<div class="line">    hal-&gt;rx_callback = &amp;cb_node;</div>
+<div class="line">    cb_node.<a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">next_ni</a> = hal-&gt;rx_cbchain_ni;</div>
+<div class="line">    hal-&gt;rx_cbchain_ni = &amp;cb_node;</div>
 </div><!-- fragment --><h1><a class="anchor" id="callback_retval"></a>
 Influencing Callback Chain Execution</h1>
 <p>The callback chain infrastructure supports an arbitrary number of notifications resulting from a single event. In many cases, it would be improper to invoke chain elements past the point where the event was completely handled. In addition, it is necessary to inform the interrupt handler top half when a low power mode should be exited. This information is conveyed to the interrupt through the return value of the callback handler, using bit values defined in &lt;<a class="el" href="periph_8h.html" title="Generic peripheral support for MSP430 MCUs.">bsp430/periph.h</a>&gt;</p>
@@ -148,8 +148,8 @@ Providing Extended Information to the Callback</h1>
 <div class="line">} sConsoleRxBuffer;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line">console_rx_isr_ (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * cb,</div>
-<div class="line">                 <span class="keywordtype">void</span> * context)</div>
+<div class="line">console_rx_isr_ni (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * cb,</div>
+<div class="line">                   <span class="keywordtype">void</span> * context)</div>
 <div class="line">{</div>
 <div class="line">  sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;</div>
 <div class="line">  <a class="code" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> * hal = (<a class="code" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> *)context;</div>
@@ -163,12 +163,13 @@ Providing Extended Information to the Callback</h1>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> sConsoleRxBuffer rx_buffer_ = {</div>
-<div class="line">  .cb_node = { .callback = console_rx_isr_ },</div>
+<div class="line">  .cb_node = { .callback = console_rx_isr_ni },</div>
 <div class="line">};</div>
-</div><!-- fragment --></div></div><!-- contents -->
+</div><!-- fragment --><p>Copyright 2012, Peter A. Bigot </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

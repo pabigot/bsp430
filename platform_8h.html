@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_afb03915f4cb7ca917695af54c12c4db.html">include</a></li><li class="navelem"><a class="el" href="dir_a3c8f7f0425d4f7a44c2fd239713bb47.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -118,6 +118,7 @@ Macros</h2></td></tr>
 <tr class="memitem:a33caa59d1913e09742abeefb9d00aad2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a33caa59d1913e09742abeefb9d00aad2">BSP430_PLATFORM_CUSTOM</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:a5658121b6e4e9a02a759878c58807b43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a5658121b6e4e9a02a759878c58807b43">BSP430_PLATFORM_SPIN_FOR_JUMPER</a>&#160;&#160;&#160;0 /* False unless platform explicitly enabled it */</td></tr>
 <tr class="memitem:ab6710fe3c15825a6d4cfad92debe14bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#ab6710fe3c15825a6d4cfad92debe14bd">BSP430_PLATFORM_PERIPHERAL_HELP</a>&#160;&#160;&#160;1 /* True unless platform explicitly disabled it */</td></tr>
+<tr class="memitem:a136722b0c2fec7d74f088cf8211aab2c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a136722b0c2fec7d74f088cf8211aab2c">BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG</a>&#160;&#160;&#160;(! (<a class="el" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">configBSP430_CORE_SUPPORT_WATCHDOG</a> - 0))</td></tr>
 <tr class="memitem:ad7358fbc82a593d4ae9525e36dcfb84a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#ad7358fbc82a593d4ae9525e36dcfb84a">BSP430_PLATFORM_BOOT_CONFIGURE_LEDS</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memitem:a9ccb62d7259bf01a8d3d099359d0042a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a9ccb62d7259bf01a8d3d099359d0042a">BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memitem:a790f6f3589071c3ec5061512072d9d5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a790f6f3589071c3ec5061512072d9d5b">BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1</a>&#160;&#160;&#160;0</td></tr>
@@ -188,7 +189,7 @@ invoke ulBSP430clockConfigureMCLK_Hz_ni() using <a class="el" href="clock_8h.htm
 <li>
 invoke <a class="el" href="clock_8h.html#a5e043a1d5544be98754de17482eb009f">iBSP430clockConfigureSMCLKDividingShift_ni()</a> using <a class="el" href="clock_8h.html#adfae913d448a6d5e70f9ed8f727f4afa">BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT</a> </li>
 <li>
-set <a class="el" href="msp430_8h.html#a196a05515c9476be96443ccb3aa6004d">SCG0</a> if <a class="el" href="common_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a> is true </li>
+set <a class="el" href="msp430_8h.html#a196a05515c9476be96443ccb3aa6004d">SCG0</a> if <a class="el" href="core_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a> is true </li>
 </ul>
 <p>If defined to a false value, <a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni()</a> will leave the clocks in their power-up configuration.</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="platform_8h.html#a790f6f3589071c3ec5061512072d9d5b">BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1</a></dd></dl>
@@ -231,6 +232,22 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a4">bootstrap/clocks/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a136722b0c2fec7d74f088cf8211aab2c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG&#160;&#160;&#160;(! (<a class="el" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">configBSP430_CORE_SUPPORT_WATCHDOG</a> - 0))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If defined to a true value <a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni()</a> will set the watchdog infrastructure into a reset state prior to any other activities.</p>
+<p>If <a class="el" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">configBSP430_CORE_SUPPORT_WATCHDOG</a> is true then this is defaulted to false; otherwise it is defaulted to true.</p>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">configBSP430_CORE_SUPPORT_WATCHDOG</a> is true and <a class="el" href="platform_8h.html#a136722b0c2fec7d74f088cf8211aab2c">BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG</a> is also true, the watchdog will be disabled, but subsequent invocations of <a class="el" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR()</a> are likely to re-enable it, possibly before control returns from <a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni()</a>.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a2eb4c14d2e207025278b4ba3ada572b9"></a>
@@ -545,7 +562,7 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 <p>Basic configuration for the platform.</p>
 <p>This routine will: </p>
 <ul>
-<li>Disable the watchdog </li>
+<li>Disable the watchdog (see <a class="el" href="platform_8h.html#a136722b0c2fec7d74f088cf8211aab2c">BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG</a>) </li>
 <li>Configure the LEDs (see <a class="el" href="platform_8h.html#ad7358fbc82a593d4ae9525e36dcfb84a">BSP430_PLATFORM_BOOT_CONFIGURE_LEDS</a>) </li>
 <li>Crystal configuration (see <a class="el" href="platform_8h.html#a790f6f3589071c3ec5061512072d9d5b">BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1</a>) </li>
 <li>Clock configuration (see <a class="el" href="platform_8h.html#a9ccb62d7259bf01a8d3d099359d0042a">BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS</a>) </li>
@@ -600,14 +617,14 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to a help string suitable for display. A null pointer is returned if the peripheral was not enabled.</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="platform_8h.html#ab6710fe3c15825a6d4cfad92debe14bd">BSP430_PLATFORM_PERIPHERAL_HELP</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a25">sensors/hh10d/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a25">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a6">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

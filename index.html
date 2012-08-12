@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -102,23 +102,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>A <a class="el" href="callbacks.html">callback infrastructure </a> allowing unrelated capabilities to share resources including port and timer interrupt handlers;</li>
 </ul>
 <ul>
-<li>A platform model that enables rapid development on common hardware solutions including six TI experimenter boards as well as custom boards;</li>
+<li>A <a class="el" href="platform.html">platform model </a> that enables rapid development on common hardware solutions including six TI experimenter boards as well as custom boards;</li>
 </ul>
 <ul>
-<li>Support for watchdog, low power mode execution</li>
+<li><a class="el" href="enhanced.html">Enhanced support </a> for watchdog, low power mode execution, and interrupt management;</li>
 </ul>
 <ul>
 <li>A <a class="el" href="buildenv.html">build infrastructure </a> designed to simplify creating new applications, currently focused on the MSPGCC toolchain in a POSIX command-line environment supported by GNU Make</li>
 </ul>
 <p>BSP430 is released as open source under the <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> license.</p>
-<p>For further details, please see the Background, Philosophy, Coding Style, and Maintenance pages.</p>
+<p>For further details, please see the Background, Philosophy, <a class="el" href="coding.html">Coding Style</a>, and Maintenance pages.</p>
+<p>Please download using git:</p>
+<div class="fragment"><div class="line">git clone git:<span class="comment">//github.com/pabigot/bsp430.git</span></div>
+</div><!-- fragment --><p>or get a <a href="https://github.com/pabigot/bsp430/tarball/master">tar file</a> of the complete source.</p>
+<p>Please file support requests and bug reports on the <a href="http://github.com/pabigot/bsp430/issues">issue tracker</a>.</p>
 <h1><a class="anchor" id="mp_capabilities"></a>
 Capabilities Currently Supported</h1>
 <ul>
 <li><a class="el" href="timer_8h.html">Timers </a> supporting both Timer_A and Timer_B supported in a common interface;</li>
 </ul>
 <ul>
-<li>A <a class="el" href="clock_8h.html">standard clock interface </a> supporting MCLK, SMCLK, ACLK, and LFXT1 crystal configuration in the clock systems in the <a class="el" href="bc2_8h.html">2xx </a>, <a class="el" href="fllplus_8h.html">4xx </a>, <a class="el" href="ucs_8h.html">5xx/6xx </a>, and <a class="el" href="cs_8h.html">FR5xx </a> families;</li>
+<li>A <a class="el" href="clock_8h.html">standard clock interface </a> supporting MCLK, SMCLK, ACLK, and LFXT1 crystal configuration in the clock systems in the <a class="el" href="bc2_8h.html">2xx</a>, <a class="el" href="fllplus_8h.html">4xx</a>, <a class="el" href="ucs_8h.html">5xx/6xx</a>, and <a class="el" href="cs_8h.html">FR5xx</a> families;</li>
 </ul>
 <ul>
 <li>A <a class="el" href="serial_8h.html">standard serial interface </a> supporting UART, SPI, and I2C using the USCI variants in the <a class="el" href="usci_8h.html">2xx/4xx</a>, <a class="el" href="usci5_8h.html">5xx/6xx</a>, and <a class="el" href="eusci_8h.html">FR5xx </a> families;</li>
@@ -160,10 +164,11 @@ Sensors</h2>
 <li><a class="el" href="ex_sensors_tmp102.html">Sensors: TMP102</a> demonstrates the I2C interface with a TI TMP102 temperature sensor </li>
 <li><a class="el" href="ex_sensors_hh10d.html">Sensors: HH10D</a> demonstrates measuring the frequency of an input signal using the Hope RF Humidity Sensor</li>
 </ul>
+<p>Copyright 2012, Peter A. Bigot </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

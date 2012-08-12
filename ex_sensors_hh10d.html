@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -126,9 +126,9 @@ main.c</h1>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line">hh10d_1Hz_isr (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *cb,</div>
-<div class="line">               <span class="keywordtype">void</span> *context,</div>
-<div class="line">               <span class="keywordtype">int</span> idx)</div>
+<div class="line">hh10d_1Hz_isr_ni (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *cb,</div>
+<div class="line">                  <span class="keywordtype">void</span> *context,</div>
+<div class="line">                  <span class="keywordtype">int</span> idx)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">volatile</span> <span class="keyword">struct </span>sHH10D * hh10d = (<span class="keyword">struct </span>sHH10D *)cb;</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> capture;</div>
@@ -145,7 +145,7 @@ main.c</h1>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keyword">struct </span>sHH10D hh10d = {</div>
-<div class="line">  .cb = { .callback = hh10d_1Hz_isr },</div>
+<div class="line">  .cb = { .callback = hh10d_1Hz_isr_ni },</div>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> bitToPin (<span class="keywordtype">int</span> v)</div>
@@ -171,7 +171,7 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">  (void)<a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nApplication starting\n&quot;</span>);</div>
-<div class="line">  <a class="code" href="common_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(10000);</div>
+<div class="line">  <a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(10000);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (NULL == hh10d_port) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nERROR: No port HAL; did you enable configBSP430_HAL_%s?\n&quot;</span>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(APP_HH10D_PORT_PERIPH_HANDLE) ?: <span class="stringliteral">&quot;whatever&quot;</span>);</div>
@@ -242,11 +242,11 @@ main.c</h1>
 <div class="line">  register_hh10d_ni(&amp;hh10d);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Go to low power mode with interrupts enabled */</span></div>
-<div class="line">  <a class="code" href="common_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">  <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Initial %u\n&quot;</span>, hh10d.last_capture);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
-<div class="line">    <a class="code" href="common_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%lu: Sample %u in %u uptime ticks&quot;</span>, <a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>(), hh10d.last_period_count, hh10d.sample_duration_utt);</div>
 <div class="line">    <span class="keywordflow">if</span> (0 != hh10d_sens) {</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;: RH %u%%&quot;</span>, (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)(((hh10d_offs - hh10d.last_period_count) * (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>) hh10d_sens) / 4096));</div>
@@ -322,7 +322,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

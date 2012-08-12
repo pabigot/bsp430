@@ -2,10 +2,11 @@ var searchData=
 [
   ['periph_2eh',['periph.h',['../periph_8h.html',1,'']]],
   ['pin_5fcbchain_5fni',['pin_cbchain_ni',['../structsBSP430halPORT.html#a064ef3897a45a15efed3afe917517773',1,'sBSP430halPORT']]],
+  ['platform_20model',['Platform Model',['../platform.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2exp430g2_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2rf2500t_2platform_8h.html',1,'']]],
-  ['platform_2eh',['platform.h',['../platform_2exp430f5438_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_8h.html',1,'']]],
+  ['platform_2eh',['platform.h',['../platform_2exp430f5438_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2exp430f5529_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2exp430fg4618_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2exp430fr5739_2platform_8h.html',1,'']]],

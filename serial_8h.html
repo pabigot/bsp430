@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_afb03915f4cb7ca917695af54c12c4db.html">include</a></li><li class="navelem"><a class="el" href="dir_a3c8f7f0425d4f7a44c2fd239713bb47.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Abstracted serial interface.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="common_8h_source.html">bsp430/common.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="core_8h_source.html">bsp430/core.h</a>&gt;</code><br/>
 <code>#include &lt;<a class="el" href="periph_8h_source.html">bsp430/periph.h</a>&gt;</code><br/>
 </div>
 <p><a href="serial_8h_source.html">Go to the source code of this file.</a></p>
@@ -334,7 +334,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field value for variant stored in #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>. </p>
+<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>. </p>
 
 </div>
 </div>
@@ -347,7 +347,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field value for variant stored in #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>. </p>
+<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>. </p>
 
 </div>
 </div>
@@ -428,7 +428,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field value for variant stored in #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplUSCI.html">sBSP430hplUSCI</a>. </p>
+<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplUSCI.html">sBSP430hplUSCI</a>. </p>
 
 </div>
 </div>
@@ -441,7 +441,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field value for variant stored in #sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplUSCI5.html">sBSP430hplUSCI5</a>. </p>
+<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplUSCI5.html">sBSP430hplUSCI5</a>. </p>
 
 </div>
 </div>
@@ -640,7 +640,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup()</a>.</td></tr>
-    <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a7aaa4e5d0a84cda0e759fe84dc059a75">UCA10</a>, <a class="el" href="msp430_8h.html#a6eb866cf9b13ba1891a0184afa7ca19b">UCSLA10</a>, #UCMMM, and <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a> (but <b>see the warning above</b>). The UCSYNC field is cleared and the UCMODE field is configured for I2C before being written.</td></tr>
+    <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a7aaa4e5d0a84cda0e759fe84dc059a75">UCA10</a>, <a class="el" href="msp430_8h.html#a6eb866cf9b13ba1891a0184afa7ca19b">UCSLA10</a>, <a class="el" href="msp430_8h.html#a678176f3eb3226c0bb5bd5812e553b07">UCMM</a>, and <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a> (but <b>see the warning above</b>). The UCSYNC field is cleared and the UCMODE field is configured for I2C before being written.</td></tr>
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are configuration of the clock (<a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, or <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>) and perhaps <a class="el" href="msp430_8h.html#a311c1dc057c97e3b6e6e8fafaa82ffcd">UCTR</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function.</td></tr>
     <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <em>ctl1_byte</em> is divided to produce the I2C clock. A value of zero will result in this function returning an error.</td></tr>
   </table>
@@ -648,7 +648,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><em>A</em> peripheral-specific HAL handle if the allocation and configuration is successful, and a null handle if something went wrong (e.g., absence of the requested <em>periph</em> or a zero-valued <em>prescaler</em>).</dd></dl>
 <dl class="section user"><dt>Delegated:</dt><dd>This function exists only as an inline delegate to a peripheral-specific implementation. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a28">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a6">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a28">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a7">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -761,7 +761,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup()</a>.</td></tr>
     <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For UART mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a7fb6b3fbbb7fd56c8f11792ffb3e3d6c">UCPEN</a>, <a class="el" href="msp430_8h.html#a05da44320219dcbc56214c9fd424a219">UCPAR</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a17059906b161d93c430b7ee875e0f356">UCSPB</a> (but <b>see the warning above</b>). The UCMODE and UCSYNC elements of the byte are ignored. In most cases for UART mode a value of 0 producing 8N1 serial communications is appropriate.</td></tr>
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For UART mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#ae54706b57b264155a533ba8673b8ed96">UCRXEIE</a>, <a class="el" href="msp430_8h.html#ac4f7aaa4d67ed80a4099d40e2dde3ccc">UCBRKIE</a>, and <a class="el" href="msp430_8h.html#a6d58a8e741c77478dafc016c41fd57b2">UCDORM</a>. The UCSSEL and UCSWRST elements of the byte are cleared as the function configures those. In most cases a value of 0 is appropriate.</td></tr>
-    <tr><td class="paramname">baud</td><td>The desired baud rate. This will be configured automatically. ACLK will be used as the baud rate clock if ACLK is both at least 20 kHz and at least three times faster than the requested baud rate; otherwise SMCLK will be used. The function invokes <a class="el" href="clock_8h.html#ac6df48b7667e1268240ea5555fad1d9c">ulBSP430clockSMCLK_Hz()</a> and <a class="el" href="clock_8h.html#ad88e60e07be8bd774f7187da781023db">usBSP430clockACLK_Hz()</a> as necessary to determine the actual speed of the baud rate clock.</td></tr>
+    <tr><td class="paramname">baud</td><td>The desired baud rate. This will be configured automatically. ACLK will be used as the baud rate clock if ACLK is both at least 20 kHz and at least three times faster than the requested baud rate; otherwise SMCLK will be used. The function invokes <a class="el" href="clock_8h.html#ac6df48b7667e1268240ea5555fad1d9c">ulBSP430clockSMCLK_Hz()</a> and <a class="el" href="clock_8h.html#abd226cba123de9f974df991e2502d3c3">uiBSP430clockACLK_Hz()</a> as necessary to determine the actual speed of the baud rate clock.</td></tr>
   </table>
   </dd>
 </dl>
@@ -820,7 +820,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes stored in <em>rx_data</em>, or -1 if an error occcured. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a33">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a11">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a33">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a12">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -872,7 +872,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if successfully set, -1 if an error occurs. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a31">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a9">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a31">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a10">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -925,7 +925,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes transmitted, or -1 if an error occcured. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a32">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a10">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a32">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a11">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -1346,7 +1346,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

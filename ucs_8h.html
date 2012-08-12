@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_afb03915f4cb7ca917695af54c12c4db.html">include</a></li><li class="navelem"><a class="el" href="dir_a3c8f7f0425d4f7a44c2fd239713bb47.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_23ce4506639dee3157702691a02175c1.html">periph</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_19e4f19d9de152fbe2728cd5df77a8c2.html">periph</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -152,7 +152,7 @@ Hardware Adaptation Layer</h1>
 <li>DCOCLKDIV is DCOCLK/2 (the power-up value)</li>
 </ul>
 <ul>
-<li>FLL trimming will leave the FLL disabled if it was disabled on entry; see <a class="el" href="common_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a>.</li>
+<li>FLL trimming will leave the FLL disabled if it was disabled on entry; see <a class="el" href="core_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a>.</li>
 </ul>
 <ul>
 <li>Executing an FLL trim (either directly or due to having invoked <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a>) will record in private state the measured clock frequency.</li>
@@ -252,7 +252,7 @@ Hardware Adaptation Layer</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The UCS module supports an internally trimmed reference oscillator running at a nominal 32 kiHz rate, for use where XT1 is not populated. </p>
+<p>The UCS module supports an internally trimmed reference oscillator running at a nominal 32 KiHz rate, for use where XT1 is not populated. </p>
 
 </div>
 </div>
@@ -298,7 +298,7 @@ Hardware Adaptation Layer</h1>
       </table>
 </div><div class="memdoc">
 <p>When measuring the actual clock speed to determine whether the FLL has drifted, a reliable clock at a known frequency is required. The implementation here configures ACLK to source from that clock for the duration of the trim operation.</p>
-<p>Alternative sources supported here are LFXT1 and REFO, both of which are nominally 32 kiHz though LFXT1 could be a different speed. As LFXT1 is likely more accurate than REFO, there may be some benefit in using it when FLLREFCLK is REFO.</p>
+<p>Alternative sources supported here are LFXT1 and REFO, both of which are nominally 32 KiHz though LFXT1 could be a different speed. As LFXT1 is likely more accurate than REFO, there may be some benefit in using it when FLLREFCLK is REFO.</p>
 <p>Define this to true if you want to use LFXT1; otherwise REFO is used.</p>
 <dl class="section warning"><dt>Warning</dt><dd>If this is selected, FLL trim will hang if LFXT1 is faulted and cannot be cleared.</dd></dl>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
@@ -339,7 +339,7 @@ Hardware Adaptation Layer</h1>
       </table>
 </div><div class="memdoc">
 <p>Adjust the FLL as necessary to maintain the last configured DCOCLKDIV speed</p>
-<p>This function is most likely to be used if <a class="el" href="common_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a> is set, but is also a required subroutine of the UCS implementation of <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a>.</p>
+<p>This function is most likely to be used if <a class="el" href="core_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a> is set, but is also a required subroutine of the UCS implementation of <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a>.</p>
 <p>The function is expected to be used periodically to maintain an already configured clock in the face of varying voltage, temperature, and other factors such as chip errata that introduce clock drift. The implementation is not entitled to reconfigure to a different DCO range selection, should that be supported by the clock. Consequently, oscillator faults may result if the system drifts so far that the target frequency cannot be represented within the current range. In such a situation, <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a> should be re-invoked to configure the clock.</p>
 <dl class="section warning"><dt>Warning</dt><dd>This function will temporarily reconfigure MCLK, SMCLK, and ACLK. Any peripherals that depend on those clocks should be disabled while the function is executing.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if the trimming was completed successfully, -1 if an error occurred. Potential errors are a dependency on XT1CLK while that is faulted and inability to access <a class="el" href="timer_8h.html#aaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>.</dd></dl>
@@ -350,7 +350,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -114,7 +114,7 @@ main.c</h1>
 <div class="line"><span class="preprocessor">#if BSP430_CONSOLE - 0</span></div>
 <div class="line"><span class="preprocessor"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span> * help;</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> smclk_Hz;</div>
-<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> aclk_Hz;</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> aclk_Hz;</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line">  <span class="comment">/* First thing you do in main is configure the platform. */</span></div>
@@ -177,8 +177,8 @@ main.c</h1>
 <div class="line">  <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(<a class="code" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>, 10);</div>
 <div class="line">  <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: &quot;</span>);</div>
 <div class="line">  <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(<a class="code" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">BSP430_CLOCK_NOMINAL_XT1CLK_HZ</a>, 10);</div>
-<div class="line">  <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\nusBSP430clockACLK_Hz_ni(): &quot;</span>);</div>
-<div class="line">  aclk_Hz = <a class="code" href="clock_8h.html#ad3c75b0b9bb266e2110c060e26d29651">usBSP430clockACLK_Hz_ni</a>();</div>
+<div class="line">  <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\nuiBSP430clockACLK_Hz_ni(): &quot;</span>);</div>
+<div class="line">  aclk_Hz = <a class="code" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni</a>();</div>
 <div class="line">  <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(aclk_Hz, 10);</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#if BSP430_TIMER_CCACLK - 0</span></div>
@@ -299,7 +299,7 @@ main.c</h1>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(help);</div>
 <div class="line">    <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\nStatus register LPM bits: &quot;</span>);</div>
-<div class="line">    <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(__read_status_register() &amp; <a class="code" href="common_8h.html#a1054ff5339d5fc04a83cbfd493ccb4fb">BSP430_CORE_LPM_SR_MASK</a>, 16);</div>
+<div class="line">    <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(__read_status_register() &amp; <a class="code" href="core_8h.html#a1054ff5339d5fc04a83cbfd493ccb4fb">BSP430_CORE_LPM_SR_MASK</a>, 16);</div>
 <div class="line">    <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\nIFG1 bits: &quot;</span>);</div>
 <div class="line"><span class="preprocessor">#if defined(__MSP430_HAS_MSP430XV2_CPU__)</span></div>
 <div class="line"><span class="preprocessor"></span>    <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(SFRIFG1, 16);</div>
@@ -314,7 +314,7 @@ main.c</h1>
 <div class="line"><span class="comment">     * clocks get disabled at deeper sleep modes; if you fall off the</span></div>
 <div class="line"><span class="comment">     * bottom, you might end up in LPM4 with all clocks disabled. */</span></div>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
-<div class="line">      <a class="code" href="common_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR</a>();</div>
+<div class="line">      <a class="code" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR</a>();</div>
 <div class="line">    }</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line"><span class="preprocessor">#if BSP430_CONSOLE - 0</span></div>
@@ -393,7 +393,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_afb03915f4cb7ca917695af54c12c4db.html">include</a></li><li class="navelem"><a class="el" href="dir_a3c8f7f0425d4f7a44c2fd239713bb47.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_12fdd06fd3f66e51cb270249c1ff8d9c.html">rtos</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_065ffdf592468600cda1d1e899056772.html">rtos</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>BSP430 interface to FreeRTOS.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="common_8h_source.html">bsp430/common.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="core_8h_source.html">bsp430/core.h</a>&gt;</code><br/>
 <code>#include &lt;<a class="el" href="clock_8h_source.html">bsp430/clock.h</a>&gt;</code><br/>
 </div>
 <p><a href="freertos_8h_source.html">Go to the source code of this file.</a></p>
@@ -118,7 +118,7 @@ Functions</h2></td></tr>
 <div class="textblock"><p>BSP430 interface to FreeRTOS. </p>
 <p>More specifically, to the <a href="http://github.com/pabigot/freertos-mspgcc">BSP430-enabled FreeRTOS port supporting MSPGCC</a>. Other toolchains aren't intentionally excluded, they just aren't supported yet.</p>
 <p>This header is not included by any BSP430 code, nor should it be directly included by application code. It is included by the freertos-mspgcc port of FreeRTOS via the <code>portmacro.h</code> header if <a class="el" href="freertos_8h.html#a5d2f6d04ef026426df4a41876f6a6548">configBSP430_RTOS_FREERTOS</a> is defined to a true value by the compilation environment. Doing this makes basic BSP430 configuration data available within FreeRTOS application code. Note that this inclusion occurs before FreeRTOS.h includes the application-specific FreeRTOSConfig.h, allowing this file to set defaults for the FreeRTOS port.</p>
-<p>The <code>FreeRTOS.h</code> header is similarly included by <code><a class="el" href="common_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/common.h</a></code> when <a class="el" href="freertos_8h.html#a5d2f6d04ef026426df4a41876f6a6548">configBSP430_RTOS_FREERTOS</a> is defined to a true value by the compilation environment. This ensures that the BSP430 infrastructure uses FreeRTOS-compatible mechanisms for critical sections and interrupt management.</p>
+<p>The <code>FreeRTOS.h</code> header is similarly included by <code><a class="el" href="core_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/core.h</a></code> when <a class="el" href="freertos_8h.html#a5d2f6d04ef026426df4a41876f6a6548">configBSP430_RTOS_FREERTOS</a> is defined to a true value by the compilation environment. This ensures that the BSP430 infrastructure uses FreeRTOS-compatible mechanisms for critical sections and interrupt management.</p>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2>Macro Definition Documentation</h2>
@@ -177,11 +177,11 @@ Functions</h2></td></tr>
 <p>Defining this macro to a true value externally to the system will: </p>
 <ul>
 <li>
-<p class="startli">Cause the inclusion of <a class="el" href="common_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/common.h</a> to also include "FreeRTOS.h", making available the standard FreeRTOS environment to BSP430 library code and defining RTOS-related macros to use the FreeRTOS implementation.</p>
+<p class="startli">Cause the inclusion of <a class="el" href="core_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/core.h</a> to also include "FreeRTOS.h", making available the standard FreeRTOS environment to BSP430 library code and defining RTOS-related macros to use the FreeRTOS implementation.</p>
 <p class="endli"></p>
 </li>
 <li>
-<p class="startli">Cause the inclusion of "FreeRTOS.h" to include &lt;<a class="el" href="common_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/common.h</a>&gt;, make standard BSP430 configuration data available to the FreeRTOS application code.</p>
+<p class="startli">Cause the inclusion of "FreeRTOS.h" to include &lt;<a class="el" href="core_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/core.h</a>&gt;, make standard BSP430 configuration data available to the FreeRTOS application code.</p>
 <p class="endli"></p>
 </li>
 </ul>
@@ -248,7 +248,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

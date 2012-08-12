@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_afb03915f4cb7ca917695af54c12c4db.html">include</a></li><li class="navelem"><a class="el" href="dir_a3c8f7f0425d4f7a44c2fd239713bb47.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Generic peripheral support for MSP430 MCUs.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="common_8h_source.html">bsp430/common.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="core_8h_source.html">bsp430/core.h</a>&gt;</code><br/>
 <code>#include &lt;<a class="el" href="msp430_8h_source.html">msp430.h</a>&gt;</code><br/>
 </div>
 <p><a href="periph_8h_source.html">Go to the source code of this file.</a></p>
@@ -207,7 +207,7 @@ Callback Infrastructure</h1>
 </div><div class="memdoc">
 <p>Indicate that LPM mode should be exited</p>
 <p>This flag may be marked in the return value of <a class="el" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid</a> and <a class="el" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a> callbacks to indicate that the top-half should clear the standard LPM bits prior to exit, causing the MCU to return to active mode.</p>
-<p>Use of this flag is preferred to use of <a class="el" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a> or a similar value because <a class="el" href="common_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a> can influence the selection of the bits to be cleared.</p>
+<p>Use of this flag is preferred to use of <a class="el" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a> or a similar value because <a class="el" href="core_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a> can influence the selection of the bits to be cleared.</p>
 <p>(The value of this flag is specifically selected to be a value supported by the constant generator, to optimize the callback loop.) </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a3">bootstrap/applpm/main.c</a>, and <a class="el" href="bootstrap_2button_2main_8c-example.html#a8">bootstrap/button/main.c</a>.</dd>
 </dl>
@@ -229,7 +229,7 @@ Callback Infrastructure</h1>
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {     \</div>
 <div class="line">    int return_flags_ = (_return_flags);                        \</div>
 <div class="line">    if (return_flags_ &amp; <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>) {     \</div>
-<div class="line">      return_flags_ |= <a class="code" href="common_8h.html#a2b4afc21563d1222ddc2cda30168c052">BSP430_CORE_LPM_EXIT_MASK</a>;               \</div>
+<div class="line">      return_flags_ |= <a class="code" href="core_8h.html#a2b4afc21563d1222ddc2cda30168c052">BSP430_CORE_LPM_EXIT_MASK</a>;               \</div>
 <div class="line">    }                                                           \</div>
 <div class="line">    BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);               \</div>
 <div class="line">    if (return_flags_ &amp; <a class="code" href="periph_8h.html#a91d408b6d97a12b296903e07b095d9c4">BSP430_HAL_ISR_CALLBACK_YIELD</a>) {        \</div>
@@ -711,7 +711,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

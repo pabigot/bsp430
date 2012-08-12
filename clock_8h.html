@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_afb03915f4cb7ca917695af54c12c4db.html">include</a></li><li class="navelem"><a class="el" href="dir_a3c8f7f0425d4f7a44c2fd239713bb47.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Clock-related functions implemented on all MSP430 MCUs.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="common_8h_source.html">bsp430/common.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="core_8h_source.html">bsp430/core.h</a>&gt;</code><br/>
 </div>
 <p><a href="clock_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -148,8 +148,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ac6df48b7667e1268240ea5555fad1d9c"><td class="memItemLeft" align="right" valign="top">static unsigned long __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#ac6df48b7667e1268240ea5555fad1d9c">ulBSP430clockSMCLK_Hz</a> (void)</td></tr>
 <tr class="memitem:a11303f50d951e4d623afe1f656bda7a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a> (int enablep, int loop_limit)</td></tr>
 <tr class="memitem:af634a7a6fbaf23e799250ed9a02b7ce4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#af634a7a6fbaf23e799250ed9a02b7ce4">iBSP430clockConfigureACLK_ni</a> (<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> sel)</td></tr>
-<tr class="memitem:ad3c75b0b9bb266e2110c060e26d29651"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#ad3c75b0b9bb266e2110c060e26d29651">usBSP430clockACLK_Hz_ni</a> (void)</td></tr>
-<tr class="memitem:ad88e60e07be8bd774f7187da781023db"><td class="memItemLeft" align="right" valign="top">static unsigned short __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#ad88e60e07be8bd774f7187da781023db">usBSP430clockACLK_Hz</a> (void)</td></tr>
+<tr class="memitem:a81d3191393783b4479969fed1019f40b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni</a> (void)</td></tr>
+<tr class="memitem:abd226cba123de9f974df991e2502d3c3"><td class="memItemLeft" align="right" valign="top">static unsigned int __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#abd226cba123de9f974df991e2502d3c3">uiBSP430clockACLK_Hz</a> (void)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Clock-related functions implemented on all MSP430 MCUs. </p>
@@ -206,7 +206,7 @@ Functions</h2></td></tr>
 <p>The generic implementation looks for any oscillator fault by checking the system-wide register. It is overridden in peripheral-specific clock headers where an ability exists to check specifically for a LFXT1 fault. The value is nonzero iff an external crystal is the source for LFXT1 and a fault has been detected.</p>
 <dl class="section note"><dt>Note</dt><dd>This function macro is implicitly not to be interrupted, and should be implemented where possible as a single instruction test.</dd>
 <dd>
-This test is intended specifically to validate an external watch crystal running at 32 kiHz. Where LFXT1 is sourced from other means, it is assumed that the (missing) crystal is faulted even if the peripheral-specific bit suggests it is not. Similarly, the state of the system oscillator fault bit is not reflected in the value for a peripheral-specific check.</dd></dl>
+This test is intended specifically to validate an external watch crystal running at 32 KiHz. Where LFXT1 is sourced from other means, it is assumed that the (missing) crystal is faulted even if the peripheral-specific bit suggests it is not. Similarly, the state of the system oscillator fault bit is not reflected in the value for a peripheral-specific check.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>If the underlying peripheral requires that its register bank be unlocked for modification, this macro will do so then re-lock them. This will result in unexpected behavior if the macro is invoked in a context where the registers are already unlocked.</dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="clock_8h.html#ae59021b5f9f12d0361bdcc8144859890">BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI()</a></dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
@@ -226,7 +226,7 @@ This test is intended specifically to validate an external watch crystal running
 </div><div class="memdoc">
 <p>Define this to the number of MCLK cycles that <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a> should delay, after clearing oscillator faults, before checking for oscillator stability. This must be a compile-time constant integer compatible with <code>unsigned long</code>.</p>
 <p>Crystal stabilization can take hundreds of milliseconds. If this value is too short, <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a> may prematurely decide that the crystal is working; if it is too long, the return from <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a> is delayed.</p>
-<p>The default value is chosen to reflect a 20msec delay at the PUC MCLK frequency of roughly 1MHz. This allows <a class="el" href="common_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR()</a> to be invoked within the loop to prevent a watchdog reset while waiting for stabilization. It does assume that an unstable crystal will indicate a fault within 10msec, which may not be true.</p>
+<p>The default value is chosen to reflect a 20msec delay at the PUC MCLK frequency of roughly 1MHz. This allows <a class="el" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR()</a> to be invoked within the loop to prevent a watchdog reset while waiting for stabilization. It does assume that an unstable crystal will indicate a fault within 10msec, which may not be true.</p>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a6">bootstrap/clocks/main.c</a>.</dd>
 </dl>
@@ -247,7 +247,7 @@ This test is intended specifically to validate an external watch crystal running
 <dd>
 Applications may wish to provide an alternative value suited to specific needs. It is suggested that the value include the suffix L in case the compiler does not automatically promote constants as necessary.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a4">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a10">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a6">bootstrap/console/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a13">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a13">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a4">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a10">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a6">bootstrap/console/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a13">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a14">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -293,7 +293,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Nominal rate of the external low-frequency crystal. This is expected to be a 32 kiHz watch crystal, so that's what the default is. </p>
+<p>Nominal rate of the external low-frequency crystal. This is expected to be a 32 KiHz watch crystal, so that's what the default is. </p>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a18">bootstrap/clocks/main.c</a>.</dd>
 </dl>
@@ -341,7 +341,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A function macro that converts a value specified in microseconds to an approximate duration counted in MCLK cycles. This is primarily used to provide the parameter to <a class="el" href="common_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a> when the desired delay is specified by time rather than cycles.</p>
+<p>A function macro that converts a value specified in microseconds to an approximate duration counted in MCLK cycles. This is primarily used to provide the parameter to <a class="el" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a> when the desired delay is specified by time rather than cycles.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_delay_us</td><td>the delay in microseconds. Expected, but not required, to be a compile-time integer constant compatible with unsigned long. </td></tr>
@@ -383,13 +383,13 @@ Applications may wish to provide an alternative value suited to specific needs. 
 <p>A marker value indicating that no clock is selected. Generally this is not an appropriate value to use as a parameter. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa71286517a83aeb014d841071bc7794d8"></a>eBSP430clockSRC_XT1CLK</em>&nbsp;</td><td>
-<p>XT1 is the primary external clock. It is generally a low-frequency watch crystal running at 32 kiHz. The nominal speed for this clock is <a class="el" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">BSP430_CLOCK_NOMINAL_XT1CLK_HZ</a>. </p>
+<p>XT1 is the primary external clock. It is generally a low-frequency watch crystal running at 32 KiHz. The nominal speed for this clock is <a class="el" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">BSP430_CLOCK_NOMINAL_XT1CLK_HZ</a>. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaad127090299761a8dbd1b8248b7ab2c0e"></a>eBSP430clockSRC_VLOCLK</em>&nbsp;</td><td>
 <p>VLOCLK is a low-speed internal clock, normally around 10-12 kHz. It is relatively imprecise. The nominal speed for this clock is <a class="el" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa25f599d5547daa7bb5b126162fe3c06e"></a>eBSP430clockSRC_REFOCLK</em>&nbsp;</td><td>
-<p>REFOCLK is an internally low power trimmed 32 kiHz oscillator supported in the UCS peripheral </p>
+<p>REFOCLK is an internally low power trimmed 32 KiHz oscillator supported in the UCS peripheral </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa08fe6b5e068e82d29fe98632bc2f4b32"></a>eBSP430clockSRC_DCOCLK</em>&nbsp;</td><td>
 <p>DCOCLK is whatever the DCO clock frequency is. It's probably related to <a class="el" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>, but may be a multiple of that. </p>
@@ -410,7 +410,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa509e9b965e91f15094b75169f550b95d"></a>eBSP430clockSRC_XT1CLK_FALLBACK</em>&nbsp;</td><td>
 <p>Fallback: use XT1CLK if <a class="el" href="clock_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI()</a> is false, otherwise use the most precise available internal reference clock.</p>
-<p>Generally this will be equivalent to <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa0b31074786d75cdbc65a1be576a20786">eBSP430clockSRC_XT1CLK_OR_VLOCLK</a> or <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa3480b90ace81a2b9f2c25d22d18fc4d6">eBSP430clockSRC_XT1CLK_OR_REFOCLK</a>, depending on what clock peripheral is available. Use <a class="el" href="clock_8h.html#ad3c75b0b9bb266e2110c060e26d29651">usBSP430clockACLK_Hz_ni()</a> to determine what the actual (nominal) speed is. </p>
+<p>Generally this will be equivalent to <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa0b31074786d75cdbc65a1be576a20786">eBSP430clockSRC_XT1CLK_OR_VLOCLK</a> or <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa3480b90ace81a2b9f2c25d22d18fc4d6">eBSP430clockSRC_XT1CLK_OR_REFOCLK</a>, depending on what clock peripheral is available. Use <a class="el" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni()</a> to determine what the actual (nominal) speed is. </p>
 </td></tr>
 </table>
 </dd>
@@ -523,6 +523,53 @@ Applications may wish to provide an alternative value suited to specific needs. 
 <p>This is extracted from the peripheral-specific registers and accounts for any division by MCLK of a shared source clock.</p>
 <dl class="section return"><dt>Returns</dt><dd>The power of 2 by which MCLK is divided to produce SMCLK. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a14">bootstrap/clocks/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="abd226cba123de9f974df991e2502d3c3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned int __inline__ uiBSP430clockACLK_Hz </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Interruptible-preserving wrapper for <a class="el" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni()</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="a81d3191393783b4479969fed1019f40b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int uiBSP430clockACLK_Hz_ni </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the best available estimate of ACLK frequency.</p>
+<p>Depending on clock configuration, this will return one of <a class="el" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">BSP430_CLOCK_NOMINAL_XT1CLK_HZ</a>, <a class="el" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>, or another constant or possibly measured value.</p>
+<p>A value of 0 may be returned if the clock is configured for an unidentified external source.</p>
+<dl class="section note"><dt>Note</dt><dd>If the ACLK is configured to source from LFXT1 but <a class="el" href="clock_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI()</a> is true this will return <a class="el" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a> instead of <a class="el" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">BSP430_CLOCK_NOMINAL_XT1CLK_HZ</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>an estimate of the ACLK frequency, in Hz </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a53">bootstrap/applpm/main.c</a>, and <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a19">bootstrap/clocks/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -668,57 +715,10 @@ The &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction
 </dl>
 </div>
 </div>
-<a class="anchor" id="ad88e60e07be8bd774f7187da781023db"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static unsigned short __inline__ usBSP430clockACLK_Hz </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Interruptible-preserving wrapper for <a class="el" href="clock_8h.html#ad3c75b0b9bb266e2110c060e26d29651">usBSP430clockACLK_Hz_ni()</a> </p>
-
-</div>
-</div>
-<a class="anchor" id="ad3c75b0b9bb266e2110c060e26d29651"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned short usBSP430clockACLK_Hz_ni </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Return the best available estimate of ACLK frequency.</p>
-<p>Depending on clock configuration, this will return one of <a class="el" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">BSP430_CLOCK_NOMINAL_XT1CLK_HZ</a>, <a class="el" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>, or another constant or possibly measured value.</p>
-<p>A value of 0 may be returned if the clock is configured for an unidentified external source.</p>
-<dl class="section note"><dt>Note</dt><dd>If the ACLK is configured to source from LFXT1 but <a class="el" href="clock_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI()</a> is true this will return <a class="el" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a> instead of <a class="el" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">BSP430_CLOCK_NOMINAL_XT1CLK_HZ</a>.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>an estimate of the ACLK frequency, in Hz </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a53">bootstrap/applpm/main.c</a>, and <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a19">bootstrap/clocks/main.c</a>.</dd>
-</dl>
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

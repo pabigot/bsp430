@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120811</span>
+   &#160;<span id="projectnumber">20120812</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -100,9 +100,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">} sButtonState;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line">button_isr (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * cb,</div>
-<div class="line">            <span class="keywordtype">void</span> * context,</div>
-<div class="line">            <span class="keywordtype">int</span> idx)</div>
+<div class="line">button_isr_ni (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * cb,</div>
+<div class="line">               <span class="keywordtype">void</span> * context,</div>
+<div class="line">               <span class="keywordtype">int</span> idx)</div>
 <div class="line">{</div>
 <div class="line">  <a name="_a1"></a><a class="code" href="structsBSP430halPORT.html">hBSP430halPORT</a> hal = (<a name="a2"></a><a class="code" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">hBSP430halPORT</a>)context;</div>
 <div class="line">  <span class="keyword">volatile</span> <a name="_a3"></a><a class="code" href="structsBSP430hplPORT__IE__8.html">sBSP430hplPORTIE</a> * hpl = <a name="a4"></a><a class="code" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(hal);</div>
@@ -130,7 +130,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> sButtonState button_state = {</div>
-<div class="line">  .button_cb = { .callback = button_isr },</div>
+<div class="line">  .button_cb = { .callback = button_isr_ni },</div>
 <div class="line">  .bit = <a name="a9"></a><a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a></div>
 <div class="line">};</div>
 <div class="line"></div>
@@ -181,13 +181,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="comment">/* Note that we&#39;ve never turned interrupts on, so we do so now</span></div>
 <div class="line"><span class="comment">     * when entering LPM.  The ISR will turn them off again before</span></div>
 <div class="line"><span class="comment">     * waking the MCU. */</span></div>
-<div class="line">    <a name="a25"></a><a class="code" href="common_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a26"></a><a class="code" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">    <a name="a25"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a26"></a><a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 04:49:26 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
