@@ -34,7 +34,13 @@
 
 BSP430 is a set of C language adaptation layers simplifying cross-MCU
 library and application development on Texas Instruments MSP430
-microcontrollers.  It features:
+microcontrollers.  
+
+The target audience is experienced embedded systems developers who need full
+control over the microcontroller but are willing to trade a small amount of
+performance for improved component re-usability and rapid prototyping.
+
+BSP430 features:
 
 \li A @link bsp430_config configuration infrastructure @endlink allowing you
 to include only those resources and capabilities required by your

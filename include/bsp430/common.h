@@ -58,7 +58,7 @@
  * the BSP430 library that is being used.  The value represents a
  * development freeze date in the form YYYYMMDD as a decimal
  * number. */
-#define BSP430_VERSION 20120713
+#define BSP430_VERSION 20120811
 
 /** @def configBSP430_COMMON_INCLUDE_BSP430_CONFIG_FILE
  *
