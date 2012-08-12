@@ -66,19 +66,19 @@ BSP430 is released as open source under the <a
 href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
 license.
 
-For further details, please see the Background, Philosophy, Coding Style,
-and Maintenance pages.
+For further details, please see the Background, Philosophy, @link coding
+Coding Style@endlink, and Maintenance pages.
 
 \section mp_capabilities Capabilities Currently Supported
 
 \li @link bsp430/periph/timer.h Timers @endlink supporting both Timer_A and
 Timer_B supported in a common interface;
 
-\li A @link bsp430/clock.h standard clock interface @endlink supporting MCLK,
-SMCLK, ACLK, and LFXT1 crystal configuration in the clock systems in the
-@link bsp430/periph/bc2.h 2xx @endlink, @link bsp430/periph/fllplus.h 4xx
-@endlink, @link bsp430/periph/ucs.h 5xx/6xx @endlink, and @link
-bsp430/periph/cs.h FR5xx @endlink families;
+\li A @link bsp430/clock.h standard clock interface @endlink supporting
+MCLK, SMCLK, ACLK, and LFXT1 crystal configuration in the clock systems in
+the @link bsp430/periph/bc2.h 2xx@endlink, @link bsp430/periph/fllplus.h
+4xx@endlink, @link bsp430/periph/ucs.h 5xx/6xx@endlink, and @link
+bsp430/periph/cs.h FR5xx@endlink families;
 
 \li A @link bsp430/serial.h standard serial interface @endlink supporting
 UART, SPI, and I2C using the USCI variants in the @link bsp430/periph/usci.h

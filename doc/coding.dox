@@ -29,118 +29,185 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*! \page coding_p BSP430 Coding Style
+/*! @page coding BSP430 Coding Style
+@tableofcontents
 
-\section coding BSP430 Coding Standard and Style Guide
+The coding style for BSP430 is primarily the one the author converged to
+over the last twenty-five years, but has a few lingering influences from
+FreeRTOS.
 
-As BSP430 is intended as a library for use with <a
-href="http://www.freertos.org">FreeRTOS</a>, the code style attempts to
-follow the <a
-href="http://www.freertos.org/FreeRTOS-Coding-Standard-and-Style-Guide.html">FreeRTOS
-Coding Standard and Style Guide</a>.  The attempt is best-effort, with
-several intentional deviations:
+\section coding_style Indentation and Syntactic Style
 
-<ul>
+BSP430's coding style may be obtained using the following Emacs <a
+href="http://cc-mode.sourceforge.net/">ccmode</a> style:
 
-<li>The C standard type corresponding to the native word size of the MSP430
-is @c int, as it is for many platforms.  The type @c int (<tt>unsigned
-int</tt>) will often be used in lieu of @c portBASE_TYPE.  A prefix
-character @e i shall be used in lieu of @e x in function names.
+@code
+(c-add-style "pab"
+	     '("gnu"
+	       (indent-tabs-mode . nil)	; No tabs in the source
+	       (c-offsets-alist
+		(case-label . 2)	; Indent the case labels
+		)))
+@endcode
 
-<li>While the FreeRTOS variant of <a
-href="http://en.wikipedia.org/wiki/Hungarian_notation">Systems Hungarian</a>
-is used for global type and function names and for parameters in function
-declarations, it is not used in implementation or in internal structures.
+An acceptably close approximation can be had using the following <a
+href="http://astyle.sourceforge.net/">Artistic Style (astyle)</a> command
+line:
 
-<li>Function names comprise the encoding of return type, the identifier @c
-BSP430, a lowercase module identifier such as @c usci, followed by a
-camel-case initial-capital suffix reflecting the function purpose.
+@code
+astyle \
+  --options=none \
+  --style=1tbs \
+  --indent=spaces=2 \
+  --indent-switches \
+  --pad-header \
+  -r \
+    '*.c' \
+    '*.h' \
+    '*.inc'
+@endcode
 
-</ul>
+\section coding_naming Identifiers and Naming Conventions
 
-The use of tab characters instead of spaces, with a non-standard spacing of
-four positions for tables, is retained (regrettably).
+Care is taken in BSP430 to conform to the rules for C regarding global
+identifiers; in particular, underscores may not appear at the start of an
+identifier, and certain suffixes like @c _t are reserved.
 
-5xx/6xx-family devices are identified by checking for
-defined(__MSP430_HAS_MSP430XV2_CPU__).
+@li All global symbols and macros encode that they are part of BSP430 by
+beginning with @c BSP430 with or without prefix characters that indicate
+type information.  The next section of the identifier encodes information
+about the BSP430 module to which it belongs.
 
+@li Macros are upper-case, underscore separated.  An exception is made for
+configuration macros which have a prefixed lower-case @c config.
 
-header: periph/%(periph)s.h
-multiple include protection: BSP430_PERIPH_%(PERIPH)s_H
+@li Function names are intercapped.  An initial letter indicates the return
+type:  @c i is used for @c int, @c ul for <c>unsigned long</c>, @c v for @c
+void, and @c h for a @HAL handle.  The letter @c x is used as a prefix for
+more complex types, such as <c>const char *</c>.
 
-Instance-specific HPL support: configBSP430_HPL_%(INSTANCE)s
-Instance-specific HAL support: configBSP430_HAL_%(INSTANCE)s
-Instance-specific HAL ISR: configBSP430_HAL_%(INSTANCE)s_ISR
+@li Type names (tags and typedefs) are intercapped.  @c struct, @c union,
+and @c enum types have typedef aliases that use the tag as the type name.
+An initial letter distinguishes the "type" of type: @c s is a @c struct, @c
+u is a @c union, @c e is an @c enum.  @c h indicates a handle for (pointer
+to) a @HAL structure type; for example #hBSP430halSERIAL is a typedef for a
+pointer to #sBSP430halSERIAL.  @c t is used for any typedef for a normal
+type, such as #tBSP430periphHandle.
 
-peripheral instance handles: BSP430_PERIPH_%(INSTANCE)s
-HPL structure sBSP430hpl%(PERIPH)s
-HPL inline pointer: BSP430_HPL_%(INSTANCE)s
-HAL structure sBSP430hal%(PERIPH)s
-HAL handle typedef hBSP430hal%(PERIPH)s
-Non-public HAL instance xBSP430hal_%(INSTANCE)s_
-HAL inline pointer: BSP430_HAL_%(INSTANCE)s
-HAL handle: hBSP430hal_%(INSTANCE)s
+@li Enumeration values are intercapped and begin with @c e.
 
+@li A concept of "protected" is indicated by a single trailing underscore.
+Generally this is used in macro parameters and for static storage class
+variables that should not be referenced outside the implementation.
 
-Global symbols indicate their purpose or flavor using a single prefix
-character.
+@li The extremely rare global variables follow the general convention of
+function names.  Most of these variables are marked as protected.
 
-struct sBSP430foo is a structure type related to foo. sBSP430foo is a
-typedef to this struct.
+@li Function parameters, structure/union member tags, local variables, and
+and file static variables should be lower case, underscore separated.  These
+identifiers do not encode type information.
 
-union uBSP430foo is a union type related to foo.  uBSP430foo is a typedef to
-this union.
+@li Where a function or value has an associated physical unit that is
+required for correct interpretation of the value, that should be expressed
+as an underscore-separated suffix consistent with the <a
+href="http://unitsofmeasure.org/">Unified Code for Units of Measure</a>.  As
+an example, all BSP430 frequency values are annotated with the suffix @c
+_Hz.
 
-enum eBSP430foo is an enumeration type related to foo.  eBSP430foo is a
-typedef to this enum.
+@li Where a function, function macro, or structure tag must be manipulated
+with interrupts disabled, it ends with a suffix @c _ni (@c _NI for macros).
 
-tBSP430foo is a typedef related to foo that is not a struct, union, or enum.
-Exception: sBSP430hplPORTfoo is a platform-specific typedef to the
-variant port structure supported on the target MCU.
-Exception: hBSP430halPERIPH is a typedef for a pointer to sBSP430halPERIPH.
+\section coding_types Type Selection
 
-hBSP430foo is a HAL (hBSP430%(periph)s%(INSTANCE)s) handle for a peripheral.
+Except where a data type is used as part of an interface to an external
+system or to reflect a specific intent, native types are used.
 
-FreeRTOS HAL state structure: struct sBSP430%(periph)sState
-FreeRTOS HAL handle type: typedef sBSP430%(periph)sState * tBSP430%(periph)sHandle
-FreeRTOS HAL handle global: extern tBSP430%(periph)sHandle const hBSP430%(periph)%(INSTANCE)
+@li @c int is the native type.  Anybody using an MSP430 should know that
+this is a 16-bit value.  <c>unsigned int</c> is the type for any 16-bit
+peripheral registers.
 
-Pattern for platform-specific features:
+@li <c>unsigned char</c> is the type for any 8-bit peripheral registers.
 
-configBSP430_MODULE_FEATURE -- in module.h header, serves to request
-feature, default to 0
+@li ASCII text characters and strings use @c char as the core type.
 
-configBSP430_MODULE_FEATURE_USE_DEFAULT_RESOURCES -- in module.h header,
-default to (configBSP430_MODULE_FEATURE - 0)
+@li Data transmitted to and from an external system using the @link
+bsp430/serial.h serial abstraction@endlink uses @c uint8_t as codified in
+<c><stdint.h></c>.
 
-BSP430_MODULE_FEATURE -- documented in module.h header, used in application
-code to determine whether feature was enabled, @nodefault, @dependency
-<bsp430/platform.h>
+\section coding_misc Miscellaneous
 
-BSP430_MODULE_FEATURE_ATTRIBUTES -- as needed, documented in module.h
-header, @nodefault, @dependency <bsp430/platform.h>
+\subsection coding_misc_yoda Comparison Operands
 
-BSP430_MODULE_FEATURE_ATTRIBUTES -- defined in (specific) platform.h under
-test:
-#if ((configBSP430_MODULE_FEATURE - 0) \
-     && ((! defined(configBSP430_MODULE_FEATURE_USE_DEFAULT_RESOURCE)) \
-        || (configBSP430_MODULE_FEATURE_USE_DEFAULT_RESOURCE - 0)))
-/** Defined only if #configBSP430_MODULE_FEATURE_USE_DEFAULT_RESOURCE. @defaulted */
-#define BSP430_MODULE_FEATURE_ATTRIBUTES whatever
-#endif /* configBSP430_MODULE_FEATURE && need default */
+BSP430 places comparison operands which are lvalues on the right side of the
+operator, as with:
 
-If the feature attributes introduce a dependency on a specific peripheral,
-default to enabling that peripheral with:
+@code
+if (4 <= len) {
+  /* Too long */
+}
+@endcode
 
-configBSP430_PERIPH_WHATEVER -- defined in (specific) platform bsp430_config.h
-under test:
-#if ((configBSP430_MODULE_FEATURE - 0) \
-     && ((! defined(configBSP430_MODULE_FEATURE_USE_DEFAULT_RESOURCE)) \
-        || (configBSP430_MODULE_FEATURE_USE_DEFAULT_RESOURCE - 0)))
-#if !defined(configBSP430_PERIPH_WHATEVER)
-#define configBSP430_PERIPH_WHATEVER 1
-#endif /* configBSP430_PERIPH_WHATEVER */
-#endif /* configBSP430_MODULE_FEATURE && need default */
+Yes, even if the conditional operator "couldn't possibly be mistyped" as an
+assignment operator.
+
+<a href="http://www.dodgycoder.net/2011/11/yoda-conditions-pokemon-exception.html">Up with it you must put.</a>
+
+\subsection coding_misc_rv Function Return Values
+
+Where a function implements an operation that may succeed or fail, that
+state reflected in the return value following standard POSIX conventions: a
+zero indicates a successful execution and a negative value indicates an
+error.  Where useful information about a successful result may be expressed
+as a non-negative value (e.g., the number of bytes successfully
+transmitted), that may be included in the return value.
+
+This is often counter-intuitive to programmers unfamiliar with POSIX, but
+the correct test to see whether the I2C addresses were successfully set is
+indeed:
+
+@code
+  if (0 == iBSP430serialI2CsetAddresses_ni(i2c, oa, sa)) {
+    /* Success here... */
+  }
+@endcode
+
+\subsection coding_misc_incl Include Files
+
+Include file protection symbols encode the path by which the include
+file is normally accessed; e.g. the protection sequence for
+<bsp430/platform/exp430fr5739/platform.h> is:
+
+@code
+#ifndef BSP430_PLATFORM_EXP430FR5739_PLATFORM_H
+#define BSP430_PLATFORM_EXP430FR5739_PLATFORM_H
+/* ... */
+#endif /* BSP430_PLATFORM_EXP430FR5739_PLATFORM_H */
+@endcode
+
+\subsection coding_misc_cpp Preprocessor Feature Tests
+
+Where a macro value is used for conditional compilation, the state of
+being true is determined with the following pattern:
+
+@code
+#if FEATURE_FLAG - 0
+/* Feature is enabled */
+#else /* MACRO_VALUE */
+/* Feature is not enabled */
+#endif /* MACRO_VALUE */
+@endcode
+
+This is not consistent with the way the TI headers use functional presence
+symbols such as <c>\__MSP430_HAS_ADC12__</c>, but is required to allow use of:
+
+@code
+#define FEATURE_FLAG 0
+@endcode
+
+to denote that the feature is being explicitly disabled.  BSP430 should
+ensure that any feature test flag has a definition to either 1 or 0 (or to
+an expression that will evaluate to either a true or false value when used
+within a preprocessor condition).
 
 @copyright_doc
 */
