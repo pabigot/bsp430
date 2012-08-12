@@ -54,10 +54,8 @@
  * Throughout BSP430 the term LFXT1 is exclusively used to denote an
  * external low-frequency crystal.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @date 2012
- * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_CLOCK_H

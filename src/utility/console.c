@@ -33,10 +33,8 @@
  *
  * @brief Implementation for the BSP430 console facility
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @date 2012
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @copyright @link http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause @endlink
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #include <bsp430/utility/console.h>

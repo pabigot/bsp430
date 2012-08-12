@@ -53,10 +53,8 @@
  * set on wakeup if interrupts are normally disabled in the main
  * application.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @date 2012
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_LPM_H

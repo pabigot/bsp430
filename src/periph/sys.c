@@ -31,8 +31,7 @@
 
 /** @file
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @copyright @link http://www.opensource.org/licenses/BSD-3-Clause BSD 3-Clause @endlink
+ * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #include <bsp430/periph/sys.h>

@@ -29,8 +29,7 @@ BSP430 features:
   currently focused on the `MSPGCC`_ toolchain in a POSIX command-line
   environment supported by GNU Make
 
-Copyright 2012, Peter A. Bigot
-Licensed under `BSD-3-Clause`_.
+Copyright 2012, Peter A. Bigot, and licensed under `BSD-3-Clause`_.
 
 .. _giturl:
 .. _homepage: 

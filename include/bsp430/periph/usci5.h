@@ -71,10 +71,8 @@
  * corresponding interrupt structure by default.  USCI5 does not
  * support a secondary ISR.
  *
- * @author Peter A. Bigot <bigotp@acm.org>
- * @date 2012
- * @homepage http://github.com/pabigot/freertos-mspgcc
- * @copyright <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 /* !BSP430! periph=usci5 */

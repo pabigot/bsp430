@@ -107,8 +107,6 @@
  * sBSP430halTIMER.cc_cbchain_ni array is invoked by this ISR.  The
  * interrupt enable bit is controlled by the application.
  *
- * @author Peter A. Bigot <bigotp@acm.org> @homepage
- * http://github.com/pabigot/freertos-mspgcc @date 2012 @copyright <a
  * href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
