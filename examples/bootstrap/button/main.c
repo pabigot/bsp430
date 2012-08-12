@@ -105,6 +105,6 @@ void main ()
     /* Note that we've never turned interrupts on, so we do so now
      * when entering LPM.  The ISR will turn them off again before
      * waking the MCU. */
-    BSP430_CORE_LPM_ENTER_NI(LPM4_bits | GIE);
+    BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
   }
 }
