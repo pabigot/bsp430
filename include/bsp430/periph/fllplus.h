@@ -47,13 +47,13 @@
  * @section h_periph_fllplus_hpl Hardware Presentation Layer
  *
  * As there can be only one instance of FLLPLUS on any MCU, there is no
- * structure supporting a FLLPLUS @hpl.  Manipulate the peripheral through its
+ * structure supporting a FLLPLUS @HPL.  Manipulate the peripheral through its
  * registers directly.
  *
  * @section h_periph_fllplus_hal Hardware Adaptation Layer
  *
  * As there can be only one instance of FLLPLUS on any MCU, there is no
- * structure supporting a FLLPLUS @hal.
+ * structure supporting a FLLPLUS @HAL.
  *
  * The standard set of capabilities in the bsp430/clocks.h header are
  * supported, with the following details:

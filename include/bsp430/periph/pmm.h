@@ -44,13 +44,13 @@
  * @section h_periph_pmm_hpl Hardware Presentation Layer
  *
  * As there can be only one instance of PMM on any MCU, there is no
- * structure supporting a PMM @hpl.  Manipulate the peripheral through its
+ * structure supporting a PMM @HPL.  Manipulate the peripheral through its
  * registers directly.
  *
  * @section h_periph_pmm_hal Hardware Adaptation Layer
  *
  * As there can be only one instance of PMM on any MCU, there is no
- * structure supporting a PMM @hal.
+ * structure supporting a PMM @HAL.
  *
  * Inline functions defined in this module support forcing processor
  * resets that include a complete reset of all registers and

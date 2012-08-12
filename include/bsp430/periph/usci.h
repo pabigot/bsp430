@@ -68,10 +68,10 @@
  *
  * @section h_periph_usci_hal Hardware Adaptation Layer
  *
- * The USCI @hal uses the #sBSP430halSERIAL structure from the @link
+ * The USCI @HAL uses the #sBSP430halSERIAL structure from the @link
  * bsp430/serial.h generic serial adaptation layer@endlink.  It can
  * also be accessed directly using the functions defined in this
- * module.  Both @b A and @b B variants are supported by the same @hal
+ * module.  Both @b A and @b B variants are supported by the same @HAL
  * structure.
  *
  * Enabling the HAL layer for a USCI instance enables both the

@@ -39,7 +39,7 @@
  *
  * Conventional peripheral handles are #BSP430_PERIPH_TA0 and
  * #BSP430_PERIPH_TB0.  The handles are available only when the
- * corresponding @hpl is requested.  The number of capture/compare
+ * corresponding @HPL is requested.  The number of capture/compare
  * blocks supported by the MCU is not an identifying characteristic of
  * the peripheral instance.
  *
@@ -86,7 +86,7 @@
  *
  * @section h_periph_timer_hal Hardware Adaptation Layer
  *
- * The timer @hal uses the sBSP430halTIMER structure.
+ * The timer @HAL uses the sBSP430halTIMER structure.
  *
  * Enabling #configBSP430_HAL_TA0 also enables
  * #configBSP430_HAL_TA0_ISR unless previously disabled.  When this

@@ -38,7 +38,7 @@
  * below.
  *
  * Conventional peripheral handles are #BSP430_PERIPH_PORT1.  The
- * handles are available only when the corresponding @hpl is
+ * handles are available only when the corresponding @HPL is
  * requested.  The peripheral handle can be used with
  * xBSP430hplLookupPORT() and xBSP430hplLookupPORTIE() to obtain the
  * HPL handles, and with hBSP430halPORT() to obtain the HAL handle.
@@ -54,7 +54,7 @@
  *
  * @section h_periph_port_hpl Hardware Presentation Layer
  *
- * The module defines five distinct @hpl structures:
+ * The module defines five distinct @HPL structures:
  *
  * @li #sBSP430hplPORT_8 is an 8-bit port lacking interrupt support on a
  * pre-5xx family device
@@ -85,16 +85,16 @@
  * resolve to the appropriate underlying structure supported by the
  * target MCU:
  *
- * @li #sBSP430hplPORT denotes the @hpl for an 8-bit port that lacks
+ * @li #sBSP430hplPORT denotes the @HPL for an 8-bit port that lacks
  * interrupt support (generally ports 3 and higher)
  *
- * @li #sBSP430hplPORTIE denotes the @hpl for an 8-bit port that does
+ * @li #sBSP430hplPORTIE denotes the @HPL for an 8-bit port that does
  * support interrupts (generally ports 1 and 2, but higher ports on
  * some MCUs)
  *
  * @section h_periph_port_hal Hardware Adaptation Layer
  *
- * The port @hal uses the sBSP430halPORT structure.  All variant HPL
+ * The port @HAL uses the sBSP430halPORT structure.  All variant HPL
  * structures are accessible through this structure.
  *
  * When enabled by #configBSP430_HAL_PORT1_ISR the

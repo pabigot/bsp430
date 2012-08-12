@@ -51,13 +51,13 @@
  * @section h_periph_ucs_hpl Hardware Presentation Layer
  *
  * As there can be only one instance of UCS on any MCU, there is no
- * structure supporting a UCS @hpl.  Manipulate the peripheral through its
+ * structure supporting a UCS @HPL.  Manipulate the peripheral through its
  * registers directly.
  *
  * @section h_periph_ucs_hal Hardware Adaptation Layer
  *
  * As there can be only one instance of UCS on any MCU, there is no
- * structure supporting a UCS @hal.
+ * structure supporting a UCS @HAL.
  *
  * The standard set of capabilities in the bsp430/clocks.h header are
  * supported, with the following details:

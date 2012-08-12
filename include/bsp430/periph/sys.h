@@ -43,13 +43,13 @@
  * @section h_periph_sys_hpl Hardware Presentation Layer
  *
  * As there can be only one instance of SYS on any MCU, there is no
- * structure supporting a SYS @hpl.  Manipulate the peripheral through its
+ * structure supporting a SYS @HPL.  Manipulate the peripheral through its
  * registers directly.
  *
  * @section h_periph_sys_hal Hardware Adaptation Layer
  *
  * As there can be only one instance of SYS on any MCU, there is no
- * structure supporting a SYS @hal.
+ * structure supporting a SYS @HAL.
  *
  * The functions provided by this module simplify the extraction of
  * reset causes, notification of type of reset, and translation from

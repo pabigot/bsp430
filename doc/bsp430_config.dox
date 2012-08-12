@@ -37,15 +37,14 @@ preprocessor.  As a general rule, if an application wishes to use a
 peripheral, it specifies this by defining a macro to 1.  The specific
 peripheral, and the desired capability, are reflected in the macro name.
 
-For example, to use the @link hpl HPL @endlink interface to digital I/O port
-1 it is necessary to define #configBSP430_HPL_PORT1:
+For example, to use the @HPL interface to digital I/O port 1 it is necessary
+to define #configBSP430_HPL_PORT1:
 
 @code
 #define configBSP430_HPL_PORT1 1
 @endcode
 
-If the @link hal HAL @endlink interface is desired, that must be requested
-using:
+If the @HAL interface is desired, that must be requested using:
 
 @code
 #define configBSP430_HAL_PORT1 1

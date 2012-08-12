@@ -71,7 +71,7 @@
  * structure from the @link bsp430/serial.h generic serial adaptation
  * layer@endlink.  It can also be accessed directly using the
  * functions defined in this module.  Both @b A and @b B variants are
- * supported by the same @hal structure.
+ * supported by the same @HAL structure.
  *
  * Enabling the HAL layer for an eUSCI instance enables the
  * corresponding interrupt structure by default.  eUSCI does not
