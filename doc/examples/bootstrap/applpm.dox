@@ -78,7 +78,8 @@ populated.
 Place the ammeter on the <c>MSP PWR</c> test header.  Note that this board's
 lowest MCLK rate is 5.3MHz, unlike the others which are configured to run at
 1MHz for this test.  Since active-mode power consumption is proportional to
-MCLK rate, this may explain why the 
+MCLK rate, this may explain why the power consumption in active mode is
+relatively high.
 
 uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
 ---------: | ---------: | ---------: | -----------
