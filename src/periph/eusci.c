@@ -393,12 +393,13 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
     return -1;
   }
 
-  /* Wait for previous activity to complete */
-  while (hpl->statw & UCBBUSY) {
+  /* Check for errors while waiting for previous activity to
+   * complete */
+  do {
     if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
       return -1;
     }
-  }
+  } while (hpl->statw & UCBBUSY);
 
   /* Set for receive and store length */
   hpl->ctlw0 &= ~UCTR;
@@ -409,11 +410,11 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
 
   /* Read it in as soon as it arrives.  Device handles stop. */
   while (dp < dpe) {
-    while (! (hpl->ifg & UCRXIFG)) {
+    do {
       if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
         return -1;
       }
-    }
+    } while (! (hpl->ifg & UCRXIFG));
     *dp++ = hpl->rxbuf;
   }
   return dp - data;
@@ -432,12 +433,13 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
     return -1;
   }
 
-  /* Wait for previous activity to complete */
-  while (hpl->statw & UCBBUSY) {
+  /* Check for errors while waiting for previous activity to
+   * complete */
+  do {
     if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
       return -1;
     }
-  }
+  } while (hpl->statw & UCBBUSY);
 
   /* Set the transaction length */
   hpl->tbcnt = len;
@@ -447,11 +449,11 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
 
   /* Spit it all out as soon as there's space */
   while (i < len) {
-    while (! (hpl->ifg & UCTXIFG)) {
+    do {
       if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
         return -1;
       }
-    }
+    } while (! (hpl->ifg & UCTXIFG));
     hpl->txbuf = data[i];
     ++i;
   }

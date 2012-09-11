@@ -374,29 +374,31 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
   /* Set for receive */
   hpl->ctl1 &= ~UCTR;
   /* Delay for any in-progress stop to complete */
-  while (hpl->ctl1 & UCTXSTP) {
+  do {
     if (hpl->stat & (UCNACKIFG | UCALIFG)) {
       return -1;
     }
-  }
+  } while (hpl->ctl1 & UCTXSTP);
+
   /* Issue a start */
   hpl->ctl1 |= UCTXSTT;
   while (dp < dpe) {
     if (dpe == (dp+1)) {
       /* This will be last character: wait for any in-progress start
        * to complete then issue stop */
-      while (hpl->ctl1 & UCTXSTT) {
+      do {
         if (hpl->stat & (UCNACKIFG | UCALIFG)) {
           return -1;
         }
-      }
+      } while (hpl->ctl1 & UCTXSTT);
       hpl->ctl1 |= UCTXSTP;
     }
-    while (! (aux->rx_bit & *aux->ifgp)) {
+    do {
       if (hpl->stat & (UCNACKIFG | UCALIFG)) {
         return -1;
       }
-    }
+    } while (! (aux->rx_bit & *aux->ifgp));
+
     *dp++ = hpl->rxbuf;
   }
   return dp - data;
@@ -412,27 +414,28 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
   int i = 0;
 
   /* Delay for any in-progress stop to complete */
-  while (hpl->ctl1 & UCTXSTP) {
+  do {
     if (hpl->stat & (UCNACKIFG | UCALIFG)) {
       return -1;
     }
-  }
+  } while (hpl->ctl1 & UCTXSTP);
+
   /* Issue a start for transmit */
   hpl->ctl1 |= UCTR | UCTXSTT;
   while (i < len) {
-    while (! (aux->tx_bit & *aux->ifgp)) {
+    do {
       if (hpl->stat & (UCNACKIFG | UCALIFG)) {
         return -1;
       }
-    }
+    } while (! (aux->tx_bit & *aux->ifgp));
     hpl->txbuf = data[i++];
   }
   /* Wait for any in-progress start to complete then issue stop */
-  while (hpl->ctl1 & UCTXSTT) {
+  do {
     if (hpl->stat & (UCNACKIFG | UCALIFG)) {
       return -1;
     }
-  }
+  } while (hpl->ctl1 & UCTXSTT);
   hpl->ctl1 |= UCTXSTP;
   return i;
 }
