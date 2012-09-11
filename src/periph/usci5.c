@@ -453,6 +453,7 @@ __attribute__ ( ( __c16__ ) )
 /* __attribute__((__always_inline__)) */
 usci5_isr (hBSP430halSERIAL hal)
 {
+  int did_tx;
   int rv = 0;
 
   switch (SERIAL_HAL_HPL(hal)->iv) {
@@ -461,20 +462,25 @@ usci5_isr (hBSP430halSERIAL hal)
       break;
     case USCI_UCTXIFG:
       rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_cbchain_ni, hal, 0);
+      did_tx = 0;
       if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
         /* Found some data; send it out */
         ++hal->num_tx;
+        did_tx = 1;
         SERIAL_HAL_HPL(hal)->txbuf = hal->tx_byte;
       } else {
         /* No data; disable transmission interrupt */
         rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
       }
-      /* If no more is expected, clear the interrupt but mark that the
+      /* If no more is expected, clear the interrupt so we don't wake
+       * again.  Further, if we didn't transmit anything mark that the
        * function is ready so when the interrupt is next set it will
        * fire. */
       if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
         SERIAL_HAL_HPL(hal)->ie &= ~UCTXIE;
-        SERIAL_HAL_HPL(hal)->ifg |= UCTXIFG;
+        if (! did_tx) {
+          SERIAL_HAL_HPL(hal)->ifg |= UCTXIFG;
+        }
       }
       break;
     case USCI_UCRXIFG:

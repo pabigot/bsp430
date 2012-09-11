@@ -640,20 +640,25 @@ __attribute__ ( ( __c16__ ) )
 usciabtx_isr (hBSP430halSERIAL hal)
 {
   int rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_cbchain_ni, hal, 0);
+  int did_tx = 0;
   if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
     /* Found some data; send it out */
     ++hal->num_tx;
     SERIAL_HAL_HPL(hal)->txbuf = hal->tx_byte;
+    did_tx = 1;
   } else {
     /* No data; mark transmission disabled */
     rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
   }
-  /* If no more is expected, clear the interrupt but mark that the
+  /* If no more is expected, clear the interrupt so we don't wake
+   * again.  Further, if we didn't transmit anything mark that the
    * function is ready so when the interrupt is next set it will
    * fire. */
   if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
     *SERIAL_HAL_HPLAUX(hal)->iep &= ~SERIAL_HAL_HPLAUX(hal)->tx_bit;
-    *SERIAL_HAL_HPLAUX(hal)->ifgp |= SERIAL_HAL_HPLAUX(hal)->tx_bit;
+    if (! did_tx) {
+      *SERIAL_HAL_HPLAUX(hal)->ifgp |= SERIAL_HAL_HPLAUX(hal)->tx_bit;
+    }
   }
   return rv;
 }
