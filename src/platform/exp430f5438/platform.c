@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/platform/exp430f5438/platform.h>
 #include <bsp430/periph/ucs.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/usci5.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/periph/port.h>
+#include <bsp430/platform/exp430f5438/platform.h>
 
 #if BSP430_LED - 0
 const sBSP430halLED xBSP430hal_[] = {

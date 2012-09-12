@@ -29,12 +29,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/platform/exp430fr5739/platform.h>
 #include <bsp430/periph/cs.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/eusci.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/utility/uptime.h>
+#include <bsp430/platform/exp430fr5739/platform.h>
 
 #if BSP430_LED - 0
 const unsigned char nBSP430led = 8;
