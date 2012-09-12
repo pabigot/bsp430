@@ -45,8 +45,9 @@
  * <li>#BSP430_PLATFORM_EXP430F5438</a>
  * <li>#BSP430_PLATFORM_EXP430F5529</a>
  * <li>#BSP430_PLATFORM_EXP430FR5739</a>
- * <li>#BSP430_PLATFORM_RF2500T</a>
  * <li>#BSP430_PLATFORM_EM430</a>
+ * <li>#BSP430_PLATFORM_RF2500T</a>
+ * <li>#BSP430_PLATFORM_SURF</a>
  * <li>#BSP430_PLATFORM_CUSTOM</a>
  * </ul>
  *
@@ -426,6 +427,34 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #if BSP430_PLATFORM_EM430 - 0
 #include <bsp430/platform/em430/platform.h>
 #endif /* BSP430_PLATFORM_EM430 */
+
+/* END AUTOMATICALLY GENERATED CODE [platform_decl_url] */
+/* !BSP430! end=platform_decl_url */
+/* !BSP430! url=http://en.wikipedia.org/wiki/HTTP_404 subst=url instance=surf */
+/* !BSP430! insert=platform_decl_url */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl_url] */
+/** @def BSP430_PLATFORM_SURF
+ * Define to a true value if application is being built for the
+ * <a href="http://en.wikipedia.org/wiki/http_404">SURF</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/surf/platform.h>.
+ * If you include that header directly, #BSP430_PLATFORM_SURF will be
+ * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/surf/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_SURF
+#define BSP430_PLATFORM_SURF 0
+#endif /* BSP430_PLATFORM_SURF */
+
+#if BSP430_PLATFORM_SURF - 0
+#include <bsp430/platform/surf/platform.h>
+#endif /* BSP430_PLATFORM_SURF */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_decl_url] */
 /* !BSP430! end=platform_decl_url */

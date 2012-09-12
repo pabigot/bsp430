@@ -29,42 +29,57 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef BSP430_PLATFORM_SURF_PLATFORM_H
+#define BSP430_PLATFORM_SURF_PLATFORM_H
+
 /** @file
- * @brief Platform-specific BSP430 configuration directives for <a href="http://www.ti.com/tool/em430f5137rf900">EM430</a>
+ *
+ * @brief Platform-specific include for SuRF board.
+ *
+ * The SuRF board was a development platform for the <a
+ * href="http://www.ti.com/product/cc430f5137">CC430F5137</a>,
+ * produced by <a href="http://www.peoplepowerco.com">PeoplePower</a>
+ * prior to their focus on a cloud-based software and mobile
+ * applications.
+ *
+ * The following platform-specific features are supported:
+ * <ul>
+ *
+ * <li> #vBSP430platformSpinForJumper_ni is not implemented on this
+ * platform.
+ *
+ * </ul>
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_PLATFORM_EM430_BSP430_CONFIG_H
-#define BSP430_PLATFORM_EM430_BSP430_CONFIG_H
+/** Denote the version of the SuRF board that is being targetted.
+ *
+ * <ul>
+ * <li>A value of 0 indicates a Rev A board.
+ * <li>A value of 1 indicates a Rev B board.
+ * <li>A value of 2 indicates a Rev B2 board, which was the production version.
+ * <ul>
+ */
+#ifndef BSP430_PLATFORM_SURF_REVISION
+#define BSP430_PLATFORM_SURF_REVISION 2
+#endif /* BSP430_PLATFORM_SURF_REVISION */
 
-/* Use native USCI5 for genericized serial port unless told not to */
-#ifndef configBSP430_SERIAL_USE_USCI5
-#define configBSP430_SERIAL_USE_USCI5 1
-#endif /* configBSP430_SERIAL_USE_USCI5 */
+/** Unconditionally define this, so as to produce errors if there is a
+ * conflict in definition. */
+#define BSP430_PLATFORM_SURF 1
 
-/* Enable buttons as requested */
-#if ((configBSP430_PLATFORM_BUTTON0 - 0)        \
-     || (configBSP430_PLATFORM_BUTTON1 - 0))
-#if !defined(configBSP430_HAL_PORT1)
-#define configBSP430_HAL_PORT1 1
-#else /* configBSP430_HAL_PORT1 */
-#if ! defined(configBSP430_HPL_PORT1)
-#define configBSP430_HPL_PORT1 1
-#endif /* BUTTON[01] */
-#endif /* configBSP430_HAL_PORT1 */
-#endif /* configBSP430_PLATFORM_BUTTON[01] */
-#if ((configBSP430_PLATFORM_BUTTON2 - 0)        \
-     || (configBSP430_PLATFORM_BUTTON3 - 0))
-#if !defined(configBSP430_HAL_PORT2)
-#define configBSP430_HAL_PORT2 1
-#else /* configBSP430_HAL_PORT2 */
-#if ! defined(configBSP430_HPL_PORT2)
-#define configBSP430_HPL_PORT2 1
-#endif /* BUTTON[23] */
-#endif /* configBSP430_HAL_PORT2 */
-#endif /* configBSP430_PLATFORM_BUTTON[23] */
+/* Available button definitions.  These are revision-dependent, but
+ * only rev B2 have been defined. */
+#define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT0
+#define BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#define BSP430_PLATFORM_BUTTON1_PORT_BIT BIT1
+#define BSP430_PLATFORM_BUTTON2_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+#define BSP430_PLATFORM_BUTTON2_PORT_BIT BIT6
+#define BSP430_PLATFORM_BUTTON3_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+#define BSP430_PLATFORM_BUTTON3_PORT_BIT BIT7
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
@@ -75,9 +90,7 @@
          || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [module_startif] */
 /* !BSP430! end=module_startif */
-#if !defined(configBSP430_HAL_USCI5_A0)
-#define configBSP430_HAL_USCI5_A0 1
-#endif /* configBSP430_HAL_USCI5_A0 */
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A0
 /* !BSP430! insert=module_endif */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
 #endif /* configBSP430_CONSOLE && need default */
@@ -93,33 +106,24 @@
          || (configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE - 0)))
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
-/* !BSP430! insert=feature_ccaclk_cfg subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_cfg] */
-#if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
-#if !defined(configBSP430_HAL_TA1)
-#define configBSP430_HAL_TA1 1
-#endif /* configBSP430_HAL_TA1 */
-#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
-#if !defined(configBSP430_HPL_TA1)
-#define configBSP430_HPL_TA1 1
-#endif /* configBSP430_HPL_TA1 */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
-
-#if configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL - 0
-#if !defined(configBSP430_HAL_PORT2)
-#define configBSP430_HAL_PORT2 1
-#endif /* configBSP430_HAL_PORT2 */
-#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
-#if !defined(configBSP430_HPL_PORT2)
-#define configBSP430_HPL_PORT2 1
-#endif /* configBSP430_HPL_PORT2 */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
-/* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_cfg] */
-/* !BSP430! end=feature_ccaclk_cfg */
+/* !BSP430! insert=feature_ccaclk_decl subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_decl] */
+#define BSP430_TIMER_CCACLK 1
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA1
+#define BSP430_TIMER_CCACLK_IS_TA0 0
+#define BSP430_TIMER_CCACLK_CC_INDEX 2
+#define BSP430_TIMER_CCACLK_CCIS CCIS_1
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+#define BSP430_TIMER_CCACLK_CLK_PORT_BIT BIT0
+/* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_decl] */
+/* !BSP430! end=feature_ccaclk_decl */
 /* !BSP430! insert=feature_endif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
 #endif /* configBSP430_TIMER_CCACLK && need default */
 /* END AUTOMATICALLY GENERATED CODE [feature_endif] */
 /* !BSP430! end=feature_endif */
 
-#endif /* BSP430_PLATFORM_EM430_BSP430_CONFIG_H */
+/* Include generic file, in case this is being included directly */
+#include <bsp430/platform.h>
+
+#endif /* BSP430_PLATFORM_SURF_H */
