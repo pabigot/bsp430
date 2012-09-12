@@ -447,6 +447,30 @@ isr_%(INSTANCE)s (void)
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */
 ''',
 
+    'platform_decl_url' : '''/** @def BSP430_PLATFORM_%(INSTANCE)s
+ * Define to a true value if application is being built for the
+ * <a href="%(url)s">%(INSTANCE)s</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/%(instance)s/platform.h>.
+ * If you include that header directly, #BSP430_PLATFORM_%(INSTANCE)s will be
+ * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/%(instance)s/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_%(INSTANCE)s
+#define BSP430_PLATFORM_%(INSTANCE)s 0
+#endif /* BSP430_PLATFORM_%(INSTANCE)s */
+
+#if BSP430_PLATFORM_%(INSTANCE)s - 0
+#include <bsp430/platform/%(instance)s/platform.h>
+#endif /* BSP430_PLATFORM_%(INSTANCE)s */
+''',
+
     'platform_bsp430_config' : '''#if BSP430_PLATFORM_%(INSTANCE)s - 0
 #include <bsp430/platform/%(instance)s/bsp430_config.h>
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */

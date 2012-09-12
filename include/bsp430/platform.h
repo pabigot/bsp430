@@ -39,12 +39,15 @@
  * Further, if a recognized platform selection macro is defined to a
  * true value, the corresponding platform-specific header will be
  * included for you.  Platform-specific headers are included based on
- * the definitions of: <ul> <li>#BSP430_PLATFORM_EXP430G2</a>
+ * the definitions of: <ul>
+ * <li>#BSP430_PLATFORM_EXP430G2</a>
  * <li>#BSP430_PLATFORM_EXP430FG4618</a>
  * <li>#BSP430_PLATFORM_EXP430F5438</a>
  * <li>#BSP430_PLATFORM_EXP430F5529</a>
  * <li>#BSP430_PLATFORM_EXP430FR5739</a>
- * <li>#BSP430_PLATFORM_RF2500T</a> <li>#BSP430_PLATFORM_CUSTOM</a>
+ * <li>#BSP430_PLATFORM_RF2500T</a>
+ * <li>#BSP430_PLATFORM_EM430</a>
+ * <li>#BSP430_PLATFORM_CUSTOM</a>
  * </ul>
  *
  * @homepage http://github.com/pabigot/bsp430
@@ -398,6 +401,34 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 
 /* END AUTOMATICALLY GENERATED CODE [platform_decl] */
 /* !BSP430! end=platform_decl */
+/* !BSP430! url=http://www.ti.com/tool/em430f5137rf900 subst=url instance=em430 */
+/* !BSP430! insert=platform_decl_url */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl_url] */
+/** @def BSP430_PLATFORM_EM430
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/em430f5137rf900">EM430</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/em430/platform.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EM430 will be
+ * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/em430/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_EM430
+#define BSP430_PLATFORM_EM430 0
+#endif /* BSP430_PLATFORM_EM430 */
+
+#if BSP430_PLATFORM_EM430 - 0
+#include <bsp430/platform/em430/platform.h>
+#endif /* BSP430_PLATFORM_EM430 */
+
+/* END AUTOMATICALLY GENERATED CODE [platform_decl_url] */
+/* !BSP430! end=platform_decl_url */
 
 /** @def BSP430_PLATFORM_CUSTOM
 

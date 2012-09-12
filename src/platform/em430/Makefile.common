@@ -1,0 +1,7 @@
+# Somebody might have a EM430F6137RF900 or EM430F6147RF900.  I don't.
+MCU ?= cc430f5137
+
+MSPDEBUG_DRIVER=-j uif
+# UCS needs CCACLK for DCO configuration
+MODULES_CLOCK=periph/ucs periph/timer
+MODULES_PLATFORM_SERIAL=periph/usci5

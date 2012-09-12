@@ -46,6 +46,7 @@
  * <li>#BSP430_PLATFORM_EXP430F5529</a>
  * <li>#BSP430_PLATFORM_EXP430FR5739</a>
  * <li>#BSP430_PLATFORM_RF2500T</a>
+ * <li>#BSP430_PLATFORM_EM430</a>
  * <li>#BSP430_PLATFORM_CUSTOM</a>
  * </ul>
  * After platform-specific configuration has been read, this file may
@@ -80,7 +81,7 @@
 #endif /* configBSP430_TIMER_CCACLK */
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
 
-/* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,rf2500t */
+/* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,em430,rf2500t */
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */
 #if BSP430_PLATFORM_EXP430F5438 - 0
@@ -102,6 +103,10 @@
 #if BSP430_PLATFORM_EXP430G2 - 0
 #include <bsp430/platform/exp430g2/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
+
+#if BSP430_PLATFORM_EM430 - 0
+#include <bsp430/platform/em430/bsp430_config.h>
+#endif /* BSP430_PLATFORM_EM430 */
 
 #if BSP430_PLATFORM_RF2500T - 0
 #include <bsp430/platform/rf2500t/bsp430_config.h>
