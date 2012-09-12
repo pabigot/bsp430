@@ -66,56 +66,113 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
 #if configBSP430_HPL_USCI5_A0 - 0
   else if (BSP430_PERIPH_USCI5_A0 == device) {
     bits = BIT4 | BIT5;
+    if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
+      bits |= BIT0;             /* UCA0CLK */
+    } else if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+      bits |= BIT0 | BIT3;      /* UCA0CLK + UCA0STE */
+    }
     pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_A0 */
 #if configBSP430_HPL_USCI5_A1 - 0
   else if (BSP430_PERIPH_USCI5_A1 == device) {
     bits = BIT6 | BIT7;
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      /* UCA1CLK is on P3.6 */
+      if (enablep) {
+        P3SEL |= BIT6;
+      } else {
+        P3OUT &= ~BIT6;
+        P3DIR |= BIT6;
+        P3SEL &= ~BIT6;
+      }
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits |= BIT4;      /* UCA1STE */
+      }
+    }
     pba = BSP430_PERIPH_PORT5_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_A1 */
 #if configBSP430_HPL_USCI5_A2 - 0
   else if (BSP430_PERIPH_USCI5_A2 == device) {
     bits = BIT4 | BIT5;
+    if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
+      bits |= BIT0;             /* UCA2CLK */
+    } else if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+      bits |= BIT0 | BIT3;      /* UCA2CLK + UCA2STE */
+    }
     pba = BSP430_PERIPH_PORT9_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_A2 */
 #if configBSP430_HPL_USCI5_A3 - 0
   else if (BSP430_PERIPH_USCI5_A3 == device) {
     bits = BIT4 | BIT5;
+    if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
+      bits |= BIT0;             /* UCA3CLK */
+    } else if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+      bits |= BIT0 | BIT3;      /* UCA3CLK + UCA3STE */
+    }
     pba = BSP430_PERIPH_PORT10_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_A3 */
 #if configBSP430_HPL_USCI5_B0 - 0
   else if (BSP430_PERIPH_USCI5_B0 == device) {
-    bits = BIT0 | BIT1 | BIT2 | BIT3;
+    bits = BIT1 | BIT2;
+    if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
+      bits |= BIT3;             /* UCB0CLK */
+    } else if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+      bits |= BIT0 | BIT3;      /* UCB0STE + UCB0CLK */
+    }
     pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_B0 */
 #if configBSP430_HPL_USCI5_B1 - 0
   else if (BSP430_PERIPH_USCI5_B1 == device) {
-    bits = BIT6 | BIT7;
-    if (enablep) {
-      P5SEL |= bits;
-    } else {
-      P5OUT &= ~bits;
-      P5DIR |= bits;
-      P5SEL &= ~bits;
+    /* MISO(SCL): P5.4; CLK: P5.5; MOSI(SDA): P3.7; STE: P3.6 */
+    unsigned char bits3 = BIT7;
+    unsigned char bits5 = BIT4;
+
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      bits5 |= BIT5;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits3 |= BIT6;
+      }
     }
-    bits = BIT6 | BIT7;
-    pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
+    if (enablep) {
+      P3SEL |= bits3;
+      P5SEL |= bits5;
+    } else {
+      P3OUT &= ~bits3;
+      P5OUT &= ~bits5;
+      P3DIR |= bits3;
+      P5DIR |= bits5;
+      P3SEL &= ~bits3;
+      P5SEL &= ~bits5;
+    }
+    return 0;
   }
 #endif /* configBSP430_HPL_USCI5_B1 */
 #if configBSP430_HPL_USCI5_B2 - 0
   else if (BSP430_PERIPH_USCI5_B2 == device) {
-    bits = BIT0 | BIT1 | BIT2 | BIT3;
+    bits = BIT1 | BIT2;
+    if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
+      bits |= BIT3;             /* UCB2CLK */
+    } else if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+      bits |= BIT0 | BIT3;      /* UCB2STE + UCB2CLK */
+    }
     pba = BSP430_PERIPH_PORT9_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_B2 */
 #if configBSP430_HPL_USCI5_B3 - 0
   else if (BSP430_PERIPH_USCI5_B3 == device) {
-    bits = BIT0 | BIT1 | BIT2 | BIT3;
+    bits = BIT1 | BIT2;
+    if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
+      bits |= BIT3;             /* UCB3CLK */
+    } else if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+      bits |= BIT0 | BIT3;      /* UCB3STE + UCB3CLK */
+    }
     pba = BSP430_PERIPH_PORT10_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_B3 */
@@ -147,42 +204,42 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI5_A0 - 0
   if (BSP430_PERIPH_USCI5_A0 == device) {
-    return "MOSI/TXD=P3.4; MISO/RXD=P3.5";
+    return "MOSI/TXD=P3.4; MISO/RXD=P3.5; CLK=P3.0; STE=P3.3";
   }
 #endif /* configBSP430_HPL_USCI5_A0 */
 #if configBSP430_HPL_USCI5_A1 - 0
   if (BSP430_PERIPH_USCI5_A1 == device) {
-    return "MOSI/TXD=P5.6; MISO/RXD=P5.7";
+    return "MOSI/TXD=P5.6; MISO/RXD=P5.7; CLK=P3.6; STE=P5.4";
   }
 #endif /* configBSP430_HPL_USCI5_A1 */
 #if configBSP430_HPL_USCI5_A2 - 0
   if (BSP430_PERIPH_USCI5_A2 == device) {
-    return "MOSI/TXD=P9.4; MISO/RXD=P9.5";
+    return "MOSI/TXD=P9.4; MISO/RXD=P9.5; CLK=P9.0; STE=P9.3";
   }
 #endif /* configBSP430_HPL_USCI5_A2 */
 #if configBSP430_HPL_USCI5_A3 - 0
   if (BSP430_PERIPH_USCI5_A3 == device) {
-    return "MOSI/TXD=P10.4; MISO/RXD=P10.5";
+    return "MOSI/TXD=P10.4; MISO/RXD=P10.5; CLK=P10.0; STE=P10.3";
   }
 #endif /* configBSP430_HPL_USCI5_A3 */
 #if configBSP430_HPL_USCI5_B0 - 0
   if (BSP430_PERIPH_USCI5_B0 == device) {
-    return "STE=P3.0; MOSI/SDA=P3.1; MISO/SCL=P3.2; CLK=P3.3";
+    return "MOSI/SDA=P3.1; MISO/SCL=P3.2; CLK=P3.3; STE=P3.0";
   }
 #endif /* configBSP430_HPL_USCI5_B0 */
 #if configBSP430_HPL_USCI5_B1 - 0
   if (BSP430_PERIPH_USCI5_B1 == device) {
-    return "STE=P3.6; MOSI/SDA=P3.7; MISO/SCL=P5.4; CLK=P5.5";
+    return "MOSI/SDA=P3.7; MISO/SCL=P5.4; CLK=P5.5; STE=P3.6";
   }
 #endif /* configBSP430_HPL_USCI5_B1 */
 #if configBSP430_HPL_USCI5_B2 - 0
   if (BSP430_PERIPH_USCI5_B2 == device) {
-    return "STE=P9.0; MOSI/SDA=P9.1; MISO/SCL=P9.2; CLK=P9.3";
+    return "MOSI/SDA=P9.1; MISO/SCL=P9.2; CLK=P9.3; STE=P9.0";
   }
 #endif /* configBSP430_HPL_USCI5_B2 */
 #if configBSP430_HPL_USCI5_B3 - 0
   else if (BSP430_PERIPH_USCI5_B3 == device) {
-    return "STE=P10.0; MOSI/SDA=P10.1; MISO/SCL=P10.2; CLK=P10.3";
+    return "MOSI/SDA=P10.1; MISO/SCL=P10.2; CLK=P10.3; STE=P10.0";
   }
 #endif /* configBSP430_HPL_USCI5_B3 */
   return NULL;
