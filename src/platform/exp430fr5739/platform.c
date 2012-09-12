@@ -83,14 +83,13 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
                                            int periph_config,
                                            int enablep)
 {
-  unsigned int bits = 0;
-  unsigned int pba = 0;
-  volatile sBSP430hplPORT_5XX_8 * hpl;
+  unsigned char bits1 = 0;
+  unsigned char bits2 = 0;
 
   if (BSP430_PERIPH_LFXT1 == device) {
     /* NB: Only XIN (PJ.4) needs to be configured; XOUT follows
      * it. */
-    bits = BIT4;
+    unsigned char bits = BIT4;
     if (enablep) {
       PJSEL0 |= bits;
     } else {
@@ -103,7 +102,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
   }
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
-    bits = BIT0 | BIT1 | BIT2;
+    unsigned char bits = BIT0 | BIT1 | BIT2;
     PJDIR |= bits;
     PJSEL1 &= ~bits;
     if (enablep) {
@@ -117,51 +116,61 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_EUSCI_A0 - 0
   else if (BSP430_PERIPH_EUSCI_A0 == device) {
-    bits = BIT0 | BIT1;
-    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
-    if (! enablep) {
-      P2DIR |= bits;
-      P2OUT &= ~bits;
+    bits2 = BIT0 | BIT1;
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      bits1 |= BIT5;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits1 |= BIT4;
+      }
     }
   }
 #endif /* configBSP430_HPL_EUSCI_A0 */
 #if configBSP430_HPL_EUSCI_A1 - 0
   else if (BSP430_PERIPH_EUSCI_A1 == device) {
-    bits = BIT5 | BIT6;
-    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
-    return 0;
+    bits2 = BIT5 | BIT6;
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      bits2 |= BIT4;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits2 |= BIT3;
+      }
+    }
   }
 #endif /* configBSP430_HPL_EUSCI_A1 */
 #if configBSP430_HPL_EUSCI_B0 - 0
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
-    bits = BIT6 | BIT7;
-    pba = BSP430_PERIPH_PORT1_BASEADDRESS_;
-    P1SEL0 &= ~BIT3;
-    P2SEL0 &= ~BIT2;
-    if (enablep) {
-      P1SEL1 |= BIT3;
-      P2SEL1 |= BIT2;
-    } else {
-      P1OUT &= ~BIT3;
-      P2OUT &= ~BIT2;
-      P1DIR |= BIT3;
-      P2DIR |= BIT2;
-      P1SEL1 &= ~BIT3;
-      P2SEL1 &= ~BIT2;
+    bits1 = BIT6 | BIT7;
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      bits2 |= BIT2;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits1 |= BIT3;
+      }
     }
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
-  if (0 == pba) {
-    return -1;
+  if (0 != bits1) {
+    volatile sBSP430hplPORT_5XX_8 * hpl = (volatile sBSP430hplPORT_5XX_8 *)BSP430_PERIPH_PORT1_BASEADDRESS_;
+    hpl->sel0 &= ~bits1;
+    if (enablep) {
+      hpl->sel1 |= bits1;
+    } else {
+      hpl->out &= ~bits1;
+      hpl->dir |= bits1;
+      hpl->sel1 &= ~bits1;
+    }
   }
-  hpl = (volatile sBSP430hplPORT_5XX_8 *)pba;
-  hpl->sel0 &= ~bits;
-  if (enablep) {
-    hpl->sel1 |= bits;
-  } else {
-    hpl->out &= ~bits;
-    hpl->dir |= bits;
-    hpl->sel1 &= ~bits;
+  if (0 != bits2) {
+    volatile sBSP430hplPORT_5XX_8 * hpl = (volatile sBSP430hplPORT_5XX_8 *)BSP430_PERIPH_PORT2_BASEADDRESS_;
+    hpl->sel0 &= ~bits2;
+    if (enablep) {
+      hpl->sel1 |= bits2;
+    } else {
+      hpl->out &= ~bits2;
+      hpl->dir |= bits2;
+      hpl->sel1 &= ~bits2;
+    }
   }
   return 0;
 }
@@ -180,17 +189,17 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_EUSCI_A0 - 0
   if (BSP430_PERIPH_EUSCI_A0 == device) {
-    return "MOSI/TXD=P2.0; MISO/RXD=P2.1";
+    return "MOSI/TXD=P2.0; MISO/RXD=P2.1; CLK=P1.5; STE=P1.4";
   }
 #endif /* configBSP430_HPL_EUSCI_A0 */
 #if configBSP430_HPL_EUSCI_A1 - 0
   if (BSP430_PERIPH_EUSCI_A1 == device) {
-    return "MOSI/TXD=P2.5; MISO/RXD=P2.6";
+    return "MOSI/TXD=P2.5; MISO/RXD=P2.6; CLK=P2.4; STE=P2.3";
   }
 #endif /* configBSP430_HPL_EUSCI_A1 */
 #if configBSP430_HPL_EUSCI_B0 - 0
   if (BSP430_PERIPH_EUSCI_B0 == device) {
-    return "STE=P1.3; MOSI/SDA=P1.6; MISO/SCL=P1.7; CLK=P2.2";
+    return "MOSI/SDA=P1.6; MISO/SCL=P1.7; CLK=P2.2; STE=P1.3";
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
   return NULL;
