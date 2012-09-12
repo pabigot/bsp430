@@ -203,7 +203,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
      * REFCLK here is probably XT1CLK so a tick is at most 100usec
      * using VLOCLK. */
     last_ctl0 = UCSCTL0;
-    tp->ctl = TASSEL__ACLK | MC__CONTINOUS | TBCLR;
+    tp->ctl = TASSEL__ACLK | MC__CONTINOUS | TACLR;
     __bic_status_register(SCG0);
     tp->cctl0 = 0;
     tp->ccr0 = tp->r + 32;
