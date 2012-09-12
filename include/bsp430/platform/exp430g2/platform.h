@@ -70,7 +70,6 @@
          || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
 #if defined(__MSP430G2553__)
 #define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA1
-#define BSP430_UPTIME 1
 #endif /* MCU */
 #endif /* configBSP430_UPTIME && need default */
 

@@ -36,9 +36,9 @@
  * files.  First define anything for your application, then include
  * this file.
  *
- * This file will first include any platform-specific files.
- * Platform-specific configuration headers are included based on the
- * definitions of:
+ * This file will first include any platform-specific @c
+ * bsp430_config.h files.  Platform-specific configuration headers are
+ * included based on the definitions of:
  * <ul>
  * <li>#BSP430_PLATFORM_EXP430G2</a>
  * <li>#BSP430_PLATFORM_EXP430FG4618</a>
@@ -117,6 +117,7 @@
 /* Requirements to support default uptime resource (if that is
  * enabled, and nobody's done it already) */
 #if ((configBSP430_UPTIME - 0)                                  \
+     && (! (BSP430_UPTIME_USE_PLATFORM_RESOURCE - 0))           \
      && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))  \
          || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
 #define configBSP430_HAL_TA0 1

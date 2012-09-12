@@ -453,17 +453,24 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
 #endif /* configBSP430_CONSOLE */
 
+/* If configBSP430_UPTIME was requested and we're to use the default
+ * source, and the platform didn't provide one, then default to TA0. */
+#if ((configBSP430_UPTIME - 0)                                  \
+  && (! (BSP430_UPTIME_USE_PLATFORM_RESOURCE - 0))              \
+  && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))     \
+      || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA0
+#endif /* default uptime timer */
+
 /* If configBSP430_UPTIME was requested, then mark the feature as
  * available or not based on whether the platform provided a timer for
  * its use. */
 #if (configBSP430_UPTIME - 0) && !defined(BSP430_UPTIME)
-#if ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))      \
-     || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0))
-#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA0
+#if defined(BSP430_UPTIME_TIMER_PERIPH_HANDLE)
 #define BSP430_UPTIME 1
-#else /* default uptime timer */
+#else /* BSP430_UPTIME_TIMER_PERIPH_HANDLE */
 #define BSP430_UPTIME 0
-#endif /* default uptime timer */
+#endif /* BSP430_UPTIME_TIMER_PERIPH_HANDLE */
 #endif /* configBSP430_UPTIME */
 
 /* If configBSP430_PLATFORM_BUTTON0 was requested, then mark the

@@ -55,6 +55,8 @@
 #if configBSP430_UPTIME_USE_DEFAULT_CC0_ISR - 0
 #define configBSP430_HAL_TA1_CC0_ISR 1
 #endif /* enable uptime CC0 ISR */
+/* Inhibit the generic uptime default from being enabled. */
+#define BSP430_UPTIME_USE_PLATFORM_RESOURCE 1
 #endif /* MCU */
 #endif /* configBSP430_UPTIME && need default */
 

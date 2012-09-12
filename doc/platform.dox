@@ -41,6 +41,14 @@ create the files below in the source tree, and modify the dispatch headers
 bsp430/platform.h and bsp430/platform/bsp430_config.h so that the platform
 is included in the template expansion.
 
+Remember that all BSP430 headers first include <bsp430/core.h>, which in
+turn will normally include the application "bsp430_config.h", which includes
+the generic @c bsp430_config.h which includes the platform @c
+bsp430_config.h before doing platform-independent configuration.  The order
+ensures the customization points are encountered from most-specific to
+least-specific, and each must defer to the configuration specified by a
+previously-included customization point.
+
 \section platform_header platform.h
 
 This file, placed to be found at <c>bsp430/platform/custom/platform.h</c>
@@ -71,6 +79,15 @@ This file, placed to be found at
 <c>bsp430/platform/custom/bsp430_config.h</c>, parallels <c>platform.h</c>
 and adds configuration defaults for resources that were default-identified
 in that header.  Here too you will want to use the expansion templates.
+
+Where the platform customization provides a resource preferred to a resource
+normally provided by the platform-independent customization, a flag should
+be used to inhibit the platform-independent resource allocation.  An example
+of this can be found with respect to
+#configBSP430_UPTIME_USE_DEFAULT_RESOURCE in
+<bsp430/platform/exp430g2/platform.h> which defines an alternative timer and
+uses #BSP430_UPTIME_USE_PLATFORM_RESOURCE to convey that fact to subsequent
+customization points.
 
 \section platform_impl platform.c
 

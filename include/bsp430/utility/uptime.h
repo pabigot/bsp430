@@ -85,7 +85,8 @@
  * ACLK as a source another might be preferable, so that
  * #BSP430_TIMER_CCACLK can be used without conflicting with
  * #BSP430_UPTIME.  Where possible, selections of compatible timers
- * are made in the platform-specific headers.
+ * are made in the platform-specific headers.  See
+ * #BSP430_UPTIME_USE_PLATFORM_RESOURCE.
  *
  * If you want control over the timer used for uptime monitoring, set
  * this to false.
@@ -94,6 +95,24 @@
  * @defaulted */
 #ifndef configBSP430_UPTIME_USE_DEFAULT_RESOURCE
 #define configBSP430_UPTIME_USE_DEFAULT_RESOURCE (configBSP430_UPTIME - 0)
+#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
+
+/** @def BSP430_UPTIME_USE_PLATFORM_RESOURCE
+ *
+ * If #configBSP430_UPTIME_USE_DEFAULT_RESOURCE is enabled but the
+ * platform-specific @c bsp430_config.h selects a different peripheral
+ * (e.g., #BSP430_PERIPH_TA1) than the generic @c bsp430_config.h,
+ * this flag is defined to a true value to prevent the generic
+ * resource from being allocated as well.  You only need to make use
+ * of this this if you're providing a platform that doesn't use
+ * #BSP430_PERIPH_TA0 for the uptime clock.
+ *
+ * @cppflag
+ * @dependency #configBSP430_UPTIME_USE_DEFAULT_RESOURCE
+ * @affects #BSP430_UPTIME_TIMER_PERIPH_HANDLE
+ * @platformdefault */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UPTIME_USE_PLATFORM_RESOURCE include <bsp430/platform/bsp430_config.h>
 #endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
 
 /** @def BSP430_UPTIME_TIMER_PERIPH_HANDLE
