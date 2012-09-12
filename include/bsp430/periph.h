@@ -160,6 +160,37 @@ typedef int tBSP430periphHandle;
  */
 #define BSP430_PERIPH_BUTTON3 ((tBSP430periphHandle)0x4107)
 
+/** Value indicating the default peripheral configuration should be used. */
+#define BSP430_PERIPHCFG_DEFAULT 0
+
+/** Value indicating peripheral should be configured in UART mode.
+ *
+ * Only the RX and TX signals will be configured by
+ * iBSP430platformConfigurePeripheralPins_ni(). */
+#define BSP430_PERIPHCFG_SERIAL_UART 1
+
+/** Value indicating peripheral should be configured in I2C mode.
+ *
+ * Only the SDA and SCL signals will be configured by
+ * iBSP430platformConfigurePeripheralPins_ni().
+ */
+#define BSP430_PERIPHCFG_SERIAL_I2C 2
+
+/** Value indicating peripheral should be configured in SPI 3-pin
+ * mode.
+ *
+ * Only the MOSI (SIMO), MISO (SOMI), and CLK pins will be configured
+ * by iBSP430platformConfigurePeripheralPins_ni().  STE will remain in
+ * its last-configured mode. */
+#define BSP430_PERIPHCFG_SERIAL_SPI3 3
+
+/** Value indicating peripheral should be configured in SPI 4-pin
+ * mode.
+ *
+ * The MOSI (SIMO), MISO (SOMI), CLK, and STE pins will be configured
+ * by iBSP430platformConfigurePeripheralPins_ni(). */
+#define BSP430_PERIPHCFG_SERIAL_SPI4 4
+
 /** Reserved value for #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT */
 #define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0
 

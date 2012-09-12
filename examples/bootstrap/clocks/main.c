@@ -217,12 +217,12 @@ void main ()
 
 #endif /* BSP430_CONSOLE */
 
-  if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 1)) {
+  if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 0, 1)) {
 #if BSP430_CONSOLE - 0
     cputtext_ni("\n\nClock signals exposed:\n ");
     help = NULL;
 #ifdef BSP430_PLATFORM_PERIPHERAL_HELP
-    help = xBSP430platformPeripheralHelp(BSP430_PERIPH_EXPOSED_CLOCKS);
+    help = xBSP430platformPeripheralHelp(BSP430_PERIPH_EXPOSED_CLOCKS, 0);
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
     if (NULL == help) {
       help = "Go look at the data sheet and source, because nobody told me where they are";

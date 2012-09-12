@@ -380,7 +380,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   int rc = 0;
 
   if (enablep && (0 != loop_limit)) {
-    rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 1);
+    rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 1);
     if (0 != rc) {
       return rc;
     }
@@ -399,7 +399,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
     rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
   }
   if (! rc) {
-    (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
+    (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 0);
     UCSCTL6 |= XT1OFF;
     UCSCTL6 &= XT1DRIVE0 | XT1DRIVE1;
   }

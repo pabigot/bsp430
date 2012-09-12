@@ -71,6 +71,27 @@
     }                                           \
   } while (0)
 
+/** Inspect bits in CTL0 to determine the appropriate peripheral
+ * configuration. */
+static int
+__inline__
+peripheralConfigFlag (unsigned int ctlw0)
+{
+  if (0 == (ctlw0 & UCSYNC)) {
+    return BSP430_PERIPHCFG_SERIAL_UART;
+  }
+  switch (ctlw0 & (UCMODE1 | UCMODE0)) {
+    case 0:
+      return BSP430_PERIPHCFG_SERIAL_SPI3;
+    case UCMODE0:
+    case UCMODE1:
+      return BSP430_PERIPHCFG_SERIAL_SPI4;
+    case UCMODE0 | UCMODE1:
+      return BSP430_PERIPHCFG_SERIAL_I2C;
+  }
+  return 0;
+}
+
 static
 hBSP430halSERIAL
 eusciConfigure (hBSP430halSERIAL hal,
@@ -86,9 +107,10 @@ eusciConfigure (hBSP430halSERIAL hal,
   BSP430_CORE_DISABLE_INTERRUPT();
   HAL_HPL_FIELD(hal,ctlw0) = UCSWRST;
   do {
+    int periph_config = peripheralConfigFlag(ctlw0);
+
     /* Reject if the pins can't be configured */
-    if ((NULL != hal)
-        && (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), 1))) {
+    if (0 != iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1)) {
       hal = NULL;
       break;
     }
@@ -241,13 +263,14 @@ iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
                         int holdp)
 {
   int rc;
+  int periph_config = peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0));
 
   SERIAL_HAL_FLUSH_NI(hal);
   if (holdp) {
     HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;
-    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
+    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
-    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 1);
+    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
     if (0 == rc) {
       HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
       SERIAL_HAL_RELEASE_NI(hal);
@@ -265,7 +288,9 @@ iBSP430eusciClose (hBSP430halSERIAL hal)
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_RESET_NI(hal);
-  rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), 0);
+  rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any),
+                                                  peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0)),
+                                                  0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rc;
 }

@@ -51,7 +51,9 @@ const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
 #endif /* BSP430_LED */
 
 int
-iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
+iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
+                                           int periph_config,
+                                           int enablep)
 {
   unsigned char bits = 0;
   unsigned int pba = 0;
@@ -131,7 +133,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 }
 
 const char *
-xBSP430platformPeripheralHelp (tBSP430periphHandle device)
+xBSP430platformPeripheralHelp (tBSP430periphHandle device,
+                               int periph_config)
 {
   if (BSP430_PERIPH_LFXT1 == device) {
     return "XIN=P5.4, XOUT=P5.5";

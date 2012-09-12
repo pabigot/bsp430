@@ -156,7 +156,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
 
   CSCTL0_H = 0xA5;
   if (enablep && (0 != loop_limit)) {
-    rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, enablep);
+    rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, enablep);
     if (0 == rc) {
       int loop_delta = (0 < loop_limit) ? 1 : 0;
 
@@ -174,7 +174,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
     }
   }
   if (! rc) {
-    (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0);
+    (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 0);
     CSCTL4 |= XT1OFF;
     CSCTL4 &= ~(XT1DRIVE0 | XT1DRIVE1);
   }

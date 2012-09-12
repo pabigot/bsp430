@@ -79,7 +79,9 @@ void vBSP430ledSet (int led_idx,
 #endif /* BSP430_LED */
 
 int
-iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enablep)
+iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
+                                           int periph_config,
+                                           int enablep)
 {
   unsigned int bits = 0;
   unsigned int pba = 0;
@@ -165,7 +167,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device, int enabl
 }
 
 const char *
-xBSP430platformPeripheralHelp (tBSP430periphHandle device)
+xBSP430platformPeripheralHelp (tBSP430periphHandle device,
+                               int periph_config)
 {
   if (BSP430_PERIPH_LFXT1 == device) {
     return "XIN=PJ.4, XOUT=PJ.5";

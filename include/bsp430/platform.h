@@ -82,15 +82,22 @@ void vBSP430platformInitialize_ni (void);
  * @param periph Raw peripheral device for which pins should be
  * configured.
  *
+ * @param periph_config Flag controlling which pins of the peripheral
+ * will be configured.  A value of zero indicates a platform and
+ * peripheral-specific default.  Generic flag values include
+ * #BSP430_PERIPHCFG_SERIAL_UART, #BSP430_PERIPHCFG_SERIAL_I2C,
+ * #BSP430_PERIPHCFG_SERIAL_SPI3, and #BSP430_PERIPHCFG_SERIAL_SPI4.
+ *
  * @param enablep TRUE to enable for peripheral use; FALSE to disable
  * (return to general purpose IO).  When disabled, the direction and
  * output register bits are configured for low power use (output
- * zero).
+ * zero).  Note that only the pins specified by @a periph_config will
+ * be modified.
  *
  * @return 0 if configuration was successful, -1 if the device was not
  * recognized.
  */
-int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int enablep);
+int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int periph_config, int enablep);
 
 /** @def configBSP430_PLATFORM_SPIN_FOR_JUMPER
  *
@@ -157,12 +164,17 @@ void vBSP430platformSpinForJumper_ni (void);
  *
  * @param periph Raw peripheral device for which help is desired
  *
+ * @param periph_config Flag as passed to
+ * iBSP430platformConfigurePeripheralPins_ni() as the @c periph_config
+ * value.  A value of zero will describe all potential pins for the
+ * peripheral.
+ *
  * @return A pointer to a help string suitable for display.  A null
  * pointer is returned if the peripheral was not enabled.
  *
  * @dependency #BSP430_PLATFORM_PERIPHERAL_HELP
  */
-const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph);
+const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int periph_config);
 
 /** @def configBSP430_PLATFORM_BUTTON0
  *

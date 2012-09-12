@@ -110,7 +110,7 @@ void main ()
           i2c, ulBSP430clockSMCLK_Hz_ni() / APP_HH10D_I2C_PRESCALER,
           APP_HH10D_I2C_ADDRESS);
 #if BSP430_PLATFORM_PERIPHERAL_HELP
-  cprintf("HH10D I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_HH10D_I2C_PERIPH_HANDLE));
+  cprintf("HH10D I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_HH10D_I2C_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_I2C));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf("Monitoring HH10D on %s.%u using timer %s\n",
           xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
