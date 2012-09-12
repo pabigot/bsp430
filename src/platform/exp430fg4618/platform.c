@@ -67,14 +67,31 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI_A0 - 0
   else if (BSP430_PERIPH_USCI_A0 == device) {
-    bits = BIT4 | BIT5;
-    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
+    if ((0 == periph_config) || (BSP430_PERIPHCFG_SERIAL_UART == periph_config)) {
+      /* UART on P2 */
+      bits = BIT4 | BIT5;
+      pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
+    } else {
+      /* SPI on P7 */
+      bits = BIT1 | BIT2 | BIT3;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits |= BIT0;
+      }
+      pba = BSP430_PERIPH_PORT7_BASEADDRESS_;
+    }
   }
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   else if (BSP430_PERIPH_USCI_B0 == device) {
-    bits = BIT0 | BIT1 | BIT2 | BIT3;
-    pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
+    bits = BIT1 | BIT2;
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      bits |= BIT3;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits |= BIT0;
+      }
+    }
+    pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
   if (0 == pba) {
@@ -105,12 +122,16 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI_A0 - 0
   if (BSP430_PERIPH_USCI_A0 == device) {
-    return "MOSI/TXD=P2.4; MISO/RXD=P2.5";
+    if ((0 == periph_config) || (BSP430_PERIPHCFG_SERIAL_UART == periph_config)) {
+      return "TXD=P2.4; RXD=P2.5";
+    } else {
+      return "MOSI=P7.1; MISO=P7.2; CLK=P7.3; STE=P7.0";
+    }
   }
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   else if (BSP430_PERIPH_USCI_B0 == device) {
-    return "STE=P3.0; MOSI/SDA=P3.1; MISO/SCL=P3.2; CLK=P3.3";
+    return "MOSI/SDA=P3.1; MISO/SCL=P3.2; CLK=P3.3; STE=P3.0";
   }
 #endif /* configBSP430_HPL_USCI_B0 */
   return NULL;
