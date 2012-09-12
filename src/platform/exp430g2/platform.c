@@ -78,6 +78,13 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
 #if configBSP430_HPL_USCI_A0 - 0
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT1 | BIT2;
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      bits |= BIT4;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits |= BIT5;
+      }
+    }
     if (enablep) {
       P1SEL |= bits;
       P1SEL2 |= bits;
@@ -92,7 +99,14 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   else if (BSP430_PERIPH_USCI_B0 == device) {
-    bits = BIT4 | BIT5 | BIT6 | BIT7;
+    bits = BIT6 | BIT7;
+    if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
+        || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
+      bits |= BIT5;
+      if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
+        bits |= BIT4;
+      }
+    }
     if (enablep) {
       P1SEL |= bits;
       P1SEL2 |= bits;
@@ -122,13 +136,13 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI_A0 - 0
   if (BSP430_PERIPH_USCI_A0 == device) {
-    return "MOSI/TXD=P1.2; MISO/RXD=P1.1";
+    return "MOSI/TXD=P1.2; MISO/RXD=P1.1; CLK=P1.4; STE=P1.5";
   }
 #endif /* configBSP430_HPL_USCI_A0 */
 #if configBSP430_HPL_USCI_B0 - 0
   if (BSP430_PERIPH_USCI_B0 == device) {
     /* Yes, MISO/MOSI are a different order than other chips */
-    return "STE=P1.4; MOSI/SDA=P1.7; MISO/SCL=P1.6; CLK=P1.5";
+    return "MOSI/SDA=P1.7; MISO/SCL=P1.6; CLK=P1.5; STE=P1.4";
   }
 #endif /* configBSP430_HPL_USCI_B0 */
 #if configBSP430_HPL_TA0 - 0
