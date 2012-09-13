@@ -79,10 +79,19 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)
 
+#if defined(BSP430_DOXYGEN) || defined(PM5CTL0)
+
 /** Macro to enter LPMx.5 mode
  *
  * This should be invoked when #BSP430_CORE_LPM_LPMXp5 or some other
  * cue indicates that ultra-low-power sleep is desired.
+ *
+ * @note This macro is unavailable on 5xx/6xx chips for which PM5CTL0
+ * is not provided by the MCU headers, possibly due to the presence of
+ * erratum PMM8.  In particular, it is not available on the CC430F5137
+ * used in the EM430 and SuRF platforms.  User code can test whether
+ * the macro is defined in order to determine whether the feature is
+ * supported.
  *
  * @warning The implementation assumes that the PMM control registers
  * are locked.  The macro will unlock the registers, set the bit for
@@ -94,6 +103,8 @@
     PMMCTL0 = PMMPW | PMMREGOFF;                \
     PMMCTL0_H = !PMMPW_H;                       \
   } while (0)
+
+#endif /* PM5CTL0 */
 
 /** Cause a brown-out reset */
 static void

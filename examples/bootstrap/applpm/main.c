@@ -38,12 +38,12 @@ const sCommand commands[] = {
   { CMD_MODE_LPM3, "Set mode to enter LPM3" },
 #define CMD_MODE_LPM4 '4'
   { CMD_MODE_LPM4, "Set mode to enter LPM4" },
-#if BSP430_MODULE_PMM - 0
+#ifdef BSP430_PMM_ENTER_LPMXp5_NI
 #define CMD_MODE_LPM3p5 '5'
   { CMD_MODE_LPM3p5, "Set mode to enter LPM3.5" },
 #define CMD_MODE_LPM4p5 '6'
   { CMD_MODE_LPM4p5, "Set mode to enter LPM4.5" },
-#endif /* BSP430_MODULE_PMM */
+#endif /* BSP430_PMM_ENTER_LPMXp5_NI */
 #define CMD_HOLD_SERIAL 's'
   { CMD_HOLD_SERIAL, "Toggle whether serial is placed on hold during LPM" },
 #define CMD_HOLD_CLOCK 'u'
@@ -157,7 +157,7 @@ void main ()
       reset_causes |= 1UL << (sysrstiv / 2);
     }
 
-#if BSP430_MODULE_PMM - 0
+#ifdef BSP430_PMM_ENTER_LPMXp5_NI
     /* If we woke from LPMx.5, we need to clear the lock in PM5CTL0.
      * We'll do it early, since we're not really interested in
      * retaining the current IFG settings. */
@@ -166,7 +166,7 @@ void main ()
       PM5CTL0 = 0;
       PMMCTL0_H = 0;
     }
-#endif /* BSP430_MODULE_PMM */
+#endif /* BSP430_PMM_ENTER_LPMXp5_NI */
   }
 #endif /* BSP430_MODULE_SYS */
 
@@ -271,7 +271,7 @@ void main ()
               state.lpm_bits = LPM4_bits;
               state.lpm_description = "LPM4";
               break;
-#if BSP430_MODULE_PMM - 0
+#ifdef BSP430_PMM_ENTER_LPMXp5_NI
             case CMD_MODE_LPM3p5:
               state.lpm_bits = BSP430_CORE_LPM_LPMXp5 | LPM3_bits;
               state.lpm_description = "LPM3.5";
@@ -280,7 +280,7 @@ void main ()
               state.lpm_bits = BSP430_CORE_LPM_LPMXp5 | LPM4_bits;
               state.lpm_description = "LPM4.5";
               break;
-#endif /* BSP430_MODULE_PMM */
+#endif /* BSP430_PMM_ENTER_LPMXp5_NI */
             case CMD_HELP: {
               cmdp = commands;
               cprintf("Available commands:\n");
@@ -343,11 +343,11 @@ void main ()
       while ((rx_head == rx_tail) && (! button)) {
       }
     } else {
-#if BSP430_MODULE_PMM - 0
+#ifdef BSP430_PMM_ENTER_LPMXp5_NI
       if (state.lpm_bits & BSP430_CORE_LPM_LPMXp5) {
         BSP430_PMM_ENTER_LPMXp5_NI();
       }
-#endif /* BSP430_MODULE_PMM */
+#endif /* BSP430_PMM_ENTER_LPMXp5_NI */
       BSP430_CORE_LPM_ENTER_NI(state.lpm_bits | GIE);
     }
     BSP430_CORE_DISABLE_INTERRUPT();
