@@ -354,7 +354,7 @@ struct sBSP430halISRIndexedChainNode;
  * #BSP430_HAL_ISR_CALLBACK_YIELD.
  */
 typedef int (* iBSP430halISRCallbackVoid) (const struct sBSP430halISRVoidChainNode * cb,
-    void * context);
+                                           void * context);
 
 /** Callback for ISR chains where the event includes an index
  *
@@ -371,8 +371,8 @@ typedef int (* iBSP430halISRCallbackVoid) (const struct sBSP430halISRVoidChainNo
  * @return As with #iBSP430halISRCallbackVoid.
  */
 typedef int (* iBSP430halISRCallbackIndexed) (const struct sBSP430halISRIndexedChainNode * cb,
-    void * context,
-    int idx);
+                                              void * context,
+                                              int idx);
 
 /** Structure used to record #iBSP430halISRCallbackVoid chains. */
 typedef struct sBSP430halISRVoidChainNode {

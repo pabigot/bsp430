@@ -49,8 +49,8 @@ const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
-    int periph_config,
-    int enablep)
+                                           int periph_config,
+                                           int enablep)
 {
   unsigned char bits = 0;
   unsigned int pba = 0;

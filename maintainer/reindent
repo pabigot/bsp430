@@ -5,8 +5,9 @@ astyle \
   --style=1tbs \
   --indent=spaces=2 \
   --indent-switches \
-   --pad-header \
-   -r \
+  --max-instatement-indent=60 \
+  --pad-header \
+  -r \
       '*.c' \
       '*.h' \
       '*.inc'

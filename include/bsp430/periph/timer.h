@@ -398,10 +398,10 @@
  * unrecognized or stopped.  Otherwise the delta in the counter of the
  * timer over @a count captures. */
 unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
-    int ccidx,
-    unsigned int capture_mode,
-    unsigned int ccis,
-    unsigned int count);
+                                           int ccidx,
+                                           unsigned int capture_mode,
+                                           unsigned int ccis,
+                                           unsigned int count);
 
 /** Layout for Timer_A and Timer_B peripherals.
  */
