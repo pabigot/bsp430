@@ -288,6 +288,7 @@ iBSP430usci5UARTrxByte_ni (hBSP430halSERIAL hal)
     return -1;
   }
   if (SERIAL_HAL_HPL(hal)->ifg & UCRXIFG) {
+    ++hal->num_rx;
     return SERIAL_HAL_HPL(hal)->rxbuf;
   }
   return -1;
@@ -300,6 +301,7 @@ iBSP430usci5UARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
     return -1;
   }
   SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), c);
+  ++hal->num_tx;
   return c;
 }
 
@@ -315,6 +317,7 @@ iBSP430usci5UARTtxData_ni (hBSP430halSERIAL hal,
   }
   while (p < edata) {
     SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), *p++);
+    ++hal->num_tx;
   }
   return p - data;
 }
@@ -329,6 +332,7 @@ iBSP430usci5UARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
   }
   while (*str) {
     SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), *str);
+    ++hal->num_tx;
     ++str;
   }
   return str - in_string;
@@ -349,6 +353,7 @@ iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
   }
   while (i < transaction_length) {
     SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), (i < tx_len) ? tx_data[i] : i);
+    ++hal->num_tx;
     SERIAL_HPL_RAW_RECEIVE_NI(SERIAL_HAL_HPL(hal), *rx_data);
     ++rx_data;
     ++i;
@@ -406,6 +411,7 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
         return -1;
       }
     } while (! (hpl->ifg & UCRXIFG));
+    ++hal->num_rx;
     *dp++ = hpl->rxbuf;
   }
   return dp - data;

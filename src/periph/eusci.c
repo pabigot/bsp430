@@ -47,6 +47,7 @@
     while (! (SERIAL_HAL_HPL_A(_hal)->ifg & UCTXIFG)) { \
       ;                                                 \
     }                                                   \
+    ++(_hal)->num_tx;                                   \
     SERIAL_HAL_HPL_A(_hal)->txbuf = _c;                 \
   } while (0)
 
@@ -314,6 +315,7 @@ iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL hal)
     return -1;
   }
   if (SERIAL_HAL_HPL_A(hal)->ifg & UCRXIFG) {
+    ++hal->num_rx;
     return SERIAL_HAL_HPL_A(hal)->rxbuf;
   }
   return -1;
@@ -380,10 +382,12 @@ iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
     while (! (UCTXIFG & *ifgp)) {
       ;
     }
+    ++hal->num_tx;
     *txbp = (i < tx_len) ? tx_data[i] : i;
     while (! (UCRXIFG & *ifgp)) {
       ;
     }
+    ++hal->num_rx;
     *rx_data++ = *rxbp;
     ++i;
   }
@@ -440,6 +444,7 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
         return -1;
       }
     } while (! (hpl->ifg & UCRXIFG));
+    ++hal->num_rx;
     *dp++ = hpl->rxbuf;
   }
   return dp - data;
@@ -479,6 +484,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
         return -1;
       }
     } while (! (hpl->ifg & UCTXIFG));
+    ++hal->num_tx;
     hpl->txbuf = data[i];
     ++i;
   }

@@ -50,6 +50,7 @@
       ;                                                 \
     }                                                   \
     SERIAL_HAL_HPL(_hal)->txbuf = _c;                   \
+    ++(_hal)->num_tx;                                   \
   } while (0)
 
 #define RAW_RECEIVE_HAL_NI(_hal, _c) do {              \
@@ -57,6 +58,7 @@
       ;                                                 \
     }                                                   \
     _c = SERIAL_HAL_HPL(_hal)->rxbuf;                   \
+    ++(_hal)->num_rx;                                   \
   } while (0)
 
 
@@ -306,6 +308,7 @@ iBSP430usciUARTrxByte_ni (hBSP430halSERIAL hal)
     return -1;
   }
   if (*SERIAL_HAL_HPLAUX(hal)->ifgp & SERIAL_HAL_HPLAUX(hal)->rx_bit) {
+    ++hal->num_rx;
     return SERIAL_HAL_HPL(hal)->rxbuf;
   }
   return -1;
@@ -424,8 +427,8 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
         return -1;
       }
     } while (! (aux->rx_bit & *aux->ifgp));
-
     *dp++ = hpl->rxbuf;
+    ++hal->num_rx;
   }
   return dp - data;
 }
@@ -455,6 +458,7 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
       }
     } while (! (aux->tx_bit & *aux->ifgp));
     hpl->txbuf = data[i++];
+    ++hal->num_tx;
   }
   /* Wait for any in-progress start to complete then issue stop */
   do {
