@@ -61,6 +61,7 @@ astyle \
   --indent=spaces=2 \
   --indent-switches \
   --pad-header \
+  --max-instatement-indent=60 \
   -r \
     '*.c' \
     '*.h' \
