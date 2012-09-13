@@ -41,6 +41,22 @@ half second, and displaying any input characters that were received between
 outputs.  The LEDs are a visual cue that the program is running even if
 something's wrong with the serial output.
 
+Be aware that, unless #BSP430_CONSOLE_RX_BUFFER_SIZE is set to a positive
+value, the receive infrastructure has only the one byte UART buffer
+available, and typing more than that between display updates will result in
+lost characters.  This can be achieved by adding the following to the make
+command line when building the application:
+@verbatim
+AUX_CPPFLAGS=-DBSP430_CONSOLE_RX_BUFFER_SIZE=16
+@endverbatim
+
+@c APP_VERBOSE may be defined to 1 while building this
+application; with that flag, the number of characters transmitted and
+received, and the UART status register, are displayed on each iteration:
+@verbatim
+AUX_CPPFLAGS=-DAPP_VERBOSE=1
+@endverbatim
+
 \section ex_bootstrap_console_main main.c
 \include bootstrap/console/main.c
 

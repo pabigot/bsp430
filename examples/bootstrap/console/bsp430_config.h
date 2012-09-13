@@ -6,4 +6,10 @@
 /* Request console resources */
 #define configBSP430_CONSOLE 1
 
+/* In verbose mode, the number of characters transmitted and received, and
+ * the raw status of the UART, are displayed on each iteration. */
+#ifndef APP_VERBOSE
+#define APP_VERBOSE 0
+#endif /* APP_VERBOSE */
+
 #include <bsp430/platform/bsp430_config.h>
