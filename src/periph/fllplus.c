@@ -67,7 +67,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
     dcoclk_xt1 /= 2;
   }
 
-  (void)iBSP430clockConfigureLFXT1_ni (1, -1);
+  (void)iBSP430clockConfigureLFXT1_ni(1, -1);
 
   if (dcoplus) {
     FLL_CTL0 |= DCOPLUS;

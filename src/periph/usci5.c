@@ -240,9 +240,9 @@ iBSP430usci5SetHold_ni (hBSP430halSERIAL hal,
   SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   if (holdp) {
     SERIAL_HAL_HPL(hal)->ctlw0 |= UCSWRST;
-    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
+    rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
-    rc = iBSP430platformConfigurePeripheralPins_ni (xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
+    rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
     if (0 == rc) {
       SERIAL_HAL_HPL(hal)->ctlw0 &= ~UCSWRST;
       SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
@@ -261,9 +261,9 @@ iBSP430usci5Close (hBSP430halSERIAL hal)
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
-  rc = iBSP430platformConfigurePeripheralPins_ni ((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)),
-                                                  peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctlw0),
-                                                  0);
+  rc = iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)),
+                                                 peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctlw0),
+                                                 0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   return rc;

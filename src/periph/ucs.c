@@ -258,7 +258,7 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
   /* Require XT1 valid and use it as ACLK source.  If it can't be
    * stabilized, this function call won't return. */
   if (UCSCTL7 & XT1LFOFFG) {
-    (void)iBSP430clockConfigureLFXT1_ni (1, -1);
+    (void)iBSP430clockConfigureLFXT1_ni(1, -1);
   }
 #endif /* Require LFXT1 */
 
