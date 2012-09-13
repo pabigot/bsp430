@@ -20,6 +20,10 @@
 #error No button available on this platform
 #endif /* BSP430_PLATFORM_BUTTON0 */
 
+/* Core voltage control is supported on 5xx/6xx modules with PMM
+ * support but not on FRAM devices. */
+#define APP_ENABLE_COREV (BSP430_MODULE_PMM - 0) && ! (BSP430_MODULE_PMM_FRAM - 0)
+
 typedef struct sCommand {
   char cmd;
   const char * description;
@@ -54,6 +58,12 @@ const sCommand commands[] = {
   { CMD_STATE, "Display system state (clock speeds, etc.)" },
 #define CMD_SLEEP '$'
   { CMD_SLEEP, "Enter sleep mode" },
+#if APP_ENABLE_COREV
+#define CMD_COREV_INCR '>'
+  { CMD_COREV_INCR, "Increment core voltage" },
+#define CMD_COREV_DECR '<'
+  { CMD_COREV_DECR, "Decrement core voltage" },
+#endif /* APP_ENABLE_COREV */
 };
 
 typedef struct sState {
@@ -299,6 +309,9 @@ void main ()
               cprintf("Selected idle state: %s\n", state.lpm_description);
               cprintf("Clocks will %s\n", state.hold_clock ? "freeze" : "run");
               cprintf("Serial will %s\n", state.hold_serial ? "be held" : "be active");
+#if APP_ENABLE_COREV
+              cprintf("Core voltage level %d\n", PMMCTL0 & PMMCOREV_3);
+#endif /* APP_ENABLE_COREV */
               break;
             case CMD_HOLD_SERIAL:
               state.hold_serial = ! state.hold_serial;
@@ -309,6 +322,34 @@ void main ()
             case CMD_SLEEP:
               enter_sleep = 1;
               break;
+#if APP_ENABLE_COREV
+            case CMD_COREV_INCR:
+            case CMD_COREV_DECR: {
+              int delta = 0;
+              int rc = 0;
+              BSP430_CORE_DISABLE_INTERRUPT();
+              do {
+                unsigned int level = PMMCTL0 & PMMCOREV_3;
+                if ((cmdp->cmd == CMD_COREV_INCR) && (level < PMMCOREV_3)) {
+                  delta = 1;
+                }
+                if ((cmdp->cmd == CMD_COREV_DECR) && (level > PMMCOREV_0)) {
+                  delta = -1;
+                }
+                if (0 != delta) {
+                  rc = iBSP430pmmSetCoreVoltageLevel_ni(level + delta);
+                }
+              } while (0);
+              BSP430_CORE_ENABLE_INTERRUPT();
+              if (0 == delta) {
+                cprintf("Core voltage at limit\n");
+              } else {
+                cprintf("Core voltage adjusted %d to %d rv %d\n", delta, PMMCTL0 & PMMCOREV_3, rc);
+              }
+              cprintf("PMM: CTL0 %04x CTL1 %04x\n", PMMCTL0, PMMCTL1);
+              break;
+            }
+#endif /* APP_ENABLE_COREV */
           }
         } else {
           cprintf("Unrecognized command: %c\n", c);

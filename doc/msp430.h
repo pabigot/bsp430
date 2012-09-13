@@ -373,6 +373,14 @@
 * PMM - Power Management System
 ************************************************************/
 #define  __MSP430_HAS_PMM__            /**< Definition to show that Module is available */
+
+/* PMMCTL0 Control Bits */
+
+#define PMMCOREV_0          (0x0000)  /**< PMM Core Voltage 0 (1.35V) */
+#define PMMCOREV_1          (0x0001)  /**< PMM Core Voltage 1 (1.55V) */
+#define PMMCOREV_2          (0x0002)  /**< PMM Core Voltage 2 (1.75V) */
+#define PMMCOREV_3          (0x0003)  /**< PMM Core Voltage 3 (1.85V) */
+
 /************************************************************
 * PMM - Power Management System
 ************************************************************/

@@ -77,6 +77,17 @@
                            || defined(__MSP430_HAS_PMM_FR5xx__) \
                            || defined(__MSP430_HAS_PMM_FRAM__))
 
+/** @def BSP430_MODULE_PMM_FRAM
+ *
+ * Defined on inclusion of <bsp430/periph/pmm.h>.  The value evaluates
+ * to true if the target MCU supports the FRAM version of the Power
+ * Management Module, and false if it does not.
+ *
+ * @cppflag
+ */
+#define BSP430_MODULE_PMM_FRAM (defined(__MSP430_HAS_PMM_FR5xx__)       \
+                                || defined(__MSP430_HAS_PMM_FRAM__))
+
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)
 
 #if defined(BSP430_DOXYGEN) || defined(PM5CTL0)
@@ -121,6 +132,34 @@ vBSP430pmmInducePOR (void)
 {
   PMMCTL0 = PMMPW | PMMSWPOR;
 }
+
+#if defined(BSP430_DOXYGEN) || ! (BSP430_MODULE_PMM_FRAM - 0)
+
+/** Safely adjust the PMM core voltage to a desired level.
+ *
+ * This function gradually increases or decreases the PMM core voltage
+ * to the desired level, or as close to it as can be achieved.  The
+ * implementation is from <a
+ * href="http://www.ti.com/tool/msp430ware">MSP430Ware</a>, and
+ * includes a workaround for erratum FLASH37.  If supply voltage does
+ * not support the requested voltage, the closest attainable level
+ * will be configured and returned.
+ *
+ * @param target_level The power level to be entered.  This must be a
+ * valid level, i.e. #PMMCOREV_0 through #PMMCOREV_3, or an error code
+ * is returned.
+ * 
+ * @return -1 if the @a target_level is invalid, otherwise the level
+ * at which power is left.  This may be less than @a target_level if
+ * the requested level could not be reached due to inadequate supply
+ * voltage.
+ *
+ * @note This function is available only on non-FRAM 5xx PMM
+ * implementations.
+ */
+int iBSP430pmmSetCoreVoltageLevel_ni (unsigned int target_level);
+
+#endif /* PMM not FRAM */
 
 #endif /* BSP430_MODULE_PMM */
 
