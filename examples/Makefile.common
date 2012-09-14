@@ -173,13 +173,30 @@ MODULES_CONSOLE = $(MODULES_SERIAL) utility/console
 MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED)
 
 # Add all selected modules to the SRC, eliminating any duplicates
-SRC += $(patsubst %,$(BSP430_ROOT)/src/%.c,$(sort $(MODULES)))
+
+# This places dependencies and object files in the common directories.  It
+# makes builds across platforms and between applications confusing.
+# undefine VPATH
+#SRC += $(patsubst %,$(BSP430_ROOT)/src/%.c,$(sort $(MODULES)))
+
+# This places all dependencies and object files in the app directory, but
+# would break if the same file basename is used for different capabilities.
+# Doesn't happen for now; let's see how it works.
+VPATH=$(BSP430_ROOT)/src/platform/$(PLATFORM):$(BSP430_ROOT)/src/utility:$(BSP430_ROOT)/src/periph:$(BSP430_ROOT)/src
+SRC += $(addsuffix .c,$(notdir $(sort $(MODULES))))
+
+# This places dependencies and object files in subdirectories of the app
+# directory, but would require somebody to create those subdirectories
+#VPATH=$(BSP430_ROOT)/src
+#SRC += $(addsuffix .c,$(sort $(MODULES)))
 
 # Object files derive from C source files and preprocessed assembly files
 OBJ += $(SRC:.c=.o) $(SRC_S:.S=.o)
 
-# Dependency files derive from C source files
-DEP += $(SRC:.c=.d)
+# Dependency files derive from anything that was preprocessed.  I'd like
+# these stuffed in a hidden subdirectory, haven't worked that one yet.
+# Also see http://locklessinc.com/articles/makefile_tricks/
+DEP += $(SRC:.c=.d) $(SRC_S:.S=.d)
 
 # AOUT: The name of the application image.
 AOUT ?= app.elf
@@ -195,7 +212,7 @@ clean:
 
 # REALCLEAN: Additional files to be removed on make realclean
 realclean: clean
-	-$(RM) $(AOUT) $(DEP) $(REALCLEAN)
+	-$(RM) $(AOUT) $(DEP) $(REALCLEAN) *.d *.o
 
 # MSPDEBUG: Path to the mspdebug application (http://mspdebug.sourceforge.net/)
 MSPDEBUG ?= mspdebug
