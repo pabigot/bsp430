@@ -578,11 +578,11 @@ const char * xBSP430timerName (tBSP430periphHandle periph);
 
 /** Provide the frequency of the timer source, if that can be determined.
  *
- * @param timer The timer for which the source frequency is desired
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
  *
  * @return 0 if the timer is stopped; -1 if the frequency cannot be
  * determined, a positive value for a known source. */
-unsigned long ulBSP430timerFrequency_Hz_ni (hBSP430halTIMER timer);
+unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph);
 
 /** Read the timer counter assuming interrupts are disabled.
  *

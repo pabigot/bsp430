@@ -204,7 +204,7 @@ static unsigned long
 __inline__
 ulBSP430uptimeResolution_Hz_ni (void)
 {
-  return ulBSP430timerFrequency_Hz_ni(xBSP430uptimeTimer());
+  return ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
 }
 #endif /* DOXYGEN or function available */
 

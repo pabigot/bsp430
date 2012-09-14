@@ -232,10 +232,15 @@ sBSP430halTIMER xBSP430hal_TB2_ = {
 #endif /* configBSP430_HAL_TB2 */
 
 unsigned long
-ulBSP430timerFrequency_Hz_ni (hBSP430halTIMER timer)
+ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph)
 {
+  volatile sBSP430hplTIMER * tp = xBSP430hplLookupTIMER(periph);
   unsigned long freq_Hz;
-  switch (timer->hpl->ctl & TASSEL_3) {
+
+  if (0 == tp) {
+    return -1;
+  }
+  switch (tp->ctl & TASSEL_3) {
     case TASSEL_0:
       return 0;
     case TASSEL_1:
@@ -248,7 +253,7 @@ ulBSP430timerFrequency_Hz_ni (hBSP430halTIMER timer)
     case TASSEL_3:
       return -1;
   }
-  return freq_Hz >> ((timer->hpl->ctl & ID_3) / ID0);
+  return freq_Hz >> ((tp->ctl & ID_3) / ID0);
 }
 
 unsigned int
