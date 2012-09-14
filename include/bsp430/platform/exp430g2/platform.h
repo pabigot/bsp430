@@ -63,6 +63,10 @@
 #define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 #define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT3
 
+/* Standard LED colors */
+#define BSP430_LED_RED 0
+#define BSP430_LED_GREEN 1
+
 /* What to use as the uptime timer.  If we're going to pick TA0 for
    CCACLK, try to pick a different timer for uptime. */
 #if ((configBSP430_UPTIME - 0)                                  \

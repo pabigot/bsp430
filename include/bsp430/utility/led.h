@@ -107,6 +107,42 @@ void vBSP430ledSet (int led_idx,
 #define vBSP430ledSet(led_idx, value) do { (void)(led_idx); (void)(value); } while (0)
 #endif /* BSP430_LED */
 
+/** @def BSP430_LED_GREEN
+ *
+ * The platform-specific index for the first green LED.
+ *
+ * This macro is defined in the platform-specific header on platforms
+ * that include a green LED.  It is undefined if no green LED is
+ * available.  If there are multiple green LEDs, subsequent ones would
+ * be numbered beginning with BSP430_LED_GREEN1 to indicate the second
+ * (sic) green LED.
+ *
+ * Where possible, platforms should define both #BSP430_LED_GREEN and
+ * #BSP430_LED_RED.  If one or the other is missing, but multiple LEDs
+ * are available, it is appropriate to use a different color for
+ * either or both, with the understanding that the inconsistency is
+ * specific to that board.
+ *
+ * Additional colors may be available and are defined similarly.
+ * Availability of an LED color on a platform is determined by
+ * checking for the corresponding macro definition.
+ *
+ * @platformdefault 
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_LED_GREEN include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_LED_RED
+ *
+ * As with #BSP430_LED_GREEN, but for red LEDs.
+ *
+ * @platformdefault 
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_LED_RED include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
 /** @def configBSP430_LED_USE_COMMON
  *
  * If the development board has LEDs that can be expressed using

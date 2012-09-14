@@ -70,8 +70,9 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_SURF 1
 
-/* Available button definitions.  These are revision-dependent, but
- * only rev B2 have been defined. */
+#if 2 == BSP430_PLATFORM_SURF_REVISION
+
+/* Available button definitions. */
 #define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 #define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT0
 #define BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
@@ -80,6 +81,19 @@
 #define BSP430_PLATFORM_BUTTON2_PORT_BIT BIT6
 #define BSP430_PLATFORM_BUTTON3_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
 #define BSP430_PLATFORM_BUTTON3_PORT_BIT BIT7
+
+/* Standard LED colors */
+#define BSP430_LED_GREEN 0
+#define BSP430_LED_RED 1
+#define BSP430_LED_ORANGE 2
+#define BSP430_LED_WHITE 3
+#define BSP430_LED_BLUE 4
+
+#else /* BSP430_PLATFORM_SURF_REVISION */
+
+#error BSP430_PLATFORM_SURF_REVISION not supported
+
+#endif /* BSP430_PLATFORM_SURF_REVISION */
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */

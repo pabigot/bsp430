@@ -59,6 +59,11 @@
 #define BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 #define BSP430_PLATFORM_BUTTON1_PORT_BIT BIT2
 
+/* Standard LED colors */
+#define BSP430_LED_GREEN 0
+#define BSP430_LED_YELLOW 1
+#define BSP430_LED_RED 3
+
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */
