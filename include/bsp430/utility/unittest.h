@@ -196,7 +196,7 @@ void vBSP430unittestFinalize (void);
     type_ v1v_ = (v1_);                                                 \
     type_ v2v_ = (v2_);                                                 \
     if (v1v_ == v2v_) {                                                 \
-      vBSP430unittestResult_(__LINE__, 1, "%s\n", expr_str_);           \
+      vBSP430unittestResult_(__LINE__, 1, "%s", expr_str_);           \
     } else {                                                            \
       vBSP430unittestResult_(__LINE__, 0, "%s: %" pri_ " != %" pri_, expr_str_, v1v_, v2v_); \
     }                                                                   \
