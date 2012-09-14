@@ -34,7 +34,7 @@ void main ()
   BSP430_UNITTEST_ASSERT_FALSE(1 == 2);
 #if ! APP_ONLY_PASSING
   rv = 42;
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTd16(1, rv);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(1, rv);
 #endif /* APP_ONLY_PASSING */
   vBSP430unittestFinalize();
 }

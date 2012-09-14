@@ -188,7 +188,7 @@ void vBSP430unittestFinalize (void);
  * @param type_ a type suitable for holding the values of @a v1_ and
  * @a v2_ for equality comparison purposes
  *
- * @param pri_ a print(3) format specifier, exclusive of the leading
+ * @param pri_ a print(3) format specifier, inclusive of the leading
  * @c %, to be used to format the passed values of @a v1_ and @a v2_
  * in the case where the test fails */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,type_,pri_) do {      \
@@ -198,7 +198,7 @@ void vBSP430unittestFinalize (void);
     if (v1v_ == v2v_) {                                                 \
       vBSP430unittestResult_(__LINE__, 1, "%s", expr_str_);           \
     } else {                                                            \
-      vBSP430unittestResult_(__LINE__, 0, "%s: %" pri_ " != %" pri_, expr_str_, v1v_, v2v_); \
+      vBSP430unittestResult_(__LINE__, 0, "%s: " pri_ " != " pri_, expr_str_, v1v_, v2v_); \
     }                                                                   \
   } while (0)
 
@@ -207,48 +207,48 @@ void vBSP430unittestFinalize (void);
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * signed 16-bit integers. */
-#define BSP430_UNITTEST_ASSERT_EQUAL_FMTd16(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,PRId16)
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTd(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,"%" PRId16)
 
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * unsigned 16-bit decimal integers. */
-#define BSP430_UNITTEST_ASSERT_EQUAL_FMTu16(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,PRIu16)
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTu(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,"%" PRIu16)
 
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * unsigned 16-bit hexadecimal integers. */
-#define BSP430_UNITTEST_ASSERT_EQUAL_FMTx16(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,PRIx16)
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTx(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,"%#" PRIx16)
 
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * signed 32-bit decimal integers. */
-#define BSP430_UNITTEST_ASSERT_EQUAL_FMTd32(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,PRId32)
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTld(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,"%" PRId32)
 
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * unsigned 32-bit decimal integers. */
-#define BSP430_UNITTEST_ASSERT_EQUAL_FMTu32(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,PRIu32)
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTlu(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,"%" PRIu32)
 
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * unsigned 32-bit hexadecimal integers. */
-#define BSP430_UNITTEST_ASSERT_EQUAL_FMTx32(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,PRIx32)
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTlx(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int, "%#" PRIx32)
 
 /** Validate that the pointer expressions are equal.
  *
  * If they are not, emit a diagnostic showing both pointer values. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTp(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,void *,"p")
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,void *,"%p")
 
 #endif /* BSP430_UTILITY_UNITTEST_H */
