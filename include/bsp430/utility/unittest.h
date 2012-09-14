@@ -249,6 +249,6 @@ void vBSP430unittestFinalize (void);
  *
  * If they are not, emit a diagnostic showing both pointer values. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTp(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,uintptr_t,PRIxPTR)
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,void *,"p")
 
 #endif /* BSP430_UTILITY_UNITTEST_H */
