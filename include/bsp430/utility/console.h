@@ -59,6 +59,7 @@
 
 #include <bsp430/serial.h>
 #include <bsp430/platform.h>
+#include <stdarg.h>
 
 /** @def configBSP430_CONSOLE
  *
@@ -276,12 +277,18 @@ int cpeekchar_ni (void);
  * encountered
  *
  * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
-int
-cprintf (const char * format, ...)
+int cprintf (const char * format, ...)
 #if __GNUC__ - 0
 __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
 ;
+
+/** Like vprintf(3), but to the console UART.
+ *
+ * @param format A printf(3) format string
+ * @param ap A stdarg reference to variable arguments to a calling function.
+ * @return as with cprintf(). */
+int vcprintf (const char * format, va_list ap);
 
 /** Like puts(3) to the console UART
  *

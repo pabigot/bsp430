@@ -174,9 +174,19 @@ __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
 cprintf (const char *fmt, ...)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  va_list argp;
   int rv;
+  va_list argp;
+  va_start(argp, fmt);
+  rv = vcprintf(fmt, argp);
+  va_end(argp);
+  return rv;
+}
+
+int
+vcprintf (const char * fmt, va_list ap)
+{
+  int rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   /* Fail fast if printing is disabled */
   if (! console_hal_) {
@@ -184,12 +194,11 @@ cprintf (const char *fmt, ...)
   }
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-  va_start (argp, fmt);
-  rv = vuprintf(emit_char_ni, fmt, argp);
-  va_end (argp);
+  rv = vuprintf(emit_char_ni, fmt, ap);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
+
 #endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
 
 hBSP430halSERIAL
