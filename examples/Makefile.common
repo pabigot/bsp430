@@ -182,7 +182,12 @@ MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED
 # This places all dependencies and object files in the app directory, but
 # would break if the same file basename is used for different capabilities.
 # Doesn't happen for now; let's see how it works.
-VPATH=$(BSP430_ROOT)/src/platform/$(PLATFORM):$(BSP430_ROOT)/src/utility:$(BSP430_ROOT)/src/periph:$(BSP430_ROOT)/src
+ifdef PLATFORM
+VPATH += $(BSP430_ROOT)/src/platform/$(PLATFORM)
+endif # PLATFORM
+VPATH += $(BSP430_ROOT)/src/utility
+VPATH += $(BSP430_ROOT)/src/periph
+VPATH += $(BSP430_ROOT)/src
 SRC += $(addsuffix .c,$(notdir $(sort $(MODULES))))
 
 # This places dependencies and object files in subdirectories of the app
