@@ -182,14 +182,17 @@ typedef struct sBSP430halLED {
 
 #if configBSP430_LED_USE_COMMON - 0
 
-/** Platform should define the LED configuration available to it. */
+/** Platform should define the LED configuration available to it.
+ * @dependency #BSP430_LED */
 extern const sBSP430halLED xBSP430hal_[];
 
-/** Platform should define the length of the xBSP430hal_
- * configuration array.  We'll assume there can't be more than 255
- * LEDs. */
-extern const unsigned char nBSP430led;
-
 #endif /* configBSP430_LED_USE_COMMON */
+
+/** The number of LEDs available on the platform.
+ *
+ * If #configBSP430_LED_USE_COMMON is true, this is the length of the
+ * xBSP430hal_ configuration array.  Otherwise it's just a constant.
+ * We'll assume there can't be more than 255 LEDs. */
+extern const unsigned char nBSP430led;
 
 #endif /* BSP430_UTILITY_LED_H */
