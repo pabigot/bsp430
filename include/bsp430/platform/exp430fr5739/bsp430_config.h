@@ -114,4 +114,14 @@
 #endif /* configBSP430_HAL_PORT4 */
 #endif /* configBSP430_PLATFORM_BUTTON[01] */
 
+/* Enable RFEM resources if requested */
+#if (configBSP430_RFEM - 0)
+#define configBSP430_SERIAL_ENABLE_SPI 1
+#define configBSP430_HAL_EUSCI_B0 1
+#define configBSP430_HAL_PORT1 1
+#define configBSP430_HAL_PORT2 1
+#define configBSP430_HAL_PORT3 1
+#define configBSP430_HAL_PORT4 1
+#endif /* configBSP430_RFEM */
+
 #endif /* BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H */
