@@ -48,6 +48,7 @@
  * <li>#BSP430_PLATFORM_EM430</a>
  * <li>#BSP430_PLATFORM_RF2500T</a>
  * <li>#BSP430_PLATFORM_SURF</a>
+ * <li>#BSP430_PLATFORM_TRXEB</a>
  * <li>#BSP430_PLATFORM_CUSTOM</a>
  * </ul>
  *
@@ -455,6 +456,34 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #if BSP430_PLATFORM_SURF - 0
 #include <bsp430/platform/surf/platform.h>
 #endif /* BSP430_PLATFORM_SURF */
+
+/* END AUTOMATICALLY GENERATED CODE [platform_decl_url] */
+/* !BSP430! end=platform_decl_url */
+/* !BSP430! url=http://www.ti.com/tool/cc1125dk subst=url instance=trxeb */
+/* !BSP430! insert=platform_decl_url */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl_url] */
+/** @def BSP430_PLATFORM_TRXEB
+ * Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/cc1125dk">TRXEB</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/trxeb/platform.h>.
+ * If you include that header directly, #BSP430_PLATFORM_TRXEB will be
+ * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/trxeb/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_TRXEB
+#define BSP430_PLATFORM_TRXEB 0
+#endif /* BSP430_PLATFORM_TRXEB */
+
+#if BSP430_PLATFORM_TRXEB - 0
+#include <bsp430/platform/trxeb/platform.h>
+#endif /* BSP430_PLATFORM_TRXEB */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_decl_url] */
 /* !BSP430! end=platform_decl_url */

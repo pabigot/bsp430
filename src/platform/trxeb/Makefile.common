@@ -1,0 +1,9 @@
+# The MSP430F5438a is soldered in.
+MCU=msp430f5438a
+
+MSPDEBUG_DRIVER=-j uif
+# Custom LED implementation in platform module
+MODULES_LED=platform/$(PLATFORM)/platform
+# UCS needs CCACLK for DCO configuration
+MODULES_CLOCK=periph/ucs periph/timer
+MODULES_PLATFORM_SERIAL=periph/usci5

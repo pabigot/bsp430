@@ -48,6 +48,7 @@
  * <li>#BSP430_PLATFORM_EM430</a>
  * <li>#BSP430_PLATFORM_RF2500T</a>
  * <li>#BSP430_PLATFORM_SURF</a>
+ * <li>#BSP430_PLATFORM_TRXEB</a>
  * <li>#BSP430_PLATFORM_CUSTOM</a>
  * </ul>
  * After platform-specific configuration has been read, this file may
@@ -82,7 +83,7 @@
 #endif /* configBSP430_TIMER_CCACLK */
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
 
-/* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,em430,rf2500t,surf */
+/* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,em430,rf2500t,trxeb,surf */
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */
 #if BSP430_PLATFORM_EXP430F5438 - 0
@@ -112,6 +113,10 @@
 #if BSP430_PLATFORM_RF2500T - 0
 #include <bsp430/platform/rf2500t/bsp430_config.h>
 #endif /* BSP430_PLATFORM_RF2500T */
+
+#if BSP430_PLATFORM_TRXEB - 0
+#include <bsp430/platform/trxeb/bsp430_config.h>
+#endif /* BSP430_PLATFORM_TRXEB */
 
 #if BSP430_PLATFORM_SURF - 0
 #include <bsp430/platform/surf/bsp430_config.h>
