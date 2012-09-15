@@ -61,8 +61,8 @@
  *  RF1.5 (RF3.6)   | SLOW_CLK                               | |
  *  RF1.7 (RF3.8)   | BT_HCI_RX                              | aka SPI1_MISO/UART_TXD |                  
  *  RF1.9 (RF3.10)  | BT_HCI_TX                              | aka SPI1_MOSI/UART_RXD |
- *  RF1.10          | #BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE   | |
- *  RF1.12          | #BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE   | |
+ *  RF1.10          | #BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE   | PWR_EN on CC3000 WiFi module |
+ *  RF1.12          | #BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE   | SPI_IRQ on CC3000 WiFi module |
  *  RF1.14          | #BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE| |
  *  RF1.16          | #BSP430_RFEM_SPI0_PERIPH_HANDLE        | SCLK |
  *  RF1.18          | #BSP430_RFEM_SPI0_PERIPH_HANDLE        | MOSI |
