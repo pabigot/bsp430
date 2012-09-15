@@ -1,6 +1,6 @@
 /** This file is in the public domain.
  *
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */

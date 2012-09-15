@@ -1,10 +1,10 @@
 /** This file is in the public domain.
  *
  * Test with:
- * 
+ *
  * -DAPP_ONLY_PASSING
  * -DconfigBSP430_UNITTEST_FAILFAST
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */

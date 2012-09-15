@@ -54,7 +54,7 @@ void
 vBSP430unittestInitialize (void)
 {
   int ctr;
-  
+
   if (NULL == hBSP430console()) {
     iBSP430consoleInitialize();
   }

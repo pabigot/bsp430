@@ -148,7 +148,7 @@ vBSP430pmmInducePOR (void)
  * @param target_level The power level to be entered.  This must be a
  * valid level, i.e. #PMMCOREV_0 through #PMMCOREV_3, or an error code
  * is returned.
- * 
+ *
  * @return -1 if the @a target_level is invalid, otherwise the level
  * at which power is left.  This may be less than @a target_level if
  * the requested level could not be reached due to inadequate supply

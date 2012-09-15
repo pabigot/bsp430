@@ -2,7 +2,7 @@
  *
  * Iterate through available LED colors to visually verify the constants
  * are correct.
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */
@@ -18,42 +18,48 @@ typedef struct sColor {
 } sColor;
 
 const sColor colors[] = {
-  { "red", 
+  {
+    "red",
 #ifdef BSP430_LED_RED
     BSP430_LED_RED
 #else /* BSP430_LED_RED */
     -1
 #endif /* BSP430_LED_RED */
   },
-  { "green", 
+  {
+    "green",
 #ifdef BSP430_LED_GREEN
     BSP430_LED_GREEN
 #else /* BSP430_LED_GREEN */
     -1
 #endif /* BSP430_LED_GREEN */
   },
-  { "white", 
+  {
+    "white",
 #ifdef BSP430_LED_WHITE
     BSP430_LED_WHITE
 #else /* BSP430_LED_WHITE */
     -1
 #endif /* BSP430_LED_WHITE */
   },
-  { "orange", 
+  {
+    "orange",
 #ifdef BSP430_LED_ORANGE
     BSP430_LED_ORANGE
 #else /* BSP430_LED_ORANGE */
     -1
 #endif /* BSP430_LED_ORANGE */
   },
-  { "yellow", 
+  {
+    "yellow",
 #ifdef BSP430_LED_YELLOW
     BSP430_LED_YELLOW
 #else /* BSP430_LED_YELLOW */
     -1
 #endif /* BSP430_LED_YELLOW */
   },
-  { "blue", 
+  {
+    "blue",
 #ifdef BSP430_LED_BLUE
     BSP430_LED_BLUE
 #else /* BSP430_LED_BLUE */
@@ -67,7 +73,7 @@ void main ()
 {
   const sColor * cp = colors;
   const sColor * const ecp = colors + sizeof(colors) / sizeof(*colors);
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   while (1) {

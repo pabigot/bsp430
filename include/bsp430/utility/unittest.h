@@ -131,10 +131,10 @@ void vBSP430unittestInitialize (void);
 /** Display a unit test result.
  *
  * @param line the line number on which the test occurred.
- * 
+ *
  * @param passp a non-zero value if the test passed; a zero value
  * indicates the test failed.
- * 
+ *
  * @param format a #cprintf format statement for any diagnostic or
  * status to be displayed for the test.  A newline will be
  * appended automatically. */

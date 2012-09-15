@@ -88,14 +88,16 @@ setVCoreUp (unsigned int level)
   PMMIFG &= ~SVSMHDLYIFG;
 
   /* Check if a VCore increase is possible */
-  if ((PMMIFG & SVMHIFG) == SVMHIFG){
+  if ((PMMIFG & SVMHIFG) == SVMHIFG) {
     /* -> Vcc is too low for a Vcore increase, recover the previous
      * settings */
     PMMIFG &= ~SVSMHDLYIFG;
     SVSMHCTL = SVSMHCTL_backup;
 
     /* Wait until SVM highside is settled */
-    while ((PMMIFG & SVSMHDLYIFG) == 0) ;
+    while ((PMMIFG & SVSMHDLYIFG) == 0) {
+      ;
+    }
 
     /* Clear all Flags */
     PMMIFG &= ~(SVMHVLRIFG | SVMHIFG | SVSMHDLYIFG | SVMLVLRIFG | SVMLIFG | SVSMLDLYIFG);
@@ -260,7 +262,7 @@ int
 iBSP430pmmSetCoreVoltageLevel_ni (unsigned int target_level)
 {
   int level = 0;
-  
+
   if (target_level & ~(PMMCOREV_3)) {
     return -1;
   }

@@ -127,7 +127,7 @@ void vBSP430ledSet (int led_idx,
  * Availability of an LED color on a platform is determined by
  * checking for the corresponding macro definition.
  *
- * @platformdefault 
+ * @platformdefault
  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_LED_GREEN include <bsp430/platform.h>
@@ -137,7 +137,7 @@ void vBSP430ledSet (int led_idx,
  *
  * As with #BSP430_LED_GREEN, but for red LEDs.
  *
- * @platformdefault 
+ * @platformdefault
  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_LED_RED include <bsp430/platform.h>
