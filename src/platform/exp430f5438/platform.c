@@ -61,6 +61,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT0 | BIT1 | BIT2;
     pba = BSP430_PERIPH_PORT11_BASEADDRESS_;
+    /* SEL is not sufficient to bring out signal; need DIR */
+    P11DIR |= bits;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_USCI5_A0 - 0
