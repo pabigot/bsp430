@@ -39,6 +39,11 @@
 #ifndef BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H
 
+/* Platform has custom LED implementation */
+#ifndef configBSP430_LED_USE_COMMON
+#define configBSP430_LED_USE_COMMON 0
+#endif /* configBSP430_LED_USE_COMMON */
+
 /* Use native EUSCI for genericized serial port unless told not to */
 #ifndef configBSP430_SERIAL_USE_EUSCI
 #define configBSP430_SERIAL_USE_EUSCI 1
