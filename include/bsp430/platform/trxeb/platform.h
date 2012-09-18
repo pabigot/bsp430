@@ -149,6 +149,39 @@
 #define BSP430_RFEM_SPI0CSn_PORT_BIT BIT0
 #endif /* configBSP430_RFEM */
 
+#ifndef configBSP430_PLATFORM_TRXEB_ALS
+/** Enable HPL support for on-board ambient light sensor
+ *
+ * The TrxEB has an SFH 5711 ambient light sensor from Osram on board,
+ * positioned to the right and below the LCD.  It receives power
+ * through P6.1, and provides an analog logarithmic measure of ambient
+ * light over P6.2 which is A2 for the on-board ADC.  Defining this
+ * constant to a true value enables the configuration of port 6 as
+ * well as provides constants for applications to use the sensor. */
+#define configBSP430_PLATFORM_TRXEB_ALS 0
+#endif /* configBSP430_PLATFORM_TRXEB_ALS */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_ALS - 0)
+/** BSP430 port HPL reference on which ambient light sensor is placed.
+ * @dependency #configBSP430_PLATFORM_TRXEB_ALS
+ */
+#define BSP430_PLATFORM_TRXEB_ALS_PORT_HPL BSP430_HPL_PORT6
+/** Port bit on #BSP430_PLATFORM_TRXEB_ALS_PORT_HPL for ALS power */
+ * @dependency #configBSP430_PLATFORM_TRXEB_ALS
+ */
+
+#define BSP430_PLATFORM_TRXEB_ALS_PWR_PORT_BIT BIT1
+/** Port bit on #BSP430_PLATFORM_TRXEB_ALS_PORT_HPL for ALS output */
+ * @dependency #configBSP430_PLATFORM_TRXEB_ALS
+ */
+
+#define BSP430_PLATFORM_TRXEB_ALS_OUT_PORT_BIT BIT2
+/** ADC12 channel for ALS output */
+ * @dependency #configBSP430_PLATFORM_TRXEB_ALS
+ */
+#define BSP430_PLATFORM_TRXEB_ALS_OUT_INCH ADC12INCH_2
+#endif /* configBSP430_PLATFORM_TRXEB_ALS */
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 

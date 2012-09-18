@@ -127,4 +127,10 @@
 #define configBSP430_HAL_PORT3 1
 #endif /* configBSP430_RFEM */
 
+#if (configBSP430_PLATFORM_TRXEB_ALS - 0)
+#ifndef configBSP430_HPL_PORT6
+#define configBSP430_HPL_PORT6 1
+#endif /* configBSP430_HPL_PORT6 */
+#endif /* configBSP430_PLATFORM_TRXEB_ALS */
+
 #endif /* BSP430_PLATFORM_TRXEB_BSP430_CONFIG_H */
