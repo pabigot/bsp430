@@ -251,4 +251,15 @@ void vBSP430uptimeSuspend_ni (void);
  */
 void vBSP430uptimeResume_ni (void);
 
+/** Convert an uptime count to text HH:MM:SS.mmm format.
+ *
+ * At least the MM:SS.mmm portion is present, with minutes
+ * space-padded on the left.  If the duration exceeds 59:59.999, then
+ * space-padded hours will be included as well, and minutes will be
+ * zero-padded.
+ *
+ * @param duration_utt a duration in uptime ticks
+ * @return pointer to formatted time.  The pointer is to static storage. */
+const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
+
 #endif /* BSP430_UTILITY_UPTIME_H */

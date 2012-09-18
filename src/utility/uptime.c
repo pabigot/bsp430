@@ -29,9 +29,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <bsp430/utility/uptime.h>
-#include <bsp430/periph/timer.h>
 #include <bsp430/platform.h>
+#include <bsp430/utility/uptime.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #if BSP430_UPTIME - 0
 /* Inhibit definition if required components were not provided. */
@@ -60,6 +61,31 @@ void
 vBSP430uptimeResume_ni (void)
 {
   xBSP430uptimeTIMER_->hpl->ctl |= MC_2;
+}
+
+const char *
+xBSP430uptimeAsText_ni (unsigned long duration_utt)
+{
+  static char buf[sizeof("HHH:MM:SS.mmm")];
+  unsigned long resolution_Hz;
+  ldiv_t ld;
+  unsigned int msec;
+  unsigned int sec;
+  unsigned int min;
+
+  resolution_Hz = ulBSP430uptimeResolution_Hz_ni();
+  ld = ldiv(duration_utt, resolution_Hz);
+  msec = (1000L * ld.rem) / resolution_Hz;
+  ld = ldiv(ld.quot, 60);
+  sec = ld.rem;
+  ld = ldiv(ld.quot, 60);
+  min = ld.rem;
+  if (0 < ld.quot) {
+    snprintf(buf, sizeof(buf), "%u:%02u:%02u.%03u", (unsigned int)ld.quot, min, sec, msec);
+  } else {
+    snprintf(buf, sizeof(buf), "%2u:%02u.%03u", min, sec, msec);
+  }
+  return buf;
 }
 
 #endif /* BSP430_UPTIME */
