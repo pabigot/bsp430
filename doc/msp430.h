@@ -225,6 +225,37 @@
 #define UCSSEL_2            (0x80)    /**< ctl1 : USCI 0 Clock Source: 2 (SMCLK) */
 #define UCSSEL_3            (0xC0)    /**< ctl1 : USCI 0 Clock Source: 3 (SMCLK) */
 
+/* PMMCTL0 Control Bits */
+
+#define PMMCOREV_0          (0x0000)  /**< PMM Core Voltage 0 (1.35V) */
+#define PMMCOREV_1          (0x0001)  /**< PMM Core Voltage 1 (1.55V) */
+#define PMMCOREV_2          (0x0002)  /**< PMM Core Voltage 2 (1.75V) */
+#define PMMCOREV_3          (0x0003)  /**< PMM Core Voltage 3 (1.85V) */
+
+/* TLV-related offsets and constants */
+
+#define TLV_START             (0x1A08)    /**< Start Address of the TLV structure (EXCLUDES HEADER) */
+#define TLV_END               (0x1AFF)    /**< End Address of the TLV structure (INCLUSIVE) */
+
+#define TLV_LDTAG             (0x01)      /**<  Legacy descriptor (1xx, 2xx, 4xx families) */
+#define TLV_PDTAG             (0x02)      /**<  Peripheral discovery descriptor */
+#define TLV_Reserved3         (0x03)      /*  Future usage */
+#define TLV_Reserved4         (0x04)      /*  Future usage */
+#define TLV_BLANK             (0x05)      /**<  Blank descriptor */
+#define TLV_Reserved6         (0x06)      /*  Future usage */
+#define TLV_Reserved7         (0x07)      /*  Serial Number */
+#define TLV_DIERECORD         (0x08)      /**<  Die Record  */
+#define TLV_ADCCAL            (0x11)      /**<  ADC12 calibration */
+#define TLV_ADC12CAL          (0x11)      /**<  ADC12 calibration */
+#define TLV_ADC10CAL          (0x13)      /**<  ADC10 calibration */
+#define TLV_REFCAL            (0x12)      /**<  REF calibration */
+#define TLV_TAGEXT            (0xFE)      /**<  Tag extender */
+
+#define TAG_DCO_30             (0x01)    /**< (2xx) Tag for DCO30  Calibration Data */
+#define TAG_ADC10_1            (0x08)    /**< (2xx) Tag for ADC10_1 Calibration Data */
+#define TAG_ADC12_1            (0x08)    /**< (2xx) Tag for ADC12_1 Calibration Data */
+#define TAG_EMPTY              (0xFE)    /**< (2xx) Tag for Empty Data Field in Calibration Data */
+
 #endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */
@@ -373,14 +404,6 @@
 * PMM - Power Management System
 ************************************************************/
 #define  __MSP430_HAS_PMM__            /**< Definition to show that Module is available */
-
-/* PMMCTL0 Control Bits */
-
-#define PMMCOREV_0          (0x0000)  /**< PMM Core Voltage 0 (1.35V) */
-#define PMMCOREV_1          (0x0001)  /**< PMM Core Voltage 1 (1.55V) */
-#define PMMCOREV_2          (0x0002)  /**< PMM Core Voltage 2 (1.75V) */
-#define PMMCOREV_3          (0x0003)  /**< PMM Core Voltage 3 (1.85V) */
-
 /************************************************************
 * PMM - Power Management System
 ************************************************************/
