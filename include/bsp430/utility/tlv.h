@@ -165,6 +165,21 @@ typedef sBSP430tlvTable2xx sBSP430tlvTable;
  * guide. */
 #define BSP430_TLV_NEXT_ENTRY(ep_) ((sBSP430tlvEntry *)(sizeof(sBSP430tlvEntry) + (ep_)->len + (unsigned char *)(ep_)))
 
+/** @def BSP430_TLV_ENTRY_IS_ADC
+ *
+ * Check whether a TLV entry corresponds to an ADC.
+ * 
+ * On 5xx/6xx MCUs this may be either #TLV_ADC10CAL or #TLV_ADC12CAL.  No MCU has both.
+ *
+ * On 2xx MCUs, the tag value is not constant across the family for
+ * either peripheral type, so an ADC is detected by a tag that is
+ * neither #TAG_DCO_30 nor #TAG_EMPTY. */
+#if defined(BSP430_DOXYGEN) || (BSP430_TLV_IS_5XX - 0)
+#define BSP430_TLV_ENTRY_IS_ADC(ep_) ((TLV_ADC10CAL == (ep_)->tag) || (TLV_ADC12CAL == (ep_)->tag))
+#else /* BSP430_TLV_IS_5XX */
+#define BSP430_TLV_ENTRY_IS_ADC(ep_) ((TAG_DCO_30 != (ep_)->tag) && (TAG_EMPTY != (ep_)->tag))
+#endif /* BSP430_TLV_IS_5XX */
+
 #if defined(BSP430_DOXYGEN) || (BSP430_TLV_IS_5XX - 0)
 
 /* Standard definitions when missing from header */
@@ -338,6 +353,16 @@ typedef struct sBPS430tlvADC {
  * information.  The value has type <c>const unsigned char *</c>, and
  * may be cast to #sBSP430tlvTable to access relevant information. */
 #define BSP430_TLV_TABLE_START ((const unsigned char *)TLV_START - BSP430_TLV_TABLE_PREFIX_LENGTH)
+
+/** Check whether the table is valid.
+ *
+ * This references #BSP430_TLV_TABLE_START and #TLV_END and other
+ * constants to verify that the stored checksum matches the checksum
+ * calculated over the data area of the descriptor table. */
+#define BSP430_TLV_TABLE_IS_VALID()                                     \
+  (((const sBSP430tlvTable *)BSP430_TLV_TABLE_START)->crc               \
+   == uiBSP430tlvChecksum(BSP430_TLV_TABLE_START + BSP430_TLV_TABLE_DATA_OFFSET, \
+                          (1 + (const unsigned char *)TLV_END) - (BSP430_TLV_TABLE_START + BSP430_TLV_TABLE_DATA_OFFSET)))
 
 /** Calculate the TLV-compatible checksum for a region of memory.
  *
