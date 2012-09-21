@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -128,7 +128,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PERIPH_USCI5_H</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="periph_8h.html" title="Generic peripheral support for MSP430 MCUs.">bsp430/periph.h</a>&gt;</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="serial_8h.html" title="Abstracted serial interface.">bsp430/serial.h</a>&gt;</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="serial___8h.html" title="Structures for abstracted serial interface.">bsp430/serial_.h</a>&gt;</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
 <div class="line"><a name="l00096"></a><span class="lineno"><a class="code" href="usci5_8h.html#aa4473acdf9cf2a9295e4b8f406edbaa0">   96</a></span>&#160;<span class="preprocessor">#define BSP430_MODULE_USCI5 (defined(__MSP430_HAS_USCI_A0__)     \</span></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">                            || defined(__MSP430_HAS_USCI_B0__)) \</span></div>
@@ -570,19 +570,131 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;                              <span class="keyword">const</span> uint8_t * tx_data,</div>
 <div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;                              <span class="keywordtype">size_t</span> tx_len);</div>
 <div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;</div>
-<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;<span class="keyword">volatile</span> <a class="code" href="structsBSP430hplUSCI5.html">sBSP430hplUSCI5</a> * <a class="code" href="usci5_8h.html#a2c1e561dbd7f28d89d5320ab9d721f19">xBSP430hplLookupUSCI5</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph);</div>
-<div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;</div>
-<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="usci5_8h.html#a52737cf0ebc875505a88bf1f3cc67605">xBSP430usciLookup5</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph);</div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;</div>
-<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> * <a class="code" href="usci5_8h.html#a597e0da824a01c3f4815cd6ebff10e92">xBSP430usci5Name</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph);</div>
-<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;</div>
-<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_USCI5 */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_USCI5_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;<span class="keyword">static</span> __inline__</div>
+<div class="line"><a name="l01070"></a><span class="lineno"><a class="code" href="usci5_8h.html#a4d449427be86919e3534f64238274226"> 1070</a></span>&#160;<span class="keyword">volatile</span> <a class="code" href="structsBSP430hplUSCI5.html">sBSP430hplUSCI5</a> * <a class="code" href="usci5_8h.html#a4d449427be86919e3534f64238274226">xBSP430hplLookupUSCI5</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;{</div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;  <span class="comment">/* !BSP430! insert=periph_hpl_demux */</span></div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;  <span class="comment">/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */</span></div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_A0 - 0</span></div>
+<div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#acea8698f877ebdb9b08d144d6a077c6f">BSP430_PERIPH_USCI5_A0</a> == periph) {</div>
+<div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#ae1514d39b42d5fdd448710e532fede62">BSP430_HPL_USCI5_A0</a>;</div>
+<div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160;  }</div>
+<div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_A0 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_A1 - 0</span></div>
+<div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a9d8faa91e1a1698b94fd287fec14a324">BSP430_PERIPH_USCI5_A1</a> == periph) {</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a487c3c001698df0e950a5c38b0044df8">BSP430_HPL_USCI5_A1</a>;</div>
+<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;  }</div>
+<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_A1 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_A2 - 0</span></div>
+<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a554a1ae7b06e14d149994fc2aea06918">BSP430_PERIPH_USCI5_A2</a> == periph) {</div>
+<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a5224452930d378723f3aa2db891d2032">BSP430_HPL_USCI5_A2</a>;</div>
+<div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160;  }</div>
+<div class="line"><a name="l01090"></a><span class="lineno"> 1090</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_A2 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01091"></a><span class="lineno"> 1091</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01092"></a><span class="lineno"> 1092</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_A3 - 0</span></div>
+<div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#aa9d02169ace310e0929796b85ac3262c">BSP430_PERIPH_USCI5_A3</a> == periph) {</div>
+<div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a9b3b288d2bb362c733843f1f5f215d5e">BSP430_HPL_USCI5_A3</a>;</div>
+<div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160;  }</div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_A3 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_B0 - 0</span></div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a0b65b990e8c555759a8f4f5d4402cfcb">BSP430_PERIPH_USCI5_B0</a> == periph) {</div>
+<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#ae6714c1d5b386a9747707ff2e4ceca82">BSP430_HPL_USCI5_B0</a>;</div>
+<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;  }</div>
+<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_B0 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_B1 - 0</span></div>
+<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a8a7137993c3ce4112443047f6ec2d7ca">BSP430_PERIPH_USCI5_B1</a> == periph) {</div>
+<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a5ef13ea42e4f318c0e706c242e56c47b">BSP430_HPL_USCI5_B1</a>;</div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;  }</div>
+<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_B1 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_B2 - 0</span></div>
+<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#ad5c2671074d5dd362fadccfee64f0d8e">BSP430_PERIPH_USCI5_B2</a> == periph) {</div>
+<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a3b591be0344278bc8eb9e150de37a55b">BSP430_HPL_USCI5_B2</a>;</div>
+<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;  }</div>
+<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_B2 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;<span class="preprocessor">#if configBSP430_HPL_USCI5_B3 - 0</span></div>
+<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a5251ef69a73234a2204bb95a43162469">BSP430_PERIPH_USCI5_B3</a> == periph) {</div>
+<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#aecd47cc7c7722e94b5dfd208857415a8">BSP430_HPL_USCI5_B3</a>;</div>
+<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160;  }</div>
+<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HPL_USCI5_B3 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160;  <span class="comment">/* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */</span></div>
+<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;  <span class="comment">/* !BSP430! end=periph_hpl_demux */</span></div>
+<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;  <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;}</div>
+<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;</div>
+<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160;<span class="keyword">static</span> __inline__</div>
+<div class="line"><a name="l01136"></a><span class="lineno"><a class="code" href="usci5_8h.html#a6c28ce4b238787033b60b46b47805394"> 1136</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="usci5_8h.html#a6c28ce4b238787033b60b46b47805394">xBSP430usci5Lookup</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
+<div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160;{</div>
+<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160;  <span class="comment">/* !BSP430! insert=periph_hal_demux */</span></div>
+<div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160;  <span class="comment">/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */</span></div>
+<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_A0 - 0</span></div>
+<div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#acea8698f877ebdb9b08d144d6a077c6f">BSP430_PERIPH_USCI5_A0</a> == periph) {</div>
+<div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a8b86f5532fcc0e65fdb12b6b516057b0">BSP430_HAL_USCI5_A0</a>;</div>
+<div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160;  }</div>
+<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_A0 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_A1 - 0</span></div>
+<div class="line"><a name="l01147"></a><span class="lineno"> 1147</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a9d8faa91e1a1698b94fd287fec14a324">BSP430_PERIPH_USCI5_A1</a> == periph) {</div>
+<div class="line"><a name="l01148"></a><span class="lineno"> 1148</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a5538f73ce8cb58add5061351c68cf61b">BSP430_HAL_USCI5_A1</a>;</div>
+<div class="line"><a name="l01149"></a><span class="lineno"> 1149</span>&#160;  }</div>
+<div class="line"><a name="l01150"></a><span class="lineno"> 1150</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_A1 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01151"></a><span class="lineno"> 1151</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01152"></a><span class="lineno"> 1152</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_A2 - 0</span></div>
+<div class="line"><a name="l01153"></a><span class="lineno"> 1153</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a554a1ae7b06e14d149994fc2aea06918">BSP430_PERIPH_USCI5_A2</a> == periph) {</div>
+<div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#af39829c9af4894ab4f089641041e2f6a">BSP430_HAL_USCI5_A2</a>;</div>
+<div class="line"><a name="l01155"></a><span class="lineno"> 1155</span>&#160;  }</div>
+<div class="line"><a name="l01156"></a><span class="lineno"> 1156</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_A2 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01157"></a><span class="lineno"> 1157</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01158"></a><span class="lineno"> 1158</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_A3 - 0</span></div>
+<div class="line"><a name="l01159"></a><span class="lineno"> 1159</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#aa9d02169ace310e0929796b85ac3262c">BSP430_PERIPH_USCI5_A3</a> == periph) {</div>
+<div class="line"><a name="l01160"></a><span class="lineno"> 1160</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a1b0246982bd9a2a57fd4d369d3888edc">BSP430_HAL_USCI5_A3</a>;</div>
+<div class="line"><a name="l01161"></a><span class="lineno"> 1161</span>&#160;  }</div>
+<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_A3 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01163"></a><span class="lineno"> 1163</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_B0 - 0</span></div>
+<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a0b65b990e8c555759a8f4f5d4402cfcb">BSP430_PERIPH_USCI5_B0</a> == periph) {</div>
+<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a379287577fa26ef855886ce3e029a9f7">BSP430_HAL_USCI5_B0</a>;</div>
+<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;  }</div>
+<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_B0 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_B1 - 0</span></div>
+<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a8a7137993c3ce4112443047f6ec2d7ca">BSP430_PERIPH_USCI5_B1</a> == periph) {</div>
+<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#aebb6c1e39d84e9c0c983b1a54d5ce629">BSP430_HAL_USCI5_B1</a>;</div>
+<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;  }</div>
+<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_B1 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_B2 - 0</span></div>
+<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#ad5c2671074d5dd362fadccfee64f0d8e">BSP430_PERIPH_USCI5_B2</a> == periph) {</div>
+<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#aefa7261a4f80d12e24a2b7670ffd8ea4">BSP430_HAL_USCI5_B2</a>;</div>
+<div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;  }</div>
+<div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_B2 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01181"></a><span class="lineno"> 1181</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;<span class="preprocessor">#if configBSP430_HAL_USCI5_B3 - 0</span></div>
+<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (<a class="code" href="usci5_8h.html#a5251ef69a73234a2204bb95a43162469">BSP430_PERIPH_USCI5_B3</a> == periph) {</div>
+<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="usci5_8h.html#a3ad0c85a0724a87b1dc036a09834e932">BSP430_HAL_USCI5_B3</a>;</div>
+<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;  }</div>
+<div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_HAL_USCI5_B3 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;  <span class="comment">/* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */</span></div>
+<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;  <span class="comment">/* !BSP430! end=periph_hal_demux */</span></div>
+<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;  <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;}</div>
+<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;</div>
+<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> * <a class="code" href="usci5_8h.html#a597e0da824a01c3f4815cd6ebff10e92">xBSP430usci5Name</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph);</div>
+<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;</div>
+<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_USCI5 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_USCI5_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

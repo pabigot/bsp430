@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -110,7 +110,7 @@ EXP430G2</h2>
 <p>Current costs are slightly higher in LPM3 and LPM4 if the crystal is populated.</p>
 <h2><a class="anchor" id="EXP430FR5739"></a>
 EXP430FR5739</h2>
-<p>Place the ammeter on the <code>MSP PWR</code> test header. Note that this board's lowest MCLK rate is 5.3MHz, unlike the others which are configured to run at 1MHz for this test. Since active-mode power consumption is proportional to MCLK rate, this may explain why the</p>
+<p>Place the ammeter on the <code>MSP PWR</code> test header. Note that this board's lowest MCLK rate is 5.3MHz, unlike the others which are configured to run at 1MHz for this test. Since active-mode power consumption is proportional to MCLK rate, this may explain why the power consumption in active mode is relatively high.</p>
 <table class="doxtable">
 <tr>
 <th align="right">uA (+S,+U) </th><th align="right">uA (-S,+U) </th><th align="right">uA (-S,-U) </th><th>Description</th></tr>
@@ -178,6 +178,10 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#error No button available on this platform</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BUTTON0 */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="comment">/* Core voltage control is supported on 5xx/6xx modules with PMM</span></div>
+<div class="line"><span class="comment"> * support but not on FRAM devices. */</span></div>
+<div class="line"><span class="preprocessor">#define APP_ENABLE_COREV (BSP430_MODULE_PMM - 0) &amp;&amp; ! (BSP430_MODULE_PMM_FRAM - 0)</span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>sCommand {</div>
 <div class="line">  <span class="keywordtype">char</span> cmd;</div>
 <div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> * description;</div>
@@ -196,12 +200,12 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span>  { CMD_MODE_LPM3, <span class="stringliteral">&quot;Set mode to enter LPM3&quot;</span> },</div>
 <div class="line"><span class="preprocessor">#define CMD_MODE_LPM4 &#39;4&#39;</span></div>
 <div class="line"><span class="preprocessor"></span>  { CMD_MODE_LPM4, <span class="stringliteral">&quot;Set mode to enter LPM4&quot;</span> },</div>
-<div class="line"><span class="preprocessor">#if BSP430_MODULE_PMM - 0</span></div>
+<div class="line"><span class="preprocessor">#ifdef BSP430_PMM_ENTER_LPMXp5_NI</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define CMD_MODE_LPM3p5 &#39;5&#39;</span></div>
 <div class="line"><span class="preprocessor"></span>  { CMD_MODE_LPM3p5, <span class="stringliteral">&quot;Set mode to enter LPM3.5&quot;</span> },</div>
 <div class="line"><span class="preprocessor">#define CMD_MODE_LPM4p5 &#39;6&#39;</span></div>
 <div class="line"><span class="preprocessor"></span>  { CMD_MODE_LPM4p5, <span class="stringliteral">&quot;Set mode to enter LPM4.5&quot;</span> },</div>
-<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_ENTER_LPMXp5_NI */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define CMD_HOLD_SERIAL &#39;s&#39;</span></div>
 <div class="line"><span class="preprocessor"></span>  { CMD_HOLD_SERIAL, <span class="stringliteral">&quot;Toggle whether serial is placed on hold during LPM&quot;</span> },</div>
 <div class="line"><span class="preprocessor">#define CMD_HOLD_CLOCK &#39;u&#39;</span></div>
@@ -212,7 +216,13 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span>  { CMD_STATE, <span class="stringliteral">&quot;Display system state (clock speeds, etc.)&quot;</span> },</div>
 <div class="line"><span class="preprocessor">#define CMD_SLEEP &#39;$&#39;</span></div>
 <div class="line"><span class="preprocessor"></span>  { CMD_SLEEP, <span class="stringliteral">&quot;Enter sleep mode&quot;</span> },</div>
-<div class="line">};</div>
+<div class="line"><span class="preprocessor">#if APP_ENABLE_COREV</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define CMD_COREV_INCR &#39;&gt;&#39;</span></div>
+<div class="line"><span class="preprocessor"></span>  { CMD_COREV_INCR, <span class="stringliteral">&quot;Increment core voltage&quot;</span> },</div>
+<div class="line"><span class="preprocessor">#define CMD_COREV_DECR &#39;&lt;&#39;</span></div>
+<div class="line"><span class="preprocessor"></span>  { CMD_COREV_DECR, <span class="stringliteral">&quot;Decrement core voltage&quot;</span> },</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_ENABLE_COREV */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>};</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>sState {</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> lpm_bits;</div>
@@ -278,7 +288,7 @@ main.c</h1>
 <div class="line">rx_cbchain_ni (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * cb,</div>
 <div class="line">               <span class="keywordtype">void</span> * context)</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> device = (<a class="code" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>)context;</div>
+<div class="line">  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> device = (<a class="code" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>)context;</div>
 <div class="line"></div>
 <div class="line">  *rx_head++ = device-&gt;<a class="code" href="structsBSP430halSERIAL.html#a15e5570eb45ae458119bb23a3a346dfc">rx_byte</a>;</div>
 <div class="line">  <span class="keywordflow">if</span> (rx_head &gt; (rx_buffer + <span class="keyword">sizeof</span>(rx_buffer) / <span class="keyword">sizeof</span>(*rx_buffer))) {</div>
@@ -315,7 +325,7 @@ main.c</h1>
 <div class="line">      reset_causes |= 1UL &lt;&lt; (sysrstiv / 2);</div>
 <div class="line">    }</div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor">#if BSP430_MODULE_PMM - 0</span></div>
+<div class="line"><span class="preprocessor">#ifdef BSP430_PMM_ENTER_LPMXp5_NI</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="comment">/* If we woke from LPMx.5, we need to clear the lock in PM5CTL0.</span></div>
 <div class="line"><span class="comment">     * We&#39;ll do it early, since we&#39;re not really interested in</span></div>
 <div class="line"><span class="comment">     * retaining the current IFG settings. */</span></div>
@@ -324,7 +334,7 @@ main.c</h1>
 <div class="line">      PM5CTL0 = 0;</div>
 <div class="line">      PMMCTL0_H = 0;</div>
 <div class="line">    }</div>
-<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_ENTER_LPMXp5_NI */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>  }</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_SYS */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -365,8 +375,8 @@ main.c</h1>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line">  b0hal = <a class="code" href="port_8h.html#a1faf6f6e33b41544cbb6c2da797c08ff">hBSP430portLookup</a>(<a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>);</div>
-<div class="line">  b0pin = <a class="code" href="port_8h.html#af382612632b9c077ad033b5039ab741e">iBSP430portBitPosition</a>(<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>);</div>
+<div class="line">  b0hal = <a class="code" href="port_8h.html#a08ff8c8d9a25e25aa5d53ff28b5812a9">hBSP430portLookup</a>(<a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>);</div>
+<div class="line">  b0pin = <a class="code" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a>(<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>);</div>
 <div class="line">  b0hpl = <a class="code" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(b0hal);</div>
 <div class="line">  b0hal-&gt;<a class="code" href="structsBSP430halPORT.html#a064ef3897a45a15efed3afe917517773">pin_cbchain_ni</a>[b0pin] = &amp;button_cb;</div>
 <div class="line">  b0hpl-&gt;sel &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
@@ -429,7 +439,7 @@ main.c</h1>
 <div class="line">              state.lpm_bits = <a class="code" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a>;</div>
 <div class="line">              state.lpm_description = <span class="stringliteral">&quot;LPM4&quot;</span>;</div>
 <div class="line">              <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="preprocessor">#if BSP430_MODULE_PMM - 0</span></div>
+<div class="line"><span class="preprocessor">#ifdef BSP430_PMM_ENTER_LPMXp5_NI</span></div>
 <div class="line"><span class="preprocessor"></span>            <span class="keywordflow">case</span> CMD_MODE_LPM3p5:</div>
 <div class="line">              state.lpm_bits = <a class="code" href="core_8h.html#ac98f22bd2238bfdadf9c7d2a7a8bcc8f">BSP430_CORE_LPM_LPMXp5</a> | <a class="code" href="msp430_8h.html#ae8217664a1729103e247c6984d1744cc">LPM3_bits</a>;</div>
 <div class="line">              state.lpm_description = <span class="stringliteral">&quot;LPM3.5&quot;</span>;</div>
@@ -438,7 +448,7 @@ main.c</h1>
 <div class="line">              state.lpm_bits = <a class="code" href="core_8h.html#ac98f22bd2238bfdadf9c7d2a7a8bcc8f">BSP430_CORE_LPM_LPMXp5</a> | <a class="code" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a>;</div>
 <div class="line">              state.lpm_description = <span class="stringliteral">&quot;LPM4.5&quot;</span>;</div>
 <div class="line">              <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_ENTER_LPMXp5_NI */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>            <span class="keywordflow">case</span> CMD_HELP: {</div>
 <div class="line">              cmdp = commands;</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Available commands:\n&quot;</span>);</div>
@@ -457,7 +467,10 @@ main.c</h1>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Selected idle state: %s\n&quot;</span>, state.lpm_description);</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Clocks will %s\n&quot;</span>, state.hold_clock ? <span class="stringliteral">&quot;freeze&quot;</span> : <span class="stringliteral">&quot;run&quot;</span>);</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Serial will %s\n&quot;</span>, state.hold_serial ? <span class="stringliteral">&quot;be held&quot;</span> : <span class="stringliteral">&quot;be active&quot;</span>);</div>
-<div class="line">              <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="preprocessor">#if APP_ENABLE_COREV</span></div>
+<div class="line"><span class="preprocessor"></span>              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Core voltage level %d\n&quot;</span>, PMMCTL0 &amp; <a class="code" href="msp430_8h.html#a4aa3f2a0135a48433168c58a596e88da">PMMCOREV_3</a>);</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_ENABLE_COREV */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>              <span class="keywordflow">break</span>;</div>
 <div class="line">            <span class="keywordflow">case</span> CMD_HOLD_SERIAL:</div>
 <div class="line">              state.hold_serial = ! state.hold_serial;</div>
 <div class="line">              <span class="keywordflow">break</span>;</div>
@@ -467,7 +480,35 @@ main.c</h1>
 <div class="line">            <span class="keywordflow">case</span> CMD_SLEEP:</div>
 <div class="line">              enter_sleep = 1;</div>
 <div class="line">              <span class="keywordflow">break</span>;</div>
-<div class="line">          }</div>
+<div class="line"><span class="preprocessor">#if APP_ENABLE_COREV</span></div>
+<div class="line"><span class="preprocessor"></span>            <span class="keywordflow">case</span> CMD_COREV_INCR:</div>
+<div class="line">            <span class="keywordflow">case</span> CMD_COREV_DECR: {</div>
+<div class="line">              <span class="keywordtype">int</span> delta = 0;</div>
+<div class="line">              <span class="keywordtype">int</span> rc = 0;</div>
+<div class="line">              <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line">              <span class="keywordflow">do</span> {</div>
+<div class="line">                <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> level = PMMCTL0 &amp; <a class="code" href="msp430_8h.html#a4aa3f2a0135a48433168c58a596e88da">PMMCOREV_3</a>;</div>
+<div class="line">                <span class="keywordflow">if</span> ((cmdp-&gt;cmd == CMD_COREV_INCR) &amp;&amp; (level &lt; PMMCOREV_3)) {</div>
+<div class="line">                  delta = 1;</div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">if</span> ((cmdp-&gt;cmd == CMD_COREV_DECR) &amp;&amp; (level &gt; <a class="code" href="msp430_8h.html#a34ca0e5c11c8b5df96c3c0897728ca8f">PMMCOREV_0</a>)) {</div>
+<div class="line">                  delta = -1;</div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">if</span> (0 != delta) {</div>
+<div class="line">                  rc = <a class="code" href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a>(level + delta);</div>
+<div class="line">                }</div>
+<div class="line">              } <span class="keywordflow">while</span> (0);</div>
+<div class="line">              <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line">              <span class="keywordflow">if</span> (0 == delta) {</div>
+<div class="line">                <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Core voltage at limit\n&quot;</span>);</div>
+<div class="line">              } <span class="keywordflow">else</span> {</div>
+<div class="line">                <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Core voltage adjusted %d to %d rv %d\n&quot;</span>, delta, PMMCTL0 &amp; PMMCOREV_3, rc);</div>
+<div class="line">              }</div>
+<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;PMM: CTL0 %04x CTL1 %04x\n&quot;</span>, PMMCTL0, PMMCTL1);</div>
+<div class="line">              <span class="keywordflow">break</span>;</div>
+<div class="line">            }</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_ENABLE_COREV */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>          }</div>
 <div class="line">        } <span class="keywordflow">else</span> {</div>
 <div class="line">          <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Unrecognized command: %c\n&quot;</span>, c);</div>
 <div class="line">        }</div>
@@ -501,11 +542,11 @@ main.c</h1>
 <div class="line">      <span class="keywordflow">while</span> ((rx_head == rx_tail) &amp;&amp; (! button)) {</div>
 <div class="line">      }</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="preprocessor">#if BSP430_MODULE_PMM - 0</span></div>
+<div class="line"><span class="preprocessor">#ifdef BSP430_PMM_ENTER_LPMXp5_NI</span></div>
 <div class="line"><span class="preprocessor"></span>      <span class="keywordflow">if</span> (state.lpm_bits &amp; <a class="code" href="core_8h.html#ac98f22bd2238bfdadf9c7d2a7a8bcc8f">BSP430_CORE_LPM_LPMXp5</a>) {</div>
 <div class="line">        <a class="code" href="pmm_8h.html#a77f7471bb2f76ad4c4173a9a4afa3055">BSP430_PMM_ENTER_LPMXp5_NI</a>();</div>
 <div class="line">      }</div>
-<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_ENTER_LPMXp5_NI */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>      <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(state.lpm_bits | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
@@ -562,13 +603,14 @@ Makefile</h1>
 <div class="line">MODULES += $(MODULES_CONSOLE)</div>
 <div class="line">MODULES += periph/port</div>
 <div class="line">MODULES += periph/sys</div>
+<div class="line">MODULES += periph/pmm</div>
 <div class="line">MODULES += lpm</div>
 <div class="line">SRC=main.c</div>
 <div class="line">include $(BSP430_ROOT)/examples/Makefile.common</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

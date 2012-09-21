@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -103,12 +103,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:af9f6a1ab23247e37c030abdfef888798"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pmm_8h.html#af9f6a1ab23247e37c030abdfef888798">BSP430_MODULE_PMM</a></td></tr>
+<tr class="memitem:a62ed8a8befdc42e680d77a22ce15fb62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pmm_8h.html#a62ed8a8befdc42e680d77a22ce15fb62">BSP430_MODULE_PMM_FRAM</a></td></tr>
 <tr class="memitem:a77f7471bb2f76ad4c4173a9a4afa3055"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pmm_8h.html#a77f7471bb2f76ad4c4173a9a4afa3055">BSP430_PMM_ENTER_LPMXp5_NI</a>()</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a3c178428e1797873c294efcff98b9694"><td class="memItemLeft" align="right" valign="top">static void __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pmm_8h.html#a3c178428e1797873c294efcff98b9694">vBSP430pmmInduceBOR</a> (void)</td></tr>
 <tr class="memitem:ad8707049de035b8d93cea2bfa863e270"><td class="memItemLeft" align="right" valign="top">static void __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pmm_8h.html#ad8707049de035b8d93cea2bfa863e270">vBSP430pmmInducePOR</a> (void)</td></tr>
+<tr class="memitem:ac3621d45ad0e516384a5dce097dadba9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a> (unsigned int target_level)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Hardware presentation/abstraction for Power Management Module (PMM). </p>
@@ -143,6 +145,22 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
+<a class="anchor" id="a62ed8a8befdc42e680d77a22ce15fb62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_MODULE_PMM_FRAM</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(defined(__MSP430_HAS_PMM_FR5xx__)       \</div>
+<div class="line">                                || defined(__MSP430_HAS_PMM_FRAM__))</div>
+</div><!-- fragment --><p>Defined on inclusion of &lt;<a class="el" href="pmm_8h.html" title="Hardware presentation/abstraction for Power Management Module (PMM).">bsp430/periph/pmm.h</a>&gt;. The value evaluates to true if the target MCU supports the FRAM version of the Power Management Module, and false if it does not.</p>
+<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a77f7471bb2f76ad4c4173a9a4afa3055"></a>
 <div class="memitem">
 <div class="memproto">
@@ -162,12 +180,40 @@ Hardware Adaptation Layer</h1>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
 </div><!-- fragment --><p>Macro to enter LPMx.5 mode</p>
 <p>This should be invoked when <a class="el" href="core_8h.html#ac98f22bd2238bfdadf9c7d2a7a8bcc8f">BSP430_CORE_LPM_LPMXp5</a> or some other cue indicates that ultra-low-power sleep is desired.</p>
+<dl class="section note"><dt>Note</dt><dd>This macro is unavailable on 5xx/6xx chips for which PM5CTL0 is not provided by the MCU headers, possibly due to the presence of erratum PMM8. In particular, it is not available on the CC430F5137 used in the EM430 and SuRF platforms. User code can test whether the macro is defined in order to determine whether the feature is supported.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the PMM control registers are locked. The macro will unlock the registers, set the bit for LPMx.5, then lock the registers again. If used in a context where the PMM registers are already unlocked, this will probably not be what you want. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a61">bootstrap/applpm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a64">bootstrap/applpm/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 <h2>Function Documentation</h2>
+<a class="anchor" id="ac3621d45ad0e516384a5dce097dadba9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int iBSP430pmmSetCoreVoltageLevel_ni </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>target_level</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Safely adjust the PMM core voltage to a desired level.</p>
+<p>This function gradually increases or decreases the PMM core voltage to the desired level, or as close to it as can be achieved. The implementation is from <a href="http://www.ti.com/tool/msp430ware">MSP430Ware</a>, and includes a workaround for erratum FLASH37. If supply voltage does not support the requested voltage, the closest attainable level will be configured and returned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target_level</td><td>The power level to be entered. This must be a valid level, i.e. <a class="el" href="msp430_8h.html#a34ca0e5c11c8b5df96c3c0897728ca8f">PMMCOREV_0</a> through <a class="el" href="msp430_8h.html#a4aa3f2a0135a48433168c58a596e88da">PMMCOREV_3</a>, or an error code is returned.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>-1 if the <em>target_level</em> is invalid, otherwise the level at which power is left. This may be less than <em>target_level</em> if the requested level could not be reached due to inadequate supply voltage.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function is available only on non-FRAM 5xx PMM implementations. </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a58">bootstrap/applpm/main.c</a>, and <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a11">platform/exp430f5529/fatfs/main.c</a>.</dd>
+</dl>
+</div>
+</div>
 <a class="anchor" id="a3c178428e1797873c294efcff98b9694"></a>
 <div class="memitem">
 <div class="memproto">
@@ -221,7 +267,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

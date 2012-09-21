@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="serial_8h_source.html">bsp430/serial.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="serial___8h_source.html">bsp430/serial_.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
@@ -115,7 +115,7 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Structure holding hardware abstraction layer state for serial devices. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#_a11">bootstrap/applpm/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#_a14">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#_a0">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#_a11">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#_a0">bootstrap/console/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#_a0">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#_a14">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#_a0">sensors/tmp102/main.c</a>.</dd>
 </dl></div><h2>Field Documentation</h2>
 <a class="anchor" id="a916b10c7934fe6c5f64a5433715aa4de"></a>
 <div class="memitem">
@@ -153,7 +153,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Access to the HPL pointer as a 5xx/6xx eUSCI type A peripheral </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a21">bootstrap/console/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="adbcfb934a8e21ec940154c8a830af399"></a>
@@ -192,8 +193,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Allow the HAL state to be independent of the underlying HPL layout.</p>
-<p>Use <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT()</a>, or the selector macros like <a class="el" href="serial_8h.html#a49ce5bef456fc55c4da4f44347779e2c">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI()</a> and <a class="el" href="serial_8h.html#a5e8b2157a4ce226a984dd67f9f527cb1">BSP430_SERIAL_HAL_GET_HPL_USCI()</a>, to introspect a HAL instance. </p>
-
+<p>Use <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT()</a>, or the selector macros like <a class="el" href="serial___8h.html#a49ce5bef456fc55c4da4f44347779e2c">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI()</a> and <a class="el" href="serial___8h.html#a5e8b2157a4ce226a984dd67f9f527cb1">BSP430_SERIAL_HAL_GET_HPL_USCI()</a>, to introspect a HAL instance. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a16">bootstrap/console/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a271b5090b8bb18131f159ac3708f19c0"></a>
@@ -207,7 +209,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Support for additional data specific to the HPL that is not part of the standard HPL structure.</p>
 <p>This is necessary for 2xx/4xx USCI, where the interrupt enable and flag registers are outside the <a class="el" href="structsBSP430hplUSCI.html">sBSP430hplUSCI</a> structure. Future HPL implementations (e.g., USART) might need a similar facility.</p>
-<p>Use <a class="el" href="serial_8h.html#afd35b80d4d3f4e8f67cb622d852218f2">BSP430_SERIAL_HAL_GET_HPLAUX_USCI()</a> to access the corresponding structure, which is declared within the peripheral-specific header. </p>
+<p>Use <a class="el" href="serial___8h.html#afd35b80d4d3f4e8f67cb622d852218f2">BSP430_SERIAL_HAL_GET_HPLAUX_USCI()</a> to access the corresponding structure, which is declared within the peripheral-specific header. </p>
 
 </div>
 </div>
@@ -221,7 +223,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Total number of received octets </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a15">bootstrap/console/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="ab96893c7c8a493681cda94f69e97d9c3"></a>
@@ -234,7 +237,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Total number of transmitted octets </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a14">bootstrap/console/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a15e5570eb45ae458119bb23a3a346dfc"></a>
@@ -303,7 +307,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Access to the HPL pointer as a 2xx/4xx USCI peripheral </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a17">bootstrap/console/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="ad621bfea12bab23fd9d4008744657969"></a>
@@ -329,16 +334,17 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Access to the HPL pointer as a 5xx/6xx USCI peripheral </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a19">bootstrap/console/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/bsp430/<a class="el" href="serial_8h_source.html">serial.h</a></li>
+<li>include/bsp430/<a class="el" href="serial___8h_source.html">serial_.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

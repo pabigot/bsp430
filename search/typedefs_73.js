@@ -4,7 +4,7 @@ var searchData=
   ['sbsp430halisrvoidchainnode',['sBSP430halISRVoidChainNode',['../periph_8h.html#a79b47a57f019b607261202d78a4f8917',1,'periph.h']]],
   ['sbsp430halled',['sBSP430halLED',['../led_8h.html#a21eea6a2b8a5f58e35280a0ae5945ee0',1,'led.h']]],
   ['sbsp430halport',['sBSP430halPORT',['../port_8h.html#ae2c59cf00cbde64450babf7e571afec8',1,'port.h']]],
-  ['sbsp430halserial',['sBSP430halSERIAL',['../serial_8h.html#ad27a305aea8b040ef093b2b7ee19f208',1,'serial.h']]],
+  ['sbsp430halserial',['sBSP430halSERIAL',['../serial___8h.html#ad27a305aea8b040ef093b2b7ee19f208',1,'serial_.h']]],
   ['sbsp430haltimer',['sBSP430halTIMER',['../timer_8h.html#af29b8d3d2f517eee17c0f7cd98e8eea3',1,'timer.h']]],
   ['sbsp430hpleuscia',['sBSP430hplEUSCIA',['../eusci_8h.html#a8d73a484766affef84b3da41fe4dd34c',1,'eusci.h']]],
   ['sbsp430hpleuscib',['sBSP430hplEUSCIB',['../eusci_8h.html#a8ef21357e23b8b4f2a83f7738df16c47',1,'eusci.h']]],
@@ -21,5 +21,14 @@ var searchData=
   ['sbsp430hplusci',['sBSP430hplUSCI',['../usci_8h.html#a0956e8f6589f994ae5a8ad0279c60823',1,'usci.h']]],
   ['sbsp430hplusci5',['sBSP430hplUSCI5',['../usci5_8h.html#a4bcfc781f58147083ed67feffc945b4c',1,'usci5.h']]],
   ['sbsp430onewirebus',['sBSP430onewireBus',['../onewire_8h.html#a070da854f2fa1f3927d626e02f20e50f',1,'onewire.h']]],
-  ['sbsp430onewireserialnumber',['sBSP430onewireSerialNumber',['../onewire_8h.html#abbba8ba6511cee0ac789115cf3c3fc9b',1,'onewire.h']]]
+  ['sbsp430onewireserialnumber',['sBSP430onewireSerialNumber',['../onewire_8h.html#abbba8ba6511cee0ac789115cf3c3fc9b',1,'onewire.h']]],
+  ['sbsp430tlvadc',['sBSP430tlvADC',['../tlv_8h.html#a2a0fe541339ba20c75f7f2f10f5452bd',1,'tlv.h']]],
+  ['sbsp430tlvadccal',['sBSP430tlvADCCAL',['../tlv_8h.html#a4a7e16617472011fef65b3de53462292',1,'tlv.h']]],
+  ['sbsp430tlvdco',['sBSP430tlvDCO',['../tlv_8h.html#aa9702e4c842126a4b12aa9fdd1ba4f96',1,'tlv.h']]],
+  ['sbsp430tlvdierecord',['sBSP430tlvDIERECORD',['../tlv_8h.html#a9924d70fb0d4a5d1567f8b679c09d687',1,'tlv.h']]],
+  ['sbsp430tlventry',['sBSP430tlvEntry',['../tlv_8h.html#a9a38043383a6da66ceb7fe3d076d0111',1,'tlv.h']]],
+  ['sbsp430tlvrefcal',['sBSP430tlvREFCAL',['../tlv_8h.html#a9e6793a58b955e8a1dcf8e31463162f5',1,'tlv.h']]],
+  ['sbsp430tlvtable',['sBSP430tlvTable',['../tlv_8h.html#ace3ea3a61ff148934bcd2404c9f8ccff',1,'tlv.h']]],
+  ['sbsp430tlvtable2xx',['sBSP430tlvTable2xx',['../tlv_8h.html#a175d88356bb1555f7fe23a627523768e',1,'tlv.h']]],
+  ['sbsp430tlvtable5xx',['sBSP430tlvTable5xx',['../tlv_8h.html#a71243f9918b36d18d51db6274f2a8c51',1,'tlv.h']]]
 ];

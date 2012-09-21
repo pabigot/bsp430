@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -151,29 +151,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define vBSP430ledSet(led_idx, value) do { (void)(led_idx); (void)(value); } while (0)</span></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_LED */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#ifndef configBSP430_LED_USE_COMMON</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno"><a class="code" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">  125</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_LED_USE_COMMON 1</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_LED_USE_COMMON */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00135"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html">  135</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halLED.html">sBSP430halLED</a> {</div>
-<div class="line"><a name="l00137"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html#afc4ea31917e1c86ce5313cdbd7a27ef6">  137</a></span>&#160;  <span class="keyword">volatile</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html#afc4ea31917e1c86ce5313cdbd7a27ef6">outp</a>;</div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html#a935200799c2676cf51d92f26b833e534">  139</a></span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html#a935200799c2676cf51d92f26b833e534">bit</a>;</div>
-<div class="line"><a name="l00144"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html#a017a47a7d67e9b29227d5be3dcc4f30e">  144</a></span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html#a017a47a7d67e9b29227d5be3dcc4f30e">flags</a>;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;} <a class="code" href="led_8h.html#a21eea6a2b8a5f58e35280a0ae5945ee0">sBSP430halLED</a>;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#if configBSP430_LED_USE_COMMON - 0</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html">sBSP430halLED</a> <a class="code" href="led_8h.html#a6ceb25fd3281c5b9ba3b488dd0065a64">xBSP430hal_</a>[];</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="led_8h.html#a9d226a182dbe529ce49a0a83b450e759">nBSP430led</a>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_LED_USE_COMMON */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_LED_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">  133</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_LED_GREEN include &lt;bsp430/platform.h&gt;</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno"><a class="code" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">  143</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_LED_RED include &lt;bsp430/platform.h&gt;</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">#ifndef configBSP430_LED_USE_COMMON</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno"><a class="code" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">  161</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_LED_USE_COMMON 1</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_LED_USE_COMMON */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html">  171</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halLED.html">sBSP430halLED</a> {</div>
+<div class="line"><a name="l00173"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html#afc4ea31917e1c86ce5313cdbd7a27ef6">  173</a></span>&#160;  <span class="keyword">volatile</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> * <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html#afc4ea31917e1c86ce5313cdbd7a27ef6">outp</a>;</div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html#a935200799c2676cf51d92f26b833e534">  175</a></span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html#a935200799c2676cf51d92f26b833e534">bit</a>;</div>
+<div class="line"><a name="l00180"></a><span class="lineno"><a class="code" href="structsBSP430halLED.html#a017a47a7d67e9b29227d5be3dcc4f30e">  180</a></span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html#a017a47a7d67e9b29227d5be3dcc4f30e">flags</a>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;} <a class="code" href="led_8h.html#a21eea6a2b8a5f58e35280a0ae5945ee0">sBSP430halLED</a>;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="preprocessor">#if configBSP430_LED_USE_COMMON - 0</span></div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structsBSP430halLED.html">sBSP430halLED</a> <a class="code" href="led_8h.html#aaf319eee3d004a0a6733cd7fb0b31b66">xBSP430halLED_</a>[];</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_LED_USE_COMMON */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="led_8h.html#a9d226a182dbe529ce49a0a83b450e759">nBSP430led</a>;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_LED_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

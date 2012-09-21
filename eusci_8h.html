@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Hardware presentation/abstraction for eUSCI.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="periph_8h_source.html">bsp430/periph.h</a>&gt;</code><br/>
-<code>#include &lt;<a class="el" href="serial_8h_source.html">bsp430/serial.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="serial___8h_source.html">bsp430/serial_.h</a>&gt;</code><br/>
 </div>
 <p><a href="eusci_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -153,24 +153,26 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a979f8d655b638d5ee057fad3eb18f5dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a979f8d655b638d5ee057fad3eb18f5dd">hBSP430eusciOpenUART</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned long baud)</td></tr>
-<tr class="memitem:a105be2a888ebe0a32ea54935986ba8cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a105be2a888ebe0a32ea54935986ba8cb">hBSP430eusciOpenSPI</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
-<tr class="memitem:a9eee56bc961776b89104888aaaa4345e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a9eee56bc961776b89104888aaaa4345e">hBSP430eusciOpenI2C</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
-<tr class="memitem:ad43d2bc64443a22a88c03c8774573955"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ad43d2bc64443a22a88c03c8774573955">iBSP430eusciSetHold_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int holdp)</td></tr>
-<tr class="memitem:a088ac017874abf07c40c31c379f291d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a088ac017874abf07c40c31c379f291d2">iBSP430eusciClose</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
-<tr class="memitem:aa411a8cb361fb9fe27f1ee9137e7218d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#aa411a8cb361fb9fe27f1ee9137e7218d">vBSP430eusciWakeupTransmit_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device)</td></tr>
-<tr class="memitem:a90b9938475e26c1a0d35fd40b0cc000f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a90b9938475e26c1a0d35fd40b0cc000f">vBSP430eusciFlush_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device)</td></tr>
-<tr class="memitem:a61a029e52634ae06a986207f6c58156a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a61a029e52634ae06a986207f6c58156a">iBSP430eusciUARTrxByte_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device)</td></tr>
-<tr class="memitem:a4ed70a616252107c71f0da128d4667d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a4ed70a616252107c71f0da128d4667d2">iBSP430eusciUARTtxByte_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device, uint8_t c)</td></tr>
-<tr class="memitem:a6bc5f31ff940fc0062eb7af9d8c5a1df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a6bc5f31ff940fc0062eb7af9d8c5a1df">iBSP430eusciUARTtxData_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device, const uint8_t *data, size_t len)</td></tr>
-<tr class="memitem:ac0ab739b1321030b5bd175785336b96a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ac0ab739b1321030b5bd175785336b96a">iBSP430eusciUARTtxASCIIZ_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device, const char *str)</td></tr>
-<tr class="memitem:a7007a8e15bdfa5eee5bebb81d500c1d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a7007a8e15bdfa5eee5bebb81d500c1d7">iBSP430eusciSPITxRx_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len, size_t rx_len, uint8_t *rx_data)</td></tr>
-<tr class="memitem:a1d7e9e1a8f992ddb3555c16beae91b11"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a1d7e9e1a8f992ddb3555c16beae91b11">iBSP430eusciI2CsetAddresses_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int own_address, int slave_address)</td></tr>
-<tr class="memitem:aa6a4d58f5030197abf5c9397d5cf0d42"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#aa6a4d58f5030197abf5c9397d5cf0d42">iBSP430eusciI2CrxData_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, uint8_t *rx_data, size_t rx_len)</td></tr>
-<tr class="memitem:ad99b27d5028ce6b609b867ddaceb7ef6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ad99b27d5028ce6b609b867ddaceb7ef6">iBSP430eusciI2CtxData_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len)</td></tr>
-<tr class="memitem:a65581cde4a4d70e7b623cf986ff26972"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a65581cde4a4d70e7b623cf986ff26972">xBSP430hplLookupEUSCIA</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
-<tr class="memitem:afca2b4cf461d9d60bfa4da27813b0c89"><td class="memItemLeft" align="right" valign="top">volatile <a class="el" href="structsBSP430hplEUSCIB.html">sBSP430hplEUSCIB</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#afca2b4cf461d9d60bfa4da27813b0c89">xBSP430hplLookupEUSCIB</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
-<tr class="memitem:affcc3df15edc38a9931caf708198d9f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#affcc3df15edc38a9931caf708198d9f3">hBSP430eusciLookup</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:a979f8d655b638d5ee057fad3eb18f5dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a979f8d655b638d5ee057fad3eb18f5dd">hBSP430eusciOpenUART</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned long baud)</td></tr>
+<tr class="memitem:a105be2a888ebe0a32ea54935986ba8cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a105be2a888ebe0a32ea54935986ba8cb">hBSP430eusciOpenSPI</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
+<tr class="memitem:a9eee56bc961776b89104888aaaa4345e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a9eee56bc961776b89104888aaaa4345e">hBSP430eusciOpenI2C</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
+<tr class="memitem:ad43d2bc64443a22a88c03c8774573955"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ad43d2bc64443a22a88c03c8774573955">iBSP430eusciSetHold_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int holdp)</td></tr>
+<tr class="memitem:a088ac017874abf07c40c31c379f291d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a088ac017874abf07c40c31c379f291d2">iBSP430eusciClose</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
+<tr class="memitem:aa411a8cb361fb9fe27f1ee9137e7218d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#aa411a8cb361fb9fe27f1ee9137e7218d">vBSP430eusciWakeupTransmit_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device)</td></tr>
+<tr class="memitem:a90b9938475e26c1a0d35fd40b0cc000f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a90b9938475e26c1a0d35fd40b0cc000f">vBSP430eusciFlush_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device)</td></tr>
+<tr class="memitem:a61a029e52634ae06a986207f6c58156a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a61a029e52634ae06a986207f6c58156a">iBSP430eusciUARTrxByte_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device)</td></tr>
+<tr class="memitem:a4ed70a616252107c71f0da128d4667d2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a4ed70a616252107c71f0da128d4667d2">iBSP430eusciUARTtxByte_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device, uint8_t c)</td></tr>
+<tr class="memitem:a6bc5f31ff940fc0062eb7af9d8c5a1df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a6bc5f31ff940fc0062eb7af9d8c5a1df">iBSP430eusciUARTtxData_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device, const uint8_t *data, size_t len)</td></tr>
+<tr class="memitem:ac0ab739b1321030b5bd175785336b96a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ac0ab739b1321030b5bd175785336b96a">iBSP430eusciUARTtxASCIIZ_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> device, const char *str)</td></tr>
+<tr class="memitem:a7007a8e15bdfa5eee5bebb81d500c1d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a7007a8e15bdfa5eee5bebb81d500c1d7">iBSP430eusciSPITxRx_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len, size_t rx_len, uint8_t *rx_data)</td></tr>
+<tr class="memitem:a1d7e9e1a8f992ddb3555c16beae91b11"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a1d7e9e1a8f992ddb3555c16beae91b11">iBSP430eusciI2CsetAddresses_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int own_address, int slave_address)</td></tr>
+<tr class="memitem:aa6a4d58f5030197abf5c9397d5cf0d42"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#aa6a4d58f5030197abf5c9397d5cf0d42">iBSP430eusciI2CrxData_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, uint8_t *rx_data, size_t rx_len)</td></tr>
+<tr class="memitem:ad99b27d5028ce6b609b867ddaceb7ef6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ad99b27d5028ce6b609b867ddaceb7ef6">iBSP430eusciI2CtxData_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len)</td></tr>
+<tr class="memitem:ac58ee5575fd492e33e294edcc5cfb49a"><td class="memItemLeft" align="right" valign="top">static __inline__ volatile <br class="typebreak"/>
+<a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ac58ee5575fd492e33e294edcc5cfb49a">xBSP430hplLookupEUSCIA</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:ab3b5eaccbaa3aadbb04e230b5375e123"><td class="memItemLeft" align="right" valign="top">static __inline__ volatile <br class="typebreak"/>
+<a class="el" href="structsBSP430hplEUSCIB.html">sBSP430hplEUSCIB</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#ab3b5eaccbaa3aadbb04e230b5375e123">xBSP430hplLookupEUSCIB</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:aae9401544a0246cb06e2bc0db4540a49"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#aae9401544a0246cb06e2bc0db4540a49">hBSP430eusciLookup</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 <tr class="memitem:a543ffe8b48f4ca7cde657e222aca8d33"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eusci_8h.html#a543ffe8b48f4ca7cde657e222aca8d33">xBSP430eusciName</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -777,18 +779,26 @@ Hardware Adaptation Layer</h1>
 </div>
 </div>
 <h2>Function Documentation</h2>
-<a class="anchor" id="affcc3df15edc38a9931caf708198d9f3"></a>
+<a class="anchor" id="aae9401544a0246cb06e2bc0db4540a49"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciLookup </td>
+          <td class="memname">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciLookup </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Get the HAL handle for a specific EUSCI (A or B) instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -806,9 +816,9 @@ Hardware Adaptation Layer</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciOpenI2C </td>
+          <td class="memname"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciOpenI2C </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -845,9 +855,9 @@ Hardware Adaptation Layer</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciOpenSPI </td>
+          <td class="memname"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciOpenSPI </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -884,9 +894,9 @@ Hardware Adaptation Layer</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciOpenUART </td>
+          <td class="memname"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430eusciOpenUART </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -925,7 +935,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciClose </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em></td><td>)</td>
           <td></td>
         </tr>
@@ -942,7 +952,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciI2CrxData_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -975,7 +985,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciI2CsetAddresses_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1008,7 +1018,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciI2CtxData_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1041,7 +1051,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciSetHold_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1068,7 +1078,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciSPITxRx_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1113,7 +1123,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciUARTrxByte_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>device</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1130,7 +1140,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciUARTtxASCIIZ_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
@@ -1157,7 +1167,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciUARTtxByte_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
@@ -1184,7 +1194,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">int iBSP430eusciUARTtxData_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
@@ -1217,7 +1227,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">void vBSP430eusciFlush_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>device</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1234,7 +1244,7 @@ Hardware Adaptation Layer</h1>
         <tr>
           <td class="memname">void vBSP430eusciWakeupTransmit_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>device</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1268,18 +1278,26 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
-<a class="anchor" id="a65581cde4a4d70e7b623cf986ff26972"></a>
+<a class="anchor" id="ac58ee5575fd492e33e294edcc5cfb49a"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">volatile <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>* xBSP430hplLookupEUSCIA </td>
+          <td class="memname">static __inline__ volatile <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>* xBSP430hplLookupEUSCIA </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Get the HPL handle for a specific EUSCIA instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1292,18 +1310,26 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
-<a class="anchor" id="afca2b4cf461d9d60bfa4da27813b0c89"></a>
+<a class="anchor" id="ab3b5eaccbaa3aadbb04e230b5375e123"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">volatile <a class="el" href="structsBSP430hplEUSCIB.html">sBSP430hplEUSCIB</a>* xBSP430hplLookupEUSCIB </td>
+          <td class="memname">static __inline__ volatile <a class="el" href="structsBSP430hplEUSCIB.html">sBSP430hplEUSCIB</a>* xBSP430hplLookupEUSCIB </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Get the HPL handle for a specific EUSCIB instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1319,7 +1345,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

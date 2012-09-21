@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -106,6 +106,7 @@ Macros</h2></td></tr>
 <tr class="memitem:a9d11620036fe41e9f4fca30676e4d821"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a9d11620036fe41e9f4fca30676e4d821">configBSP430_UPTIME</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:aa3a8d2483ccc30c355cae2f3be6ad547"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#aa3a8d2483ccc30c355cae2f3be6ad547">BSP430_UPTIME</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="memitem:a05fb92deab925aa3557cbbfb6d37fbaa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a05fb92deab925aa3557cbbfb6d37fbaa">configBSP430_UPTIME_USE_DEFAULT_RESOURCE</a>&#160;&#160;&#160;(<a class="el" href="uptime_8h.html#a9d11620036fe41e9f4fca30676e4d821">configBSP430_UPTIME</a> - 0)</td></tr>
+<tr class="memitem:a5896bdd2a487e968e6c1aaacace58087"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a5896bdd2a487e968e6c1aaacace58087">BSP430_UPTIME_USE_PLATFORM_RESOURCE</a>&#160;&#160;&#160;include &lt;bsp430/platform/bsp430_config.h&gt;</td></tr>
 <tr class="memitem:a6d4b3ca225b4057be8a5c6f05de6eb7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="memitem:a6f0075826a6164ffd4b9272ab9c5d748"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a6f0075826a6164ffd4b9272ab9c5d748">configBSP430_UPTIME_USE_DEFAULT_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:a54587d84857a8574c58b4dc945c82e6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a54587d84857a8574c58b4dc945c82e6e">BSP430_UPTIME_SSEL</a>&#160;&#160;&#160;TASSEL_1 /* == TASSEL__ACLK */</td></tr>
@@ -120,6 +121,7 @@ Functions</h2></td></tr>
 <tr class="memitem:af2ac7fe1f205bed2b6e8e41faa8a43bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#af2ac7fe1f205bed2b6e8e41faa8a43bc">vBSP430uptimeStart_ni</a> (void)</td></tr>
 <tr class="memitem:a62fc249f2c4699ab77b408e3488ca4b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a62fc249f2c4699ab77b408e3488ca4b5">vBSP430uptimeSuspend_ni</a> (void)</td></tr>
 <tr class="memitem:af8e943e205552a5c9aa1532ca1347b0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#af8e943e205552a5c9aa1532ca1347b0b">vBSP430uptimeResume_ni</a> (void)</td></tr>
+<tr class="memitem:a790fc3c41c4a8e93ec7caca7825733c1"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1">xBSP430uptimeAsText_ni</a> (unsigned long duration_utt)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Support for maintaining a system uptime counter. </p>
@@ -185,8 +187,25 @@ Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>If you set this, you must also set <a class="el" href="uptime_8h.html#a05fb92deab925aa3557cbbfb6d37fbaa">configBSP430_UPTIME_USE_DEFAULT_RESOURCE</a> to be a false value. You must also ensure the corresponding peripheral HAL interface (e.g. <a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a>) and HAL interrupt that will count overflows (e.g. <a class="el" href="timer_8h.html#a0028c9a043565a31a90d14f2aa90fc51">configBSP430_HAL_TA1_ISR</a>) are enabled.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a27">sensors/hh10d/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a28">sensors/hh10d/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a5896bdd2a487e968e6c1aaacace58087"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_UPTIME_USE_PLATFORM_RESOURCE&#160;&#160;&#160;include &lt;bsp430/platform/bsp430_config.h&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If <a class="el" href="uptime_8h.html#a05fb92deab925aa3557cbbfb6d37fbaa">configBSP430_UPTIME_USE_DEFAULT_RESOURCE</a> is enabled but the platform-specific <code>bsp430_config.h</code> selects a different peripheral (e.g., <a class="el" href="timer_8h.html#aa811147838571017c01dd6f987035f5f">BSP430_PERIPH_TA1</a>) than the generic <code>bsp430_config.h</code>, this flag is defined to a true value to prevent the generic resource from being allocated as well. You only need to make use of this this if you're providing a platform that doesn't use <a class="el" href="timer_8h.html#a2f1f35990892a20c7ace8c88a1dce998">BSP430_PERIPH_TA0</a> for the uptime clock.</p>
+<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="uptime_8h.html#a05fb92deab925aa3557cbbfb6d37fbaa">configBSP430_UPTIME_USE_DEFAULT_RESOURCE</a> </dd></dl>
+<dl class="section user"><dt>Affects:</dt><dd><a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a> </dd></dl>
+<dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a9d11620036fe41e9f4fca30676e4d821"></a>
@@ -232,7 +251,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The "best" timer to use for uptime management is probably <a class="el" href="timer_8h.html#a2f1f35990892a20c7ace8c88a1dce998">BSP430_PERIPH_TA0</a>, but if that time is the only one that can use ACLK as a source another might be preferable, so that <a class="el" href="timer_8h.html#afaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a> can be used without conflicting with <a class="el" href="uptime_8h.html#aa3a8d2483ccc30c355cae2f3be6ad547">BSP430_UPTIME</a>. Where possible, selections of compatible timers are made in the platform-specific headers.</p>
+<p>The "best" timer to use for uptime management is probably <a class="el" href="timer_8h.html#a2f1f35990892a20c7ace8c88a1dce998">BSP430_PERIPH_TA0</a>, but if that time is the only one that can use ACLK as a source another might be preferable, so that <a class="el" href="timer_8h.html#afaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a> can be used without conflicting with <a class="el" href="uptime_8h.html#aa3a8d2483ccc30c355cae2f3be6ad547">BSP430_UPTIME</a>. Where possible, selections of compatible timers are made in the platform-specific headers. See <a class="el" href="uptime_8h.html#a5896bdd2a487e968e6c1aaacace58087">BSP430_UPTIME_USE_PLATFORM_RESOURCE</a>.</p>
 <p>If you want control over the timer used for uptime monitoring, set this to false.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
@@ -287,7 +306,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Return system uptime in clock ticks with disabled interrupts. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a55">bootstrap/applpm/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a7">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a39">sensors/hh10d/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a55">bootstrap/applpm/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a7">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a41">sensors/hh10d/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -334,7 +353,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Resume the system uptime clock</p>
 <p>The clocks are re-enabled to continue counting from their last recorded value. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a64">bootstrap/applpm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a67">bootstrap/applpm/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -372,8 +391,33 @@ Functions</h2></td></tr>
 <p>Suspend the system uptime clock.</p>
 <p>Suspension means that the clocks are halted and interrupts from them inhibited. Counter values are not modified. <a class="el" href="uptime_8h.html#af8e943e205552a5c9aa1532ca1347b0b">vBSP430uptimeResume_ni</a> should be invoked to release the clocks to continue counting.</p>
 <p>The system clock may be suspended prior to entering certain low power modes. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a56">bootstrap/applpm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a59">bootstrap/applpm/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a790fc3c41c4a8e93ec7caca7825733c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* xBSP430uptimeAsText_ni </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>duration_utt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convert an uptime count to text HH:MM:SS.mmm format.</p>
+<p>At least the MM:SS.mmm portion is present, with minutes space-padded on the left. If the duration exceeds 59:59.999, then space-padded hours will be included as well, and minutes will be zero-padded.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">duration_utt</td><td>a duration in uptime ticks </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>pointer to formatted time. The pointer is to static storage. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a7ebac1b73c1b727c7021bdfb82edea98"></a>
@@ -407,7 +451,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

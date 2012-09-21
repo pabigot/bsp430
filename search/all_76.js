@@ -17,11 +17,15 @@ var searchData=
   ['vbsp430serialflush_5fni',['vBSP430serialFlush_ni',['../serial_8h.html#a93d526570d79de26de98ba341833b61f',1,'serial.h']]],
   ['vbsp430serialwakeuptransmit_5fni',['vBSP430serialWakeupTransmit_ni',['../serial_8h.html#a08deb57a4d0ff7606dc446b07f35ce57',1,'serial.h']]],
   ['vbsp430timerresetcounter_5fni',['vBSP430timerResetCounter_ni',['../timer_8h.html#adbda3deda56fd4453c32f47f51c3f861',1,'timer.h']]],
+  ['vbsp430unittestfinalize',['vBSP430unittestFinalize',['../unittest_8h.html#adb812494059862a4b57674b8011da8b1',1,'unittest.h']]],
+  ['vbsp430unittestinitialize',['vBSP430unittestInitialize',['../unittest_8h.html#a3220284c913cc7bd22754ce0078f1d94',1,'unittest.h']]],
+  ['vbsp430unittestresult_5f',['vBSP430unittestResult_',['../unittest_8h.html#a92310aad1c12a8e73477b5a13f333df9',1,'unittest.h']]],
   ['vbsp430uptimeresume_5fni',['vBSP430uptimeResume_ni',['../uptime_8h.html#af8e943e205552a5c9aa1532ca1347b0b',1,'uptime.h']]],
   ['vbsp430uptimestart_5fni',['vBSP430uptimeStart_ni',['../uptime_8h.html#af2ac7fe1f205bed2b6e8e41faa8a43bc',1,'uptime.h']]],
   ['vbsp430uptimesuspend_5fni',['vBSP430uptimeSuspend_ni',['../uptime_8h.html#a62fc249f2c4699ab77b408e3488ca4b5',1,'uptime.h']]],
   ['vbsp430usci5flush_5fni',['vBSP430usci5Flush_ni',['../usci5_8h.html#ac7fbdaad1495f393e3ffc6f9dca5c0bc',1,'usci5.h']]],
   ['vbsp430usci5wakeuptransmit_5fni',['vBSP430usci5WakeupTransmit_ni',['../usci5_8h.html#a69524581ad144ac9cfca6506f51be8ef',1,'usci5.h']]],
   ['vbsp430usciflush_5fni',['vBSP430usciFlush_ni',['../usci_8h.html#a4e7f07198ad59310af771e1201a809f2',1,'usci.h']]],
-  ['vbsp430usciwakeuptransmit_5fni',['vBSP430usciWakeupTransmit_ni',['../usci_8h.html#a4d56d7c5e60f87479bdc03e5163c705f',1,'usci.h']]]
+  ['vbsp430usciwakeuptransmit_5fni',['vBSP430usciWakeupTransmit_ni',['../usci_8h.html#a4d56d7c5e60f87479bdc03e5163c705f',1,'usci.h']]],
+  ['vcprintf',['vcprintf',['../console_8h.html#a88bc4e1137c425954f5e5624c95367ab',1,'console.h']]]
 ];

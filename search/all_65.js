@@ -11,6 +11,7 @@ var searchData=
   ['ebsp430clocksrc_5fxt1clk_5for_5frefoclk',['eBSP430clockSRC_XT1CLK_OR_REFOCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa3480b90ace81a2b9f2c25d22d18fc4d6',1,'clock.h']]],
   ['ebsp430clocksrc_5fxt1clk_5for_5fvloclk',['eBSP430clockSRC_XT1CLK_OR_VLOCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa0b31074786d75cdbc65a1be576a20786',1,'clock.h']]],
   ['ebsp430clocksrc_5fxt2clk',['eBSP430clockSRC_XT2CLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaacd6b3df0e86d9a98bcd7e044d4aac248',1,'clock.h']]],
+  ['entry',['entry',['../structsBSP430tlvTable2xx.html#a13fece3c9d2ff08acd6abe5b9d5e80e6',1,'sBSP430tlvTable2xx::entry()'],['../structsBSP430tlvTable5xx.html#a411eef39473a01835e6f6898cc6b4f42',1,'sBSP430tlvTable5xx::entry()']]],
   ['eusci_2eh',['eusci.h',['../eusci_8h.html',1,'']]],
   ['euscia',['euscia',['../structsBSP430halSERIAL.html#a30424a6ad26b1660f215a5a3b98e24d5',1,'sBSP430halSERIAL']]],
   ['euscib',['euscib',['../structsBSP430halSERIAL.html#adbcfb934a8e21ec940154c8a830af399',1,'sBSP430halSERIAL']]]

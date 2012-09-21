@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -247,7 +247,7 @@ This test is intended specifically to validate an external watch crystal running
 <dd>
 Applications may wish to provide an alternative value suited to specific needs. It is suggested that the value include the suffix L in case the compiler does not automatically promote constants as necessary.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a4">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a10">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a6">bootstrap/console/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a13">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a14">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a4">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a10">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a8">bootstrap/console/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a39">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a13">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a16">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -468,7 +468,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
       </table>
 </div><div class="memdoc">
 <p>Configure (or deconfigure) XT1 as a clock source.</p>
-<p>The peripheral-specific implementation will use <a class="el" href="platform_8h.html#a93f2e78617ceaeb548fe440e850924ce">iBSP430platformConfigurePeripheralPins_ni</a> with <a class="el" href="periph_8h.html#a2c2bb4eeb28cd74d0cc8071fabbbee57">BSP430_PERIPH_LFXT1</a> to configure the crystal. If crystal functionality has been requested, it then clears oscillator faults, delays <a class="el" href="clock_8h.html#af540b5147f5f33d64f3a81aed12d3a6d">BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES</a>, then detects whether the crystal is functioning. It terminates with success once the oscillator remains unfaulted after the delay, and otherwise repeats the clear/delay/check process as specified by <em>loop_limit</em>.</p>
+<p>The peripheral-specific implementation will use <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni</a> with <a class="el" href="periph_8h.html#a2c2bb4eeb28cd74d0cc8071fabbbee57">BSP430_PERIPH_LFXT1</a> to configure the crystal. If crystal functionality has been requested, it then clears oscillator faults, delays <a class="el" href="clock_8h.html#af540b5147f5f33d64f3a81aed12d3a6d">BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES</a>, then detects whether the crystal is functioning. It terminates with success once the oscillator remains unfaulted after the delay, and otherwise repeats the clear/delay/check process as specified by <em>loop_limit</em>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">enablep</td><td>Pass a nonzero value to configure XIN/XOUT for crystal functionality and to loop until the crystal is stabilized or has failed to stabilize. Pass a zero value to turn off the crystal function: this reconfigures pins to their digital port function, disables the crystal, and clears any crystal capacitance setting.</td></tr>
@@ -718,7 +718,7 @@ The &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

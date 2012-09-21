@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -94,7 +94,7 @@ main.c</h1>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> main ()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> i2c = <a class="code" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup</a>(APP_TMP102_I2C_PERIPH_HANDLE);</div>
+<div class="line">  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> i2c = <a class="code" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup</a>(APP_TMP102_I2C_PERIPH_HANDLE);</div>
 <div class="line">  uint8_t pr = 0;</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
@@ -102,10 +102,10 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C interface on %s is %p\n&quot;</span>, <a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(APP_TMP102_I2C_PERIPH_HANDLE), i2c);</div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
-<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;TMP102 I2C Pins: %s\n&quot;</span>, <a class="code" href="platform_8h.html#a2df452ec53e3f7d4b4372cb1333f265e">xBSP430platformPeripheralHelp</a>(APP_TMP102_I2C_PERIPH_HANDLE));</div>
+<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;TMP102 I2C Pins: %s\n&quot;</span>, <a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(APP_TMP102_I2C_PERIPH_HANDLE, <a class="code" href="periph_8h.html#aaf5e8738e695389f357acad95ac286ec">BSP430_PERIPHCFG_SERIAL_I2C</a>));</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="comment">/* Ugliness to accomodate value change in UCMST with eUSCI */</span></div>
-<div class="line">  i2c = <a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a>(i2c, (0x100 &lt;= <a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>) ? (<a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a> &gt;&gt; 8) : <a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>,</div>
+<div class="line"><span class="preprocessor"></span>  i2c = <a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a>(i2c,</div>
+<div class="line">                             <a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>),</div>
 <div class="line">                             <a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, APP_TMP102_I2C_PRESCALER);</div>
 <div class="line">  <span class="keywordflow">if</span> (! i2c) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C open failed.\n&quot;</span>);</div>
@@ -168,8 +168,8 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_USCI_B0 1</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span><span class="comment">/* Use SMCLK/40 (=100 kHz) for the I2C speed */</span></div>
-<div class="line"><span class="preprocessor">#define APP_TMP102_I2C_PRESCALER 40</span></div>
+<div class="line"><span class="preprocessor"></span><span class="comment">/* Use SMCLK/100 (=80 kHz) for the I2C speed */</span></div>
+<div class="line"><span class="preprocessor">#define APP_TMP102_I2C_PRESCALER 100</span></div>
 <div class="line"><span class="preprocessor"></span><span class="comment">/* Address for the thing.  0x48 when ADD0 is shorted to GND. */</span></div>
 <div class="line"><span class="preprocessor">#define APP_TMP102_I2C_ADDRESS 0x48</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -186,7 +186,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

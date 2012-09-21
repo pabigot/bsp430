@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -111,7 +111,7 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Structure holding hardware abstraction layer state for digital I/O ports. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#_a16">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#_a1">bootstrap/button/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#_a12">sensors/hh10d/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#_a16">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#_a1">bootstrap/button/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#_a6">rfem/ccid/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#_a12">sensors/hh10d/main.c</a>.</dd>
 </dl></div><h2>Field Documentation</h2>
 <a class="anchor" id="af26a6d2ec27e51f8210d93882633d2b8"></a>
 <div class="memitem">
@@ -123,7 +123,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Access to the HPL pointer ignoring its underlying type </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a19">rfem/ccid/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a5acd0de9c604085a502465a72a1bbcd4"></a>
@@ -150,7 +151,8 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Allow the HAL state to be independent of the underlying HPL layout.</p>
 <p>In practice, a valid pointer here will be compatible with either <em>port</em> or <em>portie</em>, both in the case of the 5xx port peripheral where a single layout is used. Use <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT()</a> to introspect a HAL instance to determine which pointer is appropriate. </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a18">rfem/ccid/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a064ef3897a45a15efed3afe917517773"></a>
@@ -277,7 +279,7 @@ Data Fields</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -161,8 +161,8 @@ main.c</h1>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> main ()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="structsBSP430halPORT.html">sBSP430halPORT</a> * hh10d_port = <a class="code" href="port_8h.html#a1faf6f6e33b41544cbb6c2da797c08ff">hBSP430portLookup</a>(APP_HH10D_PORT_PERIPH_HANDLE);</div>
-<div class="line">  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> i2c = <a class="code" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup</a>(APP_HH10D_I2C_PERIPH_HANDLE);</div>
+<div class="line">  <a class="code" href="structsBSP430halPORT.html">sBSP430halPORT</a> * hh10d_port = <a class="code" href="port_8h.html#a08ff8c8d9a25e25aa5d53ff28b5812a9">hBSP430portLookup</a>(APP_HH10D_PORT_PERIPH_HANDLE);</div>
+<div class="line">  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> i2c = <a class="code" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup</a>(APP_HH10D_I2C_PERIPH_HANDLE);</div>
 <div class="line">  <span class="keywordtype">int</span> uptime_Hz;</div>
 <div class="line">  <span class="keywordtype">int</span> hh10d_offs;</div>
 <div class="line">  <span class="keywordtype">int</span> hh10d_sens;</div>
@@ -179,7 +179,7 @@ main.c</h1>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Initialize the state information used in the HH10D ISR */</span></div>
-<div class="line">  hh10d.freq_timer = <a class="code" href="timer_8h.html#ac0492b28a2888c9c3b5a5974041caa88">xBSP430hplLookupTIMER</a>(APP_HH10D_TIMER_PERIPH_HANDLE);</div>
+<div class="line">  hh10d.freq_timer = <a class="code" href="timer_8h.html#aacf24f2076a6ba1a965ffb23a64246c6">xBSP430hplLookupTIMER</a>(APP_HH10D_TIMER_PERIPH_HANDLE);</div>
 <div class="line">  hh10d.uptime_ccidx = APP_HH10D_UPTIME_CC_INDEX;</div>
 <div class="line">  uptime_Hz = <a class="code" href="uptime_8h.html#aa3d4e602d3c9b1bc5ab245b2411f4306">ulBSP430uptimeResolution_Hz_ni</a>();</div>
 <div class="line">  hh10d.sample_duration_utt = uptime_Hz;</div>
@@ -189,7 +189,7 @@ main.c</h1>
 <div class="line">          i2c, <a class="code" href="clock_8h.html#a0a6941051abd2d3a18654b83ba1f9398">ulBSP430clockSMCLK_Hz_ni</a>() / APP_HH10D_I2C_PRESCALER,</div>
 <div class="line">          APP_HH10D_I2C_ADDRESS);</div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
-<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;HH10D I2C Pins: %s\n&quot;</span>, <a class="code" href="platform_8h.html#a2df452ec53e3f7d4b4372cb1333f265e">xBSP430platformPeripheralHelp</a>(APP_HH10D_I2C_PERIPH_HANDLE));</div>
+<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;HH10D I2C Pins: %s\n&quot;</span>, <a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(APP_HH10D_I2C_PERIPH_HANDLE, <a class="code" href="periph_8h.html#aaf5e8738e695389f357acad95ac286ec">BSP430_PERIPHCFG_SERIAL_I2C</a>));</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Monitoring HH10D on %s.%u using timer %s\n&quot;</span>,</div>
 <div class="line">          <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(APP_HH10D_PORT_PERIPH_HANDLE) ?: <span class="stringliteral">&quot;P?&quot;</span>,</div>
@@ -199,8 +199,8 @@ main.c</h1>
 <div class="line">          <a class="code" href="timer_8h.html#aad872aaa82973fd3accca3bcc004ea69">xBSP430timerName</a>(<a class="code" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>),</div>
 <div class="line">          APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);</div>
 <div class="line"></div>
-<div class="line"></div>
-<div class="line">  i2c = <a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a>(i2c, (0x100 &lt;= <a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>) ? (<a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a> &gt;&gt; 8) : <a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>,</div>
+<div class="line">  i2c = <a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a>(i2c,</div>
+<div class="line">                             <a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>),</div>
 <div class="line">                             <a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, APP_HH10D_I2C_PRESCALER);</div>
 <div class="line">  <span class="keywordflow">if</span> (! i2c) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C open failed.\n&quot;</span>);</div>
@@ -322,7 +322,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

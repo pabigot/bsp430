@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -119,6 +119,11 @@ Macros</h2></td></tr>
 <tr class="memitem:afcf3c0b720fbc4dabcfee7c13555441b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#afcf3c0b720fbc4dabcfee7c13555441b">BSP430_PERIPH_BUTTON1</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)0x4103)</td></tr>
 <tr class="memitem:abeecd2a5a555c1e55c45644600fe46f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#abeecd2a5a555c1e55c45644600fe46f0">BSP430_PERIPH_BUTTON2</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)0x4105)</td></tr>
 <tr class="memitem:a09b640e7845a12145a86bad83e21d332"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a09b640e7845a12145a86bad83e21d332">BSP430_PERIPH_BUTTON3</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)0x4107)</td></tr>
+<tr class="memitem:adfa5a70f361205f0cd07041cad5d264d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#adfa5a70f361205f0cd07041cad5d264d">BSP430_PERIPHCFG_DEFAULT</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:a62038d74e2ead80c4805dc7d8dcb3c2c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a62038d74e2ead80c4805dc7d8dcb3c2c">BSP430_PERIPHCFG_SERIAL_UART</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:aaf5e8738e695389f357acad95ac286ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#aaf5e8738e695389f357acad95ac286ec">BSP430_PERIPHCFG_SERIAL_I2C</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memitem:a5a28880814f93f755ea189df4e2d1900"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memitem:a858ff57a92ed0ee6e78b494d067b053a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a858ff57a92ed0ee6e78b494d067b053a">BSP430_PERIPHCFG_SERIAL_SPI4</a>&#160;&#160;&#160;4</td></tr>
 <tr class="memitem:a08346d4c3f51c37af5b0d8799397eba4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a08346d4c3f51c37af5b0d8799397eba4">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:a8986d6d92fa33470eb4f53418c11ec9c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a8986d6d92fa33470eb4f53418c11ec9c">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_</a>&#160;&#160;&#160;0x0F</td></tr>
 <tr class="memitem:ac05efc5552af50ea113149414d699bcd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_p)&#160;&#160;&#160;(<a class="el" href="periph_8h.html#a8986d6d92fa33470eb4f53418c11ec9c">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_</a> &amp; (_p)-&gt;hal_state.cflags)</td></tr>
@@ -327,7 +332,7 @@ Callback Infrastructure</h1>
       </table>
 </div><div class="memdoc">
 <p>HPL handle identifying the ability to expose clock signals.</p>
-<p>This is used by application code as a debug facility, invoking <a class="el" href="platform_8h.html#a93f2e78617ceaeb548fe440e850924ce">iBSP430platformConfigurePeripheralPins_ni</a> to expose MCLK, SMCLK, and ACLK on pins where they may be monitored. Its availability is conditional on platform support and <a class="el" href="periph_8h.html#a29371426578462373619c52609a223f3">configBSP430_PERIPH_EXPOSED_CLOCKS</a>. </p>
+<p>This is used by application code as a debug facility, invoking <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni</a> to expose MCLK, SMCLK, and ACLK on pins where they may be monitored. Its availability is conditional on platform support and <a class="el" href="periph_8h.html#a29371426578462373619c52609a223f3">configBSP430_PERIPH_EXPOSED_CLOCKS</a>. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a33">bootstrap/clocks/main.c</a>.</dd>
 </dl>
 </div>
@@ -447,6 +452,77 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 
 </div>
 </div>
+<a class="anchor" id="adfa5a70f361205f0cd07041cad5d264d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PERIPHCFG_DEFAULT&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value indicating the default peripheral configuration should be used. </p>
+
+</div>
+</div>
+<a class="anchor" id="aaf5e8738e695389f357acad95ac286ec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PERIPHCFG_SERIAL_I2C&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value indicating peripheral should be configured in I2C mode.</p>
+<p>Only the SDA and SCL signals will be configured by <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni()</a>. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a26">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a7">sensors/tmp102/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a5a28880814f93f755ea189df4e2d1900"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PERIPHCFG_SERIAL_SPI3&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value indicating peripheral should be configured in SPI 3-pin mode.</p>
+<p>Only the MOSI (SIMO), MISO (SOMI), and CLK pins will be configured by <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni()</a>. STE will remain in its last-configured mode. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a25">rfem/ccid/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a858ff57a92ed0ee6e78b494d067b053a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PERIPHCFG_SERIAL_SPI4&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value indicating peripheral should be configured in SPI 4-pin mode.</p>
+<p>The MOSI (SIMO), MISO (SOMI), CLK, and STE pins will be configured by <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni()</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a62038d74e2ead80c4805dc7d8dcb3c2c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PERIPHCFG_SERIAL_UART&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value indicating peripheral should be configured in UART mode.</p>
+<p>Only the RX and TX signals will be configured by <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni()</a>. </p>
+
+</div>
+</div>
 <a class="anchor" id="a29371426578462373619c52609a223f3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -456,7 +532,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of <a class="el" href="periph_8h.html#a8fdd7291ef0be5835eca07b9d4707f65">BSP430_PERIPH_EXPOSED_CLOCKS</a> in <a class="el" href="platform_8h.html#a93f2e78617ceaeb548fe440e850924ce">iBSP430platformConfigurePeripheralPins_ni</a>.</p>
+<p>Define to a true value in <code>bsp430_config.h</code> to enable use of <a class="el" href="periph_8h.html#a8fdd7291ef0be5835eca07b9d4707f65">BSP430_PERIPH_EXPOSED_CLOCKS</a> in <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni</a>.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Affects:</dt><dd><a class="el" href="periph_8h.html#a8fdd7291ef0be5835eca07b9d4707f65">BSP430_PERIPH_EXPOSED_CLOCKS</a> </dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
@@ -560,7 +636,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 <p>An integral type used to uniquely identify a raw MCU peripheral.</p>
 <p>For MCU families where peripheral base addresses are provided in the header files, those base addresses are used as the handle. In other cases arbitrary values may be used, so in general objects with this type should be referenced only equality testing against the constant handle identifier provided in the peripheral header.</p>
 <p>The value zero is reserved and available as <a class="el" href="periph_8h.html#ad313f9d0f95b3cdfffab0843f33767e8">BSP430_PERIPH_NONE</a> to indicate no peripheral.</p>
-<p>Odd values are reserved for non-standard "peripherals" for which some identifier is necessary to allow use in functions like <a class="el" href="platform_8h.html#a93f2e78617ceaeb548fe440e850924ce">iBSP430platformConfigurePeripheralPins_ni</a>, such as <a class="el" href="periph_8h.html#a2c2bb4eeb28cd74d0cc8071fabbbee57">BSP430_PERIPH_LFXT1</a>.</p>
+<p>Odd values are reserved for non-standard "peripherals" for which some identifier is necessary to allow use in functions like <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni</a>, such as <a class="el" href="periph_8h.html#a2c2bb4eeb28cd74d0cc8071fabbbee57">BSP430_PERIPH_LFXT1</a>.</p>
 <p>Negative values indicate an error. </p>
 
 </div>
@@ -697,7 +773,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </table>
 </div><div class="memdoc">
 <p>Get the peripheral handle corresponding to an HPL handle</p>
-<p>The Hardware Presentation Layer handle is a typed pointer to a structure of registers used to control the peripheral. The peripheral handle is an integral value. This routine translates from the HPL to the integral handle; the other direction is done by peripheral-specific functions like <a class="el" href="timer_8h.html#ac0492b28a2888c9c3b5a5974041caa88">xBSP430hplLookupTIMER()</a>.</p>
+<p>The Hardware Presentation Layer handle is a typed pointer to a structure of registers used to control the peripheral. The peripheral handle is an integral value. This routine translates from the HPL to the integral handle; the other direction is done by peripheral-specific functions like <a class="el" href="timer_8h.html#aacf24f2076a6ba1a965ffb23a64246c6">xBSP430hplLookupTIMER()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hpl</td><td>Hardware presentation layer handle. This is generally a pointer to a volatile structure; the absence of the volatile qualifier would require that it be explicitly cast when used as this argument.</td></tr>
@@ -711,7 +787,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

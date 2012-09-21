@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -87,32 +87,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">serial.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Abstracted serial interface.  
+<p>Declarations for abstracted serial interface.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="core_8h_source.html">bsp430/core.h</a>&gt;</code><br/>
 <code>#include &lt;<a class="el" href="periph_8h_source.html">bsp430/periph.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="serial___8h_source.html">bsp430/serial_.h</a>&gt;</code><br/>
 </div>
 <p><a href="serial_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a9fe1757c87c1d7a00d613259efc82625"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a9fe1757c87c1d7a00d613259efc82625">BSP430_SERIAL_HAL_HPL_VARIANT_USCI</a>&#160;&#160;&#160;1</td></tr>
-<tr class="memitem:aa3e10e3f394424bb16b34db0f7cd977b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#aa3e10e3f394424bb16b34db0f7cd977b">BSP430_SERIAL_HAL_HPL_VARIANT_USCI5</a>&#160;&#160;&#160;2</td></tr>
-<tr class="memitem:a02fbdba1497e0f5aea7119314ea6ff88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a02fbdba1497e0f5aea7119314ea6ff88">BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA</a>&#160;&#160;&#160;3</td></tr>
-<tr class="memitem:a0459596ad8719461cc4e33324b97f82b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a0459596ad8719461cc4e33324b97f82b">BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB</a>&#160;&#160;&#160;4</td></tr>
 <tr class="memitem:a48ab4e1dd9be66a4c36e749ff3f26cd7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a48ab4e1dd9be66a4c36e749ff3f26cd7">configBSP430_SERIAL_USE_USCI</a>&#160;&#160;&#160;defined(__MSP430_HAS_USCI__)</td></tr>
 <tr class="memitem:abf14206f9d5a943f6feeaaf31b646ecc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#abf14206f9d5a943f6feeaaf31b646ecc">configBSP430_SERIAL_USE_USCI5</a>&#160;&#160;&#160;defined(__MSP430_HAS_USCI_A0__)</td></tr>
 <tr class="memitem:af1048e989a7051a7aee88c46ef67b279"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#af1048e989a7051a7aee88c46ef67b279">configBSP430_SERIAL_USE_EUSCI</a>&#160;&#160;&#160;(defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_B0__))</td></tr>
@@ -120,46 +111,31 @@ Macros</h2></td></tr>
 <tr class="memitem:a23f6bef8cddedeea579d8e15e4045ee5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a23f6bef8cddedeea579d8e15e4045ee5">configBSP430_SERIAL_ENABLE_SPI</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:a19e915aa21bdaf7e259a6ac99157a644"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a19e915aa21bdaf7e259a6ac99157a644">configBSP430_SERIAL_ENABLE_I2C</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:a34692b8a5e5a11a401030db5d9a6dd19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a34692b8a5e5a11a401030db5d9a6dd19">BSP430_SERIAL</a></td></tr>
-<tr class="memitem:a49ce5bef456fc55c4da4f44347779e2c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a49ce5bef456fc55c4da4f44347779e2c">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI</a>(_hal)&#160;&#160;&#160;(<a class="el" href="serial_8h.html#a9fe1757c87c1d7a00d613259efc82625">BSP430_SERIAL_HAL_HPL_VARIANT_USCI</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td></tr>
-<tr class="memitem:a5e8b2157a4ce226a984dd67f9f527cb1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a5e8b2157a4ce226a984dd67f9f527cb1">BSP430_SERIAL_HAL_GET_HPL_USCI</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a49ce5bef456fc55c4da4f44347779e2c">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI</a>(_hal)) ? (_hal)-&gt;hpl.usci : (void *)0)</td></tr>
-<tr class="memitem:afd35b80d4d3f4e8f67cb622d852218f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#afd35b80d4d3f4e8f67cb622d852218f2">BSP430_SERIAL_HAL_GET_HPLAUX_USCI</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a49ce5bef456fc55c4da4f44347779e2c">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI</a>(_hal)) ? (_hal)-&gt;hpl_aux.usci : (void *)0)</td></tr>
-<tr class="memitem:a20793b79e0caeff55abd2a0316ae8bb0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a20793b79e0caeff55abd2a0316ae8bb0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5</a>(_hal)&#160;&#160;&#160;(<a class="el" href="serial_8h.html#aa3e10e3f394424bb16b34db0f7cd977b">BSP430_SERIAL_HAL_HPL_VARIANT_USCI5</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td></tr>
-<tr class="memitem:ae6445a15fdb284bbfbee4f06d827cdb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ae6445a15fdb284bbfbee4f06d827cdb3">BSP430_SERIAL_HAL_GET_HPL_USCI5</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a20793b79e0caeff55abd2a0316ae8bb0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5</a>(_hal)) ? (_hal)-&gt;hpl.usci5 : (void *)0)</td></tr>
-<tr class="memitem:a6a14a25a6f5044d77a56e4402c09b05a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a6a14a25a6f5044d77a56e4402c09b05a">BSP430_SERIAL_HAL_GET_HPLAUX_USCI5</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a20793b79e0caeff55abd2a0316ae8bb0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5</a>(_hal)) ? (_hal)-&gt;hpl_aux.usci5 : (void *)0)</td></tr>
-<tr class="memitem:af2f388be6a9537ec23bc85b465b5b1a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#af2f388be6a9537ec23bc85b465b5b1a0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA</a>(_hal)&#160;&#160;&#160;(<a class="el" href="serial_8h.html#a02fbdba1497e0f5aea7119314ea6ff88">BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td></tr>
-<tr class="memitem:ad806612033cc1e9b5625563efd3f7022"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ad806612033cc1e9b5625563efd3f7022">BSP430_SERIAL_HAL_GET_HPL_EUSCIA</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#af2f388be6a9537ec23bc85b465b5b1a0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA</a>(_hal)) ? (_hal)-&gt;hpl.euscia : (void *)0)</td></tr>
-<tr class="memitem:a686c59b2e5026479020af9637d724b34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a686c59b2e5026479020af9637d724b34">BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIA</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#af2f388be6a9537ec23bc85b465b5b1a0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA</a>(_hal)) ? (_hal)-&gt;hpl_aux.euscia : (void *)0)</td></tr>
-<tr class="memitem:a8d6273d64588e935a18864a93a9fd87f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)&#160;&#160;&#160;(<a class="el" href="serial_8h.html#a0459596ad8719461cc4e33324b97f82b">BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td></tr>
-<tr class="memitem:aa16b8ccb1c5252ef76270bc55501f84f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#aa16b8ccb1c5252ef76270bc55501f84f">BSP430_SERIAL_HAL_GET_HPL_EUSCIB</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)) ? (_hal)-&gt;hpl.euscib : (void *)0)</td></tr>
-<tr class="memitem:a48c274dcc60f707bae2b42ea0c9788d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a48c274dcc60f707bae2b42ea0c9788d8">BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIB</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)) ? (_hal)-&gt;hpl_aux.euscib : (void *)0)</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ad27a305aea8b040ef093b2b7ee19f208"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ad27a305aea8b040ef093b2b7ee19f208">sBSP430halSERIAL</a></td></tr>
-<tr class="memitem:a31185ece51d6a343bb1f1c6f44fa8bcb"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a></td></tr>
+<tr class="memitem:a84cdc2d11d71d5fd97b96f427c239cb9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(_i)&#160;&#160;&#160;(((_i) &gt;= 0x100) ? ((_i) &gt;&gt; 8) : (_i))</td></tr>
+<tr class="memitem:ae97e0a8d4d66141d6082dac000826b8d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ae97e0a8d4d66141d6082dac000826b8d">BSP430_SERIAL_SPI_READ_TX_BYTE</a>(i_)&#160;&#160;&#160;(i_)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae997de3719b1aa7a522f84d48b989317"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ae997de3719b1aa7a522f84d48b989317">hBSP430serialOpenUART</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned long baud)</td></tr>
-<tr class="memitem:ab62ec5abbab624dc335aa43448c3df68"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ab62ec5abbab624dc335aa43448c3df68">iBSP430uartRxByte_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
-<tr class="memitem:a3437b37c8abf021f5854a0329b9a8c80"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a3437b37c8abf021f5854a0329b9a8c80">iBSP430uartTxByte_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, uint8_t c)</td></tr>
-<tr class="memitem:ad84b351e4a4fb77a287427ea37a7aea6"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ad84b351e4a4fb77a287427ea37a7aea6">iBSP430uartTxData_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *data, size_t len)</td></tr>
-<tr class="memitem:a9a396f87517b9db3c6261e62b6115ebd"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a9a396f87517b9db3c6261e62b6115ebd">iBSP430uartTxASCIIZ_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const char *str)</td></tr>
-<tr class="memitem:a2b7505d46a02a7d5970e48a59c8d26d0"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a2b7505d46a02a7d5970e48a59c8d26d0">hBSP430serialOpenSPI</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
-<tr class="memitem:a9f46e1fbe33db18ba1389d30f8a5beba"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len, size_t rx_len, uint8_t *rx_data)</td></tr>
-<tr class="memitem:a73b7d4973a32423d720db00714b401b8"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
-<tr class="memitem:abc3e56da62a7bcc31f44ab2449f3d4ec"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#abc3e56da62a7bcc31f44ab2449f3d4ec">iBSP430i2cSetAddresses_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int own_address, int slave_address)</td></tr>
-<tr class="memitem:a6de4220a6d133d13625e234bffe78e81"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a6de4220a6d133d13625e234bffe78e81">iBSP430i2cTxData_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len)</td></tr>
-<tr class="memitem:a9235d82e5d626b88fdc59eecfde04321"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a9235d82e5d626b88fdc59eecfde04321">iBSP430i2cRxData_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, uint8_t *rx_data, size_t rx_len)</td></tr>
-<tr class="memitem:abadbedbb2447510053bbec2aa371899f"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int holdp)</td></tr>
-<tr class="memitem:a5b614830a5e7ebd00ca3c88d81784eea"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a5b614830a5e7ebd00ca3c88d81784eea">iBSP430serialClose</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
-<tr class="memitem:a08deb57a4d0ff7606dc446b07f35ce57"><td class="memItemLeft" align="right" valign="top">static __inline__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a08deb57a4d0ff7606dc446b07f35ce57">vBSP430serialWakeupTransmit_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
-<tr class="memitem:a93d526570d79de26de98ba341833b61f"><td class="memItemLeft" align="right" valign="top">static __inline__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a93d526570d79de26de98ba341833b61f">vBSP430serialFlush_ni</a> (<a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
-<tr class="memitem:a207e0ec9a6bb7c8f55e69263c80f164d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:ae997de3719b1aa7a522f84d48b989317"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ae997de3719b1aa7a522f84d48b989317">hBSP430serialOpenUART</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned long baud)</td></tr>
+<tr class="memitem:ab62ec5abbab624dc335aa43448c3df68"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ab62ec5abbab624dc335aa43448c3df68">iBSP430uartRxByte_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
+<tr class="memitem:a3437b37c8abf021f5854a0329b9a8c80"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a3437b37c8abf021f5854a0329b9a8c80">iBSP430uartTxByte_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, uint8_t c)</td></tr>
+<tr class="memitem:ad84b351e4a4fb77a287427ea37a7aea6"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#ad84b351e4a4fb77a287427ea37a7aea6">iBSP430uartTxData_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *data, size_t len)</td></tr>
+<tr class="memitem:a9a396f87517b9db3c6261e62b6115ebd"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a9a396f87517b9db3c6261e62b6115ebd">iBSP430uartTxASCIIZ_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const char *str)</td></tr>
+<tr class="memitem:a2b7505d46a02a7d5970e48a59c8d26d0"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a2b7505d46a02a7d5970e48a59c8d26d0">hBSP430serialOpenSPI</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
+<tr class="memitem:a9f46e1fbe33db18ba1389d30f8a5beba"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len, size_t rx_len, uint8_t *rx_data)</td></tr>
+<tr class="memitem:a73b7d4973a32423d720db00714b401b8"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, unsigned char ctl0_byte, unsigned char ctl1_byte, unsigned int prescaler)</td></tr>
+<tr class="memitem:abc3e56da62a7bcc31f44ab2449f3d4ec"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#abc3e56da62a7bcc31f44ab2449f3d4ec">iBSP430i2cSetAddresses_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int own_address, int slave_address)</td></tr>
+<tr class="memitem:a6de4220a6d133d13625e234bffe78e81"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a6de4220a6d133d13625e234bffe78e81">iBSP430i2cTxData_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, const uint8_t *tx_data, size_t tx_len)</td></tr>
+<tr class="memitem:a9235d82e5d626b88fdc59eecfde04321"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a9235d82e5d626b88fdc59eecfde04321">iBSP430i2cRxData_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, uint8_t *rx_data, size_t rx_len)</td></tr>
+<tr class="memitem:abadbedbb2447510053bbec2aa371899f"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal, int holdp)</td></tr>
+<tr class="memitem:a5b614830a5e7ebd00ca3c88d81784eea"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a5b614830a5e7ebd00ca3c88d81784eea">iBSP430serialClose</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
+<tr class="memitem:a08deb57a4d0ff7606dc446b07f35ce57"><td class="memItemLeft" align="right" valign="top">static __inline__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a08deb57a4d0ff7606dc446b07f35ce57">vBSP430serialWakeupTransmit_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
+<tr class="memitem:a93d526570d79de26de98ba341833b61f"><td class="memItemLeft" align="right" valign="top">static __inline__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a93d526570d79de26de98ba341833b61f">vBSP430serialFlush_ni</a> (<a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hal)</td></tr>
+<tr class="memitem:a06fd80e81dd60f4f2b85badaa438eca2"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 <tr class="memitem:a7f2e6f39abd1faca343663917e34840a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Abstracted serial interface. </p>
+<div class="textblock"><p>Declarations for abstracted serial interface. </p>
 <p>The MSP430 line has a variety of peripherals that support serial communications, including the origin 2xx/4xx family USCI, 5xx USCI, and 5xx eUSCI. These are sufficiently similar in function that it is useful to have a hardware abstraction layer that delegates to the peripherals available on the current platform.</p>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
@@ -181,267 +157,48 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad806612033cc1e9b5625563efd3f7022"></a>
+<a class="anchor" id="a84cdc2d11d71d5fd97b96f427c239cb9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPL_EUSCIA</td>
+          <td class="memname">#define BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#af2f388be6a9537ec23bc85b465b5b1a0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA</a>(_hal)) ? (_hal)-&gt;hpl.euscia : (void *)0)</td>
+          <td class="paramname">_i</td><td>)</td>
+          <td>&#160;&#160;&#160;(((_i) &gt;= 0x100) ? ((_i) &gt;&gt; 8) : (_i))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the serial HPL pointer if the HAL is a EUSCIA variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
+<p>When the underlying implementation is an EUSCI device (as on FR5xx chips), the header defines used to construct the value <em>ctl0_byte</em> are specified for a 16-bit access. The ctl0 byte in the upper byte of the ctlw0 word that comprises <em>ctl0</em> and <em>ctl1</em> on these MCUs. On those devices you must use the <code>_H</code> suffix to select the high-byte version of these constants or divide your configured value by 256 to place it in the low byte of the argument. This applies to configuration values <a class="el" href="msp430_8h.html#a7fb6b3fbbb7fd56c8f11792ffb3e3d6c">UCPEN</a>, <a class="el" href="msp430_8h.html#a05da44320219dcbc56214c9fd424a219">UCPAR</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a17059906b161d93c430b7ee875e0f356">UCSPB</a>, <a class="el" href="msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd">UCCKPH</a>, <a class="el" href="msp430_8h.html#ab4313a6c37c97ba5cdba16c4ca56b517">UCCKPL</a>, <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>, and <a class="el" href="msp430_8h.html#a2f02e983d228152bb8491fb6cb0f1228">UCMODE_0</a> or <a class="el" href="msp430_8h.html#a207fbbe8ef93ccdd9774348ba0794b08">UCMODE_1</a> or <a class="el" href="msp430_8h.html#a57df40fcf2c24a4605e30a900d2b239e">UCMODE_2</a>, and perhaps others.</p>
+<p>Given a <em>ctl0_byte</em> expression comprised of these constants, this macro will adjust it for you when the value appears to be outside the expected range (i.e., greater than <code>0xFF</code>) and will leave the values alone when it is not, so you can use the standard header constant names without having to worry about the underlying implementation. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a27">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a30">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a9">sensors/tmp102/main.c</a>.</dd>
+</dl>
 </div>
 </div>
-<a class="anchor" id="aa16b8ccb1c5252ef76270bc55501f84f"></a>
+<a class="anchor" id="ae97e0a8d4d66141d6082dac000826b8d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPL_EUSCIB</td>
+          <td class="memname">#define BSP430_SERIAL_SPI_READ_TX_BYTE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)) ? (_hal)-&gt;hpl.euscib : (void *)0)</td>
+          <td class="paramname">i_</td><td>)</td>
+          <td>&#160;&#160;&#160;(i_)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Get the serial HPL pointer if the HAL is a EUSCIB variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5e8b2157a4ce226a984dd67f9f527cb1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPL_USCI</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a49ce5bef456fc55c4da4f44347779e2c">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI</a>(_hal)) ? (_hal)-&gt;hpl.usci : (void *)0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the serial HPL pointer if the HAL is a USCI variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae6445a15fdb284bbfbee4f06d827cdb3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPL_USCI5</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a20793b79e0caeff55abd2a0316ae8bb0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5</a>(_hal)) ? (_hal)-&gt;hpl.usci5 : (void *)0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the serial HPL pointer if the HAL is a USCI5 variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
-</div>
-</div>
-<a class="anchor" id="a686c59b2e5026479020af9637d724b34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIA</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#af2f388be6a9537ec23bc85b465b5b1a0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA</a>(_hal)) ? (_hal)-&gt;hpl_aux.euscia : (void *)0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the serial HPL auxiliary pointer if the HAL is a EUSCIA variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
-</div>
-</div>
-<a class="anchor" id="a48c274dcc60f707bae2b42ea0c9788d8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIB</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)) ? (_hal)-&gt;hpl_aux.euscib : (void *)0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the serial HPL auxiliary pointer if the HAL is a EUSCIB variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
-</div>
-</div>
-<a class="anchor" id="afd35b80d4d3f4e8f67cb622d852218f2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a49ce5bef456fc55c4da4f44347779e2c">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI</a>(_hal)) ? (_hal)-&gt;hpl_aux.usci : (void *)0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the serial HPL auxiliary pointer if the HAL is a USCI variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6a14a25a6f5044d77a56e4402c09b05a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI5</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;((<a class="el" href="serial_8h.html#a20793b79e0caeff55abd2a0316ae8bb0">BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5</a>(_hal)) ? (_hal)-&gt;hpl_aux.usci5 : (void *)0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the serial HPL auxiliary pointer if the HAL is a USCI5 variant.</p>
-<p>Value is a null pointer if the HAL references a different HPL type. </p>
-
-</div>
-</div>
-<a class="anchor" id="a02fbdba1497e0f5aea7119314ea6ff88"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0459596ad8719461cc4e33324b97f82b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplEUSCIA.html">sBSP430hplEUSCIA</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="af2f388be6a9537ec23bc85b465b5b1a0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;(<a class="el" href="serial_8h.html#a02fbdba1497e0f5aea7119314ea6ff88">BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True iff the HPL pointer of the serial HAL is a EUSCIA variant. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8d6273d64588e935a18864a93a9fd87f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;(<a class="el" href="serial_8h.html#a0459596ad8719461cc4e33324b97f82b">BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True iff the HPL pointer of the serial HAL is a EUSCIB variant. </p>
-
-</div>
-</div>
-<a class="anchor" id="a49ce5bef456fc55c4da4f44347779e2c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;(<a class="el" href="serial_8h.html#a9fe1757c87c1d7a00d613259efc82625">BSP430_SERIAL_HAL_HPL_VARIANT_USCI</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True iff the HPL pointer of the serial HAL is a USCI variant. </p>
-
-</div>
-</div>
-<a class="anchor" id="a20793b79e0caeff55abd2a0316ae8bb0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;(<a class="el" href="serial_8h.html#aa3e10e3f394424bb16b34db0f7cd977b">BSP430_SERIAL_HAL_HPL_VARIANT_USCI5</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True iff the HPL pointer of the serial HAL is a USCI5 variant. </p>
-
-</div>
-</div>
-<a class="anchor" id="a9fe1757c87c1d7a00d613259efc82625"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_USCI&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplUSCI.html">sBSP430hplUSCI</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa3e10e3f394424bb16b34db0f7cd977b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_SERIAL_HAL_HPL_VARIANT_USCI5&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Field value for variant stored in sBSP430halSERIAL.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplUSCI5.html">sBSP430hplUSCI5</a>. </p>
+<p>Specify byte written when reading a SPI byte.</p>
+<p>The SPI protocal requires that a byte be written for every byte received; the reception occurs during the write. In many cases, the value of the byte written is completely irrelevant. For the purposes of debugging a SPI bus trace, it's nice to have an ordinal value written, so this is the default.</p>
+<p>However, some peripherals require a specific value; in particular an MMC-based SD card apparently requires 0xFF. Allow the default to be overridden by the application.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i_</td><td>the ordinal of the received byte</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
 </div>
@@ -538,47 +295,27 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<h2>Typedef Documentation</h2>
-<a class="anchor" id="a31185ece51d6a343bb1f1c6f44fa8bcb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a>* <a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle for a serial HAL instance </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a12">bootstrap/applpm/main.c</a>.</dd>
-</dl>
-</div>
-</div>
-<a class="anchor" id="ad27a305aea8b040ef093b2b7ee19f208"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a>  <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Structure holding hardware abstraction layer state for serial devices. </p>
-
-</div>
-</div>
 <h2>Function Documentation</h2>
-<a class="anchor" id="a207e0ec9a6bb7c8f55e69263c80f164d"></a>
+<a class="anchor" id="a06fd80e81dd60f4f2b85badaa438eca2"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialLookup </td>
+          <td class="memname">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialLookup </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Get the HAL handle for a specific serial peripheral.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -588,7 +325,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the HAL handle for the peripheral. A null pointer is returned if the handle does not correspond to a serial peripheral for which the HAL interface has been enabled. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a15">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a1">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a10">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a15">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a1">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -600,9 +337,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __inline__ <a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialOpenI2C </td>
+          <td class="memname">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialOpenI2C </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -636,11 +373,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Request and configure a serial device in I2C mode.</p>
-<dl class="section warning"><dt>Warning</dt><dd>When the underlying implementation is an EUSCI device (as on FR5xx chips), the header defines used to construct the value <em>ctl0_byte</em> are specified for a 16-bit access. The ctl0 byte is the upper byte of the ctlw0 word that comprises <em>ctl0</em> and <em>ctl1</em> on these MCUs, so on those devices you must use the <code>_H</code> suffix to select the high-byte version of these constants or divide your configured value by 256 to place it in the low byte of the argument.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup()</a>.</td></tr>
+    <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup()</a>.</td></tr>
     <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a7aaa4e5d0a84cda0e759fe84dc059a75">UCA10</a>, <a class="el" href="msp430_8h.html#a6eb866cf9b13ba1891a0184afa7ca19b">UCSLA10</a>, <a class="el" href="msp430_8h.html#a678176f3eb3226c0bb5bd5812e553b07">UCMM</a>, and <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a> (but <b>see the warning above</b>). The UCSYNC field is cleared and the UCMODE field is configured for I2C before being written.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>See <a class="el" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER()</a> regarding portable use of <em>ctl0_byte</em> header constants.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are configuration of the clock (<a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, or <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>) and perhaps <a class="el" href="msp430_8h.html#a311c1dc057c97e3b6e6e8fafaa82ffcd">UCTR</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function.</td></tr>
     <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <em>ctl1_byte</em> is divided to produce the I2C clock. A value of zero will result in this function returning an error.</td></tr>
   </table>
@@ -648,7 +390,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><em>A</em> peripheral-specific HAL handle if the allocation and configuration is successful, and a null handle if something went wrong (e.g., absence of the requested <em>periph</em> or a zero-valued <em>prescaler</em>).</dd></dl>
 <dl class="section user"><dt>Delegated:</dt><dd>This function exists only as an inline delegate to a peripheral-specific implementation. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a28">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a7">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a29">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a8">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -660,9 +402,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __inline__ <a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialOpenSPI </td>
+          <td class="memname">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialOpenSPI </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -696,11 +438,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Request and configure a serial device in SPI mode.</p>
-<dl class="section warning"><dt>Warning</dt><dd>When the underlying implementation is an EUSCI device (as on FR5xx chips), the header defines used to construct the value <em>ctl0_byte</em> are specified for a 16-bit access. The ctl0 byte is the upper byte of the ctlw0 word that comprises <em>ctl0</em> and <em>ctl1</em> on these MCUs, so on those devices you must use the <code>_H</code> suffix to select the high-byte version of these constants or divide your configured value by 256 to place it in the low byte of the argument.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup()</a>.</td></tr>
-    <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For SPI mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd">UCCKPH</a>, <a class="el" href="msp430_8h.html#ab4313a6c37c97ba5cdba16c4ca56b517">UCCKPL</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>, and <a class="el" href="msp430_8h.html#a2f02e983d228152bb8491fb6cb0f1228">UCMODE_0</a> or <a class="el" href="msp430_8h.html#a207fbbe8ef93ccdd9774348ba0794b08">UCMODE_1</a> or <a class="el" href="msp430_8h.html#a57df40fcf2c24a4605e30a900d2b239e">UCMODE_2</a> (but <b>see the warning above</b>). The UCSYNC field is cleared before being written. Selection of <a class="el" href="msp430_8h.html#a760c41f322f6e332a3bf8c5a269e1837">UCMODE_3</a> (I2C mode) will result in this function returning an error.</td></tr>
+    <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup()</a>.</td></tr>
+    <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For SPI mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd">UCCKPH</a>, <a class="el" href="msp430_8h.html#ab4313a6c37c97ba5cdba16c4ca56b517">UCCKPL</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>, and <a class="el" href="msp430_8h.html#a2f02e983d228152bb8491fb6cb0f1228">UCMODE_0</a> or <a class="el" href="msp430_8h.html#a207fbbe8ef93ccdd9774348ba0794b08">UCMODE_1</a> or <a class="el" href="msp430_8h.html#a57df40fcf2c24a4605e30a900d2b239e">UCMODE_2</a>. The UCSYNC field is cleared before being written. Selection of <a class="el" href="msp430_8h.html#a760c41f322f6e332a3bf8c5a269e1837">UCMODE_3</a> (I2C mode) will result in this function returning an error.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>See <a class="el" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER()</a> regarding portable use of <em>ctl0_byte</em> header constants.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For SPI mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are only configuration of the clock: <a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function.</td></tr>
     <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <em>ctl1_byte</em> is divided to produce the SPI clock. A value of zero will result in this function returning an error.</td></tr>
   </table>
@@ -708,7 +455,8 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><em>A</em> peripheral-specific HAL handle if the allocation and configuration is successful, and a null handle if something went wrong (e.g., absence of the requested <em>periph</em>, an invalid mode in <em>ctl0_byte</em> or a zero-valued <em>prescaler</em>).</dd></dl>
 <dl class="section user"><dt>Delegated:</dt><dd>This function exists only as an inline delegate to a peripheral-specific implementation. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a26">rfem/ccid/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="ae997de3719b1aa7a522f84d48b989317"></a>
@@ -719,9 +467,9 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __inline__ <a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialOpenUART </td>
+          <td class="memname">static __inline__ <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> hBSP430serialOpenUART </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -755,11 +503,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Request and configure a serial device in UART mode.</p>
-<dl class="section warning"><dt>Warning</dt><dd>When the underlying implementation is an EUSCI device (as on FR5xx chips), the header defines used to construct the value <em>ctl0_byte</em> are specified for a 16-bit access. The ctl0 byte is the upper byte of the ctlw0 word that comprises <em>ctl0</em> and <em>ctl1</em> on these MCUs, so on those devices you must use the <code>_H</code> suffix to select the high-byte version of these constants or divide your configured value by 256 to place it in the low byte of the argument.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a207e0ec9a6bb7c8f55e69263c80f164d">hBSP430serialLookup()</a>.</td></tr>
-    <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For UART mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a7fb6b3fbbb7fd56c8f11792ffb3e3d6c">UCPEN</a>, <a class="el" href="msp430_8h.html#a05da44320219dcbc56214c9fd424a219">UCPAR</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a17059906b161d93c430b7ee875e0f356">UCSPB</a> (but <b>see the warning above</b>). The UCMODE and UCSYNC elements of the byte are ignored. In most cases for UART mode a value of 0 producing 8N1 serial communications is appropriate.</td></tr>
+    <tr><td class="paramname">hal</td><td>the handle for the HAL interface for the serial device to be configured. These are found from the peripheral handle using <a class="el" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup()</a>.</td></tr>
+    <tr><td class="paramname">ctl0_byte</td><td>The configuration to be written to the device's ctl0 byte. For UART mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#a7fb6b3fbbb7fd56c8f11792ffb3e3d6c">UCPEN</a>, <a class="el" href="msp430_8h.html#a05da44320219dcbc56214c9fd424a219">UCPAR</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a17059906b161d93c430b7ee875e0f356">UCSPB</a>. The UCMODE and UCSYNC elements of the byte are ignored. In most cases for UART mode a value of 0 producing 8N1 serial communications is appropriate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>See <a class="el" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER()</a> regarding portable use of <em>ctl0_byte</em> header constants.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For UART mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#ae54706b57b264155a533ba8673b8ed96">UCRXEIE</a>, <a class="el" href="msp430_8h.html#ac4f7aaa4d67ed80a4099d40e2dde3ccc">UCBRKIE</a>, and <a class="el" href="msp430_8h.html#a6d58a8e741c77478dafc016c41fd57b2">UCDORM</a>. The UCSSEL and UCSWRST elements of the byte are cleared as the function configures those. In most cases a value of 0 is appropriate.</td></tr>
     <tr><td class="paramname">baud</td><td>The desired baud rate. This will be configured automatically. ACLK will be used as the baud rate clock if ACLK is both at least 20 kHz and at least three times faster than the requested baud rate; otherwise SMCLK will be used. The function invokes <a class="el" href="clock_8h.html#ac6df48b7667e1268240ea5555fad1d9c">ulBSP430clockSMCLK_Hz()</a> and <a class="el" href="clock_8h.html#abd226cba123de9f974df991e2502d3c3">uiBSP430clockACLK_Hz()</a> as necessary to determine the actual speed of the baud rate clock.</td></tr>
   </table>
@@ -781,7 +534,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430i2cRxData_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -820,7 +573,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes stored in <em>rx_data</em>, or -1 if an error occcured. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a33">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a12">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a35">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a14">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -834,7 +587,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430i2cSetAddresses_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -872,7 +625,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if successfully set, -1 if an error occurs. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a31">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a10">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a33">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a12">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -886,7 +639,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430i2cTxData_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -925,7 +678,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes transmitted, or -1 if an error occcured. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a32">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a11">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a34">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a13">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -939,7 +692,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430serialClose </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em></td><td>)</td>
           <td></td>
         </tr>
@@ -973,7 +726,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430serialSetHold_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1005,7 +758,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if the transition was successful, -1 if an error occurred. Potential errors include inability to configure the peripheral pins. On error, the peripheral is left in reset mode. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a41">bootstrap/applpm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a41">bootstrap/applpm/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a32">rfem/ccid/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -1019,7 +772,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430spiTxRx_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1072,7 +825,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes stored in <em>rx_data</em>, or -1 if an error occcured. </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a1">rfem/ccid/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="ab62ec5abbab624dc335aa43448c3df68"></a>
@@ -1085,7 +839,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430uartRxByte_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1119,7 +873,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430uartTxASCIIZ_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1164,7 +918,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430uartTxByte_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1209,7 +963,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ int iBSP430uartTxData_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em>, </td>
         </tr>
         <tr>
@@ -1261,7 +1015,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ void vBSP430serialFlush_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1294,7 +1048,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">static __inline__ void vBSP430serialWakeupTransmit_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="serial_8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a>&#160;</td>
           <td class="paramname"><em>hal</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1339,14 +1093,14 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The short name of the port, e.g. "USCI_A0". If the peripheral is not recognized as a serial device, a null pointer is returned. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a23">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a5">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a23">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a23">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a5">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -149,102 +149,112 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00161"></a><span class="lineno"><a class="code" href="periph_8h.html#a09b640e7845a12145a86bad83e21d332">  161</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_BUTTON3 ((tBSP430periphHandle)0x4107)</span></div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00164"></a><span class="lineno"><a class="code" href="periph_8h.html#a08346d4c3f51c37af5b0d8799397eba4">  164</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="code" href="periph_8h.html#adfa5a70f361205f0cd07041cad5d264d">  164</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPHCFG_DEFAULT 0</span></div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00168"></a><span class="lineno"><a class="code" href="periph_8h.html#a8986d6d92fa33470eb4f53418c11ec9c">  168</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ 0x0F</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00175"></a><span class="lineno"><a class="code" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">  175</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_p) (BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ &amp; (_p)-&gt;hal_state.cflags)</span></div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00192"></a><span class="lineno"><a class="code" href="periph_8h.html#a1cc660745089e0881d4842e3e547ac1e">  192</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR 0x80</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno"><a class="code" href="periph_8h.html#a62038d74e2ead80c4805dc7d8dcb3c2c">  170</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPHCFG_SERIAL_UART 1</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00177"></a><span class="lineno"><a class="code" href="periph_8h.html#aaf5e8738e695389f357acad95ac286ec">  177</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPHCFG_SERIAL_I2C 2</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">  185</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPHCFG_SERIAL_SPI3 3</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00192"></a><span class="lineno"><a class="code" href="periph_8h.html#a858ff57a92ed0ee6e78b494d067b053a">  192</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPHCFG_SERIAL_SPI4 4</span></div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00211"></a><span class="lineno"><a class="code" href="periph_8h.html#a396379859f982cdba1a3d0e7f15ae3a0">  211</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2 0x40</span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="code" href="structsBSP430hplHALStatePrefix.html">  218</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430hplHALStatePrefix.html">sBSP430hplHALStatePrefix</a> {</div>
-<div class="line"><a name="l00224"></a><span class="lineno"><a class="code" href="structsBSP430hplHALStatePrefix.html#a084198259512be6e4429df8b7abe908d">  224</a></span>&#160;  <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="structsBSP430hplHALStatePrefix.html#a084198259512be6e4429df8b7abe908d">cflags</a>;</div>
-<div class="line"><a name="l00230"></a><span class="lineno"><a class="code" href="structsBSP430hplHALStatePrefix.html#a74fa7ef7f1b91527068bc44b20eb3d23">  230</a></span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="structsBSP430hplHALStatePrefix.html#a74fa7ef7f1b91527068bc44b20eb3d23">flags</a>;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;} <a class="code" href="periph_8h.html#a39db24707df8d0794b9912bf3e37e5d0">sBSP430hplHALStatePrefix</a>;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="keyword">static</span> <a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;__inline__</div>
-<div class="line"><a name="l00251"></a><span class="lineno"><a class="code" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">  251</a></span>&#160;<a class="code" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">xBSP430periphFromHPL</a> (<span class="keyword">volatile</span> <span class="keywordtype">void</span> * hpl)</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;{</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="keywordflow">return</span> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(uintptr_t)hpl;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="comment">/* Forward declarations */</span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a>;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00267"></a><span class="lineno"><a class="code" href="periph_8h.html#a91d408b6d97a12b296903e07b095d9c4">  267</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_YIELD 0x1000</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00277"></a><span class="lineno"><a class="code" href="periph_8h.html#a94d022aee289b5f9350fbce9e6973078">  277</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT 0x2000</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00292"></a><span class="lineno"><a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">  292</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN 0x0001</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00308"></a><span class="lineno"><a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">  308</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_EXIT_LPM 0x0002</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno"><a class="code" href="periph_8h.html#a08346d4c3f51c37af5b0d8799397eba4">  195</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_UNKNOWN 0</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00199"></a><span class="lineno"><a class="code" href="periph_8h.html#a8986d6d92fa33470eb4f53418c11ec9c">  199</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ 0x0F</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00206"></a><span class="lineno"><a class="code" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">  206</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_p) (BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT_MASK_ &amp; (_p)-&gt;hal_state.cflags)</span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="code" href="periph_8h.html#a1cc660745089e0881d4842e3e547ac1e">  223</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR 0x80</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00242"></a><span class="lineno"><a class="code" href="periph_8h.html#a396379859f982cdba1a3d0e7f15ae3a0">  242</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2 0x40</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00249"></a><span class="lineno"><a class="code" href="structsBSP430hplHALStatePrefix.html">  249</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430hplHALStatePrefix.html">sBSP430hplHALStatePrefix</a> {</div>
+<div class="line"><a name="l00255"></a><span class="lineno"><a class="code" href="structsBSP430hplHALStatePrefix.html#a084198259512be6e4429df8b7abe908d">  255</a></span>&#160;  <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="structsBSP430hplHALStatePrefix.html#a084198259512be6e4429df8b7abe908d">cflags</a>;</div>
+<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="structsBSP430hplHALStatePrefix.html#a74fa7ef7f1b91527068bc44b20eb3d23">  261</a></span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="structsBSP430hplHALStatePrefix.html#a74fa7ef7f1b91527068bc44b20eb3d23">flags</a>;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;} <a class="code" href="periph_8h.html#a39db24707df8d0794b9912bf3e37e5d0">sBSP430hplHALStatePrefix</a>;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keyword">static</span> <a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;__inline__</div>
+<div class="line"><a name="l00282"></a><span class="lineno"><a class="code" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">  282</a></span>&#160;<a class="code" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">xBSP430periphFromHPL</a> (<span class="keyword">volatile</span> <span class="keywordtype">void</span> * hpl)</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;{</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  <span class="keywordflow">return</span> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(uintptr_t)hpl;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;}</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="comment">/* Forward declarations */</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a>;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a>;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
+<div class="line"><a name="l00298"></a><span class="lineno"><a class="code" href="periph_8h.html#a91d408b6d97a12b296903e07b095d9c4">  298</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_YIELD 0x1000</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00308"></a><span class="lineno"><a class="code" href="periph_8h.html#a94d022aee289b5f9350fbce9e6973078">  308</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT 0x2000</span></div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00325"></a><span class="lineno"><a class="code" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">  325</a></span>&#160;<span class="keyword">typedef</span> int (* <a class="code" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid</a>) (<span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * cb,</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordtype">void</span> * context);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
-<div class="line"><a name="l00342"></a><span class="lineno"><a class="code" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">  342</a></span>&#160;<span class="keyword">typedef</span> int (* <a class="code" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a>) (<span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * cb,</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keywordtype">void</span> * context,</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordtype">int</span> idx);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;</div>
-<div class="line"><a name="l00347"></a><span class="lineno"><a class="code" href="structsBSP430halISRVoidChainNode.html">  347</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> {</div>
-<div class="line"><a name="l00352"></a><span class="lineno"><a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">  352</a></span>&#160;  <span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * <a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">next_ni</a>;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
-<div class="line"><a name="l00355"></a><span class="lineno"><a class="code" href="structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2">  355</a></span>&#160;  <a class="code" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid</a> <a class="code" href="structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2">callback</a>;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;} <a class="code" href="periph_8h.html#a79b47a57f019b607261202d78a4f8917">sBSP430halISRVoidChainNode</a>;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;</div>
-<div class="line"><a name="l00359"></a><span class="lineno"><a class="code" href="structsBSP430halISRIndexedChainNode.html">  359</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> {</div>
-<div class="line"><a name="l00364"></a><span class="lineno"><a class="code" href="structsBSP430halISRIndexedChainNode.html#ac76f42f3472c8e0e08dabbb50293452c">  364</a></span>&#160;  <span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * <a class="code" href="structsBSP430halISRIndexedChainNode.html#ac76f42f3472c8e0e08dabbb50293452c">next_ni</a>;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
-<div class="line"><a name="l00367"></a><span class="lineno"><a class="code" href="structsBSP430halISRIndexedChainNode.html#a88c6166d592b2f7720b89aac0d785c7a">  367</a></span>&#160;  <a class="code" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a> <a class="code" href="structsBSP430halISRIndexedChainNode.html#a88c6166d592b2f7720b89aac0d785c7a">callback</a>;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;} <a class="code" href="periph_8h.html#a035b8e5b659712cd0961e7a792dd0fb9">sBSP430halISRIndexedChainNode</a>;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;__inline__</div>
-<div class="line"><a name="l00385"></a><span class="lineno"><a class="code" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">  385</a></span>&#160;<a class="code" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;                                 <span class="keywordtype">void</span> * context,</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;                                 <span class="keywordtype">int</span> basis)</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;{</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;  <span class="keywordflow">while</span> (*cbpp &amp;&amp; ! (basis &amp; <a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a>)) {</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    basis |= (*cbpp)-&gt;callback(*cbpp, context);</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    cbpp = &amp;(*cbpp)-&gt;<a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">next_ni</a>;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;  }</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;  <span class="keywordflow">return</span> basis;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;}</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;__inline__</div>
-<div class="line"><a name="l00408"></a><span class="lineno"><a class="code" href="periph_8h.html#abf2b8f041f4f6fc003a649aa62f6458e">  408</a></span>&#160;<a class="code" href="periph_8h.html#abf2b8f041f4f6fc003a649aa62f6458e">iBSP430callbackInvokeISRIndexed_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                                    <span class="keywordtype">void</span> * context,</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;                                    <span class="keywordtype">int</span> idx,</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;                                    <span class="keywordtype">int</span> basis)</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;{</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;  <span class="keywordflow">while</span> (*cbpp &amp;&amp; ! (basis &amp; <a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a>)) {</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    basis |= (*cbpp)-&gt;callback(*cbpp, context, idx);</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    cbpp = &amp;(*cbpp)-&gt;<a class="code" href="structsBSP430halISRIndexedChainNode.html#ac76f42f3472c8e0e08dabbb50293452c">next_ni</a>;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  }</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;  <span class="keywordflow">return</span> basis;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;}</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;</div>
-<div class="line"><a name="l00428"></a><span class="lineno"><a class="code" href="periph_8h.html#a00a5b53d4d5c438c9113832887eddafa">  428</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {     \</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="preprocessor">    int return_flags_ = (_return_flags);                        \</span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="preprocessor">    if (return_flags_ &amp; BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {     \</span></div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="preprocessor">      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;               \</span></div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="preprocessor">    }                                                           \</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="preprocessor">    BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);               \</span></div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor">    if (return_flags_ &amp; BSP430_HAL_ISR_CALLBACK_YIELD) {        \</span></div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="preprocessor">      BSP430_RTOS_YIELD_FROM_ISR();                             \</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="preprocessor">    }                                                           \</span></div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00323"></a><span class="lineno"><a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">  323</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN 0x0001</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">  339</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_EXIT_LPM 0x0002</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00356"></a><span class="lineno"><a class="code" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">  356</a></span>&#160;<span class="keyword">typedef</span> int (* <a class="code" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid</a>) (<span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * cb,</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                                           <span class="keywordtype">void</span> * context);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
+<div class="line"><a name="l00373"></a><span class="lineno"><a class="code" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">  373</a></span>&#160;<span class="keyword">typedef</span> int (* <a class="code" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a>) (<span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * cb,</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;                                              <span class="keywordtype">void</span> * context,</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;                                              <span class="keywordtype">int</span> idx);</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;</div>
+<div class="line"><a name="l00378"></a><span class="lineno"><a class="code" href="structsBSP430halISRVoidChainNode.html">  378</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> {</div>
+<div class="line"><a name="l00383"></a><span class="lineno"><a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">  383</a></span>&#160;  <span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * <a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">next_ni</a>;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;</div>
+<div class="line"><a name="l00386"></a><span class="lineno"><a class="code" href="structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2">  386</a></span>&#160;  <a class="code" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid</a> <a class="code" href="structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2">callback</a>;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;} <a class="code" href="periph_8h.html#a79b47a57f019b607261202d78a4f8917">sBSP430halISRVoidChainNode</a>;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;</div>
+<div class="line"><a name="l00390"></a><span class="lineno"><a class="code" href="structsBSP430halISRIndexedChainNode.html">  390</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> {</div>
+<div class="line"><a name="l00395"></a><span class="lineno"><a class="code" href="structsBSP430halISRIndexedChainNode.html#ac76f42f3472c8e0e08dabbb50293452c">  395</a></span>&#160;  <span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * <a class="code" href="structsBSP430halISRIndexedChainNode.html#ac76f42f3472c8e0e08dabbb50293452c">next_ni</a>;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
+<div class="line"><a name="l00398"></a><span class="lineno"><a class="code" href="structsBSP430halISRIndexedChainNode.html#a88c6166d592b2f7720b89aac0d785c7a">  398</a></span>&#160;  <a class="code" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a> <a class="code" href="structsBSP430halISRIndexedChainNode.html#a88c6166d592b2f7720b89aac0d785c7a">callback</a>;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;} <a class="code" href="periph_8h.html#a035b8e5b659712cd0961e7a792dd0fb9">sBSP430halISRIndexedChainNode</a>;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;__inline__</div>
+<div class="line"><a name="l00416"></a><span class="lineno"><a class="code" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">  416</a></span>&#160;<a class="code" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                                 <span class="keywordtype">void</span> * context,</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;                                 <span class="keywordtype">int</span> basis)</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;{</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;  <span class="keywordflow">while</span> (*cbpp &amp;&amp; ! (basis &amp; <a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a>)) {</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    basis |= (*cbpp)-&gt;callback(*cbpp, context);</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    cbpp = &amp;(*cbpp)-&gt;<a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">next_ni</a>;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;  <span class="keywordflow">return</span> basis;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;}</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;__inline__</div>
+<div class="line"><a name="l00439"></a><span class="lineno"><a class="code" href="periph_8h.html#abf2b8f041f4f6fc003a649aa62f6458e">  439</a></span>&#160;<a class="code" href="periph_8h.html#abf2b8f041f4f6fc003a649aa62f6458e">iBSP430callbackInvokeISRIndexed_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;                                    <span class="keywordtype">void</span> * context,</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;                                    <span class="keywordtype">int</span> idx,</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;                                    <span class="keywordtype">int</span> basis)</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;{</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;  <span class="keywordflow">while</span> (*cbpp &amp;&amp; ! (basis &amp; <a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a>)) {</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    basis |= (*cbpp)-&gt;callback(*cbpp, context, idx);</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    cbpp = &amp;(*cbpp)-&gt;<a class="code" href="structsBSP430halISRIndexedChainNode.html#ac76f42f3472c8e0e08dabbb50293452c">next_ni</a>;</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;  }</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;  <span class="keywordflow">return</span> basis;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;}</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;</div>
+<div class="line"><a name="l00459"></a><span class="lineno"><a class="code" href="periph_8h.html#a00a5b53d4d5c438c9113832887eddafa">  459</a></span>&#160;<span class="preprocessor">#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {     \</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="preprocessor">    int return_flags_ = (_return_flags);                        \</span></div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="preprocessor">    if (return_flags_ &amp; BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {     \</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="preprocessor">      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;               \</span></div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="preprocessor">    }                                                           \</span></div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="preprocessor">    BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);               \</span></div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="preprocessor">    if (return_flags_ &amp; BSP430_HAL_ISR_CALLBACK_YIELD) {        \</span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="preprocessor">      BSP430_RTOS_YIELD_FROM_ISR();                             \</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="preprocessor">    }                                                           \</span></div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

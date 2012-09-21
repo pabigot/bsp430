@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 </div>
 <div class="textblock"><p>Definition of a platform for BSP430 requires three files be created and placed in a standard location. For out-of-tree platforms, the <a class="el" href="platform_8h.html#a33caa59d1913e09742abeefb9d00aad2">BSP430_PLATFORM_CUSTOM</a> feature can be used to allow BSP430 to access the platform without source code modifications. For in-tree platforms, you should define a platform identifier (e.g., <code>em430f5137</code> or <code>chronos</code>), create the files below in the source tree, and modify the dispatch headers <a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a> and <a class="el" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a> so that the platform is included in the template expansion.</p>
+<p>Remember that all BSP430 headers first include &lt;<a class="el" href="core_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/core.h</a>&gt;, which in turn will normally include the application "bsp430_config.h", which includes the generic <code>bsp430_config.h</code> which includes the platform <code>bsp430_config.h</code> before doing platform-independent configuration. The order ensures the customization points are encountered from most-specific to least-specific, and each must defer to the configuration specified by a previously-included customization point.</p>
 <h1><a class="anchor" id="platform_header"></a>
 platform.h</h1>
 <p>This file, placed to be found at <code>bsp430/platform/custom/platform.h</code> should contain a documentation block describing the platform, as well as default assignments for core features like:</p>
@@ -105,6 +106,7 @@ platform.h</h1>
 </div><!-- fragment --><h1><a class="anchor" id="platform_config"></a>
 bsp430_config.h</h1>
 <p>This file, placed to be found at <code>bsp430/platform/custom/bsp430_config.h</code>, parallels <code>platform.h</code> and adds configuration defaults for resources that were default-identified in that header. Here too you will want to use the expansion templates.</p>
+<p>Where the platform customization provides a resource preferred to a resource normally provided by the platform-independent customization, a flag should be used to inhibit the platform-independent resource allocation. An example of this can be found with respect to <a class="el" href="uptime_8h.html#a05fb92deab925aa3557cbbfb6d37fbaa">configBSP430_UPTIME_USE_DEFAULT_RESOURCE</a> in &lt;<a class="el" href="platform_2exp430g2_2platform_8h.html" title="Platform-specific include for MSP-EXP430G2 (&quot;LaunchPad&quot;)">bsp430/platform/exp430g2/platform.h</a>&gt; which defines an alternative timer and uses <a class="el" href="uptime_8h.html#a5896bdd2a487e968e6c1aaacace58087">BSP430_UPTIME_USE_PLATFORM_RESOURCE</a> to convey that fact to subsequent customization points.</p>
 <h1><a class="anchor" id="platform_impl"></a>
 platform.c</h1>
 <p>In this file, located in <code>src/platform/custom/custom.c</code> or another location specified in your platform-specific Makefile, you will place:</p>
@@ -112,10 +114,10 @@ platform.c</h1>
 <li>the data structures associated with <a class="el" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">configBSP430_LED_USE_COMMON</a>, if you are using the default LED utility implementation;</li>
 </ul>
 <ul>
-<li>the implementation of <a class="el" href="platform_8h.html#a93f2e78617ceaeb548fe440e850924ce">iBSP430platformConfigurePeripheralPins_ni()</a>;</li>
+<li>the implementation of <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni()</a>;</li>
 </ul>
 <ul>
-<li>the implementation of <a class="el" href="platform_8h.html#a2df452ec53e3f7d4b4372cb1333f265e">xBSP430platformPeripheralHelp()</a>;</li>
+<li>the implementation of <a class="el" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp()</a>;</li>
 </ul>
 <ul>
 <li>the implementation of <a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni()</a>;</li>
@@ -136,7 +138,7 @@ Makefile.common</h1>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

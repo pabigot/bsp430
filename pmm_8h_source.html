@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -130,35 +130,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">                           || defined(__MSP430_HAS_PMM_FR5xx__) \</span></div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">                           || defined(__MSP430_HAS_PMM_FRAM__))</span></div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="pmm_8h.html#a77f7471bb2f76ad4c4173a9a4afa3055">   92</a></span>&#160;<span class="preprocessor">#define BSP430_PMM_ENTER_LPMXp5_NI() do {       \</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">    PMMCTL0_H = PMMPW_H;                        \</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">    PMMCTL0 = PMMPW | PMMREGOFF;                \</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">    PMMCTL0_H = !PMMPW_H;                       \</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;__inline__</div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="code" href="pmm_8h.html#a3c178428e1797873c294efcff98b9694">  101</a></span>&#160;<a class="code" href="pmm_8h.html#a3c178428e1797873c294efcff98b9694">vBSP430pmmInduceBOR</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  PMMCTL0 = PMMPW | PMMSWBOR;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;}</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;__inline__</div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="code" href="pmm_8h.html#ad8707049de035b8d93cea2bfa863e270">  109</a></span>&#160;<a class="code" href="pmm_8h.html#ad8707049de035b8d93cea2bfa863e270">vBSP430pmmInducePOR</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;{</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  PMMCTL0 = PMMPW | PMMSWPOR;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_PMM_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="code" href="pmm_8h.html#a62ed8a8befdc42e680d77a22ce15fb62">   88</a></span>&#160;<span class="preprocessor">#define BSP430_MODULE_PMM_FRAM (defined(__MSP430_HAS_PMM_FR5xx__)       \</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">                                || defined(__MSP430_HAS_PMM_FRAM__))</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || defined(PM5CTL0)</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00112"></a><span class="lineno"><a class="code" href="pmm_8h.html#a77f7471bb2f76ad4c4173a9a4afa3055">  112</a></span>&#160;<span class="preprocessor">#define BSP430_PMM_ENTER_LPMXp5_NI() do {       \</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">    PMMCTL0_H = PMMPW_H;                        \</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">    PMMCTL0 = PMMPW | PMMREGOFF;                \</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">    PMMCTL0_H = !PMMPW_H;                       \</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PM5CTL0 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;__inline__</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="code" href="pmm_8h.html#a3c178428e1797873c294efcff98b9694">  123</a></span>&#160;<a class="code" href="pmm_8h.html#a3c178428e1797873c294efcff98b9694">vBSP430pmmInduceBOR</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;{</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  PMMCTL0 = PMMPW | PMMSWBOR;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;__inline__</div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="code" href="pmm_8h.html#ad8707049de035b8d93cea2bfa863e270">  131</a></span>&#160;<a class="code" href="pmm_8h.html#ad8707049de035b8d93cea2bfa863e270">vBSP430pmmInducePOR</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;{</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  PMMCTL0 = PMMPW | PMMSWPOR;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || ! (BSP430_MODULE_PMM_FRAM - 0)</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keywordtype">int</span> <a class="code" href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> target_level);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PMM not FRAM */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_PMM_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

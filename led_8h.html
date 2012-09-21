@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -110,6 +110,8 @@ Data Structures</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:acee2d05f926c3def423c732439ab3756"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#acee2d05f926c3def423c732439ab3756">configBSP430_LED</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memitem:ab09948f90e7b002a67f4576b0815034e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#ab09948f90e7b002a67f4576b0815034e">BSP430_LED</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:a660d45784c69ff3843c9de4683c6e414"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="memitem:a895d03ce18ff50a43a9cc1164afae057"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="memitem:ad275aa3b223b3ef8e51cd515909ed6a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">configBSP430_LED_USE_COMMON</a>&#160;&#160;&#160;1</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="typedef-members"></a>
@@ -123,7 +125,7 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a6ceb25fd3281c5b9ba3b488dd0065a64"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structsBSP430halLED.html">sBSP430halLED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#a6ceb25fd3281c5b9ba3b488dd0065a64">xBSP430hal_</a> []</td></tr>
+<tr class="memitem:aaf319eee3d004a0a6733cd7fb0b31b66"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structsBSP430halLED.html">sBSP430halLED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#aaf319eee3d004a0a6733cd7fb0b31b66">xBSP430halLED_</a> []</td></tr>
 <tr class="memitem:a9d226a182dbe529ce49a0a83b450e759"><td class="memItemLeft" align="right" valign="top">const unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="led_8h.html#a9d226a182dbe529ce49a0a83b450e759">nBSP430led</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -143,6 +145,37 @@ Variables</h2></td></tr>
 <p>Indicate that the LED interface is available on the platform. This is normally set by &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; when <a class="el" href="led_8h.html#acee2d05f926c3def423c732439ab3756">configBSP430_LED</a> is true. If it happens to be false, the LED interface functions are replaced by macros that do nothing.</p>
 <p>This flag is defined only if <a class="el" href="led_8h.html#acee2d05f926c3def423c732439ab3756">configBSP430_LED</a> is true.</p>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="led_8h.html#acee2d05f926c3def423c732439ab3756">configBSP430_LED</a> </dd></dl>
+<dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a660d45784c69ff3843c9de4683c6e414"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_LED_GREEN&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The platform-specific index for the first green LED.</p>
+<p>This macro is defined in the platform-specific header on platforms that include a green LED. It is undefined if no green LED is available. If there are multiple green LEDs, subsequent ones would be numbered beginning with BSP430_LED_GREEN1 to indicate the second (sic) green LED.</p>
+<p>Where possible, platforms should define both <a class="el" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a> and <a class="el" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>. If one or the other is missing, but multiple LEDs are available, it is appropriate to use a different color for either or both, with the understanding that the inconsistency is specific to that board.</p>
+<p>Additional colors may be available and are defined similarly. Availability of an LED color on a platform is determined by checking for the corresponding macro definition.</p>
+<dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a895d03ce18ff50a43a9cc1164afae057"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_LED_RED&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>As with <a class="el" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, but for red LEDs.</p>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
 
 </div>
@@ -172,7 +205,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If the development board has LEDs that can be expressed using <a class="el" href="structsBSP430halLED.html">sBSP430halLED</a> (i.e., controlled through 8-bit digital I/O ports with a single selection register) then the common implementation of the LED interface can be used. In that case, define this to a true value, and provide within a platform file or the application definitions of the <a class="el" href="led_8h.html#a6ceb25fd3281c5b9ba3b488dd0065a64">xBSP430hal_</a> and <a class="el" href="led_8h.html#a9d226a182dbe529ce49a0a83b450e759">nBSP430led</a> variables.</p>
+<p>If the development board has LEDs that can be expressed using <a class="el" href="structsBSP430halLED.html">sBSP430halLED</a> (i.e., controlled through 8-bit digital I/O ports with a single selection register) then the common implementation of the LED interface can be used. In that case, define this to a true value, and provide within a platform file or the application definitions of the <a class="el" href="led_8h.html#aaf319eee3d004a0a6733cd7fb0b31b66">xBSP430halLED_</a> and <a class="el" href="led_8h.html#a9d226a182dbe529ce49a0a83b450e759">nBSP430led</a> variables.</p>
 <p>Since most platforms can benefit from the shared implementation, those that do not should override the default value.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
@@ -209,7 +242,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Call to initialize the hardware for all LEDs.</p>
-<p>The common implementation uses the LEDs defined in <a class="el" href="led_8h.html#a6ceb25fd3281c5b9ba3b488dd0065a64">xBSP430hal_</a>.</p>
+<p>The common implementation uses the LEDs defined in <a class="el" href="led_8h.html#aaf319eee3d004a0a6733cd7fb0b31b66">xBSP430halLED_</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>Unless <a class="el" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">configBSP430_LED_USE_COMMON</a> is defined to a true value, the application or platform must define this function. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2lpm_2main_8c-example.html#a5">bootstrap/lpm/main.c</a>.</dd>
 </dl>
@@ -247,7 +280,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>If <a class="el" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">configBSP430_LED_USE_COMMON</a> is defined to a true value, the application or platform need not define this function, but must provide the data structures described for <a class="el" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">configBSP430_LED_USE_COMMON</a>. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a2">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a6">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a1">bootstrap/console/main.c</a>, <a class="el" href="bootstrap_2lpm_2main_8c-example.html#a6">bootstrap/lpm/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a8">sensors/hh10d/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a2">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a6">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a2">bootstrap/console/main.c</a>, <a class="el" href="bootstrap_2lpm_2main_8c-example.html#a6">bootstrap/lpm/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a8">sensors/hh10d/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -261,28 +294,30 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Platform should define the length of the xBSP430hal_ configuration array. We'll assume there can't be more than 255 LEDs. </p>
+<p>The number of LEDs available on the platform.</p>
+<p>If <a class="el" href="led_8h.html#ad275aa3b223b3ef8e51cd515909ed6a5">configBSP430_LED_USE_COMMON</a> is true, this is the length of the xBSP430halLED_ configuration array. Otherwise it's just a constant. We'll assume there can't be more than 255 LEDs. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a5">bootstrap/blink/main.c</a>.</dd>
 </dl>
 </div>
 </div>
-<a class="anchor" id="a6ceb25fd3281c5b9ba3b488dd0065a64"></a>
+<a class="anchor" id="aaf319eee3d004a0a6733cd7fb0b31b66"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="structsBSP430halLED.html">sBSP430halLED</a> xBSP430hal_[]</td>
+          <td class="memname">const <a class="el" href="structsBSP430halLED.html">sBSP430halLED</a> xBSP430halLED_[]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Platform should define the LED configuration available to it. </p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="led_8h.html#ab09948f90e7b002a67f4576b0815034e">BSP430_LED</a> </dd></dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

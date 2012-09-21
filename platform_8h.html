@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120812</span>
+   &#160;<span id="projectnumber">20120921</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -115,6 +115,9 @@ Macros</h2></td></tr>
 <tr class="memitem:af8eb9465cc81b1f372371c0e409b13aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#af8eb9465cc81b1f372371c0e409b13aa">BSP430_PLATFORM_EXP430FG4618</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:ababc41a3cb834f76137a81137c75f484"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#ababc41a3cb834f76137a81137c75f484">BSP430_PLATFORM_EXP430G2</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:aedc673a41d6e8a3aea69df0984055c36"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#aedc673a41d6e8a3aea69df0984055c36">BSP430_PLATFORM_RF2500T</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:aa2b5bcad983b3f82fe33feaab4d5710b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#aa2b5bcad983b3f82fe33feaab4d5710b">BSP430_PLATFORM_EM430</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:a4c34c7ca812427345dd932ff2288467b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a4c34c7ca812427345dd932ff2288467b">BSP430_PLATFORM_SURF</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:a5a5c1abaed74ea2fe6ec9463df714abc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a5a5c1abaed74ea2fe6ec9463df714abc">BSP430_PLATFORM_TRXEB</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:a33caa59d1913e09742abeefb9d00aad2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a33caa59d1913e09742abeefb9d00aad2">BSP430_PLATFORM_CUSTOM</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memitem:a5658121b6e4e9a02a759878c58807b43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a5658121b6e4e9a02a759878c58807b43">BSP430_PLATFORM_SPIN_FOR_JUMPER</a>&#160;&#160;&#160;0 /* False unless platform explicitly enabled it */</td></tr>
 <tr class="memitem:ab6710fe3c15825a6d4cfad92debe14bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#ab6710fe3c15825a6d4cfad92debe14bd">BSP430_PLATFORM_PERIPHERAL_HELP</a>&#160;&#160;&#160;1 /* True unless platform explicitly disabled it */</td></tr>
@@ -128,9 +131,9 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a616515ce5e0f7635ca36a815841d2a21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a> (void)</td></tr>
-<tr class="memitem:a93f2e78617ceaeb548fe440e850924ce"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a93f2e78617ceaeb548fe440e850924ce">iBSP430platformConfigurePeripheralPins_ni</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph, int enablep)</td></tr>
+<tr class="memitem:a7c332b3b2af080a737e5b75ab08a4f4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph, int periph_config, int enablep)</td></tr>
 <tr class="memitem:a2bf91c013585d7c2aaa6d7b4d0e35904"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a2bf91c013585d7c2aaa6d7b4d0e35904">vBSP430platformSpinForJumper_ni</a> (void)</td></tr>
-<tr class="memitem:a2df452ec53e3f7d4b4372cb1333f265e"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#a2df452ec53e3f7d4b4372cb1333f265e">xBSP430platformPeripheralHelp</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:ad5df0a450196592bc395c5efe89a6fb3"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph, int periph_config)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Entrypoint for platform-specific capabilities. </p>
@@ -148,7 +151,13 @@ Functions</h2></td></tr>
 <li>
 <a class="el" href="platform_8h.html#aa4b16eecb782dbbc4290845872c5fbd8">BSP430_PLATFORM_EXP430FR5739</a> </li>
 <li>
+<a class="el" href="platform_8h.html#aa2b5bcad983b3f82fe33feaab4d5710b">BSP430_PLATFORM_EM430</a> </li>
+<li>
 <a class="el" href="platform_8h.html#aedc673a41d6e8a3aea69df0984055c36">BSP430_PLATFORM_RF2500T</a> </li>
+<li>
+<a class="el" href="platform_8h.html#a4c34c7ca812427345dd932ff2288467b">BSP430_PLATFORM_SURF</a> </li>
+<li>
+<a class="el" href="platform_8h.html#a5a5c1abaed74ea2fe6ec9463df714abc">BSP430_PLATFORM_TRXEB</a> </li>
 <li>
 <a class="el" href="platform_8h.html#a33caa59d1913e09742abeefb9d00aad2">BSP430_PLATFORM_CUSTOM</a> </li>
 </ul>
@@ -334,6 +343,22 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 
 </div>
 </div>
+<a class="anchor" id="aa2b5bcad983b3f82fe33feaab4d5710b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PLATFORM_EM430&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define to a true value if application is being built for the <a href="http://www.ti.com/tool/em430f5137rf900">EM430</a> platform.</p>
+<p>A true value causes &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to include the corresponding platform-specific header &lt;<a class="el" href="platform_2em430_2platform_8h.html" title="Platform-specific include for EM430">bsp430/platform/em430/platform.h</a>&gt;. If you include that header directly, <a class="el" href="platform_8h.html#aa2b5bcad983b3f82fe33feaab4d5710b">BSP430_PLATFORM_EM430</a> will be defined for you.</p>
+<p>A true value also causes &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt; to include &lt;<a class="el" href="em430_2bsp430__config_8h.html" title="Platform-specific BSP430 configuration directives for EM430">bsp430/platform/em430/bsp430_config.h</a>&gt; for you. You should not include that header directly, as it coordinates with the generic platform version.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="adf1f1c592370a21c05e217460e8cd19f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -423,7 +448,7 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Defined to indicate that the application or infrastructure supports use of the <a class="el" href="platform_8h.html#a2bf91c013585d7c2aaa6d7b4d0e35904">vBSP430platformSpinForJumper_ni()</a> function. The value is defined only if <a class="el" href="platform_8h.html#a4a3441839bb3e5596de1bb4eaa918afd">configBSP430_PLATFORM_PERIPHERAL_HELP</a> is set, and is true only if the platform supports <a class="el" href="platform_8h.html#a2df452ec53e3f7d4b4372cb1333f265e">xBSP430platformPeripheralHelp()</a>.</p>
+<p>Defined to indicate that the application or infrastructure supports use of the <a class="el" href="platform_8h.html#a2bf91c013585d7c2aaa6d7b4d0e35904">vBSP430platformSpinForJumper_ni()</a> function. The value is defined only if <a class="el" href="platform_8h.html#a4a3441839bb3e5596de1bb4eaa918afd">configBSP430_PLATFORM_PERIPHERAL_HELP</a> is set, and is true only if the platform supports <a class="el" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp()</a>.</p>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="platform_8h.html#a4a3441839bb3e5596de1bb4eaa918afd">configBSP430_PLATFORM_PERIPHERAL_HELP</a> </dd></dl>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
 
@@ -459,6 +484,38 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 
 </div>
 </div>
+<a class="anchor" id="a4c34c7ca812427345dd932ff2288467b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PLATFORM_SURF&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define to a true value if application is being built for the <a href="http://en.wikipedia.org/wiki/http_404">SURF</a> platform.</p>
+<p>A true value causes &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to include the corresponding platform-specific header &lt;<a class="el" href="platform_2surf_2platform_8h.html" title="Platform-specific include for SuRF board.">bsp430/platform/surf/platform.h</a>&gt;. If you include that header directly, <a class="el" href="platform_8h.html#a4c34c7ca812427345dd932ff2288467b">BSP430_PLATFORM_SURF</a> will be defined for you.</p>
+<p>A true value also causes &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt; to include &lt;<a class="el" href="surf_2bsp430__config_8h.html" title="Platform-specific BSP430 configuration directives for EM430">bsp430/platform/surf/bsp430_config.h</a>&gt; for you. You should not include that header directly, as it coordinates with the generic platform version.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5a5c1abaed74ea2fe6ec9463df714abc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_PLATFORM_TRXEB&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define to a true value if application is being built for the <a href="http://www.ti.com/tool/cc1125dk">TRXEB</a> platform.</p>
+<p>A true value causes &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to include the corresponding platform-specific header &lt;<a class="el" href="platform_2trxeb_2platform_8h.html" title="Platform-specific include for MSP-TRXEB">bsp430/platform/trxeb/platform.h</a>&gt;. If you include that header directly, <a class="el" href="platform_8h.html#a5a5c1abaed74ea2fe6ec9463df714abc">BSP430_PLATFORM_TRXEB</a> will be defined for you.</p>
+<p>A true value also causes &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt; to include &lt;<a class="el" href="trxeb_2bsp430__config_8h.html" title="Platform-specific BSP430 configuration directives for MSP-TRXEB">bsp430/platform/trxeb/bsp430_config.h</a>&gt; for you. You should not include that header directly, as it coordinates with the generic platform version.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a3a32caf35097f2fef2f19b6d2684fd76"></a>
 <div class="memitem">
 <div class="memproto">
@@ -484,7 +541,7 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Define to a true value if the application will want to invoke <a class="el" href="platform_8h.html#a2df452ec53e3f7d4b4372cb1333f265e">xBSP430platformPeripheralHelp()</a>.</p>
+<p>Define to a true value if the application will want to invoke <a class="el" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp()</a>.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
@@ -508,7 +565,7 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 </div>
 </div>
 <h2>Function Documentation</h2>
-<a class="anchor" id="a93f2e78617ceaeb548fe440e850924ce"></a>
+<a class="anchor" id="a7c332b3b2af080a737e5b75ab08a4f4f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -517,6 +574,12 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>periph_config</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -537,7 +600,8 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">periph</td><td>Raw peripheral device for which pins should be configured.</td></tr>
-    <tr><td class="paramname">enablep</td><td>TRUE to enable for peripheral use; FALSE to disable (return to general purpose IO). When disabled, the direction and output register bits are configured for low power use (output zero).</td></tr>
+    <tr><td class="paramname">periph_config</td><td>Flag controlling which pins of the peripheral will be configured. A value of zero indicates a platform and peripheral-specific default. Generic flag values include <a class="el" href="periph_8h.html#a62038d74e2ead80c4805dc7d8dcb3c2c">BSP430_PERIPHCFG_SERIAL_UART</a>, <a class="el" href="periph_8h.html#aaf5e8738e695389f357acad95ac286ec">BSP430_PERIPHCFG_SERIAL_I2C</a>, <a class="el" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>, and <a class="el" href="periph_8h.html#a858ff57a92ed0ee6e78b494d067b053a">BSP430_PERIPHCFG_SERIAL_SPI4</a>.</td></tr>
+    <tr><td class="paramname">enablep</td><td>TRUE to enable for peripheral use; FALSE to disable (return to general purpose IO). When disabled, the direction and output register bits are configured for low power use (output zero). Note that only the pins specified by <em>periph_config</em> will be modified.</td></tr>
   </table>
   </dd>
 </dl>
@@ -568,7 +632,7 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 <li>Clock configuration (see <a class="el" href="platform_8h.html#a9ccb62d7259bf01a8d3d099359d0042a">BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS</a>) </li>
 <li>Start the system clock (if <a class="el" href="uptime_8h.html#aa3a8d2483ccc30c355cae2f3be6ad547">BSP430_UPTIME</a>) </li>
 </ul>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a21">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2blink_2main_8c-example.html#a0">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a13">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a0">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a0">bootstrap/console/main.c</a>, <a class="el" href="bootstrap_2nop_2main_8c-example.html#a0">bootstrap/nop/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a3">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a16">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a2">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a21">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2blink_2main_8c-example.html#a0">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a13">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a0">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a1">bootstrap/console/main.c</a>, <a class="el" href="bootstrap_2nop_2main_8c-example.html#a0">bootstrap/nop/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a1">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a12">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a3">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a16">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a2">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -593,7 +657,7 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 
 </div>
 </div>
-<a class="anchor" id="a2df452ec53e3f7d4b4372cb1333f265e"></a>
+<a class="anchor" id="ad5df0a450196592bc395c5efe89a6fb3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -601,8 +665,18 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
           <td class="memname">const char* xBSP430platformPeripheralHelp </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
-          <td class="paramname"><em>periph</em></td><td>)</td>
+          <td class="paramname"><em>periph</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>periph_config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -612,19 +686,20 @@ invoke <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">periph</td><td>Raw peripheral device for which help is desired</td></tr>
+    <tr><td class="paramname">periph_config</td><td>Flag as passed to <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni()</a> as the <code>periph_config</code> value. A value of zero will describe all potential pins for the peripheral.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to a help string suitable for display. A null pointer is returned if the peripheral was not enabled.</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="platform_8h.html#ab6710fe3c15825a6d4cfad92debe14bd">BSP430_PLATFORM_PERIPHERAL_HELP</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a25">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a6">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a24">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a25">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a6">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 12 2012 18:08:59 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
