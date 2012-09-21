@@ -62,13 +62,13 @@
     HAL_HPL_FIELD(_hal,ctlw0) = UCSWRST;        \
   } while (0)
 
-#define SERIAL_HAL_HOLD_NI(_hal) do {       \
+#define SERIAL_HAL_HOLD_NI(_hal) do {           \
     HAL_HPL_FIELD(_hal,ctlw0) |= UCSWRST;       \
   } while (0)
 
 #define SERIAL_HAL_RELEASE_NI(_hal) do {        \
     HAL_HPL_FIELD(_hal,ctlw0) &= ~UCSWRST;      \
-    if ((_hal)->rx_cbchain_ni) {                  \
+    if ((_hal)->rx_cbchain_ni) {                \
       HAL_HPL_FIELD(_hal,ie) |= UCRXIE;         \
     }                                           \
   } while (0)
@@ -384,7 +384,7 @@ iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
       ;
     }
     ++hal->num_tx;
-    *txbp = (i < tx_len) ? tx_data[i] : i;
+    *txbp = (i < tx_len) ? tx_data[i] : BSP430_SERIAL_SPI_READ_TX_BYTE(i-tx_len);
     while (! (UCRXIFG & *ifgp)) {
       ;
     }

@@ -75,7 +75,7 @@
 
 #define SERIAL_HPL_RELEASE_HPL_NI(_hal,_hpl) do {       \
     (_hpl)->ctlw0 &= ~UCSWRST;                          \
-    if ((_hal)->rx_cbchain_ni) {                          \
+    if ((_hal)->rx_cbchain_ni) {                        \
       (_hpl)->ie |= UCRXIE;                             \
     }                                                   \
   } while (0)
@@ -353,7 +353,8 @@ iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
     return -1;
   }
   while (i < transaction_length) {
-    SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), (i < tx_len) ? tx_data[i] : i);
+    uint8_t txd = (i < tx_len) ? tx_data[i] : BSP430_SERIAL_SPI_READ_TX_BYTE(i-tx_len);
+    SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), txd);
     ++hal->num_tx;
     SERIAL_HPL_RAW_RECEIVE_NI(SERIAL_HAL_HPL(hal), *rx_data);
     ++rx_data;

@@ -40,33 +40,32 @@
 #define SERIAL_HAL_HPL(_hal) (_hal)->hpl.usci
 #define SERIAL_HAL_HPLAUX(_hal) (_hal)->hpl_aux.usci
 
-#define WAKEUP_TRANSMIT_HAL_NI(_hal) do {               \
-    if (! (*SERIAL_HAL_HPLAUX(_hal)->iep & SERIAL_HAL_HPLAUX(_hal)->tx_bit)) {            \
+#define WAKEUP_TRANSMIT_HAL_NI(_hal) do {                               \
+    if (! (*SERIAL_HAL_HPLAUX(_hal)->iep & SERIAL_HAL_HPLAUX(_hal)->tx_bit)) { \
       *SERIAL_HAL_HPLAUX(_hal)->iep |= (*SERIAL_HAL_HPLAUX(_hal)->ifgp & SERIAL_HAL_HPLAUX(_hal)->tx_bit); \
-    }                                                   \
+    }                                                                   \
   } while (0)
 
-#define RAW_TRANSMIT_HAL_NI(_hal, _c) do {              \
-    while (! (SERIAL_HAL_HPLAUX(_hal)->tx_bit & *SERIAL_HAL_HPLAUX(_hal)->ifgp)) {	\
-      ;                                                 \
-    }                                                   \
-    SERIAL_HAL_HPL(_hal)->txbuf = _c;                   \
-    ++(_hal)->num_tx;                                   \
+#define RAW_TRANSMIT_HAL_NI(_hal, _c) do {                              \
+    while (! (SERIAL_HAL_HPLAUX(_hal)->tx_bit & *SERIAL_HAL_HPLAUX(_hal)->ifgp)) { \
+      ;                                                                 \
+    }                                                                   \
+    SERIAL_HAL_HPL(_hal)->txbuf = _c;                                   \
+    ++(_hal)->num_tx;                                                   \
   } while (0)
 
-#define RAW_RECEIVE_HAL_NI(_hal, _c) do {              \
-    while (! (SERIAL_HAL_HPLAUX(_hal)->rx_bit & *SERIAL_HAL_HPLAUX(_hal)->ifgp)) {	\
-      ;                                                 \
-    }                                                   \
-    _c = SERIAL_HAL_HPL(_hal)->rxbuf;                   \
-    ++(_hal)->num_rx;                                   \
+#define RAW_RECEIVE_HAL_NI(_hal, _c) do {                               \
+    while (! (SERIAL_HAL_HPLAUX(_hal)->rx_bit & *SERIAL_HAL_HPLAUX(_hal)->ifgp)) { \
+      ;                                                                 \
+    }                                                                   \
+    _c = SERIAL_HAL_HPL(_hal)->rxbuf;                                   \
+    ++(_hal)->num_rx;                                                   \
   } while (0)
 
-
-#define FLUSH_HAL_NI(_hal) do {                 \
+#define FLUSH_HAL_NI(_hal) do {                         \
     while (SERIAL_HAL_HPL(_hal)->stat & UCBUSY) {       \
-      ;                                         \
-    }                                           \
+      ;                                                 \
+    }                                                   \
   } while (0)
 
 /** Inspect bits in CTL0 to determine the appropriate peripheral
@@ -369,7 +368,8 @@ iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
     return -1;
   }
   while (i < transaction_length) {
-    RAW_TRANSMIT_HAL_NI(hal, (i < tx_len) ? tx_data[i] : i);
+    uint8_t txd = (i < tx_len) ? tx_data[i] : BSP430_SERIAL_SPI_READ_TX_BYTE(i-tx_len);
+    RAW_TRANSMIT_HAL_NI(hal, txd);
     RAW_RECEIVE_HAL_NI(hal, *rx_data);
     ++rx_data;
     ++i;
