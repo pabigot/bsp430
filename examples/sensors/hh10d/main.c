@@ -120,8 +120,8 @@ void main ()
           xBSP430timerName(BSP430_UPTIME_TIMER_PERIPH_HANDLE),
           APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);
 
-
-  i2c = hBSP430serialOpenI2C(i2c, (0x100 <= UCMST) ? (UCMST >> 8) : UCMST,
+  i2c = hBSP430serialOpenI2C(i2c,
+                             BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),
                              UCSSEL_2, APP_HH10D_I2C_PRESCALER);
   if (! i2c) {
     cprintf("I2C open failed.\n");

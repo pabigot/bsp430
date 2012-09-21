@@ -72,7 +72,7 @@ writeRegister (uint8_t reg,
 void main ()
 {
   int rc = 0;
-  unsigned int ctl0_byte;
+
   /* GDO0 and GDO2 are always interrupt-capable. */
   volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE);
@@ -97,12 +97,9 @@ void main ()
 
   /* Configure the SPI interface, but immediately put it into hold
    * mode so we can check CHIP_RDYn on the MISO/GDO1 input */
-  ctl0_byte = UCCKPH | UCMSB | UCMST;
-  cprintf("Initial ctl0 %04x\n", ctl0_byte);
-  if (0x100 <= ctl0_byte) {
-    ctl0_byte >>= 8;
-  }
-  spi = hBSP430serialOpenSPI(spi, ctl0_byte, UCSSEL_2, 1);
+  spi = hBSP430serialOpenSPI(spi,
+                             BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPH | UCMSB | UCMST),
+                             UCSSEL_2, 1);
   if (spi) {
     rc = iBSP430serialSetHold_ni(spi, 1);
     /* GDO1 to input, pull-up */

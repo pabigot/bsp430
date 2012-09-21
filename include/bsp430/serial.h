@@ -163,18 +163,31 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_SERIAL - 0)
 
+/** @def BSP430_SERIAL_ADJUST_CTL0_INITIALIZER
+ *
+ * When the underlying implementation is an EUSCI device (as on FR5xx
+ * chips), the header defines used to construct the value @a ctl0_byte
+ * are specified for a 16-bit access.  The ctl0 byte in the upper byte
+ * of the ctlw0 word that comprises @a ctl0 and @a ctl1 on these MCUs.
+ * On those devices you must use the @c _H suffix to select the
+ * high-byte version of these constants or divide your configured
+ * value by 256 to place it in the low byte of the argument.  This
+ * applies to configuration values #UCPEN, #UCPAR, #UCMSB, #UC7BIT,
+ * #UCSPB, #UCCKPH, #UCCKPL, #UCMST, and #UCMODE_0 or #UCMODE_1 or
+ * #UCMODE_2, and perhaps others.
+ *
+ * Given a @a ctl0_byte expression comprised of these constants, this
+ * macro will adjust it for you when the value appears to be outside
+ * the expected range (i.e., greater than @c 0xFF) and will leave the
+ * values alone when it is not, so you can use the standard header
+ * constant names without having to worry about the underlying
+ * implementation.
+ */
+#define BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(_i) (((_i) >= 0x100) ? ((_i) >> 8) : (_i))
+
 #if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_UART - 0)
 
 /** Request and configure a serial device in UART mode.
- *
- * @warning When the underlying implementation is an EUSCI device (as
- * on FR5xx chips), the header defines used to construct the value @a
- * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
- * upper byte of the ctlw0 word that comprises @a ctl0 and @a ctl1 on
- * these MCUs, so on those devices you must use the @c _H suffix to
- * select the high-byte version of these constants or divide your
- * configured value by 256 to place it in the low byte of the
- * argument.
  *
  * @param hal the handle for the HAL interface for the serial device
  * to be configured.  These are found from the peripheral handle using
@@ -182,10 +195,13 @@
  *
  * @param ctl0_byte The configuration to be written to the device's
  * ctl0 byte.  For UART mode, potential values specified in the
- * <msp430.h> header include #UCPEN, #UCPAR, #UCMSB, #UC7BIT, #UCSPB
- * (but <b>see the warning above</b>).  The UCMODE and UCSYNC elements
- * of the byte are ignored.  In most cases for UART mode a value of 0
- * producing 8N1 serial communications is appropriate.
+ * <msp430.h> header include #UCPEN, #UCPAR, #UCMSB, #UC7BIT, #UCSPB.
+ * The UCMODE and UCSYNC elements of the byte are ignored.  In most
+ * cases for UART mode a value of 0 producing 8N1 serial
+ * communications is appropriate.
+ *
+ * @warning See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
+ * portable use of @a ctl0_byte header constants.
  *
  * @param ctl1_byte The configuration to be written to the device's
  * ctl1 byte.  For UART mode, potential values specified in the
@@ -317,15 +333,6 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 
 /** Request and configure a serial device in SPI mode.
  *
- * @warning When the underlying implementation is an EUSCI device (as
- * on FR5xx chips), the header defines used to construct the value @a
- * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
- * upper byte of the ctlw0 word that comprises @a ctl0 and @a ctl1 on
- * these MCUs, so on those devices you must use the @c _H suffix to
- * select the high-byte version of these constants or divide your
- * configured value by 256 to place it in the low byte of the
- * argument.
- *
  * @param hal the handle for the HAL interface for the serial device
  * to be configured.  These are found from the peripheral handle using
  * hBSP430serialLookup().
@@ -333,10 +340,12 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * @param ctl0_byte The configuration to be written to the device's
  * ctl0 byte.  For SPI mode, potential values specified in the
  * <msp430.h> header include #UCCKPH, #UCCKPL, #UCMSB, #UC7BIT,
- * #UCMST, and #UCMODE_0 or #UCMODE_1 or #UCMODE_2 (but <b>see the
- * warning above</b>).  The UCSYNC field is cleared before being
- * written.  Selection of #UCMODE_3 (I2C mode) will result in this
- * function returning an error.
+ * #UCMST, and #UCMODE_0 or #UCMODE_1 or #UCMODE_2.  The UCSYNC field
+ * is cleared before being written.  Selection of #UCMODE_3 (I2C mode)
+ * will result in this function returning an error.
+ *
+ * @warning See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
+ * portable use of @a ctl0_byte header constants.
  *
  * @param ctl1_byte The configuration to be written to the device's
  * ctl1 byte.  For SPI mode, potential values specified in the
@@ -415,15 +424,6 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
 
 /** Request and configure a serial device in I2C mode.
  *
- * @warning When the underlying implementation is an EUSCI device (as
- * on FR5xx chips), the header defines used to construct the value @a
- * ctl0_byte are specified for a 16-bit access.  The ctl0 byte is the
- * upper byte of the ctlw0 word that comprises @a ctl0 and @a ctl1 on
- * these MCUs, so on those devices you must use the @c _H suffix to
- * select the high-byte version of these constants or divide your
- * configured value by 256 to place it in the low byte of the
- * argument.
- *
  * @param hal the handle for the HAL interface for the serial device
  * to be configured.  These are found from the peripheral handle using
  * hBSP430serialLookup().
@@ -433,6 +433,9 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  * <msp430.h> header include #UCA10, #UCSLA10, #UCMM, and #UCMST (but
  * <b>see the warning above</b>).  The UCSYNC field is cleared and the
  * UCMODE field is configured for I2C before being written.
+ *
+ * @warning See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
+ * portable use of @a ctl0_byte header constants.
  *
  * @param ctl1_byte The configuration to be written to the device's
  * ctl1 byte.  For I2C mode, potential values specified in the

@@ -24,8 +24,8 @@ void main ()
 #if BSP430_PLATFORM_PERIPHERAL_HELP
   cprintf("TMP102 I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_TMP102_I2C_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_I2C));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
-  /* Ugliness to accomodate value change in UCMST with eUSCI */
-  i2c = hBSP430serialOpenI2C(i2c, (0x100 <= UCMST) ? (UCMST >> 8) : UCMST,
+  i2c = hBSP430serialOpenI2C(i2c,
+                             BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),
                              UCSSEL_2, APP_TMP102_I2C_PRESCALER);
   if (! i2c) {
     cprintf("I2C open failed.\n");
