@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------/
-/  Bitbanging MMCv3/SDv1/SDv2 (in SPI mode) control module
+/  BSP430 MMCv3/SDv1/SDv2 (in SPI mode) control module
 /-------------------------------------------------------------------------/
 /
 /  Copyright (C) 2012, ChaN, all right reserved.
@@ -8,6 +8,7 @@
 / * No restriction on use. You can use, modify and redistribute it for
 /   personal, non-profit or commercial products UNDER YOUR RESPONSIBILITY.
 / * Redistributions of source code must retain the above copyright notice.
+/ * This version modified for MSP430 use under BSP430: http://github.com/pabigot/bsp430
 /
 /--------------------------------------------------------------------------/
  Features and Limitations:
@@ -23,28 +24,79 @@
 
 /-------------------------------------------------------------------------*/
 
+/* Include BSP430 material first, which will include msp430.h. */
+#include <bsp430/serial.h>
+#include <bsp430/clock.h>
+#include <bsp430/periph/port.h>
+#include <bsp430/utility/console.h>
+
+#ifndef BSP430_MMC_FAST_HZ
+#define BSP430_MMC_FAST_HZ 8000000UL
+#endif /* BSP430_MMC_FAST_HZ */
 
 #include "diskio.h"		/* Common include file for FatFs and disk I/O layer */
-
 
 /*-------------------------------------------------------------------------*/
 /* Platform dependent macros and functions needed to be modified           */
 /*-------------------------------------------------------------------------*/
 
-#include <device.h>				/* Include device specific declareation file here */
+#define APP_SD_CS_PORT_HPL xBSP430hplLookupPORT(APP_SD_CS_PORT_PERIPH_HANDLE)
+static hBSP430halSERIAL sdspi;
 
-#define	INIT_PORT()	init_port()	/* Initialize MMC control port (CS=H, CLK=L, DI=H, DO=in) */
-#define DLY_US(n)	dly_us(n)	/* Delay n microseconds */
+/* Following BSP430/POSIX conventions, this returns 0 if successful,
+ * -1 on error. */
+static int
+configureSPIforSD (int fastp)
+{
+  unsigned long smclk_hz = ulBSP430clockSMCLK_Hz();
+  unsigned int init_spi_divisor;
+  volatile sBSP430hplPORT * miso_port = xBSP430hplLookupPORT(APP_SD_MISO_PORT_PERIPH_HANDLE);
 
-#define	CS_H()		PORT |= 0x01	/* Set MMC CS "high" */
-#define CS_L()		PORT &= 0xFE	/* Set MMC CS "low" */
-#define CK_H()		PORT |= 0x02	/* Set MMC SCLK "high" */
-#define	CK_L()		PORT &= 0xFD	/* Set MMC SCLK "low" */
-#define DI_H()		PORT |= 0x04	/* Set MMC DI "high" */
-#define DI_L()		PORT &= 0xFB	/* Set MMC DI "low" */
-#define DO			(PORT &	0x08)	/* Test for MMC DO ('H':true, 'L':false) */
+  /* We'll drive the SPI device using SMCLK.  For initialization, we
+   * need to stay below 400 kHz, and have chosen 380 kHz in case of
+   * clock variances.  After initialization, we can go faster. */
+  if (fastp) {
+    init_spi_divisor = (smclk_hz + BSP430_MMC_FAST_HZ) / BSP430_MMC_FAST_HZ;
+  } else {
+    init_spi_divisor = (smclk_hz + 380000UL) / 380000UL;
+  }
+  /* SPI divisor must not be zero */
+  if (0 == init_spi_divisor) {
+    init_spi_divisor = 1;
+  }
+  
+  /* Close the device if we already opened it. */
+  if (sdspi) {
+    (void)iBSP430serialClose(sdspi);
+  }
+  
+  /* For some SD cards, need MISO pullup, or so we're told.  Do that
+   * first, hoping the platform peripheral configuration won't destroy
+   * it. */
+  miso_port->ren |= APP_SD_MISO_PORT_BIT;
+  miso_port->dir &= ~APP_SD_MISO_PORT_BIT;
+  miso_port->out |= APP_SD_MISO_PORT_BIT;
 
+  /* Configure SPI.  Probably ought to have a way to return an error
+   * code. */
+  sdspi = hBSP430serialOpenSPI(hBSP430serialLookup(APP_SD_SPI_PERIPH_HANDLE),
+                               BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST | UCMODE_0),
+                               UCSSEL__SMCLK, init_spi_divisor);
 
+  /* Configure the chip-select port. */
+  APP_SD_CS_PORT_HPL->sel &= ~APP_SD_CS_PORT_BIT;
+  APP_SD_CS_PORT_HPL->out |= APP_SD_CS_PORT_BIT;
+  APP_SD_CS_PORT_HPL->dir |= APP_SD_CS_PORT_BIT;
+
+  return (0 != sdspi) ? 0 : -1;
+}
+
+#define INIT_PORT() configureSPIforSD(0)
+#define REINIT_PORT_FAST() configureSPIforSD(1)
+#define DLY_US(n_) BSP430_CORE_DELAY_CYCLES(((n_) * BSP430_CLOCK_NOMINAL_MCLK_HZ)/1000000)
+
+#define CS_H() do { APP_SD_CS_PORT_HPL->out |= APP_SD_CS_PORT_BIT; } while (0)
+#define CS_L() do { APP_SD_CS_PORT_HPL->out &= ~APP_SD_CS_PORT_BIT; } while (0)
 
 /*--------------------------------------------------------------------------
 
@@ -73,14 +125,6 @@
 #define CMD55	(55)		/* APP_CMD */
 #define CMD58	(58)		/* READ_OCR */
 
-/* Card type flags (CardType) */
-#define CT_MMC		0x01		/* MMC ver 3 */
-#define CT_SD1		0x02		/* SD ver 1 */
-#define CT_SD2		0x04		/* SD ver 2 */
-#define CT_SDC		0x06		/* SD */
-#define CT_BLOCK	0x08		/* Block addressing */
-
-
 static
 DSTATUS Stat = STA_NOINIT;	/* Disk status */
 
@@ -99,28 +143,12 @@ void xmit_mmc (
 	UINT bc				/* Number of bytes to send */
 )
 {
-	BYTE d;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-
-	do {
-		d = *buff++;	/* Get a byte to be sent */
-		if (d & 0x80) DI_H(); else DI_L();	/* bit7 */
-		CK_H(); CK_L();
-		if (d & 0x40) DI_H(); else DI_L();	/* bit6 */
-		CK_H(); CK_L();
-		if (d & 0x20) DI_H(); else DI_L();	/* bit5 */
-		CK_H(); CK_L();
-		if (d & 0x10) DI_H(); else DI_L();	/* bit4 */
-		CK_H(); CK_L();
-		if (d & 0x08) DI_H(); else DI_L();	/* bit3 */
-		CK_H(); CK_L();
-		if (d & 0x04) DI_H(); else DI_L();	/* bit2 */
-		CK_H(); CK_L();
-		if (d & 0x02) DI_H(); else DI_L();	/* bit1 */
-		CK_H(); CK_L();
-		if (d & 0x01) DI_H(); else DI_L();	/* bit0 */
-		CK_H(); CK_L();
-	} while (--bc);
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  (void)iBSP430spiTxRx_ni(sdspi, buff, bc, 0, 0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
 
@@ -135,30 +163,12 @@ void rcvr_mmc (
 	UINT bc		/* Number of bytes to receive */
 )
 {
-	BYTE r;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-
-	DI_H();	/* Send 0xFF */
-
-	do {
-		r = 0;	 if (DO) r++;	/* bit7 */
-		CK_H(); CK_L();
-		r <<= 1; if (DO) r++;	/* bit6 */
-		CK_H(); CK_L();
-		r <<= 1; if (DO) r++;	/* bit5 */
-		CK_H(); CK_L();
-		r <<= 1; if (DO) r++;	/* bit4 */
-		CK_H(); CK_L();
-		r <<= 1; if (DO) r++;	/* bit3 */
-		CK_H(); CK_L();
-		r <<= 1; if (DO) r++;	/* bit2 */
-		CK_H(); CK_L();
-		r <<= 1; if (DO) r++;	/* bit1 */
-		CK_H(); CK_L();
-		r <<= 1; if (DO) r++;	/* bit0 */
-		CK_H(); CK_L();
-		*buff++ = r;			/* Store a received byte */
-	} while (--bc);
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  (void)iBSP430spiTxRx_ni(sdspi, NULL, 0, bc, buff);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
 
@@ -376,7 +386,10 @@ DSTATUS disk_initialize (
 
 	if (drv) return RES_NOTRDY;
 
-	INIT_PORT();				/* Initialize control port */
+	if (0 != INIT_PORT()) {				/* Initialize control port */
+		return RES_ERROR;
+	}
+
 	for (n = 10; n; n--) rcvr_mmc(buf, 1);	/* 80 dummy clocks */
 
 	ty = 0;
@@ -412,6 +425,13 @@ DSTATUS disk_initialize (
 	Stat = s;
 
 	deselect();
+
+        /* If initialization succeeded, speed up the SPI clock */
+        if (! (Stat & STA_NOINIT)) {
+          if (0 != REINIT_PORT_FAST()) {
+            return RES_ERROR;
+          }
+        }
 
 	return s;
 }

@@ -1,0 +1,8 @@
+PLATFORM ?= exp430f5529
+AUX_CPPFLAGS = -Ifatfs/src
+MODULES=$(MODULES_PLATFORM)
+MODULES += $(MODULES_UPTIME)
+MODULES += $(MODULES_CONSOLE)
+MODULES += $(MODULES_SERIAL)
+SRC=bsp430mmc.c main.c fatfs/src/ff.c
+include $(BSP430_ROOT)/examples/Makefile.common
