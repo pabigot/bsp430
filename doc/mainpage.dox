@@ -115,6 +115,10 @@ bsp430/utility/uptime.h ACLK-driven system timer@endlink, and demonstration
 \li <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
 \li <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529 ("USB Experimenter's Board")</a>
 \li <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
+\li <a href="http://www.ti.com/tool/em430f5137rf900">EM430-900</a>
+\li <a href="http://google.com/?q=people+power+company+surf+board">PeoplePower Company SuRF
+Board</a>
+\li <a href="http://www.ti.com/tool/cc1125dk">TrxEB SmartRF Transceiver Evaluation Board</a>
 \li <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a>
 
 \section mp_examples Provided Examples
