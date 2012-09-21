@@ -501,17 +501,6 @@ typedef struct sBSP430hplTIMER {
 #endif /* MSP430XV2 */
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/** Get the HPL handle for a specific timer.
- *
- * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
- *
- * @return A typed pointer that can be used to manipulate the timer.
- * A null pointer is returned if the handle does not correspond to a
- * timer for which the HPL interface been enabled (e.g., with
- * #configBSP430_HPL_TA0).
- */
-volatile sBSP430hplTIMER * xBSP430hplLookupTIMER (tBSP430periphHandle periph);
-
 /** Field value for variant stored in sBSP430halTIMER.hal_state.cflags
  * when HPL reference is to an #sBSP430hplTIMER. */
 #define BSP430_TIMER_HAL_HPL_VARIANT_TIMER 1
@@ -556,25 +545,6 @@ typedef struct sBSP430halTIMER {
 
 /** The timer internal state is protected. */
 typedef struct sBSP430halTIMER * hBSP430halTIMER;
-
-/** Get the HAL handle for a specific timer.
- *
- * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
- *
- * @return the HAL handle for the timer.  A null pointer is returned
- * if the handle does not correspond to a timer for which the HAL
- * interface has been enabled (e.g., with #configBSP430_HAL_TA0).
- */
-hBSP430halTIMER hBSP430timerLookup (tBSP430periphHandle periph);
-
-/** Get a human-readable identifier for the timer
- *
- * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
- *
- * @return The name of the timer, e.g. "TA0".  If the peripheral is
- * not recognized as a timer, a null pointer is returned.
- */
-const char * xBSP430timerName (tBSP430periphHandle periph);
 
 /** Provide the frequency of the timer source, if that can be determined.
  *
@@ -1507,6 +1477,136 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 
 /* END AUTOMATICALLY GENERATED CODE [hal_timer_isr_decl] */
 /* !BSP430! end=hal_timer_isr_decl */
+
+/** Get the HPL handle for a specific timer.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return A typed pointer that can be used to manipulate the timer.
+ * A null pointer is returned if the handle does not correspond to a
+ * timer for which the HPL interface been enabled (e.g., with
+ * #configBSP430_HPL_TA0).
+ */
+static __inline__
+volatile sBSP430hplTIMER * xBSP430hplLookupTIMER (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hpl_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
+#if configBSP430_HPL_TA0 - 0
+  if (BSP430_PERIPH_TA0 == periph) {
+    return BSP430_HPL_TA0;
+  }
+#endif /* configBSP430_HPL_TA0 */
+
+#if configBSP430_HPL_TA1 - 0
+  if (BSP430_PERIPH_TA1 == periph) {
+    return BSP430_HPL_TA1;
+  }
+#endif /* configBSP430_HPL_TA1 */
+
+#if configBSP430_HPL_TA2 - 0
+  if (BSP430_PERIPH_TA2 == periph) {
+    return BSP430_HPL_TA2;
+  }
+#endif /* configBSP430_HPL_TA2 */
+
+#if configBSP430_HPL_TA3 - 0
+  if (BSP430_PERIPH_TA3 == periph) {
+    return BSP430_HPL_TA3;
+  }
+#endif /* configBSP430_HPL_TA3 */
+
+#if configBSP430_HPL_TB0 - 0
+  if (BSP430_PERIPH_TB0 == periph) {
+    return BSP430_HPL_TB0;
+  }
+#endif /* configBSP430_HPL_TB0 */
+
+#if configBSP430_HPL_TB1 - 0
+  if (BSP430_PERIPH_TB1 == periph) {
+    return BSP430_HPL_TB1;
+  }
+#endif /* configBSP430_HPL_TB1 */
+
+#if configBSP430_HPL_TB2 - 0
+  if (BSP430_PERIPH_TB2 == periph) {
+    return BSP430_HPL_TB2;
+  }
+#endif /* configBSP430_HPL_TB2 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */
+  /* !BSP430! end=periph_hpl_demux */
+  return NULL;
+}
+
+/** Get the HAL handle for a specific timer.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return the HAL handle for the timer.  A null pointer is returned
+ * if the handle does not correspond to a timer for which the HAL
+ * interface has been enabled (e.g., with #configBSP430_HAL_TA0).
+ */
+static __inline__
+hBSP430halTIMER hBSP430timerLookup (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hal_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
+#if configBSP430_HAL_TA0 - 0
+  if (BSP430_PERIPH_TA0 == periph) {
+    return BSP430_HAL_TA0;
+  }
+#endif /* configBSP430_HAL_TA0 */
+
+#if configBSP430_HAL_TA1 - 0
+  if (BSP430_PERIPH_TA1 == periph) {
+    return BSP430_HAL_TA1;
+  }
+#endif /* configBSP430_HAL_TA1 */
+
+#if configBSP430_HAL_TA2 - 0
+  if (BSP430_PERIPH_TA2 == periph) {
+    return BSP430_HAL_TA2;
+  }
+#endif /* configBSP430_HAL_TA2 */
+
+#if configBSP430_HAL_TA3 - 0
+  if (BSP430_PERIPH_TA3 == periph) {
+    return BSP430_HAL_TA3;
+  }
+#endif /* configBSP430_HAL_TA3 */
+
+#if configBSP430_HAL_TB0 - 0
+  if (BSP430_PERIPH_TB0 == periph) {
+    return BSP430_HAL_TB0;
+  }
+#endif /* configBSP430_HAL_TB0 */
+
+#if configBSP430_HAL_TB1 - 0
+  if (BSP430_PERIPH_TB1 == periph) {
+    return BSP430_HAL_TB1;
+  }
+#endif /* configBSP430_HAL_TB1 */
+
+#if configBSP430_HAL_TB2 - 0
+  if (BSP430_PERIPH_TB2 == periph) {
+    return BSP430_HAL_TB2;
+  }
+#endif /* configBSP430_HAL_TB2 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
+  /* !BSP430! end=periph_hal_demux */
+  return NULL;
+}
+
+/** Get a human-readable identifier for the timer
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return The name of the timer, e.g. "TA0".  If the peripheral is
+ * not recognized as a timer, a null pointer is returned.
+ */
+const char * xBSP430timerName (tBSP430periphHandle periph);
 
 #endif /* BSP430_MODULE_TIMER */
 

@@ -38,27 +38,6 @@
 
 #include <bsp430/serial.h>
 
-hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph)
-{
-  hBSP430halSERIAL rv = NULL;
-#if configBSP430_SERIAL_USE_USCI - 0
-  if (NULL == rv) {
-    rv = hBSP430usciLookup(periph);
-  }
-#endif /* configBSP430_SERIAL_USE_USCI */
-#if configBSP430_SERIAL_USE_USCI5 - 0
-  if (NULL == rv) {
-    rv = xBSP430usciLookup5(periph);
-  }
-#endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCI - 0
-  if (NULL == rv) {
-    rv = hBSP430eusciLookup(periph);
-  }
-#endif /* configBSP430_SERIAL_USE_EUSCI */
-  return rv;
-}
-
 const char *
 xBSP430serialName (tBSP430periphHandle periph)
 {

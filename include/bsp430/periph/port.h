@@ -342,32 +342,6 @@ typedef sBSP430hplPORT_5XX_16 sBSP430hplPORTW;
 typedef sBSP430hplPORT_16 sBSP430hplPORTW;
 #endif /* 5XX */
 
-/** Get the peripheral register pointer for an interrupt-enabled port.
- *
- * @note All ports on 5xx-family devices are interrupt-enabled.
- *
- * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
- *
- * @return A typed pointer that can be used to manipulate the port.  A
- * null pointer is returned if the handle does not correspond to a
- * timer which has been enabled (e.g., with
- * #configBSP430_HPL_PORT1), or if the specified port does not
- * support interrupts (see #xBSP430hplLookupPORT)
- */
-volatile sBSP430hplPORTIE * xBSP430hplLookupPORTIE (tBSP430periphHandle periph);
-
-/** Get the peripheral register pointer for a non-interrupt-enabled port.
- *
- * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
- *
- * @return A typed pointer that can be used to manipulate the port.  A
- * null pointer is returned if the handle does not correspond to a
- * timer which has been enabled (e.g., with
- * #configBSP430_HPL_PORT1), or if the specified port supports
- * interrupts (see #xBSP430hplLookupPORTIE)
- */
-volatile sBSP430hplPORT * xBSP430hplLookupPORT (tBSP430periphHandle periph);
-
 /** @cond DOXYGEN_INTERNAL */
 
 /* Port address constants are not defined for use outside the BSP430
@@ -647,24 +621,6 @@ typedef struct sBSP430halPORT {
 
 /** Handle for a port HAL instance */
 typedef struct sBSP430halPORT * hBSP430halPORT;
-
-/** Get the HAL handle for a specific port.
- *
- * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
- *
- * @return the HAL handle for the port.  A null pointer is returned
- * if the handle does not correspond to a port for which the HAL
- * interface has been enabled (e.g., with #configBSP430_HAL_PORT1).
- */
-hBSP430halPORT hBSP430portLookup (tBSP430periphHandle periph);
-
-/** Get a human-readable identifier for the port
- *
- * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
- *
- * @return The short name of the port, e.g. "P1".  If the peripheral
- * is not recognized as a port, a null pointer is returned. */
-const char * xBSP430portName (tBSP430periphHandle periph);
 
 /** Macro to reference a port IN register regardless of HPL layout. */
 #if BSP430_CORE_FAMILY_IS_5XX - 0
@@ -1920,6 +1876,272 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 /* END AUTOMATICALLY GENERATED CODE [hal_port_isr_decl] */
 /* !BSP430! end=hal_port_isr_decl */
 
+/** Get the peripheral register pointer for an interrupt-enabled port.
+ *
+ * @note All ports on 5xx-family devices are interrupt-enabled.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
+ *
+ * @return A typed pointer that can be used to manipulate the port.  A
+ * null pointer is returned if the handle does not correspond to a
+ * timer which has been enabled (e.g., with
+ * #configBSP430_HPL_PORT1), or if the specified port does not
+ * support interrupts (see #xBSP430hplLookupPORT)
+ */
+static __inline__
+volatile sBSP430hplPORTIE * xBSP430hplLookupPORTIE (tBSP430periphHandle periph)
+{
+  /* !BSP430! ie_test=<= subst=ie_test insert=periph_hpl_port_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
+#if (configBSP430_HPL_PORT1 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (1 <= 2))
+  if (BSP430_PERIPH_PORT1 == periph) {
+    return BSP430_HPL_PORT1;
+  }
+#endif /* configBSP430_HPL_PORT1 */
+
+#if (configBSP430_HPL_PORT2 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (2 <= 2))
+  if (BSP430_PERIPH_PORT2 == periph) {
+    return BSP430_HPL_PORT2;
+  }
+#endif /* configBSP430_HPL_PORT2 */
+
+#if (configBSP430_HPL_PORT3 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (3 <= 2))
+  if (BSP430_PERIPH_PORT3 == periph) {
+    return BSP430_HPL_PORT3;
+  }
+#endif /* configBSP430_HPL_PORT3 */
+
+#if (configBSP430_HPL_PORT4 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (4 <= 2))
+  if (BSP430_PERIPH_PORT4 == periph) {
+    return BSP430_HPL_PORT4;
+  }
+#endif /* configBSP430_HPL_PORT4 */
+
+#if (configBSP430_HPL_PORT5 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (5 <= 2))
+  if (BSP430_PERIPH_PORT5 == periph) {
+    return BSP430_HPL_PORT5;
+  }
+#endif /* configBSP430_HPL_PORT5 */
+
+#if (configBSP430_HPL_PORT6 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (6 <= 2))
+  if (BSP430_PERIPH_PORT6 == periph) {
+    return BSP430_HPL_PORT6;
+  }
+#endif /* configBSP430_HPL_PORT6 */
+
+#if (configBSP430_HPL_PORT7 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (7 <= 2))
+  if (BSP430_PERIPH_PORT7 == periph) {
+    return BSP430_HPL_PORT7;
+  }
+#endif /* configBSP430_HPL_PORT7 */
+
+#if (configBSP430_HPL_PORT8 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (8 <= 2))
+  if (BSP430_PERIPH_PORT8 == periph) {
+    return BSP430_HPL_PORT8;
+  }
+#endif /* configBSP430_HPL_PORT8 */
+
+#if (configBSP430_HPL_PORT9 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (9 <= 2))
+  if (BSP430_PERIPH_PORT9 == periph) {
+    return BSP430_HPL_PORT9;
+  }
+#endif /* configBSP430_HPL_PORT9 */
+
+#if (configBSP430_HPL_PORT10 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (10 <= 2))
+  if (BSP430_PERIPH_PORT10 == periph) {
+    return BSP430_HPL_PORT10;
+  }
+#endif /* configBSP430_HPL_PORT10 */
+
+#if (configBSP430_HPL_PORT11 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (11 <= 2))
+  if (BSP430_PERIPH_PORT11 == periph) {
+    return BSP430_HPL_PORT11;
+  }
+#endif /* configBSP430_HPL_PORT11 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_port_demux] */
+  /* !BSP430! end=periph_hpl_port_demux */
+  return NULL;
+}
+
+/** Get the peripheral register pointer for a non-interrupt-enabled port.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
+ *
+ * @return A typed pointer that can be used to manipulate the port.  A
+ * null pointer is returned if the handle does not correspond to a
+ * timer which has been enabled (e.g., with
+ * #configBSP430_HPL_PORT1), or if the specified port supports
+ * interrupts (see #xBSP430hplLookupPORTIE)
+ */
+static __inline__
+volatile sBSP430hplPORT * xBSP430hplLookupPORT (tBSP430periphHandle periph)
+{
+  /* !BSP430! ie_test=> subst=ie_test insert=periph_hpl_port_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
+#if (configBSP430_HPL_PORT1 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (1 > 2))
+  if (BSP430_PERIPH_PORT1 == periph) {
+    return BSP430_HPL_PORT1;
+  }
+#endif /* configBSP430_HPL_PORT1 */
+
+#if (configBSP430_HPL_PORT2 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (2 > 2))
+  if (BSP430_PERIPH_PORT2 == periph) {
+    return BSP430_HPL_PORT2;
+  }
+#endif /* configBSP430_HPL_PORT2 */
+
+#if (configBSP430_HPL_PORT3 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (3 > 2))
+  if (BSP430_PERIPH_PORT3 == periph) {
+    return BSP430_HPL_PORT3;
+  }
+#endif /* configBSP430_HPL_PORT3 */
+
+#if (configBSP430_HPL_PORT4 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (4 > 2))
+  if (BSP430_PERIPH_PORT4 == periph) {
+    return BSP430_HPL_PORT4;
+  }
+#endif /* configBSP430_HPL_PORT4 */
+
+#if (configBSP430_HPL_PORT5 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (5 > 2))
+  if (BSP430_PERIPH_PORT5 == periph) {
+    return BSP430_HPL_PORT5;
+  }
+#endif /* configBSP430_HPL_PORT5 */
+
+#if (configBSP430_HPL_PORT6 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (6 > 2))
+  if (BSP430_PERIPH_PORT6 == periph) {
+    return BSP430_HPL_PORT6;
+  }
+#endif /* configBSP430_HPL_PORT6 */
+
+#if (configBSP430_HPL_PORT7 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (7 > 2))
+  if (BSP430_PERIPH_PORT7 == periph) {
+    return BSP430_HPL_PORT7;
+  }
+#endif /* configBSP430_HPL_PORT7 */
+
+#if (configBSP430_HPL_PORT8 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (8 > 2))
+  if (BSP430_PERIPH_PORT8 == periph) {
+    return BSP430_HPL_PORT8;
+  }
+#endif /* configBSP430_HPL_PORT8 */
+
+#if (configBSP430_HPL_PORT9 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (9 > 2))
+  if (BSP430_PERIPH_PORT9 == periph) {
+    return BSP430_HPL_PORT9;
+  }
+#endif /* configBSP430_HPL_PORT9 */
+
+#if (configBSP430_HPL_PORT10 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (10 > 2))
+  if (BSP430_PERIPH_PORT10 == periph) {
+    return BSP430_HPL_PORT10;
+  }
+#endif /* configBSP430_HPL_PORT10 */
+
+#if (configBSP430_HPL_PORT11 - 0) && ((BSP430_CORE_FAMILY_IS_5XX - 0) || (11 > 2))
+  if (BSP430_PERIPH_PORT11 == periph) {
+    return BSP430_HPL_PORT11;
+  }
+#endif /* configBSP430_HPL_PORT11 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_port_demux] */
+  /* !BSP430! end=periph_hpl_port_demux */
+  return NULL;
+}
+
+/** Get the HAL handle for a specific port.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return the HAL handle for the port.  A null pointer is returned
+ * if the handle does not correspond to a port for which the HAL
+ * interface has been enabled (e.g., with #configBSP430_HAL_PORT1).
+ */
+static __inline__
+hBSP430halPORT hBSP430portLookup (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hal_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
+#if configBSP430_HAL_PORT1 - 0
+  if (BSP430_PERIPH_PORT1 == periph) {
+    return BSP430_HAL_PORT1;
+  }
+#endif /* configBSP430_HAL_PORT1 */
+
+#if configBSP430_HAL_PORT2 - 0
+  if (BSP430_PERIPH_PORT2 == periph) {
+    return BSP430_HAL_PORT2;
+  }
+#endif /* configBSP430_HAL_PORT2 */
+
+#if configBSP430_HAL_PORT3 - 0
+  if (BSP430_PERIPH_PORT3 == periph) {
+    return BSP430_HAL_PORT3;
+  }
+#endif /* configBSP430_HAL_PORT3 */
+
+#if configBSP430_HAL_PORT4 - 0
+  if (BSP430_PERIPH_PORT4 == periph) {
+    return BSP430_HAL_PORT4;
+  }
+#endif /* configBSP430_HAL_PORT4 */
+
+#if configBSP430_HAL_PORT5 - 0
+  if (BSP430_PERIPH_PORT5 == periph) {
+    return BSP430_HAL_PORT5;
+  }
+#endif /* configBSP430_HAL_PORT5 */
+
+#if configBSP430_HAL_PORT6 - 0
+  if (BSP430_PERIPH_PORT6 == periph) {
+    return BSP430_HAL_PORT6;
+  }
+#endif /* configBSP430_HAL_PORT6 */
+
+#if configBSP430_HAL_PORT7 - 0
+  if (BSP430_PERIPH_PORT7 == periph) {
+    return BSP430_HAL_PORT7;
+  }
+#endif /* configBSP430_HAL_PORT7 */
+
+#if configBSP430_HAL_PORT8 - 0
+  if (BSP430_PERIPH_PORT8 == periph) {
+    return BSP430_HAL_PORT8;
+  }
+#endif /* configBSP430_HAL_PORT8 */
+
+#if configBSP430_HAL_PORT9 - 0
+  if (BSP430_PERIPH_PORT9 == periph) {
+    return BSP430_HAL_PORT9;
+  }
+#endif /* configBSP430_HAL_PORT9 */
+
+#if configBSP430_HAL_PORT10 - 0
+  if (BSP430_PERIPH_PORT10 == periph) {
+    return BSP430_HAL_PORT10;
+  }
+#endif /* configBSP430_HAL_PORT10 */
+
+#if configBSP430_HAL_PORT11 - 0
+  if (BSP430_PERIPH_PORT11 == periph) {
+    return BSP430_HAL_PORT11;
+  }
+#endif /* configBSP430_HAL_PORT11 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
+  /* !BSP430! end=periph_hal_demux */
+  return NULL;
+}
+
+/** Get a human-readable identifier for the port
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_PORT1.
+ *
+ * @return The short name of the port, e.g. "P1".  If the peripheral
+ * is not recognized as a port, a null pointer is returned. */
+const char * xBSP430portName (tBSP430periphHandle periph);
+
 /** Convert from a bit value to a pin value.
  *
  * Mostly used for informational messages, but also for ISR IFG
@@ -1933,9 +2155,8 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * @warning This function is explicitly intended for support of 8-bit
  * ports, and cannot be used to detect the position of the lowest set
  * bit in a wider integer. */
-static int
-__inline__
-iBSP430portBitPosition (unsigned int bitx)
+static __inline__
+int iBSP430portBitPosition (unsigned int bitx)
 {
   unsigned char bit = 0x01;
   int rv = 0;

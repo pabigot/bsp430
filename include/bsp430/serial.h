@@ -658,7 +658,27 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
  * returned if the handle does not correspond to a serial peripheral
  * for which the HAL interface has been enabled.
  */
-hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph);
+static __inline__
+hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph)
+{
+  hBSP430halSERIAL rv = NULL;
+#if configBSP430_SERIAL_USE_USCI - 0
+  if (NULL == rv) {
+    rv = hBSP430usciLookup(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_USCI */
+#if configBSP430_SERIAL_USE_USCI5 - 0
+  if (NULL == rv) {
+    rv = xBSP430usci5Lookup(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_USCI5 */
+#if configBSP430_SERIAL_USE_EUSCI - 0
+  if (NULL == rv) {
+    rv = hBSP430eusciLookup(periph);
+  }
+#endif /* configBSP430_SERIAL_USE_EUSCI */
+  return rv;
+}
 
 /** Get a human-readable identifier for the serial peripheral
  *

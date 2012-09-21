@@ -646,7 +646,39 @@ int iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
  * correspond to a timer for which the HPL interface been enabled
  * (e.g., with #configBSP430_HPL_USCI_A0).
  */
-volatile sBSP430hplUSCI * xBSP430hplLookupUSCI (tBSP430periphHandle periph);
+static __inline__
+volatile sBSP430hplUSCI * xBSP430hplLookupUSCI (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hpl_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
+#if configBSP430_HPL_USCI_A0 - 0
+  if (BSP430_PERIPH_USCI_A0 == periph) {
+    return BSP430_HPL_USCI_A0;
+  }
+#endif /* configBSP430_HPL_USCI_A0 */
+
+#if configBSP430_HPL_USCI_A1 - 0
+  if (BSP430_PERIPH_USCI_A1 == periph) {
+    return BSP430_HPL_USCI_A1;
+  }
+#endif /* configBSP430_HPL_USCI_A1 */
+
+#if configBSP430_HPL_USCI_B0 - 0
+  if (BSP430_PERIPH_USCI_B0 == periph) {
+    return BSP430_HPL_USCI_B0;
+  }
+#endif /* configBSP430_HPL_USCI_B0 */
+
+#if configBSP430_HPL_USCI_B1 - 0
+  if (BSP430_PERIPH_USCI_B1 == periph) {
+    return BSP430_HPL_USCI_B1;
+  }
+#endif /* configBSP430_HPL_USCI_B1 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */
+  /* !BSP430! end=periph_hpl_demux */
+  return NULL;
+}
 
 /** Get the HAL handle for a specific USCI instance.
  *
@@ -656,7 +688,39 @@ volatile sBSP430hplUSCI * xBSP430hplLookupUSCI (tBSP430periphHandle periph);
  * returned if the handle does not correspond to a timer for which the
  * HAL interface has been enabled (e.g., with #configBSP430_HAL_USCI_A0).
  */
-hBSP430halSERIAL hBSP430usciLookup (tBSP430periphHandle periph);
+static __inline__
+hBSP430halSERIAL hBSP430usciLookup (tBSP430periphHandle periph)
+{
+  /* !BSP430! insert=periph_hal_demux */
+  /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
+#if configBSP430_HAL_USCI_A0 - 0
+  if (BSP430_PERIPH_USCI_A0 == periph) {
+    return BSP430_HAL_USCI_A0;
+  }
+#endif /* configBSP430_HAL_USCI_A0 */
+
+#if configBSP430_HAL_USCI_A1 - 0
+  if (BSP430_PERIPH_USCI_A1 == periph) {
+    return BSP430_HAL_USCI_A1;
+  }
+#endif /* configBSP430_HAL_USCI_A1 */
+
+#if configBSP430_HAL_USCI_B0 - 0
+  if (BSP430_PERIPH_USCI_B0 == periph) {
+    return BSP430_HAL_USCI_B0;
+  }
+#endif /* configBSP430_HAL_USCI_B0 */
+
+#if configBSP430_HAL_USCI_B1 - 0
+  if (BSP430_PERIPH_USCI_B1 == periph) {
+    return BSP430_HAL_USCI_B1;
+  }
+#endif /* configBSP430_HAL_USCI_B1 */
+
+  /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
+  /* !BSP430! end=periph_hal_demux */
+  return NULL;
+}
 
 /** Get a human-readable identifier for the USCI peripheral
  *
