@@ -12,7 +12,7 @@ fail () {
 
 PLATFORMS_2="exp430g2 rf2500t"
 PLATFORMS_4="exp430fg4618"
-PLATFORMS_5="exp430f5438 exp430f5529 exp430fr5739"
+PLATFORMS_5="exp430f5438 exp430f5529 exp430fr5739 em430 surf trxeb"
 PLATFORMS="${PLATFORMS_2} ${PLATFORMS_4} ${PLATFORMS_5}"
 for p in ${PLATFORMS} ; do
   make PLATFORM=${p} "${@}" || fail "make PLATFORM=${p} $@"
