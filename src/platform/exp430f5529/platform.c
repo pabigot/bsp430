@@ -37,7 +37,7 @@
 #include <bsp430/platform/exp430f5529/platform.h>
 
 #if BSP430_LED - 0
-const sBSP430halLED xBSP430hal_[] = {
+const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Red */
   { .outp = &P8OUT, .bit = BIT1 }, /* Orange */
   { .outp = &P8OUT, .bit = BIT2 }, /* Green */
@@ -47,7 +47,7 @@ const sBSP430halLED xBSP430hal_[] = {
   { .outp = &P1OUT, .bit = BIT4 }, /* Blue */
   { .outp = &P1OUT, .bit = BIT5 }, /* Blue */
 };
-const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
+const unsigned char nBSP430led = sizeof(xBSP430halLED_) / sizeof(*xBSP430halLED_);
 #endif /* BSP430_LED */
 
 int

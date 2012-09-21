@@ -77,7 +77,7 @@
 
 /** Call to initialize the hardware for all LEDs.
  *
- * The common implementation uses the LEDs defined in #xBSP430hal_.
+ * The common implementation uses the LEDs defined in #xBSP430halLED_.
  *
  * @note Unless #configBSP430_LED_USE_COMMON is defined to a true
  * value, the application or platform must define this function. */
@@ -150,7 +150,7 @@ void vBSP430ledSet (int led_idx,
  * a single selection register) then the common implementation of the
  * LED interface can be used.  In that case, define this to a true
  * value, and provide within a platform file or the application
- * definitions of the #xBSP430hal_ and #nBSP430led variables.
+ * definitions of the #xBSP430halLED_ and #nBSP430led variables.
  *
  * Since most platforms can benefit from the shared implementation,
  * those that do not should override the default value.
@@ -184,14 +184,14 @@ typedef struct sBSP430halLED {
 
 /** Platform should define the LED configuration available to it.
  * @dependency #BSP430_LED */
-extern const sBSP430halLED xBSP430hal_[];
+extern const sBSP430halLED xBSP430halLED_[];
 
 #endif /* configBSP430_LED_USE_COMMON */
 
 /** The number of LEDs available on the platform.
  *
  * If #configBSP430_LED_USE_COMMON is true, this is the length of the
- * xBSP430hal_ configuration array.  Otherwise it's just a constant.
+ * xBSP430halLED_ configuration array.  Otherwise it's just a constant.
  * We'll assume there can't be more than 255 LEDs. */
 extern const unsigned char nBSP430led;
 

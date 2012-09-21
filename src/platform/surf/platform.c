@@ -37,14 +37,14 @@
 #include <bsp430/platform/surf/platform.h>
 
 #if BSP430_LED - 0
-const sBSP430halLED xBSP430hal_[] = {
+const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P3OUT, .bit = BIT0 }, /* Green */
   { .outp = &P3OUT, .bit = BIT1 }, /* Red */
   { .outp = &P3OUT, .bit = BIT2 }, /* Orange */
   { .outp = &P3OUT, .bit = BIT3 }, /* White */
   { .outp = &P3OUT, .bit = BIT4 }, /* Blue */
 };
-const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
+const unsigned char nBSP430led = sizeof(xBSP430halLED_) / sizeof(*xBSP430halLED_);
 #endif /* BSP430_LED */
 
 int

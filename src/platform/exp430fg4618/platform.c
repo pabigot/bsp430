@@ -37,13 +37,13 @@
 #include <bsp430/platform/exp430fg4618/platform.h>
 
 #if BSP430_LED - 0
-const sBSP430halLED xBSP430hal_[] = {
+const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P2OUT, .bit = BIT2 }, /* Green (LED1) */
   { .outp = &P2OUT, .bit = BIT1 }, /* Yellow (LED2) */
   /* LED3 is attached to msp430f2013 */
   { .outp = &P5OUT, .bit = BIT1 }, /* Red (LED4) */
 };
-const unsigned char nBSP430led = sizeof(xBSP430hal_) / sizeof(*xBSP430hal_);
+const unsigned char nBSP430led = sizeof(xBSP430halLED_) / sizeof(*xBSP430halLED_);
 #endif /* BSP430_LED */
 
 int
