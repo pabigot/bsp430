@@ -53,7 +53,7 @@ uiBSP430tlvChecksum (const unsigned char * data,
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   CRCINIRES = 0xFFFF;
-  
+
   for (i = 0; i < len; ++i) {
     /* @warning Reversed CRC not available on certain MCUs; see
      * function description */

@@ -5,18 +5,18 @@
  * factory temperature calibrations really are.
  *
  * ADC10 is classic 1xx/2xx 10-bit ADC.
- * 
+ *
  * ADC10_A is ADC10 on a 5xx/6xx MCU.  It has external channels on A8
  * and A9 instead of reference voltage inputs.
- * 
+ *
  * ADC10_B is ADC10 on a FR5xx MCU.  It provides a facility to measure
  * VeREF+ and VeREF- on channels 8 and 9.
- * 
+ *
  * ADC12 is classic 1xx/2xx/4xx 12-bit ADC.
- * 
+ *
  * ADC12_B is ADC12 on a FR5xx MCU.  It will be on the FR5969 which is
  * not yet documented.
- * 
+ *
  * ADC12_PLUS is ADC12 on a 5xx/6xx MCU.  It adds REFOUT not available
  * on ADC12.
  *
@@ -89,7 +89,7 @@ typedef struct sSample {
       int cF;
     };
     int mV;
-  };  
+  };
 } sSample;
 
 #define REF_1p5 15
@@ -116,18 +116,18 @@ int initializeADC (void)
   }
 
 #if HAVE_REF
-  while(REFCTL0 & REFGENBUSY) {
+  while (REFCTL0 & REFGENBUSY) {
     ;
   }
   REFCTL0 = REFVSEL_1 | REFON
 #ifdef REFMSTR
-    /* REFMSTR is implicit (and not defined) in FR5xx devices,
-     * required on ADC10_A devices, and optional for ADC12_A (but if
-     * not selected you have to control the reference voltage from the
-     * legacy ADC12 settings).  Use it if you got it. */
-    | REFMSTR
+            /* REFMSTR is implicit (and not defined) in FR5xx devices,
+             * required on ADC10_A devices, and optional for ADC12_A (but if
+             * not selected you have to control the reference voltage from the
+             * legacy ADC12 settings).  Use it if you got it. */
+            | REFMSTR
 #endif
-    ;
+            ;
 #endif
 
 #if defined(__MSP430_HAS_ADC10__)
@@ -147,7 +147,7 @@ int initializeADC (void)
 #error Not implemented
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
   /* ~ADC12ENC: Place module into hold before modifying configuration */
-  ADC12CTL0 &= ~ADC12ENC; 
+  ADC12CTL0 &= ~ADC12ENC;
   /* ADC12SHT_10:  512 ADC12CLK cycles per sample
    * ADC12ON: Turn module on
    * Do not enable yet.
@@ -241,7 +241,7 @@ int getSample (sSample * sp,
 {
   unsigned int divisor;
   unsigned int vref_scale = 0;
-  
+
   memset(sp, 0, sizeof(*sp));
   if (0 != setSource(inch)) {
     return -1;
@@ -356,7 +356,7 @@ void displayVoltage (const sSample * sp)
 void main ()
 {
   int rc;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   rc = initializeADC();
@@ -376,7 +376,7 @@ void main ()
 #endif /* ADC */
           , rc, cal_adc, cal_ref);
 
-  if (cal_adc) { 
+  if (cal_adc) {
     cprintf("Temperature ranges:\n");
     cprintf("\t1.5V T30 %u T85 %u\n", cal_adc->cal_adc_15t30, cal_adc->cal_adc_15t85);
 #if BSP430_TLV_IS_5XX
@@ -393,7 +393,7 @@ void main ()
     sSample v15;
     sSample v20;
     sSample v25;
-    
+
     if (0 == setReferenceVoltage(REF_1p5)) {
       if (0 == getSample(&t15, REF_1p5, INCH_TEMP)) {
         valid |= VALID_T_1p5;

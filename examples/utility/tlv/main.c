@@ -38,7 +38,7 @@ void main ()
   const sBSP430tlvTable * tp = (const sBSP430tlvTable *)BSP430_TLV_TABLE_START;
   const sBSP430tlvEntry * ep = (const sBSP430tlvEntry *)TLV_START;
   unsigned int crc;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   cprintf("\n\n\n");
@@ -69,7 +69,7 @@ void main ()
 #if defined(TLV_ADCCAL)
         || (TLV_ADCCAL == ep->tag)
 #endif /* TLV_ADCCAL */
-        ) {
+       ) {
       const sBSP430tlvADCCAL * calp = (const sBSP430tlvADCCAL *)ep;
       cprintf("\tADC: Gain factor %d, offset %d\n", calp->cal_adc_gain_factor, calp->cal_adc_offset);
       cprintf("\t 1.5V T30 %u T85 %u\n",
@@ -83,7 +83,7 @@ void main ()
       const unsigned char * cp = (const unsigned char *)(ep+1);
       unsigned int periph_addr = 0;
       unsigned int pc;
-      
+
       while (*cp) {
         unsigned int me = *(unsigned int *)cp;
         unsigned char memory_type = (me >> 13) & 0x07;
@@ -91,7 +91,8 @@ void main ()
         unsigned long unit_size = ((me >> 7) & 0x01) ? 0x10000L : 0x200;
         unsigned char address_value = me & 0x3F;
         const char * memory_type_str[] = { "None", "RAM", "EEPROM", "Reserved",
-                                           "FLASH", "ROM", "app", "Undefined" };
+                                           "FLASH", "ROM", "app", "Undefined"
+                                         };
 
         cp += sizeof(me);
         cprintf("\tMemory entry %04x: ", me);
@@ -158,5 +159,5 @@ void main ()
     ep = BSP430_TLV_NEXT_ENTRY(ep);
   }
   cprintf("End of TLV structure\n\n");
-  
+
 }

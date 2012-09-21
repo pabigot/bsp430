@@ -45,7 +45,7 @@
  * for checksum on them differ between these two implementations.  The
  * C preprocessor symbol #BSP430_TLV_IS_5XX may be used to identify
  * the supported implementation in user code.
- * 
+ *
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -168,7 +168,7 @@ typedef sBSP430tlvTable2xx sBSP430tlvTable;
 /** @def BSP430_TLV_ENTRY_IS_ADC
  *
  * Check whether a TLV entry corresponds to an ADC.
- * 
+ *
  * On 5xx/6xx MCUs this may be either #TLV_ADC10CAL or #TLV_ADC12CAL.  No MCU has both.
  *
  * On 2xx MCUs, the tag value is not constant across the family for

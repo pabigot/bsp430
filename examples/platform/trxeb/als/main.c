@@ -1,7 +1,7 @@
 /** This file is in the public domain.
  *
  * Basic demonstration of on-board light sensor.
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */
