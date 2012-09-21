@@ -148,6 +148,12 @@ signal using the Hope RF Humidity Sensor
 
 \subsection ex_platform Platform-Specific Examples
 
+\li \ref ex_rfem_ccid demonstrates the abstraction of the @link
+bsp430/utility/rfem.h RF Evaluation Module @endlink available on many MSP430
+experimenter boards by displaying information about a connected ChipCon
+radio.  The same demonstration works on the #BSP430_PLATFORM_EM430 and
+#BSP430_PLATFORM_SURF platforms.
+
 \li \ref ex_platform_exp430f5529_fatfs demonstrates use of <a
 href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430
 SPI serial abstraction
