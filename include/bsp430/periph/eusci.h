@@ -88,7 +88,7 @@
 #define BSP430_PERIPH_EUSCI_H
 
 #include <bsp430/periph.h>
-#include <bsp430/serial.h>
+#include <bsp430/serial_.h>
 
 /** @def BSP430_MODULE_EUSCI
  *

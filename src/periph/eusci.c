@@ -31,6 +31,7 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
+#include <bsp430/serial.h>
 #include <bsp430/periph/eusci.h>
 
 #define SERIAL_HAL_HPL_A(_hal) (_hal)->hpl.euscia
