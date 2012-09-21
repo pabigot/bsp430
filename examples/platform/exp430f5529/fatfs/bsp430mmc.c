@@ -24,6 +24,8 @@
 
 /-------------------------------------------------------------------------*/
 
+/** [BSP430 Initialization] */
+
 /* Include BSP430 material first, which will include msp430.h. */
 #include <bsp430/serial.h>
 #include <bsp430/clock.h>
@@ -31,6 +33,7 @@
 #include <bsp430/utility/console.h>
 
 #ifndef BSP430_MMC_FAST_HZ
+/** Desired SPI bus speed after initialization.  Limited by SMCLK. */
 #define BSP430_MMC_FAST_HZ 8000000UL
 #endif /* BSP430_MMC_FAST_HZ */
 
@@ -98,6 +101,7 @@ configureSPIforSD (int fastp)
 #define CS_H() do { APP_SD_CS_PORT_HPL->out |= APP_SD_CS_PORT_BIT; } while (0)
 #define CS_L() do { APP_SD_CS_PORT_HPL->out &= ~APP_SD_CS_PORT_BIT; } while (0)
 
+/** [BSP430 Initialization] */
 /*--------------------------------------------------------------------------
 
    Module Private Functions
@@ -131,7 +135,7 @@ DSTATUS Stat = STA_NOINIT;	/* Disk status */
 static
 BYTE CardType;			/* b0:MMC, b1:SDv1, b2:SDv2, b3:Block addressing */
 
-
+/**! [BSP430 SPI TxRx] */
 
 /*-----------------------------------------------------------------------*/
 /* Transmit bytes to the card (bitbanging)                               */
@@ -171,7 +175,7 @@ void rcvr_mmc (
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
-
+/**! [BSP430 SPI TxRx] */
 
 /*-----------------------------------------------------------------------*/
 /* Wait for card ready                                                   */
@@ -576,3 +580,24 @@ void disk_timerproc (void)
 	/* Nothing to do */
 }
 
+DWORD
+get_fattime (void)
+{
+  union {
+    DWORD dword;
+    struct {
+      DWORD year:7;
+      DWORD month:4;
+      DWORD dom:5;
+      DWORD hour:5;
+      DWORD minute:6;
+      DWORD sec_div_2:5;
+    };
+  } bit_time;
+  bit_time.dword = 0;
+  bit_time.year = 0;
+  bit_time.month = 1;
+  bit_time.dom = 1;
+
+  return bit_time.dword;
+}

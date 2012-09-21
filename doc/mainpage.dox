@@ -113,7 +113,7 @@ bsp430/utility/uptime.h ACLK-driven system timer@endlink, and demonstration
 \li <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a>
 \li <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739 ("Fraunchpad")</a>
 \li <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
-\li <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a>
+\li <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529 ("USB Experimenter's Board")</a>
 \li <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
 \li <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a>
 
@@ -145,6 +145,12 @@ DS18B20 (or similar) 1-wire temperature sensor
 temperature sensor
 \li \ref ex_sensors_hh10d demonstrates measuring the frequency of an input
 signal using the Hope RF Humidity Sensor
+
+\subsection ex_platform Platform-Specific Examples
+
+\li \ref ex_platform_exp430f5529_fatfs demonstrates use of <a
+href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430
+SPI serial abstraction
 
 @copyright_doc
 */
