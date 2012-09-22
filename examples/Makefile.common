@@ -13,15 +13,24 @@ ifndef BSP430_ROOT
 $(error Must specify BSP430_ROOT)
 endif # BSP430_ROOT
 
+# WITH_CCS: Unless defined to 1, assume CCS will not be used
+# WARNING: This is a stub.  CCS is not supported by BSP430.
+WITH_CCS ?= 0
+ifneq (0,$(WITH_CCS))
+WITH_GCC ?= 0
+endif # WITH_GCC
+
 # WITH_GCC: Unless defined to 0, assume that GCC will be used, and
 # define options suitable for building with it.
 WITH_GCC ?= 1
+
 ifneq (0,$(WITH_GCC))
 CROSS_COMPILE ?= msp430-
 CC=$(CROSS_COMPILE)gcc
 LD=$(CROSS_COMPILE)ld
 AR=$(CROSS_COMPILE)ar
 SIZE=$(CROSS_COMPILE)size
+endif # WITH_GCC
 
 # PLATFORM: Standard nomenclature for a particular board with
 # particular features.  If defined, other settings such as the MCU and
@@ -40,12 +49,18 @@ ifndef TARGET_FLAGS
 ifndef MCU
 $(error No MCU identified)
 endif # MCU
+
+ifneq (0,$(WITH_GCC))
 TARGET_FLAGS = -mmcu=$(MCU)
 
 # MEMORY_MODEL: Level of 20-bit support, assuming this is a CPUX MCU.
 ifdef MEMORY_MODEL
 TARGET_FLAGS += -mmemory-model=$(MEMORY_MODEL)
 endif # MEMORY_MODEL
+endif # WITH_GCC
+ifneq (0,$(WITH_CCS))
+TARGET_FLAGS = -D__$(shell echo $(MCU)|tr '[a-z]' '[A-Z]')__
+endif # WITH_CCS
 
 # Extend the derived configuration with application Makefile (AUX_*)
 # and externally provided (EXT_*) refinements.
@@ -56,21 +71,29 @@ endif # TARGET_FLAGS
 # default enables debugging and optimizes for size, and puts each
 # function and data object in its own section so it can be discarded
 # at link time if not needed.  Also review OPT_LDFLAGS.
+ifneq (0,$(WITH_GCC))
 OPT_CFLAGS ?= -ggdb -Os -ffunction-sections -fdata-sections
+endif # WITH_GCC
 
 # OPT_LDFLAGS: LDFLAGS related to optimization and debugging.  THe
 # default value enables removal of unreferenced sections during
 # non-relocatable link.
+ifneq (0,$(WITH_GCC))
 OPT_LDFLAGS ?= -Wl,-gc-sections
+endif # WITH_GCC
 
 # WARN_CFLAGS: CFLAGS that control warnings
+ifneq (0,$(WITH_GCC))
 WARN_CFLAGS ?= -Wall -Wno-main
+endif # WITH_GCC
 
 # WITH_WARN_ERROR: If not set to zero, adds -Werror which causes all
 # warnings to be treated as errors.
 WITH_WARN_ERROR ?= 1
 ifneq (0,$(WITH_WARN_ERROR))
+ifneq (0,$(WITH_GCC))
 WARN_CFLAGS += -Werror
+endif # WITH_GCC
 endif # WITH_WARN_ERROR
 
 # Use GCC to generate dependency files
@@ -80,11 +103,11 @@ endif # WITH_WARN_ERROR
 	 sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 	 $(RM) $@.$$$$
 
+ifneq (0,$(WITH_GCC))
 # Interleaved source/object-code/asm listing
 %.lst: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -ggdb -Wa,-ahdlns=$@ -c $<
 CLEAN += $(SRC:.c=.lst)
-
 endif # WITH_GCC
 
 CFLAGS += $(WARN_CFLAGS)

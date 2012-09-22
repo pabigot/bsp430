@@ -183,7 +183,11 @@
 #define BSP430_CORE_TOOLCHAIN_GCC 1
 #endif /* __GNUC__ */
 
-/** Defined to a true value if Code Composer Studio is being used */
+/** Defined to a true value if Code Composer Studio is being used.
+ *
+ * @warning Although this definition is present and used, Code
+ * Composer Studio cannot be used to build BSP430 because it does not
+ * support ISO C11 anonymous struct/union fields. */
 #ifdef __TI_COMPILER_VERSION__
 #define BSP430_CORE_TOOLCHAIN_CCS 1
 #endif /* __TI_COMPILER_VERSION__ */
@@ -350,7 +354,11 @@
  *
  * @defaulted */
 #ifndef BSP430_CORE_INTERRUPT_STATE_T
+#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
 #define BSP430_CORE_INTERRUPT_STATE_T __istate_t
+#else /* TOOLCHAIN */
+#define BSP430_CORE_INTERRUPT_STATE_T unsigned int
+#endif /* TOOLCHAIN */
 #endif /* BSP430_CORE_INTERRUPT_STATE_T */
 
 /** @def BSP430_CORE_SAVE_INTERRUPT_STATE(_state)
