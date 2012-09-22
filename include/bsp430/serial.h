@@ -624,7 +624,7 @@ int iBSP430serialClose (hBSP430halSERIAL hal)
 static BSP430_CORE_INLINE
 void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
 {
-  return hal->dispatch->wakeupTransmit_ni(hal);
+  hal->dispatch->wakeupTransmit_ni(hal);
 }
 
 /** Spin until any in-progress transmission or reception is complete.
@@ -638,7 +638,7 @@ void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
 static BSP430_CORE_INLINE
 void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
 {
-  return hal->dispatch->flush_ni(hal);
+  hal->dispatch->flush_ni(hal);
 }
 
 #endif /* BSP430_SERIAL - 0 */
