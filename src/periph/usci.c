@@ -71,7 +71,7 @@
 /** Inspect bits in CTL0 to determine the appropriate peripheral
  * configuration. */
 static int
-__inline__
+BSP430_CORE_INLINE
 peripheralConfigFlag (unsigned int ctl0)
 {
   if (0 == (ctl0 & UCSYNC)) {

@@ -187,7 +187,7 @@ extern hBSP430halTIMER xBSP430uptimeTIMER_;
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 static hBSP430halTIMER
-__inline__
+BSP430_CORE_INLINE
 xBSP430uptimeTimer (void)
 {
   return xBSP430uptimeTIMER_;
@@ -201,7 +201,7 @@ xBSP430uptimeTimer (void)
  * @return The nominal frequency of the uptime clock, in Hz. */
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 static unsigned long
-__inline__
+BSP430_CORE_INLINE
 ulBSP430uptimeResolution_Hz_ni (void)
 {
   return ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
@@ -211,7 +211,7 @@ ulBSP430uptimeResolution_Hz_ni (void)
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 /** Return system uptime in clock ticks with disabled interrupts. */
 static unsigned long
-__inline__
+BSP430_CORE_INLINE
 ulBSP430uptime_ni (void)
 {
   return ulBSP430timerCounter_ni(xBSP430uptimeTimer(), 0);
@@ -219,7 +219,7 @@ ulBSP430uptime_ni (void)
 
 /** Return the system uptime in clock ticks. */
 static unsigned long
-__inline__
+BSP430_CORE_INLINE
 ulBSP430uptime (void)
 {
   return ulBSP430timerCounter(xBSP430uptimeTimer(), 0);

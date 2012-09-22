@@ -178,6 +178,28 @@
  * #BSP430_CORE_LPM_ENTER_NI(). */
 #define BSP430_CORE_LPM_LPMXp5 0x0100
 
+/** Defined to a true value if GCC is being used */
+#if 1 < __GNUC__
+#define BSP430_CORE_TOOLCHAIN_GCC 1
+#endif /* __GNUC__ */
+
+/** Defined to a true value if Code Composer Studio is being used */
+#ifdef __TI_COMPILER_VERSION__
+#define BSP430_CORE_TOOLCHAIN_CCS 1
+#endif /* __TI_COMPILER_VERSION__ */
+
+/** Mark a function to be inlined.
+ *
+ * The spelling of this varies among toolchains.
+ */
+#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
+#define BSP430_CORE_INLINE __inline__
+#elif BSP430_CORE_TOOLCHAIN_CCS - 0
+#define BSP430_CORE_INLINE __inline
+#else /* TOOLCHAIN */
+#define BSP430_CORE_INLINE inline
+#endif /* TOOLCHAIN */
+
 /** Enter a low-power mode
  *
  * This sets the status register bits in accordance to the bits

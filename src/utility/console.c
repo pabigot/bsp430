@@ -52,7 +52,7 @@ static hBSP430halSERIAL console_hal_;
 /* Optimized version used inline.  Assumes that the uart is not
  * null. */
 static
-__inline__
+BSP430_CORE_INLINE
 int
 emit_char2_ni (int c, hBSP430halSERIAL uart)
 {
@@ -67,7 +67,7 @@ emit_char2_ni (int c, hBSP430halSERIAL uart)
 /* Base version used by cprintf.  This has to re-read the console_hal_
  * variable each time. */
 static
-__inline__
+BSP430_CORE_INLINE
 int
 emit_char_ni (int c)
 {

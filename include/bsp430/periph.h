@@ -278,7 +278,7 @@ typedef struct sBSP430hplHALStatePrefix {
  * passed is not a pointer to the HPL structure for an enabled
  * peripheral. */
 static tBSP430periphHandle
-__inline__
+BSP430_CORE_INLINE
 xBSP430periphFromHPL (volatile void * hpl)
 {
   return (tBSP430periphHandle)(uintptr_t)hpl;
@@ -412,7 +412,7 @@ typedef struct sBSP430halISRIndexedChainNode {
  * @return The bitwise OR of the @a basis value and the return values
  * of each callback */
 static int
-__inline__
+BSP430_CORE_INLINE
 iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRVoidChainNode * const * cbpp,
                                  void * context,
                                  int basis)
@@ -435,7 +435,7 @@ iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRVoidChainNode * const
  * @param basis As with #iBSP430callbackInvokeISRVoid_ni
  * @return As with #iBSP430callbackInvokeISRVoid_ni */
 static int
-__inline__
+BSP430_CORE_INLINE
 iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode * const * cbpp,
                                     void * context,
                                     int idx,

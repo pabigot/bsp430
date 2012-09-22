@@ -119,7 +119,7 @@
 
 /** Cause a brown-out reset */
 static void
-__inline__
+BSP430_CORE_INLINE
 vBSP430pmmInduceBOR (void)
 {
   PMMCTL0 = PMMPW | PMMSWBOR;
@@ -127,7 +127,7 @@ vBSP430pmmInduceBOR (void)
 
 /** Cause a power-on reset */
 static void
-__inline__
+BSP430_CORE_INLINE
 vBSP430pmmInducePOR (void)
 {
   PMMCTL0 = PMMPW | PMMSWPOR;

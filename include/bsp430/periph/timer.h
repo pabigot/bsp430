@@ -573,7 +573,7 @@ unsigned long ulBSP430timerCounter_ni (hBSP430halTIMER timer,
  * state prior to returning the timer counts.
  */
 static unsigned long
-__inline__
+BSP430_CORE_INLINE
 ulBSP430timerCounter (hBSP430halTIMER timer,
                       unsigned int * overflowp)
 {
@@ -1487,7 +1487,7 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * timer for which the HPL interface been enabled (e.g., with
  * #configBSP430_HPL_TA0).
  */
-static __inline__
+static BSP430_CORE_INLINE
 volatile sBSP430hplTIMER * xBSP430hplLookupTIMER (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hpl_demux */
@@ -1547,7 +1547,7 @@ volatile sBSP430hplTIMER * xBSP430hplLookupTIMER (tBSP430periphHandle periph)
  * if the handle does not correspond to a timer for which the HAL
  * interface has been enabled (e.g., with #configBSP430_HAL_TA0).
  */
-static __inline__
+static BSP430_CORE_INLINE
 hBSP430halTIMER hBSP430timerLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */

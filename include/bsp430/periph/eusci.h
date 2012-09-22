@@ -842,7 +842,7 @@ int iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
  * correspond to a timer for which the HPL interface been enabled
  * (e.g., with #configBSP430_HPL_EUSCI_A0).
  */
-static __inline__
+static BSP430_CORE_INLINE
 volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph)
 {
   /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
@@ -880,7 +880,7 @@ volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph)
  * correspond to a timer for which the HPL interface been enabled
  * (e.g., with #configBSP430_HPL_EUSCI_B0).
  */
-static __inline__
+static BSP430_CORE_INLINE
 volatile sBSP430hplEUSCIB * xBSP430hplLookupEUSCIB (tBSP430periphHandle periph)
 {
   /* !BSP430! periph=eusci instance=EUSCI_B0,EUSCI_B1,EUSCI_B2 */
@@ -917,7 +917,7 @@ volatile sBSP430hplEUSCIB * xBSP430hplLookupEUSCIB (tBSP430periphHandle periph)
  * returned if the handle does not correspond to a timer for which the
  * HAL interface has been enabled (e.g., with #configBSP430_HAL_EUSCI_A0).
  */
-static __inline__
+static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430eusciLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_B0,EUSCI_B1,EUSCI_B2 */

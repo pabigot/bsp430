@@ -224,7 +224,7 @@
  * peripheral-specific implementation.
  *
  * @dependency #configBSP430_SERIAL_ENABLE_UART */
-static __inline__
+static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
                                         unsigned char ctl0_byte,
                                         unsigned char ctl1_byte,
@@ -248,7 +248,7 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
 {
   return hal->dispatch->uartRxByte_ni(hal);
@@ -271,7 +271,7 @@ int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
   return hal->dispatch->uartTxByte_ni(hal, c);
@@ -295,7 +295,7 @@ int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
                           const uint8_t * data,
                           size_t len)
@@ -322,7 +322,7 @@ int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
   return hal->dispatch->uartTxASCIIZ_ni(hal, str);
@@ -364,7 +364,7 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
                                        unsigned char ctl0_byte,
                                        unsigned char ctl1_byte,
@@ -408,7 +408,7 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
  * @return the total number of bytes stored in @a rx_data, or -1 if an
  * error occcured.
  */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
                        const uint8_t * tx_data,
                        size_t tx_len,
@@ -454,7 +454,7 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
                                        unsigned char ctl0_byte,
                                        unsigned char ctl1_byte,
@@ -479,7 +479,7 @@ hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
  * unchanged.
  *
  * @return 0 if successfully set, -1 if an error occurs. */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
                                int own_address,
                                int slave_address)
@@ -511,7 +511,7 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
  * @return the total number of bytes transmitted, or -1 if an error
  * occcured.
  */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
                          const uint8_t * tx_data,
                          size_t tx_len)
@@ -543,7 +543,7 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * @return the total number of bytes stored in @a rx_data, or -1 if an
  * error occcured.
  */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
                          uint8_t * rx_data,
                          size_t rx_len)
@@ -578,7 +578,7 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
  * occurred.  Potential errors include inability to configure the
  * peripheral pins.  On error, the peripheral is left in reset mode.
  */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
                              int holdp)
 {
@@ -599,7 +599,7 @@ int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 int iBSP430serialClose (hBSP430halSERIAL hal)
 {
   return hal->dispatch->close(hal);
@@ -621,7 +621,7 @@ int iBSP430serialClose (hBSP430halSERIAL hal)
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
 {
   return hal->dispatch->wakeupTransmit_ni(hal);
@@ -635,7 +635,7 @@ void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
-static __inline__
+static BSP430_CORE_INLINE
 void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
 {
   return hal->dispatch->flush_ni(hal);
@@ -661,7 +661,7 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
  * returned if the handle does not correspond to a serial peripheral
  * for which the HAL interface has been enabled.
  */
-static __inline__
+static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph)
 {
   hBSP430halSERIAL rv = NULL;

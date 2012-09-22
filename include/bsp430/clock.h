@@ -384,7 +384,7 @@ unsigned long ulBSP430clockMCLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for #ulBSP430clockMCLK_Hz_ni */
 static unsigned long
-__inline__
+BSP430_CORE_INLINE
 ulBSP430clockMCLK_Hz (void)
 {
   unsigned long rv;
@@ -430,7 +430,7 @@ int iBSP430clockSMCLKDividingShift_ni (void);
  *
  * @return an estimate of the SMCLK frequency, in Hz */
 static unsigned long
-__inline__
+BSP430_CORE_INLINE
 ulBSP430clockSMCLK_Hz_ni (void)
 {
   unsigned long mclk_Hz = ulBSP430clockMCLK_Hz_ni();
@@ -439,7 +439,7 @@ ulBSP430clockSMCLK_Hz_ni (void)
 
 /** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
 static unsigned long
-__inline__
+BSP430_CORE_INLINE
 ulBSP430clockSMCLK_Hz (void)
 {
   unsigned long rv;
@@ -521,7 +521,7 @@ unsigned int uiBSP430clockACLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for uiBSP430clockACLK_Hz_ni() */
 static unsigned int
-__inline__
+BSP430_CORE_INLINE
 uiBSP430clockACLK_Hz (void)
 {
   unsigned int rv;

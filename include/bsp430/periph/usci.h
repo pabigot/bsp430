@@ -646,7 +646,7 @@ int iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
  * correspond to a timer for which the HPL interface been enabled
  * (e.g., with #configBSP430_HPL_USCI_A0).
  */
-static __inline__
+static BSP430_CORE_INLINE
 volatile sBSP430hplUSCI * xBSP430hplLookupUSCI (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hpl_demux */
@@ -688,7 +688,7 @@ volatile sBSP430hplUSCI * xBSP430hplLookupUSCI (tBSP430periphHandle periph)
  * returned if the handle does not correspond to a timer for which the
  * HAL interface has been enabled (e.g., with #configBSP430_HAL_USCI_A0).
  */
-static __inline__
+static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430usciLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
