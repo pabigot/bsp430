@@ -134,6 +134,26 @@
 /* END AUTOMATICALLY GENERATED CODE [hal_variant_hpl_macro] */
 /* !BSP430! end=hal_variant_hpl_macro */
 
+/** Specify byte written when reading a SPI byte.
+ * 
+ * The SPI protocal requires that a byte be written for every byte
+ * received; the reception occurs during the write.  In many cases,
+ * the value of the byte written is completely irrelevant.  For the
+ * purposes of debugging a SPI bus trace, it's nice to have an ordinal
+ * value written, so this is the default.
+ *
+ * However, some peripherals require a specific value; in particular
+ * an MMC-based SD card apparently requires 0xFF.  Allow the default
+ * to be overridden by the application.
+ *
+ * @param i_ the ordinal of the received byte
+ *
+ * @defaulted
+ */
+#ifndef BSP430_SERIAL_SPI_READ_TX_BYTE
+#define BSP430_SERIAL_SPI_READ_TX_BYTE(i_) (i_)
+#endif /* BSP430_SERIAL_SPI_READ_TX_BYTE */
+
 /* Forward declarations */
 struct sBSP430hplUSCI;
 struct sBSP430usciHPLAux;
