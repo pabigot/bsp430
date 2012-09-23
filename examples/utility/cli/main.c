@@ -16,6 +16,52 @@
 #define LAST_COMMAND NULL
 
 static int
+cmd_h234 (sBSP430cliCommandLink * chain,
+          void * param,
+          const char * argstr,
+          size_t argstr_len)
+{
+  cputtext_ni("Display: ");
+  vBSP430cliConsoleDisplayChain(chain, argstr);
+  if (0 == argstr_len) {
+    cputs("\nWTH are we fighting for? Walk!");
+  }
+  cputchar_ni('\n');
+  return 0;
+}
+
+static int
+cmd_hup_two (const char * argstr)
+{
+  cprintf("Give me a 'three'\n");
+  return 0;
+}
+
+static const sBSP430cliCommand dcmd_hup_two_three_four = {
+  .key = "four",
+  .handler = cmd_h234
+};
+static const sBSP430cliCommand dcmd_hup_two_three = {
+  .key = "three",
+  .help = "# invalid if no four",
+  .child = &dcmd_hup_two_three_four,
+};
+static const sBSP430cliCommand dcmd_hup_two = {
+  .key = "two",
+  .help = "# valid if no three",
+  .child = &dcmd_hup_two_three,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_hup_two
+};
+static const sBSP430cliCommand dcmd_hup = {
+  .key = "hup",
+  .child = &dcmd_hup_two,
+  .next = LAST_COMMAND,
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_hup
+
+static int
 cmd_uptime (const char * argstr)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -80,7 +126,8 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
-  cprintf("And we're up and running.\n");
+  cprintf("\n\n\nAnd we're up and running.\n");
+  flags = FLG_NEED_PROMPT;
   memset(command, 0, sizeof(command));
   cp = command;
   while (1) {

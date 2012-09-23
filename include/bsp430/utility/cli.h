@@ -72,13 +72,12 @@ struct sBSP430cliCommandLink;
  *
  * When a command is executed from a string representation, each
  * initial token that can be uniquely identified as a command is
- * extracted, and the corresponding handler invoked on the remainder
- * of the command string.  When the handler is
- * iBSP430cliHandlerExecuteSubcommand(), the interpreter creates a
- * link structure on the stack referencing the command definition and
- * recurses.  These link structures create a chain that can be used by
- * the final operation to extract information from higher layers of
- * the command.
+ * extracted.  If the identified command definition has child commands
+ * and the command string has additional tokens, the interpreter
+ * creates a link structure on the stack referencing the command
+ * definition and recurses on the remainder of the command string.
+ * These link structures create a chain that can be used by the final
+ * operation to extract information from higher layers of the command.
  */
 typedef struct sBSP430cliCommandLink {
   /** The command definition to be applied */
@@ -126,8 +125,11 @@ typedef struct sBSP430cliCommand {
   /** Subordinate command structures.
    *
    * This is an entrypoint to subordinate commands, e.g. further
-   * keywords that must be matched against argstr.  This field is
-   * normally processed by iBSP430cliHandlerExecuteSubCommand(). */
+   * keywords that must be matched against argstr.  When a command
+   * with a non-null @a child field is recognized and the remainder of
+   * the command string has a non-empty token, processing
+   * automatically continues with an attempt to identify a child that
+   * can process the remainder. */
   const struct sBSP430cliCommand * const child;
 
   /** The next command at this level.
@@ -161,12 +163,23 @@ typedef void (* vBSP430cliMatchCallback) (const sBSP430cliCommand * cmd);
 
 /** A utility function to extract the next command in the parsed string.
  *
+ * The goal here is to extract a non-empty token from the beginning of
+ * the provided command (after any leading whitespace), and match it
+ * as a prefix of a uniquely identified command in @a cmds.  If this
+ * succeeds, we can go on to process the remainder of the command
+ * line, which is returned.
+ *
  * @param cmds the first in a sequence of sibling commands that may
  * appear at the beginning of the remainder of the command string.
+ * This must not be a null pointer.
  *
- * @param command the unprocessed remainder of the command string
+ * @param command the unprocessed remainder of the command string.  If
+ * there is no non-empty token in what remains, @a match_cb (if
+ * provided) is invoked on all commands in @a cmds, and the number of
+ * available commands is returned as a negative number.
  *
- * @param command_len the number of characters in @a command
+ * @param command_len the number of characters in @a command, possibly
+ * including leading and trailing whitespace.
  *
  * @param matchp an optional pointer to where the uniquely identified
  * next command should be stored.  If @matchp is null, no action is
@@ -191,16 +204,16 @@ typedef void (* vBSP430cliMatchCallback) (const sBSP430cliCommand * cmd);
  * stored in @a *argstrp is stored in @a *argstr_lenp.
  *
  * @return the number of commands in @a cmds for which the first token
- * of @a command was a prefix.
+ * of @a command was a prefix, or -1 if @a command is empty
+ * (disregarding whitespace).
  */
-unsigned int
-uiBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
-                         const char * command,
-                         size_t command_len,
-                         const sBSP430cliCommand * * matchp,
-                         vBSP430cliMatchCallback match_cb,
-                         const char * * argstrp,
-                         size_t * argstr_lenp);
+int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
+                            const char * command,
+                            size_t command_len,
+                            const sBSP430cliCommand * * matchp,
+                            vBSP430cliMatchCallback match_cb,
+                            const char * * argstrp,
+                            size_t * argstr_lenp);
 
 /** Entrypoint to command parsing.
  *
@@ -226,34 +239,6 @@ uiBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
 int iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
                               void * param,
                               const char * command);
-
-/** Handler to execute subcommands.
- *
- * See iBSP430cliHandlerFunction() and iBSP430cliExecuteCommand().
- *
- * @param chain Pointer to the end of the command chain.  @link
- * sBSP430cliCommand::param @a chain->cmd->child @endlink is expected
- * to be non-null, and represents the first in a sequence of sibling
- * commands that may appear next in the parsed command string.
- *
- * @param param Caller-provided value, passed to the handler of the
- * selected sub-command.
- *
- * @param argstr text representation of the remainder of the command
- * string.  The first token is extracted and used to identify the
- * sub-command to execute.  If the token fails to identify a unique
- * subcommand, the diagnostic routine is invoked and the parsing
- * fails.
- *
- * @param argstr_len length of the @a argstr text.
- *
- * @return a negative error code if a unique subcommand is not
- * recognized, otherwise the return value after invoking the handler
- * of the subcommand on the remainder of the command string. */
-int iBSP430cliHandlerExecuteSubcommand (sBSP430cliCommandLink * chain,
-                                        void * param,
-                                        const char * command,
-                                        size_t command_len);
 
 /** Type for a command handler that needs only the remainder of the
  * command string.
@@ -401,13 +386,24 @@ enum eBSP430cliErrorType {
  * registering it with the infrastructure through
  * vBSP430cliSetDiagnosticFunction().
  * 
- * @param chain the chain of command links that did not produce an error
+ * @param chain the chain of command links that did not produce an
+ * error
+ *
  * @param errtype the type of error discovered
- * @param argstr the remainder of the command string at the point of error
+ *
+ * @param cmds the first of a set of sibling commands that could apply
+ * at the point of error, or a null pointer if the error is unrelated
+ * to failure to identify a subcommand.
+ *
+ * @param argstr the remainder of the command string at the point of
+ * error
+ *
  * @param argstr_len the length of @a argstr
+ *
  * @return the value of <c>-(int)errtype</c> */
-typedef int (* iBSP430cliDiagnosticFunction) (struct sBSP430cliCommandLink * chain,
+typedef int (* iBSP430cliDiagnosticFunction) (sBSP430cliCommandLink * chain,
                                               enum eBSP430cliErrorType errtype,
+                                              const sBSP430cliCommand * cmds,
                                               const char * argstr,
                                               size_t argstr_len);
 
@@ -427,28 +423,22 @@ void vBSP430cliSetDiagnosticFunction (iBSP430cliDiagnosticFunction diagnostic_fu
 
 /** A diagnostic function that returns the error code.
  *
- * @param chain ignored
- * @param errtype the type of error discovered
- * @param argstr ignored
- * @param argstr_len ignored
- * @return the value of <c>-(int)errtype</c> */
-int iBSP430cliNullDiagnostic (struct sBSP430cliCommandLink * chain,
+ * See @iBSP430cliDiagnosticFunction. */
+int iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
                               enum eBSP430cliErrorType errtype,
+                              const sBSP430cliCommand * cmds,
                               const char * argstr,
                               size_t argstr_len);
 
 /** A diagnostic function that displays on the console.
  *
- * @param chain the chain of command links that did not produce an error
- * @param errtype the type of error discovered
- * @param argstr the remainder of the command string at the point of error
- * @param argstr_len the length of @a argstr
- * @return the value of <c>-(int)errtype</c>
+ * See @iBSP430cliDiagnosticFunction.
  *
  * @dependency #BSP430_CONSOLE */
 #if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE - 0)
-int iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
+int iBSP430cliConsoleDiagnostic (sBSP430cliCommandLink * chain,
                                  enum eBSP430cliErrorType errtype,
+                                 const sBSP430cliCommand * cmds,
                                  const char * argstr,
                                  size_t argstr_len);
 #endif /* configBSP430_CONSOLE */

@@ -81,14 +81,14 @@ xBSP430cliNextToken (const char * command,
   return rv;
 }
 
-unsigned int
-uiBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
-                         const char * command,
-                         size_t command_len,
-                         const sBSP430cliCommand * * matchp,
-                         vBSP430cliMatchCallback match_cb,
-                         const char * * argstrp,
-                         size_t * argstr_lenp)
+int
+iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
+                        const char * command,
+                        size_t command_len,
+                        const sBSP430cliCommand * * matchp,
+                        vBSP430cliMatchCallback match_cb,
+                        const char * * argstrp,
+                        size_t * argstr_lenp)
 {
   const sBSP430cliCommand * match = NULL;
   unsigned int nmatches;
@@ -98,9 +98,6 @@ uiBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
 
   remaining = command_len;
   key = xBSP430cliNextToken(command, &remaining, &len);
-  if (0 == len) {
-    return 0;
-  }
   if (0 != argstrp) {
     *argstrp = key + len;
   }
@@ -118,12 +115,15 @@ uiBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
     }
     cmds = cmds->next;
   }
-  
-  if (1 < nmatches) {
-    match = NULL;
-  }
-  if (0 != matchp) {
-    *matchp = match;
+  if (0 == len) {
+    nmatches = -nmatches;
+  } else {
+    if (1 < nmatches) {
+      match = NULL;
+    }
+    if (0 != matchp) {
+      *matchp = match;
+    }
   }
   return nmatches;
 }
@@ -137,21 +137,31 @@ executeSubcommand_ (sBSP430cliCommandLink * chain,
 {
   sBSP430cliCommandLink parent_link;
   const sBSP430cliCommand * match;
-  unsigned int nmatches;
+  int nmatches;
   const char * argstr;
   size_t argstr_len;
 
   parent_link.link = chain;
-  nmatches = uiBSP430cliMatchCommand(cmds, command, command_len, &match, 0, &argstr, &argstr_len);
+  nmatches = iBSP430cliMatchCommand(cmds, command, command_len, &match, 0, &argstr, &argstr_len);
   if (1 != nmatches) {
     if (1 < nmatches) {
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_MultiMatch, command, command_len);
+      return diagnosticFunction(chain, eBSP430_CLI_ERR_MultiMatch, cmds, command, command_len);
     }
-    return diagnosticFunction(chain, eBSP430_CLI_ERR_Missing, command, command_len);
+    return diagnosticFunction(chain, eBSP430_CLI_ERR_Missing, cmds, command, command_len);
   }
   parent_link.cmd = match;
+  if (match->child) {
+    const char * nargstr;
+    size_t ncommand_len = argstr_len;
+    size_t len;
+
+    nargstr = xBSP430cliNextToken(argstr, &ncommand_len, &len);
+    if ((0 != nargstr) && (0 < len)) {
+      return executeSubcommand_(&parent_link, match->child, param, argstr, argstr_len);
+    }
+  }
   if (NULL == match->handler) {
-    return diagnosticFunction(&parent_link, eBSP430_CLI_ERR_Config, argstr, argstr_len);
+    return diagnosticFunction(&parent_link, eBSP430_CLI_ERR_Config, NULL, argstr, argstr_len);
   }
   return match->handler(&parent_link, param, argstr, argstr_len);
 }
@@ -165,28 +175,13 @@ iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
 }
 
 int
-iBSP430cliHandlerExecuteSubcommand (sBSP430cliCommandLink * chain,
-                                    void * param,
-                                    const char * command,
-                                    size_t command_len)
-{
-  const sBSP430cliCommand * cmds;
-
-  cmds = chain->cmd->child;
-  if (0 == cmds) {
-    return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, command, command_len);
-  }
-  return executeSubcommand_(chain, cmds, param, command, command_len);
-}
-
-int
 iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
                          void * param,
                          const char * argstr,
                          size_t argstr_len)
 {
   if (0 == chain->cmd->param) {
-    return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, argstr, argstr_len);
+    return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, NULL, argstr, argstr_len);
   }
   return ((iBSP430cliSimpleHandler)chain->cmd->param)(argstr);
 }
@@ -207,18 +202,18 @@ iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
     type_ v;                                                            \
                                                                         \
     if (NULL == cmd->param) {                                           \
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, argstr, argstr_len); \
+      return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, NULL, argstr, argstr_len); \
     }                                                                   \
     remaining = argstr_len;                                             \
     vstr = xBSP430cliNextToken(argstr, &remaining, &len);               \
     if ((0 == len) || (sizeof(buffer)-1 < len)) {                       \
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, argstr, argstr_len); \
+      return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, NULL, argstr, argstr_len); \
     }                                                                   \
     memcpy(buffer, vstr, len);                                          \
     buffer[len] = 0;                                                    \
     v = strtov_(buffer, &ep, 0);                                        \
     if (*ep) {                                                          \
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, argstr, argstr_len); \
+      return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, NULL, argstr, argstr_len); \
     }                                                                   \
     *(type_ *)cmd->param = v;                                           \
     return 0;                                                           \
@@ -250,8 +245,9 @@ xBSP430cliReverseChain (sBSP430cliCommandLink * chain)
 }
 
 int
-iBSP430cliNullDiagnostic (struct sBSP430cliCommandLink * chain,
+iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
                           enum eBSP430cliErrorType errtype,
+                          const sBSP430cliCommand * cmds,
                           const char * argstr,
                           size_t argstr_len)
 {
@@ -294,19 +290,42 @@ vBSP430cliConsoleDisplayChain (struct sBSP430cliCommandLink * chain,
 int
 iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
                              enum eBSP430cliErrorType errtype,
+                             const sBSP430cliCommand * cmds,
                              const char * argstr,
                              size_t argstr_len)
 {
-  if (eBSP430_CLI_ERR_MultiMatch == errtype) {
-    cprintf("Ambiguous command: ");
-    vBSP430cliConsoleDisplayChain(chain, argstr);
-    cprintf("\nCandidates:\n");
-    (void)uiBSP430cliMatchCommand(chain->cmd->child, argstr, argstr_len, 0, display_cmd, 0, 0);
-  } else {
-    cprintf("ERROR %u at: ", errtype);
-    vBSP430cliConsoleDisplayChain(chain, argstr);
-    cprintf("\n");
+  switch (errtype) {
+    case eBSP430_CLI_ERR_Config:
+      cputtext_ni("Command configuration error: ");
+      break;
+    case eBSP430_CLI_ERR_Missing:
+      cputtext_ni("Expected something after: ");
+      break;
+    case eBSP430_CLI_ERR_Unrecognized:
+      cputtext_ni("Unrecognized subcommand: ");
+      break;
+    case eBSP430_CLI_ERR_MultiMatch:
+      cputtext_ni("Ambiguous command: ");
+      break;
+    default:
+      cprintf("ERROR %u at: ", errtype);
+      break;
   }
+  vBSP430cliConsoleDisplayChain(chain, argstr);
+  if ((0 != cmds)
+      && ((eBSP430_CLI_ERR_MultiMatch == errtype)
+          || (eBSP430_CLI_ERR_Missing == errtype))) {
+    cprintf("\nCandidates:\n");
+
+    /* If the diagnostic is that something's missing, ignore
+     * whatever's there so it doesn't inappropriately filter out all
+     * the real candidates. */
+    if (eBSP430_CLI_ERR_Missing == errtype) {
+      argstr_len = 0;
+    }
+    (void)iBSP430cliMatchCommand(cmds, argstr, argstr_len, 0, display_cmd, 0, 0);
+  }
+  cputchar_ni('\n');
   return -(int)errtype;
 }
 
