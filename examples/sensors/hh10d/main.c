@@ -102,7 +102,7 @@ void main ()
   /* Initialize the state information used in the HH10D ISR */
   hh10d.freq_timer = xBSP430hplLookupTIMER(APP_HH10D_TIMER_PERIPH_HANDLE);
   hh10d.uptime_ccidx = APP_HH10D_UPTIME_CC_INDEX;
-  uptime_Hz = ulBSP430uptimeResolution_Hz_ni();
+  uptime_Hz = ulBSP430uptimeConversionFrequency_Hz_ni();
   hh10d.sample_duration_utt = uptime_Hz;
 
   cprintf("HH10D I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n",

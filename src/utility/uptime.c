@@ -63,19 +63,47 @@ vBSP430uptimeResume_ni (void)
   xBSP430uptimeTIMER_->hpl->ctl |= MC_2;
 }
 
+static unsigned long uptimeConversionFrequency_Hz_;
+
+static BSP430_CORE_INLINE
+unsigned long
+uptimeConversionFrequency_Hz_ni (void)
+{
+  if (0 == uptimeConversionFrequency_Hz_) {
+    /* Get the frequency of the underlying timer.  If there's a
+     * divisor, the timer routine will take that into account. */
+    uptimeConversionFrequency_Hz_ = ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
+  }
+  return uptimeConversionFrequency_Hz_;
+}
+
+unsigned long
+ulBSP430uptimeConversionFrequency_Hz_ni (void)
+{
+  return uptimeConversionFrequency_Hz_ni();
+}
+
+unsigned long
+ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_Hz)
+{
+  unsigned long rv = uptimeConversionFrequency_Hz_;
+  uptimeConversionFrequency_Hz_ = frequency_Hz;
+  return rv;
+}
+
 const char *
 xBSP430uptimeAsText_ni (unsigned long duration_utt)
 {
   static char buf[sizeof("HHH:MM:SS.mmm")];
-  unsigned long resolution_Hz;
   ldiv_t ld;
+  unsigned long conversionFrequency_Hz;
   unsigned int msec;
   unsigned int sec;
   unsigned int min;
 
-  resolution_Hz = ulBSP430uptimeResolution_Hz_ni();
-  ld = ldiv(duration_utt, resolution_Hz);
-  msec = (1000L * ld.rem) / resolution_Hz;
+  conversionFrequency_Hz = uptimeConversionFrequency_Hz_ni();
+  ld = ldiv(duration_utt, conversionFrequency_Hz);
+  msec = (1000L * ld.rem) / conversionFrequency_Hz;
   ld = ldiv(ld.quot, 60);
   sec = ld.rem;
   ld = ldiv(ld.quot, 60);

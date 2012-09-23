@@ -54,8 +54,8 @@ void main ()
   (void)iBSP430consoleInitialize();
   cprintf("\nHere we go...\n");
 
-  uptime_ticks_per_sec = ulBSP430uptimeResolution_Hz_ni();
-  cprintf("Uptime now %lu with resolution %lu\n",
+  uptime_ticks_per_sec = ulBSP430uptimeConversionFrequency_Hz_ni();
+  cprintf("Uptime now %lu with frequency %lu Hz\n",
           ulBSP430uptime_ni(), uptime_ticks_per_sec);
 
   cprintf("Monitoring DS18xx on %s.%u bit %x\n",

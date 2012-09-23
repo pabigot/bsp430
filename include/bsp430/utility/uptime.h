@@ -194,19 +194,33 @@ xBSP430uptimeTimer (void)
 }
 #endif /* DOXYGEN or function available */
 
-/** Return the uptime clock resolution
+/** Return the uptime clock conversion frequency.
  *
- * Necesary for translating between tick measurements and durations.
+ * This is the number of uptime ticks in a standard second, and is
+ * used when translating between tick measurements and second-based
+ * durations.  The default value is the nominal frequency of the timer
+ * underlying the uptime clock, but this may be overridden by
+ * ulBSP430uptimeSetConversionFrequency_ni().
  *
- * @return The nominal frequency of the uptime clock, in Hz. */
-#if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
-static unsigned long
-BSP430_CORE_INLINE
-ulBSP430uptimeResolution_Hz_ni (void)
-{
-  return ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
-}
-#endif /* DOXYGEN or function available */
+ * @return The conversion frequency of the uptime clock, in Hz. */
+unsigned long ulBSP430uptimeConversionFrequency_Hz_ni (void);
+
+/** Set the uptime frequency that will be used for tick/time conversion.
+ *
+ * In cases where the uptime clock derives from #VLOCLK, the nominal
+ * frequency used by default may be off by as much as 10% from the
+ * actual frequency.  This function can be used when a more accurate
+ * estimate of actual frequency is available to decrease the error in
+ * converted times.
+ *
+ * @param frequency_Hz the frequency to be used when converting
+ * durations in ticks to durations in seconds or related units.  If a
+ * value of zero is provided, the current nominal frequency will be
+ * used in subsequent conversions.
+ *
+ * @return the previous value of the conversion frequency, which may
+ * be 0 if no conversions had occured. */
+unsigned long ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_Hz);
 
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 /** Return system uptime in clock ticks with disabled interrupts. */
