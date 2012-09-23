@@ -210,16 +210,14 @@ uiBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
  * @param param A user-provided parameter passed to the handler of the
  * recognized command.
  *
- * @param command A text representation of a command, consisting of
- * whitespace-separated tokens.  The first token is extracted and used
- * to identify a unique command within the siblings of @a cmds.  If a
- * unique command is identified, its sBSP430cliCommand::handler
- * function is invoked, providing a #sBSP430cliCommandLink reference
- * identifying the command itself, the provided @a param argument, and
- * the remainder of the @a command string after having stripped off
- * the initial token.
- *
- * @param command_len the length of @a command in characters.
+ * @param command A nul-terminated text representation of a command
+ * comprising whitespace-separated tokens.  The first token is
+ * extracted and used to identify a unique command within the siblings
+ * of @a cmds.  If a unique command is identified, its
+ * sBSP430cliCommand::handler function is invoked, providing a
+ * #sBSP430cliCommandLink reference identifying the command itself,
+ * the provided @a param argument, and the remainder of the @a command
+ * string after having stripped off the initial token.
  *
  * @return a negative error code if a unique command is not
  * identifiable from the first token in @a command, otherwise the
@@ -227,8 +225,7 @@ uiBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
  */
 int iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
                               void * param,
-                              const char * command,
-                              size_t command_len);
+                              const char * command);
 
 /** Handler to execute subcommands.
  *
@@ -257,6 +254,34 @@ int iBSP430cliHandlerExecuteSubcommand (sBSP430cliCommandLink * chain,
                                         void * param,
                                         const char * command,
                                         size_t command_len);
+
+/** Type for a command handler that needs only the remainder of the
+ * command string.
+ *
+ * When the sBSP430cliCommand::handler field is set to this handler,
+ * the corresponding sBSP430cliCommand::param field should be the
+ * address of a conforming function which will be invoked.
+ *
+ * @param argstr the remainder of the command string
+ */
+typedef int (* iBSP430cliSimpleHandler) (const char * argstr);
+
+/** Handler to invoke a simple command
+ *
+ * The sBSP430cliCommand::param field should be the
+ * #iBSP430cliSimpleHandler that is to be invoked.
+ * 
+ * See iBSP430cliHandlerFunction().
+ * 
+ * @param chain ignored
+ * @param param ignored
+ * @param argstr passed to #iBSP430cliSimpleHandler
+ * @param argstr_len ignored
+ * @return value returned by simple handler. */
+int iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
+                             void * param,
+                             const char * argstr,
+                             size_t argstr_len);
 
 /** Handler to store a signed 16-bit integer expressed in text.
  *

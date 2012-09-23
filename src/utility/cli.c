@@ -159,10 +159,9 @@ executeSubcommand_ (sBSP430cliCommandLink * chain,
 int
 iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
                           void * param,
-                          const char * command,
-                          size_t command_len)
+                          const char * command)
 {
-  return executeSubcommand_(NULL, cmds, param, command, command_len);
+  return executeSubcommand_(NULL, cmds, param, command, strlen(command));
 }
 
 int
@@ -178,6 +177,18 @@ iBSP430cliHandlerExecuteSubcommand (sBSP430cliCommandLink * chain,
     return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, command, command_len);
   }
   return executeSubcommand_(chain, cmds, param, command, command_len);
+}
+
+int
+iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
+                         void * param,
+                         const char * argstr,
+                         size_t argstr_len)
+{
+  if (0 == chain->cmd->param) {
+    return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, argstr, argstr_len);
+  }
+  return ((iBSP430cliSimpleHandler)chain->cmd->param)(argstr);
 }
 
 #define GEN_STORE_VALUE_HANDLER(tag_,type_,strtov_,maxvalstr_)          \
