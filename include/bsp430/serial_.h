@@ -135,7 +135,7 @@
 /* !BSP430! end=hal_variant_hpl_macro */
 
 /** Specify byte written when reading a SPI byte.
- * 
+ *
  * The SPI protocal requires that a byte be written for every byte
  * received; the reception occurs during the write.  In many cases,
  * the value of the byte written is completely irrelevant.  For the

@@ -152,7 +152,7 @@ void main ()
 {
   unsigned int flags = 0;
   char * cp;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
@@ -164,7 +164,7 @@ void main ()
   commandSet = LAST_COMMAND;
   while (1) {
     int c;
-    
+
     if (flags & FLG_NEED_PROMPT) {
       *cp = 0;
       cprintf("> %s", command);

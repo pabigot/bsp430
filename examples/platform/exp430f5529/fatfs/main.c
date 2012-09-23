@@ -11,7 +11,7 @@
  *
  * Or you can clone a copy with:
  *   git clone -b ff/master git@github.com:pabigot/FatFs.git fatfs
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  */
 
@@ -137,5 +137,5 @@ void main ()
 #endif
   f_mount(0, NULL);
   cprintf("Exiting application\n");
-  
+
 }

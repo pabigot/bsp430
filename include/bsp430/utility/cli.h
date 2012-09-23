@@ -98,9 +98,9 @@ typedef struct sBSP430cliCommandLink {
  *
  * @return a context-specific value. */
 typedef int (* iBSP430cliHandlerFunction) (struct sBSP430cliCommandLink * chain,
-                                          void * param,
-                                          const char * argstr,
-                                          size_t argstr_len);
+                                           void * param,
+                                           const char * argstr,
+                                           size_t argstr_len);
 
 /** The definition of a command */
 typedef struct sBSP430cliCommand {
@@ -117,7 +117,7 @@ typedef struct sBSP430cliCommand {
    * The expected format of this string is an abstract representation
    * of whatever would follow it; e.g. for a "set" command something
    * like "[variable] [value]" would be appropriate.
-   * 
+   *
    * To save space where diagnostics and interactive help are
    * unnecessary, this may be a null pointer. */
   const char * help;
@@ -250,7 +250,7 @@ int iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
  * @param cmds as with iBSP430cliExecuteCommand()
  *
  * @param param as with iBSP430cliExecuteCommand()
- * 
+ *
  * @param command as with iBSP430cliExecuteCommand()
  *
  * @param handler the handler function to execute on the resolved
@@ -278,9 +278,9 @@ typedef int (* iBSP430cliSimpleHandler) (const char * argstr);
  *
  * The sBSP430cliCommand::param field should be the
  * #iBSP430cliSimpleHandler that is to be invoked.
- * 
+ *
  * See iBSP430cliHandlerFunction().
- * 
+ *
  * @param chain ignored
  * @param param ignored
  * @param argstr passed to #iBSP430cliSimpleHandler
@@ -304,7 +304,7 @@ int iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
  * @param argstr text representation of a signed 16-bit integer,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
- * 
+ *
  * @param argstr_len length of the @a argstr text */
 int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
                              void * param,
@@ -324,7 +324,7 @@ int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
  * @param argstr text representation of an unsigned 16-bit integer,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
- * 
+ *
  * @param argstr_len length of the @a argstr text */
 int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
                               void * param,
@@ -344,7 +344,7 @@ int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
  * @param argstr text representation of a signed 32-bit integer,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
- * 
+ *
  * @param argstr_len length of the @a argstr text */
 int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
                              void * param,
@@ -364,7 +364,7 @@ int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
  * @param argstr text representation of an unsigned 32-bit integer,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
- * 
+ *
  * @param argstr_len length of the @a argstr text */
 int iBSP430cliHandlerStoreUL (struct sBSP430cliCommandLink * chain,
                               void * param,
@@ -408,7 +408,7 @@ enum eBSP430cliErrorType {
  * errors by implementing a function meeting this interface and
  * registering it with the infrastructure through
  * vBSP430cliSetDiagnosticFunction().
- * 
+ *
  * @param chain the chain of command links that did not produce an
  * error
  *

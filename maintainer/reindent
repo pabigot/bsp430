@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# bsp430mmc.c is excluded to reduce gratuitous inconsistencies with
+# upstream source.
+
 astyle \
   --options=none \
   --style=1tbs \
@@ -7,6 +10,7 @@ astyle \
   --indent-switches \
   --max-instatement-indent=60 \
   --pad-header \
+  --exclude=examples/platform/exp430f5529/fatfs/bsp430mmc.c \
   -r \
       '*.c' \
       '*.h' \
