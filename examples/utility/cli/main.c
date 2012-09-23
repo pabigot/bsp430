@@ -13,6 +13,7 @@
 #include <string.h>
 #include <ctype.h>
 
+const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
 static int
@@ -82,6 +83,33 @@ static sBSP430cliCommand dcmd_uptime = {
 #define LAST_COMMAND &dcmd_uptime
 
 static int
+cmd_expand_ (sBSP430cliCommandLink * chain,
+             void * param,
+             const char * argstr,
+             size_t argstr_len)
+{
+  cputtext_ni("Expanded: ");
+  vBSP430cliConsoleDisplayChain(chain, argstr);
+  cputchar_ni('\n');
+  return 0;
+}
+
+static int
+cmd_expand (const char * argstr)
+{
+  return iBSP430cliParseCommand(commandSet, NULL, argstr, cmd_expand_);
+}
+static sBSP430cliCommand dcmd_expand = {
+  .key = "expand",
+  .help = "[command...] # Show the expansion of the command without executing it",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_expand
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_expand
+
+static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,
           const char * command,
@@ -96,6 +124,8 @@ static sBSP430cliCommand dcmd_help = {
   .next = LAST_COMMAND,
   .handler = cmd_help
 };
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_help
 
 // expand cmd...
 // set ival|uval|lval|ulval|date|time
@@ -130,6 +160,8 @@ void main ()
   flags = FLG_NEED_PROMPT;
   memset(command, 0, sizeof(command));
   cp = command;
+
+  commandSet = LAST_COMMAND;
   while (1) {
     int c;
     

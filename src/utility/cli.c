@@ -174,6 +174,48 @@ iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
   return executeSubcommand_(NULL, cmds, param, command, strlen(command));
 }
 
+static int
+parseSubcommand_ (sBSP430cliCommandLink * chain,
+                  const sBSP430cliCommand * cmds,
+                  void * param,
+                  const char * command,
+                  size_t command_len,
+                  iBSP430cliHandlerFunction handler)
+{
+  sBSP430cliCommandLink parent_link;
+  const sBSP430cliCommand * match;
+  int nmatches;
+  const char * argstr;
+  size_t argstr_len;
+
+  parent_link.link = chain;
+  nmatches = iBSP430cliMatchCommand(cmds, command, command_len, &match, 0, &argstr, &argstr_len);
+  if (1 != nmatches) {
+    return handler(chain, param, command, command_len);
+  }
+  parent_link.cmd = match;
+  if (match->child) {
+    const char * nargstr;
+    size_t ncommand_len = argstr_len;
+    size_t len;
+
+    nargstr = xBSP430cliNextToken(argstr, &ncommand_len, &len);
+    if ((0 != nargstr) && (0 < len)) {
+      return parseSubcommand_(&parent_link, match->child, param, argstr, argstr_len, handler);
+    }
+  }
+  return handler(&parent_link, param, argstr, argstr_len);
+}
+
+int
+iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
+                        void * param,
+                        const char * command,
+                        iBSP430cliHandlerFunction handler)
+{
+  return parseSubcommand_(NULL, cmds, param, command, strlen(command), handler);
+}
+
 int
 iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
                          void * param,

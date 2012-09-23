@@ -215,7 +215,7 @@ int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
                             const char * * argstrp,
                             size_t * argstr_lenp);
 
-/** Entrypoint to command parsing.
+/** Entrypoint to command execution.
  *
  * @param cmds the first in a sequence of sibling commands that may
  * appear at the beginning of the parsed command string.
@@ -239,6 +239,29 @@ int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
 int iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
                               void * param,
                               const char * command);
+
+/** Entrypoint to command parsing.
+ *
+ * This is like iBSP430cliExecuteCommand(), except that instead of
+ * executing the handlers in the command definitions, the chain of
+ * parent commands is constructed and when no further subcommands are
+ * identified the caller-provided function is invoked on the results.
+ *
+ * @param cmds as with iBSP430cliExecuteCommand()
+ *
+ * @param param as with iBSP430cliExecuteCommand()
+ * 
+ * @param command as with iBSP430cliExecuteCommand()
+ *
+ * @param handler the handler function to execute on the resolved
+ * command chain and remaining arguments
+ *
+ * @return the value returned by the handler function */
+int
+iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
+                        void * param,
+                        const char * command,
+                        iBSP430cliHandlerFunction handler);
 
 /** Type for a command handler that needs only the remainder of the
  * command string.
