@@ -228,6 +228,47 @@ iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
   return ((iBSP430cliSimpleHandler)chain->cmd->param)(argstr);
 }
 
+#define GEN_STORE_EXTRACTED_VALUE(tag_,type_,strtov_,maxvalstr_)        \
+  int                                                                   \
+  iBSP430cliStoreExtracted##tag_ (const char * * argstrp,               \
+                                  size_t * argstr_lenp,                 \
+                                  type_ * destp)                        \
+  {                                                                     \
+    char buffer[sizeof(maxvalstr_)];                                    \
+    char * ep;                                                          \
+    const char * vstr;                                                  \
+    size_t remaining;                                                   \
+    size_t len;                                                         \
+    type_ v;                                                            \
+                                                                        \
+    remaining = *argstr_lenp;                                           \
+    vstr = xBSP430cliNextToken(*argstrp, &remaining, &len);             \
+    if (0 == len) {                                                     \
+      return -eBSP430_CLI_ERR_Missing;                                  \
+    }                                                                   \
+    if (sizeof(buffer)-1 < len) {                                       \
+      return -eBSP430_CLI_ERR_Invalid;                                  \
+    }                                                                   \
+    memcpy(buffer, vstr, len);                                          \
+    buffer[len] = 0;                                                    \
+    v = strtov_(buffer, &ep, 0);                                        \
+    if (*ep) {                                                          \
+      return -eBSP430_CLI_ERR_Invalid;                                  \
+    }                                                                   \
+    *destp = v;                                                         \
+    *argstrp = vstr + len;                                              \
+    *argstr_lenp = remaining - len;                                     \
+    return 0;                                                           \
+  }
+
+/* The text representations with the greatest length are the
+ * ones that use octal. */
+GEN_STORE_EXTRACTED_VALUE(UI,unsigned int,strtoul,"0177777")
+GEN_STORE_EXTRACTED_VALUE(UL,unsigned long int,strtoul,"037777777777")
+GEN_STORE_EXTRACTED_VALUE(I,int,strtol,"-0100000")
+GEN_STORE_EXTRACTED_VALUE(L,long int,strtol,"-020000000000")
+#undef GEN_STORE_EXTRACTED_VALUE
+
 #define GEN_STORE_VALUE_HANDLER(tag_,type_,strtov_,maxvalstr_)          \
   int                                                                   \
   iBSP430cliHandlerStore##tag_ (struct sBSP430cliCommandLink * chain,   \
@@ -236,28 +277,15 @@ iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
                                 size_t argstr_len)                      \
   {                                                                     \
     const sBSP430cliCommand * cmd = chain->cmd;                         \
-    char buffer[sizeof(maxvalstr_)];                                    \
-    char * ep;                                                          \
-    const char * vstr;                                                  \
-    size_t remaining;                                                   \
-    size_t len;                                                         \
-    type_ v;                                                            \
+    int rv;                                                             \
                                                                         \
     if (NULL == cmd->param) {                                           \
       return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, NULL, argstr, argstr_len); \
     }                                                                   \
-    remaining = argstr_len;                                             \
-    vstr = xBSP430cliNextToken(argstr, &remaining, &len);               \
-    if ((0 == len) || (sizeof(buffer)-1 < len)) {                       \
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, NULL, argstr, argstr_len); \
+    rv = iBSP430cliStoreExtracted##tag_(&argstr, &argstr_len, (type_*)cmd->param); \
+    if (0 != rv) {                                                      \
+      return diagnosticFunction(chain, eBSP430_CLI_ERR_Invalid, NULL, argstr, argstr_len); \
     }                                                                   \
-    memcpy(buffer, vstr, len);                                          \
-    buffer[len] = 0;                                                    \
-    v = strtov_(buffer, &ep, 0);                                        \
-    if (*ep) {                                                          \
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, NULL, argstr, argstr_len); \
-    }                                                                   \
-    *(type_ *)cmd->param = v;                                           \
     return 0;                                                           \
   }
 
@@ -348,6 +376,9 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
       break;
     case eBSP430_CLI_ERR_MultiMatch:
       cputtext_ni("Ambiguous command: ");
+      break;
+    case eBSP430_CLI_ERR_Invalid:
+      cputtext_ni("Invalid value: ");
       break;
     default:
       cprintf("ERROR %u at: ", errtype);

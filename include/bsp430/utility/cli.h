@@ -263,6 +263,98 @@ iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
                         const char * command,
                         iBSP430cliHandlerFunction handler);
 
+/** Utility to extract and store a signed 16-bit integer expressed in
+ * text.
+ *
+ * @param argstrp pointer to a pointer to the text representation of a
+ * signed 16-bit integer, normally decimal but optionally in
+ * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
+ * success @a *argstrp is updated to point past the consumed integer
+ * token.
+ * 
+ * @param argstr_lenp pointer to the length of the @a *argstrp text.
+ * On success the @a *argstr_lenp is updated to hold
+ * the remaining length of the string.
+ *
+ * @param destp pointer to where the extracted and converted value
+ * should be stored.
+ *
+ * @return 0 if a valid value can be extracted and converted from the
+ * head of @*argstr; a negative value if the string has no token or
+ * the conversion was unsuccessful. */
+int iBSP430cliStoreExtractedI (const char * * argstrp,
+                               size_t * argstr_lenp,
+                               int * destp);
+
+/** Utility to extract and store an unsigned 16-bit integer expressed in
+ * text.
+ *
+ * @param argstrp pointer to a pointer to the text representation of a
+ * signed 16-bit integer, normally decimal but optionally in
+ * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
+ * success @a *argstrp is updated to point past the consumed integer
+ * token.
+ * 
+ * @param argstr_lenp pointer to the length of the @a *argstrp text.
+ * On success the @a *argstr_lenp is updated to hold
+ * the remaining length of the string.
+ *
+ * @param destp pointer to where the extracted and converted value
+ * should be stored.
+ *
+ * @return 0 if a valid value can be extracted and converted from the
+ * head of @*argstr; a negative value if the string has no token or
+ * the conversion was unsuccessful. */
+int iBSP430cliStoreExtractedUI (const char * * argstrp,
+                                size_t * argstr_lenp,
+                                unsigned int * destp);
+
+/** Utility to extract and store a signed 32-bit integer expressed in
+ * text.
+ *
+ * @param argstrp pointer to a pointer to the text representation of a
+ * signed 32-bit integer, normally decimal but optionally in
+ * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
+ * success @a *argstrp is updated to point past the consumed integer
+ * token.
+ * 
+ * @param argstr_lenp pointer to the length of the @a *argstrp text.
+ * On success the @a *argstr_lenp is updated to hold
+ * the remaining length of the string.
+ *
+ * @param destp pointer to where the extracted and converted value
+ * should be stored.
+ *
+ * @return 0 if a valid value can be extracted and converted from the
+ * head of @*argstr; a negative value if the string has no token or
+ * the conversion was unsuccessful. */
+int iBSP430cliStoreExtractedL (const char * * argstrp,
+                               size_t * argstr_lenp,
+                               long * destp);
+
+/** Utility to extract and store an unsigned 32-bit integer expressed
+ * in text.
+ *
+ * @param argstrp pointer to a pointer to the text representation of an
+ * unsigned 32-bit integer, normally decimal but optionally in
+ * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
+ * success @a *argstrp is updated to point past the consumed integer
+ * token.
+ * 
+ * @param argstr_lenp pointer to the length of the @a *argstrp text.
+ * On success the @a *argstr_lenp is updated to hold
+ * the remaining length of the string.
+ *
+ * @param destp pointer to where the extracted and converted value
+ * should be stored.
+ *
+ * @return 0 if a valid value can be extracted and converted from the
+ * head of @*argstr; a negative value if the string has no token or
+ * the conversion was unsuccessful. */
+int iBSP430cliStoreExtractedUL (const char * * argstrp,
+                                size_t * argstr_lenp,
+                                unsigned long * destp);
+
 /** Type for a command handler that needs only the remainder of the
  * command string.
  *
@@ -293,7 +385,7 @@ int iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
 
 /** Handler to store a signed 16-bit integer expressed in text.
  *
- * See iBSP430cliHandlerFunction().
+ * See iBSP430cliHandlerFunction() and iBSP430cliStoreI().
  *
  * @param chain Pointer to the end of the command chain.  @link
  * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected
@@ -313,7 +405,7 @@ int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
 
 /** Handler to store an unsigned 16-bit integer expressed in text.
  *
- * See iBSP430cliHandlerFunction().
+ * See iBSP430cliHandlerFunction() and iBSP430cliStoreUI().
  *
  * @param chain Pointer to the end of the command chain.  @link
  * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected to be a
@@ -333,7 +425,7 @@ int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
 
 /** Handler to store a signed 32-bit integer expressed in text.
  *
- * See iBSP430cliHandlerFunction().
+ * See iBSP430cliHandlerFunction() and iBSP430cliStoreL().
  *
  * @param chain Pointer to the end of the command chain.  @link
  * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected to
@@ -353,7 +445,7 @@ int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
 
 /** Handler to store an unsigned 32-bit integer expressed in text.
  *
- * See iBSP430cliHandlerFunction().
+ * See iBSP430cliHandlerFunction() and iBSP430cliStoreUL().
  *
  * @param chain Pointer to the end of the command chain.  @link
  * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected to
@@ -396,6 +488,10 @@ enum eBSP430cliErrorType {
   /** Returned when a token does not uniquely identify a command among
    * the set of acceptable commands. */
   eBSP430_CLI_ERR_MultiMatch,
+
+  /** Returned when a token in the command string is rejected by the
+   * processing command. */
+  eBSP430_CLI_ERR_Invalid,
 
   /** A sentinal value strictly greater than any valid enumeration
    * tag */

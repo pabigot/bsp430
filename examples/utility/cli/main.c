@@ -13,6 +13,22 @@
 #include <string.h>
 #include <ctype.h>
 
+struct data_t {
+  int ival;
+  unsigned int uival;
+  long lval;
+  unsigned long ulval;
+} data;
+
+void
+dumpData (void)
+{
+  cprintf("ival %d\n", data.ival);
+  cprintf("uival %u (0x%x)\n", data.uival, data.uival);
+  cprintf("lval %ld\n", data.lval);
+  cprintf("ulval %lu (0x%lx)\n", data.ulval, data.ulval);
+}
+
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
@@ -110,6 +126,82 @@ static sBSP430cliCommand dcmd_expand = {
 #define LAST_COMMAND &dcmd_expand
 
 static int
+cmd_show (const char * argstr)
+{
+  dumpData();
+  return 0;
+}
+static sBSP430cliCommand dcmd_show = {
+  .key = "show",
+  .help = "# Display the value of variables",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_show
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_show
+
+static int
+cmd_set_all (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  int rv;
+
+  rv = iBSP430cliStoreExtractedI(&argstr, &argstr_len, &data.ival);
+  if (0 == rv) {
+    rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &data.uival);
+  }
+  if (0 == rv) {
+    rv = iBSP430cliStoreExtractedL(&argstr, &argstr_len, &data.lval);
+  }
+  if (0 == rv) {
+    rv = iBSP430cliStoreExtractedUL(&argstr, &argstr_len, &data.ulval);
+  }
+  return rv;
+}
+static const sBSP430cliCommand dcmd_set_all = {
+  .key = "all",
+  .help = "[ival] [ [uival] [ [lval] [ [ulval] ] ] ]",
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_set_all
+};
+static const sBSP430cliCommand dcmd_set_ival = {
+  .key = "ival",
+  .help = "[signed 16-bit integer in octal, decimal, or hex]",
+  .next = &dcmd_set_all,
+  .handler = iBSP430cliHandlerStoreI,
+  .param = &data.ival
+};
+static const sBSP430cliCommand dcmd_set_uival = {
+  .key = "uival",
+  .help = "[unsigned 16-bit integer in octal, decimal, or hex]",
+  .next = &dcmd_set_ival,
+  .handler = iBSP430cliHandlerStoreUI,
+  .param = &data.uival
+};
+static const sBSP430cliCommand dcmd_set_lval = {
+  .key = "lval",
+  .help = "[signed 32-bit integer in octal, decimal, or hex]",
+  .next = &dcmd_set_uival,
+  .handler = iBSP430cliHandlerStoreL,
+  .param = &data.lval
+};
+static const sBSP430cliCommand dcmd_set_ulval = {
+  .key = "ulval",
+  .help = "[unsigned 32-bit integer in octal, decimal, or hex]",
+  .next = &dcmd_set_lval,
+  .handler = iBSP430cliHandlerStoreUL,
+  .param = &data.ulval
+};
+static const sBSP430cliCommand dcmd_set = {
+  .key = "set",
+  .child = &dcmd_set_ulval,
+  .next = LAST_COMMAND,
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_set
+
+static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,
           const char * command,
@@ -126,13 +218,6 @@ static sBSP430cliCommand dcmd_help = {
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_help
-
-// expand cmd...
-// set ival|uval|lval|ulval|date|time
-// show
-// time
-// reboot
-
 
 #define KEY_BS '\b'
 #define KEY_LF '\n'
@@ -208,9 +293,14 @@ void main ()
       }
     }
     if (flags & FLG_HAVE_COMMAND) {
+      int rv;
+      
       cputchar_ni('\n');
       *cp = 0;
-      iBSP430cliExecuteCommand(&dcmd_help, 0, command);
+      rv = iBSP430cliExecuteCommand(&dcmd_help, 0, command);
+      if (0 != rv) {
+        cprintf("Command execution returned %d\n", rv);
+      }
       cp = command;
       *cp = 0;
       flags &= ~FLG_HAVE_COMMAND;
