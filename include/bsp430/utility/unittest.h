@@ -57,6 +57,7 @@
 #define BSP430_UTILITY_UNITTEST_H
 
 #include <bsp430/platform.h>
+#include <string.h>
 #include <inttypes.h>
 
 /** @def configBSP430_UNITTEST
@@ -179,6 +180,14 @@ void vBSP430unittestFinalize (void);
     vBSP430unittestResult_(__LINE__, (v1_) == (v2_), expr_str_);        \
   } while (0)
 
+/** Validate that the ASCIIZ contents are equal */
+#define BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ(v1_,v2_) do {               \
+    static const char * expr_str_ = #v1_ "==" #v2_;                     \
+    const char * v1v_ = (v1_);                                          \
+    const char * v2v_ = (v2_);                                          \
+    vBSP430unittestResult_(__LINE__, 0 == strcmp(v1v_, v2v_), expr_str_); \
+  } while (0)
+
 /** Diagnose equality failures.
  *
  * @param v1_ an expression of some type
@@ -249,6 +258,6 @@ void vBSP430unittestFinalize (void);
  *
  * If they are not, emit a diagnostic showing both pointer values. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTp(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,void *,"%p")
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,const void *,"%p")
 
 #endif /* BSP430_UTILITY_UNITTEST_H */
