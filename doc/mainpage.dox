@@ -103,6 +103,9 @@ bsp430/periph/eusci.h FR5xx @endlink families;
 bsp430/periph/pmm.h PMM@endlink modules for 5xx/6xx/FR5xx devices allowing
 detection of reboot cause and control of ultra-low-power LPMx.5 modes;
 
+\li Pre-configured support for the @link bsp430/utility/rfem.h RF Evaluation
+Module@endlink headers on many experimenter boards;
+
 \li Utilities supporting a bi-direction @link bsp430/utility/console.h serial
 console@endlink, @link bsp430/utility/led.h LEDs@endlink, @link
 bsp430/utility/uptime.h ACLK-driven system timer@endlink, and demonstration

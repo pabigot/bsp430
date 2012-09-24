@@ -31,10 +31,10 @@
 
 /** @file
  *
- * @brief RF Evaluation Model connector support
+ * @brief RF Evaluation Module connector support
  *
  * Many MSP430 evaluation boards support an RF interface, often in the
- * form of the RF1/RF2 Evaluation Model connector and/or its companion
+ * form of the RF1/RF2 Evaluation Module connector and/or its companion
  * RF3 header.  In some cases, such as the #BSP430_PLATFORM_RF2500T,
  * the radio is built into the platform.  This header provides
  * standard names for the resources required to use these interfaces
