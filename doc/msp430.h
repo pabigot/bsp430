@@ -256,6 +256,10 @@
 #define TAG_ADC12_1            (0x08)    /**< (2xx) Tag for ADC12_1 Calibration Data */
 #define TAG_EMPTY              (0xFE)    /**< (2xx) Tag for Empty Data Field in Calibration Data */
 
+/* FLASH-related information */
+#define LOCKA               (0x0040)  /**< Segment A Lock bit: read = 1 - Segment is locked (read only) */
+#define LOCKINFO            (0x0080)  /**< Lock INFO Memory bit: read = 1 - Segment is locked (read only) */
+
 #endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */
