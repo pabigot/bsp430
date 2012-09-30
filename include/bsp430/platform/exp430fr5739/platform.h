@@ -69,6 +69,18 @@
 #define BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT4
 #define BSP430_PLATFORM_BUTTON1_PORT_BIT BIT1
 
+/* Standard LED colors.  Board has nothing but eight blue LEDs, so
+ * assign the first two to the red and green functions,
+ * respectively. */
+#define BSP430_LED_RED 0
+#define BSP430_LED_GREEN 1
+#define BSP430_LED_BLUE 2
+#define BSP430_LED_BLUE1 3
+#define BSP430_LED_BLUE2 4
+#define BSP430_LED_BLUE3 5
+#define BSP430_LED_BLUE4 6
+#define BSP430_LED_BLUE5 7
+
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */
 /* !BSP430! insert=module_startif */
