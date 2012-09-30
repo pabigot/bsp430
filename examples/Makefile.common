@@ -138,7 +138,8 @@ endif # BSP430_ROOT
 # on the make command line (EXT_*).
 CPPFLAGS += $(AUX_CPPFLAGS) $(EXT_CPPFLAGS)
 CFLAGS += $(AUX_CFLAGS) $(EXT_CFLAGS)
-LDFLAGS += $(AUX_LDFLAGS) $(EXT_CFLAGS)
+LDFLAGS += $(AUX_LDFLAGS) $(EXT_LDFLAGS)
+LDLIBS += $(AUX_LDLIBS) $(EXT_LDLIBS)
 
 # Object file derived from assembler source including preprocessor
 %.o: %.S
@@ -229,7 +230,7 @@ DEP += $(SRC:.c=.d) $(SRC_S:.S=.d)
 # AOUT: The name of the application image.
 AOUT ?= app.elf
 $(AOUT): $(OBJ)
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ)
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ) $(LDLIBS)
 ifneq (0,$(WITH_GCC))
 	$(SIZE) $@
 endif # WITH_GCC
