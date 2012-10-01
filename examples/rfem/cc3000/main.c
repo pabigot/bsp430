@@ -15,6 +15,7 @@
 #include <bsp430/utility/cli.h>
 #include <bsp430/utility/cc3000spi.h>
 #include <cc3000/wlan.h>
+#include <cc3000/nvmem.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -67,8 +68,10 @@ static void wlan_cb (long event_type,
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
+#undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
 
+#if 0
 static int
 cmd_wlan_stop (const char * argstr)
 {
@@ -77,14 +80,15 @@ cmd_wlan_stop (const char * argstr)
 }
 static sBSP430cliCommand dcmd_wlan_stop = {
   .key = "stop",
-  .help = "# Stop the CC3000 WLAN",
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_stop
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_stop
+#endif
 
+#if 0
 static int
 cmd_wlan_status (const char * argstr)
 {
@@ -112,7 +116,59 @@ static sBSP430cliCommand dcmd_wlan_status = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_status
+#endif
 
+#if 0
+static int
+cmd_wlan_connect (const char * argstr)
+{
+  long rl;
+  char ssid[33];
+  int ssid_len = 0;
+  unsigned char key[33];
+  int key_len = 0;
+  int security_type = WLAN_SEC_WPA;
+  const char * tp;
+  size_t remaining;
+  size_t len;
+  unsigned long t[2];
+
+  remaining = strlen(argstr);
+  tp = xBSP430cliNextToken(argstr, &remaining, &len);
+  argstr = tp + len;
+  remaining -= len;
+  if (*tp) {
+    memcpy(ssid, tp, len);
+    ssid_len = len;
+  }
+  ssid[ssid_len] = 0;
+
+  tp = xBSP430cliNextToken(argstr, &remaining, &len);
+  argstr += len;
+  remaining -= len;
+  if (*tp) {
+    memcpy(key, tp, len);
+    key_len = len;
+  }
+  key[key_len] = 0;
+  
+  cprintf("con '%s' '%s'\n", ssid, key);
+  t[0] = ulBSP430uptime_ni();
+  rl = wlan_connect(security_type, ssid, ssid_len, NULL, key, key_len);
+  t[1] = ulBSP430uptime_ni();
+  cprintf("con %ld in %s\n", rl, xBSP430uptimeAsText_ni(t[1]-t[0]));
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_connect = {
+  .key = "connect",
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_connect
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_connect
+
+#endif
 static int
 cmd_wlan_start (const char * argstr)
 {
@@ -125,7 +181,6 @@ cmd_wlan_start (const char * argstr)
 }
 static sBSP430cliCommand dcmd_wlan_start = {
   .key = "start",
-  .help = "# Start the CC3000 WLAN",
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_start
@@ -140,6 +195,39 @@ static sBSP430cliCommand dcmd_wlan = {
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_wlan
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND NULL
+
+static int
+cmd_nvmem_sp (const char * argstr)
+{
+  unsigned char patch_version[2];
+  unsigned char rv;
+
+  memset(patch_version, -1, sizeof(patch_version));
+  rv = nvmem_read_sp_version(patch_version);
+  cprintf("sp ret %u: %u.%u\n", rv, patch_version[0], patch_version[1]);
+  return 0;
+}
+
+static sBSP430cliCommand dcmd_nvmem_sp = {
+  .key = "sp",
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_nvmem_sp
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_nvmem_sp
+
+static sBSP430cliCommand dcmd_nvmem = {
+  .key = "nvmem",
+  .next = LAST_COMMAND,
+  .child = LAST_SUB_COMMAND
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_nvmem
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND NULL
 
 static int
 cmd_help (sBSP430cliCommandLink * chain,
@@ -152,7 +240,6 @@ cmd_help (sBSP430cliCommandLink * chain,
 }
 static sBSP430cliCommand dcmd_help = {
   .key = "help",
-  .help = "[cmd] # Show help on cmd or all commands",
   .next = LAST_COMMAND,
   .handler = cmd_help
 };
@@ -240,6 +327,11 @@ void main (void)
   }
   cputchar_ni('\n');
 #endif /* BSP430_MODULE_SYS */
+
+#if (BSP430_MODULE_PMM - 0) && ! (BSP430_MODULE_PMM_FRAM - 0)
+  rv = iBSP430pmmSetCoreVoltageLevel_ni(PMMCOREV_3);
+  cprintf("Vcore at %d\n", rv);
+#endif
 
   cprintf("PWR_EN at %s.%u\n", xBSP430portName(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_PWR_EN_PORT_BIT));
   cprintf("SPI_IRQ HAL at %s.%u\n", xBSP430portName(BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_SPI_IRQ_PORT_BIT));
