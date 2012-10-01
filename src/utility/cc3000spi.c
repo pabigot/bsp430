@@ -157,8 +157,7 @@ iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
                             tDriverPatches driver_patch_fn,
                             tBootLoaderPatches boot_loader_patch_fn)
 {
-  spi_ = hBSP430serialLookup(BSP430_RFEM_SPI0_PERIPH_HANDLE);
-  if (NULL == spi_) {
+  if (NULL == hBSP430serialLookup(BSP430_RFEM_SPI0_PERIPH_HANDLE)) {
     return -1;
   }
   
@@ -242,45 +241,51 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-
+  do {
+    if (spi_) {
+      break;
+    }
 #if 0
-  cprintf("%s SpiOpen(%p)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), pfRxHandler);
+    cprintf("%s SpiOpen(%p)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), pfRxHandler);
 #endif /* 0 */
 
-  /* Clear the SPI flags */
-  spiFlags_ = 0;
+    /* Open the device for 3-wire SPI.  Per
+     * http://processors.wiki.ti.com/index.php/CC3000_Host_Programming_Guide#CC3000_SPI_Operation
+     * the CC3000 can accept clock speeds up to 26MHz, so we might as
+     * well just use undivided SMCLK. */
+    spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_RFEM_SPI0_PERIPH_HANDLE),
+                                BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMSB | UCMST),
+                                UCSSEL_2, 1);
+    if (! spi_) {
+      break;
+    }
 
-  /* Preserve the callback pointer */
-  rxCallback_ni_ = pfRxHandler;
+    /* Clear the SPI flags */
+    spiFlags_ = 0;
 
-  /* Configure CC3000 power-enable pin and turn off power.  It'll be
-   * turned on in wlan_start(). */
-  pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
-  pwr_en_port->dir |= BSP430_RFEM_PWR_EN_PORT_BIT;
+    /* Preserve the callback pointer */
+    rxCallback_ni_ = pfRxHandler;
 
-  /* Clear chip select (set value before making it an output) */
-  CS_DEASSERT();
-  BSP430_PORT_HAL_HPL_DIR(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
+    /* Configure CC3000 power-enable pin and turn off power.  It'll be
+     * turned on in wlan_start(). */
+    pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
+    pwr_en_port->dir |= BSP430_RFEM_PWR_EN_PORT_BIT;
 
-  /* Open the device for 3-wire SPI.  Per
-   * http://processors.wiki.ti.com/index.php/CC3000_Host_Programming_Guide#CC3000_SPI_Operation
-   * the CC3000 can accept clock speeds up to 26MHz, so we might as
-   * well just use undivided SMCLK. */
-  spi_ = hBSP430serialOpenSPI(spi_,
-                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMSB | UCMST),
-                              UCSSEL_2, 1);
+    /* Clear chip select (set value before making it an output) */
+    CS_DEASSERT();
+    BSP430_PORT_HAL_HPL_DIR(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
 
-  /* Hook into the interrupt vector for the SPI IRQ, then enable
-   * interrupts on falling edge.  When wlan_start() turns on power,
-   * we'll get an interrupt indicating the chip is ready (wlan_start()
-   * also busy-waits internally for this event). */
-  spi_irq_cb.next_ni = spi_irq_hal->pin_cbchain_ni[spi_irq_pin];
-  spi_irq_hal->pin_cbchain_ni[spi_irq_pin] = &spi_irq_cb;
-  spiIRQport_->ies |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
-  spiIRQport_->dir &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
-  spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
-  wlanInterruptEnable_();
-
+    /* Hook into the interrupt vector for the SPI IRQ, then enable
+     * interrupts on falling edge.  When wlan_start() turns on power,
+     * we'll get an interrupt indicating the chip is ready (wlan_start()
+     * also busy-waits internally for this event). */
+    spi_irq_cb.next_ni = spi_irq_hal->pin_cbchain_ni[spi_irq_pin];
+    spi_irq_hal->pin_cbchain_ni[spi_irq_pin] = &spi_irq_cb;
+    spiIRQport_->ies |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    spiIRQport_->dir &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    wlanInterruptEnable_();
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
@@ -294,31 +299,35 @@ SpiClose (void)
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
-
+  do {
+    if (! spi_) {
+      break;
+    }
 #if 0
-  cprintf("%s SpiClose()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+    cprintf("%s SpiClose()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
 #endif /* 0 */
 
-  /* Disable interrupts, clear pending interrupt, and unhook from
-   * the ISR chain.  Set the GPIO to output low. */
-  tSLInformation.WlanInterruptDisable();
-  spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
-  spi_irq_hal->pin_cbchain_ni[spi_irq_pin] = spi_irq_cb.next_ni;
-  spiIRQport_->out &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
-  spiIRQport_->dir |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    /* Disable interrupts, clear pending interrupt, and unhook from
+     * the ISR chain.  Set the GPIO to output low. */
+    tSLInformation.WlanInterruptDisable();
+    spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    spi_irq_hal->pin_cbchain_ni[spi_irq_pin] = spi_irq_cb.next_ni;
+    spiIRQport_->out &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    spiIRQport_->dir |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
 
-  /* Close down SPI peripheral */
-  (void)iBSP430serialClose(spi_);
+    /* Close down SPI peripheral */
+    (void)iBSP430serialClose(spi_);
 
-  /* Release the chip select line, just for completeness. */
-  CS_DEASSERT();
+    /* Release the chip select line, just for completeness. */
+    CS_DEASSERT();
+    
+    /* Power down the CC3000.  In fact, this was already done by
+     * wlan_stop(). */
+    pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
 
-  /* Power down the CC3000.  In fact, this was already done by
-   * wlan_stop(). */
-  pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
-
-  rxCallback_ni_ = NULL;
-
+    rxCallback_ni_ = NULL;
+    spi_ = NULL;
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
