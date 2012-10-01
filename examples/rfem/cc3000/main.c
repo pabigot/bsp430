@@ -98,10 +98,13 @@ void main (void)
   cprintf(__DATE__ " " __TIME__ "\n");
 
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
+  BSP430_CORE_ENABLE_INTERRUPT();
+
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
   wlan_start(0);
   cprintf("%s Past wlan start\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-  
+  wlan_stop();
+  cprintf("%s Past wlan stop\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
   
   cprintf("Leaving program\n");
 }

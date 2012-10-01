@@ -86,7 +86,12 @@
 /** BSP430 wrapper around CC3000 wlan_init().
  *
  * This interface provides access to user-level callbacks, and adds
- * the driver-level callbacks internally.  
+ * the driver-level callbacks internally.
+ *
+ * @note While this function may be called with interrupts disabled,
+ * it does nothing but store some configuration information.  All
+ * other CC3000 operations including wlan_start() should be called
+ * with interrupts enabled.
  *
  * @param wlan_cb see wlan_init() documentation.
  *
@@ -99,7 +104,8 @@
  * @param boot_loader_patch_fn see wlan_init() documentation.  Passing
  * @c NULL is generally appropriate.
  * 
- * @return 0
+ * @return 0 if all goes well; -1 if one of the underlying BSP430
+ * resources could not be obtained.
  */
 int iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
                                 tFWPatches firmware_patch_fn,
