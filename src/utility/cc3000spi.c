@@ -57,12 +57,16 @@
 /** Globally visible array wherein CC3000 host driver will place data
  * to be written to the device.  Poor API design, but what can you
  * do? */
+#if defined(__MSP430FR5739__)
 __attribute__((__section__(".rodata")))
+#endif /* __MSP430FR5739__ */
 unsigned char wlan_tx_buffer[BSP430_CC3000SPI_TX_BUFFER_SIZE];
 
 /** Not globally visible array for local collection of incoming data
  * from the CC3000. */
+#if defined(__MSP430FR5739__)
 __attribute__((__section__(".rodata")))
+#endif /* __MSP430FR5739__ */
 static unsigned char wlan_rx_buffer[BSP430_CC3000SPI_RX_BUFFER_SIZE];
 
 /** Bit set in spiFlags_ when the CC3000 has powered up and is
@@ -92,12 +96,12 @@ static gcSpiHandleRx rxCallback_ni_;
 /* Assert chip select by clearing CSn */
 #define CS_ASSERT() do {                                                \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;  \
-    vBSP430ledSet(BSP430_LED_GREEN, 1);                                 \
+    vBSP430ledSet(0, 1);                                                \
   } while (0)
   
 /* De-assert chip select by setting CSn */
 #define CS_DEASSERT() do {                                              \
-    vBSP430ledSet(BSP430_LED_GREEN, 0);                                 \
+    vBSP430ledSet(0, 0);                                                \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;   \
   } while (0)
 
@@ -185,7 +189,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
 #if 0
   cprintf("%s processSpiIRQ_\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
 #endif /* 0 */
-  vBSP430ledSet(BSP430_LED_RED, 1);
+  vBSP430ledSet(1, 1);
   if (spiFlags_ & SPIFLAG_INITIALIZED) {
     int rv;
     const unsigned char opcode = CC3000_SPI_OPCODE_READ;
@@ -215,9 +219,9 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
 
       /* Pass the packet off to the driver.  Again, yes, right here in
        * the ISR. */
-      vBSP430ledSet(BSP430_LED_BLUE, 1);
+      vBSP430ledSet(2, 1);
       rxCallback_ni_(rp);
-      vBSP430ledSet(BSP430_LED_BLUE, 0);
+      vBSP430ledSet(2, 0);
     }
   } else {
     /* If not initialized, this is the IRQ raised by the CC3000 to
@@ -225,7 +229,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
      * to read, no callback to invoke. */
     spiFlags_ |= SPIFLAG_INITIALIZED;
   }
-  vBSP430ledSet(BSP430_LED_RED, 0);
+  vBSP430ledSet(1, 0);
   return 0;
 }
 
