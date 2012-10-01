@@ -29,6 +29,20 @@ const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
 static int
+cmd_wlan_stop (const char * argstr)
+{
+  wlan_stop();
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_stop = {
+  .key = "stop",
+  .help = "# Stop the CC3000 WLAN",
+  .next = NULL,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_stop
+};
+
+static int
 cmd_wlan_start (const char * argstr)
 {
   unsigned long t[2];
@@ -41,28 +55,18 @@ cmd_wlan_start (const char * argstr)
 static sBSP430cliCommand dcmd_wlan_start = {
   .key = "start",
   .help = "# Start the CC3000 WLAN",
-  .next = LAST_COMMAND,
+  .next = &dcmd_wlan_stop,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_start
 };
-#undef LAST_COMMAND
-#define LAST_COMMAND &dcmd_wlan_start
 
-static int
-cmd_wlan_stop (const char * argstr)
-{
-  wlan_stop();
-  return 0;
-}
-static sBSP430cliCommand dcmd_wlan_stop = {
-  .key = "stop",
-  .help = "# Stop the CC3000 WLAN",
+static sBSP430cliCommand dcmd_wlan = {
+  .key = "wlan",
   .next = LAST_COMMAND,
-  .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_stop
+  .child = &dcmd_wlan_start
 };
 #undef LAST_COMMAND
-#define LAST_COMMAND &dcmd_wlan_stop
+#define LAST_COMMAND &dcmd_wlan
 
 static int
 cmd_help (sBSP430cliCommandLink * chain,
