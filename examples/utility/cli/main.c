@@ -309,6 +309,6 @@ void main ()
     if (flags) {
       continue;
     }
-    BSP430_CORE_LPM_ENTER_NI(LPM4_bits | GIE);
+    BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
   }
 }
