@@ -5,6 +5,7 @@ MODULES += $(MODULES_CONSOLE)
 MODULES += periph/port
 MODULES += periph/sys
 MODULES += utility/cc3000spi
+MODULES += utility/cli
 
 CC3000_ROOT ?= /usr/local/msp430-cc3000-236a
 AUX_CPPFLAGS=-I$(CC3000_ROOT)/include

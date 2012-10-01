@@ -12,8 +12,11 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>
+#include <bsp430/utility/cli.h>
 #include <bsp430/utility/cc3000spi.h>
 #include <cc3000/wlan.h>
+#include <string.h>
+#include <ctype.h>
 
 static void wlan_cb (long event_type,
                      char * data,
@@ -22,9 +25,78 @@ static void wlan_cb (long event_type,
   cprintf("wlan_cb %#lx %u at %p SR %#x\n", event_type, length, data, __read_status_register());
 }
 
+const sBSP430cliCommand * commandSet;
+#define LAST_COMMAND NULL
+
+static int
+cmd_wlan_start (const char * argstr)
+{
+  wlan_start(0);
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_start = {
+  .key = "start",
+  .help = "# Start the CC3000 WLAN",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_start
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_wlan_start
+
+static int
+cmd_wlan_stop (const char * argstr)
+{
+  wlan_stop();
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_stop = {
+  .key = "stop",
+  .help = "# Stop the CC3000 WLAN",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_stop
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_wlan_stop
+
+static int
+cmd_help (sBSP430cliCommandLink * chain,
+          void * param,
+          const char * command,
+          size_t command_len)
+{
+  vBSP430cliConsoleDisplayHelp(chain->cmd);
+  return 0;
+}
+static sBSP430cliCommand dcmd_help = {
+  .key = "help",
+  .help = "[cmd] # Show help on cmd or all commands",
+  .next = LAST_COMMAND,
+  .handler = cmd_help
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_help
+
+#define KEY_BS '\b'
+#define KEY_LF '\n'
+#define KEY_CR '\r'
+#define KEY_BEL '\a'
+#define KEY_ESC '\e'
+#define KEY_FF '\f'
+#define KEY_TAB '\t'
+#define KEY_KILL_LINE 0x15
+#define KEY_KILL_WORD 0x17
+char command[40];
+
+#define FLG_NEED_PROMPT 0x01
+#define FLG_HAVE_COMMAND 0x02
+
 void main (void)
 {
   int rv;
+  unsigned int flags = 0;
+  char * cp;
 #if BSP430_MODULE_SYS - 0
   unsigned long reset_causes = 0;
   unsigned int reset_flags = 0;
@@ -98,12 +170,84 @@ void main (void)
   cprintf(__DATE__ " " __TIME__ "\n");
 
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
-  BSP430_CORE_ENABLE_INTERRUPT();
-
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
+
+  vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
+  cprintf("\n\n\nAnd we're up and running.\n");
+  flags = FLG_NEED_PROMPT;
+  memset(command, 0, sizeof(command));
+  cp = command;
+
+  commandSet = LAST_COMMAND;
+  while (1) {
+    int c;
+
+    if (flags & FLG_NEED_PROMPT) {
+      *cp = 0;
+      cprintf("> %s", command);
+      flags &= ~FLG_NEED_PROMPT;
+    }
+    while (0 <= ((c = cgetchar_ni()))) {
+      if (KEY_BS == c) {
+        if (cp == command) {
+          cputchar_ni(KEY_BEL);
+        } else {
+          --cp;
+          cputtext_ni("\b \b");
+        }
+      } else if (KEY_CR == c) {
+        flags |= FLG_HAVE_COMMAND;
+        break;
+      } else if (KEY_KILL_LINE == c) {
+        cprintf("\e[%uD\e[K", cp - command);
+        cp = command;
+        *cp = 0;
+      } else if (KEY_KILL_WORD == c) {
+        char * kp = cp;
+        while (--kp > command && isspace(*kp)) {
+        }
+        while (--kp > command && !isspace(*kp)) {
+        }
+        ++kp;
+        cprintf("\e[%uD\e[K", cp-kp);
+        cp = kp;
+        *cp = 0;
+      } else if (KEY_FF == c) {
+        cputchar_ni(c);
+        flags |= FLG_NEED_PROMPT;
+      } else {
+        if ((1+cp) >= (command + sizeof(command))) {
+          cputchar_ni(KEY_BEL);
+        } else {
+          *cp++ = c;
+          cputchar_ni(c);
+        }
+      }
+    }
+    if (flags & FLG_HAVE_COMMAND) {
+      int rv;
+      
+      cputchar_ni('\n');
+      *cp = 0;
+      rv = iBSP430cliExecuteCommand(&dcmd_help, 0, command);
+      if (0 != rv) {
+        cprintf("Command execution returned %d\n", rv);
+      }
+      cp = command;
+      *cp = 0;
+      flags &= ~FLG_HAVE_COMMAND;
+      flags |= FLG_NEED_PROMPT;
+    }
+    if (flags) {
+      continue;
+    }
+    BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
+  }
+#if 0
   cprintf("%s wlan_start(0)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
   wlan_start(0);
   cprintf("%s wlan_stop()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
   wlan_stop();
   cprintf("%s Leaving program\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+#endif
 }
