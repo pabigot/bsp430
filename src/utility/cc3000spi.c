@@ -139,7 +139,9 @@ static void
 writeWlanPin_ (unsigned char val)
 {
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
-  //cprintf("%s writeWlanPin_(%d)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), val);
+#if 0
+  cprintf("%s writeWlanPin_(%d)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), val);
+#endif /* 0 */
 
   if (val) {
     pwr_en_port->out |= BSP430_RFEM_PWR_EN_PORT_BIT;
@@ -181,7 +183,9 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
                 void * context,
                 int idx)
 {
+#if 0
   cprintf("%s processSpiIRQ_\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+#endif /* 0 */
   vBSP430ledSet(BSP430_LED_RED, 1);
   if (spiFlags_ & SPIFLAG_INITIALIZED) {
     int rv;
@@ -209,16 +213,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
       /* Turn off the interrupt while we process this message.  The
        * driver will invoke SpiResume() to turn it back on. */
       wlanInterruptDisable_();
-#if 0
-      {
-        const unsigned char * const rpe = rp + len;
-        const unsigned char * rp2 = wlan_rx_buffer;
-        cprintf("processSpiIRQ_() read %u:\n", len);
-        while (rp2 < rpe) {
-          cprintf(" %02x", *rp2++);
-        }
-      }
-#endif
+
       /* Pass the packet off to the driver.  Again, yes, right here in
        * the ISR. */
       vBSP430ledSet(BSP430_LED_BLUE, 1);
@@ -227,8 +222,8 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
     }
   } else {
     /* If not initialized, this is the IRQ raised by the CC3000 to
-     * notify the MCU that it is now powered up and active.  No user
-     * callback need be invoked. */
+     * notify the MCU that it is now powered up and active.  No data
+     * to read, no callback to invoke. */
     spiFlags_ |= SPIFLAG_INITIALIZED;
   }
   vBSP430ledSet(BSP430_LED_RED, 0);
@@ -248,7 +243,9 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
 
+#if 0
   cprintf("%s SpiOpen(%p)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), pfRxHandler);
+#endif /* 0 */
 
   /* Clear the SPI flags */
   spiFlags_ = 0;
@@ -298,7 +295,9 @@ SpiClose (void)
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
 
+#if 0
   cprintf("%s SpiClose()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+#endif /* 0 */
 
   /* Disable interrupts, clear pending interrupt, and unhook from
    * the ISR chain.  Set the GPIO to output low. */
@@ -331,7 +330,9 @@ SpiWrite (unsigned char * tx_buffer,
   unsigned char * tp = tx_buffer;
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
+#if 0
   cprintf("%s SpiWrite(%p, %u)...", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), tx_buffer, len);
+#endif /* 0 */
 
   /* Total length of packet must be an even number of octets.  Packet
    * length is user-provided length plus the length of the SPI header,
@@ -374,7 +375,9 @@ SpiWrite (unsigned char * tx_buffer,
 
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
+#if 0
   cprintf("%d\n", rv);
+#endif /* 0 */
   return (0 <= rv) ? rv : 0;
 }
 
@@ -383,6 +386,8 @@ SpiWrite (unsigned char * tx_buffer,
 void
 SpiResumeSpi (void)
 {
+#if 0
   cprintf("%s SpiResume()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+#endif /* 0 */
   wlanInterruptEnable_();
 }
