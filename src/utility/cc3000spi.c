@@ -50,12 +50,30 @@
 #include <bsp430/serial.h>
 #include <cc3000/cc3000_common.h>
 #include <cc3000/wlan.h>
+#include <cc3000/hci.h>
 #include <cc3000/spi.h>
 
+/** Globally visible array wherein CC3000 will place data for
+ * communication.  Poor API design, but what can you do? */
 unsigned char wlan_tx_buffer[BSP430_CC3000SPI_TX_BUFFER_SIZE];
 
+/** Bit set in spiFlags_ when the CC3000 has powered up and is
+ * attentive (via an IRQ after a power-up). */
 #define SPIFLAG_INITIALIZED 0x01
+
+/** Bit set in spiFlags_ after the first SPI write has been completed.
+ * Per
+ * http://processors.wiki.ti.com/index.php/CC3000_Host_Programming_Guide#First_Host_Write_Operation,
+ * this first operation has special timing requirements. */
 #define SPIFLAG_DID_FIRST_WRITE 0x02
+
+/** The CC3000 transaction header opcode used when writing to the
+ * device. */
+#define CC3000_SPI_OPCODE_WRITE 1
+
+/** The CC3000 transaction header opcode used when reading from the
+ * device. */
+#define CC3000_SPI_OPCODE_READ 3
 
 static unsigned int spiFlags_;
 static hBSP430halSERIAL spi_;
@@ -63,46 +81,61 @@ static hBSP430halPORT halCSn_;
 static volatile sBSP430hplPORTIE * spiIRQport_;
 static gcSpiHandleRx rxCallback_;
 
+/* Assert chip select by clearing CSn */
 #define ASSERT_CS() do {                                                \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;  \
   } while (0)
   
+/* De-assert chip select by setting CSn */
 #define DEASSERT_CS() do {                                              \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;   \
   } while (0)
 
-
-/* Implementation of tWlanReadInterruptPin for wlan_init() */
+/* Implementation of tWlanReadInterruptPin for wlan_init().
+ * 
+ * This is used in wlan_start() to detect that the CC3000 has
+ * successfully powered up. */
 static long
 readWlanInterruptPin_ (void)
 {
   return spiIRQport_->in & BSP430_RFEM_SPI_IRQ_PORT_BIT;
 }
 
-/* Implementation of tWlanInterruptEnable for wlan_init() */
+/* Implementation of tWlanInterruptEnable for wlan_init().
+ *
+ * Required by the interface, but not used by the host driver
+ * implementation.  Used internally. */
 static void
 wlanInterruptEnable_ (void)
 {
   spiIRQport_->ie |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
 }
 
-/* Implementation of tWlanInterruptDisable for wlan_init() */
+/* Implementation of tWlanInterruptDisable for wlan_init().
+ *
+ * Required by the interface, but not used by the host driver
+ * implementation.  Used internally.  */
 static void
 wlanInterruptDisable_ (void)
 {
   spiIRQport_->ie &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
 }
 
-/* Implementation of tWriteWlanPin for wlan_init() */
+/* Implementation of tWriteWlanPin for wlan_init().
+ *
+ * This is used in wlan_start() to power-up the CC3000, and in
+ * wlan_stop() to shut it down again. */
 static void
 writeWlanPin_ (unsigned char val)
 {
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
   cprintf("%s writeWlanPin_(%d)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), val);
+
   if (val) {
     pwr_en_port->out |= BSP430_RFEM_PWR_EN_PORT_BIT;
   } else {
     pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
+    spiFlags_ &= ~SPIFLAG_INITIALIZED;
   }
 }
 
@@ -138,9 +171,19 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
                 void * context,
                 int idx)
 {
+  int rv;
   cprintf("%s processSpiIRQ_()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-  spiFlags_ |= SPIFLAG_INITIALIZED;
-  return 0;
+
+  if (spiFlags_ & SPIFLAG_INITIALIZED) {
+    rv = 0;
+  } else {
+    /* If not initialized, this is the IRQ raised by the CC3000 to
+     * notify the MCU that it is now powered up and active.  No user
+     * callback need be invoked. */
+    spiFlags_ |= SPIFLAG_INITIALIZED;
+    rv = 0;
+  }
+  return rv;
 }
 
 static sBSP430halISRIndexedChainNode spi_irq_cb = { .callback = processSpiIRQ_ };
@@ -235,8 +278,49 @@ long
 SpiWrite (unsigned char * tx_buffer,
           unsigned short len)
 {
+  int rv;
+  unsigned char * tp = tx_buffer;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+
   cprintf("%s SpiWrite(%p, %u)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), tx_buffer, len);
-  return 0;
+
+  /* Total length of packet must be an even number of octets.  Packet
+   * length is user-provided length plus the length of the SPI header,
+   * which happens to be odd.  Pad the payload if necessary. */
+  if (0x01 & (len + SPI_HEADER_SIZE)) {
+    ++len;
+  }
+
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+
+  /* The caller-provided tx_buffer includes SPI_HEADER_SIZE octets at
+   * the front, ready for our use. */
+  *tp++ = CC3000_SPI_OPCODE_WRITE;
+  *tp++ = len >> 8;
+  *tp++ = len & 0x0FF;
+  *tp++ = 0;
+  *tp++ = 0;
+  len += SPI_HEADER_SIZE;
+  
+  ASSERT_CS();
+  while (0 != readWlanInterruptPin_()) {
+    ;
+  }
+  if (! (spiFlags_ & SPIFLAG_DID_FIRST_WRITE)) {
+    BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
+    tp = tx_buffer;
+    rv = iBSP430spiTxRx_ni(spi_, tp, 4, 0, NULL);
+    tp += 4;
+    len -= 4;
+    BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
+  }
+  rv = iBSP430spiTxRx_ni(spi_, tp, len, 0, NULL);
+  DEASSERT_CS();
+
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
+  return (0 <= rv) ? rv : 0;
 }
 
 void
