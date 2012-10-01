@@ -31,7 +31,11 @@ const sBSP430cliCommand * commandSet;
 static int
 cmd_wlan_start (const char * argstr)
 {
+  unsigned long t[2];
+  t[0] = ulBSP430uptime_ni();
   wlan_start(0);
+  t[1] = ulBSP430uptime_ni();
+  cprintf("wlan_start() took %s\n", xBSP430uptimeAsText_ni(t[1]-t[0]));
   return 0;
 }
 static sBSP430cliCommand dcmd_wlan_start = {
