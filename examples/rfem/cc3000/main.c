@@ -13,6 +13,7 @@
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/utility/cc3000spi.h>
+#include <cc3000/wlan.h>
 
 static void wlan_cb (long event_type,
                      char * data,
@@ -97,7 +98,10 @@ void main (void)
   cprintf(__DATE__ " " __TIME__ "\n");
 
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
-  cprintf("Initialize returned %d\n", rv);
+  cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
+  wlan_start(0);
+  cprintf("%s Past wlan start\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+  
   
   cprintf("Leaving program\n");
 }

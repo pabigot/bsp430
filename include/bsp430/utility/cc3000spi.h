@@ -53,6 +53,36 @@
 #include <bsp430/utility/rfem.h>
 #include <cc3000/cc3000_common.h>
 
+/** Size of the cc3000spi receive buffer, in octets.
+ *
+ * The value is an integer between #CC3000_MINIMAL_RX_SIZE=119 and
+ * #CC3000_MAXIMAL_RX_SIZE=1520, unless #CC3000_TINY_DRIVER is defined
+ * in which case #CC3000_MAXIMAL_RX_SIZE is 44.
+ * 
+ * <cc3000/cc3000_common.h> unconditionally defines a
+ * CC3000_RX_BUFFER_SIZE constant, but it is not referenced by the
+ * driver and is not relevant to this implementation.
+ *
+ */
+#ifndef BSP430_CC3000SPI_RX_BUFFER_SIZE
+#define BSP430_CC3000SPI_RX_BUFFER_SIZE 400
+#endif /* BSP430_CC3000SPI_RX_BUFFER_SIZE */
+
+/** Size of the cc3000spi transmit buffer, in octets.
+ *
+ * The value is an integer between #CC3000_MINIMAL_TX_SIZE=119 and
+ * #CC3000_MAXIMAL_TX_SIZE=1520, unless #CC3000_TINY_DRIVER is defined
+ * in which case #CC3000_MAXIMAL_TX_SIZE is 59.
+ * 
+ * <cc3000/cc3000_common.h> unconditionally defines a
+ * CC3000_TX_BUFFER_SIZE constant, but it is not referenced by the
+ * driver and is not relevant to this implementation.
+ *
+ */
+#ifndef BSP430_CC3000SPI_TX_BUFFER_SIZE
+#define BSP430_CC3000SPI_TX_BUFFER_SIZE 400
+#endif /* BSP430_CC3000SPI_TX_BUFFER_SIZE */
+
 /** BSP430 wrapper around CC3000 wlan_init().
  *
  * This interface provides access to user-level callbacks, and adds

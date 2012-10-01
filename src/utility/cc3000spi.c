@@ -33,16 +33,24 @@
  *
  * @brief Implementation for the BSP430 CC3000 SPI Host Driver interface
  *
+ * This follows the specification at
+ * http://processors.wiki.ti.com/index.php/CC3000_Host_Driver_Porting_Guide,
+ * informed by the use of these functions in the host driver version
+ * 6.10.
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #include <bsp430/platform.h>
 #include <bsp430/utility/cc3000spi.h>
+#include <bsp430/utility/console.h>
+#include <bsp430/utility/uptime.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/serial.h>
 #include <cc3000/cc3000_common.h>
 #include <cc3000/wlan.h>
+#include <cc3000/spi.h>
 
 /* Implementation of tWlanReadInterruptPin for wlan_init() */
 static long
@@ -74,6 +82,7 @@ static void
 writeWlanPin_ (unsigned char val)
 {
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
+  cprintf("%s writeWlanPin_(%d)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), val);
   if (val) {
     pwr_en_port->out |= BSP430_RFEM_PWR_EN_PORT_BIT;
   } else {
@@ -91,4 +100,29 @@ iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
             readWlanInterruptPin_, wlanInterruptEnable_, wlanInterruptDisable_,
             writeWlanPin_);
   return 0;
+}
+
+unsigned char wlan_tx_buffer[BSP430_CC3000SPI_TX_BUFFER_SIZE];
+
+void
+SpiOpen (gcSpiHandleRx pfRxHandler)
+{
+  cprintf("%s SpiOpen(%p)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), pfRxHandler);
+}
+
+void
+SpiClose (void)
+{
+}
+
+long
+SpiWrite (unsigned char * tx_buffer,
+          unsigned short len)
+{
+  return 0;
+}
+
+void
+SpiResumeSpi (void)
+{
 }
