@@ -19,6 +19,18 @@
 #include <string.h>
 #include <ctype.h>
 
+/* Memory is extremely tight on the FR5739.  Set these to restrict the
+ * set of commands to ones of interest that will fit. */
+#define CMD_WLAN 1
+#define CMD_WLAN_STOP 0
+#define CMD_WLAN_STATUS 1
+#define CMD_WLAN_CONNECT 1
+#define CMD_WLAN_START 1
+#define CMD_NVMEM 0
+#define CMD_NVMEM_SP 0
+#define CMD_NVMEM_READ 1
+#define CMD_HELP 1
+
 #if 0
 typedef struct sWlanSecMap {
   unsigned int val;
@@ -71,7 +83,7 @@ const sBSP430cliCommand * commandSet;
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
 
-#if 0
+#if (CMD_WLAN - 0) && (CMD_WLAN_STOP - 0)
 static int
 cmd_wlan_stop (const char * argstr)
 {
@@ -86,9 +98,9 @@ static sBSP430cliCommand dcmd_wlan_stop = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_stop
-#endif
+#endif /* CMD_WLAN_STOP */
 
-#if 0
+#if (CMD_WLAN - 0) && (CMD_WLAN_STATUS - 0)
 static int
 cmd_wlan_status (const char * argstr)
 {
@@ -116,9 +128,9 @@ static sBSP430cliCommand dcmd_wlan_status = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_status
-#endif
+#endif /* CMD_WLAN_STATUS */
 
-#if 0
+#if (CMD_WLAN - 0) && (CMD_WLAN_CONNECT - 0)
 static int
 cmd_wlan_connect (const char * argstr)
 {
@@ -167,8 +179,9 @@ static sBSP430cliCommand dcmd_wlan_connect = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_connect
+#endif /* CMD_WLAN_CONNECT */
 
-#endif
+#if (CMD_WLAN - 0) && (CMD_WLAN_START - 0)
 static int
 cmd_wlan_start (const char * argstr)
 {
@@ -187,7 +200,9 @@ static sBSP430cliCommand dcmd_wlan_start = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_start
+#endif /* CMD_WLAN_START */
 
+#if (CMD_WLAN - 0)
 static sBSP430cliCommand dcmd_wlan = {
   .key = "wlan",
   .next = LAST_COMMAND,
@@ -197,8 +212,9 @@ static sBSP430cliCommand dcmd_wlan = {
 #define LAST_COMMAND &dcmd_wlan
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
+#endif /* CMD_WLAN */
 
-#if 0
+#if (CMD_NVMEM - 0) && (CMD_NVMEM_SP - 0)
 static int
 cmd_nvmem_sp (const char * argstr)
 {
@@ -218,8 +234,9 @@ static sBSP430cliCommand dcmd_nvmem_sp = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_sp
-#endif
+#endif /* CMD_NVMEM_SP */
 
+#if (CMD_NVMEM - 0) && (CMD_NVMEM_READ - 0)
 static int
 cmd_nvmem_read (const char * argstr)
 {
@@ -254,7 +271,7 @@ cmd_nvmem_read (const char * argstr)
       nb = sizeof(data);
     }
     rc = nvmem_read(fileid, nb, ofs, data);
-    cprintf("%u @ %u got %u\n", nb, ofs, rc);
+    cprintf("%u @ %x.%u got %u\n", nb, fileid, ofs, rc);
     dp = data;
     dpe = dp + nb;
     while (dp < dpe) {
@@ -279,7 +296,9 @@ static sBSP430cliCommand dcmd_nvmem_read = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_read
+#endif /* CMD_NVMEM_READ */
 
+#if (CMD_NVMEM - 0)
 static sBSP430cliCommand dcmd_nvmem = {
   .key = "nvmem",
   .next = LAST_COMMAND,
@@ -289,8 +308,9 @@ static sBSP430cliCommand dcmd_nvmem = {
 #define LAST_COMMAND &dcmd_nvmem
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
+#endif /* CMD_NVMEM */
 
-#if 0
+#if (CMD_HELP - 0)
 static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,
@@ -307,7 +327,7 @@ static sBSP430cliCommand dcmd_help = {
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_help
-#endif
+#endif /* CMD_HELP */
 
 #define KEY_BS '\b'
 #define KEY_LF '\n'
