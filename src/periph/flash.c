@@ -36,7 +36,9 @@
 
 /** @file
  *
- * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012, Peter A. Bigot.  Portions Copyright
+ * 2012, Texas Instruments Incorporated.  Licensed under <a
+ * href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #include <bsp430/periph/flash.h>

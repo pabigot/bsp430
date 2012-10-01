@@ -1,12 +1,15 @@
 The majority of files in this package are copyright Peter A. Bigot, are
 released under the BSD-3-Clause license, and are so-marked in the source.
-Docy
 
 Most material in the examples subdirectory is placed in the public domain
 and is so-marked.
 
-Exceptions to this are listed below.
+Exceptions to this are listed below.  
 
-File          License        Copyright                  Comment
-------------  ------------   ----------------------     ---------------
-doc/msp430.h  BSD-3-Clause   2012 Texas Instruments     Derivative work
+File                 License        Copyright                  Comment
+------------         ------------   ----------------------     ---------------
+doc/msp430.h         BSD-3-Clause   2012 Texas Instruments     Derivative work
+examples/platform/exp430f5529/fatfs/bsp430mmc.c \
+                     ChaN           2012 ChaN                  Derivative work
+src/periph/flash.c   BSD-3-Clause   2012 Texas Instruments     Derivative work
+src/periph/pmm.c     BSD-3-Clause   2012 Texas Instruments     Derivative work
