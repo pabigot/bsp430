@@ -198,6 +198,7 @@ static sBSP430cliCommand dcmd_wlan = {
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
 
+#if 0
 static int
 cmd_nvmem_sp (const char * argstr)
 {
@@ -209,7 +210,6 @@ cmd_nvmem_sp (const char * argstr)
   cprintf("sp ret %u: %u.%u\n", rv, patch_version[0], patch_version[1]);
   return 0;
 }
-
 static sBSP430cliCommand dcmd_nvmem_sp = {
   .key = "sp",
   .next = LAST_SUB_COMMAND,
@@ -218,6 +218,67 @@ static sBSP430cliCommand dcmd_nvmem_sp = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_sp
+#endif
+
+static int
+cmd_nvmem_read (const char * argstr)
+{
+  int rc;
+  unsigned int fileid = 0;
+  unsigned int len = 128;
+  unsigned int ofs = 0;
+  unsigned char data[32];
+  unsigned int end_read;
+  unsigned int ui;
+  size_t argstr_len = strlen(argstr);
+  
+  rc = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &ui);
+  if (0 == rc) {
+    fileid = ui;
+    rc = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &ui);
+  }
+  if (0 == rc) {
+    len = ui;
+    rc = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &ui);
+  }
+  if (0 == rc) {
+    ofs = ui;
+    rc = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &ui);
+  }
+  end_read = ofs + len;
+  while (ofs < end_read) {
+    unsigned char * dp;
+    unsigned char * dpe;
+    unsigned int nb = (end_read - ofs);
+    if (sizeof(data) < nb) {
+      nb = sizeof(data);
+    }
+    rc = nvmem_read(fileid, nb, ofs, data);
+    cprintf("%u @ %u got %u\n", nb, ofs, rc);
+    dp = data;
+    dpe = dp + nb;
+    while (dp < dpe) {
+      if (0 == (ofs % 16)) {
+        cprintf("\n%x.%04x ", fileid, ofs);
+      } else if (0 == (ofs % 8)) {
+        cprintf(" ");
+      }
+      ++ofs;
+      cprintf(" %02x", *dp++);
+    }
+    cprintf("\n");
+    len -= nb;
+  }
+  return 0;
+}
+static sBSP430cliCommand dcmd_nvmem_read = {
+  .key = "read",
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_nvmem_read
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_nvmem_read
 
 static sBSP430cliCommand dcmd_nvmem = {
   .key = "nvmem",
@@ -229,6 +290,7 @@ static sBSP430cliCommand dcmd_nvmem = {
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
 
+#if 0
 static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,
@@ -245,6 +307,7 @@ static sBSP430cliCommand dcmd_help = {
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_help
+#endif
 
 #define KEY_BS '\b'
 #define KEY_LF '\n'
@@ -402,7 +465,7 @@ void main (void)
       
       cputchar_ni('\n');
       *cp = 0;
-      rv = iBSP430cliExecuteCommand(&dcmd_help, 0, command);
+      rv = iBSP430cliExecuteCommand(commandSet, 0, command);
       if (0 != rv) {
         cprintf("Command execution returned %d\n", rv);
       }
