@@ -101,10 +101,9 @@ void main (void)
   BSP430_CORE_ENABLE_INTERRUPT();
 
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
+  cprintf("%s wlan_start(0)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
   wlan_start(0);
-  cprintf("%s Past wlan start\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+  cprintf("%s wlan_stop()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
   wlan_stop();
-  cprintf("%s Past wlan stop\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-  
-  cprintf("Leaving program\n");
+  cprintf("%s Leaving program\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
 }

@@ -46,6 +46,7 @@
 #include <bsp430/utility/cc3000spi.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/uptime.h>
+#include <bsp430/utility/led.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/serial.h>
 #include <cc3000/cc3000_common.h>
@@ -53,9 +54,16 @@
 #include <cc3000/hci.h>
 #include <cc3000/spi.h>
 
-/** Globally visible array wherein CC3000 will place data for
- * communication.  Poor API design, but what can you do? */
+/** Globally visible array wherein CC3000 host driver will place data
+ * to be written to the device.  Poor API design, but what can you
+ * do? */
+__attribute__((__section__(".rodata")))
 unsigned char wlan_tx_buffer[BSP430_CC3000SPI_TX_BUFFER_SIZE];
+
+/** Not globally visible array for local collection of incoming data
+ * from the CC3000. */
+__attribute__((__section__(".rodata")))
+static unsigned char wlan_rx_buffer[BSP430_CC3000SPI_RX_BUFFER_SIZE];
 
 /** Bit set in spiFlags_ when the CC3000 has powered up and is
  * attentive (via an IRQ after a power-up). */
@@ -79,15 +87,17 @@ static unsigned int spiFlags_;
 static hBSP430halSERIAL spi_;
 static hBSP430halPORT halCSn_;
 static volatile sBSP430hplPORTIE * spiIRQport_;
-static gcSpiHandleRx rxCallback_;
+static gcSpiHandleRx rxCallback_ni_;
 
 /* Assert chip select by clearing CSn */
-#define ASSERT_CS() do {                                                \
+#define CS_ASSERT() do {                                                \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;  \
+    vBSP430ledSet(BSP430_LED_GREEN, 1);                                 \
   } while (0)
   
 /* De-assert chip select by setting CSn */
-#define DEASSERT_CS() do {                                              \
+#define CS_DEASSERT() do {                                              \
+    vBSP430ledSet(BSP430_LED_GREEN, 0);                                 \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;   \
   } while (0)
 
@@ -129,7 +139,7 @@ static void
 writeWlanPin_ (unsigned char val)
 {
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
-  cprintf("%s writeWlanPin_(%d)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), val);
+  //cprintf("%s writeWlanPin_(%d)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), val);
 
   if (val) {
     pwr_en_port->out |= BSP430_RFEM_PWR_EN_PORT_BIT;
@@ -171,19 +181,58 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
                 void * context,
                 int idx)
 {
-  int rv;
-  cprintf("%s processSpiIRQ_()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-
+  cprintf("%s processSpiIRQ_\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+  vBSP430ledSet(BSP430_LED_RED, 1);
   if (spiFlags_ & SPIFLAG_INITIALIZED) {
-    rv = 0;
+    int rv;
+    const unsigned char opcode = CC3000_SPI_OPCODE_READ;
+    unsigned char * rp;
+    unsigned int len;
+    
+    /* This is a signal that data is available.  Read it.  Yes, right
+     * here in the ISR.  The host driver API would need to be
+     * integrated with a multi-tasking OS to do it elsewhere, since
+     * it's not event-driven at the user level. */
+    CS_ASSERT();
+    /* Read the header.  From that we'll extract the length. */
+    rp = wlan_rx_buffer;
+    rv = iBSP430spiTxRx_ni(spi_, &opcode, sizeof(opcode), SPI_HEADER_SIZE-sizeof(opcode), rp);
+    if (SPI_HEADER_SIZE == rv) {
+      len = (wlan_rx_buffer[HCI_PACKET_LENGTH_OFFSET] << 8) | wlan_rx_buffer[1 + HCI_PACKET_LENGTH_OFFSET];
+      rp += SPI_HEADER_SIZE;
+      rv = iBSP430spiTxRx_ni(spi_, NULL, 0, len, rp);
+    } else {
+      rv = -1;
+    }
+    CS_DEASSERT();
+    if (0 < rv) {
+      /* Turn off the interrupt while we process this message.  The
+       * driver will invoke SpiResume() to turn it back on. */
+      wlanInterruptDisable_();
+#if 0
+      {
+        const unsigned char * const rpe = rp + len;
+        const unsigned char * rp2 = wlan_rx_buffer;
+        cprintf("processSpiIRQ_() read %u:\n", len);
+        while (rp2 < rpe) {
+          cprintf(" %02x", *rp2++);
+        }
+      }
+#endif
+      /* Pass the packet off to the driver.  Again, yes, right here in
+       * the ISR. */
+      vBSP430ledSet(BSP430_LED_BLUE, 1);
+      rxCallback_ni_(rp);
+      vBSP430ledSet(BSP430_LED_BLUE, 0);
+    }
   } else {
     /* If not initialized, this is the IRQ raised by the CC3000 to
      * notify the MCU that it is now powered up and active.  No user
      * callback need be invoked. */
     spiFlags_ |= SPIFLAG_INITIALIZED;
-    rv = 0;
   }
-  return rv;
+  vBSP430ledSet(BSP430_LED_RED, 0);
+  return 0;
 }
 
 static sBSP430halISRIndexedChainNode spi_irq_cb = { .callback = processSpiIRQ_ };
@@ -205,7 +254,7 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
   spiFlags_ = 0;
 
   /* Preserve the callback pointer */
-  rxCallback_ = pfRxHandler;
+  rxCallback_ni_ = pfRxHandler;
 
   /* Configure CC3000 power-enable pin and turn off power.  It'll be
    * turned on in wlan_start(). */
@@ -213,7 +262,7 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
   pwr_en_port->dir |= BSP430_RFEM_PWR_EN_PORT_BIT;
 
   /* Clear chip select (set value before making it an output) */
-  DEASSERT_CS();
+  CS_DEASSERT();
   BSP430_PORT_HAL_HPL_DIR(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
 
   /* Open the device for 3-wire SPI.  Per
@@ -233,7 +282,7 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
   spiIRQport_->ies |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
   spiIRQport_->dir &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
   spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
-  tSLInformation.WlanInterruptEnable();
+  wlanInterruptEnable_();
 
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
@@ -263,13 +312,13 @@ SpiClose (void)
   (void)iBSP430serialClose(spi_);
 
   /* Release the chip select line, just for completeness. */
-  DEASSERT_CS();
+  CS_DEASSERT();
 
   /* Power down the CC3000.  In fact, this was already done by
    * wlan_stop(). */
   pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
 
-  rxCallback_ = NULL;
+  rxCallback_ni_ = NULL;
 
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
@@ -282,7 +331,7 @@ SpiWrite (unsigned char * tx_buffer,
   unsigned char * tp = tx_buffer;
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
-  cprintf("%s SpiWrite(%p, %u)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), tx_buffer, len);
+  cprintf("%s SpiWrite(%p, %u)...", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), tx_buffer, len);
 
   /* Total length of packet must be an even number of octets.  Packet
    * length is user-provided length plus the length of the SPI header,
@@ -290,9 +339,6 @@ SpiWrite (unsigned char * tx_buffer,
   if (0x01 & (len + SPI_HEADER_SIZE)) {
     ++len;
   }
-
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-  BSP430_CORE_DISABLE_INTERRUPT();
 
   /* The caller-provided tx_buffer includes SPI_HEADER_SIZE octets at
    * the front, ready for our use. */
@@ -303,10 +349,18 @@ SpiWrite (unsigned char * tx_buffer,
   *tp++ = 0;
   len += SPI_HEADER_SIZE;
   
-  ASSERT_CS();
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+
+  CS_ASSERT();
+  /* Spin waiting for acknowledgement, then clear the flag that would
+   * look like a read request when we exit. */
   while (0 != readWlanInterruptPin_()) {
     ;
   }
+  spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+
+  /* Special handling for first write */
   if (! (spiFlags_ & SPIFLAG_DID_FIRST_WRITE)) {
     BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
     tp = tx_buffer;
@@ -316,15 +370,19 @@ SpiWrite (unsigned char * tx_buffer,
     BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
   }
   rv = iBSP430spiTxRx_ni(spi_, tp, len, 0, NULL);
-  DEASSERT_CS();
+  CS_DEASSERT();
 
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
+  cprintf("%d\n", rv);
   return (0 <= rv) ? rv : 0;
 }
 
+/* Driver calls this to restore interrupts after processing an
+ * incoming message. */
 void
 SpiResumeSpi (void)
 {
   cprintf("%s SpiResume()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
+  wlanInterruptEnable_();
 }
