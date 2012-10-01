@@ -18,6 +18,45 @@
 #include <string.h>
 #include <ctype.h>
 
+#if 0
+typedef struct sWlanSecMap {
+  unsigned int val;
+  const char * tag;
+} sWlanSecMap;
+static const sWlanSecMap wlanSecMap[] = {
+  { WLAN_SEC_UNSEC, "unsec" },
+  { WLAN_SEC_WEP, "wep" },
+  { WLAN_SEC_WPA, "wpa" },
+  { WLAN_SEC_WPA2, "wpa2" },
+};
+static const sWlanSecMap * wlanSecMapFromValue (unsigned int val)
+{
+  const sWlanSecMap * mp;
+  for (mp = wlanSecMap; mp < (wlanSecMap + sizeof(wlanSecMap)/sizeof(*wlanSecMap)); ++mp) {
+    if (mp->val == val) {
+      return mp;
+    }
+  }
+  return NULL;
+}
+static const sWlanSecMap * wlanSecMapFromTag (const char * tag)
+{
+  const sWlanSecMap * mp;
+  for (mp = wlanSecMap; mp < (wlanSecMap + sizeof(wlanSecMap)/sizeof(*wlanSecMap)); ++mp) {
+    if (0 == strcmp(mp->tag, tag)) {
+      return mp;
+    }
+  }
+  return NULL;
+}
+#endif
+
+typedef struct sConnectParams {
+  int security_type;
+  char ssid[33];
+  char key[65];
+} sConnectParams;
+
 static void wlan_cb (long event_type,
                      char * data,
                      unsigned char length)
@@ -28,6 +67,8 @@ static void wlan_cb (long event_type,
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
+#define LAST_SUB_COMMAND NULL
+
 static int
 cmd_wlan_stop (const char * argstr)
 {
@@ -37,10 +78,40 @@ cmd_wlan_stop (const char * argstr)
 static sBSP430cliCommand dcmd_wlan_stop = {
   .key = "stop",
   .help = "# Stop the CC3000 WLAN",
-  .next = NULL,
+  .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_stop
 };
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_stop
+
+static int
+cmd_wlan_status (const char * argstr)
+{
+  /* Contrary to the documentation, there are no macro constants
+   * defined for these states */
+  static const char * status_str[] = {
+    "disconnected",
+    "scanning",
+    "connecting",
+    "connected"
+  };
+  long rl = wlan_ioctl_statusget();
+  cprintf("WLAN status %ld", rl);
+  if ((0 <= rl) && (rl < (sizeof(status_str)/sizeof(*status_str)))) {
+    cprintf(": %s", status_str[rl]);
+  }
+  cputchar_ni('\n');
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_status = {
+  .key = "status",
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_status
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_status
 
 static int
 cmd_wlan_start (const char * argstr)
@@ -55,15 +126,17 @@ cmd_wlan_start (const char * argstr)
 static sBSP430cliCommand dcmd_wlan_start = {
   .key = "start",
   .help = "# Start the CC3000 WLAN",
-  .next = &dcmd_wlan_stop,
+  .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_start
 };
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_start
 
 static sBSP430cliCommand dcmd_wlan = {
   .key = "wlan",
   .next = LAST_COMMAND,
-  .child = &dcmd_wlan_start
+  .child = LAST_SUB_COMMAND
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_wlan
