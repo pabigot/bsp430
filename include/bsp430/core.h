@@ -367,6 +367,18 @@
  * enabled in the state parameter.  The parameter should subsequently
  * be passed to #BSP430_CORE_RESTORE_INTERRUPT_STATE.
  *
+ * The canonical code sequence for this is:
+ * @code
+ * BSP430_CORE_INTERRUPT_STATE_T istate;
+ *
+ * BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+ * BSP430_CORE_DISABLE_INTERRUPT();
+ * do {
+ *   // stuff with interrupts disabled
+ * } while (0);
+ * BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+ * @endcode
+ *
  * @param _state where the interrupt enable/disable state is stored.
  *
  * @defaulted */
