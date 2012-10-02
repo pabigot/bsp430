@@ -31,6 +31,12 @@
 #define CMD_NVMEM_READ 1
 #define CMD_HELP 1
 
+#if NO_HELP - 0
+#define HELP_STRING(h_) NULL
+#else /* NO_HELP */
+#define HELP_STRING(h_) h_
+#endif /* NO_HELP */
+
 #if 0
 typedef struct sWlanSecMap {
   unsigned int val;
@@ -92,6 +98,7 @@ cmd_wlan_stop (const char * argstr)
 }
 static sBSP430cliCommand dcmd_wlan_stop = {
   .key = "stop",
+  .help = HELP_STRING("# shut down CC3000"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_stop
@@ -122,6 +129,7 @@ cmd_wlan_status (const char * argstr)
 }
 static sBSP430cliCommand dcmd_wlan_status = {
   .key = "status",
+  .help = HELP_STRING("# get CC3000 status"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_status
@@ -146,21 +154,21 @@ cmd_wlan_connect (const char * argstr)
   unsigned long t[2];
 
   remaining = strlen(argstr);
-  tp = xBSP430cliNextToken(&argstr, &remaining, &len);
+  tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
   if (*tp) {
     memcpy(ssid, tp, len);
     ssid_len = len;
   }
   ssid[ssid_len] = 0;
 
-  tp = xBSP430cliNextToken(&argstr, &remaining, &len);
+  tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
   if (*tp) {
     memcpy(key, tp, len);
     key_len = len;
   }
   key[key_len] = 0;
   
-  cprintf("con '%s' '%s'\n", ssid, key);
+  cprintf("connect ssid '%s' passphrase '%s'\n", ssid, key);
   t[0] = ulBSP430uptime_ni();
   rl = wlan_connect(security_type, ssid, ssid_len, NULL, key, key_len);
   t[1] = ulBSP430uptime_ni();
@@ -169,6 +177,7 @@ cmd_wlan_connect (const char * argstr)
 }
 static sBSP430cliCommand dcmd_wlan_connect = {
   .key = "connect",
+  .help = HELP_STRING("ssid passphrase [(unsec|wep|*wpa|wpa2)] # connect to specified access point"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_connect
@@ -190,6 +199,7 @@ cmd_wlan_start (const char * argstr)
 }
 static sBSP430cliCommand dcmd_wlan_start = {
   .key = "start",
+  .help = HELP_STRING("# power-up CC3000"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_start
@@ -224,6 +234,7 @@ cmd_nvmem_sp (const char * argstr)
 }
 static sBSP430cliCommand dcmd_nvmem_sp = {
   .key = "sp",
+  .help = HELP_STRING("# read firmware server patchlevel"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_nvmem_sp
@@ -286,6 +297,7 @@ cmd_nvmem_read (const char * argstr)
 }
 static sBSP430cliCommand dcmd_nvmem_read = {
   .key = "read",
+  .help = HELP_STRING("fileid [len(=128) [ofs(=0)]] # read block from nvmem file"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_nvmem_read
