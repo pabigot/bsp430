@@ -43,6 +43,8 @@
 
 #include <bsp430/periph/flash.h>
 
+#if BSP430_MODULE_FLASH - 0
+
 int
 iBSP430flashEraseSegment_ni (const void * addr)
 {
@@ -92,3 +94,4 @@ iBSP430flashWriteData_ni (void * dest,
   return len;
 }
 
+#endif /* BSP430_MODULE_FLASH */
