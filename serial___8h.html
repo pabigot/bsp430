@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -124,6 +124,7 @@ Macros</h2></td></tr>
 <tr class="memitem:a8d6273d64588e935a18864a93a9fd87f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial___8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)&#160;&#160;&#160;(<a class="el" href="serial___8h.html#a0459596ad8719461cc4e33324b97f82b">BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td></tr>
 <tr class="memitem:aa16b8ccb1c5252ef76270bc55501f84f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial___8h.html#aa16b8ccb1c5252ef76270bc55501f84f">BSP430_SERIAL_HAL_GET_HPL_EUSCIB</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial___8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)) ? (_hal)-&gt;hpl.euscib : (void *)0)</td></tr>
 <tr class="memitem:a48c274dcc60f707bae2b42ea0c9788d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial___8h.html#a48c274dcc60f707bae2b42ea0c9788d8">BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIB</a>(_hal)&#160;&#160;&#160;((<a class="el" href="serial___8h.html#a8d6273d64588e935a18864a93a9fd87f">BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB</a>(_hal)) ? (_hal)-&gt;hpl_aux.euscib : (void *)0)</td></tr>
+<tr class="memitem:ae97e0a8d4d66141d6082dac000826b8d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial___8h.html#ae97e0a8d4d66141d6082dac000826b8d">BSP430_SERIAL_SPI_READ_TX_BYTE</a>(i_)&#160;&#160;&#160;(i_)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -401,6 +402,32 @@ Typedefs</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae97e0a8d4d66141d6082dac000826b8d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_SERIAL_SPI_READ_TX_BYTE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">i_</td><td>)</td>
+          <td>&#160;&#160;&#160;(i_)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify byte written when reading a SPI byte.</p>
+<p>The SPI protocal requires that a byte be written for every byte received; the reception occurs during the write. In many cases, the value of the byte written is completely irrelevant. For the purposes of debugging a SPI bus trace, it's nice to have an ordinal value written, so this is the default.</p>
+<p>However, some peripherals require a specific value; in particular an MMC-based SD card apparently requires 0xFF. Allow the default to be overridden by the application.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i_</td><td>the ordinal of the received byte</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
+</div>
+</div>
 <h2>Typedef Documentation</h2>
 <a class="anchor" id="a31185ece51d6a343bb1f1c6f44fa8bcb"></a>
 <div class="memitem">
@@ -432,7 +459,7 @@ Typedefs</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -112,9 +112,9 @@ bsp430mmc.c</h1>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
 <div class="line">configureSPIforSD (<span class="keywordtype">int</span> fastp)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> smclk_hz = <a class="code" href="clock_8h.html#ac6df48b7667e1268240ea5555fad1d9c">ulBSP430clockSMCLK_Hz</a>();</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> smclk_hz = <a class="code" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz</a>();</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> init_spi_divisor;</div>
-<div class="line">  <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplPORT__8.html">sBSP430hplPORT</a> * miso_port = <a class="code" href="port_8h.html#a5aa18f621e971a6a493d3132b4da340f">xBSP430hplLookupPORT</a>(APP_SD_MISO_PORT_PERIPH_HANDLE);</div>
+<div class="line">  <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplPORT__8.html">sBSP430hplPORT</a> * miso_port = <a class="code" href="port_8h.html#af85295c41d6419afb9df641ae90d0213">xBSP430hplLookupPORT</a>(APP_SD_MISO_PORT_PERIPH_HANDLE);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* We&#39;ll drive the SPI device using SMCLK.  For initialization, we</span></div>
 <div class="line"><span class="comment">   * need to stay below 400 kHz, and have chosen 380 kHz in case of</span></div>
@@ -131,7 +131,7 @@ bsp430mmc.c</h1>
 <div class="line">  </div>
 <div class="line">  <span class="comment">/* Close the device if we already opened it. */</span></div>
 <div class="line">  <span class="keywordflow">if</span> (sdspi) {</div>
-<div class="line">    (void)<a class="code" href="serial_8h.html#a5b614830a5e7ebd00ca3c88d81784eea">iBSP430serialClose</a>(sdspi);</div>
+<div class="line">    (void)<a class="code" href="serial_8h.html#a9ef360a3a47ffaef50409a14fbffe5d2">iBSP430serialClose</a>(sdspi);</div>
 <div class="line">  }</div>
 <div class="line">  </div>
 <div class="line">  <span class="comment">/* For some SD cards, need MISO pullup, or so we&#39;re told.  Do that</span></div>
@@ -143,7 +143,7 @@ bsp430mmc.c</h1>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Configure SPI.  Probably ought to have a way to return an error</span></div>
 <div class="line"><span class="comment">   * code. */</span></div>
-<div class="line">  sdspi = <a class="code" href="serial_8h.html#a2b7505d46a02a7d5970e48a59c8d26d0">hBSP430serialOpenSPI</a>(<a class="code" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup</a>(APP_SD_SPI_PERIPH_HANDLE),</div>
+<div class="line">  sdspi = <a class="code" href="serial_8h.html#a40983f5ed625fd352698117786691dd5">hBSP430serialOpenSPI</a>(<a class="code" href="serial_8h.html#ad311104b2da6d177b2ae5ec0b29e7207">hBSP430serialLookup</a>(APP_SD_SPI_PERIPH_HANDLE),</div>
 <div class="line">                               <a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a class="code" href="msp430_8h.html#ab4313a6c37c97ba5cdba16c4ca56b517">UCCKPL</a> | <a class="code" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a> | <a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a> | <a class="code" href="msp430_8h.html#a2f02e983d228152bb8491fb6cb0f1228">UCMODE_0</a>),</div>
 <div class="line">                               UCSSEL__SMCLK, init_spi_divisor);</div>
 <div class="line"></div>
@@ -178,7 +178,7 @@ bsp430mmc.c</h1>
 <div class="line"></div>
 <div class="line">  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line">  (void)<a class="code" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a>(sdspi, buff, bc, 0, 0);</div>
+<div class="line">  (void)<a class="code" href="serial_8h.html#af6a874dd01b76f52eac4c67fa1aebd4e">iBSP430spiTxRx_ni</a>(sdspi, buff, bc, 0, 0);</div>
 <div class="line">  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -198,7 +198,7 @@ bsp430mmc.c</h1>
 <div class="line"></div>
 <div class="line">  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line">  (void)<a class="code" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a>(sdspi, NULL, 0, bc, buff);</div>
+<div class="line">  (void)<a class="code" href="serial_8h.html#af6a874dd01b76f52eac4c67fa1aebd4e">iBSP430spiTxRx_ni</a>(sdspi, NULL, 0, bc, buff);</div>
 <div class="line">  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -210,7 +210,7 @@ main.c</h1>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="clock_8h.html" title="Clock-related functions implemented on all MSP430 MCUs.">bsp430/clock.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="uptime_8h.html" title="Support for maintaining a system uptime counter.">bsp430/utility/uptime.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html" title="A generic console print capability.">bsp430/utility/console.h</a>&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="rfem_8h.html" title="RF Evaluation Model connector support.">bsp430/utility/rfem.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="rfem_8h.html" title="RF Evaluation Module connector support.">bsp430/utility/rfem.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="serial_8h.html" title="Declarations for abstracted serial interface.">bsp430/serial.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="port_8h.html" title="Hardware presentation/abstraction for Digital I/O Port (PORT#/PORT#_R)">bsp430/periph/port.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="sys_8h.html" title="Hardware presentation/abstraction for SYS peripheral (SYS).">bsp430/periph/sys.h</a>&gt;</span></div>
@@ -328,7 +328,7 @@ main.c</h1>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>  f_mount(0, NULL);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Exiting application\n&quot;</span>);</div>
-<div class="line">  </div>
+<div class="line"></div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_platform_exp430f5529_fatfs_config"></a>
 bsp430_config.h</h1>
@@ -386,7 +386,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -23,6 +23,7 @@ var searchData=
   ['callback',['callback',['../structsBSP430halISRVoidChainNode.html#a0d61bba3d225dcb3bb9611b0d4d69da2',1,'sBSP430halISRVoidChainNode::callback()'],['../structsBSP430halISRIndexedChainNode.html#a88c6166d592b2f7720b89aac0d785c7a',1,'sBSP430halISRIndexedChainNode::callback()']]],
   ['callback_20infrastructure',['Callback Infrastructure',['../callbacks.html',1,'']]],
   ['cap',['CAP',['../msp430_8h.html#a3aa216f6d9b942391fc15090d23256e5',1,'msp430.h']]],
+  ['cc3000spi_2eh',['cc3000spi.h',['../cc3000spi_8h.html',1,'']]],
   ['cc_5fcbchain_5fni',['cc_cbchain_ni',['../structsBSP430halTIMER.html#a55d43abe986951ead86dfe8ff7030502',1,'sBSP430halTIMER']]],
   ['ccis_5f0',['CCIS_0',['../msp430_8h.html#a9ba6a151f54a33e229f22f57bba8c7f2',1,'msp430.h']]],
   ['ccis_5f1',['CCIS_1',['../msp430_8h.html#acaab9ff42b856835386744831ae42aa7',1,'msp430.h']]],
@@ -46,11 +47,14 @@ var searchData=
   ['cctl6',['cctl6',['../structsBSP430hplTIMER.html#aa27a846d675a0b3818949a86697fc31e',1,'sBSP430hplTIMER']]],
   ['cflags',['cflags',['../structsBSP430hplHALStatePrefix.html#a084198259512be6e4429df8b7abe908d',1,'sBSP430hplHALStatePrefix']]],
   ['cgetchar_5fni',['cgetchar_ni',['../console_8h.html#ab51614b234cfd24eed353dde0d9f014c',1,'console.h']]],
+  ['child',['child',['../structsBSP430cliCommand.html#a6a9989a8bbebdd6246f647ab54a9123e',1,'sBSP430cliCommand']]],
+  ['cli_2eh',['cli.h',['../cli_8h.html',1,'']]],
   ['clock_2eh',['clock.h',['../clock_8h.html',1,'']]],
   ['cm_5f0',['CM_0',['../msp430_8h.html#ae4ac4996357d9a077b9dd574bf68ce81',1,'msp430.h']]],
   ['cm_5f1',['CM_1',['../msp430_8h.html#a87b9b380895c28ba129dcb85d222f13c',1,'msp430.h']]],
   ['cm_5f2',['CM_2',['../msp430_8h.html#a2b1b82d027be49a47ecead06bf6e8750',1,'msp430.h']]],
   ['cm_5f3',['CM_3',['../msp430_8h.html#a4a1110659312c37b3e6ed09d8b6d83f6',1,'msp430.h']]],
+  ['cmd',['cmd',['../structsBSP430cliCommandLink.html#a1abd6b2e5174e42795a7c73191732520',1,'sBSP430cliCommandLink']]],
   ['configbsp430_5fbc2_5ftrim_5fto_5fmclk',['configBSP430_BC2_TRIM_TO_MCLK',['../bc2_8h.html#a4cfe6f32391ffebb454ac32609505a80',1,'bc2.h']]],
   ['configbsp430_5fconsole',['configBSP430_CONSOLE',['../console_8h.html#a7e7be9a93cd9726e38378c1736d3b239',1,'console.h']]],
   ['configbsp430_5fconsole_5flibc_5fhas_5fitoa',['configBSP430_CONSOLE_LIBC_HAS_ITOA',['../console_8h.html#a45dea9afedd2d38692468f4d590ad07a',1,'console.h']]],
@@ -224,5 +228,6 @@ var searchData=
   ['ctl0',['ctl0',['../structsBSP430hplEUSCIA.html#ae0f5b8c61001f78b87ceac4f38b7252d',1,'sBSP430hplEUSCIA::ctl0()'],['../structsBSP430hplEUSCIB.html#aecbbc6a9a7bb879429dbc0609bf454b1',1,'sBSP430hplEUSCIB::ctl0()'],['../structsBSP430hplUSCI.html#a928fa1b70f4d40ef970184225c85d610',1,'sBSP430hplUSCI::ctl0()'],['../structsBSP430hplUSCI5.html#ab001aaafad425344eb99b179fd04c722',1,'sBSP430hplUSCI5::ctl0()']]],
   ['ctl1',['ctl1',['../structsBSP430hplEUSCIA.html#a1928840466f89c7eb22abe318c3a69ec',1,'sBSP430hplEUSCIA::ctl1()'],['../structsBSP430hplEUSCIB.html#af1b4d269068a2d1c167853a22a6060be',1,'sBSP430hplEUSCIB::ctl1()'],['../structsBSP430hplUSCI.html#a83c1ab0de1413b4bff604e3cdb85c72c',1,'sBSP430hplUSCI::ctl1()'],['../structsBSP430hplUSCI5.html#a5625b48f285452cc998aa16f4722cb80',1,'sBSP430hplUSCI5::ctl1()']]],
   ['ctlw0',['ctlw0',['../structsBSP430hplEUSCIA.html#ab7246b027491b66bd46a9fe3e047f845',1,'sBSP430hplEUSCIA::ctlw0()'],['../structsBSP430hplEUSCIB.html#adc35ce050acb0de9bbe52884aef9019a',1,'sBSP430hplEUSCIB::ctlw0()'],['../structsBSP430hplUSCI5.html#a6ec759713a16ea9bf4921c79317a7d26',1,'sBSP430hplUSCI5::ctlw0()']]],
-  ['ctlw1',['ctlw1',['../structsBSP430hplEUSCIA.html#a60ca65b6894c483fcd098a57f9569522',1,'sBSP430hplEUSCIA::ctlw1()'],['../structsBSP430hplEUSCIB.html#a90647d96aff799e92fac141311e4d497',1,'sBSP430hplEUSCIB::ctlw1()']]]
+  ['ctlw1',['ctlw1',['../structsBSP430hplEUSCIA.html#a60ca65b6894c483fcd098a57f9569522',1,'sBSP430hplEUSCIA::ctlw1()'],['../structsBSP430hplEUSCIB.html#a90647d96aff799e92fac141311e4d497',1,'sBSP430hplEUSCIB::ctlw1()']]],
+  ['cc3000_20simplelink_20exploration',['CC3000 SimpleLink Exploration',['../ex_rfem_cc3000.html',1,'']]]
 ];

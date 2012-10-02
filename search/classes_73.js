@@ -2,6 +2,8 @@ var searchData=
 [
   ['sbps430tlvadc',['sBPS430tlvADC',['../structsBPS430tlvADC.html',1,'']]],
   ['sbps430tlvadccal',['sBPS430tlvADCCAL',['../structsBPS430tlvADCCAL.html',1,'']]],
+  ['sbsp430clicommand',['sBSP430cliCommand',['../structsBSP430cliCommand.html',1,'']]],
+  ['sbsp430clicommandlink',['sBSP430cliCommandLink',['../structsBSP430cliCommandLink.html',1,'']]],
   ['sbsp430halisrindexedchainnode',['sBSP430halISRIndexedChainNode',['../structsBSP430halISRIndexedChainNode.html',1,'']]],
   ['sbsp430halisrvoidchainnode',['sBSP430halISRVoidChainNode',['../structsBSP430halISRVoidChainNode.html',1,'']]],
   ['sbsp430halled',['sBSP430halLED',['../structsBSP430halLED.html',1,'']]],

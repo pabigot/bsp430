@@ -38,6 +38,8 @@ var searchData=
   ['cctl5',['cctl5',['../structsBSP430hplTIMER.html#ab1f13b4e0252b059f6039d268e3ba19e',1,'sBSP430hplTIMER']]],
   ['cctl6',['cctl6',['../structsBSP430hplTIMER.html#aa27a846d675a0b3818949a86697fc31e',1,'sBSP430hplTIMER']]],
   ['cflags',['cflags',['../structsBSP430hplHALStatePrefix.html#a084198259512be6e4429df8b7abe908d',1,'sBSP430hplHALStatePrefix']]],
+  ['child',['child',['../structsBSP430cliCommand.html#a6a9989a8bbebdd6246f647ab54a9123e',1,'sBSP430cliCommand']]],
+  ['cmd',['cmd',['../structsBSP430cliCommandLink.html#a1abd6b2e5174e42795a7c73191732520',1,'sBSP430cliCommandLink']]],
   ['crc',['crc',['../structsBSP430tlvTable2xx.html#a9d7a7738b495fcbdb9bf2c8731d8cc87',1,'sBSP430tlvTable2xx::crc()'],['../structsBSP430tlvTable5xx.html#a32ddd002906b89c0f63de2927d951336',1,'sBSP430tlvTable5xx::crc()']]],
   ['crc_5flen_5flg2',['crc_len_lg2',['../structsBSP430tlvTable5xx.html#a5e8d8bb8c5e3a4c919d3dc3383886169',1,'sBSP430tlvTable5xx']]],
   ['ctl',['ctl',['../structsBSP430hplTIMER.html#af7e38ca9803b3645a8abb261608a7957',1,'sBSP430hplTIMER']]],

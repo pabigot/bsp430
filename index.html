@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -83,9 +83,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#mp_capabilities">Capabilities Currently Supported</a></li>
 <li class="level1"><a href="#mp_platforms">Hardware Platforms Currently Supported</a></li>
-<li class="level1"><a href="#mp_examples">Provided Examples</a><ul><li class="level2"><a href="#ex_bootstrap">Bootstrap Support Programs</a></li>
+<li class="level1"><a href="#mp_examples">Provided Examples</a><ul><li class="level2"><a href="#ex_utility">Value-Added Utility Examples</a></li>
 <li class="level2"><a href="#ex_sensors">Sensors</a></li>
-<li class="level2"><a href="#ex_platform">Platform-Specific Examples</a></li>
+<li class="level2"><a href="#ex_bootstrap">Bootstrap Support Programs</a></li>
 </ul>
 </li>
 </ul>
@@ -109,7 +109,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><a class="el" href="enhanced.html">Enhanced support </a> for watchdog, low power mode execution, and interrupt management;</li>
 </ul>
 <ul>
-<li>A <a class="el" href="buildenv.html">build infrastructure </a> designed to simplify creating new applications, currently focused on the MSPGCC toolchain in a POSIX command-line environment supported by GNU Make</li>
+<li>A <a class="el" href="buildenv.html">build infrastructure </a> designed to simplify creating new applications, currently focused on the MSPGCC toolchain in a POSIX command-line environment supported by GNU Make;</li>
+</ul>
+<ul>
+<li>Value-added capabilities including a <a class="el" href="cli_8h.html">command line interface</a>, <a class="el" href="unittest_8h.html">unit test framework</a>, and <a class="el" href="rfem_8h.html">RF Evaluation Module</a> interface</li>
 </ul>
 <p>BSP430 is released as open source under the <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> license.</p>
 <p>For further details, please see the Background, Philosophy, <a class="el" href="coding.html">Coding Style</a>, and Maintenance pages.</p>
@@ -132,6 +135,9 @@ Capabilities Currently Supported</h1>
 <li>Access to the <a class="el" href="sys_8h.html">SYS</a> and <a class="el" href="pmm_8h.html">PMM</a> modules for 5xx/6xx/FR5xx devices allowing detection of reboot cause and control of ultra-low-power LPMx.5 modes;</li>
 </ul>
 <ul>
+<li>Pre-configured support for the <a class="el" href="rfem_8h.html">RF Evaluation Module</a> headers on many experimenter boards;</li>
+</ul>
+<ul>
 <li>Utilities supporting a bi-direction <a class="el" href="console_8h.html">serial console</a>, <a class="el" href="led_8h.html">LEDs</a>, <a class="el" href="uptime_8h.html">ACLK-driven system timer</a>, and demonstration <a class="el" href="onewire_8h.html">1-Wire bus</a></li>
 </ul>
 <h1><a class="anchor" id="mp_platforms"></a>
@@ -149,6 +155,30 @@ Hardware Platforms Currently Supported</h1>
 </ul>
 <h1><a class="anchor" id="mp_examples"></a>
 Provided Examples</h1>
+<h2><a class="anchor" id="ex_utility"></a>
+Value-Added Utility Examples</h2>
+<ul>
+<li><a class="el" href="ex_utility_unittest.html">Utilities: Unit Test</a> demonstrates the primitive <a class="el" href="unittest_8h.html">unit test capability</a> supported by BSP430.</li>
+</ul>
+<ul>
+<li><a class="el" href="ex_utility_cli.html">Utilities: Command Line Interface</a> demonstrates the command line interface structure based on the <a class="el" href="console_8h.html">console capability </a>.</li>
+</ul>
+<ul>
+<li><a class="el" href="ex_rfem_ccid.html">RF Evaluation Module and ChipCon Radios</a> demonstrates the abstraction of the <a class="el" href="rfem_8h.html">RF Evaluation Module </a> available on many MSP430 experimenter boards by displaying information about a connected ChipCon radio. The same demonstration works on the <a class="el" href="platform_8h.html#aa2b5bcad983b3f82fe33feaab4d5710b">BSP430_PLATFORM_EM430</a> and <a class="el" href="platform_8h.html#a4c34c7ca812427345dd932ff2288467b">BSP430_PLATFORM_SURF</a> platforms.</li>
+</ul>
+<ul>
+<li><a class="el" href="ex_platform_exp430f5529_fatfs.html">FatFs on an EXP430F5529</a> demonstrates use of <a href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430 SPI serial abstraction</li>
+</ul>
+<ul>
+<li><a class="el" href="ex_rfem_cc3000.html">CC3000 SimpleLink Exploration</a> is a fairly complex example providing interactive exploration of the <a href="http://processors.wiki.ti.com/index.php/CC3000_Wi-Fi_for_MCU">Texas Instruments CC3000 SimpleLink(tm) Wi-Fi</a> evaluation module. It demonstrates advanced use of the BSP430 <a class="el" href="cli_8h.html">command line interface </a> as well as a <a class="el" href="serial_8h.html">SPI interface </a> to the on most TI experimenter boards through the <a class="el" href="rfem_8h.html">RFEM </a> capabilities of BSP430.</li>
+</ul>
+<h2><a class="anchor" id="ex_sensors"></a>
+Sensors</h2>
+<ul>
+<li><a class="el" href="ex_sensors_ds18b20.html">Sensors: DS18B20</a> demonstrates temperature measurement with the DS18B20 (or similar) 1-wire temperature sensor </li>
+<li><a class="el" href="ex_sensors_tmp102.html">Sensors: TMP102</a> demonstrates the I2C interface with a TI TMP102 temperature sensor </li>
+<li><a class="el" href="ex_sensors_hh10d.html">Sensors: HH10D</a> demonstrates measuring the frequency of an input signal using the Hope RF Humidity Sensor</li>
+</ul>
 <h2><a class="anchor" id="ex_bootstrap"></a>
 Bootstrap Support Programs</h2>
 <p>The following examples lead you through the basic capabilities of BSP430, following the same path that you would use if you were adding support for a new platform.</p>
@@ -161,26 +191,11 @@ Bootstrap Support Programs</h2>
 <li><a class="el" href="ex_bootstrap_lpm.html">Bootstrapping a New Platform: Basic LPM</a> is used to configure the board into low power mode, verifying that the numbers in the data sheet are achievable </li>
 <li><a class="el" href="ex_bootstrap_applpm.html">Bootstrapping a New Platform: Application LPM</a> is used to interactively evaluate different low power modes with and without the peripherals being disabled</li>
 </ul>
-<h2><a class="anchor" id="ex_sensors"></a>
-Sensors</h2>
-<ul>
-<li><a class="el" href="ex_sensors_ds18b20.html">Sensors: DS18B20</a> demonstrates temperature measurement with the DS18B20 (or similar) 1-wire temperature sensor </li>
-<li><a class="el" href="ex_sensors_tmp102.html">Sensors: TMP102</a> demonstrates the I2C interface with a TI TMP102 temperature sensor </li>
-<li><a class="el" href="ex_sensors_hh10d.html">Sensors: HH10D</a> demonstrates measuring the frequency of an input signal using the Hope RF Humidity Sensor</li>
-</ul>
-<h2><a class="anchor" id="ex_platform"></a>
-Platform-Specific Examples</h2>
-<ul>
-<li><a class="el" href="ex_rfem_ccid.html">RF Evaluation Module and ChipCon Radios</a> demonstrates the abstraction of the <a class="el" href="rfem_8h.html">RF Evaluation Module </a> available on many MSP430 experimenter boards by displaying information about a connected ChipCon radio. The same demonstration works on the <a class="el" href="platform_8h.html#aa2b5bcad983b3f82fe33feaab4d5710b">BSP430_PLATFORM_EM430</a> and <a class="el" href="platform_8h.html#a4c34c7ca812427345dd932ff2288467b">BSP430_PLATFORM_SURF</a> platforms.</li>
-</ul>
-<ul>
-<li><a class="el" href="ex_platform_exp430f5529_fatfs.html">FatFs on an EXP430F5529</a> demonstrates use of <a href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430 SPI serial abstraction</li>
-</ul>
 <p>Copyright 2012, Peter A. Bigot </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:45 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

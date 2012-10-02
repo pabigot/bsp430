@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_19e4f19d9de152fbe2728cd5df77a8c2.html">periph</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_9cb70b0f81efa0454c88900ecd971aae.html">periph</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -310,7 +310,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> * overflowp);</div>
 <div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;</div>
 <div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;__inline__</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
 <div class="line"><a name="l00577"></a><span class="lineno"><a class="code" href="timer_8h.html#a73cf4f30824d57dead07b2aa52614b2f">  577</a></span>&#160;<a class="code" href="timer_8h.html#a73cf4f30824d57dead07b2aa52614b2f">ulBSP430timerCounter</a> (hBSP430halTIMER timer,</div>
 <div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;                      <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> * overflowp)</div>
 <div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;{</div>
@@ -663,8 +663,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01478"></a><span class="lineno"> 1478</span>&#160;<span class="comment">/* END AUTOMATICALLY GENERATED CODE [hal_timer_isr_decl] */</span></div>
 <div class="line"><a name="l01479"></a><span class="lineno"> 1479</span>&#160;<span class="comment">/* !BSP430! end=hal_timer_isr_decl */</span></div>
 <div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;</div>
-<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l01491"></a><span class="lineno"><a class="code" href="timer_8h.html#aacf24f2076a6ba1a965ffb23a64246c6"> 1491</a></span>&#160;<span class="keyword">volatile</span> <a class="code" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> * <a class="code" href="timer_8h.html#aacf24f2076a6ba1a965ffb23a64246c6">xBSP430hplLookupTIMER</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
+<div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l01491"></a><span class="lineno"><a class="code" href="timer_8h.html#aad15c4346f91b47e4a18bbdf05fb8ed7"> 1491</a></span>&#160;<span class="keyword">volatile</span> <a class="code" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> * <a class="code" href="timer_8h.html#aad15c4346f91b47e4a18bbdf05fb8ed7">xBSP430hplLookupTIMER</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
 <div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;{</div>
 <div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160;  <span class="comment">/* !BSP430! insert=periph_hpl_demux */</span></div>
 <div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;  <span class="comment">/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */</span></div>
@@ -715,8 +715,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01539"></a><span class="lineno"> 1539</span>&#160;  <span class="keywordflow">return</span> NULL;</div>
 <div class="line"><a name="l01540"></a><span class="lineno"> 1540</span>&#160;}</div>
 <div class="line"><a name="l01541"></a><span class="lineno"> 1541</span>&#160;</div>
-<div class="line"><a name="l01550"></a><span class="lineno"> 1550</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l01551"></a><span class="lineno"><a class="code" href="timer_8h.html#a8938f7e30810412110568d8be6b37b8a"> 1551</a></span>&#160;hBSP430halTIMER <a class="code" href="timer_8h.html#a8938f7e30810412110568d8be6b37b8a">hBSP430timerLookup</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
+<div class="line"><a name="l01550"></a><span class="lineno"> 1550</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l01551"></a><span class="lineno"><a class="code" href="timer_8h.html#afe3886cec73bfe10e638855dac7964dc"> 1551</a></span>&#160;hBSP430halTIMER <a class="code" href="timer_8h.html#afe3886cec73bfe10e638855dac7964dc">hBSP430timerLookup</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
 <div class="line"><a name="l01552"></a><span class="lineno"> 1552</span>&#160;{</div>
 <div class="line"><a name="l01553"></a><span class="lineno"> 1553</span>&#160;  <span class="comment">/* !BSP430! insert=periph_hal_demux */</span></div>
 <div class="line"><a name="l01554"></a><span class="lineno"> 1554</span>&#160;  <span class="comment">/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */</span></div>
@@ -775,7 +775,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

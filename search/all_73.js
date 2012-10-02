@@ -5,6 +5,8 @@ var searchData=
   ['sensors_3a_20tmp102',['Sensors: TMP102',['../ex_sensors_tmp102.html',1,'']]],
   ['sbps430tlvadc',['sBPS430tlvADC',['../structsBPS430tlvADC.html',1,'']]],
   ['sbps430tlvadccal',['sBPS430tlvADCCAL',['../structsBPS430tlvADCCAL.html',1,'']]],
+  ['sbsp430clicommand',['sBSP430cliCommand',['../structsBSP430cliCommand.html',1,'sBSP430cliCommand'],['../cli_8h.html#a093282c0ee45a19a7cbbc32c1a875d0a',1,'sBSP430cliCommand():&#160;cli.h']]],
+  ['sbsp430clicommandlink',['sBSP430cliCommandLink',['../structsBSP430cliCommandLink.html',1,'sBSP430cliCommandLink'],['../cli_8h.html#a8306443ce97f057752f0afe26c043982',1,'sBSP430cliCommandLink():&#160;cli.h']]],
   ['sbsp430halisrindexedchainnode',['sBSP430halISRIndexedChainNode',['../structsBSP430halISRIndexedChainNode.html',1,'sBSP430halISRIndexedChainNode'],['../periph_8h.html#a035b8e5b659712cd0961e7a792dd0fb9',1,'sBSP430halISRIndexedChainNode():&#160;periph.h']]],
   ['sbsp430halisrvoidchainnode',['sBSP430halISRVoidChainNode',['../structsBSP430halISRVoidChainNode.html',1,'sBSP430halISRVoidChainNode'],['../periph_8h.html#a79b47a57f019b607261202d78a4f8917',1,'sBSP430halISRVoidChainNode():&#160;periph.h']]],
   ['sbsp430halled',['sBSP430halLED',['../structsBSP430halLED.html',1,'sBSP430halLED'],['../led_8h.html#a21eea6a2b8a5f58e35280a0ae5945ee0',1,'sBSP430halLED():&#160;led.h']]],

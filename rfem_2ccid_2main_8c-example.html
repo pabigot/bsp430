@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -87,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html" title="A generic console print capability.">bsp430/utility/console.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="serial_8h.html" title="Declarations for abstracted serial interface.">bsp430/serial.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="port_8h.html" title="Hardware presentation/abstraction for Digital I/O Port (PORT#/PORT#_R)">bsp430/periph/port.h</a>&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="rfem_8h.html" title="RF Evaluation Model connector support.">bsp430/utility/rfem.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="rfem_8h.html" title="RF Evaluation Module connector support.">bsp430/utility/rfem.h</a>&gt;</span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#if ! (BSP430_RFEM - 0)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#error No RFEM support on platform</span></div>
@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">{</div>
 <div class="line">  uint8_t rc = 0;</div>
 <div class="line"></div>
-<div class="line">  (void)<a name="a1"></a><a class="code" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a>(spi, &amp;reg, 1, 0, &amp;rc);</div>
+<div class="line">  (void)<a name="a1"></a><a class="code" href="serial_8h.html#af6a874dd01b76f52eac4c67fa1aebd4e">iBSP430spiTxRx_ni</a>(spi, &amp;reg, 1, 0, &amp;rc);</div>
 <div class="line">  <span class="keywordflow">return</span> rc;</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -115,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  }</div>
 <div class="line">  <span class="comment">/* Add the READ bit */</span></div>
 <div class="line">  reg |= 0x80;</div>
-<div class="line">  (void)<a class="code" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a>(spi, &amp;reg, 1, 1, rxbuf);</div>
+<div class="line">  (void)<a class="code" href="serial_8h.html#af6a874dd01b76f52eac4c67fa1aebd4e">iBSP430spiTxRx_ni</a>(spi, &amp;reg, 1, 1, rxbuf);</div>
 <div class="line">  <span class="keywordflow">return</span> rxbuf[1];</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -128,7 +128,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">  txbuf[0] = reg;</div>
 <div class="line">  txbuf[1] = val;</div>
-<div class="line">  (void)<a class="code" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a>(spi, txbuf, 2, 0, rxbuf);</div>
+<div class="line">  (void)<a class="code" href="serial_8h.html#af6a874dd01b76f52eac4c67fa1aebd4e">iBSP430spiTxRx_ni</a>(spi, txbuf, 2, 0, rxbuf);</div>
 <div class="line">  <span class="keywordflow">return</span> rxbuf[1];</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -137,20 +137,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="keywordtype">int</span> rc = 0;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* GDO0 and GDO2 are always interrupt-capable. */</span></div>
-<div class="line">  <span class="keyword">volatile</span> <a name="_a2"></a><a class="code" href="structsBSP430hplPORT__IE__8.html">sBSP430hplPORTIE</a> * gdo0 = <a name="a3"></a><a class="code" href="port_8h.html#a2472b35fcc34eefedf5b9987960b9d75">xBSP430hplLookupPORTIE</a>(<a name="a4"></a><a class="code" href="rfem_8h.html#adfc1522139eeee33ba5d43d6f814dfef">BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE</a>);</div>
-<div class="line">  <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplPORT__IE__8.html">sBSP430hplPORTIE</a> * gdo2 = <a class="code" href="port_8h.html#a2472b35fcc34eefedf5b9987960b9d75">xBSP430hplLookupPORTIE</a>(<a name="a5"></a><a class="code" href="rfem_8h.html#a3f4ce51dd2737f0a681ef5fc3c972817">BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE</a>);</div>
-<div class="line">  <a name="_a6"></a><a class="code" href="structsBSP430halPORT.html">hBSP430halPORT</a> hgdo1 = <a name="a7"></a><a class="code" href="port_8h.html#a08ff8c8d9a25e25aa5d53ff28b5812a9">hBSP430portLookup</a>(<a name="a8"></a><a class="code" href="rfem_8h.html#aef98a690f3207112d7be0a612bd7b9d1">BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE</a>);</div>
-<div class="line">  <a class="code" href="structsBSP430halPORT.html">hBSP430halPORT</a> hcsn = <a class="code" href="port_8h.html#a08ff8c8d9a25e25aa5d53ff28b5812a9">hBSP430portLookup</a>(<a name="a9"></a><a class="code" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a>);</div>
+<div class="line">  <span class="keyword">volatile</span> <a name="_a2"></a><a class="code" href="structsBSP430hplPORT__IE__8.html">sBSP430hplPORTIE</a> * gdo0 = <a name="a3"></a><a class="code" href="port_8h.html#ab315de00d9b9e34a6bb772103b05f0f8">xBSP430hplLookupPORTIE</a>(<a name="a4"></a><a class="code" href="rfem_8h.html#adfc1522139eeee33ba5d43d6f814dfef">BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE</a>);</div>
+<div class="line">  <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplPORT__IE__8.html">sBSP430hplPORTIE</a> * gdo2 = <a class="code" href="port_8h.html#ab315de00d9b9e34a6bb772103b05f0f8">xBSP430hplLookupPORTIE</a>(<a name="a5"></a><a class="code" href="rfem_8h.html#a3f4ce51dd2737f0a681ef5fc3c972817">BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE</a>);</div>
+<div class="line">  <a name="_a6"></a><a class="code" href="structsBSP430halPORT.html">hBSP430halPORT</a> hgdo1 = <a name="a7"></a><a class="code" href="port_8h.html#a039c56ddc64f51922244aac149f7a853">hBSP430portLookup</a>(<a name="a8"></a><a class="code" href="rfem_8h.html#aef98a690f3207112d7be0a612bd7b9d1">BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE</a>);</div>
+<div class="line">  <a class="code" href="structsBSP430halPORT.html">hBSP430halPORT</a> hcsn = <a class="code" href="port_8h.html#a039c56ddc64f51922244aac149f7a853">hBSP430portLookup</a>(<a name="a9"></a><a class="code" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a>);</div>
 <div class="line"></div>
-<div class="line">  spi = <a name="a10"></a><a class="code" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup</a>(<a name="a11"></a><a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>);</div>
+<div class="line">  spi = <a name="a10"></a><a class="code" href="serial_8h.html#ad311104b2da6d177b2ae5ec0b29e7207">hBSP430serialLookup</a>(<a name="a11"></a><a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>);</div>
 <div class="line"></div>
 <div class="line">  <a name="a12"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line">  (void)<a name="a13"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line"></div>
-<div class="line">  <a name="a14"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO0 %p at %s.%u\n&quot;</span>, gdo0, <a name="a15"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#adfc1522139eeee33ba5d43d6f814dfef">BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE</a>), <a name="a16"></a><a class="code" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a>(<a name="a17"></a><a class="code" href="rfem_8h.html#a740d598b5d5bfd61421b29f5742d47e8">BSP430_RFEM_GDO0_PORT_BIT</a>));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO1 HAL %p HPL %p at %s.%u\n&quot;</span>, hgdo1, hgdo1-&gt;<a name="a18"></a><a class="code" href="structsBSP430halPORT.html#aab4e7f67e557a42b744af92f9572bb71">hpl</a>.<a name="a19"></a><a class="code" href="structsBSP430halPORT.html#af26a6d2ec27e51f8210d93882633d2b8">any</a>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#aef98a690f3207112d7be0a612bd7b9d1">BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a>(<a name="a20"></a><a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO2 %p at %s.%u\n&quot;</span>, gdo2, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#a3f4ce51dd2737f0a681ef5fc3c972817">BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a>(<a name="a21"></a><a class="code" href="rfem_8h.html#a53273a8129fcbbde7b6f405394df52a5">BSP430_RFEM_GDO2_PORT_BIT</a>));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CSn HAL %p HPL %p at %s.%u\n&quot;</span>, hcsn, hcsn-&gt;<a class="code" href="structsBSP430halPORT.html#aab4e7f67e557a42b744af92f9572bb71">hpl</a>.<a class="code" href="structsBSP430halPORT.html#af26a6d2ec27e51f8210d93882633d2b8">any</a>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a>(<a name="a22"></a><a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>));</div>
+<div class="line">  <a name="a14"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO0 %p at %s.%u\n&quot;</span>, gdo0, <a name="a15"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#adfc1522139eeee33ba5d43d6f814dfef">BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE</a>), <a name="a16"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a17"></a><a class="code" href="rfem_8h.html#a740d598b5d5bfd61421b29f5742d47e8">BSP430_RFEM_GDO0_PORT_BIT</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO1 HAL %p HPL %p at %s.%u\n&quot;</span>, hgdo1, hgdo1-&gt;<a name="a18"></a><a class="code" href="structsBSP430halPORT.html#aab4e7f67e557a42b744af92f9572bb71">hpl</a>.<a name="a19"></a><a class="code" href="structsBSP430halPORT.html#af26a6d2ec27e51f8210d93882633d2b8">any</a>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#aef98a690f3207112d7be0a612bd7b9d1">BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a20"></a><a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO2 %p at %s.%u\n&quot;</span>, gdo2, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#a3f4ce51dd2737f0a681ef5fc3c972817">BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a21"></a><a class="code" href="rfem_8h.html#a53273a8129fcbbde7b6f405394df52a5">BSP430_RFEM_GDO2_PORT_BIT</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CSn HAL %p HPL %p at %s.%u\n&quot;</span>, hcsn, hcsn-&gt;<a class="code" href="structsBSP430halPORT.html#aab4e7f67e557a42b744af92f9572bb71">hpl</a>.<a class="code" href="structsBSP430halPORT.html#af26a6d2ec27e51f8210d93882633d2b8">any</a>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a22"></a><a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>));</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI %p is %s\n&quot;</span>, spi, <a name="a23"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(<a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>));</div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI Pins: %s\n&quot;</span>, <a name="a24"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(<a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>, <a name="a25"></a><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>));</div>
@@ -160,11 +160,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Configure the SPI interface, but immediately put it into hold</span></div>
 <div class="line"><span class="comment">   * mode so we can check CHIP_RDYn on the MISO/GDO1 input */</span></div>
-<div class="line">  spi = <a name="a26"></a><a class="code" href="serial_8h.html#a2b7505d46a02a7d5970e48a59c8d26d0">hBSP430serialOpenSPI</a>(spi,</div>
+<div class="line">  spi = <a name="a26"></a><a class="code" href="serial_8h.html#a40983f5ed625fd352698117786691dd5">hBSP430serialOpenSPI</a>(spi,</div>
 <div class="line">                             <a name="a27"></a><a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a name="a28"></a><a class="code" href="msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd">UCCKPH</a> | <a name="a29"></a><a class="code" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a> | <a name="a30"></a><a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>),</div>
 <div class="line">                             <a name="a31"></a><a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, 1);</div>
 <div class="line">  <span class="keywordflow">if</span> (spi) {</div>
-<div class="line">    rc = <a name="a32"></a><a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a>(spi, 1);</div>
+<div class="line">    rc = <a name="a32"></a><a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(spi, 1);</div>
 <div class="line">    <span class="comment">/* GDO1 to input, pull-up */</span></div>
 <div class="line">    <a name="a33"></a><a class="code" href="port_8h.html#a464269017051d0faa11317c6627db1b5">BSP430_PORT_HAL_HPL_DIR</a>(hgdo1) &amp;= ~<a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
 <div class="line">    <a name="a34"></a><a class="code" href="port_8h.html#a9addaf04ba38436b90d0dc9481c29425">BSP430_PORT_HAL_HPL_REN</a>(hgdo1) |= <a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
@@ -192,7 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Enable SPI */</span></div>
-<div class="line">  rc = <a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a>(spi, 0);</div>
+<div class="line">  rc = <a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(spi, 0);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Radio is up, hold release %d; sending SRES strobe\n&quot;</span>, rc);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Send a reset */</span></div>
@@ -229,7 +229,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Disable SPI before removing CSn otherwise the sequence isn&#39;t</span></div>
 <div class="line"><span class="comment">   * right. */</span></div>
-<div class="line">  rc = <a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a>(spi, 1);</div>
+<div class="line">  rc = <a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(spi, 1);</div>
 <div class="line">  <a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(hcsn) |= <a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* This gets the RF2500T power down to about 120 nA. */</span></div>
@@ -238,7 +238,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

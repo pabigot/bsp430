@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>BSP430: include/bsp430/platform/exp430g2/ Directory Reference</title>
+<title>BSP430: utility/unittest/main.c</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -60,6 +60,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -74,28 +75,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_3c10c8f91572428b0af8a5fe468add4e.html">platform</a></li><li class="navelem"><a class="el" href="dir_36c78e56be5f2326af5a324bc1a2db65.html">exp430g2</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">exp430g2 Directory Reference</div>  </div>
+<div class="title">utility/unittest/main.c</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:exp430g2_2bsp430__config_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="exp430g2_2bsp430__config_8h.html">bsp430_config.h</a> <a href="exp430g2_2bsp430__config_8h_source.html">[code]</a></td></tr>
-<tr class="memdesc:exp430g2_2bsp430__config_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific BSP430 configuration directives for <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a> <br/></td></tr>
-<tr class="memitem:platform_2exp430g2_2platform_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_2exp430g2_2platform_8h.html">platform.h</a> <a href="platform_2exp430g2_2platform_8h_source.html">[code]</a></td></tr>
-<tr class="memdesc:platform_2exp430g2_2platform_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific include for <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2 ("LaunchPad")</a> <br/></td></tr>
-</table>
-</div><!-- contents -->
+<div class="fragment"><div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="clock_8h.html" title="Clock-related functions implemented on all MSP430 MCUs.">bsp430/clock.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="uptime_8h.html" title="Support for maintaining a system uptime counter.">bsp430/utility/uptime.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="unittest_8h.html" title="A unit test facility.">bsp430/utility/unittest.h</a>&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#ifndef APP_ONLY_PASSING</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_ONLY_PASSING 0</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* APP_ONLY_PASSING */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="keywordtype">void</span> main ()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">int</span> rv;</div>
+<div class="line"></div>
+<div class="line">  (void)rv;</div>
+<div class="line">  <a name="a0"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
+<div class="line">  <a name="a1"></a><a class="code" href="unittest_8h.html#a3220284c913cc7bd22754ce0078f1d94">vBSP430unittestInitialize</a>();</div>
+<div class="line"><span class="preprocessor">#if ! APP_ONLY_PASSING</span></div>
+<div class="line"><span class="preprocessor"></span>  <a name="a2"></a><a class="code" href="unittest_8h.html#a33a67b41f5a8fb5cde823cd8e7fa3c4f">BSP430_UNITTEST_FAIL</a>(<span class="stringliteral">&quot;unconditional&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_ONLY_PASSING */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>  <a name="a3"></a><a class="code" href="unittest_8h.html#acabfbba159793032859c6ff2e0253a4b">BSP430_UNITTEST_ASSERT_TRUE</a>(1 == 1);</div>
+<div class="line">  <a class="code" href="unittest_8h.html#acabfbba159793032859c6ff2e0253a4b">BSP430_UNITTEST_ASSERT_TRUE</a>(1 != 2);</div>
+<div class="line">  <a name="a4"></a><a class="code" href="unittest_8h.html#a5ddc2c0d11c3d2d081c794ef210e175c">BSP430_UNITTEST_ASSERT_FALSE</a>(1 != 1);</div>
+<div class="line">  <a class="code" href="unittest_8h.html#a5ddc2c0d11c3d2d081c794ef210e175c">BSP430_UNITTEST_ASSERT_FALSE</a>(1 == 2);</div>
+<div class="line"><span class="preprocessor">#if ! APP_ONLY_PASSING</span></div>
+<div class="line"><span class="preprocessor"></span>  rv = 42;</div>
+<div class="line">  <a name="a5"></a><a class="code" href="unittest_8h.html#a928c29e5201332d07f84df40c0e5e4a5">BSP430_UNITTEST_ASSERT_EQUAL_FMTd</a>(1, rv);</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_ONLY_PASSING */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>  <a name="a6"></a><a class="code" href="unittest_8h.html#adb812494059862a4b57674b8011da8b1">vBSP430unittestFinalize</a>();</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:45 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -166,6 +166,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>BSP430_BC2_TRIM_TO_MCLK
 : <a class="el" href="bc2_8h.html#a9263146121baf3bb2cfe973ef4fde8da">bc2.h</a>
 </li>
+<li>BSP430_CC3000SPI_RX_BUFFER_SIZE
+: <a class="el" href="cc3000spi_8h.html#ad0be8d9dad7f10d193314afbb436822e">cc3000spi.h</a>
+</li>
+<li>BSP430_CC3000SPI_TX_BUFFER_SIZE
+: <a class="el" href="cc3000spi_8h.html#a91296e239f43b23894ff57a3d196a644">cc3000spi.h</a>
+</li>
+<li>BSP430_CLI_CONSOLE_BUFFER_SIZE
+: <a class="el" href="cli_8h.html#a80909b9854af24b22d02cc9e881ab4d8">cli.h</a>
+</li>
 <li>BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
 : <a class="el" href="clock_8h.html#ae59021b5f9f12d0361bdcc8144859890">clock.h</a>
 , <a class="el" href="bc2_8h.html#ae59021b5f9f12d0361bdcc8144859890">bc2.h</a>
@@ -190,11 +199,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="clock_8h.html#adfae913d448a6d5e70f9ed8f727f4afa">clock.h</a>
 </li>
 <li>BSP430_CLOCK_NOMINAL_VLOCLK_HZ
-: <a class="el" href="bc2_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">bc2.h</a>
+: <a class="el" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">clock.h</a>
+, <a class="el" href="bc2_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">bc2.h</a>
 , <a class="el" href="cs_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">cs.h</a>
 , <a class="el" href="fllplus_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">fllplus.h</a>
 , <a class="el" href="ucs_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">ucs.h</a>
-, <a class="el" href="clock_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">clock.h</a>
 </li>
 <li>BSP430_CLOCK_NOMINAL_XT1CLK_HZ
 : <a class="el" href="clock_8h.html#a7edeacce320b73a2f7de5d2a865a2802">clock.h</a>
@@ -235,6 +244,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>BSP430_CORE_FAMILY_IS_5XX
 : <a class="el" href="core_8h.html#a4c84fee0a5a393e76610a65ee1a6bf36">core.h</a>
+</li>
+<li>BSP430_CORE_INLINE
+: <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">core.h</a>
 </li>
 <li>BSP430_CORE_INTERRUPT_STATE_T
 : <a class="el" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">core.h</a>
@@ -521,6 +533,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>BSP430_MODULE_EUSCI
 : <a class="el" href="eusci_8h.html#a79d84cc98e24f41b291db99fc2539ea2">eusci.h</a>
 </li>
+<li>BSP430_MODULE_FLASH
+: <a class="el" href="flash_8h.html#a33b38079f23cf7d4cac8e6f4aa902ec0">flash.h</a>
+</li>
 <li>BSP430_MODULE_FLLPLUS
 : <a class="el" href="fllplus_8h.html#a7d969185d54cd717a69437a0500127ca">fllplus.h</a>
 </li>
@@ -732,8 +747,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="platform_8h.html#a136722b0c2fec7d74f088cf8211aab2c">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
-: <a class="el" href="rf2500t_2bsp430__config_8h.html#a2eb4c14d2e207025278b4ba3ada572b9">bsp430_config.h</a>
-, <a class="el" href="platform_8h.html#a2eb4c14d2e207025278b4ba3ada572b9">platform.h</a>
+: <a class="el" href="platform_8h.html#a2eb4c14d2e207025278b4ba3ada572b9">platform.h</a>
+, <a class="el" href="rf2500t_2bsp430__config_8h.html#a2eb4c14d2e207025278b4ba3ada572b9">bsp430_config.h</a>
 </li>
 <li>BSP430_PLATFORM_BUTTON0
 : <a class="el" href="platform_8h.html#acfa7e54bbf90e1e54ea9c17bee024645">platform.h</a>
@@ -751,13 +766,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="platform_2em430_2platform_8h.html#aa2b5bcad983b3f82fe33feaab4d5710b">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_EXP430F5438
-: <a class="el" href="platform_2exp430f5438_2platform_8h.html#adf1f1c592370a21c05e217460e8cd19f">platform.h</a>
+: <a class="el" href="platform_8h.html#adf1f1c592370a21c05e217460e8cd19f">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_EXP430F5529
 : <a class="el" href="platform_2exp430f5529_2platform_8h.html#ad8ac2ee635ef4d88ed9d69ef0006a4be">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_EXP430FG4618
-: <a class="el" href="platform_2exp430fg4618_2platform_8h.html#af8eb9465cc81b1f372371c0e409b13aa">platform.h</a>
+: <a class="el" href="platform_8h.html#af8eb9465cc81b1f372371c0e409b13aa">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_EXP430FR5739
 : <a class="el" href="platform_2exp430fr5739_2platform_8h.html#aa4b16eecb782dbbc4290845872c5fbd8">platform.h</a>
@@ -775,13 +790,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="platform_8h.html#a5658121b6e4e9a02a759878c58807b43">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_SURF
-: <a class="el" href="platform_8h.html#a4c34c7ca812427345dd932ff2288467b">platform.h</a>
+: <a class="el" href="platform_2surf_2platform_8h.html#a4c34c7ca812427345dd932ff2288467b">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_SURF_REVISION
 : <a class="el" href="platform_2surf_2platform_8h.html#a85f0606fbfd3672927d03e6d4c8ed391">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_TRXEB
-: <a class="el" href="platform_2trxeb_2platform_8h.html#a5a5c1abaed74ea2fe6ec9463df714abc">platform.h</a>
+: <a class="el" href="platform_8h.html#a5a5c1abaed74ea2fe6ec9463df714abc">platform.h</a>
 </li>
 <li>BSP430_PLATFORM_TRXEB_ALS_OUT_INCH
 : <a class="el" href="platform_2trxeb_2platform_8h.html#a297a46e6b639e764834311ea321689a5">platform.h</a>
@@ -960,6 +975,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>BSP430_RFEM_GPIO3_PORT_PERIPH_HANDLE
 : <a class="el" href="rfem_8h.html#ac52b2516b4d61f2d8cf38c8eed7d3bab">rfem.h</a>
 </li>
+<li>BSP430_RFEM_PWR_EN_PORT_BIT
+: <a class="el" href="rfem_8h.html#a02b8877017074eff5126882bdee9f840">rfem.h</a>
+</li>
+<li>BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE
+: <a class="el" href="rfem_8h.html#a8ef1d1dc188b30379f946635a3920f07">rfem.h</a>
+</li>
 <li>BSP430_RFEM_SPI0_PERIPH_HANDLE
 : <a class="el" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">rfem.h</a>
 </li>
@@ -968,6 +989,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE
 : <a class="el" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">rfem.h</a>
+</li>
+<li>BSP430_RFEM_SPI_IRQ_PORT_BIT
+: <a class="el" href="rfem_8h.html#a2d4b63fe5eaa2695edfbd8ed4058b119">rfem.h</a>
+</li>
+<li>BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE
+: <a class="el" href="rfem_8h.html#a526c15df0b78d0e456a1d8777a47ec43">rfem.h</a>
 </li>
 <li>BSP430_RTOS_YIELD_FROM_ISR
 : <a class="el" href="core_8h.html#a15a07b5efea8b66be572787a37455578">core.h</a>
@@ -1027,7 +1054,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="serial___8h.html#aa3e10e3f394424bb16b34db0f7cd977b">serial_.h</a>
 </li>
 <li>BSP430_SERIAL_SPI_READ_TX_BYTE
-: <a class="el" href="serial_8h.html#ae97e0a8d4d66141d6082dac000826b8d">serial.h</a>
+: <a class="el" href="serial___8h.html#ae97e0a8d4d66141d6082dac000826b8d">serial_.h</a>
 </li>
 <li>BSP430_SYS_FLAG_SYSRST_BOR
 : <a class="el" href="sys_8h.html#a790d901e62558a64459412e0459d8d7a">sys.h</a>
@@ -1101,6 +1128,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>BSP430_UNITTEST_ASSERT_EQUAL
 : <a class="el" href="unittest_8h.html#a04d1b56a4fc511d65e21bbf7b4c0b347">unittest.h</a>
 </li>
+<li>BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ
+: <a class="el" href="unittest_8h.html#ada838d3c304db464219062c4ed9a37db">unittest.h</a>
+</li>
 <li>BSP430_UNITTEST_ASSERT_EQUAL_FMT_
 : <a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">unittest.h</a>
 </li>
@@ -1168,7 +1198,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:45 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

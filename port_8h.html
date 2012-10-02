@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_19e4f19d9de152fbe2728cd5df77a8c2.html">periph</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_9cb70b0f81efa0454c88900ecd971aae.html">periph</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -148,7 +148,7 @@ Macros</h2></td></tr>
 <tr class="memitem:ab3d9986c3a4969cb977ecbec08b191b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#ab3d9986c3a4969cb977ecbec08b191b2">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW</a>(_hal)&#160;&#160;&#160;(<a class="el" href="port_8h.html#a7a19900bd45bf864ae2f9ace4e974381">BSP430_PORT_HAL_HPL_VARIANT_PORTW</a> == <a class="el" href="periph_8h.html#ac05efc5552af50ea113149414d699bcd">BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT</a>(_hal))</td></tr>
 <tr class="memitem:a8f62d9b887454399e0478ddd0ebf3ea8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a8f62d9b887454399e0478ddd0ebf3ea8">BSP430_PORT_HAL_GET_HPL_PORTW</a>(_hal)&#160;&#160;&#160;((<a class="el" href="port_8h.html#ab3d9986c3a4969cb977ecbec08b191b2">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW</a>(_hal)) ? (_hal)-&gt;hpl.portw : (void *)0)</td></tr>
 <tr class="memitem:a4b123ae1b2c5133e723175b46aada008"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a4b123ae1b2c5133e723175b46aada008">BSP430_PORT_HAL_GET_HPLAUX_PORTW</a>(_hal)&#160;&#160;&#160;((<a class="el" href="port_8h.html#ab3d9986c3a4969cb977ecbec08b191b2">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW</a>(_hal)) ? (_hal)-&gt;hpl_aux.portw : (void *)0)</td></tr>
-<tr class="memitem:aa76914b00157adbd8e691cfaeff48fa6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#aa76914b00157adbd8e691cfaeff48fa6">BSP430_PORT_HAL_GET_PERIPH_HANDLE</a>(_hal)&#160;&#160;&#160;<a class="el" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td></tr>
+<tr class="memitem:aa76914b00157adbd8e691cfaeff48fa6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#aa76914b00157adbd8e691cfaeff48fa6">BSP430_PORT_HAL_GET_PERIPH_HANDLE</a>(_hal)&#160;&#160;&#160;<a class="el" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td></tr>
 <tr class="memitem:a942c2ff4c4f1a23607d98aa9767308b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a942c2ff4c4f1a23607d98aa9767308b6">BSP430_PORT_HAL_HPL_IN</a>(_hal)&#160;&#160;&#160;(*(<a class="el" href="port_8h.html#aabb453e9a174fbf5a1ddf65b424d1cbe">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE</a>(_hal) ? &amp;<a class="el" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(_hal)-&gt;in : &amp;<a class="el" href="port_8h.html#a9ebc2bd94816d535484c94b158f241d6">BSP430_PORT_HAL_GET_HPL_PORT</a>(_hal)-&gt;in))</td></tr>
 <tr class="memitem:a4c6f6b6b83c5ffd5f8b6468065a8d209"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(_hal)&#160;&#160;&#160;(*(<a class="el" href="port_8h.html#aabb453e9a174fbf5a1ddf65b424d1cbe">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE</a>(_hal) ? &amp;<a class="el" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(_hal)-&gt;out : &amp;<a class="el" href="port_8h.html#a9ebc2bd94816d535484c94b158f241d6">BSP430_PORT_HAL_GET_HPL_PORT</a>(_hal)-&gt;out))</td></tr>
 <tr class="memitem:a464269017051d0faa11317c6627db1b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a464269017051d0faa11317c6627db1b5">BSP430_PORT_HAL_HPL_DIR</a>(_hal)&#160;&#160;&#160;(*(<a class="el" href="port_8h.html#aabb453e9a174fbf5a1ddf65b424d1cbe">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE</a>(_hal) ? &amp;<a class="el" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(_hal)-&gt;dir : &amp;<a class="el" href="port_8h.html#a9ebc2bd94816d535484c94b158f241d6">BSP430_PORT_HAL_GET_HPL_PORT</a>(_hal)-&gt;dir))</td></tr>
@@ -238,18 +238,19 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2472b35fcc34eefedf5b9987960b9d75"><td class="memItemLeft" align="right" valign="top">static __inline__ volatile <br class="typebreak"/>
-<a class="el" href="port_8h.html#a6cdc87c851c8c45075fd6ada2a329088">sBSP430hplPORTIE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a2472b35fcc34eefedf5b9987960b9d75">xBSP430hplLookupPORTIE</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
-<tr class="memitem:a5aa18f621e971a6a493d3132b4da340f"><td class="memItemLeft" align="right" valign="top">static __inline__ volatile <br class="typebreak"/>
-<a class="el" href="port_8h.html#aa63f0e6fe0ee84d00dae3e5a9f9a8c3f">sBSP430hplPORT</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a5aa18f621e971a6a493d3132b4da340f">xBSP430hplLookupPORT</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
-<tr class="memitem:a08ff8c8d9a25e25aa5d53ff28b5812a9"><td class="memItemLeft" align="right" valign="top">static __inline__ <a class="el" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">hBSP430halPORT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a08ff8c8d9a25e25aa5d53ff28b5812a9">hBSP430portLookup</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:ab315de00d9b9e34a6bb772103b05f0f8"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+volatile <a class="el" href="port_8h.html#a6cdc87c851c8c45075fd6ada2a329088">sBSP430hplPORTIE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#ab315de00d9b9e34a6bb772103b05f0f8">xBSP430hplLookupPORTIE</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:af85295c41d6419afb9df641ae90d0213"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+volatile <a class="el" href="port_8h.html#aa63f0e6fe0ee84d00dae3e5a9f9a8c3f">sBSP430hplPORT</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#af85295c41d6419afb9df641ae90d0213">xBSP430hplLookupPORT</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="memitem:a039c56ddc64f51922244aac149f7a853"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+<a class="el" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">hBSP430halPORT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a039c56ddc64f51922244aac149f7a853">hBSP430portLookup</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 <tr class="memitem:a78a791b05b428f3aa2bf5ff09e907200"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
-<tr class="memitem:a483e66d3dc9f6a76aae8895777a78e4c"><td class="memItemLeft" align="right" valign="top">static __inline__ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a> (unsigned int bitx)</td></tr>
+<tr class="memitem:aa9b72a778f0f690c08bba27871c4d374"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a> (unsigned int bitx)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Hardware presentation/abstraction for Digital I/O Port (PORT#/PORT#_R) </p>
 <p>A Digital I/O port capability exists on every MSP430 MCU. Differences between families are reflected in the HPL structures below.</p>
-<p>Conventional peripheral handles are <a class="el" href="port_8h.html#afa71d42b869eb19c18aa4a6b11de5a04">BSP430_PERIPH_PORT1</a>. The handles are available only when the corresponding <a class="el" href="layer.html#HPL">HPL</a> is requested. The peripheral handle can be used with <a class="el" href="port_8h.html#a5aa18f621e971a6a493d3132b4da340f">xBSP430hplLookupPORT()</a> and <a class="el" href="port_8h.html#a2472b35fcc34eefedf5b9987960b9d75">xBSP430hplLookupPORTIE()</a> to obtain the HPL handles, and with <a class="el" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">hBSP430halPORT()</a> to obtain the HAL handle.</p>
+<p>Conventional peripheral handles are <a class="el" href="port_8h.html#afa71d42b869eb19c18aa4a6b11de5a04">BSP430_PERIPH_PORT1</a>. The handles are available only when the corresponding <a class="el" href="layer.html#HPL">HPL</a> is requested. The peripheral handle can be used with <a class="el" href="port_8h.html#af85295c41d6419afb9df641ae90d0213">xBSP430hplLookupPORT()</a> and <a class="el" href="port_8h.html#ab315de00d9b9e34a6bb772103b05f0f8">xBSP430hplLookupPORTIE()</a> to obtain the HPL handles, and with <a class="el" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">hBSP430halPORT()</a> to obtain the HAL handle.</p>
 <h1><a class="anchor" id="h_periph_port_opt"></a>
 Module Configuration Options</h1>
 <ul>
@@ -1123,7 +1124,7 @@ Hardware Adaptation Layer</h1>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2174,7 +2175,7 @@ Hardware Adaptation Layer</h1>
 </div>
 </div>
 <h2>Function Documentation</h2>
-<a class="anchor" id="a08ff8c8d9a25e25aa5d53ff28b5812a9"></a>
+<a class="anchor" id="a039c56ddc64f51922244aac149f7a853"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2182,7 +2183,7 @@ Hardware Adaptation Layer</h1>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __inline__ <a class="el" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">hBSP430halPORT</a> hBSP430portLookup </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <a class="el" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">hBSP430halPORT</a> hBSP430portLookup </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em></td><td>)</td>
@@ -2207,7 +2208,7 @@ Hardware Adaptation Layer</h1>
 </dl>
 </div>
 </div>
-<a class="anchor" id="a483e66d3dc9f6a76aae8895777a78e4c"></a>
+<a class="anchor" id="aa9b72a778f0f690c08bba27871c4d374"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2215,7 +2216,7 @@ Hardware Adaptation Layer</h1>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __inline__ int iBSP430portBitPosition </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int iBSP430portBitPosition </td>
           <td>(</td>
           <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>bitx</em></td><td>)</td>
@@ -2236,13 +2237,13 @@ Hardware Adaptation Layer</h1>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the index of the first bit that is set within bitx; 0 for a bitx value of 0x01, 3 for a bitx value of 0x08, etc. The return value is -1 if no bit is set in the low byte of <em>bitx</em>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the index of the first bit that is set within bitx; 0 for a bitx value of 0x01, 3 for a bitx value of 0x08, etc. The return value is -1 if no bit is set in the low byte of <code>bitx</code>.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>This function is explicitly intended for support of 8-bit ports, and cannot be used to detect the position of the lowest set bit in a wider integer. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a32">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a12">bootstrap/button/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a16">rfem/ccid/main.c</a>, and <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a10">sensors/ds18b20/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a32">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a12">bootstrap/button/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a36">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a16">rfem/ccid/main.c</a>, and <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a10">sensors/ds18b20/main.c</a>.</dd>
 </dl>
 </div>
 </div>
-<a class="anchor" id="a5aa18f621e971a6a493d3132b4da340f"></a>
+<a class="anchor" id="af85295c41d6419afb9df641ae90d0213"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2250,7 +2251,7 @@ Hardware Adaptation Layer</h1>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __inline__ volatile <a class="el" href="port_8h.html#aa63f0e6fe0ee84d00dae3e5a9f9a8c3f">sBSP430hplPORT</a>* xBSP430hplLookupPORT </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> volatile <a class="el" href="port_8h.html#aa63f0e6fe0ee84d00dae3e5a9f9a8c3f">sBSP430hplPORT</a>* xBSP430hplLookupPORT </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em></td><td>)</td>
@@ -2270,11 +2271,11 @@ Hardware Adaptation Layer</h1>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A typed pointer that can be used to manipulate the port. A null pointer is returned if the handle does not correspond to a timer which has been enabled (e.g., with <a class="el" href="port_8h.html#ae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>), or if the specified port supports interrupts (see <a class="el" href="port_8h.html#a2472b35fcc34eefedf5b9987960b9d75">xBSP430hplLookupPORTIE</a>) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A typed pointer that can be used to manipulate the port. A null pointer is returned if the handle does not correspond to a timer which has been enabled (e.g., with <a class="el" href="port_8h.html#ae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>), or if the specified port supports interrupts (see <a class="el" href="port_8h.html#ab315de00d9b9e34a6bb772103b05f0f8">xBSP430hplLookupPORTIE</a>) </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a2472b35fcc34eefedf5b9987960b9d75"></a>
+<a class="anchor" id="ab315de00d9b9e34a6bb772103b05f0f8"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -2282,7 +2283,7 @@ Hardware Adaptation Layer</h1>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __inline__ volatile <a class="el" href="port_8h.html#a6cdc87c851c8c45075fd6ada2a329088">sBSP430hplPORTIE</a>* xBSP430hplLookupPORTIE </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> volatile <a class="el" href="port_8h.html#a6cdc87c851c8c45075fd6ada2a329088">sBSP430hplPORTIE</a>* xBSP430hplLookupPORTIE </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
           <td class="paramname"><em>periph</em></td><td>)</td>
@@ -2303,7 +2304,7 @@ Hardware Adaptation Layer</h1>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A typed pointer that can be used to manipulate the port. A null pointer is returned if the handle does not correspond to a timer which has been enabled (e.g., with <a class="el" href="port_8h.html#ae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>), or if the specified port does not support interrupts (see <a class="el" href="port_8h.html#a5aa18f621e971a6a493d3132b4da340f">xBSP430hplLookupPORT</a>) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A typed pointer that can be used to manipulate the port. A null pointer is returned if the handle does not correspond to a timer which has been enabled (e.g., with <a class="el" href="port_8h.html#ae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>), or if the specified port does not support interrupts (see <a class="el" href="port_8h.html#af85295c41d6419afb9df641ae90d0213">xBSP430hplLookupPORT</a>) </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a3">rfem/ccid/main.c</a>.</dd>
 </dl>
 </div>
@@ -2329,14 +2330,14 @@ Hardware Adaptation Layer</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The short name of the port, e.g. "P1". If the peripheral is not recognized as a port, a null pointer is returned. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2button_2main_8c-example.html#a16">bootstrap/button/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a15">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a8">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a20">sensors/hh10d/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2button_2main_8c-example.html#a16">bootstrap/button/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a34">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a15">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a8">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a20">sensors/hh10d/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

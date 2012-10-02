@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_4d13793df383114196391927751b44a0.html">utility</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_3a342b515484da5d2be804b4d00fb40f.html">utility</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -97,6 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>A unit test facility.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="platform_8h_source.html">bsp430/platform.h</a>&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
 <code>#include &lt;inttypes.h&gt;</code><br/>
 </div>
 <p><a href="unittest_8h_source.html">Go to the source code of this file.</a></p>
@@ -112,6 +113,7 @@ Macros</h2></td></tr>
 <tr class="memitem:acabfbba159793032859c6ff2e0253a4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#acabfbba159793032859c6ff2e0253a4b">BSP430_UNITTEST_ASSERT_TRUE</a>(expr_)</td></tr>
 <tr class="memitem:a5ddc2c0d11c3d2d081c794ef210e175c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a5ddc2c0d11c3d2d081c794ef210e175c">BSP430_UNITTEST_ASSERT_FALSE</a>(expr_)</td></tr>
 <tr class="memitem:a04d1b56a4fc511d65e21bbf7b4c0b347"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a04d1b56a4fc511d65e21bbf7b4c0b347">BSP430_UNITTEST_ASSERT_EQUAL</a>(v1_, v2_)</td></tr>
+<tr class="memitem:ada838d3c304db464219062c4ed9a37db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#ada838d3c304db464219062c4ed9a37db">BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ</a>(v1_, v2_)</td></tr>
 <tr class="memitem:a90abb69b4cffc6e251ca163c19c09c95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_, v2_, type_, pri_)</td></tr>
 <tr class="memitem:a928c29e5201332d07f84df40c0e5e4a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a928c29e5201332d07f84df40c0e5e4a5">BSP430_UNITTEST_ASSERT_EQUAL_FMTd</a>(v1_, v2_)&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,int,&quot;%&quot; PRId16)</td></tr>
 <tr class="memitem:a395dd7976d07c4fefb310d10788ca1fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a395dd7976d07c4fefb310d10788ca1fa">BSP430_UNITTEST_ASSERT_EQUAL_FMTu</a>(v1_, v2_)&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,unsigned int,&quot;%&quot; PRIu16)</td></tr>
@@ -119,7 +121,7 @@ Macros</h2></td></tr>
 <tr class="memitem:a9105a26a02cd4e9e8441a368d242b2d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a9105a26a02cd4e9e8441a368d242b2d6">BSP430_UNITTEST_ASSERT_EQUAL_FMTld</a>(v1_, v2_)&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,int,&quot;%&quot; PRId32)</td></tr>
 <tr class="memitem:a8e271619f85bbe656d62ff925b7db1bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a8e271619f85bbe656d62ff925b7db1bf">BSP430_UNITTEST_ASSERT_EQUAL_FMTlu</a>(v1_, v2_)&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,unsigned int,&quot;%&quot; PRIu32)</td></tr>
 <tr class="memitem:a82497b482d89742b2ca338dd6402b1b9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a82497b482d89742b2ca338dd6402b1b9">BSP430_UNITTEST_ASSERT_EQUAL_FMTlx</a>(v1_, v2_)&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,unsigned int, &quot;%#&quot; PRIx32)</td></tr>
-<tr class="memitem:a551519507b92a02192023edd0c9ef7f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a551519507b92a02192023edd0c9ef7f0">BSP430_UNITTEST_ASSERT_EQUAL_FMTp</a>(v1_, v2_)&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,void *,&quot;%p&quot;)</td></tr>
+<tr class="memitem:a551519507b92a02192023edd0c9ef7f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unittest_8h.html#a551519507b92a02192023edd0c9ef7f0">BSP430_UNITTEST_ASSERT_EQUAL_FMTp</a>(v1_, v2_)&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,const void *,&quot;%p&quot;)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -182,6 +184,39 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ada838d3c304db464219062c4ed9a37db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v1_, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v2_&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {               \</div>
+<div class="line">    static <span class="keyword">const</span> <span class="keywordtype">char</span> * expr_str_ = #v1_ <span class="stringliteral">&quot;==&quot;</span> #v2_;                     \</div>
+<div class="line">    const <span class="keywordtype">char</span> * v1v_ = (v1_);                                          \</div>
+<div class="line">    const <span class="keywordtype">char</span> * v2v_ = (v2_);                                          \</div>
+<div class="line">    vBSP430unittestResult_(__LINE__, 0 == strcmp(v1v_, v2v_), expr_str_); \</div>
+<div class="line">  } <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment --><p>Validate that the ASCIIZ contents are equal </p>
+
+</div>
+</div>
 <a class="anchor" id="a90abb69b4cffc6e251ca163c19c09c95"></a>
 <div class="memitem">
 <div class="memproto">
@@ -231,9 +266,9 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">v1_</td><td>an expression of some type</td></tr>
-    <tr><td class="paramname">v2_</td><td>an expression of the same type as <em>v1_</em> </td></tr>
-    <tr><td class="paramname">type_</td><td>a type suitable for holding the values of <em>v1_</em> and <em>v2_</em> for equality comparison purposes</td></tr>
-    <tr><td class="paramname">pri_</td><td>a print(3) format specifier, inclusive of the leading <code>%</code>, to be used to format the passed values of <em>v1_</em> and <em>v2_</em> in the case where the test fails </td></tr>
+    <tr><td class="paramname">v2_</td><td>an expression of the same type as <code>v1_</code> </td></tr>
+    <tr><td class="paramname">type_</td><td>a type suitable for holding the values of <code>v1_</code> and <code>v2_</code> for equality comparison purposes</td></tr>
+    <tr><td class="paramname">pri_</td><td>a print(3) format specifier, inclusive of the leading <code>%</code>, to be used to format the passed values of <code>v1_</code> and <code>v2_</code> in the case where the test fails </td></tr>
   </table>
   </dd>
 </dl>
@@ -265,7 +300,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Validate that the expressions are equal.</p>
 <p>If they are not, emit a diagnostic showing both values formatted as signed 16-bit integers. </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2unittest_2main_8c-example.html#a5">utility/unittest/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a9105a26a02cd4e9e8441a368d242b2d6"></a>
@@ -371,7 +407,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,void *,&quot;%p&quot;)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">BSP430_UNITTEST_ASSERT_EQUAL_FMT_</a>(v1_,v2_,const void *,&quot;%p&quot;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -454,7 +490,8 @@ Functions</h2></td></tr>
 <div class="line">    vBSP430unittestResult_(__LINE__, !(expr_), <span class="stringliteral">&quot;NOT %s&quot;</span>, expr_str_);    \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
 </div><!-- fragment --><p>Validate that the expression is false </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2unittest_2main_8c-example.html#a4">utility/unittest/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="acabfbba159793032859c6ff2e0253a4b"></a>
@@ -475,7 +512,8 @@ Functions</h2></td></tr>
 <div class="line">    vBSP430unittestResult_(__LINE__, !!(expr_), expr_str_);     \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
 </div><!-- fragment --><p>Validate that the expression is true </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2unittest_2main_8c-example.html#a3">utility/unittest/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a33a67b41f5a8fb5cde823cd8e7fa3c4f"></a>
@@ -495,7 +533,8 @@ Functions</h2></td></tr>
 <div class="line">    vBSP430unittestResult_(__LINE__, 0, msg_);  \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
 </div><!-- fragment --><p>Diagnose an unconditional failure </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2unittest_2main_8c-example.html#a2">utility/unittest/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="ada3ea164acff93c6ab330140ac1e96d1"></a>
@@ -574,7 +613,8 @@ Functions</h2></td></tr>
 <p>This displays the results of the tests and emits a distinguished sequence (<code>...done</code>) to the console for use in external monitor applications.</p>
 <p>If tests pass, <a class="el" href="unittest_8h.html#a9b92386758a7749b13b21e49b383c3dc">BSP430_UNITTEST_LED_PASSED</a> is lit, and this function returns.</p>
 <p>If at least one test failed, <a class="el" href="unittest_8h.html#ada3ea164acff93c6ab330140ac1e96d1">BSP430_UNITTEST_LED_FAILED</a> flashes at 1Hz and this function does not return. </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2unittest_2main_8c-example.html#a6">utility/unittest/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a3220284c913cc7bd22754ce0078f1d94"></a>
@@ -592,7 +632,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Initialize the unittest framework.</p>
 <p>This clears the history of previous tests and emits a distinguished sequence (<code>sync...</code>) to the console for use in external monitor applications. </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2unittest_2main_8c-example.html#a1">utility/unittest/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a92310aad1c12a8e73477b5a13f333df9"></a>
@@ -645,7 +686,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

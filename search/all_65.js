@@ -1,5 +1,16 @@
 var searchData=
 [
+  ['ebsp430_5fcli_5ferr_5fconfig',['eBSP430_CLI_ERR_Config',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418af67753f402df7ea54e6c9e7bcdfba03d',1,'cli.h']]],
+  ['ebsp430_5fcli_5ferr_5finvalid',['eBSP430_CLI_ERR_Invalid',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418ac7647ce309e6b99836933a9c841ffba6',1,'cli.h']]],
+  ['ebsp430_5fcli_5ferr_5fmissing',['eBSP430_CLI_ERR_Missing',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418a7e762748ddd1751adfbe207b65b59150',1,'cli.h']]],
+  ['ebsp430_5fcli_5ferr_5fmultimatch',['eBSP430_CLI_ERR_MultiMatch',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418aa6be58f5262516a97eb56998645c7dc7',1,'cli.h']]],
+  ['ebsp430_5fcli_5ferr_5fnone',['eBSP430_CLI_ERR_NONE',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418af7871a3246adc4314d44665fee56fdaa',1,'cli.h']]],
+  ['ebsp430_5fcli_5ferr_5funrecognized',['eBSP430_CLI_ERR_Unrecognized',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418a1af771a09f3a455eba799c33af8489e1',1,'cli.h']]],
+  ['ebsp430_5fclierrortypes',['eBSP430_CLIERRORTYPES',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418a9109cb7434ac191cf8b7bb68f7d21868',1,'cli.h']]],
+  ['ebsp430cliconsole',['eBSP430cliConsole',['../cli_8h.html#abf197215e696298dd3a9690ef10a69de',1,'eBSP430cliConsole():&#160;cli.h'],['../cli_8h.html#a99ad08bfe82dcda855f26970616f1ce6',1,'eBSP430cliConsole():&#160;cli.h']]],
+  ['ebsp430cliconsole_5fready',['eBSP430cliConsole_READY',['../cli_8h.html#abf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94',1,'cli.h']]],
+  ['ebsp430cliconsole_5frepaint',['eBSP430cliConsole_REPAINT',['../cli_8h.html#abf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3',1,'cli.h']]],
+  ['ebsp430clierrortype',['eBSP430cliErrorType',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418',1,'cli.h']]],
   ['ebsp430clocksource',['eBSP430clockSource',['../clock_8h.html#afad775d35ca969034172f0955cf1bcda',1,'eBSP430clockSource():&#160;clock.h'],['../clock_8h.html#a577bb951d567b756f39b52c3c1933f41',1,'eBSP430clockSource():&#160;clock.h']]],
   ['ebsp430clocksrc_5fdcoclk',['eBSP430clockSRC_DCOCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa08fe6b5e068e82d29fe98632bc2f4b32',1,'clock.h']]],
   ['ebsp430clocksrc_5fdcoclkdiv',['eBSP430clockSRC_DCOCLKDIV',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa003c26ac0b1326d3423e705dd4ab5dab',1,'clock.h']]],

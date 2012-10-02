@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -175,8 +175,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;} <a class="code" href="periph_8h.html#a39db24707df8d0794b9912bf3e37e5d0">sBSP430hplHALStatePrefix</a>;</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keyword">static</span> <a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;__inline__</div>
-<div class="line"><a name="l00282"></a><span class="lineno"><a class="code" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">  282</a></span>&#160;<a class="code" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">xBSP430periphFromHPL</a> (<span class="keyword">volatile</span> <span class="keywordtype">void</span> * hpl)</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00282"></a><span class="lineno"><a class="code" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">  282</a></span>&#160;<a class="code" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">xBSP430periphFromHPL</a> (<span class="keyword">volatile</span> <span class="keywordtype">void</span> * hpl)</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;{</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  <span class="keywordflow">return</span> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(uintptr_t)hpl;</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;}</div>
@@ -213,8 +213,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;} <a class="code" href="periph_8h.html#a035b8e5b659712cd0961e7a792dd0fb9">sBSP430halISRIndexedChainNode</a>;</div>
 <div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;__inline__</div>
-<div class="line"><a name="l00416"></a><span class="lineno"><a class="code" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">  416</a></span>&#160;<a class="code" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00416"></a><span class="lineno"><a class="code" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">  416</a></span>&#160;<a class="code" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">iBSP430callbackInvokeISRVoid_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
 <div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                                 <span class="keywordtype">void</span> * context,</div>
 <div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;                                 <span class="keywordtype">int</span> basis)</div>
 <div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;{</div>
@@ -226,8 +226,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;}</div>
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;</div>
 <div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;__inline__</div>
-<div class="line"><a name="l00439"></a><span class="lineno"><a class="code" href="periph_8h.html#abf2b8f041f4f6fc003a649aa62f6458e">  439</a></span>&#160;<a class="code" href="periph_8h.html#abf2b8f041f4f6fc003a649aa62f6458e">iBSP430callbackInvokeISRIndexed_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00439"></a><span class="lineno"><a class="code" href="periph_8h.html#afd815dd0c3bf9164819813698b8f2f98">  439</a></span>&#160;<a class="code" href="periph_8h.html#afd815dd0c3bf9164819813698b8f2f98">iBSP430callbackInvokeISRIndexed_ni</a> (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> * <span class="keyword">const</span> * cbpp,</div>
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;                                    <span class="keywordtype">void</span> * context,</div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;                                    <span class="keywordtype">int</span> idx,</div>
 <div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;                                    <span class="keywordtype">int</span> basis)</div>
@@ -254,7 +254,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

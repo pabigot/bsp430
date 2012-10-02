@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -171,8 +171,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_UART - 0)</span></div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00228"></a><span class="lineno"><a class="code" href="serial_8h.html#ae997de3719b1aa7a522f84d48b989317">  228</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#ae997de3719b1aa7a522f84d48b989317">hBSP430serialOpenUART</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00228"></a><span class="lineno"><a class="code" href="serial_8h.html#a32f608fdca583bd1c68b1eb2617426e5">  228</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#a32f608fdca583bd1c68b1eb2617426e5">hBSP430serialOpenUART</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;                                        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl0_byte,</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;                                        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl1_byte,</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                                        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> baud)</div>
@@ -180,28 +180,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;openUART(hal, ctl0_byte, ctl1_byte, baud);</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;}</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="code" href="serial_8h.html#ab62ec5abbab624dc335aa43448c3df68">  252</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#ab62ec5abbab624dc335aa43448c3df68">iBSP430uartRxByte_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00252"></a><span class="lineno"><a class="code" href="serial_8h.html#abea0a4563138d19b6c240d53d8ba0fd4">  252</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#abea0a4563138d19b6c240d53d8ba0fd4">iBSP430uartRxByte_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;{</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;uartRxByte_ni(hal);</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;}</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00275"></a><span class="lineno"><a class="code" href="serial_8h.html#a3437b37c8abf021f5854a0329b9a8c80">  275</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a3437b37c8abf021f5854a0329b9a8c80">iBSP430uartTxByte_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal, uint8_t c)</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00275"></a><span class="lineno"><a class="code" href="serial_8h.html#abc6ba558fd00b4630acfbfbe350e8ba7">  275</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#abc6ba558fd00b4630acfbfbe350e8ba7">iBSP430uartTxByte_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal, uint8_t c)</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;{</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;uartTxByte_ni(hal, c);</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;}</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00299"></a><span class="lineno"><a class="code" href="serial_8h.html#ad84b351e4a4fb77a287427ea37a7aea6">  299</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#ad84b351e4a4fb77a287427ea37a7aea6">iBSP430uartTxData_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00299"></a><span class="lineno"><a class="code" href="serial_8h.html#ae94de2c8da27535611263b0cd66e353b">  299</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#ae94de2c8da27535611263b0cd66e353b">iBSP430uartTxData_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
 <div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                          <span class="keyword">const</span> uint8_t * data,</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                          <span class="keywordtype">size_t</span> len)</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;{</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;uartTxData_ni(hal, data, len);</div>
 <div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;}</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00326"></a><span class="lineno"><a class="code" href="serial_8h.html#a9a396f87517b9db3c6261e62b6115ebd">  326</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a9a396f87517b9db3c6261e62b6115ebd">iBSP430uartTxASCIIZ_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal, <span class="keyword">const</span> <span class="keywordtype">char</span> * str)</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00326"></a><span class="lineno"><a class="code" href="serial_8h.html#ac2fadbddc72e5139ae32007c48cf4b18">  326</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#ac2fadbddc72e5139ae32007c48cf4b18">iBSP430uartTxASCIIZ_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal, <span class="keyword">const</span> <span class="keywordtype">char</span> * str)</div>
 <div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;{</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;uartTxASCIIZ_ni(hal, str);</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
@@ -209,133 +209,129 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_SPI - 0)</span></div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="preprocessor">#ifndef BSP430_SERIAL_SPI_READ_TX_BYTE</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno"><a class="code" href="serial_8h.html#ae97e0a8d4d66141d6082dac000826b8d">  351</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_SERIAL_SPI_READ_TX_BYTE(i_) (i_)</span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_SERIAL_SPI_READ_TX_BYTE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00388"></a><span class="lineno"><a class="code" href="serial_8h.html#a2b7505d46a02a7d5970e48a59c8d26d0">  388</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#a2b7505d46a02a7d5970e48a59c8d26d0">hBSP430serialOpenSPI</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl0_byte,</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl1_byte,</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> prescaler)</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;{</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;openSPI(hal, ctl0_byte, ctl1_byte, prescaler);</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;}</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;</div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00432"></a><span class="lineno"><a class="code" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">  432</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a9f46e1fbe33db18ba1389d30f8a5beba">iBSP430spiTxRx_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;                       <span class="keyword">const</span> uint8_t * tx_data,</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;                       <span class="keywordtype">size_t</span> tx_len,</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;                       <span class="keywordtype">size_t</span> rx_len,</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;                       uint8_t * rx_data)</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;{</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;}</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_ENABLE_SPI */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_I2C - 0)</span></div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00478"></a><span class="lineno"><a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">  478</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl0_byte,</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl1_byte,</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> prescaler)</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;{</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;openI2C(hal, ctl0_byte, ctl1_byte, prescaler);</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;}</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00503"></a><span class="lineno"><a class="code" href="serial_8h.html#abc3e56da62a7bcc31f44ab2449f3d4ec">  503</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#abc3e56da62a7bcc31f44ab2449f3d4ec">iBSP430i2cSetAddresses_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;                               <span class="keywordtype">int</span> own_address,</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;                               <span class="keywordtype">int</span> slave_address)</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;{</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;i2cSetAddresses_ni(hal, own_address, slave_address);</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;}</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00535"></a><span class="lineno"><a class="code" href="serial_8h.html#a6de4220a6d133d13625e234bffe78e81">  535</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a6de4220a6d133d13625e234bffe78e81">iBSP430i2cTxData_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;                         <span class="keyword">const</span> uint8_t * tx_data,</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;                         <span class="keywordtype">size_t</span> tx_len)</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;{</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;i2cTxData_ni(hal, tx_data, tx_len);</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;}</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00567"></a><span class="lineno"><a class="code" href="serial_8h.html#a9235d82e5d626b88fdc59eecfde04321">  567</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a9235d82e5d626b88fdc59eecfde04321">iBSP430i2cRxData_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;                         uint8_t * rx_data,</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;                         <span class="keywordtype">size_t</span> rx_len)</div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;{</div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;i2cRxData_ni(hal, rx_data, rx_len);</div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;}</div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_ENABLE_I2C */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00602"></a><span class="lineno"><a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">  602</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;                             <span class="keywordtype">int</span> holdp)</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00368"></a><span class="lineno"><a class="code" href="serial_8h.html#a40983f5ed625fd352698117786691dd5">  368</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#a40983f5ed625fd352698117786691dd5">hBSP430serialOpenSPI</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl0_byte,</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl1_byte,</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> prescaler)</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;{</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;openSPI(hal, ctl0_byte, ctl1_byte, prescaler);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;}</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00412"></a><span class="lineno"><a class="code" href="serial_8h.html#af6a874dd01b76f52eac4c67fa1aebd4e">  412</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#af6a874dd01b76f52eac4c67fa1aebd4e">iBSP430spiTxRx_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                       <span class="keyword">const</span> uint8_t * tx_data,</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;                       <span class="keywordtype">size_t</span> tx_len,</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;                       <span class="keywordtype">size_t</span> rx_len,</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;                       uint8_t * rx_data)</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;{</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;}</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_ENABLE_SPI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_I2C - 0)</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00458"></a><span class="lineno"><a class="code" href="serial_8h.html#a85fb70e450164721994aad656c24d6a0">  458</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#a85fb70e450164721994aad656c24d6a0">hBSP430serialOpenI2C</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl0_byte,</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> ctl1_byte,</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;                                       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> prescaler)</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;{</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;openI2C(hal, ctl0_byte, ctl1_byte, prescaler);</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;}</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00483"></a><span class="lineno"><a class="code" href="serial_8h.html#aaab8aec24c9fcd6a79789fe4085ee621">  483</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#aaab8aec24c9fcd6a79789fe4085ee621">iBSP430i2cSetAddresses_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;                               <span class="keywordtype">int</span> own_address,</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;                               <span class="keywordtype">int</span> slave_address)</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;{</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;i2cSetAddresses_ni(hal, own_address, slave_address);</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;}</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00515"></a><span class="lineno"><a class="code" href="serial_8h.html#acb6e6c371692d359a7f36a7df5418a22">  515</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#acb6e6c371692d359a7f36a7df5418a22">iBSP430i2cTxData_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;                         <span class="keyword">const</span> uint8_t * tx_data,</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;                         <span class="keywordtype">size_t</span> tx_len)</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;{</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;i2cTxData_ni(hal, tx_data, tx_len);</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;}</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00547"></a><span class="lineno"><a class="code" href="serial_8h.html#ae92b187fd34006fd855f425980b3904d">  547</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#ae92b187fd34006fd855f425980b3904d">iBSP430i2cRxData_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;                         uint8_t * rx_data,</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;                         <span class="keywordtype">size_t</span> rx_len)</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;{</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;i2cRxData_ni(hal, rx_data, rx_len);</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;}</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_ENABLE_I2C */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00582"></a><span class="lineno"><a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">  582</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal,</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;                             <span class="keywordtype">int</span> holdp)</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;{</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;setHold_ni(hal, holdp);</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;}</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00603"></a><span class="lineno"><a class="code" href="serial_8h.html#a9ef360a3a47ffaef50409a14fbffe5d2">  603</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a9ef360a3a47ffaef50409a14fbffe5d2">iBSP430serialClose</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
 <div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;{</div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;setHold_ni(hal, holdp);</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;close(hal);</div>
 <div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;}</div>
 <div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00623"></a><span class="lineno"><a class="code" href="serial_8h.html#a5b614830a5e7ebd00ca3c88d81784eea">  623</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="serial_8h.html#a5b614830a5e7ebd00ca3c88d81784eea">iBSP430serialClose</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;{</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;close(hal);</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;}</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00645"></a><span class="lineno"><a class="code" href="serial_8h.html#a08deb57a4d0ff7606dc446b07f35ce57">  645</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="serial_8h.html#a08deb57a4d0ff7606dc446b07f35ce57">vBSP430serialWakeupTransmit_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;{</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;wakeupTransmit_ni(hal);</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;}</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00659"></a><span class="lineno"><a class="code" href="serial_8h.html#a93d526570d79de26de98ba341833b61f">  659</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="serial_8h.html#a93d526570d79de26de98ba341833b61f">vBSP430serialFlush_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;{</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;  <span class="keywordflow">return</span> hal-&gt;dispatch-&gt;flush_ni(hal);</div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;}</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_SERIAL - 0 */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;<span class="preprocessor">#if configBSP430_SERIAL_USE_USCI - 0</span></div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="usci_8h.html" title="Hardware presentation/abstraction for USCI_A/USCI_B on 2xx/4xx devices.">bsp430/periph/usci.h</a>&gt;</span></div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_USCI5 - 0</span></div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="usci5_8h.html" title="Hardware presentation/abstraction for USCI_A/USCI_B on 5xx/6xx devices.">bsp430/periph/usci5.h</a>&gt;</span></div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI5 */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_EUSCI - 0</span></div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="eusci_8h.html" title="Hardware presentation/abstraction for eUSCI.">bsp430/periph/eusci.h</a>&gt;</span></div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_EUSCI */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;<span class="keyword">static</span> __inline__</div>
-<div class="line"><a name="l00685"></a><span class="lineno"><a class="code" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">  685</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;{</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> rv = NULL;</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;<span class="preprocessor">#if configBSP430_SERIAL_USE_USCI - 0</span></div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (NULL == rv) {</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;    rv = <a class="code" href="usci_8h.html#a7cfbc91646a2b75296c221fbfc4ad3c1">hBSP430usciLookup</a>(periph);</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;  }</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_USCI5 - 0</span></div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (NULL == rv) {</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;    rv = <a class="code" href="usci5_8h.html#a6c28ce4b238787033b60b46b47805394">xBSP430usci5Lookup</a>(periph);</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;  }</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI5 */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_EUSCI - 0</span></div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (NULL == rv) {</div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    rv = <a class="code" href="eusci_8h.html#aae9401544a0246cb06e2bc0db4540a49">hBSP430eusciLookup</a>(periph);</div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;  }</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_EUSCI */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">return</span> rv;</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;}</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> * <a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph);</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_SERIAL_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00625"></a><span class="lineno"><a class="code" href="serial_8h.html#a51b3ab4fe84cca0c3272d6e216c54b41">  625</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="serial_8h.html#a51b3ab4fe84cca0c3272d6e216c54b41">vBSP430serialWakeupTransmit_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;{</div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;  hal-&gt;dispatch-&gt;wakeupTransmit_ni(hal);</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;}</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00639"></a><span class="lineno"><a class="code" href="serial_8h.html#ad0eb5394c5af668e42fdf0ef8a7941ec">  639</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="serial_8h.html#ad0eb5394c5af668e42fdf0ef8a7941ec">vBSP430serialFlush_ni</a> (<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> hal)</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;{</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;  hal-&gt;dispatch-&gt;flush_ni(hal);</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;}</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_SERIAL - 0 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;<span class="preprocessor">#if configBSP430_SERIAL_USE_USCI - 0</span></div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="usci_8h.html" title="Hardware presentation/abstraction for USCI_A/USCI_B on 2xx/4xx devices.">bsp430/periph/usci.h</a>&gt;</span></div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_USCI5 - 0</span></div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="usci5_8h.html" title="Hardware presentation/abstraction for USCI_A/USCI_B on 5xx/6xx devices.">bsp430/periph/usci5.h</a>&gt;</span></div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI5 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_EUSCI - 0</span></div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="eusci_8h.html" title="Hardware presentation/abstraction for eUSCI.">bsp430/periph/eusci.h</a>&gt;</span></div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_EUSCI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00665"></a><span class="lineno"><a class="code" href="serial_8h.html#ad311104b2da6d177b2ae5ec0b29e7207">  665</a></span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="serial_8h.html#ad311104b2da6d177b2ae5ec0b29e7207">hBSP430serialLookup</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;{</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;  <a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> rv = NULL;</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;<span class="preprocessor">#if configBSP430_SERIAL_USE_USCI - 0</span></div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (NULL == rv) {</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;    rv = <a class="code" href="usci_8h.html#a91f3238ecb90e7e83c9d5557e7aa818f">hBSP430usciLookup</a>(periph);</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;  }</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_USCI5 - 0</span></div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (NULL == rv) {</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    rv = <a class="code" href="usci5_8h.html#ae97efa5cf75c7146b636184883859a91">xBSP430usci5Lookup</a>(periph);</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;  }</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_USCI5 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if configBSP430_SERIAL_USE_EUSCI - 0</span></div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">if</span> (NULL == rv) {</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;    rv = <a class="code" href="eusci_8h.html#a5a7c437aa7fb05a88fdf5fc81e5490eb">hBSP430eusciLookup</a>(periph);</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;  }</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_SERIAL_USE_EUSCI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;<span class="preprocessor"></span>  <span class="keywordflow">return</span> rv;</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;}</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span> * <a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a> (<a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph);</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_SERIAL_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

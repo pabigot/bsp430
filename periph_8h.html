@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -149,10 +149,10 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a46cb2e0b5f9ddefdc37edfa9d131efa1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> <br class="typebreak"/>
-__inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a46cb2e0b5f9ddefdc37edfa9d131efa1">xBSP430periphFromHPL</a> (volatile void *hpl)</td></tr>
-<tr class="memitem:a0047ff603459ba876099b5434d44b32a"><td class="memItemLeft" align="right" valign="top">static int __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> (const struct <a class="el" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> *const *cbpp, void *context, int basis)</td></tr>
-<tr class="memitem:abf2b8f041f4f6fc003a649aa62f6458e"><td class="memItemLeft" align="right" valign="top">static int __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#abf2b8f041f4f6fc003a649aa62f6458e">iBSP430callbackInvokeISRIndexed_ni</a> (const struct <a class="el" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *const *cbpp, void *context, int idx, int basis)</td></tr>
+<tr class="memitem:aa42032dffb0bcb70079bcff34f67ac3b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> <br class="typebreak"/>
+<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">xBSP430periphFromHPL</a> (volatile void *hpl)</td></tr>
+<tr class="memitem:a0103dda522f336fe608217ddb0e49506"><td class="memItemLeft" align="right" valign="top">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">iBSP430callbackInvokeISRVoid_ni</a> (const struct <a class="el" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> *const *cbpp, void *context, int basis)</td></tr>
+<tr class="memitem:afd815dd0c3bf9164819813698b8f2f98"><td class="memItemLeft" align="right" valign="top">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#afd815dd0c3bf9164819813698b8f2f98">iBSP430callbackInvokeISRIndexed_ni</a> (const struct <a class="el" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *const *cbpp, void *context, int idx, int basis)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Generic peripheral support for MSP430 MCUs. </p>
@@ -491,7 +491,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </div><div class="memdoc">
 <p>Value indicating peripheral should be configured in SPI 3-pin mode.</p>
 <p>Only the MOSI (SIMO), MISO (SOMI), and CLK pins will be configured by <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">iBSP430platformConfigurePeripheralPins_ni()</a>. STE will remain in its last-configured mode. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a25">rfem/ccid/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a45">rfem/cc3000/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a25">rfem/ccid/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -642,7 +642,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </div>
 </div>
 <h2>Function Documentation</h2>
-<a class="anchor" id="abf2b8f041f4f6fc003a649aa62f6458e"></a>
+<a class="anchor" id="afd815dd0c3bf9164819813698b8f2f98"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -650,7 +650,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int __inline__ iBSP430callbackInvokeISRIndexed_ni </td>
+          <td class="memname">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> iBSP430callbackInvokeISRIndexed_ni </td>
           <td>(</td>
           <td class="paramtype">const struct <a class="el" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *const *&#160;</td>
           <td class="paramname"><em>cbpp</em>, </td>
@@ -686,21 +686,21 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </table>
 </div><div class="memdoc">
 <p>Execute a chain of <a class="el" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a> callbacks.</p>
-<p>Same as <a class="el" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a>, but providing an index to the callback.</p>
+<p>Same as <a class="el" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">iBSP430callbackInvokeISRVoid_ni</a>, but providing an index to the callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cbpp</td><td>As with <a class="el" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
-    <tr><td class="paramname">context</td><td>As with <a class="el" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
+    <tr><td class="paramname">cbpp</td><td>As with <a class="el" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
+    <tr><td class="paramname">context</td><td>As with <a class="el" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
     <tr><td class="paramname">idx</td><td>The index to be passed to each <a class="el" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a> handler </td></tr>
-    <tr><td class="paramname">basis</td><td>As with <a class="el" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
+    <tr><td class="paramname">basis</td><td>As with <a class="el" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>As with <a class="el" href="periph_8h.html#a0047ff603459ba876099b5434d44b32a">iBSP430callbackInvokeISRVoid_ni</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>As with <a class="el" href="periph_8h.html#a0103dda522f336fe608217ddb0e49506">iBSP430callbackInvokeISRVoid_ni</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a0047ff603459ba876099b5434d44b32a"></a>
+<a class="anchor" id="a0103dda522f336fe608217ddb0e49506"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -708,7 +708,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int __inline__ iBSP430callbackInvokeISRVoid_ni </td>
+          <td class="memname">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> iBSP430callbackInvokeISRVoid_ni </td>
           <td>(</td>
           <td class="paramtype">const struct <a class="el" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> *const *&#160;</td>
           <td class="paramname"><em>cbpp</em>, </td>
@@ -738,7 +738,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </table>
 </div><div class="memdoc">
 <p>Execute a chain of <a class="el" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid</a> callbacks.</p>
-<p>The return value of the callback is expected to be a bitmask indicating bits to be cleared to wake from low power modes and bits indicating other activities to be performed by the ISR top half. The return value of individual callbacks is combined using bitwise or with the <em>basis</em> parameter.</p>
+<p>The return value of the callback is expected to be a bitmask indicating bits to be cleared to wake from low power modes and bits indicating other activities to be performed by the ISR top half. The return value of individual callbacks is combined using bitwise or with the <code>basis</code> parameter.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cbpp</td><td>Pointer to the start of the chain </td></tr>
@@ -747,11 +747,11 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The bitwise OR of the <em>basis</em> value and the return values of each callback </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The bitwise OR of the <code>basis</code> value and the return values of each callback </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a46cb2e0b5f9ddefdc37edfa9d131efa1"></a>
+<a class="anchor" id="aa42032dffb0bcb70079bcff34f67ac3b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -759,7 +759,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> __inline__ xBSP430periphFromHPL </td>
+          <td class="memname">static <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> xBSP430periphFromHPL </td>
           <td>(</td>
           <td class="paramtype">volatile void *&#160;</td>
           <td class="paramname"><em>hpl</em></td><td>)</td>
@@ -773,7 +773,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </table>
 </div><div class="memdoc">
 <p>Get the peripheral handle corresponding to an HPL handle</p>
-<p>The Hardware Presentation Layer handle is a typed pointer to a structure of registers used to control the peripheral. The peripheral handle is an integral value. This routine translates from the HPL to the integral handle; the other direction is done by peripheral-specific functions like <a class="el" href="timer_8h.html#aacf24f2076a6ba1a965ffb23a64246c6">xBSP430hplLookupTIMER()</a>.</p>
+<p>The Hardware Presentation Layer handle is a typed pointer to a structure of registers used to control the peripheral. The peripheral handle is an integral value. This routine translates from the HPL to the integral handle; the other direction is done by peripheral-specific functions like <a class="el" href="timer_8h.html#aad15c4346f91b47e4a18bbdf05fb8ed7">xBSP430hplLookupTIMER()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hpl</td><td>Hardware presentation layer handle. This is generally a pointer to a volatile structure; the absence of the volatile qualifier would require that it be explicitly cast when used as this argument.</td></tr>
@@ -787,7 +787,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

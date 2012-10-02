@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -127,13 +127,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  (void)<a name="a4"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line">  <a name="a5"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nHere we go...\n&quot;</span>);</div>
 <div class="line"></div>
-<div class="line">  uptime_ticks_per_sec = <a name="a6"></a><a class="code" href="uptime_8h.html#aa3d4e602d3c9b1bc5ab245b2411f4306">ulBSP430uptimeResolution_Hz_ni</a>();</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Uptime now %lu with resolution %lu\n&quot;</span>,</div>
-<div class="line">          <a name="a7"></a><a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>(), uptime_ticks_per_sec);</div>
+<div class="line">  uptime_ticks_per_sec = <a name="a6"></a><a class="code" href="uptime_8h.html#abee524dac4c6d777b5493f1c16bc1c2a">ulBSP430uptimeConversionFrequency_Hz_ni</a>();</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Uptime now %lu with frequency %lu Hz\n&quot;</span>,</div>
+<div class="line">          <a name="a7"></a><a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>(), uptime_ticks_per_sec);</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Monitoring DS18xx on %s.%u bit %x\n&quot;</span>,</div>
 <div class="line">          <a name="a8"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a name="a9"></a><a class="code" href="port_8h.html#aa76914b00157adbd8e691cfaeff48fa6">BSP430_PORT_HAL_GET_PERIPH_HANDLE</a>(APP_DS18B20_PORT_HAL)) ?: <span class="stringliteral">&quot;P?&quot;</span>,</div>
-<div class="line">          <a name="a10"></a><a class="code" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a>(APP_DS18B20_BIT),</div>
+<div class="line">          <a name="a10"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(APP_DS18B20_BIT),</div>
 <div class="line">          APP_DS18B20_BIT);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">do</span> {</div>
@@ -155,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> delay_count = 0;</div>
 <div class="line">    <span class="keywordtype">int</span> t_c;</div>
 <div class="line"></div>
-<div class="line">    start_tck = <a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>();</div>
+<div class="line">    start_tck = <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>();</div>
 <div class="line">    rc = -1;</div>
 <div class="line">    <span class="keywordflow">if</span> (0 == <a name="a14"></a><a class="code" href="onewire_8h.html#add5078955c0e48264eed9a65763925cc">iBSP430onewireRequestTemperature_ni</a>(bus)) {</div>
 <div class="line">      <span class="comment">/* Wait for read to complete.  Each read is nominally 61</span></div>
@@ -167,7 +167,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">      }</div>
 <div class="line">      rc = <a name="a16"></a><a class="code" href="onewire_8h.html#a586ac794112164ca1df2538f5874c6f7">iBSP430onewireReadTemperature_ni</a>(bus, &amp;t_c);</div>
 <div class="line">    }</div>
-<div class="line">    end_tck = <a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>();</div>
+<div class="line">    end_tck = <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>();</div>
 <div class="line">    duration_ms = 1000 * (end_tck - start_tck) / uptime_ticks_per_sec;</div>
 <div class="line"></div>
 <div class="line">    <span class="keywordflow">if</span> (0 == rc) {</div>
@@ -184,7 +184,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

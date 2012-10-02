@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -375,8 +375,8 @@ main.c</h1>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line">  b0hal = <a class="code" href="port_8h.html#a08ff8c8d9a25e25aa5d53ff28b5812a9">hBSP430portLookup</a>(<a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>);</div>
-<div class="line">  b0pin = <a class="code" href="port_8h.html#a483e66d3dc9f6a76aae8895777a78e4c">iBSP430portBitPosition</a>(<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>);</div>
+<div class="line">  b0hal = <a class="code" href="port_8h.html#a039c56ddc64f51922244aac149f7a853">hBSP430portLookup</a>(<a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>);</div>
+<div class="line">  b0pin = <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>);</div>
 <div class="line">  b0hpl = <a class="code" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(b0hal);</div>
 <div class="line">  b0hal-&gt;<a class="code" href="structsBSP430halPORT.html#a064ef3897a45a15efed3afe917517773">pin_cbchain_ni</a>[b0pin] = &amp;button_cb;</div>
 <div class="line">  b0hpl-&gt;sel &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
@@ -390,10 +390,10 @@ main.c</h1>
 <div class="line">  rx_head = rx_tail = rx_buffer;</div>
 <div class="line">  <span class="comment">/* A careful coder would check to return values in the following */</span></div>
 <div class="line">  tty = <a class="code" href="console_8h.html#a641b6419ca463bcb87d4ec1645928c0b">hBSP430console</a>();</div>
-<div class="line">  (void)<a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a>(tty, 1);</div>
+<div class="line">  (void)<a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(tty, 1);</div>
 <div class="line">  rx_cb.<a class="code" href="structsBSP430halISRVoidChainNode.html#a8d30674994d901c6736d6ed933edc673">next_ni</a> = tty-&gt;<a class="code" href="structsBSP430halSERIAL.html#a47baad3d8dbbff41eff72a8bacd0ff33">rx_cbchain_ni</a>;</div>
 <div class="line">  tty-&gt;<a class="code" href="structsBSP430halSERIAL.html#a47baad3d8dbbff41eff72a8bacd0ff33">rx_cbchain_ni</a> = &amp;rx_cb;</div>
-<div class="line">  (void)<a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a>(tty, 0);</div>
+<div class="line">  (void)<a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(tty, 0);</div>
 <div class="line">  *rx_head++ = CMD_MODE_ACTIVE;</div>
 <div class="line">  *rx_head++ = CMD_STATE;</div>
 <div class="line"></div>
@@ -460,10 +460,10 @@ main.c</h1>
 <div class="line">            }</div>
 <div class="line">            <span class="keywordflow">case</span> CMD_STATE:</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;MCLK rate: %lu Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a>());</div>
-<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SMCLK rate: %lu Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a0a6941051abd2d3a18654b83ba1f9398">ulBSP430clockSMCLK_Hz_ni</a>());</div>
+<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SMCLK rate: %lu Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni</a>());</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ACLK rate: %u Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni</a>());</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;LFXT1: %s\n&quot;</span>, <a class="code" href="clock_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>() ? <span class="stringliteral">&quot;FAULTED&quot;</span> : <span class="stringliteral">&quot;stable&quot;</span>);</div>
-<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Uptime (ACLK ticks): %lu\n&quot;</span>, <a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>());</div>
+<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Uptime (ACLK ticks): %lu\n&quot;</span>, <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>());</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Selected idle state: %s\n&quot;</span>, state.lpm_description);</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Clocks will %s\n&quot;</span>, state.hold_clock ? <span class="stringliteral">&quot;freeze&quot;</span> : <span class="stringliteral">&quot;run&quot;</span>);</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Serial will %s\n&quot;</span>, state.hold_serial ? <span class="stringliteral">&quot;be held&quot;</span> : <span class="stringliteral">&quot;be active&quot;</span>);</div>
@@ -516,7 +516,7 @@ main.c</h1>
 <div class="line">      }</div>
 <div class="line">    } <span class="keywordflow">while</span> (! enter_sleep);</div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line">    sleep_utt = <a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>();</div>
+<div class="line">    sleep_utt = <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>();</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Entering idle mode at %lu: %s\n&quot;</span>, sleep_utt, state.lpm_description);</div>
 <div class="line">    <span class="keywordflow">if</span> (state.lpm_bits &amp; <a class="code" href="core_8h.html#ac98f22bd2238bfdadf9c7d2a7a8bcc8f">BSP430_CORE_LPM_LPMXp5</a>) {</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;NOTE: Will use LPMx.5: press button to exit\n&quot;</span>);</div>
@@ -527,7 +527,7 @@ main.c</h1>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (state.hold_serial) {</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Disabling serial; press button to wake\n\n&quot;</span>);</div>
-<div class="line">      <a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a>(tty, 1);</div>
+<div class="line">      <a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(tty, 1);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (b0hpl-&gt;in &amp; <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>) {</div>
 <div class="line">      b0hpl-&gt;ies |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
@@ -550,9 +550,9 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span>      <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(state.lpm_bits | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line">    wake_utt = <a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>();</div>
+<div class="line">    wake_utt = <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>();</div>
 <div class="line">    <span class="keywordflow">if</span> (state.hold_serial) {</div>
-<div class="line">      <a class="code" href="serial_8h.html#abadbedbb2447510053bbec2aa371899f">iBSP430serialSetHold_ni</a>(tty, 0);</div>
+<div class="line">      <a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(tty, 0);</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Serial now awake\n&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (state.hold_clock) {</div>
@@ -610,7 +610,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

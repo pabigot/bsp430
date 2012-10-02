@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_4d13793df383114196391927751b44a0.html">utility</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li><li class="navelem"><a class="el" href="dir_3a342b515484da5d2be804b4d00fb40f.html">utility</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -140,7 +140,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a0560fbd32faeeac9abc070fe88416905"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onewire_8h.html#a0560fbd32faeeac9abc070fe88416905">iBSP430onewireComputeCRC</a> (const unsigned char *data, int len)</td></tr>
 <tr class="memitem:a37588f8966ba3a6ec70da4f10c86ca4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onewire_8h.html#a37588f8966ba3a6ec70da4f10c86ca4f">iBSP430onewireReadSerialNumber</a> (const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> *bus, <a class="el" href="structsBSP430onewireSerialNumber.html">sBSP430onewireSerialNumber</a> *snp)</td></tr>
 <tr class="memitem:add5078955c0e48264eed9a65763925cc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onewire_8h.html#add5078955c0e48264eed9a65763925cc">iBSP430onewireRequestTemperature_ni</a> (const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> *bus)</td></tr>
-<tr class="memitem:a22ede396986c639df4a8f0e3575fd18d"><td class="memItemLeft" align="right" valign="top">static int __inline__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onewire_8h.html#a22ede396986c639df4a8f0e3575fd18d">iBSP430onewireTemperatureReady_ni</a> (const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> *bus)</td></tr>
+<tr class="memitem:a0be8b48935ae42d91f0c7f35e966b1bc"><td class="memItemLeft" align="right" valign="top">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onewire_8h.html#a0be8b48935ae42d91f0c7f35e966b1bc">iBSP430onewireTemperatureReady_ni</a> (const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> *bus)</td></tr>
 <tr class="memitem:a586ac794112164ca1df2538f5874c6f7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="onewire_8h.html#a586ac794112164ca1df2538f5874c6f7">iBSP430onewireReadTemperature_ni</a> (const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> *bus, int *temp_xCel)</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -406,7 +406,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Send the command sequence to initiate a temperature measurement</p>
 <p>Note that this simply requests that the device start to measure the temperature. The measurement process may take up to 750 msec at the default 12-bit resolution.</p>
-<p>If the device is externally powered, <a class="el" href="onewire_8h.html#a22ede396986c639df4a8f0e3575fd18d">iBSP430onewireTemperatureReady_ni()</a> can be invoked to determine whether the requested measurement has completed. If using parasitic power, the application should wait for at least the maximum sample time before invoking <a class="el" href="onewire_8h.html#a586ac794112164ca1df2538f5874c6f7">iBSP430onewireReadTemperature_ni()</a>.</p>
+<p>If the device is externally powered, <a class="el" href="onewire_8h.html#a0be8b48935ae42d91f0c7f35e966b1bc">iBSP430onewireTemperatureReady_ni()</a> can be invoked to determine whether the requested measurement has completed. If using parasitic power, the application should wait for at least the maximum sample time before invoking <a class="el" href="onewire_8h.html#a586ac794112164ca1df2538f5874c6f7">iBSP430onewireReadTemperature_ni()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bus</td><td>The port and bit identifying the 1-wire bus</td></tr>
@@ -444,7 +444,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a22ede396986c639df4a8f0e3575fd18d"></a>
+<a class="anchor" id="a0be8b48935ae42d91f0c7f35e966b1bc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -452,7 +452,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int __inline__ iBSP430onewireTemperatureReady_ni </td>
+          <td class="memname">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> iBSP430onewireTemperatureReady_ni </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> *&#160;</td>
           <td class="paramname"><em>bus</em></td><td>)</td>
@@ -539,7 +539,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

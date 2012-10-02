@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_62ed61ea3473d085a8b2bf70053df4f0.html">include</a></li><li class="navelem"><a class="el" href="dir_7c92f3a74acfd272e55b8e8273858819.html">bsp430</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_b88edee3dd3c84f98132ff53401cb3f9.html">bsp430</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -196,8 +196,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;__inline__</div>
-<div class="line"><a name="l00388"></a><span class="lineno"><a class="code" href="clock_8h.html#a453c22edb5443469b217d43e4f5555cd">  388</a></span>&#160;<a class="code" href="clock_8h.html#a453c22edb5443469b217d43e4f5555cd">ulBSP430clockMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00388"></a><span class="lineno"><a class="code" href="clock_8h.html#aa749bb6b58228edd697cd4c33494404f">  388</a></span>&#160;<a class="code" href="clock_8h.html#aa749bb6b58228edd697cd4c33494404f">ulBSP430clockMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;{</div>
 <div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
@@ -213,22 +213,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#af4f11047b7504eab981af923a4a58036">iBSP430clockSMCLKDividingShift_ni</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;</div>
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;__inline__</div>
-<div class="line"><a name="l00434"></a><span class="lineno"><a class="code" href="clock_8h.html#a0a6941051abd2d3a18654b83ba1f9398">  434</a></span>&#160;<a class="code" href="clock_8h.html#a0a6941051abd2d3a18654b83ba1f9398">ulBSP430clockSMCLK_Hz_ni</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00434"></a><span class="lineno"><a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">  434</a></span>&#160;<a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni</a> (<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;{</div>
 <div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> mclk_Hz = <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a>();</div>
 <div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;  <span class="keywordflow">return</span> mclk_Hz &gt;&gt; <a class="code" href="clock_8h.html#af4f11047b7504eab981af923a4a58036">iBSP430clockSMCLKDividingShift_ni</a>();</div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;}</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;</div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;__inline__</div>
-<div class="line"><a name="l00443"></a><span class="lineno"><a class="code" href="clock_8h.html#ac6df48b7667e1268240ea5555fad1d9c">  443</a></span>&#160;<a class="code" href="clock_8h.html#ac6df48b7667e1268240ea5555fad1d9c">ulBSP430clockSMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00443"></a><span class="lineno"><a class="code" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">  443</a></span>&#160;<a class="code" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;{</div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
 <div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
 <div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  rv = <a class="code" href="clock_8h.html#a0a6941051abd2d3a18654b83ba1f9398">ulBSP430clockSMCLK_Hz_ni</a>();</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  rv = <a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni</a>();</div>
 <div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;  <span class="keywordflow">return</span> rv;</div>
 <div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;}</div>
@@ -241,8 +241,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;</div>
 <div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;__inline__</div>
-<div class="line"><a name="l00525"></a><span class="lineno"><a class="code" href="clock_8h.html#abd226cba123de9f974df991e2502d3c3">  525</a></span>&#160;<a class="code" href="clock_8h.html#abd226cba123de9f974df991e2502d3c3">uiBSP430clockACLK_Hz</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00525"></a><span class="lineno"><a class="code" href="clock_8h.html#a7e6b8510714bb26cac0b2c5cdcfdc0e0">  525</a></span>&#160;<a class="code" href="clock_8h.html#a7e6b8510714bb26cac0b2c5cdcfdc0e0">uiBSP430clockACLK_Hz</a> (<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;{</div>
 <div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> rv;</div>
 <div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
@@ -271,7 +271,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

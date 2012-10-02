@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -117,9 +117,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="comment">/* Hook into the uptime infrastructure and have the HH10D callback</span></div>
 <div class="line"><span class="comment">   * invoked once per second, starting as soon as interrupts are</span></div>
 <div class="line"><span class="comment">   * enabled. */</span></div>
-<div class="line">  sp-&gt;cb.next_ni = <a name="a2"></a><a class="code" href="uptime_8h.html#a7ebac1b73c1b727c7021bdfb82edea98">xBSP430uptimeTimer</a>()-&gt;<a name="a3"></a><a class="code" href="structsBSP430halTIMER.html#a55d43abe986951ead86dfe8ff7030502">cc_cbchain_ni</a>[sp-&gt;uptime_ccidx];</div>
-<div class="line">  <a class="code" href="uptime_8h.html#a7ebac1b73c1b727c7021bdfb82edea98">xBSP430uptimeTimer</a>()-&gt;<a class="code" href="structsBSP430halTIMER.html#a55d43abe986951ead86dfe8ff7030502">cc_cbchain_ni</a>[sp-&gt;uptime_ccidx] = &amp;sp-&gt;cb;</div>
-<div class="line">  <a class="code" href="uptime_8h.html#a7ebac1b73c1b727c7021bdfb82edea98">xBSP430uptimeTimer</a>()-&gt;<a name="a4"></a><a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a name="a5"></a><a class="code" href="structsBSP430hplTIMER.html#a58b606ac397c9b2a4c65847d1ddfd67f">cctl</a>[sp-&gt;uptime_ccidx] = CCIFG | CCIE;</div>
+<div class="line">  sp-&gt;cb.next_ni = <a name="a2"></a><a class="code" href="uptime_8h.html#a179923d3d8e44110187bdfe8ed50a8d1">xBSP430uptimeTimer</a>()-&gt;<a name="a3"></a><a class="code" href="structsBSP430halTIMER.html#a55d43abe986951ead86dfe8ff7030502">cc_cbchain_ni</a>[sp-&gt;uptime_ccidx];</div>
+<div class="line">  <a class="code" href="uptime_8h.html#a179923d3d8e44110187bdfe8ed50a8d1">xBSP430uptimeTimer</a>()-&gt;<a class="code" href="structsBSP430halTIMER.html#a55d43abe986951ead86dfe8ff7030502">cc_cbchain_ni</a>[sp-&gt;uptime_ccidx] = &amp;sp-&gt;cb;</div>
+<div class="line">  <a class="code" href="uptime_8h.html#a179923d3d8e44110187bdfe8ed50a8d1">xBSP430uptimeTimer</a>()-&gt;<a name="a4"></a><a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a name="a5"></a><a class="code" href="structsBSP430hplTIMER.html#a58b606ac397c9b2a4c65847d1ddfd67f">cctl</a>[sp-&gt;uptime_ccidx] = CCIFG | CCIE;</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
@@ -158,8 +158,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> main ()</div>
 <div class="line">{</div>
-<div class="line">  <a name="_a12"></a><a class="code" href="structsBSP430halPORT.html">sBSP430halPORT</a> * hh10d_port = <a name="a13"></a><a class="code" href="port_8h.html#a08ff8c8d9a25e25aa5d53ff28b5812a9">hBSP430portLookup</a>(APP_HH10D_PORT_PERIPH_HANDLE);</div>
-<div class="line">  <a name="_a14"></a><a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> i2c = <a name="a15"></a><a class="code" href="serial_8h.html#a06fd80e81dd60f4f2b85badaa438eca2">hBSP430serialLookup</a>(APP_HH10D_I2C_PERIPH_HANDLE);</div>
+<div class="line">  <a name="_a12"></a><a class="code" href="structsBSP430halPORT.html">sBSP430halPORT</a> * hh10d_port = <a name="a13"></a><a class="code" href="port_8h.html#a039c56ddc64f51922244aac149f7a853">hBSP430portLookup</a>(APP_HH10D_PORT_PERIPH_HANDLE);</div>
+<div class="line">  <a name="_a14"></a><a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> i2c = <a name="a15"></a><a class="code" href="serial_8h.html#ad311104b2da6d177b2ae5ec0b29e7207">hBSP430serialLookup</a>(APP_HH10D_I2C_PERIPH_HANDLE);</div>
 <div class="line">  <span class="keywordtype">int</span> uptime_Hz;</div>
 <div class="line">  <span class="keywordtype">int</span> hh10d_offs;</div>
 <div class="line">  <span class="keywordtype">int</span> hh10d_sens;</div>
@@ -176,14 +176,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Initialize the state information used in the HH10D ISR */</span></div>
-<div class="line">  hh10d.freq_timer = <a name="a21"></a><a class="code" href="timer_8h.html#aacf24f2076a6ba1a965ffb23a64246c6">xBSP430hplLookupTIMER</a>(APP_HH10D_TIMER_PERIPH_HANDLE);</div>
+<div class="line">  hh10d.freq_timer = <a name="a21"></a><a class="code" href="timer_8h.html#aad15c4346f91b47e4a18bbdf05fb8ed7">xBSP430hplLookupTIMER</a>(APP_HH10D_TIMER_PERIPH_HANDLE);</div>
 <div class="line">  hh10d.uptime_ccidx = APP_HH10D_UPTIME_CC_INDEX;</div>
-<div class="line">  uptime_Hz = <a name="a22"></a><a class="code" href="uptime_8h.html#aa3d4e602d3c9b1bc5ab245b2411f4306">ulBSP430uptimeResolution_Hz_ni</a>();</div>
+<div class="line">  uptime_Hz = <a name="a22"></a><a class="code" href="uptime_8h.html#abee524dac4c6d777b5493f1c16bc1c2a">ulBSP430uptimeConversionFrequency_Hz_ni</a>();</div>
 <div class="line">  hh10d.sample_duration_utt = uptime_Hz;</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;HH10D I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n&quot;</span>,</div>
 <div class="line">          <a name="a23"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(APP_HH10D_I2C_PERIPH_HANDLE) ?: <span class="stringliteral">&quot;UNKNOWN&quot;</span>,</div>
-<div class="line">          i2c, <a name="a24"></a><a class="code" href="clock_8h.html#a0a6941051abd2d3a18654b83ba1f9398">ulBSP430clockSMCLK_Hz_ni</a>() / APP_HH10D_I2C_PRESCALER,</div>
+<div class="line">          i2c, <a name="a24"></a><a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni</a>() / APP_HH10D_I2C_PRESCALER,</div>
 <div class="line">          APP_HH10D_I2C_ADDRESS);</div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;HH10D I2C Pins: %s\n&quot;</span>, <a name="a25"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(APP_HH10D_I2C_PERIPH_HANDLE, <a name="a26"></a><a class="code" href="periph_8h.html#aaf5e8738e695389f357acad95ac286ec">BSP430_PERIPHCFG_SERIAL_I2C</a>));</div>
@@ -196,7 +196,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">          <a class="code" href="timer_8h.html#aad872aaa82973fd3accca3bcc004ea69">xBSP430timerName</a>(<a name="a28"></a><a class="code" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>),</div>
 <div class="line">          APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);</div>
 <div class="line"></div>
-<div class="line">  i2c = <a name="a29"></a><a class="code" href="serial_8h.html#a73b7d4973a32423d720db00714b401b8">hBSP430serialOpenI2C</a>(i2c,</div>
+<div class="line">  i2c = <a name="a29"></a><a class="code" href="serial_8h.html#a85fb70e450164721994aad656c24d6a0">hBSP430serialOpenI2C</a>(i2c,</div>
 <div class="line">                             <a name="a30"></a><a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a name="a31"></a><a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>),</div>
 <div class="line">                             <a name="a32"></a><a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, APP_HH10D_I2C_PRESCALER);</div>
 <div class="line">  <span class="keywordflow">if</span> (! i2c) {</div>
@@ -204,16 +204,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordflow">return</span>;</div>
 <div class="line">  }</div>
 <div class="line"></div>
-<div class="line">  (void)<a name="a33"></a><a class="code" href="serial_8h.html#abc3e56da62a7bcc31f44ab2449f3d4ec">iBSP430i2cSetAddresses_ni</a>(i2c, -1, APP_HH10D_I2C_ADDRESS);</div>
+<div class="line">  (void)<a name="a33"></a><a class="code" href="serial_8h.html#aaab8aec24c9fcd6a79789fe4085ee621">iBSP430i2cSetAddresses_ni</a>(i2c, -1, APP_HH10D_I2C_ADDRESS);</div>
 <div class="line"></div>
 <div class="line">  hh10d_sens = 0;</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordtype">int</span> rc;</div>
 <div class="line">    uint8_t addr = 10;</div>
 <div class="line">    uint8_t data[4];</div>
-<div class="line">    rc = <a name="a34"></a><a class="code" href="serial_8h.html#a6de4220a6d133d13625e234bffe78e81">iBSP430i2cTxData_ni</a>(i2c, &amp;addr, <span class="keyword">sizeof</span>(addr));</div>
+<div class="line">    rc = <a name="a34"></a><a class="code" href="serial_8h.html#acb6e6c371692d359a7f36a7df5418a22">iBSP430i2cTxData_ni</a>(i2c, &amp;addr, <span class="keyword">sizeof</span>(addr));</div>
 <div class="line">    <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(addr) == rc) {</div>
-<div class="line">      rc = <a name="a35"></a><a class="code" href="serial_8h.html#a9235d82e5d626b88fdc59eecfde04321">iBSP430i2cRxData_ni</a>(i2c, data, <span class="keyword">sizeof</span>(data));</div>
+<div class="line">      rc = <a name="a35"></a><a class="code" href="serial_8h.html#ae92b187fd34006fd855f425980b3904d">iBSP430i2cRxData_ni</a>(i2c, data, <span class="keyword">sizeof</span>(data));</div>
 <div class="line">      <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(data) == rc) {</div>
 <div class="line">        hh10d_sens = (data[0] &lt;&lt; 8) | data[1];</div>
 <div class="line">        hh10d_offs = (data[2] &lt;&lt; 8) | data[3];</div>
@@ -244,7 +244,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
-<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%lu: Sample %u in %u uptime ticks&quot;</span>, <a name="a41"></a><a class="code" href="uptime_8h.html#ada445193682ed9b58ce9ebb38bb99594">ulBSP430uptime_ni</a>(), hh10d.last_period_count, hh10d.sample_duration_utt);</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%lu: Sample %u in %u uptime ticks&quot;</span>, <a name="a41"></a><a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>(), hh10d.last_period_count, hh10d.sample_duration_utt);</div>
 <div class="line">    <span class="keywordflow">if</span> (0 != hh10d_sens) {</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;: RH %u%%&quot;</span>, (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)(((hh10d_offs - hh10d.last_period_count) * (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>) hh10d_sens) / 4096));</div>
 <div class="line">    }</div>
@@ -254,7 +254,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

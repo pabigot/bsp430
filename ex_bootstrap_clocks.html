@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20120921</span>
+   &#160;<span id="projectnumber">20121002</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -169,7 +169,7 @@ main.c</h1>
 <div class="line">  <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\niBSP430clockSMCLKDividingShift_ni(): &quot;</span>);</div>
 <div class="line">  <a class="code" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni</a>(<a class="code" href="clock_8h.html#af4f11047b7504eab981af923a4a58036">iBSP430clockSMCLKDividingShift_ni</a>(), 10);</div>
 <div class="line">  <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\nulBSP430clockSMCLK_Hz_ni(): &quot;</span>);</div>
-<div class="line">  smclk_Hz = <a class="code" href="clock_8h.html#a0a6941051abd2d3a18654b83ba1f9398">ulBSP430clockSMCLK_Hz_ni</a>();</div>
+<div class="line">  smclk_Hz = <a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni</a>();</div>
 <div class="line">  <a class="code" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni</a>(smclk_Hz, 10);</div>
 <div class="line">  <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;\nBSP430_CLOCK_LFXT1_IS_FAULTED_NI(): &quot;</span>);</div>
 <div class="line">  <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(<a class="code" href="clock_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>(), 10);</div>
@@ -184,7 +184,7 @@ main.c</h1>
 <div class="line"><span class="preprocessor">#if BSP430_TIMER_CCACLK - 0</span></div>
 <div class="line"><span class="preprocessor"></span>  <span class="keywordflow">do</span> {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> SAMPLE_PERIOD_ACLK = 10;</div>
-<div class="line">    <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> * tp = <a class="code" href="timer_8h.html#aacf24f2076a6ba1a965ffb23a64246c6">xBSP430hplLookupTIMER</a>(<a class="code" href="timer_8h.html#aaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>);</div>
+<div class="line">    <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> * tp = <a class="code" href="timer_8h.html#aad15c4346f91b47e4a18bbdf05fb8ed7">xBSP430hplLookupTIMER</a>(<a class="code" href="timer_8h.html#aaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>);</div>
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> cc_delta;</div>
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> aclk_rel_smclk_Hz;</div>
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> smclk_rel_aclk_Hz;</div>
@@ -393,7 +393,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 12:37:44 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 2 2012 14:39:04 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

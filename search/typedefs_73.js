@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['sbsp430clicommand',['sBSP430cliCommand',['../cli_8h.html#a093282c0ee45a19a7cbbc32c1a875d0a',1,'cli.h']]],
+  ['sbsp430clicommandlink',['sBSP430cliCommandLink',['../cli_8h.html#a8306443ce97f057752f0afe26c043982',1,'cli.h']]],
   ['sbsp430halisrindexedchainnode',['sBSP430halISRIndexedChainNode',['../periph_8h.html#a035b8e5b659712cd0961e7a792dd0fb9',1,'periph.h']]],
   ['sbsp430halisrvoidchainnode',['sBSP430halISRVoidChainNode',['../periph_8h.html#a79b47a57f019b607261202d78a4f8917',1,'periph.h']]],
   ['sbsp430halled',['sBSP430halLED',['../led_8h.html#a21eea6a2b8a5f58e35280a0ae5945ee0',1,'led.h']]],
