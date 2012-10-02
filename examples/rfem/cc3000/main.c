@@ -1,8 +1,6 @@
 /** This file is in the public domain.
  *
- *
  * @homepage http://github.com/pabigot/bsp430
- *
  */
 
 #include <bsp430/platform.h>
@@ -23,12 +21,16 @@
 #include <string.h>
 #include <ctype.h>
 
-/* Memory is extremely tight on the FR5739.  Set these to restrict the
- * set of commands to ones of interest that will fit. */
+/* Memory is extremely tight on the FR5739 (16 kB including CC3000
+ * buffers).  Set these to restrict the set of commands to ones of
+ * interest that will fit.  You'll probably find you'll need to
+ * disable WLAN_CONNECT, which makes this pretty useless.  On the
+ * EXP430F5438 the total application size is just over 20 kB. */
 #define CMD_WLAN 1
 #define CMD_WLAN_STOP 1
 #define CMD_WLAN_STATUS 1
 #define CMD_WLAN_CONNECT 1
+#define CMD_WLAN_IPCONFIG 1
 #define CMD_WLAN_DISCONNECT 1
 #define CMD_WLAN_START 1
 #define CMD_NVMEM 1
@@ -36,7 +38,6 @@
 #define CMD_NVMEM_READ 1
 #define CMD_NVMEM_MAC 1
 #define CMD_INFO 1
-#define CMD_IPCONFIG 1
 #define CMD_HELP 1
 
 #if NO_HELP - 0
@@ -68,10 +69,11 @@ static void wlan_cb (long event_type,
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
+#if CMD_WLAN - 0
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
 
-#if (CMD_WLAN - 0) && (CMD_WLAN_STOP - 0)
+#if CMD_WLAN_STOP - 0
 static int
 cmd_wlan_stop (const char * argstr)
 {
@@ -89,7 +91,7 @@ static sBSP430cliCommand dcmd_wlan_stop = {
 #define LAST_SUB_COMMAND &dcmd_wlan_stop
 #endif /* CMD_WLAN_STOP */
 
-#if (CMD_WLAN - 0) && (CMD_WLAN_DISCONNECT - 0)
+#if CMD_WLAN_DISCONNECT - 0
 static int
 cmd_wlan_disconnect (const char * argstr)
 {
@@ -108,7 +110,49 @@ static sBSP430cliCommand dcmd_wlan_disconnect = {
 #define LAST_SUB_COMMAND &dcmd_wlan_disconnect
 #endif /* CMD_WLAN_DISCONNECT */
 
-#if (CMD_WLAN - 0) && (CMD_WLAN_CONNECT - 0)
+#if CMD_WLAN_IPCONFIG - 0
+const char *
+ipv4AsText (const unsigned char * ipaddr)
+{
+  static char buffer[16];
+  snprintf(buffer, sizeof(buffer), "%u.%u.%u.%u", ipaddr[3], ipaddr[2], ipaddr[1], ipaddr[0]);
+  return buffer;
+}
+
+static int
+cmd_wlan_ipconfig (const char * argstr)
+{
+  tNetappIpconfigRetArgs ipc;
+  const unsigned char * p;
+  
+  memset(&ipc, 0, sizeof(ipc));
+  netapp_ipconfig(&ipc);
+  cprintf("IP: %s\n", ipv4AsText(ipc.aucIP));
+  cprintf("NM: %s\n", ipv4AsText(ipc.aucSubnetMask));
+  cprintf("GW: %s\n", ipv4AsText(ipc.aucDefaultGateway));
+  cprintf("DHCP: %s\n", ipv4AsText(ipc.aucDHCPServer));
+  cprintf("DNS: %s\n", ipv4AsText(ipc.aucDNSServer));
+  p = ipc.uaMacAddr;
+  /* WTF?  A little-endian MAC address?  This may be because of a bug
+   * fix in the host driver; the original version was completely
+   * wrong. */
+  cprintf("MAC: %02x.%02x.%02x.%02x.%02x.%02x\n",
+          p[5], p[4], p[3], p[2], p[1], p[0]);
+  cprintf("SSID: %s\n", ipc.uaSSID);
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_ipconfig = {
+  .key = "ipconfig",
+  .help = HELP_STRING("# show IP parameters"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_ipconfig
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_ipconfig
+#endif /* CMD_WLAN_IPCONFIG */  
+
+#if CMD_WLAN_CONNECT - 0
 typedef struct sWlanSecMap {
   unsigned int val;
   const char * tag;
@@ -262,7 +306,7 @@ static sBSP430cliCommand dcmd_wlan_connect = {
 #define LAST_SUB_COMMAND &dcmd_wlan_connect
 #endif /* CMD_WLAN_CONNECT */
 
-#if (CMD_WLAN - 0) && (CMD_WLAN_STATUS - 0)
+#if CMD_WLAN_STATUS - 0
 static int
 cmd_wlan_status (const char * argstr)
 {
@@ -294,7 +338,7 @@ cmd_wlan_status (const char * argstr)
 }
 static sBSP430cliCommand dcmd_wlan_status = {
   .key = "status",
-  .help = HELP_STRING("# get CC3000 status"),
+  .help = HELP_STRING("# get CC3000 status and AP config"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_status
@@ -303,7 +347,7 @@ static sBSP430cliCommand dcmd_wlan_status = {
 #define LAST_SUB_COMMAND &dcmd_wlan_status
 #endif /* CMD_WLAN_STATUS */
 
-#if (CMD_WLAN - 0) && (CMD_WLAN_START - 0)
+#if CMD_WLAN_START - 0
 static int
 cmd_wlan_start (const char * argstr)
 {
@@ -325,7 +369,6 @@ static sBSP430cliCommand dcmd_wlan_start = {
 #define LAST_SUB_COMMAND &dcmd_wlan_start
 #endif /* CMD_WLAN_START */
 
-#if (CMD_WLAN - 0)
 static sBSP430cliCommand dcmd_wlan = {
   .key = "wlan",
   .next = LAST_COMMAND,
@@ -335,6 +378,7 @@ static sBSP430cliCommand dcmd_wlan = {
 #define LAST_COMMAND &dcmd_wlan
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
+
 #endif /* CMD_WLAN */
 
 #if (CMD_NVMEM - 0) && (CMD_NVMEM_SP - 0)
@@ -477,50 +521,10 @@ static sBSP430cliCommand dcmd_nvmem = {
 #define LAST_SUB_COMMAND NULL
 #endif /* CMD_NVMEM */
 
-const char *
-ipv4AsText (const unsigned char * ipaddr)
-{
-  static char buffer[16];
-  snprintf(buffer, sizeof(buffer), "%u.%u.%u.%u", ipaddr[3], ipaddr[2], ipaddr[1], ipaddr[0]);
-  return buffer;
-}
-
-#if (CMD_IPCONFIG - 0)
-
-static int
-cmd_ipconfig (const char * argstr)
-{
-  tNetappIpconfigRetArgs ipc;
-  const unsigned char * p;
-  
-  memset(&ipc, 0, sizeof(ipc));
-  netapp_ipconfig(&ipc);
-  cprintf("IP: %s\n", ipv4AsText(ipc.aucIP));
-  cprintf("NM: %s\n", ipv4AsText(ipc.aucSubnetMask));
-  cprintf("GW: %s\n", ipv4AsText(ipc.aucDefaultGateway));
-  cprintf("DHCP: %s\n", ipv4AsText(ipc.aucDHCPServer));
-  cprintf("DNS: %s\n", ipv4AsText(ipc.aucDNSServer));
-  p = ipc.uaMacAddr;
-  /* WTF?  A little-endian MAC address?  This may be because of a bug
-   * fix in the host driver; the original version was completely
-   * wrong. */
-  cprintf("MAC: %02x.%02x.%02x.%02x.%02x.%02x\n",
-          p[5], p[4], p[3], p[2], p[1], p[0]);
-  cprintf("SSID: %s\n", ipc.uaSSID);
-  return 0;
-}
-static sBSP430cliCommand dcmd_ipconfig = {
-  .key = "ipconfig",
-  .help = HELP_STRING("# show IP parameters"),
-  .next = LAST_COMMAND,
-  .handler = iBSP430cliHandlerSimple,
-  .param = cmd_ipconfig
-};
-#undef LAST_SUB_COMMAND
-#define LAST_SUB_COMMAND &dcmd_ipconfig
-#undef LAST_COMMAND
-#define LAST_COMMAND &dcmd_ipconfig
-#endif /* CMD_IPCONFIG */  
+#if ! (BSP430_MODULE_FLASH - 0)
+/* No support for this on FRAM boards yet */
+#undef CMD_INFO
+#endif
 
 #if CMD_INFO - 0
 
@@ -635,20 +639,6 @@ static sBSP430cliCommand dcmd_help = {
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_help
 #endif /* CMD_HELP */
-
-#define KEY_BS '\b'
-#define KEY_LF '\n'
-#define KEY_CR '\r'
-#define KEY_BEL '\a'
-#define KEY_ESC '\e'
-#define KEY_FF '\f'
-#define KEY_TAB '\t'
-#define KEY_KILL_LINE 0x15
-#define KEY_KILL_WORD 0x17
-char command[80];
-
-#define FLG_NEED_PROMPT 0x01
-#define FLG_HAVE_COMMAND 0x02
 
 void main (void)
 {
@@ -786,11 +776,4 @@ void main (void)
     }
     BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
   }
-#if 0
-  cprintf("%s wlan_start(0)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-  wlan_start(0);
-  cprintf("%s wlan_stop()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-  wlan_stop();
-  cprintf("%s Leaving program\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-#endif
 }
