@@ -44,9 +44,7 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/utility/cc3000spi.h>
-#include <bsp430/utility/console.h>
 #include <bsp430/utility/uptime.h>
-#include <bsp430/utility/led.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/serial.h>
 #include <cc3000/cc3000_common.h>
@@ -96,12 +94,10 @@ static gcSpiHandleRx rxCallback_ni_;
 /* Assert chip select by clearing CSn */
 #define CS_ASSERT() do {                                                \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;  \
-    vBSP430ledSet(0, 1);                                                \
   } while (0)
   
 /* De-assert chip select by setting CSn */
 #define CS_DEASSERT() do {                                              \
-    vBSP430ledSet(0, 0);                                                \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;   \
   } while (0)
 
@@ -143,9 +139,6 @@ static void
 writeWlanPin_ (unsigned char val)
 {
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
-#if 0
-  cprintf("%s writeWlanPin_(%d)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), val);
-#endif /* 0 */
 
   if (val) {
     pwr_en_port->out |= BSP430_RFEM_PWR_EN_PORT_BIT;
@@ -186,10 +179,6 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
                 void * context,
                 int idx)
 {
-#if 0
-  cprintf("%s processSpiIRQ_\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-#endif /* 0 */
-  vBSP430ledSet(1, 1);
   if (spiFlags_ & SPIFLAG_INITIALIZED) {
     int rv;
     const unsigned char opcode = CC3000_SPI_OPCODE_READ;
@@ -219,9 +208,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
 
       /* Pass the packet off to the driver.  Again, yes, right here in
        * the ISR. */
-      vBSP430ledSet(2, 1);
       rxCallback_ni_(rp);
-      vBSP430ledSet(2, 0);
     }
   } else {
     /* If not initialized, this is the IRQ raised by the CC3000 to
@@ -229,7 +216,6 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
      * to read, no callback to invoke. */
     spiFlags_ |= SPIFLAG_INITIALIZED;
   }
-  vBSP430ledSet(1, 0);
   return 0;
 }
 
@@ -249,9 +235,6 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
     if (spi_) {
       break;
     }
-#if 0
-    cprintf("%s SpiOpen(%p)\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), pfRxHandler);
-#endif /* 0 */
 
     /* Open the device for 3-wire SPI.  Per
      * http://processors.wiki.ti.com/index.php/CC3000_Host_Programming_Guide#CC3000_SPI_Operation
@@ -307,9 +290,6 @@ SpiClose (void)
     if (! spi_) {
       break;
     }
-#if 0
-    cprintf("%s SpiClose()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-#endif /* 0 */
 
     /* Disable interrupts, clear pending interrupt, and unhook from
      * the ISR chain.  Set the GPIO to output low. */
@@ -342,10 +322,6 @@ SpiWrite (unsigned char * tx_buffer,
   int rv;
   unsigned char * tp = tx_buffer;
   BSP430_CORE_INTERRUPT_STATE_T istate;
-
-#if 0
-  cprintf("%s SpiWrite(%p, %u)...", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), tx_buffer, len);
-#endif /* 0 */
 
   /* Total length of packet must be an even number of octets.  Packet
    * length is user-provided length plus the length of the SPI header,
@@ -388,9 +364,6 @@ SpiWrite (unsigned char * tx_buffer,
 
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
-#if 0
-  cprintf("%d\n", rv);
-#endif /* 0 */
   return (0 <= rv) ? rv : 0;
 }
 
@@ -399,8 +372,5 @@ SpiWrite (unsigned char * tx_buffer,
 void
 SpiResumeSpi (void)
 {
-#if 0
-  cprintf("%s SpiResume()\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
-#endif /* 0 */
   wlanInterruptEnable_();
 }
