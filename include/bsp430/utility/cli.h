@@ -44,23 +44,24 @@
 
 /** Get the next token in the command string.
  *
- * @param command pointer into an immutable buffer containing a
- * sequence of whitespace-separated tokens.
+ * @param commandp pointer to a pointer into an immutable buffer
+ * containing a sequence of whitespace-separated tokens.  On return it
+ * is updated to point to the first whitespace character following the
+ * recognized token.
  *
- * @param remainingp pointer to the length of the command.  On input
- * this is the number of valid characters beginning at @a command.  On
- * return the value is updated to reflect the number of valid
- * characters beginning at the pointer that is returned.
+ * @param remainingp pointer to the length of the sequence beginning
+ * at @p *commandp.  On return the value has been updated to account
+ * for any adjustment to @p *commandp.
  *
  * @param lenp pointer to the length of the returned token.  On return
- * the value is set to the number of valid non-space characters
+ * the value is set to the number of valid characters in the token
  * beginning at the returned pointer.
  *
- * @return A pointer to the first non-space character in @a command.
- * If there are no such characters, the pointer is just past the end
- * of @a command and @a *remainingp is updated to have a value of
- * zero. */
-const char * xBSP430cliNextToken (const char * command,
+ * @return A pointer to the first character of the first token in @p
+ * *command.  If there are no such characters, the pointer is just
+ * past the end of @p *commandp and both @p *remainingp and @p *lenp
+ * are updated to have value zero. */
+const char * xBSP430cliNextToken (const char * * commandp,
                                   size_t * remainingp,
                                   size_t * lenp);
 

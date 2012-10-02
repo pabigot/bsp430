@@ -146,18 +146,14 @@ cmd_wlan_connect (const char * argstr)
   unsigned long t[2];
 
   remaining = strlen(argstr);
-  tp = xBSP430cliNextToken(argstr, &remaining, &len);
-  argstr = tp + len;
-  remaining -= len;
+  tp = xBSP430cliNextToken(&argstr, &remaining, &len);
   if (*tp) {
     memcpy(ssid, tp, len);
     ssid_len = len;
   }
   ssid[ssid_len] = 0;
 
-  tp = xBSP430cliNextToken(argstr, &remaining, &len);
-  argstr += len;
-  remaining -= len;
+  tp = xBSP430cliNextToken(&argstr, &remaining, &len);
   if (*tp) {
     memcpy(key, tp, len);
     key_len = len;

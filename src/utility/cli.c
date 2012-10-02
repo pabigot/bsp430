@@ -55,11 +55,12 @@ void vBSP430cliSetDiagnosticFunction (iBSP430cliDiagnosticFunction diagnostic_fu
 }
 
 const char *
-xBSP430cliNextToken (const char * command,
+xBSP430cliNextToken (const char * * commandp,
                      size_t * remainingp,
                      size_t * lenp)
 {
   size_t remaining = *remainingp;
+  const char * command = *commandp;
   const char * rv = command;
   const char * lp;
 
@@ -74,8 +75,10 @@ xBSP430cliNextToken (const char * command,
          && ! isspace(*lp)) {
     ++lp;
   }
+  /* Updated command string */
+  *commandp = lp;
   /* Length of space skipped */
-  *remainingp -= (rv - command);
+  *remainingp -= (lp - command);
   /* Length of non-space detected */
   *lenp = lp - rv;
   return rv;
@@ -92,17 +95,15 @@ iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
 {
   const sBSP430cliCommand * match = NULL;
   unsigned int nmatches;
-  size_t remaining;
   size_t len;
   const char * key;
 
-  remaining = command_len;
-  key = xBSP430cliNextToken(command, &remaining, &len);
+  key = xBSP430cliNextToken(&command, &command_len, &len);
   if (0 != argstrp) {
-    *argstrp = key + len;
+    *argstrp = command;
   }
   if (0 != argstr_lenp) {
-    *argstr_lenp = remaining - len;
+    *argstr_lenp = command_len;
   }
   nmatches = 0;
   while (cmds) {
@@ -152,10 +153,11 @@ executeSubcommand_ (sBSP430cliCommandLink * chain,
   parent_link.cmd = match;
   if (match->child) {
     const char * nargstr;
+    const char * mut_argstr = argstr;
     size_t ncommand_len = argstr_len;
     size_t len;
 
-    nargstr = xBSP430cliNextToken(argstr, &ncommand_len, &len);
+    nargstr = xBSP430cliNextToken(&mut_argstr, &ncommand_len, &len);
     if ((0 != nargstr) && (0 < len)) {
       return executeSubcommand_(&parent_link, match->child, param, argstr, argstr_len);
     }
@@ -196,10 +198,11 @@ parseSubcommand_ (sBSP430cliCommandLink * chain,
   parent_link.cmd = match;
   if (match->child) {
     const char * nargstr;
+    const char * mut_argstr;
     size_t ncommand_len = argstr_len;
     size_t len;
 
-    nargstr = xBSP430cliNextToken(argstr, &ncommand_len, &len);
+    nargstr = xBSP430cliNextToken(&mut_argstr, &ncommand_len, &len);
     if ((0 != nargstr) && (0 < len)) {
       return parseSubcommand_(&parent_link, match->child, param, argstr, argstr_len, handler);
     }
@@ -236,13 +239,13 @@ iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
   {                                                                     \
     char buffer[sizeof(maxvalstr_)];                                    \
     char * ep;                                                          \
+    const char * argstr = *argstrp;                                     \
+    size_t argstr_len = *argstr_lenp;                                   \
     const char * vstr;                                                  \
-    size_t remaining;                                                   \
     size_t len;                                                         \
     type_ v;                                                            \
                                                                         \
-    remaining = *argstr_lenp;                                           \
-    vstr = xBSP430cliNextToken(*argstrp, &remaining, &len);             \
+    vstr = xBSP430cliNextToken(&argstr, &argstr_len, &len);             \
     if (0 == len) {                                                     \
       return -eBSP430_CLI_ERR_Missing;                                  \
     }                                                                   \
@@ -256,8 +259,8 @@ iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
       return -eBSP430_CLI_ERR_Invalid;                                  \
     }                                                                   \
     *destp = v;                                                         \
-    *argstrp = vstr + len;                                              \
-    *argstr_lenp = remaining - len;                                     \
+    *argstrp = argstr;                                                  \
+    *argstr_lenp = argstr_len;                                          \
     return 0;                                                           \
   }
 
