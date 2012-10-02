@@ -13,7 +13,7 @@
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/utility/cli.h>
-#include <bsp430/utility/cc3000spi.h>
+#include "cc3000spi.h"
 #include <cc3000/wlan.h>
 #include <cc3000/nvmem.h>
 #include <cc3000/netapp.h>
