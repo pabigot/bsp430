@@ -4,6 +4,7 @@ MODULES += $(MODULES_UPTIME)
 MODULES += $(MODULES_CONSOLE)
 MODULES += periph/port
 MODULES += periph/sys
+MODULES += periph/flash
 MODULES += utility/cc3000spi
 MODULES += utility/cli
 

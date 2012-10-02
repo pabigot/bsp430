@@ -9,6 +9,8 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/periph/sys.h>
+#include <bsp430/periph/flash.h>
+#include <sys/crtld.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>
@@ -33,6 +35,7 @@
 #define CMD_NVMEM_SP 1
 #define CMD_NVMEM_READ 1
 #define CMD_NVMEM_MAC 1
+#define CMD_INFO 1
 #define CMD_IPCONFIG 1
 #define CMD_HELP 1
 
@@ -42,7 +45,10 @@
 #define HELP_STRING(h_) h_
 #endif /* NO_HELP */
 
+#define MAGIC_CONNECT_PARAMS 0x3000
+
 typedef struct sConnectParams {
+  unsigned int magic;
   int security_type;
   size_t ssid_len;
   size_t passphrase_len;
@@ -101,7 +107,6 @@ static sBSP430cliCommand dcmd_wlan_disconnect = {
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_disconnect
 #endif /* CMD_WLAN_DISCONNECT */
-
 
 #if (CMD_WLAN - 0) && (CMD_WLAN_CONNECT - 0)
 typedef struct sWlanSecMap {
@@ -513,9 +518,104 @@ static sBSP430cliCommand dcmd_ipconfig = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_ipconfig
-#endif /* CMD_NVMEM_MAC */  
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_ipconfig
+#endif /* CMD_IPCONFIG */  
+
+#if CMD_INFO - 0
+
+static sConnectParams * const infoConnectParams = (sConnectParams *)__infob;
+
+static int
+cmd_info_load (const char * argstr)
+{
+  if (MAGIC_CONNECT_PARAMS != infoConnectParams->magic) {
+    cprintf("ERR: Stored connection params invalid\n");
+    return -1;
+  }
+#if (CMD_WLAN_CONNECT - 0)
+  connectParams = *infoConnectParams;
+#endif /* CMD_WLAN_CONNECT */
+  return 0;
+}
+
+static int
+cmd_info_erase_ni (void)
+{
+  int rv;
+  
+  cprintf("Erasing stored params at %p...", infoConnectParams);
+  rv = iBSP430flashEraseSegment_ni(infoConnectParams);
+  cprintf("%d\n", rv);
+  return rv;
+}
+
+static int
+cmd_info_erase (const char * argstr)
+{
+  int rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    rv = cmd_info_erase_ni();
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+static int
+cmd_info_store (const char * argstr)
+{
+  int rv;
+
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    rv = cmd_info_erase_ni();
+    if (0 == rv) {
+      connectParams.magic = MAGIC_CONNECT_PARAMS;
+      cprintf("Copying current configuration...");
+      rv = iBSP430flashWriteData_ni(infoConnectParams, &connectParams, sizeof(connectParams));
+      cprintf("%d\n", rv);
+    }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+static sBSP430cliCommand dcmd_info_store = {
+  .key = "store",
+  .help = HELP_STRING("# store wlan AP params in INFO_B"),
+  .next = NULL,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_info_store
+};
+static sBSP430cliCommand dcmd_info_erase = {
+  .key = "erase",
+  .help = HELP_STRING("# erase INFO_B"),
+  .next = &dcmd_info_store,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_info_erase
+};
+static sBSP430cliCommand dcmd_info_load = {
+  .key = "load",
+  .help = HELP_STRING("# load wlan AP params from INFO_B"),
+  .next = &dcmd_info_erase,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_info_load
+};
+static sBSP430cliCommand dcmd_info = {
+  .key = "info",
+  .next = LAST_COMMAND,
+  .child = &dcmd_info_load
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_info
+
+#endif /* CMD_INFO */
 
 #if (CMD_HELP - 0)
 static int
@@ -633,6 +733,8 @@ void main (void)
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf(__DATE__ " " __TIME__ "\n");
 
+  /* Initialization can be done with interrupts disabled, since the
+   * function does nothing but store callbacks. */
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
 
@@ -641,9 +743,16 @@ void main (void)
   flags = eBSP430cliConsole_REPAINT;
 
   BSP430_CORE_ENABLE_INTERRUPT();
+
+  /* wlan_start() MUST be invoked with interrupts enabled. */
   wlan_start(0);
 
   cprintf("\nAnd wlan has been started.\n");
+#if CMD_INFO - 0
+  if (0 == cmd_info_load("")) {
+    cmd_wlan_status("");
+  }
+#endif
 
   while (1) {
     if (NULL != command) {
