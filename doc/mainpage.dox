@@ -141,6 +141,15 @@ radio.  The same demonstration works on the #BSP430_PLATFORM_EM430 and
 href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430
 SPI serial abstraction
 
+\li \ref ex_rfem_cc3000 is a fairly complex example providing interactive
+exploration of the <a
+href="http://processors.wiki.ti.com/index.php/CC3000_Wi-Fi_for_MCU">Texas
+Instruments CC3000 SimpleLink(tm) Wi-Fi</a> evaluation module.  It
+demonstrates advanced use of the BSP430 @link bsp430/utility/cli.h command
+line interface @endlink as well as a @link bsp430/serial.h SPI interface
+@endlink to the on most TI experimenter boards through the @link
+bsp430/utility/rfem.h RFEM @endlink capabilities of BSP430.
+
 \subsection ex_sensors Sensors
 
 \li \ref ex_sensors_ds18b20 demonstrates temperature measurement with the

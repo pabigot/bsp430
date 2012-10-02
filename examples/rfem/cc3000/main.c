@@ -1,5 +1,8 @@
 /** This file is in the public domain.
  *
+ * This program is an example; see detailed discussion within the
+ * BSP430 documentation.
+ *
  * @homepage http://github.com/pabigot/bsp430
  */
 
@@ -395,7 +398,7 @@ cmd_nvmem_sp (const char * argstr)
 }
 static sBSP430cliCommand dcmd_nvmem_sp = {
   .key = "sp",
-  .help = HELP_STRING("# read firmware server patchlevel"),
+  .help = HELP_STRING("# read firmware service pack level"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_nvmem_sp
