@@ -2150,7 +2150,7 @@ const char * xBSP430portName (tBSP430periphHandle periph);
  * @param bitx The value of a bit within a byte-addressed port @return
  * the index of the first bit that is set within bitx; 0 for a bitx
  * value of 0x01, 3 for a bitx value of 0x08, etc.  The return value
- * is -1 if no bit is set in the low byte of @a bitx.
+ * is -1 if no bit is set in the low byte of @p bitx.
  *
  * @warning This function is explicitly intended for support of 8-bit
  * ports, and cannot be used to detect the position of the lowest set

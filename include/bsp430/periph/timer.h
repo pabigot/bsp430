@@ -357,9 +357,9 @@
  * This function uses the timer capture/compare infrastructure to
  * count clock cycles.  The source for a timer is configured
  * externally (for example, to SMCLK, or to an external source).  The
- * CCACLK capture/control block is configured based on @a
+ * CCACLK capture/control block is configured based on @p
  * capture_mode.  The code synchronizes with a capture, then loops for
- * @a period captures.  The CCACLK timer counter is recorded at the
+ * @p period captures.  The CCACLK timer counter is recorded at the
  * start of the first and end of the last cycle.  The capture/control
  * block control is reset, and the difference between first and last
  * counters is returned.
@@ -367,7 +367,7 @@
  * The expectation is that the events triggered by the input selection
  * are slow relative to the MCLK and timer sources.  If the timer is
  * slower than the input, the use of the #SCS flag in the
- * implementation will result in the function returning @a count.
+ * implementation will result in the function returning @p count.
  *
  * @note The function does not modify the timer-level configuration;
  * the timer source must be assigned and the timer started prior to
@@ -394,9 +394,9 @@
  * @param count the number of capture events over which the delta is
  * measured.
  *
- * @return -1 if @a capture_mode is not valid or the timer is
+ * @return -1 if @p capture_mode is not valid or the timer is
  * unrecognized or stopped.  Otherwise the delta in the counter of the
- * timer over @a count captures. */
+ * timer over @p count captures. */
 unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
                                            int ccidx,
                                            unsigned int capture_mode,

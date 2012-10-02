@@ -207,7 +207,7 @@
 /** Enter a low-power mode
  *
  * This sets the status register bits in accordance to the bits
- * specified in @a lpm_bits_.
+ * specified in @p lpm_bits_.
  *
  * @param lpm_bits_ bits to be set in the status register.  The value
  * is masked by #BSP430_CORE_LPM_SR_MASK before being written.
@@ -216,7 +216,7 @@
 
 /** Exit low-power mode on return from ISR
  *
- * This clears the status register bits provided in @a lpm_bits from
+ * This clears the status register bits provided in @p lpm_bits from
  * the saved status register value stored in the stack by the
  * interrupt invocation, so that when the interrupt returns the change
  * will take effect.

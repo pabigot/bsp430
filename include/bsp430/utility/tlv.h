@@ -384,8 +384,8 @@ typedef struct sBPS430tlvADC {
  *
  * @note 5xx/6xx MCU headers provide #TLV_START and #TLV_END, which
  * provide the addresses of the first and last byte of the TLV entry
- * region.  The CRC should be calculated starting at @a data = #TLV_START-4, and
- * the length of the region is @a len = <c>5+#TLV_END-#TLV_START</c>.
+ * region.  The CRC should be calculated starting at @p data = #TLV_START-4, and
+ * the length of the region is @p len = <c>5+#TLV_END-#TLV_START</c>.
  *
  * @param data The address of the data over which the checksum is calculated.
  *

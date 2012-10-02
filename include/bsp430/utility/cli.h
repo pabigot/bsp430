@@ -139,7 +139,7 @@ typedef struct sBSP430cliCommandLink {
  * @param argstr any additional arguments remaining unprocessed after
  * reaching this command
  *
- * @param argstr_len the length of @a argstr in characters.
+ * @param argstr_len the length of @p argstr in characters.
  *
  * @return a context-specific value. */
 typedef int (* iBSP430cliHandlerFunction) (struct sBSP430cliCommandLink * chain,
@@ -210,7 +210,7 @@ typedef void (* vBSP430cliMatchCallback) (const sBSP430cliCommand * cmd);
  *
  * The goal here is to extract a non-empty token from the beginning of
  * the provided command (after any leading whitespace), and match it
- * as a prefix of a uniquely identified command in @a cmds.  If this
+ * as a prefix of a uniquely identified command in @p cmds.  If this
  * succeeds, we can go on to process the remainder of the command
  * line, which is returned.
  *
@@ -219,37 +219,37 @@ typedef void (* vBSP430cliMatchCallback) (const sBSP430cliCommand * cmd);
  * This must not be a null pointer.
  *
  * @param command the unprocessed remainder of the command string.  If
- * there is no non-empty token in what remains, @a match_cb (if
- * provided) is invoked on all commands in @a cmds, and the number of
+ * there is no non-empty token in what remains, @p match_cb (if
+ * provided) is invoked on all commands in @p cmds, and the number of
  * available commands is returned as a negative number.
  *
- * @param command_len the number of characters in @a command, possibly
+ * @param command_len the number of characters in @p command, possibly
  * including leading and trailing whitespace.
  *
  * @param matchp an optional pointer to where the uniquely identified
  * next command should be stored.  If @matchp is null, no action is
  * taken; otherwise if a unique command could be identified the
  * pointer to that command is stored in @c *matchp; otherwise a null
- * pointer is stored in @a *matchp.
+ * pointer is stored in @p *matchp.
  *
  * @param match_cb an optional callback that is invoked on each
  * matching command.  If null, no action is taken; otherwise when the
- * key of a command in @a cmds has the first token of @a command as a
- * prefix @a match_cb() is invoked on that command.  The primary use
+ * key of a command in @p cmds has the first token of @p command as a
+ * prefix @p match_cb() is invoked on that command.  The primary use
  * of this parameter is to determine the potential matching commands
  * for the purposes of diagnostics or command completion.
  *
  * @param argstrp if null or if no unique match is identified no
- * action is taken, otherwise the pointer to the remainder of @a
- * command after the initial token has been removed is stored in @a
+ * action is taken, otherwise the pointer to the remainder of @p
+ * command after the initial token has been removed is stored in @p
  * *argstrp.
  *
  * @param argstr_lenp if null or if no unique match is identified no
  * action is taken, otherwise the length of the string (that would be)
- * stored in @a *argstrp is stored in @a *argstr_lenp.
+ * stored in @p *argstrp is stored in @p *argstr_lenp.
  *
- * @return the number of commands in @a cmds for which the first token
- * of @a command was a prefix, or -1 if @a command is empty
+ * @return the number of commands in @p cmds for which the first token
+ * of @p command was a prefix, or -1 if @p command is empty
  * (disregarding whitespace).
  */
 int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
@@ -271,14 +271,14 @@ int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
  * @param command A nul-terminated text representation of a command
  * comprising whitespace-separated tokens.  The first token is
  * extracted and used to identify a unique command within the siblings
- * of @a cmds.  If a unique command is identified, its
+ * of @p cmds.  If a unique command is identified, its
  * sBSP430cliCommand::handler function is invoked, providing a
  * #sBSP430cliCommandLink reference identifying the command itself,
- * the provided @a param argument, and the remainder of the @a command
+ * the provided @p param argument, and the remainder of the @p command
  * string after having stripped off the initial token.
  *
  * @return a negative error code if a unique command is not
- * identifiable from the first token in @a command, otherwise the
+ * identifiable from the first token in @p command, otherwise the
  * value returned by the sBSP430cliCommand::handler.
  */
 int iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
@@ -314,11 +314,11 @@ iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
  * @param argstrp pointer to a pointer to the text representation of a
  * signed 16-bit integer, normally decimal but optionally in
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
- * success @a *argstrp is updated to point past the consumed integer
+ * success @p *argstrp is updated to point past the consumed integer
  * token.
  *
- * @param argstr_lenp pointer to the length of the @a *argstrp text.
- * On success the @a *argstr_lenp is updated to hold
+ * @param argstr_lenp pointer to the length of the @p *argstrp text.
+ * On success the @p *argstr_lenp is updated to hold
  * the remaining length of the string.
  *
  * @param destp pointer to where the extracted and converted value
@@ -337,11 +337,11 @@ int iBSP430cliStoreExtractedI (const char * * argstrp,
  * @param argstrp pointer to a pointer to the text representation of a
  * signed 16-bit integer, normally decimal but optionally in
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
- * success @a *argstrp is updated to point past the consumed integer
+ * success @p *argstrp is updated to point past the consumed integer
  * token.
  *
- * @param argstr_lenp pointer to the length of the @a *argstrp text.
- * On success the @a *argstr_lenp is updated to hold
+ * @param argstr_lenp pointer to the length of the @p *argstrp text.
+ * On success the @p *argstr_lenp is updated to hold
  * the remaining length of the string.
  *
  * @param destp pointer to where the extracted and converted value
@@ -360,11 +360,11 @@ int iBSP430cliStoreExtractedUI (const char * * argstrp,
  * @param argstrp pointer to a pointer to the text representation of a
  * signed 32-bit integer, normally decimal but optionally in
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
- * success @a *argstrp is updated to point past the consumed integer
+ * success @p *argstrp is updated to point past the consumed integer
  * token.
  *
- * @param argstr_lenp pointer to the length of the @a *argstrp text.
- * On success the @a *argstr_lenp is updated to hold
+ * @param argstr_lenp pointer to the length of the @p *argstrp text.
+ * On success the @p *argstr_lenp is updated to hold
  * the remaining length of the string.
  *
  * @param destp pointer to where the extracted and converted value
@@ -383,11 +383,11 @@ int iBSP430cliStoreExtractedL (const char * * argstrp,
  * @param argstrp pointer to a pointer to the text representation of an
  * unsigned 32-bit integer, normally decimal but optionally in
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
- * success @a *argstrp is updated to point past the consumed integer
+ * success @p *argstrp is updated to point past the consumed integer
  * token.
  *
- * @param argstr_lenp pointer to the length of the @a *argstrp text.
- * On success the @a *argstr_lenp is updated to hold
+ * @param argstr_lenp pointer to the length of the @p *argstrp text.
+ * On success the @p *argstr_lenp is updated to hold
  * the remaining length of the string.
  *
  * @param destp pointer to where the extracted and converted value
@@ -442,7 +442,7 @@ int iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
  *
- * @param argstr_len length of the @a argstr text */
+ * @param argstr_len length of the @p argstr text */
 int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
                              void * param,
                              const char * argstr,
@@ -462,7 +462,7 @@ int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
  *
- * @param argstr_len length of the @a argstr text */
+ * @param argstr_len length of the @p argstr text */
 int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
                               void * param,
                               const char * argstr,
@@ -482,7 +482,7 @@ int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
  *
- * @param argstr_len length of the @a argstr text */
+ * @param argstr_len length of the @p argstr text */
 int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
                              void * param,
                              const char * argstr,
@@ -502,7 +502,7 @@ int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
  * normally decimal but optionally in hexadecimal (with leading @c 0x)
  * or octal (with leading @c 0).
  *
- * @param argstr_len length of the @a argstr text */
+ * @param argstr_len length of the @p argstr text */
 int iBSP430cliHandlerStoreUL (struct sBSP430cliCommandLink * chain,
                               void * param,
                               const char * argstr,
@@ -562,7 +562,7 @@ enum eBSP430cliErrorType {
  * @param argstr the remainder of the command string at the point of
  * error
  *
- * @param argstr_len the length of @a argstr
+ * @param argstr_len the length of @p argstr
  *
  * @return the value of <c>-(int)errtype</c> */
 typedef int (* iBSP430cliDiagnosticFunction) (sBSP430cliCommandLink * chain,
@@ -611,7 +611,7 @@ int iBSP430cliConsoleDiagnostic (sBSP430cliCommandLink * chain,
  *
  * This function is usually invoked in the context of diagnostics to
  * indicate where in the input an error was detected.  It prints on
- * the console the sequence of prefix commands encoded within @a
+ * the console the sequence of prefix commands encoded within @p
  * chain, then displays the remaining argument string.  (Note that to
  * do this it reverses the chain, then restores it to its original
  * direction before returning.)

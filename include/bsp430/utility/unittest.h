@@ -192,13 +192,13 @@ void vBSP430unittestFinalize (void);
  *
  * @param v1_ an expression of some type
  **
- ** @param v2_ an expression of the same type as @a v1_
+ ** @param v2_ an expression of the same type as @p v1_
  *
- * @param type_ a type suitable for holding the values of @a v1_ and
- * @a v2_ for equality comparison purposes
+ * @param type_ a type suitable for holding the values of @p v1_ and
+ * @p v2_ for equality comparison purposes
  *
  * @param pri_ a print(3) format specifier, inclusive of the leading
- * @c %, to be used to format the passed values of @a v1_ and @a v2_
+ * @c %, to be used to format the passed values of @p v1_ and @p v2_
  * in the case where the test fails */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,type_,pri_) do {      \
     static const char * expr_str_ = #v1_ "==" #v2_;                     \

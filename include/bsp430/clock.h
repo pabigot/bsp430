@@ -354,7 +354,7 @@ typedef enum eBSP430clockSource {
  * There is no facility for adjusting this to an arbitrary frequency.
  * </ul>
  *
- * @note Although passing @a mclk_Hz zero is a short-hand for using
+ * @note Although passing @p mclk_Hz zero is a short-hand for using
  * #BSP430_CLOCK_PUC_MCLK_HZ, the result may not be to restore the
  * clock to its power-up configuration.  To avoid manipulating the
  * clocks during platform initialization, see
@@ -460,7 +460,7 @@ ulBSP430clockSMCLK_Hz (void)
  * #BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, then detects
  * whether the crystal is functioning.  It terminates with success
  * once the oscillator remains unfaulted after the delay, and
- * otherwise repeats the clear/delay/check process as specified by @a
+ * otherwise repeats the clear/delay/check process as specified by @p
  * loop_limit.
  *
  * @param enablep Pass a nonzero value to configure XIN/XOUT for
@@ -475,7 +475,7 @@ ulBSP430clockSMCLK_Hz (void)
  * this many loops, assume the crystal is absent and configure for
  * VLOCLK.  A negative value indicates the process should loop until
  * stabilization is detected.  A zero value is equivalent to passing a
- * zero value as @a enablep..
+ * zero value as @p enablep.
  *
  * @return Zero if XT1 was disabled by the call, and a positive value
  * if XT1 is stable on completion of the call (available as a clock

@@ -149,8 +149,8 @@ vBSP430pmmInducePOR (void)
  * valid level, i.e. #PMMCOREV_0 through #PMMCOREV_3, or an error code
  * is returned.
  *
- * @return -1 if the @a target_level is invalid, otherwise the level
- * at which power is left.  This may be less than @a target_level if
+ * @return -1 if the @p target_level is invalid, otherwise the level
+ * at which power is left.  This may be less than @p target_level if
  * the requested level could not be reached due to inadequate supply
  * voltage.
  *

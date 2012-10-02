@@ -115,7 +115,7 @@
  * uiBSP430sysSYSRSTGenerator_ni()
  *
  * @return a text description of the reset cause that is being
- * returned, or a null pointer if @a sysrstiv is not recognized.
+ * returned, or a null pointer if @p sysrstiv is not recognized.
  */
 const char * xBSP430sysSYSRSTIVDescription (unsigned int sysrstiv);
 

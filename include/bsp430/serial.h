@@ -166,7 +166,7 @@
 /** @def BSP430_SERIAL_ADJUST_CTL0_INITIALIZER
  *
  * When the underlying implementation is an EUSCI device (as on FR5xx
- * chips), the header defines used to construct the value @a ctl0_byte
+ * chips), the header defines used to construct the value @p ctl0_byte
  * are specified for a 16-bit access.  The ctl0 byte in the upper byte
  * of the ctlw0 word that comprises @a ctl0 and @a ctl1 on these MCUs.
  * On those devices you must use the @c _H suffix to select the
@@ -176,7 +176,7 @@
  * #UCSPB, #UCCKPH, #UCCKPL, #UCMST, and #UCMODE_0 or #UCMODE_1 or
  * #UCMODE_2, and perhaps others.
  *
- * Given a @a ctl0_byte expression comprised of these constants, this
+ * Given a @p ctl0_byte expression comprised of these constants, this
  * macro will adjust it for you when the value appears to be outside
  * the expected range (i.e., greater than @c 0xFF) and will leave the
  * values alone when it is not, so you can use the standard header
@@ -201,7 +201,7 @@
  * communications is appropriate.
  *
  * @warning See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
- * portable use of @a ctl0_byte header constants.
+ * portable use of @p ctl0_byte header constants.
  *
  * @param ctl1_byte The configuration to be written to the device's
  * ctl1 byte.  For UART mode, potential values specified in the
@@ -216,7 +216,7 @@
  * invokes ulBSP430clockSMCLK_Hz() and uiBSP430clockACLK_Hz() as
  * necessary to determine the actual speed of the baud rate clock.
  *
- * @return @a A peripheral-specific HAL handle if the allocation and
+ * @return A peripheral-specific HAL handle if the allocation and
  * configuration is successful, and a null handle if something went
  * wrong.
  *
@@ -266,7 +266,7 @@ int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
  *
  * @param c a data byte to be transmitted
  *
- * @return the input character @a c if transmitted, or -1 if an error
+ * @return the input character @p c if transmitted, or -1 if an error
  * occurred
  *
  * @delegated This function exists only as an inline delegate to a
@@ -345,7 +345,7 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * will result in this function returning an error.
  *
  * @warning See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
- * portable use of @a ctl0_byte header constants.
+ * portable use of @p ctl0_byte header constants.
  *
  * @param ctl1_byte The configuration to be written to the device's
  * ctl1 byte.  For SPI mode, potential values specified in the
@@ -353,14 +353,14 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * #UCSSEL_1, #UCSSEL_2, #UCSSEL_3.  The #UCSWRST field is controlled
  * by the function.
  *
- * @param prescaler The value by which the clock selected in @a
+ * @param prescaler The value by which the clock selected in @p
  * ctl1_byte is divided to produce the SPI clock.  A value of zero
  * will result in this function returning an error.
  *
- * @return @a A peripheral-specific HAL handle if the allocation and
+ * @return A peripheral-specific HAL handle if the allocation and
  * configuration is successful, and a null handle if something went
- * wrong (e.g., absence of the requested @a periph, an invalid mode in
- * @a ctl0_byte or a zero-valued @a prescaler).
+ * wrong (e.g., absence of the requested peripheral, an invalid mode
+ * in @p ctl0_byte or a zero-valued @p prescaler).
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
@@ -375,14 +375,14 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
 
 /** Transmit and receive using a SPI-configured device
  *
- * This routine transmits @a tx_len octets from @a tx_data, storing
- * the octets received in response into @a rx_data.  It then transmits
- * @a rx_len dummy bytes, appending the resulting response into @a
+ * This routine transmits @p tx_len octets from @p tx_data, storing
+ * the octets received in response into @p rx_data.  It then transmits
+ * @p rx_len dummy bytes, appending the resulting response into @p
  * rx_data.
  *
  * This routine should only be invoked when @link
- * sBSP430halSERIAL.tx_cbchain_ni @a hal->tx_cbchain_ni @endlink and
- * @link sBSP430halSERIAL.rx_cbchain_ni @a hal->rx_cbchain_ni
+ * sBSP430halSERIAL.tx_cbchain_ni @p hal->tx_cbchain_ni @endlink and
+ * @link sBSP430halSERIAL.rx_cbchain_ni @p hal->rx_cbchain_ni
  * @endlink are null.  If callbacks are present, they are expected to
  * be used to provide data for transmission and to process received
  * data.
@@ -391,21 +391,21 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
  * received
  *
  * @param tx_data the data to be transmitted (generally, a command).
- * The pointer may be null only if @a tx_len is zero.
+ * The pointer may be null only if @p tx_len is zero.
  *
  * @param tx_len the number of bytes to transmit as the command.  The
  * value may be zero if this call is reading additional data resulting
  * from a previous command.
  *
  * @param rx_len the number of additional bytes expected in response,
- * exclusive of the synchronous responses to bytes transmitted from @a
+ * exclusive of the synchronous responses to bytes transmitted from @p
  * tx_data.
  *
  * @param rx_data where to store the responses received during the
  * transmit and receive phases.  The space available must be at least
- * @a tx_len + @a rx_len.
+ * @p tx_len + @p rx_len.
  *
- * @return the total number of bytes stored in @a rx_data, or -1 if an
+ * @return the total number of bytes stored in @p rx_data, or -1 if an
  * error occcured.
  */
 static BSP430_CORE_INLINE
@@ -435,7 +435,7 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  * UCMODE field is configured for I2C before being written.
  *
  * @warning See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
- * portable use of @a ctl0_byte header constants.
+ * portable use of @p ctl0_byte header constants.
  *
  * @param ctl1_byte The configuration to be written to the device's
  * ctl1 byte.  For I2C mode, potential values specified in the
@@ -443,14 +443,14 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  * #UCSSEL_1, #UCSSEL_2, or #UCSSEL_3) and perhaps #UCTR.  The
  * #UCSWRST field is controlled by the function.
  *
- * @param prescaler The value by which the clock selected in @a
+ * @param prescaler The value by which the clock selected in @p
  * ctl1_byte is divided to produce the I2C clock.  A value of zero
  * will result in this function returning an error.
  *
- * @return @a A peripheral-specific HAL handle if the allocation and
+ * @return A peripheral-specific HAL handle if the allocation and
  * configuration is successful, and a null handle if something went
- * wrong (e.g., absence of the requested @a periph or a zero-valued @a
- * prescaler).
+ * wrong (e.g., absence of the requested peripheral or a zero-valued
+ * @p prescaler).
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
@@ -489,7 +489,7 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
 
 /** Transmit using an I2C-configured device
  *
- * This routine transmits @a tx_len octets from @a tx_data.  It will
+ * This routine transmits @p tx_len octets from @p tx_data.  It will
  * return an error if the device is configured with a transmit
  * callback.
  *
@@ -521,8 +521,8 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
 
 /** Receive using an I2C-configured device
  *
- * This routine receives @a rx_len octets into @a rx_data, storing the
- * octets received in response into @a rx_data.  It will return an
+ * This routine receives @p rx_len octets into @p rx_data, storing the
+ * octets received in response into @p rx_data.  It will return an
  * error if the device is configured with a receive callback.
  *
  * This routine should only be invoked when @link
@@ -535,12 +535,12 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * @param hal the serial device from which the data is received
  *
  * @param rx_data where to store the data.  The space available must
- * be at least @a rx_len octets.
+ * be at least @p rx_len octets.
  *
  * @param rx_len the number of bytes expected in response.  A
  * transaction reading more than 255 bytes may be rejected.
  *
- * @return the total number of bytes stored in @a rx_data, or -1 if an
+ * @return the total number of bytes stored in @p rx_data, or -1 if an
  * error occcured.
  */
 static BSP430_CORE_INLINE

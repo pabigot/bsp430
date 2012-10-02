@@ -404,12 +404,12 @@ typedef struct sBSP430halISRIndexedChainNode {
  * indicating bits to be cleared to wake from low power modes and bits
  * indicating other activities to be performed by the ISR top half.
  * The return value of individual callbacks is combined using bitwise
- * or with the @a basis parameter.
+ * or with the @p basis parameter.
  *
  * @param cbpp Pointer to the start of the chain
  * @param context The context to be passed into each callback
  * @param basis The basis for the return value
- * @return The bitwise OR of the @a basis value and the return values
+ * @return The bitwise OR of the @p basis value and the return values
  * of each callback */
 static int
 BSP430_CORE_INLINE

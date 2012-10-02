@@ -96,7 +96,7 @@ void vBSP430platformInitialize_ni (void);
  * @param enablep TRUE to enable for peripheral use; FALSE to disable
  * (return to general purpose IO).  When disabled, the direction and
  * output register bits are configured for low power use (output
- * zero).  Note that only the pins specified by @a periph_config will
+ * zero).  Note that only the pins specified by @p periph_config will
  * be modified.
  *
  * @return 0 if configuration was successful, -1 if the device was not
