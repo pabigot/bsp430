@@ -1,8 +1,6 @@
 /** This file is in the public domain.
  *
- *
  * @homepage http://github.com/pabigot/bsp430
- *
  */
 
 #include <bsp430/platform.h>
@@ -29,6 +27,10 @@ dumpData (void)
   cprintf("ulval %lu (0x%lx)\n", data.ulval, data.ulval);
 }
 
+/* Recommended pattern: a global variable that holds the entrypoint to
+ * the supported commands, and a macro that is redefined after each
+ * command is hooked in.  The macro allows commands to be disabled or
+ * rearranged without having to change the links. */
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
@@ -109,7 +111,6 @@ cmd_expand_ (sBSP430cliCommandLink * chain,
   cputchar_ni('\n');
   return 0;
 }
-
 static int
 cmd_expand (const char * argstr)
 {

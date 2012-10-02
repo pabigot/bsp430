@@ -1,0 +1,111 @@
+/* Copyright (c) 2012, Peter A. Bigot
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/** \page ex_utility_cli Utilities: Command Line Interface
+
+The <bsp430/utility/cli.h> header provides a simple way to implement a
+command line interface within a program that uses
+<bsp430/utility/console.h>.  Each command is implemented in its own
+function, and registered as available by linking them into a chain of static
+structures at compile-time.  The example below shows how this can be done in
+a way that makes it simple to include or exclude commands based on
+development needs and available options.
+
+The module also provides utilities that make it easy to add commands for
+users to reconfigure parameters of various types, obtain help on the
+available commands, and implement nested commands.
+
+The example below supports the following commands:
+@verbatim
+> help                                                                          
+help [cmd] # Show help on cmd or all commands                                   
+quote [qstr]... # Extract one or more quoted tokens                             
+set # No help available                                                         
+  ulval [unsigned 32-bit integer in octal, decimal, or hex]                     
+  lval [signed 32-bit integer in octal, decimal, or hex]                        
+  uival [unsigned 16-bit integer in octal, decimal, or hex]                     
+  ival [signed 16-bit integer in octal, decimal, or hex]                        
+  all [ival] [ [uival] [ [lval] [ [ulval] ] ] ]                                 
+show # Display the value of variables                                           
+expand [command...] # Show the expansion of the command without executing it    
+uptime # Show system uptime                                                     
+hup # No help available                                                         
+  two # valid if no three                                                       
+    three # invalid if no four                                                  
+      four # No help available                                                  
+@endverbatim
+
+Below is a capture from an interactive session with the application:
+@verbatim
+> uptime
+Up  1:25.337
+> up
+Up  1:26.129
+> exp h t t 4
+Expanded: ( h t t 4)
+> exp hu t t 4
+Expanded: hup two three( 4)
+> hu t t f
+Display: hup two three four
+WTH are we fighting for? Walk!
+
+> sh 
+ival 0
+uival 0 (0x0)
+lval 0
+ulval 0 (0x0)
+> set i 0x23
+> sh
+ival 35
+uival 0 (0x0)
+lval 0
+ulval 0 (0x0)
+> set all -5 -010 -1 -1
+> sh
+ival -5
+uival 65528 (0xfff8)
+lval -1
+ulval 4294967295 (0xffffffff)
+> 
+@endverbatim
+
+
+\section ex_utility_cli_main main.c
+\include utility/cli/main.c
+
+\section ex_utility_cli_confic bsp430_config.h
+\include utility/cli/bsp430_config.h
+
+\section ex_utility_cli_make Makefile
+\include utility/cli/Makefile
+
+\example utility/cli/main.c
+*/

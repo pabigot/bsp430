@@ -33,8 +33,22 @@
  *
  * @brief Basic support for command line processing
  *
- * An interactive utility demonstrating most of the capabilities of
- * this module is available in examples/utility/cli.
+ * This module provides two major features:
+ *
+ * @li Support for structures to register and search among available
+ * commands.  The core structure is #sBSP430cliCommandLink.
+ * iBSP430cliExecuteCommand() processes user input and invokes the
+ * specific function.
+ *
+ * @li A simple command line editor using the @link
+ * bsp430/utility/console.h console interface @endlink to collect user
+ * input before processing it.
+ *
+ * Additional functions convert user input values to internal format
+ * (e.g. integer or string values).
+ *
+ * See @ref ex_utility_cli for a detailed example demonstrating most
+ * capabilities of this module.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -573,7 +587,7 @@ void vBSP430cliSetDiagnosticFunction (iBSP430cliDiagnosticFunction diagnostic_fu
 
 /** A diagnostic function that returns the error code.
  *
- * See @iBSP430cliDiagnosticFunction. */
+ * See #iBSP430cliDiagnosticFunction. */
 int iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
                               enum eBSP430cliErrorType errtype,
                               const sBSP430cliCommand * cmds,
@@ -582,7 +596,7 @@ int iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
 
 /** A diagnostic function that displays on the console.
  *
- * See @iBSP430cliDiagnosticFunction.
+ * See #iBSP430cliDiagnosticFunction.
  *
  * @dependency #BSP430_CONSOLE */
 #if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE - 0)
