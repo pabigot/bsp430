@@ -115,7 +115,7 @@ xBSP430cliNextQToken (const char * * commandp,
     return xBSP430cliNextToken(commandp, remainingp, lenp);
   }
   equote = squote;
-  
+
   /* Skip the quote and look for the end quote */
   lp = ++rv;
   while (((lp - command) < remaining)

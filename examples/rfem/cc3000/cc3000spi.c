@@ -94,14 +94,14 @@ static gcSpiHandleRx rxCallback_ni_;
 #define CS_ASSERT() do {                                                \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;  \
   } while (0)
-  
+
 /* De-assert chip select by setting CSn */
 #define CS_DEASSERT() do {                                              \
     BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;   \
   } while (0)
 
 /* Implementation of tWlanReadInterruptPin for wlan_init().
- * 
+ *
  * This is used in wlan_start() to detect that the CC3000 has
  * successfully powered up. */
 static long
@@ -156,12 +156,12 @@ iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
   if (NULL == hBSP430serialLookup(BSP430_RFEM_SPI0_PERIPH_HANDLE)) {
     return -1;
   }
-  
+
   spiIRQport_ = xBSP430hplLookupPORTIE(BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE);
   if (NULL == spiIRQport_) {
     return -1;
   }
-  
+
   halCSn_ = hBSP430portLookup(BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE);
   if (NULL == halCSn_) {
     return -1;
@@ -183,7 +183,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
     const unsigned char opcode = CC3000_SPI_OPCODE_READ;
     unsigned char * rp;
     unsigned int len;
-    
+
     /* This is a signal that data is available.  Read it.  Yes, right
      * here in the ISR.  The host driver API would need to be
      * integrated with a multi-tasking OS to do it elsewhere, since
@@ -303,7 +303,7 @@ SpiClose (void)
 
     /* Release the chip select line, just for completeness. */
     CS_DEASSERT();
-    
+
     /* Power down the CC3000.  In fact, this was already done by
      * wlan_stop(). */
     pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
@@ -337,7 +337,7 @@ SpiWrite (unsigned char * tx_buffer,
   *tp++ = 0;
   *tp++ = 0;
   len += SPI_HEADER_SIZE;
-  
+
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
 

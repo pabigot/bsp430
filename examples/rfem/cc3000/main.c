@@ -127,7 +127,7 @@ cmd_wlan_ipconfig (const char * argstr)
 {
   tNetappIpconfigRetArgs ipc;
   const unsigned char * p;
-  
+
   memset(&ipc, 0, sizeof(ipc));
   netapp_ipconfig(&ipc);
   cprintf("IP: %s\n", ipv4AsText(ipc.aucIP));
@@ -153,7 +153,7 @@ static sBSP430cliCommand dcmd_wlan_ipconfig = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_ipconfig
-#endif /* CMD_WLAN_IPCONFIG */  
+#endif /* CMD_WLAN_IPCONFIG */
 
 #if CMD_WLAN_CONNECT - 0
 typedef struct sWlanSecMap {
@@ -200,7 +200,7 @@ cmd_wlan_sectype (const char * argstr)
   size_t len;
   const char * tp;
   const sWlanSecMap * mp;
-  
+
   tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
   if (0 < len) {
     mp = wlanSecMapFromTag(tp);
@@ -225,7 +225,7 @@ cmd_wlan_ssid (const char * argstr)
   size_t remaining = strlen(argstr);
   size_t len;
   const char * tp;
-  
+
   tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
   if (0 < len) {
     memcpy(connectParams.ssid, tp, len);
@@ -242,7 +242,7 @@ cmd_wlan_passphrase (const char * argstr)
   size_t remaining = strlen(argstr);
   size_t len;
   const char * tp;
-  
+
   tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
   if (0 < len) {
     if (sizeof(connectParams.passphrase) <= (len+1)) {
@@ -422,7 +422,7 @@ cmd_nvmem_read (const char * argstr)
   unsigned int ui;
   size_t argstr_len = strlen(argstr);
   unsigned int nb;
-  
+
   rc = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &ui);
   if (0 == rc) {
     fileid = ui;
@@ -510,7 +510,7 @@ static sBSP430cliCommand dcmd_nvmem_mac = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_mac
-#endif /* CMD_NVMEM_MAC */  
+#endif /* CMD_NVMEM_MAC */
 
 #if (CMD_NVMEM - 0)
 static sBSP430cliCommand dcmd_nvmem = {
@@ -550,7 +550,7 @@ static int
 cmd_info_erase_ni (void)
 {
   int rv;
-  
+
   cprintf("Erasing stored params at %p...", infoConnectParams);
   rv = iBSP430flashEraseSegment_ni(infoConnectParams);
   cprintf("%d\n", rv);
@@ -562,7 +562,7 @@ cmd_info_erase (const char * argstr)
 {
   int rv;
   BSP430_CORE_INTERRUPT_STATE_T istate;
-  
+
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
@@ -578,7 +578,7 @@ cmd_info_store (const char * argstr)
   int rv;
 
   BSP430_CORE_INTERRUPT_STATE_T istate;
-  
+
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {

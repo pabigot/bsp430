@@ -316,7 +316,7 @@ iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
  * success @a *argstrp is updated to point past the consumed integer
  * token.
- * 
+ *
  * @param argstr_lenp pointer to the length of the @a *argstrp text.
  * On success the @a *argstr_lenp is updated to hold
  * the remaining length of the string.
@@ -339,7 +339,7 @@ int iBSP430cliStoreExtractedI (const char * * argstrp,
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
  * success @a *argstrp is updated to point past the consumed integer
  * token.
- * 
+ *
  * @param argstr_lenp pointer to the length of the @a *argstrp text.
  * On success the @a *argstr_lenp is updated to hold
  * the remaining length of the string.
@@ -362,7 +362,7 @@ int iBSP430cliStoreExtractedUI (const char * * argstrp,
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
  * success @a *argstrp is updated to point past the consumed integer
  * token.
- * 
+ *
  * @param argstr_lenp pointer to the length of the @a *argstrp text.
  * On success the @a *argstr_lenp is updated to hold
  * the remaining length of the string.
@@ -385,7 +385,7 @@ int iBSP430cliStoreExtractedL (const char * * argstrp,
  * hexadecimal (with leading @c 0x) or octal (with leading @c 0).  On
  * success @a *argstrp is updated to point past the consumed integer
  * token.
- * 
+ *
  * @param argstr_lenp pointer to the length of the @a *argstrp text.
  * On success the @a *argstr_lenp is updated to hold
  * the remaining length of the string.
@@ -700,7 +700,7 @@ const char * xBSP430cliConsoleBuffer_ni (void);
  * Invoke this after having processed a command that was returned by
  * iBSP430cliProcessConsoleInput_ni() so subsequent input begins a new
  * command.
- * 
+ *
  * @dependency BSP430_CONSOLE
  * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
  */

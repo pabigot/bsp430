@@ -58,12 +58,12 @@ testNextQToken (void)
     mcommand = command = str_;                  \
     command_len = strlen(str_);                 \
   } while (0)                                   \
-  
+ 
   SET_INPUT("'one two'");
   tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(7,len);
-  
+
   SET_INPUT("'one two");
   tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command);
@@ -77,7 +77,7 @@ testNextQToken (void)
   tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0,len);
-  
+
   SET_INPUT("\"\"");
   tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);

@@ -58,7 +58,7 @@
  * The value is an integer between #CC3000_MINIMAL_RX_SIZE=119 and
  * #CC3000_MAXIMAL_RX_SIZE=1520, unless #CC3000_TINY_DRIVER is defined
  * in which case #CC3000_MAXIMAL_RX_SIZE is 44.
- * 
+ *
  * <cc3000/cc3000_common.h> unconditionally defines a
  * CC3000_RX_BUFFER_SIZE constant, but it is not referenced by the
  * driver and is not relevant to this implementation.
@@ -73,7 +73,7 @@
  * The value is an integer between #CC3000_MINIMAL_TX_SIZE=119 and
  * #CC3000_MAXIMAL_TX_SIZE=1520, unless #CC3000_TINY_DRIVER is defined
  * in which case #CC3000_MAXIMAL_TX_SIZE is 59.
- * 
+ *
  * <cc3000/cc3000_common.h> unconditionally defines a
  * CC3000_TX_BUFFER_SIZE constant, but it is not referenced by the
  * driver and is not relevant to this implementation.
@@ -97,13 +97,13 @@
  *
  * @param firmware_patch_fn see wlan_init() documentation.  Passing @c
  * NULL is generally appropriate.
- * 
+ *
  * @param driver_patch_fn see wlan_init() documentation.  Passing @c
  * NULL is generally appropriate.
- * 
+ *
  * @param boot_loader_patch_fn see wlan_init() documentation.  Passing
  * @c NULL is generally appropriate.
- * 
+ *
  * @return 0 if all goes well; -1 if one of the underlying BSP430
  * resources could not be obtained.
  */

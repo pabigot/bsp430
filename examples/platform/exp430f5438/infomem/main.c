@@ -41,7 +41,7 @@ void main ()
   unsigned int ct[5];
   int i;
   unsigned int * ctp;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
