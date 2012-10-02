@@ -16,6 +16,8 @@
 #include <bsp430/utility/cc3000spi.h>
 #include <cc3000/wlan.h>
 #include <cc3000/nvmem.h>
+#include <cc3000/netapp.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -30,6 +32,7 @@
 #define CMD_NVMEM_SP 1
 #define CMD_NVMEM_READ 1
 #define CMD_NVMEM_MAC 1
+#define CMD_IPCONFIG 1
 #define CMD_HELP 1
 
 #if NO_HELP - 0
@@ -361,6 +364,51 @@ static sBSP430cliCommand dcmd_nvmem = {
 #define LAST_SUB_COMMAND NULL
 #endif /* CMD_NVMEM */
 
+const char *
+ipv4AsText (const unsigned char * ipaddr)
+{
+  static char buffer[16];
+  snprintf(buffer, sizeof(buffer), "%u.%u.%u.%u", ipaddr[3], ipaddr[2], ipaddr[1], ipaddr[0]);
+  return buffer;
+}
+
+#if (CMD_IPCONFIG - 0)
+
+static int
+cmd_ipconfig (const char * argstr)
+{
+  tNetappIpconfigRetArgs ipc;
+  const unsigned char * p;
+  
+  memset(&ipc, 0, sizeof(ipc));
+  netapp_ipconfig(&ipc);
+  cprintf("IP: %s\n", ipv4AsText(ipc.aucIP));
+  cprintf("NM: %s\n", ipv4AsText(ipc.aucSubnetMask));
+  cprintf("GW: %s\n", ipv4AsText(ipc.aucDefaultGateway));
+  cprintf("DHCP: %s\n", ipv4AsText(ipc.aucDHCPServer));
+  cprintf("DNS: %s\n", ipv4AsText(ipc.aucDNSServer));
+  p = ipc.uaMacAddr;
+  /* WTF?  A little-endian MAC address?  This may be because of a bug
+   * fix in the host driver; the original version was completely
+   * wrong. */
+  cprintf("MAC: %02x.%02x.%02x.%02x.%02x.%02x\n",
+          p[5], p[4], p[3], p[2], p[1], p[0]);
+  cprintf("SSID: %s\n", ipc.uaSSID);
+  return 0;
+}
+static sBSP430cliCommand dcmd_ipconfig = {
+  .key = "ipconfig",
+  .help = HELP_STRING("# show IP parameters"),
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_ipconfig
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_ipconfig
+#endif /* CMD_NVMEM_MAC */  
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_ipconfig
+
 #if (CMD_HELP - 0)
 static int
 cmd_help (sBSP430cliCommandLink * chain,
@@ -427,6 +475,7 @@ void main (void)
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
+  vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
   cprintf("\n\nWLAN test program\n");
 
@@ -478,9 +527,10 @@ void main (void)
 
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
+  BSP430_CORE_ENABLE_INTERRUPT();
+  wlan_start(0);
+  cprintf("\nAnd wlan has been started.\n");
 
-  vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
-  cprintf("\n\n\nAnd we're up and running.\n");
   flags = FLG_NEED_PROMPT;
   memset(command, 0, sizeof(command));
   cp = command;
