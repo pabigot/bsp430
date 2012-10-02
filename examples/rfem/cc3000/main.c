@@ -42,43 +42,12 @@
 #define HELP_STRING(h_) h_
 #endif /* NO_HELP */
 
-#if 0
-typedef struct sWlanSecMap {
-  unsigned int val;
-  const char * tag;
-} sWlanSecMap;
-static const sWlanSecMap wlanSecMap[] = {
-  { WLAN_SEC_UNSEC, "unsec" },
-  { WLAN_SEC_WEP, "wep" },
-  { WLAN_SEC_WPA, "wpa" },
-  { WLAN_SEC_WPA2, "wpa2" },
-};
-static const sWlanSecMap * wlanSecMapFromValue (unsigned int val)
-{
-  const sWlanSecMap * mp;
-  for (mp = wlanSecMap; mp < (wlanSecMap + sizeof(wlanSecMap)/sizeof(*wlanSecMap)); ++mp) {
-    if (mp->val == val) {
-      return mp;
-    }
-  }
-  return NULL;
-}
-static const sWlanSecMap * wlanSecMapFromTag (const char * tag)
-{
-  const sWlanSecMap * mp;
-  for (mp = wlanSecMap; mp < (wlanSecMap + sizeof(wlanSecMap)/sizeof(*wlanSecMap)); ++mp) {
-    if (0 == strcmp(mp->tag, tag)) {
-      return mp;
-    }
-  }
-  return NULL;
-}
-#endif
-
 typedef struct sConnectParams {
   int security_type;
+  size_t ssid_len;
+  size_t passphrase_len;
   char ssid[33];
-  char key[65];
+  unsigned char passphrase[65];
 } sConnectParams;
 
 static void wlan_cb (long event_type,
@@ -114,37 +83,6 @@ static sBSP430cliCommand dcmd_wlan_stop = {
 #define LAST_SUB_COMMAND &dcmd_wlan_stop
 #endif /* CMD_WLAN_STOP */
 
-#if (CMD_WLAN - 0) && (CMD_WLAN_STATUS - 0)
-static int
-cmd_wlan_status (const char * argstr)
-{
-  /* Contrary to the documentation, there are no macro constants
-   * defined for these states */
-  static const char * status_str[] = {
-    "disconnected",
-    "scanning",
-    "connecting",
-    "connected"
-  };
-  long rl = wlan_ioctl_statusget();
-  cprintf("WLAN status %ld", rl);
-  if ((0 <= rl) && (rl < (sizeof(status_str)/sizeof(*status_str)))) {
-    cprintf(": %s", status_str[rl]);
-  }
-  cputchar_ni('\n');
-  return 0;
-}
-static sBSP430cliCommand dcmd_wlan_status = {
-  .key = "status",
-  .help = HELP_STRING("# get CC3000 status"),
-  .next = LAST_SUB_COMMAND,
-  .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_status
-};
-#undef LAST_SUB_COMMAND
-#define LAST_SUB_COMMAND &dcmd_wlan_status
-#endif /* CMD_WLAN_STATUS */
-
 #if (CMD_WLAN - 0) && (CMD_WLAN_DISCONNECT - 0)
 static int
 cmd_wlan_disconnect (const char * argstr)
@@ -166,52 +104,199 @@ static sBSP430cliCommand dcmd_wlan_disconnect = {
 
 
 #if (CMD_WLAN - 0) && (CMD_WLAN_CONNECT - 0)
+typedef struct sWlanSecMap {
+  unsigned int val;
+  const char * tag;
+} sWlanSecMap;
+static const sWlanSecMap wlanSecMap[] = {
+  { WLAN_SEC_UNSEC, "unsec" },
+  { WLAN_SEC_WEP, "wep" },
+  { WLAN_SEC_WPA, "wpa" },
+#if 0
+  /* WPA2 is not implemented.  Unit will transmit unsecured auth request */
+  { WLAN_SEC_WPA2, "wpa2" },
+#endif /* 0 */
+};
+static const sWlanSecMap * const wlanSecMap_end = wlanSecMap + sizeof(wlanSecMap)/sizeof(*wlanSecMap);
+static const sWlanSecMap * wlanSecMapFromValue (unsigned int val)
+{
+  const sWlanSecMap * mp;
+  for (mp = wlanSecMap; mp < wlanSecMap_end; ++mp) {
+    if (mp->val == val) {
+      return mp;
+    }
+  }
+  return NULL;
+}
+static const sWlanSecMap * wlanSecMapFromTag (const char * tag)
+{
+  const sWlanSecMap * mp;
+  for (mp = wlanSecMap; mp < wlanSecMap_end; ++mp) {
+    if (0 == strcmp(mp->tag, tag)) {
+      return mp;
+    }
+  }
+  return NULL;
+}
+
+sConnectParams connectParams;
+
+static int
+cmd_wlan_sectype (const char * argstr)
+{
+  size_t remaining = strlen(argstr);
+  size_t len;
+  const char * tp;
+  const sWlanSecMap * mp;
+  
+  tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
+  if (0 < len) {
+    mp = wlanSecMapFromTag(tp);
+    if (0 != mp) {
+      connectParams.security_type = mp->val;
+    } else {
+      cprintf("ERR: Unrecognized sectype '%s': valid are", tp);
+      for (mp = wlanSecMap; mp < wlanSecMap_end; ++mp) {
+        cprintf(" %s", mp->tag);
+      }
+      cprintf("\n");
+    }
+  }
+  mp = wlanSecMapFromValue(connectParams.security_type);
+  cprintf("AP security type is %s (%u)\n", (mp ? mp->tag : "<UNDEF>"), connectParams.security_type);
+  return 0;
+}
+
+static int
+cmd_wlan_ssid (const char * argstr)
+{
+  size_t remaining = strlen(argstr);
+  size_t len;
+  const char * tp;
+  
+  tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
+  if (0 < len) {
+    memcpy(connectParams.ssid, tp, len);
+    connectParams.ssid[len] = 0;
+    connectParams.ssid_len = len;
+  }
+  cprintf("AP SSID is %s (%u chars)\n", connectParams.ssid, connectParams.ssid_len);
+  return 0;
+}
+
+static int
+cmd_wlan_passphrase (const char * argstr)
+{
+  size_t remaining = strlen(argstr);
+  size_t len;
+  const char * tp;
+  
+  tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
+  if (0 < len) {
+    if (sizeof(connectParams.passphrase) <= (len+1)) {
+      cprintf("ERR: Passphrase too long (> %u chars + EOS)\n", sizeof(connectParams.passphrase));
+    } else {
+      memcpy(connectParams.passphrase, tp, len);
+      connectParams.passphrase[len] = 0;
+      connectParams.passphrase_len = len;
+    }
+  }
+  cprintf("AP passphrase is '%s' (%u chars)\n", connectParams.passphrase, connectParams.passphrase_len);
+  return 0;
+}
+
 static int
 cmd_wlan_connect (const char * argstr)
 {
   long rl;
-  char ssid[33];
-  int ssid_len = 0;
-  unsigned char key[33];
-  int key_len = 0;
-  int security_type = WLAN_SEC_WPA;
-  const char * tp;
-  size_t remaining;
-  size_t len;
+  const sWlanSecMap * mp;
   unsigned long t[2];
 
-  remaining = strlen(argstr);
-  tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
-  if (*tp) {
-    memcpy(ssid, tp, len);
-    ssid_len = len;
-  }
-  ssid[ssid_len] = 0;
-
-  tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
-  if (*tp) {
-    memcpy(key, tp, len);
-    key_len = len;
-  }
-  key[key_len] = 0;
-  
-  cprintf("connect ssid '%s' passphrase '%s'\n", ssid, key);
+  mp = wlanSecMapFromValue(connectParams.security_type);
+  cprintf("connect to ssid '%s' by %s using '%s'\n",
+          connectParams.ssid, (mp ? mp->tag : "<UNDEF>"),
+          connectParams.passphrase);
   t[0] = ulBSP430uptime_ni();
-  rl = wlan_connect(security_type, ssid, ssid_len, NULL, key, key_len);
+  rl = wlan_connect(connectParams.security_type,
+                    connectParams.ssid, connectParams.ssid_len,
+                    NULL,
+                    connectParams.passphrase, connectParams.passphrase_len);
   t[1] = ulBSP430uptime_ni();
   cprintf("con %ld in %s\n", rl, xBSP430uptimeAsText_ni(t[1]-t[0]));
   return 0;
 }
+static sBSP430cliCommand dcmd_wlan_ssid = {
+  .key = "ssid",
+  .help = HELP_STRING("[{ssid}] # Display or set AP SSID for connect"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_ssid
+};
+static sBSP430cliCommand dcmd_wlan_passphrase = {
+  .key = "passphrase",
+  .help = HELP_STRING("[{passphrase}] # Display or set AP passphrase"),
+  .next = &dcmd_wlan_ssid,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_passphrase
+};
+static sBSP430cliCommand dcmd_wlan_sectype = {
+  .key = "sectype",
+  .help = HELP_STRING("[{sectype}] # Display or set AP sectype"),
+  .next = &dcmd_wlan_passphrase,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_sectype
+};
 static sBSP430cliCommand dcmd_wlan_connect = {
   .key = "connect",
-  .help = HELP_STRING("ssid passphrase [(unsec|wep|*wpa|wpa2)] # connect to specified access point"),
-  .next = LAST_SUB_COMMAND,
+  .help = HELP_STRING("# connect to specified access point using AP config"),
+  .next = &dcmd_wlan_sectype,
   .handler = iBSP430cliHandlerSimple,
   .param = cmd_wlan_connect
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_connect
 #endif /* CMD_WLAN_CONNECT */
+
+#if (CMD_WLAN - 0) && (CMD_WLAN_STATUS - 0)
+static int
+cmd_wlan_status (const char * argstr)
+{
+  /* Contrary to the documentation, there are no macro constants
+   * defined for these states */
+  static const char * status_str[] = {
+    "disconnected",
+    "scanning",
+    "connecting",
+    "connected"
+  };
+  long rl = wlan_ioctl_statusget();
+#if CMD_WLAN_CONNECT - 0
+  {
+    const sWlanSecMap * mp;
+    mp = wlanSecMapFromValue(connectParams.security_type);
+
+    cprintf("AP configuration SSID '%s', passphrase '%s'\n",
+            connectParams.ssid, connectParams.passphrase);
+    cprintf("AP security type %s (%u)\n", (mp ? mp->tag : "<UNDEF>"), connectParams.security_type);
+  }
+#endif /* CMD_WLAN_CONNECT */
+  cprintf("WLAN status %ld", rl);
+  if ((0 <= rl) && (rl < (sizeof(status_str)/sizeof(*status_str)))) {
+    cprintf(": %s", status_str[rl]);
+  }
+  cputchar_ni('\n');
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_status = {
+  .key = "status",
+  .help = HELP_STRING("# get CC3000 status"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_status
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_status
+#endif /* CMD_WLAN_STATUS */
 
 #if (CMD_WLAN - 0) && (CMD_WLAN_START - 0)
 static int
@@ -460,7 +545,7 @@ static sBSP430cliCommand dcmd_help = {
 #define KEY_TAB '\t'
 #define KEY_KILL_LINE 0x15
 #define KEY_KILL_WORD 0x17
-char command[40];
+char command[80];
 
 #define FLG_NEED_PROMPT 0x01
 #define FLG_HAVE_COMMAND 0x02
