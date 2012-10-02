@@ -553,8 +553,8 @@ char command[80];
 void main (void)
 {
   int rv;
-  unsigned int flags = 0;
-  char * cp;
+  const char * command;
+  int flags;
 #if BSP430_MODULE_SYS - 0
   unsigned long reset_causes = 0;
   unsigned int reset_flags = 0;
@@ -635,75 +635,44 @@ void main (void)
 
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
-  BSP430_CORE_ENABLE_INTERRUPT();
-  wlan_start(0);
-  cprintf("\nAnd wlan has been started.\n");
-
-  flags = FLG_NEED_PROMPT;
-  memset(command, 0, sizeof(command));
-  cp = command;
 
   commandSet = LAST_COMMAND;
-  while (1) {
-    int c;
+  command = NULL;
+  flags = eBSP430cliConsole_REPAINT;
 
-    if (flags & FLG_NEED_PROMPT) {
-      *cp = 0;
-      cprintf("> %s", command);
-      flags &= ~FLG_NEED_PROMPT;
-    }
-    while (0 <= ((c = cgetchar_ni()))) {
-      if (KEY_BS == c) {
-        if (cp == command) {
-          cputchar_ni(KEY_BEL);
-        } else {
-          --cp;
-          cputtext_ni("\b \b");
-        }
-      } else if (KEY_CR == c) {
-        flags |= FLG_HAVE_COMMAND;
-        break;
-      } else if (KEY_KILL_LINE == c) {
-        cprintf("\e[%uD\e[K", cp - command);
-        cp = command;
-        *cp = 0;
-      } else if (KEY_KILL_WORD == c) {
-        char * kp = cp;
-        while (--kp > command && isspace(*kp)) {
-        }
-        while (--kp > command && !isspace(*kp)) {
-        }
-        ++kp;
-        cprintf("\e[%uD\e[K", cp-kp);
-        cp = kp;
-        *cp = 0;
-      } else if (KEY_FF == c) {
-        cputchar_ni(c);
-        flags |= FLG_NEED_PROMPT;
-      } else {
-        if ((1+cp) >= (command + sizeof(command))) {
-          cputchar_ni(KEY_BEL);
-        } else {
-          *cp++ = c;
-          cputchar_ni(c);
-        }
-      }
-    }
-    if (flags & FLG_HAVE_COMMAND) {
+  BSP430_CORE_ENABLE_INTERRUPT();
+  wlan_start(0);
+
+  cprintf("\nAnd wlan has been started.\n");
+
+  while (1) {
+    if (NULL != command) {
       int rv;
-      
-      cputchar_ni('\n');
-      *cp = 0;
+
       rv = iBSP430cliExecuteCommand(commandSet, 0, command);
       if (0 != rv) {
         cprintf("Command execution returned %d\n", rv);
       }
-      cp = command;
-      *cp = 0;
-      flags &= ~FLG_HAVE_COMMAND;
-      flags |= FLG_NEED_PROMPT;
+      /* Ensure prompt is rewritten, but not the command we just
+       * ran */
+      flags |= eBSP430cliConsole_REPAINT;
+      command = NULL;
     }
+    if (flags & eBSP430cliConsole_REPAINT) {
+      /* Draw the prompt along with whatever's left in the command buffer */
+      cprintf("> %s", command ? command : "");
+      flags &= ~eBSP430cliConsole_REPAINT;
+    }
+    BSP430_CORE_DISABLE_INTERRUPT();
+    if (flags & eBSP430cliConsole_READY) {
+      /* Clear the command we just completed */
+      vBSP430cliClearConsoleBuffer_ni();
+    }
+    flags = iBSP430cliProcessConsoleInput_ni();
     if (flags) {
+      /* Got something to do; get the command contents in place */
+      command = xBSP430cliConsoleBuffer_ni();
+      BSP430_CORE_ENABLE_INTERRUPT();
       continue;
     }
     BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
