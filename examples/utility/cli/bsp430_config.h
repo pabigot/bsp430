@@ -8,8 +8,11 @@
 /* Support console output */
 #define configBSP430_CONSOLE 1
 
-/* Enable a 16-character rx buffer for the console */
-#define BSP430_CONSOLE_RX_BUFFER_SIZE 16
+/* Enable an 8-character rx buffer for the console */
+#define BSP430_CONSOLE_RX_BUFFER_SIZE 8
+
+/* Enable an 80-character command buffer */
+#define BSP430_CLI_CONSOLE_BUFFER_SIZE 80
 
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1

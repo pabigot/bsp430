@@ -54,6 +54,11 @@ void vBSP430cliSetDiagnosticFunction (iBSP430cliDiagnosticFunction diagnostic_fu
   diagnosticFunction = diagnostic_function;
 }
 
+#if 0 < BSP430_CLI_CONSOLE_BUFFER_SIZE
+static char consoleBuffer_[BSP430_CLI_CONSOLE_BUFFER_SIZE];
+static char * cbEnd_;
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
 const char *
 xBSP430cliNextToken (const char * * commandp,
                      size_t * remainingp,
@@ -478,6 +483,92 @@ void vBSP430cliConsoleDisplayHelp (const sBSP430cliCommand * cmd)
 {
   consoleDisplayHelp_(cmd, 0);
 }
+
+const char *
+xBSP430cliConsoleBuffer_ni (void)
+{
+#if 0 < BSP430_CLI_CONSOLE_BUFFER_SIZE
+  if (NULL == cbEnd_) {
+    cbEnd_ = consoleBuffer_;
+  }
+  *cbEnd_ = 0;
+  return consoleBuffer_;
+#else /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+  return NULL;
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+}
+
+#if 0 < BSP430_CLI_CONSOLE_BUFFER_SIZE
+
+#define KEY_BS '\b'
+#define KEY_LF '\n'
+#define KEY_CR '\r'
+#define KEY_BEL '\a'
+#define KEY_ESC '\e'
+#define KEY_FF '\f'
+#define KEY_TAB '\t'
+#define KEY_KILL_LINE 0x15
+#define KEY_KILL_WORD 0x17
+
+void
+vBSP430cliClearConsoleBuffer_ni (void)
+{
+  cbEnd_ = NULL;
+}
+
+int
+iBSP430cliProcessConsoleInput_ni ()
+{
+  int rv;
+  int c;
+
+  rv = 0;
+  if (NULL == cbEnd_) {
+    cbEnd_ = consoleBuffer_;
+  }
+  while (0 <= ((c = cgetchar_ni()))) {
+    if (KEY_BS == c) {
+      if (cbEnd_ == consoleBuffer_) {
+        cputchar_ni(KEY_BEL);
+      } else {
+        --cbEnd_;
+        cputtext_ni("\b \b");
+      }
+    } else if (KEY_FF == c) {
+      cputchar_ni(c);
+      rv |= eBSP430cliConsole_REPAINT;
+      break;
+    } else if (KEY_CR == c) {
+      cputchar_ni('\n');
+      rv |= eBSP430cliConsole_READY;
+      break;
+    } else if (KEY_KILL_LINE == c) {
+      cprintf("\e[%uD\e[K", cbEnd_ - consoleBuffer_);
+      cbEnd_ = consoleBuffer_;
+      *cbEnd_ = 0;
+    } else if (KEY_KILL_WORD == c) {
+      char * kp = cbEnd_;
+      while (--kp > consoleBuffer_ && isspace(*kp)) {
+      }
+      while (--kp > consoleBuffer_ && !isspace(*kp)) {
+      }
+      ++kp;
+      cprintf("\e[%uD\e[K", cbEnd_-kp);
+      cbEnd_ = kp;
+      *cbEnd_ = 0;
+    } else {
+      if ((1+cbEnd_) >= (consoleBuffer_ + sizeof(consoleBuffer_))) {
+        cputchar_ni(KEY_BEL);
+      } else {
+        *cbEnd_++ = c;
+        cputchar_ni(c);
+      }
+    }
+  }
+  return rv;
+}
+
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 #endif /* BSP430_CONSOLE */
 

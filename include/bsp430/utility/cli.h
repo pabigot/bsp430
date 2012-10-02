@@ -639,5 +639,89 @@ void vBSP430cliConsoleDisplayHelp (const sBSP430cliCommand * cmd);
  * @return The reversed chain */
 sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 
+/** Specify the size of an internal command buffer for editing.
+ *
+ * A non-zero setting for this parameter allocates an internal buffer
+ * that is used by iBSP430cliProcessConsoleInput_ni() to aggregate
+ * keystrokes and produce a command string.
+ *
+ * If the value of this is zero, iBSP430cliProcessConsoleInput_ni()
+ * will not be available.
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLI_CONSOLE_BUFFER_SIZE)
+#define BSP430_CLI_CONSOLE_BUFFER_SIZE 0
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
+/** Enumeration of bit values returned from
+ * iBSP430cliConsoleProcessInput_ni(). */
+typedef enum eBSP430cliConsole {
+  /** Bit set in response if console buffer now holds a completed
+   * command.
+   *
+   * @note If this bit is set, there may be additional input that has
+   * not been processed.  After processing the command that is ready
+   * the caller should re-invoke #iBSP430cliConsoleProcessInput_ni()
+   * to complete reading pending input. */
+  eBSP430cliConsole_READY = 0x01,
+
+  /** Bit set in response if caller should repaint the screen in
+   * response to keystrokes */
+  eBSP430cliConsole_REPAINT = 0x02,
+} eBSP430cliConsole;
+
+/** Return a pointer to the internal console buffer.
+ *
+ * @note Although the value returned from this function is a constant
+ * throughout the life of the program, it is the call to this function
+ * that stores the NUL character terminating the command based on data
+ * received.
+ *
+ * @return pointer to the NUL-terminated current contents of the
+ * internal command buffer, or NULL if #BSP430_CLI_CONSOLE_BUFFER_SIZE
+ * is zero. */
+const char * xBSP430cliConsoleBuffer_ni (void);
+
+/** Clear any current console buffer contents.
+ *
+ * Invoke this after having processed a command that was returned by
+ * iBSP430cliProcessConsoleInput_ni() so subsequent input begins a new
+ * command.
+ * 
+ * @dependency BSP430_CONSOLE
+ * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
+ */
+#if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
+void vBSP430cliClearConsoleBuffer_ni (void);
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
+/** Process pending console input and produce completed commands.
+ *
+ * This function reads data over the console, and stores the
+ * characters into an internal buffer allocated when
+ * #BSP430_CLI_CONSOLE_BUFFER_SIZE is nonzero.  Certain keystrokes are
+ * recognized as editing commands, as described below.
+ *
+ * Keystroke      | Function
+ * :------------- | :---------------
+ * Backspace (BS) | Erase previous character (if any)
+ * C-l (FF)       | Redraw screen with prompt and pending command
+ * Enter (CR)     | Return with #eBSP430cliConsole_READY
+ * C-u (NAK)      | Kill command (resets buffer)
+ * C-w (ETB)      | Kill previous word (erases back to space)
+ *
+ * When carriage return is pressed, a complete command is recognized,
+ * and the function returns even if there is additional data to be
+ * consumed.
+ *
+ * @return zero if all pending input was consumed and no actions are
+ * required.  A positive result encodes bits from #eBSP430cliConsole
+ * indicating available commands or other actions that are required.
+ *
+ * @dependency BSP430_CONSOLE
+ * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
+ */
+#if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
+int iBSP430cliProcessConsoleInput_ni (void);
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 #endif /* BSP430_UTILITY_CLI_H */

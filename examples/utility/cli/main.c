@@ -246,94 +246,54 @@ static sBSP430cliCommand dcmd_help = {
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_help
 
-#define KEY_BS '\b'
-#define KEY_LF '\n'
-#define KEY_CR '\r'
-#define KEY_BEL '\a'
-#define KEY_ESC '\e'
-#define KEY_FF '\f'
-#define KEY_TAB '\t'
-#define KEY_KILL_LINE 0x15
-#define KEY_KILL_WORD 0x17
-char command[30];
-
-#define FLG_NEED_PROMPT 0x01
-#define FLG_HAVE_COMMAND 0x02
-
 void main ()
 {
-  unsigned int flags = 0;
-  char * cp;
+  const char * command;
+  int flags;
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   cprintf("\n\n\nAnd we're up and running.\n");
-  flags = FLG_NEED_PROMPT;
-  memset(command, 0, sizeof(command));
-  cp = command;
 
+  /* NOTE: The control flow in this is a bit tricky, as we're trying
+   * to leave interrupts enabled during the main body of the loop,
+   * while they must be disabled when processing input to recognize a
+   * command.  Both flags and command serve as signals as well as
+   * values. */
   commandSet = LAST_COMMAND;
-  while (1) {
-    int c;
+  command = NULL;
+  flags = eBSP430cliConsole_REPAINT;
 
-    if (flags & FLG_NEED_PROMPT) {
-      *cp = 0;
-      cprintf("> %s", command);
-      flags &= ~FLG_NEED_PROMPT;
-    }
-    while (0 <= ((c = cgetchar_ni()))) {
-      if (KEY_BS == c) {
-        if (cp == command) {
-          cputchar_ni(KEY_BEL);
-        } else {
-          --cp;
-          cputtext_ni("\b \b");
-        }
-      } else if (KEY_CR == c) {
-        flags |= FLG_HAVE_COMMAND;
-        break;
-      } else if (KEY_KILL_LINE == c) {
-        cprintf("\e[%uD\e[K", cp - command);
-        cp = command;
-        *cp = 0;
-      } else if (KEY_KILL_WORD == c) {
-        char * kp = cp;
-        while (--kp > command && isspace(*kp)) {
-        }
-        while (--kp > command && !isspace(*kp)) {
-        }
-        ++kp;
-        cprintf("\e[%uD\e[K", cp-kp);
-        cp = kp;
-        *cp = 0;
-      } else if (KEY_FF == c) {
-        cputchar_ni(c);
-        flags |= FLG_NEED_PROMPT;
-      } else {
-        if ((1+cp) >= (command + sizeof(command))) {
-          cputchar_ni(KEY_BEL);
-        } else {
-          *cp++ = c;
-          cputchar_ni(c);
-        }
-      }
-    }
-    if (flags & FLG_HAVE_COMMAND) {
+  BSP430_CORE_ENABLE_INTERRUPT();
+  while (1) {
+    if (NULL != command) {
       int rv;
-      
-      cputchar_ni('\n');
-      *cp = 0;
-      rv = iBSP430cliExecuteCommand(&dcmd_help, 0, command);
+
+      rv = iBSP430cliExecuteCommand(commandSet, 0, command);
       if (0 != rv) {
         cprintf("Command execution returned %d\n", rv);
       }
-      cp = command;
-      *cp = 0;
-      flags &= ~FLG_HAVE_COMMAND;
-      flags |= FLG_NEED_PROMPT;
+      /* Ensure prompt is rewritten, but not the command we just
+       * ran */
+      flags |= eBSP430cliConsole_REPAINT;
+      command = NULL;
     }
+    if (flags & eBSP430cliConsole_REPAINT) {
+      /* Draw the prompt along with whatever's left in the command buffer */
+      cprintf("> %s", command ? command : "");
+      flags &= ~eBSP430cliConsole_REPAINT;
+    }
+    BSP430_CORE_DISABLE_INTERRUPT();
+    if (flags & eBSP430cliConsole_READY) {
+      /* Clear the command we just completed */
+      vBSP430cliClearConsoleBuffer_ni();
+    }
+    flags = iBSP430cliProcessConsoleInput_ni();
     if (flags) {
+      /* Got something to do; get the command contents in place */
+      command = xBSP430cliConsoleBuffer_ni();
+      BSP430_CORE_ENABLE_INTERRUPT();
       continue;
     }
     BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
