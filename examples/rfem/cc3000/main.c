@@ -29,6 +29,7 @@
 #define CMD_NVMEM 1
 #define CMD_NVMEM_SP 1
 #define CMD_NVMEM_READ 1
+#define CMD_NVMEM_MAC 1
 #define CMD_HELP 1
 
 #if NO_HELP - 0
@@ -319,6 +320,34 @@ static sBSP430cliCommand dcmd_nvmem_read = {
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_read
 #endif /* CMD_NVMEM_READ */
+
+#if (CMD_NVMEM - 0) && (CMD_NVMEM_MAC - 0)
+static int
+cmd_nvmem_mac (const char * argstr)
+{
+  int rc;
+  unsigned char mac[6];
+
+  /* Could extend this to parse "set {addr}" if you wanted. */
+  rc = nvmem_get_mac_address(mac);
+  if (0 == rc) {
+    cprintf("nvmem mac is %02x.%02x.%02x.%02x.%02x.%02x\n",
+            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  } else {
+    cprintf("ERR: nvmem mac read got %u\n", rc);
+  }
+  return 0;
+}
+static sBSP430cliCommand dcmd_nvmem_mac = {
+  .key = "mac",
+  .help = HELP_STRING("# get mac address"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_nvmem_mac
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_nvmem_mac
+#endif /* CMD_NVMEM_MAC */  
 
 #if (CMD_NVMEM - 0)
 static sBSP430cliCommand dcmd_nvmem = {
