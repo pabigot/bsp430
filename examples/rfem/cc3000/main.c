@@ -27,6 +27,7 @@
 #define CMD_WLAN_STOP 1
 #define CMD_WLAN_STATUS 1
 #define CMD_WLAN_CONNECT 1
+#define CMD_WLAN_DISCONNECT 1
 #define CMD_WLAN_START 1
 #define CMD_NVMEM 1
 #define CMD_NVMEM_SP 1
@@ -84,7 +85,9 @@ static void wlan_cb (long event_type,
                      char * data,
                      unsigned char length)
 {
-  cprintf("wlan_cb %#lx %u at %p SR %#x\n", event_type, length, data, __read_status_register());
+  cprintf("%s wlan_cb %#lx %u at %p SR %#x\n",
+          xBSP430uptimeAsText_ni(ulBSP430uptime_ni()),
+          event_type, length, data, __read_status_register());
 }
 
 const sBSP430cliCommand * commandSet;
@@ -141,6 +144,26 @@ static sBSP430cliCommand dcmd_wlan_status = {
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_status
 #endif /* CMD_WLAN_STATUS */
+
+#if (CMD_WLAN - 0) && (CMD_WLAN_DISCONNECT - 0)
+static int
+cmd_wlan_disconnect (const char * argstr)
+{
+  long rl = wlan_disconnect();
+  cprintf("disconnect returned %ld\n", rl);
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_disconnect = {
+  .key = "disconnect",
+  .help = HELP_STRING("# disconnect from AP"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_wlan_disconnect
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_disconnect
+#endif /* CMD_WLAN_DISCONNECT */
+
 
 #if (CMD_WLAN - 0) && (CMD_WLAN_CONNECT - 0)
 static int
