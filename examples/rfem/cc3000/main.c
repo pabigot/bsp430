@@ -252,9 +252,12 @@ cmd_nvmem_read (const char * argstr)
   unsigned int len = 128;
   unsigned int ofs = 0;
   unsigned char data[32];
+  char asciiz[17];
+  char * ap;
   unsigned int end_read;
   unsigned int ui;
   size_t argstr_len = strlen(argstr);
+  unsigned int nb;
   
   rc = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &ui);
   if (0 == rc) {
@@ -267,31 +270,42 @@ cmd_nvmem_read (const char * argstr)
   }
   if (0 == rc) {
     ofs = ui;
-    rc = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &ui);
   }
   end_read = ofs + len;
-  while (ofs < end_read) {
+  memset(asciiz, 0, sizeof(asciiz));
+  ap = asciiz;
+  rc = 0;
+  while ((0 == rc) && (ofs < end_read)) {
     unsigned char * dp;
     unsigned char * dpe;
-    unsigned int nb = (end_read - ofs);
+    nb = (end_read - ofs);
     if (sizeof(data) < nb) {
       nb = sizeof(data);
     }
     rc = nvmem_read(fileid, nb, ofs, data);
-    cprintf("%u @ %x.%u got %u\n", nb, fileid, ofs, rc);
-    dp = data;
-    dpe = dp + nb;
-    while (dp < dpe) {
-      if (0 == (ofs % 16)) {
-        cprintf("\n%x.%04x ", fileid, ofs);
-      } else if (0 == (ofs % 8)) {
-        cprintf(" ");
+    if (0 == rc) {
+      dp = data;
+      dpe = dp + nb;
+      while (dp < dpe) {
+        if (0 == (ofs % 16)) {
+          cprintf("    %s\n%x.%04x ", asciiz, fileid, ofs);
+          memset(asciiz, 0, sizeof(asciiz));
+          ap = asciiz;
+        } else if (0 == (ofs % 8)) {
+          cprintf(" ");
+        }
+        ++ofs;
+        *ap++ = isprint(*dp) ? *dp : '.';
+        cprintf(" %02x", *dp++);
       }
-      ++ofs;
-      cprintf(" %02x", *dp++);
+      len -= nb;
     }
-    cprintf("\n");
-    len -= nb;
+  }
+  if (0 == rc) {
+    cprintf("    %s\n", asciiz);
+  } else {
+    cprintf("\nERR: Read returned %u for %u bytes at %u of fileid %u\n",
+            rc, nb, ofs, fileid);
   }
   return 0;
 }
