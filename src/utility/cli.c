@@ -84,6 +84,54 @@ xBSP430cliNextToken (const char * * commandp,
   return rv;
 }
 
+const char *
+xBSP430cliNextQToken (const char * * commandp,
+                      size_t * remainingp,
+                      size_t * lenp)
+{
+  size_t remaining = *remainingp;
+  const char * command = *commandp;
+  const char * rv = command;
+  const char * lp;
+  char squote;
+  char equote;
+
+  /* Skip leading space up to end of input */
+  while (((rv - command) < remaining)
+         && isspace(*rv)) {
+    ++rv;
+  }
+
+  /* If nothing remains, or if the first character of what remains
+   * isn't a quote, defer to base implementation. */
+  if (((rv - command) >= remaining)
+      || (! ((*rv == ((squote = '\'')))
+             || (*rv == ((squote = '"')))))) {
+    return xBSP430cliNextToken(commandp, remainingp, lenp);
+  }
+  equote = squote;
+  
+  /* Skip the quote and look for the end quote */
+  lp = ++rv;
+  while (((lp - command) < remaining)
+         && (*lp != equote)) {
+    ++lp;
+  }
+
+  /* If we didn't find the end quote, or the end quote is not the end
+   * of the input and is followed by a non-space character, defer to
+   * the base implementation */
+  if (((lp - command) >= remaining)
+      || (((lp + 1 - command) < remaining)
+          && ! isspace(lp[1]))) {
+    return xBSP430cliNextToken(commandp, remainingp, lenp);
+  }
+  *commandp = lp+1;
+  *remainingp -= (*commandp - command);
+  *lenp = lp - rv;
+  return rv;
+}
+
 int
 iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
                         const char * command,

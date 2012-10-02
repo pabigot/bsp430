@@ -33,6 +33,9 @@
  *
  * @brief Basic support for command line processing
  *
+ * An interactive utility demonstrating most of the capabilities of
+ * this module is available in examples/utility/cli.
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -64,6 +67,33 @@
 const char * xBSP430cliNextToken (const char * * commandp,
                                   size_t * remainingp,
                                   size_t * lenp);
+
+/** Get the next token or quoted token in the command string.
+ *
+ * Exactly the same as xBSP430cliNextToken() except that if the first
+ * non-whitespace character is a single or double quote, all
+ * characters to a following single or double quote are taken as the
+ * value to be returned.  The opening and closing quotes are outside
+ * the returned token.
+ *
+ * The function delegates to xBSP430cliNextToken() on these conditions:
+ * @li the first character is not a quote;
+ * @li if there is no matching end quote;
+ * @li if the matching end quote is followed by a non-space character
+ *
+ * @param commandp as with xBSP430cliNextToken()
+ *
+ * @param remainingp as with xBSP430cliNextToken()
+ *
+ * @param lenp as with xBSP430cliNextToken().  If a quoted token is
+ * identified, the length excludes the opening and closing quotes.
+ *
+ * @return as with xBSP430cliNextToken().  If a quoted token is
+ * identified, the return value begins after the opening quote.
+ */
+const char * xBSP430cliNextQToken (const char * * commandp,
+                                   size_t * remainingp,
+                                   size_t * lenp);
 
 /* Forward declarations */
 struct sBSP430cliCommand;

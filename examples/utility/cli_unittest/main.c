@@ -45,12 +45,59 @@ testNextToken (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(mcommand, key + len);
 }
 
+static void
+testNextQToken (void)
+{
+  const char * command;
+  const char * mcommand;
+  size_t command_len;
+  size_t len;
+  const char * tp;
+
+#define SET_INPUT(str_) do {                    \
+    mcommand = command = str_;                  \
+    command_len = strlen(str_);                 \
+  } while (0)                                   \
+  
+  SET_INPUT("'one two'");
+  tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(7,len);
+  
+  SET_INPUT("'one two");
+  tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(4, len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(mcommand, command+4);
+  tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+5);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, len);
+
+  SET_INPUT("''");
+  tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0,len);
+  
+  SET_INPUT("\"\"");
+  tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0,len);
+
+  SET_INPUT("'one'x two");
+  tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(6, len);
+
+#undef SET_INPUT
+}
+
 void main (void)
 {
   vBSP430platformInitialize_ni();
   vBSP430unittestInitialize();
 
   testNextToken();
+  testNextQToken();
 
   vBSP430unittestFinalize();
 }

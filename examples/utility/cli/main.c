@@ -202,6 +202,33 @@ static const sBSP430cliCommand dcmd_set = {
 #define LAST_COMMAND &dcmd_set
 
 static int
+cmd_quote (const char * argstr)
+{
+  size_t arglen = strlen(argstr);
+  size_t len;
+
+  cprintf("Extracting text tokens from %u characters\n", arglen);
+  while (0 < arglen) {
+    const char * tp = xBSP430cliNextQToken(&argstr, &arglen, &len);
+    cprintf("%u-char token <", len);
+    while (len--) {
+      cputchar_ni(*tp++);
+    }
+    cprintf(">\n");
+  }
+  return 0;
+}
+static const sBSP430cliCommand dcmd_quote = {
+  .key = "quote",
+  .help = "[qstr]... # Extract one or more quoted tokens",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_quote
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_quote
+
+static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,
           const char * command,
