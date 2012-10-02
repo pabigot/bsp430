@@ -22,12 +22,12 @@
 /* Memory is extremely tight on the FR5739.  Set these to restrict the
  * set of commands to ones of interest that will fit. */
 #define CMD_WLAN 1
-#define CMD_WLAN_STOP 0
+#define CMD_WLAN_STOP 1
 #define CMD_WLAN_STATUS 1
 #define CMD_WLAN_CONNECT 1
 #define CMD_WLAN_START 1
-#define CMD_NVMEM 0
-#define CMD_NVMEM_SP 0
+#define CMD_NVMEM 1
+#define CMD_NVMEM_SP 1
 #define CMD_NVMEM_READ 1
 #define CMD_HELP 1
 
