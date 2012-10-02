@@ -1,0 +1,97 @@
+/* Copyright (c) 2012, Peter A. Bigot
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/** \page ex_utility_unittest Utilities: Unit Test
+
+The <bsp430/utility/unittest.h> header provides a simple way to provide unit
+tests on MSP430.  The core functionality provides a standard header emitted
+to the console, execution of code interspersed with validation of expected
+results, and a standard footer.  External scripts can be used to automate
+the test infrastructure.  In addition to text output, pass and fail states
+are demonstrated using LEDs.
+
+Output from the following example is:
+
+@verbatim
+# sync...
+# sync...
+# sync...
+# sync...
+# sync...
+FAIL [29]: unconditional
+pass [31]: 1 == 1
+pass [32]: 1 != 2
+pass [33]: NOT 1 != 1
+pass [34]: NOT 1 == 2
+FAIL [37]: 1==rv: 1 != 42
+# FAIL 2 pass 4
+# ...done
+# ...done
+# ...done
+# ...done
+# ...done
+@endverbatim
+
+When compiled using:
+@verbatim
+make PLATFORM=exp430f5438 realclean EXT_CPPFLAGS=-DAPP_ONLY_PASSING install
+@endverbatim
+
+the output is:
+@verbatim
+# sync...
+# sync...
+# sync...
+# sync...
+# sync...
+pass [31]: 1 == 1
+pass [32]: 1 != 2
+pass [33]: NOT 1 != 1
+pass [34]: NOT 1 == 2
+# PASSED 4
+# ...done
+# ...done
+# ...done
+# ...done
+# ...done
+@endverbatim
+
+\section ex_utility_unittest_main main.c
+\include utility/unittest/main.c
+
+\section ex_utility_unittest_confic bsp430_config.h
+\include utility/unittest/bsp430_config.h
+
+\section ex_utility_unittest_make Makefile
+\include utility/unittest/Makefile
+
+\example utility/unittest/main.c
+*/

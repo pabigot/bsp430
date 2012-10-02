@@ -62,7 +62,12 @@ execution, and interrupt management;
 
 \li A @link buildenv build infrastructure @endlink designed to simplify
 creating new applications, currently focused on the MSPGCC toolchain in a
-POSIX command-line environment supported by GNU Make
+POSIX command-line environment supported by GNU Make;
+
+\li Value-added capabilities including a @link bsp430/utility/cli.h command
+line interface@endlink, @link bsp430/utility/unittest.h unit test
+framework@endlink, and @link bsp430/utility/rfem.h RF Evaluation
+Module@endlink interface
 
 BSP430 is released as open source under the <a
 href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -127,6 +132,9 @@ Board</a>
 \section mp_examples Provided Examples
 
 \subsection ex_utility Value-Added Utility Examples
+
+\li \ref ex_utility_unittest demonstrates the primitive @link
+bsp430/utility/unittest.h unit test capability@endlink supported by BSP430.
 
 \li \ref ex_utility_cli demonstrates the command line interface structure
 based on the @link bsp430/utility/console.h console capability @endlink.
