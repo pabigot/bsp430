@@ -92,11 +92,14 @@ void main ()
   cputchar_ni('\n');
 #endif /* BSP430_MODULE_SYS */
 
-  dumpRegion("Vectors", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
   memcpy(ivect, VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
   dumpRegion("Cached vectors", ivect, VECTOR_LENGTH_BYTES);
+  dumpRegion("Vectors", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
+  (void)iBSP430flashEraseSegment_ni((void*)0xFE00);
+  dumpRegion("Vectors with 0xFE00", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
   (void)iBSP430flashEraseSegment_ni(VECTOR_OFFSET);
   vBSP430ledSet(0, 1);
+  dumpRegion("Vectors as erased", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
   memcpy(erased_ivect, VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
   (void)iBSP430flashWriteData_ni(VECTOR_OFFSET, ivect, VECTOR_LENGTH_BYTES);
   vBSP430ledSet(1, 1);
