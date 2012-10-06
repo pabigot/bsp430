@@ -235,6 +235,7 @@ parseSubcommand_ (sBSP430cliCommandLink * chain,
                   void * param,
                   const char * command,
                   size_t command_len,
+                  iBSP430cliHandlerFunction chain_handler,
                   iBSP430cliHandlerFunction handler)
 {
   sBSP430cliCommandLink parent_link;
@@ -250,14 +251,16 @@ parseSubcommand_ (sBSP430cliCommandLink * chain,
   }
   parent_link.cmd = match;
   if (match->child) {
-    const char * nargstr;
-    const char * mut_argstr;
-    size_t ncommand_len = argstr_len;
+    const char * mut_argstr = argstr;
+    size_t mut_argstr_len = argstr_len;
     size_t len;
 
-    nargstr = xBSP430cliNextToken(&mut_argstr, &ncommand_len, &len);
-    if ((0 != nargstr) && (0 < len)) {
-      return parseSubcommand_(&parent_link, match->child, param, argstr, argstr_len, handler);
+    (void)xBSP430cliNextToken(&mut_argstr, &mut_argstr_len, &len);
+    if (0 < len) {
+      if (NULL != chain_handler) {
+        (void)chain_handler(&parent_link, param, argstr, argstr_len);
+      }
+      return parseSubcommand_(&parent_link, match->child, param, argstr, argstr_len, chain_handler, handler);
     }
   }
   return handler(&parent_link, param, argstr, argstr_len);
@@ -267,9 +270,10 @@ int
 iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
                         void * param,
                         const char * command,
+                        iBSP430cliHandlerFunction chain_handler,
                         iBSP430cliHandlerFunction handler)
 {
-  return parseSubcommand_(NULL, cmds, param, command, strlen(command), handler);
+  return parseSubcommand_(NULL, cmds, param, command, strlen(command), chain_handler, handler);
 }
 
 int

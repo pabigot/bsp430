@@ -302,14 +302,19 @@ int iBSP430cliExecuteCommand (const sBSP430cliCommand * cmds,
  *
  * @param command as with iBSP430cliExecuteCommand()
  *
- * @param handler the handler function to execute on the resolved
- * command chain and remaining arguments
+ * @param chain_handler optional handler function to invoke on an
+ * interior chain node command chain and remaining arguments prior to
+ * continuing the chain on a child command set
+ *
+ * @param handler the handler function to execute on the
+ * fully-resolved command chain and remaining arguments
  *
  * @return the value returned by the handler function */
 int
 iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
                         void * param,
                         const char * command,
+                        iBSP430cliHandlerFunction chain_handler,
                         iBSP430cliHandlerFunction handler);
 
 /** Utility to extract and store a signed 16-bit integer expressed in

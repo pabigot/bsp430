@@ -114,7 +114,7 @@ cmd_expand_ (sBSP430cliCommandLink * chain,
 static int
 cmd_expand (const char * argstr)
 {
-  return iBSP430cliParseCommand(commandSet, NULL, argstr, cmd_expand_);
+  return iBSP430cliParseCommand(commandSet, NULL, argstr, NULL, cmd_expand_);
 }
 static sBSP430cliCommand dcmd_expand = {
   .key = "expand",
