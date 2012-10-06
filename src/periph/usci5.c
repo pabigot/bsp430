@@ -699,8 +699,7 @@ struct sBSP430halSERIAL xBSP430hal_USCI5_B3_ = {
 /* !BSP430! uscifrom=usci5 insert=hal_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_defn] */
 #if configBSP430_HAL_USCI5_A0_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_A0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_A0_VECTOR)
 isr_USCI5_A0 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_A0);
@@ -709,8 +708,7 @@ isr_USCI5_A0 (void)
 #endif /* configBSP430_HAL_USCI5_A0_ISR */
 
 #if configBSP430_HAL_USCI5_A1_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_A1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_A1_VECTOR)
 isr_USCI5_A1 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_A1);
@@ -719,8 +717,7 @@ isr_USCI5_A1 (void)
 #endif /* configBSP430_HAL_USCI5_A1_ISR */
 
 #if configBSP430_HAL_USCI5_A2_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_A2_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_A2_VECTOR)
 isr_USCI5_A2 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_A2);
@@ -729,8 +726,7 @@ isr_USCI5_A2 (void)
 #endif /* configBSP430_HAL_USCI5_A2_ISR */
 
 #if configBSP430_HAL_USCI5_A3_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_A3_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_A3_VECTOR)
 isr_USCI5_A3 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_A3);
@@ -739,8 +735,7 @@ isr_USCI5_A3 (void)
 #endif /* configBSP430_HAL_USCI5_A3_ISR */
 
 #if configBSP430_HAL_USCI5_B0_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_B0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_B0_VECTOR)
 isr_USCI5_B0 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_B0);
@@ -749,8 +744,7 @@ isr_USCI5_B0 (void)
 #endif /* configBSP430_HAL_USCI5_B0_ISR */
 
 #if configBSP430_HAL_USCI5_B1_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_B1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_B1_VECTOR)
 isr_USCI5_B1 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_B1);
@@ -759,8 +753,7 @@ isr_USCI5_B1 (void)
 #endif /* configBSP430_HAL_USCI5_B1_ISR */
 
 #if configBSP430_HAL_USCI5_B2_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_B2_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_B2_VECTOR)
 isr_USCI5_B2 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_B2);
@@ -769,8 +762,7 @@ isr_USCI5_B2 (void)
 #endif /* configBSP430_HAL_USCI5_B2_ISR */
 
 #if configBSP430_HAL_USCI5_B3_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_B3_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCI_B3_VECTOR)
 isr_USCI5_B3 (void)
 {
   int rv = usci5_isr(BSP430_HAL_USCI5_B3);

@@ -406,6 +406,15 @@
 #define BSP430_CORE_PACKED_STRUCT(nm_) struct __attribute__((__packed__)) nm_
 #endif /* TOOLCHAIN */
 
+/** Mark a function as an interrupt handler.
+ *
+ * The technique required varies among toolchains.
+ *
+ * @param iv_ the TI header constant identifying the interrupt, e.g @c
+ * USCI_B2_VECTOR
+ */
+#define BSP430_CORE_DECLARE_INTERRUPT(iv_) static void __attribute__((__interrupt__(iv_)))
+
 /** Enter a low-power mode
  *
  * This sets the status register bits in accordance to the bits

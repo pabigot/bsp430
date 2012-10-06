@@ -638,8 +638,7 @@ iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm)
 /* !BSP430! TYPE=A subst=TYPE instance=0,1,2,3 insert=hal_timer_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_defn] */
 #if configBSP430_HAL_TA0_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER0_A0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER0_A0_VECTOR)
 isr_cc0_TA0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA0;
@@ -649,8 +648,7 @@ isr_cc0_TA0 (void)
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
 
 #if configBSP430_HAL_TA0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER0_A1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER0_A1_VECTOR)
 isr_TA0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA0;
@@ -670,8 +668,7 @@ isr_TA0 (void)
 #endif /* configBSP430_HAL_TA0_ISR */
 
 #if configBSP430_HAL_TA1_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER1_A0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER1_A0_VECTOR)
 isr_cc0_TA1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA1;
@@ -681,8 +678,7 @@ isr_cc0_TA1 (void)
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
 
 #if configBSP430_HAL_TA1_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER1_A1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER1_A1_VECTOR)
 isr_TA1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA1;
@@ -702,8 +698,7 @@ isr_TA1 (void)
 #endif /* configBSP430_HAL_TA1_ISR */
 
 #if configBSP430_HAL_TA2_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER2_A0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER2_A0_VECTOR)
 isr_cc0_TA2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA2;
@@ -713,8 +708,7 @@ isr_cc0_TA2 (void)
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
 
 #if configBSP430_HAL_TA2_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER2_A1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER2_A1_VECTOR)
 isr_TA2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA2;
@@ -734,8 +728,7 @@ isr_TA2 (void)
 #endif /* configBSP430_HAL_TA2_ISR */
 
 #if configBSP430_HAL_TA3_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER3_A0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER3_A0_VECTOR)
 isr_cc0_TA3 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA3;
@@ -745,8 +738,7 @@ isr_cc0_TA3 (void)
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
 
 #if configBSP430_HAL_TA3_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER3_A1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER3_A1_VECTOR)
 isr_TA3 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA3;
@@ -770,8 +762,7 @@ isr_TA3 (void)
 /* !BSP430! TYPE=B subst=TYPE instance=0,1,2 insert=hal_timer_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_defn] */
 #if configBSP430_HAL_TB0_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER0_B0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER0_B0_VECTOR)
 isr_cc0_TB0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB0;
@@ -781,8 +772,7 @@ isr_cc0_TB0 (void)
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
 
 #if configBSP430_HAL_TB0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER0_B1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER0_B1_VECTOR)
 isr_TB0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB0;
@@ -802,8 +792,7 @@ isr_TB0 (void)
 #endif /* configBSP430_HAL_TB0_ISR */
 
 #if configBSP430_HAL_TB1_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER1_B0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER1_B0_VECTOR)
 isr_cc0_TB1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB1;
@@ -813,8 +802,7 @@ isr_cc0_TB1 (void)
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
 
 #if configBSP430_HAL_TB1_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER1_B1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER1_B1_VECTOR)
 isr_TB1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB1;
@@ -834,8 +822,7 @@ isr_TB1 (void)
 #endif /* configBSP430_HAL_TB1_ISR */
 
 #if configBSP430_HAL_TB2_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER2_B0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER2_B0_VECTOR)
 isr_cc0_TB2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB2;
@@ -845,8 +832,7 @@ isr_cc0_TB2 (void)
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
 
 #if configBSP430_HAL_TB2_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER2_B1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER2_B1_VECTOR)
 isr_TB2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB2;

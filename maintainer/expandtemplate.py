@@ -268,8 +268,7 @@ sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_ = {
 ''',
 
     'hal_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
-static void
-__attribute__((__interrupt__(%(BASEINSTANCE)s_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(%(BASEINSTANCE)s_VECTOR)
 isr_%(INSTANCE)s (void)
 {
   int rv = %(periph)s_isr(BSP430_HAL_%(INSTANCE)s);
@@ -279,8 +278,7 @@ isr_%(INSTANCE)s (void)
 ''',
 
     'hal_timer_isr_defn' : '''#if configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER%(INSTANCE)s_%(TYPE)s0_VECTOR)
 isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 {
   hBSP430hal%(PERIPH)s timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
@@ -290,8 +288,7 @@ isr_cc0_T%(TYPE)s%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_CC0_ISR */
 
 #if configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR - 0
-static void
-__attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)
 isr_T%(TYPE)s%(INSTANCE)s (void)
 {
   hBSP430hal%(PERIPH)s timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
@@ -368,8 +365,7 @@ struct sBSP430halSERIAL xBSP430hal_%(INSTANCE)s_ = {
 ''',
 
     'hal_port_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
-static void
-__attribute__((__interrupt__(%(INSTANCE)s_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(TIMER%(INSTANCE)s_VECTOR)
 isr_%(INSTANCE)s (void)
 {
   int idx = 0;

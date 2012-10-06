@@ -53,7 +53,7 @@ sBSP430halDMA xBSP430hal_DMA_ = {
 
 #if (configBSP430_HAL_DMA_ISR - 0)
 static void
-__attribute__((__interrupt__(DMA_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(DMA_VECTOR)
 isr_DMA (void)
 {
   hBSP430halDMA dma = BSP430_HAL_DMA;

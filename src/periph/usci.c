@@ -627,8 +627,7 @@ usciabrx_isr (hBSP430halSERIAL hal)
 }
 
 #if configBSP430_HAL_USCI_AB0RX_ISR - 0
-static void
-__attribute__((__interrupt__(USCIAB0RX_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCIAB0RX_VECTOR)
 isr_USCI_AB0RX (void)
 {
   hBSP430halSERIAL usci = NULL;
@@ -654,8 +653,7 @@ isr_USCI_AB0RX (void)
 #endif /* HAL USCI_AB0RX ISR */
 
 #if configBSP430_HAL_USCI_AB1RX_ISR - 0
-static void
-__attribute__((__interrupt__(USCIAB1RX_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCIAB1RX_VECTOR)
 isr_USCI_AB1RX (void)
 {
   hBSP430halSERIAL usci = NULL;
@@ -715,8 +713,7 @@ usciabtx_isr (hBSP430halSERIAL hal)
 }
 
 #if configBSP430_HAL_USCI_AB0TX_ISR - 0
-static void
-__attribute__((__interrupt__(USCIAB0TX_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCIAB0TX_VECTOR)
 isr_USCI_AB0TX (void)
 {
   int rv = 0;
@@ -742,8 +739,7 @@ isr_USCI_AB0TX (void)
 #endif /* HAL USCI_AB0TX ISR */
 
 #if configBSP430_HAL_USCI_AB1TX_ISR - 0
-static void
-__attribute__((__interrupt__(USCIAB1TX_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(USCIAB1TX_VECTOR)
 isr_USCI_AB1TX (void)
 {
   int rv = 0;
