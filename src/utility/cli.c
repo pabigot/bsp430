@@ -511,13 +511,13 @@ xBSP430cliConsoleBuffer_ni (void)
 #define KEY_KILL_WORD 0x17
 
 void
-vBSP430cliClearConsoleBuffer_ni (void)
+vBSP430cliConsoleBufferClear_ni (void)
 {
   cbEnd_ = NULL;
 }
 
 int
-iBSP430cliProcessConsoleInput_ni ()
+iBSP430cliConsoleBufferProcessInput_ni ()
 {
   int rv;
   int c;

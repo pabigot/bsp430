@@ -768,9 +768,9 @@ void main (void)
     BSP430_CORE_DISABLE_INTERRUPT();
     if (flags & eBSP430cliConsole_READY) {
       /* Clear the command we just completed */
-      vBSP430cliClearConsoleBuffer_ni();
+      vBSP430cliConsoleBufferClear_ni();
     }
-    flags = iBSP430cliProcessConsoleInput_ni();
+    flags = iBSP430cliConsoleBufferProcessInput_ni();
     if (flags) {
       /* Got something to do; get the command contents in place */
       command = xBSP430cliConsoleBuffer_ni();

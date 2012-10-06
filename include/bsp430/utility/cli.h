@@ -656,10 +656,10 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 /** Specify the size of an internal command buffer for editing.
  *
  * A non-zero setting for this parameter allocates an internal buffer
- * that is used by iBSP430cliProcessConsoleInput_ni() to aggregate
+ * that is used by iBSP430cliConsoleBufferProcessInput_ni() to aggregate
  * keystrokes and produce a command string.
  *
- * If the value of this is zero, iBSP430cliProcessConsoleInput_ni()
+ * If the value of this is zero, iBSP430cliConsoleBufferProcessInput_ni()
  * will not be available.
  */
 #if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLI_CONSOLE_BUFFER_SIZE)
@@ -698,14 +698,14 @@ const char * xBSP430cliConsoleBuffer_ni (void);
 /** Clear any current console buffer contents.
  *
  * Invoke this after having processed a command that was returned by
- * iBSP430cliProcessConsoleInput_ni() so subsequent input begins a new
+ * iBSP430cliConsoleBufferProcessInput_ni() so subsequent input begins a new
  * command.
  *
  * @dependency BSP430_CONSOLE
  * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
-void vBSP430cliClearConsoleBuffer_ni (void);
+void vBSP430cliConsoleBufferClear_ni (void);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 /** Process pending console input and produce completed commands.
@@ -735,7 +735,7 @@ void vBSP430cliClearConsoleBuffer_ni (void);
  * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
-int iBSP430cliProcessConsoleInput_ni (void);
+int iBSP430cliConsoleBufferProcessInput_ni (void);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 #endif /* BSP430_UTILITY_CLI_H */
