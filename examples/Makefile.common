@@ -13,8 +13,12 @@ ifndef BSP430_ROOT
 $(error Must specify BSP430_ROOT)
 endif # BSP430_ROOT
 
-# WITH_CCS: Unless defined to 1, assume CCS will not be used
+# WITH_CCS: Indicate that Code Composer Studio is installed and the TI
+# compiler used in it should be preferred.  Unless defined to 1, assumes CCS
+# will not be used.
 # WARNING: This is a stub.  CCS is not supported by BSP430.
+# NOTE: Within the source, the toolchain is identified as the TI compiler,
+# not CCS.
 WITH_CCS ?= 0
 ifneq (0,$(WITH_CCS))
 WITH_GCC ?= 0
@@ -31,6 +35,35 @@ LD=$(CROSS_COMPILE)ld
 AR=$(CROSS_COMPILE)ar
 SIZE=$(CROSS_COMPILE)size
 endif # WITH_GCC
+ifneq (0,$(WITH_CCS))
+CCS_INSTALL_ROOT ?= /usr/local/ccs/ccsv5
+
+# CCS_BASE_ROOT is the name used in CCS Eclipse project files for the
+# code-generator--independent files such as MCU-specific headers
+CCS_BASE_ROOT ?= $(CCS_INSTALL_ROOT)/ccs_base
+
+# CG_TOOL_ROOT is the name used in CCS Eclipse project files for the
+# compiler toolchain root
+ifndef CG_TOOL_ROOT
+CG_TOOL_ROOT := $(shell ls -d $(CCS_INSTALL_ROOT)/tools/compiler/msp430_*)
+endif # CG_TOOL_ROOT
+
+CC=cl430
+OBJ_EXT=.obj
+CFLAGS = --abi=eabi --relaxed_ansi
+CPPFLAGS = --include_path="$(CCS_BASE_ROOT)/msp430/include"
+CPPFLAGS += --include_path="$(CG_TOOL_ROOT)/include"
+
+# This one allows the MCU-specific linker file to include more generic
+# linker files.
+LDFLAGS = -i"$(CCS_BASE_ROOT)/msp430/include"
+# This one find -llibc.a (implicit
+LDFLAGS += -i"$(CG_TOOL_ROOT)/lib"
+# This one initializes data at runtime from tables stored in ROM.
+# Note that global variables without initializers are not zeroed
+# as is required by the C standard.  No workaround.
+LDFLAGS += --rom_model
+endif # WITH_CCS
 
 # PLATFORM: Standard nomenclature for a particular board with
 # particular features.  If defined, other settings such as the MCU and
@@ -64,6 +97,7 @@ endif # MEMORY_MODEL
 endif # WITH_GCC
 
 ifneq (0,$(WITH_CCS))
+# Add the define for the target MCU
 TARGET_CPPFLAGS += -D__$(shell echo $(MCU)|tr '[a-z]' '[A-Z]')__
 endif # WITH_CCS
 
@@ -71,6 +105,9 @@ endif # WITH_CCS
 # default enables debugging and optimizes for size, and puts each
 # function and data object in its own section so it can be discarded
 # at link time if not needed.  Also review OPT_LDFLAGS.
+ifneq (0,$(WITH_CCS))
+OPT_CFLAGS ?= -o -mf=0
+endif # WITH_CCS
 ifneq (0,$(WITH_GCC))
 OPT_CFLAGS ?= -ggdb -Os -ffunction-sections -fdata-sections
 endif # WITH_GCC
@@ -112,6 +149,13 @@ ifneq (0,$(WITH_GCC))
 	 $(CC) -MM -MT$*.o $(CPPFLAGS) $(CFLAGS) $< > $@.$$$$; \
 	 sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 	 $(RM) $@.$$$$
+endif # WITH_GCC
+
+ifneq (0,$(WITH_CCS))
+# Rule for CCS compiler which insists on placing output in foo.obj
+%.obj: %.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
+endif # WITH_CCS
 
 ifneq (0,$(WITH_GCC))
 # Interleaved source/object-code/asm listing
@@ -237,8 +281,12 @@ SRC += $(addsuffix .c,$(notdir $(sort $(MODULES))))
 #VPATH=$(BSP430_ROOT)/src
 #SRC += $(addsuffix .c,$(sort $(MODULES)))
 
+# Normal compilers use .o for object files.  TI's uses .obj, and defines
+# OBJ_EXT above.
+OBJ_EXT ?= .o
+
 # Object files derive from C source files and preprocessed assembly files
-OBJ += $(SRC:.c=.o) $(SRC_S:.S=.o)
+OBJ += $(SRC:.c=$(OBJ_EXT)) $(SRC_S:.S=$(OBJ_EXT))
 
 # Dependency files derive from anything that was preprocessed.  I'd like
 # these stuffed in a hidden subdirectory, haven't worked that one yet.
@@ -248,7 +296,11 @@ DEP += $(SRC:.c=.d) $(SRC_S:.S=.d)
 # AOUT: The name of the application image.
 AOUT ?= app.elf
 $(AOUT): $(OBJ)
+ifneq (0,$(WITH_CCS))
+	$(CC) $(CFLAGS) -z $(LDFLAGS) -o $@ $(OBJ) $(LDLIBS) $(CCS_BASE_ROOT)/msp430/include/lnk_$(MCU).cmd
+else # WITH_CCS
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ) $(LDLIBS)
+endif # WITH_CCS
 ifneq (0,$(WITH_GCC))
 	$(SIZE) $@
 endif # WITH_GCC
