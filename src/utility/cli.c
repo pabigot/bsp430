@@ -142,7 +142,7 @@ iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
                         const char * command,
                         size_t command_len,
                         const sBSP430cliCommand * * matchp,
-                        vBSP430cliMatchCallback match_cb,
+                        sBSP430cliMatchCallback * match_callback,
                         const char * * argstrp,
                         size_t * argstr_lenp)
 {
@@ -162,8 +162,8 @@ iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
   while (cmds) {
     if (0 == strncmp(key, cmds->key, len)) {
       ++nmatches;
-      if (0 != match_cb) {
-        match_cb(cmds);
+      if (0 != match_callback) {
+        match_callback->callback(match_callback, cmds);
       }
       match = cmds;
     }
@@ -384,8 +384,10 @@ iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
 #if BSP430_CONSOLE - 0
 
 static void
-display_cmd (const sBSP430cliCommand * cmd)
+display_cmd (sBSP430cliMatchCallback * self,
+             const sBSP430cliCommand * cmd)
 {
+  (void)self;
   cprintf("\t%s\n", cmd->key);
 }
 
@@ -444,6 +446,7 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
   if ((0 != cmds)
       && ((eBSP430_CLI_ERR_MultiMatch == errtype)
           || (eBSP430_CLI_ERR_Missing == errtype))) {
+    sBSP430cliMatchCallback cbs;
     cprintf("\nCandidates:\n");
 
     /* If the diagnostic is that something's missing, ignore
@@ -452,7 +455,8 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
     if (eBSP430_CLI_ERR_Missing == errtype) {
       argstr_len = 0;
     }
-    (void)iBSP430cliMatchCommand(cmds, argstr, argstr_len, 0, display_cmd, 0, 0);
+    cbs.callback = display_cmd;
+    (void)iBSP430cliMatchCommand(cmds, argstr, argstr_len, 0, &cbs, 0, 0);
   }
   cputchar_ni('\n');
   return -(int)errtype;

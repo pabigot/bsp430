@@ -196,15 +196,19 @@ typedef struct sBSP430cliCommand {
   void * const param;
 } sBSP430cliCommand;
 
-/** Type of a function that does something with a command structure.
- *
- * For example, this is used in uiBSP430cliMatchCommand() to inform
- * the user application of potential matches for the purpose of
- * diagnostics or command completion.
- *
- * @param cmd the command definition of interest */
-typedef void (* vBSP430cliMatchCallback) (const sBSP430cliCommand * cmd);
-
+/** Callback support for iBSP430cliMatchCommand().  In addition to
+ * providing a place to store the function that is called, this
+ * structure may be followed in memory by application-specific memory,
+ * using the techniques in @ref callback_appinfo. */
+typedef struct sBSP430cliMatchCallback {
+  /** The function that does something with a matching command structure.
+   *
+   * @param self a pointer to the callback structure
+   * 
+   * @param cmd the command definition of interest */
+  void (* callback) (struct sBSP430cliMatchCallback * self,
+                     const sBSP430cliCommand * cmd);
+} sBSP430cliMatchCallback;
 
 /** A utility function to extract the next command in the parsed string.
  *
@@ -256,7 +260,7 @@ int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
                             const char * command,
                             size_t command_len,
                             const sBSP430cliCommand * * matchp,
-                            vBSP430cliMatchCallback match_cb,
+                            sBSP430cliMatchCallback * match_callback,
                             const char * * argstrp,
                             size_t * argstr_lenp);
 
