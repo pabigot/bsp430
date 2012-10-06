@@ -13,7 +13,7 @@
 #include <bsp430/utility/cli.h>
 #include <string.h>
 
-static void
+void
 testNextToken (void)
 {
   const char * command = "  one two ";
@@ -45,7 +45,7 @@ testNextToken (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(mcommand, key + len);
 }
 
-static void
+void
 testNextQToken (void)
 {
   const char * command;
@@ -91,6 +91,26 @@ testNextQToken (void)
 #undef SET_INPUT
 }
 
+void
+testConsoleBufferExtend (void)
+{
+  const char * p;
+  int rv;
+  
+  vBSP430cliConsoleBufferClear_ni();
+  p = xBSP430cliConsoleBuffer_ni();
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0, strlen(p));
+  rv = iBSP430cliConsoleBufferExtend_ni("one", 1);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(rv, 1);
+  p = xBSP430cliConsoleBuffer_ni();
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, strlen(p));
+  BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ("o", p);
+  rv = iBSP430cliConsoleBufferExtend_ni("ne", (size_t)-1);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(rv, 2);
+  p = xBSP430cliConsoleBuffer_ni();
+  BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ("one", p);
+}
+
 void main (void)
 {
   vBSP430platformInitialize_ni();
@@ -98,6 +118,7 @@ void main (void)
 
   testNextToken();
   testNextQToken();
+  testConsoleBufferExtend();
 
   vBSP430unittestFinalize();
 }

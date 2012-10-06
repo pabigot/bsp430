@@ -517,6 +517,20 @@ vBSP430cliConsoleBufferClear_ni (void)
 }
 
 int
+iBSP430cliConsoleBufferExtend_ni (const char * text,
+                                  size_t len)
+{
+  const char * in_cb = cbEnd_;
+
+  while ((0 != *text)
+         && (0 < len--)
+         && ((1+cbEnd_) < (consoleBuffer_ + sizeof(consoleBuffer_)))) {
+    *cbEnd_++ = *text++;
+  }
+  return (cbEnd_ - in_cb);
+}
+
+int
 iBSP430cliConsoleBufferProcessInput_ni ()
 {
   int rv;

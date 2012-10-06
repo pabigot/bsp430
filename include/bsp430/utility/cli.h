@@ -708,6 +708,27 @@ const char * xBSP430cliConsoleBuffer_ni (void);
 void vBSP430cliConsoleBufferClear_ni (void);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
+/** Append characters to the current console buffer contents.
+ *
+ * Characters are taken from @p src until an end-of-string is
+ * encountered or @p len characters have been appended.
+ *
+ * @param text pointer to the text to be appended
+ *
+ * @param len number of characters to be appended.  To append
+ * everything to the end of @p text, use -1 or another large value.
+ *
+ * @return the number of characters actually appended, which may be
+ * less than @p len if the console buffer is too small, or @p text has
+ * a @c NUL before the length is reached.
+ *
+ * @dependency BSP430_CONSOLE
+ * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
+ */
+#if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
+int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
 /** Process pending console input and produce completed commands.
  *
  * This function reads data over the console, and stores the

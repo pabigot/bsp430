@@ -11,5 +11,8 @@
 /* Support the unit-test framework */
 #define configBSP430_UNITTEST 1
 
+/* Provide a console buffer for testing */
+#define BSP430_CLI_CONSOLE_BUFFER_SIZE 16
+
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>
