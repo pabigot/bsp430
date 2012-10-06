@@ -352,12 +352,33 @@
 /** Defined to a true value if GCC is being used */
 #define BSP430_CORE_TOOLCHAIN_GCC (1 < __GNUC__)
 
-/** Defined to a true value if Code Composer Studio is being used.
+/** Defined to a true value if the Texas Instruments compiler is being
+ * used.
  *
- * @warning Although this definition is present and used, Code
- * Composer Studio cannot be used to build BSP430 because it does not
- * support ISO C11 anonymous struct/union fields. */
-#define BSP430_CORE_TOOLCHAIN_CCS (__TI_COMPILER_VERSION - 0)
+ * The TI compiler is part of Code Composer Studio, but itself has no
+ * clear dependencies on CCS and internally uses a different version
+ * series.  Since BSP430 has no IDE infrastructure, the toolchain is
+ * identified by the compiler (TI), not the IDE (CCS).
+ *
+ * @warning Although this definition is present and used, the TI C/C++
+ * compiler is not fully supported.  At this time the issue is
+ * weaknesses in libc (itoa and printf).
+ */
+#ifdef __TI_COMPILER_VERSION__
+/* TI's compiler isn't GCC even if somebody added --gcc to the command
+ * line, which causes __GNUC__ to be defined (apparently as 3). */
+#undef BSP430_CORE_TOOLCHAIN_GCC
+#define BSP430_CORE_TOOLCHAIN_TI 1
+#endif /* __TI_COMPILER_VERSION__ */
+
+#if BSP430_CORE_TOOLCHAIN_TI - 0
+#define __read_stack_register() _get_SP_register()
+#define __read_status_register() _get_SR_register()
+#define __bis_status_register(_v) _bis_SR_register(_v)
+#define __bic_status_register(_v) _bic_SR_register(_v)
+#define __bic_status_register_on_exit(_v) _bic_SR_register_on_exit(_v)
+#define __nop() _nop()
+#endif /* BSP430_CORE_TOOLCHAIN_TI */
 
 /** Mark a function to be inlined.
  *
@@ -373,7 +394,7 @@
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
 #define BSP430_CORE_INLINE __inline__
-#elif BSP430_CORE_TOOLCHAIN_CCS - 0
+#elif BSP430_CORE_TOOLCHAIN_TI - 0
 #define BSP430_CORE_INLINE __inline
 #else /* TOOLCHAIN */
 #define BSP430_CORE_INLINE inline
@@ -413,7 +434,14 @@
  * @param iv_ the TI header constant identifying the interrupt, e.g @c
  * USCI_B2_VECTOR
  */
+#if BSP430_CORE_TOOLCHAIN_TI - 0
+#define BSP430_CORE_DECLARE_INTERRUPT(iv_) _BSP430_CORE_TOOLCHAIN_TI_PRAGMA(vector=##iv_) __interrupt void
+/* Helper function required to make the _Pragma argument a single
+ * string literal */
+#define _BSP430_CORE_TOOLCHAIN_TI_PRAGMA(x_) _Pragma(#x_)
+#else  /* TOOLCHAIN */
 #define BSP430_CORE_DECLARE_INTERRUPT(iv_) static void __attribute__((__interrupt__(iv_)))
+#endif /* TOOLCHAIN */
 
 /** Enter a low-power mode
  *
