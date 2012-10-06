@@ -184,7 +184,7 @@ iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
 
 static int
 processSubcommand_ (sBSP430cliCommandLink * chain,
-                    const sBSP430cliCommand * cmds,
+                    const sBSP430cliCommand * command_set,
                     void * param,
                     const char * command,
                     size_t command_len,
@@ -198,15 +198,17 @@ processSubcommand_ (sBSP430cliCommandLink * chain,
   size_t argstr_len;
 
   parent_link.link = chain;
-  nmatches = iBSP430cliMatchCommand(cmds, command, command_len, &match, 0, &argstr, &argstr_len);
+  parent_link.command_set = command_set;
+  parent_link.cmd = NULL;
+  nmatches = iBSP430cliMatchCommand(command_set, command, command_len, &match, 0, &argstr, &argstr_len);
   if (1 != nmatches) {
     if (NULL != handler) {
-      return handler(chain, param, command, command_len);
+      return handler(&parent_link, param, command, command_len);
     }
     if (1 < nmatches) {
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_MultiMatch, cmds, command, command_len);
+      return diagnosticFunction(&parent_link, eBSP430_CLI_ERR_MultiMatch, command, command_len);
     }
-    return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, cmds, command, command_len);
+    return diagnosticFunction(&parent_link, eBSP430_CLI_ERR_Unrecognized, command, command_len);
   }
   parent_link.cmd = match;
   if (match->child) {
@@ -226,7 +228,11 @@ processSubcommand_ (sBSP430cliCommandLink * chain,
     return handler(&parent_link, param, argstr, argstr_len);
   }
   if (NULL == match->handler) {
-    return diagnosticFunction(&parent_link, eBSP430_CLI_ERR_Config, NULL, argstr, argstr_len);
+    /* Either the user didn't provide a subcommand, or the developer
+     * didn't provide the handler. */
+    return diagnosticFunction(&parent_link,
+                              (match->child ? eBSP430_CLI_ERR_Missing : eBSP430_CLI_ERR_Config),
+                               argstr, argstr_len);
   }
   return match->handler(&parent_link, param, argstr, argstr_len);
 }
@@ -256,7 +262,7 @@ iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
                          size_t argstr_len)
 {
   if (0 == chain->cmd->param) {
-    return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, NULL, argstr, argstr_len);
+    return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, argstr, argstr_len);
   }
   return ((iBSP430cliSimpleHandler)chain->cmd->param)(argstr);
 }
@@ -313,11 +319,11 @@ GEN_STORE_EXTRACTED_VALUE(L,long int,strtol,"-020000000000")
     int rv;                                                             \
                                                                         \
     if (NULL == cmd->param) {                                           \
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, NULL, argstr, argstr_len); \
+      return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, argstr, argstr_len); \
     }                                                                   \
     rv = iBSP430cliStoreExtracted##tag_(&argstr, &argstr_len, (type_*)cmd->param); \
     if (0 != rv) {                                                      \
-      return diagnosticFunction(chain, eBSP430_CLI_ERR_Invalid, NULL, argstr, argstr_len); \
+      return diagnosticFunction(chain, eBSP430_CLI_ERR_Invalid, argstr, argstr_len); \
     }                                                                   \
     return 0;                                                           \
   }
@@ -350,7 +356,6 @@ xBSP430cliReverseChain (sBSP430cliCommandLink * chain)
 int
 iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
                           enum eBSP430cliErrorType errtype,
-                          const sBSP430cliCommand * cmds,
                           const char * argstr,
                           size_t argstr_len)
 {
@@ -379,10 +384,12 @@ vBSP430cliConsoleDisplayChain (struct sBSP430cliCommandLink * chain,
     unsigned int nlinks = 0;
     cp = rchain = xBSP430cliReverseChain(chain);
     do {
-      if (0 < nlinks++) {
-        cputchar_ni(' ');
+      if (cp->cmd) {
+        if (0 < nlinks++) {
+          cputchar_ni(' ');
+        }
+        cprintf("%s", cp->cmd->key);
       }
-      cprintf("%s", cp->cmd->key);
       cp = cp->link;
     } while (cp);
     (void)xBSP430cliReverseChain(rchain);
@@ -395,10 +402,10 @@ vBSP430cliConsoleDisplayChain (struct sBSP430cliCommandLink * chain,
 int
 iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
                              enum eBSP430cliErrorType errtype,
-                             const sBSP430cliCommand * cmds,
                              const char * argstr,
                              size_t argstr_len)
 {
+  const sBSP430cliCommand * cmds = chain->command_set;
   switch (errtype) {
     case eBSP430_CLI_ERR_Config:
       cputtext_ni("Command configuration error: ");

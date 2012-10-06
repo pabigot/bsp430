@@ -125,11 +125,18 @@ struct sBSP430cliCommandLink;
  * operation to extract information from higher layers of the command.
  */
 typedef struct sBSP430cliCommandLink {
-  /** The command definition to be applied */
+  /** A link to the parent command definition for layered commands.
+   * It will be a null pointer if this link is at the top level of the
+   * command hierarchy */
+  struct sBSP430cliCommandLink * link;
+
+  /** The set of potential comands at the level of this node */
+  const struct sBSP430cliCommand * command_set;
+
+  /** The command definition to be applied at this level.  This will
+   * be one of the commands in @a command_set. */
   const struct sBSP430cliCommand * cmd;
 
-  /** A link to the parent command definition for layered commands. */
-  struct sBSP430cliCommandLink * link;
 } sBSP430cliCommandLink;
 
 /** Type for a function that implements a command.
@@ -564,10 +571,6 @@ enum eBSP430cliErrorType {
  *
  * @param errtype the type of error discovered
  *
- * @param cmds the first of a set of sibling commands that could apply
- * at the point of error, or a null pointer if the error is unrelated
- * to failure to identify a subcommand.
- *
  * @param argstr the remainder of the command string at the point of
  * error
  *
@@ -576,7 +579,6 @@ enum eBSP430cliErrorType {
  * @return the value of <c>-(int)errtype</c> */
 typedef int (* iBSP430cliDiagnosticFunction) (sBSP430cliCommandLink * chain,
                                               enum eBSP430cliErrorType errtype,
-                                              const sBSP430cliCommand * cmds,
                                               const char * argstr,
                                               size_t argstr_len);
 
@@ -599,7 +601,6 @@ void vBSP430cliSetDiagnosticFunction (iBSP430cliDiagnosticFunction diagnostic_fu
  * See #iBSP430cliDiagnosticFunction. */
 int iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
                               enum eBSP430cliErrorType errtype,
-                              const sBSP430cliCommand * cmds,
                               const char * argstr,
                               size_t argstr_len);
 
@@ -611,7 +612,6 @@ int iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
 #if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE - 0)
 int iBSP430cliConsoleDiagnostic (sBSP430cliCommandLink * chain,
                                  enum eBSP430cliErrorType errtype,
-                                 const sBSP430cliCommand * cmds,
                                  const char * argstr,
                                  size_t argstr_len);
 #endif /* configBSP430_CONSOLE */
