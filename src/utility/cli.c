@@ -201,7 +201,7 @@ executeSubcommand_ (sBSP430cliCommandLink * chain,
     if (1 < nmatches) {
       return diagnosticFunction(chain, eBSP430_CLI_ERR_MultiMatch, cmds, command, command_len);
     }
-    return diagnosticFunction(chain, eBSP430_CLI_ERR_Missing, cmds, command, command_len);
+    return diagnosticFunction(chain, eBSP430_CLI_ERR_Unrecognized, cmds, command, command_len);
   }
   parent_link.cmd = match;
   if (match->child) {
@@ -430,7 +430,7 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
       cputtext_ni("Expected something after: ");
       break;
     case eBSP430_CLI_ERR_Unrecognized:
-      cputtext_ni("Unrecognized subcommand: ");
+      cputtext_ni("Unrecognized: ");
       break;
     case eBSP430_CLI_ERR_MultiMatch:
       cputtext_ni("Ambiguous command: ");
@@ -445,14 +445,16 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
   vBSP430cliConsoleDisplayChain(chain, argstr);
   if ((0 != cmds)
       && ((eBSP430_CLI_ERR_MultiMatch == errtype)
-          || (eBSP430_CLI_ERR_Missing == errtype))) {
+          || (eBSP430_CLI_ERR_Missing == errtype)
+          || (eBSP430_CLI_ERR_Unrecognized == errtype))) {
     sBSP430cliMatchCallback cbs;
     cprintf("\nCandidates:\n");
 
-    /* If the diagnostic is that something's missing, ignore
-     * whatever's there so it doesn't inappropriately filter out all
-     * the real candidates. */
-    if (eBSP430_CLI_ERR_Missing == errtype) {
+    /* If the diagnostic is that something's missing or unrecognized,
+     * ignore whatever's there so it doesn't inappropriately filter
+     * out all the real candidates. */
+    if ((eBSP430_CLI_ERR_Missing == errtype)
+        || (eBSP430_CLI_ERR_Unrecognized == errtype)) {
       argstr_len = 0;
     }
     cbs.callback = display_cmd;
