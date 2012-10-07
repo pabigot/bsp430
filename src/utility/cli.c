@@ -649,9 +649,8 @@ doCompletion_ (struct sBSP430cliCommandLink * chain,
   size_t key_len = 0;
   int rv = 0;
 
-#if configBSP430_CLI_COMMAND_COMPLETION_BELL - 0
+  /* Set this.  The user is free to ignore it. */
   rv |= eBSP430cliConsole_REPAINT_BEL;
-#endif /* configBSP430_CLI_COMMAND_COMPLETION_BELL */
 
   /* Reset the data fields that are return values, or are accessed
    * below and might need a consistency check */

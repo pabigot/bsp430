@@ -687,20 +687,6 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 #define configBSP430_CLI_COMMAND_COMPLETION 0
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
 
-/** Define to a true value to enable a bell when completion is invoked.
- *
- * Common practice in completion interfaces is to visibly or audibly
- * signal that the context has been updated (or an attempt to update
- * was made).  Sometimes that can be annoying; if you don't want it,
- * define this macro to be @c 0.
- *
- * @cppflag
- * @defaulted
- */
-#ifndef configBSP430_CLI_COMMAND_COMPLETION_BELL
-#define configBSP430_CLI_COMMAND_COMPLETION_BELL 1
-#endif /* configBSP430_CLI_COMMAND_COMPLETION_BELL */
-
 /** Enumeration of bit values returned from
  * iBSP430cliConsoleProcessInput_ni(). */
 typedef enum eBSP430cliConsole {
