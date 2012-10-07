@@ -304,6 +304,24 @@ void main ()
 
   BSP430_CORE_ENABLE_INTERRUPT();
   while (1) {
+    if (flags & eBSP430cliConsole_ANY_ESCAPE) {
+      int c;
+      while (0 <= ((c = cgetchar()))) {
+        cprintf("escape char 0x%02x (%u) '%c'\n", c, c, isprint(c) ? c : '.');
+        /* Technically CSI is a single character 0x9b representing
+         * ESC+[.  In the two-character mode accepted here, we use the
+         * value for the second character. */
+#define KEY_CSI '['
+        if ((KEY_CSI == c) && (flags & eBSP430cliConsole_PROCESS_ESCAPE)) {
+          flags &= ~eBSP430cliConsole_PROCESS_ESCAPE;
+          flags |= eBSP430cliConsole_IN_ESCAPE;
+        } else if ((64 <= c) && (c <= 126)) {
+          flags &= ~eBSP430cliConsole_ANY_ESCAPE;
+          cprintf("Leaving escape mode\n");
+          break;
+        }
+      }
+    }
     if (flags & eBSP430cliConsole_DO_COMPLETION) {
       flags &= ~eBSP430cliConsole_DO_COMPLETION;
       flags |= iBSP430cliConsoleBufferCompletion(commandSet, &command);
@@ -336,12 +354,17 @@ void main ()
       /* Clear the command we just completed */
       vBSP430cliConsoleBufferClear_ni();
     }
-    flags = iBSP430cliConsoleBufferProcessInput_ni();
-    if (flags) {
-      /* Got something to do; get the command contents in place */
-      command = xBSP430cliConsoleBuffer_ni();
-      BSP430_CORE_ENABLE_INTERRUPT();
-      continue;
+    /* Unless we're processing escape characters, let
+     * iBSP430cliConsoleBufferProcessInput_ni() handle the blocking
+     * for input characters. */
+    if (! (flags & eBSP430cliConsole_ANY_ESCAPE)) {
+      flags = iBSP430cliConsoleBufferProcessInput_ni();
+      if (flags) {
+        /* Got something to do; get the command contents in place */
+        command = xBSP430cliConsoleBuffer_ni();
+        BSP430_CORE_ENABLE_INTERRUPT();
+        continue;
+      }
     }
     BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
   }

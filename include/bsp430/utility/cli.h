@@ -721,15 +721,50 @@ typedef enum eBSP430cliConsole {
    * infrastructure based on the current buffer contents. */
   eBSP430cliConsole_DO_COMPLETION = 0x04,
 
+  /** Bit set in response if an escape character (ESC) has been
+   * consumed.  The caller should process the remaining input to
+   * consume the escape sequence.  If the sequence is an ANSI
+   * sequence, there are two cases the processing code must recognize:
+   *
+   * @li If the character after the ESC is a left bracket (comprising
+   * a Control Sequence Introducer, or CSI), the sequence is
+   * terminated by an ASCII character in the range 64 to 126.  See
+   * #eBSP430cliConsole_IN_ESCAPE.
+   *
+   * @li Otherwise, the consumed ESC is expected to be followed by a
+   * single ASCII character in the range 64 to 95.
+   *
+   * See http://en.wikipedia.org/wiki/ANSI_escape_code. */
+  eBSP430cliConsole_PROCESS_ESCAPE = 0x08,
+
+  /** Bit set in flags if system is processing an escape sequence.
+   *
+   * This flag is not produced by the infrastructure, but is available
+   * for use in applications which preserve the console state in a
+   * flag buffer.  Suggested practice is to read the first character
+   * after #eBSP430cliConsole_PROCESS_ESCAPE has been set, and if that
+   * character is recognized as completing a control sequence
+   * introducer the applicaiton should clear
+   * #eBSP430cliConsole_PROCESS_ESCAPE, set
+   * #eBSP430cliConsole_IN_ESCAPE, and continue in escape processing
+   * mode until the entire sequence has been consumed.
+   * 
+   * See the CLI example program. */
+  eBSP430cliConsole_IN_ESCAPE = 0x10,
+
+  /** Bit mask for flags indicating that some escape-sequence
+   * processing is in effect. */
+  eBSP430cliConsole_ANY_ESCAPE = eBSP430cliConsole_PROCESS_ESCAPE | eBSP430cliConsole_IN_ESCAPE,
+
   /** Bit set to signal that the repaint should be followed by a BEL
    * or other indicator.  This is normally used to warn the user that
    * the screen content includes changes not directly entered by the
    * user, e.g. completion has been performed. */
-  eBSP430cliConsole_REPAINT_BEL = 0x10,
+  eBSP430cliConsole_REPAINT_BEL = 0x100,
 
   /** Bit set in response from completion if caller should add a space
    * after whatever text was suggested */
-  eBSP430cliConsole_COMPLETE_SPACE = 0x20,
+  eBSP430cliConsole_COMPLETE_SPACE = 0x200,
   
 } eBSP430cliConsole;
 
@@ -839,6 +874,7 @@ int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
  * Enter (CR)     | Return #eBSP430cliConsole_READY
  * C-u (NAK)      | Kill command (resets buffer)
  * C-w (ETB)      | Kill previous word (erases back to space)
+ * Escape (ESC)   | Return #eBSP430cliConsole_PROCESS_ESCAPE
  * Tab (HT)       | Auto-complete based on legal commands (<b>if enabled</b>)
  *
  * Note that auto-completion is enabled by

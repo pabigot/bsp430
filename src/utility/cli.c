@@ -546,6 +546,9 @@ iBSP430cliConsoleBufferProcessInput_ni ()
       rv |= eBSP430cliConsole_DO_COMPLETION;
       break;
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
+    } else if (KEY_ESC == c) {
+      rv |= eBSP430cliConsole_PROCESS_ESCAPE;
+      break;
     } else if (KEY_FF == c) {
       cputchar_ni(c);
       rv |= eBSP430cliConsole_REPAINT;
