@@ -399,11 +399,13 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
  *
  * @param rx_len the number of additional bytes expected in response,
  * exclusive of the synchronous responses to bytes transmitted from @p
- * tx_data.
+ * tx_data.  See #BSP430_SERIAL_SPI_READ_TX_BYTE regarding the content
+ * of the dummy bytes that are transmitted to trigger reception.
  *
  * @param rx_data where to store the responses received during the
- * transmit and receive phases.  The space available must be at least
- * @p tx_len + @p rx_len.
+ * transmit and receive phases.  A null pointer may be passed if the
+ * incoming data is not of interest.  If the pointer is not null, the
+ * space available must be at least @p tx_len + @p rx_len.
  *
  * @return the total number of bytes stored in @p rx_data, or -1 if an
  * error occcured.

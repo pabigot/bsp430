@@ -372,6 +372,7 @@ iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
 {
   size_t transaction_length = tx_len + rx_len;
   size_t i = 0;
+
   volatile unsigned int * ifgp = &HAL_HPL_FIELD(hal, ifg);
   volatile unsigned int * txbp = &HAL_HPL_FIELD(hal, txbuf);
   volatile unsigned int * rxbp = &HAL_HPL_FIELD(hal, rxbuf);
@@ -380,6 +381,8 @@ iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
     return -1;
   }
   while (i < transaction_length) {
+    uint8_t rx_dummy;
+
     while (! (UCTXIFG & *ifgp)) {
       ;
     }
@@ -389,7 +392,10 @@ iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
       ;
     }
     ++hal->num_rx;
-    *rx_data++ = *rxbp;
+    rx_dummy = *rxbp;
+    if (rx_data) {
+      *rx_data++ = rx_dummy;
+    }
     ++i;
   }
   return i;

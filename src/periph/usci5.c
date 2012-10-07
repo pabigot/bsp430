@@ -347,17 +347,25 @@ iBSP430usci5SPITxRx_ni (hBSP430halSERIAL hal,
                         uint8_t * rx_data)
 {
   size_t transaction_length = tx_len + rx_len;
+  uint8_t * rxp;
+  uint8_t rx_dummy;
   size_t i = 0;
 
   if (hal->tx_cbchain_ni) {
     return -1;
   }
+  rxp = rx_data;
+  if (NULL == rx_data)  {
+    rxp = &rx_dummy;
+  }
   while (i < transaction_length) {
     uint8_t txd = (i < tx_len) ? tx_data[i] : BSP430_SERIAL_SPI_READ_TX_BYTE(i-tx_len);
     SERIAL_HPL_RAW_TRANSMIT_NI(SERIAL_HAL_HPL(hal), txd);
     ++hal->num_tx;
-    SERIAL_HPL_RAW_RECEIVE_NI(SERIAL_HAL_HPL(hal), *rx_data);
-    ++rx_data;
+    SERIAL_HPL_RAW_RECEIVE_NI(SERIAL_HAL_HPL(hal), *rxp);
+    if (rx_data) {
+      ++rxp;
+    }
     ++i;
   }
   return i;
