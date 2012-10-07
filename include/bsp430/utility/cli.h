@@ -726,14 +726,15 @@ typedef enum eBSP430cliConsole {
   /** Bit set in flags if system is processing an escape sequence.
    *
    * This flag is not produced by the infrastructure, but is available
-   * for use in applications which preserve the console state in a
-   * flag buffer.  Suggested practice is to read the first character
+   * for use in applications which preserve the console state while
+   * processing.  Suggested practice is to read the first character
    * after #eBSP430cliConsole_PROCESS_ESCAPE has been set, and if that
    * character is recognized as completing a control sequence
-   * introducer the applicaiton should clear
+   * introducer the application should clear
    * #eBSP430cliConsole_PROCESS_ESCAPE, set
-   * #eBSP430cliConsole_IN_ESCAPE, and continue in escape processing
-   * mode until the entire sequence has been consumed.
+   * #eBSP430cliConsole_IN_ESCAPE, and continue in escape-processing
+   * mode until the entire sequence has been consumed (i.e., a
+   * character in the range 64 to 126 is recognized).
    * 
    * See the CLI example program. */
   eBSP430cliConsole_IN_ESCAPE = 0x10,
