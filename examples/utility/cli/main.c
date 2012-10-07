@@ -230,6 +230,39 @@ static const sBSP430cliCommand dcmd_quote = {
 #define LAST_COMMAND &dcmd_quote
 
 static int
+cmd_dummy (const char * argstr)
+{
+  cprintf("dummy %s\n", argstr);
+  return 0;
+}
+
+#undef LAST_SUBCOMMAND
+#define LAST_SUBCOMMAND NULL
+static const sBSP430cliCommand dcmd_complete_common = {
+  .key = "common",
+  .next = LAST_SUBCOMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_dummy
+};
+#undef LAST_SUBCOMMAND
+#define LAST_SUBCOMMAND &dcmd_complete_common
+static const sBSP430cliCommand dcmd_complete_component = {
+  .key = "component",
+  .next = LAST_SUBCOMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_dummy
+};
+#undef LAST_SUBCOMMAND
+#define LAST_SUBCOMMAND &dcmd_complete_component
+static const sBSP430cliCommand dcmd_complete = {
+  .key = "complete",
+  .next = LAST_COMMAND,
+  .child = LAST_SUBCOMMAND
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_complete
+
+static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,
           const char * command,
@@ -256,6 +289,9 @@ void main ()
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   cprintf("\n\n\nAnd we're up and running.\n");
+#if configBSP430_CLI_COMMAND_COMPLETION - 0
+  cprintf("Command completion is available.\n");
+#endif /* configBSP430_CLI_COMMAND_COMPLETION */
 
   /* NOTE: The control flow in this is a bit tricky, as we're trying
    * to leave interrupts enabled during the main body of the loop,
@@ -268,7 +304,11 @@ void main ()
 
   BSP430_CORE_ENABLE_INTERRUPT();
   while (1) {
-    if (NULL != command) {
+    if (flags & eBSP430cliConsole_DO_COMPLETION) {
+      flags &= ~eBSP430cliConsole_DO_COMPLETION;
+      flags |= iBSP430cliConsoleBufferCompletion(commandSet, &command);
+    }
+    if (flags & eBSP430cliConsole_READY) {
       int rv;
 
       rv = iBSP430cliExecuteCommand(commandSet, 0, command);
@@ -281,9 +321,15 @@ void main ()
       command = NULL;
     }
     if (flags & eBSP430cliConsole_REPAINT) {
-      /* Draw the prompt along with whatever's left in the command buffer */
-      cprintf("> %s", command ? command : "");
+      /* Draw the prompt along with whatever's left in the command
+       * buffer.  Note use of leading carriage return in case an edit
+       * left material on the current line. */
+      cprintf("\r> %s", command ? command : "");
       flags &= ~eBSP430cliConsole_REPAINT;
+    }
+    if (flags & eBSP430cliConsole_REPAINT_BEL) {
+      cputchar_ni('\a');
+      flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
     BSP430_CORE_DISABLE_INTERRUPT();
     if (flags & eBSP430cliConsole_READY) {

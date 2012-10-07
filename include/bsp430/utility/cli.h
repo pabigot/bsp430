@@ -250,18 +250,17 @@ typedef struct sBSP430cliMatchCallback {
  * of this parameter is to determine the potential matching commands
  * for the purposes of diagnostics or command completion.
  *
- * @param argstrp if null or if no unique match is identified no
- * action is taken, otherwise the pointer to the remainder of @p
- * command after the initial token has been removed is stored in @p
- * *argstrp.
+ * @param argstrp if null no action is taken, otherwise the pointer to
+ * the remainder of @p command after the initial token has been
+ * removed is stored in @p *argstrp.
  *
- * @param argstr_lenp if null or if no unique match is identified no
- * action is taken, otherwise the length of the string (that would be)
- * stored in @p *argstrp is stored in @p *argstr_lenp.
+ * @param argstr_lenp if null no action is taken, otherwise the length
+ * of the string (that would be) stored in @p *argstrp is stored in @p
+ * *argstr_lenp.
  *
  * @return the number of commands in @p cmds for which the first token
- * of @p command was a prefix, or -1 if @p command is empty
- * (disregarding whitespace).
+ * of @p command was a prefix, or a negative number if @p command is
+ * empty (disregarding whitespace) so no prefix could be identified.
  */
 int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
                             const char * command,
@@ -675,6 +674,33 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 #define BSP430_CLI_CONSOLE_BUFFER_SIZE 0
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
+/** Define to a true value to request that command completion be enabled.
+ *
+ * When command completion is enabled, a horizontal tab in command
+ * input causes a flag to be returned to the caller indicating a need
+ * to auto-fill the command buffer.
+ *
+ * @cppflag
+ * @defaulted
+ */
+#ifndef configBSP430_CLI_COMMAND_COMPLETION
+#define configBSP430_CLI_COMMAND_COMPLETION 0
+#endif /* configBSP430_CLI_COMMAND_COMPLETION */
+
+/** Define to a true value to enable a bell when completion is invoked.
+ *
+ * Common practice in completion interfaces is to visibly or audibly
+ * signal that the context has been updated (or an attempt to update
+ * was made).  Sometimes that can be annoying; if you don't want it,
+ * define this macro to be @c 0.
+ *
+ * @cppflag
+ * @defaulted
+ */
+#ifndef configBSP430_CLI_COMMAND_COMPLETION_BELL
+#define configBSP430_CLI_COMMAND_COMPLETION_BELL 1
+#endif /* configBSP430_CLI_COMMAND_COMPLETION_BELL */
+
 /** Enumeration of bit values returned from
  * iBSP430cliConsoleProcessInput_ni(). */
 typedef enum eBSP430cliConsole {
@@ -690,7 +716,68 @@ typedef enum eBSP430cliConsole {
   /** Bit set in response if caller should repaint the screen in
    * response to keystrokes */
   eBSP430cliConsole_REPAINT = 0x02,
+
+  /** Bit set in response if caller should invoke the completion
+   * infrastructure based on the current buffer contents. */
+  eBSP430cliConsole_DO_COMPLETION = 0x04,
+
+  /** Bit set to signal that the repaint should be followed by a BEL
+   * or other indicator.  This is normally used to warn the user that
+   * the screen content includes changes not directly entered by the
+   * user, e.g. completion has been performed. */
+  eBSP430cliConsole_REPAINT_BEL = 0x10,
+
+  /** Bit set in response from completion if caller should add a space
+   * after whatever text was suggested */
+  eBSP430cliConsole_COMPLETE_SPACE = 0x20,
+  
 } eBSP430cliConsole;
+
+/** Data structure used to communicate between user applications and
+ * the command completion infrastructure.
+ *
+ * This is a parameter to iBSP430cliCommandCompletion(). */
+typedef struct sBSP430cliCommandCompletionData {
+  /** The command that is to be completed.  On the initial call to
+   * iBSP430cliCommandCompletion() this should be NUL terminated, and
+   * the length will be stored in @a command_len.  During execution @a
+   * command and @a command_len will be updated as leading commands
+   * are stripped off. */
+  const char * command;
+
+  /** The number of valid characters at @a command */
+  size_t command_len;
+
+  /** The set of commands against which completion is performed.  This
+   * is the set corresponding to the first token in @a command, which
+   * is parsed to reach the completion point using the same process as
+   * when attempting to execute the command. */
+  const sBSP430cliCommand * command_set;
+
+  /** Pointer to where the user wants candidates returned.  A null
+   * value indicates candidate commands will not be returned to the
+   * user.  When used internally, the pointer must not be null: the
+   * module will provide a temporary buffer in this case. */
+  const sBSP430cliCommand * * returned_candidates;
+
+  /** Maximum number of elements that can be placed in @a
+   * candidatesp. */
+  size_t max_returned_candidates;
+
+  /** Returned total number of candidates identified */
+  size_t ncandidates;
+
+  /** A pointer to the text to be appended.  If this is null,
+   * completion failed to identify data to append to the command.
+   * Otherwise this will be a reference to a position in one of the
+   * keys in @a command_set. */
+  const char * append;
+
+  /** The number of characters to be appended, when the completion is
+   * not unique.  This value is valid only when @a append is not a
+   * null pointer. */
+  size_t append_len;
+} sBSP430cliCommandCompletionData;
 
 /** Return a pointer to the internal console buffer.
  *
@@ -710,8 +797,8 @@ const char * xBSP430cliConsoleBuffer_ni (void);
  * iBSP430cliConsoleBufferProcessInput_ni() so subsequent input begins a new
  * command.
  *
- * @dependency BSP430_CONSOLE
- * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
+ * @dependency #BSP430_CONSOLE
+ * @dependency #BSP430_CLI_CONSOLE_BUFFER_SIZE
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
 void vBSP430cliConsoleBufferClear_ni (void);
@@ -731,8 +818,8 @@ void vBSP430cliConsoleBufferClear_ni (void);
  * less than @p len if the console buffer is too small, or @p text has
  * a @c NUL before the length is reached.
  *
- * @dependency BSP430_CONSOLE
- * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
+ * @dependency #BSP430_CONSOLE
+ * @dependency #BSP430_CLI_CONSOLE_BUFFER_SIZE
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
 int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
@@ -748,10 +835,14 @@ int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
  * Keystroke      | Function
  * :------------- | :---------------
  * Backspace (BS) | Erase previous character (if any)
- * C-l (FF)       | Redraw screen with prompt and pending command
- * Enter (CR)     | Return with #eBSP430cliConsole_READY
+ * C-l (FF)       | Return #eBSP430cliConsole_REPAINT
+ * Enter (CR)     | Return #eBSP430cliConsole_READY
  * C-u (NAK)      | Kill command (resets buffer)
  * C-w (ETB)      | Kill previous word (erases back to space)
+ * Tab (HT)       | Auto-complete based on legal commands (<b>if enabled</b>)
+ *
+ * Note that auto-completion is enabled by
+ * #configBSP430_CLI_COMMAND_COMPLETION.
  *
  * When carriage return is pressed, a complete command is recognized,
  * and the function returns even if there is additional data to be
@@ -761,11 +852,80 @@ int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
  * required.  A positive result encodes bits from #eBSP430cliConsole
  * indicating available commands or other actions that are required.
  *
- * @dependency BSP430_CONSOLE
- * @dependency BSP430_CLI_CONSOLE_BUFFER_SIZE
+ * @dependency #BSP430_CONSOLE
+ * @dependency #BSP430_CLI_CONSOLE_BUFFER_SIZE
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
 int iBSP430cliConsoleBufferProcessInput_ni (void);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
+/** Interface to command completion.
+ *
+ * This function traverses the command in @p cdp->command in the
+ * context of @p cdp->command_set and identifies text that would
+ * unambiguously extend the command, or where ambiguity is present a
+ * set of candidate text that could complete the next step of the
+ * command.
+ *
+ * This version simply does the calculations.  For an example, or to
+ * use this within a standard CLI console environment, see
+ * iBSP430cliConsoleBufferCompletion().
+ *
+ * @param cdp Pointer to the structure used to pass in and return
+ * information about the completion.  On entry, the @a command, @a
+ * command_set, @a returned_candidates, and @a max_returned_candidates
+ * fields must be set.  All others are set in the process of executing
+ * this function.
+ *
+ * @return a bitset of flags indicating caller update
+ * responsibilities, potentially including
+ * #eBSP430cliConsole_COMPLETE_SPACE, #eBSP430cliConsole_REPAINT, and
+ * #eBSP430cliConsole_REPAINT_BEL.
+ *
+ * @dependency #configBSP430_CLI_COMMAND_COMPLETION
+ */
+#if defined(BSP430_DOXYGEN) || (configBSP430_CLI_COMMAND_COMPLETION - 0)
+int iBSP430cliCommandCompletion (sBSP430cliCommandCompletionData * cdp);
+#endif /* configBSP430_CLI_COMMAND_COMPLETION */
+
+#ifndef BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS
+/** The maximum number of candidate completions returned by
+ * iBSP430cliConsoleBufferCompletion().
+ *
+ * The value must be at least 1.
+ *
+ * @defaulted */
+#define BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS 5
+#endif /* BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS */
+
+/** Complete the command currently in the console buffer
+ *
+ * This is a wrapper around iBSP430cliCommandCompletion() which
+ * applies the results from that function.  If the completion can be
+ * uniquely identified, the text is added to the command buffer; the
+ * text is also printed to the console unless the returned flags
+ * indicate the caller is for repainting.  If alternatives are
+ * available, a prompt will be emitted showing available completions.
+ *
+ * @param command_set the set of commands acceptable at the top level
+ * of the command interpreter.
+ *
+ * @param commandp a pointer to storage for a command pointer.  On
+ * input, this should be NULL or pre-initialized with the return value
+ * from xBSP430cliConsoleBuffer_ni().  On exit, it will be updated to
+ * the new return value from xBSP430cliConsoleBuffer_ni().
+ *
+ * @return a bitset of flags indicating caller update
+ * responsibilities, potentially including #eBSP430cliConsole_REPAINT,
+ * and #eBSP430cliConsole_REPAINT_BEL.
+ *
+ * @dependency #BSP430_CONSOLE
+ * @dependency #BSP430_CLI_CONSOLE_BUFFER_SIZE
+ * @dependency #configBSP430_CLI_COMMAND_COMPLETION
+ */
+#if defined(BSP430_DOXYGEN) || (configBSP430_CLI_COMMAND_COMPLETION - 0)
+int iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
+                                       const char * * commandp);
+#endif /* configBSP430_CLI_COMMAND_COMPLETION */
 
 #endif /* BSP430_UTILITY_CLI_H */

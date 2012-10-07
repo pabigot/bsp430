@@ -211,6 +211,9 @@ processSubcommand_ (sBSP430cliCommandLink * chain,
     return diagnosticFunction(&parent_link, eBSP430_CLI_ERR_Unrecognized, command, command_len);
   }
   parent_link.cmd = match;
+  if (NULL != chain_handler) {
+    (void)chain_handler(&parent_link, param, command, command_len);
+  }
   if (match->child) {
     const char * mut_argstr = argstr;
     size_t ncommand_len = argstr_len;
@@ -218,9 +221,6 @@ processSubcommand_ (sBSP430cliCommandLink * chain,
 
     (void)xBSP430cliNextToken(&mut_argstr, &ncommand_len, &len);
     if (0 < len) {
-      if (NULL != chain_handler) {
-        (void)chain_handler(&parent_link, param, argstr, argstr_len);
-      }
       return processSubcommand_(&parent_link, match->child, param, argstr, argstr_len, chain_handler, handler);
     }
   }
@@ -412,6 +412,9 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
       break;
     case eBSP430_CLI_ERR_Missing:
       cputtext_ni("Expected something after: ");
+      if (chain->cmd) {
+        cmds = chain->cmd->child;
+      }
       break;
     case eBSP430_CLI_ERR_Unrecognized:
       cputtext_ni("Unrecognized: ");
@@ -496,7 +499,7 @@ xBSP430cliConsoleBuffer_ni (void)
 #define KEY_BEL '\a'
 #define KEY_ESC '\e'
 #define KEY_FF '\f'
-#define KEY_TAB '\t'
+#define KEY_HT '\t'
 #define KEY_KILL_LINE 0x15
 #define KEY_KILL_WORD 0x17
 
@@ -538,6 +541,11 @@ iBSP430cliConsoleBufferProcessInput_ni ()
         --cbEnd_;
         cputtext_ni("\b \b");
       }
+#if configBSP430_CLI_COMMAND_COMPLETION - 0
+    } else if (KEY_HT == c) {
+      rv |= eBSP430cliConsole_DO_COMPLETION;
+      break;
+#endif /* configBSP430_CLI_COMMAND_COMPLETION */
     } else if (KEY_FF == c) {
       cputchar_ni(c);
       rv |= eBSP430cliConsole_REPAINT;
@@ -573,6 +581,232 @@ iBSP430cliConsoleBufferProcessInput_ni ()
 }
 
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
+#if configBSP430_CLI_COMMAND_COMPLETION - 0
+
+struct sCallbackParam {
+  /** The callback record used on a match.  This must be first in the
+   * structure so its address can be cast to obtain access to the
+   * remaining parameters. */
+  sBSP430cliMatchCallback match_callback;
+  
+  /** Data describing the state of the completion process */
+  sBSP430cliCommandCompletionData * cdp;
+};
+
+static void
+completion_callback (struct sBSP430cliMatchCallback * self,
+                     const sBSP430cliCommand * cmd)
+{
+  sBSP430cliCommandCompletionData * cdp = ((struct sCallbackParam *)self)->cdp;
+
+  if (0 == cdp->ncandidates) {
+    cdp->append_len = strlen(cmd->key);
+  } else {
+    const char * p1 = cdp->returned_candidates[0]->key;
+    const char * p2 = cmd->key;
+    while ((*p1 == *p2)
+           && (0 != *p2)
+           && ((p2 - cmd->key) < cdp->append_len)) {
+      ++p1;
+      ++p2;
+    }
+    cdp->append_len = p2 - cmd->key;
+  }
+  if (cdp->ncandidates < cdp->max_returned_candidates) {
+    cdp->returned_candidates[cdp->ncandidates] = cmd;
+  }
+  ++cdp->ncandidates;
+}
+
+static int
+storeCompletionParent_ (struct sBSP430cliCommandLink * chain,
+                        void * param,
+                        const char * command,
+                        size_t command_len)
+{
+  sBSP430cliCommandCompletionData * cdp = (sBSP430cliCommandCompletionData *)param;
+  cdp->command = command;
+  cdp->command_len = command_len;
+  return 0;
+}
+
+static int
+doCompletion_ (struct sBSP430cliCommandLink * chain,
+               void * param,
+               const char * argstr,
+               size_t argstr_len)
+{
+  sBSP430cliCommandCompletionData * cdp = (sBSP430cliCommandCompletionData *)param;
+  const sBSP430cliCommand * command_set;
+  const sBSP430cliCommand * matches[1];
+  const char * remstr;
+  size_t remstr_len;
+  struct sCallbackParam callback_param;
+  size_t key_len = 0;
+  int rv = 0;
+
+#if configBSP430_CLI_COMMAND_COMPLETION_BELL - 0
+  rv |= eBSP430cliConsole_REPAINT_BEL;
+#endif /* configBSP430_CLI_COMMAND_COMPLETION_BELL */
+
+  /* Reset the data fields that are return values, or are accessed
+   * below and might need a consistency check */
+  cdp->append = NULL;
+  cdp->append_len = 0;
+  cdp->ncandidates = 0;
+  if (NULL == cdp->returned_candidates) {
+    cdp->max_returned_candidates = 0;
+  }
+
+  command_set = chain->command_set;
+  if (NULL != chain->cmd) {
+    size_t len = strlen(chain->cmd->key);
+
+    /* A command was uniquely identified, but it either doesn't have
+     * sub-commands, or there was no token available to compare
+     * against its sub-commands.  If the input ends inside the token
+     * that uniquely identified the command, then completion should
+     * finish that token and add a separating space for the expected
+     * following argument. */
+    remstr = cdp->command;
+    remstr_len = cdp->command_len;
+    (void)xBSP430cliNextToken(&remstr, &remstr_len, &key_len);
+    if (0 == remstr_len) {
+      cdp->append = chain->cmd->key + key_len;
+      cdp->append_len = len - key_len;
+      rv |= eBSP430cliConsole_COMPLETE_SPACE;
+      /* Add the output fields that would normally be filled in below,
+       * if we hadn't already identified the unique result. */
+      if (0 < cdp->max_returned_candidates) {
+        cdp->returned_candidates[0] = chain->cmd;
+      }
+      cdp->ncandidates = 1;
+      return rv;
+    }
+    /* Otherwise the command is as it is, and we need to look among
+     * its children for then next completion. */
+    command_set = chain->cmd->child;
+  }
+
+  /* Figure out how long a token will be used to resolve the next
+   * command.  This is the same calculation performed in
+   * iBSP430cliMatchCommand, but we need it too. */
+  remstr = argstr;
+  remstr_len = argstr_len;
+  (void)xBSP430cliNextToken(&remstr, &remstr_len, &key_len);
+
+  /* If no working space for candidates was provided, assign one
+   * temporarily: we need at least one in order to calculate the
+   * common prefix in the callback. */
+  if (NULL == cdp->returned_candidates) {
+    cdp->returned_candidates = matches;
+    cdp->max_returned_candidates = sizeof(matches)/sizeof(*matches);
+  }
+
+  /* Walk the command set, identifying matching candidates and
+   * calculating their common prefix. */
+  callback_param.match_callback.callback = completion_callback;
+  callback_param.cdp = cdp;
+  iBSP430cliMatchCommand(command_set, argstr, argstr_len, NULL, &callback_param.match_callback, NULL, NULL);
+
+  if (key_len < cdp->append_len) {
+    /* Whatever we were given is sufficient to identify a common
+     * prefix, if not a whole command.  Append it. */
+    cdp->append = cdp->returned_candidates[0]->key + key_len;
+    cdp->append_len -= key_len;
+    if (1 == cdp->ncandidates) {
+      rv |= eBSP430cliConsole_COMPLETE_SPACE;
+    }
+  } else {
+    /* There's nothing to append: either the input already has the
+     * common prefix, or it's inconsistent with the available
+     * commands. */
+    cdp->append = NULL;
+    cdp->append_len = 0;
+  }
+
+  /* If we used a local buffer for the candidates, remove it. */
+  if (matches == cdp->returned_candidates) {
+    cdp->returned_candidates = NULL;
+    cdp->max_returned_candidates = 0;
+  }
+  return rv;
+}
+
+int
+iBSP430cliCommandCompletion (sBSP430cliCommandCompletionData * cdp)
+{
+  return iBSP430cliParseCommand(cdp->command_set, cdp, cdp->command, storeCompletionParent_, doCompletion_);
+}
+
+#if 0 < BSP430_CLI_CONSOLE_BUFFER_SIZE
+
+int
+iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
+                                   const char * * commandp)
+{
+BSP430_CORE_INTERRUPT_STATE_T istate;
+  sBSP430cliCommandCompletionData ccd;
+  const sBSP430cliCommand * matches[BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS];
+  int flags;
+
+  memset(&ccd, 0, sizeof(ccd));
+  if (NULL == *commandp) {
+    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+    BSP430_CORE_DISABLE_INTERRUPT();
+    *commandp = xBSP430cliConsoleBuffer_ni();
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  }
+  ccd.command = *commandp;
+  ccd.command_set = command_set;
+  ccd.returned_candidates = matches;
+  ccd.max_returned_candidates = sizeof(matches)/sizeof(*matches);
+  flags = iBSP430cliCommandCompletion(&ccd);
+  if (NULL != ccd.append) {
+    size_t app_len = 0;
+    
+    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+    BSP430_CORE_DISABLE_INTERRUPT();
+    do {
+      if (0 < ccd.append_len) {
+        app_len += ccd.append_len;
+        iBSP430cliConsoleBufferExtend_ni(ccd.append, ccd.append_len);
+      }
+      if (flags & eBSP430cliConsole_COMPLETE_SPACE) {
+        flags &= ~eBSP430cliConsole_COMPLETE_SPACE;
+        iBSP430cliConsoleBufferExtend_ni(" ", 1);
+        ++app_len;
+      }
+      *commandp = xBSP430cliConsoleBuffer_ni();
+      if ((0 < app_len) && ! (flags & eBSP430cliConsole_REPAINT)) {
+        cputtext_ni(*commandp + strlen(*commandp) - app_len);
+      }
+    } while (0);
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  } else {
+    if (0 < ccd.ncandidates) {
+      size_t ci = 0;
+
+      cprintf("\nCandidates:");
+      while ((ci < ccd.ncandidates)
+             && (ci < ccd.max_returned_candidates)) {
+        cprintf(" %s", ccd.returned_candidates[ci]->key);
+        ++ci;
+      }
+      if (ci < ccd.ncandidates) {
+        cprintf(" (+ %u more)", ccd.ncandidates - ci);
+      }
+      cputchar_ni('\n');
+      flags |= eBSP430cliConsole_REPAINT;
+    }
+  }
+  return flags;
+}
+
+#endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
+#endif /* configBSP430_CLI_COMMAND_COMPLETION */
 
 #endif /* BSP430_CONSOLE */
 
