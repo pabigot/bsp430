@@ -162,6 +162,22 @@
  */
 int cgetchar_ni (void);
 
+/** Return character disregarding interrupt state.
+ *
+ * This is a wrapper around cgetchar_ni(). */
+static int
+BSP430_CORE_INLINE
+cgetchar (void)
+{
+  int rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = cgetchar_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
 /** Peek at the next character input to the console
  *
  * Use this to determine whether there's any data ready to be read,
@@ -304,12 +320,33 @@ int vcprintf (const char * format, va_list ap);
  */
 int cputs (const char * s);
 
-/** Like putchar(3) to the console UART
+/** Like putchar(3) to the console UART, with interrupts already disabled
  *
  * @param c character to be output
  *
  * @return the character that was output */
 int cputchar_ni (int c);
+
+/** Like putchar(3) to the console UART
+ *
+ * This wraps cputchar_ni() with code to preserve the interrupt enable
+ * state.
+ *
+ * @param c character to be output
+ *
+ * @return the character that was output */
+static int
+BSP430_CORE_INLINE
+cputchar (int c)
+{
+  int rv;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = cputchar_ni(c);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
 
 /** Like puts(3) to the console UART without trailing newline
  *
