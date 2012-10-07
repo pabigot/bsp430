@@ -14,6 +14,9 @@
 /* Enable an 80-character command buffer */
 #define BSP430_CLI_CONSOLE_BUFFER_SIZE 80
 
+/* Enable completion */
+#define configBSP430_CLI_COMMAND_COMPLETION 1
+
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1
 

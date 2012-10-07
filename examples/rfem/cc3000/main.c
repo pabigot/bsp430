@@ -741,6 +741,7 @@ void main (void)
   wlan_start(0);
 
   cprintf("\nAnd wlan has been started.\n");
+
 #if CMD_INFO - 0
   if (0 == cmd_info_load("")) {
     cmd_wlan_status("");
@@ -748,7 +749,11 @@ void main (void)
 #endif
 
   while (1) {
-    if (NULL != command) {
+    if (flags & eBSP430cliConsole_DO_COMPLETION) {
+      flags &= ~eBSP430cliConsole_DO_COMPLETION;
+      flags |= iBSP430cliConsoleBufferCompletion(commandSet, &command);
+    }
+    if (flags & eBSP430cliConsole_READY) {
       int rv;
 
       rv = iBSP430cliExecuteCommand(commandSet, 0, command);
@@ -764,6 +769,10 @@ void main (void)
       /* Draw the prompt along with whatever's left in the command buffer */
       cprintf("> %s", command ? command : "");
       flags &= ~eBSP430cliConsole_REPAINT;
+    }
+    if (flags & eBSP430cliConsole_REPAINT_BEL) {
+      cputchar_ni('\a');
+      flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
     BSP430_CORE_DISABLE_INTERRUPT();
     if (flags & eBSP430cliConsole_READY) {
