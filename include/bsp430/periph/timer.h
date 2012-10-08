@@ -175,11 +175,17 @@
  * the relative speed of SMCLK and ACLK when manually trimming the FLL
  * in iBSP430ucsTrimDCOCLKDIV_ni().
  *
- * @note Where possible, a timer other than TA0 should be used, as TA0
- * is the default for the uptime facility and other things that use an
- * ACLK-sourced counter.  If this cannot be satisfied, the timer
- * should still be made available but #BSP430_TIMER_CCACLK_IS_TA0
- * should be defined to a true value.
+ * @note Where possible, the selected timer should not conflict with
+ * the #BSP430_UPTIME_TIMER_PERIPH_HANDLE.  If this cannot be
+ * satisfied, the timer should still be made available; code that is
+ * concerned about the possibility of conflict should validate that
+ * the timers are different, which can be done at compile time:
+ *
+ * @code
+ * #if BSP430_UPTIME_TIMER_PERIPH_HANDLE == BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * #error Cannot use both
+ * #endif // uptime == ccaclk
+ * @endcode
  *
  * @cppflag
  * @affects #BSP430_TIMER_CCACLK
@@ -201,7 +207,6 @@
  * and provide definitions for:
  * <ul>
  * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_IS_TA0
  * <li>#BSP430_TIMER_CCACLK_CC_INDEX
  * <li>#BSP430_TIMER_CCACLK_CCIS
  * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
@@ -249,7 +254,6 @@
  *
  * <ul>
  * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_IS_TA0
  * <li>#BSP430_TIMER_CCACLK_CC_INDEX
  * <li>#BSP430_TIMER_CCACLK_CCIS
  * </ul>
@@ -273,23 +277,6 @@
  * @platformdefault */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK include <bsp430/platform.h>
-#endif /* BSP430_DOXYGEN */
-
-/** @def BSP430_TIMER_CCACLK_IS_TA0
- *
- * Defined to a true value by default or external configuration when
- * the timer identified by #BSP430_TIMER_CCACLK_PERIPH_HANDLE is
- * #BSP430_PERIPH_TA0.
- *
- * Applications making use of #BSP430_TIMER_CCACLK_PERIPH_HANDLE in a
- * context where TA0 might be used for other purposes (such as a
- * persistent system uptime) should check this value to determine
- * whether it is safe to reconfigure the timer.
- *
- * @dependency #BSP430_TIMER_CCACLK
- * @platformdefault */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_IS_TA0 include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_PERIPH_HANDLE

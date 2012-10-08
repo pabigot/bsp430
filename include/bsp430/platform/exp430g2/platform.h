@@ -105,12 +105,11 @@
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
 #if defined(__MSP430G2553__)
-/* !BSP430! module=timer feature=ccaclk timer=TA0 is_ta0=1 cc_index=0 ccis=1 clk_port=PORT1 clk_pin=BIT0 */
-/* !BSP430! insert=feature_ccaclk_decl subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
+/* !BSP430! module=timer feature=ccaclk timer=TA0 cc_index=0 ccis=1 clk_port=PORT1 clk_pin=BIT0 */
+/* !BSP430! insert=feature_ccaclk_decl subst=timer,cc_index,ccis,clk_port,clk_pin */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_decl] */
 #define BSP430_TIMER_CCACLK 1
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA0
-#define BSP430_TIMER_CCACLK_IS_TA0 1
 #define BSP430_TIMER_CCACLK_CC_INDEX 0
 #define BSP430_TIMER_CCACLK_CCIS CCIS_1
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1

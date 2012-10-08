@@ -90,8 +90,8 @@
 /* END AUTOMATICALLY GENERATED CODE [feature_startif] */
 /* !BSP430! end=feature_startif */
 #if defined(__MSP430G2553__)
-/* !BSP430! module=timer feature=ccaclk timer=TA0 is_ta0=1 cc_index=0 ccis=1 clk_port=PORT1 clk_pin=BIT0 */
-/* !BSP430! insert=feature_ccaclk_cfg subst=timer,is_ta0,cc_index,ccis,clk_port,clk_pin */
+/* !BSP430! module=timer feature=ccaclk timer=TA0 cc_index=0 ccis=1 clk_port=PORT1 clk_pin=BIT0 */
+/* !BSP430! insert=feature_ccaclk_cfg subst=timer,cc_index,ccis,clk_port,clk_pin */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_cfg] */
 #if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
 #if !defined(configBSP430_HAL_TA0)
