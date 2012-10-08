@@ -96,7 +96,7 @@ testConsoleBufferExtend (void)
 {
   const char * p;
   int rv;
-  
+
   vBSP430cliConsoleBufferClear_ni();
   p = xBSP430cliConsoleBuffer_ni();
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0, strlen(p));
@@ -175,7 +175,7 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND, ccd.returned_candidates[0]);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND->next, ccd.returned_candidates[1]);
-  
+
   ccd.command = "c"; /* + "omplete " */
   flags = iBSP430cliCommandCompletion(&ccd);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL|eBSP430cliConsole_COMPLETE_SPACE, flags);
@@ -183,7 +183,7 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.key+1, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(7, ccd.append_len);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(&dcmd_complete, ccd.returned_candidates[0]);
-  
+
   ccd.command = "complete"; /* + " " */
   flags = iBSP430cliCommandCompletion(&ccd);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL|eBSP430cliConsole_COMPLETE_SPACE, flags);

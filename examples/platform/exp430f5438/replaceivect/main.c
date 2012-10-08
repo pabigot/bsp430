@@ -1,7 +1,7 @@
 /** This file is in the public domain.
  *
  * Inspired by http://e2e.ti.com/support/microcontrollers/msp43016-bit_ultra-low_power_mcus/f/166/p/217914/768650.aspx
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  */
 

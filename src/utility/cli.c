@@ -232,7 +232,7 @@ processSubcommand_ (sBSP430cliCommandLink * chain,
      * didn't provide the handler. */
     return diagnosticFunction(&parent_link,
                               (match->child ? eBSP430_CLI_ERR_Missing : eBSP430_CLI_ERR_Config),
-                               argstr, argstr_len);
+                              argstr, argstr_len);
   }
   return match->handler(&parent_link, param, argstr, argstr_len);
 }
@@ -592,7 +592,7 @@ struct sCallbackParam {
    * structure so its address can be cast to obtain access to the
    * remaining parameters. */
   sBSP430cliMatchCallback match_callback;
-  
+
   /** Data describing the state of the completion process */
   sBSP430cliCommandCompletionData * cdp;
 };
@@ -748,7 +748,7 @@ int
 iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
                                    const char * * commandp)
 {
-BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
   sBSP430cliCommandCompletionData ccd;
   const sBSP430cliCommand * matches[BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS];
   int flags;
@@ -767,7 +767,7 @@ BSP430_CORE_INTERRUPT_STATE_T istate;
   flags = iBSP430cliCommandCompletion(&ccd);
   if (NULL != ccd.append) {
     size_t app_len = 0;
-    
+
     BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
     BSP430_CORE_DISABLE_INTERRUPT();
     do {

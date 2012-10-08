@@ -211,7 +211,7 @@ typedef struct sBSP430cliMatchCallback {
   /** The function that does something with a matching command structure.
    *
    * @param self a pointer to the callback structure
-   * 
+   *
    * @param cmd the command definition of interest */
   void (* callback) (struct sBSP430cliMatchCallback * self,
                      const sBSP430cliCommand * cmd);
@@ -735,7 +735,7 @@ typedef enum eBSP430cliConsole {
    * #eBSP430cliConsole_IN_ESCAPE, and continue in escape-processing
    * mode until the entire sequence has been consumed (i.e., a
    * character in the range 64 to 126 is recognized).
-   * 
+   *
    * See the CLI example program. */
   eBSP430cliConsole_IN_ESCAPE = 0x10,
 
@@ -752,7 +752,7 @@ typedef enum eBSP430cliConsole {
   /** Bit set in response from completion if caller should add a space
    * after whatever text was suggested */
   eBSP430cliConsole_COMPLETE_SPACE = 0x200,
-  
+
 } eBSP430cliConsole;
 
 /** Data structure used to communicate between user applications and
