@@ -603,7 +603,7 @@ struct sBSP430halSERIAL xBSP430hal_USCI_B1_ = {
 
 #if ((configBSP430_HAL_USCI_AB0RX_ISR - 0) || (configBSP430_HAL_USCI_AB1RX_ISR - 0))
 static int
-#if __MSP430X__
+#if (20120406 < __MSPGCC__) && (__MSP430X__ - 0)
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
@@ -672,7 +672,7 @@ isr_USCI_AB1RX (void)
 
 #if ((configBSP430_HAL_USCI_AB0TX_ISR - 0) || (configBSP430_HAL_USCI_AB1TX_ISR - 0))
 static int
-#if __MSP430X__
+#if (20120406 < __MSPGCC__) && (__MSP430X__ - 0)
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */

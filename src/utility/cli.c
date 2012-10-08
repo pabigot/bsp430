@@ -558,7 +558,7 @@ iBSP430cliConsoleBufferProcessInput_ni ()
       rv |= eBSP430cliConsole_READY;
       break;
     } else if (KEY_KILL_LINE == c) {
-      cprintf("\e[%uD\e[K", cbEnd_ - consoleBuffer_);
+      cprintf("\e[%uD\e[K", (unsigned int)(cbEnd_ - consoleBuffer_));
       cbEnd_ = consoleBuffer_;
       *cbEnd_ = 0;
     } else if (KEY_KILL_WORD == c) {
@@ -568,7 +568,7 @@ iBSP430cliConsoleBufferProcessInput_ni ()
       while (--kp > consoleBuffer_ && !isspace(*kp)) {
       }
       ++kp;
-      cprintf("\e[%uD\e[K", cbEnd_-kp);
+      cprintf("\e[%uD\e[K", (unsigned int)(cbEnd_ - kp));
       cbEnd_ = kp;
       *cbEnd_ = 0;
     } else {

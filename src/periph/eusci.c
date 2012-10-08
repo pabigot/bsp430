@@ -518,7 +518,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
      || (configBSP430_HAL_EUSCI_A1_ISR - 0)     \
      || (configBSP430_HAL_EUSCI_A2_ISR - 0))
 static int
-#if __MSP430X__
+#if (20120406 < __MSPGCC__) && (__MSP430X__ - 0)
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */

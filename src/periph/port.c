@@ -350,7 +350,7 @@ struct sBSP430halPORT xBSP430hal_PORT11_ = {
      )
 
 static int
-#if __MSP430X__
+#if (20120406 < __MSPGCC__) && (__MSP430X__ - 0)
 __attribute__ ( ( __c16__ ) )
 #endif /* CPUX */
 /* __attribute__((__always_inline__)) */
