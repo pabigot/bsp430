@@ -305,8 +305,7 @@ iBSP430consoleInitialize (void)
     /* Associate the callback before opening the device, so the
      * interrupts are enabled properly. */
     rx_buffer_.head = rx_buffer_.tail = 0;
-    rx_buffer_.cb_node.next_ni = hal->rx_cbchain_ni;
-    hal->rx_cbchain_ni = &rx_buffer_.cb_node;
+    BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, hal->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
     /* Attempt to configure and install the console */
@@ -314,8 +313,7 @@ iBSP430consoleInitialize (void)
     if (! console_hal_) {
       /* Open failed, revert the callback association. */
 #if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
-      hal->rx_cbchain_ni = rx_buffer_.cb_node.next_ni;
-      rx_buffer_.cb_node.next_ni = 0;
+      BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, hal->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
       break;
     }
@@ -342,7 +340,7 @@ iBSP430consoleDeconfigure (void)
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430serialClose(console_hal_);
 #if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
-  console_hal_->rx_cbchain_ni = rx_buffer_.cb_node.next_ni;
+  BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
   console_hal_ = NULL;
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);

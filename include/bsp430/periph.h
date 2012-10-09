@@ -467,4 +467,53 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
     }                                                           \
   } while (0)
 
+/** Link the given node to the chain.
+ *
+ * This simply prepends the node at the front.  You want more complex
+ * orderings, you're on your own.
+ *
+ * @param type_ the type of the structure that contains the link,
+ * e.g. #sBSP430halISRVoidChainNode.
+ *
+ * @param root_ the global root of the chain of nodes.  This is
+ * expected to have been declared as <c>const type_ * root_</c>.
+ *
+ * @param node_ the instance node that is being linked in.
+ *
+ * @param next_ the structure tag within @p type_ that holds the
+ * pointer to the next node in the chain
+ */
+#define BSP430_HAL_ISR_CALLBACK_LINK_NI(type_,root_,node_,next_) do {   \
+    (node_).next_ = root_;                                              \
+    root_ = &(node_);                                                   \
+  } while (0)
+
+/** Link the given node to the chain.
+ *
+ * This walks the chain and splices it back together after removing
+ * the pointer to @p node_.
+ *
+ * @param type_ the type of the structure that contains the link,
+ * e.g. #sBSP430halISRVoidChainNode.
+ *
+ * @param root_ the global root of the chain of nodes.  This is
+ * expected to have been declared as <c>const type_ * root_</c>.
+ *
+ * @param node_ the instance node that is being linked in.
+ *
+ * @param next_ the structure tag within @p type_ that holds the
+ * pointer to the next node in the chain
+ */
+#define BSP430_HAL_ISR_CALLBACK_UNLINK_NI(type_,root_,node_,next_) do { \
+    typedef type_ tNode_;                                               \
+    const tNode_ * volatile * curp_ = &(root_);                         \
+    while ((NULL != *curp_) && (&(node_) != *curp_)) {                  \
+      curp_ = &(((tNode_*)*curp_)->next_);                              \
+    }                                                                   \
+    if (&(node_) == *curp_) {                                           \
+      *curp_ = (node_).next_;                                           \
+      (node_).next_ = NULL;                                             \
+    }                                                                   \
+  } while (0)
+
 #endif /* BSP430_PERIPH_H */

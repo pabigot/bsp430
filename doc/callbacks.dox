@@ -103,13 +103,18 @@ service the callback.
 The HAL structure tags holding the start of the callback chain, as well as
 the sBSP430halISRVoidChainNode.next_ni tags within chain nodes, must only be
 mutated while interrupts are disabled.  The steps required to add or remove
-a valid from the chain are straightforward:
+a valid from the chain are straightforward and can be explicitly coded if
+only one callback will ever be used.  Nonetheless, in the general case you
+should assume other resources may be linked into the callback and that the
+node you are removing may no longer be the head of the chain.  Utility
+macros as exemplified below support these operations:
 
 @code
 static sBSP430halISRVoidChainNode cb_node = { .callback = handle_rx_ni };
-/* ... */
-    cb_node.next_ni = hal->rx_cbchain_ni;
-    hal->rx_cbchain_ni = &cb_node;
+  /* ... */
+  BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, hal->rx_cb_chain_ni, cb_node, next_ni);
+  /* ... */
+  BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, hal->rx_cb_chain_ni, cb_node, next_ni);
 @endcode
 
 \section callback_retval Influencing Callback Chain Execution
