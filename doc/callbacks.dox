@@ -117,6 +117,11 @@ static sBSP430halISRVoidChainNode cb_node = { .callback = handle_rx_ni };
   BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, hal->rx_cb_chain_ni, cb_node, next_ni);
 @endcode
 
+@note In many cases, you will never have cause to unlink a callback from a
+chain.  However, if you do, understand that the interrupt handler walks this
+chain, and any attempt to modify the chain from within a callback that is
+part of the chain may result in wild pointers.
+
 \section callback_retval Influencing Callback Chain Execution
 
 The callback chain infrastructure supports an arbitrary number of

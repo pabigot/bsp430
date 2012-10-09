@@ -493,6 +493,10 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
  * This walks the chain and splices it back together after removing
  * the pointer to @p node_.
  *
+ * @warning Do not invoke this from within a callback that is a member
+ * of the chain, or the code in the interrupt handler that is
+ * currently walking the chain may follow an invalid pointer.
+ *
  * @param type_ the type of the structure that contains the link,
  * e.g. #sBSP430halISRVoidChainNode.
  *
