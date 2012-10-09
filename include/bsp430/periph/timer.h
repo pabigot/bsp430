@@ -506,7 +506,9 @@ typedef struct sBSP430halTIMER {
    *
    * The value is maintained only if the corresponding HAL ISR is
    * enabled for the timer and the overflow interrupt is explicitly
-   * enabled by the application.
+   * enabled by the application.  It is also only accurate if
+   * interrupts are enabled, as the value is incremented by the
+   * interrupt handler itself.
    *
    * @note This field is not marked volatile because doing so costs
    * several extra instructions due to it being a multi-word value.
@@ -542,6 +544,11 @@ typedef struct sBSP430halTIMER * hBSP430halTIMER;
 unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph);
 
 /** Read the timer counter assuming interrupts are disabled.
+ *
+ * @note This routine accounts for the possibility of a single
+ * as-yet-unhandled overflow event in the timer, but the counter will
+ * generally be wrong if interrupts are disabled most of the time
+ * resulting in lost overflow events.
  *
  * @param timer The timer for which the count is desired.
  *
