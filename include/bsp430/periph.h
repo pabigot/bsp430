@@ -380,7 +380,7 @@ typedef struct sBSP430halISRVoidChainNode {
    * terminate the chain.  @note This field must only be mutated when
    * interrupts are disabled, or if the node is not within a callback
    * chain installed in a HAL instance. */
-  const struct sBSP430halISRVoidChainNode * next_ni;
+  const struct sBSP430halISRVoidChainNode * volatile next_ni;
 
   /** The function to be invoked. */
   iBSP430halISRCallbackVoid callback;
@@ -392,7 +392,7 @@ typedef struct sBSP430halISRIndexedChainNode {
    * terminate the chain.  @note This field must only be mutated when
    * interrupts are disabled, or if the node is not within a callback
    * chain installed in a HAL instance. */
-  const struct sBSP430halISRIndexedChainNode * next_ni;
+  const struct sBSP430halISRIndexedChainNode * volatile next_ni;
 
   /** The function to be invoked. */
   iBSP430halISRCallbackIndexed callback;
@@ -413,7 +413,7 @@ typedef struct sBSP430halISRIndexedChainNode {
  * of each callback */
 static int
 BSP430_CORE_INLINE
-iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRVoidChainNode * const * cbpp,
+iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRVoidChainNode * volatile const * cbpp,
                                  void * context,
                                  int basis)
 {
@@ -436,7 +436,7 @@ iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRVoidChainNode * const
  * @return As with #iBSP430callbackInvokeISRVoid_ni */
 static int
 BSP430_CORE_INLINE
-iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode * const * cbpp,
+iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode * volatile const * cbpp,
                                     void * context,
                                     int idx,
                                     int basis)

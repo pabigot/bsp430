@@ -518,7 +518,7 @@ typedef struct sBSP430halTIMER {
    * received.  @note This pointer, and the pointers for any
    * #sBSP430halISRVoidChainNode.next_ni fields in chain nodes accessed
    * through it, must be mutated only when interrupts are disabled. */
-  const struct sBSP430halISRVoidChainNode * overflow_cbchain_ni;
+  const struct sBSP430halISRVoidChainNode * volatile overflow_cbchain_ni;
 
   /** The callback chain to invoke when a CCx interrupt is received.
    *
@@ -527,7 +527,7 @@ typedef struct sBSP430halTIMER {
    * can be invoked if desired.  The chain for CC0 is accessed only if
    * the corresponding ISR is enabled (e.g.,
    * #configBSP430_HAL_TA0_CC0_ISR) */
-  const struct sBSP430halISRIndexedChainNode * * const cc_cbchain_ni;
+  const struct sBSP430halISRIndexedChainNode * volatile * const cc_cbchain_ni;
 } sBSP430halTIMER;
 
 /** The timer internal state is protected. */

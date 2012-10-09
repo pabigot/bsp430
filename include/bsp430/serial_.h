@@ -225,7 +225,7 @@ typedef struct sBSP430halSERIAL {
    * A non-null value enables interrupt-driven reception, and data
    * will be provided to the callbacks on receiption.  The received
    * character will be stored in #rx_byte */
-  const struct sBSP430halISRVoidChainNode * rx_cbchain_ni;
+  const struct sBSP430halISRVoidChainNode * volatile rx_cbchain_ni;
 
   /** The callback chain to invoke when space is available in the
    * transmission buffer
@@ -241,7 +241,7 @@ typedef struct sBSP430halSERIAL {
    * it is known that there will not be data available after the
    * transmission.  If the callback has no data to transmit, it should
    * return zero. */
-  const struct sBSP430halISRVoidChainNode * tx_cbchain_ni;
+  const struct sBSP430halISRVoidChainNode * volatile tx_cbchain_ni;
 
   /** Total number of received octets */
   unsigned long num_rx;

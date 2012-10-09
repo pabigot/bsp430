@@ -606,7 +606,7 @@ typedef struct sBSP430halPORT {
   } const hpl;
   /** Callbacks invoked when the HAL ISR handler receives an event for
    * the corresponding bit of the port. */
-  const struct sBSP430halISRIndexedChainNode * pin_cbchain_ni[8];
+  const struct sBSP430halISRIndexedChainNode * volatile pin_cbchain_ni[8];
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   /** Pointer to the resistor enable register for this peripheral.
    *
