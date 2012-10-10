@@ -32,6 +32,7 @@
 #include <bsp430/platform.h>    /* BSP430_PLATFORM_TIMER_CCACLK defined by this */
 #include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
+#include <string.h>
 
 #if BSP430_CORE_FAMILY_IS_5XX - 0
 /* In 5xx Timer_A and Timer_B use the same layout with 0x0E denoting
@@ -349,6 +350,185 @@ vBSP430timerResetCounter_ni (hBSP430halTIMER timer)
   timer->overflow_count = 0;
   timer->hpl->r = 0;
   timer->hpl->ctl &= ~TAIFG;
+}
+
+/** Set the interrupt flags based on the alarm needs.
+ *
+ * This gets invoked both when the alarm is originally set and, if
+ * necessary, within the overflow handler.  At the point where the
+ * overflow counter is consistent with the upper word of the scheduled
+ * alarm time, check to see whether the timer counter is at or below
+ * the low word of the set time.  If not, we'll let the counter change
+ * cue the interrupt; otherwise we'll force one immediately. */
+static inline
+void alarmConfigureInterrupts_ni (sBSP430timerAlarm * map)
+{
+  unsigned int olo = map->timer->overflow_count;
+  unsigned int hi = map->setting_tck >> 16;
+  unsigned int lo = map->setting_tck;
+
+  if (olo == hi) {
+    volatile sBSP430hplTIMER * hpl = map->timer->hpl;
+
+    /* Clear any flag set in previous cycles, then set to generate an
+     * interrupt on the next event. */
+    hpl->cctl[map->ccidx] &= ~CCIFG;
+    hpl->cctl[map->ccidx] |= CCIE;
+
+    /* If it looks like we missed the count-to-lo event, set one. */
+    if (hpl->r >= lo) {
+      hpl->cctl[map->ccidx] |= CCIFG;
+    }
+  }
+}
+
+/* The overflow callback registered for enabled alarms.  It is
+ * responsible for enabling an interrupt on compare match within the
+ * cycle at which the alarm event is due. */
+static int
+alarmOFcb_ni (const struct sBSP430halISRVoidChainNode *cb,
+              void *context)
+{
+  sBSP430timerAlarm * malarmp = (sBSP430timerAlarm *)(-offsetof(sBSP430timerAlarm, overflow_cb) + (unsigned char *)cb);
+
+  if (malarmp->flags & BSP430_TIMER_ALARM_FLAG_SET) {
+    alarmConfigureInterrupts_ni(malarmp);
+  }
+  return 0;
+}
+
+/* The capture/compare callback registered for enabled alarms.  It is
+ * responsible for clearing the alarm and invoking the user-provided
+ * callback. */
+static int
+alarmCCcb_ni (const struct sBSP430halISRIndexedChainNode *cb,
+              void *context,
+              int idx)
+{
+  sBSP430timerAlarm * malarmp = (sBSP430timerAlarm *)(-offsetof(sBSP430timerAlarm, cc_cb) + (unsigned char *)cb);
+  int rv = 0;
+
+  if (! (malarmp->flags & BSP430_TIMER_ALARM_FLAG_SET)) {
+    return rv;
+  }
+  malarmp->flags &= ~BSP430_TIMER_ALARM_FLAG_SET;
+  malarmp->timer->hpl->cctl[malarmp->ccidx] &= ~CCIE;
+  rv |= BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+  if (NULL != malarmp->callback) {
+    rv = malarmp->callback(malarmp);
+  }
+  return rv;
+}
+
+hBSP430timerAlarm
+hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
+                             tBSP430periphHandle periph,
+                             int ccidx,
+                             iBSP430timerAlarmCallback_ni callback)
+{
+  if (NULL == alarm) {
+    return NULL;
+  }
+  memset(alarm, 0, sizeof(*alarm));
+  alarm->timer = hBSP430timerLookup(periph);
+  if (NULL == alarm->timer) {
+    return NULL;
+  }
+  alarm->ccidx = ccidx;
+  alarm->callback = callback;
+  alarm->overflow_cb.callback = alarmOFcb_ni;
+  alarm->cc_cb.callback = alarmCCcb_ni;
+  return alarm;
+}
+
+int
+iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
+                                int enablep)
+{
+  sBSP430timerAlarm * malarm = (sBSP430timerAlarm *)alarm;
+
+  if (enablep) {
+    if (! (alarm->flags & BSP430_TIMER_ALARM_FLAG_ENABLED)) {
+      BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode,
+                                      alarm->timer->overflow_cbchain_ni,
+                                      malarm->overflow_cb,
+                                      next_ni);
+      BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
+                                      alarm->timer->cc_cbchain_ni[alarm->ccidx],
+                                      malarm->cc_cb,
+                                      next_ni);
+      malarm->flags |= BSP430_TIMER_ALARM_FLAG_ENABLED;
+    }
+  } else {
+    if (alarm->flags & BSP430_TIMER_ALARM_FLAG_ENABLED) {
+      if (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags) {
+        (void)iBSP430timerAlarmCancel_ni(alarm);
+      }
+      BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode,
+                                        alarm->timer->overflow_cbchain_ni,
+                                        malarm->overflow_cb,
+                                        next_ni);
+      BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRIndexedChainNode,
+                                        alarm->timer->cc_cbchain_ni[alarm->ccidx],
+                                        malarm->cc_cb,
+                                        next_ni);
+      malarm->flags &= ~BSP430_TIMER_ALARM_FLAG_ENABLED;
+    }
+  }
+
+  return 0;
+}
+
+int
+iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
+                         unsigned long setting_tck)
+{
+  sBSP430timerAlarm * malarmp = (sBSP430timerAlarm *)alarm;
+  unsigned long now_tck = ulBSP430timerCounter_ni(alarm->timer, NULL);
+  unsigned long delay_tck = setting_tck - now_tck;
+
+  /* Alarm must be enabled... */
+  if (! (BSP430_TIMER_ALARM_FLAG_ENABLED & alarm->flags)) {
+    return -1;
+  }
+  /* ... and not already set */
+  if (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags) {
+    return BSP430_TIMER_ALARM_SET_ALREADY;
+  }
+  if (BSP430_TIMER_ALARM_FUTURE_LIMIT > delay_tck) {
+    return BSP430_TIMER_ALARM_SET_NOW;
+  }
+  if (BSP430_TIMER_ALARM_PAST_LIMIT > (now_tck - setting_tck)) {
+    return BSP430_TIMER_ALARM_SET_PAST;
+  }
+
+  /* Record the time at which the event occurs, and that the alarm is
+   * scheduled.  Also set the CCR to match the point in the cycle at
+   * which the event should be raised.  We don't enable an interrupt
+   * on the event until the timer overflow is consistent with the
+   * upper word of the scheduled time. */
+  malarmp->setting_tck = setting_tck;
+  malarmp->flags |= BSP430_TIMER_ALARM_FLAG_SET;
+  alarm->timer->hpl->ccr[alarm->ccidx] = (unsigned int)setting_tck;
+  alarmConfigureInterrupts_ni(malarmp);
+  return 0;
+}
+
+int
+iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm)
+{
+  sBSP430timerAlarm * malarm = (sBSP430timerAlarm *)alarm;
+  if (! (BSP430_TIMER_ALARM_FLAG_ENABLED & alarm->flags)) {
+    return -1;
+  }
+  if (! (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags)) {
+    return -1;
+  }
+  /* Clear the set and clear the CCIE and CCIFG bits in the timer
+   * (along with everything else). */
+  malarm->flags &= ~BSP430_TIMER_ALARM_FLAG_SET;
+  alarm->timer->hpl->cctl[alarm->ccidx] = 0;
+  return 0;
 }
 
 /* !BSP430! TYPE=A subst=TYPE instance=0,1,2,3 insert=hal_timer_isr_defn */

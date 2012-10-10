@@ -598,6 +598,280 @@ unsigned long ulBSP430timerCounter (hBSP430halTIMER timer,
  * It does not start or stop the timer. */
 void vBSP430timerResetCounter_ni (hBSP430halTIMER timer);
 
+/* Forward declaration */
+struct sBSP430timerAlarm;
+
+/** A handle to an alarm structure.
+ *
+ * @note The reference is to a @c const #sBSP430timerAlarm because
+ * user code should never manipulate the alarm configuration
+ * directly. */
+typedef const struct sBSP430timerAlarm * hBSP430timerAlarm;
+
+/** Callback for alarm events.
+ *
+ * This function will be invoked by the timer infrastructure in an
+ * interrupt context when the alarm goes off.  The implementation is
+ * permitted to invoke iBSP430timerAlarmSet_ni() to schedule a new
+ * alarm.  If this is not done, the alarm will automatically be
+ * disabled when the callback returns.
+ *
+ * @param cfg The structure describing the alarm configuration.
+ *
+ * @return As with iBSP430halISRCallbackVoid(). */
+typedef int (* iBSP430timerAlarmCallback_ni) (hBSP430timerAlarm alarm);
+
+/** Bit set in sBSP430timerAlarm::flags if the alarm is currently set. */
+#define BSP430_TIMER_ALARM_FLAG_SET 0x01
+
+/** Bit set in sBSP430timerAlarm::flags if the alarm is enabled. */
+#define BSP430_TIMER_ALARM_FLAG_ENABLED 0x02
+
+/** A structure holding information related to timer-based alarms.
+ *
+ * @warning The contents of this structure must not be manipulated by
+ * user code at any time.  The primary reason the internals are
+ * exposed is so that alarm structures can be statically allocated.
+ * Fields may be inspected, though only @a flags and @a setting_tck
+ * are likely to be of great interest. */
+typedef struct sBSP430timerAlarm {
+  /** The timer registered as owner of this alarm structure. */
+  hBSP430halTIMER timer;
+
+  /** The capture/compare resource used by the alarm. */
+  unsigned char ccidx;
+
+  /** Assorted flags recording alarm state.  Bit values
+   * #BSP430_TIMER_ALARM_FLAG_SET and #BSP430_TIMER_ALARM_FLAG_ENABLED
+   * may be inspected; other bits are reserved for internal use. */
+  unsigned char flags;
+
+  /** The absolute time as determined by @a timer at which the alarm
+   * fired (when the @a callback is invoked), or at which the next
+   * alarm should fire (when returning from @a callback with
+   * #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT cleared).  This is the
+   * scheduled time of the alarm, not the time at which the callback
+   * is entered which is likely to be later due to processing
+   * overhead. */
+  unsigned long setting_tck;
+
+  /** The function invoked by the infrastructure when the alarm goes
+   * off.  If this is a null pointer, the infrastructure will act as
+   * though it was a function that did nothing but return
+   * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM. */
+  iBSP430timerAlarmCallback_ni callback;
+
+  /** The callback chain node used when the alarm must be hooked into
+   * a timer overflow chain.  @note This is initialized by
+   * iBSP430timerAlarmInitialize() and should not be manipulated by
+   * user code. */
+  sBSP430halISRVoidChainNode overflow_cb;
+
+  /** The callback chain node used when the alarm must be hooked into
+   * a capture/compare chain.  @note This is initialized by
+   * iBSP430timerAlarmInitialize() and should not be manipulated by
+   * user code. */
+  sBSP430halISRIndexedChainNode cc_cb;
+} sBSP430timerAlarm;
+
+/** Initialize an alarm structure.
+ *
+ * This routine configures the @p alarm structure so it is prepared to
+ * operate using capture/compare register @p ccidx of the timer
+ * peripheral identified by @p periph.  This involves setting various
+ * fields inside the @p alarm structure; those settings should never
+ * be manipulated by user code.
+ *
+ * Note that this simply initializes the structure; it does not set
+ * any alarms, nor does it enable the alarm.
+ *
+ * @param alarm a pointer to the structure holding alarm configuration
+ * data.
+ *
+ * @param periph the handle identifier, such as
+ * #BSP430_UPTIME_TIMER_PERIPH_HANDLE.
+ *
+ * @param ccidx the capture/compare index within the timer.  It is the
+ * user's responsibility to ensure that the selected timer supports
+ * the selected capture/compare register.
+ *
+ * @param callback the callback function to be invoked when the alarm
+ * goes off.  This may be a null pointer, in which case the alarm will
+ * be disabled and the system will return from low power mode if
+ * necessary.
+ *
+ * @return A non-null handle for the alarm.  A null handle will be
+ * returned if initialization failed, e.g. because @p periph could not
+ * be identified as a timer with a HAL supporting an alarm. */
+hBSP430timerAlarm hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
+                                               tBSP430periphHandle periph,
+                                               int ccidx,
+                                               iBSP430timerAlarmCallback_ni callback);
+
+/** Enable or disable an alarm.
+ *
+ * The effect of this is to hook the alarm into the necessary
+ * interrupt callbacks.  Enabling the alarm does not cause it to be
+ * set; disabling does cause a set alarm to be cancelled.
+ *
+ * During the times an alarm is enabled its callbacks are linked into
+ * the relevant interrupt callback chains.  This can introduce
+ * overhead, so alarms should be explicitly disabled during periods
+ * when they are not active.
+ *
+ * @warning Do not enable or disable alarms from inside interrupt
+ * handlers or alarm callbacks.
+ *
+ * @param alarm the alarm that is being configured
+ *
+ * @param enablep nonzero if the alarm is to be enabled; zero if it is
+ * to be disabled.
+ *
+ * @return 0 if setting was successful; -1 if an error occurs. */
+int iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
+                                    int enablep);
+
+/** Enable an initialized alarm.
+ *
+ * A wrapper around iBSP430timerAlarmSetEnabled_ni() suitable for use
+ * when interrupts are enabled.
+ * 
+ * This hooks the alarm's callbacks into the timer infrastructure.  It
+ * does not set the alarm.  Alarms must be enabled before they can be
+ * set, and initialized before they can be enabled.
+ */
+static BSP430_CORE_INLINE
+int iBSP430timerAlarmEnable (hBSP430timerAlarm alarm)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerAlarmSetEnabled_ni(alarm, 1);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+/** Disable an enabled alarm.
+ *
+ * A wrapper around iBSP430timerAlarmSetEnabled_ni() suitable for use
+ * when interrupts are enabled.
+ * 
+ * This removes the alarm's callbacks from the timer infrastructure.
+ * Any scheduled alarm will be canceled prior to disabling it.
+ */
+static BSP430_CORE_INLINE
+int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerAlarmSetEnabled_ni(alarm, 0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+/** Time limit for past alarms.
+ *
+ * If the requested time is less than this many ticks in the past,
+ * iBSP430timerAlarmSet_ni() will not schedule the alarm and will
+ * return #BSP430_TIMER_ALARM_SET_PAST.  Times more this limit in the
+ * past are assumed to be valid future times that were subject to
+ * 32-bit overflow. */
+#ifndef BSP430_TIMER_ALARM_PAST_LIMIT
+#define BSP430_TIMER_ALARM_PAST_LIMIT 65536UL
+#endif /* BSP430_TIMER_ALARM_PAST_LIMIT */
+
+/** Time limit for future alarms.
+ *
+ * If the requested time is less than this many ticks in the future,
+ * iBSP430timerAlarmSet_ni() will not schedule the alarm and will
+ * returned #BSP430_TIMER_ALARM_SET_NOW.  This more than this limit in
+ * the future will be scheduled. */
+#ifndef BSP430_TIMER_ALARM_FUTURE_LIMIT
+#define BSP430_TIMER_ALARM_FUTURE_LIMIT 5UL
+#endif /* BSP430_TIMER_ALARM_FUTURE_LIMIT */
+
+/** Value returned by iBSP430timerAlarmSet_ni() when the requested
+ * time is too near for the scheduling to be reliable. */
+#define BSP430_TIMER_ALARM_SET_NOW 1
+
+/** Value returned by iBSP430timerAlarmSet_ni() when the requested
+ * time appears to have recently passed. */
+#define BSP430_TIMER_ALARM_SET_PAST 2
+
+/** Value returned by iBSP430timerAlarmSet_ni() when the alarm was
+ * already scheduled. */
+#define BSP430_TIMER_ALARM_SET_ALREADY -2
+
+/** Set the alarm to go off at the specified time.
+ *
+ * This function may be invoked in normal user code, or within an
+ * alarm callback or other interrupt handler to reschedule the alarm.
+ *
+ * @param alarm a pointer to an alarm structure initialized using
+ * iBSP430timerAlarmInitialize().
+ *
+ * @param setting_tck the time at which the alarm should go off.
+ *
+ * @return
+ * @li Zero to indicate the alarm was successfully scheduled;
+ * @li The positive value #BSP430_TIMER_ALARM_SET_NOW if @p
+ * setting_tck is too near for the alarm infrastructure to guarantee
+ * delivery of the alarm event;
+ * @li The positive value #BSP430_TIMER_ALARM_SET_PAST if @p
+ * setting_tck appears to be in the recent past;
+ * @li The negative value #BSP430_TIMER_ALARM_SET_ALREADY if the alarm
+ * was already scheduled;
+ * @li other negative values indicating errors.
+ */
+int iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
+                             unsigned long setting_tck);
+
+/** Wrapper to invoke iBSP430timerAlarmSet_ni() when interrupts are
+ * enabled. */
+static BSP430_CORE_INLINE
+int iBSP430timerAlarmSet (hBSP430timerAlarm alarm,
+                          unsigned long setting_tck)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerAlarmSet_ni(alarm, setting_tck);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+/** Cancel a scheduled alarm event.
+ *
+ * This disconnects the scheduled alarm and inhibits any pending alarm
+ * from being executed.  It may be executed from user code or from
+ * within an alarm callback or other interrupt handler.
+ *
+ * @param alarm a pointer to an alarm structure initialized using
+ * iBSP430timerAlarmInitialize().
+ *
+ * @return zero if the alarm was disabled.  A negative value indicates
+ * an error, such as that the alarm was not set when this was called.
+ * This may indicate that the alarm had already fired. */
+int iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm);
+
+/** Wrapper to invoke iBSP430timerCancel_ni() when interrupts are
+ * enabled. */
+static BSP430_CORE_INLINE
+int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv;
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerAlarmCancel_ni(alarm);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** @def configBSP430_HAL_TA0
