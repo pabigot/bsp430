@@ -53,9 +53,9 @@ void main ()
   console = hBSP430console();
 #endif /* APP_VERBOSE */
 
-#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
-  /* If we're using interrupt-driven reception, we'd better enable
-   * interrupts. */
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
+  /* If we're using interrupt-driven transmission or reception, we'd
+   * better enable interrupts. */
   BSP430_CORE_ENABLE_INTERRUPT();
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
