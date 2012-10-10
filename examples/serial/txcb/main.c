@@ -27,18 +27,20 @@ console_tx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
 {
   sConsoleTxBuffer * bufp = (sConsoleTxBuffer *)cb;
   sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
+  unsigned char tail = bufp->tail;
   int rv = 0;
 
   /* If there's data available here, store it and mark that we have
    * done so. */
-  if (bufp->head != bufp->tail) {
-    hal->tx_byte = bufp->buffer[bufp->tail];
+  if (bufp->head != tail) {
+    hal->tx_byte = bufp->buffer[tail];
     rv |= BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN;
-    bufp->tail = (bufp->tail + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
+    tail = (tail + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
   }
-  if (bufp->head == bufp->tail) {
+  if (bufp->head == tail) {
     rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
   }
+  bufp->tail = tail;
   return rv;
 }
 
