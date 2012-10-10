@@ -33,22 +33,35 @@
  *
  * @brief A generic console print capability.
  *
- * cprintf() is like @c printf.  It disables interrupts while
- * operating to ensure that interleaved messages do not occur.  It is
- * "safe" for call from within interrupt handlers. cputs() is provided
- * where the complexity of printf is not required but atomic output is
- * desired.
+ * cprintf() is like @c printf.
  *
- * Other routines permit display of plain text (cputtext_ni()), single
- * characters (cputchar_ni()), and integers (cputi_ni(), cputu_ni(),
- * cputl_ni(), cputul_ni()) without incurring the stack overhead of
- * printf, which can be quite high (on the order of 100 bytes if
- * 64-bit integer support is included).  These assume that interrupts
- * are disabled when called.
+ * In the default configuration with interrupt-driven transmission
+ * disabled, it disables interrupts while operating to ensure that
+ * interleaved messages do not occur, transmits with direct UART
+ * writes, and is "safe" for call from within interrupt handlers.
+ * 
+ * cputs() is provided where the complexity of printf is not required
+ * but atomic output is desired.  Other routines permit display of
+ * plain text without a newline (cputtext_ni()), single characters
+ * (cputchar_ni()), and integers (cputi_ni(), cputu_ni(), cputl_ni(),
+ * cputul_ni()) without incurring the stack overhead of printf, which
+ * can be quite high (on the order of 100 bytes if 64-bit integer
+ * support is included).  These all assume that interrupts are
+ * disabled when called.
  *
  * All these routines are safe to call even if the console was not
  * initialized, or its initialization failed, or it is temporarily
  * disabled: in that situation, they simply return immediately.
+ *
+ * As the console has proved to be extremely useful, it has also been
+ * enhanced with interrupt-driven transmision capabilities.  By
+ * configuring #BSP430_CONSOLE_TX_BUFFER_SIZE to a positive value all
+ * console output routines will place their output into the buffer.
+ * If insufficient room remains, they will block.
+ *
+ * @warning The console routines are not safe to call from interrupts
+ * when #BSP430_CONSOLE_TX_BUFFER_SIZE has been configured to enable
+ * interrupt-driven output.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -152,6 +165,27 @@
 #ifndef BSP430_CONSOLE_RX_BUFFER_SIZE
 #define BSP430_CONSOLE_RX_BUFFER_SIZE 0
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+
+/** @def BSP430_CONSOLE_TX_BUFFER_SIZE
+ *
+ * Define this to the size of a buffer to be used for interrupt-driven
+ * console output.  The value must not exceed 254, and buffer
+ * management is most efficient if the value is a power of 2.
+ *
+ * If this has a value of zero, character output is not interrupt
+ * driven.  cputchar_ni() will block until the UART is ready to accept
+ * a new character.
+ *
+ * @warning By enabling interrupt-driven output the console output
+ * routines are no longer safe to call from within interrupt handlers.
+ * They may be called with interrupts disabled, but are entitled to
+ * enable interrupts in order to drain the transmission buffer to the
+ * point where they can complete their output.
+ *
+ * @defaulted */
+#ifndef BSP430_CONSOLE_TX_BUFFER_SIZE
+#define BSP430_CONSOLE_TX_BUFFER_SIZE 0
+#endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
 
 /** Return a character that was input to the console.
  *
@@ -365,9 +399,8 @@ int cputtext_ni (const char * s);
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
- * @warning The implementation here assumes that the radix is at least
- * 10.  Passing a smaller radix will likely result in stack
- * corruption.
+ * @warning The implementation assumes that @p radix is at least 10.
+ * Passing a smaller radix will likely result in stack corruption.
  *
  * @return the number of characters emitted
  *
@@ -379,9 +412,8 @@ int cputi_ni (int n, int radix);
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
- * @warning The implementation here assumes that the radix is at least
- * 10.  Passing a smaller radix will likely result in stack
- * corruption.
+ * @warning The implementation assumes that the radix is at least 10.
+ * Passing a smaller radix will likely result in stack corruption.
  *
  * @return the number of characters emitted
  *
@@ -393,9 +425,8 @@ int cputu_ni (unsigned int n, int radix);
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
- * @warning The implementation here assumes that the radix is at least
- * 10.  Passing a smaller radix will likely result in stack
- * corruption.
+ * @warning The implementation assumes that the radix is at least 10.
+ * Passing a smaller radix will likely result in stack corruption.
  *
  * @return the number of characters emitted
  *
@@ -406,10 +437,9 @@ int cputl_ni (long n, int radix);
  *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
-
- * @warning The implementation here assumes that the radix is at least
- * 10.  Passing a smaller radix will likely result in stack
- * corruption.
+ *
+ * @warning The implementation assumes that the radix is at least 10.
+ * Passing a smaller radix will likely result in stack corruption.
  *
  * @return the number of characters emitted
  *
@@ -452,5 +482,51 @@ int iBSP430consoleDeconfigure (void);
  * null pointer is returned if the console has not been successfully
  * initialized. */
 hBSP430halSERIAL hBSP430console (void);
+
+/** Potentially block until space is available in console transmit buffer.
+ *
+ * This function causes the caller to block until the interrupt-driven
+ * console transmit buffer has drained to the point where at least @p
+ * want_available bytes are available.
+ *
+ * If the console does not use interrupt-driven transmission, this
+ * function immediately returns zero.
+ *
+ * @note The return value of this function indicates whether it was
+ * necessary to enable interrupts in order to achieve the desired
+ * available space.  In such a case an application may need to
+ * re-check other conditions to ensure there is no pending work prior
+ * to entering low power mode.
+ *
+ * @param want_available the number of bytes that are requested.  A
+ * negative number requires that the transmit buffer be empty (i.e.,
+ * flushed).
+ *
+ * @return
+ * @li Zero if @p want_available bytes were available on entry without
+ * suspending;
+ * @li A positive number if the bytes are now available, but the
+ * function had to suspend (enabling interrupts) in order to obtain
+ * that space;
+ * @li -1 if @p want_available is larger than
+ * #BSP430_CONSOLE_TX_BUFFER_SIZE-1, which is the maximum number of
+ * bytes that can be made available. */
+int iBSP430consoleWaitForTxSpace_ni (int want_available);
+
+/** Flush any pending data in the console transmit buffer.
+ *
+ * The caller may enter low power mode while waiting for the console
+ * transmission infrastructure to drain the buffer.  On return, all
+ * queued output will have been transmitted.
+ *
+ * If the console does not use interrupt driven transmission, this
+ * function will simply spin until the last character has been
+ * transmitted by the UART.
+ *
+ * @return 0 if the console was flushed without suspending; a positive
+ * number of the application had to suspend to permit interrupt-driven
+ * transmission to complete.
+ */
+int iBSP430consoleFlush (void);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

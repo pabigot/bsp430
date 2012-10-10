@@ -84,6 +84,103 @@ static sConsoleRxBuffer rx_buffer_ = {
 
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
+#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+#if 254 < (BSP430_CONSOLE_TX_BUFFER_SIZE)
+#error BSP430_CONSOLE_TX_BUFFER_SIZE is too large
+#endif /* validate BSP430_CONSOLE_TX_BUFFER_SIZE */
+
+typedef struct sConsoleTxBuffer {
+  sBSP430halISRVoidChainNode cb_node;
+  char buffer[BSP430_CONSOLE_TX_BUFFER_SIZE];
+  volatile unsigned char head;
+  volatile unsigned char tail;
+  volatile int wake_available;
+} sConsoleTxBuffer;
+
+/* Calculate the number of bytes available in the buffer given the
+ * head and tail indexes. */
+#define TX_BUFFER_AVAILABLE_(bp_,h_,t_) (((h_) >= (t_))                 \
+                                         ? (sizeof((bp_)->buffer) + (t_) - (h_) - 1) \
+                                         : ((t_) - (h_) - 1))
+
+static int
+console_tx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
+                   void * context)
+{
+  sConsoleTxBuffer * bufp = (sConsoleTxBuffer *)cb;
+  sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
+  unsigned char tail = bufp->tail;
+  unsigned char head = bufp->head;
+  int wake_available;
+  int rv = 0;
+
+  /* If there's data available here, store it and mark that we have
+   * done so. */
+  if (head != tail) {
+    hal->tx_byte = bufp->buffer[tail];
+    rv |= BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN;
+    bufp->tail = tail = (tail + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
+  }
+  wake_available = bufp->wake_available;
+  if (head == tail) {
+    /* Ran out of data.  Turn off the interrupt infrastructure. */
+    rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
+    /* If somebody wants to know when there's space available, well,
+     * there's never going to be any more space than the whole
+     * buffer. */
+    if (0 != wake_available) {
+      bufp->wake_available = 0;
+      rv |= BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+    }
+  } else if (0 < wake_available) {
+    int available = TX_BUFFER_AVAILABLE_(bufp, head, tail);
+
+    if (available >= wake_available) {
+      bufp->wake_available = 0;
+      rv |= BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+    }
+  }
+  return rv;
+}
+
+static sConsoleTxBuffer tx_buffer_ = {
+  .cb_node = { .callback = console_tx_isr_ni },
+};
+
+int
+console_tx_queue_ni (hBSP430halSERIAL uart, int c)
+{
+  sConsoleTxBuffer * bufp = &tx_buffer_;
+
+  while (1) {
+    unsigned char head = bufp->head;
+    unsigned char next_head = (head + 1) % (sizeof(bufp->buffer)/sizeof(*bufp->buffer));
+    if (next_head == bufp->tail) {
+      if (0 == bufp->wake_available) {
+        bufp->wake_available = 1;
+      }
+      BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+      BSP430_CORE_DISABLE_INTERRUPT();
+      continue;
+    }
+    bufp->buffer[head] = c;
+    bufp->head = next_head;
+    if (head == bufp->tail) {
+      vBSP430serialWakeupTransmit_ni(uart);
+    }
+    break;
+  }
+  return c;
+}
+
+#define UART_TRANSMIT(uart_, c_) console_tx_queue_ni(uart_, c_)
+
+#else /* BSP430_CONSOLE_TX_BUFFER_SIZE */
+
+#define UART_TRANSMIT(uart_, c_) iBSP430uartTxByte_ni(uart_, c_)
+
+#endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
+
 /* Optimized version used inline.  Assumes that the uart is not
  * null. */
 static
@@ -93,10 +190,10 @@ emit_char2_ni (int c, hBSP430halSERIAL uart)
 {
 #if configBSP430_CONSOLE_USE_ONLCR - 0
   if ('\n' == c) {
-    iBSP430uartTxByte_ni(uart, '\r');
+    UART_TRANSMIT(uart, '\r');
   }
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
-  return iBSP430uartTxByte_ni(uart, c);
+  return UART_TRANSMIT(uart, c);
 }
 
 /* Base version used by cprintf.  This has to re-read the console_hal_
@@ -311,6 +408,12 @@ iBSP430consoleInitialize (void)
     BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, hal->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
+#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+    tx_buffer_.wake_available = 0;
+    tx_buffer_.head = tx_buffer_.tail = 0;
+    BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, hal->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
+#endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
+
     /* Attempt to configure and install the console */
     console_hal_ = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
     if (! console_hal_) {
@@ -345,7 +448,61 @@ iBSP430consoleDeconfigure (void)
 #if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
   BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+  BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
+#endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
   console_hal_ = NULL;
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+int
+iBSP430consoleWaitForTxSpace_ni (int want_available)
+{
+  int rv = 0;
+#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+  if ((sizeof(tx_buffer_.buffer) - 1) < want_available) {
+    return -1;
+  }
+  while (1) {
+    int available;
+    unsigned char head = tx_buffer_.head;
+    unsigned char tail = tx_buffer_.tail;
+    
+    if (0 > want_available) {
+      if (head == tail) {
+        break;
+      }
+    } else {
+      available = TX_BUFFER_AVAILABLE_(&tx_buffer_, head, tail);
+      if (available >= want_available) {
+        break;
+      }
+    }
+    if (0 == tx_buffer_.wake_available) {
+      tx_buffer_.wake_available = want_available;
+    }
+    rv = 1;
+    BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+    BSP430_CORE_DISABLE_INTERRUPT();
+  }
+#endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
+  return rv;
+}
+
+int
+iBSP430consoleFlush (void)
+{
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+  int rv;
+  
+  if (! console_hal_) {
+    return 0;
+  }
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430consoleWaitForTxSpace_ni(-1);
+  vBSP430serialFlush_ni(console_hal_);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
