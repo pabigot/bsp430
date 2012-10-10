@@ -636,3 +636,86 @@ xBSP430timerName (tBSP430periphHandle periph)
   /* !BSP430! end=periph_name_demux */
   return NULL;
 }
+
+int
+iBSP430timerSupportedCCs (tBSP430periphHandle periph)
+{
+#if configBSP430_HPL_TA0 - 0
+  if (BSP430_PERIPH_TA0 == periph) {
+#if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
+    return 2;
+#elif defined(__MSP430_HAS_TA3__) || defined(__MSP430_HAS_T0A3__)
+    return 3;
+#else
+    return 5;
+#endif /* TA0 */
+  }
+#endif /* configBSP430_HPL_TA0 */
+
+#if configBSP430_HPL_TA1 - 0
+  if (BSP430_PERIPH_TA1 == periph) {
+#if defined(__MSP430_HAS_T1A2__)
+    return 2;
+#elif defined(__MSP430_HAS_T1A3__)
+    return 3;
+#else
+    return 5;
+#endif /* TA1 */
+  }
+#endif /* configBSP430_HPL_TA1 */
+
+#if configBSP430_HPL_TA2 - 0
+  if (BSP430_PERIPH_TA2 == periph) {
+#if defined(__MSP430_HAS_T2A2__)
+    return 2;
+#elif defined(__MSP430_HAS_T2A3__)
+    return 3;
+#else
+    return 5;
+#endif /* TA2 */
+  }
+#endif /* configBSP430_HPL_TA2 */
+
+#if configBSP430_HPL_TA3 - 0
+  if (BSP430_PERIPH_TA3 == periph) {
+#if defined(__MSP430_HAS_T3A2__)
+    return 2;
+#elif defined(__MSP430_HAS_T3A3__)
+    return 3;
+#else
+    return 5;
+#endif /* TA3 */
+  }
+#endif /* configBSP430_HPL_TA3 */
+
+#if configBSP430_HPL_TB0 - 0
+  if (BSP430_PERIPH_TB0 == periph) {
+#if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
+    return 3;
+#else
+    return 7;
+#endif /* TB0 */
+  }
+#endif /* configBSP430_HPL_TB0 */
+
+#if configBSP430_HPL_TB1 - 0
+  if (BSP430_PERIPH_TB1 == periph) {
+#if defined(__MSP430_HAS_T1B3__)
+    return 3;
+#else
+    return 7;
+#endif /* TB1 */
+  }
+#endif /* configBSP430_HPL_TB1 */
+
+#if configBSP430_HPL_TB2 - 0
+  if (BSP430_PERIPH_TB2 == periph) {
+#if defined(__MSP430_HAS_T2B3__)
+    return 3;
+#else
+    return 7;
+#endif /* TB2 */
+  }
+#endif /* configBSP430_HPL_TB2 */
+  return -1;
+}

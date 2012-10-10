@@ -1602,6 +1602,14 @@ hBSP430halTIMER hBSP430timerLookup (tBSP430periphHandle periph)
  */
 const char * xBSP430timerName (tBSP430periphHandle periph);
 
+/** Get the number of capture/compare registers supported by the timer.
+ *
+ * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
+ *
+ * @return the number of CCs on the timer.  -1 is returned if the
+ * timer does not exist or the resource was not configured. */
+int iBSP430timerSupportedCCs (tBSP430periphHandle periph);
+
 #endif /* BSP430_MODULE_TIMER */
 
 #endif /* BSP430_PERIPH_TIMER_H */
