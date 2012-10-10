@@ -57,8 +57,8 @@ static hBSP430halSERIAL console_hal_;
 typedef struct sConsoleRxBuffer {
   sBSP430halISRVoidChainNode cb_node;
   char buffer[BSP430_CONSOLE_RX_BUFFER_SIZE];
-  unsigned char head;
-  unsigned char tail;
+  volatile unsigned char head;
+  volatile unsigned char tail;
 } sConsoleRxBuffer;
 
 static int
@@ -67,12 +67,14 @@ console_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
 {
   sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;
   sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
+  unsigned char head = bufp->head;
 
-  bufp->buffer[bufp->head] = hal->rx_byte;
-  bufp->head = (bufp->head + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
-  if (bufp->head == bufp->tail) {
+  bufp->buffer[head] = hal->rx_byte;
+  head = (head + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
+  if (head == bufp->tail) {
     bufp->tail = (bufp->tail + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
   }
+  bufp->head = head;
   return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
@@ -81,9 +83,6 @@ static sConsoleRxBuffer rx_buffer_ = {
 };
 
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
-
-
-
 
 /* Optimized version used inline.  Assumes that the uart is not
  * null. */
