@@ -461,7 +461,7 @@ iBSP430consoleWaitForTxSpace_ni (int want_available)
 {
   int rv = 0;
 #if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
-  if ((sizeof(tx_buffer_.buffer) - 1) < want_available) {
+  if (((int)sizeof(tx_buffer_.buffer) - 1) < want_available) {
     return -1;
   }
   while (1) {
