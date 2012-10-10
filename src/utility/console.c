@@ -49,6 +49,42 @@
 
 static hBSP430halSERIAL console_hal_;
 
+#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+#if 254 < (BSP430_CONSOLE_RX_BUFFER_SIZE)
+#error BSP430_CONSOLE_RX_BUFFER_SIZE is too large
+#endif /* validate BSP430_CONSOLE_RX_BUFFER_SIZE */
+
+typedef struct sConsoleRxBuffer {
+  sBSP430halISRVoidChainNode cb_node;
+  char buffer[BSP430_CONSOLE_RX_BUFFER_SIZE];
+  unsigned char head;
+  unsigned char tail;
+} sConsoleRxBuffer;
+
+static int
+console_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
+                   void * context)
+{
+  sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;
+  sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
+
+  bufp->buffer[bufp->head] = hal->rx_byte;
+  bufp->head = (bufp->head + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
+  if (bufp->head == bufp->tail) {
+    bufp->tail = (bufp->tail + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
+  }
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+}
+
+static sConsoleRxBuffer rx_buffer_ = {
+  .cb_node = { .callback = console_rx_isr_ni },
+};
+
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
+
+
+
+
 /* Optimized version used inline.  Assumes that the uart is not
  * null. */
 static
@@ -208,38 +244,6 @@ hBSP430console (void)
 }
 
 #if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
-#if ((BSP430_CONSOLE_RX_BUFFER_SIZE) & ((BSP430_CONSOLE_RX_BUFFER_SIZE) - 1))
-#error BSP430_CONSOLE_RX_BUFFER_SIZE is not a power of two
-#endif /* validate BSP430_CONSOLE_RX_BUFFER_SIZE */
-#if 128 < (BSP430_CONSOLE_RX_BUFFER_SIZE)
-#error BSP430_CONSOLE_RX_BUFFER_SIZE is too large
-#endif /* validate BSP430_CONSOLE_RX_BUFFER_SIZE */
-
-typedef struct sConsoleRxBuffer {
-  sBSP430halISRVoidChainNode cb_node;
-  char buffer[BSP430_CONSOLE_RX_BUFFER_SIZE];
-  unsigned char head;
-  unsigned char tail;
-} sConsoleRxBuffer;
-
-static int
-console_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
-                   void * context)
-{
-  sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;
-  sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
-
-  bufp->buffer[bufp->head] = hal->rx_byte;
-  bufp->head = (bufp->head + 1) & ((sizeof(bufp->buffer) / sizeof(*bufp->buffer)) - 1);
-  if (bufp->head == bufp->tail) {
-    bufp->tail = (bufp->tail + 1) & ((sizeof(bufp->buffer) / sizeof(*bufp->buffer)) - 1);
-  }
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
-}
-
-static sConsoleRxBuffer rx_buffer_ = {
-  .cb_node = { .callback = console_rx_isr_ni },
-};
 
 static int
 console_getchar_ (int do_pop)

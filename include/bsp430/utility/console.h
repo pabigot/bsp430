@@ -140,13 +140,14 @@
 
 /** @def BSP430_CONSOLE_RX_BUFFER_SIZE
  *
- * Define this to a non-zero power of 2 to allow the console
- * infrastructure to buffer input in an ISR.  The value must not
- * exceed 128.
+ * Define this to the size of a buffer to be used for interrupt-driven
+ * console input.  The value must not exceed 254, and buffer
+ * management is most efficient if the value is a power of 2.
  *
  * If this has a value of zero, character input is not interrupt
- * driven. cgetchar_ni() will return the most recently received
+ * driven.  cgetchar_ni() will return the most recently received
  * character, if any, and cpeekchar_ni() will not be available.
+ * 
  * @defaulted */
 #ifndef BSP430_CONSOLE_RX_BUFFER_SIZE
 #define BSP430_CONSOLE_RX_BUFFER_SIZE 0
