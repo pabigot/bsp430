@@ -39,9 +39,7 @@
 #define HAL_HPL_FIELD(_hal,_fld) (*(BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal) ? &(_hal)->hpl.euscib->_fld : &(_hal)->hpl.euscia->_fld))
 
 #define SERIAL_HAL_WAKEUP_TRANSMIT_NI(_hal) do {                        \
-    if (! (HAL_HPL_FIELD(_hal,ie) & UCTXIE)) {                          \
-      HAL_HPL_FIELD(_hal,ie) |= (HAL_HPL_FIELD(_hal,ifg) & UCTXIFG);    \
-    }                                                                   \
+    HAL_HPL_FIELD(_hal,ie) |= UCTXIE;                                   \
   } while (0)
 
 #define UART_RAW_TRANSMIT_NI(_hal, _c) do {             \

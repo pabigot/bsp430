@@ -41,9 +41,7 @@
 #define SERIAL_HAL_HPLAUX(_hal) (_hal)->hpl_aux.usci
 
 #define WAKEUP_TRANSMIT_HAL_NI(_hal) do {                               \
-    if (! (*SERIAL_HAL_HPLAUX(_hal)->iep & SERIAL_HAL_HPLAUX(_hal)->tx_bit)) { \
-      *SERIAL_HAL_HPLAUX(_hal)->iep |= (*SERIAL_HAL_HPLAUX(_hal)->ifgp & SERIAL_HAL_HPLAUX(_hal)->tx_bit); \
-    }                                                                   \
+    *SERIAL_HAL_HPLAUX(_hal)->iep |= SERIAL_HAL_HPLAUX(_hal)->tx_bit;   \
   } while (0)
 
 #define RAW_TRANSMIT_HAL_NI(_hal, _c) do {                              \

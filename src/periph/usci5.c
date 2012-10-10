@@ -40,9 +40,7 @@
 #define SERIAL_HAL_HPL(_hal) ((_hal)->hpl.usci5)
 
 #define SERIAL_HPL_WAKEUP_TRANSMIT_NI(_hpl) do {        \
-    if (! (_hpl->ie & UCTXIE)) {                        \
-      _hpl->ie |= (_hpl->ifg & UCTXIFG);                \
-    }                                                   \
+    _hpl->ie |= UCTXIE;                                 \
   } while (0)
 
 #define SERIAL_HPL_RAW_TRANSMIT_NI(_hpl, _c) do {       \
