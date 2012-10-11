@@ -72,7 +72,8 @@
  *
  * @param lenp pointer to the length of the returned token.  On return
  * the value is set to the number of valid characters in the token
- * beginning at the returned pointer.
+ * beginning at the returned pointer.  The pointer may be null if the
+ * length of the returned token is not of interest.
  *
  * @return A pointer to the first character of the first token in @p
  * *command.  If there are no such characters, the pointer is just
@@ -101,6 +102,8 @@ const char * xBSP430cliNextToken (const char * * commandp,
  *
  * @param lenp as with xBSP430cliNextToken().  If a quoted token is
  * identified, the length excludes the opening and closing quotes.
+ * The pointer may be null if the length of the returned token is not
+ * of interest.
  *
  * @return as with xBSP430cliNextToken().  If a quoted token is
  * identified, the return value begins after the opening quote.

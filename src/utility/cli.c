@@ -85,7 +85,9 @@ xBSP430cliNextToken (const char * * commandp,
   /* Length of space skipped */
   *remainingp -= (lp - command);
   /* Length of non-space detected */
-  *lenp = lp - rv;
+  if (NULL != lenp) {
+    *lenp = lp - rv;
+  }
   return rv;
 }
 
@@ -133,7 +135,9 @@ xBSP430cliNextQToken (const char * * commandp,
   }
   *commandp = lp+1;
   *remainingp -= (*commandp - command);
-  *lenp = lp - rv;
+  if (NULL != lenp) {
+    *lenp = lp - rv;
+  }
   return rv;
 }
 
