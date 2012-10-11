@@ -684,10 +684,25 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * <li> invoke iBSP430clockConfigureLFXT1_ni() to enable and stabilize the crystal
  * </ul>
  *
- * If defined to a false value, vBSP430platformInitialize_ni() will
- * leave the crystal in its power-up configuration.  For most clock
- * peripherals this is a faulted mode because the XIN/XOUT pins are
- * reset to digital I/O rather than peripheral function mode.
+ * If defined to a false value, platforms which power-up with the crystal
+ * pins configured for their peripheral mode (specifically, 2xx family
+ * devices including the @link bsp430/platform/exp430g2/platform.h
+ * EXP430G2 "Launchpad" @endlink), should:
+ * <ul>
+ * <li> invoke iBSP430platformConfigurePeripheralPins_ni() to set the
+ * #BSP430_PERIPH_LFXT1 pins to their I/O function.
+ * </ul>
+ * Other platforms may treat this as if
+ * #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 was left undefined.
+ *
+ * If #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 is left undefined,
+ * vBSP430platformInitialize_ni() will leave the crystal in its
+ * power-up configuration.  For most clock peripherals this is a
+ * faulted mode because the XIN/XOUT pins are reset to digital I/O
+ * rather than peripheral function mode.  For 2xx-family devices the
+ * pins are defaulted to peripheral function mode, and the @link
+ * bsp430/periph/bc2.h BC2 @endlink configuration will normally use the
+ * crystal if it is populated.
  *
  * @see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
  *

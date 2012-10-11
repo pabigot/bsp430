@@ -41,6 +41,12 @@
  * platform is P1.4 and P1.5, located in the left header.  Place the
  * jumper across these pins.
  *
+ * <li> Since 2xx-family MCUs power-up with the standard XIN/XOUT pins
+ * enabled for their peripheral function in P2SEL, you may define
+ * #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 to 0 to explicitly disable
+ * the crystal on power-up.  This allows P2.6 and P2.7 to be used for
+ * other functions without concern that the clock depends on them.
+ *
  * </ul>
  *
  * @homepage http://github.com/pabigot/bsp430

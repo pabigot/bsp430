@@ -1,6 +1,13 @@
 /* Use a crystal if one is installed.  Much more accurate timing
- * results. */
+ * results.  Except, don't do this on a G2 where the crystal uses the
+ * same line as the Anaren CSn, and if we happen to run the
+ * application on a board with that populated it'd be used for the
+ * serial clock. */
+#if BSP430_PLATFORM_EXP430G2 - 0
+#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 0
+#else /* BSP430_PLATFORM_EXP430G2 */
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
+#endif /* BSP430_PLATFORM_EXP430G2 */
 
 /* 8 MHz system clock, 4 MHz SMCLK */
 #define BSP430_CLOCK_NOMINAL_MCLK_HZ (8*1000*1000UL)

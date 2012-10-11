@@ -164,7 +164,11 @@ void vBSP430platformInitialize_ni (void)
   vBSP430ledInitialize_ni();
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LEDS */
 
-#if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
+#if defined(BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1) && (0 == BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1)
+  /* Crystal explicitly disabled.  2xx family devices power-up with it enabled,
+   * so turn it off. */
+  (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 0);
+#elif BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
   /* Attempt to stabilize the crystal */
   (void)iBSP430clockConfigureLFXT1_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
