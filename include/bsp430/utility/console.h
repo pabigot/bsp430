@@ -61,7 +61,10 @@
  *
  * @warning The console routines are not safe to call from interrupts
  * when #BSP430_CONSOLE_TX_BUFFER_SIZE has been configured to enable
- * interrupt-driven output.
+ * interrupt-driven output.  If, at runtime, you determine you need to
+ * do console output without interrupts, use
+ * iBSP430consoleTransmitUseInterrupts_ni() to enable and disable
+ * interrupt-driven transmission.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -180,7 +183,9 @@
  * routines are no longer safe to call from within interrupt handlers.
  * They may be called with interrupts disabled, but are entitled to
  * enable interrupts in order to drain the transmission buffer to the
- * point where they can complete their output.
+ * point where they can complete their output.  Use
+ * iBSP430consoleTransmitUseInterrupts_ni() to enable and disable
+ * interrupt-driven transmission at runtime.
  *
  * @defaulted */
 #ifndef BSP430_CONSOLE_TX_BUFFER_SIZE
@@ -482,6 +487,31 @@ int iBSP430consoleDeconfigure (void);
  * null pointer is returned if the console has not been successfully
  * initialized. */
 hBSP430halSERIAL hBSP430console (void);
+
+/** Control whether console output uses interrupt-driven transmission.
+ *
+ * When #BSP430_CONSOLE_TX_BUFFER_SIZE is configured to a positive
+ * value, it is normally improper to use the console output routines
+ * from within interrupt handlers and in other cases where interrupts
+ * are disabled, since the routines might enable interrupts to allow
+ * the transmission buffer to drain.  This routine can be used at
+ * runtime to disable the interrupt-based transmission, thus allowing
+ * use of direct, busy-waiting console output.
+ *
+ * @note You probably want to invoke vBSP430consoleFlush() prior to
+ * disabling interrupt-driven transmission.  If you don't, whatever
+ * was unflushed will be displayed once the transmission is
+ * re-enabled.
+ *
+ * @param enablep nonzero if interrupt-drive transmission is to be
+ * used; zero to disable the transmit interrupt on the console UART
+ * and use direct UART writes instead.
+ *
+ * @return 0 if the configuration was accepted.  -1 if @p enable is
+ * nonzero but the application was not configured with
+ * interrupt-driven transmission enabled.
+ */
+int iBSP430consoleTransmitUseInterrupts_ni (int enablep);
 
 /** Potentially block until space is available in console transmit buffer.
  *

@@ -41,6 +41,7 @@ void dumpRegion (const char * header,
 
 void main ()
 {
+  BSP430_CORE_INTERRUPT_STATE_T istate;
 #if BSP430_MODULE_SYS - 0
   unsigned long reset_causes = 0;
   unsigned int reset_flags = 0;
@@ -92,18 +93,33 @@ void main ()
   cputchar_ni('\n');
 #endif /* BSP430_MODULE_SYS */
 
+  BSP430_CORE_ENABLE_INTERRUPT();
+
   memcpy(ivect, VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
   dumpRegion("Cached vectors", ivect, VECTOR_LENGTH_BYTES);
   dumpRegion("Vectors", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
-  (void)iBSP430flashEraseSegment_ni((void*)0xFE00);
-  dumpRegion("Vectors with 0xFE00", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
-  (void)iBSP430flashEraseSegment_ni(VECTOR_OFFSET);
-  vBSP430ledSet(0, 1);
-  dumpRegion("Vectors as erased", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
-  memcpy(erased_ivect, VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
-  (void)iBSP430flashWriteData_ni(VECTOR_OFFSET, ivect, VECTOR_LENGTH_BYTES);
-  vBSP430ledSet(1, 1);
+
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    /* Note: You need to flush the console if you want to see the
+     * output now; otherwise it'll be printed once interrupt-driven
+     * transmission is re-enabled. */
+    iBSP430consoleFlush();
+    iBSP430consoleTransmitUseInterrupts_ni(0);
+    (void)iBSP430flashEraseSegment_ni((void*)0xFE00);
+    dumpRegion("Vectors with 0xFE00", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
+    (void)iBSP430flashEraseSegment_ni(VECTOR_OFFSET);
+    vBSP430ledSet(0, 1);
+    dumpRegion("Vectors as erased", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
+    memcpy(erased_ivect, VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
+    (void)iBSP430flashWriteData_ni(VECTOR_OFFSET, ivect, VECTOR_LENGTH_BYTES);
+    vBSP430ledSet(1, 1);
+    iBSP430consoleTransmitUseInterrupts_ni(1);
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   dumpRegion("Erased Vectors", erased_ivect, VECTOR_LENGTH_BYTES);
   dumpRegion("Restored Vectors", VECTOR_OFFSET, VECTOR_LENGTH_BYTES);
+  iBSP430consoleFlush();
 }

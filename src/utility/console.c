@@ -37,11 +37,11 @@
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
+#include <bsp430/platform.h>
 #include <bsp430/utility/console.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <bsp430/platform.h>
 
 #if BSP430_CONSOLE - 0
 
@@ -148,7 +148,7 @@ static sConsoleTxBuffer tx_buffer_ = {
 };
 
 int
-console_tx_queue_ni (hBSP430halSERIAL uart, int c)
+console_tx_queue_ni (hBSP430halSERIAL uart, uint8_t c)
 {
   sConsoleTxBuffer * bufp = &tx_buffer_;
 
@@ -173,7 +173,9 @@ console_tx_queue_ni (hBSP430halSERIAL uart, int c)
   return c;
 }
 
-#define UART_TRANSMIT(uart_, c_) console_tx_queue_ni(uart_, c_)
+static int (* uartTransmit_ni) (hBSP430halSERIAL uart, uint8_t c);
+
+#define UART_TRANSMIT(uart_, c_) uartTransmit_ni(uart_, c_)
 
 #else /* BSP430_CONSOLE_TX_BUFFER_SIZE */
 
@@ -381,6 +383,36 @@ cgetchar_ni (void)
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
 int
+iBSP430consoleTransmitUseInterrupts_ni (int enablep)
+{
+#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+  if (enablep) {
+    if (uartTransmit_ni != console_tx_queue_ni) {
+      uartTransmit_ni = console_tx_queue_ni;
+      vBSP430serialFlush_ni(console_hal_);
+      iBSP430serialSetHold_ni(console_hal_, 1);
+      BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
+      iBSP430serialSetHold_ni(console_hal_, 0);
+      if (tx_buffer_.head != tx_buffer_.tail) {
+        vBSP430serialWakeupTransmit_ni(console_hal_);
+      }
+    }
+  } else {
+    if (uartTransmit_ni != iBSP430uartTxByte_ni) {
+      uartTransmit_ni = iBSP430uartTxByte_ni;
+      vBSP430serialFlush_ni(console_hal_);
+      iBSP430serialSetHold_ni(console_hal_, 1);
+      BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
+      iBSP430serialSetHold_ni(console_hal_, 0);
+    }
+  }
+  return 0;
+#else /* BSP430_CONSOLE_TX_BUFFER_SIZE */
+  return enablep ? -1 : 0;
+#endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
+}
+
+int
 iBSP430consoleInitialize (void)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
@@ -409,6 +441,7 @@ iBSP430consoleInitialize (void)
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
 #if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+    uartTransmit_ni = console_tx_queue_ni;
     tx_buffer_.wake_available = 0;
     tx_buffer_.head = tx_buffer_.tail = 0;
     BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, hal->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
