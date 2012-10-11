@@ -610,7 +610,7 @@ completion_callback (struct sBSP430cliMatchCallback * self,
   if (0 == cdp->ncandidates) {
     cdp->append_len = strlen(cmd->key);
   } else {
-    const char * p1 = cdp->returned_candidates[0]->key;
+    const char * p1 = cdp->returned_candidates[0];
     const char * p2 = cmd->key;
     while ((*p1 == *p2)
            && (0 != *p2)
@@ -621,7 +621,7 @@ completion_callback (struct sBSP430cliMatchCallback * self,
     cdp->append_len = p2 - cmd->key;
   }
   if (cdp->ncandidates < cdp->max_returned_candidates) {
-    cdp->returned_candidates[cdp->ncandidates] = cmd;
+    cdp->returned_candidates[cdp->ncandidates] = cmd->key;
   }
   ++cdp->ncandidates;
 }
@@ -646,7 +646,7 @@ doCompletion_ (struct sBSP430cliCommandLink * chain,
 {
   sBSP430cliCommandCompletionData * cdp = (sBSP430cliCommandCompletionData *)param;
   const sBSP430cliCommand * command_set;
-  const sBSP430cliCommand * matches[1];
+  const char * matches[1];
   const char * remstr;
   size_t remstr_len;
   struct sCallbackParam callback_param;
@@ -685,7 +685,7 @@ doCompletion_ (struct sBSP430cliCommandLink * chain,
       /* Add the output fields that would normally be filled in below,
        * if we hadn't already identified the unique result. */
       if (0 < cdp->max_returned_candidates) {
-        cdp->returned_candidates[0] = chain->cmd;
+        cdp->returned_candidates[0] = chain->cmd->key;
       }
       cdp->ncandidates = 1;
       return rv;
@@ -710,16 +710,20 @@ doCompletion_ (struct sBSP430cliCommandLink * chain,
     cdp->max_returned_candidates = sizeof(matches)/sizeof(*matches);
   }
 
-  /* Walk the command set, identifying matching candidates and
-   * calculating their common prefix. */
-  callback_param.match_callback.callback = completion_callback;
-  callback_param.cdp = cdp;
-  iBSP430cliMatchCommand(command_set, argstr, argstr_len, NULL, &callback_param.match_callback, NULL, NULL);
+  if (NULL == command_set) {
+    /* Alternative source for completions? */
+  } else {
+    /* Walk the command set, identifying matching candidates and
+     * calculating their common prefix. */
+    callback_param.match_callback.callback = completion_callback;
+    callback_param.cdp = cdp;
+    iBSP430cliMatchCommand(command_set, argstr, argstr_len, NULL, &callback_param.match_callback, NULL, NULL);
+  }
 
   if (key_len < cdp->append_len) {
     /* Whatever we were given is sufficient to identify a common
      * prefix, if not a whole command.  Append it. */
-    cdp->append = cdp->returned_candidates[0]->key + key_len;
+    cdp->append = cdp->returned_candidates[0] + key_len;
     cdp->append_len -= key_len;
     if (1 == cdp->ncandidates) {
       rv |= eBSP430cliConsole_COMPLETE_SPACE;
@@ -754,7 +758,7 @@ iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   sBSP430cliCommandCompletionData ccd;
-  const sBSP430cliCommand * matches[BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS];
+  const char * matches[BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS];
   int flags;
 
   memset(&ccd, 0, sizeof(ccd));
@@ -797,7 +801,7 @@ iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
       cprintf("\nCandidates:");
       while ((ci < ccd.ncandidates)
              && (ci < ccd.max_returned_candidates)) {
-        cprintf(" %s", ccd.returned_candidates[ci]->key);
+        cprintf(" %s", ccd.returned_candidates[ci]);
         ++ci;
       }
       if (ci < ccd.ncandidates) {

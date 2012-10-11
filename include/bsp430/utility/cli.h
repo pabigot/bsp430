@@ -779,11 +779,12 @@ typedef struct sBSP430cliCommandCompletionData {
    * when attempting to execute the command. */
   const sBSP430cliCommand * command_set;
 
-  /** Pointer to where the user wants candidates returned.  A null
-   * value indicates candidate commands will not be returned to the
-   * user.  When used internally, the pointer must not be null: the
-   * module will provide a temporary buffer in this case. */
-  const sBSP430cliCommand * * returned_candidates;
+  /** Pointer to where the user wants candidate completion text
+   * returned.  A null value indicates candidate completions will not
+   * be returned to the user.  When used internally, the pointer must
+   * not be null: the module will provide a temporary buffer in this
+   * case. */
+  const char * * returned_candidates;
 
   /** Maximum number of elements that can be placed in @a
    * candidatesp. */
@@ -795,7 +796,7 @@ typedef struct sBSP430cliCommandCompletionData {
   /** A pointer to the text to be appended.  If this is null,
    * completion failed to identify data to append to the command.
    * Otherwise this will be a reference to a position in one of the
-   * keys in @a command_set. */
+   * keys in @a command_set or a non-command completion string. */
   const char * append;
 
   /** The number of characters to be appended, when the completion is

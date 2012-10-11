@@ -157,7 +157,7 @@ void
 
 testCommandCompletion (void)
 {
-  const sBSP430cliCommand * cands[5];
+  const char * cands[5];
   sBSP430cliCommandCompletionData ccd;
   int flags;
 
@@ -173,8 +173,8 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL, flags);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, ccd.ncandidates);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND, ccd.returned_candidates[0]);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND->next, ccd.returned_candidates[1]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND->key, ccd.returned_candidates[0]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND->next->key, ccd.returned_candidates[1]);
 
   ccd.command = "c"; /* + "omplete " */
   flags = iBSP430cliCommandCompletion(&ccd);
@@ -182,7 +182,7 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.key+1, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(7, ccd.append_len);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(&dcmd_complete, ccd.returned_candidates[0]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.key, ccd.returned_candidates[0]);
 
   ccd.command = "complete"; /* + " " */
   flags = iBSP430cliCommandCompletion(&ccd);
@@ -190,7 +190,7 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.key+8, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0, ccd.append_len);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(&dcmd_complete, ccd.returned_candidates[0]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.key, ccd.returned_candidates[0]);
 
   ccd.command = "complete "; /* + "com" */
   flags = iBSP430cliCommandCompletion(&ccd);
@@ -198,16 +198,16 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child->key, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, ccd.append_len);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child, ccd.returned_candidates[0]);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child->next, ccd.returned_candidates[1]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child->key, ccd.returned_candidates[0]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child->next->key, ccd.returned_candidates[1]);
 
   ccd.command = "complete com"; /* candidates, no completion */
   flags = iBSP430cliCommandCompletion(&ccd);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL, flags);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, ccd.append);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child, ccd.returned_candidates[0]);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child->next, ccd.returned_candidates[1]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child->key, ccd.returned_candidates[0]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete.child->next->key, ccd.returned_candidates[1]);
 
   ccd.command = "complete comp"; /* + "onent " */
   flags = iBSP430cliCommandCompletion(&ccd);
