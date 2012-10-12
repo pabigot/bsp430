@@ -781,13 +781,37 @@ vBSP430cliCompletionHelperStrings (struct sBSP430cliCompletionHelper * self,
 
   key = xBSP430cliNextToken(&remstr, &remstr_len, &key_len);
   for (ni = 0; ni < chsp->len; ++ni) {
-    if (0 == strncmp(key, chsp->strings[ni], key_len)) {
+    if ((NULL != chsp->strings[ni])
+        && (0 == strncmp(key, chsp->strings[ni], key_len))) {
       vBSP430cliCompletionHelperCallback(cdp, chsp->strings[ni]);
     }
   }
 }
 
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
+
+const char * const *
+xBSP430cliLookupHelperString (const struct sBSP430cliCompletionHelperStrings * chsp,
+                              const char * argstr)
+{
+  int ni;
+  size_t argstr_len = strlen(argstr);
+  size_t key_len;
+  const char * key = xBSP430cliNextToken(&argstr, &argstr_len, &key_len);
+  const char * const * rv = NULL;
+
+  for (ni = 0; ni < chsp->len; ++ni) {
+    const char * const * sp = chsp->strings + ni;
+    if ((NULL != *sp) && (0 == strncmp(key, *sp, key_len))) {
+      if (NULL == rv) {
+        rv = sp;
+        continue;
+      }
+      return NULL;
+    }
+  }
+  return rv;
+}
 
 #if 0 < BSP430_CLI_CONSOLE_BUFFER_SIZE
 

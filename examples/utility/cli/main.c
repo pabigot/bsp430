@@ -276,23 +276,6 @@ static const char * const numbers[] = {
   "ten"
 };
 static const size_t number_len = sizeof(numbers)/sizeof(*numbers);
-static const char * const * findNumber (const char * key,
-                                        size_t key_len)
-{
-  int ni;
-  const char * const * rv = NULL;
-  for (ni = 0; ni < number_len; ++ni) {
-    const char * const * np = numbers + ni;
-    if (0 == strncmp(key, *np, key_len)) {
-      if (NULL == rv) {
-        rv = np;
-        continue;
-      }
-      return NULL;
-    }
-  }
-  return rv;
-}
 #if configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0
 static sBSP430cliCompletionHelperStrings completion_helper_say = {
   .completion_helper = { .helper = vBSP430cliCompletionHelperStrings },
@@ -304,17 +287,13 @@ static sBSP430cliCompletionHelperStrings completion_helper_say = {
 static int
 cmd_say (const char * argstr)
 {
-  const char * command = argstr;
-  size_t argstr_len = strlen(argstr);
-  size_t key_len;
-  const char * tp = xBSP430cliNextToken(&argstr, &argstr_len, &key_len);
-  const char * const * np = findNumber(tp, key_len);
+  const char * const * np = xBSP430cliLookupHelperString(&completion_helper_say, argstr);
 
   if (NULL == np) {
-    cprintf("No match for '%s' from '%s'\n", tp, command);
+    cprintf("No match from '%s'\n", argstr);
     return -1;
   }
-  cprintf("Input %s matches %s is %u\n", tp, *np, np - numbers);
+  cprintf("Match %s position %u\n", *np, np - numbers);
   return 0;
 }
 

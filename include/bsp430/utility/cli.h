@@ -184,8 +184,9 @@ typedef struct sBSP430cliCommandLink {
 /** A function that implements customized completion.
  *
  * This is invoked by iBSP430cliCommandCompletion() when completion is
- * required for a command that has a registered completion helper.  It
- * in turn should invoke vBSP430cliCompletionHelperCallback() to
+ * required for a command that has a registered @link
+ * sBSP430cliCommand::completion_helper completion helper@endlink.
+ * It in turn should invoke vBSP430cliCompletionHelperCallback() to
  * register acceptable tokens with the completion infrastructure.
  *
  * @param self the helper object registered within the command.  The
@@ -272,6 +273,29 @@ void vBSP430cliCompletionHelperStrings (struct sBSP430cliCompletionHelper * self
                                         const char * argstr,
                                         size_t argstr_len,
                                         struct sBSP430cliCompletionData * cdp);
+
+/** Utility function for user code to use #sBSP430cliCompletionHelperStrings.
+ *
+ * This function searches for a unique match in the
+ * sBSP430cliCompletionHelperStrings::strings array using the first @p
+ * argstr_len chars of @p argstr.  If successfully found, a pointer to
+ * the element in sBSP430cliCompletionHelperStrings::strings that
+ * matches is returned.  This in turn can be used to determine the
+ * ordinal position of the match within the array, or to determine the
+ * string that was matched.
+ *
+ * If @p argstr does not provide a unique prefix among the candidates,
+ * a null pointer is returned.
+ *
+ * @param chsp the record containing the list of acceptable tokens
+ *
+ * @param argstr the text used for input.  This may have leading
+ * spaces and trailing material; #iBSP430cliNextToken() is used to
+ * extract the leading token, which is used for the comparison.
+ *
+ * @return a pointer to a position in @p chsp->strings, or NULL */
+const char * const * xBSP430cliLookupHelperString (const struct sBSP430cliCompletionHelperStrings * chsp,
+                                                   const char * argstr);
 
 /** Type for a function that implements a command.
  *

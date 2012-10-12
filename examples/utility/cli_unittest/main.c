@@ -262,8 +262,13 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[3] + 2, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, ccd.append_len);
-}
 
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, xBSP430cliLookupHelperString(&completion_helper_say, "th"));
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, xBSP430cliLookupHelperString(&completion_helper_say, "thr"));
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, xBSP430cliLookupHelperString(&completion_helper_say, "t"));
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, xBSP430cliLookupHelperString(&completion_helper_say, "threepio"));
+
+}
 
 void main (void)
 {
