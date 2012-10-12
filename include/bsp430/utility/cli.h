@@ -202,7 +202,7 @@ typedef struct sBSP430cliCommandLink {
  * @param cdp the aggregation of completion data
  *
  * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER */
-typedef void (* vBSP430cliCompletionHelper) (struct sBSP430cliCompletionHelper * self,
+typedef void (* vBSP430cliCompletionHelper) (const struct sBSP430cliCompletionHelper * self,
                                              const char * argstr,
                                              size_t argstr_len,
                                              struct sBSP430cliCompletionData * cdp);
@@ -269,7 +269,7 @@ typedef struct sBSP430cliCompletionHelperStrings {
  * @param cdp as in #vBSP430cliCompletionHelper
  *
  * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER */
-void vBSP430cliCompletionHelperStrings (struct sBSP430cliCompletionHelper * self,
+void vBSP430cliCompletionHelperStrings (const struct sBSP430cliCompletionHelper * self,
                                         const char * argstr,
                                         size_t argstr_len,
                                         struct sBSP430cliCompletionData * cdp);
@@ -337,8 +337,9 @@ typedef struct sBSP430cliCommand {
       && (configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0))
   /** Optional pointer to material supporting customized completion.
    *
+   * @note 
    * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER */
-  sBSP430cliCompletionHelper * completion_helper;
+  const sBSP430cliCompletionHelper * completion_helper;
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
 
   /** Subordinate command structures.

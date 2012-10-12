@@ -90,7 +90,7 @@ cmd_uptime (const char * argstr)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return 0;
 }
-static sBSP430cliCommand dcmd_uptime = {
+static const sBSP430cliCommand dcmd_uptime = {
   .key = "uptime",
   .help = "# Show system uptime",
   .next = LAST_COMMAND,
@@ -116,7 +116,7 @@ cmd_expand (const char * argstr)
 {
   return iBSP430cliParseCommand(commandSet, NULL, argstr, NULL, cmd_expand_);
 }
-static sBSP430cliCommand dcmd_expand = {
+static const sBSP430cliCommand dcmd_expand = {
   .key = "expand",
   .help = "[command...] # Show the expansion of the command without executing it",
   .next = LAST_COMMAND,
@@ -132,7 +132,7 @@ cmd_show (const char * argstr)
   dumpData();
   return 0;
 }
-static sBSP430cliCommand dcmd_show = {
+static const sBSP430cliCommand dcmd_show = {
   .key = "show",
   .help = "# Display the value of variables",
   .next = LAST_COMMAND,
@@ -277,7 +277,7 @@ static const char * const numbers[] = {
 };
 static const size_t number_len = sizeof(numbers)/sizeof(*numbers);
 #if configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0
-static sBSP430cliCompletionHelperStrings completion_helper_say = {
+static const sBSP430cliCompletionHelperStrings completion_helper_say = {
   .completion_helper = { .helper = vBSP430cliCompletionHelperStrings },
   .strings = numbers,
   .len = sizeof(numbers)/sizeof(*numbers)
@@ -318,7 +318,7 @@ cmd_help (sBSP430cliCommandLink * chain,
   vBSP430cliConsoleDisplayHelp(chain->cmd);
   return 0;
 }
-static sBSP430cliCommand dcmd_help = {
+static const sBSP430cliCommand dcmd_help = {
   .key = "help",
   .help = "[cmd] # Show help on cmd or all commands",
   .next = LAST_COMMAND,

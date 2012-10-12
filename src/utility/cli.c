@@ -767,7 +767,7 @@ iBSP430cliCommandCompletion (sBSP430cliCompletionData * cdp)
      && (configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0))
 
 void
-vBSP430cliCompletionHelperStrings (struct sBSP430cliCompletionHelper * self,
+vBSP430cliCompletionHelperStrings (const struct sBSP430cliCompletionHelper * self,
                                    const char * argstr,
                                    size_t argstr_len,
                                    struct sBSP430cliCompletionData * cdp)
