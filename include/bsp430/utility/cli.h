@@ -59,6 +59,43 @@
 
 #include <bsp430/core.h>
 
+/** Define to a true value to request that command completion be enabled.
+ *
+ * When command completion is enabled, a horizontal tab in command
+ * input causes a flag to be returned to the caller indicating a need
+ * to auto-fill the command buffer.
+ *
+ * @cppflag
+ * @defaulted
+ */
+#ifndef configBSP430_CLI_COMMAND_COMPLETION
+#define configBSP430_CLI_COMMAND_COMPLETION 0
+#endif /* configBSP430_CLI_COMMAND_COMPLETION */
+
+/** Define to a true value to support customized completion.
+ *
+ * Default command completion will identify candidates using keys in a
+ * chain of subcommands registered as a child of a command.  In some
+ * contexts, the set of valid completions may not be a command; for
+ * example, a command may accept a set of peripheral register names.
+ * Because support for these cases incurs overhead in all command
+ * structures and is uncommon, it must be explicitly enabled.
+ *
+ * Setting this to a true value causes the
+ * sBSP430cliCommand::completion_helper field to be declared within
+ * the structure.  That in turn may be set to an instance of the
+ * #sBSP430cliCompletionHelper structure, which in turn will be
+ * invoked to provide completion services in preference to using
+ * subcommands.
+ *
+ * @cppflag
+ * @defaulted
+ * @dependency #configBSP430_CLI_COMMAND_COMPLETION
+ */
+#ifndef configBSP430_CLI_COMMAND_COMPLETION_HELPER
+#define configBSP430_CLI_COMMAND_COMPLETION_HELPER 0
+#endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
+
 /** Get the next token in the command string.
  *
  * @param commandp pointer to a pointer into an immutable buffer
@@ -115,6 +152,8 @@ const char * xBSP430cliNextQToken (const char * * commandp,
 /* Forward declarations */
 struct sBSP430cliCommand;
 struct sBSP430cliCommandLink;
+struct sBSP430cliCompletionData;
+struct sBSP430cliCompletionHelper;
 
 /** Link in a command chain.
  *
@@ -141,6 +180,98 @@ typedef struct sBSP430cliCommandLink {
   const struct sBSP430cliCommand * cmd;
 
 } sBSP430cliCommandLink;
+
+/** A function that implements customized completion.
+ *
+ * This is invoked by iBSP430cliCommandCompletion() when completion is
+ * required for a command that has a registered completion helper.  It
+ * in turn should invoke vBSP430cliCompletionHelperCallback() to
+ * register acceptable tokens with the completion infrastructure.
+ *
+ * @param self the helper object registered within the command.  The
+ * techniques of @ref callback_appinfo may be used to provide
+ * command-specific context.
+ *
+ * @param argstr the text, including leading spaces, that comprise
+ * the remainder of the input.  One or more tokens from this should
+ * be used to effect completion.
+ *
+ * @param argstr_len the number of valid characters in @p argstr
+ *
+ * @param cdp the aggregation of completion data
+ *
+ * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER */
+typedef void (* vBSP430cliCompletionHelper) (struct sBSP430cliCompletionHelper * self,
+                                             const char * argstr,
+                                             size_t argstr_len,
+                                             struct sBSP430cliCompletionData * cdp);
+
+/** Structure encoding information to identify candidate completions.
+ *
+ * When #configBSP430_CLI_COMMAND_COMPLETION_HELPER is true
+ * sBSP430cliCommand::completion_helper is present in every command
+ * definition to support customized completion for commands that do
+ * not have subcommands.
+ *
+ * This base structure contains only the pointer to the function that
+ * implements the completion.  A pointer to the structure instance is
+ * passed to the function, and the techniques of @ref callback_appinfo
+ * may be used to provide additional information.  See
+ * #sBSP430cliCompletionHelperStrings. */
+typedef struct sBSP430cliCompletionHelper {
+  /** The function that implements the completion operation. */
+  vBSP430cliCompletionHelper helper;
+} sBSP430cliCompletionHelper;
+
+/** Structure supporting completion based on a static list of
+ * acceptable strings.
+ *
+ * One of the most common cases for non-command completion is
+ * selection among a set of permitted tokens.  This structure encodes
+ * the necessary information to convey those tokens to
+ * #vBSP430cliCompletionHelperStrings, which itself should be stored
+ * as @a completion_helper.helper.
+ */
+typedef struct sBSP430cliCompletionHelperStrings {
+  /** The common completion helper data, which should have its
+   * sBSP430cliCompletionHelper::helper field set to
+   * vBSP430cliCompletionHelperStrings(). */
+  sBSP430cliCompletionHelper completion_helper;
+
+  /** A pointer to a sequence of pointers to valid strings.  Note that
+   * it is explicitly permitted for one or more of the contained
+   * pointers to be null; those entries are ignored for the purposes
+   * of completion. */
+  const char * const * strings;
+
+  /** The number of elements in @a strings. */
+  size_t len;
+} sBSP430cliCompletionHelperStrings;
+
+/** A function that provides completion where a fixed set of tokens is
+ * permitted.
+ *
+ * Specifically, this extracts the first token of @p argstr and
+ * compares it against each string in the
+ * #sBSP430cliCompletionHelperStrings structure of which @p self is
+ * the first member.  Each string for which @p argstr is a prefix is
+ * registered as an acceptable completion in @p cdp.
+ *
+ * See #sBSP430cliCompletionHelperStrings.
+ *
+ * @param self as in #vBSP430cliCompletionHelper
+ *
+ * @param argstr as in #vBSP430cliCompletionHelper
+ *
+ * @param argstr_len as in #vBSP430cliCompletionHelper
+ *
+ * @param cdp as in #vBSP430cliCompletionHelper
+ *
+ * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER */
+void vBSP430cliCompletionHelperStrings (struct sBSP430cliCompletionHelper * self,
+                                        const char * argstr,
+                                        size_t argstr_len,
+                                        struct sBSP430cliCompletionData * cdp);
 
 /** Type for a function that implements a command.
  *
@@ -176,6 +307,15 @@ typedef struct sBSP430cliCommand {
    * To save space where diagnostics and interactive help are
    * unnecessary, this may be a null pointer. */
   const char * help;
+
+#if defined(BSP430_DOXYGEN)                                     \
+  || ((configBSP430_CLI_COMMAND_COMPLETION - 0)                 \
+      && (configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0))
+  /** Optional pointer to material supporting customized completion.
+   *
+   * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER */
+  sBSP430cliCompletionHelper * completion_helper;
+#endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
 
   /** Subordinate command structures.
    *
@@ -677,19 +817,6 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 #define BSP430_CLI_CONSOLE_BUFFER_SIZE 0
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
-/** Define to a true value to request that command completion be enabled.
- *
- * When command completion is enabled, a horizontal tab in command
- * input causes a flag to be returned to the caller indicating a need
- * to auto-fill the command buffer.
- *
- * @cppflag
- * @defaulted
- */
-#ifndef configBSP430_CLI_COMMAND_COMPLETION
-#define configBSP430_CLI_COMMAND_COMPLETION 0
-#endif /* configBSP430_CLI_COMMAND_COMPLETION */
-
 /** Enumeration of bit values returned from
  * iBSP430cliConsoleProcessInput_ni(). */
 typedef enum eBSP430cliConsole {
@@ -762,7 +889,7 @@ typedef enum eBSP430cliConsole {
  * the command completion infrastructure.
  *
  * This is a parameter to iBSP430cliCommandCompletion(). */
-typedef struct sBSP430cliCommandCompletionData {
+typedef struct sBSP430cliCompletionData {
   /** The command that is to be completed.  On the initial call to
    * iBSP430cliCommandCompletion() this should be NUL terminated, and
    * the length will be stored in @a command_len.  During execution @a
@@ -776,7 +903,8 @@ typedef struct sBSP430cliCommandCompletionData {
   /** The set of commands against which completion is performed.  This
    * is the set corresponding to the first token in @a command, which
    * is parsed to reach the completion point using the same process as
-   * when attempting to execute the command. */
+   * when attempting to execute the command.  @a command_set is
+   * ignored once the first command has been resolved. */
   const sBSP430cliCommand * command_set;
 
   /** Pointer to where the user wants candidate completion text
@@ -803,7 +931,21 @@ typedef struct sBSP430cliCommandCompletionData {
    * not unique.  This value is valid only when @a append is not a
    * null pointer. */
   size_t append_len;
-} sBSP430cliCommandCompletionData;
+} sBSP430cliCompletionData;
+
+/** Register an acceptable candidate for command completion.
+ *
+ * This function calculates the new common prefix and updates the list
+ * of candidate completions to include the provided new candidate.  It
+ * is invoked by iBSP430cliCommandCompletion() indirectly through the
+ * use of internal and external #sBSP430cliCompletionHelper instances.
+ *
+ * @param cdp the aggregation of completion data
+ *
+ * @param candidate a token that would be acceptable at the current
+ * point of processing */
+void vBSP430cliCompletionHelperCallback (sBSP430cliCompletionData * cdp,
+                                         const char * candidate);
 
 /** Return a pointer to the internal console buffer.
  *
@@ -912,7 +1054,7 @@ int iBSP430cliConsoleBufferProcessInput_ni (void);
  * @dependency #configBSP430_CLI_COMMAND_COMPLETION
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_CLI_COMMAND_COMPLETION - 0)
-int iBSP430cliCommandCompletion (sBSP430cliCommandCompletionData * cdp);
+int iBSP430cliCommandCompletion (sBSP430cliCompletionData * cdp);
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
 
 #ifndef BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS

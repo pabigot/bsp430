@@ -262,6 +262,74 @@ static const sBSP430cliCommand dcmd_complete = {
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_complete
 
+static const char * const numbers[] = {
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+  "ten"
+};
+static const size_t number_len = sizeof(numbers)/sizeof(*numbers);
+static const char * const * findNumber (const char * key,
+                                        size_t key_len)
+{
+  int ni;
+  const char * const * rv = NULL;
+  for (ni = 0; ni < number_len; ++ni) {
+    const char * const * np = numbers + ni;
+    if (0 == strncmp(key, *np, key_len)) {
+      if (NULL == rv) {
+        rv = np;
+        continue;
+      }
+      return NULL;
+    }
+  }
+  return rv;
+}
+#if configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0
+static sBSP430cliCompletionHelperStrings completion_helper_say = {
+  .completion_helper = { .helper = vBSP430cliCompletionHelperStrings },
+  .strings = numbers,
+  .len = sizeof(numbers)/sizeof(*numbers)
+};
+#endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
+
+static int
+cmd_say (const char * argstr)
+{
+  const char * command = argstr;
+  size_t argstr_len = strlen(argstr);
+  size_t key_len;
+  const char * tp = xBSP430cliNextToken(&argstr, &argstr_len, &key_len);
+  const char * const * np = findNumber(tp, key_len);
+
+  if (NULL == np) {
+    cprintf("No match for '%s' from '%s'\n", tp, command);
+    return -1;
+  }
+  cprintf("Input %s matches %s is %u\n", tp, *np, np - numbers);
+  return 0;
+}
+
+static const sBSP430cliCommand dcmd_say = {
+  .key = "say",
+#if configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0
+  .completion_helper = &completion_helper_say.completion_helper,
+#endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_say
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND (&dcmd_say)
+
 static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,

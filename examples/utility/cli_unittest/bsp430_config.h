@@ -14,8 +14,9 @@
 /* Provide a console buffer for testing */
 #define BSP430_CLI_CONSOLE_BUFFER_SIZE 16
 
-/* Enable completion */
+/* Enable command completion, and completion helper */
 #define configBSP430_CLI_COMMAND_COMPLETION 1
+#define configBSP430_CLI_COMMAND_COMPLETION_HELPER 1
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

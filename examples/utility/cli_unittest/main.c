@@ -153,12 +153,33 @@ static const sBSP430cliCommand dcmd_other = {
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_other)
 
-void
+static const char * const numbers[] = {
+  "zero",
+  "one",
+  "two",
+  "three"
+};
+static const size_t number_len = sizeof(numbers)/sizeof(*numbers);
+static sBSP430cliCompletionHelperStrings completion_helper_say = {
+  .completion_helper = { .helper = vBSP430cliCompletionHelperStrings },
+  .strings = numbers,
+  .len = sizeof(numbers)/sizeof(*numbers)
+};
+static const sBSP430cliCommand dcmd_say = {
+  .key = "say",
+  .completion_helper = &completion_helper_say.completion_helper,
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param = cmd_dummy
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND (&dcmd_say)
 
+void
 testCommandCompletion (void)
 {
   const char * cands[5];
-  sBSP430cliCommandCompletionData ccd;
+  sBSP430cliCompletionData ccd;
   int flags;
 
   //vBSP430cliConsoleDisplayHelp(LAST_COMMAND);
@@ -172,9 +193,10 @@ testCommandCompletion (void)
   flags = iBSP430cliCommandCompletion(&ccd);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL, flags);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, ccd.append);
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, ccd.ncandidates);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND->key, ccd.returned_candidates[0]);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND->next->key, ccd.returned_candidates[1]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(LAST_COMMAND->next->next->key, ccd.returned_candidates[2]);
 
   ccd.command = "c"; /* + "omplete " */
   flags = iBSP430cliCommandCompletion(&ccd);
@@ -215,6 +237,31 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(dcmd_complete_component.key + 4, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(5, ccd.append_len);
+
+  ccd.command = "say ";
+  flags = iBSP430cliCommandCompletion(&ccd);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL, flags);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, ccd.append);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(4, ccd.ncandidates);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[0], ccd.returned_candidates[0]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[1], ccd.returned_candidates[1]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[2], ccd.returned_candidates[2]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[3], ccd.returned_candidates[3]);
+
+  ccd.command = "say t";
+  flags = iBSP430cliCommandCompletion(&ccd);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL, flags);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, ccd.append);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, ccd.ncandidates);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[2], ccd.returned_candidates[0]);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[3], ccd.returned_candidates[1]);
+
+  ccd.command = "say th"; /* + "ree " */
+  flags = iBSP430cliCommandCompletion(&ccd);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(eBSP430cliConsole_REPAINT_BEL|eBSP430cliConsole_COMPLETE_SPACE, flags);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, ccd.ncandidates);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[3] + 2, ccd.append);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, ccd.append_len);
 }
 
 
