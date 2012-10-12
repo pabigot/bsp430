@@ -39,7 +39,7 @@
  * disabled, it disables interrupts while operating to ensure that
  * interleaved messages do not occur, transmits with direct UART
  * writes, and is "safe" for call from within interrupt handlers.
- * 
+ *
  * cputs() is provided where the complexity of printf is not required
  * but atomic output is desired.  Other routines permit display of
  * plain text without a newline (cputtext_ni()), single characters
@@ -163,7 +163,7 @@
  * If this has a value of zero, character input is not interrupt
  * driven.  cgetchar_ni() will return the most recently received
  * character, if any, and cpeekchar_ni() will not be available.
- * 
+ *
  * @defaulted */
 #ifndef BSP430_CONSOLE_RX_BUFFER_SIZE
 #define BSP430_CONSOLE_RX_BUFFER_SIZE 0

@@ -55,7 +55,7 @@ void main ()
   unsigned long prep_utt = 0;
   unsigned long emit_utt = 0;
   unsigned long done_utt = 0;
-  
+
   vBSP430platformInitialize_ni();
   iBSP430consoleInitialize();
 
@@ -87,7 +87,7 @@ void main ()
     unsigned long next_prep_utt;
     char * obp;
     char * ob_end;
-    
+
     next_prep_utt = ulBSP430uptime();
     obp = tx_buffer_.buffer;
     ob_end = obp + sizeof(tx_buffer_.buffer);

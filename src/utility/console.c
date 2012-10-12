@@ -501,7 +501,7 @@ iBSP430consoleWaitForTxSpace_ni (int want_available)
     int available;
     unsigned char head = tx_buffer_.head;
     unsigned char tail = tx_buffer_.tail;
-    
+
     if (0 > want_available) {
       if (head == tail) {
         break;
@@ -528,7 +528,7 @@ iBSP430consoleFlush (void)
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
   int rv;
-  
+
   if (! console_hal_) {
     return 0;
   }

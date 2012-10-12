@@ -735,7 +735,7 @@ int iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
  *
  * A wrapper around iBSP430timerAlarmSetEnabled_ni() suitable for use
  * when interrupts are enabled.
- * 
+ *
  * This hooks the alarm's callbacks into the timer infrastructure.  It
  * does not set the alarm.  Alarms must be enabled before they can be
  * set, and initialized before they can be enabled.
@@ -756,7 +756,7 @@ int iBSP430timerAlarmEnable (hBSP430timerAlarm alarm)
  *
  * A wrapper around iBSP430timerAlarmSetEnabled_ni() suitable for use
  * when interrupts are enabled.
- * 
+ *
  * This removes the alarm's callbacks from the timer infrastructure.
  * Any scheduled alarm will be canceled prior to disabling it.
  */
