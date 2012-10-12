@@ -262,12 +262,39 @@ testCommandCompletion (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, ccd.ncandidates);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers[3] + 2, ccd.append);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, ccd.append_len);
+}
 
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, xBSP430cliLookupHelperString(&completion_helper_say, "th"));
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, xBSP430cliLookupHelperString(&completion_helper_say, "thr"));
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, xBSP430cliLookupHelperString(&completion_helper_say, "t"));
-  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, xBSP430cliLookupHelperString(&completion_helper_say, "threepio"));
-
+void
+testHelperStringsExtract (void)
+{
+  const char * cmd;
+  const char * arg;
+  size_t len;
+  const char * const * rv;
+  
+  arg = cmd = "th x";
+  len = strlen(cmd);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(4, len);
+  rv = xBSP430cliHelperStringsExtract(&completion_helper_say, &arg, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, rv);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(arg, cmd + 2);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, len);
+  
+  arg = cmd = "thr";
+  len = strlen(cmd);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, len);
+  rv = xBSP430cliHelperStringsExtract(&completion_helper_say, &arg, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, rv);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(arg, cmd + 3);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0, len);
+  
+  arg = cmd = "threepio";
+  len = strlen(cmd);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(8, len);
+  rv = xBSP430cliHelperStringsExtract(&completion_helper_say, &arg, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, rv);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(arg, cmd);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(8, len);
 }
 
 void main (void)
@@ -275,10 +302,13 @@ void main (void)
   vBSP430platformInitialize_ni();
   vBSP430unittestInitialize();
 
+#if 0
   testNextToken();
   testNextQToken();
   testConsoleBufferExtend();
   testCommandCompletion();
+#endif
+  testHelperStringsExtract();
 
   vBSP430unittestFinalize();
 }

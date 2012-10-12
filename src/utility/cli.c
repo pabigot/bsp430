@@ -791,13 +791,15 @@ vBSP430cliCompletionHelperStrings (const struct sBSP430cliCompletionHelper * sel
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
 
 const char * const *
-xBSP430cliLookupHelperString (const struct sBSP430cliCompletionHelperStrings * chsp,
-                              const char * argstr)
+xBSP430cliHelperStringsExtract (const struct sBSP430cliCompletionHelperStrings * chsp,
+                                const char * * argstrp,
+                                size_t * argstr_lenp)
 {
   int ni;
-  size_t argstr_len = strlen(argstr);
+  const char * remstr = *argstrp;
+  size_t remstr_len = *argstr_lenp;
   size_t key_len;
-  const char * key = xBSP430cliNextToken(&argstr, &argstr_len, &key_len);
+  const char * key = xBSP430cliNextToken(&remstr, &remstr_len, &key_len);
   const char * const * rv = NULL;
 
   for (ni = 0; ni < chsp->len; ++ni) {
@@ -809,6 +811,10 @@ xBSP430cliLookupHelperString (const struct sBSP430cliCompletionHelperStrings * c
       }
       return NULL;
     }
+  }
+  if (NULL != rv) {
+    *argstrp = remstr;
+    *argstr_lenp = remstr_len;
   }
   return rv;
 }

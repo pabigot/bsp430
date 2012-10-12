@@ -284,18 +284,23 @@ void vBSP430cliCompletionHelperStrings (const struct sBSP430cliCompletionHelper 
  * ordinal position of the match within the array, or to determine the
  * string that was matched.
  *
- * If @p argstr does not provide a unique prefix among the candidates,
- * a null pointer is returned.
+ * If @p *argstrp does not provide a unique prefix among the
+ * candidates, a null pointer is returned, and neither @p *argstrp nor
+ * @p *argstr_lenp are updated.
  *
  * @param chsp the record containing the list of acceptable tokens
  *
- * @param argstr the text used for input.  This may have leading
- * spaces and trailing material; #iBSP430cliNextToken() is used to
- * extract the leading token, which is used for the comparison.
+ * @param argstrp pointer to a pointer to the text used for input.  On
+ * success, @p *argstrp is updated to point past the consumed token.
  *
- * @return a pointer to a position in @p chsp->strings, or NULL */
-const char * const * xBSP430cliLookupHelperString (const struct sBSP430cliCompletionHelperStrings * chsp,
-                                                   const char * argstr);
+ * @param argstr_lenp pointer to the length of input available at @p
+ * *argstrp.  On success, @p *argstr_lenp is updated to the length of
+ * the unconsumed input.
+ *
+ * @return a pointer to an offset within @p chsp->strings, or NULL */
+const char * const * xBSP430cliHelperStringsExtract (const struct sBSP430cliCompletionHelperStrings * chsp,
+                                                     const char * * argstrp,
+                                                     size_t * argstr_lenp);
 
 /** Type for a function that implements a command.
  *

@@ -285,15 +285,23 @@ static const sBSP430cliCompletionHelperStrings completion_helper_say = {
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
 
 static int
-cmd_say (const char * argstr)
+cmd_say (sBSP430cliCommandLink * chain,
+         void * param,
+         const char * command,
+         size_t command_len)
 {
-  const char * const * np = xBSP430cliLookupHelperString(&completion_helper_say, argstr);
+  const char * const * np = &command;
+  int nmatches = 0;
 
-  if (NULL == np) {
-    cprintf("No match from '%s'\n", argstr);
-    return -1;
+  while (NULL != np) {
+    size_t ocl = command_len;
+    np = xBSP430cliHelperStringsExtract(&completion_helper_say, &command, &command_len);
+    if (NULL != np) {
+      ++nmatches;
+      cprintf("Match %s for %u consumed position %u\n", *np, ocl - command_len, np - numbers);
+    }
   }
-  cprintf("Match %s position %u\n", *np, np - numbers);
+  cprintf("%u matches found\n", nmatches);
   return 0;
 }
 
@@ -303,8 +311,7 @@ static const sBSP430cliCommand dcmd_say = {
   .completion_helper = &completion_helper_say.completion_helper,
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
   .next = LAST_COMMAND,
-  .handler = iBSP430cliHandlerSimple,
-  .param = cmd_say
+  .handler = cmd_say,
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_say)
