@@ -76,13 +76,14 @@ license.
 For further details, please see the Background, Philosophy, @link coding
 Coding Style@endlink, and Maintenance pages.
 
-Please download using git:
+The project page is at http://github.com/pabigot/bsp430.  Releases can be
+obtained by cloning the git repository:
 
 @code
 git clone git://github.com/pabigot/bsp430.git
 @endcode
 
-or get a <a href="https://github.com/pabigot/bsp430/tarball/master">tar
+or by downloading a <a href="http://github.com/pabigot/bsp430/tarball/master">tar
 file</a> of the complete source.
 
 Please file support requests and bug reports on the <a
@@ -111,10 +112,12 @@ detection of reboot cause and control of ultra-low-power LPMx.5 modes;
 \li Pre-configured support for the @link bsp430/utility/rfem.h RF Evaluation
 Module@endlink headers on many experimenter boards;
 
-\li Utilities supporting a bi-direction @link bsp430/utility/console.h serial
-console@endlink, @link bsp430/utility/led.h LEDs@endlink, @link
-bsp430/utility/uptime.h ACLK-driven system timer@endlink, and demonstration
-@link bsp430/utility/onewire.h 1-Wire bus@endlink
+\li Utilities for a bi-directional @link bsp430/utility/console.h serial
+console@endlink with a @link bsp430/utility/cli.h command line
+interface@endlink that supports editing input; @link bsp430/utility/led.h
+LEDs@endlink; @link bsp430/utility/uptime.h ACLK-driven system timer@endlink
+and @ref grp_timer_alarm; and demonstration @link bsp430/utility/onewire.h
+1-Wire bus@endlink
 
 \section mp_platforms Hardware Platforms Currently Supported
 
