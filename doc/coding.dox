@@ -225,7 +225,7 @@ critical and requires a value-based comparison.  The subtraction of 0 in the
 conditional expression allows syntactic correctness when somebody
 inappropriately defines the feature flag with no value: such a case is
 equivalent to setting it false.  The syntax also makes clear that the code
-was not intended to be <c>#ifdef FEATURE_FLAG</c>.
+was not intended to be <c>\#ifdef FEATURE_FLAG</c>.
 
 @warning When features identified with null macro definitions are processed
 according to the BSP430 standard conditional directives, they are
@@ -252,7 +252,7 @@ libraries using the null-definition style is:
 #endif /* USCI_B0 */
 @endcode
 
-The short-hand <c>#ifdef</c> may be used instead of the <c>defined()</c>
+The short-hand <c>\#ifdef</c> may be used instead of the <c>defined()</c>
 test if no further conditions are required, but is discouraged for
 consistency.
 

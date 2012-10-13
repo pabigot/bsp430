@@ -844,10 +844,10 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * @warning The default value for BSP430_TIMER_ALARM_PAST_LIMIT
  * assumes the interrupt will be processed within a single overflow of
  * the underlying 16-bit timer peripheral.  When a busy system uses
- * very high-speed timers, e.g. an undivided #SMCLK, application code
- * should take into account that the sBSP430timerAlarm::setting_tck
- * value may be so far in the past that new settings are
- * mis-interpreted as being in the far future.
+ * very high-speed timers, e.g. an undivided @c SMCLK, application
+ * code should take into account that the
+ * sBSP430timerAlarm::setting_tck value may be so far in the past that
+ * new settings are mis-interpreted as being in the far future.
  *
  * @param alarm a pointer to an alarm structure initialized using
  * iBSP430timerAlarmInitialize().
