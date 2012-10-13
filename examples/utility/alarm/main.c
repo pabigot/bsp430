@@ -569,8 +569,7 @@ void main ()
   /* NOTE: The control flow in this is a bit tricky, as we're trying
    * to leave interrupts enabled during the main body of the loop,
    * while they must be disabled when processing input to recognize a
-   * command.  Both flags and command serve as signals as well as
-   * values. */
+   * command. */
   commandSet = LAST_COMMAND;
   command = NULL;
   flags = eBSP430cliConsole_REPAINT;

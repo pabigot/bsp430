@@ -37,7 +37,7 @@ command line interface within a program that uses
 function, and registered as available by linking them into a chain of static
 structures at compile-time.  The example below shows how this can be done in
 a way that makes it simple to include or exclude commands based on
-development needs and available options.
+development needs and available options.  
 
 The module also provides utilities that make it easy to add commands for
 users to reconfigure parameters of various types, obtain help on the
@@ -45,25 +45,34 @@ available commands, and implement nested commands.
 
 The example below supports the following commands:
 @verbatim
-> help                                                                          
-help [cmd] # Show help on cmd or all commands                                   
-quote [qstr]... # Extract one or more quoted tokens                             
-set # No help available                                                         
-  ulval [unsigned 32-bit integer in octal, decimal, or hex]                     
-  lval [signed 32-bit integer in octal, decimal, or hex]                        
-  uival [unsigned 16-bit integer in octal, decimal, or hex]                     
-  ival [signed 16-bit integer in octal, decimal, or hex]                        
-  all [ival] [ [uival] [ [lval] [ [ulval] ] ] ]                                 
-show # Display the value of variables                                           
-expand [command...] # Show the expansion of the command without executing it    
-uptime # Show system uptime                                                     
-hup # No help available                                                         
-  two # valid if no three                                                       
-    three # invalid if no four                                                  
-      four # No help available                                                  
+> help 
+help [cmd] # Show help on cmd or all commands
+say {word}... # Customized completion demonstration
+complete # No help available
+  component # No help available
+  common # No help available
+quote [qstr]... # Extract one or more quoted tokens
+set # No help available
+  ulval [unsigned 32-bit integer in octal, decimal, or hex]
+  lval [signed 32-bit integer in octal, decimal, or hex]
+  uival [unsigned 16-bit integer in octal, decimal, or hex]
+  ival [signed 16-bit integer in octal, decimal, or hex]
+  all [ival] [ [uival] [ [lval] [ [ulval] ] ] ]
+show # Display the value of variables
+expand [command...] # Show the expansion of the command without executing it
+uptime # Show system uptime
+hup # No help available
+  two # valid if no three
+    three # invalid if no four
+      four # No help available
 @endverbatim
 
-Below is a capture from an interactive session with the application:
+Below is a capture from an interactive session with the application.  Where
+the sequence @c \<TAB\> appears a tab character was typed.  Where the
+sequence @c \<UP\> appears the up-arrow on an ANSI terminal was pressed.
+See iBSP430cliConsoleBufferProcessInput_ni() for a table showing command
+metacharacters.
+
 @verbatim
 > uptime
 Up  1:25.337
@@ -94,7 +103,30 @@ ival -5
 uival 65528 (0xfff8)
 lval -1
 ulval 4294967295 (0xffffffff)
+> quote "one two" and "three four"
+Extracting text tokens from 27 characters
+7-char token <one two>
+3-char token <and>
+10-char token <three four>
+> s<TAB>
+Candidates: say set show
+> say <TAB>
+Candidates: zero one two three four (+ 6 more)
+> say t<TAB>
+Candidates: two three ten
+> say three 
+Match three for 6 consumed position 3
+1 matches found
+> say ten five sev                                                             
+Match ten for 4 consumed position 10                                           
+Match five for 5 consumed position 5                                           
+Match seven for 4 consumed position 7                                          
+3 matches found                                                                
 > 
+> <UP>escape char 0x5b (91) '['
+escape char 0x41 (65) 'A'
+Leaving escape mode
+
 @endverbatim
 
 

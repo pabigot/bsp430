@@ -307,6 +307,7 @@ cmd_say (sBSP430cliCommandLink * chain,
 
 static const sBSP430cliCommand dcmd_say = {
   .key = "say",
+  .help = "{word}... # Customized completion demonstration",
 #if configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0
   .completion_helper = &completion_helper_say.completion_helper,
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
@@ -350,8 +351,8 @@ void main ()
   /* NOTE: The control flow in this is a bit tricky, as we're trying
    * to leave interrupts enabled during the main body of the loop,
    * while they must be disabled when processing input to recognize a
-   * command.  Both flags and command serve as signals as well as
-   * values. */
+   * command.  The flags variable preserves state across multiple loop
+   * iterations until all relevant activities have completed. */
   commandSet = LAST_COMMAND;
   command = NULL;
   flags = eBSP430cliConsole_REPAINT;

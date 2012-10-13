@@ -115,6 +115,9 @@
  * @li @ref grp_timer_alarm
  * @li @ref grp_timer_ccaclk
  *
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ *
  * @defgroup grp_timer_alarm Alarm-related Timer Functionality
  *
  * @brief bsp430/periph/timer.h data structures and functions supporting alarms
@@ -197,8 +200,8 @@
  * The @ref ex_utility_alarm example program provides an environment
  * where the behavior of alarms can be interactively probed.
  * 
- * @{
- * @}
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  * 
  * @defgroup grp_timer_ccaclk Platform-independent Secondary Timer Functionality
  *
@@ -221,9 +224,6 @@
  * infrastructure.  Use of CCACLK in this role can be seen in @ref
  * ex_utility_alarm.
  * 
- * @{
- * @}
- *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
