@@ -139,6 +139,9 @@ bsp430/utility/unittest.h unit test capability@endlink supported by BSP430.
 \li \ref ex_utility_cli demonstrates the command line interface structure
 based on the @link bsp430/utility/console.h console capability @endlink.
 
+\li \ref ex_utility_alarm provides an interactive program for using one-shot
+and repeating alarms with the @ref grp_timer_alarm.
+
 \li \ref ex_rfem_ccid demonstrates the abstraction of the @link
 bsp430/utility/rfem.h RF Evaluation Module @endlink available on many MSP430
 experimenter boards by displaying information about a connected ChipCon

@@ -107,6 +107,123 @@
  * sBSP430halTIMER.cc_cbchain_ni array is invoked by this ISR.  The
  * interrupt enable bit is controlled by the application.
  *
+ * @section h_periph_timer_extra Additional Capabilities
+ *
+ * Some of the material provided by this header is documented in
+ * separate sections:
+ *
+ * @li @ref grp_timer_alarm
+ * @li @ref grp_timer_ccaclk
+ *
+ * @defgroup grp_timer_alarm Alarm-related Timer Functionality
+ *
+ * @brief bsp430/periph/timer.h data structures and functions supporting alarms
+ * 
+ * BSP430 provides an infrastructure that uses the capture/compare
+ * interrupt callbacks of the timer peripheral to support a
+ * configurable alarm system.
+ *
+ * Each alarm is configured at initialization to reference a specific
+ * capture/compare register within a specific timer peripheral.  The
+ * HAL infrastructure for that peripheral must also have been
+ * requested.  The number of capture/compare registers supported by a
+ * particular peripheral may be obtained at runtime using
+ * iBSP430timerSupportedCCs().  If capture/compare register zero is to
+ * be used for alarms, the corresponding CC0 ISR infrastructure must
+ * also be enabled.  The table below indicates the options that should
+ * be enabled for various timers:
+ *
+ * Underlying Timer                   | HAL Request           | CC0 ISR Request
+ * :--------------------------------- | :-------------------- | :--------------
+ * #BSP430_UPTIME_TIMER_PERIPH_HANDLE | @em automatic         | #configBSP430_UPTIME_USE_DEFAULT_CC0_ISR
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE | #configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL | #configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR 
+ * #BSP430_PERIPH_TA3                 | #configBSP430_HAL_TA3 | #configBSP430_HAL_TA3_CC0_ISR
+ *
+ * @note It is the responsibility of the application to configure the
+ * underlying timer to continuous mode with the appropriate clock
+ * source, any desired dividers, and enabling the interrupt that
+ * maintains the 32-bit overflow counter timer HAL infrastructure.
+ * For example: @code
+
+  alarmHAL_ = hBSP430timerLookup(ALARM_TIMER_PERIPH_HANDLE);
+  if (alarmHAL_) {
+    alarmHAL_->hpl->ctl = 0;
+    vBSP430timerResetCounter_ni(alarmHAL_);
+    alarmHAL_->hpl->ctl = APP_TASSEL | MC_2 | TACLR | TAIE;
+  }
+
+ * @endcode
+ *
+ * Alarms depend on a persistent object that describes their current
+ * state and holds the callback structures necessary to connect them
+ * to the peripheral interrupt infrastructure.  These objects must be
+ * initialized once using hBSP430timerAlarmInitialize().  After that
+ * point, the objects are not directly referenced; operations on the
+ * alarm are performed using a @link hBSP430timerAlarm handle@endlink.
+ *
+ * Alarms are @link iBSP430timerAlarmEnable() enabled@endlink and
+ * @link iBSP430timerAlarmDisable() disabled@endlink as needed.  The
+ * act of enabling an alarm links its callbacks into the timer
+ * interrupt system.  Because these callbacks introduce overhead even
+ * when the alarm is not set, alarms should only be enabled when they
+ * are likely to be used.
+ *
+ * Alarms are set with iBSP430timerAlarmSet() using the absolute time
+ * of the underlying 32-bit timer, which can be obtained through
+ * ulBSP430timerCounter().  Because timers run asynchronously to the
+ * code, even when interrupts are disabled, the set function return
+ * value should be examined to ensure that the alarm was, in fact,
+ * set.  Alarms may not be set if the duration is too short to
+ * reliably implement them, or if the time specified appears to be in
+ * the past.  The infrastructure detects times that are past the
+ * 16-bit overflow of the underlying timer and uses the overflow
+ * interrupt to enable the capture/compare register interrupt in the
+ * correct cycle.
+ *
+ * Alarms that are set may be reliably cancelled using
+ * iBSP430timerAlarmCancel_ni().  This should always be done with
+ * interrupts disabled, to ensure that the alarm is not firing while
+ * the cancellation occurs.  The return value will indicate if the
+ * alarm cancellation failed, e.g. due to it having already gone off.
+ *
+ * When the alarm fires, the callback registered in
+ * sBSP430timerAlarm::callback is invoked.  The callback may invoke
+ * iBSP430timerAlarmSet_ni() to reschedule a periodic alarm, but
+ * complex processing should not be done.  The callback should instead
+ * set a volatile global variable and return a value such as
+ * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.  See
+ * #iBSP430timerAlarmCallback_ni.
+ *
+ * The @ref ex_utility_alarm example program provides an environment
+ * where the behavior of alarms can be interactively probed.
+ * 
+ * @{
+ * @}
+ * 
+ * @defgroup grp_timer_ccaclk Platform-independent Secondary Timer Functionality
+ *
+ * @brief bsp430/periph/timer.h identifies a CCACLK secondary timer
+ * feature in a platform-independent manner.
+ *
+ * The primary capability of this timer and the origin of its name is
+ * the ability to use ACLK as a capture/compare input source.  This
+ * capability enables measuring the frequency of one clock relative to
+ * the frequency of ACLK, and is the foundation of several DCO
+ * calibration capabilities including iBSP430ucsTrimDCOCLKDIV_ni() and
+ * iBSP430bc2TrimToMCLK_ni().  Use of CCACLK in this role can be seen
+ * in @ref ex_bootstrap_clocks for DCO measurement, and in @ref
+ * ex_sensors_hh10d for measuring an externally-supplied frequency.
+ *
+ * A secondary role of this infrastructure is to identify a timer
+ * distinct from #BSP430_UPTIME_TIMER_PERIPH_HANDLE which can be used
+ * by platform-independent applications for various purposes, such as
+ * alarms drive by a clock distinct from the bsp430/utility/uptime.h
+ * infrastructure.  Use of CCACLK in this role can be seen in @ref
+ * ex_utility_alarm.
+ * 
+ * @{
+ * @}
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -189,7 +306,8 @@
  *
  * @cppflag
  * @affects #BSP430_TIMER_CCACLK
- * @defaulted */
+ * @defaulted 
+ * @ingroup grp_timer_ccaclk */
 #ifndef configBSP430_TIMER_CCACLK
 #define configBSP430_TIMER_CCACLK 0
 #endif /* configBSP430_TIMER_CCACLK */
@@ -217,7 +335,8 @@
  * the port.
  *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
 #ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE
 #define configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE (configBSP430_TIMER_CCACLK - 0)
 #endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE */
@@ -231,7 +350,8 @@
  * ISR for CC0; see #configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR.
  *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
 #ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL
 #define configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL 0
 #endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
@@ -248,7 +368,8 @@
  * ex_sensors_hh10d for an example.
  *
  * @cppflag
- * @defaulted */
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
 #ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL
 #define configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL 0
 #endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
@@ -271,7 +392,8 @@
  *
  * @cppflag
  * @nodefault
- * @dependency #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE */
+ * @dependency #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE 
+ * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR 0
 #endif /* BSP430_DOXYGEN */
@@ -303,7 +425,8 @@
  * occur.  This can be demonstrated on the EXP430G2 LaunchPad.
  *
  * @dependency #configBSP430_TIMER_CCACLK
- * @platformdefault */
+ * @platformdefault 
+ * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -311,15 +434,17 @@
 /** @def BSP430_TIMER_CCACLK_PERIPH_HANDLE
  *
  * The peripheral handle for a timer that is capable of using ACLK as
- * a capture/compare input.  Preferably this would not be TA0.  The
- * intended use of this timer is to measure pulses of some fast clock
- * (SMCLK or an external clock) against ACLK.
+ * a capture/compare input.  Preferably this would not be the same as
+ * #BSP430_UPTIME_TIMER_PERIPH_HANDLE.  The intended use of this timer
+ * is to measure pulses of some fast clock (SMCLK or an external
+ * clock) against ACLK.
  *
  * See #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE if you intend
  * to override the platform default.
  *
  * @dependency #BSP430_TIMER_CCACLK
- * @platformdefault */
+ * @platformdefault 
+ * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -331,7 +456,8 @@
  * signal.
  *
  * @dependency #BSP430_TIMER_CCACLK
- * @platformdefault  */
+ * @platformdefault  
+ * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC_INDEX include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -343,7 +469,8 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
  * @dependency #BSP430_TIMER_CCACLK
- * @platformdefault  */
+ * @platformdefault 
+ * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CCIS include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -354,7 +481,9 @@
  * BSP430_TIMER_CCACLK_PERIPH_HANDLE can be found.
  *
  * @note If #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE is true,
- * the corresponding HAL interface will default to enabled. */
+ * the corresponding HAL interface will default to enabled.
+ * 
+ * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -363,7 +492,9 @@
  *
  * The pin on BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE to which the
  * external clock source for BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
- * provided. */
+ * provided.
+ * 
+ * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -373,11 +504,11 @@
  * This function uses the timer capture/compare infrastructure to
  * count clock cycles.  The source for a timer is configured
  * externally (for example, to SMCLK, or to an external source).  The
- * CCACLK capture/control block is configured based on @p
+ * capture/control block @p ccidx is configured based on @p
  * capture_mode.  The code synchronizes with a capture, then loops for
- * @p period captures.  The CCACLK timer counter is recorded at the
- * start of the first and end of the last cycle.  The capture/control
- * block control is reset, and the difference between first and last
+ * @p period captures.  The timer counter is recorded at the start of
+ * the first and end of the last cycle.  The capture/control block
+ * control is reset, and the difference between first and last
  * counters is returned.
  *
  * The expectation is that the events triggered by the input selection
@@ -412,7 +543,8 @@
  *
  * @return -1 if @p capture_mode is not valid or the timer is
  * unrecognized or stopped.  Otherwise the delta in the counter of the
- * timer over @p count captures. */
+ * timer over @p count captures.
+ * */
 unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
                                            int ccidx,
                                            unsigned int capture_mode,
@@ -634,7 +766,9 @@ struct sBSP430timerAlarm;
  *
  * @note The reference is to a @c const #sBSP430timerAlarm because
  * user code should never manipulate the alarm configuration
- * directly. */
+ * directly.
+ *
+ * @ingroup grp_timer_alarm */
 typedef const struct sBSP430timerAlarm * hBSP430timerAlarm;
 
 /** Callback for alarm events.
@@ -645,15 +779,26 @@ typedef const struct sBSP430timerAlarm * hBSP430timerAlarm;
  * alarm.  If this is not done, the alarm will automatically be
  * disabled when the callback returns.
  *
+ * @note Because @p cfg is a pointer to the underlying
+ * #sBSP430timerAlarm structure, the techniques of @ref
+ * callback_appinfo may be used to provide additional parameters for
+ * use by the callback function.
+ *
  * @param cfg The structure describing the alarm configuration.
  *
- * @return As with iBSP430halISRCallbackVoid(). */
+ * @return As with iBSP430halISRCallbackVoid(). 
+ *
+ * @ingroup grp_timer_alarm */
 typedef int (* iBSP430timerAlarmCallback_ni) (hBSP430timerAlarm alarm);
 
-/** Bit set in sBSP430timerAlarm::flags if the alarm is currently set. */
+/** Bit set in sBSP430timerAlarm::flags if the alarm is currently set. 
+ *
+ * @ingroup grp_timer_alarm */
 #define BSP430_TIMER_ALARM_FLAG_SET 0x01
 
-/** Bit set in sBSP430timerAlarm::flags if the alarm is enabled. */
+/** Bit set in sBSP430timerAlarm::flags if the alarm is enabled. 
+ *
+ * @ingroup grp_timer_alarm */
 #define BSP430_TIMER_ALARM_FLAG_ENABLED 0x02
 
 /** A structure holding information related to timer-based alarms.
@@ -661,18 +806,26 @@ typedef int (* iBSP430timerAlarmCallback_ni) (hBSP430timerAlarm alarm);
  * @warning The contents of this structure must not be manipulated by
  * user code at any time.  The primary reason the internals are
  * exposed is so that alarm structures can be statically allocated.
- * Fields may be inspected, though only @a flags and @a setting_tck
- * are likely to be of great interest. */
-typedef struct sBSP430timerAlarm {
+ * Fields may be inspected, though only sBSP430timerAlarm::flags and
+ * sBSP430timerAlarm::setting_tck are likely to be of great interest.
+ *
+ * @ingroup grp_timer_alarm */
+struct sBSP430timerAlarm {
   /** The timer registered as owner of this alarm structure. */
   hBSP430halTIMER timer;
 
-  /** The capture/compare resource used by the alarm. */
+  /** The capture/compare resource used by the alarm.
+   *
+   * @note This field is initialized by iBSP430timerAlarmInitialize()
+   * and must not be manipulated by user code. */
   unsigned char ccidx;
 
   /** Assorted flags recording alarm state.  Bit values
    * #BSP430_TIMER_ALARM_FLAG_SET and #BSP430_TIMER_ALARM_FLAG_ENABLED
-   * may be inspected; other bits are reserved for internal use. */
+   * may be inspected; other bits are reserved for internal use.
+   *
+   * @note This field is maintained by the infrastructure and must not
+   * be manipulated by user code. */
   unsigned char flags;
 
   /** The absolute time as determined by @a timer at which the alarm
@@ -681,27 +834,39 @@ typedef struct sBSP430timerAlarm {
    * #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT cleared).  This is the
    * scheduled time of the alarm, not the time at which the callback
    * is entered which is likely to be later due to processing
-   * overhead. */
+   * overhead.
+   *
+   * @note This field is maintained by iBSP430timerAlarmSet_ni() and
+   * must not be manipulated by user code. */
   unsigned long setting_tck;
 
   /** The function invoked by the infrastructure when the alarm goes
    * off.  If this is a null pointer, the infrastructure will act as
    * though it was a function that did nothing but return
-   * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM. */
+   * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.
+   *
+   * @note This field is initialized by iBSP430timerAlarmInitialize()
+   * and must not be manipulated by user code. */
   iBSP430timerAlarmCallback_ni callback;
 
   /** The callback chain node used when the alarm must be hooked into
-   * a timer overflow chain.  @note This is initialized by
-   * iBSP430timerAlarmInitialize() and should not be manipulated by
-   * user code. */
+   * a timer overflow chain.
+   *
+   * @note This field is initialized by iBSP430timerAlarmInitialize()
+   * and maintained by iBSP430timerAlarmSetEnabled_ni(), and must not
+   * be manipulated by user code. should not be manipulated by user
+   * code. */
   sBSP430halISRVoidChainNode overflow_cb;
 
   /** The callback chain node used when the alarm must be hooked into
-   * a capture/compare chain.  @note This is initialized by
-   * iBSP430timerAlarmInitialize() and should not be manipulated by
-   * user code. */
+   * a capture/compare chain.
+   *
+   * @note This field is initialized by iBSP430timerAlarmInitialize()
+   * and maintained by iBSP430timerAlarmSetEnabled_ni(), and must not
+   * be manipulated by user code. should not be manipulated by user
+   * code. */
   sBSP430halISRIndexedChainNode cc_cb;
-} sBSP430timerAlarm;
+};
 
 /** Initialize an alarm structure.
  *
@@ -731,8 +896,10 @@ typedef struct sBSP430timerAlarm {
  *
  * @return A non-null handle for the alarm.  A null handle will be
  * returned if initialization failed, e.g. because @p periph could not
- * be identified as a timer with a HAL supporting an alarm. */
-hBSP430timerAlarm hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
+ * be identified as a timer with a HAL supporting an alarm. 
+ *
+ * @ingroup grp_timer_alarm */
+hBSP430timerAlarm hBSP430timerAlarmInitialize (struct sBSP430timerAlarm * alarm,
                                                tBSP430periphHandle periph,
                                                int ccidx,
                                                iBSP430timerAlarmCallback_ni callback);
@@ -756,7 +923,9 @@ hBSP430timerAlarm hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
  * @param enablep nonzero if the alarm is to be enabled; zero if it is
  * to be disabled.
  *
- * @return 0 if setting was successful; -1 if an error occurs. */
+ * @return 0 if setting was successful; -1 if an error occurs. 
+ *
+ * @ingroup grp_timer_alarm */
 int iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
                                     int enablep);
 
@@ -768,7 +937,8 @@ int iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
  * This hooks the alarm's callbacks into the timer infrastructure.  It
  * does not set the alarm.  Alarms must be enabled before they can be
  * set, and initialized before they can be enabled.
- */
+ *
+ * @ingroup grp_timer_alarm */
 static BSP430_CORE_INLINE
 int iBSP430timerAlarmEnable (hBSP430timerAlarm alarm)
 {
@@ -788,7 +958,8 @@ int iBSP430timerAlarmEnable (hBSP430timerAlarm alarm)
  *
  * This removes the alarm's callbacks from the timer infrastructure.
  * Any scheduled alarm will be canceled prior to disabling it.
- */
+ *
+ * @ingroup grp_timer_alarm */
 static BSP430_CORE_INLINE
 int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
 {
@@ -807,7 +978,10 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * iBSP430timerAlarmSet_ni() will not schedule the alarm and will
  * return #BSP430_TIMER_ALARM_SET_PAST.  Times more than this number
  * of ticks in the past are assumed to be valid future times that were
- * subject to 32-bit overflow. */
+ * subject to 32-bit overflow.
+ * 
+ * @defaulted
+ * @ingroup grp_timer_alarm */
 #ifndef BSP430_TIMER_ALARM_PAST_LIMIT
 #define BSP430_TIMER_ALARM_PAST_LIMIT 65536UL
 #endif /* BSP430_TIMER_ALARM_PAST_LIMIT */
@@ -817,23 +991,32 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * If the requested time is less than this many ticks in the future,
  * iBSP430timerAlarmSet_ni() will not schedule the alarm and will
  * returned #BSP430_TIMER_ALARM_SET_NOW.  This more than this limit in
- * the future will be scheduled. */
+ * the future will be scheduled. 
+ *
+ * @defaulted
+ * @ingroup grp_timer_alarm */
 #ifndef BSP430_TIMER_ALARM_FUTURE_LIMIT
 #define BSP430_TIMER_ALARM_FUTURE_LIMIT 5UL
 #endif /* BSP430_TIMER_ALARM_FUTURE_LIMIT */
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the requested
  * time is too near for the scheduling to be reliable.  See
- * #BSP430_TIMER_ALARM_FUTURE_LIMIT. */
+ * #BSP430_TIMER_ALARM_FUTURE_LIMIT. 
+ *
+ * @ingroup grp_timer_alarm */
 #define BSP430_TIMER_ALARM_SET_NOW 1
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the requested
  * time appears to have recently passed.  See
- * #BSP430_TIMER_ALARM_PAST_LIMIT.*/
+ * #BSP430_TIMER_ALARM_PAST_LIMIT. 
+ *
+ * @ingroup grp_timer_alarm */
 #define BSP430_TIMER_ALARM_SET_PAST 2
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the alarm was
- * already scheduled. */
+ * already scheduled.  
+ *
+ * @ingroup grp_timer_alarm */
 #define BSP430_TIMER_ALARM_SET_ALREADY -2
 
 /** Set the alarm to go off at the specified time.
@@ -864,12 +1047,15 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * @li The negative value #BSP430_TIMER_ALARM_SET_ALREADY if the alarm
  * was already scheduled;
  * @li other negative values indicating errors.
- */
+ *
+ * @ingroup grp_timer_alarm */
 int iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
                              unsigned long setting_tck);
 
 /** Wrapper to invoke iBSP430timerAlarmSet_ni() when interrupts are
- * enabled. */
+ * enabled. 
+ *
+ * @ingroup grp_timer_alarm */
 static BSP430_CORE_INLINE
 int iBSP430timerAlarmSet (hBSP430timerAlarm alarm,
                           unsigned long setting_tck)
@@ -894,11 +1080,15 @@ int iBSP430timerAlarmSet (hBSP430timerAlarm alarm,
  *
  * @return zero if the alarm was disabled.  A negative value indicates
  * an error, such as that the alarm was not set when this was called.
- * This may indicate that the alarm had already fired. */
+ * This may indicate that the alarm had already fired. 
+ *
+ * @ingroup grp_timer_alarm */
 int iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm);
 
 /** Wrapper to invoke iBSP430timerCancel_ni() when interrupts are
- * enabled. */
+ * enabled. 
+ *
+ * @ingroup grp_timer_alarm */
 static BSP430_CORE_INLINE
 int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
 {

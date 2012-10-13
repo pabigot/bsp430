@@ -145,8 +145,8 @@
  * Defined to a true value if #configBSP430_UCS_TRIM_DCOCLKDIV was requested
  * and #BSP430_TIMER_CCACLK is available on the platform.
  *
- * In the absence of this flag, ulBSP430uscTrimDCOCLKDIV_ni() will not be
- * available and must not be referenced.
+ * In the absence of this flag, iBSP430ucsTrimDCOCLKDIV_ni() will not
+ * be available and must not be referenced.
  *
  * @dependency #configBSP430_UCS_TRIM_DCOCLKDIV, #BSP430_TIMER_CCACLK
  * @platformdefault
