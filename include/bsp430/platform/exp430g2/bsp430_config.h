@@ -97,6 +97,11 @@
 #if !defined(configBSP430_HAL_TA0)
 #define configBSP430_HAL_TA0 1
 #endif /* configBSP430_HAL_TA0 */
+#if configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR - 0
+#if !defined(configBSP430_HAL_TA0_CC0_ISR)
+#define configBSP430_HAL_TA0_CC0_ISR 1
+#endif /* configBSP430_HAL_TA0_CC0_ISR */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR */
 #else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
 #if !defined(configBSP430_HPL_TA0)
 #define configBSP430_HPL_TA0 1

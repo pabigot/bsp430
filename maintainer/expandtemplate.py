@@ -488,6 +488,11 @@ isr_%(INSTANCE)s (void)
 #if !defined(configBSP430_HAL_%(TIMER)s)
 #define configBSP430_HAL_%(TIMER)s 1
 #endif /* configBSP430_HAL_%(TIMER)s */
+#if configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR - 0
+#if !defined(configBSP430_HAL_%(TIMER)s_CC0_ISR)
+#define configBSP430_HAL_%(TIMER)s_CC0_ISR 1
+#endif /* configBSP430_HAL_%(TIMER)s_CC0_ISR */
+#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR */
 #else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
 #if !defined(configBSP430_HPL_%(TIMER)s)
 #define configBSP430_HPL_%(TIMER)s 1

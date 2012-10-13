@@ -210,7 +210,7 @@
  * <li>#BSP430_TIMER_CCACLK_CC_INDEX
  * <li>#BSP430_TIMER_CCACLK_CCIS
  * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_CLK_PORT_BIT BIT1
+ * <li>#BSP430_TIMER_CCACLK_CLK_PORT_BIT
  * </ul>
  *
  * Also be sure you enable the HAL or HPL resources for the timer and
@@ -226,7 +226,9 @@
  *
  * Define to a true value to automatically request the HAL support for
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE when the latter is defaulted.
- * When false, only the HPL support for the peripheral is enabled.
+ * When false, only the HPL support for the peripheral is enabled.  As
+ * is standard for BSP430 timers, enabling the HAL does not enable the
+ * ISR for CC0; see #configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR.
  *
  * @cppflag
  * @defaulted */
@@ -241,11 +243,38 @@
  * defaulted.  When false, only the HPL support for the peripheral is
  * enabled.
  *
+ * You would want to use the port HAL if the source for the clock
+ * being timed was external to the microcontroller.  See @ref
+ * ex_sensors_hh10d for an example.
+ *
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL
 #define configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL 0
 #endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
+
+/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR
+ *
+ * Normally, when the HAL timer infrastructure associated with
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE is enabled through
+ * #configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL, the standard HAL
+ * ISR is enabled but the companion CC0 interrupt HAL ISR is left
+ * unmanaged by BSP430 (see #configBSP430_HAL_TA1_CC0_ISR).
+ *
+ * Set this flag to 1 if you want BSP430 to provide an implementation for
+ * the CC0 interrupt for the HAL timer that underlies the
+ * implementation, thereby allowing BSP430 to dispatch CC0 events to
+ * callbacks registered in #sBSP430halTIMER.
+ *
+ * Set this flag to 0 if you intend to implement your own CC0 ISR or
+ * will not be using CC0 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ *
+ * @cppflag
+ * @nodefault
+ * @dependency #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK
  *
