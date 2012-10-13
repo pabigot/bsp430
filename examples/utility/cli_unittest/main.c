@@ -271,7 +271,7 @@ testHelperStringsExtract (void)
   const char * arg;
   size_t len;
   const char * const * rv;
-  
+
   arg = cmd = "th x";
   len = strlen(cmd);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(4, len);
@@ -279,7 +279,7 @@ testHelperStringsExtract (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, rv);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(arg, cmd + 2);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(2, len);
-  
+
   arg = cmd = "thr";
   len = strlen(cmd);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(3, len);
@@ -287,7 +287,7 @@ testHelperStringsExtract (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(numbers + 3, rv);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(arg, cmd + 3);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0, len);
-  
+
   arg = cmd = "threepio";
   len = strlen(cmd);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(8, len);
