@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['max_5freturned_5fcandidates',['max_returned_candidates',['../structsBSP430cliCompletionData.html#a7ce75c9f6969582bbd980f9064a448d7',1,'sBSP430cliCompletionData']]],
   ['mc_5f0',['MC_0',['../msp430_8h.html#a3b2ed176100dbd3914f8d0a6a1da50fc',1,'msp430.h']]],
   ['mc_5f1',['MC_1',['../msp430_8h.html#ac74d5cf24d8aeca91ba722e5229657f2',1,'msp430.h']]],
   ['mc_5f2',['MC_2',['../msp430_8h.html#ad367be228fa82c3f35290c9141138710',1,'msp430.h']]],

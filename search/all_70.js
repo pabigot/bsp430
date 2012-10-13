@@ -1,8 +1,9 @@
 var searchData=
 [
+  ['platform_2dindependent_20secondary_20timer_20functionality',['Platform-independent Secondary Timer Functionality',['../group__grp__timer__ccaclk.html',1,'']]],
   ['param',['param',['../structsBSP430cliCommand.html#afa4f2cf4e215e15a425d4d6d3f82aeb3',1,'sBSP430cliCommand']]],
   ['periph_2eh',['periph.h',['../periph_8h.html',1,'']]],
-  ['pin_5fcbchain_5fni',['pin_cbchain_ni',['../structsBSP430halPORT.html#a064ef3897a45a15efed3afe917517773',1,'sBSP430halPORT']]],
+  ['pin_5fcbchain_5fni',['pin_cbchain_ni',['../structsBSP430halPORT.html#a8b9fd95d1ee0929db93ae602b5e32767',1,'sBSP430halPORT']]],
   ['platform_20model',['Platform Model',['../platform.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2em430_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2exp430fr5739_2platform_8h.html',1,'']]],
@@ -12,8 +13,8 @@ var searchData=
   ['platform_2eh',['platform.h',['../platform_2surf_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2trxeb_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_8h.html',1,'']]],
-  ['platform_2eh',['platform.h',['../platform_2exp430fg4618_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2exp430f5529_2platform_8h.html',1,'']]],
+  ['platform_2eh',['platform.h',['../platform_2exp430fg4618_2platform_8h.html',1,'']]],
   ['pmm_2eh',['pmm.h',['../pmm_8h.html',1,'']]],
   ['pmmcorev_5f0',['PMMCOREV_0',['../msp430_8h.html#a34ca0e5c11c8b5df96c3c0897728ca8f',1,'msp430.h']]],
   ['pmmcorev_5f1',['PMMCOREV_1',['../msp430_8h.html#a503996ac8895fb0561ccb3117f3191f4',1,'msp430.h']]],

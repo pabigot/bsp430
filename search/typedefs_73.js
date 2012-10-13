@@ -2,6 +2,10 @@ var searchData=
 [
   ['sbsp430clicommand',['sBSP430cliCommand',['../cli_8h.html#a093282c0ee45a19a7cbbc32c1a875d0a',1,'cli.h']]],
   ['sbsp430clicommandlink',['sBSP430cliCommandLink',['../cli_8h.html#a8306443ce97f057752f0afe26c043982',1,'cli.h']]],
+  ['sbsp430clicompletiondata',['sBSP430cliCompletionData',['../group__grp__utility__cli__completion.html#gae3c310bff335837710df01a72e98679e',1,'cli.h']]],
+  ['sbsp430clicompletionhelper',['sBSP430cliCompletionHelper',['../group__grp__utility__cli__completion.html#gaf5d1b0aaf0138af3ba82ad573e9fe127',1,'cli.h']]],
+  ['sbsp430clicompletionhelperstrings',['sBSP430cliCompletionHelperStrings',['../group__grp__utility__cli__completion.html#ga2f89c5d390189b7cba8aeec5596fe3f9',1,'cli.h']]],
+  ['sbsp430climatchcallback',['sBSP430cliMatchCallback',['../cli_8h.html#acda519ef04bc2e7916d5e559025e4fdb',1,'cli.h']]],
   ['sbsp430halisrindexedchainnode',['sBSP430halISRIndexedChainNode',['../periph_8h.html#a035b8e5b659712cd0961e7a792dd0fb9',1,'periph.h']]],
   ['sbsp430halisrvoidchainnode',['sBSP430halISRVoidChainNode',['../periph_8h.html#a79b47a57f019b607261202d78a4f8917',1,'periph.h']]],
   ['sbsp430halled',['sBSP430halLED',['../led_8h.html#a21eea6a2b8a5f58e35280a0ae5945ee0',1,'led.h']]],

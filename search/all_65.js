@@ -7,9 +7,15 @@ var searchData=
   ['ebsp430_5fcli_5ferr_5fnone',['eBSP430_CLI_ERR_NONE',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418af7871a3246adc4314d44665fee56fdaa',1,'cli.h']]],
   ['ebsp430_5fcli_5ferr_5funrecognized',['eBSP430_CLI_ERR_Unrecognized',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418a1af771a09f3a455eba799c33af8489e1',1,'cli.h']]],
   ['ebsp430_5fclierrortypes',['eBSP430_CLIERRORTYPES',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418a9109cb7434ac191cf8b7bb68f7d21868',1,'cli.h']]],
-  ['ebsp430cliconsole',['eBSP430cliConsole',['../cli_8h.html#abf197215e696298dd3a9690ef10a69de',1,'eBSP430cliConsole():&#160;cli.h'],['../cli_8h.html#a99ad08bfe82dcda855f26970616f1ce6',1,'eBSP430cliConsole():&#160;cli.h']]],
-  ['ebsp430cliconsole_5fready',['eBSP430cliConsole_READY',['../cli_8h.html#abf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94',1,'cli.h']]],
-  ['ebsp430cliconsole_5frepaint',['eBSP430cliConsole_REPAINT',['../cli_8h.html#abf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3',1,'cli.h']]],
+  ['ebsp430cliconsole',['eBSP430cliConsole',['../group__grp__utility__cli__cli.html#gabf197215e696298dd3a9690ef10a69de',1,'eBSP430cliConsole():&#160;cli.h'],['../group__grp__utility__cli__cli.html#ga99ad08bfe82dcda855f26970616f1ce6',1,'eBSP430cliConsole():&#160;cli.h']]],
+  ['ebsp430cliconsole_5fany_5fescape',['eBSP430cliConsole_ANY_ESCAPE',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea5a05d17ffe59e202f061455f77b12c92',1,'cli.h']]],
+  ['ebsp430cliconsole_5fcomplete_5fspace',['eBSP430cliConsole_COMPLETE_SPACE',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deacdf7e3d4f0e314a960acc4579e20339f',1,'cli.h']]],
+  ['ebsp430cliconsole_5fdo_5fcompletion',['eBSP430cliConsole_DO_COMPLETION',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deafdfdebe7b8568728238e4069ae19cd09',1,'cli.h']]],
+  ['ebsp430cliconsole_5fin_5fescape',['eBSP430cliConsole_IN_ESCAPE',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea736f64677f998edc054fef9479f388f0',1,'cli.h']]],
+  ['ebsp430cliconsole_5fprocess_5fescape',['eBSP430cliConsole_PROCESS_ESCAPE',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea35ef4020932be71bd87834c27fd16c08',1,'cli.h']]],
+  ['ebsp430cliconsole_5fready',['eBSP430cliConsole_READY',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94',1,'cli.h']]],
+  ['ebsp430cliconsole_5frepaint',['eBSP430cliConsole_REPAINT',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3',1,'cli.h']]],
+  ['ebsp430cliconsole_5frepaint_5fbel',['eBSP430cliConsole_REPAINT_BEL',['../group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b',1,'cli.h']]],
   ['ebsp430clierrortype',['eBSP430cliErrorType',['../cli_8h.html#aac3bf57c4b7945b5ff6a8fc49d297418',1,'cli.h']]],
   ['ebsp430clocksource',['eBSP430clockSource',['../clock_8h.html#afad775d35ca969034172f0955cf1bcda',1,'eBSP430clockSource():&#160;clock.h'],['../clock_8h.html#a577bb951d567b756f39b52c3c1933f41',1,'eBSP430clockSource():&#160;clock.h']]],
   ['ebsp430clocksrc_5fdcoclk',['eBSP430clockSRC_DCOCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa08fe6b5e068e82d29fe98632bc2f4b32',1,'clock.h']]],
@@ -25,5 +31,6 @@ var searchData=
   ['entry',['entry',['../structsBSP430tlvTable2xx.html#a13fece3c9d2ff08acd6abe5b9d5e80e6',1,'sBSP430tlvTable2xx::entry()'],['../structsBSP430tlvTable5xx.html#a411eef39473a01835e6f6898cc6b4f42',1,'sBSP430tlvTable5xx::entry()']]],
   ['eusci_2eh',['eusci.h',['../eusci_8h.html',1,'']]],
   ['euscia',['euscia',['../structsBSP430halSERIAL.html#a30424a6ad26b1660f215a5a3b98e24d5',1,'sBSP430halSERIAL']]],
-  ['euscib',['euscib',['../structsBSP430halSERIAL.html#adbcfb934a8e21ec940154c8a830af399',1,'sBSP430halSERIAL']]]
+  ['euscib',['euscib',['../structsBSP430halSERIAL.html#adbcfb934a8e21ec940154c8a830af399',1,'sBSP430halSERIAL']]],
+  ['extracting_20data_20from_20user_20input',['Extracting Data from User Input',['../group__grp__utility__cli__hci.html',1,'']]]
 ];

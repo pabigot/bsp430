@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['utilities_3a_20alarms',['Utilities: Alarms',['../ex_utility_alarm.html',1,'']]],
   ['utilities_3a_20command_20line_20interface',['Utilities: Command Line Interface',['../ex_utility_cli.html',1,'']]],
   ['utilities_3a_20unit_20test',['Utilities: Unit Test',['../ex_utility_unittest.html',1,'']]],
   ['ubsp430hplport_5f16',['uBSP430hplPORT_16',['../unionuBSP430hplPORT__16.html',1,'uBSP430hplPORT_16'],['../port_8h.html#a8b2f67a9cf3035d4ae75ca5ded4227d5',1,'uBSP430hplPORT_16():&#160;port.h']]],

@@ -1,10 +1,12 @@
 var searchData=
 [
   ['v',['V',['../msp430_8h.html#af40a326b23c68a27cebe60f16634a2cb',1,'msp430.h']]],
-  ['vbsp430cliclearconsolebuffer_5fni',['vBSP430cliClearConsoleBuffer_ni',['../cli_8h.html#ab537420fa4f2b78a7e4c04075062219d',1,'cli.h']]],
-  ['vbsp430cliconsoledisplaychain',['vBSP430cliConsoleDisplayChain',['../cli_8h.html#a733c7b931476c5f02c297dd7e0f78283',1,'cli.h']]],
-  ['vbsp430cliconsoledisplayhelp',['vBSP430cliConsoleDisplayHelp',['../cli_8h.html#a2c3a36a00ea6f676cf2006859364d45a',1,'cli.h']]],
-  ['vbsp430climatchcallback',['vBSP430cliMatchCallback',['../cli_8h.html#a01a6754af304d1a3d6ac0ed6a36c5efc',1,'cli.h']]],
+  ['vbsp430clicompletionhelper',['vBSP430cliCompletionHelper',['../group__grp__utility__cli__completion.html#ga4ac6938244a33d237065a80549370193',1,'cli.h']]],
+  ['vbsp430clicompletionhelpercallback',['vBSP430cliCompletionHelperCallback',['../group__grp__utility__cli__completion.html#ga7165f70c9baf818be402c4939e1dfce3',1,'cli.h']]],
+  ['vbsp430clicompletionhelperstrings',['vBSP430cliCompletionHelperStrings',['../group__grp__utility__cli__completion.html#ga33939ab21b276f5aecfc2125e72c5568',1,'cli.h']]],
+  ['vbsp430cliconsolebufferclear_5fni',['vBSP430cliConsoleBufferClear_ni',['../group__grp__utility__cli__cli.html#ga851a3ff12f32fc07f0e83b084dbd659d',1,'cli.h']]],
+  ['vbsp430cliconsoledisplaychain',['vBSP430cliConsoleDisplayChain',['../group__grp__utility__cli__cli.html#ga733c7b931476c5f02c297dd7e0f78283',1,'cli.h']]],
+  ['vbsp430cliconsoledisplayhelp',['vBSP430cliConsoleDisplayHelp',['../group__grp__utility__cli__cli.html#ga2c3a36a00ea6f676cf2006859364d45a',1,'cli.h']]],
   ['vbsp430clisetdiagnosticfunction',['vBSP430cliSetDiagnosticFunction',['../cli_8h.html#a0a5b3cee7e2d9002d5d301b36c814d55',1,'cli.h']]],
   ['vbsp430eusciflush_5fni',['vBSP430eusciFlush_ni',['../eusci_8h.html#a90b9938475e26c1a0d35fd40b0cc000f',1,'eusci.h']]],
   ['vbsp430eusciwakeuptransmit_5fni',['vBSP430eusciWakeupTransmit_ni',['../eusci_8h.html#aa411a8cb361fb9fe27f1ee9137e7218d',1,'eusci.h']]],

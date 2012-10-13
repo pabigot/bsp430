@@ -17,6 +17,8 @@ var searchData=
   ['hbsp430serialopeni2c',['hBSP430serialOpenI2C',['../serial_8h.html#a85fb70e450164721994aad656c24d6a0',1,'serial.h']]],
   ['hbsp430serialopenspi',['hBSP430serialOpenSPI',['../serial_8h.html#a40983f5ed625fd352698117786691dd5',1,'serial.h']]],
   ['hbsp430serialopenuart',['hBSP430serialOpenUART',['../serial_8h.html#a32f608fdca583bd1c68b1eb2617426e5',1,'serial.h']]],
+  ['hbsp430timeralarm',['hBSP430timerAlarm',['../group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f',1,'timer.h']]],
+  ['hbsp430timeralarminitialize',['hBSP430timerAlarmInitialize',['../group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81',1,'timer.h']]],
   ['hbsp430timerlookup',['hBSP430timerLookup',['../timer_8h.html#afe3886cec73bfe10e638855dac7964dc',1,'timer.h']]],
   ['hbsp430usci5openspi',['hBSP430usci5OpenSPI',['../usci5_8h.html#a3a04f2b3eb37ea1f7bfb4ed98f0494cd',1,'usci5.h']]],
   ['hbsp430usci5openuart',['hBSP430usci5OpenUART',['../usci5_8h.html#a37a7c9c342c51ebb947fe1d6342ec087',1,'usci5.h']]],
@@ -26,6 +28,6 @@ var searchData=
   ['hbsp430usciopenuart',['hBSP430usciOpenUART',['../usci_8h.html#a3b931d90b152b41a9b5bdfebc94c2143',1,'usci.h']]],
   ['hdr',['hdr',['../structsBSP430tlvDIERECORD.html#a096c234f817f418699adb704e24d63ae',1,'sBSP430tlvDIERECORD::hdr()'],['../structsBSP430tlvREFCAL.html#ab8642a512bc9b6c47390ad15a1e44d92',1,'sBSP430tlvREFCAL::hdr()'],['../structsBPS430tlvADCCAL.html#ac7438c534902a5388f46dbc8758c14a7',1,'sBPS430tlvADCCAL::hdr()'],['../structsBSP430tlvDCO.html#ad92bdae77517af276473f7b34fe72548',1,'sBSP430tlvDCO::hdr()'],['../structsBPS430tlvADC.html#aad1ce276fb02c30b007035f9aaaac4c3',1,'sBPS430tlvADC::hdr()']]],
   ['help',['help',['../structsBSP430cliCommand.html#a92d535f231bea8e65f95011a0843670c',1,'sBSP430cliCommand']]],
-  ['hpl',['hpl',['../structsBSP430halPORT.html#aab4e7f67e557a42b744af92f9572bb71',1,'sBSP430halPORT::hpl()'],['../structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716',1,'sBSP430halTIMER::hpl()'],['../structsBSP430halSERIAL.html#a5c03af1f8f6f631b56cdbc7f8efc9941',1,'sBSP430halSERIAL::hpl()']]],
-  ['hpl_5faux',['hpl_aux',['../structsBSP430halSERIAL.html#a271b5090b8bb18131f159ac3708f19c0',1,'sBSP430halSERIAL']]]
+  ['helper',['helper',['../structsBSP430cliCompletionHelper.html#aa4eedca5d94e913b7946c1ac32539579',1,'sBSP430cliCompletionHelper']]],
+  ['hpl',['hpl',['../structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716',1,'sBSP430halTIMER']]]
 ];

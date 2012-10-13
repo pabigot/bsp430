@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['xbsp430cliconsolebuffer_5fni',['xBSP430cliConsoleBuffer_ni',['../cli_8h.html#ad0d2c92b96b17302159c049f7a9bfb17',1,'cli.h']]],
-  ['xbsp430clinextqtoken',['xBSP430cliNextQToken',['../cli_8h.html#abcda3dd127008a5cdcc5f40cac4e9e68',1,'cli.h']]],
-  ['xbsp430clinexttoken',['xBSP430cliNextToken',['../cli_8h.html#ad8ad62488676a6ef0de220019d635c29',1,'cli.h']]],
+  ['xbsp430cliconsolebuffer_5fni',['xBSP430cliConsoleBuffer_ni',['../group__grp__utility__cli__cli.html#gad0d2c92b96b17302159c049f7a9bfb17',1,'cli.h']]],
+  ['xbsp430clihelperstringsextract',['xBSP430cliHelperStringsExtract',['../group__grp__utility__cli__hci.html#ga28e7e4a8ab65e7240377f5327fc30256',1,'cli.h']]],
+  ['xbsp430clinextqtoken',['xBSP430cliNextQToken',['../group__grp__utility__cli__hci.html#gabcda3dd127008a5cdcc5f40cac4e9e68',1,'cli.h']]],
+  ['xbsp430clinexttoken',['xBSP430cliNextToken',['../group__grp__utility__cli__hci.html#gad8ad62488676a6ef0de220019d635c29',1,'cli.h']]],
   ['xbsp430clireversechain',['xBSP430cliReverseChain',['../cli_8h.html#ae4f4115cef094484843bd48ef24af08d',1,'cli.h']]],
   ['xbsp430eusciname',['xBSP430eusciName',['../eusci_8h.html#a543ffe8b48f4ca7cde657e222aca8d33',1,'eusci.h']]],
   ['xbsp430hpllookupeuscia',['xBSP430hplLookupEUSCIA',['../eusci_8h.html#afc9b676a8acb765fedf300703c493785',1,'eusci.h']]],

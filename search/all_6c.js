@@ -2,7 +2,7 @@ var searchData=
 [
   ['l',['l',['../unionuBSP430hplPORT__16.html#a73596dfd17a4293714bcf6fd69e3a60b',1,'uBSP430hplPORT_16']]],
   ['led_2eh',['led.h',['../led_8h.html',1,'']]],
-  ['len',['len',['../structsBSP430tlvEntry.html#ad4c428b91f48dcf7a75337989adcca14',1,'sBSP430tlvEntry']]],
+  ['len',['len',['../structsBSP430cliCompletionHelperStrings.html#a52d21796dfc494c9c8c623e92cd07bc3',1,'sBSP430cliCompletionHelperStrings::len()'],['../structsBSP430tlvEntry.html#ad4c428b91f48dcf7a75337989adcca14',1,'sBSP430tlvEntry::len()']]],
   ['lfxt1s_5f0',['LFXT1S_0',['../msp430_8h.html#a4f0fd1a3b081971a810a68e00c22df53',1,'msp430.h']]],
   ['lfxt1s_5f1',['LFXT1S_1',['../msp430_8h.html#a7fb5db4c54a5f0d296be2c9fa8028250',1,'msp430.h']]],
   ['lfxt1s_5f2',['LFXT1S_2',['../msp430_8h.html#abc7cb6910e39c4e10104f51e060af5db',1,'msp430.h']]],
