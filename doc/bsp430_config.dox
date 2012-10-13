@@ -114,10 +114,17 @@ In cases where the affected macro is a C preprocessor symbol it should be
 checked following the standard for those macros:
 
 @code
+#include <bsp430/platform.h>
+/* ... */
 #if BSP430_TIMER_CCACLK - 0
 /* The capture/compare-on-aclk feature is available */
 #endif /* BSP430_TIMER_CCACLK */
 @endcode
+
+bsp430/platform.h should be the first BSP430-related include file in
+implementation files, so that both the configuration information obtained
+through bsp430/core.h and any platform-specific restrictions/overrides are
+available.
 
 In other cases like #configBSP430_HPL_PORT7 simple use of the feature (viz.,
 reference to #BSP430_HPL_PORT7) will produce a compile-time error if the

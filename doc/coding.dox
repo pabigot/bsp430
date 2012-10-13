@@ -191,6 +191,9 @@ file is normally accessed; e.g. the protection sequence for
 
 \subsection coding_misc_cpp Preprocessor Feature Tests
 
+See also @ref bsp430_config for naming conventions and standards related to
+feature tests.
+
 Where a macro value is used for conditional compilation, the state of
 being true is determined with the following pattern:
 
@@ -202,8 +205,7 @@ being true is determined with the following pattern:
 #endif /* MACRO_VALUE */
 @endcode
 
-This is not consistent with the way the TI headers use functional presence
-symbols such as <c>\__MSP430_HAS_ADC12__</c>, but is required to allow use of:
+This technique allows use of:
 
 @code
 #define FEATURE_FLAG 0
@@ -212,9 +214,61 @@ symbols such as <c>\__MSP430_HAS_ADC12__</c>, but is required to allow use of:
 to denote that the feature is being explicitly disabled.  BSP430 should
 ensure that any feature test flag has a definition to either 1 or 0 (or to
 an expression that will evaluate to either a true or false value when used
-within a preprocessor condition).  (The subtraction of 0 is to allow
-syntactic correctness when somebody inappropriately defines the feature flag
-with no value: such a case is equivalent to setting it false.)
+within a preprocessor condition).  The documentation explicitly marks macro
+definitions that are expected to have such values with the following
+annotation:
+
+@cppflag
+
+The ability to explicitly disable features that default to being enabled is
+critical and requires a value-based comparison.  The subtraction of 0 in the
+conditional expression allows syntactic correctness when somebody
+inappropriately defines the feature flag with no value: such a case is
+equivalent to setting it false.  The syntax also makes clear that the code
+was not intended to be <c>#ifdef FEATURE_FLAG</c>.
+
+@warning When features identified with null macro definitions are processed
+according to the BSP430 standard conditional directives, they are
+interpreted as being turned off, not on.
+
+A common practice, followed by Texas Instruments in their standard MSP430
+MCU-specific headers, is to use code like:
+
+@code
+#define __MSP430_HAS_USCI_B0__
+@endcode
+
+with a null expansion to the macro.  Here is simply the existence of a
+definition, not its value, that indicates feature is present.
+
+The correct way of detecting features when interoperating with external
+libraries using the null-definition style is:
+
+@code
+#if defined(__MSP430_HAS_USCI_B0__) && (configBSP430_HAL_USCI_B0 - 0)
+/* Function is available and feature is enabled */
+#else /* USCI_B0 */
+/* Function is missing or feature is disabled */
+#endif /* USCI_B0 */
+@endcode
+
+The short-hand <c>#ifdef</c> may be used instead of the <c>defined()</c>
+test if no further conditions are required, but is discouraged for
+consistency.
+
+In a very few cases, a @c configFEATURE_FOO flag is a request to supply a
+specific resource such as @c BSP430_FOO_PERIPH_HANDLE.  If the platform is
+unable to provide the resource, it will leave the handle macro undefined
+When there is no independent reason also define a @c FEATURE_FOO flag,
+success of the configuration request should be tested by:
+
+@code
+#if defined(BSP430_FOO_PERIPH_HANDLE)
+#endif /* FOO */
+@endcode
+
+The documentation for @c configFEATURE_FOO and @c BSP430_FOO_PERIPH_HANDLE
+will indicate when this alternative success test should being used.
 
 @copyright_doc
 */
