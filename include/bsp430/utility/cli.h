@@ -513,7 +513,7 @@ iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
  * should be stored.
  *
  * @return 0 if a valid value can be extracted and converted from the
- * head of @*argstr; a negative value if the string has no token or
+ * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful. */
 int iBSP430cliStoreExtractedI (const char * * argstrp,
                                size_t * argstr_lenp,
@@ -536,7 +536,7 @@ int iBSP430cliStoreExtractedI (const char * * argstrp,
  * should be stored.
  *
  * @return 0 if a valid value can be extracted and converted from the
- * head of @*argstr; a negative value if the string has no token or
+ * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful. */
 int iBSP430cliStoreExtractedUI (const char * * argstrp,
                                 size_t * argstr_lenp,
@@ -559,7 +559,7 @@ int iBSP430cliStoreExtractedUI (const char * * argstrp,
  * should be stored.
  *
  * @return 0 if a valid value can be extracted and converted from the
- * head of @*argstr; a negative value if the string has no token or
+ * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful. */
 int iBSP430cliStoreExtractedL (const char * * argstrp,
                                size_t * argstr_lenp,
@@ -582,7 +582,7 @@ int iBSP430cliStoreExtractedL (const char * * argstrp,
  * should be stored.
  *
  * @return 0 if a valid value can be extracted and converted from the
- * head of @*argstr; a negative value if the string has no token or
+ * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful. */
 int iBSP430cliStoreExtractedUL (const char * * argstrp,
                                 size_t * argstr_lenp,

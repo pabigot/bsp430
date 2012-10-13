@@ -776,9 +776,9 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  *
  * If the requested time is less than this many ticks in the past,
  * iBSP430timerAlarmSet_ni() will not schedule the alarm and will
- * return #BSP430_TIMER_ALARM_SET_PAST.  Times more this limit in the
- * past are assumed to be valid future times that were subject to
- * 32-bit overflow. */
+ * return #BSP430_TIMER_ALARM_SET_PAST.  Times more than this number
+ * of ticks in the past are assumed to be valid future times that were
+ * subject to 32-bit overflow. */
 #ifndef BSP430_TIMER_ALARM_PAST_LIMIT
 #define BSP430_TIMER_ALARM_PAST_LIMIT 65536UL
 #endif /* BSP430_TIMER_ALARM_PAST_LIMIT */
@@ -794,11 +794,13 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
 #endif /* BSP430_TIMER_ALARM_FUTURE_LIMIT */
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the requested
- * time is too near for the scheduling to be reliable. */
+ * time is too near for the scheduling to be reliable.  See
+ * #BSP430_TIMER_ALARM_FUTURE_LIMIT. */
 #define BSP430_TIMER_ALARM_SET_NOW 1
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the requested
- * time appears to have recently passed. */
+ * time appears to have recently passed.  See
+ * #BSP430_TIMER_ALARM_PAST_LIMIT.*/
 #define BSP430_TIMER_ALARM_SET_PAST 2
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the alarm was
@@ -809,6 +811,14 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  *
  * This function may be invoked in normal user code, or within an
  * alarm callback or other interrupt handler to reschedule the alarm.
+ *
+ * @warning The default value for BSP430_TIMER_ALARM_PAST_LIMIT
+ * assumes the interrupt will be processed within a single overflow of
+ * the underlying 16-bit timer peripheral.  When a busy system uses
+ * very high-speed timers, e.g. an undivided #SMCLK, application code
+ * should take into account that the sBSP430timerAlarm::setting_tck
+ * value may be so far in the past that new settings are
+ * mis-interpreted as being in the far future.
  *
  * @param alarm a pointer to an alarm structure initialized using
  * iBSP430timerAlarmInitialize().
