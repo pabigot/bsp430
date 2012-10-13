@@ -342,7 +342,6 @@ typedef struct sBSP430cliCommand {
       && (configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0))
   /** Optional pointer to material supporting customized completion.
    *
-   * @note 
    * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER */
   const sBSP430cliCompletionHelper * completion_helper;
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
