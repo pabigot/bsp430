@@ -57,8 +57,9 @@
 /* No buttons */
 
 /* One LED on P1.0.  Unpopulated LEDs on P1.1 and P1.2. */
-#define BSP430_LED_RED 0
 #define BSP430_LED_GREEN 0
+#define BSP430_LED_RED 1
+#define BSP430_LED_GREEN1 2
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */

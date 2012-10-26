@@ -38,7 +38,9 @@
 
 #if BSP430_LED - 0
 const sBSP430halLED xBSP430halLED_[] = {
-  { .outp = &P1OUT, .bit = BIT0 }, /* Red */
+  { .outp = &P1OUT, .bit = BIT0 }, /* Yellow (on-board)*/
+  { .outp = &P1OUT, .bit = BIT1 }, /* Red (external) */
+  { .outp = &P1OUT, .bit = BIT2 }, /* Green (external) */
 };
 const unsigned char nBSP430led = sizeof(xBSP430halLED_) / sizeof(*xBSP430halLED_);
 #endif /* BSP430_LED */
