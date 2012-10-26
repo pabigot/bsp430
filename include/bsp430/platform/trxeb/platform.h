@@ -185,6 +185,94 @@
 #define BSP430_PLATFORM_TRXEB_ALS_OUT_INCH ADC12INCH_2
 #endif /* configBSP430_PLATFORM_TRXEB_ALS */
 
+#ifndef configBSP430_PLATFORM_TRXEB_ACCEL
+/** Enable HPL support for on-board accelerometer
+ *
+ * The TrxEB has a CMA3000-D01 digital accelerometer from VTI on
+ * board.  It receives power through P6.0, and supplies an interrupt
+ * on P2.0.  Interface to it uses IO_SPI0.  Defining this constant to
+ * a true value enables the configuration of port 6 as well as
+ * provides constants for applications to use the sensor. */
+#define configBSP430_PLATFORM_TRXEB_ACCEL 0
+#endif /* configBSP430_PLATFORM_TRXEB_ACCEL */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_ACCEL - 0)
+
+/** BSP430 peripheral handle for port on which accelerometer power is placed.
+ * @dependency #configBSP430_PLATFORM_TRXEB_ACCEL
+ */
+#define BSP430_PLATFORM_TRXEB_ACCEL_PWR_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT6
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_ACCEL_PORT_PERIPH_HANDLE for accelerometer power
+ * @dependency #configBSP430_PLATFORM_TRXEB_ACCEL
+ */
+#define BSP430_PLATFORM_TRXEB_ACCEL_PWR_PORT_BIT BIT0
+
+/** BSP430 peripheral handle for port on which accelerometer chip-select (inverted) is placed.
+ * @dependency #configBSP430_PLATFORM_TRXEB_ACCEL
+ */
+#define BSP430_PLATFORM_TRXEB_ACCEL_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT8
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_ACCEL_PORT_PERIPH_HANDLE for accelerometer CSn
+ * @dependency #configBSP430_PLATFORM_TRXEB_ACCEL
+ */
+#define BSP430_PLATFORM_TRXEB_ACCEL_CSn_PORT_BIT BIT7
+
+#ifndef configBSP430_PLATFORM_TRXEB_ACCEL_IRQ
+/** Enable HAL support for on-board accelerometer interrupt.
+ *
+ * @requires configBSP430_PLATFORM_TRXEB_ACCEL
+ * @affects #BSP430_PLATFORM_TRXEB_ACCEL_IRQ_PORT_PERIPH_HANDLE
+ */
+#define configBSP430_PLATFORM_TRXEB_ACCEL_IRQ 0
+#endif /* configBSP430_PLATFORM_TRXEB_ACCEL_IRQ */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_ACCEL_IRQ - 0)
+/** BSP430 peripheral handle for port on which accelerometer power is placed.
+ * @dependency #configBSP430_PLATFORM_TRXEB_ACCEL_IRQ
+ */
+#define BSP430_PLATFORM_TRXEB_ACCEL_IRQ_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_ACCEL_IRQ_PORT_PERIPH_HANDLE for accelerometer IRQ
+ * @dependency #configBSP430_PLATFORM_TRXEB_ACCEL_IRQ
+ */
+#define BSP430_PLATFORM_TRXEB_ACCEL_IRQ_PORT_BIT BIT0
+
+#endif /* configBSP430_PLATFORM_TRXEB_ACCEL_IRQ */
+
+#endif /* configBSP430_PLATFORM_TRXEB_ACCEL */
+
+#ifndef configBSP430_PLATFORM_TRXEB_IO_SPI0
+/** Enable use of IO_SPI0 peripheral.
+ *
+ * This peripheral services the accelerometer, and is default enabled
+ * when #configBSP430_PLATFORM_TRXEB_ACCEL is enabled.
+ *
+ * @defaulted
+ * @cppflag
+ */
+#define configBSP430_PLATFORM_TRXEB_IO_SPI0 (configBSP430_PLATFORM_TRXEB_ACCEL - 0)
+
+#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */
+
+#define BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_IO_SPI0 - 0)
+/** BSP430 port peripheral handle for IO_SPI0.
+ *
+ * IO_SPI0 services the accelerometer. 
+ * @dependency #configBSP430_PLATFORM_TRXEB_IO_SPI0 */
+#define BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE BSP430_PERIPH_USCI5_A2
+#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_IO_SPI1 - 0)
+/** BSP430 port peripheral handle for IO_SPI1.
+ *
+ * IO_SPI1 services the LCD and the serial flash.
+ * @dependency #configBSP430_PLATFORM_TRXEB_IO_SPI1 */
+#define BSP430_PLATFORM_TRXEB_IO_SPI1_PERIPH_HANDLE BSP430_PERIPH_USCI5_B2
+#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI1 */
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
