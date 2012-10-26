@@ -31,9 +31,13 @@ void main ()
      * is that the watchdog is resetting the board.  Don't let that
      * happen to you. */
     BSP430_CORE_WATCHDOG_CLEAR();
-    /* Turn each LED on in turn wait a half second, then turn it off
-     * and move to the next LED */
-    vBSP430ledSet(led, 1);
+    if (1 < nBSP430led) {
+      /* If there are multiple LEDs, turn each LED on in turn, wait a
+       * half second, then turn it off and move to the next LED.  If
+       * there's only one LED, the invert state handles the on as well
+       * as the off. */
+      vBSP430ledSet(led, 1);
+    }
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
     /* -1 means "invert state", which in this case will turn it off */
     vBSP430ledSet(led, -1);
