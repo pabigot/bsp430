@@ -49,9 +49,9 @@
  *
  * Supporting facilities also provided by this module are documented
  * in these pages:
- * 
+ *
  * @li @ref grp_utility_cli_cli
- * 
+ *
  * @li @ref grp_utility_cli_hci
  *
  * @li @ref grp_utility_cli_completion
@@ -75,10 +75,10 @@
  * responsibility of the application, but are assisted with functions
  * to provide help on available commands and diagnostics when the
  * infrastructure detects an error in user input.
- * 
+ *
  * See @ref ex_utility_cli for a detailed example demonstrating most
  * capabilities of this module.
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
@@ -105,7 +105,7 @@
  *
  * See @ref ex_utility_cli for a detailed example demonstrating most
  * capabilities of this module.
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
@@ -119,10 +119,10 @@
  * structures that describe commands and use them to complete commands
  * given the first few letters, or (when a unique command is not
  * selected) provide hints about acceptable input in context.
- * 
+ *
  * See @ref ex_utility_cli for a detailed example demonstrating most
  * capabilities of this module.
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -191,7 +191,7 @@
  * *command.  If there are no such characters, the pointer is just
  * past the end of @p *commandp and both @p *remainingp and @p *lenp
  * are updated to have value zero.
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 const char * xBSP430cliNextToken (const char * * commandp,
                                   size_t * remainingp,
@@ -221,7 +221,7 @@ const char * xBSP430cliNextToken (const char * * commandp,
  *
  * @return as with xBSP430cliNextToken().  If a quoted token is
  * identified, the return value begins after the opening quote.
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 const char * xBSP430cliNextQToken (const char * * commandp,
                                    size_t * remainingp,
@@ -280,7 +280,7 @@ typedef struct sBSP430cliCommandLink {
  * @param cdp the aggregation of completion data
  *
  * @dependency #configBSP430_CLI_COMMAND_COMPLETION_HELPER
- * 
+ *
  * @ingroup grp_utility_cli_completion */
 typedef void (* vBSP430cliCompletionHelper) (const struct sBSP430cliCompletionHelper * self,
                                              const char * argstr,
@@ -299,7 +299,7 @@ typedef void (* vBSP430cliCompletionHelper) (const struct sBSP430cliCompletionHe
  * passed to the function, and the techniques of @ref callback_appinfo
  * may be used to provide additional information.  See
  * #sBSP430cliCompletionHelperStrings.
- * 
+ *
  * @ingroup grp_utility_cli_completion */
 typedef struct sBSP430cliCompletionHelper {
   /** The function that implements the completion operation. */
@@ -314,7 +314,7 @@ typedef struct sBSP430cliCompletionHelper {
  * the necessary information to convey those tokens to
  * #vBSP430cliCompletionHelperStrings, which itself should be stored
  * as @a completion_helper.helper.
- * 
+ *
  * @ingroup grp_utility_cli_completion
  */
 typedef struct sBSP430cliCompletionHelperStrings {
@@ -383,8 +383,8 @@ void vBSP430cliCompletionHelperStrings (const struct sBSP430cliCompletionHelper 
  * *argstrp.  On success, @p *argstr_lenp is updated to the length of
  * the unconsumed input.
  *
- * @return a pointer to an offset within @p chsp->strings, or NULL 
- * 
+ * @return a pointer to an offset within @p chsp->strings, or NULL
+ *
  * @ingroup grp_utility_cli_hci */
 const char * const * xBSP430cliHelperStringsExtract (const struct sBSP430cliCompletionHelperStrings * chsp,
                                                      const char * * argstrp,
@@ -604,7 +604,7 @@ iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
  * @return 0 if a valid value can be extracted and converted from the
  * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful.
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliStoreExtractedI (const char * * argstrp,
                                size_t * argstr_lenp,
@@ -629,7 +629,7 @@ int iBSP430cliStoreExtractedI (const char * * argstrp,
  * @return 0 if a valid value can be extracted and converted from the
  * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful.
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliStoreExtractedUI (const char * * argstrp,
                                 size_t * argstr_lenp,
@@ -654,7 +654,7 @@ int iBSP430cliStoreExtractedUI (const char * * argstrp,
  * @return 0 if a valid value can be extracted and converted from the
  * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful.
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliStoreExtractedL (const char * * argstrp,
                                size_t * argstr_lenp,
@@ -679,7 +679,7 @@ int iBSP430cliStoreExtractedL (const char * * argstrp,
  * @return 0 if a valid value can be extracted and converted from the
  * head of @p *argstr; a negative value if the string has no token or
  * the conversion was unsuccessful.
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliStoreExtractedUL (const char * * argstrp,
                                 size_t * argstr_lenp,
@@ -728,7 +728,7 @@ int iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
  * or octal (with leading @c 0).
  *
  * @param argstr_len length of the @p argstr text
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
                              void * param,
@@ -750,7 +750,7 @@ int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
  * or octal (with leading @c 0).
  *
  * @param argstr_len length of the @p argstr text
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
                               void * param,
@@ -772,7 +772,7 @@ int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
  * or octal (with leading @c 0).
  *
  * @param argstr_len length of the @p argstr text
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
                              void * param,
@@ -794,7 +794,7 @@ int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
  * or octal (with leading @c 0).
  *
  * @param argstr_len length of the @p argstr text
- * 
+ *
  * @ingroup grp_utility_cli_hci */
 int iBSP430cliHandlerStoreUL (struct sBSP430cliCommandLink * chain,
                               void * param,
@@ -908,7 +908,7 @@ int iBSP430cliConsoleDiagnostic (sBSP430cliCommandLink * chain,
  * @param chain the chain of commands from the innermost to the outermost
  *
  * @param argstr the unprocessed remainder of the original command string
- * 
+ *
  * @ingroup grp_utility_cli_cli */
 #if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE - 0)
 void vBSP430cliConsoleDisplayChain (struct sBSP430cliCommandLink * chain,
@@ -923,7 +923,7 @@ void vBSP430cliConsoleDisplayChain (struct sBSP430cliCommandLink * chain,
  * @param cmd pointer to the first in a sequence of sibling commands
  *
  * @dependency #BSP430_CONSOLE
- * 
+ *
  * @ingroup grp_utility_cli_cli */
 #if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE - 0)
 void vBSP430cliConsoleDisplayHelp (const sBSP430cliCommand * cmd);
@@ -953,7 +953,7 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
  *
  * If the value of this is zero, iBSP430cliConsoleBufferProcessInput_ni()
  * will not be available.
- * 
+ *
  * @ingroup grp_utility_cli_cli
  */
 #if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLI_CONSOLE_BUFFER_SIZE)
@@ -962,7 +962,7 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 
 /** Enumeration of bit values returned from
  * iBSP430cliConsoleBufferProcessInput_ni().
- * 
+ *
  * @ingroup grp_utility_cli_cli*/
 typedef enum eBSP430cliConsole {
   /** Bit set in response if console buffer now holds a completed
@@ -1039,7 +1039,7 @@ typedef enum eBSP430cliConsole {
  * the command completion infrastructure.
  *
  * This is a parameter to iBSP430cliCommandCompletion().
- * 
+ *
  * @ingroup grp_utility_cli_completion */
 typedef struct sBSP430cliCompletionData {
   /** The command that is to be completed.  On the initial call to
@@ -1096,7 +1096,7 @@ typedef struct sBSP430cliCompletionData {
  *
  * @param candidate a token that would be acceptable at the current
  * point of processing
- * 
+ *
  * @ingroup grp_utility_cli_completion*/
 void vBSP430cliCompletionHelperCallback (sBSP430cliCompletionData * cdp,
                                          const char * candidate);
@@ -1111,7 +1111,7 @@ void vBSP430cliCompletionHelperCallback (sBSP430cliCompletionData * cdp,
  * @return pointer to the NUL-terminated current contents of the
  * internal command buffer, or NULL if #BSP430_CLI_CONSOLE_BUFFER_SIZE
  * is zero.
- * 
+ *
  * @ingroup grp_utility_cli_cli */
 const char * xBSP430cliConsoleBuffer_ni (void);
 
@@ -1123,7 +1123,7 @@ const char * xBSP430cliConsoleBuffer_ni (void);
  *
  * @dependency #BSP430_CONSOLE
  * @dependency #BSP430_CLI_CONSOLE_BUFFER_SIZE
- * @ingroup grp_utility_cli_cli 
+ * @ingroup grp_utility_cli_cli
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
 void vBSP430cliConsoleBufferClear_ni (void);
@@ -1211,7 +1211,7 @@ int iBSP430cliConsoleBufferProcessInput_ni (void);
  * #eBSP430cliConsole_REPAINT_BEL.
  *
  * @dependency #configBSP430_CLI_COMMAND_COMPLETION
- * 
+ *
  * @ingroup grp_utility_cli_completion
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_CLI_COMMAND_COMPLETION - 0)
@@ -1224,7 +1224,7 @@ int iBSP430cliCommandCompletion (sBSP430cliCompletionData * cdp);
  *
  * The value must be at least 1.
  *
- * @defaulted 
+ * @defaulted
  * @ingroup grp_utility_cli_completion */
 #define BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS 5
 #endif /* BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS */
@@ -1253,7 +1253,7 @@ int iBSP430cliCommandCompletion (sBSP430cliCompletionData * cdp);
  * @dependency #BSP430_CONSOLE
  * @dependency #BSP430_CLI_CONSOLE_BUFFER_SIZE
  * @dependency #configBSP430_CLI_COMMAND_COMPLETION
- * 
+ *
  * @ingroup grp_utility_cli_completion
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_CLI_COMMAND_COMPLETION - 0)
