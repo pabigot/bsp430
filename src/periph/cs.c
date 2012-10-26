@@ -32,6 +32,18 @@
 #include <bsp430/periph/cs.h>
 #include <bsp430/platform.h>
 
+#ifdef __MSP430_HAS_CS_A__
+/* Provide aliases for name change from CS peripheral */
+#define XT1DRIVE_3 LFXTDRIVE_3
+#define XT1BYPASS LFXTBYPASS
+#define XT1OFF LFXTOFF
+#define XT1OFFG LFXTOFFG
+#define XT1DRIVE0 LFXTDRIVE0
+#define XT1DRIVE1 LFXTDRIVE1
+#define SELA__XT1CLK SELA__LFXTCLK
+#define XTS 0
+#endif /* __MSP430_HAS_CS_A__ */
+
 /* Mask for SELA bits in CSCTL2 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
 
@@ -222,8 +234,13 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
     case eBSP430clockSRC_REFOCLK:
       return -1;
     case eBSP430clockSRC_DCOCLK:
+#if defined(__MSP430_HAS_CS_A__)
+      /* CS_A does not permit use of DCOCLK as source for ACLK */
+      return -1;
+#else /* __MSP430_HAS_CS_A__ */
       sela = SELA__DCOCLK;
       break;
+#endif /* __MSP430_HAS_CS_A__ */
     case eBSP430clockSRC_DCOCLKDIV:
       return -1;
 #if defined(SELA__XT2CLK) && defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)

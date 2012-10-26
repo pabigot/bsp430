@@ -92,7 +92,11 @@
  * crystal-specific flags.  Note that if somebody has turned off the
  * crystal by setting CSCTL4.XT1OFF, the crystal is assumed to be
  * faulted. */
+#if defined(__MSP430_HAS_CS_A__)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((CSCTL4 & LFXTOFF) || (CSCTL5 & LFXTOFFG))
+#else /* __MSP430_HAS_CS_A__ */
 #define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((CSCTL4 & XT1OFF) || (CSCTL5 & XT1OFFG))
+#endif /* __MSP430_HAS_CS_A__ */
 
 #undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
 /** Clear the fault associated with LFXT1.
