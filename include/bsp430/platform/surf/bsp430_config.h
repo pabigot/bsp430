@@ -116,4 +116,14 @@
 /* END AUTOMATICALLY GENERATED CODE [feature_endif] */
 /* !BSP430! end=feature_endif */
 
+#if (configBSP430_PLATFORM_SURF_FLASH - 0)
+/* Flash is on USCI_B0 */
+#define configBSP430_SERIAL_ENABLE_SPI 1
+#define configBSP430_HAL_USCI5_B0 1
+/* P1.7 is FLASH_CSn */
+#ifndef configBSP430_HPL_PORT1
+#define configBSP430_HPL_PORT1 1
+#endif /* configBSP430_HPL_PORT1 */
+#endif /* configBSP430_PLATFORM_SURF_FLASH */
+
 #endif /* BSP430_PLATFORM_EM430_BSP430_CONFIG_H */

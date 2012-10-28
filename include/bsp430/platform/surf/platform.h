@@ -136,6 +136,37 @@
 /* END AUTOMATICALLY GENERATED CODE [feature_endif] */
 /* !BSP430! end=feature_endif */
 
+
+#ifndef configBSP430_PLATFORM_SURF_FLASH
+/** Enable HPL support for on-board SPI flash
+ *
+ * The SuRF board has a M25P10-A 1 Mib (128 kiB) serial flash from
+ * Micron on board.  It uses USCI_B0 and has CSn on P1.7.  PWR and
+ * RSTn are hard-wired.  Defining this constant to a true value
+ * enables the HPL interface to port 1, SPI on USCI_B0, and provides
+ * constants for applications to use the flash. */
+#define configBSP430_PLATFORM_SURF_FLASH 0
+#endif /* configBSP430_PLATFORM_SURF_FLASH */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_SURF_FLASH - 0)
+
+/** BSP430 SPI peripheral handle for flash.
+ * @dependency #configBSP430_PLATFORM_SURF_FLASH
+ */
+#define BSP430_PLATFORM_SURF_FLASH_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0
+
+/** BSP430 peripheral handle for port on which SPI flash chip-select (inverted) is placed.
+ * @dependency #configBSP430_PLATFORM_SURF_FLASH
+ */
+#define BSP430_PLATFORM_SURF_FLASH_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+
+/** Port bit on #BSP430_PLATFORM_SURF_FLASH_PORT_PERIPH_HANDLE for SPI flash CSn
+ * @dependency #configBSP430_PLATFORM_SURF_FLASH
+ */
+#define BSP430_PLATFORM_SURF_FLASH_CSn_PORT_BIT BIT7
+
+#endif /* configBSP430_PLATFORM_SURF_FLASH */
+
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
 
