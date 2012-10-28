@@ -157,6 +157,19 @@
 #endif /* configBSP430_PLATFORM_TRXEB_ACCEL_IRQ */
 #endif /* configBSP430_PLATFORM_TRXEB_ACCEL */
 
+#if (configBSP430_PLATFORM_TRXEB_FLASH - 0)
+/* Flash is on IO_SPI1 */
+#define configBSP430_PLATFORM_TRXEB_IO_SPI1 1
+/* P7.6 is FLASH_PWR */
+#ifndef configBSP430_HPL_PORT7
+#define configBSP430_HPL_PORT7 1
+#endif /* configBSP430_HPL_PORT7 */
+/* P8.6 is FLASH_CSn */
+#ifndef configBSP430_HPL_PORT8
+#define configBSP430_HPL_PORT8 1
+#endif /* configBSP430_HPL_PORT8 */
+#endif /* configBSP430_PLATFORM_TRXEB_FLASH */
+
 #if (configBSP430_PLATFORM_TRXEB_IO_SPI0 - 0)
 #define configBSP430_SERIAL_ENABLE_SPI 1
 #define configBSP430_HAL_USCI5_A2 1

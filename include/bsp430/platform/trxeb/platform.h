@@ -242,6 +242,51 @@
 
 #endif /* configBSP430_PLATFORM_TRXEB_ACCEL */
 
+#ifndef configBSP430_PLATFORM_TRXEB_FLASH
+/** Enable HPL support for on-board SPI flash
+ *
+ * The TrxEB has a M25PE20 2 Mib (256 kiB) serial flash from Micron on
+ * board.  It receives power through P7.6, and has RESETn on P7.2.
+ * Interface to it uses IO_SPI1.  Defining this constant to a true
+ * value enables the configuration of port 7 as well as provides
+ * constants for applications to use the flash. */
+#define configBSP430_PLATFORM_TRXEB_FLASH 0
+#endif /* configBSP430_PLATFORM_TRXEB_FLASH */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_FLASH - 0)
+
+/** BSP430 peripheral handle for port on which SPI flash power is placed.
+ * @dependency #configBSP430_PLATFORM_TRXEB_FLASH
+ */
+#define BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_FLASH_PORT_PERIPH_HANDLE for SPI flash power
+ * @dependency #configBSP430_PLATFORM_TRXEB_FLASH
+ */
+#define BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_BIT BIT6
+
+/** BSP430 peripheral handle for port on which SPI flash power is placed.
+ * @dependency #configBSP430_PLATFORM_TRXEB_FLASH
+ */
+#define BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_FLASH_PORT_PERIPH_HANDLE for SPI flash power
+ * @dependency #configBSP430_PLATFORM_TRXEB_FLASH
+ */
+#define BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_BIT BIT2
+
+/** BSP430 peripheral handle for port on which SPI flash chip-select (inverted) is placed.
+ * @dependency #configBSP430_PLATFORM_TRXEB_FLASH
+ */
+#define BSP430_PLATFORM_TRXEB_FLASH_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT8
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_FLASH_PORT_PERIPH_HANDLE for SPI flash CSn
+ * @dependency #configBSP430_PLATFORM_TRXEB_FLASH
+ */
+#define BSP430_PLATFORM_TRXEB_FLASH_CSn_PORT_BIT BIT6
+
+#endif /* configBSP430_PLATFORM_TRXEB_FLASH */
+
 #ifndef configBSP430_PLATFORM_TRXEB_IO_SPI0
 /** Enable use of IO_SPI0 peripheral.
  *
@@ -252,10 +297,29 @@
  * @cppflag
  */
 #define configBSP430_PLATFORM_TRXEB_IO_SPI0 (configBSP430_PLATFORM_TRXEB_ACCEL - 0)
-
 #endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */
 
+#ifndef configBSP430_PLATFORM_TRXEB_IO_SPI1
+/** Enable use of IO_SPI1 peripheral.
+ *
+ * This peripheral services the SPI flash and LCD, and is default
+ * enabled when #configBSP430_PLATFORM_TRXEB_FLASH or
+ * #configBSP430PLATFORM_TRXEB_LCD is enabled.
+ *
+ * @defaulted
+ * @cppflag
+ */
+#define configBSP430_PLATFORM_TRXEB_IO_SPI1 ((configBSP430_PLATFORM_TRXEB_FLASH - 0) || (configBSP430_PLATFORM_TRXEB_LCD - 0))
+#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI1 */
+
+#if configBSP430_PLATFORM_TRXEB_ACCEL - 0
+/** Peripheral handle for SPI access to accelerometer */
 #define BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE
+#endif /* configBSP430_PLATFORM_TRXEB_ACCEL */
+#if configBSP430_PLATFORM_TRXEB_FLASH - 0
+/** Peripheral handle for SPI access to serial flash */
+#define BSP430_PLATFORM_TRXEB_FLASH_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI1_PERIPH_HANDLE
+#endif /* configBSP430_PLATFORM_TRXEB_FLASH */
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_IO_SPI0 - 0)
 /** BSP430 port peripheral handle for IO_SPI0.
