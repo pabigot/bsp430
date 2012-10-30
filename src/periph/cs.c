@@ -31,6 +31,7 @@
 
 #include <bsp430/periph/cs.h>
 #include <bsp430/platform.h>
+#include <stdlib.h>
 
 #ifdef __MSP430_HAS_CS_A__
 /* Provide aliases for name change from CS peripheral */
@@ -43,6 +44,14 @@
 #define SELA__XT1CLK SELA__LFXTCLK
 #define XTS 0
 #endif /* __MSP430_HAS_CS_A__ */
+
+#if defined(__MSP430_HAS_CS__)
+#define DCOFSEL_MASK (DCOFSEL0 | DCOFSEL1)
+#elif defined(__MSP430_HAS_CS_A__)
+#define DCOFSEL_MASK (DCOFSEL0 | DCOFSEL1 | DCOFSEL2)
+#else /* __MSP430_HAS_CS__ */
+#error Unrecognized peripheral
+#endif /* __MSP430_HAS_CS__*/
 
 /* Mask for SELA bits in CSCTL2 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
@@ -59,34 +68,34 @@
 /* Mask for DIVM bits in CSCTL3 */
 #define DIVM_MASK (DIVM0 | DIVM1 | DIVM2)
 
+static const int32_t supported_freq[] = {
+#if defined(__MSP430_HAS_CS__)
+  /*  0       DCORSEL */ 
+  5330000UL, 16000000UL,        /* DCOFSEL_0 */
+  6670000UL, 20000000UL,        /* DCOFSEL_1 */
+  5330000UL, 16000000UL,        /* DCOFSEL_2 */
+  8000000UL, 24000000UL         /* DCOFSEL_3 */
+#elif defined(__MSP430_HAS_CS_A__)
+  /*  0       DCORSEL */ 
+  1000000UL, 1000000UL,        /* DCOFSEL_0 */
+  2670000UL, 5330000UL,        /* DCOFSEL_1 */
+  3330000UL, 6670000UL,        /* DCOFSEL_2 */
+  4000000UL, 8000000UL,        /* DCOFSEL_3 */
+  5330000UL, 16000000UL,       /* DCOFSEL_4 */
+  6670000UL, 20000000UL,       /* DCOFSEL_5 */
+  8000000UL, 24000000UL,       /* DCOFSEL_6 */
+  8000000UL, 24000000UL,       /* DCOFSEL_7 */
+#else /* __MSP430_HAS_CS__ */
+#error Unrecognized peripheral
+#endif /* __MSP430_HAS_CS__*/
+};
+
 static unsigned long
 ulBSP430csDCOCLK_Hz_ni (void)
 {
-  unsigned long freq_Hz = 0;
+  unsigned int csctl1 = CSCTL1;
 
-  switch (CSCTL1 & 0x86) {
-    case 0x00:
-    case 0x04:
-      freq_Hz = 5333333UL;
-      break;
-    case 0x02:
-      freq_Hz = 6666667UL;
-      break;
-    case 0x06:
-      freq_Hz = 8000000UL;
-      break;
-    case 0x80:
-    case 0x84:
-      freq_Hz = 16000000UL;
-      break;
-    case 0x82:
-      freq_Hz = 20000000UL;
-      break;
-    case 0x86:
-      freq_Hz = 24000000UL;
-      break;
-  }
-  return freq_Hz;
+  return supported_freq[!!(csctl1 & DCORSEL) + 2 * (csctl1 & DCOFSEL_MASK) / DCOFSEL0];
 }
 
 unsigned long
@@ -129,25 +138,26 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
-  unsigned int csctl1 = 0x06;
+  unsigned int csctl1;
+  int ci;
+  int best_ci;
+  unsigned long delta;
+  unsigned long best_delta;
 
   if (0 == mclk_Hz) {
     mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
   }
-
-  if ((5330000UL + 6670000UL) / 2 > mclk_Hz) {
-    csctl1 = 0;
-  } else if ((6670000UL + 8000000UL) / 2 > mclk_Hz) {
-    csctl1 = 0x02;
-  } else if ((8000000UL + 16000000UL) / 2 < mclk_Hz) {
-    csctl1 = 0x86;
-    if ((16000000UL + 20000000UL) / 2 > mclk_Hz) {
-      csctl1 = 0x80;
-    } else if ((20000000UL + 24000000UL) / 2 > mclk_Hz) {
-      csctl1 = 0x82;
+  best_ci = ci = 0;
+  best_delta = labs(supported_freq[best_ci] - (int32_t)mclk_Hz);
+  for (ci = 1; ci < sizeof(supported_freq)/sizeof(supported_freq[0]); ++ci) {
+    delta = labs(supported_freq[ci] - (int32_t)mclk_Hz);
+    if (delta < best_delta) {
+      best_delta = delta;
+      best_ci = ci;
     }
   }
-
+  csctl1 = (best_ci & 1) ? DCORSEL : 0;
+  csctl1 |= (best_ci / 2) * DCOFSEL0;
   CSCTL0_H = 0xA5;
   CSCTL1 = csctl1;
   CSCTL2 = (CSCTL2 & (SELA_MASK | SELS_MASK)) | SELM__DCOCLK;

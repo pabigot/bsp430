@@ -33,7 +33,12 @@
  *
  * @brief Hardware presentation/abstraction for Clock System (CS).
  *
- * The Clock System (CS) peripheral is present in FR5xx-family devices.
+ * The Clock System (CS) peripheral is present in FR5xx-family
+ * devices.  Variant CS is used in FR57xx devices; variant CS_A is
+ * used in FR58xx/FR59xx devices.  They differ in the names for
+ * constants related to low and high frequency crystals, in the set of
+ * supported DCOCLK frequencies, and in whether DCOCLK can source
+ * ACLK.
  *
  * @section h_periph_cs_opt Module Configuration Options
  *
@@ -53,11 +58,13 @@
  * The standard set of capabilities in the bsp430/clocks.h header are
  * supported, with the following details:
  *
- * @li The peripheral supports only a few factory-trimmed frequencies:
- * 5.33, 6.67, and 8 MHz on low-speed devices.  On high-speed--capable
- * devices the speed may also be set to 16, 20, and 24 MHz.
- * ulBSP430clockConfigureMCLK_ni() will select and return the closest
- * available frequency.
+ * @li (CS) The peripheral supports only a few factory-trimmed
+ * frequencies: for CS these are 5.33, 6.67, and 8 MHz on low-speed
+ * devices, and additionally 16, 20, and 24 MHz on high-speed--capable
+ * devices.  For CS_A these are 1, 2.67, 3.33, 4.0, 5.33, and 6.67 MHz
+ * on low-speed devices, and additionally 8, 16, 20, and 24 MHz on
+ * high-speed-capable devices.  ulBSP430clockConfigureMCLK_ni() will
+ * select and return the closest available frequency.
  *
  * @li The implementation assumes that MCLK and SMCLK are both sourced
  * from DCOCLK.
