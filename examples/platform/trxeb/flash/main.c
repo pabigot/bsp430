@@ -76,7 +76,8 @@ void dumpMemory (const uint8_t * dp,
 /* As-delivered TrxEB flash is completely erased except for the first
  * sixteen bytes. */
 const uint8_t flashContents[] = { 0xAA, 0x55, 0x0F, 0xF0, 0xCC, 0x33, 0xC3, 0x3C,
-                                  0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF };
+                                  0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF
+                                };
 
 uint8_t output[10];
 uint8_t buffer[256];
@@ -239,7 +240,7 @@ void main ()
   /* Drive RSTn low during power-on*/
   rst_hpl->out &= ~BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_BIT;
   rst_hpl->dir |= BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_BIT;
-  
+
   /* Turn on power, then wait 10 ms for chip to stabilize before releasing RSTn. */
   pwr_hpl->out &= ~BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_BIT;
   pwr_hpl->dir |= BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_BIT;
@@ -295,9 +296,9 @@ void main ()
   rc = readFromAddress(0, sizeof(flashContents));
   dumpMemory(buffer, rc, 0);
   /*
-Write 4 took 8
-PAGE_PROGRAM to 0 returned 4
-00000000  88 11 03 30 cc 33 c3 3c  01 23 45 67 89 ab cd ef  ...0.3.<.#Eg....
+  Write 4 took 8
+  PAGE_PROGRAM to 0 returned 4
+  00000000  88 11 03 30 cc 33 c3 3c  01 23 45 67 89 ab cd ef  ...0.3.<.#Eg....
   */
 
   /* PAGE_WRITE is the one that does not need a prior erase cycle */
@@ -307,9 +308,9 @@ PAGE_PROGRAM to 0 returned 4
   rc = readFromAddress(0, sizeof(flashContents));
   dumpMemory(buffer, rc, 0);
   /*
-Write 4 took 204
-PAGE_WRITE to 8 returned 4
-00000000  88 11 03 30 cc 33 c3 3c  cc 33 c3 3c 89 ab cd ef  ...0.3.<.3.<....
+  Write 4 took 204
+  PAGE_WRITE to 8 returned 4
+  00000000  88 11 03 30 cc 33 c3 3c  cc 33 c3 3c 89 ab cd ef  ...0.3.<.3.<....
   */
 
   rc = writeToAddress(0x0a, 0, flashContents, sizeof(flashContents));

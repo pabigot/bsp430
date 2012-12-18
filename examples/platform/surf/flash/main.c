@@ -72,22 +72,22 @@ void main ()
 {
   int rc;
   hBSP430halSERIAL spi;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-#if 0  
+#if 0
   P1SEL &= ~(BIT2 | BIT3 | BIT4 | BIT7);
   P1OUT &= ~(BIT2 | BIT3 | BIT4);
   P1OUT |= BIT7;
   P1DIR |= BIT2 | BIT3 | BIT4 | BIT7;
 #endif
-  
+
   cprintf("Clock speed %lu Hz\n", ulBSP430clockMCLK_Hz());
   spi = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_PLATFORM_SURF_FLASH_SPI_PERIPH_HANDLE),
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST),
                              UCSSEL_2, 1);
-  
+
   cprintf("SPI %s at HAL %p : %s\n",
           xBSP430serialName(BSP430_PLATFORM_SURF_FLASH_SPI_PERIPH_HANDLE),
           spi,

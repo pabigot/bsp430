@@ -70,13 +70,13 @@
 
 static const int32_t supported_freq[] = {
 #if defined(__MSP430_HAS_CS__)
-  /*  0       DCORSEL */ 
+  /*  0       DCORSEL */
   5330000UL, 16000000UL,        /* DCOFSEL_0 */
   6670000UL, 20000000UL,        /* DCOFSEL_1 */
   5330000UL, 16000000UL,        /* DCOFSEL_2 */
   8000000UL, 24000000UL         /* DCOFSEL_3 */
 #elif defined(__MSP430_HAS_CS_A__)
-  /*  0       DCORSEL */ 
+  /*  0       DCORSEL */
   1000000UL, 1000000UL,        /* DCOFSEL_0 */
   2670000UL, 5330000UL,        /* DCOFSEL_1 */
   3330000UL, 6670000UL,        /* DCOFSEL_2 */

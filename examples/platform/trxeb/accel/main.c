@@ -97,7 +97,7 @@ int cma3000read (uint8_t reg,
   BSP430_CORE_INTERRUPT_STATE_T istate;
   uint8_t resp[2];
   int rc;
-  
+
   reg = REG_TO_READ(reg);
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -107,7 +107,7 @@ int cma3000read (uint8_t reg,
     CS_DEASSERT();
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-      
+
   //cprintf("send 0x%02x got %x %x res %d  ", reg, resp[0], resp[1], rc);
   if ((sizeof(resp) == rc) && RESP_VALID(resp[0])) {
     *valp = resp[1];
@@ -137,10 +137,10 @@ int cma3000write (uint8_t reg,
   BSP430_CORE_INTERRUPT_STATE_T istate;
   uint8_t outbuf[2];
   int rc;
-  
+
   outbuf[0] = REG_TO_WRITE(reg);
   outbuf[1] = val;
-  
+
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
@@ -185,13 +185,14 @@ int cma3000sample (int cpg,
 {
   static const uint8_t req_in[6] = { REG_TO_READ(R_DOUTX), 0,
                                      REG_TO_READ(R_DOUTY), 0,
-                                     REG_TO_READ(R_DOUTZ), 0 };
+                                     REG_TO_READ(R_DOUTZ), 0
+                                   };
   uint8_t req_out[6];
   uint8_t last[3];
   int reps = 0;
   int rc;
   BSP430_CORE_INTERRUPT_STATE_T istate;
-  
+
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
@@ -230,11 +231,11 @@ int cma3000sample (int cpg,
 void dumpState (void)
 {
   int i;
-    
+
   for (i = 0; i < R_RegisterLimit ; ++i) {
     uint8_t v = -1;
     int rc;
-    
+
     rc = cma3000read(i, &v);
     cprintf("Reg %u got %d val 0x%02x\n", i, rc, v);
   }
@@ -246,7 +247,7 @@ void main ()
   int cpg;
   unsigned int divisor;
   int rc;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
@@ -299,7 +300,7 @@ void main ()
   cprintf("CTRL assign %02x got %d readback %02x\n", ctrl, rc, readreg(R_CTRL));
 
   dumpState();
-  
+
   /* Need to enable interrupts so timer overflow events are properly
    * acknowledged */
   BSP430_CORE_ENABLE_INTERRUPT();
