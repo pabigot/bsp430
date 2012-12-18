@@ -110,7 +110,7 @@
 /* !BSP430! end=module_endif */
 
 /* How to use ACLK as a capture/compare input source */
-/* !BSP430! module=timer feature=ccaclk timer=TB0 cc_index=6 ccis=1 clk_port=PORT4 clk_pin=BIT7 */
+/* !BSP430! module=timer feature=ccaclk timer=TB0 cc_index=6 ccis=1 clk:pp=4.7 */
 /* !BSP430! insert=feature_startif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
@@ -324,7 +324,7 @@
 #if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_IO_SPI0 - 0)
 /** BSP430 port peripheral handle for IO_SPI0.
  *
- * IO_SPI0 services the accelerometer. 
+ * IO_SPI0 services the accelerometer.
  * @dependency #configBSP430_PLATFORM_TRXEB_IO_SPI0 */
 #define BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE BSP430_PERIPH_USCI5_A2
 #endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */

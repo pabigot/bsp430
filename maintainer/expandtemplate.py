@@ -591,6 +591,16 @@ for fn in args.files:
         mo = directive_re.search(line)
         if mo:
             kw = filter(lambda _s: 0 < _s.find('='), mo.group('keywords').strip().split())
+         
+            for (k, v) in [ _s.split('=', 1) for _s in kw ]:
+                if 0 < k.find(':'):
+                    (pfx, op) = k.split(':', 1)
+                    if 'pp' == op:
+                        (port, pin) = v.split('.', 1)
+                        idmap['%s_port' % (pfx,) ] = 'PORT%s' % (port,)
+                        idmap['%s_pin' % (pfx,) ] = 'BIT%s' % (pin,)
+                        continue
+                idmap[k] = v
             idmap.update([ _s.split('=', 1) for _s in kw ])
             if 'insert' in idmap:
                 assert insertable is None
