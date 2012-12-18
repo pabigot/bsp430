@@ -77,7 +77,7 @@
 /* !BSP430! end=module_endif */
 
 /* How to use ACLK as a capture/compare input source */
-/* !BSP430! module=timer feature=ccaclk timer=TB0 cc_index=6 ccis=1 clk:pp=4.7 */
+/* !BSP430! module=timer feature=ccaclk timer=TB0 cc_index=6 ccis=1 clk:pp=4.7 cc0:pp=4.0 cc1:pp=4.1 */
 /* !BSP430! insert=feature_startif subst=module,feature */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
 #if ((configBSP430_TIMER_CCACLK - 0)                                    \
