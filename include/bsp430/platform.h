@@ -569,20 +569,20 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 
 /* If configBSP430_CONSOLE was requested, then mark the feature as
  * available or not based on whether the platform provided a serial
- * peripheral handle for the console's use. */
+ * peripheral for the console's use. */
 #if configBSP430_CONSOLE - 0
-#ifdef BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
+#if BSP430_PERIPH_CPPID_NONE != BSP430_CONSOLE_SERIAL_PERIPH_CPPID
 #define BSP430_CONSOLE 1
-#else /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
+#else /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
 #define BSP430_CONSOLE 0
-#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
 #endif /* configBSP430_CONSOLE */
 
 /* If configBSP430_UPTIME was requested, then mark the feature as
  * available or not based on whether the platform provided a timer for
  * its use. */
 #if (configBSP430_UPTIME - 0) && !defined(BSP430_UPTIME)
-#if BSP430_PERIPH_CPPPID_NONE != BSP430_UPTIME_TIMER_PERIPH_CPPID
+#if BSP430_PERIPH_CPPID_NONE != BSP430_UPTIME_TIMER_PERIPH_CPPID
 #define BSP430_UPTIME 1
 #else /* BSP430_UPTIME_TIMER_PERIPH_CPPID */
 #define BSP430_UPTIME 0

@@ -93,22 +93,6 @@
 #define BSP430_LED_GREEN 2
 #define BSP430_LED_RED1 3
 
-/* What to use as a console */
-/* !BSP430! module=console subst=module instance=nop */
-/* !BSP430! insert=module_startif */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_startif] */
-#if ((configBSP430_CONSOLE - 0)                                    \
-     && ((! defined(configBSP430_CONSOLE_USE_DEFAULT_RESOURCE))    \
-         || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
-/* END AUTOMATICALLY GENERATED CODE [module_startif] */
-/* !BSP430! end=module_startif */
-#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A1
-/* !BSP430! insert=module_endif */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
-#endif /* configBSP430_CONSOLE && need default */
-/* END AUTOMATICALLY GENERATED CODE [module_endif] */
-/* !BSP430! end=module_endif */
-
 /* How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk timer=TB0 cc_index=6 ccis=1 clk:pp=4.7 cc0:pp=4.0 cc1:pp=4.1 */
 /* !BSP430! insert=feature_startif subst=module,feature */

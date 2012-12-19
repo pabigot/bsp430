@@ -56,24 +56,13 @@
 #endif /* configBSP430_UPTIME */
 
 /* What to use as a console */
-/* !BSP430! module=console subst=module instance=nop */
-/* !BSP430! insert=module_startif */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_startif] */
-#if ((configBSP430_CONSOLE - 0)                                    \
-     && ((! defined(configBSP430_CONSOLE_USE_DEFAULT_RESOURCE))    \
-         || (configBSP430_CONSOLE_USE_DEFAULT_RESOURCE - 0)))
-/* END AUTOMATICALLY GENERATED CODE [module_startif] */
-/* !BSP430! end=module_startif */
-#if !defined(configBSP430_HAL_USCI_A0)
+#if configBSP430_CONSOLE - 0
+#ifndef BSP430_CONSOLE_SERIAL_PERIPH_CPPID
 #if defined(__MSP430G2553__)
-#define configBSP430_HAL_USCI_A0 1
+#define BSP430_CONSOLE_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI_A0
 #endif /* MCU */
-#endif /* configBSP430_HAL_USCI_A0 */
-/* !BSP430! insert=module_endif */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [module_endif] */
-#endif /* configBSP430_CONSOLE && need default */
-/* END AUTOMATICALLY GENERATED CODE [module_endif] */
-/* !BSP430! end=module_endif */
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
+#endif /* configBSP430_CONSOLE */
 
 /* How to use ACLK as a capture/compare input source */
 /* !BSP430! module=timer feature=ccaclk */

@@ -94,7 +94,7 @@
 
 /** @def BSP430_CONSOLE
  *
- * Defined to a true value if #BSP430_CONSOLE_SERIAL_PERIPH_HANDLE has
+ * Defined to a true value if #BSP430_CONSOLE_SERIAL_PERIPH_CPPID has
  * been provided, making the console infrastructure available.
  *
  * @dependency #configBSP430_CONSOLE
@@ -104,45 +104,100 @@
 #define BSP430_CONSOLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def configBSP430_CONSOLE_USE_DEFAULT_RESOURCE
+/** @def BSP430_CONSOLE_SERIAL_PERIPH_CPPID
  *
- * Define to a true value to use the default (platform-specific)
- * serial HAL handle.  This is true by default if
- * #configBSP430_CONSOLE is true.
+ * Define to the preprocessor-compatible identifier for the peripheral
+ * that should be used by platform-agnostic programs to create the
+ * console, for example #BSP430_PERIPH_CPPID_USCI5_A0.
  *
- * If you want to override the default, define this to a false value
- * and provide definitions for:
- * <ul>
- * <li>#BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
- * </ul>
+ * The define must appear in the @ref bsp430_config subsystem so that
+ * functional resource requests are correctly propagated to the
+ * underlying resource instances.  A default is provided based on the
+ * platform or available serial peripherals.
  *
- * You are also responsible for requesting the inclusion of the
- * corresponding device and its HAL interface in the application,
- * e.g. by setting #configBSP430_HAL_USCI5_A1.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_CONSOLE_USE_DEFAULT_RESOURCE
-#define configBSP430_CONSOLE_USE_DEFAULT_RESOURCE (configBSP430_CONSOLE - 0)
-#endif /* configBSP430_CONSOLE_USE_DEFAULT_RESOURCE */
+ * @dependency #BSP430_CONSOLE
+ * @platformdefault
+ * @affects #BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CONSOLE_SERIAL_PERIPH_CPPID include "bsp430_config.h"
+#endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
  *
  * The peripheral handle that should be used by platform-agnostic
- * programs to create the console, for example #BSP430_PERIPH_USCI5_A0.
- * A default is provided based on the platform or available serial
- * peripherals.
+ * programs to create the console.  This derives directly from
+ * #BSP430_CONSOLE_SERIAL_PERIPH_CPPID, but is a serial peripheral
+ * handle suitable for use in code.
  *
- * If you override this, be sure to set
- * #configBSP430_CONSOLE_USE_DEFAULT_RESOURCE to false and to
- * explicitly request the HAL resource in your bsp430_config.h file
- * (e.g., enable #configBSP430_HAL_USCI5_A0).
- *
- * @dependency #BSP430_CONSOLE
+ * @dependency #BSP430_CONSOLE_SERIAL_PERIPH_CPPID
  * @platformdefault */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE include <bsp430/platform.h>
-#endif /* BSP430_DOXYGEN */
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE platform or application specific
+/* !BSP430! instance=@serial functional=console_serial subst=functional insert=periph_sethandle */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_A0
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_A0
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_A1
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_A1
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_B0
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_B1
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_B1
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A0
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A0
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A1
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A1
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A2
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A2
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A3
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A3
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B0
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B1
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B1
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B2
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B2
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B3
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A0
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A0
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A1
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A1
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A2
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A2
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A3
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A3
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_B0
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B0
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_B1
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B1
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_B2
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B2
+
+#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_B3
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B3
+/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */
+/* !BSP430! end=periph_sethandle */
+#endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
 
 /** @def BSP430_CONSOLE_BAUD_RATE
  *
