@@ -58,6 +58,141 @@
  * number. */
 #define BSP430_VERSION 20121013
 
+/** Constant to specify no peripheral in preprocessor checks.
+ *
+ * Where a functional resource may be specified by either an
+ * application or a platform, we need a way to identify it that
+ * permits preprocessor checks that default the corresponding core
+ * resource capability.  For example, if
+ * #BSP430_UPTIME_TIMER_PERIPH_CPPID is defined to
+ * #BSP430_PERIPH_CPPID_TB0, then setting #configBSP430_UPTIME will
+ * ensure that #configBSP430_HAL_TB0 and #configBSP430_HAL_TB0_ISR are
+ * both defined to 1.
+ *
+ * This particular value indicates that no core resource is associated
+ * with the functional resource.
+ */
+#define BSP430_PERIPH_CCPID_NONE 0
+
+/* !BSP430! insert=periph_cppid */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_cppid] */
+
+/** Constant to identify #BSP430_PERIPH_PORT1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT1 1
+
+/** Constant to identify #BSP430_PERIPH_PORT2 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT2 2
+
+/** Constant to identify #BSP430_PERIPH_PORT3 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT3 3
+
+/** Constant to identify #BSP430_PERIPH_PORT4 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT4 4
+
+/** Constant to identify #BSP430_PERIPH_PORT5 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT5 5
+
+/** Constant to identify #BSP430_PERIPH_PORT6 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT6 6
+
+/** Constant to identify #BSP430_PERIPH_PORT7 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT7 7
+
+/** Constant to identify #BSP430_PERIPH_PORT8 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT8 8
+
+/** Constant to identify #BSP430_PERIPH_PORT9 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT9 9
+
+/** Constant to identify #BSP430_PERIPH_PORT10 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT10 10
+
+/** Constant to identify #BSP430_PERIPH_PORT11 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_PORT11 11
+
+/** Constant to identify #BSP430_PERIPH_TA0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_TA0 12
+
+/** Constant to identify #BSP430_PERIPH_TA1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_TA1 13
+
+/** Constant to identify #BSP430_PERIPH_TA2 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_TA2 14
+
+/** Constant to identify #BSP430_PERIPH_TA3 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_TA3 15
+
+/** Constant to identify #BSP430_PERIPH_TB0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_TB0 16
+
+/** Constant to identify #BSP430_PERIPH_TB1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_TB1 17
+
+/** Constant to identify #BSP430_PERIPH_TB2 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_TB2 18
+
+/** Constant to identify #BSP430_PERIPH_USCI_A0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI_A0 19
+
+/** Constant to identify #BSP430_PERIPH_USCI_A1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI_A1 20
+
+/** Constant to identify #BSP430_PERIPH_USCI_B0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI_B0 21
+
+/** Constant to identify #BSP430_PERIPH_USCI_B1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI_B1 22
+
+/** Constant to identify #BSP430_PERIPH_USCI5_A0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_A0 23
+
+/** Constant to identify #BSP430_PERIPH_USCI5_A1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_A1 24
+
+/** Constant to identify #BSP430_PERIPH_USCI5_A2 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_A2 25
+
+/** Constant to identify #BSP430_PERIPH_USCI5_A3 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_A3 26
+
+/** Constant to identify #BSP430_PERIPH_USCI5_B0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_B0 27
+
+/** Constant to identify #BSP430_PERIPH_USCI5_B1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_B1 28
+
+/** Constant to identify #BSP430_PERIPH_USCI5_B2 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_B2 29
+
+/** Constant to identify #BSP430_PERIPH_USCI5_B3 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_USCI5_B3 30
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_A0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_A0 31
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_A1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_A1 32
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_A2 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_A2 33
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_A3 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_A3 34
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_B0 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_B0 35
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_B1 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_B1 36
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_B2 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_B2 37
+
+/** Constant to identify #BSP430_PERIPH_EUSCI_B3 in preprocessor checks */
+#define BSP430_PERIPH_CPPID_EUSCI_B3 38
+/* END AUTOMATICALLY GENERATED CODE [periph_cppid] */
+/* !BSP430! end=periph_cppid */
+
 /** @def configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE
  *
  * BSP430 depends heavily on configuration specified by preprocessor

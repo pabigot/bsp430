@@ -523,7 +523,42 @@ isr_%(INSTANCE)s (void)
 
     }
 
+
+# Generate a list of the core resource tags for all instances of core
+# resource groups.
+import itertools
+# Ports
+periph_ports = map(''.join, itertools.product(('PORT',), map(str, range(1, 12))))
+# Timers
+periph_timers = map(''.join, itertools.product(('TA',), map(str, range(4))))
+periph_timers.extend(map(''.join, itertools.product(('TB',), map(str, range(3)))))
+# Serial serial
+periph_usci = map(''.join, itertools.product(('USCI_',), ('A', 'B'), ('0', '1')))
+periph_usci5 = map(''.join, itertools.product(('USCI5_',), ('A', 'B'), map(str, range(4))))
+periph_eusci = map(''.join, itertools.product(('EUSCI_',), ('A', 'B'), map(str, range(4))))
+periph_serial = []
+periph_serial.extend(periph_usci)
+periph_serial.extend(periph_usci5)
+periph_serial.extend(periph_eusci)
+    
+periphs = []
+periphs.extend(periph_ports)
+periphs.extend(periph_timers)
+periphs.extend(periph_serial)
+
+# Generate an expansion that provides unique positive constants that
+# uniquely identify each core resource instance.
+periph_cppid = []
+for i in xrange(len(periphs)):
+    periph_cppid.append('''
+/** Constant to identify #BSP430_PERIPH_%(periph)s in preprocessor checks */
+#define BSP430_PERIPH_CPPID_%(periph)s %(ordinal)s''' % { 'periph': periphs[i], 'ordinal': str(i+1) })
+templates['periph_cppid'] = '\n'.join(periph_cppid)
+
 directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')
+# Directives:
+#  insert=<name> : identify the template to be expanded
+#  subst=<name,...> : populate subst_map from idmap entries for name,...
 idmap = {}
 
 def expandTemplate (tplname, idmap):
@@ -542,27 +577,35 @@ def expandTemplate (tplname, idmap):
     text = []
     text.append('/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [%(template)s] */' % subst_map)
 
-    for i in idmap['instance'].split(','):
-        if i.startswith(periph.upper()):
-            subst_map.update({ '#' : i[len(periph):] })
-        subst_map.update({ 'instance': i.lower(), 'INSTANCE': i.upper() })
-        subst_map.update({ 'baseinstance' : subst_map.get('instance'),
-                           'BASEINSTANCE' : subst_map.get('INSTANCE') })
-        uscifrom = idmap.get('uscifrom', None)
-        if uscifrom is not None:
-            subst_map.update({ 'baseinstance' : subst_map.get('instance').replace(uscifrom.lower(), 'usci'),
-                               'BASEINSTANCE' : subst_map.get('INSTANCE').replace(uscifrom.upper(), 'USCI') })
-        if idmap.get('portexpand', False):
-            subst_map.update({ 'PORTA' : 'PORT' + i[0],
-                               'PORT1': 'PORT%d' % (1 + 2 * (ord(i[0]) - ord('A')),),
-                               'PORT2': 'PORT%d' % (2 + 2 * (ord(i[0]) - ord('A')),) })
+    if idmap.get('instance'): # Non-empty value
+        for i in idmap['instance'].split(','):
+            if i.startswith(periph.upper()):
+                subst_map.update({ '#' : i[len(periph):] })
+            subst_map.update({ 'instance': i.lower(), 'INSTANCE': i.upper() })
+            subst_map.update({ 'baseinstance' : subst_map.get('instance'),
+                               'BASEINSTANCE' : subst_map.get('INSTANCE') })
+            uscifrom = idmap.get('uscifrom', None)
+            if uscifrom is not None:
+                subst_map.update({ 'baseinstance' : subst_map.get('instance').replace(uscifrom.lower(), 'usci'),
+                                   'BASEINSTANCE' : subst_map.get('INSTANCE').replace(uscifrom.upper(), 'USCI') })
+            if idmap.get('portexpand', False):
+                subst_map.update({ 'PORTA' : 'PORT' + i[0],
+                                   'PORT1': 'PORT%d' % (1 + 2 * (ord(i[0]) - ord('A')),),
+                                   'PORT2': 'PORT%d' % (2 + 2 * (ord(i[0]) - ord('A')),) })
+            try:
+                text.append(template % subst_map)
+            except TypeError as e:
+                print 'Exception expanding %s with %s: %s' % (insert_name, subst_map, e)
+                print template
+                raise
+            subst_map.pop('#', None)
+    else:
         try:
             text.append(template % subst_map)
         except TypeError as e:
             print 'Exception expanding %s with %s: %s' % (insert_name, subst_map, e)
             print template
             raise
-        subst_map.pop('#', None)
     text.append('/* END AUTOMATICALLY GENERATED CODE [%(template)s] */' % subst_map)
     text.append('')
     return '\n'.join(text)
