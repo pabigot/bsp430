@@ -476,51 +476,6 @@ isr_%(INSTANCE)s (void)
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */
 ''',
 
-
-    'feature_ccaclk_decl' : '''#define BSP430_TIMER_CCACLK 1
-#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_%(TIMER)s
-#define BSP430_TIMER_CCACLK_ACLK_CC %(CC_INDEX)s
-#define BSP430_TIMER_CCACLK_ACLK_CCIS CCIS_%(CCIS)s
-#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_%(CLK_PORT)s
-#define BSP430_TIMER_CCACLK_CLK_PORT_BIT %(CLK_PIN)s''',
-
-    'feature_ccaclk_cfg' : '''#if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
-#if !defined(configBSP430_HAL_%(TIMER)s)
-#define configBSP430_HAL_%(TIMER)s 1
-#endif /* configBSP430_HAL_%(TIMER)s */
-#if configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR - 0
-#if !defined(configBSP430_HAL_%(TIMER)s_CC0_ISR)
-#define configBSP430_HAL_%(TIMER)s_CC0_ISR 1
-#endif /* configBSP430_HAL_%(TIMER)s_CC0_ISR */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR */
-#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
-#if !defined(configBSP430_HPL_%(TIMER)s)
-#define configBSP430_HPL_%(TIMER)s 1
-#endif /* configBSP430_HPL_%(TIMER)s */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
-
-#if configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL - 0
-#if !defined(configBSP430_HAL_%(CLK_PORT)s)
-#define configBSP430_HAL_%(CLK_PORT)s 1
-#endif /* configBSP430_HAL_%(CLK_PORT)s */
-#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
-#if !defined(configBSP430_HPL_%(CLK_PORT)s)
-#define configBSP430_HPL_%(CLK_PORT)s 1
-#endif /* configBSP430_HPL_%(CLK_PORT)s */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */''',
-
-    'feature_startif' : '''#if ((configBSP430_%(MODULE)s_%(FEATURE)s - 0)                                    \\
-     && ((! defined(configBSP430_%(MODULE)s_%(FEATURE)s_USE_DEFAULT_RESOURCE))    \\
-         || (configBSP430_%(MODULE)s_%(FEATURE)s_USE_DEFAULT_RESOURCE - 0)))''',
-
-    'feature_endif' : '''#endif /* configBSP430_%(MODULE)s_%(FEATURE)s && need default */''',
-
-    'module_startif' : '''#if ((configBSP430_%(MODULE)s - 0)                                    \\
-     && ((! defined(configBSP430_%(MODULE)s_USE_DEFAULT_RESOURCE))    \\
-         || (configBSP430_%(MODULE)s_USE_DEFAULT_RESOURCE - 0)))''',
-
-    'module_endif' : '''#endif /* configBSP430_%(MODULE)s && need default */''',
-
     'periph_want' : '''
 #elif BSP430_PERIPH_CPPID_%(INSTANCE)s == BSP430_WANT_PERIPH_CPPID
 #if (BSP430_WANT_CONFIG_HAL)
