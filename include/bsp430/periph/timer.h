@@ -138,8 +138,8 @@
  *
  * Underlying Timer                   | HAL Request           | CC0 ISR Request
  * :--------------------------------- | :-------------------- | :--------------
- * #BSP430_UPTIME_TIMER_PERIPH_HANDLE | @em automatic         | #configBSP430_UPTIME_USE_DEFAULT_CC0_ISR
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE | #configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL | #configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR
+ * #BSP430_UPTIME_TIMER_PERIPH_HANDLE | @em automatic         | #configBSP430_UPTIME_TIMER_HAL_CC0_ISR
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE | @em automatic#configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL | #configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR
  * #BSP430_PERIPH_TA3                 | #configBSP430_HAL_TA3 | #configBSP430_HAL_TA3_CC0_ISR
  *
  * @note It is the responsibility of the application to configure the

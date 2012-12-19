@@ -134,16 +134,26 @@
 #include <bsp430/platform/custom/bsp430_config.h>
 #endif /* BSP430_PLATFORM_CUSTOM */
 
-/* Requirements to support default uptime resource (if that is
- * enabled, and nobody's done it already) */
-#if ((configBSP430_UPTIME - 0)                                  \
-     && (! (BSP430_UPTIME_USE_PLATFORM_RESOURCE - 0))           \
-     && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))  \
-         || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
-#define configBSP430_HAL_TA0 1
-#if configBSP430_UPTIME_USE_DEFAULT_CC0_ISR - 0
-#define configBSP430_HAL_TA0_CC0_ISR 1
-#endif /* enable uptime CC0 ISR */
+/* Propagate requests for functional resources.  Note that because we
+ * need the feature resource identified in order to request it,
+ * default values for BSP430-supported features must be provided in
+ * the platform-specific bsp430_config.h not the platform.h file. */
+
+#if configBSP430_UPTIME - 0
+/* Set a default resource if none encountered so far */
+#ifndef BSP430_UPTIME_TIMER_PERIPH_CPPID
+#define BSP430_UPTIME_TIMER_PERIPH_CPPID BSP430_PERIPH_CPPID_TA0
+#endif /* BSP430_UPTIME_TIMER_PERIPH_CPPID */
+
+#define BSP430_WANT_PERIPH_CPPID BSP430_UPTIME_TIMER_PERIPH_CPPID
+#define BSP430_WANT_CONFIG_HAL 1
+#define BSP430_WANT_CONFIG_HAL_ISR 1
+#define BSP430_WANT_CONFIG_HAL_CC0_ISR (configBSP430_UPTIME_HAL_CC0_ISR - 0)
+#include <bsp430/periph/want_.h>
+#undef BSP430_WANT_CONFIG_HAL_CC0_ISR
+#undef BSP430_WANT_CONFIG_HAL_ISR
+#undef BSP430_WANT_CONFIG_HAL
+#undef BSP430_WANT_PERIPH_CPPID
 #endif /* configBSP430_UPTIME */
 
 #endif /* BSP430_PLATFORM_BSP430_CONFIG_H */

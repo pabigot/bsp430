@@ -29,7 +29,7 @@
 
 /* And we need a CC block on the uptime counter that we can use to
  * determine the frequency of the HH10D signal.  Don't use CC0; we
- * didn't ask for configBSP430_UPTIME_USE_DEFAULT_CC0_ISR. */
+ * didn't ask for configBSP430_UPTIME_TIMER_HAL_CC0_ISR. */
 #define APP_HH10D_UPTIME_CC_INDEX 1
 
 /* Need I2C to access the calibration constants */

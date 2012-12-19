@@ -46,19 +46,14 @@
 #endif /* MCU */
 #endif /* configBSP430_SERIAL_USE_USCI */
 
-/** Use the platform default for the uptime timer */
-#if ((configBSP430_UPTIME - 0)                                  \
-     && ((! defined(configBSP430_UPTIME_USE_DEFAULT_RESOURCE))  \
-         || (configBSP430_UPTIME_USE_DEFAULT_RESOURCE - 0)))
+/** Provide a platform default for the uptime timer */
+#if configBSP430_UPTIME - 0
+#ifndef BSP430_UPTIME_TIMER_PERIPH_CPPID
 #if defined(__MSP430G2553__)
-#define configBSP430_HAL_TA1 1
-#if configBSP430_UPTIME_USE_DEFAULT_CC0_ISR - 0
-#define configBSP430_HAL_TA1_CC0_ISR 1
-#endif /* enable uptime CC0 ISR */
-/* Inhibit the generic uptime default from being enabled. */
-#define BSP430_UPTIME_USE_PLATFORM_RESOURCE 1
+#define BSP430_UPTIME_TIMER_PERIPH_CPPID BSP430_PERIPH_CPPID_TA1
 #endif /* MCU */
-#endif /* configBSP430_UPTIME && need default */
+#endif /* BSP430_UPTIME_TIMER_PERIPH_CPPID */
+#endif /* configBSP430_UPTIME */
 
 /* What to use as a console */
 /* !BSP430! module=console subst=module instance=nop */

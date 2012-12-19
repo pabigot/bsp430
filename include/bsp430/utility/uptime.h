@@ -40,8 +40,9 @@
  * after configuring the system clocks.  This is done for you in
  * vBSP430platformInitialize_ni() if #configBSP430_UPTIME is true.
  *
- * See #configBSP430_UPTIME_USE_DEFAULT_RESOURCE if you want to
- * control the timer that will be used.
+ * Normally #BSP430_PERIPH_TA0 is used for this function, but see
+ * #BSP430_UPTIME_TIMER_PERIPH_CPPID if you want to select a different
+ * timer..
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -57,7 +58,7 @@
  *
  * Define to a true value to enable the uptime infrastructure to
  * maintain a continuous system clock.  A timer that will support this
- * must be identified; see #configBSP430_UPTIME_USE_DEFAULT_RESOURCE.
+ * must be identified; see #BSP430_UPTIME_TIMER_PERIPH_CPPID.
  *
  * @cppflag
  * @affects #BSP430_UPTIME
@@ -69,7 +70,7 @@
 
 /** @def BSP430_UPTIME
  *
- * Defined to a true value if #BSP430_UPTIME_TIMER_PERIPH_HANDLE has
+ * Defined to a true value if #BSP430_UPTIME_TIMER_PERIPH_CPPID has
  * been provided, making the uptime infrastructure available.
  *
  * @dependency #configBSP430_UPTIME
@@ -78,80 +79,77 @@
 #define BSP430_UPTIME include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def configBSP430_UPTIME_USE_DEFAULT_RESOURCE
+/** @def BSP430_UPTIME_TIMER_PERIPH_CPPID
  *
- * The "best" timer to use for uptime management is probably
- * #BSP430_PERIPH_TA0, but if that time is the only one that can use
- * ACLK as a source another might be preferable, so that
- * #BSP430_TIMER_CCACLK can be used without conflicting with
- * #BSP430_UPTIME.  Where possible, selections of compatible timers
- * are made in the platform-specific headers.  See
- * #BSP430_UPTIME_USE_PLATFORM_RESOURCE.
+ * Define to the preprocessor-compatible identifier for a timer that
+ * should be used to maintain a continuous system clock sourced from
+ * ACLK.  The define must appear in the @ref bsp430_config subsystem
+ * so that functional resource requests are correctly propagated to
+ * the underlying resource instances.
  *
- * If you want control over the timer used for uptime monitoring, set
- * this to false.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_UPTIME_USE_DEFAULT_RESOURCE
-#define configBSP430_UPTIME_USE_DEFAULT_RESOURCE (configBSP430_UPTIME - 0)
-#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
-
-/** @def BSP430_UPTIME_USE_PLATFORM_RESOURCE
- *
- * If #configBSP430_UPTIME_USE_DEFAULT_RESOURCE is enabled but the
- * platform-specific @c bsp430_config.h selects a different peripheral
- * (e.g., #BSP430_PERIPH_TA1) than the generic @c bsp430_config.h,
- * this flag is defined to a true value to prevent the generic
- * resource from being allocated as well.  You only need to make use
- * of this this if you're providing a platform that doesn't use
- * #BSP430_PERIPH_TA0 for the uptime clock.
- *
- * @cppflag
- * @dependency #configBSP430_UPTIME_USE_DEFAULT_RESOURCE
- * @affects #BSP430_UPTIME_TIMER_PERIPH_HANDLE
- * @platformdefault */
+ * @defaulted
+ * @platformdefault
+ * @affects #BSP430_UPTIME_TIMER_PERIPH_HANDLE */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_UPTIME_USE_PLATFORM_RESOURCE include <bsp430/platform/bsp430_config.h>
-#endif /* configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
+#define BSP430_UPTIME_TIMER_PERIPH_CPPID include "bsp430_config.h"
+#endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_UPTIME_TIMER_PERIPH_HANDLE
  *
- * Define to the peripheral identifier for a timer that can be used to
- * maintain a continuous system clock sourced from ACLK.
+ * Defined to the peripheral identifier for a timer that can be used
+ * to maintain a continuous system clock sourced from ACLK.  This
+ * derives directly from #BSP430_UPTIME_TIMER_PERIPH_CPPID, but is a
+ * timer peripheral handle suitable for use in code.
  *
- * @warning If you set this, you must also set
- * #configBSP430_UPTIME_USE_DEFAULT_RESOURCE to be a false value.  You
- * must also ensure the corresponding peripheral HAL interface
- * (e.g. #configBSP430_HAL_TA1) and HAL interrupt that will count
- * overflows (e.g. #configBSP430_HAL_TA1_ISR) are enabled.
- *
- * @defaulted
- * @platformdefault */
+ * @dependency #BSP430_UPTIME_TIMER_PERIPH_CPPID */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_UPTIME_TIMER_PERIPH_HANDLE include <bsp430/platform.h>
-#endif /* BSP430_DOXYGEN */
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE platform or application specific
+/* !BSP430! instance=@timers functional=uptime_timer subst=functional insert=periph_sethandle */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
 
-/** @def configBSP430_UPTIME_USE_DEFAULT_CC0_ISR
+#elif BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA0
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA0
+
+#elif BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA1
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA1
+
+#elif BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA2
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA2
+
+#elif BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA3
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA3
+
+#elif BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TB0
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TB0
+
+#elif BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TB1
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TB1
+
+#elif BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TB2
+#define BSP430_UPTIME_TIMER_PERIPH_HANDLE BSP430_PERIPH_TB2
+/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */
+/* !BSP430! end=periph_sethandle */
+#endif /* BSP430_UPTIME_TIMER_PERIPH_CPPID */
+
+/** @def configBSP430_UPTIME_TIMER_HAL_CC0_ISR
  *
  * The dedicated CC0 ISR associated with the uptime timer is an ideal
- * place to support timeslicing for an RTOS.  Normally, when the HAL
- * timer infrastructure used for uptime management is enabled, the CC0
- * interrupt HAL ISR is left unmanaged by BSP430 (see
+ * place to support timeslicing for an RTOS.  Normally the CC0
+ * interrupt HAL ISR is left unmanaged by BSP430 (see, for example,
  * #configBSP430_HAL_TA1_CC0_ISR).
  *
- * Set this flag to 1 if you want BSP430 to provide an implementation for
- * the CC0 interrupt for the HAL timer that underlies the
+ * Set this flag to 1 if you want BSP430 to provide an implementation
+ * for the CC0 interrupt for the HAL timer that underlies the
  * implementation, thereby allowing BSP430 to dispatch CC0 events to
  * callbacks registered in #sBSP430halTIMER.
  *
- * Set this flag to 0 if you intend to implement your own CC0 ISR.
+ * Set this flag to 0 (or leave it unset) if don't need CC0 or intend
+ * to implement your own CC0 ISR.
  *
  * @cppflag
- * @nodefault
- * @dependency #configBSP430_UPTIME_USE_DEFAULT_RESOURCE */
+ * @nodefault */
 #if defined(BSP430_DOXYGEN)
-#define configBSP430_UPTIME_USE_DEFAULT_CC0_ISR 0
+#define configBSP430_UPTIME_TIMER_HAL_CC0_ISR 0
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_UPTIME_SSEL
