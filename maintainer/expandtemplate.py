@@ -23,7 +23,7 @@ templates = {
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_%(INSTANCE)s - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 /** @endcond */

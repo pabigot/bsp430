@@ -225,7 +225,7 @@ typedef struct sBSP430hplEUSCIB {
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_A0 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_A0_;
 #endif /* configBSP430_HAL_EUSCI_A0 */
 /** @endcond */
@@ -259,7 +259,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A0_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_A1 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_A1_;
 #endif /* configBSP430_HAL_EUSCI_A1 */
 /** @endcond */
@@ -293,7 +293,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A1_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_A2 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #endif /* configBSP430_HAL_EUSCI_A2 */
 /** @endcond */
@@ -327,7 +327,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_B0 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #endif /* configBSP430_HAL_EUSCI_B0 */
 /** @endcond */
@@ -361,7 +361,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_B1 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_B1_;
 #endif /* configBSP430_HAL_EUSCI_B1 */
 /** @endcond */
@@ -395,7 +395,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B1_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_EUSCI_B2 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #endif /* configBSP430_HAL_EUSCI_B2 */
 /** @endcond */

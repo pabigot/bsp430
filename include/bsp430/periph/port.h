@@ -678,7 +678,7 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT1 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT1_;
 #endif /* configBSP430_HAL_PORT1 */
 /** @endcond */
@@ -712,7 +712,7 @@ extern sBSP430halPORT xBSP430hal_PORT1_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT2 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT2_;
 #endif /* configBSP430_HAL_PORT2 */
 /** @endcond */
@@ -746,7 +746,7 @@ extern sBSP430halPORT xBSP430hal_PORT2_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT3 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT3_;
 #endif /* configBSP430_HAL_PORT3 */
 /** @endcond */
@@ -780,7 +780,7 @@ extern sBSP430halPORT xBSP430hal_PORT3_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT4 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT4_;
 #endif /* configBSP430_HAL_PORT4 */
 /** @endcond */
@@ -814,7 +814,7 @@ extern sBSP430halPORT xBSP430hal_PORT4_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT5 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT5_;
 #endif /* configBSP430_HAL_PORT5 */
 /** @endcond */
@@ -848,7 +848,7 @@ extern sBSP430halPORT xBSP430hal_PORT5_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT6 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT6_;
 #endif /* configBSP430_HAL_PORT6 */
 /** @endcond */
@@ -882,7 +882,7 @@ extern sBSP430halPORT xBSP430hal_PORT6_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT7 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT7_;
 #endif /* configBSP430_HAL_PORT7 */
 /** @endcond */
@@ -916,7 +916,7 @@ extern sBSP430halPORT xBSP430hal_PORT7_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT8 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT8_;
 #endif /* configBSP430_HAL_PORT8 */
 /** @endcond */
@@ -950,7 +950,7 @@ extern sBSP430halPORT xBSP430hal_PORT8_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT9 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT9_;
 #endif /* configBSP430_HAL_PORT9 */
 /** @endcond */
@@ -984,7 +984,7 @@ extern sBSP430halPORT xBSP430hal_PORT9_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT10 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT10_;
 #endif /* configBSP430_HAL_PORT10 */
 /** @endcond */
@@ -1018,7 +1018,7 @@ extern sBSP430halPORT xBSP430hal_PORT10_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_PORT11 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT11_;
 #endif /* configBSP430_HAL_PORT11 */
 /** @endcond */

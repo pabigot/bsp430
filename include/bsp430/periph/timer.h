@@ -1122,7 +1122,7 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA0 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA0_;
 #endif /* configBSP430_HAL_TA0 */
 /** @endcond */
@@ -1156,7 +1156,7 @@ extern sBSP430halTIMER xBSP430hal_TA0_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA1 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA1_;
 #endif /* configBSP430_HAL_TA1 */
 /** @endcond */
@@ -1190,7 +1190,7 @@ extern sBSP430halTIMER xBSP430hal_TA1_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA2 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA2_;
 #endif /* configBSP430_HAL_TA2 */
 /** @endcond */
@@ -1224,7 +1224,7 @@ extern sBSP430halTIMER xBSP430hal_TA2_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TA3 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA3_;
 #endif /* configBSP430_HAL_TA3 */
 /** @endcond */
@@ -1258,7 +1258,7 @@ extern sBSP430halTIMER xBSP430hal_TA3_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TB0 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TB0_;
 #endif /* configBSP430_HAL_TB0 */
 /** @endcond */
@@ -1292,7 +1292,7 @@ extern sBSP430halTIMER xBSP430hal_TB0_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TB1 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TB1_;
 #endif /* configBSP430_HAL_TB1 */
 /** @endcond */
@@ -1326,7 +1326,7 @@ extern sBSP430halTIMER xBSP430hal_TB1_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_TB2 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TB2_;
 #endif /* configBSP430_HAL_TB2 */
 /** @endcond */

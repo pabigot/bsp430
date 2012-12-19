@@ -198,7 +198,7 @@ typedef struct sBSP430hplUSCI5 {
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A0 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A0_;
 #endif /* configBSP430_HAL_USCI5_A0 */
 /** @endcond */
@@ -232,7 +232,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A0_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A1 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A1_;
 #endif /* configBSP430_HAL_USCI5_A1 */
 /** @endcond */
@@ -266,7 +266,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A1_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A2 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A2_;
 #endif /* configBSP430_HAL_USCI5_A2 */
 /** @endcond */
@@ -300,7 +300,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A2_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_A3 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A3_;
 #endif /* configBSP430_HAL_USCI5_A3 */
 /** @endcond */
@@ -334,7 +334,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A3_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B0 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B0_;
 #endif /* configBSP430_HAL_USCI5_B0 */
 /** @endcond */
@@ -368,7 +368,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B0_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B1 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B1_;
 #endif /* configBSP430_HAL_USCI5_B1 */
 /** @endcond */
@@ -402,7 +402,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B1_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B2 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B2_;
 #endif /* configBSP430_HAL_USCI5_B2 */
 /** @endcond */
@@ -436,7 +436,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B2_;
 
 /** @cond DOXYGEN_EXCLUDE */
 #if configBSP430_HAL_USCI5_B3 - 0
-/* You don't need to know about this */
+/* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 #endif /* configBSP430_HAL_USCI5_B3 */
 /** @endcond */
