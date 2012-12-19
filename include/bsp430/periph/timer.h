@@ -138,9 +138,9 @@
  *
  * Underlying Timer                   | HAL Request           | CC0 ISR Request
  * :--------------------------------- | :-------------------- | :--------------
- * #BSP430_UPTIME_TIMER_PERIPH_HANDLE | @em automatic         | #configBSP430_UPTIME_TIMER_HAL_CC0_ISR
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE | @em automatic#configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL | #configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR
  * #BSP430_PERIPH_TA3                 | #configBSP430_HAL_TA3 | #configBSP430_HAL_TA3_CC0_ISR
+ * #BSP430_UPTIME_TIMER_PERIPH_HANDLE | @em automatic         | #configBSP430_UPTIME_TIMER_HAL_CC0_ISR
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE | #configBSP430_TIMER_CCACLK_HAL | #configBSP430_TIMER_CCACLK_HAL_CC0_ISR
  *
  * @note It is the responsibility of the application to configure the
  * underlying timer to continuous mode with the appropriate clock
@@ -232,7 +232,7 @@
 #define BSP430_PERIPH_TIMER_H
 
 /* !BSP430! periph=timer */
-/* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
+/* !BSP430! instance=@timers */
 
 #include <bsp430/periph.h>
 
@@ -283,7 +283,7 @@
  * Define to true to indicate that the application or infrastructure
  * would like to use a timer that supports using ACLK as a
  * capture/compare input signal.  The timer is identified by
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE, and that macro is defined only
+ * #BSP430_TIMER_CCACLK_PERIPH_CPPID, and that macro is defined only
  * if such a timer is available on the platform.
  *
  * This timer is used by selecting an alternative clock source, then
@@ -299,7 +299,7 @@
  * the timers are different, which can be done at compile time:
  *
  * @code
- * #if BSP430_UPTIME_TIMER_PERIPH_HANDLE == BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * #if BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_TIMER_CCACLK_PERIPH_CPPID
  * #error Cannot use both
  * #endif // uptime == ccaclk
  * @endcode
@@ -312,105 +312,11 @@
 #define configBSP430_TIMER_CCACLK 0
 #endif /* configBSP430_TIMER_CCACLK */
 
-/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE
- *
- * Define to a true value to use the default (platform-specific)
- * CCACLK timer.  This is true by default if
- * #configBSP430_TIMER_CCACLK is true.  If it remains true, the HPL
- * resources corresponding to #BSP430_TIMER_CCACLK_PERIPH_HANDLE and
- * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE will also be enabled
- * by default.
- *
- * If you want to override the default, define this to a false value
- * and provide definitions for:
- * <ul>
- * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_ACLK_CC
- * <li>#BSP430_TIMER_CCACLK_ACLK_CCIS
- * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_CLK_PORT_BIT
- * </ul>
- *
- * Also be sure you enable the HAL or HPL resources for the timer and
- * the port.
- *
- * @cppflag
- * @defaulted
- * @ingroup grp_timer_ccaclk */
-#ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE
-#define configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE (configBSP430_TIMER_CCACLK - 0)
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE */
-
-/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL
- *
- * Define to a true value to automatically request the HAL support for
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE when the latter is defaulted.
- * When false, only the HPL support for the peripheral is enabled.  As
- * is standard for BSP430 timers, enabling the HAL does not enable the
- * ISR for CC0; see #configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR.
- *
- * @cppflag
- * @defaulted
- * @ingroup grp_timer_ccaclk */
-#ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL
-#define configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL 0
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
-
-/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL
- *
- * Define to a true value to automatically request the HAL support for
- * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE when the latter is
- * defaulted.  When false, only the HPL support for the peripheral is
- * enabled.
- *
- * You would want to use the port HAL if the source for the clock
- * being timed was external to the microcontroller.  See @ref
- * ex_sensors_hh10d for an example.
- *
- * @cppflag
- * @defaulted
- * @ingroup grp_timer_ccaclk */
-#ifndef configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL
-#define configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL 0
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
-
-/** @def configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR
- *
- * Normally, when the HAL timer infrastructure associated with
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE is enabled through
- * #configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL, the standard HAL
- * ISR is enabled but the companion CC0 interrupt HAL ISR is left
- * unmanaged by BSP430 (see #configBSP430_HAL_TA1_CC0_ISR).
- *
- * Set this flag to 1 if you want BSP430 to provide an implementation for
- * the CC0 interrupt for the HAL timer that underlies the
- * implementation, thereby allowing BSP430 to dispatch CC0 events to
- * callbacks registered in #sBSP430halTIMER.
- *
- * Set this flag to 0 if you intend to implement your own CC0 ISR or
- * will not be using CC0 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
- *
- * @cppflag
- * @nodefault
- * @dependency #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE
- * @ingroup grp_timer_ccaclk */
-#if defined(BSP430_DOXYGEN)
-#define configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR 0
-#endif /* BSP430_DOXYGEN */
-
 /** @def BSP430_TIMER_CCACLK
  *
  * Defined to a true value if ACLK-triggered timer captures are
- * supported using the platform-specific values of:
- *
- * <ul>
- * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_ACLK_CC
- * <li>#BSP430_TIMER_CCACLK_ACLK_CCIS
- * </ul>
- *
- * The values above should not be referenced if this macro is
- * undefined or has a false value.
+ * supported due to somebody providing
+ * #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @note It is recommended that application code use of this feature
  * be done in a non-interruptible context that is run-to-completion,
@@ -431,22 +337,110 @@
 #define BSP430_TIMER_CCACLK include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
+/** @def BSP430_TIMER_CCACLK_PERIPH_CPPID
+ *
+ * Define to the preprocessor-compatible identifier for a timer that
+ * should be used to maintain a continuous system clock sourced from
+ * ACLK.  The define must appear in the @ref bsp430_config subsystem
+ * so that functional resource requests are correctly propagated to
+ * the underlying resource instances.
+ *
+ * @defaulted
+ * @platformdefault
+ * @affects #BSP430_TIMER_CCACLK_PERIPH_HANDLE */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_PERIPH_CPPID include "bsp430_config.h"
+#endif /* BSP430_DOXYGEN */
+
 /** @def BSP430_TIMER_CCACLK_PERIPH_HANDLE
  *
- * The peripheral handle for a timer that is capable of using ACLK as
- * a capture/compare input.  Preferably this would not be the same as
- * #BSP430_UPTIME_TIMER_PERIPH_HANDLE.  The intended use of this timer
- * is to measure pulses of some fast clock (SMCLK or an external
- * clock) against ACLK.
+ * Defined to the peripheral identifier for a timer that can be used
+ * to maintain a continuous system clock sourced from ACLK.  This
+ * derives directly from #BSP430_TIMER_CCACLK_PERIPH_CPPID, but is a
+ * timer peripheral handle suitable for use in code.
  *
- * See #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE if you intend
- * to override the platform default.
+ * @dependency #BSP430_TIMER_CCACLK_PERIPH_CPPID */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE platform or application specific
+/* !BSP430! instance=@timers functional=timer_ccaclk subst=functional insert=periph_sethandle */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
+
+#elif BSP430_TIMER_CCACLK_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA0
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA0
+
+#elif BSP430_TIMER_CCACLK_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA1
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA1
+
+#elif BSP430_TIMER_CCACLK_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA2
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA2
+
+#elif BSP430_TIMER_CCACLK_PERIPH_CPPID == BSP430_PERIPH_CPPID_TA3
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA3
+
+#elif BSP430_TIMER_CCACLK_PERIPH_CPPID == BSP430_PERIPH_CPPID_TB0
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TB0
+
+#elif BSP430_TIMER_CCACLK_PERIPH_CPPID == BSP430_PERIPH_CPPID_TB1
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TB1
+
+#elif BSP430_TIMER_CCACLK_PERIPH_CPPID == BSP430_PERIPH_CPPID_TB2
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TB2
+/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */
+/* !BSP430! end=periph_sethandle */
+#endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
+
+/** @def configBSP430_TIMER_CCACLK_HAL
  *
- * @dependency #BSP430_TIMER_CCACLK
- * @platformdefault
+ * Define to a true value to automatically request the HAL support for
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE when the latter is defaulted.
+ * When false, only the HPL support for the peripheral is enabled.
+ * Enabling the HAL does not enable the ISRs; see
+ * #configBSP430_TIMER_CCACLK_HAL_ISR and
+ * #configBSP430_TIMER_CCACLK_HAL_CC0_ISR.
+ *
+ * @cppflag
+ * @nodefault
+ * @ingroup grp_timer_ccaclk */
+#ifndef configBSP430_TIMER_CCACLK_HAL
+#define configBSP430_TIMER_CCACLK_HAL 0
+#endif /* configBSP430_TIMER_CCACLK_HAL */
+
+/** @def configBSP430_TIMER_CCACLK_HAL_CC0_ISR
+ *
+ * Set this to 1 if you want BSP430 to provide the HAL interrupt
+ * infrastructure for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ *
+ * Set this flag to 0 if you intend to implement your own ISR or will
+ * not be using interrupts on #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ *
+ * @cppflag
+ * @nodefault
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_PERIPH_HANDLE include <bsp430/platform.h>
+#define configBSP430_TIMER_CCACLK_HAL_CC0_ISR 0
+#endif /* BSP430_DOXYGEN */
+
+/** @def configBSP430_TIMER_CCACLK_HAL_CC0_ISR
+ *
+ * Normally, when the HAL timer infrastructure associated with
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE is enabled through
+ * #configBSP430_TIMER_CCACLK_HAL, the standard HAL ISR is enabled but
+ * the companion CC0 interrupt HAL ISR is left unmanaged by BSP430
+ * (see #configBSP430_HAL_TA1_CC0_ISR).
+ *
+ * Set this flag to 1 if you want BSP430 to provide an implementation for
+ * the CC0 interrupt for the HAL timer that underlies the
+ * implementation, thereby allowing BSP430 to dispatch CC0 events to
+ * callbacks registered in #sBSP430halTIMER.
+ *
+ * Set this flag to 0 if you intend to implement your own CC0 ISR or
+ * will not be using CC0 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ *
+ * @cppflag
+ * @nodefault
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define configBSP430_TIMER_CCACLK_HAL_CC0_ISR 0
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_ACLK_CC
@@ -475,18 +469,62 @@
 #define BSP430_TIMER_CCACLK_ACLK_CCIS include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
+/** @def BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID
+ *
+ * The BSP430 port peripheral on which the external clock source for
+ * BSP430_TIMER_CCACLK_PERIPH_HANDLE can be found.
+ *
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID platform or application specific
+#endif /* BSP430_DOXYGEN */
+
 /** @def BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
  *
  * The BSP430 port peripheral on which the external clock source for
  * BSP430_TIMER_CCACLK_PERIPH_HANDLE can be found.
  *
- * @note If #configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE is true,
- * the corresponding HAL interface will default to enabled.
- *
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE include <bsp430/platform.h>
-#endif /* BSP430_DOXYGEN */
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE platform or application specific
+/* !BSP430! instance=@ports functional=timer_ccaclk_clk_port subst=functional insert=periph_sethandle */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT1
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT2
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT3
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT4
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT4
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT5
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT5
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT6
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT6
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT7
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT8
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT8
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT9
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT9
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT10
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT10
+
+#elif BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT11
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT11
+/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */
+/* !BSP430! end=periph_sethandle instance=@timers */
+#endif /* BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID */
 
 /** @def BSP430_TIMER_CCACLK_CLK_PORT_BIT
  *
@@ -498,6 +536,36 @@
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
+
+/** @def configBSP430_TIMER_CCACLK_CLK_PORT
+ *
+ * You might need to use the port interface if the source for the clock
+ * being timed was external to the microcontroller.  See @ref
+ * ex_sensors_hh10d for an example.
+ *
+ * @cppflag
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
+#ifndef configBSP430_TIMER_CCACLK_CLK_PORT
+#define configBSP430_TIMER_CCACLK_CLK_PORT 0
+#endif /* configBSP430_TIMER_CCACLK_CLK_PORT */
+
+/** @def configBSP430_TIMER_CCACLK_CLK_PORT_HAL
+ *
+ * Define to a true value to automatically request the HAL support for
+ * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE.  When false, only the
+ * HPL support for the peripheral is enabled.
+ *
+ * You might need to use the port HAL if the source for the clock
+ * being timed was external to the microcontroller.  See @ref
+ * ex_sensors_hh10d for an example.
+ *
+ * @cppflag
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
+#ifndef configBSP430_TIMER_CCACLK_CLK_PORT_HAL
+#define configBSP430_TIMER_CCACLK_CLK_PORT_HAL 0
+#endif /* configBSP430_TIMER_CCACLK_CLK_PORT_HAL */
 
 /** Count number of timer transitions over a span of ACLK ticks
  *

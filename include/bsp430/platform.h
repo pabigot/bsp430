@@ -532,7 +532,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * include directories provided to the compiler allow the custom
  * platform headers to be located at the necessary paths.
  *
- * lLternatively, you could have your application include the custom
+ * Alternatively, you could have your application include the custom
  * platform files directly and bypass any reference to
  * <bsp430/platform.h> or <bsp430/platform/bsp430_config.h>.
  *
@@ -544,6 +544,17 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #if BSP430_PLATFORM_CUSTOM - 0
 #include <bsp430/platform/custom/platform.h>
 #endif /* BSP430_PLATFORM_CUSTOM */
+
+/* If configBSP430_TIMER_CCACLK was requested, then mark the feature as
+ * available or not based on whether the platform provided a serial
+ * peripheral for the console's use. */
+#if configBSP430_TIMER_CCACLK - 0
+#if BSP430_PERIPH_CPPID_NONE != BSP430_TIMER_CCACLK_PERIPH_CPPID
+#define BSP430_TIMER_CCACLK 1
+#else /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
+#define BSP430_TIMER_CCACLK 0
+#endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
+#endif /* configBSP430_TIMER_CCACLK */
 
 /* If configBSP430_UCS_TRIM_DCOCLKDIV was requested and the platform
  * supports BSP430_TIMER_CCACLK, then mark the feature as

@@ -17,9 +17,10 @@
 
 /* We're going to need a timer to capture a frequency, which is what
  * BSP430_TIMER_CCACLK does.  We only need the HPL for the timer, but
- * we need the HAL for the port. */
+ * we need the CLK port and its HAL. */
 #define configBSP430_TIMER_CCACLK 1
-#define configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL 1
+#define configBSP430_TIMER_CCACLK_CLK_PORT 1
+#define configBSP430_TIMER_CCACLK_CLK_PORT_HAL 1
 
 /* We need to know the port and pin to attach the HH10D to, which is
  * the clock source for the timer we're going to use. */
