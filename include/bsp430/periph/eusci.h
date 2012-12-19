@@ -81,9 +81,6 @@
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-/* !BSP430! periph=euscia */
-/* !BSP430! instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
-
 #ifndef BSP430_PERIPH_EUSCI_H
 #define BSP430_PERIPH_EUSCI_H
 
@@ -767,6 +764,80 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
 /* !BSP430! end=hpl_decl */
+
+/* !BSP430! insert=hal_isr_decl */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
+/** @def configBSP430_HAL_EUSCI_B0_ISR
+ *
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c EUSCI_B0 but want to define your
+ * own interrupt service routine for the peripheral.
+ *
+ * Enabling #configBSP430_HAL_EUSCI_B0 defaults this to
+ * true, so you only need to explicitly set it if you do not want to
+ * use the standard ISR provided by BSP430.
+ *
+ * @note Enabling this requires that #configBSP430_HAL_EUSCI_B0
+ * also be true.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B0_ISR
+#define configBSP430_HAL_EUSCI_B0_ISR (configBSP430_HAL_EUSCI_B0 - 0)
+#endif /* configBSP430_HAL_EUSCI_B0_ISR */
+
+#if (configBSP430_HAL_EUSCI_B0_ISR - 0) && ! (configBSP430_HAL_EUSCI_B0 - 0)
+#warning configBSP430_HAL_EUSCI_B0_ISR requested without configBSP430_HAL_EUSCI_B0
+#endif /* HAL_ISR and not HAL */
+
+/** @def configBSP430_HAL_EUSCI_B1_ISR
+ *
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c EUSCI_B1 but want to define your
+ * own interrupt service routine for the peripheral.
+ *
+ * Enabling #configBSP430_HAL_EUSCI_B1 defaults this to
+ * true, so you only need to explicitly set it if you do not want to
+ * use the standard ISR provided by BSP430.
+ *
+ * @note Enabling this requires that #configBSP430_HAL_EUSCI_B1
+ * also be true.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B1_ISR
+#define configBSP430_HAL_EUSCI_B1_ISR (configBSP430_HAL_EUSCI_B1 - 0)
+#endif /* configBSP430_HAL_EUSCI_B1_ISR */
+
+#if (configBSP430_HAL_EUSCI_B1_ISR - 0) && ! (configBSP430_HAL_EUSCI_B1 - 0)
+#warning configBSP430_HAL_EUSCI_B1_ISR requested without configBSP430_HAL_EUSCI_B1
+#endif /* HAL_ISR and not HAL */
+
+/** @def configBSP430_HAL_EUSCI_B2_ISR
+ *
+ * Define to a false value in @c bsp430_config.h if you are using the
+ * BSP430 HAL interface for @c EUSCI_B2 but want to define your
+ * own interrupt service routine for the peripheral.
+ *
+ * Enabling #configBSP430_HAL_EUSCI_B2 defaults this to
+ * true, so you only need to explicitly set it if you do not want to
+ * use the standard ISR provided by BSP430.
+ *
+ * @note Enabling this requires that #configBSP430_HAL_EUSCI_B2
+ * also be true.
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B2_ISR
+#define configBSP430_HAL_EUSCI_B2_ISR (configBSP430_HAL_EUSCI_B2 - 0)
+#endif /* configBSP430_HAL_EUSCI_B2_ISR */
+
+#if (configBSP430_HAL_EUSCI_B2_ISR - 0) && ! (configBSP430_HAL_EUSCI_B2 - 0)
+#warning configBSP430_HAL_EUSCI_B2_ISR requested without configBSP430_HAL_EUSCI_B2
+#endif /* HAL_ISR and not HAL */
+
+/* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
+/* !BSP430! end=hal_isr_decl */
 
 /** eUSCI(A)-specific implementation of hBSP430serialOpenUART() */
 hBSP430halSERIAL hBSP430eusciOpenUART (hBSP430halSERIAL hal,
