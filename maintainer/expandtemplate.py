@@ -585,7 +585,6 @@ directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')
 # Directives:
 #  insert=<name> : identify the template to be expanded
 #  subst=<name,...> : populate subst_map from idmap entries for name,...
-idmap = {}
 
 def expandTemplate (tplname, idmap):
     global templates
@@ -658,6 +657,7 @@ for fn in args.files:
     new_contents = []
     insert_name = None
     insertable = None
+    idmap = {}
     while contents:
         line = contents.pop(0)
         if insertable is None:
