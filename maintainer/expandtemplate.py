@@ -535,6 +535,10 @@ isr_%(INSTANCE)s (void)
 #if (BSP430_WANT_CONFIG_HAL_CC0_ISR)
 #define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 1
 #endif /* CC0_ISR */''',
+
+    'periph_sethandle' : '''
+#elif BSP430_%(FUNCTIONAL)s_PERIPH_CPPID == BSP430_PERIPH_CPPID_%(INSTANCE)s
+#define BSP430_%(FUNCTIONAL)s_PERIPH_HANDLE BSP430_PERIPH_%(INSTANCE)s''',
     }
 
 
@@ -559,6 +563,14 @@ periphs = []
 periphs.extend(periph_ports)
 periphs.extend(periph_timers)
 periphs.extend(periph_serial)
+
+instance_atmap = { 'periphs' : periphs,
+                   'timers' : periph_timers,
+                   'ports' : periph_ports,
+                   'serial' : periph_serial,
+                   'usci' : periph_usci,
+                   'usci5' : periph_usci5,
+                   'eusci' : periph_eusci }
 
 # Generate an expansion that provides unique positive constants that
 # uniquely identify each core resource instance.
@@ -593,8 +605,8 @@ def expandTemplate (tplname, idmap):
 
     instance_str = idmap.get('instance')
     if instance_str: # Non-empty value
-        if '@periphs' == instance_str:
-            instances = periphs
+        if instance_str.startswith('@'):
+            instances = instance_atmap[instance_str[1:]]
         else:
             instances = instance_str.split(',')
         for i in instances:
