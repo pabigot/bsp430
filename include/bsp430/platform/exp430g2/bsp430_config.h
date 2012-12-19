@@ -65,50 +65,23 @@
 #endif /* configBSP430_CONSOLE */
 
 /* How to use ACLK as a capture/compare input source */
-/* !BSP430! module=timer feature=ccaclk */
-/* !BSP430! insert=feature_startif subst=module,feature */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
-#if ((configBSP430_TIMER_CCACLK - 0)                                    \
-     && ((! defined(configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE))    \
-         || (configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE - 0)))
-/* END AUTOMATICALLY GENERATED CODE [feature_startif] */
-/* !BSP430! end=feature_startif */
+/* Settings for TA0: T0A0 ccis=1 ; clk P1.0 ; cc0 P1.1 ; cc1 P1.2 */
+#if configBSP430_TIMER_CCACLK - 0
 #if defined(__MSP430G2553__)
-/* !BSP430! module=timer feature=ccaclk timer=TA0 cc_index=0 ccis=1 clk:pp=1.0 cc0:pp=1.1 cc1:pp=1.2 */
-/* !BSP430! insert=feature_ccaclk_cfg subst=timer,cc_index,ccis,clk_port,clk_pin */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_cfg] */
-#if configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL - 0
-#if !defined(configBSP430_HAL_TA0)
-#define configBSP430_HAL_TA0 1
-#endif /* configBSP430_HAL_TA0 */
-#if configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR - 0
-#if !defined(configBSP430_HAL_TA0_CC0_ISR)
-#define configBSP430_HAL_TA0_CC0_ISR 1
-#endif /* configBSP430_HAL_TA0_CC0_ISR */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR */
-#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
-#if !defined(configBSP430_HPL_TA0)
-#define configBSP430_HPL_TA0 1
-#endif /* configBSP430_HPL_TA0 */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL */
-
-#if configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL - 0
-#if !defined(configBSP430_HAL_PORT1)
-#define configBSP430_HAL_PORT1 1
-#endif /* configBSP430_HAL_PORT1 */
-#else /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
-#if !defined(configBSP430_HPL_PORT1)
-#define configBSP430_HPL_PORT1 1
-#endif /* configBSP430_HPL_PORT1 */
-#endif /* configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL */
-/* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_cfg] */
-/* !BSP430! end=feature_ccaclk_cfg */
+#ifndef BSP430_TIMER_CCACLK_PERIPH_CPPID
+#define BSP430_TIMER_CCACLK_PERIPH_CPPID BSP430_PERIPH_CPPID_TA0
+#endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
+#ifndef BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT1
+#endif /* BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID */
+#ifndef BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT1
+#endif /* BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID */
+#ifndef BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT1
+#endif /* BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID */
 #endif /* MCU */
-/* !BSP430! insert=feature_endif  subst=module,feature */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
-#endif /* configBSP430_TIMER_CCACLK && need default */
-/* END AUTOMATICALLY GENERATED CODE [feature_endif] */
-/* !BSP430! end=feature_endif */
+#endif /* configBSP430_TIMER_CCACLK */
 
 /* Enable buttons as requested */
 #if configBSP430_PLATFORM_BUTTON0 - 0

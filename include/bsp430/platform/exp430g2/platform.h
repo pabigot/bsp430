@@ -74,32 +74,27 @@
 #define BSP430_LED_GREEN 1
 
 /* How to use ACLK as a capture/compare input source */
-/* !BSP430! module=timer feature=ccaclk */
-/* !BSP430! insert=feature_startif subst=module,feature */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_startif] */
-#if ((configBSP430_TIMER_CCACLK - 0)                                    \
-     && ((! defined(configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE))    \
-         || (configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE - 0)))
-/* END AUTOMATICALLY GENERATED CODE [feature_startif] */
-/* !BSP430! end=feature_startif */
-#if defined(__MSP430G2553__)
-/* !BSP430! module=timer feature=ccaclk timer=TA0 cc_index=0 ccis=1 clk:pp=1.0 cc0:pp=1.1 cc1:pp=1.2 */
-/* !BSP430! insert=feature_ccaclk_decl subst=timer,cc_index,ccis,clk_port,clk_pin */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_ccaclk_decl] */
-#define BSP430_TIMER_CCACLK 1
-#define BSP430_TIMER_CCACLK_PERIPH_HANDLE BSP430_PERIPH_TA0
+/* Settings for TA0: T0A0 ccis=1 ; clk P1.0 ; cc0 P1.1 ; cc1 P1.2 */
+#ifndef BSP430_TIMER_CCACLK_ACLK_CC
+/* NB: Check against BSP430_TIMER_CCACLK_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_ACLK_CC 0
+#endif /* BSP430_TIMER_CCACLK_ACLK_CC */
+#ifndef BSP430_TIMER_CCACLK_ACLK_CCIS
+/* NB: Check against BSP430_TIMER_CCACLK_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_ACLK_CCIS CCIS_1
-#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#endif /* BSP430_TIMER_CCACLK_ACLK_CCIS */
+#ifndef BSP430_TIMER_CCACLK_CLK_PORT_BIT
+/* NB: Check against BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_CLK_PORT_BIT BIT0
-/* END AUTOMATICALLY GENERATED CODE [feature_ccaclk_decl] */
-/* !BSP430! end=feature_ccaclk_decl */
-#endif /* MCU */
-/* !BSP430! insert=feature_endif  subst=module,feature */
-/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [feature_endif] */
-#endif /* configBSP430_TIMER_CCACLK && need default */
-/* END AUTOMATICALLY GENERATED CODE [feature_endif] */
-/* !BSP430! end=feature_endif */
+#endif /* BSP430_TIMER_CCACLK_CLK_PORT_BIT */
+#ifndef BSP430_TIMER_CCACLK_CC0_PORT_BIT
+/* NB: Check against BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID in bsp430_config.h */
+#define BSP430_TIMER_CCACLK_CC0_PORT_BIT BIT1
+#endif /* BSP430_TIMER_CCACLK_CC0_PORT_BIT */
+#ifndef BSP430_TIMER_CCACLK_CC1_PORT_BIT
+/* NB: Check against BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID in bsp430_config.h */
+#define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT2
+#endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
 
 /* RFEM capabilities */
 #if (configBSP430_RFEM - 0)
