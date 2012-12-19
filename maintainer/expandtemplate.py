@@ -521,6 +521,20 @@ isr_%(INSTANCE)s (void)
 
     'module_endif' : '''#endif /* configBSP430_%(MODULE)s && need default */''',
 
+    'periph_want' : '''
+#elif BSP430_PERIPH_CPPID_%(INSTANCE)s == BSP430_WANT_PERIPH_CPPID
+#if (BSP430_WANT_CONFIG_HAL)
+#define configBSP430_HAL_%(INSTANCE)s 1
+#endif /* HAL */
+#if (BSP430_WANT_CONFIG_HPL)
+#define configBSP430_HPL_%(INSTANCE)s 1
+#endif /* HPL */
+#if (BSP430_WANT_CONFIG_HAL_ISR)
+#define configBSP430_HAL_%(INSTANCE)s_ISR 1
+#endif /* ISR */''',
+#if (BSP430_WANT_CONFIG_HAL_CC0_ISR)
+#define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 1
+#endif /* CC0_ISR */''',
     }
 
 
@@ -577,8 +591,13 @@ def expandTemplate (tplname, idmap):
     text = []
     text.append('/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [%(template)s] */' % subst_map)
 
-    if idmap.get('instance'): # Non-empty value
-        for i in idmap['instance'].split(','):
+    instance_str = idmap.get('instance')
+    if instance_str: # Non-empty value
+        if '@periphs' == instance_str:
+            instances = periphs
+        else:
+            instances = instance_str.split(',')
+        for i in instances:
             if i.startswith(periph.upper()):
                 subst_map.update({ '#' : i[len(periph):] })
             subst_map.update({ 'instance': i.lower(), 'INSTANCE': i.upper() })
