@@ -126,9 +126,9 @@ void main ()
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL_2 | MC_2 | TACLR;
     cc_delta = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
-                                            BSP430_TIMER_CCACLK_CC_INDEX,
+                                            BSP430_TIMER_CCACLK_ACLK_CC,
                                             CM_2,
-                                            BSP430_TIMER_CCACLK_CCIS,
+                                            BSP430_TIMER_CCACLK_ACLK_CCIS,
                                             SAMPLE_PERIOD_ACLK);
     tp->ctl = 0;
     if (-1 == cc_delta) {

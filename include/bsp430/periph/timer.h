@@ -325,8 +325,8 @@
  * and provide definitions for:
  * <ul>
  * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_CC_INDEX
- * <li>#BSP430_TIMER_CCACLK_CCIS
+ * <li>#BSP430_TIMER_CCACLK_ACLK_CC
+ * <li>#BSP430_TIMER_CCACLK_ACLK_CCIS
  * <li>#BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
  * <li>#BSP430_TIMER_CCACLK_CLK_PORT_BIT
  * </ul>
@@ -405,8 +405,8 @@
  *
  * <ul>
  * <li>#BSP430_TIMER_CCACLK_PERIPH_HANDLE
- * <li>#BSP430_TIMER_CCACLK_CC_INDEX
- * <li>#BSP430_TIMER_CCACLK_CCIS
+ * <li>#BSP430_TIMER_CCACLK_ACLK_CC
+ * <li>#BSP430_TIMER_CCACLK_ACLK_CCIS
  * </ul>
  *
  * The values above should not be referenced if this macro is
@@ -449,7 +449,7 @@
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_CC_INDEX
+/** @def BSP430_TIMER_CCACLK_ACLK_CC
  *
  * The capture/compare block index within
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
@@ -459,20 +459,20 @@
  * @platformdefault
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_CC_INDEX include <bsp430/platform.h>
+#define BSP430_TIMER_CCACLK_ACLK_CC include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_CCIS
+/** @def BSP430_TIMER_CCACLK_ACLK_CCIS
  *
  * The capture/compare block input signal bits to be selected in the
- * control word for CC block #BSP430_TIMER_CCACLK_CC_INDEX of
+ * control word for CC block #BSP430_TIMER_CCACLK_ACLK_CC of
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
  * @dependency #BSP430_TIMER_CCACLK
  * @platformdefault
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_CCIS include <bsp430/platform.h>
+#define BSP430_TIMER_CCACLK_ACLK_CCIS include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE

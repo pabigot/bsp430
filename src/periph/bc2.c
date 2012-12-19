@@ -189,9 +189,9 @@ iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
   while (iter++ < MAX_ITERATIONS) {
     unsigned int freq_tsp;
     freq_tsp = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
-                                            BSP430_TIMER_CCACLK_CC_INDEX,
+                                            BSP430_TIMER_CCACLK_ACLK_CC,
                                             CM_2,
-                                            BSP430_TIMER_CCACLK_CCIS,
+                                            BSP430_TIMER_CCACLK_ACLK_CCIS,
                                             SAMPLE_PERIOD_ACLK);
     if (freq_tsp == target_tsp) {
       configuredMCLK_Hz = mclk_Hz;
