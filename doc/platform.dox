@@ -80,15 +80,6 @@ This file, placed to be found at
 and adds configuration defaults for resources that were default-identified
 in that header.  Here too you will want to use the expansion templates.
 
-Where the platform customization provides a resource preferred to a resource
-normally provided by the platform-independent customization, a flag should
-be used to inhibit the platform-independent resource allocation.  An example
-of this can be found with respect to
-#configBSP430_UPTIME_USE_DEFAULT_RESOURCE in
-<bsp430/platform/exp430g2/platform.h> which defines an alternative timer and
-uses #BSP430_UPTIME_USE_PLATFORM_RESOURCE to convey that fact to subsequent
-customization points.
-
 \section platform_impl platform.c
 
 In this file, located in <c>src/platform/custom/custom.c</c> or another

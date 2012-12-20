@@ -39,6 +39,8 @@
 #ifndef BSP430_PLATFORM_EM430_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EM430_BSP430_CONFIG_H
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Use native USCI5 for genericized serial port unless told not to */
 #ifndef configBSP430_SERIAL_USE_USCI5
 #define configBSP430_SERIAL_USE_USCI5 1
@@ -89,5 +91,7 @@
 #define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT2
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID */
 #endif /* configBSP430_TIMER_CCACLK */
+
+/** @endcond */
 
 #endif /* BSP430_PLATFORM_EM430_BSP430_CONFIG_H */

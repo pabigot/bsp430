@@ -15,7 +15,7 @@
 
 void main ()
 {
-  volatile sBSP430hplPORT * hpl = xBSP430hplLookupPORT(BSP430_PLATFORM_TRXEB_ALS_PWR_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORT * hpl = xBSP430hplLookupPORT(BSP430_PLATFORM_TRXEB_ALS_PORT_PERIPH_HANDLE);
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 

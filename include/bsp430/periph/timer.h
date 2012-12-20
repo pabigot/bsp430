@@ -484,7 +484,7 @@
 #endif /* BSP430_DOXYGEN */
 
 /** The preprocessor-compatible identifier for a port that provides
- * the input clock function for #BS430_TIMER_CCACLK_PERIPH_HANDLE.
+ * the input clock function for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
  * The define must appear in the @ref bsp430_config subsystem so that
  * functional resource requests are correctly propagated to the

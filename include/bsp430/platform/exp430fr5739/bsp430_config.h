@@ -39,6 +39,8 @@
 #ifndef BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Platform has custom LED implementation */
 #ifndef configBSP430_LED_USE_COMMON
 #define configBSP430_LED_USE_COMMON 0
@@ -96,5 +98,7 @@
 #define configBSP430_HAL_PORT3 1
 #define configBSP430_HAL_PORT4 1
 #endif /* configBSP430_RFEM */
+
+/** @endcond */
 
 #endif /* BSP430_PLATFORM_EXP430FR5739_BSP430_CONFIG_H */

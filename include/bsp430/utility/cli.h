@@ -500,17 +500,17 @@ typedef struct sBSP430cliMatchCallback {
  * including leading and trailing whitespace.
  *
  * @param matchp an optional pointer to where the uniquely identified
- * next command should be stored.  If @matchp is null, no action is
+ * next command should be stored.  If @p matchp is null, no action is
  * taken; otherwise if a unique command could be identified the
  * pointer to that command is stored in @c *matchp; otherwise a null
  * pointer is stored in @p *matchp.
  *
- * @param match_cb an optional callback that is invoked on each
+ * @param match_callback an optional callback that is invoked on each
  * matching command.  If null, no action is taken; otherwise when the
  * key of a command in @p cmds has the first token of @p command as a
- * prefix @p match_cb() is invoked on that command.  The primary use
- * of this parameter is to determine the potential matching commands
- * for the purposes of diagnostics or command completion.
+ * prefix @p match_callback() is invoked on that command.  The primary
+ * use of this parameter is to determine the potential matching
+ * commands for the purposes of diagnostics or command completion.
  *
  * @param argstrp if null no action is taken, otherwise the pointer to
  * the remainder of @p command after the initial token has been

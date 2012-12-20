@@ -60,7 +60,7 @@
  * <li>A value of 0 indicates a Rev A board.
  * <li>A value of 1 indicates a Rev B board.
  * <li>A value of 2 indicates a Rev B2 board, which was the production version.
- * <ul>
+ * </ul>
  */
 #ifndef BSP430_PLATFORM_SURF_REVISION
 #define BSP430_PLATFORM_SURF_REVISION 2
@@ -69,6 +69,8 @@
 /** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
 #define BSP430_PLATFORM_SURF 1
+
+/** @cond DOXYGEN_EXCLUDE */
 
 #if 2 == BSP430_PLATFORM_SURF_REVISION
 
@@ -118,7 +120,8 @@
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT2
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
 
-#ifndef configBSP430_PLATFORM_SURF_FLASH
+/** @endcond */
+
 /** Enable HPL support for on-board SPI flash
  *
  * The SuRF board has a M25P10-A 1 Mib (128 kiB) serial flash from
@@ -126,6 +129,7 @@
  * RSTn are hard-wired.  Defining this constant to a true value
  * enables the HPL interface to port 1, SPI on USCI_B0, and provides
  * constants for applications to use the flash. */
+#ifndef configBSP430_PLATFORM_SURF_FLASH
 #define configBSP430_PLATFORM_SURF_FLASH 0
 #endif /* configBSP430_PLATFORM_SURF_FLASH */
 
@@ -141,7 +145,7 @@
  */
 #define BSP430_PLATFORM_SURF_FLASH_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 
-/** Port bit on #BSP430_PLATFORM_SURF_FLASH_PORT_PERIPH_HANDLE for SPI flash CSn
+/** Port bit on #BSP430_PLATFORM_SURF_FLASH_CSn_PORT_PERIPH_HANDLE for SPI flash CSn
  * @dependency #configBSP430_PLATFORM_SURF_FLASH
  */
 #define BSP430_PLATFORM_SURF_FLASH_CSn_PORT_BIT BIT7

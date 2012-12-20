@@ -55,6 +55,8 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430F5438 1
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Available button definitions */
 #define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
 #define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT6
@@ -106,6 +108,8 @@
 #define BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
 #define BSP430_RFEM_SPI0CSn_PORT_BIT BIT0
 #endif /* configBSP430_RFEM */
+
+/** @endcond */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

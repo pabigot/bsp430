@@ -56,9 +56,11 @@
 #ifndef BSP430_PLATFORM_EXP430G2_PLATFORM_H
 #define BSP430_PLATFORM_EXP430G2_PLATFORM_H
 
-/* Unconditionally define this, so as to produce errors if there is a
+/** Unconditionally define this, so as to produce errors if there is a
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430G2 1
+
+/** @cond DOXYGEN_EXCLUDE */
 
 /* Enable if requested */
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
@@ -112,6 +114,8 @@
 #define BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
 #define BSP430_RFEM_SPI0CSn_PORT_BIT BIT7
 #endif /* configBSP430_RFEM */
+
+/** @endcond */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

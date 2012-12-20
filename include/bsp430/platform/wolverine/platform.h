@@ -54,6 +54,8 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_WOLVERINE 1
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* No buttons */
 
 /* One LED on P1.0.  Unpopulated LEDs on P1.1 and P1.2. */
@@ -83,6 +85,8 @@
 /* NB: Check against BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT2
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
+
+/** @endcond */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

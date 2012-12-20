@@ -39,6 +39,8 @@
 #ifndef BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H
 #define BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /** Platform does not support a crystal
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
@@ -93,5 +95,6 @@
 #define configBSP430_HAL_PORT3 1
 #endif /* configBSP430_RFEM */
 
+/** @endcond */
 
 #endif /* BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H */

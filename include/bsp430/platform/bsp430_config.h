@@ -75,29 +75,28 @@
  * @brief Flag macros used to enabling core resources (@HAL, @HPL, etc.).
  *
  * Core resources are MSP430 peripherals that are instances of a class
- * of peripheral, such as @link bsp430/periph/port.h digital i/o
- * ports@endlink, @link bsp430/periph/timers.h timers@endlink, and
- * @link bsp430/serial.h serial interfaces@endlink.  For the purposes
- * of exposition, we will use #BSP430_PERIPH_TA0 as an exemplary
- * resource.  The spelling of the options for other peripherals is the
- * same, substituting their short tag for @c TA0 in the flag macros.
+ * of peripheral, such as @link port.h digital i/o ports@endlink,
+ * @link timer.h timers@endlink, and @link serial.h serial
+ * interfaces@endlink.  For the purposes of exposition, we will use
+ * #BSP430_PERIPH_TA0 as an exemplary resource.  The spelling of the
+ * options for other peripherals is the same, substituting their short
+ * tag for @c TA0 in the flag macros.
  *
- * #configBSP430_HPL_TA0 enables the @link HPL Hardware Presentation
- * Layer @endlink for the peripheral.  This defines the
- * #BSP430_PERIPH_TA0 unique handle, and the #BSP430_HPL_TA0 pointer
- * to the peripheral register map.  It also allows you to use
- * xBSP430hplLookupTIMER() to get the type-cast pointer using the
- * handle.  It allocates no memory and introduces no code.
+ * #configBSP430_HPL_TA0 enables the @HPL for the peripheral.  This
+ * defines the #BSP430_PERIPH_TA0 unique handle, and the
+ * #BSP430_HPL_TA0 pointer to the peripheral register map.  It also
+ * allows you to use xBSP430hplLookupTIMER() to get the type-cast
+ * pointer using the handle.  It allocates no memory and introduces
+ * no code.
  *
- * #configBSP430_HAL_TA0 enables the @link HAL Hardware Adaptation
- * Layer @endlink object.  This is a global object, accessed through
- * #BSP430_HAL_TA0, containing information about the resource
- * including references to peripheral registers that are not
- * contiguous with the @HPL registers and control of any associated
- * infrastructure-provided interrupt callbacks.  Use
- * hBSP430timerLookup() to get a pointer to the object from its
- * handle.  Enabling #configBSP430_HAL_TA0 automatically enables
- * #configBSP430_HPL_TA0.
+ * #configBSP430_HAL_TA0 enables the @HAL object for the peripheral.
+ * This is a global object, accessed through #BSP430_HAL_TA0,
+ * containing information about the resource including references
+ * to peripheral registers that are not contiguous with the @HPL
+ * registers and control of any associated infrastructure-provided
+ * interrupt callbacks.  Use hBSP430timerLookup() to get a pointer
+ * to the object from its handle.  Enabling #configBSP430_HAL_TA0
+ * automatically enables #configBSP430_HPL_TA0.
  *
  * #configBSP430_HAL_TA0_ISR provides a shared handler for any primary
  * interrupt capability associated with the peripheral.  Enabling
@@ -108,7 +107,7 @@
  *
  * Some peripherals use variant names for the interrupt capability
  * (e.g., #configBSP430_HAL_USCI_AB0RX_ISR for receive interrupts
- * shared between #BSP340_PERIPH_USCI_A0 and #BSP430_PERIPH_USCI_B0).
+ * shared between #BSP430_PERIPH_USCI_A0 and #BSP430_PERIPH_USCI_B0).
  *
  * Some peripherals have additional names for extended interrupt
  * capability (e.g., #configBSP430_HAL_TA0_CC0_ISR for the dicated CC0

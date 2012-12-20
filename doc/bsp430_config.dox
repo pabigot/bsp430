@@ -134,12 +134,6 @@ reference to #BSP430_HPL_PORT7) will produce a compile-time error if the
 requested feature is not available on the target, so it is generally not
 necessary to explicitly check for success.
 
-Some configuration macros such as
-#configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE serve only to influence a
-choice of solution, and there is no specific facility to determine whether
-the setting was successful.  For these macros there is no @b Affects
-annotation in the documentation.
-
 \section cfg_module Checking for Module Capabilities
 
 Internally BSP430 checks functional presence macro definitions that are

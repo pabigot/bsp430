@@ -184,28 +184,28 @@ typedef sBSP430tlvTable2xx sBSP430tlvTable;
 
 /* Standard definitions when missing from header */
 #ifndef TLV_LDTAG
-#define TLV_LDTAG 0x01
+#define TLV_LDTAG             (0x01)      /**<  Legacy descriptor (1xx, 2xx, 4xx families) */
 #endif /* TLV_LDTAG */
 #ifndef TLV_PDTAG
-#define TLV_PDTAG 0x02
+#define TLV_PDTAG             (0x02)      /**<  Peripheral discovery descriptor */
 #endif /* TLV_PDTAG */
 #ifndef TLV_BLANK
-#define TLV_BLANK 0x05
+#define TLV_BLANK             (0x05)      /**<  Blank descriptor */
 #endif /* TLV_BLANK */
 #ifndef TLV_DIERECORD
-#define TLV_DIERECORD 0x08
+#define TLV_DIERECORD         (0x08)      /**<  Die Record  */
 #endif /* TLV_DIERECORD */
 #ifndef TLV_ADC12CAL
-#define TLV_ADC12CAL 0x11
+#define TLV_ADC12CAL          (0x11)      /**<  ADC12 calibration */
 #endif /* TLV_ADC12CAL */
 #ifndef TLV_REFCAL
-#define TLV_REFCAL 0x12
+#define TLV_REFCAL            (0x12)      /**<  REF calibration */
 #endif /* TLV_REFCAL */
 #ifndef TLV_ADC10CAL
-#define TLV_ADC10CAL 0x13
+#define TLV_ADC10CAL          (0x13)      /**<  ADC10 calibration */
 #endif /* TLV_ADC10CAL */
 #ifndef TLV_TAGEXT
-#define TLV_TAGEXT 0xFE
+#define TLV_TAGEXT            (0xFE)      /**<  Tag extender */
 #endif /* TLV_TAGEXT */
 
 /** TLV entry for #TLV_DIERECORD on 5xx MCUs.
@@ -266,10 +266,10 @@ typedef struct sBSP430tlvBSL {
 
 /* Standard definitions when missing from header */
 #ifndef TAG_DCO_30
-#define TAG_DCO_30             (0x01)
+#define TAG_DCO_30             (0x01)    /**< (2xx) Tag for DCO30  Calibration Data */
 #endif /* TAG_DCO_30 */
 #ifndef TAG_EMPTY
-#define TAG_EMPTY              (0xFE)
+#define TAG_EMPTY              (0xFE)    /**< (2xx) Tag for Empty Data Field in Calibration Data */
 #endif /* TAG_EMPTY */
 
 /** TLV entry for #TAG_DCO_30 on 2xx MCUs.

@@ -239,11 +239,7 @@
 
 #define TLV_LDTAG             (0x01)      /**<  Legacy descriptor (1xx, 2xx, 4xx families) */
 #define TLV_PDTAG             (0x02)      /**<  Peripheral discovery descriptor */
-#define TLV_Reserved3         (0x03)      /*  Future usage */
-#define TLV_Reserved4         (0x04)      /*  Future usage */
 #define TLV_BLANK             (0x05)      /**<  Blank descriptor */
-#define TLV_Reserved6         (0x06)      /*  Future usage */
-#define TLV_Reserved7         (0x07)      /*  Serial Number */
 #define TLV_DIERECORD         (0x08)      /**<  Die Record  */
 #define TLV_ADCCAL            (0x11)      /**<  ADC12 calibration */
 #define TLV_ADC12CAL          (0x11)      /**<  ADC12 calibration */
@@ -259,6 +255,51 @@
 /* FLASH-related information */
 #define LOCKA               (0x0040)  /**< Segment A Lock bit: read = 1 - Segment is locked (read only) */
 #define LOCKINFO            (0x0080)  /**< Lock INFO Memory bit: read = 1 - Segment is locked (read only) */
+
+/* SYSRSTIV aggregated candidate names */
+#define SYSRSTIV_BOR       (0x0002)    /**< SYSRSTIV : BOR */
+#define SYSRSTIV_RSTNMI    (0x0004)    /**< SYSRSTIV : RST/NMI */
+#define SYSRSTIV_SVMBOR    (0x0004)    /**< SYSRSTIV : SVMBOR */
+#define SYSRSTIV_DOBOR     (0x0006)    /**< SYSRSTIV : Do BOR */
+#define SYSRSTIV_RSTNMI    (0x0006)    /**< SYSRSTIV : RST/NMI */
+#define SYSRSTIV_DOBOR     (0x0008)    /**< SYSRSTIV : Do BOR */
+#define SYSRSTIV_LPM5WU    (0x0008)    /**< SYSRSTIV : Port LPM5 Wake Up */
+#define SYSRSTIV_SECYV     (0x000A)    /**< SYSRSTIV : Security violation */
+#define SYSRSTIV_DOPOR     (0x000C)    /**< SYSRSTIV : Do POR */
+#define SYSRSTIV_SVSL      (0x000C)    /**< SYSRSTIV : SVSL */
+#define SYSRSTIV_SVSLIFG   (0x000C)    /**< SYSRSTIV : SVSLIFG */
+#define SYSRSTIV_SVSH      (0x000E)    /**< SYSRSTIV : SVSH */
+#define SYSRSTIV_SVSHIFG   (0x000E)    /**< SYSRSTIV : SVSHIFG */
+#define SYSRSTIV_WDTTO     (0x000E)    /**< SYSRSTIV : WDT Time out */
+#define SYSRSTIV_SVML_OVP  (0x0010)    /**< SYSRSTIV : SVML_OVP */
+#define SYSRSTIV_WDTKEY    (0x0010)    /**< SYSRSTIV : WDTKEY violation */
+#define SYSRSTIV_CCSKEY    (0x0012)    /**< SYSRSTIV : CCS Key violation */
+#define SYSRSTIV_SVMH_OVP  (0x0012)    /**< SYSRSTIV : SVMH_OVP */
+#define SYSRSTIV_DOPOR     (0x0014)    /**< SYSRSTIV : Do POR */
+#define SYSRSTIV_PMMKEY    (0x0014)    /**< SYSRSTIV : PMMKEY violation */
+#define SYSRSTIV_WDTTO     (0x0016)    /**< SYSRSTIV : WDT Time out */
+#define SYSRSTIV_PERF      (0x0016)    /**< SYSRSTIV : peripheral/config area fetch */
+#define SYSRSTIV_WDTKEY    (0x0018)    /**< SYSRSTIV : WDTKEY violation */
+#define SYSRSTIV_FRCTLPW   (0x001A)    /**< SYSRSTIV : FRAM Key violation */
+#define SYSRSTIV_KEYV      (0x001A)    /**< SYSRSTIV : Flash Key violation */
+#define SYSRSTIV_FLLUL     (0x001C)    /**< SYSRSTIV : FLL unlock */
+#define SYSRSTIV_DBDIFG    (0x001C)    /**< SYSRSTIV : FRAM Double bit Error */
+#define SYSRSTIV_UBDIFG    (0x001C)    /**< SYSRSTIV : FRAM Uncorrectable bit Error */
+#define SYSRSTIV_PLLUL     (0x001C)    /**< SYSRSTIV : PLL unlock */
+#define SYSRSTIV_PERF      (0x001E)    /**< SYSRSTIV : peripheral/config area fetch */
+#define SYSRSTIV_PSSKEY    (0x0020)    /**< SYSRSTIV : Legacy: PMMKEY violation */
+#define SYSRSTIV_PMMPW     (0x0020)    /**< SYSRSTIV : PMM Password violation */
+#define SYSRSTIV_PMMKEY    (0x0020)    /**< SYSRSTIV : PMMKEY violation */
+#define SYSRSTIV_MPUPW     (0x0022)    /**< SYSRSTIV : MPU Password violation */
+#define SYSRSTIV_MPUKEY    (0x0022)    /**< SYSRSTIV : MPUKEY violation */
+#define SYSRSTIV_CSPW      (0x0024)    /**< SYSRSTIV : CS Password violation */
+#define SYSRSTIV_CSKEY     (0x0024)    /**< SYSRSTIV : CSKEY violation */
+#define SYSRSTIV_MPUSEGIIFG (0x0026)   /**< SYSRSTIV : MPUSEGIIFG violation */
+#define SYSRSTIV_MPUSEGPIFG (0x0026)   /**< SYSRSTIV : MPUSEGPIFG violation */
+#define SYSRSTIV_MPUSEG1IFG (0x0028)   /**< SYSRSTIV : MPUSEG1IFG violation */
+#define SYSRSTIV_MPUSEG2IFG (0x002A)   /**< SYSRSTIV : MPUSEG2IFG violation */
+#define SYSRSTIV_MPUSEG3IFG (0x002C)   /**< SYSRSTIV : MPUSEG3IFG violation */
+
 
 #endif /* BSP430_DOXYGEN */
 

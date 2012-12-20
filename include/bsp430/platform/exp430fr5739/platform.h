@@ -58,6 +58,8 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FR5739 1
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Enable if requested */
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
@@ -123,5 +125,7 @@
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>
+
+/** @endcond */
 
 #endif /* BSP430_PLATFORM_EXP430FR5739_H */

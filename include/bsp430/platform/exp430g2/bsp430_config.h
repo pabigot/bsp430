@@ -39,6 +39,8 @@
 #ifndef BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Use native USCI for genericized serial port unless told not to */
 #ifndef configBSP430_SERIAL_USE_USCI
 #if defined(__MSP430G2553__)
@@ -101,5 +103,7 @@
 #define configBSP430_HAL_PORT1 1
 #define configBSP430_HAL_PORT2 1
 #endif /* configBSP430_RFEM */
+
+/** @endcond */
 
 #endif /* BSP430_PLATFORM_EXP430G2_BSP430_CONFIG_H */

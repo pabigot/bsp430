@@ -53,6 +53,8 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430FG4618 1
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Available button definitions */
 #define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 #define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT0
@@ -86,6 +88,8 @@
 /* NB: Check against BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT2
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
+
+/** @endcond */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

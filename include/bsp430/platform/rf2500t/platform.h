@@ -51,6 +51,8 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_RF2500T 1
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Enable if requested */
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
@@ -103,6 +105,8 @@
 #define BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
 #define BSP430_RFEM_SPI0CSn_PORT_BIT BIT0
 #endif /* configBSP430_RFEM */
+
+/** @endcond */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

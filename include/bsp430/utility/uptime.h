@@ -212,11 +212,12 @@ unsigned long ulBSP430uptimeConversionFrequency_Hz_ni (void);
 
 /** Set the uptime frequency that will be used for tick/time conversion.
  *
- * In cases where the uptime clock derives from #VLOCLK, the nominal
- * frequency used by default may be off by as much as 10% from the
- * actual frequency.  This function can be used when a more accurate
- * estimate of actual frequency is available to decrease the error in
- * converted times.
+ * In cases where the uptime clock derives from @link
+ * eBSP430clockSRC_VLOCLK VLOCLK@endlink, the nominal frequency
+ * used by default may be off by as much as 10% from the actual
+ * frequency.  This function can be used when a more accurate estimate
+ * of actual frequency is available to decrease the error in converted
+ * times.
  *
  * @param frequency_Hz the frequency to be used when converting
  * durations in ticks to durations in seconds or related units.  If a

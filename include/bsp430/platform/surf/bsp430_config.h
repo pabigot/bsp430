@@ -39,6 +39,8 @@
 #ifndef BSP430_PLATFORM_EM430_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EM430_BSP430_CONFIG_H
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Use native USCI5 for genericized serial port unless told not to */
 #ifndef configBSP430_SERIAL_USE_USCI5
 #define configBSP430_SERIAL_USE_USCI5 1
@@ -88,5 +90,7 @@
 #define configBSP430_HPL_PORT1 1
 #endif /* configBSP430_HPL_PORT1 */
 #endif /* configBSP430_PLATFORM_SURF_FLASH */
+
+/** @endcond */
 
 #endif /* BSP430_PLATFORM_EM430_BSP430_CONFIG_H */

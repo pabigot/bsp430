@@ -39,6 +39,8 @@
 #ifndef BSP430_PLATFORM_EXP430FG4618_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430FG4618_BSP430_CONFIG_H
 
+/** @cond DOXYGEN_EXCLUDE */
+
 /* Use native USCI for genericized serial port unless told not to */
 #ifndef configBSP430_SERIAL_USE_USCI
 #define configBSP430_SERIAL_USE_USCI 1
@@ -81,5 +83,7 @@
 #endif /* BUTTON1 */
 #endif /* configBSP430_HAL_PORT1 */
 #endif /* configBSP430_PLATFORM_BUTTON[01] */
+
+/** @endcond */
 
 #endif /* BSP430_PLATFORM_EXP430FG4618_BSP430_CONFIG_H */

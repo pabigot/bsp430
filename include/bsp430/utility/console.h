@@ -82,7 +82,8 @@
  * Define to a true value to request that a serial handle be
  * identified to serve as a system console.
  *
- * See #configBSP430_CONSOLE_USE_DEFAULT_RESOURCE.
+ * See #BSP430_CONSOLE_SERIAL_PERIPH_CPPID for information about which
+ * serial peripheral will be used for this capability.
  *
  * @cppflag
  * @affects #BSP430_CONSOLE
