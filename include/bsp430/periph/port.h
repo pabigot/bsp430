@@ -659,18 +659,21 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
-/** @def configBSP430_HAL_PORT1
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT1 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT1 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT1 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT1.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT1).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT1 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT1
 #define configBSP430_HAL_PORT1 0
@@ -683,9 +686,9 @@ extern sBSP430halPORT xBSP430hal_PORT1_;
 #endif /* configBSP430_HAL_PORT1 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT1.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT1.
  *
- * The handle may be used only if #configBSP430_HAL_PORT1
+ * This pointer may be used only if #configBSP430_HAL_PORT1
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT1 */
@@ -693,18 +696,21 @@ extern sBSP430halPORT xBSP430hal_PORT1_;
 #define BSP430_HAL_PORT1 (&xBSP430hal_PORT1_)
 #endif /* configBSP430_HAL_PORT1 */
 
-/** @def configBSP430_HAL_PORT2
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT2 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT2 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT2 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT2.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT2).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT2 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT2
 #define configBSP430_HAL_PORT2 0
@@ -717,9 +723,9 @@ extern sBSP430halPORT xBSP430hal_PORT2_;
 #endif /* configBSP430_HAL_PORT2 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT2.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT2.
  *
- * The handle may be used only if #configBSP430_HAL_PORT2
+ * This pointer may be used only if #configBSP430_HAL_PORT2
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT2 */
@@ -727,18 +733,21 @@ extern sBSP430halPORT xBSP430hal_PORT2_;
 #define BSP430_HAL_PORT2 (&xBSP430hal_PORT2_)
 #endif /* configBSP430_HAL_PORT2 */
 
-/** @def configBSP430_HAL_PORT3
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT3
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT3 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT3 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT3 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT3.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT3).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT3 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT3
 #define configBSP430_HAL_PORT3 0
@@ -751,9 +760,9 @@ extern sBSP430halPORT xBSP430hal_PORT3_;
 #endif /* configBSP430_HAL_PORT3 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT3.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT3.
  *
- * The handle may be used only if #configBSP430_HAL_PORT3
+ * This pointer may be used only if #configBSP430_HAL_PORT3
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT3 */
@@ -761,18 +770,21 @@ extern sBSP430halPORT xBSP430hal_PORT3_;
 #define BSP430_HAL_PORT3 (&xBSP430hal_PORT3_)
 #endif /* configBSP430_HAL_PORT3 */
 
-/** @def configBSP430_HAL_PORT4
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT4
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT4 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT4 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT4 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT4.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT4).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT4 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT4
 #define configBSP430_HAL_PORT4 0
@@ -785,9 +797,9 @@ extern sBSP430halPORT xBSP430hal_PORT4_;
 #endif /* configBSP430_HAL_PORT4 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT4.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT4.
  *
- * The handle may be used only if #configBSP430_HAL_PORT4
+ * This pointer may be used only if #configBSP430_HAL_PORT4
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT4 */
@@ -795,18 +807,21 @@ extern sBSP430halPORT xBSP430hal_PORT4_;
 #define BSP430_HAL_PORT4 (&xBSP430hal_PORT4_)
 #endif /* configBSP430_HAL_PORT4 */
 
-/** @def configBSP430_HAL_PORT5
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT5
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT5 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT5 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT5 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT5.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT5).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT5 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT5
 #define configBSP430_HAL_PORT5 0
@@ -819,9 +834,9 @@ extern sBSP430halPORT xBSP430hal_PORT5_;
 #endif /* configBSP430_HAL_PORT5 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT5.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT5.
  *
- * The handle may be used only if #configBSP430_HAL_PORT5
+ * This pointer may be used only if #configBSP430_HAL_PORT5
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT5 */
@@ -829,18 +844,21 @@ extern sBSP430halPORT xBSP430hal_PORT5_;
 #define BSP430_HAL_PORT5 (&xBSP430hal_PORT5_)
 #endif /* configBSP430_HAL_PORT5 */
 
-/** @def configBSP430_HAL_PORT6
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT6
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT6 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT6 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT6 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT6.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT6).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT6 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT6
 #define configBSP430_HAL_PORT6 0
@@ -853,9 +871,9 @@ extern sBSP430halPORT xBSP430hal_PORT6_;
 #endif /* configBSP430_HAL_PORT6 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT6.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT6.
  *
- * The handle may be used only if #configBSP430_HAL_PORT6
+ * This pointer may be used only if #configBSP430_HAL_PORT6
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT6 */
@@ -863,18 +881,21 @@ extern sBSP430halPORT xBSP430hal_PORT6_;
 #define BSP430_HAL_PORT6 (&xBSP430hal_PORT6_)
 #endif /* configBSP430_HAL_PORT6 */
 
-/** @def configBSP430_HAL_PORT7
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT7
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT7 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT7 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT7 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT7.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT7).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT7 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT7
 #define configBSP430_HAL_PORT7 0
@@ -887,9 +908,9 @@ extern sBSP430halPORT xBSP430hal_PORT7_;
 #endif /* configBSP430_HAL_PORT7 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT7.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT7.
  *
- * The handle may be used only if #configBSP430_HAL_PORT7
+ * This pointer may be used only if #configBSP430_HAL_PORT7
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT7 */
@@ -897,18 +918,21 @@ extern sBSP430halPORT xBSP430hal_PORT7_;
 #define BSP430_HAL_PORT7 (&xBSP430hal_PORT7_)
 #endif /* configBSP430_HAL_PORT7 */
 
-/** @def configBSP430_HAL_PORT8
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT8
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT8 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT8 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT8 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT8.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT8).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT8 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT8
 #define configBSP430_HAL_PORT8 0
@@ -921,9 +945,9 @@ extern sBSP430halPORT xBSP430hal_PORT8_;
 #endif /* configBSP430_HAL_PORT8 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT8.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT8.
  *
- * The handle may be used only if #configBSP430_HAL_PORT8
+ * This pointer may be used only if #configBSP430_HAL_PORT8
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT8 */
@@ -931,18 +955,21 @@ extern sBSP430halPORT xBSP430hal_PORT8_;
 #define BSP430_HAL_PORT8 (&xBSP430hal_PORT8_)
 #endif /* configBSP430_HAL_PORT8 */
 
-/** @def configBSP430_HAL_PORT9
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT9
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT9 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT9 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT9 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT9.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT9).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT9 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT9
 #define configBSP430_HAL_PORT9 0
@@ -955,9 +982,9 @@ extern sBSP430halPORT xBSP430hal_PORT9_;
 #endif /* configBSP430_HAL_PORT9 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT9.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT9.
  *
- * The handle may be used only if #configBSP430_HAL_PORT9
+ * This pointer may be used only if #configBSP430_HAL_PORT9
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT9 */
@@ -965,18 +992,21 @@ extern sBSP430halPORT xBSP430hal_PORT9_;
 #define BSP430_HAL_PORT9 (&xBSP430hal_PORT9_)
 #endif /* configBSP430_HAL_PORT9 */
 
-/** @def configBSP430_HAL_PORT10
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT10
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT10 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT10 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT10 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT10.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT10).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT10 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT10
 #define configBSP430_HAL_PORT10 0
@@ -989,9 +1019,9 @@ extern sBSP430halPORT xBSP430hal_PORT10_;
 #endif /* configBSP430_HAL_PORT10 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT10.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT10.
  *
- * The handle may be used only if #configBSP430_HAL_PORT10
+ * This pointer may be used only if #configBSP430_HAL_PORT10
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT10 */
@@ -999,18 +1029,21 @@ extern sBSP430halPORT xBSP430hal_PORT10_;
 #define BSP430_HAL_PORT10 (&xBSP430hal_PORT10_)
 #endif /* configBSP430_HAL_PORT10 */
 
-/** @def configBSP430_HAL_PORT11
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_PORT11
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT11 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_PORT11 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_PORT11 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halPORT structure reference is
+ * available as #BSP430_HAL_PORT11.
+ *
+ * It may also be obtained using
+ * #hBSP430portLookup(#BSP430_PERIPH_PORT11).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_PORT11 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT11
 #define configBSP430_HAL_PORT11 0
@@ -1023,9 +1056,9 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #endif /* configBSP430_HAL_PORT11 */
 /** @endcond */
 
-/** BSP430 HAL handle for PORT11.
+/** sBSP430halPORT HAL handle for #BSP430_PERIPH_PORT11.
  *
- * The handle may be used only if #configBSP430_HAL_PORT11
+ * This pointer may be used only if #configBSP430_HAL_PORT11
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_PORT11 */
@@ -1038,17 +1071,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 
 /* !BSP430! insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
-/** @def configBSP430_HPL_PORT1
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT1 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT1 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT1).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT1
 #define configBSP430_HPL_PORT1 (configBSP430_HAL_PORT1 - 0)
@@ -1068,17 +1104,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT1 ((tBSP430periphHandle)(BSP430_PERIPH_PORT1_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT1 */
 
-/** @def configBSP430_HPL_PORT2
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT2 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT2 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT2.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT2).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT2
 #define configBSP430_HPL_PORT2 (configBSP430_HAL_PORT2 - 0)
@@ -1098,17 +1137,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT2 ((tBSP430periphHandle)(BSP430_PERIPH_PORT2_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT2 */
 
-/** @def configBSP430_HPL_PORT3
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT3
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT3 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT3 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT3.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT3).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT3
 #define configBSP430_HPL_PORT3 (configBSP430_HAL_PORT3 - 0)
@@ -1128,17 +1170,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT3 ((tBSP430periphHandle)(BSP430_PERIPH_PORT3_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT3 */
 
-/** @def configBSP430_HPL_PORT4
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT4
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT4 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT4 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT4.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT4).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT4
 #define configBSP430_HPL_PORT4 (configBSP430_HAL_PORT4 - 0)
@@ -1158,17 +1203,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT4 ((tBSP430periphHandle)(BSP430_PERIPH_PORT4_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT4 */
 
-/** @def configBSP430_HPL_PORT5
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT5
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT5 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT5 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT5.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT5).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT5
 #define configBSP430_HPL_PORT5 (configBSP430_HAL_PORT5 - 0)
@@ -1188,17 +1236,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT5 ((tBSP430periphHandle)(BSP430_PERIPH_PORT5_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT5 */
 
-/** @def configBSP430_HPL_PORT6
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT6
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT6 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT6 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT6.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT6).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT6
 #define configBSP430_HPL_PORT6 (configBSP430_HAL_PORT6 - 0)
@@ -1218,17 +1269,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT6 ((tBSP430periphHandle)(BSP430_PERIPH_PORT6_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT6 */
 
-/** @def configBSP430_HPL_PORT7
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT7
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT7 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT7 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT7.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT7).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT7
 #define configBSP430_HPL_PORT7 (configBSP430_HAL_PORT7 - 0)
@@ -1248,17 +1302,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT7 ((tBSP430periphHandle)(BSP430_PERIPH_PORT7_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT7 */
 
-/** @def configBSP430_HPL_PORT8
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT8
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT8 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT8 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT8.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT8).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT8
 #define configBSP430_HPL_PORT8 (configBSP430_HAL_PORT8 - 0)
@@ -1278,17 +1335,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT8 ((tBSP430periphHandle)(BSP430_PERIPH_PORT8_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT8 */
 
-/** @def configBSP430_HPL_PORT9
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT9
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT9 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT9 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT9.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT9).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT9
 #define configBSP430_HPL_PORT9 (configBSP430_HAL_PORT9 - 0)
@@ -1308,17 +1368,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT9 ((tBSP430periphHandle)(BSP430_PERIPH_PORT9_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT9 */
 
-/** @def configBSP430_HPL_PORT10
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT10
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT10 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT10 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT10.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT10).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT10
 #define configBSP430_HPL_PORT10 (configBSP430_HAL_PORT10 - 0)
@@ -1338,17 +1401,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #define BSP430_PERIPH_PORT10 ((tBSP430periphHandle)(BSP430_PERIPH_PORT10_BASEADDRESS_))
 #endif /* configBSP430_HPL_PORT10 */
 
-/** @def configBSP430_HPL_PORT11
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_PORT11
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c PORT11 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_PORT11 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplPORT structure reference is
+ * available as #BSP430_HPL_PORT11.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupPORT(#BSP430_PERIPH_PORT11).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_PORT11
 #define configBSP430_HPL_PORT11 (configBSP430_HAL_PORT11 - 0)
@@ -1620,20 +1686,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 
 /* !BSP430! insert=hal_port_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_isr_decl] */
-/** @def configBSP430_HAL_PORT1_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT1
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT1 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT1 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT1 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT1
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT1.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT1_ISR
 #define configBSP430_HAL_PORT1_ISR ((configBSP430_HAL_PORT1 - 0) && defined(PORT1_VECTOR))
@@ -1643,20 +1709,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT1_ISR requested without configBSP430_HAL_PORT1
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT2_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT2
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT2 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT2 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT2 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT2
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT2.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT2_ISR
 #define configBSP430_HAL_PORT2_ISR ((configBSP430_HAL_PORT2 - 0) && defined(PORT2_VECTOR))
@@ -1666,20 +1732,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT2_ISR requested without configBSP430_HAL_PORT2
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT3_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT3
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT3 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT3 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT3 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT3
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT3.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT3_ISR
 #define configBSP430_HAL_PORT3_ISR ((configBSP430_HAL_PORT3 - 0) && defined(PORT3_VECTOR))
@@ -1689,20 +1755,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT3_ISR requested without configBSP430_HAL_PORT3
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT4_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT4
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT4 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT4 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT4 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT4
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT4.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT4_ISR
 #define configBSP430_HAL_PORT4_ISR ((configBSP430_HAL_PORT4 - 0) && defined(PORT4_VECTOR))
@@ -1712,20 +1778,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT4_ISR requested without configBSP430_HAL_PORT4
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT5_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT5
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT5 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT5 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT5 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT5
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT5.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT5_ISR
 #define configBSP430_HAL_PORT5_ISR ((configBSP430_HAL_PORT5 - 0) && defined(PORT5_VECTOR))
@@ -1735,20 +1801,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT5_ISR requested without configBSP430_HAL_PORT5
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT6_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT6
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT6 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT6 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT6 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT6
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT6.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT6_ISR
 #define configBSP430_HAL_PORT6_ISR ((configBSP430_HAL_PORT6 - 0) && defined(PORT6_VECTOR))
@@ -1758,20 +1824,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT6_ISR requested without configBSP430_HAL_PORT6
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT7_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT7
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT7 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT7 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT7 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT7
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT7.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT7_ISR
 #define configBSP430_HAL_PORT7_ISR ((configBSP430_HAL_PORT7 - 0) && defined(PORT7_VECTOR))
@@ -1781,20 +1847,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT7_ISR requested without configBSP430_HAL_PORT7
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT8_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT8
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT8 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT8 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT8 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT8
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT8.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT8_ISR
 #define configBSP430_HAL_PORT8_ISR ((configBSP430_HAL_PORT8 - 0) && defined(PORT8_VECTOR))
@@ -1804,20 +1870,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT8_ISR requested without configBSP430_HAL_PORT8
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT9_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT9
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT9 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT9 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT9 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT9
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT9.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT9_ISR
 #define configBSP430_HAL_PORT9_ISR ((configBSP430_HAL_PORT9 - 0) && defined(PORT9_VECTOR))
@@ -1827,20 +1893,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT9_ISR requested without configBSP430_HAL_PORT9
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT10_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT10
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT10 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT10 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT10 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT10
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT10.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT10_ISR
 #define configBSP430_HAL_PORT10_ISR ((configBSP430_HAL_PORT10 - 0) && defined(PORT10_VECTOR))
@@ -1850,20 +1916,20 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
 #warning configBSP430_HAL_PORT10_ISR requested without configBSP430_HAL_PORT10
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_PORT11_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_PORT11
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c PORT11 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_PORT11 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_PORT11 defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_PORT11
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_PORT11.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_PORT11_ISR
 #define configBSP430_HAL_PORT11_ISR ((configBSP430_HAL_PORT11 - 0) && defined(PORT11_VECTOR))

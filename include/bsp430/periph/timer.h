@@ -304,6 +304,12 @@
  * #endif // uptime == ccaclk
  * @endcode
  *
+ * @note Setting this flag only enables the @HPL for
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.  To delegate control of
+ * additional capabilities see #configBSP430_TIMER_CCACLK_HAL,
+ * #configBSP430_TIMER_CCACLK_HAL_ISR, and
+ * #configBSP430_TIMER_CCACLK_HAL_CC0_ISR.
+ *
  * @cppflag
  * @affects #BSP430_TIMER_CCACLK
  * @defaulted
@@ -337,11 +343,10 @@
 #define BSP430_TIMER_CCACLK include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_PERIPH_CPPID
+/** The preprocessor-compatible identifier for a timer that is capable
+ * of capturing on ACLK ticks.
  *
- * Define to the preprocessor-compatible identifier for a timer that
- * should be used to maintain a continuous system clock sourced from
- * ACLK.  The define must appear in the @ref bsp430_config subsystem
+ * The define must appear in the @ref bsp430_config subsystem
  * so that functional resource requests are correctly propagated to
  * the underlying resource instances.
  *
@@ -361,7 +366,7 @@
  *
  * @dependency #BSP430_TIMER_CCACLK_PERIPH_CPPID */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_PERIPH_HANDLE platform or application specific
+#define BSP430_TIMER_CCACLK_PERIPH_HANDLE derived platform or application specific
 /* !BSP430! instance=@timers functional=timer_ccaclk subst=functional insert=periph_sethandle */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
 
@@ -389,63 +394,74 @@
 /* !BSP430! end=periph_sethandle */
 #endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
 
-/** @def configBSP430_TIMER_CCACLK_HAL
+/** Indirect control inclusion of the @HAL interface for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
- * Define to a true value to automatically request the HAL support for
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE when the latter is defaulted.
- * When false, only the HPL support for the peripheral is enabled.
- * Enabling the HAL does not enable the ISRs; see
- * #configBSP430_TIMER_CCACLK_HAL_ISR and
- * #configBSP430_TIMER_CCACLK_HAL_CC0_ISR.
+ * Propagated as the default for #configBSP430_HAL_TA0 or other flag
+ * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
  * @nodefault
- * @ingroup grp_timer_ccaclk */
+ * @ingroup grp_config_functional */
 #ifndef configBSP430_TIMER_CCACLK_HAL
-#define configBSP430_TIMER_CCACLK_HAL 0
+#define configBSP430_TIMER_CCACLK_HAL indirectly defaulted
 #endif /* configBSP430_TIMER_CCACLK_HAL */
 
-/** @def configBSP430_TIMER_CCACLK_HAL_CC0_ISR
+/** Indirect control inclusion of the primary @HAL interrupt handler for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
- * Set this to 1 if you want BSP430 to provide the HAL interrupt
- * infrastructure for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
- *
- * Set this flag to 0 if you intend to implement your own ISR or will
- * not be using interrupts on #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ * Propagated as default for #configBSP430_HAL_TA0_ISR or other flag
+ * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
  * @nodefault
- * @ingroup grp_timer_ccaclk */
+ * @ingroup grp_config_functional */
 #if defined(BSP430_DOXYGEN)
-#define configBSP430_TIMER_CCACLK_HAL_CC0_ISR 0
+#define configBSP430_TIMER_CCACLK_HAL_ISR indirectly defaulted
 #endif /* BSP430_DOXYGEN */
 
-/** @def configBSP430_TIMER_CCACLK_HAL_CC0_ISR
+/** Indirect control inclusion of the CC0 @HAL interrupt handler for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
- * Normally, when the HAL timer infrastructure associated with
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE is enabled through
- * #configBSP430_TIMER_CCACLK_HAL, the standard HAL ISR is enabled but
- * the companion CC0 interrupt HAL ISR is left unmanaged by BSP430
- * (see #configBSP430_HAL_TA1_CC0_ISR).
- *
- * Set this flag to 1 if you want BSP430 to provide an implementation for
- * the CC0 interrupt for the HAL timer that underlies the
- * implementation, thereby allowing BSP430 to dispatch CC0 events to
- * callbacks registered in #sBSP430halTIMER.
- *
- * Set this flag to 0 if you intend to implement your own CC0 ISR or
- * will not be using CC0 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ * Propagated as default for #configBSP430_HAL_TA0_CC0_ISR or other flag
+ * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
  * @nodefault
- * @ingroup grp_timer_ccaclk */
+ * @ingroup grp_config_functional */
 #if defined(BSP430_DOXYGEN)
-#define configBSP430_TIMER_CCACLK_HAL_CC0_ISR 0
+#define configBSP430_TIMER_CCACLK_HAL_CC0_ISR indirectly defaulted
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_ACLK_CC
+/** Indirect control inclusion of the @HPL for #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
  *
- * The capture/compare block index within
+ * Propagated as default for #configBSP430_HPL_PORT1 or other flag
+ * determined by #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID.
+ *
+ * You would use this if the source for the clock being timed was
+ * external to the microcontroller.  See @ref ex_sensors_hh10d for an
+ * example.
+ *
+ * @cppflag
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
+#ifndef configBSP430_TIMER_CCACLK_CLK_PORT
+#define configBSP430_TIMER_CCACLK_CLK_PORT indirectly defaulted
+#endif /* configBSP430_TIMER_CCACLK_CLK_PORT */
+
+/** Indirect control inclusion of the @HAL for #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
+ *
+ * Propagated as default for #configBSP430_HAL_PORT1 or other flag
+ * determined by #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID.
+ *
+ * You might need to use this to select the peripheral function for
+ * the clock source.
+ *
+ * @cppflag
+ * @defaulted
+ * @ingroup grp_config_functional */
+#ifndef configBSP430_TIMER_CCACLK_CLK_PORT_HAL
+#define configBSP430_TIMER_CCACLK_CLK_PORT_HAL indirectly defaulted 0
+#endif /* configBSP430_TIMER_CCACLK_CLK_PORT_HAL */
+
+/** The capture/compare block index within
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
  * signal.
  *
@@ -456,9 +472,7 @@
 #define BSP430_TIMER_CCACLK_ACLK_CC include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_ACLK_CCIS
- *
- * The capture/compare block input signal bits to be selected in the
+/** The capture/compare block input signal bits to be selected in the
  * control word for CC block #BSP430_TIMER_CCACLK_ACLK_CC of
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
@@ -469,24 +483,25 @@
 #define BSP430_TIMER_CCACLK_ACLK_CCIS include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID
+/** The preprocessor-compatible identifier for a port that provides
+ * the input clock function for #BS430_TIMER_CCACLK_PERIPH_HANDLE.
  *
- * The BSP430 port peripheral on which the external clock source for
- * BSP430_TIMER_CCACLK_PERIPH_HANDLE can be found.
+ * The define must appear in the @ref bsp430_config subsystem so that
+ * functional resource requests are correctly propagated to the
+ * underlying resource instances.
  *
+ * @defaulted
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID platform or application specific
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
- *
- * The BSP430 port peripheral on which the external clock source for
- * BSP430_TIMER_CCACLK_PERIPH_HANDLE can be found.
+/** The BSP430 port peripheral corresponding to
+ * #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE platform or application specific
+#define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE derived platform or application specific
 /* !BSP430! instance=@ports functional=timer_ccaclk_clk_port subst=functional insert=periph_sethandle */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
 
@@ -526,46 +541,15 @@
 /* !BSP430! end=periph_sethandle instance=@timers */
 #endif /* BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID */
 
-/** @def BSP430_TIMER_CCACLK_CLK_PORT_BIT
+/** The pin on #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE to which the
+ * external clock source for #BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
+ * connected.
  *
- * The pin on BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE to which the
- * external clock source for BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
- * provided.
- *
+ * @overridable
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
-
-/** @def configBSP430_TIMER_CCACLK_CLK_PORT
- *
- * You might need to use the port interface if the source for the clock
- * being timed was external to the microcontroller.  See @ref
- * ex_sensors_hh10d for an example.
- *
- * @cppflag
- * @defaulted
- * @ingroup grp_timer_ccaclk */
-#ifndef configBSP430_TIMER_CCACLK_CLK_PORT
-#define configBSP430_TIMER_CCACLK_CLK_PORT 0
-#endif /* configBSP430_TIMER_CCACLK_CLK_PORT */
-
-/** @def configBSP430_TIMER_CCACLK_CLK_PORT_HAL
- *
- * Define to a true value to automatically request the HAL support for
- * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE.  When false, only the
- * HPL support for the peripheral is enabled.
- *
- * You might need to use the port HAL if the source for the clock
- * being timed was external to the microcontroller.  See @ref
- * ex_sensors_hh10d for an example.
- *
- * @cppflag
- * @defaulted
- * @ingroup grp_timer_ccaclk */
-#ifndef configBSP430_TIMER_CCACLK_CLK_PORT_HAL
-#define configBSP430_TIMER_CCACLK_CLK_PORT_HAL 0
-#endif /* configBSP430_TIMER_CCACLK_CLK_PORT_HAL */
 
 /** Count number of timer transitions over a span of ACLK ticks
  *
@@ -1171,18 +1155,21 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
 
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
-/** @def configBSP430_HAL_TA0
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_TA0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA0 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_TA0 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA0 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halTIMER structure reference is
+ * available as #BSP430_HAL_TA0.
+ *
+ * It may also be obtained using
+ * #hBSP430timerLookup(#BSP430_PERIPH_TA0).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_TA0 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_TA0
 #define configBSP430_HAL_TA0 0
@@ -1195,9 +1182,9 @@ extern sBSP430halTIMER xBSP430hal_TA0_;
 #endif /* configBSP430_HAL_TA0 */
 /** @endcond */
 
-/** BSP430 HAL handle for TA0.
+/** sBSP430halTIMER HAL handle for #BSP430_PERIPH_TA0.
  *
- * The handle may be used only if #configBSP430_HAL_TA0
+ * This pointer may be used only if #configBSP430_HAL_TA0
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_TA0 */
@@ -1205,18 +1192,21 @@ extern sBSP430halTIMER xBSP430hal_TA0_;
 #define BSP430_HAL_TA0 (&xBSP430hal_TA0_)
 #endif /* configBSP430_HAL_TA0 */
 
-/** @def configBSP430_HAL_TA1
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_TA1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA1 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_TA1 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA1 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halTIMER structure reference is
+ * available as #BSP430_HAL_TA1.
+ *
+ * It may also be obtained using
+ * #hBSP430timerLookup(#BSP430_PERIPH_TA1).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_TA1 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_TA1
 #define configBSP430_HAL_TA1 0
@@ -1229,9 +1219,9 @@ extern sBSP430halTIMER xBSP430hal_TA1_;
 #endif /* configBSP430_HAL_TA1 */
 /** @endcond */
 
-/** BSP430 HAL handle for TA1.
+/** sBSP430halTIMER HAL handle for #BSP430_PERIPH_TA1.
  *
- * The handle may be used only if #configBSP430_HAL_TA1
+ * This pointer may be used only if #configBSP430_HAL_TA1
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_TA1 */
@@ -1239,18 +1229,21 @@ extern sBSP430halTIMER xBSP430hal_TA1_;
 #define BSP430_HAL_TA1 (&xBSP430hal_TA1_)
 #endif /* configBSP430_HAL_TA1 */
 
-/** @def configBSP430_HAL_TA2
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_TA2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA2 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_TA2 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA2 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halTIMER structure reference is
+ * available as #BSP430_HAL_TA2.
+ *
+ * It may also be obtained using
+ * #hBSP430timerLookup(#BSP430_PERIPH_TA2).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_TA2 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_TA2
 #define configBSP430_HAL_TA2 0
@@ -1263,9 +1256,9 @@ extern sBSP430halTIMER xBSP430hal_TA2_;
 #endif /* configBSP430_HAL_TA2 */
 /** @endcond */
 
-/** BSP430 HAL handle for TA2.
+/** sBSP430halTIMER HAL handle for #BSP430_PERIPH_TA2.
  *
- * The handle may be used only if #configBSP430_HAL_TA2
+ * This pointer may be used only if #configBSP430_HAL_TA2
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_TA2 */
@@ -1273,18 +1266,21 @@ extern sBSP430halTIMER xBSP430hal_TA2_;
 #define BSP430_HAL_TA2 (&xBSP430hal_TA2_)
 #endif /* configBSP430_HAL_TA2 */
 
-/** @def configBSP430_HAL_TA3
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_TA3
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA3 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_TA3 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_TA3 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halTIMER structure reference is
+ * available as #BSP430_HAL_TA3.
+ *
+ * It may also be obtained using
+ * #hBSP430timerLookup(#BSP430_PERIPH_TA3).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_TA3 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_TA3
 #define configBSP430_HAL_TA3 0
@@ -1297,9 +1293,9 @@ extern sBSP430halTIMER xBSP430hal_TA3_;
 #endif /* configBSP430_HAL_TA3 */
 /** @endcond */
 
-/** BSP430 HAL handle for TA3.
+/** sBSP430halTIMER HAL handle for #BSP430_PERIPH_TA3.
  *
- * The handle may be used only if #configBSP430_HAL_TA3
+ * This pointer may be used only if #configBSP430_HAL_TA3
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_TA3 */
@@ -1307,18 +1303,21 @@ extern sBSP430halTIMER xBSP430hal_TA3_;
 #define BSP430_HAL_TA3 (&xBSP430hal_TA3_)
 #endif /* configBSP430_HAL_TA3 */
 
-/** @def configBSP430_HAL_TB0
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_TB0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TB0 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_TB0 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_TB0 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halTIMER structure reference is
+ * available as #BSP430_HAL_TB0.
+ *
+ * It may also be obtained using
+ * #hBSP430timerLookup(#BSP430_PERIPH_TB0).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_TB0 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_TB0
 #define configBSP430_HAL_TB0 0
@@ -1331,9 +1330,9 @@ extern sBSP430halTIMER xBSP430hal_TB0_;
 #endif /* configBSP430_HAL_TB0 */
 /** @endcond */
 
-/** BSP430 HAL handle for TB0.
+/** sBSP430halTIMER HAL handle for #BSP430_PERIPH_TB0.
  *
- * The handle may be used only if #configBSP430_HAL_TB0
+ * This pointer may be used only if #configBSP430_HAL_TB0
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_TB0 */
@@ -1341,18 +1340,21 @@ extern sBSP430halTIMER xBSP430hal_TB0_;
 #define BSP430_HAL_TB0 (&xBSP430hal_TB0_)
 #endif /* configBSP430_HAL_TB0 */
 
-/** @def configBSP430_HAL_TB1
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_TB1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TB1 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_TB1 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_TB1 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halTIMER structure reference is
+ * available as #BSP430_HAL_TB1.
+ *
+ * It may also be obtained using
+ * #hBSP430timerLookup(#BSP430_PERIPH_TB1).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_TB1 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_TB1
 #define configBSP430_HAL_TB1 0
@@ -1365,9 +1367,9 @@ extern sBSP430halTIMER xBSP430hal_TB1_;
 #endif /* configBSP430_HAL_TB1 */
 /** @endcond */
 
-/** BSP430 HAL handle for TB1.
+/** sBSP430halTIMER HAL handle for #BSP430_PERIPH_TB1.
  *
- * The handle may be used only if #configBSP430_HAL_TB1
+ * This pointer may be used only if #configBSP430_HAL_TB1
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_TB1 */
@@ -1375,18 +1377,21 @@ extern sBSP430halTIMER xBSP430hal_TB1_;
 #define BSP430_HAL_TB1 (&xBSP430hal_TB1_)
 #endif /* configBSP430_HAL_TB1 */
 
-/** @def configBSP430_HAL_TB2
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_TB2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TB2 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_TB2 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_TB2 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halTIMER structure reference is
+ * available as #BSP430_HAL_TB2.
+ *
+ * It may also be obtained using
+ * #hBSP430timerLookup(#BSP430_PERIPH_TB2).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_TB2 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_TB2
 #define configBSP430_HAL_TB2 0
@@ -1399,9 +1404,9 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #endif /* configBSP430_HAL_TB2 */
 /** @endcond */
 
-/** BSP430 HAL handle for TB2.
+/** sBSP430halTIMER HAL handle for #BSP430_PERIPH_TB2.
  *
- * The handle may be used only if #configBSP430_HAL_TB2
+ * This pointer may be used only if #configBSP430_HAL_TB2
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_TB2 */
@@ -1414,17 +1419,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 
 /* !BSP430! insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
-/** @def configBSP430_HPL_TA0
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_TA0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA0 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_TA0 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplTIMER structure reference is
+ * available as #BSP430_HPL_TA0.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupTIMER(#BSP430_PERIPH_TA0).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_TA0
 #define configBSP430_HPL_TA0 (configBSP430_HAL_TA0 - 0)
@@ -1444,17 +1452,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #define BSP430_PERIPH_TA0 ((tBSP430periphHandle)(BSP430_PERIPH_TA0_BASEADDRESS_))
 #endif /* configBSP430_HPL_TA0 */
 
-/** @def configBSP430_HPL_TA1
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_TA1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA1 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_TA1 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplTIMER structure reference is
+ * available as #BSP430_HPL_TA1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupTIMER(#BSP430_PERIPH_TA1).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_TA1
 #define configBSP430_HPL_TA1 (configBSP430_HAL_TA1 - 0)
@@ -1474,17 +1485,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #define BSP430_PERIPH_TA1 ((tBSP430periphHandle)(BSP430_PERIPH_TA1_BASEADDRESS_))
 #endif /* configBSP430_HPL_TA1 */
 
-/** @def configBSP430_HPL_TA2
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_TA2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA2 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_TA2 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplTIMER structure reference is
+ * available as #BSP430_HPL_TA2.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupTIMER(#BSP430_PERIPH_TA2).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_TA2
 #define configBSP430_HPL_TA2 (configBSP430_HAL_TA2 - 0)
@@ -1504,17 +1518,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #define BSP430_PERIPH_TA2 ((tBSP430periphHandle)(BSP430_PERIPH_TA2_BASEADDRESS_))
 #endif /* configBSP430_HPL_TA2 */
 
-/** @def configBSP430_HPL_TA3
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_TA3
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TA3 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_TA3 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplTIMER structure reference is
+ * available as #BSP430_HPL_TA3.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupTIMER(#BSP430_PERIPH_TA3).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_TA3
 #define configBSP430_HPL_TA3 (configBSP430_HAL_TA3 - 0)
@@ -1534,17 +1551,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #define BSP430_PERIPH_TA3 ((tBSP430periphHandle)(BSP430_PERIPH_TA3_BASEADDRESS_))
 #endif /* configBSP430_HPL_TA3 */
 
-/** @def configBSP430_HPL_TB0
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_TB0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TB0 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_TB0 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplTIMER structure reference is
+ * available as #BSP430_HPL_TB0.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupTIMER(#BSP430_PERIPH_TB0).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_TB0
 #define configBSP430_HPL_TB0 (configBSP430_HAL_TB0 - 0)
@@ -1564,17 +1584,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #define BSP430_PERIPH_TB0 ((tBSP430periphHandle)(BSP430_PERIPH_TB0_BASEADDRESS_))
 #endif /* configBSP430_HPL_TB0 */
 
-/** @def configBSP430_HPL_TB1
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_TB1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TB1 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_TB1 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplTIMER structure reference is
+ * available as #BSP430_HPL_TB1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupTIMER(#BSP430_PERIPH_TB1).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_TB1
 #define configBSP430_HPL_TB1 (configBSP430_HAL_TB1 - 0)
@@ -1594,17 +1617,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #define BSP430_PERIPH_TB1 ((tBSP430periphHandle)(BSP430_PERIPH_TB1_BASEADDRESS_))
 #endif /* configBSP430_HPL_TB1 */
 
-/** @def configBSP430_HPL_TB2
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_TB2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c TB2 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_TB2 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplTIMER structure reference is
+ * available as #BSP430_HPL_TB2.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupTIMER(#BSP430_PERIPH_TB2).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_TB2
 #define configBSP430_HPL_TB2 (configBSP430_HAL_TB2 - 0)
@@ -1629,91 +1655,77 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 
 /* !BSP430! insert=hpl_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
-/** HPL pointer for TA0.
+/** sBSP430hplTIMER HPL pointer for #BSP430_PERIPH_TA0.
  *
- * Typed pointer to a volatile structure overlaying the TA0
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_TA0
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the TA0
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_TA0 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_TA0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA0 - 0)
 #define BSP430_HPL_TA0 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA0)
 #endif /* configBSP430_HPL_TA0 */
 
-/** HPL pointer for TA1.
+/** sBSP430hplTIMER HPL pointer for #BSP430_PERIPH_TA1.
  *
- * Typed pointer to a volatile structure overlaying the TA1
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_TA1
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the TA1
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_TA1 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_TA1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA1 - 0)
 #define BSP430_HPL_TA1 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA1)
 #endif /* configBSP430_HPL_TA1 */
 
-/** HPL pointer for TA2.
+/** sBSP430hplTIMER HPL pointer for #BSP430_PERIPH_TA2.
  *
- * Typed pointer to a volatile structure overlaying the TA2
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_TA2
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the TA2
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_TA2 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_TA2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA2 - 0)
 #define BSP430_HPL_TA2 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA2)
 #endif /* configBSP430_HPL_TA2 */
 
-/** HPL pointer for TA3.
+/** sBSP430hplTIMER HPL pointer for #BSP430_PERIPH_TA3.
  *
- * Typed pointer to a volatile structure overlaying the TA3
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_TA3
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the TA3
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_TA3 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_TA3 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TA3 - 0)
 #define BSP430_HPL_TA3 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TA3)
 #endif /* configBSP430_HPL_TA3 */
 
-/** HPL pointer for TB0.
+/** sBSP430hplTIMER HPL pointer for #BSP430_PERIPH_TB0.
  *
- * Typed pointer to a volatile structure overlaying the TB0
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_TB0
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the TB0
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_TB0 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_TB0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB0 - 0)
 #define BSP430_HPL_TB0 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB0)
 #endif /* configBSP430_HPL_TB0 */
 
-/** HPL pointer for TB1.
+/** sBSP430hplTIMER HPL pointer for #BSP430_PERIPH_TB1.
  *
- * Typed pointer to a volatile structure overlaying the TB1
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_TB1
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the TB1
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_TB1 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_TB1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB1 - 0)
 #define BSP430_HPL_TB1 ((volatile sBSP430hplTIMER *)BSP430_PERIPH_TB1)
 #endif /* configBSP430_HPL_TB1 */
 
-/** HPL pointer for TB2.
+/** sBSP430hplTIMER HPL pointer for #BSP430_PERIPH_TB2.
  *
- * Typed pointer to a volatile structure overlaying the TB2
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_TB2
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the TB2
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_TB2 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_TB2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_TB2 - 0)
@@ -1725,20 +1737,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 
 /* !BSP430! insert=hal_timer_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_decl] */
-/** @def configBSP430_HAL_TA0_CC0_ISR
+/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_TA0
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA0, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_TA0_ISR, enabling #configBSP430_HAL_TA0
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA0.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA0 */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_TA0_CC0_ISR 0
@@ -1748,19 +1760,23 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA0_CC0_ISR requested without configBSP430_HAL_TA0
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_TA0_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_TA0
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_TA0 is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_TA0 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA0 but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA0.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA0 */
 #ifndef configBSP430_HAL_TA0_ISR
 #define configBSP430_HAL_TA0_ISR (configBSP430_HAL_TA0 - 0)
@@ -1770,20 +1786,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA0_ISR requested without configBSP430_HAL_TA0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_TA1_CC0_ISR
+/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_TA1
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA1, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_TA1_ISR, enabling #configBSP430_HAL_TA1
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA1.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA1 */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_TA1_CC0_ISR 0
@@ -1793,19 +1809,23 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA1_CC0_ISR requested without configBSP430_HAL_TA1
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_TA1_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_TA1
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_TA1 is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_TA1 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA1 but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA1.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA1 */
 #ifndef configBSP430_HAL_TA1_ISR
 #define configBSP430_HAL_TA1_ISR (configBSP430_HAL_TA1 - 0)
@@ -1815,20 +1835,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA1_ISR requested without configBSP430_HAL_TA1
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_TA2_CC0_ISR
+/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_TA2
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA2, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_TA2_ISR, enabling #configBSP430_HAL_TA2
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA2.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA2 */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_TA2_CC0_ISR 0
@@ -1838,19 +1858,23 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA2_CC0_ISR requested without configBSP430_HAL_TA2
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_TA2_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_TA2
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_TA2 is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_TA2 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA2 but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA2.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA2 */
 #ifndef configBSP430_HAL_TA2_ISR
 #define configBSP430_HAL_TA2_ISR (configBSP430_HAL_TA2 - 0)
@@ -1860,20 +1884,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA2_ISR requested without configBSP430_HAL_TA2
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_TA3_CC0_ISR
+/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_TA3
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA3, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_TA3_ISR, enabling #configBSP430_HAL_TA3
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA3.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA3 */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_TA3_CC0_ISR 0
@@ -1883,19 +1907,23 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA3_CC0_ISR requested without configBSP430_HAL_TA3
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_TA3_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_TA3
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_TA3 is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_TA3 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TA3 but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA3.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA3 */
 #ifndef configBSP430_HAL_TA3_ISR
 #define configBSP430_HAL_TA3_ISR (configBSP430_HAL_TA3 - 0)
@@ -1905,20 +1933,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TA3_ISR requested without configBSP430_HAL_TA3
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_TB0_CC0_ISR
+/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_TB0
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB0, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_TB0_ISR, enabling #configBSP430_HAL_TB0
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB0.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB0 */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_TB0_CC0_ISR 0
@@ -1928,19 +1956,23 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TB0_CC0_ISR requested without configBSP430_HAL_TB0
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_TB0_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_TB0
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_TB0 is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_TB0 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB0 but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB0.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB0 */
 #ifndef configBSP430_HAL_TB0_ISR
 #define configBSP430_HAL_TB0_ISR (configBSP430_HAL_TB0 - 0)
@@ -1950,20 +1982,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TB0_ISR requested without configBSP430_HAL_TB0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_TB1_CC0_ISR
+/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_TB1
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB1, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_TB1_ISR, enabling #configBSP430_HAL_TB1
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB1.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB1 */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_TB1_CC0_ISR 0
@@ -1973,19 +2005,23 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TB1_CC0_ISR requested without configBSP430_HAL_TB1
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_TB1_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_TB1
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_TB1 is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_TB1 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB1 but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB1.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB1 */
 #ifndef configBSP430_HAL_TB1_ISR
 #define configBSP430_HAL_TB1_ISR (configBSP430_HAL_TB1 - 0)
@@ -1995,20 +2031,20 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TB1_ISR requested without configBSP430_HAL_TB1
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_TB2_CC0_ISR
+/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_TB2
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB2, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_TB2_ISR, enabling #configBSP430_HAL_TB2
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB2.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB2 */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_TB2_CC0_ISR 0
@@ -2018,19 +2054,23 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
 #warning configBSP430_HAL_TB2_CC0_ISR requested without configBSP430_HAL_TB2
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_TB2_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_TB2
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_TB2 is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_TB2 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c TB2 but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB2.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB2 */
 #ifndef configBSP430_HAL_TB2_ISR
 #define configBSP430_HAL_TB2_ISR (configBSP430_HAL_TB2 - 0)

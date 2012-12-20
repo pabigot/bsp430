@@ -57,6 +57,9 @@ you don't need to ask for them explicitly.
 Failure to correctly request a resource that your application depends on
 will result in either compile-time or link-time errors.
 
+@see @ref grp_config_core
+@see @ref grp_config_functional
+
 \section cfg_placement Placement of Configuration Information
 
 Because the BSP430 infrastructure enables and disables features within

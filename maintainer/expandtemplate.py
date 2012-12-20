@@ -4,18 +4,21 @@ import os.path
 import argparse
 
 templates = {
-    'hal_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s
+    'hal_decl' : '''/** Control inclusion of the @HAL interface to #BSP430_PERIPH_%(INSTANCE)s
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c %(INSTANCE)s peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_%(INSTANCE)s that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_%(INSTANCE)s to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430hal%(PERIPH)s structure reference is
+ * available as #BSP430_HAL_%(INSTANCE)s.
+ *
+ * It may also be obtained using
+ * #hBSP430%(periph)sLookup(#BSP430_PERIPH_%(INSTANCE)s).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_%(INSTANCE)s is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s
 #define configBSP430_HAL_%(INSTANCE)s 0
@@ -28,9 +31,9 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 /** @endcond */
 
-/** BSP430 HAL handle for %(INSTANCE)s.
+/** sBSP430hal%(PERIPH)s HAL handle for #BSP430_PERIPH_%(INSTANCE)s.
  *
- * The handle may be used only if #configBSP430_HAL_%(INSTANCE)s
+ * This pointer may be used only if #configBSP430_HAL_%(INSTANCE)s
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_%(INSTANCE)s */
@@ -39,17 +42,20 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
-    'periph_decl' : '''/** @def configBSP430_HPL_%(INSTANCE)s
+    'periph_decl' : '''/** Control inclusion of the @HPL interface to #BSP430_PERIPH_%(INSTANCE)s
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c %(INSTANCE)s peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hpl%(PERIPH)s structure reference is
+ * available as #BSP430_HPL_%(INSTANCE)s.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookup%(PERIPH)s(#BSP430_PERIPH_%(INSTANCE)s).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_%(INSTANCE)s
 #define configBSP430_HPL_%(INSTANCE)s (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -70,13 +76,11 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
 
-    'hpl_decl' : '''/** HPL pointer for %(INSTANCE)s.
+    'hpl_decl' : '''/** sBSP430hpl%(PERIPH)s HPL pointer for #BSP430_PERIPH_%(INSTANCE)s.
  *
- * Typed pointer to a volatile structure overlaying the %(INSTANCE)s
- * peripheral register map.
- * 
- * The pointer may be used only if #configBSP430_HPL_%(INSTANCE)s
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the %(INSTANCE)s
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_%(INSTANCE)s is defined to a true value.
  *
  * @dependency #configBSP430_HPL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
@@ -107,20 +111,20 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
     
-    'hal_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
+    'hal_isr_decl' : '''/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_%(INSTANCE)s
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_%(INSTANCE)s is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_%(INSTANCE)s.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -131,20 +135,20 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* HAL_ISR and not HAL */
 ''',
 
-    'hal_port_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_ISR
+    'hal_port_isr_decl' : '''/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_%(INSTANCE)s
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_%(INSTANCE)s is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_%(INSTANCE)s defaults this to true if
- * the port supports interrupts, so you only need to explicitly set it
- * if you do not want to use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_%(INSTANCE)s
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_%(INSTANCE)s.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR ((configBSP430_HAL_%(INSTANCE)s - 0) && defined(PORT%(#)s_VECTOR))
@@ -155,23 +159,21 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* HAL_ISR and not HAL */
 ''',
 
-    'hal_usci_isr_decl' : '''/** @def configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR
+    'hal_usci_isr_decl' : '''/** Control inclusion of the @HAL receive interrupt handler for #BSP430_PERIPH_USCI_A%(INSTANCE)s and #BSP430_PERIPH_USCI_B%(INSTANCE)s
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
- * USCI_B%(INSTANCE)s but want to define your own interrupt service
- * routine for receive operations for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when either or
+ * both #configBSP430_HAL_USCI_A%(INSTANCE)s or
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s are set, but it may be
+ * explicitly disabled if you intend to provide your own
+ * implementation or will not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_USCI_A%(INSTANCE)s or
- * #configBSP430_HAL_USCI_B%(INSTANCE)s defaults this to true, so you
- * only need to explicitly set it if you do not want to use the
- * standard ISR provided by BSP430.
- *
- * @note Enabling this requires that at least one of
- * #configBSP430_HAL_USCI_A%(INSTANCE)s and
- * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_USCI_A%(INSTANCE)s or #BSP430_HAL_USCI_B%(INSTANCE)s.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR
 #define configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) || (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
@@ -182,23 +184,21 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #warning configBSP430_HAL_USCI_AB%(INSTANCE)sRX_ISR requested without configBSP430_HAL_USCI_A%(INSTANCE)s or configBSP430_HAL_USCI_B%(INSTANCE)s
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR
+/** Control inclusion of the @HAL transmit interrupt handler for #BSP430_PERIPH_USCI_A%(INSTANCE)s and #BSP430_PERIPH_USCI_B%(INSTANCE)s
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI_A%(INSTANCE)s or @c
- * USCI_B%(INSTANCE)s but want to define your own interrupt service
- * routine for transmit operations for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when either or
+ * both #configBSP430_HAL_USCI_A%(INSTANCE)s or
+ * #configBSP430_HAL_USCI_B%(INSTANCE)s are set, but it may be
+ * explicitly disabled if you intend to provide your own
+ * implementation or will not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_USCI_A%(INSTANCE)s or
- * #configBSP430_HAL_USCI_B%(INSTANCE)s defaults this to true, so you
- * only need to explicitly set it if you do not want to use the
- * standard ISR provided by BSP430.
- *
- * @note Enabling this requires that at least one of
- * #configBSP430_HAL_USCI_A%(INSTANCE)s and
- * #configBSP430_HAL_USCI_B%(INSTANCE)s also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_USCI_A%(INSTANCE)s or #BSP430_HAL_USCI_B%(INSTANCE)s.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR
 #define configBSP430_HAL_USCI_AB%(INSTANCE)sTX_ISR ((configBSP430_HAL_USCI_A%(INSTANCE)s - 0) | (configBSP430_HAL_USCI_B%(INSTANCE)s - 0))
@@ -210,20 +210,20 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #endif /* HAL_ISR and not HAL */
 ''',
 
-    'hal_timer_isr_decl' : '''/** @def configBSP430_HAL_%(INSTANCE)s_CC0_ISR
+    'hal_timer_isr_decl' : '''/** Control inclusion of the secondary @HAL interrupt handler for #BSP430_PERIPH_%(INSTANCE)s
  *
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
- * Define to a true value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s, and want to BSP430 to provide
- * an interrupt service routine that dispatches CC0 events.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is not enabled.
  *
- * @note Unlike #configBSP430_HAL_%(INSTANCE)s_ISR, enabling #configBSP430_HAL_%(INSTANCE)s
- * does not default to enable this feature.
- *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_%(INSTANCE)s.
  *
  * @cppflag
  * @nodefault
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 0
@@ -233,19 +233,23 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #warning configBSP430_HAL_%(INSTANCE)s_CC0_ISR requested without configBSP430_HAL_%(INSTANCE)s
 #endif /* HAL_CC0_ISR and not HAL */
 
-/** @def configBSP430_HAL_%(INSTANCE)s_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_%(INSTANCE)s
  *
  * This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.
  *
- * This option defaults to true when #configBSP430_HAL_%(INSTANCE)s is
- * enabled.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_%(INSTANCE)s is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Define it a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c %(INSTANCE)s but want to define your
- * own interrupt service routine for the peripheral.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_%(INSTANCE)s.
  *
  * @cppflag
  * @defaulted
+ * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_%(INSTANCE)s */
 #ifndef configBSP430_HAL_%(INSTANCE)s_ISR
 #define configBSP430_HAL_%(INSTANCE)s_ISR (configBSP430_HAL_%(INSTANCE)s - 0)
@@ -478,17 +482,25 @@ isr_%(INSTANCE)s (void)
 
     'periph_want' : '''
 #elif BSP430_PERIPH_CPPID_%(INSTANCE)s == BSP430_WANT_PERIPH_CPPID
-#if (BSP430_WANT_CONFIG_HAL)
+#if (BSP430_WANT_CONFIG_HAL - 0)
 #define configBSP430_HAL_%(INSTANCE)s 1
 #endif /* HAL */
-#if (BSP430_WANT_CONFIG_HPL)
+#if (BSP430_WANT_CONFIG_HPL - 0)
 #define configBSP430_HPL_%(INSTANCE)s 1
 #endif /* HPL */
-#if (BSP430_WANT_CONFIG_HAL_ISR)
+#ifdef BSP430_WANT_CONFIG_HAL_ISR
+#if (BSP430_WANT_CONFIG_HAL_ISR - 0)
 #define configBSP430_HAL_%(INSTANCE)s_ISR 1
+#else /* BSP430_WANT_CONFIG_HAL_ISR */
+#define configBSP430_HAL_%(INSTANCE)s_ISR 0
+#endif /* BSP430_WANT_CONFIG_HAL_ISR */
 #endif /* ISR */''',
-#if (BSP430_WANT_CONFIG_HAL_CC0_ISR)
+#ifdef BSP430_WANT_CONFIG_HAL_CC0_ISR
+#if (BSP430_WANT_CONFIG_HAL_CC0_ISR - 0)
 #define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 1
+#else /* BSP430_WANT_CONFIG_HAL_CC0_ISR */
+#define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 0
+#endif /* BSP430_WANT_CONFIG_HAL_CC0_ISR */
 #endif /* CC0_ISR */''',
 
     'periph_sethandle' : '''

@@ -136,18 +136,21 @@ typedef struct sBSP430hplUSCI {
 
 /* !BSP430! periph=serial insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
-/** @def configBSP430_HAL_USCI_A0
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_USCI_A0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_A0 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_USCI_A0 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_USCI_A0 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_USCI_A0.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_USCI_A0).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_USCI_A0 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_A0
 #define configBSP430_HAL_USCI_A0 0
@@ -160,9 +163,9 @@ extern sBSP430halSERIAL xBSP430hal_USCI_A0_;
 #endif /* configBSP430_HAL_USCI_A0 */
 /** @endcond */
 
-/** BSP430 HAL handle for USCI_A0.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_USCI_A0.
  *
- * The handle may be used only if #configBSP430_HAL_USCI_A0
+ * This pointer may be used only if #configBSP430_HAL_USCI_A0
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_USCI_A0 */
@@ -170,18 +173,21 @@ extern sBSP430halSERIAL xBSP430hal_USCI_A0_;
 #define BSP430_HAL_USCI_A0 (&xBSP430hal_USCI_A0_)
 #endif /* configBSP430_HAL_USCI_A0 */
 
-/** @def configBSP430_HAL_USCI_A1
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_USCI_A1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_A1 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_USCI_A1 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_USCI_A1 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_USCI_A1.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_USCI_A1).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_USCI_A1 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_A1
 #define configBSP430_HAL_USCI_A1 0
@@ -194,9 +200,9 @@ extern sBSP430halSERIAL xBSP430hal_USCI_A1_;
 #endif /* configBSP430_HAL_USCI_A1 */
 /** @endcond */
 
-/** BSP430 HAL handle for USCI_A1.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_USCI_A1.
  *
- * The handle may be used only if #configBSP430_HAL_USCI_A1
+ * This pointer may be used only if #configBSP430_HAL_USCI_A1
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_USCI_A1 */
@@ -204,18 +210,21 @@ extern sBSP430halSERIAL xBSP430hal_USCI_A1_;
 #define BSP430_HAL_USCI_A1 (&xBSP430hal_USCI_A1_)
 #endif /* configBSP430_HAL_USCI_A1 */
 
-/** @def configBSP430_HAL_USCI_B0
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_USCI_B0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_B0 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_USCI_B0 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_USCI_B0 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_USCI_B0.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_USCI_B0).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_USCI_B0 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_B0
 #define configBSP430_HAL_USCI_B0 0
@@ -228,9 +237,9 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B0_;
 #endif /* configBSP430_HAL_USCI_B0 */
 /** @endcond */
 
-/** BSP430 HAL handle for USCI_B0.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_USCI_B0.
  *
- * The handle may be used only if #configBSP430_HAL_USCI_B0
+ * This pointer may be used only if #configBSP430_HAL_USCI_B0
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_USCI_B0 */
@@ -238,18 +247,21 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B0_;
 #define BSP430_HAL_USCI_B0 (&xBSP430hal_USCI_B0_)
 #endif /* configBSP430_HAL_USCI_B0 */
 
-/** @def configBSP430_HAL_USCI_B1
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_USCI_B1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_B1 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_USCI_B1 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_USCI_B1 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_USCI_B1.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_USCI_B1).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_USCI_B1 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_B1
 #define configBSP430_HAL_USCI_B1 0
@@ -262,9 +274,9 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #endif /* configBSP430_HAL_USCI_B1 */
 /** @endcond */
 
-/** BSP430 HAL handle for USCI_B1.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_USCI_B1.
  *
- * The handle may be used only if #configBSP430_HAL_USCI_B1
+ * This pointer may be used only if #configBSP430_HAL_USCI_B1
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_USCI_B1 */
@@ -278,17 +290,20 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 
 /* !BSP430! insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
-/** @def configBSP430_HPL_USCI_A0
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_USCI_A0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_A0 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_USCI_A0 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplUSCI structure reference is
+ * available as #BSP430_HPL_USCI_A0.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupUSCI(#BSP430_PERIPH_USCI_A0).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_USCI_A0
 #define configBSP430_HPL_USCI_A0 (configBSP430_HAL_USCI_A0 - 0)
@@ -308,17 +323,20 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #define BSP430_PERIPH_USCI_A0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_A0_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_A0 */
 
-/** @def configBSP430_HPL_USCI_A1
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_USCI_A1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_A1 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_USCI_A1 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplUSCI structure reference is
+ * available as #BSP430_HPL_USCI_A1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupUSCI(#BSP430_PERIPH_USCI_A1).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_USCI_A1
 #define configBSP430_HPL_USCI_A1 (configBSP430_HAL_USCI_A1 - 0)
@@ -338,17 +356,20 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #define BSP430_PERIPH_USCI_A1 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_A1_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_A1 */
 
-/** @def configBSP430_HPL_USCI_B0
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_USCI_B0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_B0 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_USCI_B0 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplUSCI structure reference is
+ * available as #BSP430_HPL_USCI_B0.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupUSCI(#BSP430_PERIPH_USCI_B0).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_USCI_B0
 #define configBSP430_HPL_USCI_B0 (configBSP430_HAL_USCI_B0 - 0)
@@ -368,17 +389,20 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #define BSP430_PERIPH_USCI_B0 ((tBSP430periphHandle)(BSP430_PERIPH_USCI_B0_BASEADDRESS_))
 #endif /* configBSP430_HPL_USCI_B0 */
 
-/** @def configBSP430_HPL_USCI_B1
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_USCI_B1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c USCI_B1 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_USCI_B1 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplUSCI structure reference is
+ * available as #BSP430_HPL_USCI_B1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupUSCI(#BSP430_PERIPH_USCI_B1).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_USCI_B1
 #define configBSP430_HPL_USCI_B1 (configBSP430_HAL_USCI_B1 - 0)
@@ -403,52 +427,44 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 
 /* !BSP430! insert=hpl_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
-/** HPL pointer for USCI_A0.
+/** sBSP430hplUSCI HPL pointer for #BSP430_PERIPH_USCI_A0.
  *
- * Typed pointer to a volatile structure overlaying the USCI_A0
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_USCI_A0
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the USCI_A0
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_USCI_A0 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_USCI_A0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A0 - 0)
 #define BSP430_HPL_USCI_A0 ((volatile sBSP430hplUSCI *)BSP430_PERIPH_USCI_A0)
 #endif /* configBSP430_HPL_USCI_A0 */
 
-/** HPL pointer for USCI_A1.
+/** sBSP430hplUSCI HPL pointer for #BSP430_PERIPH_USCI_A1.
  *
- * Typed pointer to a volatile structure overlaying the USCI_A1
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_USCI_A1
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the USCI_A1
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_USCI_A1 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_USCI_A1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_A1 - 0)
 #define BSP430_HPL_USCI_A1 ((volatile sBSP430hplUSCI *)BSP430_PERIPH_USCI_A1)
 #endif /* configBSP430_HPL_USCI_A1 */
 
-/** HPL pointer for USCI_B0.
+/** sBSP430hplUSCI HPL pointer for #BSP430_PERIPH_USCI_B0.
  *
- * Typed pointer to a volatile structure overlaying the USCI_B0
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_USCI_B0
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the USCI_B0
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_USCI_B0 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_USCI_B0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B0 - 0)
 #define BSP430_HPL_USCI_B0 ((volatile sBSP430hplUSCI *)BSP430_PERIPH_USCI_B0)
 #endif /* configBSP430_HPL_USCI_B0 */
 
-/** HPL pointer for USCI_B1.
+/** sBSP430hplUSCI HPL pointer for #BSP430_PERIPH_USCI_B1.
  *
- * Typed pointer to a volatile structure overlaying the USCI_B1
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_USCI_B1
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the USCI_B1
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_USCI_B1 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_USCI_B1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_USCI_B1 - 0)
@@ -461,23 +477,21 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 /* !BSP430! instance=0,1 */
 /* !BSP430! insert=hal_usci_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_usci_isr_decl] */
-/** @def configBSP430_HAL_USCI_AB0RX_ISR
+/** Control inclusion of the @HAL receive interrupt handler for #BSP430_PERIPH_USCI_A0 and #BSP430_PERIPH_USCI_B0
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI_A0 or @c
- * USCI_B0 but want to define your own interrupt service
- * routine for receive operations for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when either or
+ * both #configBSP430_HAL_USCI_A0 or
+ * #configBSP430_HAL_USCI_B0 are set, but it may be
+ * explicitly disabled if you intend to provide your own
+ * implementation or will not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_USCI_A0 or
- * #configBSP430_HAL_USCI_B0 defaults this to true, so you
- * only need to explicitly set it if you do not want to use the
- * standard ISR provided by BSP430.
- *
- * @note Enabling this requires that at least one of
- * #configBSP430_HAL_USCI_A0 and
- * #configBSP430_HAL_USCI_B0 also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_USCI_A0 or #BSP430_HAL_USCI_B0.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_AB0RX_ISR
 #define configBSP430_HAL_USCI_AB0RX_ISR ((configBSP430_HAL_USCI_A0 - 0) || (configBSP430_HAL_USCI_B0 - 0))
@@ -488,23 +502,21 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #warning configBSP430_HAL_USCI_AB0RX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCI_AB0TX_ISR
+/** Control inclusion of the @HAL transmit interrupt handler for #BSP430_PERIPH_USCI_A0 and #BSP430_PERIPH_USCI_B0
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI_A0 or @c
- * USCI_B0 but want to define your own interrupt service
- * routine for transmit operations for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when either or
+ * both #configBSP430_HAL_USCI_A0 or
+ * #configBSP430_HAL_USCI_B0 are set, but it may be
+ * explicitly disabled if you intend to provide your own
+ * implementation or will not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_USCI_A0 or
- * #configBSP430_HAL_USCI_B0 defaults this to true, so you
- * only need to explicitly set it if you do not want to use the
- * standard ISR provided by BSP430.
- *
- * @note Enabling this requires that at least one of
- * #configBSP430_HAL_USCI_A0 and
- * #configBSP430_HAL_USCI_B0 also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_USCI_A0 or #BSP430_HAL_USCI_B0.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_AB0TX_ISR
 #define configBSP430_HAL_USCI_AB0TX_ISR ((configBSP430_HAL_USCI_A0 - 0) | (configBSP430_HAL_USCI_B0 - 0))
@@ -515,23 +527,21 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #warning configBSP430_HAL_USCI_AB0TX_ISR requested without configBSP430_HAL_USCI_A0 or configBSP430_HAL_USCI_B0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCI_AB1RX_ISR
+/** Control inclusion of the @HAL receive interrupt handler for #BSP430_PERIPH_USCI_A1 and #BSP430_PERIPH_USCI_B1
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI_A1 or @c
- * USCI_B1 but want to define your own interrupt service
- * routine for receive operations for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when either or
+ * both #configBSP430_HAL_USCI_A1 or
+ * #configBSP430_HAL_USCI_B1 are set, but it may be
+ * explicitly disabled if you intend to provide your own
+ * implementation or will not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_USCI_A1 or
- * #configBSP430_HAL_USCI_B1 defaults this to true, so you
- * only need to explicitly set it if you do not want to use the
- * standard ISR provided by BSP430.
- *
- * @note Enabling this requires that at least one of
- * #configBSP430_HAL_USCI_A1 and
- * #configBSP430_HAL_USCI_B1 also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_USCI_A1 or #BSP430_HAL_USCI_B1.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_AB1RX_ISR
 #define configBSP430_HAL_USCI_AB1RX_ISR ((configBSP430_HAL_USCI_A1 - 0) || (configBSP430_HAL_USCI_B1 - 0))
@@ -542,23 +552,21 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #warning configBSP430_HAL_USCI_AB1RX_ISR requested without configBSP430_HAL_USCI_A1 or configBSP430_HAL_USCI_B1
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_USCI_AB1TX_ISR
+/** Control inclusion of the @HAL transmit interrupt handler for #BSP430_PERIPH_USCI_A1 and #BSP430_PERIPH_USCI_B1
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c USCI_A1 or @c
- * USCI_B1 but want to define your own interrupt service
- * routine for transmit operations for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when either or
+ * both #configBSP430_HAL_USCI_A1 or
+ * #configBSP430_HAL_USCI_B1 are set, but it may be
+ * explicitly disabled if you intend to provide your own
+ * implementation or will not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_USCI_A1 or
- * #configBSP430_HAL_USCI_B1 defaults this to true, so you
- * only need to explicitly set it if you do not want to use the
- * standard ISR provided by BSP430.
- *
- * @note Enabling this requires that at least one of
- * #configBSP430_HAL_USCI_A1 and
- * #configBSP430_HAL_USCI_B1 also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_USCI_A1 or #BSP430_HAL_USCI_B1.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_USCI_AB1TX_ISR
 #define configBSP430_HAL_USCI_AB1TX_ISR ((configBSP430_HAL_USCI_A1 - 0) | (configBSP430_HAL_USCI_B1 - 0))

@@ -206,18 +206,21 @@ typedef struct sBSP430hplEUSCIB {
 
 /* !BSP430! periph=serial instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_B0,EUSCI_B1,EUSCI_B2 insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
-/** @def configBSP430_HAL_EUSCI_A0
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_A0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A0 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_EUSCI_A0 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_EUSCI_A0 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_A0.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_A0).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_A0 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A0
 #define configBSP430_HAL_EUSCI_A0 0
@@ -230,9 +233,9 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A0_;
 #endif /* configBSP430_HAL_EUSCI_A0 */
 /** @endcond */
 
-/** BSP430 HAL handle for EUSCI_A0.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_A0.
  *
- * The handle may be used only if #configBSP430_HAL_EUSCI_A0
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_A0
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_EUSCI_A0 */
@@ -240,18 +243,21 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A0_;
 #define BSP430_HAL_EUSCI_A0 (&xBSP430hal_EUSCI_A0_)
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
-/** @def configBSP430_HAL_EUSCI_A1
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_A1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A1 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_EUSCI_A1 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_EUSCI_A1 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_A1.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_A1).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_A1 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A1
 #define configBSP430_HAL_EUSCI_A1 0
@@ -264,9 +270,9 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A1_;
 #endif /* configBSP430_HAL_EUSCI_A1 */
 /** @endcond */
 
-/** BSP430 HAL handle for EUSCI_A1.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_A1.
  *
- * The handle may be used only if #configBSP430_HAL_EUSCI_A1
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_A1
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_EUSCI_A1 */
@@ -274,18 +280,21 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A1_;
 #define BSP430_HAL_EUSCI_A1 (&xBSP430hal_EUSCI_A1_)
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
-/** @def configBSP430_HAL_EUSCI_A2
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_A2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A2 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_EUSCI_A2 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_EUSCI_A2 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_A2.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_A2).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_A2 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A2
 #define configBSP430_HAL_EUSCI_A2 0
@@ -298,9 +307,9 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #endif /* configBSP430_HAL_EUSCI_A2 */
 /** @endcond */
 
-/** BSP430 HAL handle for EUSCI_A2.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_A2.
  *
- * The handle may be used only if #configBSP430_HAL_EUSCI_A2
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_A2
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_EUSCI_A2 */
@@ -308,18 +317,21 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #define BSP430_HAL_EUSCI_A2 (&xBSP430hal_EUSCI_A2_)
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
-/** @def configBSP430_HAL_EUSCI_B0
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_B0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_B0 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_EUSCI_B0 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_EUSCI_B0 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_B0.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_B0).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_B0 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_B0
 #define configBSP430_HAL_EUSCI_B0 0
@@ -332,9 +344,9 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #endif /* configBSP430_HAL_EUSCI_B0 */
 /** @endcond */
 
-/** BSP430 HAL handle for EUSCI_B0.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_B0.
  *
- * The handle may be used only if #configBSP430_HAL_EUSCI_B0
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_B0
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_EUSCI_B0 */
@@ -342,18 +354,21 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #define BSP430_HAL_EUSCI_B0 (&xBSP430hal_EUSCI_B0_)
 #endif /* configBSP430_HAL_EUSCI_B0 */
 
-/** @def configBSP430_HAL_EUSCI_B1
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_B1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_B1 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_EUSCI_B1 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_EUSCI_B1 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_B1.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_B1).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_B1 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_B1
 #define configBSP430_HAL_EUSCI_B1 0
@@ -366,9 +381,9 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B1_;
 #endif /* configBSP430_HAL_EUSCI_B1 */
 /** @endcond */
 
-/** BSP430 HAL handle for EUSCI_B1.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_B1.
  *
- * The handle may be used only if #configBSP430_HAL_EUSCI_B1
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_B1
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_EUSCI_B1 */
@@ -376,18 +391,21 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B1_;
 #define BSP430_HAL_EUSCI_B1 (&xBSP430hal_EUSCI_B1_)
 #endif /* configBSP430_HAL_EUSCI_B1 */
 
-/** @def configBSP430_HAL_EUSCI_B2
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_B2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_B2 peripheral HAL interface.  This defines a global
- * object supporting enhanced functionality for the peripheral, and a
- * macro BSP430_HAL_EUSCI_B2 that is a reference to that object.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling this defaults #configBSP430_HPL_EUSCI_B2 to
- * true, since the HAL infrastructure requires the underlying HPL
- * infrastructure.
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_B2.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_B2).
  *
  * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_B2 is default-enabled
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_B2
 #define configBSP430_HAL_EUSCI_B2 0
@@ -400,9 +418,9 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #endif /* configBSP430_HAL_EUSCI_B2 */
 /** @endcond */
 
-/** BSP430 HAL handle for EUSCI_B2.
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_B2.
  *
- * The handle may be used only if #configBSP430_HAL_EUSCI_B2
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_B2
  * is defined to a true value.
  *
  * @dependency #configBSP430_HAL_EUSCI_B2 */
@@ -415,17 +433,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 
 /* !BSP430! periph=euscia instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
-/** @def configBSP430_HPL_EUSCI_A0
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_A0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A0 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_EUSCI_A0 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplEUSCIA structure reference is
+ * available as #BSP430_HPL_EUSCI_A0.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIA(#BSP430_PERIPH_EUSCI_A0).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_A0
 #define configBSP430_HPL_EUSCI_A0 (configBSP430_HAL_EUSCI_A0 - 0)
@@ -445,17 +466,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #define BSP430_PERIPH_EUSCI_A0 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_A0_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_A0 */
 
-/** @def configBSP430_HPL_EUSCI_A1
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_A1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A1 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_EUSCI_A1 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplEUSCIA structure reference is
+ * available as #BSP430_HPL_EUSCI_A1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIA(#BSP430_PERIPH_EUSCI_A1).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_A1
 #define configBSP430_HPL_EUSCI_A1 (configBSP430_HAL_EUSCI_A1 - 0)
@@ -475,17 +499,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #define BSP430_PERIPH_EUSCI_A1 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_A1_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_A1 */
 
-/** @def configBSP430_HPL_EUSCI_A2
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_A2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_A2 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_EUSCI_A2 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplEUSCIA structure reference is
+ * available as #BSP430_HPL_EUSCI_A2.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIA(#BSP430_PERIPH_EUSCI_A2).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_A2
 #define configBSP430_HPL_EUSCI_A2 (configBSP430_HAL_EUSCI_A2 - 0)
@@ -510,39 +537,33 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 
 /* !BSP430! insert=hpl_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
-/** HPL pointer for EUSCI_A0.
+/** sBSP430hplEUSCIA HPL pointer for #BSP430_PERIPH_EUSCI_A0.
  *
- * Typed pointer to a volatile structure overlaying the EUSCI_A0
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_EUSCI_A0
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the EUSCI_A0
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_A0 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_EUSCI_A0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A0 - 0)
 #define BSP430_HPL_EUSCI_A0 ((volatile sBSP430hplEUSCIA *)BSP430_PERIPH_EUSCI_A0)
 #endif /* configBSP430_HPL_EUSCI_A0 */
 
-/** HPL pointer for EUSCI_A1.
+/** sBSP430hplEUSCIA HPL pointer for #BSP430_PERIPH_EUSCI_A1.
  *
- * Typed pointer to a volatile structure overlaying the EUSCI_A1
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_EUSCI_A1
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the EUSCI_A1
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_A1 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_EUSCI_A1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A1 - 0)
 #define BSP430_HPL_EUSCI_A1 ((volatile sBSP430hplEUSCIA *)BSP430_PERIPH_EUSCI_A1)
 #endif /* configBSP430_HPL_EUSCI_A1 */
 
-/** HPL pointer for EUSCI_A2.
+/** sBSP430hplEUSCIA HPL pointer for #BSP430_PERIPH_EUSCI_A2.
  *
- * Typed pointer to a volatile structure overlaying the EUSCI_A2
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_EUSCI_A2
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the EUSCI_A2
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_A2 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_EUSCI_A2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A2 - 0)
@@ -554,20 +575,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 
 /* !BSP430! insert=hal_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
-/** @def configBSP430_HAL_EUSCI_A0_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_A0
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_A0 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_A0 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_EUSCI_A0 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_EUSCI_A0
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_A0.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A0_ISR
 #define configBSP430_HAL_EUSCI_A0_ISR (configBSP430_HAL_EUSCI_A0 - 0)
@@ -577,20 +598,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #warning configBSP430_HAL_EUSCI_A0_ISR requested without configBSP430_HAL_EUSCI_A0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_EUSCI_A1_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_A1
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_A1 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_A1 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_EUSCI_A1 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_EUSCI_A1
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_A1.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A1_ISR
 #define configBSP430_HAL_EUSCI_A1_ISR (configBSP430_HAL_EUSCI_A1 - 0)
@@ -600,20 +621,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #warning configBSP430_HAL_EUSCI_A1_ISR requested without configBSP430_HAL_EUSCI_A1
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_EUSCI_A2_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_A2
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_A2 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_A2 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_EUSCI_A2 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_EUSCI_A2
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_A2.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_A2_ISR
 #define configBSP430_HAL_EUSCI_A2_ISR (configBSP430_HAL_EUSCI_A2 - 0)
@@ -628,17 +649,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 
 /* !BSP430! periph=euscib instance=EUSCI_B0,EUSCI_B1,EUSCI_B2 insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
-/** @def configBSP430_HPL_EUSCI_B0
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_B0
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_B0 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_EUSCI_B0 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplEUSCIB structure reference is
+ * available as #BSP430_HPL_EUSCI_B0.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIB(#BSP430_PERIPH_EUSCI_B0).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_B0
 #define configBSP430_HPL_EUSCI_B0 (configBSP430_HAL_EUSCI_B0 - 0)
@@ -658,17 +682,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #define BSP430_PERIPH_EUSCI_B0 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_B0_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_B0 */
 
-/** @def configBSP430_HPL_EUSCI_B1
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_B1
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_B1 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_EUSCI_B1 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplEUSCIB structure reference is
+ * available as #BSP430_HPL_EUSCI_B1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIB(#BSP430_PERIPH_EUSCI_B1).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_B1
 #define configBSP430_HPL_EUSCI_B1 (configBSP430_HAL_EUSCI_B1 - 0)
@@ -688,17 +715,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #define BSP430_PERIPH_EUSCI_B1 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_B1_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_B1 */
 
-/** @def configBSP430_HPL_EUSCI_B2
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_B2
  *
- * Define to a true value in @c bsp430_config.h to enable use of the
- * @c EUSCI_B2 peripheral HPL interface.  Only do this if the MCU
- * supports this device.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
  *
- * @note Enabling #configBSP430_HAL_EUSCI_B2 defaults this to
- * true, so you only need to explicitly request this if you want the
- * HPL interface without the HAL interface.
+ * When enabled, the sBSP430hplEUSCIB structure reference is
+ * available as #BSP430_HPL_EUSCI_B2.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIB(#BSP430_PERIPH_EUSCI_B2).
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_EUSCI_B2
 #define configBSP430_HPL_EUSCI_B2 (configBSP430_HAL_EUSCI_B2 - 0)
@@ -723,39 +753,33 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 
 /* !BSP430! insert=hpl_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hpl_decl] */
-/** HPL pointer for EUSCI_B0.
+/** sBSP430hplEUSCIB HPL pointer for #BSP430_PERIPH_EUSCI_B0.
  *
- * Typed pointer to a volatile structure overlaying the EUSCI_B0
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_EUSCI_B0
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the EUSCI_B0
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_B0 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_EUSCI_B0 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B0 - 0)
 #define BSP430_HPL_EUSCI_B0 ((volatile sBSP430hplEUSCIB *)BSP430_PERIPH_EUSCI_B0)
 #endif /* configBSP430_HPL_EUSCI_B0 */
 
-/** HPL pointer for EUSCI_B1.
+/** sBSP430hplEUSCIB HPL pointer for #BSP430_PERIPH_EUSCI_B1.
  *
- * Typed pointer to a volatile structure overlaying the EUSCI_B1
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_EUSCI_B1
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the EUSCI_B1
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_B1 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_EUSCI_B1 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B1 - 0)
 #define BSP430_HPL_EUSCI_B1 ((volatile sBSP430hplEUSCIB *)BSP430_PERIPH_EUSCI_B1)
 #endif /* configBSP430_HPL_EUSCI_B1 */
 
-/** HPL pointer for EUSCI_B2.
+/** sBSP430hplEUSCIB HPL pointer for #BSP430_PERIPH_EUSCI_B2.
  *
- * Typed pointer to a volatile structure overlaying the EUSCI_B2
- * peripheral register map.
- *
- * The pointer may be used only if #configBSP430_HPL_EUSCI_B2
- * is defined to a true value.
+ * This pointer to a volatile structure overlaying the EUSCI_B2
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_B2 is defined to a true value.
  *
  * @dependency #configBSP430_HPL_EUSCI_B2 */
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B2 - 0)
@@ -767,20 +791,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 
 /* !BSP430! insert=hal_isr_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_isr_decl] */
-/** @def configBSP430_HAL_EUSCI_B0_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_B0
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_B0 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_B0 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_EUSCI_B0 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_EUSCI_B0
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_B0.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_B0_ISR
 #define configBSP430_HAL_EUSCI_B0_ISR (configBSP430_HAL_EUSCI_B0 - 0)
@@ -790,20 +814,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #warning configBSP430_HAL_EUSCI_B0_ISR requested without configBSP430_HAL_EUSCI_B0
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_EUSCI_B1_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_B1
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_B1 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_B1 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_EUSCI_B1 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_EUSCI_B1
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_B1.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_B1_ISR
 #define configBSP430_HAL_EUSCI_B1_ISR (configBSP430_HAL_EUSCI_B1 - 0)
@@ -813,20 +837,20 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B2_;
 #warning configBSP430_HAL_EUSCI_B1_ISR requested without configBSP430_HAL_EUSCI_B1
 #endif /* HAL_ISR and not HAL */
 
-/** @def configBSP430_HAL_EUSCI_B2_ISR
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_B2
  *
- * Define to a false value in @c bsp430_config.h if you are using the
- * BSP430 HAL interface for @c EUSCI_B2 but want to define your
- * own interrupt service routine for the peripheral.
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_B2 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
  *
- * Enabling #configBSP430_HAL_EUSCI_B2 defaults this to
- * true, so you only need to explicitly set it if you do not want to
- * use the standard ISR provided by BSP430.
- *
- * @note Enabling this requires that #configBSP430_HAL_EUSCI_B2
- * also be true.
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_B2.
  *
  * @cppflag
+ * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HAL_EUSCI_B2_ISR
 #define configBSP430_HAL_EUSCI_B2_ISR (configBSP430_HAL_EUSCI_B2 - 0)

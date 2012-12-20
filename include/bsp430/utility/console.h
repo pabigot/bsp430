@@ -129,10 +129,13 @@
  * #BSP430_CONSOLE_SERIAL_PERIPH_CPPID, but is a serial peripheral
  * handle suitable for use in code.
  *
+ * The corresponding HAL and ISR features are automatically enabled
+ * for this peripheral.
+ *
  * @dependency #BSP430_CONSOLE_SERIAL_PERIPH_CPPID
  * @platformdefault */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE platform or application specific
+#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE derived platform or application specific
 /* !BSP430! instance=@serial functional=console_serial subst=functional insert=periph_sethandle */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
 

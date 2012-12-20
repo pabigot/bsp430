@@ -101,6 +101,10 @@
  * derives directly from #BSP430_UPTIME_TIMER_PERIPH_CPPID, but is a
  * timer peripheral handle suitable for use in code.
  *
+ * The corresponding HAL and primary ISR features are automatically
+ * enabled for this peripheral.  CC0 ISR inclusion is influenced by
+ * #configBSP430_UPTIME_TIMER_HAL_CC0_ISR.
+ *
  * @dependency #BSP430_UPTIME_TIMER_PERIPH_CPPID */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UPTIME_TIMER_PERIPH_HANDLE platform or application specific
@@ -131,12 +135,14 @@
 /* !BSP430! end=periph_sethandle */
 #endif /* BSP430_UPTIME_TIMER_PERIPH_CPPID */
 
-/** @def configBSP430_UPTIME_TIMER_HAL_CC0_ISR
+/** Indirect control inclusion of the @HAL CC0 interrupt handler for #BSP430_UPTIME_TIMER_PERIPH_HANDLE
+ *
+ * Propagated as default for #configBSP430_HAL_TA0 or other flag
+ * determined by #BSP430_UPTIME_TIMER_PERIPH_CPPID.
  *
  * The dedicated CC0 ISR associated with the uptime timer is an ideal
  * place to support timeslicing for an RTOS.  Normally the CC0
- * interrupt HAL ISR is left unmanaged by BSP430 (see, for example,
- * #configBSP430_HAL_TA1_CC0_ISR).
+ * interrupt HAL ISR is left unmanaged by BSP430.
  *
  * Set this flag to 1 if you want BSP430 to provide an implementation
  * for the CC0 interrupt for the HAL timer that underlies the
@@ -147,9 +153,10 @@
  * to implement your own CC0 ISR.
  *
  * @cppflag
+ * @ingroup grp_config_functional
  * @nodefault */
 #if defined(BSP430_DOXYGEN)
-#define configBSP430_UPTIME_TIMER_HAL_CC0_ISR 0
+#define configBSP430_UPTIME_TIMER_HAL_CC0_ISR indirectly defaulted
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_UPTIME_SSEL
