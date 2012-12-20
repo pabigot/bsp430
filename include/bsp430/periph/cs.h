@@ -88,8 +88,8 @@
  * @cppflag
  */
 #define BSP430_MODULE_CS (defined(__MSP430_HAS_CS__)            \
-                          || defined(__MSP430_HAS_CS_A__))      \
- 
+                          || defined(__MSP430_HAS_CS_A__))
+
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_CS - 0)
 
 #undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI

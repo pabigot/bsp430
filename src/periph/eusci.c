@@ -672,7 +672,7 @@ isr_EUSCI_A2 (void)
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-/* !BSP430! periph=euscib instance=EUSCI_B0,EUSCI_B1,EUSCI_B2 insert=hal_serial_defn */
+/* !BSP430! periph=euscib instance=EUSCI_B0 insert=hal_serial_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_serial_defn] */
 #if configBSP430_HAL_EUSCI_B0 - 0
 struct sBSP430halSERIAL xBSP430hal_EUSCI_B0_ = {
@@ -689,36 +689,6 @@ struct sBSP430halSERIAL xBSP430hal_EUSCI_B0_ = {
 };
 #endif /* configBSP430_HAL_EUSCI_B0 */
 
-#if configBSP430_HAL_EUSCI_B1 - 0
-struct sBSP430halSERIAL xBSP430hal_EUSCI_B1_ = {
-  .hal_state = {
-    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB
-#if configBSP430_HAL_EUSCI_B1_ISR - 0
-    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
-#endif /* configBSP430_HAL_EUSCI_B1_ISR */
-  },
-  .hpl = { .euscib = BSP430_HPL_EUSCI_B1 },
-#if BSP430_SERIAL - 0
-  .dispatch = &dispatch_,
-#endif /* BSP430_SERIAL */
-};
-#endif /* configBSP430_HAL_EUSCI_B1 */
-
-#if configBSP430_HAL_EUSCI_B2 - 0
-struct sBSP430halSERIAL xBSP430hal_EUSCI_B2_ = {
-  .hal_state = {
-    .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB
-#if configBSP430_HAL_EUSCI_B2_ISR - 0
-    | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
-#endif /* configBSP430_HAL_EUSCI_B2_ISR */
-  },
-  .hpl = { .euscib = BSP430_HPL_EUSCI_B2 },
-#if BSP430_SERIAL - 0
-  .dispatch = &dispatch_,
-#endif /* BSP430_SERIAL */
-};
-#endif /* configBSP430_HAL_EUSCI_B2 */
-
 /* END AUTOMATICALLY GENERATED CODE [hal_serial_defn] */
 /* !BSP430! end=hal_serial_defn */
 /* !BSP430! uscifrom=eusci insert=hal_isr_defn */
@@ -733,30 +703,10 @@ isr_EUSCI_B0 (void)
 }
 #endif /* configBSP430_HAL_EUSCI_B0_ISR */
 
-#if configBSP430_HAL_EUSCI_B1_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_B1_VECTOR)))
-isr_EUSCI_B1 (void)
-{
-  int rv = euscib_isr(BSP430_HAL_EUSCI_B1);
-  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
-}
-#endif /* configBSP430_HAL_EUSCI_B1_ISR */
-
-#if configBSP430_HAL_EUSCI_B2_ISR - 0
-static void
-__attribute__((__interrupt__(USCI_B2_VECTOR)))
-isr_EUSCI_B2 (void)
-{
-  int rv = euscib_isr(BSP430_HAL_EUSCI_B2);
-  BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
-}
-#endif /* configBSP430_HAL_EUSCI_B2_ISR */
-
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_defn] */
 /* !BSP430! end=hal_isr_defn */
 
-/* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_B0,EUSCI_B1,EUSCI_B2 */
+/* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_B0 */
 
 const char *
 xBSP430eusciName (tBSP430periphHandle periph)
@@ -786,18 +736,6 @@ xBSP430eusciName (tBSP430periphHandle periph)
     return "EUSCI_B0";
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
-
-#if configBSP430_HPL_EUSCI_B1 - 0
-  if (BSP430_PERIPH_EUSCI_B1 == periph) {
-    return "EUSCI_B1";
-  }
-#endif /* configBSP430_HPL_EUSCI_B1 */
-
-#if configBSP430_HPL_EUSCI_B2 - 0
-  if (BSP430_PERIPH_EUSCI_B2 == periph) {
-    return "EUSCI_B2";
-  }
-#endif /* configBSP430_HPL_EUSCI_B2 */
 
   /* END AUTOMATICALLY GENERATED CODE [periph_name_demux] */
   /* !BSP430! end=periph_name_demux */

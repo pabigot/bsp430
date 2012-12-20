@@ -520,7 +520,7 @@ periph_timers.extend(map(''.join, itertools.product(('TB',), map(str, range(3)))
 # Serial serial
 periph_usci = map(''.join, itertools.product(('USCI_',), ('A', 'B'), ('0', '1')))
 periph_usci5 = map(''.join, itertools.product(('USCI5_',), ('A', 'B'), map(str, range(4))))
-periph_eusci = map(''.join, itertools.product(('EUSCI_',), ('A', 'B'), map(str, range(4))))
+periph_eusci = map(''.join, itertools.product(('EUSCI_',), ('A0', 'A1', 'A2', 'B0')))
 periph_serial = []
 periph_serial.extend(periph_usci)
 periph_serial.extend(periph_usci5)

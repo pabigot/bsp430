@@ -176,20 +176,8 @@
 /** Constant to identify #BSP430_PERIPH_EUSCI_A2 in preprocessor checks */
 #define BSP430_PERIPH_CPPID_EUSCI_A2 33
 
-/** Constant to identify #BSP430_PERIPH_EUSCI_A3 in preprocessor checks */
-#define BSP430_PERIPH_CPPID_EUSCI_A3 34
-
 /** Constant to identify #BSP430_PERIPH_EUSCI_B0 in preprocessor checks */
-#define BSP430_PERIPH_CPPID_EUSCI_B0 35
-
-/** Constant to identify #BSP430_PERIPH_EUSCI_B1 in preprocessor checks */
-#define BSP430_PERIPH_CPPID_EUSCI_B1 36
-
-/** Constant to identify #BSP430_PERIPH_EUSCI_B2 in preprocessor checks */
-#define BSP430_PERIPH_CPPID_EUSCI_B2 37
-
-/** Constant to identify #BSP430_PERIPH_EUSCI_B3 in preprocessor checks */
-#define BSP430_PERIPH_CPPID_EUSCI_B3 38
+#define BSP430_PERIPH_CPPID_EUSCI_B0 34
 /* END AUTOMATICALLY GENERATED CODE [periph_cppid] */
 /* !BSP430! end=periph_cppid */
 
