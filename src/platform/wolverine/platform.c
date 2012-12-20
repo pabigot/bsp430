@@ -151,7 +151,7 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
   }
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
-    return "Test points below LED1-3: SMCLK on TP10; MCLK on TP11; ACLK on TP12";
+    return "Test points below LED1-3: SMCLK on PJ.0 @ 12 ; MCLK on PJ.1 @ 13 ; ACLK on PJ.2 @ 14";
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if configBSP430_HPL_EUSCI_A0 - 0
