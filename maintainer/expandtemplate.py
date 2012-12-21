@@ -495,6 +495,9 @@ isr_%(INSTANCE)s (void)
 #define configBSP430_HAL_%(INSTANCE)s_ISR 0
 #endif /* BSP430_WANT_CONFIG_HAL_ISR */
 #endif /* ISR */''',
+
+    'periph_want_cc0_isr' : '''
+#elif BSP430_PERIPH_CPPID_%(INSTANCE)s == BSP430_WANT_PERIPH_CPPID
 #ifdef BSP430_WANT_CONFIG_HAL_CC0_ISR
 #if (BSP430_WANT_CONFIG_HAL_CC0_ISR - 0)
 #define configBSP430_HAL_%(INSTANCE)s_CC0_ISR 1
