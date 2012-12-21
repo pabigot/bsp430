@@ -352,6 +352,7 @@
  *
  * @defaulted
  * @platformdefault
+ * @ingroup grp_timer_ccaclk
  * @affects #BSP430_TIMER_CCACLK_PERIPH_HANDLE */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_PERIPH_CPPID include "bsp430_config.h"
@@ -364,6 +365,7 @@
  * derives directly from #BSP430_TIMER_CCACLK_PERIPH_CPPID, but is a
  * timer peripheral handle suitable for use in code.
  *
+ * @ingroup grp_timer_ccaclk
  * @dependency #BSP430_TIMER_CCACLK_PERIPH_CPPID */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_PERIPH_HANDLE derived platform or application specific
@@ -439,8 +441,15 @@
  * external to the microcontroller.  See @ref ex_sensors_hh10d for an
  * example.
  *
+ * @note Setting this flag only enables the @HPL for
+ * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE.  To delegate control
+ * of additional capabilities see
+ * #configBSP430_TIMER_CCACLK_CLK_PORT_HAL.  ISR capabilities are not
+ * available through this interface.
+ *
  * @cppflag
  * @defaulted
+ * @see #configBSP430_TIMER_CCACLK_CLK_PORT_HAL
  * @ingroup grp_timer_ccaclk */
 #ifndef configBSP430_TIMER_CCACLK_CLK_PORT
 #define configBSP430_TIMER_CCACLK_CLK_PORT indirectly defaulted
@@ -460,6 +469,82 @@
 #ifndef configBSP430_TIMER_CCACLK_CLK_PORT_HAL
 #define configBSP430_TIMER_CCACLK_CLK_PORT_HAL indirectly defaulted 0
 #endif /* configBSP430_TIMER_CCACLK_CLK_PORT_HAL */
+
+/** Indirect control inclusion of the @HPL for #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE
+ *
+ * Propagated as default for #configBSP430_HPL_PORT1 or other flag
+ * determined by #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID.
+ *
+ * You would use this if the source for the clock being timed was
+ * external to the microcontroller.  See @ref ex_sensors_hh10d for an
+ * example.
+ *
+ * @note Setting this flag only enables the @HPL for
+ * #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE.  To delegate control
+ * of additional capabilities see
+ * #configBSP430_TIMER_CCACLK_CC0_PORT_HAL.  ISR capabilities are not
+ * available through this interface.
+ *
+ * @cppflag
+ * @defaulted
+ * @see #configBSP430_TIMER_CCACLK_CC0_PORT_HAL
+ * @ingroup grp_timer_ccaclk */
+#ifndef configBSP430_TIMER_CCACLK_CC0_PORT
+#define configBSP430_TIMER_CCACLK_CC0_PORT indirectly defaulted
+#endif /* configBSP430_TIMER_CCACLK_CC0_PORT */
+
+/** Indirect control inclusion of the @HAL for #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE
+ *
+ * Propagated as default for #configBSP430_HAL_PORT1 or other flag
+ * determined by #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID.
+ *
+ * You might need to use this to select the peripheral function for
+ * the clock source.
+ *
+ * @cppflag
+ * @defaulted
+ * @ingroup grp_config_functional */
+#ifndef configBSP430_TIMER_CCACLK_CC0_PORT_HAL
+#define configBSP430_TIMER_CCACLK_CC0_PORT_HAL indirectly defaulted 0
+#endif /* configBSP430_TIMER_CCACLK_CC0_PORT_HAL */
+
+/** Indirect control inclusion of the @HPL for #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE
+ *
+ * Propagated as default for #configBSP430_HPL_PORT1 or other flag
+ * determined by #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID.
+ *
+ * You would use this if the source for the clock being timed was
+ * external to the microcontroller.  See @ref ex_sensors_hh10d for an
+ * example.
+ *
+ * @note Setting this flag only enables the @HPL for
+ * #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE.  To delegate control
+ * of additional capabilities see
+ * #configBSP430_TIMER_CCACLK_CC1_PORT_HAL.  ISR capabilities are not
+ * available through this interface.
+ *
+ * @cppflag
+ * @defaulted
+ * @see #configBSP430_TIMER_CCACLK_CC1_PORT_HAL
+ * @ingroup grp_timer_ccaclk */
+#ifndef configBSP430_TIMER_CCACLK_CC1_PORT
+#define configBSP430_TIMER_CCACLK_CC1_PORT indirectly defaulted
+#endif /* configBSP430_TIMER_CCACLK_CC1_PORT */
+
+/** Indirect control inclusion of the @HAL for #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE
+ *
+ * Propagated as default for #configBSP430_HAL_PORT1 or other flag
+ * determined by #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID.
+ *
+ * You might need to use this to select the peripheral function for
+ * the clock source.
+ *
+ * @cppflag
+ * @defaulted
+ * @ingroup grp_config_functional */
+#ifndef configBSP430_TIMER_CCACLK_CC1_PORT_HAL
+#define configBSP430_TIMER_CCACLK_CC1_PORT_HAL indirectly defaulted 0
+#endif /* configBSP430_TIMER_CCACLK_CC1_PORT_HAL */
 
 /** The capture/compare block index within
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
@@ -497,7 +582,7 @@
 #endif /* BSP430_DOXYGEN */
 
 /** The BSP430 port peripheral corresponding to
- * #BSP430_TIMER_CCACLK_PERIPH_CPPID.
+ * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID.
  *
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
@@ -545,11 +630,148 @@
  * external clock source for #BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
  * connected.
  *
- * @overridable
+ * @platformdefault
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
+
+/** The preprocessor-compatible identifier for a port that provides
+ * an external trigger on CC0 for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ *
+ * The define must appear in the @ref bsp430_config subsystem so that
+ * functional resource requests are correctly propagated to the
+ * underlying resource instances.
+ *
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID platform or application specific
+#endif /* BSP430_DOXYGEN */
+
+/** The BSP430 port peripheral corresponding to
+ * #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID.
+ *
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE derived platform or application specific
+/* !BSP430! instance=@ports functional=timer_ccaclk_cc0_port subst=functional insert=periph_sethandle */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT1
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT2
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT3
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT4
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT4
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT5
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT5
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT6
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT6
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT7
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT8
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT8
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT9
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT9
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT10
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT10
+
+#elif BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT11
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT11
+/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */
+/* !BSP430! end=periph_sethandle instance=@timers */
+#endif /* BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID */
+
+/** The pin on #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE to which
+ * the external trigger for CC0 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * can be connected.
+ *
+ * @platformdefault
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CC0_PORT_BIT include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+/** The preprocessor-compatible identifier for a port that provides
+ * an external trigger on CC1 for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ *
+ * The define must appear in the @ref bsp430_config subsystem so that
+ * functional resource requests are correctly propagated to the
+ * underlying resource instances.
+ *
+ * @defaulted
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID platform or application specific
+#endif /* BSP430_DOXYGEN */
+
+/** The BSP430 port peripheral corresponding to
+ * #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID.
+ *
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE derived platform or application specific
+/* !BSP430! instance=@ports functional=timer_ccaclk_cc1_port subst=functional insert=periph_sethandle */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT1
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT2
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT3
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT3
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT4
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT4
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT5
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT5
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT6
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT6
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT7
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT8
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT8
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT9
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT9
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT10
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT10
+
+#elif BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID == BSP430_PERIPH_CPPID_PORT11
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT11
+/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */
+/* !BSP430! end=periph_sethandle instance=@timers */
+#endif /* BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID */
+
+/** The pin on #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE to which
+ * the external trigger for CC1 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * can be connected.
+ *
+ * @overridable
+ * @ingroup grp_timer_ccaclk */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_TIMER_CCACLK_CC1_PORT_BIT include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
 
 /** Count number of timer transitions over a span of ACLK ticks
  *
