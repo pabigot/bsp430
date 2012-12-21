@@ -921,6 +921,22 @@ typedef struct sBSP430hplTIMER {
 #define BSP430_PERIPH_TA1_BASEADDRESS_ 0x0180
 #define BSP430_PERIPH_TB0_BASEADDRESS_ 0x0180
 #endif /* MSP430XV2 */
+
+/* The other thing we're doing here is adapting old-style vector
+ * macros for legacy MCUs with outdated headers. */
+#if defined(TIMERA0_VECTOR) && ! defined(TIMER0_A0_VECTOR)
+#define TIMER0_A0_VECTOR TIMERA0_VECTOR
+#endif /* T0A CC0 */
+#if defined(TIMERA1_VECTOR) && ! defined(TIMER0_A1_VECTOR)
+#define TIMER0_A1_VECTOR TIMERA1_VECTOR
+#endif /* T0A CC1-2 TA */
+#if defined(TIMERB0_VECTOR) && ! defined(TIMER0_B0_VECTOR)
+#define TIMER0_B0_VECTOR TIMERB0_VECTOR
+#endif /* T0B CC0 */
+#if defined(TIMERB1_VECTOR) && ! defined(TIMER0_B1_VECTOR)
+#define TIMER0_B1_VECTOR TIMERB1_VECTOR
+#endif /* T0B CC1-2 TB */
+
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
 /** Field value for variant stored in sBSP430halTIMER.hal_state.cflags
