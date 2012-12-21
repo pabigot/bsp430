@@ -38,6 +38,11 @@
  * <li> #vBSP430platformSpinForJumper_ni The "jumper pair" for this
  * platform is the button.  Hold it down.
  *
+ * <li> #BSP430_CONSOLE_BAUD_RATE defaults to 2400 for this
+ * platform, since no crystal is available and the DCO accuracy is far
+ * enough off to disrupt reliable communications with the Linux
+ * CDC/ACM driver.
+ *
  * </ul>
  *
  * @homepage http://github.com/pabigot/bsp430
@@ -52,6 +57,11 @@
 #define BSP430_PLATFORM_RF2500T 1
 
 /** @cond DOXYGEN_EXCLUDE */
+
+/** ACM interface on Linux through eZ430 poor */
+#ifndef BSP430_CONSOLE_BAUD_RATE
+#define BSP430_CONSOLE_BAUD_RATE 2400
+#endif /* BSP430_CONSOLE_BAUD_RATE */
 
 /* Enable if requested */
 #if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
