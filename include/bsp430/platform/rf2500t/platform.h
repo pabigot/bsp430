@@ -67,7 +67,7 @@
 #define BSP430_LED_GREEN 1
 
 /* How to use ACLK as a capture/compare input source */
-/* Settings for TB0: T0B2 ccis=1 ; clk P4.7 ; cc0 P4.0 ; cc1 P4.1 */
+/* Settings for TB0: T0B2 ccis=1 ; clk P4.7 ; cc0 P4.3 (CCI0B) ; cc1 P4.1 */
 #ifndef BSP430_TIMER_CCACLK_ACLK_CC
 /* NB: Check against BSP430_TIMER_CCACLK_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_ACLK_CC 2
@@ -82,8 +82,11 @@
 #endif /* BSP430_TIMER_CCACLK_CLK_PORT_BIT */
 #ifndef BSP430_TIMER_CCACLK_CC0_PORT_BIT
 /* NB: Check against BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID in bsp430_config.h */
-#define BSP430_TIMER_CCACLK_CC0_PORT_BIT BIT0
+#define BSP430_TIMER_CCACLK_CC0_PORT_BIT BIT3
 #endif /* BSP430_TIMER_CCACLK_CC0_PORT_BIT */
+#ifndef BSP430_TIMER_CCACLK_CC0_CCIS
+#define BSP430_TIMER_CCACLK_CC0_CCIS CCIS_1
+#endif /* BSP430_TIMER_CCACLK_CC0_CCIS */
 #ifndef BSP430_TIMER_CCACLK_CC1_PORT_BIT
 /* NB: Check against BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT1
