@@ -704,6 +704,18 @@
 #define BSP430_TIMER_CCACLK_CC0_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
+/** The CCIS setting required to support CC0 on pin
+ * #BSP430_TIMER_CCACLK_CC0_PORT_BIT of
+ * #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE.
+ *
+ * The default setting corresponds to CCIxA.
+ *
+ * @platformdefault
+ * @ingroup grp_timer_ccaclk */
+#ifndef BSP430_TIMER_CCACLK_CC0_CCIS
+#define BSP430_TIMER_CCACLK_CC0_CCIS CCIS_0
+#endif /* BSP430_TIMER_CCACLK_CC0_CCIS */
+
 /** The preprocessor-compatible identifier for a port that provides
  * an external trigger on CC1 for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
@@ -772,6 +784,17 @@
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
+/** The CCIS setting required to support CC1 on pin
+ * #BSP430_TIMER_CCACLK_CC1_PORT_BIT of
+ * #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE.
+ *
+ * The default setting corresponds to CCIxA.
+ *
+ * @platformdefault
+ * @ingroup grp_timer_ccaclk */
+#ifndef BSP430_TIMER_CCACLK_CC1_CCIS
+#define BSP430_TIMER_CCACLK_CC1_CCIS CCIS_0
+#endif /* BSP430_TIMER_CCACLK_CC1_CCIS */
 
 /** Count number of timer transitions over a span of ACLK ticks
  *
