@@ -1,6 +1,8 @@
 /* Use a crystal if one is installed.  Much more accurate timing
  * results. */
+#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
 
 /* Then pick the best available source for ACLK, allowing for an
  * absent crystal */
@@ -11,8 +13,11 @@
 /* Allow application to tell user where things are connected */
 #define configBSP430_PLATFORM_PERIPHERAL_HELP 1
 
-/* Expose the clocks */
+/* Expose the clocks.  On SuRF board this conflicts with the capture
+ * pin. */
+#ifndef configBSP430_PERIPH_EXPOSED_CLOCKS
 #define configBSP430_PERIPH_EXPOSED_CLOCKS 1
+#endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1

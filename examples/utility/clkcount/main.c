@@ -106,9 +106,11 @@ void main ()
   cprintf("CC0 uses %s.%u\n",
           xBSP430portName(BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE) ?: "P?",
           iBSP430portBitPosition(BSP430_TIMER_CCACLK_CC0_PORT_BIT));
+#ifdef BSP430_PERIPH_EXPOSED_CLOCKS
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 0, 1)) {
     cprintf("Clock signals: %s\n", xBSP430platformPeripheralHelp(BSP430_PERIPH_EXPOSED_CLOCKS, 0));
   }
+#endif /* BSP430_PERIPH_EXPOSED_CLOCKS */
 
   /* Set CC0 port for input as CC0 trigger, with weak pull-down */
   BSP430_PORT_HAL_HPL_DIR(h_cc0) &= ~BSP430_TIMER_CCACLK_CC0_PORT_BIT;
@@ -117,7 +119,6 @@ void main ()
   BSP430_PORT_HAL_HPL_REN(h_cc0) |= BSP430_TIMER_CCACLK_CC0_PORT_BIT;
 #endif /* BSP430_PORT_SUPPORTS_REN */
   BSP430_PORT_HAL_HPL_SEL(h_cc0) |= BSP430_TIMER_CCACLK_CC0_PORT_BIT;
-  P4SEL |= BSP430_TIMER_CCACLK_CC0_PORT_BIT;
 
   /* Chain in interrupt handler */
   captures.cb.next_ni = timer->cc_cbchain_ni[0];
