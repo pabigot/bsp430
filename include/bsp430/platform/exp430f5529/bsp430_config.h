@@ -39,6 +39,26 @@
 #ifndef BSP430_PLATFORM_EXP430F5529_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EXP430F5529_BSP430_CONFIG_H
 
+/** Influence selection of TIMER_CCACLK on EXP430F5529
+ *
+ * The EXP430F5529 does not expose all of CLK, CC0, and CC1 pins for
+ * any of its timer peripherals.  Depending on secondary uses for
+ * CCACLK you need to pick between available features.
+ *
+ * If you set this to a true value the timer will allow an external
+ * CLK to be provided, but neither CC0 nor CC1 are accessible.
+ *
+ * If you set this to a false value (default) the timer will support
+ * external access for CC0 and CC1, but not for CLK.
+ *
+ * @cppflag
+ * @defaulted
+ * @affects #BSP430_TIMER_CCACLK_TIMER_PERIPH_CPPID and all related values
+ */
+#ifndef configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK
+#define configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK 0
+#endif /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
+
 /** @cond DOXYGEN_EXCLUDE */
 
 /* Use native USCI5 for genericized serial port unless told not to */
@@ -69,21 +89,37 @@
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
 #endif /* configBSP430_CONSOLE */
 
-/* How to use ACLK as a capture/compare input source */
-/* Settings for TB0: T0B6 ccis=1 ; clk P7.7 ; cc0 P5.6 ; cc1 P5.7 */
+/* How to use ACLK as a capture/compare input source.  This board does
+ * a very poor job of making signals accessible.  No timer has all of
+ * CLK, CC0, and CC1 on header pins.
+ * 
+ * With CLK: Settings for TB0: T0B6 ccis=1 ; clk P7.7 ; cc0 P5.6 ; cc1 P5.7 -- CC0/CC1 PINS NOT ACCESSIBLE
+ * 
+ * Without CLK: Settings for TA2: T2A2 ccis=1 ; clk P2.2 ; cc0 P2.3 ; cc1 P2.4 -- CLK PIN NOT ACCESSIBLE
+ */
 #if configBSP430_TIMER_CCACLK - 0
 #ifndef BSP430_TIMER_CCACLK_PERIPH_CPPID
+#if (configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK - 0)
+/* Option preferring CLK */
 #define BSP430_TIMER_CCACLK_PERIPH_CPPID BSP430_PERIPH_CPPID_TB0
-#endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
+
 #ifndef BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT7
 #endif /* BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID */
+
+#else /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
+/* Option preferring CC0/CC1 */
+#define BSP430_TIMER_CCACLK_PERIPH_CPPID BSP430_PERIPH_CPPID_TA2
+
 #ifndef BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID
-#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT5
+#define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT2
 #endif /* BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID */
 #ifndef BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID
-#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT5
+#define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT2
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID */
+
+#endif /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
+#endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
 #endif /* configBSP430_TIMER_CCACLK */
 
 /* Enable RFEM resources if requested */

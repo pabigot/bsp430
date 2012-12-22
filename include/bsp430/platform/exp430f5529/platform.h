@@ -82,28 +82,47 @@
 #define BSP430_LED_BLUE3 6
 #define BSP430_LED_BLUE4 7
 
-/* How to use ACLK as a capture/compare input source */
-/* Settings for TB0: T0B6 ccis=1 ; clk P7.7 ; cc0 P5.6 ; cc1 P5.7 */
+/* How to use ACLK as a capture/compare input source.  This board does
+ * a very poor job of making signals accessible.  No timer has all of
+ * CLK, CC0, and CC1 on header pins.
+ * 
+ * With CLK: Settings for TB0: T0B6 ccis=1 ; clk P7.7 ; cc0 P5.6 ; cc1 P5.7 -- CC0/CC1 PINS NOT ACCESSIBLE
+ * 
+ * Without CLK: Settings for TA2: T2A2 ccis=1 ; clk P2.2 ; cc0 P2.3 ; cc1 P2.4 -- CLK PIN NOT ACCESSIBLE
+ */
+
 #ifndef BSP430_TIMER_CCACLK_ACLK_CC
 /* NB: Check against BSP430_TIMER_CCACLK_PERIPH_CPPID in bsp430_config.h */
+#if (configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK - 0)
 #define BSP430_TIMER_CCACLK_ACLK_CC 6
+#else /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
+#define BSP430_TIMER_CCACLK_ACLK_CC 2
+#endif /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
 #endif /* BSP430_TIMER_CCACLK_ACLK_CC */
 #ifndef BSP430_TIMER_CCACLK_ACLK_CCIS
 /* NB: Check against BSP430_TIMER_CCACLK_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_ACLK_CCIS CCIS_1
 #endif /* BSP430_TIMER_CCACLK_ACLK_CCIS */
+
+#if (configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK - 0)
+/* Option preferring CLK */
+
 #ifndef BSP430_TIMER_CCACLK_CLK_PORT_BIT
 /* NB: Check against BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_CLK_PORT_BIT BIT7
 #endif /* BSP430_TIMER_CCACLK_CLK_PORT_BIT */
+
+#else /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
+/* Option preferring CC0/CC1 */
 #ifndef BSP430_TIMER_CCACLK_CC0_PORT_BIT
 /* NB: Check against BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID in bsp430_config.h */
-#define BSP430_TIMER_CCACLK_CC0_PORT_BIT BIT6
+#define BSP430_TIMER_CCACLK_CC0_PORT_BIT BIT3
 #endif /* BSP430_TIMER_CCACLK_CC0_PORT_BIT */
 #ifndef BSP430_TIMER_CCACLK_CC1_PORT_BIT
 /* NB: Check against BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID in bsp430_config.h */
-#define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT7
+#define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT4
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
+#endif /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
 
 /* RFEM capabilities */
 #if (configBSP430_RFEM - 0)
