@@ -139,6 +139,9 @@ rx_cbchain_ni (const struct sBSP430halISRVoidChainNode * cb,
   if (rx_head == rx_tail) {
     (void)consume_rx_ni;
   }
+  /* NOTE: For this test intentionally clear all LPM bits, not just
+   * the ones in BSP430_CORE_LPM_EXIT_MASK as would happen with
+   * BSP430_HAL_ISR_CALLBACK_EXIT_LPM. */
   return LPM4_bits;
 }
 
