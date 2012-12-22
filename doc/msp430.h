@@ -300,6 +300,17 @@
 #define SYSRSTIV_MPUSEG2IFG (0x002A)   /**< SYSRSTIV : MPUSEG2IFG violation */
 #define SYSRSTIV_MPUSEG3IFG (0x002C)   /**< SYSRSTIV : MPUSEG3IFG violation */
 
+#define SELREF_0            (0x0000)    /**< UCS : FLL Reference Clock Select 0 */
+#define SELREF_1            (0x0010)    /**< UCS : FLL Reference Clock Select 1 */
+#define SELREF_2            (0x0020)    /**< UCS : FLL Reference Clock Select 2 */
+#define SELREF_3            (0x0030)    /**< UCS : FLL Reference Clock Select 3 */
+#define SELREF_4            (0x0040)    /**< UCS : FLL Reference Clock Select 4 */
+#define SELREF_5            (0x0050)    /**< UCS : FLL Reference Clock Select 5 */
+#define SELREF_6            (0x0060)    /**< UCS : FLL Reference Clock Select 6 */
+#define SELREF_7            (0x0070)    /**< UCS : FLL Reference Clock Select 7 */
+#define SELREF__XT1CLK      (0x0000)    /**< UCS : Multiply Selected Loop Freq. By XT1CLK */
+#define SELREF__REFOCLK     (0x0020)    /**< UCS : Multiply Selected Loop Freq. By REFOCLK */
+#define SELREF__XT2CLK      (0x0050)    /**< UCS : Multiply Selected Loop Freq. By XT2CLK */
 
 #endif /* BSP430_DOXYGEN */
 

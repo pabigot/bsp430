@@ -174,61 +174,34 @@
  * ulBSP430clockConfigureMCLK_ni() should be re-invoked to configure
  * the clock.
  *
+ * Trimming is done relative to XT1CLK (if available) or REFOCLK
+ * (otherwise).
+ *
  * @warning This function will temporarily reconfigure MCLK, SMCLK,
  * and ACLK.  Any peripherals that depend on those clocks should be
  * disabled while the function is executing.
  *
  * @return 0 if the trimming was completed successfully, -1 if an
- * error occurred.  Potential errors are a dependency on XT1CLK while
- * that is faulted and inability to access
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
+ * error occurred.  Potential errors are inability to access
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE, and use of XT2CLK for FLLREFCLK.
  *
  * @dependency #BSP430_UCS_TRIM_DCOCLKDIV
  */
 int iBSP430ucsTrimDCOCLKDIV_ni ();
 #endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
 
-/** @def configBSP430_UCS_FLLREFCLK_IS_XT1CLK
+/** Preferred source for FLL clock
  *
- * The UCS module supports a variety of potential sources for the FLL
- * reference clock; the implementation here supports either LFXT1 or
- * REFO.
- *
- * Define this to true if you want to use LFXT1; otherwise REFO is
- * used.
- *
- * @warning If this is selected, DCOCLKDIV trim will hang if LFXT1 is
- * faulted and cannot be cleared.
+ * This should be a constant denoting the bits to be set in the UCS
+ * control register for SELREF selecting the FLL reference clock.  The
+ * default value selects XT1CLK, which will internally fall back to
+ * REFOCLK if XT1CLK is faulted.
  *
  * @cppflag
  */
-#ifndef configBSP430_UCS_FLLREFCLK_IS_XT1CLK
-#define configBSP430_UCS_FLLREFCLK_IS_XT1CLK 0
-#endif /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
-
-/** @def configBSP430_UCS_TRIM_ACLK_IS_XT1CLK
- *
- * When measuring the actual clock speed to determine whether the FLL
- * has drifted, a reliable clock at a known frequency is required.
- * The implementation here configures ACLK to source from that clock
- * for the duration of the trim operation.
- *
- * Alternative sources supported here are LFXT1 and REFO, both of
- * which are nominally 32 KiHz though LFXT1 could be a different
- * speed.  As LFXT1 is likely more accurate than REFO, there may be
- * some benefit in using it when FLLREFCLK is REFO.
- *
- * Define this to true if you want to use LFXT1; otherwise REFO is
- * used.
- *
- * @warning If this is selected, FLL trim will hang if LFXT1 is
- * faulted and cannot be cleared.
- *
- * @cppflag
- */
-#ifndef configBSP430_UCS_TRIM_ACLK_IS_XT1CLK
-#define configBSP430_UCS_TRIM_ACLK_IS_XT1CLK 0
-#endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
+#ifndef BSP430_UCS_FLL_SELREF
+#define BSP430_UCS_FLL_SELREF SELREF__XT1CLK
+#endif /* BSP430_UCS_FLL_SELREF */
 
 #undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
 /** Check whether the LFXT1 crystal has a fault condition.

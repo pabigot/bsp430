@@ -60,31 +60,19 @@
  * isolation. */
 #define DCO_INDEX_MASK 0x1F
 
-/** Constant used in UCSCTL3/USCTL4 to select XT1CLK */
-#define CLOCKSEL_XT1CLK 0
-/** Constant used in UCSCTL3/USCTL4 to select REFOCLK */
-#define CLOCKSEL_REFOCLK 2
-/** Constant used in UCSCTL4 to select DCOCLKDIV */
-#define CLOCKSEL_DCOCLKDIV 4
+/** Frequency of ACLK when used for trimming.
+ *
+ * This assumes that a 32 kiHz crystal will be used for XT1.  If not,
+ * the trim frequency would be different when REFOCLK is used and that
+ * would make things messy. */
+#define TRIM_ACLK_HZ 32768
 
-/** Frequency measurement will be done with ACLK, which will be
- * configured to either XT1CLK or REFOCLK. */
-#if configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0
-#define TRIM_ACLK_HZ BSP430_CLOCK_NOMINAL_XT1CLK_HZ
-#define CLOCKSEL_TRIM_ACLK CLOCKSEL_XT1CLK
-#else /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
-#define TRIM_ACLK_HZ BSP430_UCS_NOMINAL_REFOCLK_HZ
-#define CLOCKSEL_TRIM_ACLK CLOCKSEL_REFOCLK
-#endif /* configBSP430_UCS_TRIM_ACLK_IS_XT1CLK */
-
-/** The FLL reference clock may be either XT1 or REFOCLK. */
-#if configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0
-#define FLLREFCLK_HZ BSP430_CLOCK_NOMINAL_XT1CLK_HZ
-#define CLOCKSEL_FLLREFCLK CLOCKSEL_XT1CLK
-#else /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
-#define FLLREFCLK_HZ BSP430_UCS_NOMINAL_REFOCLK_HZ
-#define CLOCKSEL_FLLREFCLK CLOCKSEL_REFOCLK
-#endif /* configBSP430_UCS_FLLREFCLK_IS_XT1CLK */
+/** Best estimate of frequency for the clock driving the FLL */
+#if SELREF__XT2CLK <= BSP430_UCS_FLL_SELREF
+#define FLLREFCLK_HZ BSP430_CLOCK_NOMINAL_XT2CLK_HZ
+#else /* BSP430_UCS_FLL_SELREF */
+#define FLLREFCLK_HZ TRIM_ACLK_HZ
+#endif
 
 /* Frequency measurement occurs over this duration when determining
  * whether trim is required.  The number of SMCLK ticks in an ACLK
@@ -141,21 +129,13 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
   ucsctl4 = UCSCTL4;
   ucsctl5 = UCSCTL5;
 
-#if (configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0) || (configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0)
-  /* Require XT1 valid and use it as ACLK source.  If it can't be
-   * stabilized, this function call won't return. */
-  if (UCSCTL7 & XT1LFOFFG) {
-    return -1;
-  }
-#endif /* Require LFXT1 */
-
   /* Preserve the incoming value of the SCG0 flag, and disable FLL
    * while assessing out-of-trim */
   scg0 = SCG0 & __read_status_register();
   __bis_status_register(SCG0);
 
-  /* Configure clock sources for trim analysis */
-  UCSCTL4 = (CLOCKSEL_TRIM_ACLK * SELA0) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
+  /* Configure clock sources for trim analysis. */
+  UCSCTL4 = ((UCSCTL7 & XT1LFOFFG) ? SELA__REFOCLK : SELA__XT1CLK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
   UCSCTL5 = 0;
 
   /* Almost-certainly-invalid UCSCTL0 value.  This includes reserved
@@ -254,20 +234,12 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
   }
   rsel &= RSEL_INDEX_MASK;
 
-#if (configBSP430_UCS_TRIM_ACLK_IS_XT1CLK - 0) || (configBSP430_UCS_FLLREFCLK_IS_XT1CLK - 0)
-  /* Require XT1 valid and use it as ACLK source.  If it can't be
-   * stabilized, this function call won't return. */
-  if (UCSCTL7 & XT1LFOFFG) {
-    (void)iBSP430clockConfigureLFXT1_ni(1, -1);
-  }
-#endif /* Require LFXT1 */
-
   /* Record where we're trying to get */
   targetFrequency_tsp_ = HZ_TO_TSP(dcoclkdiv_Hz);
 
   /* Set the FLL reference clock, and the FLL parameters required to
    * obtain the desired DCOCLK. */
-  UCSCTL3 = (CLOCKSEL_FLLREFCLK * SELREF0) | FLLREFDIV_0;
+  UCSCTL3 = (BSP430_UCS_FLL_SELREF) | FLLREFDIV_0;
   /* All supported frequencies can be efficiently achieved using FFLD
    * set to /2 (>> 1) and FLLREFDIV set to /1 (>> 0).  FLLN is
    * calculated from dcoclkdiv_Hz. */
