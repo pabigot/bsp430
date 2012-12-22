@@ -159,20 +159,21 @@
 #define configBSP430_UPTIME_TIMER_HAL_CC0_ISR indirectly defaulted
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_UPTIME_SSEL
+/** @def BSP430_UPTIME_TASSEL
  *
  * Source selector for uptime clock.  This should be bits suitable for
  * storage into the TASSEL field of a timer control register.  (Note
- * that TASSEL and TBSSEL support the same values).
+ * that TASSEL and TBSSEL support the same values; this works when
+ * using TBx as well.)
  *
  * @defaulted */
-#ifndef BSP430_UPTIME_SSEL
-#define BSP430_UPTIME_SSEL TASSEL_1 /* == TASSEL__ACLK */
-#endif /* BSP430_UPTIME_SSEL */
+#ifndef BSP430_UPTIME_TASSEL
+#define BSP430_UPTIME_TASSEL TASSEL_1 /* == TASSEL__ACLK */
+#endif /* BSP430_UPTIME_TASSEL */
 
 /** @def BSP430_UPTIME_DIVIDING_SHIFT
  *
- * Shift value dividing #BSP430_UPTIME_SSEL for the uptime clock.
+ * Shift value dividing #BSP430_UPTIME_TASSEL for the uptime clock.
  *
  * @defaulted
  */

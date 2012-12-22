@@ -46,7 +46,7 @@ vBSP430uptimeStart_ni (void)
   xBSP430uptimeTIMER_->hpl->ctl = 0;
   vBSP430timerResetCounter_ni(xBSP430uptimeTIMER_);
   xBSP430uptimeTIMER_->hpl->ctl =
-    ((TASSEL0 | TASSEL1) & (BSP430_UPTIME_SSEL))
+    ((TASSEL0 | TASSEL1) & (BSP430_UPTIME_TASSEL))
     | ((ID0 | ID1) & (BSP430_UPTIME_DIVIDING_SHIFT))
     | MC_2 | TACLR | TAIE;
 }
