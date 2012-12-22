@@ -1,5 +1,7 @@
 MCU=msp430f5529
 MSPDEBUG_DRIVER=-j uif
+# You can program with the ezRF interface, but it's really slow.
+#MSPDEBUG_DRIVER=rf2500
 # UCS needs CCACLK for DCO configuration
 MODULES_CLOCK=periph/ucs periph/timer
 MODULES_PLATFORM_SERIAL=periph/usci5
