@@ -6,6 +6,11 @@
  * REFOCLK accuracy, as well as validate the capacitance setting for
  * LFXT.
  *
+ * Options:
+ *
+ * APP_USE_SMCLK : Define to true to use SMCLK in the capture timer.
+ * Default false uses ACLK.
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */
@@ -69,15 +74,22 @@ void main ()
   hBSP430halTIMER timer;
   hBSP430halPORT h_cc0;
   unsigned long nominal_Hz;
+  unsigned int tassel;
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-
   cprintf("\nclkcounter " __DATE__ " " __TIME__ "\n");
   cprintf("BSP430_CLOCK_LFXT1_IS_FAULTED_NI(): %u\n", !!BSP430_CLOCK_LFXT1_IS_FAULTED_NI());
+#if APP_USE_SMCLK - 0
+  nominal_Hz = ulBSP430clockSMCLK_Hz_ni();
+  cprintf("Expected SMCLK clock freq: %lu Hz\n", nominal_Hz);
+  tassel = TASSEL_2;
+#else
   nominal_Hz = ulBSP430clockACLK_Hz_ni();
-  cprintf("Expected ACLK freq: %lu Hz\n", nominal_Hz);
+  cprintf("Expected ACLK clock freq: %lu Hz\n", nominal_Hz);
+  tassel = TASSEL_1;
+#endif
 
   timer = hBSP430timerLookup(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
   if (! timer) {
@@ -114,10 +126,10 @@ void main ()
   /* Capture synchronously on rising edge and interrupt */
   timer->hpl->cctl[0] = BSP430_TIMER_CCACLK_CC0_CCIS | CM_1 | SCS | CAP | CCIE;
 
-  /* Configure timer to run continuously off ACLK */
+  /* Configure timer to run continuously off selected clock */
   timer->hpl->ctl = 0;
   vBSP430timerResetCounter_ni(timer);
-  timer->hpl->ctl = TASSEL_1 | MC_2 | TACLR | TAIE;
+  timer->hpl->ctl = tassel | MC_2 | TACLR | TAIE;
 
   BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
   memset(sums, 0, sizeof(sums));
@@ -141,8 +153,14 @@ void main ()
     if (0 > err) {
       err = -err;
     }
-    ppm = ((err * 1000000UL) / nominal_Hz);
-    cprintf("%4u %-7lu (%lu ppm) : ", nsamples, delta, ppm);
+    /* Use calculation that accounts for potential overflow based on
+     * nominal frequency */
+    if (100000UL > nominal_Hz) {
+      ppm = (err * 10000 / (nominal_Hz / 100));
+    } else {
+      ppm = (1000 * err) / (nominal_Hz / 1000);
+    }
+    cprintf("%4u %-7lu (err %lu ppm) : ", nsamples, delta, ppm);
     si = (nsamples - 1) & SAMPLES_MASK;
     for (i = 0; i < HISTORY_EXP; ++i) {
       int sps = (1 << (i+1));
