@@ -123,8 +123,8 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
   return 0;
 }
 
-unsigned int
-uiBSP430clockACLK_Hz_ni (void)
+unsigned long
+ulBSP430clockACLK_Hz_ni (void)
 {
   if (BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
     return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;

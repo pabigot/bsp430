@@ -245,7 +245,7 @@ ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph)
     case TASSEL_0:
       return 0;
     case TASSEL_1:
-      freq_Hz = uiBSP430clockACLK_Hz_ni();
+      freq_Hz = ulBSP430clockACLK_Hz_ni();
       break;
     case TASSEL_2:
       freq_Hz = ulBSP430clockSMCLK_Hz_ni();

@@ -107,10 +107,10 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
   return iBSP430clockSMCLKDividingShift_ni();
 }
 
-unsigned int
-uiBSP430clockACLK_Hz_ni (void)
+unsigned long
+ulBSP430clockACLK_Hz_ni (void)
 {
-  unsigned int clk_hz;
+  unsigned long clk_hz;
   int diva = (BCSCTL1 & DIVA_3) / DIVA0;
   switch (BCSCTL3 & SELA_MASK) {
     default:
@@ -172,7 +172,7 @@ iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
   volatile sBSP430hplTIMER * tp = xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
   const int MAX_ITERATIONS = 16 * 256;
   int rv = -1;
-  unsigned int aclk_Hz;
+  unsigned long aclk_Hz;
   int iter = 0;
   const int SAMPLE_PERIOD_ACLK = 10;
   unsigned int target_tsp;
@@ -181,7 +181,7 @@ iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
     return -1;
   }
 
-  aclk_Hz = uiBSP430clockACLK_Hz_ni();
+  aclk_Hz = ulBSP430clockACLK_Hz_ni();
   target_tsp = (SAMPLE_PERIOD_ACLK * mclk_Hz) / aclk_Hz;
   tp->ctl = TASSEL_2 | MC_2 | TACLR;
   /* SELM = DCOCLK; DIVM = /1 */

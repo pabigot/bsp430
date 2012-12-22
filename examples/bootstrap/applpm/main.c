@@ -306,7 +306,7 @@ void main ()
             case CMD_STATE:
               cprintf("MCLK rate: %lu Hz\n", ulBSP430clockMCLK_Hz_ni());
               cprintf("SMCLK rate: %lu Hz\n", ulBSP430clockSMCLK_Hz_ni());
-              cprintf("ACLK rate: %u Hz\n", uiBSP430clockACLK_Hz_ni());
+              cprintf("ACLK rate: %lu Hz\n", ulBSP430clockACLK_Hz_ni());
               cprintf("LFXT1: %s\n", BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? "FAULTED" : "stable");
               cprintf("Uptime (ACLK ticks): %lu\n", ulBSP430uptime_ni());
               cprintf("Selected idle state: %s\n", state.lpm_description);

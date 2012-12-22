@@ -182,7 +182,7 @@ hBSP430usciOpenUART (hBSP430halSERIAL hal,
   /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
    * 32 KiHz ACLK for rates that are low enough.  Use SMCLK for
    * anything larger.  */
-  brclk_Hz = uiBSP430clockACLK_Hz_ni();
+  brclk_Hz = ulBSP430clockACLK_Hz_ni();
   if ((brclk_Hz > 20000) && (brclk_Hz >= (3 * baud))) {
     ctl1_byte |= UCSSEL_1;
   } else {

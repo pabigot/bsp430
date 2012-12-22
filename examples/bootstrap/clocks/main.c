@@ -44,7 +44,7 @@ void main ()
 #if BSP430_CONSOLE - 0
   const char * help;
   unsigned long smclk_Hz;
-  unsigned int aclk_Hz;
+  unsigned long aclk_Hz;
 #endif /* BSP430_CONSOLE */
 
   /* First thing you do in main is configure the platform. */
@@ -107,57 +107,61 @@ void main ()
   cputu_ni(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");
   cputu_ni(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
-  cputtext_ni("\nuiBSP430clockACLK_Hz_ni(): ");
-  aclk_Hz = uiBSP430clockACLK_Hz_ni();
-  cputu_ni(aclk_Hz, 10);
+  cputtext_ni("\nulBSP430clockACLK_Hz_ni(): ");
+  aclk_Hz = ulBSP430clockACLK_Hz_ni();
+  cputul_ni(aclk_Hz, 10);
 
 #if BSP430_TIMER_CCACLK - 0
-  do {
-    const int SAMPLE_PERIOD_ACLK = 10;
-    volatile sBSP430hplTIMER * tp = xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
-    unsigned int cc_delta;
-    unsigned long aclk_rel_smclk_Hz;
-    unsigned long smclk_rel_aclk_Hz;
+  if (1000000UL <= aclk_Hz) {
+    cputtext_ni("\nUnable to use high-speed ACLK for differential timing of SMCLK");
+  } else {
+    do {
+      const unsigned int SAMPLE_PERIOD_ACLK = 10;
+      volatile sBSP430hplTIMER * tp = xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+      unsigned int cc_delta;
+      unsigned long aclk_rel_smclk_Hz;
+      unsigned long smclk_rel_aclk_Hz;
 
-    if (! tp) {
-      cputtext_ni("\nUnable to access configured CCACLK timer");
-      break;
-    }
-    /* Capture the SMCLK ticks between adjacent ACLK ticks */
-    tp->ctl = TASSEL_2 | MC_2 | TACLR;
-    cc_delta = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
-                                            BSP430_TIMER_CCACLK_ACLK_CC,
-                                            CM_2,
-                                            BSP430_TIMER_CCACLK_ACLK_CCIS,
-                                            SAMPLE_PERIOD_ACLK);
-    tp->ctl = 0;
-    if (-1 == cc_delta) {
-      cputtext_ni("\nCCACLK measurement failed");
-      break;
-    }
-    cputchar_ni('\n');
-    cputu_ni(SAMPLE_PERIOD_ACLK, 10);
-    cputtext_ni(" ticks of ACLK produced ");
-    cputu_ni(cc_delta, 10);
-    cputtext_ni(" ticks of SMCLK");
-    cputtext_ni("\nComparison with measured values:");
-    cputtext_ni("\n SMCLK (Hz) (if measured ACLK correct): ");
-    smclk_rel_aclk_Hz = (cc_delta * (unsigned long)aclk_Hz) / SAMPLE_PERIOD_ACLK;
-    cputul_ni(smclk_rel_aclk_Hz, 10);
-    cputtext_ni(" (error ");
-    cputl_ni(smclk_rel_aclk_Hz - smclk_Hz, 10);
-    cputtext_ni(" = ");
-    cputl_ni(1000 * labs(smclk_rel_aclk_Hz - smclk_Hz) / smclk_Hz, 10);
-    cputtext_ni(" kHz/MHz)");
-    cputtext_ni("\n ACLK (Hz) (if measured SMCLK correct): ");
-    aclk_rel_smclk_Hz = SAMPLE_PERIOD_ACLK * smclk_Hz / cc_delta;
-    cputul_ni(aclk_rel_smclk_Hz, 10);
-    cputtext_ni(" (error ");
-    cputl_ni(aclk_rel_smclk_Hz - aclk_Hz, 10);
-    cputtext_ni(" = ");
-    cputl_ni(1000 * labs(aclk_rel_smclk_Hz - aclk_Hz) / aclk_Hz, 10);
-    cputtext_ni(" Hz/kHz)");
-  } while (0);
+      if (! tp) {
+        cputtext_ni("\nUnable to access configured CCACLK timer");
+        break;
+      }
+      /* Capture the SMCLK ticks between adjacent ACLK ticks */
+      tp->ctl = TASSEL_2 | MC_2 | TACLR;
+      cc_delta = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
+                                              BSP430_TIMER_CCACLK_ACLK_CC,
+                                              CM_2,
+                                              BSP430_TIMER_CCACLK_ACLK_CCIS,
+                                              SAMPLE_PERIOD_ACLK);
+      tp->ctl = 0;
+      if (-1 == cc_delta) {
+        cputtext_ni("\nCCACLK measurement failed");
+        break;
+      }
+      cputchar_ni('\n');
+      cputu_ni(SAMPLE_PERIOD_ACLK, 10);
+      cputtext_ni(" ticks of ACLK produced ");
+      cputu_ni(cc_delta, 10);
+      cputtext_ni(" ticks of SMCLK");
+      cputtext_ni("\nComparison with measured values:");
+      cputtext_ni("\n SMCLK (Hz) (if measured ACLK correct): ");
+      smclk_rel_aclk_Hz = (cc_delta * aclk_Hz) / SAMPLE_PERIOD_ACLK;
+      cputul_ni(smclk_rel_aclk_Hz, 10);
+      cputtext_ni(" (error ");
+      cputl_ni(smclk_rel_aclk_Hz - smclk_Hz, 10);
+      cputtext_ni(" = ");
+      cputl_ni(1000 * labs(smclk_rel_aclk_Hz - smclk_Hz) / smclk_Hz, 10);
+      cputtext_ni(" kHz/MHz)");
+      cputtext_ni("\n ACLK (Hz) (if measured SMCLK correct): ");
+      aclk_rel_smclk_Hz = SAMPLE_PERIOD_ACLK * smclk_Hz / cc_delta;
+      cputul_ni(aclk_rel_smclk_Hz, 10);
+      cputtext_ni(" (error ");
+      cputl_ni(aclk_rel_smclk_Hz - aclk_Hz, 10);
+      cputtext_ni(" = ");
+      cputl_ni(1000 * labs(aclk_rel_smclk_Hz - aclk_Hz) / aclk_Hz, 10);
+      cputtext_ni(" Hz/kHz)");
+    } while (0);
+  }
 #else /* BSP430_TIMER_CCACLK */
   cputtext_ni("\nNo CCACLK timer available for ACLK/SMCLK comparison");
 #endif /* BSP430_TIMER_CCACLK */

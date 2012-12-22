@@ -471,9 +471,9 @@ cmd_clocks (const char * argstr)
 
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
-  cprintf("CPU clocks (Hz): MCLK %lu ; SMCLK %lu ; ACLK %u\n",
+  cprintf("CPU clocks (Hz): MCLK %lu ; SMCLK %lu ; ACLK %lu\n",
           ulBSP430clockMCLK_Hz(), ulBSP430clockSMCLK_Hz(),
-          uiBSP430clockACLK_Hz());
+          ulBSP430clockACLK_Hz());
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();

@@ -17,6 +17,7 @@
 #include <bsp430/clock.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifndef HISTORY_EXP
@@ -33,7 +34,7 @@ struct sCaptures {
   sBSP430halISRIndexedChainNode cb;
   unsigned long last_count;
   volatile unsigned long count;
-  unsigned int samples;
+  unsigned int nsamples;
 };
 
 static int
@@ -46,7 +47,7 @@ capture_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
   unsigned long now_tt = ulBSP430timerCounter_ni(timer, NULL);
 
   cp->count = now_tt + ((int)timer->hpl->ccr[idx] - (unsigned int)now_tt);
-  cp->samples += 1;
+  cp->nsamples += 1;
   return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
@@ -55,25 +56,28 @@ static struct sCaptures captures = {
 };
 
 /* Simulate floating-point output */
-#define EMIT_SCALED(_s,_n) do {                                 \
-          static const int MULTIPLIER = 1000;                   \
-          unsigned long whole = (MULTIPLIER * (_s)) / (_n);     \
-          unsigned int frac = whole % MULTIPLIER;               \
-          whole /= MULTIPLIER;                          \
-          cprintf(" %7lu.%03u", whole, frac);                   \
-        } while (0)
+#define EMIT_SCALED(_s,_n) do {                         \
+    static const int MULTIPLIER = 100;                  \
+    unsigned long whole = (MULTIPLIER * (_s)) / (_n);   \
+    unsigned int frac = whole % MULTIPLIER;             \
+    whole /= MULTIPLIER;                                \
+    cprintf(" %7lu.%02u", whole, frac);                 \
+  } while (0)
 
 void main ()
 {
   hBSP430halTIMER timer;
   hBSP430halPORT h_cc0;
+  unsigned long nominal_Hz;
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
+
   cprintf("\nclkcounter " __DATE__ " " __TIME__ "\n");
   cprintf("BSP430_CLOCK_LFXT1_IS_FAULTED_NI(): %u\n", !!BSP430_CLOCK_LFXT1_IS_FAULTED_NI());
-  cprintf("Expected ACLK freq: %u Hz\n", uiBSP430clockACLK_Hz_ni());
+  nominal_Hz = ulBSP430clockACLK_Hz_ni();
+  cprintf("Expected ACLK freq: %lu Hz\n", nominal_Hz);
 
   timer = hBSP430timerLookup(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
   if (! timer) {
@@ -90,6 +94,9 @@ void main ()
   cprintf("CC0 uses %s.%u\n",
           xBSP430portName(BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE) ?: "P?",
           iBSP430portBitPosition(BSP430_TIMER_CCACLK_CC0_PORT_BIT));
+  if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 0, 1)) {
+    cprintf("Clock signals: %s\n", xBSP430platformPeripheralHelp(BSP430_PERIPH_EXPOSED_CLOCKS, 0));
+  }
 
   /* Set CC0 port for input as CC0 trigger, with weak pull-down */
   BSP430_PORT_HAL_HPL_DIR(h_cc0) &= ~BSP430_TIMER_CCACLK_CC0_PORT_BIT;
@@ -116,21 +123,31 @@ void main ()
   memset(sums, 0, sizeof(sums));
   memset(samples, 0, sizeof(samples));
   captures.last_count = captures.count;
-  captures.samples = 0;
+  captures.nsamples = 0;
   while (1) {
+    unsigned int nsamples;
     unsigned long delta;
+    long err;
+    unsigned long ppm;
     int i;
     int si;
     
     BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
     delta = captures.count - captures.last_count;
     captures.last_count = captures.count;
-    si = (captures.samples - 1) & SAMPLES_MASK;
-    cprintf("%4u %-7lu", captures.samples, delta);
+    nsamples = captures.nsamples;
+    BSP430_CORE_ENABLE_INTERRUPT();
+    err = delta - nominal_Hz;
+    if (0 > err) {
+      err = -err;
+    }
+    ppm = ((err * 1000000UL) / nominal_Hz);
+    cprintf("%4u %-7lu (%lu ppm) : ", nsamples, delta, ppm);
+    si = (nsamples - 1) & SAMPLES_MASK;
     for (i = 0; i < HISTORY_EXP; ++i) {
       int sps = (1 << (i+1));
       sums[i] += delta;
-      if (captures.samples >= sps) {
+      if (nsamples >= sps) {
         unsigned int di = (MAX_SAMPLES + si - sps) & SAMPLES_MASK;
         sums[i] -= samples[di];
         EMIT_SCALED(sums[i], sps);
