@@ -249,6 +249,11 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
     SFRIFG1 &= ~OFIFG;                          \
   } while (0)
 
+#ifndef BSP430_CLOCK_LFXT1_XCAP
+/** Peripheral default setting for platform-specific constant */
+#define BSP430_CLOCK_LFXT1_XCAP XCAP_1
+#endif /* BSP430_CLOCK_LFXT1_XCAP */
+
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
 

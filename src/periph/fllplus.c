@@ -168,7 +168,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
     }
     loop_delta = (0 < loop_limit) ? 1 : 0;
 
-    FLL_CTL0 = (FLL_CTL0 & ~(OSCCAP0 | OSCCAP1 | XTS_FLL)) | BSP430_FLLPLUS_XCAPxPF;
+    FLL_CTL0 = (FLL_CTL0 & ~(OSCCAP0 | OSCCAP1 | XTS_FLL)) | BSP430_CLOCK_LFXT1_XCAP;
     do {
       FLL_CTL0 &= ~LFOF;
       loop_limit -= loop_delta;

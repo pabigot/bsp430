@@ -61,7 +61,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
     /* See whether the crystal is populated and functional.  Do
      * this with the DCO reset to the power-up configuration,
      * where clock should be nominal 1 MHz. */
-    BCSCTL3 = XCAP_1;
+    BCSCTL3 = BSP430_CLOCK_LFXT1_XCAP;
     do {
       BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
       BSP430_CORE_WATCHDOG_CLEAR();

@@ -388,7 +388,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
 
     /* Low frequency XT1 needed.  Spin at high drive to stability, then
      * drop back.  Preserve XT1 configuration. */
-    UCSCTL6 = XT1DRIVE_3 | XCAP_1 | (UCSCTL6 & ~(XTS | XT1BYPASS | XT1OFF | XCAP0 | XCAP1));
+    UCSCTL6 = XT1DRIVE_3 | BSP430_CLOCK_LFXT1_XCAP | (UCSCTL6 & ~(XTS | XT1BYPASS | XT1OFF | XCAP0 | XCAP1));
     do {
       BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
       loop_limit -= loop_delta;

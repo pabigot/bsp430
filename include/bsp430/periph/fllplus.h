@@ -118,18 +118,26 @@
 
 /** @def BSP430_FLLPLUS_XCAPxPF
  *
- * Oscillator capacitor section to be applied to FLL_CTL0 by
- * #iBSP430clockConfigureLFXT1_ni.
- *
- * @note Most examples use XCAP14PF, but my crude tests suggest that
- * of the capacitances available 0pF produces the closest to 32768 Hz,
- * at least on the EXP430FG4618 board.  This also happens to be the
- * power-up default.
+ * @deprecated Use #BSP430_CLOCK_LFXT1_XCAP
  *
  * @defaulted */
-#ifndef BSP430_FLLPLUS_XCAPxPF
+#if defined(BSP430_DOXYGEN)
 #define BSP430_FLLPLUS_XCAPxPF XCAP0PF
 #endif /* BSP430_FLLPLUS_XCAPxPF */
+
+#ifndef BSP430_CLOCK_LFXT1_XCAP
+#if defined(BSP430_FLLPLUS_XCAPxPF) && ! defined(BSP430_DOXYGEN)
+/* Default capacitance using legacy option */
+#define BSP430_CLOCK_LFXT1_XCAP BSP430_FLLPLUS_XCAPxPF
+#else  /* BSP430_FLLPLUS_XCAPxPF */
+/** Peripheral default setting for platform-specific constant.
+ *
+ * Note: TI examples tend to use XCAP14PF but on the EXP430FG4618 that
+ * results in a clock rate of 32765, or 100 ppm error.  XCAP0F is the
+ * power-up default, and measures 32769 or only 30ppm error. */
+#define BSP430_CLOCK_LFXT1_XCAP XCAP0PF
+#endif /* BSP430_FLLPLUS_XCAPxPF */
+#endif /* BSP430_CLOCK_LFXT1_XCAP */
 
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U

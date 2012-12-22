@@ -46,7 +46,7 @@
  * <li> <bsp430/periph/bc2.h> for BC2 (Basic Clock Module+)
  * <li> <bsp430/periph/fllplus.h> for FLLPLUS and FLLPLUS_SMALL (FLL Plus)
  * <li> <bsp430/periph/ucs.h> for UCS and UCS_RF (Unified Clock System)
- * <li> <bsp430/periph/cs.h> for CS (Clock System)
+ * <li> <bsp430/periph/cs.h> for CS and CS_A (Clock System)
  * </ul>
  *
  * @note Some modules (such as BC2) use LFXT1 to denote the source for
@@ -151,6 +151,25 @@
 #ifndef BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
 #define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES (20000UL)
 #endif /* BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
+
+/* Oscillator capacitor setting for use by
+ * #iBSP430clockConfigureLFXT1_ni.
+ *
+ * Most MSP430 clock systems allow control of internal capacitors for
+ * the low-frequency crystal.  The specific setting is
+ * platform-dependent; the value for the setting is
+ * peripheral-dependent.  A default value is provided in each
+ * peripheral header.
+ * 
+ * The value of this macro should be the bits that need to be set in
+ * the peripheral-specific register to control capacitance, normally
+ * in the form of a header constant such as #XCAP_1 or #XCAP10PF.
+ * 
+ * @platformdefault
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_LFXT1_XCAP include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
 
 /** Check whether the LFXT1 crystal has a fault condition.
  *
