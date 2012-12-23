@@ -442,22 +442,30 @@ iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
 
   /* Issue a start for transmit */
   hpl->ctl1 |= UCTR | UCTXSTT;
+
+  /* Send the data. */
   while (i < len) {
     do {
       if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
         return -1;
       }
     } while (! (hpl->ifg & UCTXIFG));
-
+    
     hpl->txbuf = data[i];
     ++i;
   }
-  /* Wait for any in-progress start to complete then issue stop */
-  do {
-    if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-      return -1;
-    }
-  } while (hpl->ctl1 & UCTXSTT);
+
+  /* Wait for the start to complete, but only if we sent data. */
+  if (0 < len) {
+    /* Wait for any in-progress start to complete then issue stop */
+    do {
+      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+        return -1;
+      }
+    } while (hpl->ctl1 & UCTXSTT);
+  }
+
+  /* Send the stop. */
   hpl->ctl1 |= UCTXSTP;
   return i;
 }
