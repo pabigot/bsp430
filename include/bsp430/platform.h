@@ -65,12 +65,31 @@
 
 /** Basic configuration for the platform.
  *
- * This routine will:
+ * Applications should assume that invoking this in main() will
+ * configure the system based on requested settings.  Most platforms
+ * should use something like:
+ *
+ *
+ * @platformdep
+ */
+void vBSP430platformInitialize_ni (void);
+
+/** Basic configuration for the platform.
+ *
+ * This routine should:
  * @li Disable the watchdog (see #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG)
  * @li Configure the LEDs (see #BSP430_PLATFORM_BOOT_CONFIGURE_LEDS)
- * @li Crystal configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1)
- * @li Clock configuration (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
- * @li Start the system clock (if #BSP430_UPTIME)
+ * @li Configure crystals (see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1)
+ * @li Configure clocks (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
+ * @li Start the system clock (see #BSP430_UPTIME)
+ *
+ * If your platform does not need to do anything special, you can
+ * re-use the standard implementation of this function by including
+ * this in your platform-specific @c platform.c file:
+ * 
+ * @code
+ * #include <bsp430/platform/standard.inc>
+ * @endcode
  */
 void vBSP430platformInitialize_ni (void);
 

@@ -36,6 +36,8 @@
 #include <bsp430/periph/port.h>
 #include <bsp430/platform/exp430f5529/platform.h>
 
+#include <bsp430/platform/standard.inc>
+
 #if BSP430_LED - 0
 const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Red */
@@ -232,34 +234,4 @@ vBSP430platformSpinForJumper_ni (void)
   P7OUT &= ~BIT7;
   P7DIR |= BIT7;
   P7REN &= ~BIT7;
-}
-
-void vBSP430platformInitialize_ni (void)
-{
-  int crystal_ok = 0;
-  (void)crystal_ok;
-
-#if BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG - 0
-  /* Hold off watchdog */
-  WDTCTL = WDTPW | WDTHOLD;
-#endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
-
-#if (BSP430_PLATFORM_BOOT_CONFIGURE_LEDS - 0) && (BSP430_LED - 0)
-  vBSP430ledInitialize_ni();
-#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LEDS */
-
-#if BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 - 0
-  /* Enable XT1 functions and clock */
-  crystal_ok = iBSP430clockConfigureLFXT1_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
-
-#if BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS - 0
-  iBSP430clockConfigureACLK_ni(BSP430_PLATFORM_BOOT_ACLKSRC);
-  ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
-  iBSP430clockConfigureSMCLKDividingShift_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT);
-#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
-
-#if BSP430_UPTIME - 0
-  vBSP430uptimeStart_ni();
-#endif /* BSP430_UPTIME */
 }
