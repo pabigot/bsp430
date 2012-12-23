@@ -177,12 +177,17 @@ iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
   unsigned long aclk_Hz;
   int iter = 0;
   const int SAMPLE_PERIOD_ACLK = 10;
+  unsigned char bcsctl3;
   unsigned int target_tsp;
 
   if (! tp) {
     return -1;
   }
 
+  bcsctl3 = BCSCTL3;
+  if (0 != iBSP430clockConfigureACLK_ni(eBSP430clockSRC_XT1CLK_OR_VLOCLK)) {
+    return -1;
+  }
   aclk_Hz = ulBSP430clockACLK_Hz_ni();
   target_tsp = (SAMPLE_PERIOD_ACLK * mclk_Hz) / aclk_Hz;
   tp->ctl = TASSEL_2 | MC_2 | TACLR;
@@ -215,6 +220,7 @@ iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
     }
   }
   tp->ctl = 0;
+  BCSCTL3 = bcsctl3;
   return rv;
 }
 #endif /* BSP430_BC2_TRIM_TO_MCLK */
@@ -280,9 +286,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 
   if (use_trim_to_mclk) {
 #if BSP430_BC2_TRIM_TO_MCLK - 0
-    if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
-      (void)iBSP430bc2TrimToMCLK_ni(mclk_Hz);
-    }
+    (void)iBSP430bc2TrimToMCLK_ni(mclk_Hz);
 #endif /* BSP430_BC2_TRIM_TO_MCLK */
   }
 
