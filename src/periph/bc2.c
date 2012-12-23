@@ -51,30 +51,32 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   int loop_delta;
   int rc = 0;
 
+  BSP430_CLOCK_CLEAR_FAULTS_NI();
   if (enablep && (0 != loop_limit)) {
     rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 1);
-    if (0 != rc) {
-      return rc;
-    }
-    loop_delta = (0 < loop_limit) ? 1 : 0;
+    if (0 == rc) {
+      loop_delta = (0 < loop_limit) ? 1 : 0;
 
-    /* See whether the crystal is populated and functional.  Do
-     * this with the DCO reset to the power-up configuration,
-     * where clock should be nominal 1 MHz. */
-    BCSCTL3 = BSP430_CLOCK_LFXT1_XCAP;
-    do {
-      BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
-      BSP430_CORE_WATCHDOG_CLEAR();
-      loop_limit -= loop_delta;
-      BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-    } while ((BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) && (0 != loop_limit));
-    rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
+      /* See whether the crystal is populated and functional.  Do
+       * this with the DCO reset to the power-up configuration,
+       * where clock should be nominal 1 MHz.
+       *
+       * @TODO: Preserve XT2 configuration */
+      BCSCTL3 = BSP430_CLOCK_LFXT1_XCAP;
+      do {
+        loop_limit -= loop_delta;
+        BSP430_CORE_WATCHDOG_CLEAR();
+        BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+      } while ((BSP430_BC2_LFXT1_IS_FAULTED_NI()) && (0 != loop_limit));
+      rc = ! BSP430_BC2_LFXT1_IS_FAULTED_NI();
+    }
   }
+  BSP430_CLOCK_OSC_CLEAR_FAULT_NI();
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 0);
+    /* Explicitly fall back to VLOCLK and disable capacitors */
     BCSCTL3 = LFXT1S_2;
   }
-  BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
   return rc;
 }
 
@@ -286,16 +288,11 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 
   /* Spin until DCO faults cleared */
   do {
-    BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
-    IFG1 &= ~OFIFG;
+    BSP430_CLOCK_CLEAR_FAULTS_NI();
     BSP430_CORE_WATCHDOG_CLEAR();
-    /* Wait at least 50 usec, assuming speed does not exceed 16 MHz.
-     * Delay suggested by SLAU144I "2xx Family Users Guide" section
-     * 5.2.7.1 "Sourcing MCLK from a Crystal".  This applies to using
-     * XT2, and we're guessing it's a sufficient delay to detect
-     * faults in other configurations. */
-    __delay_cycles(16 * 50);
-  } while (IFG1 & OFIFG);
+    /* Conservatively assume a 32 MHz clock */
+    BSP430_CORE_DELAY_CYCLES(32 * BSP430_CLOCK_FAULT_RECHECK_DELAY_US);
+  } while (BSP430_CLOCK_OSC_IS_FAULTED_NI());
 
   return configuredMCLK_Hz;
 }

@@ -92,35 +92,111 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_CS - 0)
 
-#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
-/** Check whether the LFXT1 crystal has a fault condition.
- *
- * This definition overrides the generic definition to test the
- * crystal-specific flags.  Note that if somebody has turned off the
- * crystal by setting CSCTL4.XT1OFF, the crystal is assumed to be
- * faulted. */
+/** @cond DOXYGEN_INTERNAL */
+/* Simplify conditionally-defined macros to avoid reference to
+ * non-existent values and inconsistencies between CS and CS_A. */
 #if defined(__MSP430_HAS_CS_A__)
-#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((CSCTL4 & LFXTOFF) || (CSCTL5 & LFXTOFFG))
-#else /* __MSP430_HAS_CS_A__ */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((CSCTL4 & XT1OFF) || (CSCTL5 & XT1OFFG))
-#endif /* __MSP430_HAS_CS_A__ */
+#define BSP430_CS_XT2DRIVE_ HFXTDRIVE
+#define BSP430_CS_XT2OFF_ HFXTOFF
+#define BSP430_CS_XT1DRIVE_ LFXTDRIVE
+#define BSP430_CS_XTS_ 0
+#define BSP430_CS_XT1BYPASS_ LFXTBYPASS
+#define BSP430_CS_XT1OFF_ LFXTOFF
+#define BSP430_CS_XT2OFFG_ HFXTOFFG
+#define BSP430_CS_XT1OFFG_ LFXTOFFG
+#else /* CS or CS_A */
+#define BSP430_CS_XT2DRIVE_ XT2DRIVE
+#define BSP430_CS_XT2OFF_ XT2OFF
+#define BSP430_CS_XT1DRIVE_ XT1DRIVE
+#define BSP430_CS_XTS_ XTS
+#define BSP430_CS_XT1BYPASS_ XT1BYPASS
+#define BSP430_CS_XT1OFF_ XT1OFF
+#if defined(XT2OFFG)
+#define BSP430_CS_XT2OFFG_ XT2OFFG
+#else /* XT2OFFG */
+#define BSP430_CS_XT2OFFG_ 0
+#endif /* XT2OFFG */
+#define BSP430_CS_XT1OFFG_ XT1OFFG
+#endif /* CS or CS_A */
+/** @endcond */
 
-#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
-/** Clear the fault associated with LFXT1.
+/** CS-specific check for LFXT1 crystal fault condition.
+ *
+ * This checks exactly for the fault condition.
+ *
+ * @note A crystal that has never been enabled will not register as
+ * faulted. */
+#define BSP430_CS_LFXT1_IS_FAULTED_NI() (CSCTL5 & BSP430_CS_XT1OFFG_)
+
+/** CS-specific check for XT2 crystal fault condition.
+ *
+ * If the platform does not support an XT2 crystal no fault is
+ * diagnosed.
+ *
+ * @note A crystal that has never been enabled will not register as
+ * faulted. */
+#define BSP430_CS_XT2_IS_FAULTED_NI() (CSCTL5 & BSP430_CS_XT2OFFG_)
+
+/** Check whether the CS-controlled LFXT1 crystal has a fault condition.
+ *
+ * @note Oscillator fault flags are not set unless a fault has been
+ * detected.  If the crystal has never been enabled, no fault will
+ * have been detected.  On power-up, the XIN function is not enabled
+ * and CSCTL4.XT1OFF is set, and BSP430 treats CSCTL4.XT1OFF as an
+ * indication that the pins are not configured for crystal use, either
+ * because LFXT1 has not been configured or has been configured and
+ * found to be faulted.  Although it is perfectly acceptable to have
+ * CSCTL4.XT1OFF set and the crystal working fine, the complexity of
+ * detecting that case is not supported by this implementation.
+ *
+ * @defaulted
+ * @see #BSP430_CS_LFXT1_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_LFXT1_IS_FAULTED_NI)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((CSCTL4 & BSP430_CS_XT1OFF_) || BSP430_CS_LFXT1_IS_FAULTED_NI())
+#endif /* BSP430_CLOCK_LFXT1_IS_FAULTED_NI */
+
+/** Check whether the CS-controlled XT2 crystal has a fault condition.
+ * 
+ * @note Oscillator fault flags are not set unless a fault has been
+ * detected.  If the crystal has never been enabled, no fault will
+ * have been detected.  On power-up, the XT2IN function is not enabled
+ * and CSCTL4.XT2OFF is set, and BSP430 treats CSCTL4.XT2OFF as an
+ * indication that the pins are not configured for crystal use, either
+ * because XT2 has not been configured or has been configured and
+ * found to be faulted.  Although it is perfectly acceptable to have
+ * CSCTL4.XT2OFF set and the crystal working fine, the complexity of
+ * detecting that case is not supported by this implementation.
+ *
+ * @defaulted
+ * @see #BSP430_CS_XT2_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_XT2_IS_FAULTED_NI)
+#define BSP430_CLOCK_XT2_IS_FAULTED_NI() ((CSCTL4 & BSP430_CS_XT2OFF_) || BSP430_CS_XT2_IS_FAULTED_NI())
+#endif /* BSP430_CLOCK_XT2_IS_FAULTED_NI */
+
+/** Clear all CS-specific faults.
+ *
+ * @note This does not unlock the CS registers.  Invoking it while
+ * registers are locked will result in a restart. */
+#define BSP430_CS_CLEAR_FAULTS_NI() do {                        \
+    CSCTL5 &= ~(BSP430_CS_XT2OFFG_ | BSP430_CS_XT1OFFG_);       \
+  } while (0)                                                   \
+
+/** Clear all clock faults.
  *
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag.
  *
- * @warning Because the CS registers must be unlocked when being
- * modified, this macro will unlock and then re-lock them.  It should
- * not be invoked in a situation where the CS registers are already
- * locked. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {	\
-    CSCTL0_H = 0xA5;                                    \
-    CSCTL5 &= ~XT1OFFG;                                 \
-    CSCTL0_H = !0xA5;                                   \
-    SFRIFG1 &= ~OFIFG;                                  \
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_CLEAR_FAULTS_NI)
+#define BSP430_CLOCK_CLEAR_FAULTS_NI() do {                     \
+    CSCTL0_H = 0xA5;                                            \
+    BSP430_CS_CLEAR_FAULTS_NI();                                \
+    CSCTL0_H = !0xA5;                                           \
+    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                          \
   } while (0)
+#endif /*  BSP430_CLOCK_CLEAR_FAULTS_NI */
 
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U

@@ -75,18 +75,13 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   SCFQCTL = dcoclk_xt1 - 1;
   SCFI0 = (flld * FLLD0) | fn_x;
 
-  /* Spin until DCO faults cleared */
+  /* Clear all the oscillator faults and spin until DCO stabilized. */
   do {
-    BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
+    BSP430_CLOCK_CLEAR_FAULTS_NI();
     BSP430_CORE_WATCHDOG_CLEAR();
-    IFG1 &= ~OFIFG;
-    /* Wait at least 50 usec, assuming speed does not exceed 16 MHz.
-     * Delay suggested by SLAU144I "2xx Family Users Guide" section
-     * 5.2.7.1 "Sourcing MCLK from a Crystal".  This applies to using
-     * XT2 and for a different MCU family, but we're guessing it's a
-     * sufficient delay to detect faults in other configurations. */
-    __delay_cycles(16 * 50);
-  } while (FLL_CTL0 & DCOF);
+    /* Conservatively assume a 32 MHz clock */
+    BSP430_CORE_DELAY_CYCLES(32 * BSP430_CLOCK_FAULT_RECHECK_DELAY_US);
+  } while (BSP430_FLLPLUS_DCO_IS_FAULTED_NI());
 
   return ulBSP430clockMCLK_Hz_ni();
 }
@@ -161,23 +156,24 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   int loop_delta;
   int rc = 0;
 
+  BSP430_CLOCK_CLEAR_FAULTS_NI();
   if (enablep && (0 != loop_limit)) {
     rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 1);
-    if (0 != rc) {
-      return rc;
+    if (0 == rc) {
+      loop_delta = (0 < loop_limit) ? 1 : 0;
+
+      FLL_CTL0 = (FLL_CTL0 & ~(OSCCAP0 | OSCCAP1 | XTS_FLL)) | BSP430_CLOCK_LFXT1_XCAP;
+      do {
+        BSP430_CLOCK_CLEAR_FAULTS_NI();
+        loop_limit -= loop_delta;
+        BSP430_CORE_WATCHDOG_CLEAR();
+        BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+      } while (BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI() && (0 != loop_limit));
+      
+      rc = ! BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI();
     }
-    loop_delta = (0 < loop_limit) ? 1 : 0;
-
-    FLL_CTL0 = (FLL_CTL0 & ~(OSCCAP0 | OSCCAP1 | XTS_FLL)) | BSP430_CLOCK_LFXT1_XCAP;
-    do {
-      FLL_CTL0 &= ~LFOF;
-      loop_limit -= loop_delta;
-      BSP430_CORE_WATCHDOG_CLEAR();
-      BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-    } while ((FLL_CTL0 & LFOF) && (0 != loop_limit));
-
-    rc = !(FLL_CTL0 & LFOF);
   }
+  BSP430_CLOCK_OSC_CLEAR_FAULT_NI();
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 0);
     FLL_CTL0 &= ~(OSCCAP0 | OSCCAP1);

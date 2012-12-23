@@ -159,25 +159,85 @@
 int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
 
-#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
-/** Check whether the LFXT1 crystal has a fault condition.
- *
- * This definition overrides the generic definition to test the
- * crystal-specific flags.  The LFXT1OF bit reflects the stability of
- * the external crystal only if the external crystal is the source for
- * LFXT1, so check that too: all is good only if LFXT1S is an external
- * crystal that is not faulted. */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (BCSCTL3 & (LFXT1S1 | LFXT1S0 | LFXT1OF))
+/** @cond DOXYGEN_INTERNAL */
+/* Simplify conditionally-defined macros to avoid reference to
+ * non-existent values.  The chip supports an external crystal for
+ * LFXT1 iff LFXT1S_0 is defined */
+#if defined(XT2OF)
+#define BSP430_BC2_XT2OF_ XT2OF
+#else /* XT2OF */
+#define BSP430_BC2_XT2OF_ 0
+#endif /* XT2OF */
+#if defined(LFXT1OF)
+#define BSP430_BC2_LFXT1OF_ LFXT1OF
+#else /* LFXT1OF */
+#define BSP430_BC2_LFXT1OF_ 0
+#endif /* LFXT1OF */
+/** @endcond */
 
-#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
-/** Clear the fault associated with LFXT1.
+/** BC2-specific check for LFXT1 crystal fault condition.
  *
- * This definition overrides the generic definition to clear the
- * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {                   \
-    /* User's guide says BCSCTL3.LFXT1OF is read-only. */	\
-    IFG1 &= ~OFIFG;                                             \
+ * This checks exactly for the fault condition.
+ *
+ * @note A crystal that has never been enabled will not register as
+ * faulted. */
+#define BSP430_BC2_LFXT1_IS_FAULTED_NI() (BCSCTL3 & BSP430_BC2_LFXT1OF_)
+
+/** BC2-specific check for XT2 crystal fault condition.
+ *
+ * If the platform does not support an XT2 crystal no fault is
+ * diagnosed.
+ *
+ * @note A crystal that has never been enabled will not register as
+ * faulted. */
+#define BSP430_BC2_XT2_IS_FAULTED_NI() (BC2CTL7 & BSP430_BC2_XT2OF_)
+
+/** Check whether the BC2-controlled LFXT1 crystal has a fault condition.
+ *
+ * @note Unlike most other MSP430 clock peripherals, MCUs with BC2
+ * power-up with the crystal pins in their peripheral mode and with
+ * the external crystal selected as the LFXT1 source.  However, the
+ * fault flag is still valid only if the external crystal is selected.
+ * This check will indicate a fault if one is present, or if the LFXT1
+ * source is not the external crystal.
+ *
+ * @defaulted
+ * @see #BSP430_BC2_LFXT1_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_LFXT1_IS_FAULTED_NI)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((BCSCTL3 & (LFXT1S0 | LFXT1S1)) || BSP430_BC2_LFXT1_IS_FAULTED_NI())
+#endif /* BSP430_CLOCK_LFXT1_IS_FAULTED_NI */
+
+/** Check whether the BC2-controlled XT2 crystal has a fault condition.
+ * 
+ * @note Oscillator fault flags are not set unless a fault has been
+ * detected.  If the crystal has never been enabled, no fault will
+ * have been detected.  On power-up, the XT2IN function is not enabled
+ * and BCSCTL1.XT2OFF is set, and BSP430 treats BCSCTL1.XT2OFF as an
+ * indication that the pins are not configured for crystal use, either
+ * because XT2 has not been configured or has been configured and
+ * found to be faulted.  Although it is perfectly acceptable to have
+ * BCSCTL1.XT2OFF set and the crystal working fine, the complexity of
+ * detecting that case is not supported by this implementation.
+ *
+ * @defaulted
+ * @see #BSP430_BC2_XT2_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_XT2_IS_FAULTED_NI)
+#define BSP430_CLOCK_XT2_IS_FAULTED_NI() ((BCSCTL1 & XT2OFF) || BSP430_BC2_XT2_IS_FAULTED_NI())
+#endif /* BSP430_CLOCK_XT2_IS_FAULTED_NI */
+
+/** Clear all clock faults.
+ *
+ * The BC2 oscillator fault flags are read-only, so this only clears
+ * the system oscillator flag.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_CLEAR_FAULTS_NI)
+#define BSP430_CLOCK_CLEAR_FAULTS_NI() do {                             \
+    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                                  \
   } while (0)
+#endif /*  BSP430_CLOCK_CLEAR_FAULTS_NI */
 
 #ifndef BSP430_CLOCK_LFXT1_XCAP
 /** Peripheral default setting for platform-specific constant */

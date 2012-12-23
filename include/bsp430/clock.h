@@ -126,33 +126,7 @@
 #define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 0
 #endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
 
-/** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
- *
- * Define this to the number of MCLK cycles that
- * #iBSP430clockConfigureLFXT1_ni should delay, after clearing
- * oscillator faults, before checking for oscillator stability.  This
- * must be a compile-time constant integer compatible with
- * <tt>unsigned long</tt>.
- *
- * Crystal stabilization can take hundreds of milliseconds.  If this
- * value is too short, #iBSP430clockConfigureLFXT1_ni may prematurely
- * decide that the crystal is working; if it is too long, the return
- * from #iBSP430clockConfigureLFXT1_ni is delayed.
- *
- * The default value is chosen to reflect a 20msec delay at the PUC
- * MCLK frequency of roughly 1MHz.  This allows
- * #BSP430_CORE_WATCHDOG_CLEAR() to be invoked within the loop to
- * prevent a watchdog reset while waiting for stabilization.  It does
- * assume that an unstable crystal will indicate a fault within
- * 10msec, which may not be true.
- *
- * @defaulted
- */
-#ifndef BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
-#define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES (20000UL)
-#endif /* BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
-
-/* Oscillator capacitor setting for use by
+/** Oscillator capacitor setting for use by
  * #iBSP430clockConfigureLFXT1_ni.
  *
  * Most MSP430 clock systems allow control of internal capacitors for
@@ -171,59 +145,133 @@
 #define BSP430_CLOCK_LFXT1_XCAP include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** Check whether the LFXT1 crystal has a fault condition.
+/** Check whether any clock has a fault condition.
  *
- * The generic implementation looks for any oscillator fault by
- * checking the system-wide register.  It is overridden in
- * peripheral-specific clock headers where an ability exists to check
- * specifically for a LFXT1 fault.  The value is nonzero iff an
- * external crystal is the source for LFXT1 and a fault has been
- * detected.
+ * This checks all available clocks on the system.  Use
+ * peripheral-specific checks for specific clocks.
  *
- * @note This function macro is implicitly not to be interrupted, and
- * should be implemented where possible as a single instruction test.
+ * @see #BSP430_CLOCK_CLEAR_FAULTS_NI()
  *
- * @note This test is intended specifically to validate an external
- * watch crystal running at 32 KiHz.  Where LFXT1 is sourced from
- * other means, it is assumed that the (missing) crystal is faulted
- * even if the peripheral-specific bit suggests it is not.  Similarly,
- * the state of the system oscillator fault bit is not reflected in
- * the value for a peripheral-specific check.
+ * @defaulted
+ * @platformdep */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_IS_FAULTED_NI() peripheral specific
+#endif /* BSP430_DOXYGEN */
+
+/** The delay after clearing clock faults before recurrent faults are expected.
+ *
+ * When a clock fault is cleared, the clock peripheral will
+ * automatically set the fault indicator again if the clock is still
+ * faulted.  However there is no evidence in the documentation that
+ * this is done instantly.  BSP430 infrastructure code will delay this
+ * many microseconds after clearing faults before checking to see
+ * whether they are still present.
+ * 
+ * Delay suggested by SLAU144I "2xx Family Users Guide" section
+ * 5.2.7.1 "Sourcing MCLK from a Crystal".  This applies to using XT2
+ * and for a specific MCU family, but we're guessing it's a sufficient
+ * delay to detect faults in other configurations.  For DCO faults
+ * it's probably too long.
+ * 
+ * @defaulted */
+#ifndef BSP430_CLOCK_FAULT_RECHECK_DELAY_US
+#define BSP430_CLOCK_FAULT_RECHECK_DELAY_US 50
+#endif /* BSP430_CLOCK_FAULT_RECHECK_DELAY_US */
+
+/** Clear faults associated with clocks 
+ *
+ * This clears the state bits associated with fault in all clock
+ * systems supported by the peripheral.  If a clock still exhibits a
+ * fault condition, the bits will be set again automatically, though
+ * perhaps not immediately.
+ *
+ * @note Faults are cleared on peripheral-specific registers as well
+ * as the system oscillator fault flag.
  *
  * @warning If the underlying peripheral requires that its register
  * bank be unlocked for modification, this macro will do so then
  * re-lock them.  This will result in unexpected behavior if the macro
  * is invoked in a context where the registers are already unlocked.
  *
- * @see #BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI()
+ * @see #BSP430_CLOCK_IS_FAULTED_NI(),
+ * #BSP430_CLOCK_FAULT_RECHECK_DELAY_US
  *
  * @defaulted
- * @overridable */
+ * @platformdep */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_CLEAR_FAULTS_NI() peripheral specific
+#endif /* BSP430_DOXYGEN */
+
+/** Check whether the system oscillator fault flag is set.
+ *
+ * This checks the special function register which reflects roll-up
+ * oscillator faults throughout the system.
+ * 
+ * @platformdep */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (SFRIFG1 & OFIFG)
+#define BSP430_CLOCK_OSC_IS_FAULTED_NI() (SFRIFG1 & OFIFG)
 #else /* 5xx */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (IFG1 & OFIFG)
+#define BSP430_CLOCK_OSC_IS_FAULTED_NI() (IFG1 & OFIFG)
 #endif /* 5xx */
 
-/** Clear the fault associated with LFXT1.
+/** Clear the system oscillator fault flag.
  *
- * This clears the state bits associated with a fault in the LFXT1
- * crystal.  If the crystal still exhibits a fault condition, the bits
- * will be set again automatically.
+ * This clears the bit the special function register which reflects
+ * roll-up oscillator faults throughout the system.
+ * 
+ * @platformdep */
+#if defined(__MSP430_HAS_MSP430XV2_CPU__)
+#define BSP430_CLOCK_OSC_CLEAR_FAULT_NI() do { SFRIFG1 &= ~OFIFG; } while (0)
+#else /* 5xx */
+#define BSP430_CLOCK_OSC_CLEAR_FAULT_NI() do { IFG1 &= ~OFIFG; } while (0)
+#endif /* 5xx */
+
+/** Check whether the LFXT1 crystal has a fault condition.
  *
- * @note Where faults can be cleared on peripheral-specific registers,
- * the system oscillator fault is also cleared.  This is in contrast
- * to what is tested by #BSP430_CLOCK_LFXT1_IS_FAULTED_NI().
- *
- * @see #BSP430_CLOCK_LFXT1_IS_FAULTED_NI()
+ * The implementation of this is specific to the clock peripheral.
  *
  * @defaulted
- * @overridable */
-#if defined(__MSP430_HAS_MSP430XV2_CPU__)
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do { SFRIFG1 &= ~OFIFG; } while (0)
-#else /* 5xx */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do { IFG1 &= ~OFIFG; } while (0)
-#endif /* 5xx */
+ * @platformdep */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() peripheral specific
+#endif /* BSP430_DOXYGEN */
+
+/** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
+ *
+ * Define this to the number of MCLK cycles that
+ * #iBSP430clockConfigureLFXT1_ni should delay, after clearing
+ * oscillator faults, before checking for oscillator stability.  This
+ * must be a compile-time constant integer compatible with
+ * <tt>unsigned long</tt>.
+ *
+ * Crystal stabilization can take hundreds of milliseconds.  If this
+ * value is too short, #iBSP430clockConfigureLFXT1_ni may prematurely
+ * decide that the crystal is working; if it is too long, the return
+ * from #iBSP430clockConfigureLFXT1_ni is delayed.
+ *
+ * The default value is chosen to reflect a 50msec delay at the PUC
+ * MCLK frequency of roughly 1MHz.  This allows
+ * #BSP430_CORE_WATCHDOG_CLEAR() to be invoked within the loop to
+ * prevent a watchdog reset while waiting for stabilization.  It does
+ * assume that an unstable crystal will indicate a fault within this
+ * period, which may not be true.
+ *
+ * @defaulted
+ * @platformdep
+ */
+#ifndef BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
+#define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES (BSP430_CLOCK_FAULT_RECHECK_DELAY_US * 1000UL)
+#endif /* BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
+
+/** Check whether the XT2 crystal has a fault condition.
+ *
+ * The implementation of this is specific to the clock peripheral.
+ *
+ * @defaulted
+ * @platformdep */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_XT2_IS_FAULTED_NI() peripheral specific
+#endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_CLOCK_NOMINAL_XT1CLK_HZ
  *

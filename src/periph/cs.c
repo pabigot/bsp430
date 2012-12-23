@@ -177,31 +177,32 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   int rc = 0;
 
   CSCTL0_H = 0xA5;
+  BSP430_CS_CLEAR_FAULTS_NI();
   if (enablep && (0 != loop_limit)) {
     rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, enablep);
     if (0 == rc) {
       int loop_delta = (0 < loop_limit) ? 1 : 0;
 
       /* Low frequency XT1 needed.  Spin at high drive to stability, then
-       * drop back.  Preserve XT1 configuration. */
-      CSCTL4 = (CSCTL4 | XT1DRIVE_3) & ~(XTS | XT1BYPASS | XT1OFF);
+       * drop back. */
+      CSCTL4 = (CSCTL4 | XT1DRIVE_3) & ~(BSP430_CS_XTS_ | BSP430_CS_XT1BYPASS_ | BSP430_CS_XT1OFF_);
       do {
-        CSCTL5 &= ~XT1OFFG;
-        BSP430_CORE_WATCHDOG_CLEAR();
+        BSP430_CS_CLEAR_FAULTS_NI();
         loop_limit -= loop_delta;
+        BSP430_CORE_WATCHDOG_CLEAR();
         BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
-      } while ((BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) && (0 != loop_limit));
-      CSCTL4 = CSCTL4 & ~XT1DRIVE_3;
-      rc = ! BSP430_CLOCK_LFXT1_IS_FAULTED_NI();
+      } while ((BSP430_CS_LFXT1_IS_FAULTED_NI()) && (0 != loop_limit));
+      rc = ! BSP430_CS_LFXT1_IS_FAULTED_NI();
     }
   }
+  BSP430_CLOCK_OSC_CLEAR_FAULT_NI();
+  CSCTL4 &= ~XT1DRIVE_3;
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_LFXT1, 0, 0);
-    CSCTL4 |= XT1OFF;
-    CSCTL4 &= ~(XT1DRIVE0 | XT1DRIVE1);
+    /* Set this as an indication that the pin configuration is off */
+    CSCTL4 |= BSP430_CS_XT1OFF_;
   }
   CSCTL0_H = !0xA5;
-  BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI();
   return rc;
 }
 

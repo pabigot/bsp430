@@ -203,24 +203,98 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 #define BSP430_UCS_FLL_SELREF SELREF__XT1CLK
 #endif /* BSP430_UCS_FLL_SELREF */
 
-#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
-/** Check whether the LFXT1 crystal has a fault condition.
- *
- * This definition overrides the generic definition to test the
- * crystal-specific flags.  Note that if somebody has turned off the
- * crystal by setting UCSCTL6.XT1OFF, the crystal is assumed to be
- * faulted.*/
-#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((UCSCTL6 & XT1OFF) || (UCSCTL7 & XT1LFOFFG))
+/** @cond DOXYGEN_INTERNAL */
+/* Simplify conditionally-defined macros to avoid reference to
+ * non-existent values. */
+#if defined(XT2OFFG)
+#define BSP430_UCS_XT2OFF_ XT2OFF
+#define BSP430_UCS_XT2OFFG_ XT2OFFG
+#else /* XT2OFFG */
+#define BSP430_UCS_XT2OFF_ 0
+#define BSP430_UCS_XT2OFFG_ 0
+#endif /* XT2OFFG */
+#if defined(XT1HFOFFG)
+#define BSP430_UCS_XT1HFOFFG_ XT1HFOFFG
+#else /* XT1HFOFFG */
+#define BSP430_UCS_XT1HFOFFG_ 0
+#endif /* XT1HFOFFG */
+/** @endcond */
 
-#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
-/** Clear the fault associated with LFXT1.
+/** UCS-specific check for DCO fault condition */
+#define BSP430_UCS_DCO_IS_FAULTED_NI() (UCSCTL7 & DCOFFG)
+
+/** UCS-specific check for LFXT1 crystal fault condition.
+ *
+ * This checks exactly for the fault condition.
+ *
+ * @note A crystal that has never been enabled will not register as
+ * faulted. */
+#define BSP430_UCS_LFXT1_IS_FAULTED_NI() (UCSCTL7 & XT1LFOFFG)
+
+/** UCS-specific check for XT2 crystal fault condition.
+ *
+ * If the platform does not support an XT2 crystal no fault is
+ * diagnosed.
+ *
+ * @note A crystal that has never been enabled will not register as
+ * faulted. */
+#define BSP430_UCS_XT2_IS_FAULTED_NI() (UCSCTL7 & BSP430_UCS_XT2OFFG_)
+
+/** Check whether the UCS-controlled LFXT1 crystal has a fault condition.
+ *
+ * @note Oscillator fault flags are not set unless a fault has been
+ * detected.  If the crystal has never been enabled, no fault will
+ * have been detected.  On power-up, the XIN function is not enabled
+ * and UCSCTL6.XT1OFF is set, and BSP430 treats UCSCTL6.XT1OFF as an
+ * indication that the pins are not configured for crystal use, either
+ * because LFXT1 has not been configured or has been configured and
+ * found to be faulted.  Although it is perfectly acceptable to have
+ * UCSCTL6.XT1OFF set and the crystal working fine, the complexity of
+ * detecting that case is not supported by this implementation.
+ *
+ * @defaulted
+ * @see #BSP430_UCS_LFXT1_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_LFXT1_IS_FAULTED_NI)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((UCSCTL6 & XT1OFF) || BSP430_UCS_LFXT1_IS_FAULTED_NI())
+#endif /* BSP430_CLOCK_LFXT1_IS_FAULTED_NI */
+
+/** Check whether the UCS-controlled XT2 crystal has a fault condition.
+ * 
+ * @note Oscillator fault flags are not set unless a fault has been
+ * detected.  If the crystal has never been enabled, no fault will
+ * have been detected.  On power-up, the XT2IN function is not enabled
+ * and UCSCTL6.XT2OFF is set, and BSP430 treats UCSCTL6.XT2OFF as an
+ * indication that the pins are not configured for crystal use, either
+ * because XT2 has not been configured or has been configured and
+ * found to be faulted.  Although it is perfectly acceptable to have
+ * UCSCTL6.XT2OFF set and the crystal working fine, the complexity of
+ * detecting that case is not supported by this implementation.
+ *
+ * @defaulted
+ * @see #BSP430_UCS_XT2_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_XT2_IS_FAULTED_NI)
+#define BSP430_CLOCK_XT2_IS_FAULTED_NI() ((UCSCTL6 & BSP430_UCS_XT2OFF_) || BSP430_UCS_XT2_IS_FAULTED_NI())
+#endif /* BSP430_CLOCK_XT2_IS_FAULTED_NI */
+
+/** Clear all UCS-specific faults. */
+#define BSP430_UCS_CLEAR_FAULTS_NI() do {                               \
+    UCSCTL7 &= ~(BSP430_UCS_XT2OFFG_ | BSP430_UCS_XT1HFOFFG_ | XT1LFOFFG | DCOFFG); \
+  } while (0)                                                           \
+    
+/** Clear all clock faults.
  *
  * This definition overrides the generic definition to clear the
- * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {        \
-    UCSCTL7 &= ~XT1LFOFFG;                              \
-    SFRIFG1 &= ~OFIFG;                                  \
+ * crystal-specific flags as well as the system flag.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_CLEAR_FAULTS_NI)
+#define BSP430_CLOCK_CLEAR_FAULTS_NI() do {                             \
+    BSP430_UCS_CLEAR_FAULTS_NI();                                       \
+    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                                  \
   } while (0)
+#endif /*  BSP430_CLOCK_CLEAR_FAULTS_NI */
 
 #ifndef BSP430_CLOCK_LFXT1_XCAP
 /** Peripheral default setting for platform-specific constant */

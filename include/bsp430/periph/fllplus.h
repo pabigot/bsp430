@@ -93,28 +93,78 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_FLLPLUS - 0)
 
-#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI
-/** Check whether the LFXT1 crystal has a fault condition.
- *
- * This definition overrides the generic definition to test the
- * crystal-specific flags.
- *
- * @warning MSP430F41x2 devices support an FLL_CTL2 register which can
- * select an alternative source for LFXT1.  This macro does not verify
- * whether that register exists and is in fact selecting the external
- * crystal.  In all other MCUs with FLLPLUS, it is believed that the
- * crystal is mandatory and cannot be deselected. */
-#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (FLL_CTL0 & LFOF)
+/** @cond DOXYGEN_INTERNAL */
+/* Simplify conditionally-defined macros to avoid reference to
+ * non-existent values. */
+#if defined(XT2OF)
+#define BSP430_FLLPLUS_XT2OF_ XT2OF
+#else /* XT2OF */
+#define BSP430_FLLPLUS_XT2OF_ 0
+#endif /* XT2OF */
+/** @endcond */
 
-#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI
-/** Clear the fault associated with LFXT1.
+/** FLL+-specific check for LFXT1 crystal fault condition.
  *
- * This definition overrides the generic definition to clear the
- * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {           \
-    /* User's guide says FLL_CTL0.LFOF is read-only. */ \
-    IFG1 &= ~OFIFG;                                     \
+ * This checks exactly for the fault condition. */
+#define BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI() (FLL_CTL0 & LFOF)
+
+/** FLL+-specific check for XT2 crystal fault condition.
+ *
+ * If the platform does not support an XT2 crystal no fault is
+ * diagnosed.
+ *
+ * @note A crystal that has never been enabled will not register as
+ * faulted. */
+#define BSP430_FLLPLUS_XT2_IS_FAULTED_NI() (FLL_CTL0 & BSP430_FLLPLUS_XT2OF_)
+
+/** FLL+-specific check for DCO fault condition.
+ *
+ * This checks exactly for the fault condition. */
+#define BSP430_FLLPLUS_DCO_IS_FAULTED_NI() (FLL_CTL0 & DCOF)
+
+/** Check whether the FLL+-controlled LFXT1 crystal has a fault condition.
+ *
+ * @note BSP430 currently does not support MSP430F41x2 devices which
+ * allow LXFT1 to be something other than a crystal, so the standard
+ * check for disabled LFXT1 does not apply on this peripheral.
+ *
+ * @defaulted
+ * @see #BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_LFXT1_IS_FAULTED_NI)
+#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI()
+#endif /* BSP430_CLOCK_LFXT1_IS_FAULTED_NI */
+
+/** Check whether the FLL+-controlled XT2 crystal has a fault condition.
+ * 
+ * @note Oscillator fault flags are not set unless a fault has been
+ * detected.  If the crystal has never been enabled, no fault will
+ * have been detected.  On power-up, the XT2IN function is not enabled
+ * and BCSCTL1.XT2OFF is set, and BSP430 treats BCSCTL1.XT2OFF as an
+ * indication that the pins are not configured for crystal use, either
+ * because XT2 has not been configured or has been configured and
+ * found to be faulted.  Although it is perfectly acceptable to have
+ * BCSCTL1.XT2OFF set and the crystal working fine, the complexity of
+ * detecting that case is not supported by this implementation.
+ *
+ * @defaulted
+ * @see #BSP430_FLLPLUS_XT2_IS_FAULTED_NI()
+ */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_XT2_IS_FAULTED_NI)
+#define BSP430_CLOCK_XT2_IS_FAULTED_NI() ((BCSCTL1 & XT2OFF) || BSP430_FLLPLUS_XT2_IS_FAULTED_NI())
+#endif /* BSP430_CLOCK_XT2_IS_FAULTED_NI */
+
+/** Clear all clock faults.
+ *
+ * The FLL+ oscillator fault flags are read-only, so this only clears
+ * the system oscillator flag.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_CLEAR_FAULTS_NI)
+#define BSP430_CLOCK_CLEAR_FAULTS_NI() do {                             \
+    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                                  \
   } while (0)
+#endif /*  BSP430_CLOCK_CLEAR_FAULTS_NI */
 
 /** @def BSP430_FLLPLUS_XCAPxPF
  *
