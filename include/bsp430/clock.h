@@ -160,11 +160,11 @@
  * platform-dependent; the value for the setting is
  * peripheral-dependent.  A default value is provided in each
  * peripheral header.
- * 
+ *
  * The value of this macro should be the bits that need to be set in
  * the peripheral-specific register to control capacitance, normally
  * in the form of a header constant such as #XCAP_1 or #XCAP10PF.
- * 
+ *
  * @platformdefault
  */
 #if defined(BSP430_DOXYGEN)

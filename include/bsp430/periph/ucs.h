@@ -217,9 +217,9 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
  *
  * This definition overrides the generic definition to clear the
  * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {	\
-    UCSCTL7 &= ~XT1LFOFFG;                      \
-    SFRIFG1 &= ~OFIFG;                          \
+#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {        \
+    UCSCTL7 &= ~XT1LFOFFG;                              \
+    SFRIFG1 &= ~OFIFG;                                  \
   } while (0)
 
 #ifndef BSP430_CLOCK_LFXT1_XCAP

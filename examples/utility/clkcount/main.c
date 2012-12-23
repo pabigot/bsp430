@@ -144,7 +144,7 @@ void main ()
     unsigned long ppm;
     int i;
     int si;
-    
+
     BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
     delta = captures.count - captures.last_count;
     captures.last_count = captures.count;

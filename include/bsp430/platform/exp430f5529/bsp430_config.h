@@ -92,9 +92,9 @@
 /* How to use ACLK as a capture/compare input source.  This board does
  * a very poor job of making signals accessible.  No timer has all of
  * CLK, CC0, and CC1 on header pins.
- * 
+ *
  * With CLK: Settings for TB0: T0B6 ccis=1 ; clk P7.7 ; cc0 P5.6 ; cc1 P5.7 -- CC0/CC1 PINS NOT ACCESSIBLE
- * 
+ *
  * Without CLK: Settings for TA2: T2A2 ccis=1 ; clk P2.2 ; cc0 P2.3 ; cc1 P2.4 -- CLK PIN NOT ACCESSIBLE
  */
 #if configBSP430_TIMER_CCACLK - 0
