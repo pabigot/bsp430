@@ -229,6 +229,25 @@ hBSP430eusciOpenSPI (hBSP430halSERIAL hal,
   return eusciConfigure(hal, ctlw0, 0, prescaler, 0, 0);
 }
 
+static int
+i2cSetAutoStop_ni (hBSP430halSERIAL hal,
+                    int enablep)
+{
+  int rc = 0;
+  if (!!enablep != !!(UCASTP_2 == (UCASTP_3 & HAL_HPL_FIELD(hal, ctlw1)))) {
+    /* Need to reconfigure device. */
+    rc = iBSP430eusciSetHold_ni(hal, 1);
+    if (0 == rc) {
+      unsigned int ctlw1 = HAL_HPL_FIELD(hal, ctlw1);
+      ctlw1 &= ~UCASTP_3;
+      ctlw1 |= (enablep ? UCASTP_2 : UCASTP_0);
+      HAL_HPL_FIELD(hal, ctlw1) = ctlw1;
+      rc = iBSP430eusciSetHold_ni(hal, 0);
+    }
+  }
+  return rc;
+}
+
 hBSP430halSERIAL
 hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
                      unsigned char ctl0_byte,
@@ -420,12 +439,9 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
 {
   volatile struct sBSP430hplEUSCIB * hpl = SERIAL_HAL_HPL_B(hal);
   uint8_t * dp = data;
-  const uint8_t * dpe = data + len;
-
-  /* UCBxTBCNT is only 8 bits. */
-  if (255 < len) {
-    return -1;
-  }
+  int use_auto_stop;
+  int rc;
+  const uint8_t * const dpe = data + len;
 
   /* Check for errors while waiting for previous activity to
    * complete */
@@ -435,15 +451,38 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
     }
   } while (hpl->statw & UCBBUSY);
 
-  /* Set for receive and store length */
+  /* Set for receive */
   hpl->ctlw0 &= ~UCTR;
+
+  /* Prefer to use UCASTP_2 via UCBxTBCNT because this is recommended
+   * for single-byte transfers.  Since this would limit transmissions
+   * to positive 8-bit lengths fall back to the manual mode in other
+   * cases. */
+  use_auto_stop = (0 < len) && (255 >= len);
+  rc = i2cSetAutoStop_ni(hal, use_auto_stop);
+  if (0 != rc) {
+    return rc;
+  }
+
+  /* Store the receive length.  This is ignored if not using auto-stop. */
   hpl->tbcnt = len;
 
   /* Issue a start */
   hpl->ctlw0 |= UCTXSTT;
 
-  /* Read it in as soon as it arrives.  Device handles stop. */
+  /* Read it in as soon as it arrives. */
   while (dp < dpe) {
+    if ((dpe == (dp+1)) && (! use_auto_stop)) {
+      /* This will be last character, and we're not using auto-stop.
+       * Wait for any in-progress start to complete then issue
+       * stop. */
+      do {
+        if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+          return -1;
+        }
+      } while (hpl->ctlw0 & UCTXSTT);
+      hpl->ctlw0 |= UCTXSTP;
+    }
     do {
       if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
         return -1;
@@ -461,12 +500,9 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
                           size_t len)
 {
   volatile struct sBSP430hplEUSCIB * hpl = SERIAL_HAL_HPL_B(hal);
-  int i = 0;
-
-  /* UCBxTBCNT is only 8 bits. */
-  if (255 < len) {
-    return -1;
-  }
+  int use_auto_stop;
+  int rc;
+  int i;
 
   /* Check for errors while waiting for previous activity to
    * complete */
@@ -476,13 +512,25 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
     }
   } while (hpl->statw & UCBBUSY);
 
-  /* Set the transaction length */
+  /* Prefer to use UCASTP_2 via UCBxTBCNT because this is recommended
+   * for single-byte transfers.  Since this would limit transmissions
+   * to positive 8-bit lengths fall back to the manual mode in other
+   * cases. */
+  use_auto_stop = (0 < len) && (255 >= len);
+  rc = i2cSetAutoStop_ni(hal, use_auto_stop);
+  if (0 != rc) {
+    return rc;
+  }
+
+  /* Set the transaction length.  If we're not using auto-stop this
+   * won't hurt. */
   hpl->tbcnt = len;
 
   /* Issue a start for transmit */
   hpl->ctlw0 |= UCTR | UCTXSTT;
 
   /* Spit it all out as soon as there's space */
+  i = 0;
   while (i < len) {
     do {
       if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
@@ -492,6 +540,21 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
     ++hal->num_tx;
     hpl->txbuf = data[i];
     ++i;
+  }
+  if (! use_auto_stop) {
+    /* Wait for any in-progress start to complete.  If the
+     * transmission length is zero nothing will be sent so don't
+     * wait. */
+    if (0 < len) {
+      do {
+        if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+          return -1;
+        }
+      } while (hpl->ctlw0 & UCTXSTT);
+    }
+    
+    /* Send the stop. */
+    hpl->ctlw0 |= UCTXSTP;
   }
 
   /* eUSCI module handles stop */
@@ -507,7 +570,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
  * to use portYIELD_FROM_ISR().
  *
  * Adding __always_inline__ supports maintainability by having a
- * single implementation but speed by forcing the implementation into
+ * single implementation and speed by forcing the implementation into
  * each handler.  It's a lot cleaner than defining the body as a
  * macro.  GCC will normally inline the code if there's only one call
  * point; there should be a configPORT_foo option to do so in other
@@ -560,7 +623,69 @@ euscia_isr (hBSP430halSERIAL hal)
   }
   return rv;
 }
-#endif /* EUSCIA ISR */
+#endif /* EUSCIB ISR */
+
+#if (configBSP430_HAL_EUSCI_B0_ISR - 0)
+static int
+#if (20120406 < __MSPGCC__) && (__MSP430X__ - 0)
+__attribute__ ( ( __c16__ ) )
+#endif /* CPUX */
+/* __attribute__((__always_inline__)) */
+euscib_isr (hBSP430halSERIAL hal)
+{
+  int did_tx;
+  int rv = 0;
+
+  switch (SERIAL_HAL_HPL_B(hal)->iv) {
+    default:
+    case USCI_NONE:
+      break;
+    case USCI_I2C_UCALIFG: /* == USCI_SPI_UCRXIFG */
+      hal->rx_byte = SERIAL_HAL_HPL_B(hal)->rxbuf;
+      ++hal->num_rx;
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->rx_cbchain_ni, hal, 0);
+      break;
+    case USCI_I2C_UCNACKIFG: /* == USCI_SPI_UCTXIFG */
+      rv = iBSP430callbackInvokeISRVoid_ni(&hal->tx_cbchain_ni, hal, 0);
+      did_tx = 0;
+      if (rv & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN) {
+        /* Found some data; send it out */
+        ++hal->num_tx;
+        did_tx = 1;
+        SERIAL_HAL_HPL_B(hal)->txbuf = hal->tx_byte;
+      } else {
+        /* No data; mark transmission disabled */
+        rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
+      }
+      /* If no more is expected, clear the interrupt so we don't wake
+       * again.  Further, if we didn't transmit anything mark that the
+       * function is ready so when the interrupt is next set it will
+       * fire. */
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        SERIAL_HAL_HPL_B(hal)->ie &= ~UCTXIE;
+        if (! did_tx) {
+          SERIAL_HAL_HPL_B(hal)->ifg |= UCTXIFG;
+        }
+      }
+      break;
+    case USCI_I2C_UCSTTIFG:
+    case USCI_I2C_UCSTPIFG:
+    case USCI_I2C_UCRXIFG3:
+    case USCI_I2C_UCTXIFG3:
+    case USCI_I2C_UCRXIFG2:
+    case USCI_I2C_UCTXIFG2:
+    case USCI_I2C_UCRXIFG1:
+    case USCI_I2C_UCTXIFG1:
+    case USCI_I2C_UCRXIFG0:
+    case USCI_I2C_UCTXIFG0:
+    case USCI_I2C_UCBCNTIFG:
+    case USCI_I2C_UCCLTOIFG:
+    case USCI_I2C_UCBIT9IFG:
+      break;
+  }
+  return rv;
+}
+#endif /* EUSCIB ISR */
 
 #if BSP430_SERIAL - 0
 static struct sBSP430serialDispatch dispatch_ = {
