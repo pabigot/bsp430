@@ -64,13 +64,13 @@ void main ()
     rc = iBSP430i2cTxData_ni(i2c, &pr, 1);
     if (0 > rc) {
       cprintf("I2C TX ERROR\n");
-      continue;
+      break;
     }
     memset(data, 0, sizeof(data));
     rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
     if (0 > rc) {
       cprintf("I2C RX ERROR\n");
-      continue;
+      break;
     }
     raw = data[1] | (data[0] << 8);
     if (0 == pr) {
