@@ -31,7 +31,6 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/utility/uptime.h>
-#include <stdlib.h>
 #include <stdio.h>
 
 #if BSP430_UPTIME - 0
@@ -95,21 +94,25 @@ const char *
 xBSP430uptimeAsText_ni (unsigned long duration_utt)
 {
   static char buf[sizeof("HHH:MM:SS.mmm")];
-  ldiv_t ld;
   unsigned long conversionFrequency_Hz;
   unsigned int msec;
   unsigned int sec;
   unsigned int min;
+  unsigned long q_sec;
+  unsigned long r_utt;
+  unsigned long q_min;
+  unsigned long q_hr;
 
   conversionFrequency_Hz = uptimeConversionFrequency_Hz_ni();
-  ld = ldiv(duration_utt, conversionFrequency_Hz);
-  msec = (1000L * ld.rem) / conversionFrequency_Hz;
-  ld = ldiv(ld.quot, 60);
-  sec = ld.rem;
-  ld = ldiv(ld.quot, 60);
-  min = ld.rem;
-  if (0 < ld.quot) {
-    snprintf(buf, sizeof(buf), "%u:%02u:%02u.%03u", (unsigned int)ld.quot, min, sec, msec);
+  q_sec = duration_utt / conversionFrequency_Hz;
+  r_utt = duration_utt - (q_sec * conversionFrequency_Hz);
+  msec = (1000L * r_utt) / conversionFrequency_Hz;
+  q_min = q_sec / 60;
+  sec = q_sec - (q_min * 60);
+  q_hr = q_min / 60;
+  min = (q_min - (q_hr * 60));
+  if (0 < q_hr) {
+    snprintf(buf, sizeof(buf), "%u:%02u:%02u.%03u", (unsigned int)q_hr, min, sec, msec);
   } else {
     snprintf(buf, sizeof(buf), "%2u:%02u.%03u", min, sec, msec);
   }
