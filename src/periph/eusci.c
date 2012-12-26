@@ -542,16 +542,13 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
     ++i;
   }
   if (! use_auto_stop) {
-    /* Wait for any in-progress start to complete.  If the
-     * transmission length is zero nothing will be sent so don't
-     * wait. */
-    if (0 < len) {
-      do {
-        if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-          return -1;
-        }
-      } while (hpl->ctlw0 & UCTXSTT);
-    }
+    /* Wait for any queued data to be transmitted before we stop, lest
+     * it get dropped. */
+    do {
+      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+        return -1;
+      }
+    } while (! (hpl->ifg & UCTXIFG));
     
     /* Send the stop. */
     hpl->ctlw0 |= UCTXSTP;

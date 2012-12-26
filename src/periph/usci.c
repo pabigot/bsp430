@@ -470,15 +470,14 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
     ++hal->num_tx;
   }
 
-  /* Wait for the start to complete, but only if we sent data. */
-  if (0 < len) {
-    do {
-      if (hpl->stat & (UCNACKIFG | UCALIFG)) {
-        return -1;
-      }
-    } while (hpl->ctl1 & UCTXSTT);
-  }
-
+  /* Wait for any queued data to be transmitted before we stop, lest
+   * it get dropped. */
+  do {
+    if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+      return -1;
+    }
+  } while (! (aux->tx_bit & *aux->ifgp));
+  
   /* Send the stop. */
   hpl->ctl1 |= UCTXSTP;
   return i;

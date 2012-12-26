@@ -455,15 +455,13 @@ iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
     ++i;
   }
 
-  /* Wait for the start to complete, but only if we sent data. */
-  if (0 < len) {
-    /* Wait for any in-progress start to complete then issue stop */
-    do {
-      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-        return -1;
-      }
-    } while (hpl->ctl1 & UCTXSTT);
-  }
+  /* Wait for any queued data to be transmitted before we stop, lest
+   * it get dropped. */
+  do {
+    if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+      return -1;
+    }
+  } while (! (hpl->ifg & UCTXIFG));
 
   /* Send the stop. */
   hpl->ctl1 |= UCTXSTP;
