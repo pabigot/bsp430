@@ -544,6 +544,38 @@
 #define BSP430_CORE_DISABLE_INTERRUPT() __disable_interrupt()
 #endif /* BSP430_CORE_DISABLE_INTERRUPT */
 
+/** Generic convert from microseconds to ticks at some frequency.
+ *
+ * @note Calculations are done using 32-bit operations.  Fastest code
+ * when parameters are compile-time constants.
+ *
+ * @see #BSP430_CORE_TICKS_TO_US, #BSP430_CORE_MS_TO_TICKS */
+#define BSP430_CORE_US_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000000UL)
+
+/** Generic convert from ticks at some frequency to microseconds.
+ * 
+ * @note Calculations are done using 32-bit operations.  Fastest code
+ * when parameters are compile-time constants.
+ *
+ * @see #BSP430_CORE_US_TO_TICKS, #BSP430_CORE_TICKS_TO_MS */
+#define BSP430_CORE_TICKS_TO_US(ticks_, hz_) ((1000000UL * (ticks_)) / (hz_))
+
+/** Generic convert from milliseconds to ticks at some frequency.
+ * 
+ * @note Calculations are done using 32-bit operations.  Fastest code
+ * when parameters are compile-time constants.
+ *
+ * @see #BSP430_CORE_TICKS_TO_MS, #BSP430_CORE_US_TO_TICKS */
+#define BSP430_CORE_MS_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000UL)
+
+/** Generic convert from ticks at some frequency to milliseconds.
+ * 
+ * @note Calculations are done using 32-bit operations.  Fastest code
+ * when parameters are compile-time constants.
+ *
+ * @see #BSP430_CORE_MS_TO_TICKS, #BSP430_CORE_TICKS_TO_US */
+#define BSP430_CORE_TICKS_TO_MS(ticks_, hz_) ((1000UL * (ticks_)) / (hz_))
+
 /* See <bsp430/rtos/freertos.h> */
 #if configBSP430_RTOS_FREERTOS - 0
 /* FreeRTOS defines application behavior in a shared header.  Read it

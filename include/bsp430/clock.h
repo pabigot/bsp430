@@ -98,7 +98,7 @@
  * @param _delay_us the delay in microseconds.  Expected, but not
  * required, to be a compile-time integer constant compatible with
  * unsigned long. */
-#define BSP430_CLOCK_US_TO_NOMINAL_MCLK(_delay_us) (((_delay_us) * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL)
+#define BSP430_CLOCK_US_TO_NOMINAL_MCLK(_delay_us) BSP430_CORE_US_TO_TICKS((_delay_us), BSP430_CLOCK_NOMINAL_MCLK_HZ)
 
 /** @def BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
  *
