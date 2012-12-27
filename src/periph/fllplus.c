@@ -96,6 +96,12 @@ ulBSP430clockMCLK_Hz_ni (void)
   return mclk_xt1 * (unsigned long) BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
 }
 
+unsigned long
+ulBSP430clockSMCLK_Hz_ni (void)
+{
+  return ulBSP430clockMCLK_Hz_ni();
+}
+
 int
 iBSP430clockSMCLKDividingShift_ni (void)
 {

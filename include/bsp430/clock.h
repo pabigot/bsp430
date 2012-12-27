@@ -529,19 +529,8 @@ int iBSP430clockSMCLKDividingShift_ni (void);
 
 /** Return the best available estimate of SMCLK frequency.
  *
- * This simply estimates MCLK then divides it based on the
- * peripheral-specific divider.  If clocks are configured through a
- * mechanism other than #ulBSP430clockConfigureMCLK_ni assumptions
- * made by the implementation may be incorrect.
- *
  * @return an estimate of the SMCLK frequency, in Hz */
-static unsigned long
-BSP430_CORE_INLINE
-ulBSP430clockSMCLK_Hz_ni (void)
-{
-  unsigned long mclk_Hz = ulBSP430clockMCLK_Hz_ni();
-  return mclk_Hz >> iBSP430clockSMCLKDividingShift_ni();
-}
+unsigned long ulBSP430clockSMCLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
 static unsigned long

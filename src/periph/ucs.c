@@ -304,12 +304,6 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
 
 #endif /* BSP430_UCS_TRIM_DCOCLKDIV */
 
-unsigned long
-ulBSP430clockMCLK_Hz_ni (void)
-{
-  unsigned int divm = (UCSCTL5 & DIVM_MASK) / DIVM0;
-  return lastTrimDCOCLKDIV_Hz_ >> divm;
-}
 
 int
 iBSP430clockSMCLKDividingShift_ni (void)
@@ -476,9 +470,27 @@ sourceToCSEL_ (eBSP430clockSource sel)
 }
 
 unsigned long
+ulBSP430clockMCLK_Hz_ni (void)
+{
+  unsigned long freq_Hz = cselToFreq_Hz_((UCSCTL4 & SELM_MASK) / SELM0);
+  unsigned int div = (UCSCTL5 & DIVM_MASK) / DIVM0;
+  return freq_Hz >> div;
+}
+
+unsigned long
+ulBSP430clockSMCLK_Hz_ni (void)
+{
+  unsigned long freq_Hz = cselToFreq_Hz_((UCSCTL4 & SELS_MASK) / SELS0);
+  unsigned int div = (UCSCTL5 & DIVS_MASK) / DIVS0;
+  return freq_Hz >> div;
+}
+
+unsigned long
 ulBSP430clockACLK_Hz_ni (void)
 {
-  return cselToFreq_Hz_((UCSCTL4 & SELA_MASK) / SELA0);
+  unsigned long freq_Hz = cselToFreq_Hz_((UCSCTL4 & SELA_MASK) / SELA0);
+  unsigned int div = (UCSCTL5 & DIVA_MASK) / DIVA0;
+  return freq_Hz >> div;
 }
 
 int

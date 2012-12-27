@@ -81,6 +81,9 @@
 /* Mask for SELM bits in CSCTL2 */
 #define SELM_MASK (SELM0 | SELM1 | SELM2)
 
+/* Mask for DIVA bits in CSCTL3 */
+#define DIVA_MASK (DIVA0 | DIVA1 | DIVA2)
+
 /* Mask for DIVS bits in CSCTL3 */
 #define DIVS_MASK (DIVS0 | DIVS1 | DIVS2)
 
@@ -115,13 +118,6 @@ ulBSP430csDCOCLK_Hz_ni (void)
   unsigned int csctl1 = CSCTL1;
 
   return supported_freq[!!(csctl1 & DCORSEL) + 2 * (csctl1 & DCOFSEL_MASK) / DCOFSEL0];
-}
-
-unsigned long
-ulBSP430clockMCLK_Hz_ni (void)
-{
-  unsigned int divm = (CSCTL3 & DIVM_MASK) / DIVM0;
-  return ulBSP430csDCOCLK_Hz_ni() >> divm;
 }
 
 int
@@ -312,9 +308,27 @@ sourceToCSEL_ (eBSP430clockSource sel)
 }
 
 unsigned long
+ulBSP430clockMCLK_Hz_ni (void)
+{
+  unsigned long freq_Hz = cselToFreq_Hz_((CSCTL2 & SELM_MASK) / SELM0);
+  unsigned int div = (CSCTL3 & DIVM_MASK) / DIVM0;
+  return freq_Hz >> div;
+}
+
+unsigned long
+ulBSP430clockSMCLK_Hz_ni (void)
+{
+  unsigned long freq_Hz = cselToFreq_Hz_((CSCTL2 & SELS_MASK) / SELS0);
+  unsigned int div = (CSCTL3 & DIVS_MASK) / DIVS0;
+  return freq_Hz >> div;
+}
+
+unsigned long
 ulBSP430clockACLK_Hz_ni (void)
 {
-  return cselToFreq_Hz_((CSCTL2 & SELA_MASK) / SELA0);
+  unsigned long freq_Hz = cselToFreq_Hz_((CSCTL2 & SELA_MASK) / SELA0);
+  unsigned int div = (CSCTL3 & DIVA_MASK) / DIVA0;
+  return freq_Hz >> div;
 }
 
 int

@@ -109,27 +109,6 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
   return iBSP430clockSMCLKDividingShift_ni();
 }
 
-unsigned long
-ulBSP430clockACLK_Hz_ni (void)
-{
-  unsigned long clk_hz;
-  int diva = (BCSCTL1 & DIVA_3) / DIVA0;
-  switch (BCSCTL3 & SELA_MASK) {
-    default:
-    case LFXT1S_0:
-      if (BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
-        clk_hz = BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
-      } else {
-        clk_hz = BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
-      }
-      break;
-    case LFXT1S_2:
-      clk_hz = BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
-      break;
-  }
-  return clk_hz >> diva;
-}
-
 int
 iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
 {
@@ -163,7 +142,36 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
-  return configuredMCLK_Hz;
+  int div = (BCSCTL2 & DIVM_3) / DIVM0;
+  return configuredMCLK_Hz >> div;
+}
+
+unsigned long
+ulBSP430clockSMCLK_Hz_ni (void)
+{
+  int div = (BCSCTL2 & DIVS_3) / DIVS0;
+  return configuredMCLK_Hz >> div;
+}
+
+unsigned long
+ulBSP430clockACLK_Hz_ni (void)
+{
+  unsigned long clk_hz;
+  int div = (BCSCTL1 & DIVA_3) / DIVA0;
+  switch (BCSCTL3 & SELA_MASK) {
+    default:
+    case LFXT1S_0:
+      if (BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
+        clk_hz = BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+      } else {
+        clk_hz = BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+      }
+      break;
+    case LFXT1S_2:
+      clk_hz = BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
+      break;
+  }
+  return clk_hz >> div;
 }
 
 #if BSP430_BC2_TRIM_TO_MCLK - 0
