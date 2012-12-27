@@ -549,6 +549,8 @@
  * @note Calculations are done using 32-bit operations.  Fastest code
  * when parameters are compile-time constants.
  *
+ * @note The result is rounded down.
+ *
  * @see #BSP430_CORE_TICKS_TO_US, #BSP430_CORE_MS_TO_TICKS */
 #define BSP430_CORE_US_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000000UL)
 
@@ -556,6 +558,8 @@
  * 
  * @note Calculations are done using 32-bit operations.  Fastest code
  * when parameters are compile-time constants.
+ *
+ * @note The result is rounded down.
  *
  * @see #BSP430_CORE_US_TO_TICKS, #BSP430_CORE_TICKS_TO_MS */
 #define BSP430_CORE_TICKS_TO_US(ticks_, hz_) ((1000000UL * (ticks_)) / (hz_))
@@ -565,6 +569,8 @@
  * @note Calculations are done using 32-bit operations.  Fastest code
  * when parameters are compile-time constants.
  *
+ * @note The result is rounded down.
+ *
  * @see #BSP430_CORE_TICKS_TO_MS, #BSP430_CORE_US_TO_TICKS */
 #define BSP430_CORE_MS_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000UL)
 
@@ -572,6 +578,8 @@
  * 
  * @note Calculations are done using 32-bit operations.  Fastest code
  * when parameters are compile-time constants.
+ *
+ * @note The result is rounded down.
  *
  * @see #BSP430_CORE_MS_TO_TICKS, #BSP430_CORE_TICKS_TO_US */
 #define BSP430_CORE_TICKS_TO_MS(ticks_, hz_) ((1000UL * (ticks_)) / (hz_))

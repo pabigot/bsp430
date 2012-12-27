@@ -37,6 +37,7 @@
 /* Inhibit definition if required components were not provided. */
 
 hBSP430halTIMER xBSP430uptimeTIMER_;
+unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
 
 void
 vBSP430uptimeStart_ni (void)
@@ -47,7 +48,8 @@ vBSP430uptimeStart_ni (void)
   xBSP430uptimeTIMER_->hpl->ctl =
     ((TASSEL0 | TASSEL1) & (BSP430_UPTIME_TASSEL))
     | ((ID0 | ID1) & (BSP430_UPTIME_DIVIDING_SHIFT))
-    | MC_2 | TACLR | TAIE;
+    | TACLR | TAIE;
+  vBSP430uptimeResume_ni();
 }
 
 void
@@ -59,34 +61,21 @@ vBSP430uptimeSuspend_ni (void)
 void
 vBSP430uptimeResume_ni (void)
 {
+  ulBSP430uptimeConversionFrequency_Hz_ni_ = ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
   xBSP430uptimeTIMER_->hpl->ctl |= MC_2;
-}
-
-static unsigned long uptimeConversionFrequency_Hz_;
-
-static BSP430_CORE_INLINE
-unsigned long
-uptimeConversionFrequency_Hz_ni (void)
-{
-  if (0 == uptimeConversionFrequency_Hz_) {
-    /* Get the frequency of the underlying timer.  If there's a
-     * divisor, the timer routine will take that into account. */
-    uptimeConversionFrequency_Hz_ = ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
-  }
-  return uptimeConversionFrequency_Hz_;
 }
 
 unsigned long
 ulBSP430uptimeConversionFrequency_Hz_ni (void)
 {
-  return uptimeConversionFrequency_Hz_ni();
+  return ulBSP430uptimeConversionFrequency_Hz_ni_;
 }
 
 unsigned long
 ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_Hz)
 {
-  unsigned long rv = uptimeConversionFrequency_Hz_;
-  uptimeConversionFrequency_Hz_ = frequency_Hz;
+  unsigned long rv = ulBSP430uptimeConversionFrequency_Hz_ni_;
+  ulBSP430uptimeConversionFrequency_Hz_ni_ = frequency_Hz;
   return rv;
 }
 
@@ -103,7 +92,7 @@ xBSP430uptimeAsText_ni (unsigned long duration_utt)
   unsigned long q_min;
   unsigned long q_hr;
 
-  conversionFrequency_Hz = uptimeConversionFrequency_Hz_ni();
+  conversionFrequency_Hz = ulBSP430uptimeConversionFrequency_Hz_ni_;
   q_sec = duration_utt / conversionFrequency_Hz;
   r_utt = duration_utt - (q_sec * conversionFrequency_Hz);
   msec = (1000L * r_utt) / conversionFrequency_Hz;
