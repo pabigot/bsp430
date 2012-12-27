@@ -386,6 +386,18 @@ typedef enum eBSP430clockSource {
    * #BSP430_CLOCK_NOMINAL_XT2CLK_HZ has been provided. */
   eBSP430clockSRC_XT2CLK,
 
+  /** Convenience alias for CS_A peripherals which renamed this
+   * clock. */
+  eBSP430clockSRC_HFXTCLK = eBSP430clockSRC_XT2CLK,
+
+  /** Internal low-power oscillator that exists only on CS_A
+   * peripherals. */
+  eBSP430clockSRC_MODCLK,
+  
+  /** Internal low-power oscillator that exists only on CS_A
+   * peripherals. */
+  eBSP430clockSRC_LFMODCLK,
+
   /** Fallback: use XT1CLK if #BSP430_CLOCK_LFXT1_IS_FAULTED_NI() is
    * false, otherwise use VLOCLK.
    *

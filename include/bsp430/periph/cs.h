@@ -120,6 +120,22 @@
 #endif /* CS or CS_A */
 /** @endcond */
 
+#if defined(BSP430_DOXYGEN) || defined(__MSP430_HAS_CS_A__)
+/* CS_A has a significantly different set of capabilities */
+
+/** Nominal rate of the CS_A peripheral MODCLK.
+ *
+ * This source exists only in the CS_A version of the CS peripheral.
+ * It is driven by an internal low-power oscillator. */
+#define BSP430_CS_NOMINAL_MODCLK_HZ 5000000UL
+
+/** Nominal rate of the CS_A peripheral LFMODCLK.
+ *
+ * This source exists only in the CS_A version of the CS peripheral.
+ * It is driven by an internal low-power oscillator. */
+#define BSP430_CS_NOMINAL_LFMODCLK_HZ (BSP430_CS_NOMINAL_MODCLK_HZ / 128)
+#endif /* __MSP430_HAS_CS_A__ */
+
 /** CS-specific check for LFXT1 crystal fault condition.
  *
  * This checks exactly for the fault condition.
