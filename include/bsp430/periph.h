@@ -288,6 +288,9 @@ xBSP430periphFromHPL (volatile void * hpl)
 struct sBSP430halISRVoidChainNode;
 struct sBSP430halISRIndexedChainNode;
 
+/* BSP430_HAL_ISR bits must not use 0x00F8 which are SCG1, SCG0,
+ * OSCOFF, CPUOFF, and GIE. */
+
 /** Indicate ISR top half should yield on return.
  *
  * In some cases, a chained ISR handler might perform an operation
@@ -297,14 +300,21 @@ struct sBSP430halISRIndexedChainNode;
  * yield to that task when it returns. */
 #define BSP430_HAL_ISR_CALLBACK_YIELD 0x1000
 
-/** Indicate ISR top half should disable the corresponding interrupt on return.
+/** Indicate ISR top half should disable the corresponding peripheral
+ * interrupt on return.
  *
- * In some cases, the handler can determine that the interrupt is no
- * longer needed, but cannot itself disable the interrupt enable bit.
+ * In some cases, the handler can determine that the peripheral
+ * interrupt is no longer needed, but cannot itself disable the
+ * interrupt enable bit.  An example would be a peripheral-independent
+ * transmission interrupt handler that has determined that no further
+ * data will be transmitted.
+ * 
  * This bit may be set in the return value of
  * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
  * to indicate that the top-half should clear the corresponding IE bit
- * before returning returns. */
+ * before returning returns.
+ *
+ * @see #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE */
 #define BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT 0x2000
 
 /** Indicate that no further ISR callbacks should be invoked.
@@ -337,6 +347,25 @@ struct sBSP430halISRIndexedChainNode;
  * supported by the constant generator, to optimize the callback
  * loop.) */
 #define BSP430_HAL_ISR_CALLBACK_EXIT_LPM 0x0002
+
+/** Indicate that #GIE should be cleared on interrupt return
+ *
+ * This flag may be marked in the return value of
+ * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
+ * callbacks to indicate that the top-half should clear #GIE to exit,
+ * causing the MCU to return to active mode with interrupts disabled.
+ * This ensures that no other interrupts will be processed before the
+ * application has a chance to deal with the results of the current
+ * interrupt.
+ *
+ * @warning Using this flag without using
+ * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM will leave the MCU in LPM with
+ * interrupts disabled, which is usually not what you intend.
+ *
+ * (The value of this flag is specifically selected to be a value
+ * supported by the constant generator, to optimize the callback
+ * loop.) */
+#define BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE 0x0004
 
 /** Callback for ISR chains that require no special arguments.
  *
@@ -456,15 +485,18 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
  * @param _return_flags An expression denoting a return value from a
  * chain of callbacks, producing bits including (for example) @c
  * LPM_bits and/or #BSP430_HAL_ISR_CALLBACK_YIELD. */
-#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {     \
-    int return_flags_ = (_return_flags);                        \
-    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {     \
-      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;               \
-    }                                                           \
-    BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);               \
-    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_YIELD) {        \
-      BSP430_RTOS_YIELD_FROM_ISR();                             \
-    }                                                           \
+#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {             \
+    int return_flags_ = (_return_flags);                                \
+    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {             \
+      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;                       \
+    }                                                                   \
+    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE) {       \
+      return_flags_ |= GIE;                                             \
+    }                                                                   \
+    BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);                       \
+    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_YIELD) {                \
+      BSP430_RTOS_YIELD_FROM_ISR();                                     \
+    }                                                                   \
   } while (0)
 
 /** Link the given node to the chain.
