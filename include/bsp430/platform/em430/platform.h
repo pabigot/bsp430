@@ -56,6 +56,9 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EM430 1
 
+/** EM430 has a 26MHz XT2 for the RF1A */
+#define BSP430_CLOCK_NOMINAL_XT2CLK_HZ 26000000UL
+
 /** @cond DOXYGEN_EXCLUDE */
 
 /* Available button definitions.  SW2 is available and is on P1.7 */

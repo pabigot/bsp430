@@ -106,10 +106,18 @@ void main ()
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
   cputu_ni(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");
-  cputu_ni(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
+  cputul_ni(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
   cputtext_ni("\nulBSP430clockACLK_Hz_ni(): ");
   aclk_Hz = ulBSP430clockACLK_Hz_ni();
   cputul_ni(aclk_Hz, 10);
+#if defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)
+  cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_XT2: ");
+  cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_XT2, 10);
+  cputtext_ni("\nBSP430_CLOCK_XT2_IS_FAULTED_NI(): ");
+  cputu_ni(BSP430_CLOCK_XT2_IS_FAULTED_NI(), 10);
+  cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT2CLK_HZ: ");
+  cputul_ni(BSP430_CLOCK_NOMINAL_XT2CLK_HZ, 10);
+#endif /* BSP430_CLOCK_NOMINAL_XT2CLK_HZ */
 
 #if BSP430_TIMER_CCACLK - 0
   if (1000000UL <= aclk_Hz) {
@@ -200,7 +208,7 @@ void main ()
 #else /* BSP430_UCS_FLL_SELREF */
               "XT1CLK"
 #endif /* BSP430_UCS_FLL_SELREF */
-             );
+              );
   cprintf("\nUCS RSEL %d DCO %d MOD %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
           "\n CTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x",
@@ -243,6 +251,7 @@ void main ()
     cputu_ni(OFIFG, 16);
     cputchar_ni('\n');
 #endif /* BSP430_CONSOLE */
+
     /* Spin here with CPU active.  In LPM0, MCLK is disabled.  Other
      * clocks get disabled at deeper sleep modes; if you fall off the
      * bottom, you might end up in LPM4 with all clocks disabled. */

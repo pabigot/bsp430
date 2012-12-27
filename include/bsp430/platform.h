@@ -79,7 +79,7 @@ void vBSP430platformInitialize_ni (void);
  * This routine should:
  * @li Disable the watchdog (see #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG)
  * @li Configure the LEDs (see #BSP430_PLATFORM_BOOT_CONFIGURE_LEDS)
- * @li Configure crystals (see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1)
+ * @li Configure crystals (see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 and #BSP430_PLATFORM_BOOT_CONFIGURE_XT2)
  * @li Configure clocks (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
  * @li Start the system clock (see #BSP430_UPTIME)
  *
@@ -706,7 +706,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  *
  * If defined to a true value, vBSP430platformInitialize_ni() will:
  * <ul>
- * <li> configure ACLK to source from LFXT1 if a stable crystal is available
+ * <li> configure ACLK to source from #BSP430_PLATFORM_BOOT_ACLKSRC
  * <li> invoke ulBSP430clockConfigureMCLK_Hz_ni() using #BSP430_CLOCK_NOMINAL_MCLK_HZ
  * <li> invoke iBSP430clockConfigureSMCLKDividingShift_ni() using #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
  * <li> set #SCG0 if #configBSP430_CORE_DISABLE_FLL is true
@@ -715,7 +715,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * If defined to a false value, vBSP430platformInitialize_ni() will
  * leave the clocks in their power-up configuration.
  *
- * @see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
+ * @see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 and #BSP430_PLATFORM_BOOT_CONFIGURE_XT2
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
@@ -755,6 +755,19 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 0
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
+
+/** Same as #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 except configures XT2
+ *
+ * If defined to a true value, vBSP430platformInitialize_ni() will
+ * invoke iBSP430clockConfigureXT2_ni() to enable and stabilize the
+ * crystal.
+ *
+ * This has no effect if XT2 is not supported on the platform.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_XT2
+#define BSP430_PLATFORM_BOOT_CONFIGURE_XT2 0
+#endif /* BSP430_PLATFORM_BOOT_CONFIGURE_XT2 */
 
 /** @def BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
  *

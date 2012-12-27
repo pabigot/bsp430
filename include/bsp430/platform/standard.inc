@@ -65,6 +65,11 @@ vBSP430platformInitialize_ni (void)
   (void)iBSP430clockConfigureLFXT1_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
   
+  /* Enable XT2 functions if requested */
+#if (BSP430_PLATFORM_BOOT_CONFIGURE_XT2 - 0)
+  (void)iBSP430clockConfigureXT2_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
+#endif
+
   /* Configure clocks.  Start with MCLK, which may need to use ACLK or
    * SMCLK during trimming operations.  Then finish up with SMCLK and
    * ACLK. */

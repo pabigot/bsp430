@@ -70,6 +70,9 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_SURF 1
 
+/** SuRF has a 26MHz XT2 for the RF1A */
+#define BSP430_CLOCK_NOMINAL_XT2CLK_HZ 26000000UL
+
 /** @cond DOXYGEN_EXCLUDE */
 
 #if 2 == BSP430_PLATFORM_SURF_REVISION

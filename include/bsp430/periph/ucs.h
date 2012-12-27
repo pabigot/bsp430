@@ -301,6 +301,31 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 #define BSP430_CLOCK_LFXT1_XCAP XCAP_1
 #endif /* BSP430_CLOCK_LFXT1_XCAP */
 
+#if defined(BSP430_DOXYGEN) || defined(BSP430_PERIPH_XT2)
+
+#undef BSP430_CLOCK_XT2_IS_FAULTED_NI
+/** Check whether the XT2 crystal has a fault condition.
+ *
+ * This definition overrides the generic definition to test the
+ * crystal-specific flags.  It applies only when the MCU supports XT2
+ * as determined by an available platform definition for
+ * #BSP430_PERIPH_XT2.
+ *
+ * @dependency #BSP430_PERIPH_XT2 */
+#define BSP430_CLOCK_XT2_IS_FAULTED_NI() (UCSCTL7 & XT2OFFG)
+
+#undef BSP430_CLOCK_XT2_CLEAR_FAULT_NI
+/** Clear the fault associated with XT2.
+ *
+ * This definition overrides the generic definition to clear the
+ * crystal-specific flags as well as the system flag. */
+#define BSP430_CLOCK_XT2_CLEAR_FAULT_NI() do {  \
+    UCSCTL7 &= ~XT2OFFG;                        \
+    SFRIFG1 &= ~OFIFG;                          \
+  } while (0)
+
+#endif /* BSP430_PERIPH_XT2 */
+
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
 

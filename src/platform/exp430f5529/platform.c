@@ -66,6 +66,13 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     bits = BIT4;
     pba = BSP430_PERIPH_PORT5_BASEADDRESS_;
   }
+#if (configBSP430_PERIPH_XT2 - 0)
+  else if (BSP430_PERIPH_XT2 == device) {
+    /* Setting P5.2 is sufficient for both XT2IN and XT2OUT */
+    bits = BIT2;
+    pba = BSP430_PERIPH_PORT5_BASEADDRESS_;
+  }
+#endif /* configBSP430_PERIPH_XT2 */
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     /* P1.0 ACLK, P2.2 SMCLK, P7.7 MCLK */

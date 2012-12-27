@@ -54,6 +54,9 @@
  * Throughout BSP430 the term LFXT1 is exclusively used to denote an
  * external low-frequency crystal.
  *
+ * @note The CS_A module uses HFXT to refer to XT2.  BSP430 uniformly
+ * uses XT2.
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -236,9 +239,15 @@
 #define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() peripheral specific
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES
+/** Same as #BSP430_CLOCK_LFXT1_IS_FAULTED_NI() but checks XT2.
  *
- * Define this to the number of MCLK cycles that
+ * XT2 is considered to be permanently faulted for clock peripherals
+ * and MCUs on which XT2 is not supported. */
+#ifndef BSP430_CLOCK_XT2_IS_FAULTED_NI
+#define BSP430_CLOCK_XT2_IS_FAULTED_NI() (1)
+#endif /* BSP430_CLOCK_XT2_IS_FAULTED_NI */
+
+/** Define this to the number of MCLK cycles that
  * #iBSP430clockConfigureLFXT1_ni should delay, after clearing
  * oscillator faults, before checking for oscillator stability.  This
  * must be a compile-time constant integer compatible with
@@ -263,6 +272,14 @@
 #define BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES BSP430_CORE_MS_TO_TICKS(50, BSP430_CLOCK_PUC_MCLK_HZ)
 #endif /* BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES */
 
+/** Same as #BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES except applies to XT2.
+ *
+ * @defaulted
+ */
+#ifndef BSP430_CLOCK_XT2_STABILIZATION_DELAY_CYCLES
+#define BSP430_CLOCK_XT2_STABILIZATION_DELAY_CYCLES (20000UL)
+#endif /* BSP430_CLOCK_XT2_STABILIZATION_DELAY_CYCLES */
+
 /** Check whether the XT2 crystal has a fault condition.
  *
  * The implementation of this is specific to the clock peripheral.
@@ -272,6 +289,14 @@
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CLOCK_XT2_IS_FAULTED_NI() peripheral specific
 #endif /* BSP430_DOXYGEN */
+
+/** Same as #BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() but clears XT2 faults.
+ *
+ * XT2 is considered to be permanently faulted for clock peripherals
+ * and MCUs on which XT2 is not supported. */
+#ifndef BSP430_CLOCK_XT2_CLEAR_FAULT_NI
+#define BSP430_CLOCK_XT2_CLEAR_FAULT_NI() do { } while (0)
+#endif /* BSP430_CLOCK_XT2_CLEAR_FAULT_NI */
 
 /** @def BSP430_CLOCK_NOMINAL_XT1CLK_HZ
  *
@@ -286,7 +311,9 @@
 /** @def BSP430_CLOCK_NOMINAL_XT2CLK_HZ
  *
  * Nominal rate of a secondary external clock.  This must be defined
- * externally if #eBSP430clockSRC_XT2CLK is to be used.
+ * externally if #eBSP430clockSRC_XT2CLK is to be used.  Normally this
+ * would be done in the platform-specified header obtained through
+ * <bsp430/platform.h>.
  *
  * @nodefault */
 #if defined(BSP430_DOXYGEN)
@@ -552,6 +579,16 @@ ulBSP430clockSMCLK_Hz (void)
  */
 int iBSP430clockConfigureLFXT1_ni (int enablep,
                                    int loop_limit);
+
+/** Same as iBSP430clockConfigureLFXT1_ni() but for XT2.
+ *
+ * The function is not implemented if XT2CLK is not supported on the
+ * platform.
+ *
+ * @dependency #BSP430_CLOCK_NOMINAL_XT2CLK_HZ
+ */
+int iBSP430clockConfigureXT2_ni (int enablep,
+                                 int loop_limit);
 
 /** Configure ACLK to a source clock.
  *

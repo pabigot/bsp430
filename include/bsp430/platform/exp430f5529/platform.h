@@ -59,6 +59,9 @@
  * conflict in definition. */
 #define BSP430_PLATFORM_EXP430F5529 1
 
+/** EXP430F5529 has a 4MHz XT2 */
+#define BSP430_CLOCK_NOMINAL_XT2CLK_HZ 4000000UL
+
 /** @cond DOXYGEN_EXCLUDE */
 
 /* Enable if requested (ez430 serial needs it) */

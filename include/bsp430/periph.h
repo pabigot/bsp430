@@ -115,6 +115,30 @@ typedef int tBSP430periphHandle;
  * peripheral function. */
 #define BSP430_PERIPH_LFXT1 ((tBSP430periphHandle)0x4001)
 
+/** Define to true to indicate platform or installation has XT2.
+ *
+ * If this is defined, #BSP430_CLOCK_NOMINAL_XT2CLK_HZ should be
+ * provided as well.
+ *
+ * @affects #BSP430_PERIPH_XT2 
+ */
+#ifndef configBSP430_PERIPH_XT2
+#define configBSP430_PERIPH_XT2 0
+#endif /* configBSP430_PERIPH_XT2 */
+
+/** HPL handle identifying the XT2 crystal functionality.
+ *
+ * This is used by platform-independent clock peripherals to request
+ * that the pins related to XT2IN and XT2OUT be configured to their
+ * peripheral function.
+ *
+ * XT2 functionality is only available when something has defined
+ * #configBSP430_PLATFORM_PERIPH_XT2.
+ */
+#if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_XT2 - 0)
+#define BSP430_PERIPH_XT2 ((tBSP430periphHandle)0x4003)
+#endif /* configBSP430_PERIPH_XT2 */
+
 /** @def configBSP430_PERIPH_EXPOSED_CLOCKS
  *
  * Define to a true value in @c bsp430_config.h to enable use of
@@ -136,7 +160,7 @@ typedef int tBSP430periphHandle;
  * conditional on platform support and
  * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
-#define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)0x4003)
+#define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)0x4005)
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
 /** HPL handle identifying the platform primary button.

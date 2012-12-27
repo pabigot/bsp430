@@ -62,6 +62,12 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     bits = BIT0 | BIT1;
     pba = BSP430_PERIPH_PORT5_BASEADDRESS_;
   }
+#if (configBSP430_PERIPH_XT2 - 0)
+  else if (BSP430_PERIPH_XT2 == device) {
+    /* No configuration necessary; RF_XIN and RF_XOUT are dedicated pins */
+    return 0;
+  }
+#endif /* configBSP430_PERIPH_XT2 */
 #if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     /* Note: The datasheet is incorrect in its claim that PxDIR is

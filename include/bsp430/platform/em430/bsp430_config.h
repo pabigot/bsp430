@@ -39,6 +39,11 @@
 #ifndef BSP430_PLATFORM_EM430_BSP430_CONFIG_H
 #define BSP430_PLATFORM_EM430_BSP430_CONFIG_H
 
+/** EM430 has a 26MHz XT2 installed for the RF1A. */
+#ifndef configBSP430_PERIPH_XT2
+#define configBSP430_PERIPH_XT2 1
+#endif /* configBSP430_PERIPH_XT2 */
+
 /** @cond DOXYGEN_EXCLUDE */
 
 /* Use native USCI5 for genericized serial port unless told not to */

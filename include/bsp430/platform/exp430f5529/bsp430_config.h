@@ -59,6 +59,11 @@
 #define configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK 0
 #endif /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
 
+/** EXP430F5529 has a 4MHz XT2 installed. */
+#ifndef configBSP430_PERIPH_XT2
+#define configBSP430_PERIPH_XT2 1
+#endif /* configBSP430_PERIPH_XT2 */
+
 /** @cond DOXYGEN_EXCLUDE */
 
 /* Use native USCI5 for genericized serial port unless told not to */
