@@ -9,7 +9,6 @@
 #include <bsp430/periph/port.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/uptime.h>
-#include <bsp430/periph/timer.h>
 #include <bsp430/periph/sys.h>
 #include <string.h>
 
@@ -22,14 +21,9 @@
 #error Uptime is not configured correctly
 #endif /* BSP430_UPTIME */
 
-volatile int alarm_fired;
-static int
-alarmCallback_ni (hBSP430timerAlarm alarm)
-{
-  (void)alarm;
-  alarm_fired = 1;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
-}
+#ifndef RESAMPLE_INTERVAL_MS
+#define RESAMPLE_INTERVAL_MS 10000
+#endif /* RESAMPLE_INTERVAL_MS */
 
 #define BMP085_REG_CALIBRATION 0xAA
 #define BMP085_REG_CMD 0xF4
@@ -52,26 +46,14 @@ typedef struct sBMP085calibration {
   int16_t md;
 } sBMP085calibration;
 
-struct sBSP430timerAlarm alarm_struct;
 sBMP085calibration calib;
-hBSP430timerAlarm alarm;
-unsigned long alarm_freq_Hz;
-
-#define DELAY_MS_NI(ms_) do {                                              \
-    alarm_fired = 0;                                                    \
-    rc = iBSP430timerAlarmSet_ni(alarm, ulBSP430uptime_ni() + BSP430_CORE_MS_TO_TICKS(ms_, alarm_freq_Hz)); \
-    while (! alarm_fired) {                                             \
-      BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);                        \
-    }                                                                   \
-  } while (0)
-
 
 #define TEMP_dC_TO_dF(dc_) (320 + ((dc_) * 9) / 5)
 #define PRESSURE_Pa_TO_cinHg(pa_) (((pa_) * 100) / 3386)
 
 void
-getCalibration (hBSP430halSERIAL i2c,
-                sBMP085calibration * cp)
+getCalibration_ni (hBSP430halSERIAL i2c,
+                   sBMP085calibration * cp)
 {
   int rc;
   int i;
@@ -118,22 +100,15 @@ getCalibration (hBSP430halSERIAL i2c,
 void main ()
 {
   hBSP430halSERIAL i2c = hBSP430serialLookup(APP_BMP085_I2C_PERIPH_HANDLE);
+  unsigned long resample_wake_utt;
+  unsigned long resample_interval_utt;
   int rc;
 
   vBSP430platformInitialize_ni();
+  resample_interval_utt = BSP430_UPTIME_MS_TO_UTT(RESAMPLE_INTERVAL_MS);
 
   (void)iBSP430consoleInitialize();
   cprintf("\nApplication starting\n");
-
-  alarm = hBSP430timerAlarmInitialize(&alarm_struct, BSP430_UPTIME_TIMER_PERIPH_HANDLE, 1, alarmCallback_ni);
-  if (NULL == alarm) {
-    cprintf("Failed to initialize alarm\n");
-    return;
-  }
-  alarm_freq_Hz = ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
-  rc = iBSP430timerAlarmSetEnabled_ni(alarm, 1);
-
-  cprintf("Alarm enable returned %d\n", rc);
 
   cprintf("BMP085 I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n",
           xBSP430serialName(APP_BMP085_I2C_PERIPH_HANDLE) ?: "UNKNOWN",
@@ -145,7 +120,7 @@ void main ()
 
   /* XCLR not currently connected */
   /* 10ms delay before first communication */
-  DELAY_MS_NI(10);
+  BSP430_UPTIME_DELAY_MS_NI(10, LPM0_bits, 0);
 
   i2c = hBSP430serialOpenI2C(i2c,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),
@@ -157,9 +132,8 @@ void main ()
 
   (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_BMP085_I2C_ADDRESS);
 
-  getCalibration(i2c, &calib);
-  DELAY_MS_NI(10);
-
+  getCalibration_ni(i2c, &calib);
+  resample_wake_utt = ulBSP430uptime_ni();
   do {
     sBMP085calibration * const cp = &calib;
     uint8_t data[4];
@@ -178,7 +152,8 @@ void main ()
       break;
     }
 
-    DELAY_MS_NI(5);
+    /* 4.5 ms but make it 5 */
+    BSP430_UPTIME_DELAY_MS_NI(5, LPM0_bits, 0);
 
     data[0] = BMP085_REG_DATA;
     rc = iBSP430i2cTxData_ni(i2c, data, 1);
@@ -199,7 +174,8 @@ void main ()
       break;
     }
 
-    DELAY_MS_NI(20 + (3 << oss));
+    /* 3 ms plus 1.5 ms for each sample. */
+    BSP430_UPTIME_DELAY_MS_NI(3 + (2 << oss), LPM0_bits, 0);
     data[0] = BMP085_REG_DATA;
     rc = iBSP430i2cTxData_ni(i2c, data, 1);
     if (0 > rc) {
@@ -271,11 +247,13 @@ void main ()
     } while (0);
 
     temp_dF = TEMP_dC_TO_dF(temp_dC);
-    cprintf("Raw temperature %lu becomes %d dC and %d dF\n", ut, temp_dC, temp_dF);
+    cprintf("%s: Raw temperature %lu becomes %d dC and %d dF\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), ut, temp_dC, temp_dF);
     pres_cinHg = PRESSURE_Pa_TO_cinHg(pres_Pa);
-    cprintf("Raw pressure %lu becomes %lu Pa or %lu cinHg\n", up, pres_Pa, pres_cinHg);
+    cprintf("\tRaw pressure %lu becomes %lu Pa or %lu cinHg\n", up, pres_Pa, pres_cinHg);
 
-    DELAY_MS_NI(10000UL);
+    resample_wake_utt += resample_interval_utt;
+    while (0 < lBSP430uptimeSleepUntil_ni(resample_wake_utt, LPM4_bits)) {
+    }
   } while (1);
   cprintf("Error: RC %d\n", rc);
 }
