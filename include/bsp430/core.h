@@ -262,21 +262,50 @@
 #define configBSP430_CORE_DISABLE_FLL 0
 #endif /* configBSP430_CORE_DISABLE_FLL */
 
+/** Define to true to have BSP430 ISRs clear #GIE when exiting LPM.
+ *
+ * #GIE must be set in the status register for maskable interrupts to
+ * be processed.  In many cases applications may wish to have #GIE
+ * cleared by interrupt handlers, so when control returns to the
+ * program the effects of already-handled interrupts can be processed
+ * before any new interrupts are handled.
+ *
+ * When this macro is defined to a true value, #GIE is added to
+ * #BSP430_CORE_LPM_EXIT_MASK, meaning that it will be cleared along
+ * with LPM bits when #BSP430_HAL_ISR_CALLBACK_EXIT_LPM is specified
+ * in the return value of an @link iBSP430halISRCallbackVoid interrupt
+ * callback@endlink.  For more fine-grained control, the flag can be
+ * cleared for specific callbacks by using
+ * #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE.
+ */
+#ifndef configBSP430_CORE_LPM_EXIT_CLEAR_GIE
+#define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 0
+#endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
+
+/** @cond DOXYGEN_EXCLUDE */
+#if (configBSP430_CORE_LPM_EXIT_CLEAR_GIE - 0)
+#define BSP430_CORE_LPM_EXIT_CLEAR_GIE_ GIE
+#else /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
+#define BSP430_CORE_LPM_EXIT_CLEAR_GIE_ 0
+#endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
+/** @endcond */
+    
 /** @def BSP430_CORE_LPM_EXIT_MASK
  *
  * The bits cleared in the stored status word to exit from low power
  * mode in an interrupt.
  *
- * This is either #LPM4_bits or (#LPM4_bits & ~#SCG0), depending on
- * #configBSP430_CORE_DISABLE_FLL.
+ * This starts as either #LPM4_bits or (#LPM4_bits & ~#SCG0),
+ * depending on #configBSP430_CORE_DISABLE_FLL.  #GIE is added if
+ * #configBSP430_CORE_LPM_EXIT_CLEAR_GIE is true.
  *
  * @dependency #configBSP430_CORE_DISABLE_FLL
  */
 #ifndef BSP430_CORE_LPM_EXIT_MASK
 #if configBSP430_CORE_DISABLE_FLL - 0
-#define BSP430_CORE_LPM_EXIT_MASK (LPM4_bits & ~SCG0)
+#define BSP430_CORE_LPM_EXIT_MASK (BSP430_CORE_LPM_EXIT_CLEAR_GIE_ | (LPM4_bits & ~SCG0))
 #else /* configBSP430_CORE_DISABLE_FLL */
-#define BSP430_CORE_LPM_EXIT_MASK LPM4_bits
+#define BSP430_CORE_LPM_EXIT_MASK (BSP430_CORE_LPM_EXIT_CLEAR_GIE_ | LPM4_bits)
 #endif /* configBSP430_CORE_DISABLE_FLL */
 #endif /* BSP430_CORE_LPM_EXIT_MASK */
 

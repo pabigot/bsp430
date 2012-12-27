@@ -5,6 +5,9 @@
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 
+/* For this application, ensure infrastructure turns off #GIE on wakeup */
+#define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 1
+
 /* Support buffered console output and input */
 #define configBSP430_CONSOLE 1
 #define BSP430_CONSOLE_TX_BUFFER_SIZE 80
