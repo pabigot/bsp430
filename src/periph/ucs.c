@@ -60,6 +60,17 @@
  * isolation. */
 #define DCO_INDEX_MASK 0x1F
 
+/* Basic clock sources.  These values may be used in UCS registers. */
+#define CSEL_XT1CLK 0
+#define CSEL_VLOCLK 1
+#define CSEL_REFOCLK 2
+#define CSEL_DCOCLK 3
+#define CSEL_DCOCLKDIV 4
+#define CSEL_XT2CLK 5
+
+/* Mask for legal CSEL value range */
+#define CSEL_MASK 0x07
+
 /** Frequency of ACLK when used for trimming.
  *
  * This assumes that a 32 kiHz crystal will be used for XT1.  If not,
@@ -407,68 +418,77 @@ iBSP430clockConfigureXT2_ni (int enablep,
 }
 #endif /* BSP430_CLOCK_NOMINAL_XT2CLK_HZ */
 
-unsigned long
-ulBSP430clockACLK_Hz_ni (void)
+static unsigned long
+cselToFreq_Hz_ (int csel)
 {
-  switch (UCSCTL4 & SELA_MASK) {
-    case SELA_0: /* XT1CLK */
+  switch (csel & CSEL_MASK) {
+    case CSEL_XT1CLK: /* XT1CLK */
       if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
         return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
       }
       /*FALLTHRU*/
-    case SELA_2: /* REFOCLK */
+    case CSEL_REFOCLK: /* REFOCLK */
       return BSP430_UCS_NOMINAL_REFOCLK_HZ;
-    case SELA_1: /* VLOCLK */
+    case CSEL_VLOCLK: /* VLOCLK */
       return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
-    case SELA_3: /* DCOCLK */
+    case CSEL_DCOCLK: /* DCOCLK */
       return 2 * lastTrimDCOCLKDIV_Hz_;
-#if defined(SELA__XT2CLK) && defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)
-    case SELA__XT2CLK: /* XT2CLK */
+    case CSEL_XT2CLK: /* XT2CLK */
+#if defined(SELA__XT2CLK) && (configBSP430_PERIPH_XT2 - 0)
       return BSP430_CLOCK_NOMINAL_XT2CLK_HZ;
 #endif /* XT2CLK supported */
     default:
-    case SELA_4: /* DCOCLKDIV */
+    case CSEL_DCOCLKDIV: /* DCOCLKDIV */
       return lastTrimDCOCLKDIV_Hz_;
   }
 }
 
-int
-iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
+static int
+sourceToCSEL_ (eBSP430clockSource sel)
 {
-  unsigned int sela = 0;
   switch (sel) {
     default:
     case eBSP430clockSRC_NONE:
       return -1;
     case eBSP430clockSRC_XT1CLK:
-      sela = SELA__XT1CLK;
-      break;
+      return CSEL_XT1CLK;
     case eBSP430clockSRC_VLOCLK:
-      sela = SELA__VLOCLK;
-      break;
+      return CSEL_VLOCLK;
     case eBSP430clockSRC_REFOCLK:
-      sela = SELA__REFOCLK;
-      break;
+      return CSEL_REFOCLK;
     case eBSP430clockSRC_DCOCLK:
-      sela = SELA__DCOCLK;
-      break;
+      return CSEL_DCOCLK;
     case eBSP430clockSRC_DCOCLKDIV:
-      sela = SELA__DCOCLKDIV;
-      break;
-#if defined(SELA__XT2CLK) && defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)
+      return CSEL_DCOCLKDIV;
+#if defined(SELA__XT2CLK) && (configBSP430_PERIPH_XT2 - 0)
     case eBSP430clockSRC_XT2CLK:
-      sela = SELA__XT2CLK;
+      return CSEL_XT2CLK;
       break;
 #endif /* XT2CLK supported */
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
-      sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? SELA__VLOCLK : SELA__XT1CLK;
+      return BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? CSEL_VLOCLK : CSEL_XT1CLK;
       break;
     case eBSP430clockSRC_XT1CLK_FALLBACK:
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
-      sela = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? SELA__REFOCLK : SELA__XT1CLK;
-      break;
+      return BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? CSEL_REFOCLK : CSEL_XT1CLK;
   }
-  UCSCTL4 = (UCSCTL4 & ~SELA_MASK) | sela;
+  return -1;
+}
+
+unsigned long
+ulBSP430clockACLK_Hz_ni (void)
+{
+  return cselToFreq_Hz_((UCSCTL4 & SELA_MASK) / SELA0);
+}
+
+int
+iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
+{
+  int csel = sourceToCSEL_(sel);
+  if (0 > csel) {
+    return -1;
+  }
+  UCSCTL4 = (UCSCTL4 & ~SELA_MASK) | (csel * SELA0);
   return 0;
 }
 
