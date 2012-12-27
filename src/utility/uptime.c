@@ -39,6 +39,73 @@
 hBSP430halTIMER xBSP430uptimeTIMER_;
 unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
 
+#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+
+/** Bit set when alarm has gone off */
+#define DELAY_ALARM_FIRED 0x01
+
+/** Bit set when initialization validated that the alarm could be
+ * used.  If this bit is clear, the alarm functionality will never be
+ * used, simply because the handle isn't valid. */
+#define DELAY_ALARM_VALID 0x02
+
+/** Bit set if delay alarm is enabled.  This does not mean it's
+ * registered with the timer infrastructure, only that it should be
+ * registered when the uptime timer is running. */
+#define DELAY_ALARM_ENABLED 0x04
+
+/** Bit set if the timer alarm underlying the delay alarm is enabled,
+ * i.e. the uptime timer is running and delay alarm callback hooks are
+ * in place. */
+#define DELAY_ALARM_REGISTERED 0x08
+
+/** Bit set if the uptime timer is active.  This is used as a filter
+ * on whether to register the delay infrastructure. */
+#define DELAY_ALARM_TIMER_ACTIVE 0x10
+
+struct sDelayAlarm {
+  /** The underlying alarm infrastructure.  First in the structure so
+   * we can access the delay-specific metadata from the handler. */
+  struct sBSP430timerAlarm alarm;
+
+  /** Other information related to delay management */
+  volatile unsigned int flags;
+} delayAlarm_;
+#define H_delayAlarm (&delayAlarm_.alarm)
+
+static int
+delayCallback_ (hBSP430timerAlarm alarm)
+{
+  struct sDelayAlarm * ap = (struct sDelayAlarm *)alarm;
+  ap->flags |= DELAY_ALARM_FIRED;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
+}
+
+static int
+delayAlarmSetRegistered_ni_ (int enablep)
+{
+  int rv = 0;
+  if (enablep) {
+    /* Enable the delay alarm if desired and not already registered. */
+    if ((DELAY_ALARM_ENABLED & delayAlarm_.flags)
+        && (! (DELAY_ALARM_REGISTERED & delayAlarm_.flags))) {
+      rv = iBSP430timerAlarmSetEnabled_ni(H_delayAlarm, 1);
+      if (0 == rv) {
+        delayAlarm_.flags |= DELAY_ALARM_REGISTERED;
+      }
+    }
+  } else {
+    if (DELAY_ALARM_REGISTERED & delayAlarm_.flags) {
+      (void)iBSP430timerAlarmCancel_ni(H_delayAlarm);
+      (void)iBSP430timerAlarmSetEnabled_ni(H_delayAlarm, 0);
+      delayAlarm_.flags &= ~DELAY_ALARM_REGISTERED;
+    }
+  }
+  return rv;
+}
+
+#endif /* BSP430_UPTIME_DELAY_CCIDX */
+
 void
 vBSP430uptimeStart_ni (void)
 {
@@ -49,6 +116,17 @@ vBSP430uptimeStart_ni (void)
     ((TASSEL0 | TASSEL1) & (BSP430_UPTIME_TASSEL))
     | ((ID0 | ID1) & (BSP430_UPTIME_DIVIDING_SHIFT))
     | TACLR | TAIE;
+#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+  {
+    hBSP430timerAlarm delay_alarm;
+
+    delayAlarm_.flags = 0;
+    delay_alarm = hBSP430timerAlarmInitialize(&delayAlarm_.alarm, BSP430_UPTIME_TIMER_PERIPH_HANDLE, BSP430_UPTIME_DELAY_CCIDX, delayCallback_);
+    if (H_delayAlarm == delay_alarm) {
+      delayAlarm_.flags = DELAY_ALARM_VALID | DELAY_ALARM_ENABLED | DELAY_ALARM_TIMER_ACTIVE;
+    }
+  }
+#endif /* BSP430_UPTIME_DELAY_CCIDX */
   vBSP430uptimeResume_ni();
 }
 
@@ -56,12 +134,20 @@ void
 vBSP430uptimeSuspend_ni (void)
 {
   xBSP430uptimeTIMER_->hpl->ctl &= ~(MC0 | MC1);
+#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+  (void)delayAlarmSetRegistered_ni_(0);
+  delayAlarm_.flags &= ~DELAY_ALARM_TIMER_ACTIVE;
+#endif /* BSP430_UPTIME_DELAY_CCIDX */
 }
 
 void
 vBSP430uptimeResume_ni (void)
 {
   ulBSP430uptimeConversionFrequency_Hz_ni_ = ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
+#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+  delayAlarm_.flags |= DELAY_ALARM_TIMER_ACTIVE;
+  (void)delayAlarmSetRegistered_ni_(1);
+#endif /* BSP430_UPTIME_DELAY_CCIDX */
   xBSP430uptimeTIMER_->hpl->ctl |= MC_2;
 }
 
@@ -107,5 +193,61 @@ xBSP430uptimeAsText_ni (unsigned long duration_utt)
   }
   return buf;
 }
+
+#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+
+int
+iBSP430uptimeDelaySetEnabled_ni (int enablep)
+{
+  int rv = 0;
+
+  /* If the alarm isn't valid, error. */
+  if (! (DELAY_ALARM_VALID & delayAlarm_.flags)) {
+    return -1;
+  }
+  if (enablep) {
+    delayAlarm_.flags |= DELAY_ALARM_ENABLED;
+    if (delayAlarm_.flags & DELAY_ALARM_TIMER_ACTIVE) {
+      rv = delayAlarmSetRegistered_ni_(1);
+    }
+  } else {
+    if (delayAlarm_.flags & DELAY_ALARM_TIMER_ACTIVE) {
+      rv = delayAlarmSetRegistered_ni_(0);
+    }
+    delayAlarm_.flags &= ~DELAY_ALARM_ENABLED;
+  }
+  return rv;
+}
+
+long
+lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
+                            unsigned int lpm_bits)
+{
+  int rc;
+
+  /* Exit immediately unless the alarm callback is registered. */
+  if (! (DELAY_ALARM_REGISTERED & delayAlarm_.flags)) {
+    return 0;
+  }
+  delayAlarm_.flags &= ~DELAY_ALARM_FIRED;
+  rc = iBSP430timerAlarmSet_ni(H_delayAlarm, setting_utt);
+  if (0 != rc) {
+    return 0;
+  }
+  /* Sleep until the alarm goes off, or something else wakes us up. */
+  BSP430_CORE_LPM_ENTER_NI(lpm_bits | GIE);
+
+  /* NOTE: GIE may be set here if whatever woke the MCU did not clear
+   * it.  That is probably an application error but is not something
+   * this routine should attempt to fix. */
+
+  /* Cancel the alarm if it hasn't fired yet. */
+  if (! (delayAlarm_.flags & DELAY_ALARM_FIRED)) {
+    (void)iBSP430timerAlarmCancel_ni(H_delayAlarm);
+  }
+  return setting_utt - ulBSP430uptime_ni();
+}
+
+#endif /* BSP430_UPTIME_DELAY_CCIDX */
 
 #endif /* BSP430_UPTIME */

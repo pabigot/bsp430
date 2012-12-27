@@ -247,16 +247,16 @@ unsigned long ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_H
 
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 /** Convert from milliseconds to ticks of the uptime timer.
- * @note The result is rounded down. */
+ * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
 #define BSP430_UPTIME_MS_TO_UTT(ms_) BSP430_CORE_MS_TO_TICKS((ms_), ulBSP430uptimeConversionFrequency_Hz_ni_)
 /** Convert from ticks of the uptime timer to milliseconds.
- * @note The result is rounded down. */
+ * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
 #define BSP430_UPTIME_UTT_TO_MS(utt_) BSP430_CORE_TICKS_TO_MS((utt_), ulBSP430uptimeConversionFrequency_Hz_ni_)
 /** Convert from microseconds to ticks of the uptime timer.
- * @note The result is rounded down. */
+ * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
 #define BSP430_UPTIME_US_TO_UTT(us_) BSP430_CORE_US_TO_TICKS((us_), ulBSP430uptimeConversionFrequency_Hz_ni_)
 /** Convert from ticks of the uptime timer to microseconds.
- * @note The result is rounded down. */
+ * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
 #define BSP430_UPTIME_UTT_TO_US(utt_) BSP430_CORE_TICKS_TO_US((utt_), ulBSP430uptimeConversionFrequency_Hz_ni_)
 #endif /* BSP430_UPTIME */
 
@@ -281,7 +281,12 @@ ulBSP430uptime (void)
 /** Configure the system uptime clock.
  *
  * The timer associated with the uptime clock is reset to zero and
- * begins counting up. */
+ * begins counting up.
+ *
+ * @warning This should be invoked once, normally by
+ * vBSP430platformInitialize_ni().  Invoking it a second time may
+ * result in undefined behavior.  Use vBSP430uptimeSuspend_ni() and
+ * vBSP430uptimeResume_ni() to turn the uptime timer off and on. */
 void vBSP430uptimeStart_ni (void);
 
 /** Suspend the system uptime clock.
@@ -318,5 +323,109 @@ void vBSP430uptimeResume_ni (void);
  * @param duration_utt a duration in uptime ticks
  * @return pointer to formatted time.  The pointer is to static storage. */
 const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
+
+
+/** An optional capture/compare index to be used for delays.
+ *
+ * If defined to a non-zero capture/compare register index this
+ * enables delays based on the uptime timer using the @ref
+ * grp_timer_alarm infrastructure.
+ *
+ * @note CC 0 is not supported because it is reserved for RTOS context
+ * switch support.
+ *
+ * Applications can test whether this feature is enabled using:
+ * @code
+ * #if (BSP430_UPTIME_DELAY_CCIDX - 0)
+ *   code that depends on delay capabilities
+ * #endif
+ * @endcode
+ *
+ * @bsp430_config
+ */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_UPTIME_DELAY_CCIDX application-specific
+#endif /* BSP430_DOXYGEN */
+
+/** Sleep until the uptime timer reaches a particular value.
+ *
+ * This uses #BSP430_UPTIME_DELAY_CCIDX and the @ref grp_timer_alarm
+ * to sleep until either a specific time has been reached or an
+ * interrupt wakes the processor.
+ *
+ * @note Interrupts are enabled during this sleep, and an interrupt
+ * unrelated to the wakeup alarm will cause an early return.
+ *
+ * @warning This function is intended to be called when interrupts are
+ * disabled.  To ensure lower-priority interrupts are not processed
+ * during this brief window applications that use this routine should
+ * always include #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE in the
+ * return value of any interrupt callback that also includes
+ * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.  This routine does not disable
+ * #GIE if that was not done by whatever caused LPM exit.
+ *
+ * @param setting_utt The uptime counter value at which the
+ * application wishes to be awakened if no events have occured before
+ * then.  Note that the call is a wrapper around
+ * iBSP430timerAlarmSet_ni() and may return immediately with an error
+ * result if the specified time appears to be in the past.
+ *
+ * @param lpm_bits The bits to be set in the status register to
+ * control the low power mode used while awaiting the wakeup time.  A
+ * value such as #LPM0_bits or #LPM2_bits should be used depending on
+ * application needs.  #GIE will be added to these bits.
+ *
+ * @warning Consider whether the LPM mode might disable the clock or
+ * timer on which the wakeup depends.  In many recent MCUs the LPM
+ * mode will be internally masked to ensure this does not happen.
+ *
+ * @return The number of timer ticks remaining until the
+ * originally-requested time.  If an error occurs, a zero value will
+ * be returned.  There is no facility to tell whether wakeup occurred
+ * due to the alarm or another interrupt, except that if the return
+ * value is positive it is likely another interrupt is the cause.
+ *
+ * @note The function is not implemented unless
+ * #BSP430_UPTIME_DELAY_CCIDX is defined to a valid CCR.
+
+ * @warning This function does not diagnose specific errors such as
+ * invoking it while the uptime timer or the delay alarm are disabled.
+ *
+ * @dependency #BSP430_UPTIME_DELAY_CCIDX */
+long lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
+                                 unsigned int lpm_bits);
+
+/** Enable or disable the alarm used by ulBSP430uptimeDelayUntil_ni().
+ *
+ * This delegates to iBSP430timerAlarmSetEnabled_ni().
+ *
+ * By default the alarm is enabled if #BSP430_UPTIME_DELAY_CCIDX is configured.
+ *
+ * @dependency #BSP430_UPTIME_DELAY_CCIDX */
+int iBSP430uptimeDelaySetEnabled_ni (int enablep);
+
+/** Macro to simplify basic delay operations.
+ *
+ * This invokes lBSP430uptimeSleepUntil_ni() in a loop for a specified
+ * duration or until another event has occurred.
+ *
+ * @param delay_ms_ Duration, in milliseconds, that application should sleep
+ *
+ * @param lpm_bits_ The LPM mode in which the application should sleep.
+ * See corresponding parameter in lBSP430uptimeSleepUntil_ni().
+ *
+ * @param exit_expr_ An expression that will be tested prior to
+ * sleeping; if it evaluates to true, the delay will be aborted
+ * immediately regardless of remaining time.  Pass @c 0 if you wish to
+ * delay regardless of other activity.
+ *
+ * @dependency #BSP430_UPTIME_DELAY_CCIDX */
+#define BSP430_UPTIME_DELAY_MS_NI(delay_ms_, lpm_bits_, exit_expr_) do { \
+    unsigned long wake_utt;                                             \
+    wake_utt = ulBSP430uptime_ni() + BSP430_UPTIME_MS_TO_UTT(delay_ms_); \
+    while ((! (exit_expr_)) && (0 < lBSP430uptimeSleepUntil_ni(wake_utt, lpm_bits_))) { \
+      /* nop */                                                         \
+    }                                                                   \
+  } while (0)
 
 #endif /* BSP430_UTILITY_UPTIME_H */
