@@ -261,7 +261,12 @@ unsigned long ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_H
 #endif /* BSP430_UPTIME */
 
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
-/** Return system uptime in clock ticks with disabled interrupts. */
+/** Return system uptime in clock ticks with disabled interrupts.
+ *
+ * @note The returned value is adjusted for a single pending overflow
+ * event that occurs while interrupts are disabled, but will be wrong
+ * if interrupts remain disabled long enough for a second overflow to
+ * occur.  See ulBSP430timerCounter_ni() for details. */
 static unsigned long
 BSP430_CORE_INLINE
 ulBSP430uptime_ni (void)
@@ -323,7 +328,6 @@ void vBSP430uptimeResume_ni (void);
  * @param duration_utt a duration in uptime ticks
  * @return pointer to formatted time.  The pointer is to static storage. */
 const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
-
 
 /** An optional capture/compare index to be used for delays.
  *

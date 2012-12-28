@@ -145,8 +145,10 @@
  * @note It is the responsibility of the application to configure the
  * underlying timer to continuous mode with the appropriate clock
  * source, any desired dividers, and enabling the interrupt that
- * maintains the 32-bit overflow counter timer HAL infrastructure.
- * For example: @code
+ * maintains the 32-bit overflow counter timer HAL infrastructure.  If
+ * you are using #BSP430_UPTIME_TIMER_PERIPH_HANDLE the timer is
+ * already configured this way.  For other timers, use something like:
+ * @code
 
   alarmHAL_ = hBSP430timerLookup(ALARM_TIMER_PERIPH_HANDLE);
   if (alarmHAL_) {
@@ -1019,10 +1021,14 @@ unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph);
 
 /** Read the timer counter assuming interrupts are disabled.
  *
- * @note This routine accounts for the possibility of a single
- * as-yet-unhandled overflow event in the timer, but the counter will
- * generally be wrong if interrupts are disabled most of the time
- * resulting in lost overflow events.
+ * @note This routine accounts for the possibility of a single pending
+ * overflow event in the timer by adjusting the returned value to
+ * account for that.  However, it does not clear the overflow event
+ * because there may be overflow callbacks that must be invoked
+ * through the interrupt handler, and it only detects a single pending
+ * overflow event.  Times will be wrong if interrupts remain disabled
+ * so long that a second overflow occurs before the first is processed
+ * by the interrupt handler.
  *
  * @param timer The timer for which the count is desired.
  *
