@@ -602,10 +602,17 @@ int iBSP430clockConfigureXT2_ni (int enablep,
  * is rejected if the requested clock source does not exist on the
  * platform.
  *
+ * @param dividing_shift exponent of a divider used to reduce jitter
+ * and/or clock rate.  Not all peripherals support this; a value of
+ * zero is implicitly used in that situation.
+ *
  * @return 0 if the configuration was accepted, a negative error if it
  * was rejected.
+ *
+ * @see #BSP430_PLATFORM_BOOT_ACLK_SOURCE, #BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT
  */
-int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel);
+int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
+                                  unsigned int dividing_shift);
 
 /** Return the best available estimate of ACLK frequency.
  *

@@ -32,6 +32,8 @@
 #include <bsp430/periph/fllplus.h>
 #include <bsp430/platform.h>
 
+#define DIVA_MASK (FLL_DIV0 | FLL_DIV1)
+
 /* Mask extracting the N bits from SCFQCTL */
 #define FLL_N_MASK 127
 
@@ -127,21 +129,21 @@ iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
 unsigned long
 ulBSP430clockACLK_Hz_ni (void)
 {
-  if (BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
-    return BSP430_CLOCK_NOMINAL_VLOCLK_HZ;
-  }
-  return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+  unsigned long freq_hz;
+  freq_hz = BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? BSP430_CLOCK_NOMINAL_VLOCLK_HZ : BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
+  return freq_hz >> ((FLL_CTL1 & DIVA_MASK) / FLL_DIV0);
 }
 
 int
-iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
+iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
+                              unsigned int dividing_shift)
 {
   switch (sel) {
     default:
     case eBSP430clockSRC_NONE:
       return -1;
     case eBSP430clockSRC_XT1CLK:
-      return 0;
+      break;
     case eBSP430clockSRC_VLOCLK:
     case eBSP430clockSRC_REFOCLK:
     case eBSP430clockSRC_DCOCLK:
@@ -151,8 +153,10 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
     case eBSP430clockSRC_XT1CLK_FALLBACK:
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
-      return 0;
+      break;
   }
+  FLL_CTL1 = (FLL_CTL1 & ~DIVA_MASK) | (DIVA_MASK & (dividing_shift * FLL_DIV0));
+  return 0;
 }
 
 int

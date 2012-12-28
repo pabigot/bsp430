@@ -6,9 +6,9 @@
 
 /* Then pick the best available source for ACLK, allowing for an
  * absent crystal */
-#ifndef BSP430_PLATFORM_BOOT_ACLKSRC
-#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_FALLBACK
-#endif /* BSP430_PLATFORM_BOOT_ACLKSRC */
+#ifndef BSP430_PLATFORM_BOOT_ACLK_SOURCE
+#define BSP430_PLATFORM_BOOT_ACLK_SOURCE eBSP430clockSRC_XT1CLK_FALLBACK
+#endif /* BSP430_PLATFORM_BOOT_ACLK_SOURCE */
 
 /* Allow application to tell user where things are connected */
 #define configBSP430_PLATFORM_PERIPHERAL_HELP 1

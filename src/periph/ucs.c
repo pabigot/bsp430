@@ -51,6 +51,9 @@
 /* Mask for DIVM bits in UCSCTL5 */
 #define DIVM_MASK (DIVM0 | DIVM1 | DIVM2)
 
+/* Maximum respected value for dividing shifts */
+#define DIV_MAX_VALUE 5
+
 /** Range selection supports 3 bits.  Note that this mask is not for
  * the RSEL field in the UCSCTL1 register, it's for the RSEL index in isolation. */
 #define RSEL_INDEX_MASK 0x07
@@ -260,7 +263,7 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
 
   /* Set SMCLK and MCLK to be undivided DCOCLKDIV */
   UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
-  UCSCTL5 &= (UCSCTL4 & DIVA_MASK);
+  UCSCTL5 &= DIVA_MASK;
 
   /* Stabilize on an RSEL where the trimmed frequency does not leave
    * the DCO in a faulted state */
@@ -469,37 +472,49 @@ sourceToCSEL_ (eBSP430clockSource sel)
   return -1;
 }
 
+static unsigned long
+divideFrequency_ (unsigned long freq_Hz,
+                  unsigned int div)
+{
+  if (DIV_MAX_VALUE < div) {
+    div = DIV_MAX_VALUE;
+  }
+  return freq_Hz >> div;
+}
+
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
-  unsigned long freq_Hz = cselToFreq_Hz_((UCSCTL4 & SELM_MASK) / SELM0);
-  unsigned int div = (UCSCTL5 & DIVM_MASK) / DIVM0;
-  return freq_Hz >> div;
+  return divideFrequency_(cselToFreq_Hz_((UCSCTL4 & SELM_MASK) / SELM0),
+                          (UCSCTL5 & DIVM_MASK) / DIVM0);
 }
 
 unsigned long
 ulBSP430clockSMCLK_Hz_ni (void)
 {
-  unsigned long freq_Hz = cselToFreq_Hz_((UCSCTL4 & SELS_MASK) / SELS0);
-  unsigned int div = (UCSCTL5 & DIVS_MASK) / DIVS0;
-  return freq_Hz >> div;
+  return divideFrequency_(cselToFreq_Hz_((UCSCTL4 & SELS_MASK) / SELS0),
+                          (UCSCTL5 & DIVS_MASK) / DIVS0);
 }
 
 unsigned long
 ulBSP430clockACLK_Hz_ni (void)
 {
-  unsigned long freq_Hz = cselToFreq_Hz_((UCSCTL4 & SELA_MASK) / SELA0);
-  unsigned int div = (UCSCTL5 & DIVA_MASK) / DIVA0;
-  return freq_Hz >> div;
+  return divideFrequency_(cselToFreq_Hz_((UCSCTL4 & SELA_MASK) / SELA0),
+                          (UCSCTL5 & DIVA_MASK) / DIVA0);
 }
 
 int
-iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
+iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
+                              unsigned int dividing_shift)
 {
   int csel = sourceToCSEL_(sel);
   if (0 > csel) {
     return -1;
   }
+  if (DIV_MAX_VALUE < dividing_shift) {
+    dividing_shift = DIV_MAX_VALUE;
+  }
+  UCSCTL5 = (UCSCTL5 & ~DIVA_MASK) | (DIVA_MASK & (dividing_shift * DIVA0));
   UCSCTL4 = (UCSCTL4 & ~SELA_MASK) | (csel * SELA0);
   return 0;
 }

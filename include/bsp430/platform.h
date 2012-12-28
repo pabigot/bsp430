@@ -704,18 +704,14 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 
 /** @def BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
  *
- * If defined to a true value, vBSP430platformInitialize_ni() will:
- * <ul>
- * <li> configure ACLK to source from #BSP430_PLATFORM_BOOT_ACLKSRC
- * <li> invoke ulBSP430clockConfigureMCLK_Hz_ni() using #BSP430_CLOCK_NOMINAL_MCLK_HZ
- * <li> invoke iBSP430clockConfigureSMCLKDividingShift_ni() using #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
- * <li> set #SCG0 if #configBSP430_CORE_DISABLE_FLL is true
- * </ul>
+ * If defined to a true value, vBSP430platformInitialize_ni() will
+ * configure the MCLK, SMCLK, and ACLK clock infrastructure.
  *
  * If defined to a false value, vBSP430platformInitialize_ni() will
  * leave the clocks in their power-up configuration.
  *
- * @see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 and #BSP430_PLATFORM_BOOT_CONFIGURE_XT2
+ * @see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
+ * @see #BSP430_PLATFORM_BOOT_CONFIGURE_XT2
  *
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
@@ -785,11 +781,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC 1
 #endif /* BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC */
 
-/** @def BSP430_PLATFORM_BOOT_ACLKSRC
- *
- * The parameter passed to iBSP430clockConfigureACLK_ni() during
- * vBSP430platformInitialize_ni() if
- * #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true.
+/** The ACLK source configured at boot if #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true.
  *
  * On most MCUs, the power-up-clear default would be equivalent to
  * using #eBSP430clockSRC_XT1CLK.  However, on MCUs that use BC2 the
@@ -805,9 +797,27 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * family MCUs do not automatically configure the peripheral pins to
  * enable XIN/XOUT to function even if the crystal is present.
  *
+ * @see iBSP430clockConfigureACLK_ni()
+ * 
  * @defaulted */
-#ifndef BSP430_PLATFORM_BOOT_ACLKSRC
-#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_FALLBACK
-#endif /* BSP430_PLATFORM_BOOT_ACLKSRC */
+#ifndef BSP430_PLATFORM_BOOT_ACLK_SOURCE
+#define BSP430_PLATFORM_BOOT_ACLK_SOURCE eBSP430clockSRC_XT1CLK_FALLBACK
+#endif /* BSP430_PLATFORM_BOOT_ACLK_SOURCE */
+
+/** The ACLK dividing shift configured at boot if #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true.
+ *
+ * Several clock peripherals support dividing the input signal to
+ * reduce jitter or slow the clock.  This option corresponds to the
+ * DIVA field in such a peripheral.
+ * 
+ * The option is ignored unless the clock peripheral supports dividing
+ * the ACLK source.
+ *
+ * @see iBSP430clockConfigureACLK_ni()
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT
+#define BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT 0
+#endif /* BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT */
 
 #endif /* BSP430_PLATFORM_H */

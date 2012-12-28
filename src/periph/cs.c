@@ -90,6 +90,9 @@
 /* Mask for DIVM bits in CSCTL3 */
 #define DIVM_MASK (DIVM0 | DIVM1 | DIVM2)
 
+/* Maximum respected value for dividing shifts */
+#define DIV_MAX_VALUE 5
+
 static const int32_t supported_freq[] = {
 #if defined(__MSP430_HAS_CS__)
   /*  0       DCORSEL */
@@ -307,32 +310,40 @@ sourceToCSEL_ (eBSP430clockSource sel)
   return -1;
 }
 
+static unsigned long
+divideFrequency_ (unsigned long freq_Hz,
+                  unsigned int div)
+{
+  if (DIV_MAX_VALUE < div) {
+    div = DIV_MAX_VALUE;
+  }
+  return freq_Hz >> div;
+}
+
 unsigned long
 ulBSP430clockMCLK_Hz_ni (void)
 {
-  unsigned long freq_Hz = cselToFreq_Hz_((CSCTL2 & SELM_MASK) / SELM0);
-  unsigned int div = (CSCTL3 & DIVM_MASK) / DIVM0;
-  return freq_Hz >> div;
+  return divideFrequency_(cselToFreq_Hz_((CSCTL2 & SELM_MASK) / SELM0),
+                          (CSCTL3 & DIVM_MASK) / DIVM0);
 }
 
 unsigned long
 ulBSP430clockSMCLK_Hz_ni (void)
 {
-  unsigned long freq_Hz = cselToFreq_Hz_((CSCTL2 & SELS_MASK) / SELS0);
-  unsigned int div = (CSCTL3 & DIVS_MASK) / DIVS0;
-  return freq_Hz >> div;
+  return divideFrequency_(cselToFreq_Hz_((CSCTL2 & SELS_MASK) / SELS0),
+                          (CSCTL3 & DIVS_MASK) / DIVS0);
 }
 
 unsigned long
 ulBSP430clockACLK_Hz_ni (void)
 {
-  unsigned long freq_Hz = cselToFreq_Hz_((CSCTL2 & SELA_MASK) / SELA0);
-  unsigned int div = (CSCTL3 & DIVA_MASK) / DIVA0;
-  return freq_Hz >> div;
+  return divideFrequency_(cselToFreq_Hz_((CSCTL2 & SELA_MASK) / SELA0),
+                          (CSCTL3 & DIVA_MASK) / DIVA0);
 }
 
 int
-iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
+iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
+                              unsigned int dividing_shift)
 {
   int csel = sourceToCSEL_(sel);
   
@@ -344,6 +355,7 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel)
   }
 #endif /* __MSP430_HAS_CS_A__ */
   CSCTL0_H = 0xA5;
+  CSCTL3 = (CSCTL3 & ~DIVA_MASK) | (DIVA_MASK & (dividing_shift * DIVA0));
   CSCTL2 = (CSCTL2 & ~SELA_MASK) | (csel * SELA0);
   CSCTL0_H = !0xA5;
   return 0;
