@@ -27,8 +27,8 @@
  * support so we can count overflows, and the CC0 ISR so we can put
  * alarms on it too. */
 #define configBSP430_TIMER_CCACLK 1
-#define configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL 1
-#define configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR 1
+#define configBSP430_TIMER_CCACLK_HAL 1
+#define configBSP430_TIMER_CCACLK_HAL_CC0_ISR 1
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

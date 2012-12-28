@@ -543,6 +543,7 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
+  cprintf("alarm: " __DATE__ " " __TIME__ "\n");
 
   alarmHAL_ = hBSP430timerLookup(ALARM_TIMER_PERIPH_HANDLE);
   if (! alarmHAL_) {
