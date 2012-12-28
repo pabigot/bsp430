@@ -2,10 +2,6 @@
  * results. */
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
 
-/* Then pick the best available source for ACLK, allowing for an
- * absent crystal */
-#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_FALLBACK
-
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 
