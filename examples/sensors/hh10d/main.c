@@ -168,9 +168,11 @@ void main ()
 
   while (1) {
     BSP430_CORE_LPM_ENTER_NI(LPM1_bits | GIE);
-    cprintf("%lu: Sample %u in %u uptime ticks", ulBSP430uptime_ni(), hh10d.last_period_count, hh10d.sample_duration_utt);
+    cprintf("%s: Sample %u in %u uptime ticks",
+            xBSP430uptimeAsText_ni(ulBSP430uptime_ni()),
+            hh10d.last_period_count, hh10d.sample_duration_utt);
     if (0 != hh10d_sens) {
-      cprintf(": RH %u%%", (unsigned int)(((hh10d_offs - hh10d.last_period_count) * (unsigned long) hh10d_sens) / 4096));
+      cprintf(": RH %u ppt", (unsigned int)(((hh10d_offs - hh10d.last_period_count) * (10UL * hh10d_sens)) / 4096));
     }
     cputchar_ni('\n');
   }
