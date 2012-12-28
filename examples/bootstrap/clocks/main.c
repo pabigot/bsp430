@@ -92,24 +92,12 @@ void main ()
   cputul_ni(BSP430_CLOCK_PUC_MCLK_HZ, 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_MCLK_HZ: ");
   cputul_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ, 10);
-  cputtext_ni("\nulBSP430clockMCLK_Hz_ni(): ");
-  cputul_ni(ulBSP430clockMCLK_Hz_ni(), 10);
-  cputtext_ni("\nBSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT: ");
-  cputi_ni(BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT, 10);
-  cputtext_ni("\niBSP430clockSMCLKDividingShift_ni(): ");
-  cputi_ni(iBSP430clockSMCLKDividingShift_ni(), 10);
-  cputtext_ni("\nulBSP430clockSMCLK_Hz_ni(): ");
-  smclk_Hz = ulBSP430clockSMCLK_Hz_ni();
-  cputul_ni(smclk_Hz, 10);
   cputtext_ni("\nBSP430_CLOCK_LFXT1_IS_FAULTED_NI(): ");
   cputu_ni(BSP430_CLOCK_LFXT1_IS_FAULTED_NI(), 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
   cputu_ni(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");
   cputul_ni(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
-  cputtext_ni("\nulBSP430clockACLK_Hz_ni(): ");
-  aclk_Hz = ulBSP430clockACLK_Hz_ni();
-  cputul_ni(aclk_Hz, 10);
 #if defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)
   cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_XT2: ");
   cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_XT2, 10);
@@ -118,6 +106,18 @@ void main ()
   cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT2CLK_HZ: ");
   cputul_ni(BSP430_CLOCK_NOMINAL_XT2CLK_HZ, 10);
 #endif /* BSP430_CLOCK_NOMINAL_XT2CLK_HZ */
+  cputtext_ni("\nulBSP430clockMCLK_Hz_ni(): ");
+  cputul_ni(ulBSP430clockMCLK_Hz_ni(), 10);
+  cputtext_ni("\nBSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT: ");
+  cputi_ni(BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT, 10);
+  cputtext_ni("\nulBSP430clockSMCLK_Hz_ni(): ");
+  smclk_Hz = ulBSP430clockSMCLK_Hz_ni();
+  cputul_ni(smclk_Hz, 10);
+  cputtext_ni("\nBSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT: ");
+  cputi_ni(BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT, 10);
+  cputtext_ni("\nulBSP430clockACLK_Hz_ni(): ");
+  aclk_Hz = ulBSP430clockACLK_Hz_ni();
+  cputul_ni(aclk_Hz, 10);
 
 #if BSP430_TIMER_CCACLK - 0
   if (1000000UL <= aclk_Hz) {

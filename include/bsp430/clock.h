@@ -103,32 +103,6 @@
  * unsigned long. */
 #define BSP430_CLOCK_US_TO_NOMINAL_MCLK(_delay_us) BSP430_CORE_US_TO_TICKS((_delay_us), BSP430_CLOCK_NOMINAL_MCLK_HZ)
 
-/** @def BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
- *
- * SMCLK is normally configured to divide another clock by shifting it
- * left this many positions.  E.g., if MCLK is 20 MHz, a dividing
- * shift of 2 will produce a clock divisor of 4 and an SMCLK at 5 MHz.
- * The range of division and default divisor may be MCU-specific.  The
- * value reflects the divisor of MCLK.  If the clock source for SMCLK
- * is different than an undivided MCLK, the code that configures the
- * clock may modify the shift value that is stored in the peripheral
- * registers.
- *
- * If #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true,
- * vBSP430platformInitialize_ni() will invoke to
- * iBSP430clockConfigureSMCLKDividingShift_ni() with this setting to
- * configure the clock divisors after setting the nominal MCLK
- * frequency.
- *
- * @note iBSP430clockSMCLKDividingShift_ni() should always be used in
- * preference to this constant to determine the current relative
- * MCLK/SMCLK frequencies.
- *
- * @defaulted  */
-#ifndef BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
-#define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 0
-#endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
-
 /** Oscillator capacitor setting for use by
  * #iBSP430clockConfigureLFXT1_ni.
  *
@@ -382,6 +356,11 @@ typedef enum eBSP430clockSource {
    * #BSP430_CLOCK_NOMINAL_MCLK_HZ, but may be a multiple of that. */
   eBSP430clockSRC_DCOCLKDIV,
 
+  /** The default clock source for SMCLK.  The selected clock is
+   * peripheral-dependent and likely to be one of
+   * #eBSP430clockSRC_DCOCLK or #eBSP430clockSRC_DCOCLKDIV. */
+  eBSP430clockSRC_SMCLK_PU_DEFAULT,
+  
   /** A secondary external clock.  This is only recognized if
    * #BSP430_CLOCK_NOMINAL_XT2CLK_HZ has been provided. */
   eBSP430clockSRC_XT2CLK,
@@ -502,30 +481,28 @@ ulBSP430clockMCLK_Hz (void)
   return rv;
 }
 
-/** Configure SMCLK by dividing MCLK.
+/** Configure SMCLK to a source clock.
  *
- * The peripheral clock registers are configured to produce SMCLK from
- * the same source as MCLK at a rate where SMCLK divides MCLK by a
- * specified power of two.  The range of supported shift values is
- * specific to the peripheral.  Where MCLK is itself divided, the
- * underlying implementation will take that into account.
+ * The peripheral-specific implementation will configure SMCLK to
+ * source from the requested clock.
  *
- * See also #BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT.
+ * @param sel the source from which the clock should be selected.
+ * Note that the values permit an internal decision, e.g. to prefer
+ * LFXT1 but to use an alternative if that is faulted.  Configuration
+ * is rejected if the requested clock source does not exist on the
+ * platform.
  *
- * @param shift_pos the number of bit positions by which the incoming
- * clock is divided; e.g. a value of 2 produces /4.
+ * @param dividing_shift exponent of a divider used to reduce jitter
+ * and/or clock rate.  Not all peripherals support this; a value of
+ * zero is implicitly used in that situation.
  *
- * @return iBSP430clockSMCLKDividingShift_ni() as evaluated after the
- * configuration is complete */
-int iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos);
-
-/** Return the shift used to divide MCLK to produce SMCLK.
+ * @return 0 if the configuration was accepted, a negative error if it
+ * was rejected.
  *
- * This is extracted from the peripheral-specific registers and
- * accounts for any division by MCLK of a shared source clock.
- *
- * @return The power of 2 by which MCLK is divided to produce SMCLK. */
-int iBSP430clockSMCLKDividingShift_ni (void);
+ * @see #BSP430_PLATFORM_BOOT_SMCLK_SOURCE, #BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT
+ */
+int iBSP430clockConfigureSMCLK_ni (eBSP430clockSource sel,
+                                   unsigned int dividing_shift);
 
 /** Return the best available estimate of SMCLK frequency.
  *

@@ -261,9 +261,9 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
   dcoclk_refclk = dcoclk_Hz / (FLLREFCLK_HZ >> 0);
   UCSCTL2 = FLLD_1 | ((dcoclk_refclk >> 1) - 1);
 
-  /* Set SMCLK and MCLK to be undivided DCOCLKDIV */
-  UCSCTL4 = (UCSCTL4 & SELA_MASK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
-  UCSCTL5 &= DIVA_MASK;
+  /* Set MCLK to be undivided DCOCLKDIV */
+  UCSCTL4 = (UCSCTL4 & (SELA_MASK | SELS_MASK)) | SELM__DCOCLKDIV;
+  UCSCTL5 &= ~DIVM_MASK;
 
   /* Stabilize on an RSEL where the trimmed frequency does not leave
    * the DCO in a faulted state */
@@ -306,33 +306,6 @@ vBSP430ucsConfigureMCLK_ni (unsigned long mclk_Hz,
 }
 
 #endif /* BSP430_UCS_TRIM_DCOCLKDIV */
-
-
-int
-iBSP430clockSMCLKDividingShift_ni (void)
-{
-  int divs;
-  /* Assume that the source for both MCLK and SMCLK is the same, but
-   * account for a potential DIVM. */
-  divs = (UCSCTL5 & DIVS_MASK) / DIVS0;
-  divs -= (UCSCTL5 & DIVM_MASK) / DIVM0;
-  return divs;
-}
-
-int
-iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
-{
-  unsigned int selm;
-
-  /* Set SELS to the same value as SELM. */
-  selm = (UCSCTL4 & SELM_MASK) / SELM0;
-  UCSCTL4 = (UCSCTL4 & ~SELS_MASK) | (selm * SELS0);
-
-  /* Adjust the shift for any division happening at MCLK. */
-  shift_pos += (UCSCTL5 & DIVM_MASK) / DIVM0;
-  UCSCTL5 = (UCSCTL5 & ~DIVS_MASK) | (DIVS_MASK & (shift_pos * DIVS0));
-  return iBSP430clockSMCLKDividingShift_ni();
-}
 
 int
 iBSP430clockConfigureLFXT1_ni (int enablep,
@@ -455,6 +428,7 @@ sourceToCSEL_ (eBSP430clockSource sel)
       return CSEL_REFOCLK;
     case eBSP430clockSRC_DCOCLK:
       return CSEL_DCOCLK;
+    case eBSP430clockSRC_SMCLK_PU_DEFAULT:
     case eBSP430clockSRC_DCOCLKDIV:
       return CSEL_DCOCLKDIV;
 #if defined(SELA__XT2CLK) && (configBSP430_PERIPH_XT2 - 0)
@@ -518,6 +492,23 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
   UCSCTL4 = (UCSCTL4 & ~SELA_MASK) | (csel * SELA0);
   return 0;
 }
+
+int
+iBSP430clockConfigureSMCLK_ni (eBSP430clockSource sel,
+                              unsigned int dividing_shift)
+{
+  int csel = sourceToCSEL_(sel);
+  if (0 > csel) {
+    return -1;
+  }
+  if (DIV_MAX_VALUE < dividing_shift) {
+    dividing_shift = DIV_MAX_VALUE;
+  }
+  UCSCTL5 = (UCSCTL5 & ~DIVS_MASK) | (DIVS_MASK & (dividing_shift * DIVS0));
+  UCSCTL4 = (UCSCTL4 & ~SELS_MASK) | (csel * SELS0);
+  return 0;
+}
+
 
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)

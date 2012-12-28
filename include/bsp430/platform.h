@@ -820,4 +820,33 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT 0
 #endif /* BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT */
 
+/** The SMCLK source configured at boot if #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true.
+ *
+ * On most MCUs, the power-up-clear default will be equivalent having
+ * SMCLK and MCLK run at the same rate.  In some cases it might be
+ * desirable to use an external crystal as the source for SMCLK.
+ *
+ * @see iBSP430clockConfigureSMCLK_ni()
+ * 
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_SMCLK_SOURCE
+#define BSP430_PLATFORM_BOOT_SMCLK_SOURCE eBSP430clockSRC_SMCLK_PU_DEFAULT
+#endif /* BSP430_PLATFORM_BOOT_SMCLK_SOURCE */
+
+/** The SMCLK dividing shift configured at boot if #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true.
+ *
+ * Several clock peripherals support dividing the input signal to
+ * reduce jitter or slow the clock.  This option corresponds to the
+ * DIVS field in such a peripheral.
+ * 
+ * The option is ignored unless the clock peripheral supports dividing
+ * the SMCLK source.
+ *
+ * @see iBSP430clockConfigureSMCLK_ni()
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT
+#define BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT 0
+#endif /* BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT */
+
 #endif /* BSP430_PLATFORM_H */

@@ -82,35 +82,6 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
 }
 
 int
-iBSP430clockSMCLKDividingShift_ni (void)
-{
-  int divs;
-
-  /* Assume that the source for both MCLK and SMCLK is the same, but
-   * account for a potential DIVM. */
-  divs = (BCSCTL2 & DIVS_MASK) / DIVS0;
-  divs -= (BCSCTL2 & DIVM_MASK) / DIVM0;
-  return divs;
-}
-
-int
-iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
-{
-  unsigned char bcsctl2 = BCSCTL2;
-
-  /* Set SMCLK source to the same as MCLK */
-  if (SELM1 & bcsctl2) {
-    bcsctl2 |= SELS;
-  } else {
-    bcsctl2 &= ~SELS;
-  }
-  /* Adjust for division of MCLK */
-  shift_pos += (bcsctl2 & DIVM_MASK) / DIVM0;
-  BCSCTL2 = (bcsctl2 & ~DIVS_MASK) | (DIVS_MASK & (shift_pos * DIVS0));
-  return iBSP430clockSMCLKDividingShift_ni();
-}
-
-int
 iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
                               unsigned int dividing_shift)
 {
@@ -139,6 +110,21 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
   }
   BCSCTL1 = (BCSCTL1 & ~DIVA_MASK) | (DIVA_MASK & (dividing_shift * DIVA0));
   BCSCTL3 = (BCSCTL3 & ~SELA_MASK) | sela;
+  return 0;
+}
+
+int
+iBSP430clockConfigureSMCLK_ni (eBSP430clockSource sel,
+                               unsigned int dividing_shift)
+{
+  unsigned int sels = 0;
+
+#if (configBSP430_PERIPH_XT2 - 0)
+  if (eBSP430clockSRC_XT2CLK == sel) {
+    sels = SELS;
+  }
+#endif /* configBSP430_PERIPH_XT2 */
+  BCSCTL2 = (BCSCTL2 & ~(SELS | DIVS_MASK)) | sels | (DIVS_MASK & (dividing_shift * DIVS0));
   return 0;
 }
 

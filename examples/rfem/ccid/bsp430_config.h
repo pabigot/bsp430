@@ -11,7 +11,7 @@
 
 /* 8 MHz system clock, 4 MHz SMCLK */
 #define BSP430_CLOCK_NOMINAL_MCLK_HZ (8*1000*1000UL)
-#define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 1
+#define BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT 1
 
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1

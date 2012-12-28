@@ -101,29 +101,12 @@ ulBSP430clockMCLK_Hz_ni (void)
 unsigned long
 ulBSP430clockSMCLK_Hz_ni (void)
 {
-  return ulBSP430clockMCLK_Hz_ni();
-}
-
-int
-iBSP430clockSMCLKDividingShift_ni (void)
-{
-  /* Dividing shift is not configurable on this peripheral */
-  return 0;
-}
-
-int
-iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
-{
-#if defined(SELS)
-  /* If supported, source SMCLK from same source as MCLK */
-  if (FLL_CTL1 & SELM1) {
-    FLL_CTL1 |= SELS;
-  } else {
-    FLL_CTL1 &= ~SELS;
+#if defined(SELS) && (configBSP430_PERIPH_XT2 - 0)
+  if (FLL_CTL1 & SELS) {
+    return BSP430_CLOCK_NOMINAL_XT2CLK_HZ;
   }
-#endif /* SELS */
-  /* Regardless, MCU doesn't support dividing SMCLK */
-  return 0;
+#endif
+  return ulBSP430clockMCLK_Hz_ni();
 }
 
 unsigned long
@@ -156,6 +139,20 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
       break;
   }
   FLL_CTL1 = (FLL_CTL1 & ~DIVA_MASK) | (DIVA_MASK & (dividing_shift * FLL_DIV0));
+  return 0;
+}
+
+int
+iBSP430clockConfigureSMCLK_ni (eBSP430clockSource sel,
+                               unsigned int dividing_shift)
+{
+#if defined(SELS) && (configBSP430_PERIPH_XT2 - 0)
+  unsigned int sels = 0;
+  if (eBSP430clockSRC_XT2CLK == sel) {
+    sels = SELS;
+  }
+  FLL_CTL1 = (FLL_CTL1 & ~SELS) | sels;
+#endif /* configBSP430_PERIPH_XT2 */
   return 0;
 }
 

@@ -36,9 +36,9 @@ make realclean \
 
 /* By default, ensure MCLK and SMCLK can be distinguished at the test
  * points. */
-#ifndef BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT
-#define BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT 1
-#endif /* BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT */
+#ifndef BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT
+#define BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT 1
+#endif /* BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT */
 
 /* Request a differential timer for SMCLK/ACLK if available */
 #ifndef configBSP430_TIMER_CCACLK

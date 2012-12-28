@@ -123,36 +123,6 @@ ulBSP430csDCOCLK_Hz_ni (void)
   return supported_freq[!!(csctl1 & DCORSEL) + 2 * (csctl1 & DCOFSEL_MASK) / DCOFSEL0];
 }
 
-int
-iBSP430clockSMCLKDividingShift_ni (void)
-{
-  int divs;
-  /* Assume that the source for both MCLK and SMCLK is the same, but
-   * account for a potential DIVM. */
-  divs = (CSCTL3 & DIVS_MASK) / DIVS0;
-  divs -= (CSCTL3 & DIVM_MASK) / DIVM0;
-  return divs;
-}
-
-int
-iBSP430clockConfigureSMCLKDividingShift_ni (int shift_pos)
-{
-  unsigned int selm;
-
-  /* Set SELS to the same value as SELM. */
-  selm = (CSCTL2 & SELM_MASK) / SELM0;
-
-  /* Adjust the shift for any division happening at MCLK. */
-  shift_pos += (CSCTL3 & DIVM_MASK) / DIVM0;
-
-  CSCTL0_H = 0xA5;
-  CSCTL2 = (CSCTL2 & ~SELS_MASK) | (selm * SELS0);
-  CSCTL3 = (CSCTL3 & ~DIVS_MASK) | (DIVS_MASK & (shift_pos * DIVS0));
-  CSCTL0_H = !0xA5;
-
-  return iBSP430clockSMCLKDividingShift_ni();
-}
-
 unsigned long
 ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
 {
@@ -284,6 +254,7 @@ sourceToCSEL_ (eBSP430clockSource sel)
       return CSEL_XT1CLK;
     case eBSP430clockSRC_VLOCLK:
       return CSEL_VLOCLK;
+    case eBSP430clockSRC_SMCLK_PU_DEFAULT:
     case eBSP430clockSRC_DCOCLK:
       return CSEL_DCOCLK;
 #if (defined(SELS__XT2CLK) || defined(SELS__HFXTCLK)) && (configBSP430_PERIPH_XT2 - 0)
@@ -346,7 +317,12 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
                               unsigned int dividing_shift)
 {
   int csel = sourceToCSEL_(sel);
-  
+  if (0 > csel) {
+    return -1;
+  }
+  if (DIV_MAX_VALUE < dividing_shift) {
+    dividing_shift = DIV_MAX_VALUE;
+  }
 #if defined(__MSP430_HAS_CS_A__)
   if (csel >= CSEL_DCOCLK) {
     /* CS_A does not permit use of DCOCLK as source for ACLK.
@@ -360,3 +336,22 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
   CSCTL0_H = !0xA5;
   return 0;
 }
+
+int
+iBSP430clockConfigureSMCLK_ni (eBSP430clockSource sel,
+                               unsigned int dividing_shift)
+{
+  int csel = sourceToCSEL_(sel);
+  if (0 > csel) {
+    return -1;
+  }
+  if (DIV_MAX_VALUE < dividing_shift) {
+    dividing_shift = DIV_MAX_VALUE;
+  }
+  CSCTL0_H = 0xA5;
+  CSCTL3 = (CSCTL3 & ~DIVS_MASK) | (DIVS_MASK & (dividing_shift * DIVS0));
+  CSCTL2 = (CSCTL2 & ~SELS_MASK) | (csel * SELS0);
+  CSCTL0_H = !0xA5;
+  return 0;
+}
+

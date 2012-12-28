@@ -251,7 +251,7 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-  divisor = (BSP430_CLOCK_NOMINAL_MCLK_HZ >> BSP430_CLOCK_NOMINAL_SMCLK_DIVIDING_SHIFT) / 300000U;
+  divisor = ulBSP430clockSMCLK_Hz_ni() / 300000U;
   if (0 == divisor) {
     divisor = 1;
   }
