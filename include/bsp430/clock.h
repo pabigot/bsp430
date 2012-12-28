@@ -608,8 +608,8 @@ int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
  * @return an estimate of the ACLK frequency, in Hz */
 unsigned long ulBSP430clockACLK_Hz_ni (void);
 
-/** Interruptible-preserving wrapper for uiBSP430clockACLK_Hz_ni() */
-static unsigned int
+/** Interruptible-preserving wrapper for ulBSP430clockACLK_Hz_ni() */
+static unsigned long
 BSP430_CORE_INLINE
 ulBSP430clockACLK_Hz (void)
 {
