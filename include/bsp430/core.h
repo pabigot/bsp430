@@ -601,7 +601,7 @@
  * @note The result is rounded down.
  *
  * @see #BSP430_CORE_TICKS_TO_MS, #BSP430_CORE_US_TO_TICKS */
-#define BSP430_CORE_MS_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000UL)
+#define BSP430_CORE_MS_TO_TICKS(ms_, hz_) (((ms_) * (unsigned long)(hz_)) / 1000UL)
 
 /** Generic convert from ticks at some frequency to milliseconds.
  * 
