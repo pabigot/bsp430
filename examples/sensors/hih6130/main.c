@@ -21,45 +21,15 @@
 #error Uptime is not configured correctly
 #endif /* BSP430_UPTIME */
 
-volatile int alarm_fired;
-static int
-alarmCallback_ni (hBSP430timerAlarm alarm)
-{
-  (void)alarm;
-  alarm_fired = 1;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
-}
-
 void main ()
 {
-  struct sBSP430timerAlarm alarm_struct;
-  hBSP430timerAlarm alarm;
   hBSP430halSERIAL i2c = hBSP430serialLookup(APP_HIH6130_I2C_PERIPH_HANDLE);
-  unsigned long alarm_freq_Hz;
   int rc;
 
   vBSP430platformInitialize_ni();
 
   (void)iBSP430consoleInitialize();
   cprintf("\nApplication starting\n");
-
-  alarm = hBSP430timerAlarmInitialize(&alarm_struct, BSP430_UPTIME_TIMER_PERIPH_HANDLE, 1, alarmCallback_ni);
-  if (NULL == alarm) {
-    cprintf("Failed to initialize alarm\n");
-    return;
-  }
-  alarm_freq_Hz = ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
-#define DELAY_MS_NI(ms_) do {                                              \
-    alarm_fired = 0;                                                    \
-    rc = iBSP430timerAlarmSet_ni(alarm, ulBSP430uptime_ni() + BSP430_CORE_MS_TO_TICKS(ms_, alarm_freq_Hz)); \
-    while (! alarm_fired) {                                             \
-      BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);                        \
-    }                                                                   \
-  } while (0)
-
-  rc = iBSP430timerAlarmSetEnabled_ni(alarm, 1);
-
-  cprintf("Alarm enable returned %d\n", rc);
 
   cprintf("HIH6130 I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n",
           xBSP430serialName(APP_HIH6130_I2C_PERIPH_HANDLE) ?: "UNKNOWN",
@@ -80,7 +50,7 @@ void main ()
   (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_HIH6130_I2C_ADDRESS);
 
   /* HIH-613x wants max 60ms on power-up. */
-  DELAY_MS_NI(60);
+  BSP430_UPTIME_DELAY_MS_NI(60, LPM4_bits, 0);
 
 #define DENOMINATOR ((1 << 14) - 1)
 #define HUMIDITY_RAW_TO_PPT(raw_) ((unsigned int)((1000UL * (raw_)) / DENOMINATOR))
@@ -110,7 +80,7 @@ void main ()
      * typically takes 36.65ms to complete a combined temperature and
      * humidity reading.  Short it so we can verify that, but don't
      * ask more than once per millisecond. */
-    DELAY_MS_NI(30);
+    BSP430_UPTIME_DELAY_MS_NI(30, LPM4_bits, 0);
     do {
       rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
       status = 0x03 & (data[0] >> 6);
@@ -123,13 +93,13 @@ void main ()
       if (0 == status) {
         break;
       }
-      DELAY_MS_NI(1);
+      BSP430_UPTIME_DELAY_MS_NI(1, LPM4_bits, 0);
     } while (1 == status);
     t1 = ulBSP430uptime_ni();
     cprintf("%s: ", xBSP430uptimeAsText_ni(t0));
     cprintf("Temp %d dF, humidity %u ppt, in %s\n", TEMPERATURE_dC_TO_dF(TEMPERATURE_RAW_TO_dC(temp_raw)),
             HUMIDITY_RAW_TO_PPT(hum_raw),
             xBSP430uptimeAsText_ni(t1 - t0));
-    DELAY_MS_NI(5000);
+    BSP430_UPTIME_DELAY_MS_NI(5000, LPM4_bits, 0);
   }
 }
