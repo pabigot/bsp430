@@ -53,7 +53,7 @@ capture_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
 
   cp->count = now_tt + ((int)timer->hpl->ccr[idx] - (unsigned int)now_tt);
   cp->nsamples += 1;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
 }
 
 static struct sCaptures captures = {

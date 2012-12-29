@@ -84,7 +84,7 @@ button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
   (void)context;
   (void)idx;
   ++button;
-  return BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT
+  return BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE
          | BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN
          | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }

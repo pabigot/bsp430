@@ -46,11 +46,11 @@ button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
   hpl->ies ^= sp->bit;
   vBSP430ledSet(0, -1);
 
-  /* We let the infrastructure identify what LPM bits to clear, but
-   * also disable GIE on exit.  This ensures we don't overwrite the
+  /* We let the infrastructure identify what LPM bits to clear, and
+   * have it disable GIE on exit.  This ensures we don't overwrite the
    * interrupt state due to a subsequent interrupt before we can print
    * what we just stored. */
-  return GIE | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
 }
 
 static sButtonState button_state = {

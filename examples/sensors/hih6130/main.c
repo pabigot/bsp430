@@ -27,7 +27,7 @@ alarmCallback_ni (hBSP430timerAlarm alarm)
 {
   (void)alarm;
   alarm_fired = 1;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
 }
 
 void main ()

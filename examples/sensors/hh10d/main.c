@@ -62,7 +62,7 @@ hh10d_1Hz_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
   hh10d->last_period_count = capture - hh10d->last_capture;
   hh10d->last_capture = capture;
   timer->hpl->ccr[idx] += hh10d->sample_duration_utt;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
 }
 
 static struct sHH10D hh10d = {
