@@ -297,6 +297,10 @@ cmd_configure_ (const char * command,
       } else {
         rv = iBSP430timerAlarmDisable(alarm[cc]);
       }
+      if (0 != rv) {
+        cprintf("Failed cc index %d: %d\n", cc, rv);
+        return rv;
+      }
     } else {
       rv = -1;
     }
