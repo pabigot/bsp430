@@ -231,7 +231,7 @@ hBSP430eusciOpenSPI (hBSP430halSERIAL hal,
 
 static int
 i2cSetAutoStop_ni (hBSP430halSERIAL hal,
-                    int enablep)
+                   int enablep)
 {
   int rc = 0;
   if (!!enablep != !!(UCASTP_2 == (UCASTP_3 & HAL_HPL_FIELD(hal, ctlw1)))) {
@@ -549,7 +549,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
         return -1;
       }
     } while (! (hpl->ifg & UCTXIFG));
-    
+
     /* Send the stop. */
     hpl->ctlw0 |= UCTXSTP;
   }

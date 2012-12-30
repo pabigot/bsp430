@@ -176,7 +176,7 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
         BSP430_CORE_WATCHDOG_CLEAR();
         BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
       } while (BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI() && (0 != loop_limit));
-      
+
       rc = ! BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI();
     }
   }

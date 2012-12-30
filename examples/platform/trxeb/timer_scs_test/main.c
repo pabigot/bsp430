@@ -83,7 +83,7 @@ void main ()
           'A' + (APP_CC_CCIS / CCIS0),
           xBSP430portName(APP_CC_PORT_PERIPH_HANDLE),
           iBSP430portBitPosition(APP_CC_PORT_BIT));
-          
+
   /* OUTCLK: output low */
   outclk = 0;
   BSP430_PORT_HAL_HPL_OUT(outclk_port_hal) &= ~APP_OUTCLK_PORT_BIT;
@@ -225,10 +225,10 @@ void main ()
   BSP430_UNITTEST_ASSERT_EQUAL_FMTx(last_outclk+2, timer_hpl->r);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTx(cctl, timer_hpl->cctl[APP_CCIDX]);
 
-  /* 
-F1) CCI rises then falls while CLK remains low.  CCIFG remains low.  When CLK
-rises the counter is incremented but CCIFG remains low.  CCIFG is set only
-when CLK falls.
+  /*
+  F1) CCI rises then falls while CLK remains low.  CCIFG remains low.  When CLK
+  rises the counter is incremented but CCIFG remains low.  CCIFG is set only
+  when CLK falls.
   */
 
   /* CLK is low. */
@@ -264,10 +264,10 @@ when CLK falls.
   CLEAR_CAPTURE();
 
   /*
-F2) CCI rises then falls while CLK remains high.  CCIFG remains low.  When
-CLK falls CCIFG is set.
+  F2) CCI rises then falls while CLK remains high.  CCIFG remains low.  When
+  CLK falls CCIFG is set.
   */
-  
+
   /* Advance the clock.  No action on rising edge. */
   last_outclk = outclk;
   HALF_TICK_OUTCLK();

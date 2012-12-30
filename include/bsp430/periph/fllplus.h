@@ -136,7 +136,7 @@
 #endif /* BSP430_CLOCK_LFXT1_IS_FAULTED_NI */
 
 /** Check whether the FLL+-controlled XT2 crystal has a fault condition.
- * 
+ *
  * @note Oscillator fault flags are not set unless a fault has been
  * detected.  If the crystal has never been enabled, no fault will
  * have been detected.  On power-up, the XT2IN function is not enabled

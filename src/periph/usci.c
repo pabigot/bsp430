@@ -477,7 +477,7 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
       return -1;
     }
   } while (! (aux->tx_bit & *aux->ifgp));
-  
+
   /* Send the stop. */
   hpl->ctl1 |= UCTXSTP;
   return i;

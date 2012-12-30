@@ -143,19 +143,19 @@
  * this is done instantly.  BSP430 infrastructure code will delay this
  * many microseconds after clearing faults before checking to see
  * whether they are still present.
- * 
+ *
  * Delay suggested by SLAU144I "2xx Family Users Guide" section
  * 5.2.7.1 "Sourcing MCLK from a Crystal".  This applies to using XT2
  * and for a specific MCU family, but we're guessing it's a sufficient
  * delay to detect faults in other configurations.  For DCO faults
  * it's probably too long.
- * 
+ *
  * @defaulted */
 #ifndef BSP430_CLOCK_FAULT_RECHECK_DELAY_US
 #define BSP430_CLOCK_FAULT_RECHECK_DELAY_US 50
 #endif /* BSP430_CLOCK_FAULT_RECHECK_DELAY_US */
 
-/** Clear faults associated with clocks 
+/** Clear faults associated with clocks
  *
  * This clears the state bits associated with fault in all clock
  * systems supported by the peripheral.  If a clock still exhibits a
@@ -183,7 +183,7 @@
  *
  * This checks the special function register which reflects roll-up
  * oscillator faults throughout the system.
- * 
+ *
  * @platformdep */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define BSP430_CLOCK_OSC_IS_FAULTED_NI() (SFRIFG1 & OFIFG)
@@ -195,7 +195,7 @@
  *
  * This clears the bit the special function register which reflects
  * roll-up oscillator faults throughout the system.
- * 
+ *
  * @platformdep */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define BSP430_CLOCK_OSC_CLEAR_FAULT_NI() do { SFRIFG1 &= ~OFIFG; } while (0)
@@ -360,7 +360,7 @@ typedef enum eBSP430clockSource {
    * peripheral-dependent and likely to be one of
    * #eBSP430clockSRC_DCOCLK or #eBSP430clockSRC_DCOCLKDIV. */
   eBSP430clockSRC_SMCLK_PU_DEFAULT,
-  
+
   /** A secondary external clock.  This is only recognized if
    * #BSP430_CLOCK_NOMINAL_XT2CLK_HZ has been provided. */
   eBSP430clockSRC_XT2CLK,
@@ -372,7 +372,7 @@ typedef enum eBSP430clockSource {
   /** Internal low-power oscillator that exists only on CS_A
    * peripherals. */
   eBSP430clockSRC_MODCLK,
-  
+
   /** Internal low-power oscillator that exists only on CS_A
    * peripherals. */
   eBSP430clockSRC_LFMODCLK,

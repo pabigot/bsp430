@@ -260,7 +260,7 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 #endif /* BSP430_CLOCK_LFXT1_IS_FAULTED_NI */
 
 /** Check whether the UCS-controlled XT2 crystal has a fault condition.
- * 
+ *
  * @note Oscillator fault flags are not set unless a fault has been
  * detected.  If the crystal has never been enabled, no fault will
  * have been detected.  On power-up, the XT2IN function is not enabled
@@ -282,7 +282,7 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 #define BSP430_UCS_CLEAR_FAULTS_NI() do {                               \
     UCSCTL7 &= ~(BSP430_UCS_XT2OFFG_ | BSP430_UCS_XT1HFOFFG_ | XT1LFOFFG | DCOFFG); \
   } while (0)                                                           \
-    
+ 
 /** Clear all clock faults.
  *
  * This definition overrides the generic definition to clear the

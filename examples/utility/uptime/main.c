@@ -18,7 +18,7 @@ void main ()
 {
   unsigned long wake_utt;
   unsigned int iters = 0;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
@@ -47,7 +47,7 @@ void main ()
   while (1) {
     long rem;
     int rc;
-    
+
     rem = lBSP430uptimeSleepUntil_ni(wake_utt, LPM1_bits);
     if (0 >= rem) {
       wake_utt += APP_DELAY_UTT;

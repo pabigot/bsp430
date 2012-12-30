@@ -54,7 +54,7 @@ void main ()
 
 #define DENOMINATOR ((1 << 14) - 1)
 #define HUMIDITY_RAW_TO_PPT(raw_) ((unsigned int)((1000UL * (raw_)) / DENOMINATOR))
-/** Convert a raw temperature value to deci-degrees Celcius */
+  /** Convert a raw temperature value to deci-degrees Celcius */
 #define TEMPERATURE_RAW_TO_dC(raw_) ((int)(-400 + (1650L * (raw_)) / DENOMINATOR))
 #define TEMPERATURE_dC_TO_dF(dc_) (320 + ((9 * (dc_)) / 5))
 

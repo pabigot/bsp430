@@ -120,7 +120,7 @@ typedef int tBSP430periphHandle;
  * If this is defined, #BSP430_CLOCK_NOMINAL_XT2CLK_HZ should be
  * provided as well.
  *
- * @affects #BSP430_PERIPH_XT2 
+ * @affects #BSP430_PERIPH_XT2
  */
 #ifndef configBSP430_PERIPH_XT2
 #define configBSP430_PERIPH_XT2 0
@@ -332,7 +332,7 @@ struct sBSP430halISRIndexedChainNode;
  * interrupt enable bit.  An example would be a peripheral-independent
  * transmission interrupt handler that has determined that no further
  * data will be transmitted.
- * 
+ *
  * This bit may be set in the return value of
  * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
  * to indicate that the top-half should clear the corresponding IE bit

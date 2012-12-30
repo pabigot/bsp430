@@ -498,7 +498,7 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
 
 int
 iBSP430clockConfigureSMCLK_ni (eBSP430clockSource sel,
-                              unsigned int dividing_shift)
+                               unsigned int dividing_shift)
 {
   int csel = sourceToCSEL_(sel);
   if (0 > csel) {

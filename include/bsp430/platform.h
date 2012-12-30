@@ -86,7 +86,7 @@ void vBSP430platformInitialize_ni (void);
  * If your platform does not need to do anything special, you can
  * re-use the standard implementation of this function by including
  * this in your platform-specific @c platform.c file:
- * 
+ *
  * @code
  * #include <bsp430/platform/standard.inc>
  * @endcode
@@ -798,7 +798,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * enable XIN/XOUT to function even if the crystal is present.
  *
  * @see iBSP430clockConfigureACLK_ni()
- * 
+ *
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_ACLK_SOURCE
 #define BSP430_PLATFORM_BOOT_ACLK_SOURCE eBSP430clockSRC_XT1CLK_FALLBACK
@@ -809,7 +809,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * Several clock peripherals support dividing the input signal to
  * reduce jitter or slow the clock.  This option corresponds to the
  * DIVA field in such a peripheral.
- * 
+ *
  * The option is ignored unless the clock peripheral supports dividing
  * the ACLK source.
  *
@@ -827,7 +827,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * desirable to use an external crystal as the source for SMCLK.
  *
  * @see iBSP430clockConfigureSMCLK_ni()
- * 
+ *
  * @defaulted */
 #ifndef BSP430_PLATFORM_BOOT_SMCLK_SOURCE
 #define BSP430_PLATFORM_BOOT_SMCLK_SOURCE eBSP430clockSRC_SMCLK_PU_DEFAULT
@@ -838,7 +838,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * Several clock peripherals support dividing the input signal to
  * reduce jitter or slow the clock.  This option corresponds to the
  * DIVS field in such a peripheral.
- * 
+ *
  * The option is ignored unless the clock peripheral supports dividing
  * the SMCLK source.
  *

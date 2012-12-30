@@ -450,7 +450,7 @@ iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
         return -1;
       }
     } while (! (hpl->ifg & UCTXIFG));
-    
+
     hpl->txbuf = data[i];
     ++i;
   }

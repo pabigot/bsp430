@@ -208,7 +208,7 @@ void main ()
 #else /* BSP430_UCS_FLL_SELREF */
               "XT1CLK"
 #endif /* BSP430_UCS_FLL_SELREF */
-              );
+             );
   cprintf("\nUCS RSEL %d DCO %d MOD %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
           "\n CTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x",

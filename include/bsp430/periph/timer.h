@@ -819,7 +819,7 @@
  * purposes.
  *
  * @see #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX
- * @defaulted 
+ * @defaulted
  */
 #ifndef configBSP430_TIMER_SAFE_COUNTER_READ
 #define configBSP430_TIMER_SAFE_COUNTER_READ 1

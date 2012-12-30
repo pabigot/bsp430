@@ -307,7 +307,7 @@
 #define BSP430_CORE_LPM_EXIT_CLEAR_GIE_ 0
 #endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
 /** @endcond */
-    
+
 /** @def BSP430_CORE_LPM_EXIT_MASK
  *
  * The bits cleared in the stored status word to exit from low power
@@ -602,7 +602,7 @@
 #define BSP430_CORE_US_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000000UL)
 
 /** Generic convert from ticks at some frequency to microseconds.
- * 
+ *
  * @note Calculations are done using 32-bit operations.  Fastest code
  * when parameters are compile-time constants.
  *
@@ -612,7 +612,7 @@
 #define BSP430_CORE_TICKS_TO_US(ticks_, hz_) ((1000000UL * (ticks_)) / (hz_))
 
 /** Generic convert from milliseconds to ticks at some frequency.
- * 
+ *
  * @note Calculations are done using 32-bit operations.  Fastest code
  * when parameters are compile-time constants.
  *
@@ -622,7 +622,7 @@
 #define BSP430_CORE_MS_TO_TICKS(ms_, hz_) (((ms_) * (unsigned long)(hz_)) / 1000UL)
 
 /** Generic convert from ticks at some frequency to milliseconds.
- * 
+ *
  * @note Calculations are done using 32-bit operations.  Fastest code
  * when parameters are compile-time constants.
  *
