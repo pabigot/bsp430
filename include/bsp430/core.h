@@ -349,22 +349,26 @@
 #define BSP430_CORE_LPM_LPMXp5 0x0100
 
 /** Defined to a true value if GCC is being used */
-#if 1 < __GNUC__
-#define BSP430_CORE_TOOLCHAIN_GCC 1
-#endif /* __GNUC__ */
+#define BSP430_CORE_TOOLCHAIN_GCC (1 < __GNUC__)
 
 /** Defined to a true value if Code Composer Studio is being used.
  *
  * @warning Although this definition is present and used, Code
  * Composer Studio cannot be used to build BSP430 because it does not
  * support ISO C11 anonymous struct/union fields. */
-#ifdef __TI_COMPILER_VERSION__
-#define BSP430_CORE_TOOLCHAIN_CCS 1
-#endif /* __TI_COMPILER_VERSION__ */
+#define BSP430_CORE_TOOLCHAIN_CCS (__TI_COMPILER_VERSION - 0)
 
 /** Mark a function to be inlined.
  *
- * The spelling of this varies among toolchains.
+ * Most toolchains support this feature, but the spelling of the
+ * request varies.
+ *
+ * The toolchain is free to ignore the request, which is after all
+ * only the developer's expert opinion.  When optimizing for size
+ * toolchains are likely to ignore this if more than one call site is
+ * in the translation unit.
+ *
+ * @see #BSP430_CORE_INLINE_FORCED 
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
 #define BSP430_CORE_INLINE __inline__
@@ -372,6 +376,19 @@
 #define BSP430_CORE_INLINE __inline
 #else /* TOOLCHAIN */
 #define BSP430_CORE_INLINE inline
+#endif /* TOOLCHAIN */
+
+/** Insist that a function be inlined.
+ *
+ * Use this when #BSP430_CORE_INLINE is being ignored.  Not all
+ * toolchains will support this; on those it should be treated as
+ * #BSP430_CORE_INLINE.
+ */
+#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
+/* GCC wants both directives */
+#define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE __attribute__((__always_inline__)) 
+#else /* TOOLCHAIN */
+#define BSP430_CORE_INLINE_FORCED BSP340_CORE_INLINE
 #endif /* TOOLCHAIN */
 
 /** Enter a low-power mode

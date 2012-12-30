@@ -2605,7 +2605,7 @@ vBSP430timerSafeCounterInitialize_ni (tBSP430periphHandle periph)
  * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
  */
 static unsigned int
-BSP430_CORE_INLINE
+BSP430_CORE_INLINE_FORCED
 uiBSP430timerSafeCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
 {
 #if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
