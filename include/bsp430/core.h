@@ -212,6 +212,24 @@
 #include "bsp430_config.h"
 #endif /* configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE */
 
+/** Include runtime checks for critical errors.
+ *
+ * There may be situations where BSP430 can add checks that decrease
+ * performance but detect situations that would otherwise lead to very
+ * hard to diagnose bugs.  Like the classic @c NDEBUG macro used for
+ * @c assert this macro may be defined to a true value to disable such
+ * checks.
+ *
+ * This is used only in performance-critical code where a check
+ * provides safety for a situation that otherwise would be extremely
+ * difficult to diagnose.
+ *
+ * Seriously, you don't ever want to set this.
+ */
+#ifndef BSP430_CORE_NDEBUG
+#define BSP430_CORE_NDEBUG 0
+#endif /* BSP430_CORE_NDEBUG */
+
 /** @def BSP430_CORE_FAMILY_IS_5XX
  *
  * Defined to a value that is true if the build target is an MCU in
