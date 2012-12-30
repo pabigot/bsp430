@@ -42,7 +42,11 @@
  *
  * Normally #BSP430_PERIPH_TA0 is used for this function, but see
  * #BSP430_UPTIME_TIMER_PERIPH_CPPID if you want to select a different
- * timer..
+ * timer.
+ *
+ * @warning The capture/compare register for
+ * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX is reserved for use in
+ * overflow management.  Do not use or reconfigure this register.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -266,7 +270,11 @@ unsigned long ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_H
  * @note The returned value is adjusted for a single pending overflow
  * event that occurs while interrupts are disabled, but will be wrong
  * if interrupts remain disabled long enough for a second overflow to
- * occur.  See ulBSP430timerCounter_ni() for details. */
+ * occur.  See ulBSP430timerCounter_ni() for details.
+ * vBSP430timerSafeCounterInitialize_ni() will have been called on
+ * #BSP430_UPTIME_TIMER_PERIPH_HANDLE so
+ * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX is reserved to support
+ * accurate counter reads. */
 static unsigned long
 BSP430_CORE_INLINE
 ulBSP430uptime_ni (void)
@@ -344,6 +352,10 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  *   code that depends on delay capabilities
  * #endif
  * @endcode
+ *
+ * @warning If you assign the same value to #BSP430_UPTIME_DELAY_CCIDX
+ * and #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX, platform initialization
+ * will hang attempting to configure the delay alarm.
  *
  * @bsp430_config
  */

@@ -315,15 +315,13 @@ ulBSP430timerCounter_ni (hBSP430halTIMER timer,
   unsigned int ctla;
   unsigned int ctlb;
 
-  /* What we're doing is ensuring that we have a counter value that
-   * was captured at a point where the control word did not change.
-   * The expectation is that any pending overflow flag reflected in
-   * that CTL word applies to the counter value.  (Since the counter
-   * value may be tied to SMCLK, it's not possible to expect to read
-   * the same counter value twice.) */
+  /* What we're doing is ensuring that we have a valid counter value
+   * that was captured at a point where the control word did not
+   * change.  The expectation is that any pending overflow flag
+   * reflected in that CTL word applies to the counter value. */
   do {
     ctla = timer->hpl->ctl;
-    r = timer->hpl->r;
+    r = uiBSP430timerSafeCounterRead_ni(timer->hpl);
     ctlb = timer->hpl->ctl;
   } while (ctla != ctlb);
 
@@ -376,7 +374,7 @@ void alarmConfigureInterrupts_ni (struct sBSP430timerAlarm * map)
     hpl->cctl[map->ccidx] |= CCIE;
 
     /* If it looks like we missed the count-to-lo event, set one. */
-    if (hpl->r >= lo) {
+    if (uiBSP430timerSafeCounterRead_ni(hpl) >= lo) {
       hpl->cctl[map->ccidx] |= CCIFG;
     }
   }
@@ -434,6 +432,20 @@ hBSP430timerAlarmInitialize (struct sBSP430timerAlarm * alarm,
   if (NULL == alarm->timer) {
     return NULL;
   }
+#if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
+  if (BSP430_TIMER_SAFE_COUNTER_READ_CCIDX == ccidx) {
+    return NULL;
+  }
+  {
+    BSP430_CORE_INTERRUPT_STATE_T istate;
+    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+    BSP430_CORE_DISABLE_INTERRUPT();
+    do {
+      vBSP430timerSafeCounterInitialize_ni(periph);
+    } while (0);
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  }
+#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
   alarm->ccidx = ccidx;
   alarm->callback = callback;
   alarm->overflow_cb.callback = alarmOFcb_ni;
@@ -447,6 +459,9 @@ iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
 {
   struct sBSP430timerAlarm * malarm = (struct sBSP430timerAlarm *)alarm;
 
+  if (NULL == alarm) {
+    return -1;
+  }
   if (enablep) {
     if (! (alarm->flags & BSP430_TIMER_ALARM_FLAG_ENABLED)) {
       BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode,
@@ -484,9 +499,14 @@ iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
                          unsigned long setting_tck)
 {
   struct sBSP430timerAlarm * malarmp = (struct sBSP430timerAlarm *)alarm;
-  unsigned long now_tck = ulBSP430timerCounter_ni(alarm->timer, NULL);
-  unsigned long delay_tck = setting_tck - now_tck;
+  unsigned long now_tck;
+  unsigned long delay_tck;
 
+  if (NULL == alarm) {
+    return -1;
+  }
+  now_tck = ulBSP430timerCounter_ni(alarm->timer, NULL);
+  delay_tck = setting_tck - now_tck;
   /* Alarm must be enabled... */
   if (! (BSP430_TIMER_ALARM_FLAG_ENABLED & alarm->flags)) {
     return -1;
@@ -518,6 +538,9 @@ int
 iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm)
 {
   struct sBSP430timerAlarm * malarm = (struct sBSP430timerAlarm *)alarm;
+  if (NULL == alarm) {
+    return -1;
+  }
   if (! (BSP430_TIMER_ALARM_FLAG_ENABLED & alarm->flags)) {
     return -1;
   }

@@ -152,6 +152,9 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
   UCSCTL4 = ((UCSCTL7 & XT1LFOFFG) ? SELA__REFOCLK : SELA__XT1CLK) | SELS__DCOCLKDIV | SELM__DCOCLKDIV;
   UCSCTL5 = 0;
 
+  /* Ensure we can read the CCACLK counter safely */
+  vBSP430timerSafeCounterInitialize_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+
   /* Almost-certainly-invalid UCSCTL0 value.  This includes reserved
    * bits that read back as zero, so we "know" we won't terminate
    * without trimming at least once. */
@@ -200,7 +203,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
     tp->ctl = TASSEL__ACLK | MC__CONTINOUS | TACLR;
     __bic_status_register(SCG0);
     tp->cctl0 = 0;
-    tp->ccr0 = tp->r + 32;
+    tp->ccr0 = uiBSP430timerSafeCounterRead_ni(tp) + 32;
     while (! (tp->cctl0 & CCIFG)) {
       BSP430_CORE_WATCHDOG_CLEAR();
     }
@@ -208,7 +211,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
     /* Delay another 1..2 ACLK cycles for the integrator to fully
      * update. */
     tp->cctl0 &= ~CCIFG;
-    tp->ccr0 = tp->r + 2;
+    tp->ccr0 = uiBSP430timerSafeCounterRead_ni(tp) + 2;
     while (! (tp->cctl0 & CCIFG)) {
       BSP430_CORE_WATCHDOG_CLEAR();
     }

@@ -109,6 +109,7 @@ delayAlarmSetRegistered_ni_ (int enablep)
 void
 vBSP430uptimeStart_ni (void)
 {
+  vBSP430timerSafeCounterInitialize_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
   xBSP430uptimeTIMER_ = hBSP430timerLookup(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
   xBSP430uptimeTIMER_->hpl->ctl = 0;
   vBSP430timerResetCounter_ni(xBSP430uptimeTIMER_);
@@ -122,9 +123,10 @@ vBSP430uptimeStart_ni (void)
 
     delayAlarm_.flags = 0;
     delay_alarm = hBSP430timerAlarmInitialize(&delayAlarm_.alarm, BSP430_UPTIME_TIMER_PERIPH_HANDLE, BSP430_UPTIME_DELAY_CCIDX, delayCallback_);
-    if (H_delayAlarm == delay_alarm) {
-      delayAlarm_.flags = DELAY_ALARM_VALID | DELAY_ALARM_ENABLED | DELAY_ALARM_TIMER_ACTIVE;
+    while (H_delayAlarm != delay_alarm) {
+      /* Hang if the alarm cannot be used. */
     }
+    delayAlarm_.flags = DELAY_ALARM_VALID | DELAY_ALARM_ENABLED | DELAY_ALARM_TIMER_ACTIVE;
   }
 #endif /* BSP430_UPTIME_DELAY_CCIDX */
   vBSP430uptimeResume_ni();

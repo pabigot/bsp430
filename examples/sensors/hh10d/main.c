@@ -58,7 +58,7 @@ hh10d_1Hz_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
 
   /* Record the HH10D counter, schedule the next wakeup, then return
    * waking the MCU and inhibiting further interrupts when active. */
-  capture = hh10d->freq_timer->r;
+  capture = uiBSP430timerSafeCounterRead_ni(hh10d->freq_timer);
   hh10d->last_period_count = capture - hh10d->last_capture;
   hh10d->last_capture = capture;
   timer->hpl->ccr[idx] += hh10d->sample_duration_utt;
@@ -119,6 +119,10 @@ void main ()
   cprintf("Uptime CC block %s.%u at %u Hz sample duration %u ticks\n",
           xBSP430timerName(BSP430_UPTIME_TIMER_PERIPH_HANDLE),
           APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);
+
+  /* Set up so we can safely read the counter value, since the clock
+   * is asynchronous to MCLK. */
+  vBSP430timerSafeCounterInitialize_ni(APP_HH10D_TIMER_PERIPH_HANDLE);
 
   i2c = hBSP430serialOpenI2C(i2c,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),

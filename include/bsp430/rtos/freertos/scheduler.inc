@@ -54,7 +54,7 @@ vBSP430freertosSuspendScheduler (void)
 void
 vBSP430freertosResumeScheduler (void)
 {
-  BSP430_HPL_TA0->ccr0 = TIMESLICE_DURATION_tck + BSP430_HPL_TA0->r;
+  BSP430_HPL_TA0->ccr0 = TIMESLICE_DURATION_tck + uiBSP430timerSafeCounterRead_ni(BSP430_HPL_TA0);
   BSP430_HPL_TA0->cctl0 |= CCIE;
 }
 

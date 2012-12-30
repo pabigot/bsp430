@@ -202,6 +202,12 @@
  * The @ref ex_utility_alarm example program provides an environment
  * where the behavior of alarms can be interactively probed.
  *
+ * @warning The alarm infrastructure requires that
+ * vBSP430timerSafeCounterInitialize_ni() have been invoked on the
+ * underlying timer.  This is done by the infrastructure for
+ * #BSP430_UPTIME_TIMER_PERIPH_HANDLE, but you must do so for other
+ * timers that may be used for alarms.
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
@@ -798,6 +804,62 @@
 #define BSP430_TIMER_CCACLK_CC1_CCIS CCIS_0
 #endif /* BSP430_TIMER_CCACLK_CC1_CCIS */
 
+/** Provide safe counter reads for timers.
+ *
+ * The MSP430 timer infrastructure does not guarantee that a read of a
+ * timer counter produces a valid result when the timer clock is
+ * asynchronous to MCLK.  Where the timer is significantly slower than
+ * MCLK a majority vote approach can ensure the result is valid.  If
+ * the timer runs at a similar speed this will fail.
+ *
+ * The problem can be avoided by capturing the counter into a capture
+ * register instead of reading it directly.  Doing this costs a couple
+ * cycles extra when reading the counter, and due to infrastructure
+ * limitations prevents use of that capture/compare register for other
+ * purposes.
+ *
+ * @see #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX
+ * @defaulted 
+ */
+#ifndef configBSP430_TIMER_SAFE_COUNTER_READ
+#define configBSP430_TIMER_SAFE_COUNTER_READ 1
+#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+
+/** Capture/compare index reserved for safe reading of timer counters.
+ *
+ * CC 0 is normally reserved for high-priority capture/compare
+ * operations using the dedicated interrupt handler.  It is also used
+ * with #BSP430_TIMER_CCACLK_PERIPH_HANDLE by
+ * iBSP430ucsTrimDCOCLKDIV_ni().
+ *
+ * CC 1 is normally reserved for use by
+ * #configBSP430_TIMER_CCACLK_CC0_PORT functionality, and is the
+ * standard choice for #BSP430_UPTIME_DELAY_CCIDX.
+ *
+ * Therefore this functionality normally uses CC 2.  To keep the
+ * infrastructure as simple as possible, the same index is used for
+ * all timers on which safe counter reading is required.  If a timer
+ * does not support the requested index, the attempt to enable safe
+ * reading will hang.
+ *
+ * @warning Certain low-end value-line MCUS such as the MSP430G2231 do
+ * not have a third capture/compare register.  Platforms targeting
+ * those MCUs should provide an alternative definition for this macro
+ * in their bsp430_config.h file.
+ *
+ * @warning If you assign the same value to #BSP430_UPTIME_DELAY_CCIDX
+ * and #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX, platform initialization
+ * will hang attempting to configure the delay alarm.
+ *
+ * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
+ * @defaulted
+ */
+#if defined(BSP430_DOXYGEN) || (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
+#ifndef BSP430_TIMER_SAFE_COUNTER_READ_CCIDX
+#define BSP430_TIMER_SAFE_COUNTER_READ_CCIDX 2
+#endif /* BSP430_TIMER_SAFE_COUNTER_READ_CCIDX */
+#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+
 /** Count number of timer transitions over a span of ACLK ticks
  *
  * This function uses the timer capture/compare infrastructure to
@@ -1030,6 +1092,12 @@ unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph);
  * so long that a second overflow occurs before the first is processed
  * by the interrupt handler.
  *
+ * @warning This call will hang if
+ * vBSP430timerSafeCounterInitialize_ni() has not been invoked on the
+ * underlying timer, or if the #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX
+ * capture/compare register has been reconfigured since that was
+ * done.
+ *
  * @param timer The timer for which the count is desired.
  *
  * @param overflowp An optional pointer in which the high word of the
@@ -1208,6 +1276,10 @@ struct sBSP430timerAlarm {
  * user's responsibility to ensure that the selected timer supports
  * the selected capture/compare register.
  *
+ * @warning If #configBSP430_TIMER_SAFE_COUNTER_READ is enabled (as it
+ * is by default), attempts to configure an alarm on
+ * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX will be rejected.
+ *
  * @param callback the callback function to be invoked when the alarm
  * goes off.  This may be a null pointer, in which case the alarm will
  * be disabled and the system will return from low power mode if
@@ -1365,7 +1437,7 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * setting_tck appears to be in the recent past;
  * @li The negative value #BSP430_TIMER_ALARM_SET_ALREADY if the alarm
  * was already scheduled;
- * @li other negative values indicating errors.
+ * @li other negative values indicating specific or generic errors.
  *
  * @ingroup grp_timer_alarm */
 int iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
@@ -2487,6 +2559,72 @@ const char * xBSP430timerName (tBSP430periphHandle periph);
  * @return the number of CCs on the timer.  -1 is returned if the
  * timer does not exist or the resource was not configured. */
 int iBSP430timerSupportedCCs (tBSP430periphHandle periph);
+
+/** Configure the timer for safe reads.
+ *
+ * This function must be invoked before any other function that might
+ * attempt to invoke uiBSP430timerSafeCounterRead_ni() on the
+ * peripheral.  This includes ulBSP430timerCounter_ni().
+ *
+ * @note It is safe to call this function multiple times, and in fact
+ * it must be called again if you need to use
+ * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX for some other purpose.
+ *
+ * @param periph the timer peripheral for which safe counter reads are
+ * desired.
+ *
+ * @warning If #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX does not exist on
+ * @a periph this call will hang.  Since this is a configuration
+ * error, the situation should be detected during development.
+ *
+ * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
+ */
+static void
+BSP430_CORE_INLINE
+vBSP430timerSafeCounterInitialize_ni (tBSP430periphHandle periph)
+{
+#if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
+  volatile sBSP430hplTIMER * const hpl = xBSP430hplLookupTIMER(periph);
+  while ((NULL == hpl)
+         || (BSP430_TIMER_SAFE_COUNTER_READ_CCIDX >= iBSP430timerSupportedCCs(periph))) {
+    /* Spin to detect misconfiguration */
+  }
+  /* Configure for capture, alternating between GND and VCC as
+   * sources, triggering on both edges, asynchronously. */
+  hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] = CAP | CCIS1 | CM_3;
+#endif
+}
+
+/** Inline function to read the timer counter.
+ *
+ * @note This function is 13 cycles faster (8 instead of 21 cycles) if
+ * #BSP430_CORE_NDEBUG is defined to a true value and the checks that
+ * the counter value is correctly read are eliminated.  But it'd be
+ * really hard to figure out what was going wrong in that case.
+ *
+ * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
+ */
+static unsigned int
+BSP430_CORE_INLINE
+uiBSP430timerSafeCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
+{
+#if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
+#if ! (BSP430_CORE_NDEBUG - 0)
+  hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] &= ~CCIFG;
+#endif /* BSP430_CORE_NDEBUG */
+  /* Latch the current counter into a capture register and return it. */
+  hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] ^= CCIS0;
+#if ! (BSP430_CORE_NDEBUG - 0)
+  while ((CCIS1 | CCIFG) != (hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] & (CCIS1 | CCIFG))) {
+    /* Spin to detect misconfiguration */
+  }
+#endif /* NDEBUG */
+  return hpl->ccr[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX];
+#else /* configBSP430_TIMER_SAFE_COUNTER_READ */
+  /* Return the current counter without bothering to validate it */
+  return hpl->r;
+#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+}
 
 #endif /* BSP430_MODULE_TIMER */
 
