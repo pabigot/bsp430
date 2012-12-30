@@ -368,7 +368,7 @@
  * toolchains are likely to ignore this if more than one call site is
  * in the translation unit.
  *
- * @see #BSP430_CORE_INLINE_FORCED 
+ * @see #BSP430_CORE_INLINE_FORCED
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
 #define BSP430_CORE_INLINE __inline__
@@ -386,7 +386,7 @@
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
 /* GCC wants both directives */
-#define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE __attribute__((__always_inline__)) 
+#define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE __attribute__((__always_inline__))
 #else /* TOOLCHAIN */
 #define BSP430_CORE_INLINE_FORCED BSP340_CORE_INLINE
 #endif /* TOOLCHAIN */

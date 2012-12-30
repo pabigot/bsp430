@@ -54,7 +54,7 @@
  * DMA interrupt infrastructure among independently maintained
  * modules.
  *
- * There are no value-added functions for this peripheral. 
+ * There are no value-added functions for this peripheral.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>

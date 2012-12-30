@@ -3,7 +3,7 @@
  * Basic demonstration of the BSP430 DMA interface.  Shows memcpy and
  * memset about 2-3x faster than code, and UART transmission about 10x
  * faster than polling.
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  */
 
