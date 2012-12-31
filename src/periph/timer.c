@@ -573,7 +573,7 @@ __attribute__((__interrupt__(TIMER0_A1_VECTOR)))
 isr_TA0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA0;
-  int iv = TA0IV;
+  unsigned int iv = TA0IV;
   int rv = 0;
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
@@ -605,7 +605,7 @@ __attribute__((__interrupt__(TIMER1_A1_VECTOR)))
 isr_TA1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA1;
-  int iv = TA1IV;
+  unsigned int iv = TA1IV;
   int rv = 0;
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
@@ -637,7 +637,7 @@ __attribute__((__interrupt__(TIMER2_A1_VECTOR)))
 isr_TA2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA2;
-  int iv = TA2IV;
+  unsigned int iv = TA2IV;
   int rv = 0;
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
@@ -669,7 +669,7 @@ __attribute__((__interrupt__(TIMER3_A1_VECTOR)))
 isr_TA3 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA3;
-  int iv = TA3IV;
+  unsigned int iv = TA3IV;
   int rv = 0;
   if (0 != iv) {
     if (TA_OVERFLOW == iv) {
@@ -705,7 +705,7 @@ __attribute__((__interrupt__(TIMER0_B1_VECTOR)))
 isr_TB0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB0;
-  int iv = TB0IV;
+  unsigned int iv = TB0IV;
   int rv = 0;
   if (0 != iv) {
     if (TB_OVERFLOW == iv) {
@@ -737,7 +737,7 @@ __attribute__((__interrupt__(TIMER1_B1_VECTOR)))
 isr_TB1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB1;
-  int iv = TB1IV;
+  unsigned int iv = TB1IV;
   int rv = 0;
   if (0 != iv) {
     if (TB_OVERFLOW == iv) {
@@ -769,7 +769,7 @@ __attribute__((__interrupt__(TIMER2_B1_VECTOR)))
 isr_TB2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB2;
-  int iv = TB2IV;
+  unsigned int iv = TB2IV;
   int rv = 0;
   if (0 != iv) {
     if (TB_OVERFLOW == iv) {

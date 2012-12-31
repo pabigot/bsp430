@@ -295,7 +295,7 @@ __attribute__((__interrupt__(TIMER%(INSTANCE)s_%(TYPE)s1_VECTOR)))
 isr_T%(TYPE)s%(INSTANCE)s (void)
 {
   hBSP430hal%(PERIPH)s timer = BSP430_HAL_T%(TYPE)s%(INSTANCE)s;
-  int iv = T%(TYPE)s%(INSTANCE)sIV;
+  unsigned int iv = T%(TYPE)s%(INSTANCE)sIV;
   int rv = 0;
   if (0 != iv) {
     if (T%(TYPE)s_OVERFLOW == iv) {
@@ -375,7 +375,7 @@ isr_%(INSTANCE)s (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P%(#)sIV;
+  unsigned int iv = P%(#)sIV;
 
   if (0 == iv) {
     return;

@@ -371,7 +371,7 @@ isr_PORT1 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P1IV;
+  unsigned int iv = P1IV;
 
   if (0 == iv) {
     return;
@@ -402,7 +402,7 @@ isr_PORT2 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P2IV;
+  unsigned int iv = P2IV;
 
   if (0 == iv) {
     return;
@@ -433,7 +433,7 @@ isr_PORT3 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P3IV;
+  unsigned int iv = P3IV;
 
   if (0 == iv) {
     return;
@@ -464,7 +464,7 @@ isr_PORT4 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P4IV;
+  unsigned int iv = P4IV;
 
   if (0 == iv) {
     return;
@@ -495,7 +495,7 @@ isr_PORT5 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P5IV;
+  unsigned int iv = P5IV;
 
   if (0 == iv) {
     return;
@@ -526,7 +526,7 @@ isr_PORT6 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P6IV;
+  unsigned int iv = P6IV;
 
   if (0 == iv) {
     return;
@@ -557,7 +557,7 @@ isr_PORT7 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P7IV;
+  unsigned int iv = P7IV;
 
   if (0 == iv) {
     return;
@@ -588,7 +588,7 @@ isr_PORT8 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P8IV;
+  unsigned int iv = P8IV;
 
   if (0 == iv) {
     return;
@@ -619,7 +619,7 @@ isr_PORT9 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P9IV;
+  unsigned int iv = P9IV;
 
   if (0 == iv) {
     return;
@@ -650,7 +650,7 @@ isr_PORT10 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P10IV;
+  unsigned int iv = P10IV;
 
   if (0 == iv) {
     return;
@@ -681,7 +681,7 @@ isr_PORT11 (void)
   int idx = 0;
   int rv;
 #if BSP430_CORE_FAMILY_IS_5XX - 0
-  int iv = P11IV;
+  unsigned int iv = P11IV;
 
   if (0 == iv) {
     return;
