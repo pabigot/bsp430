@@ -168,9 +168,9 @@ ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_Hz)
 }
 
 const char *
-xBSP430uptimeAsText_ni (unsigned long duration_utt)
+xBSP430uptimeAsText (unsigned long duration_utt,
+                     char * buffer)
 {
-  static char buf[sizeof("HHH:MM:SS.mmm")];
   unsigned long conversionFrequency_Hz;
   unsigned int msec;
   unsigned int sec;
@@ -189,11 +189,18 @@ xBSP430uptimeAsText_ni (unsigned long duration_utt)
   q_hr = q_min / 60;
   min = (q_min - (q_hr * 60));
   if (0 < q_hr) {
-    snprintf(buf, sizeof(buf), "%u:%02u:%02u.%03u", (unsigned int)q_hr, min, sec, msec);
+    snprintf(buffer, BSP430_UPTIME_AS_TEXT_LENGTH, "%u:%02u:%02u.%03u", (unsigned int)q_hr, min, sec, msec);
   } else {
-    snprintf(buf, sizeof(buf), "%2u:%02u.%03u", min, sec, msec);
+    snprintf(buffer, BSP430_UPTIME_AS_TEXT_LENGTH, "%2u:%02u.%03u", min, sec, msec);
   }
-  return buf;
+  return buffer;
+}
+
+const char *
+xBSP430uptimeAsText_ni (unsigned long duration_utt)
+{
+  static char buf[BSP430_UPTIME_AS_TEXT_LENGTH];
+  return xBSP430uptimeAsText(duration_utt, buf);
 }
 
 #if (BSP430_UPTIME_DELAY_CCIDX - 0)

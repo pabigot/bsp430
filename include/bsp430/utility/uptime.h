@@ -323,7 +323,18 @@ void vBSP430uptimeSuspend_ni (void);
  */
 void vBSP430uptimeResume_ni (void);
 
-/** Convert an uptime count to text HH:MM:SS.mmm format.
+
+/** Expected length for a buffer used by xBSP430uptimeAsText().
+ *
+ * This macro may be used to allocate such a buffer.
+ *
+ * At 32 kHz resolution a 32-bit integer holding ticks can only
+ * represent 36 hours before wrapping, but at 10 kHz resolution the
+ * same counter might express up to 119 hours, so this allows
+ * durations up to up to 999:59:59.999 to be expressed. */
+#define BSP430_UPTIME_AS_TEXT_LENGTH sizeof("HHH:MM:SS.mmm")
+
+/** Convert an uptime count to text HHH:MM:SS.mmm format.
  *
  * At least the MM:SS.mmm portion is present, with minutes
  * space-padded on the left.  If the duration exceeds 59:59.999, then
@@ -334,7 +345,26 @@ void vBSP430uptimeResume_ni (void);
  * ulBSP430uptimeConversionFrequency_Hz_ni() is used.
  *
  * @param duration_utt a duration in uptime ticks
- * @return pointer to formatted time.  The pointer is to static storage. */
+ *
+ * @param buffer a pointer to a buffer large enough to hold the
+ * represented data, normally #BSP430_UPTIME_AS_TEXT_LENGTH characters
+ *
+ * @return @p buffer */
+const char * xBSP430uptimeAsText (unsigned long duration_utt,
+                                  char * buffer);
+
+/** Convert an uptime count to text HH:MM:SS.mmm format in a static
+ * buffer.
+ *
+ * Invokes xBSP430uptimeAsText() with a static 14-character buffer
+ * adequate for representing durations up to 999:59:59.999 in contexts
+ * where allocating storage is problematic.
+ *
+ * @param duration_utt see xBSP430uptimeAsText()
+ * 
+ * @return a pointer to the static storage holding the formatted time.
+ *
+ * @deprecated Legacy interface, use xBSP430uptimeAsText(). */
 const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
 
 /** An optional capture/compare index to be used for delays.
