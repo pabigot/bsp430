@@ -241,6 +241,24 @@ emit_text_ni (const char * s,
   return rv;
 }
 
+/* Emit a NUL-terminated string of text, returning the number of
+ * characters emitted. */
+static int
+emit_chars_ni (const char * cp,
+               size_t len,
+               hBSP430halSERIAL uart)
+{
+  int rv = 0;
+
+  if (uart) {
+    while (rv < len) {
+      emit_char2_ni(cp[rv++], uart);
+      BSP430_CORE_WATCHDOG_CLEAR();
+    }
+  }
+  return rv;
+}
+
 int
 cputs (const char * s)
 {
@@ -264,6 +282,32 @@ cputtext_ni (const char * s)
 {
   return emit_text_ni(s, console_hal_);
 }
+
+int
+cputchars (const char * cp,
+           size_t len)
+{
+  int rv = 0;
+  hBSP430halSERIAL uart = console_hal_;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+
+  if (! uart) {
+    return 0;
+  }
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = emit_chars_ni(cp, len, uart);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+int
+cputchars_ni (const char * cp,
+              size_t len)
+{
+  return emit_chars_ni(cp, len, console_hal_);
+}
+
 
 #if configBSP430_CONSOLE_LIBC_HAS_ITOA - 0
 int

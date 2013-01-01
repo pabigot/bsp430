@@ -40,14 +40,15 @@
  * interleaved messages do not occur, transmits with direct UART
  * writes, and is "safe" for call from within interrupt handlers.
  *
- * cputs() is provided where the complexity of printf is not required
- * but atomic output is desired.  Other routines permit display of
- * plain text without a newline (cputtext_ni()), single characters
- * (cputchar_ni()), and integers (cputi_ni(), cputu_ni(), cputl_ni(),
- * cputul_ni()) without incurring the stack overhead of printf, which
- * can be quite high (on the order of 100 bytes if 64-bit integer
- * support is included).  These all assume that interrupts are
- * disabled when called.
+ * cputs() and cputchars() are provided where the complexity of printf
+ * is not required but atomic output is desired.  Other routines
+ * permit display of NUL-terminated plain text without a newline
+ * (cputtext_ni()), plain text without termination (cputchars_ni()),
+ * single characters (cputchar_ni()), and integers (cputi_ni(),
+ * cputu_ni(), cputl_ni(), cputul_ni()) without incurring the stack
+ * overhead of printf, which can be quite high (on the order of 100
+ * bytes if 64-bit integer support is included).  These all assume
+ * that interrupts are disabled when called.
  *
  * All these routines are safe to call even if the console was not
  * initialized, or its initialization failed, or it is temporarily
@@ -407,6 +408,24 @@ int vcprintf (const char * format, va_list ap);
  */
 int cputs (const char * s);
 
+/** Like puts(3) to the console UART without trailing newline and
+ * with explicit length instead of a terminating NUL.
+ *
+ * As with #cprintf, interrupts are disabled for the duration of the
+ * invocation.
+ *
+ * @note Any errors returned by the underlying UART implementation
+ * while writing are ignored.
+ *
+ * @param cp first of a series of characters to be emitted to the
+ * console
+ *
+ * @param len number of characters to emit
+ *
+ * @return the number of characters written
+ */
+int cputchars (const char * cp, size_t len);
+
 /** Like putchar(3) to the console UART, with interrupts already disabled
  *
  * @param c character to be output
@@ -440,11 +459,26 @@ cputchar (int c)
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
  *
- * @param s a string to be emitted to the console
+ * @param s a NUL-terminated string to be emitted to the console
  *
  * @return the number of characters written
  */
 int cputtext_ni (const char * s);
+
+/** Like puts(3) to the console UART without trailing newline and
+ * with explicit length instead of a terminating NUL.
+ *
+ * @note Any errors returned by the underlying UART implementation
+ * while writing are ignored.
+ *
+ * @param cp first of a series of characters to be emitted to the
+ * console
+ *
+ * @param len number of characters to emit
+ *
+ * @return the number of characters written
+ */
+int cputchars_ni (const char * cp, size_t len);
 
 /** Format an int using itoa and emit it to the console.
  *
