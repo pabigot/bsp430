@@ -391,6 +391,20 @@
 #define BSP430_CORE_INLINE_FORCED BSP340_CORE_INLINE
 #endif /* TOOLCHAIN */
 
+/** @def BSP430_CORE_PACKED_STRUCT
+ *
+ * Declare a packed structure in a toolchain-specific manner.
+ *
+ * @param nm_ name of the structure to be declared
+ *
+ * This expands to @c struct @p nm_ annotated with toolchain-specific
+ * directives to ensure the structure contents have no padding.  It is
+ * used for binary messages that mix types which might normally
+ * require padding to maintain MCU-standard alignment. */
+#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
+#define BSP430_CORE_PACKED_STRUCT(nm_) struct __attribute__((__packed__)) nm_
+#endif /* TOOLCHAIN */
+
 /** Enter a low-power mode
  *
  * This sets the status register bits in accordance to the bits
