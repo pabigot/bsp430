@@ -1,4 +1,4 @@
-/* Copyright (c) 2012, Peter A. Bigot
+/* Copyright 2012-2013, Peter A. Bigot
  *
  * All rights reserved.
  *
@@ -33,7 +33,7 @@
  *
  * @brief Definitions for low power mode support.
  *
- * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #include <bsp430/lpm.h>

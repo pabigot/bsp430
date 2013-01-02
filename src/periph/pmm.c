@@ -1,5 +1,5 @@
-/* Copyright (c) 2012, Peter A. Bigot
- * Copyright (c) 2012, Texas Instruments Incorporated
+/* Copyright 2012-2013, Peter A. Bigot
+ * Copyright 2012, Texas Instruments Incorporated
  *
  * All rights reserved.
  *
@@ -36,7 +36,7 @@
 
 /** @file
  *
- * @copyright Copyright 2012, Peter A. Bigot.  Portions Copyright
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Portions Copyright
  * 2012, Texas Instruments Incorporated.  Licensed under <a
  * href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */

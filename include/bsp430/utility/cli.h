@@ -1,4 +1,4 @@
-/* Copyright (c) 2012, Peter A. Bigot
+/* Copyright 2012-2013, Peter A. Bigot
  *
  * All rights reserved.
  *
@@ -60,7 +60,7 @@
  * capabilities of this module.
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
  * @defgroup grp_utility_cli_cli Console-based Command Line User Interface
  *
@@ -80,7 +80,7 @@
  * capabilities of this module.
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
  * @brief bsp430/utility/cli.h functions for processing user-provided text.
  *
@@ -107,7 +107,7 @@
  * capabilities of this module.
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
  * @defgroup grp_utility_cli_completion Context-Sensitive Completion of User Input
  *
@@ -124,7 +124,7 @@
  * capabilities of this module.
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_UTILITY_CLI_H

@@ -36,7 +36,7 @@ Please see the `documentation`_, `issue tracker`_, and
 
 or by downloading the master branch via: https://github.com/pabigot/bsp430/tarball/master
 
-Copyright 2012, Peter A. Bigot, and licensed under `BSD-3-Clause`_.
+Copyright 2012-2013, Peter A. Bigot, and licensed under `BSD-3-Clause`_.
 
 .. _documentation: http://pabigot.github.com/bsp430/
 .. _issue tracker: http://github.com/pabigot/bsp430/issues

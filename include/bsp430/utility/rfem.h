@@ -1,4 +1,4 @@
-/* Copyright (c) 2012, Peter A. Bigot
+/* Copyright 2012-2013, Peter A. Bigot
  *
  * All rights reserved.
  *
@@ -74,7 +74,7 @@
  *  RF2.18 (RF3.11) | BT_HCI_RTS, #BSP430_RFEM_GPIO3_PORT_PERIPH_HANDLE | aka SPI1_CLK
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_UTILITY_RFEM_H
