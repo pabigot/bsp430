@@ -122,7 +122,7 @@ chain.  However, if you do, understand that the interrupt handler walks this
 chain, and any attempt to modify the chain from within a callback that is
 part of the chain may result in wild pointers.
 
-\section callback_retval Influencing Callback Chain Execution
+\section callback_retval Interrupt Callback Return Values
 
 The callback chain infrastructure supports an arbitrary number of
 notifications resulting from a single event.  In many cases, it would be
@@ -130,7 +130,16 @@ improper to invoke chain elements past the point where the event was
 completely handled.  In addition, it is necessary to inform the interrupt
 handler top half when a low power mode should be exited.  This information
 is conveyed to the interrupt through the return value of the callback
-handler, using bit values defined in <bsp430/periph.h>
+handler, using a set of flags formed by combining bit values defined in
+<bsp430/periph.h>.  The current set of callback flags is:
+
+Name                                       | Purpose
+:----------------------------------------- | :---------------------------------------------------
+#BSP430_HAL_ISR_CALLBACK_EXIT_LPM          | Interrupt handler wakes from LPM by clearing the #BSP430_CORE_LPM_EXIT_MASK bits in the status register stored on interrupt entry
+#BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE    | Interrupt handler clears #GIE priot to waking, so application restarts with interrupts disabled
+#BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN       | Interrupt handler does not invoke any subsequent callbacks in the chain
+#BSP430_HAL_ISR_CALLBACK_YIELD             | Interrupt handler should inform an RTOS that a context switch is required
+#BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT | Interrupt handler should disable the peripheral-specific interrupt
 
 The return value from a handler which receives an input character is likely
 to be:
