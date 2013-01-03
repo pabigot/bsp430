@@ -303,6 +303,14 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
 
   /* Reset the CCTL */
   tp->cctl[ccidx] = 0;
+
+#if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
+  if (ccidx == BSP430_TIMER_SAFE_COUNTER_READ_CCIDX) {
+    /* Reset the safe counter CC configuration for this timer */
+    vBSP430timerSafeCounterInitialize_ni(periph);
+  }
+#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+
   return c1 - c0;
 }
 

@@ -62,6 +62,21 @@
 /** EXP430F5529 has a 4MHz XT2 */
 #define BSP430_CLOCK_NOMINAL_XT2CLK_HZ 4000000UL
 
+/** Define to control CCACLK capabilities for EXP430F5529 platform
+ *
+ * The EXP430F5529 board does a very poor job of making signals
+ * accessible.  No timer has all of CLK, CC0, and CC1 on header pins.
+ *
+ * If this is defined to a true value, selection of
+ * #configBSP430_TIMER_CCACLK will select a timer for which the CLK
+ * signal can be accessed from a board header.  If defined to a false
+ * value (default), #configBSP430_TIMER_CCACLK will select a timer for
+ * which the CC0 and CC1 signals can be accessed from a board
+ * header. */
+#ifndef configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK
+#define configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK 0
+#endif /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
+
 /** @cond DOXYGEN_EXCLUDE */
 
 /* Enable if requested (ez430 serial needs it) */
@@ -125,6 +140,7 @@
 /* NB: Check against BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT4
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
+
 #endif /* configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK */
 
 /* RFEM capabilities */

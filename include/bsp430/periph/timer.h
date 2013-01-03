@@ -558,6 +558,8 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE that can use ACLK as an input
  * signal.
  *
+ * @warning See cautionary notes at #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX.
+ *
  * @dependency #BSP430_TIMER_CCACLK
  * @platformdefault
  * @ingroup grp_timer_ccaclk */
@@ -851,8 +853,21 @@
  * and #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX, platform initialization
  * will hang attempting to configure the delay alarm.
  *
+ * @warning If you have selected #configBSP430_TIMER_CCACLK, make sure
+ * your use of #BSP430_TIMER_CCACLK_ACLK_CCIDX does not interfere with
+ * the expectation that the configuration of
+ * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX is never changed.  Consider
+ * adding the following after any use of
+ * #BSP430_TIMER_CCACLK_ACLK_CCIDX:
+ * @code
+ * #if ((configBSP430_TIMER_SAFE_COUNTER_READ - 0) \
+ *      && (BSP430_TIMER_CCACLK_ACLK_CCIDX == BSP430_TIMER_SAFE_COUNTER_READ_CCIDX))
+ *    vBSP430timerSafeCounterInitialize_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+ * #endif
+ * @endcode
+ * 
  * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
- * @defaulted
+ * @platformdefault
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
 #ifndef BSP430_TIMER_SAFE_COUNTER_READ_CCIDX
@@ -880,6 +895,11 @@
  * @note The function does not modify the timer-level configuration;
  * the timer source must be assigned and the timer started prior to
  * invoking this function.
+ *
+ * @note If #configBSP430_TIMER_SAFE_COUNTER_READ is enabled and @p
+ * ccidx is equal to #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX this
+ * function will invoke #vBSP430timerSafeCounterInitialize_ni(@p
+ * periph) prior to returning.
  *
  * @param periph the peripheral identifier for the timer on which the
  * capture is to be made.
