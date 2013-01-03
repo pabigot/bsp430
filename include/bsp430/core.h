@@ -662,6 +662,32 @@
  * @see #BSP430_CORE_MS_TO_TICKS, #BSP430_CORE_TICKS_TO_US */
 #define BSP430_CORE_TICKS_TO_MS(ticks_, hz_) ((1000UL * (ticks_)) / (hz_))
 
+/** Utility to convert a 16-bit word between big-endian and little-endian.
+ *
+ * Some toolchains may provide an intrinsic that is faster than basic C code. 
+ */
+#if (BSP430_CORE_TOOLCHAIN_GCC - 0)
+#include <byteswap.h>
+#define BSP430_CORE_SWAP_16(w_) bswap_16(w_)
+#else
+#define BSP430_CORE_SWAP_16(w_) ((  ((w_) & 0xFF00) >> 8)       \
+                                 | (((w_) & 0x00FF) << 8) )
+#endif
+
+/** Utility to convert a 32-bit word between big-endian and little-endian.
+ *
+ * Some toolchains may provide an intrinsic that is faster than basic C code. 
+ */
+#if (BSP430_CORE_TOOLCHAIN_GCC - 0)
+#include <byteswap.h>
+#define BSP430_CORE_SWAP_32(lw_) bswap_32(lw_)
+#else
+#define BSP430_CORE_SWAP_32(lw_) ((  ((lw_) & 0xFF000000) >> 24)     \
+                                  | (((lw_) & 0x00FF0000) >> 8)      \
+                                  | (((lw_) & 0x0000FF00) << 8)      \
+                                  | (((lw_) & 0x000000FF) << 24) )
+#endif
+
 /* See <bsp430/rtos/freertos.h> */
 #if configBSP430_RTOS_FREERTOS - 0
 /* FreeRTOS defines application behavior in a shared header.  Read it
