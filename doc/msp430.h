@@ -312,6 +312,16 @@
 #define SELREF__REFOCLK     (0x0020)    /**< UCS : Multiply Selected Loop Freq. By REFOCLK */
 #define SELREF__XT2CLK      (0x0050)    /**< UCS : Multiply Selected Loop Freq. By XT2CLK */
 
+#define XCAP_0              (0x00)      /**< BC2 : XIN/XOUT Cap : 0 pF */
+#define XCAP_1              (0x04)	/**< BC2 : XIN/XOUT Cap : 6 pF */
+#define XCAP_2              (0x08)	/**< BC2 : XIN/XOUT Cap : 10 pF */
+#define XCAP_3              (0x0C)	/**< BC2 : XIN/XOUT Cap : 12.5 pF */
+
+#define XCAP0PF             (0x00)      /**< FLL+ : XIN Cap = XOUT Cap = 0pf */
+#define XCAP10PF            (0x10)      /**< FLL+ : XIN Cap = XOUT Cap = 10pf */
+#define XCAP14PF            (0x20)      /**< FLL+ : XIN Cap = XOUT Cap = 14pf */
+#define XCAP18PF            (0x30)      /**< FLL+ : XIN Cap = XOUT Cap = 18pf */
+
 #endif /* BSP430_DOXYGEN */
 
 /** @cond DOXYGEN_EXCLUDE */
