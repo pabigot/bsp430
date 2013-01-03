@@ -564,11 +564,11 @@
  * @platformdefault
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_TIMER_CCACLK_ACLK_CC include <bsp430/platform.h>
+#define BSP430_TIMER_CCACLK_ACLK_CCIDX include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** The capture/compare block input signal bits to be selected in the
- * control word for CC block #BSP430_TIMER_CCACLK_ACLK_CC of
+ * control word for CC block #BSP430_TIMER_CCACLK_ACLK_CCIDX of
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
  * @dependency #BSP430_TIMER_CCACLK

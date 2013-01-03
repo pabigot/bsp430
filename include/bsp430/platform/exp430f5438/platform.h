@@ -71,10 +71,10 @@
 
 /* How to use ACLK as a capture/compare input source */
 /* Settings for TB0: T0B6 ccis=1 ; clk P4.7 ; cc0 P4.0 ; cc1 P4.1 */
-#ifndef BSP430_TIMER_CCACLK_ACLK_CC
+#ifndef BSP430_TIMER_CCACLK_ACLK_CCIDX
 /* NB: Check against BSP430_TIMER_CCACLK_PERIPH_CPPID in bsp430_config.h */
-#define BSP430_TIMER_CCACLK_ACLK_CC 6
-#endif /* BSP430_TIMER_CCACLK_ACLK_CC */
+#define BSP430_TIMER_CCACLK_ACLK_CCIDX 6
+#endif /* BSP430_TIMER_CCACLK_ACLK_CCIDX */
 #ifndef BSP430_TIMER_CCACLK_ACLK_CCIS
 /* NB: Check against BSP430_TIMER_CCACLK_PERIPH_CPPID in bsp430_config.h */
 #define BSP430_TIMER_CCACLK_ACLK_CCIS CCIS_1

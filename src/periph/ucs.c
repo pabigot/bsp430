@@ -168,7 +168,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
     /* Capture the SMCLK ticks between adjacent ACLK ticks */
     tp->ctl = TASSEL__SMCLK | MC__CONTINOUS | TACLR;
     current_frequency_tsp = uiBSP430timerCaptureDelta_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE,
-                                                         BSP430_TIMER_CCACLK_ACLK_CC,
+                                                         BSP430_TIMER_CCACLK_ACLK_CCIDX,
                                                          CM_2,
                                                          BSP430_TIMER_CCACLK_ACLK_CCIS,
                                                          TRIM_SAMPLE_PERIOD_ACLK);
