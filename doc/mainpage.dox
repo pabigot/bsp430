@@ -130,6 +130,7 @@ and @ref grp_timer_alarm; and demonstration @link bsp430/utility/onewire.h
 \li <a href="http://google.com/?q=people+power+company+surf+board">PeoplePower Company SuRF
 Board</a>
 \li <a href="http://www.ti.com/tool/cc1125dk">TrxEB SmartRF Transceiver Evaluation Board</a>
+\li <a href="http://www.ti.com/tool/msp-ts430rgz48c">MSP430FR5969 in a TS430RGZ48C carrier ("Wolverine")</a>
 \li <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a>
 
 \section mp_examples Provided Examples

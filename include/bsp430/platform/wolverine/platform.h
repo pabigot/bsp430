@@ -31,7 +31,7 @@
 
 /** @file
  *
- * @brief Platform-specific include for MSP430FR5969 in a TS430RGZ48C carrier.
+ * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-fet430u48c">MSP430FR5969 in a TS430RGZ48C carrier</a>.
  *
  * This board is also known as the "Fraunchpad"
  *
