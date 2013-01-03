@@ -1,21 +1,21 @@
 /* Copyright (c) 2012, Peter A. Bigot
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** 
+/**
  *
  * @homepage http://github.com/pabigot/bsp430
  */
@@ -226,7 +226,7 @@ nmea_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
         break;
       }
       /*FALLTHRU*/
-    validate:
+validate:
       if (sp->csum_rx == sp->csum_calc) {
         if (NULL != serial_cb) {
           uint8_t * msg = fp_resize(sp->pool, cp->message, sp->message_idx, &cp->message_endp);
@@ -414,7 +414,7 @@ iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
 {
   /* Request and configure the serial port. */
   uart_hal = hBSP430serialOpenUART(hBSP430serialLookup(configp->nmea_serial),
-                                    0, 0, configp->nmea_baud);
+                                   0, 0, configp->nmea_baud);
   if (NULL == uart_hal) {
     return -1;
   }

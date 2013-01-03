@@ -361,7 +361,7 @@ const char * xBSP430uptimeAsText (unsigned long duration_utt,
  * where allocating storage is problematic.
  *
  * @param duration_utt see xBSP430uptimeAsText()
- * 
+ *
  * @return a pointer to the static storage holding the formatted time.
  *
  * @deprecated Legacy interface, use xBSP430uptimeAsText(). */

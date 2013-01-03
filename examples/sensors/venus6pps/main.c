@@ -148,7 +148,7 @@ gps_serial_cb (const uint8_t * msg,
         /*FALLTHRU*/
       default:
         /* Accept everything else */
-      accept:
+accept:
         gps_state_.msg = msg;
         gps_state_.msg_len = len;
         gps_state_.rx_utt = rx_utt;
@@ -207,7 +207,7 @@ void main ()
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
-  
+
   utt_per_sec = ulBSP430uptimeConversionFrequency_Hz_ni();
 
   cprintf("\n\nrtc " __DATE__ " " __TIME__ "\n");
@@ -216,7 +216,7 @@ void main ()
   {
     sBSP430gpsConfiguration config;
     int rv;
-    
+
     memset(&config, 0, sizeof(config));
     config.nmea_serial = APP_NMEA_UART_PERIPH_HANDLE;
     config.nmea_baud = APP_NMEA_BAUD_RATE;
@@ -267,7 +267,7 @@ void main ()
     char timestamp[BSP430_UPTIME_AS_TEXT_LENGTH];
     sAppGPSState state;
     unsigned long now_utt;
-    
+
     BSP430_CORE_DISABLE_INTERRUPT();
     do {
       /* Free any driver-provided buffer that we're done with. */
@@ -320,8 +320,8 @@ void main ()
           /* Display the software version */
           cprintf("\t%s: SW version kernel %08lx odm %08lx rev %08lx\n",
                   timestamp,
-                  up->out.sw_version.kernel, 
-                  up->out.sw_version.odm, 
+                  up->out.sw_version.kernel,
+                  up->out.sw_version.odm,
                   up->out.sw_version.revision);
           break;
         case eSkyTraqMIDout_NAV_DATA: {
@@ -333,7 +333,7 @@ void main ()
           uint16_t msec = (gps_csow % 100) * 10;
           uint32_t gps_sow = gps_csow / 100;
           time_t when_utc;
-          
+
           when_utc = xBSP430gpsConvertGPStoUTC_ni(gps_week, gps_sow);
           gmtime_r(&when_utc, &when_tm);
           cprintf("\tfix %u GPS week %d sec %lu: %lu.%03u: %s",

@@ -53,7 +53,7 @@
  *
  * @note Only a subset of available commands have structures defined.
  *
- * @section h_sensors_skytraq_resources Resources 
+ * @section h_sensors_skytraq_resources Resources
  * @li http://www.sparkfun.com/products/11058
  * @li http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Sensors/GPS/Venus/638/doc/AN0003_v1.4.19.pdf
  * @li http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Sensors/GPS/Venus/638/doc/Venus638FLPx_DS_v07.pdf
@@ -122,14 +122,16 @@ typedef enum eSkyTraqMessageID {
 } eSkyTraqMessageID;
 
 /** The layout common to all SkyTraq Venus 6 binary messages. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsg_GENERIC) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsg_GENERIC)
+{
   uint8_t mid;                  /**< Message ID */
   uint8_t payload[1];           /**< Message-specific content*/
 };
 
 /** This is a request message which will reset and restart the GPS
  * receiver. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_RESTART) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_RESTART)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDin_RESTART */
   uint8_t mode;                 /**< Start mode (0: mode-no-change; 1: hot) */
   uint16_t year_be;             /**< UTC year (>= 1980) */
@@ -145,14 +147,16 @@ BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_RESTART) {
 
 /** This is a request message which is issued from the host to GPS
  * receiver to retrieve loaded software version. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_SW_VERSION) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_SW_VERSION)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDin_QRY_SW_VERSION */
   uint8_t type;                 /**< 0: Reserved, 1: System code */
 };
 
 /** This is a request message which is issued from the host to GPS
  * receiver to retrieve loaded software CRC. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_SW_CRC) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_SW_CRC)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDin_QRY_SW_CRC */
   uint8_t type;                 /**< 0: Reserved, 1: System code */
 };
@@ -160,14 +164,16 @@ BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_SW_CRC) {
 /** This is a request message which is issued from the host to GPS
  * receiver to reset the GPS receiver’s internal parameters to factory
  * default values. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_FACTORY_DEFAULTS) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_FACTORY_DEFAULTS)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDin_SET_FACTORY_DEFAULTS */
   uint8_t type;                 /**< 0: Reserved, 1: reboot after setting to defaults */
 };
 
 /** This is a request message which will configure the serial COM
  * port, baud rate. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_SERIAL) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_SERIAL)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDin_CFG_SERIAL */
   uint8_t port;                 /**< COM port = 0 */
   uint8_t baud_idx;             /**< Baud rate (1:9600, 3:38400, 5:115200) */
@@ -176,7 +182,8 @@ BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_SERIAL) {
 
 /** This is a request message which will set NMEA message
  * configuration. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_NMEA) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_NMEA)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDin_CFG_SERIAL */
   uint8_t gga_s;                /**< GGA interval in seconds */
   uint8_t gsa_s;                /**< GSA interval in seconds */
@@ -190,14 +197,16 @@ BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_NMEA) {
 
 /** This is a request message which will change the GPS receiver
  * output message type. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_FORMAT) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgIn_CFG_FORMAT)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDin_CFG_FORMAT */
   uint8_t type;                 /**< 0: no output, 1: NMEA; 2: Binary */
 };
 
 /** This is a response message which provides the software version of
  * the GPS receiver. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgOut_SW_VERSION) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgOut_SW_VERSION)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDout_SW_VERSION */
   uint8_t type;                 /**< 0: Reserved, 1: System code*/
   uint32_t kernel;              /**< Kernel version (byte-encoded) */
@@ -208,14 +217,16 @@ BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgOut_SW_VERSION) {
 /** This is a response message which is an acknowledgement to a
  * request message (indicating command succeeded) or negative
  * acknowledgement (indicating command was rejected). */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgOut_ACK) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgOut_ACK)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDout_ACK or eSkyTraqMIDout_NACK */
   uint8_t in_mid;               /**< ACK/NACK ID (mid from relevant request) */
 };
 
 /** This is a response message which provides data of user navigation
  * solution. */
-BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgOut_NAV_DATA) {
+BSP430_CORE_PACKED_STRUCT(sSkyTraqMsgOut_NAV_DATA)
+{
   uint8_t mid;                  /**< Message ID = #eSkyTraqMIDout_NAV_DATA */
   uint8_t fix_mode;             /**< Fix mode: 0: no fix, 1: 2D, 2: 3D, 3: 3D+DGPS */
   uint8_t nsv;                  /**< Number of SV in fix */

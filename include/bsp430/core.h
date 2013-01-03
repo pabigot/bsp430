@@ -664,7 +664,7 @@
 
 /** Utility to convert a 16-bit word between big-endian and little-endian.
  *
- * Some toolchains may provide an intrinsic that is faster than basic C code. 
+ * Some toolchains may provide an intrinsic that is faster than basic C code.
  */
 #if (BSP430_CORE_TOOLCHAIN_GCC - 0)
 #include <byteswap.h>
@@ -676,7 +676,7 @@
 
 /** Utility to convert a 32-bit word between big-endian and little-endian.
  *
- * Some toolchains may provide an intrinsic that is faster than basic C code. 
+ * Some toolchains may provide an intrinsic that is faster than basic C code.
  */
 #if (BSP430_CORE_TOOLCHAIN_GCC - 0)
 #include <byteswap.h>

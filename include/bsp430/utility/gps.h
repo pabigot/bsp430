@@ -32,7 +32,7 @@
 /** @file
  *
  * @brief Standardized interface for GPS sensors
- * 
+ *
  * This header declares functions that should be implemented for
  * specific GPS sensors, such as the @link bsp430/sensors/skytraq.h
  * SkyTraq Venus 638FLPx@endlink, to provide access to NMEA messages
@@ -171,7 +171,7 @@ void vBSP430gpsReleaseMessage_ni (const uint8_t * msg);
  *
  * @param pps_tck The captured time at which the rising edge of the
  * 1PPS signal was detected.  The resolution is dependent on the
- * underlying timer provided via sBSP430gpsConfiguration.pps_timer. 
+ * underlying timer provided via sBSP430gpsConfiguration.pps_timer.
  *
  * @return A ISR return bitmask as described by @ref
  * callback_retval. */
@@ -311,7 +311,7 @@ int iBSP430gpsExtractTime (const uint8_t * msg,
 int iBSP430gpsGPStoUTCOffset_s_ni (void);
 
 /** Set the GPS to UTC offset.
- * 
+ *
  * @param gps_to_utc_offset_s The number of seconds that need to be
  * added to a GPS time to produce a UTC time.  Unless the rotation of
  * the earth speeds up unexpectedly, this should be a negative value
@@ -351,7 +351,7 @@ time_t xBSP430gpsConvertGPStoUTC_ni (unsigned int weekno,
  *
  * @param complete_cb the callback to be invoked when transmission has
  * completed
- * 
+ *
  * @return 0 if the driver has accepted ownership of @p msg and will
  * transmit it; a negative error code if transmission could not be
  * accepted. */
