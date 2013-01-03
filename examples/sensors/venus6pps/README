@@ -1,0 +1,10 @@
+This example uses the SkyTraq Venus 638FLPx to synchronize the LFXT-driven
+crystal timer with GPS time.  It leverages the Fragpool library
+(http://pabigot.github.com/fragpool) to simplify package management; you
+need to get a copy of that into this directory with:
+
+git clone git@github.com:pabigot/fragpool.git
+
+Build and install as usual.  You may need to add support for your specific
+experimenter board.  Note that the console is set to 115200 so it's faster
+than the GPS serial input for debugging.

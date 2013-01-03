@@ -172,6 +172,10 @@ DS18B20 (or similar) 1-wire temperature sensor
 temperature sensor
 \li \ref ex_sensors_hh10d demonstrates measuring the frequency of an input
 signal using the Hope RF Humidity Sensor
+\li \ref ex_sensors_venus6pps demonstrates the @link bsp430/utility/gps.h
+BSP430 GPS interface@endlink and synchronizing the @link ulBSP430uptime()
+uptime clock@endlink with a 1PPS GPS time source
+
 
 \subsection ex_bootstrap Bootstrap Support Programs
 The following examples lead you through the basic capabilities of BSP430,

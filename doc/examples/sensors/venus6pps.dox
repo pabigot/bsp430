@@ -1,0 +1,98 @@
+/* Copyright 2012-2013, Peter A. Bigot
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ * 
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ * 
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/** \page ex_sensors_venus6pps Sensors: SkyTraq Venus 638FLPx as Time Source
+
+The @link bsp430/sensors/skytraq.h SkyTraq Venus 638FLPx@endlink is a @link
+bsp430/utility/gps.h GPS sensor@endlink which provides a
+one-pulse-per-second output synchronized to GPS time.  This example uses
+that to capture the ACLK counter and determine the relationship between
+ulBSP430uptime() and UTC time.
+
+Example output:
+
+\verbatim
+15:28.278: Wokeup with 3, lost 0 octets in 0/d 0/a
+        fix 2 GPS week 1721 sec 402481: 1357228065.040: Thu Jan  3 15:47:45 2013
+        UTT-to-UTC offset -81 after 837 s; UTT  gained  0:00.002  in 13:57.000
+15:29.280: Wokeup with 3, lost 0 octets in 0/d 0/a
+        fix 2 GPS week 1721 sec 402482: 1357228066.040: Thu Jan  3 15:47:46 2013
+        UTT-to-UTC offset -81 after 838 s; UTT  gained  0:00.002  in 13:58.000
+\endverbatim
+
+@note The implementation for this sensor makes use of <a
+href="http://pabigot.github.com/fragpool">Fragpool</a>, a library designed
+to manage packetized data in embedded communications stacks.
+
+\section ex_sensors_venus6pps_timesync Venus 638FLPx Time Synchronization
+
+GPS data is emitted either in a block of NMEA sentences or a single binary
+#sSkyTraqMsgOut_NAV_DATA packet, once per second, at a fixed interval
+relative to power-up or reset.  Multiple NMEA sentences in a block reference
+the same time.
+
+On power up, the timestamp starts at 2006-06-28T11:59:45Z and increments in
+whole seconds.  Once GPS transmissions start getting decoded there is a jump
+to the approximate time at a 1 second resolution.  A second adjustment to
+full precision is made when synchronization is complete.  This latter
+adjustment may be more or less than one second, depending on the error.
+Sometime after that 1PPS starts showing up.
+
+For NMEA sentences the time is UTC and has a precision of 1ms.
+
+The binary #sSkyTraqMsgOut_NAV_DATA message represents time in two
+components: the GPS week, and the GPS second-of-week as a multiple of 0.01s.
+The GPS week is not provided modulo 1024, so no week rollover need be
+considered.  However, the packet does not include the GPS-to-UTC offset.  As
+of 2012-07-01T00:00:00 GPS is 16 seconds ahead of UTC, meaning that 1600
+must be subtracted from the GPS centisecond to provide the UTC centisecond.
+
+Analysis suggests that timestamps lag the 1PPS signal by between 100ms and
+200ms.  Thus a timestamp with a fractional part of 0.650 seconds might start
+transmission 800ms after the 1pps that it describes.
+
+If the Venus is restarted with no-mode-change in #sSkyTraqMsgIn_RESTART.mode
+synchronization resumes within a few seconds and timestamps are synchronized
+to near the whole second, although the 100ms+ lag remains.  This is still
+worth doing as it reduces the likelihood that a timestamp is associated with
+the wrong 1PPS event.
+
+\section ex_sensors_venus6pps_main main.c
+\include sensors/venus6pps/main.c
+
+\section ex_sensors_venus6pps_confic bsp430_config.h
+\include sensors/venus6pps/bsp430_config.h
+
+\section ex_sensors_venus6pps_make Makefile
+\include sensors/venus6pps/Makefile
+
+\example sensors/venus6pps/main.c
+*/
