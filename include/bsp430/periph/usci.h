@@ -117,14 +117,14 @@
 
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 2xx/4xx MCU. */
 typedef struct sBSP430hplUSCI {
-  unsigned char ctl0;	/**< UCtxCTL0 */ /* 0x00 */
-  unsigned char ctl1;	/**< UCtxCTL1 */ /* 0x01 */
-  unsigned char br0;	/**< UCtxBR0 */ /* 0x02 */
-  unsigned char br1;	/**< UCtxBR1 */ /* 0x03 */
-  unsigned char mctl;	/**< UCAxMCTL (UART) */ /* 0x04 */
-  unsigned char stat;	/**< UCtxSTAT */ /* 0x05 */
-  unsigned char rxbuf; /**< UCtxRXBUF */ /* 0x06 */
-  unsigned char txbuf; /**< UCtxTXBUF */ /* 0x07 */
+  unsigned char ctl0;               /**< UCtxCTL0 */ /* 0x00 */
+  unsigned char ctl1;               /**< UCtxCTL1 */ /* 0x01 */
+  unsigned char br0;                /**< UCtxBR0 */ /* 0x02 */
+  unsigned char br1;                /**< UCtxBR1 */ /* 0x03 */
+  unsigned char mctl;               /**< UCAxMCTL (UART) */ /* 0x04 */
+  unsigned char stat;               /**< UCtxSTAT */ /* 0x05 */
+  unsigned char rxbuf;              /**< UCtxRXBUF */ /* 0x06 */
+  unsigned char txbuf;              /**< UCtxTXBUF */ /* 0x07 */
 } sBSP430hplUSCI;
 
 /** @cond DOXYGEN_INTERNAL */

@@ -313,9 +313,9 @@
 #define SELREF__XT2CLK      (0x0050)    /**< UCS : Multiply Selected Loop Freq. By XT2CLK */
 
 #define XCAP_0              (0x00)      /**< BC2 : XIN/XOUT Cap : 0 pF */
-#define XCAP_1              (0x04)	/**< BC2 : XIN/XOUT Cap : 6 pF */
-#define XCAP_2              (0x08)	/**< BC2 : XIN/XOUT Cap : 10 pF */
-#define XCAP_3              (0x0C)	/**< BC2 : XIN/XOUT Cap : 12.5 pF */
+#define XCAP_1              (0x04)      /**< BC2 : XIN/XOUT Cap : 6 pF */
+#define XCAP_2              (0x08)      /**< BC2 : XIN/XOUT Cap : 10 pF */
+#define XCAP_3              (0x0C)      /**< BC2 : XIN/XOUT Cap : 12.5 pF */
 
 #define XCAP0PF             (0x00)      /**< FLL+ : XIN Cap = XOUT Cap = 0pf */
 #define XCAP10PF            (0x10)      /**< FLL+ : XIN Cap = XOUT Cap = 10pf */

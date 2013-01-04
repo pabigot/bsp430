@@ -111,70 +111,70 @@
 
 /** Register map for eUSCI_A peripheral hardware presentation layer. */
 typedef struct sBSP430hplEUSCIA {
-  union {						/* 0x00 */
-    unsigned int ctlw0;		/**< UCAxCTLW0 */
+  union {                       /* 0x00 */
+    unsigned int ctlw0;         /**< UCAxCTLW0 */
     struct {
-      unsigned char ctl1; /**< UCAxCTL1 */
-      unsigned char ctl0; /**< UCAxCTL0 */
+      unsigned char ctl1;       /**< UCAxCTL1 */
+      unsigned char ctl0;       /**< UCAxCTL0 */
     };
   };
-  unsigned int ctlw1;			/**< UCAxCTLW1 */ /* 0x02 */
+  unsigned int ctlw1;           /**< UCAxCTLW1 */ /* 0x02 */
   unsigned int _unused_0x04;
-  union {						/* 0x06 */
-    unsigned int brw;		/**< UCAxBRW */
+  union {                       /* 0x06 */
+    unsigned int brw;           /**< UCAxBRW */
     struct {
-      unsigned char br0;	/**< UCAxBR0 */
-      unsigned char br1;	/**< UCAxBR1 */
+      unsigned char br0;        /**< UCAxBR0 */
+      unsigned char br1;        /**< UCAxBR1 */
     };
   };
-  unsigned int mctlw;			/**< UCAxMCTLW (UART) */ /* 0x08 */
-  unsigned int statw;			/**< UCAxSTATW */ /* 0x0A */
-  unsigned int rxbuf;			/**< UCAxRXBUF */ /* 0x0C */
-  unsigned int txbuf;			/**< UCAxTXBUF */ /* 0x0E */
-  unsigned int abctl;			/**< UCAxABCTL (UART) */ /* 0x10 */
-  union {						/* 0x12 */
-    unsigned int irctl;		/**< UCAxIRCTL (UART) */
+  unsigned int mctlw;           /**< UCAxMCTLW (UART) */ /* 0x08 */
+  unsigned int statw;           /**< UCAxSTATW */ /* 0x0A */
+  unsigned int rxbuf;           /**< UCAxRXBUF */ /* 0x0C */
+  unsigned int txbuf;           /**< UCAxTXBUF */ /* 0x0E */
+  unsigned int abctl;           /**< UCAxABCTL (UART) */ /* 0x10 */
+  union {                       /* 0x12 */
+    unsigned int irctl;         /**< UCAxIRCTL (UART) */
     struct {
-      unsigned char irtctl; /**< UCAxIRTCTL (UART) */ /* 0x12 */
-      unsigned char irrctl; /**< UCAxIRRCTL (UART) */ /* 0x13 */
+      unsigned char irtctl;     /**< UCAxIRTCTL (UART) */ /* 0x12 */
+      unsigned char irrctl;     /**< UCAxIRRCTL (UART) */ /* 0x13 */
     };
   };
   unsigned int _unused_0x14;
   unsigned int _unused_0x16;
   unsigned int _unused_0x18;
-  unsigned int ie;			/**< UCAxIE */ /* 0x1A */
-  unsigned int ifg;			/**< UCAxIFG */ /* 0x1C */
-  unsigned int iv;			/**< UCAxIV */ /* 0x1E */
+  unsigned int ie;              /**< UCAxIE */ /* 0x1A */
+  unsigned int ifg;             /**< UCAxIFG */ /* 0x1C */
+  unsigned int iv;              /**< UCAxIV */ /* 0x1E */
 } sBSP430hplEUSCIA;
 
 /** Register map for eUSCI_B peripheral hardware presentation layer. */
 typedef struct sBSP430hplEUSCIB {
-  union {						/* 0x00 */
-    unsigned int ctlw0;		/**< UCBxCTLW0 */
+  union {                       /* 0x00 */
+    unsigned int ctlw0;         /**< UCBxCTLW0 */
     struct {
-      unsigned char ctl1; /**< UCBxCTL1 */
-      unsigned char ctl0; /**< UCBxCTL0 */
+      unsigned char ctl1;       /**< UCBxCTL1 */
+      unsigned char ctl0;       /**< UCBxCTL0 */
     };
   };
-  unsigned int ctlw1;			/**< UCBxCTLW1 */ /* 0x02 */
+  unsigned int ctlw1;           /**< UCBxCTLW1 */ /* 0x02 */
   unsigned int _unused_0x04;
-  union {						/* 0x06 */
-    unsigned int brw;		/**< UCBxBRW */
+  union {                       /* 0x06 */
+    unsigned int brw;           /**< UCBxBRW */
     struct {
-      unsigned char br0;	/**< UCBxBR0 */
-      unsigned char br1;	/**< UCBxBR1 */
+      unsigned char br0;        /**< UCBxBR0 */
+      unsigned char br1;        /**< UCBxBR1 */
     };
   };
   union {
-    unsigned int statw;			/**< UCBxSTATW */ /* 0x08 */
+    unsigned int statw;         /**< UCBxSTATW */ /* 0x08 */
     struct {
-      unsigned char stat;	/**< UCBxSTAT */
-      unsigned char bcnt;	/**< UCBxBCNT */
+      unsigned char stat;       /**< UCBxSTAT */
+      unsigned char bcnt;       /**< UCBxBCNT */
     };
   };
-  unsigned int tbcnt;                   /**< UCBxTBCNT */ /* 0x0A */
-  unsigned int rxbuf;			/**< UCAxRXBUF */ /* 0x0C */
-  unsigned int txbuf;			/**< UCAxTXBUF */ /* 0x0E */
+  unsigned int tbcnt;           /**< UCBxTBCNT */ /* 0x0A */
+  unsigned int rxbuf;           /**< UCAxRXBUF */ /* 0x0C */
+  unsigned int txbuf;           /**< UCAxTXBUF */ /* 0x0E */
   unsigned int _unused_0x10;
   unsigned int _unused_0x12;
   unsigned int i2coa0;          /**< UCBxI2COA0 */ /* 0x14 */

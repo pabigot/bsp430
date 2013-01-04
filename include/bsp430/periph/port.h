@@ -210,14 +210,14 @@
  * Access to SEL2 capability for these ports is not available in the
  * hardware-presentation layer. */
 typedef struct sBSP430hplPORT_IE_8 {
-  unsigned char in;			/* 0x00 */
-  unsigned char out;			/* 0x01 */
-  unsigned char dir;			/* 0x02 */
-  unsigned char ifg;			/* 0x03 */
-  unsigned char ies;			/* 0x04 */
-  unsigned char ie;			/* 0x05 */
-  unsigned char sel;			/* 0x06 */
-  unsigned char ren;			/* 0x07 */
+  unsigned char in;             /* 0x00 */
+  unsigned char out;            /* 0x01 */
+  unsigned char dir;            /* 0x02 */
+  unsigned char ifg;            /* 0x03 */
+  unsigned char ies;            /* 0x04 */
+  unsigned char ie;             /* 0x05 */
+  unsigned char sel;            /* 0x06 */
+  unsigned char ren;            /* 0x07 */
 } sBSP430hplPORT_IE_8;
 
 /** Layout for pre-5xx--family 8-bit ports not supporting interrupts.
@@ -225,19 +225,19 @@ typedef struct sBSP430hplPORT_IE_8 {
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
 typedef struct sBSP430hplPORT_8 {
-  unsigned char in;			/* 0x00 */
-  unsigned char out;			/* 0x01 */
-  unsigned char dir;			/* 0x02 */
-  unsigned char sel;			/* 0x03 */
+  unsigned char in;             /* 0x00 */
+  unsigned char out;            /* 0x01 */
+  unsigned char dir;            /* 0x02 */
+  unsigned char sel;            /* 0x03 */
 } sBSP430hplPORT_8;
 
 /** Helper for accessing 8-bit registers within 16-bit registers */
 typedef union uBSP430hplPORT_16 {
-  unsigned int w;				/**< Word access (e.g., PAIN) */
-  unsigned char b[2];			/**< Byte access, indexed */
+  unsigned int w;               /**< Word access (e.g., PAIN) */
+  unsigned char b[2];           /**< Byte access, indexed */
   struct {
-    unsigned char l;		/**< Low byte access for odd members of pair (e.g., P1IN) */
-    unsigned char h;		/**< High byte access for even members of pair (e.g., P2IN) */
+    unsigned char l;            /**< Low byte access for odd members of pair (e.g., P1IN) */
+    unsigned char h;            /**< High byte access for even members of pair (e.g., P2IN) */
   };
 } uBSP430hplPORT_16;
 
@@ -246,33 +246,33 @@ typedef union uBSP430hplPORT_16 {
  * Access to SEL2 and REN capability for these ports is not available
  * in the hardware-presentation layer. */
 typedef struct sBSP430hplPORT_16 {
-  uBSP430hplPORT_16 in;	/* 0x00 */
-  uBSP430hplPORT_16 out;	/* 0x02 */
-  uBSP430hplPORT_16 dir;	/* 0x04 */
-  uBSP430hplPORT_16 sel;	/* 0x08 */
+  uBSP430hplPORT_16 in;         /* 0x00 */
+  uBSP430hplPORT_16 out;        /* 0x02 */
+  uBSP430hplPORT_16 dir;        /* 0x04 */
+  uBSP430hplPORT_16 sel;        /* 0x08 */
 } sBSP430hplPORT_16;
 
 /** Layout for 5xx family ports, 16-bit access
  */
 typedef struct sBSP430hplPORT_5XX_16 {
-  uBSP430hplPORT_16 in;	/**< PxIN */ /* 0x00 */
-  uBSP430hplPORT_16 out;	/**< PxOUT */ /* 0x02 */
-  uBSP430hplPORT_16 dir;	/**< PxDIR (set for output) */ /* 0x04 */
-  uBSP430hplPORT_16 ren;	/**< PxREN (set to enable) */ /* 0x06 */
-  uBSP430hplPORT_16 ds;	/**< PxDS (drive select, some devices) */ /* 0x08 */
+  uBSP430hplPORT_16 in;         /**< PxIN */ /* 0x00 */
+  uBSP430hplPORT_16 out;        /**< PxOUT */ /* 0x02 */
+  uBSP430hplPORT_16 dir;        /**< PxDIR (set for output) */ /* 0x04 */
+  uBSP430hplPORT_16 ren;        /**< PxREN (set to enable) */ /* 0x06 */
+  uBSP430hplPORT_16 ds;         /**< PxDS (drive select, some devices) */ /* 0x08 */
   union {
-    uBSP430hplPORT_16 sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
-    uBSP430hplPORT_16 sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
+    uBSP430hplPORT_16 sel;      /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
+    uBSP430hplPORT_16 sel0;     /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
   };
-  uBSP430hplPORT_16 sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
+  uBSP430hplPORT_16 sel1;       /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
   unsigned int _reserved_x0E;
-  uBSP430hplPORT_16 selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
+  uBSP430hplPORT_16 selc;       /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
   unsigned int _reserved_x12;
   unsigned int _reserved_x14;
   unsigned int _reserved_x16;
-  uBSP430hplPORT_16 ies;	 /**< PxIES */ /* 0x18 */
-  uBSP430hplPORT_16 ie;	 /**< PxIE */ /* 0x1A */
-  uBSP430hplPORT_16 ifg;	 /**< PxIFG */ /* 0x1C */
+  uBSP430hplPORT_16 ies;        /**< PxIES */ /* 0x18 */
+  uBSP430hplPORT_16 ie;         /**< PxIE */ /* 0x1A */
+  uBSP430hplPORT_16 ifg;        /**< PxIFG */ /* 0x1C */
 } sBSP430hplPORT_5XX_16;
 
 /** Layout for 5xx family ports, 8-bit access
@@ -281,26 +281,26 @@ typedef struct sBSP430hplPORT_5XX_16 {
  * when referencing the second 8-bit register in a 16-bit bank.
  */
 typedef struct sBSP430hplPORT_5XX_8 {
-  unsigned char in;	/**< PxIN */ /* 0x00 */
+  unsigned char in;              /**< PxIN */ /* 0x00 */
   unsigned char _reserved_x01;
-  unsigned char out;	/**< PxOUT */ /* 0x02 */
+  unsigned char out;             /**< PxOUT */ /* 0x02 */
   unsigned char _reserved_x03;
-  unsigned char dir;	/**< PxDIR (set for output) */ /* 0x04 */
+  unsigned char dir;             /**< PxDIR (set for output) */ /* 0x04 */
   unsigned char _reserved_x05;
-  unsigned char ren;	/**< PxREN (set to enable) */ /* 0x06 */
+  unsigned char ren;             /**< PxREN (set to enable) */ /* 0x06 */
   unsigned char _reserved_x07;
-  unsigned char ds; /**< PxDS (drive select, some devices) */ /* 0x08 */
+  unsigned char ds;              /**< PxDS (drive select, some devices) */ /* 0x08 */
   unsigned char _reserved_x09;
   union __attribute__((__packed__)) {
-    unsigned char sel; /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
-    unsigned char sel0; /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
+    unsigned char sel;           /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
+    unsigned char sel0;          /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
   };
   unsigned char _reserved_x0B;
-  unsigned char sel1; /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
+  unsigned char sel1;            /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
   unsigned char _reserved_x0D;
   unsigned char _reserved_x0E;
   unsigned char _reserved_x0F;
-  unsigned char selc; /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) *//* 0x10 */
+  unsigned char selc;            /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) *//* 0x10 */
   unsigned char _reserved_x11;
   unsigned char _reserved_x12;
   unsigned char _reserved_x13;
@@ -308,11 +308,11 @@ typedef struct sBSP430hplPORT_5XX_8 {
   unsigned char _reserved_x15;
   unsigned char _reserved_x16;
   unsigned char _reserved_x17;
-  unsigned char ies;	 /**< PxIES */ /* 0x18 */
+  unsigned char ies;             /**< PxIES */ /* 0x18 */
   unsigned char _reserved_x19;
-  unsigned char ie;	 /**< PxIE */ /* 0x1A */
+  unsigned char ie;              /**< PxIE */ /* 0x1A */
   unsigned char _reserved_x1B;
-  unsigned char ifg;	 /**< PxIFG */ /* 0x1C */
+  unsigned char ifg;             /**< PxIFG */ /* 0x1C */
 } sBSP430hplPORT_5XX_8;
 
 /** Structure used to access ports with interrupt capability.

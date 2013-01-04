@@ -116,7 +116,7 @@ vBSP430ledSet (int led_idx,
   if (led_idx < nBSP430led) {
     const sBSP430halLED * lp = xBSP430halLED_ + led_idx;
 
-    if (value > 0)	{
+    if (value > 0) {
       *lp->outp |= lp->bit;
     } else if (value < 0) {
       *lp->outp ^= lp->bit;

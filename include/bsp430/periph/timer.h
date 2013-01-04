@@ -865,7 +865,7 @@
  *    vBSP430timerSafeCounterInitialize_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
  * #endif
  * @endcode
- * 
+ *
  * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
  * @platformdefault
  */
@@ -935,30 +935,30 @@ unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
 /** Layout for Timer_A and Timer_B peripherals.
  */
 typedef struct sBSP430hplTIMER {
-  unsigned int ctl;			/**< Control register (TA0CTL) */
+  unsigned int ctl;             /**< Control register (TA0CTL) */
   union {
-    unsigned int cctl[7];		/**< Capture/Compare Control registers (indexed) */
+    unsigned int cctl[7];       /**< Capture/Compare Control registers (indexed) */
     struct {
-      unsigned int cctl0;	/**< Tx#CCTL0 */
-      unsigned int cctl1;	/**< Tx#CCTL1 */
-      unsigned int cctl2;	/**< Tx#CCTL2 */
-      unsigned int cctl3;	/**< Tx#CCTL3 */
-      unsigned int cctl4;	/**< Tx#CCTL4 */
-      unsigned int cctl5; /**< TB#CCTL5 */
-      unsigned int cctl6;	/**< TB#CCTL6 */
+      unsigned int cctl0;       /**< Tx#CCTL0 */
+      unsigned int cctl1;       /**< Tx#CCTL1 */
+      unsigned int cctl2;       /**< Tx#CCTL2 */
+      unsigned int cctl3;       /**< Tx#CCTL3 */
+      unsigned int cctl4;       /**< Tx#CCTL4 */
+      unsigned int cctl5;       /**< TB#CCTL5 */
+      unsigned int cctl6;       /**< TB#CCTL6 */
     };
   };
-  unsigned int r;				/**< Raw timer counter (TA0R) */
+  unsigned int r;               /**< Raw timer counter (TA0R) */
   union {
-    unsigned int ccr[7];	/**< Capture/Compare registers (indexed) */
+    unsigned int ccr[7];        /**< Capture/Compare registers (indexed) */
     struct {
-      unsigned int ccr0;	/**< Tx#CCR0 */
-      unsigned int ccr1;	/**< Tx#CCR1 */
-      unsigned int ccr2;	/**< Tx#CCR2 */
-      unsigned int ccr3;	/**< Tx#CCR3 */
-      unsigned int ccr4;	/**< Tx#CCR4 */
-      unsigned int ccr5;	/**< TB#CCR5 */
-      unsigned int ccr6;	/**< TB#CCR6 */
+      unsigned int ccr0;        /**< Tx#CCR0 */
+      unsigned int ccr1;        /**< Tx#CCR1 */
+      unsigned int ccr2;        /**< Tx#CCR2 */
+      unsigned int ccr3;        /**< Tx#CCR3 */
+      unsigned int ccr4;        /**< Tx#CCR4 */
+      unsigned int ccr5;        /**< TB#CCR5 */
+      unsigned int ccr6;        /**< TB#CCR6 */
     };
   };
 } sBSP430hplTIMER;

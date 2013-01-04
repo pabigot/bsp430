@@ -70,7 +70,7 @@ void vBSP430ledSet (int led_idx,
   } else {
     pxout = &PJOUT;
   }
-  if (value > 0)	{
+  if (value > 0) {
     *pxout |= bit;
   } else if (value < 0) {
     *pxout ^= bit;

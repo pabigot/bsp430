@@ -108,62 +108,62 @@
 
 /** Register map for USCI_A/USCI_B peripheral on a MSP430 5xx/6xx MCU. */
 typedef struct sBSP430hplUSCI5 {
-  union {						/* 0x00 */
-    unsigned int ctlw0;		/**< UCtxCTLW0 */
+  union {                       /* 0x00 */
+    unsigned int ctlw0;         /**< UCtxCTLW0 */
     struct {
-      unsigned char ctl1;	/**< UCtxCTL1 */
-      unsigned char ctl0;	/**< UCtxCTL0 */
+      unsigned char ctl1;       /**< UCtxCTL1 */
+      unsigned char ctl0;       /**< UCtxCTL0 */
     };
   };
   unsigned int _unused_0x02;
   unsigned int _unused_0x04;
-  union {						/* 0x06 */
-    unsigned int brw;		/**< UCtxBRW */
+  union {                       /* 0x06 */
+    unsigned int brw;           /**< UCtxBRW */
     struct {
-      unsigned char br0;	/**< UCtxBR0 */
-      unsigned char br1;	/**< UCtxBR1 */
+      unsigned char br0;        /**< UCtxBR0 */
+      unsigned char br1;        /**< UCtxBR1 */
     };
   };
-  union {						/* 0x08 */
+  union {                       /* 0x08 */
     struct { /* USCI_A */
-      unsigned char mctl;	/**< UCAxMCTL (UART) */
+      unsigned char mctl;       /**< UCAxMCTL (UART) */
       unsigned char _reserved_0x09;
     };
     unsigned int _reserved_0x08; /* USCI_B */
   };
-  unsigned char stat;			/**< UCtxSTAT */ /* 0x0A */
+  unsigned char stat;           /**< UCtxSTAT */ /* 0x0A */
   unsigned char _reserved_0x0B;
-  unsigned char rxbuf;		/**< UCtxRXBUF */ /* 0x0C */
+  unsigned char rxbuf;          /**< UCtxRXBUF */ /* 0x0C */
   unsigned char _reserved_0x0D;
-  unsigned char txbuf;		/**< UCtxTXBUF */ /* 0x0E */
+  unsigned char txbuf;          /**< UCtxTXBUF */ /* 0x0E */
   unsigned char _reserved_0x0F;
-  union {						/* 0x10 */
-    struct {				/* USCI_A */
-      unsigned char abctl; /**< UCAxABCTL (UART) */
+  union {                       /* 0x10 */
+    struct {                    /* USCI_A */
+      unsigned char abctl;      /**< UCAxABCTL (UART) */
       unsigned char _reserved_0x11;
     };
-    unsigned int i2coa;		/**< UCBxI2COA (I2C) */ /* USCI_B */
+    unsigned int i2coa;         /**< UCBxI2COA (I2C) */ /* USCI_B */
   };
-  union {						/* 0x12 */
-    unsigned int irctl;		/**< UCAxIRCTL (UART)*/
+  union {                       /* 0x12 */
+    unsigned int irctl;         /**< UCAxIRCTL (UART)*/
     struct {
-      unsigned char irtctl; /**< UCAxIRTCTL (UART) */
-      unsigned char irrctl; /**< UCAxIRRCTL (UART) */
+      unsigned char irtctl;     /**< UCAxIRTCTL (UART) */
+      unsigned char irrctl;     /**< UCAxIRRCTL (UART) */
     };
-    unsigned int i2csa;		/**< UCBxI2CSA (I2C) */
+    unsigned int i2csa;         /**< UCBxI2CSA (I2C) */
   };
   unsigned int _unused_0x14;
   unsigned int _unused_0x16;
   unsigned int _unused_0x18;
   unsigned int _unused_0x1a;
-  union {						/* 0x1C */
-    unsigned int ictl;		/**< UCtxICTL */
+  union {                       /* 0x1C */
+    unsigned int ictl;          /**< UCtxICTL */
     struct {
-      unsigned char ie;	/**< UCtxIE */
-      unsigned char ifg;	/**< UCtxIFG */
+      unsigned char ie;         /**< UCtxIE */
+      unsigned char ifg;        /**< UCtxIFG */
     };
   };
-  unsigned int iv;			/**< UCtxIV */ /* 0x1E */
+  unsigned int iv;              /**< UCtxIV */ /* 0x1E */
 } sBSP430hplUSCI5;
 
 /** @cond DOXYGEN_INTERNAL */
