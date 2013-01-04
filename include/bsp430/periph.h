@@ -133,7 +133,7 @@ typedef int tBSP430periphHandle;
  * peripheral function.
  *
  * XT2 functionality is only available when something has defined
- * #configBSP430_PLATFORM_PERIPH_XT2.
+ * #configBSP430_PERIPH_XT2.
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_XT2 - 0)
 #define BSP430_PERIPH_XT2 ((tBSP430periphHandle)0x4003)

@@ -53,7 +53,7 @@
  *
  * @cppflag
  * @defaulted
- * @affects #BSP430_TIMER_CCACLK_TIMER_PERIPH_CPPID and all related values
+ * @affects #BSP430_TIMER_CCACLK_PERIPH_CPPID and all related values
  */
 #ifndef configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK
 #define configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK 0

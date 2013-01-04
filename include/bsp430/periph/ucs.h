@@ -42,12 +42,6 @@
  * @li #configBSP430_UCS_TRIM_DCOCLKDIV enables specific MCLK
  * frequencies to be configured
  *
- * @li #configBSP430_UCS_FLLREFCLK_IS_XT1CLK controls the selection of
- * clock used for the FLL
- *
- * @li #configBSP430_UCS_TRIM_ACLK_IS_XT1CLK controls the selection of
- * clock used for DCO trimming
- *
  * @section h_periph_ucs_hpl Hardware Presentation Layer
  *
  * As there can be only one instance of UCS on any MCU, there is no
