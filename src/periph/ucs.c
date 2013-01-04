@@ -351,42 +351,41 @@ int
 iBSP430clockConfigureXT2_ni (int enablep,
                              int loop_limit)
 {
-  int rc = 0;
   int loop_delta;
+  int rc = 0;
 
   if (enablep && (0 != loop_limit)) {
     rc = iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT2, 0, 1);
-    if (0 != rc) {
-      return rc;
-    }
-    loop_delta = (0 < loop_limit) ? 1 : 0;
+    if (0 == rc) {
+      loop_delta = (0 < loop_limit) ? 1 : 0;
 
 #if defined(__MSP430_HAS_UCS_RF__)
-    /* RF version has no control of anything but XT2OFF. */
-    UCSCTL6 &= ~XT2OFF;
+      /* RF version has no control of anything but XT2OFF. */
+      UCSCTL6 &= ~XT2OFF;
 #else /* UCS_RF */
-    /* XT2 start at high drive to stability, then drop back. */
-    UCSCTL6 = XT2DRIVE_3 | (UCSCTL6 & ~(XT2BYPASS | XT2OFF));
+      /* XT2 start at high drive to stability, then drop back. */
+      UCSCTL6 = XT2DRIVE_3 | (UCSCTL6 & ~(XT2BYPASS | XT2OFF));
 #endif /* UCS_RF */
-    do {
-      BSP430_CLOCK_XT2_CLEAR_FAULT_NI();
-      loop_limit -= loop_delta;
-      BSP430_CORE_WATCHDOG_CLEAR();
-      BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_XT2_STABILIZATION_DELAY_CYCLES);
-    } while ((BSP430_CLOCK_XT2_IS_FAULTED_NI()) && (0 != loop_limit));
+      do {
+        BSP430_CLOCK_CLEAR_FAULTS_NI();
+        loop_limit -= loop_delta;
+        BSP430_CORE_WATCHDOG_CLEAR();
+        BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_XT2_STABILIZATION_DELAY_CYCLES);
+      } while ((BSP430_CLOCK_XT2_IS_FAULTED_NI()) && (0 != loop_limit));
 #if ! defined(__MSP430_HAS_UCS_RF__)
-    UCSCTL6 &= ~XT2DRIVE_3;
+      UCSCTL6 &= ~XT2DRIVE_3;
 #endif /* UCS_RF */
-    rc = ! BSP430_CLOCK_XT2_IS_FAULTED_NI();
+      rc = ! BSP430_CLOCK_XT2_IS_FAULTED_NI();
+    }
   }
+  BSP430_CLOCK_OSC_CLEAR_FAULT_NI();
+#if ! defined(__MSP430_HAS_UCS_RF__)
+  UCSCTL6 &= ~XT2DRIVE_3;
+#endif /* UCS_RF */
   if (! rc) {
     (void)iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_XT2, 0, 0);
     UCSCTL6 |= XT2OFF;
-#if ! defined(__MSP430_HAS_UCS_RF__)
-    UCSCTL6 &= ~XT2DRIVE_3;
-#endif /* UCS_RF */
   }
-  BSP430_CLOCK_XT2_CLEAR_FAULT_NI();
   return rc;
 }
 #endif /* BSP430_CLOCK_NOMINAL_XT2CLK_HZ */

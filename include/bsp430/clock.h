@@ -264,14 +264,6 @@
 #define BSP430_CLOCK_XT2_IS_FAULTED_NI() peripheral specific
 #endif /* BSP430_DOXYGEN */
 
-/** Same as #BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() but clears XT2 faults.
- *
- * XT2 is considered to be permanently faulted for clock peripherals
- * and MCUs on which XT2 is not supported. */
-#ifndef BSP430_CLOCK_XT2_CLEAR_FAULT_NI
-#define BSP430_CLOCK_XT2_CLEAR_FAULT_NI() do { } while (0)
-#endif /* BSP430_CLOCK_XT2_CLEAR_FAULT_NI */
-
 /** @def BSP430_CLOCK_NOMINAL_XT1CLK_HZ
  *
  * Nominal rate of the external low-frequency crystal.  This is

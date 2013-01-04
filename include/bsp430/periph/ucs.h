@@ -314,16 +314,6 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
  * @dependency #BSP430_PERIPH_XT2 */
 #define BSP430_CLOCK_XT2_IS_FAULTED_NI() (UCSCTL7 & XT2OFFG)
 
-#undef BSP430_CLOCK_XT2_CLEAR_FAULT_NI
-/** Clear the fault associated with XT2.
- *
- * This definition overrides the generic definition to clear the
- * crystal-specific flags as well as the system flag. */
-#define BSP430_CLOCK_XT2_CLEAR_FAULT_NI() do {  \
-    UCSCTL7 &= ~XT2OFFG;                        \
-    SFRIFG1 &= ~OFIFG;                          \
-  } while (0)
-
 #endif /* BSP430_PERIPH_XT2 */
 
 /** Unconditional define for peripheral-specific constant */
