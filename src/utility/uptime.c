@@ -70,7 +70,10 @@ struct sDelayAlarm {
 
   /** Other information related to delay management */
   volatile unsigned int flags;
-} delayAlarm_;
+};
+
+/* Private delay alarm structure */
+static struct sDelayAlarm delayAlarm_;
 #define H_delayAlarm (&delayAlarm_.alarm)
 
 static int
