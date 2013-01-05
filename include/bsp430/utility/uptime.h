@@ -198,7 +198,7 @@ extern hBSP430halTIMER xBSP430uptimeTIMER_;
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 static hBSP430halTIMER
 BSP430_CORE_INLINE
-xBSP430uptimeTimer (void)
+hBSP430uptimeTimer (void)
 {
   return xBSP430uptimeTIMER_;
 }
@@ -279,7 +279,7 @@ static unsigned long
 BSP430_CORE_INLINE
 ulBSP430uptime_ni (void)
 {
-  return ulBSP430timerCounter_ni(xBSP430uptimeTimer(), 0);
+  return ulBSP430timerCounter_ni(hBSP430uptimeTimer(), 0);
 }
 
 /** Return the system uptime in clock ticks. */
@@ -287,7 +287,7 @@ static unsigned long
 BSP430_CORE_INLINE
 ulBSP430uptime (void)
 {
-  return ulBSP430timerCounter(xBSP430uptimeTimer(), 0);
+  return ulBSP430timerCounter(hBSP430uptimeTimer(), 0);
 }
 #endif /* BSP430_UPTIME */
 

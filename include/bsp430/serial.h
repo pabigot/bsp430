@@ -674,7 +674,7 @@ hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph)
 #endif /* configBSP430_SERIAL_USE_USCI */
 #if configBSP430_SERIAL_USE_USCI5 - 0
   if (NULL == rv) {
-    rv = xBSP430usci5Lookup(periph);
+    rv = hBSP430usci5Lookup(periph);
   }
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 #if configBSP430_SERIAL_USE_EUSCI - 0

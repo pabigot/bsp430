@@ -41,9 +41,9 @@ register_hh10d_ni (struct sHH10D * sp)
   /* Hook into the uptime infrastructure and have the HH10D callback
    * invoked once per second, starting as soon as interrupts are
    * enabled. */
-  sp->cb.next_ni = xBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx];
-  xBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx] = &sp->cb;
-  xBSP430uptimeTimer()->hpl->cctl[sp->uptime_ccidx] = CCIFG | CCIE;
+  sp->cb.next_ni = hBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx];
+  hBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx] = &sp->cb;
+  hBSP430uptimeTimer()->hpl->cctl[sp->uptime_ccidx] = CCIFG | CCIE;
 }
 
 static int

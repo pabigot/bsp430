@@ -469,7 +469,7 @@ iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
 
     /* Chain in PPS interrupt handler */
     BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
-                                    xBSP430uptimeTimer()->cc_cbchain_ni[APP_PPS_CCIDX],
+                                    hBSP430uptimeTimer()->cc_cbchain_ni[APP_PPS_CCIDX],
                                     pps_state_.cb,
                                     next_ni);
   }

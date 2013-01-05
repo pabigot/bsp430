@@ -1165,7 +1165,7 @@ volatile sBSP430hplUSCI5 * xBSP430hplLookupUSCI5 (tBSP430periphHandle periph)
  * HAL interface has been enabled (e.g., with #configBSP430_HAL_USCI5_A0).
  */
 static BSP430_CORE_INLINE
-hBSP430halSERIAL xBSP430usci5Lookup (tBSP430periphHandle periph)
+hBSP430halSERIAL hBSP430usci5Lookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
