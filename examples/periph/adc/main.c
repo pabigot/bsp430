@@ -74,8 +74,16 @@ cal_adc_ptr_type cal_adc;
 #define INCH_VMID INCH_11
 #endif /* ADC10INCH_10 */
 #elif HAVE_ADC12
+#ifndef ADC12ENC
+#define ADC12ENC ENC
+#endif /* ADC12ENC */
+#ifdef ADC12INCH_10
 #define INCH_TEMP ADC12INCH_10
 #define INCH_VMID ADC12INCH_11
+#else /* ADC12INCH_10 */
+#define INCH_TEMP INCH_10
+#define INCH_VMID INCH_11
+#endif /* ADC12INCH_10 */
 #else /* HAVE_ADC* */
 #error No ADC available */
 #endif /* HAVE_ADC* */
@@ -142,7 +150,32 @@ int initializeADC (void)
   ADC10CTL1 = ADC10SHS_0 | ADC10SHP | ADC10DIV_3 | ADC10SSEL_0;
   ADC10CTL2 = ADC10PDIV_0 | ADC10RES | ADC10SR;
 #elif defined(__MSP430_HAS_ADC12__)
-#error Not implemented
+  /* Original ADC12 does not use namespaced prefixes */
+  /* ~ADC12ENC: Place module into hold before modifying configuration */
+  ADC12CTL0 &= ~ADC12ENC;
+  /* ADC12SHT_10:  512 ADC12CLK cycles per sample
+   * REFON: Enable internal reference
+   * ADC12ON: Turn module on
+   * Do not enable yet.
+   */
+  ADC12CTL0 = SHT0_10 | REFON | ADC12ON;
+  /* Start collection with conversion register zero
+   * ADC12SHS_0: Trigger on ADC12SC bit
+   * ADC12SHP: Pulsed sampling
+   * No sample-input signal inversion
+   * Divide clock by 1
+   * ADC12SSEL_0: Clock source is MODCLK (nominal 5MHz)
+   * ADC12CONSEQ_0: Single-channel, single-conversion
+   */
+  ADC12CTL1 = SHS_0 | SHP | ADC12SSEL_0 | CONSEQ_0;
+
+  /* Delay 17ms to allow REF to stabilize */
+  {
+    unsigned long wake_utt = ulBSP430uptime_ni() + BSP430_UPTIME_MS_TO_UTT(17);
+    while (0 < lBSP430uptimeSleepUntil_ni(wake_utt, LPM0_bits)) {
+      /* nop */
+    }
+  }
 #elif defined(__MSP430_HAS_ADC12_B__)
 #error Not implemented
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
@@ -201,9 +234,9 @@ int setReferenceVoltage (int ref)
   }
 #elif HAVE_ADC12
   if (REF_1p5 == ref) {
-    ADC12CTL0 &= ~ADC12REF2_5V;
+    ADC12CTL0 &= ~REF2_5V;
   } else if (REF_2p5 == ref) {
-    ADC12CTL0 |= ADC12REF2_5V;
+    ADC12CTL0 |= REF2_5V;
   } else {
     return -1;
   }
@@ -223,11 +256,10 @@ int setSource (unsigned int inch)
 #elif defined(__MSP430_HAS_ADC10_B__)
   ADC10MCTL0 = ADC10SREF_1 | (inch * ADC10INCH0);
 #elif defined(__MSP430_HAS_ADC12__)
-#error Not implemented
+  ADC12MCTL0 = EOS | SREF_1 | (inch * INCH0);
 #elif defined(__MSP430_HAS_ADC12_B__)
 #error Not implemented
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
-  /* INCH1 (acc_x): */
   ADC12MCTL0 = ADC12EOS | ADC12SREF_1 | (inch * ADC12INCH0);
 #else
 #error No ADC available
@@ -457,7 +489,7 @@ void main ()
     }
     cputchar_ni('\n');
     next_wake_utt += delta_wake_utt;
-    while (0 < lBSP430uptimeSleepUntil_ni(next_wake_utt, LPM4_bits)) {
+    while (0 < lBSP430uptimeSleepUntil_ni(next_wake_utt, LPM3_bits)) {
       /* nop */
     }
   }

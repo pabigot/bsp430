@@ -11,6 +11,7 @@
 /* Monitor uptime and provide generic timer, with delay support. */
 #define configBSP430_UPTIME 1
 #define configBSP430_UPTIME_DELAY 1
+#define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 1
 
 /* Use the TLV infrastructure if available */
 #define configBSP430_TLV 1
