@@ -1496,7 +1496,7 @@ int iBSP430timerAlarmSet (hBSP430timerAlarm alarm,
  * @ingroup grp_timer_alarm */
 int iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm);
 
-/** Wrapper to invoke iBSP430timerCancel_ni() when interrupts are
+/** Wrapper to invoke iBSP430timerAlarmCancel_ni() when interrupts are
  * enabled.
  *
  * @ingroup grp_timer_alarm */
