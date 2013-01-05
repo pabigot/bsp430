@@ -510,7 +510,7 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
  * chain of callbacks, producing bits including (for example) @c
  * LPM_bits and/or #BSP430_HAL_ISR_CALLBACK_YIELD. */
 #define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {             \
-    int return_flags_ = (_return_flags);                                \
+    unsigned int return_flags_ = (_return_flags);                       \
     if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {             \
       return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;                       \
     }                                                                   \
