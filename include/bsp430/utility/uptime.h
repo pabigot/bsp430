@@ -438,6 +438,9 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * @warning Consider whether the LPM mode might disable the clock or
  * timer on which the wakeup depends.  In many recent MCUs the LPM
  * mode will be internally masked to ensure this does not happen.
+ * However, on 4xx MCUs setting #LPM4_bits when ACLK drives the uptime
+ * timer will cause the system to hang.  Use #LPM3_bits as a default
+ * when only the delay is important.
  *
  * @return The number of timer ticks remaining until the
  * originally-requested time.  If an error occurs, a zero value will

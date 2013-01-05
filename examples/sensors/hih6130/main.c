@@ -50,7 +50,7 @@ void main ()
   (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_HIH6130_I2C_ADDRESS);
 
   /* HIH-613x wants max 60ms on power-up. */
-  BSP430_UPTIME_DELAY_MS_NI(60, LPM4_bits, 0);
+  BSP430_UPTIME_DELAY_MS_NI(60, LPM3_bits, 0);
 
 #define DENOMINATOR ((1 << 14) - 1)
 #define HUMIDITY_RAW_TO_PPT(raw_) ((unsigned int)((1000UL * (raw_)) / DENOMINATOR))
@@ -80,7 +80,7 @@ void main ()
      * typically takes 36.65ms to complete a combined temperature and
      * humidity reading.  Short it so we can verify that, but don't
      * ask more than once per millisecond. */
-    BSP430_UPTIME_DELAY_MS_NI(30, LPM4_bits, 0);
+    BSP430_UPTIME_DELAY_MS_NI(30, LPM3_bits, 0);
     do {
       rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
       status = 0x03 & (data[0] >> 6);
@@ -93,13 +93,13 @@ void main ()
       if (0 == status) {
         break;
       }
-      BSP430_UPTIME_DELAY_MS_NI(1, LPM4_bits, 0);
+      BSP430_UPTIME_DELAY_MS_NI(1, LPM3_bits, 0);
     } while (1 == status);
     t1 = ulBSP430uptime_ni();
     cprintf("%s: ", xBSP430uptimeAsText_ni(t0));
     cprintf("Temp %d dF, humidity %u ppt, in %s\n", TEMPERATURE_dC_TO_dF(TEMPERATURE_RAW_TO_dC(temp_raw)),
             HUMIDITY_RAW_TO_PPT(hum_raw),
             xBSP430uptimeAsText_ni(t1 - t0));
-    BSP430_UPTIME_DELAY_MS_NI(5000, LPM4_bits, 0);
+    BSP430_UPTIME_DELAY_MS_NI(5000, LPM3_bits, 0);
   }
 }

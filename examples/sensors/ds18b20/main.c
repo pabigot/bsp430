@@ -88,9 +88,9 @@ void main ()
        * so uptime overflow events can be handled.  Sleep for 600ms,
        * then test at 10ms intervals until the result is ready.  Each
        * check is nominally 61 microseconds. */
-      BSP430_UPTIME_DELAY_MS_NI(600, LPM4_bits, 0);
+      BSP430_UPTIME_DELAY_MS_NI(600, LPM3_bits, 0);
       while (! iBSP430onewireReadBit_ni(bus)) {
-        BSP430_UPTIME_DELAY_MS_NI(10, LPM4_bits, 0);
+        BSP430_UPTIME_DELAY_MS_NI(10, LPM3_bits, 0);
       }
       rc = iBSP430onewireReadTemperature_ni(bus, &t_c);
     }
@@ -108,6 +108,6 @@ void main ()
 
     /* You'd want to do this if you were going to sleep here */
     vBSP430onewireShutdown_ni(bus);
-    BSP430_UPTIME_DELAY_MS_NI(5000, LPM4_bits, 0);
+    BSP430_UPTIME_DELAY_MS_NI(5000, LPM3_bits, 0);
   }
 }
