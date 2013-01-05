@@ -10,7 +10,7 @@
 
 /* Support uptime, with delays */
 #define configBSP430_UPTIME 1
-#define BSP430_UPTIME_DELAY_CCIDX 1
+#define configBSP430_UPTIME_DELAY 1
 
 #ifndef APP_CCIDX
 #define APP_CCIDX 1

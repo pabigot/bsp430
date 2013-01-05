@@ -15,7 +15,7 @@
 
 /* Enable the uptime infrastructure, including its delay capabilities on CCIDX 1. */
 #define configBSP430_UPTIME 1
-#define BSP430_UPTIME_DELAY_CCIDX 1
+#define configBSP430_UPTIME_DELAY 1
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

@@ -13,7 +13,7 @@
 
 /* Need the uptime infrastructure, with delay support */
 #define configBSP430_UPTIME 1
-#define BSP430_UPTIME_DELAY_CCIDX 1
+#define configBSP430_UPTIME_DELAY 1
 
 /* Need I2C */
 #define configBSP430_SERIAL_ENABLE_I2C 1

@@ -39,7 +39,7 @@
 hBSP430halTIMER xBSP430uptimeTIMER_;
 unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
 
-#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+#if (configBSP430_UPTIME_DELAY - 0)
 
 /** Bit set when alarm has gone off */
 #define DELAY_ALARM_FIRED 0x01
@@ -107,7 +107,7 @@ delayAlarmSetRegistered_ni_ (int enablep)
   return rv;
 }
 
-#endif /* BSP430_UPTIME_DELAY_CCIDX */
+#endif /* configBSP430_UPTIME_DELAY */
 
 void
 vBSP430uptimeStart_ni (void)
@@ -120,7 +120,7 @@ vBSP430uptimeStart_ni (void)
     ((TASSEL0 | TASSEL1) & (BSP430_UPTIME_TASSEL))
     | ((ID0 | ID1) & (BSP430_UPTIME_DIVIDING_SHIFT))
     | TACLR | TAIE;
-#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+#if (configBSP430_UPTIME_DELAY - 0)
   {
     hBSP430timerAlarm delay_alarm;
 
@@ -131,7 +131,7 @@ vBSP430uptimeStart_ni (void)
     }
     delayAlarm_.flags = DELAY_ALARM_VALID | DELAY_ALARM_ENABLED | DELAY_ALARM_TIMER_ACTIVE;
   }
-#endif /* BSP430_UPTIME_DELAY_CCIDX */
+#endif /* configBSP430_UPTIME_DELAY */
   vBSP430uptimeResume_ni();
 }
 
@@ -139,20 +139,20 @@ void
 vBSP430uptimeSuspend_ni (void)
 {
   xBSP430uptimeTIMER_->hpl->ctl &= ~(MC0 | MC1);
-#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+#if (configBSP430_UPTIME_DELAY - 0)
   (void)delayAlarmSetRegistered_ni_(0);
   delayAlarm_.flags &= ~DELAY_ALARM_TIMER_ACTIVE;
-#endif /* BSP430_UPTIME_DELAY_CCIDX */
+#endif /* configBSP430_UPTIME_DELAY */
 }
 
 void
 vBSP430uptimeResume_ni (void)
 {
   ulBSP430uptimeConversionFrequency_Hz_ni_ = ulBSP430timerFrequency_Hz_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
-#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+#if (configBSP430_UPTIME_DELAY - 0)
   delayAlarm_.flags |= DELAY_ALARM_TIMER_ACTIVE;
   (void)delayAlarmSetRegistered_ni_(1);
-#endif /* BSP430_UPTIME_DELAY_CCIDX */
+#endif /* configBSP430_UPTIME_DELAY */
   xBSP430uptimeTIMER_->hpl->ctl |= MC_2;
 }
 
@@ -206,7 +206,7 @@ xBSP430uptimeAsText_ni (unsigned long duration_utt)
   return xBSP430uptimeAsText(duration_utt, buf);
 }
 
-#if (BSP430_UPTIME_DELAY_CCIDX - 0)
+#if (configBSP430_UPTIME_DELAY - 0)
 
 int
 iBSP430uptimeDelaySetEnabled_ni (int enablep)
@@ -260,6 +260,6 @@ lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
   return setting_utt - ulBSP430uptime_ni();
 }
 
-#endif /* BSP430_UPTIME_DELAY_CCIDX */
+#endif /* configBSP430_UPTIME_DELAY */
 
 #endif /* BSP430_UPTIME */

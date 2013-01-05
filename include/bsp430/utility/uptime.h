@@ -367,30 +367,45 @@ const char * xBSP430uptimeAsText (unsigned long duration_utt,
  * @deprecated Legacy interface, use xBSP430uptimeAsText(). */
 const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
 
-/** An optional capture/compare index to be used for delays.
+/** Define to a true value to support uptime-driven delays.
  *
- * If defined to a non-zero capture/compare register index this
- * enables delays based on the uptime timer using the @ref
- * grp_timer_alarm infrastructure.
+ * This flag enables infrastructure support to use the @ref
+ * grp_timer_alarm infrastructure on the uptime timer to support
+ * application delays.  The core API for this capability is
+ * lBSP430uptimeSleepUntil_ni() and #BSP430_UPTIME_DELAY_MS_NI().
  *
- * @note CC 0 is not supported because it is reserved for RTOS context
- * switch support.
+ * @note Applications that use the delay functionality should normally
+ * enable #configBSP430_CORE_LPM_EXIT_CLEAR_GIE.  See discussion at
+ * lBSP430uptimeSleepUntil_ni().
  *
- * Applications can test whether this feature is enabled using:
- * @code
- * #if (BSP430_UPTIME_DELAY_CCIDX - 0)
- *   code that depends on delay capabilities
- * #endif
- * @endcode
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_UPTIME_DELAY
+#define configBSP430_UPTIME_DELAY 0
+#endif /* configBSP430_UPTIME_DELAY */
+
+/** The capture/compare index to be used for delays.
+ *
+ * If #configBSP430_UPTIME_DELAY is enabled this capture/compare
+ * register index will be used on the uptime timer to support delays
+ * using the @ref grp_timer_alarm infrastructure.
+ *
+ * @note Most applications should avoid using CC 0 because it is
+ * reserved for RTOS context switch support, and CC 2 because it is
+ * used in uiBSP430timerSafeCounterRead_ni().  The uptime timer is
+ * generally asynchronous to MCLK so safe counter reads are critical.
  *
  * @warning If you assign the same value to #BSP430_UPTIME_DELAY_CCIDX
  * and #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX, platform initialization
  * will hang attempting to configure the delay alarm.
  *
+ * @defaulted 
  * @bsp430_config
  */
-#if defined(BSP430_DOXYGEN)
-#define BSP430_UPTIME_DELAY_CCIDX application-specific
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
+#ifndef BSP430_UPTIME_DELAY_CCIDX
+#define BSP430_UPTIME_DELAY_CCIDX 1
+#endif /* BSP430_UPTIME_DELAY_CCIDX */
 #endif /* BSP430_DOXYGEN */
 
 /** Sleep until the uptime timer reaches a particular value.
@@ -404,11 +419,10 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  *
  * @warning This function is intended to be called when interrupts are
  * disabled.  To ensure lower-priority interrupts are not processed
- * during this brief window applications that use this routine should
- * always include #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE in the
- * return value of any interrupt callback that also includes
- * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.  This routine does not disable
- * #GIE if that was not done by whatever caused LPM exit.
+ * after the application wakes from the delay applications that use
+ * this routine should define #configBSP430_CORE_LPM_EXIT_CLEAR_GIE.
+ * This routine does not disable #GIE after waking if that was not
+ * done by whatever caused LPM exit.
  *
  * @param setting_utt The uptime counter value at which the
  * application wishes to be awakened if no events have occured before
@@ -432,23 +446,28 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * value is positive it is likely another interrupt is the cause.
  *
  * @note The function is not implemented unless
- * #BSP430_UPTIME_DELAY_CCIDX is defined to a valid CCR.
-
+ * #configBSP430_UPTIME_DELAY is enabled.
+ *
  * @warning This function does not diagnose specific errors such as
  * invoking it while the uptime timer or the delay alarm are disabled.
  *
- * @dependency #BSP430_UPTIME_DELAY_CCIDX */
+ * @dependency #configBSP430_UPTIME_DELAY */
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
 long lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
                                  unsigned int lpm_bits);
+#endif /* configBSP430_UPTIME_DELAY */
 
 /** Enable or disable the alarm used by ulBSP430uptimeDelayUntil_ni().
  *
  * This delegates to iBSP430timerAlarmSetEnabled_ni().
  *
- * By default the alarm is enabled if #BSP430_UPTIME_DELAY_CCIDX is configured.
+ * The alarm is enabled by vBSp430uptimeStart_ni() if
+ * #configBSP430_UPTIME_DELAY is enabled.
  *
- * @dependency #BSP430_UPTIME_DELAY_CCIDX */
+ * @dependency #configBSP430_UPTIME_DELAY */
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
 int iBSP430uptimeDelaySetEnabled_ni (int enablep);
+#endif /* configBSP430_UPTIME_DELAY */
 
 /** Macro to simplify basic delay operations.
  *
@@ -465,7 +484,8 @@ int iBSP430uptimeDelaySetEnabled_ni (int enablep);
  * immediately regardless of remaining time.  Pass @c 0 if you wish to
  * delay regardless of other activity.
  *
- * @dependency #BSP430_UPTIME_DELAY_CCIDX */
+ * @dependency #configBSP430_UPTIME_DELAY */
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
 #define BSP430_UPTIME_DELAY_MS_NI(delay_ms_, lpm_bits_, exit_expr_) do { \
     unsigned long wake_utt;                                             \
     wake_utt = ulBSP430uptime_ni() + BSP430_UPTIME_MS_TO_UTT(delay_ms_); \
@@ -473,5 +493,6 @@ int iBSP430uptimeDelaySetEnabled_ni (int enablep);
       /* nop */                                                         \
     }                                                                   \
   } while (0)
+#endif /* configBSP430_UPTIME_DELAY */
 
 #endif /* BSP430_UTILITY_UPTIME_H */

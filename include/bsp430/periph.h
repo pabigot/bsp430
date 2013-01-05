@@ -382,6 +382,10 @@ struct sBSP430halISRIndexedChainNode;
  * application has a chance to deal with the results of the current
  * interrupt.
  *
+ * As an alternative to adding this to each interrupt handler, you may
+ * use #configBSP430_CORE_LPM_EXIT_CLEAR_GIE to add #GIE to the set of
+ * flags normally cleared when waking due to an interrupt.
+ *
  * @warning Using this flag without using
  * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM will leave the MCU in LPM with
  * interrupts disabled, which is usually not what you intend.
@@ -404,8 +408,7 @@ struct sBSP430halISRIndexedChainNode;
  * @return An integral value used by the ISR top half to wake up from
  * low power modes and otherwise affect subsequent execution.  It
  * should be a combination of bits like #LPM4_bits and
- * #BSP430_HAL_ISR_CALLBACK_YIELD.
- */
+ * #BSP430_HAL_ISR_CALLBACK_YIELD. */
 typedef int (* iBSP430halISRCallbackVoid) (const struct sBSP430halISRVoidChainNode * cb,
                                            void * context);
 

@@ -294,8 +294,9 @@
  * in the return value of an @link iBSP430halISRCallbackVoid interrupt
  * callback@endlink.  For more fine-grained control, the flag can be
  * cleared for specific callbacks by using
- * #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE.
- */
+ * #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE, but be aware that this
+ * flag may not be present in all infrastructure-provided interrupt
+ * handlers. */
 #ifndef configBSP430_CORE_LPM_EXIT_CLEAR_GIE
 #define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 0
 #endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */

@@ -10,7 +10,7 @@
 
 /* Monitor uptime and provide generic timer with delay capability. */
 #define configBSP430_UPTIME 1
-#define BSP430_UPTIME_DELAY_CCIDX 1
+#define configBSP430_UPTIME_DELAY 1
 
 /* Use the DMA HAL.  We'll also use the implicitly-included ISR
  * capability */

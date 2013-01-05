@@ -10,7 +10,7 @@
 
 /* Monitor uptime and provide generic timer, with delay support. */
 #define configBSP430_UPTIME 1
-#define BSP430_UPTIME_DELAY_CCIDX 1
+#define configBSP430_UPTIME_DELAY 1
 
 /* Use the TLV infrastructure if available */
 #define configBSP430_TLV 1
