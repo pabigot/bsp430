@@ -5,8 +5,12 @@
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 
-/* Support console output. */
+/* Support console output.  Also support an output buffer so we can
+ * compare ISR-based transmission with DMA transmission. */
 #define configBSP430_CONSOLE 1
+#ifndef BSP430_CONSOLE_TX_BUFFER_SIZE
+#define BSP430_CONSOLE_TX_BUFFER_SIZE 80
+#endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
 
 /* Monitor uptime and provide generic timer with delay capability. */
 #define configBSP430_UPTIME 1

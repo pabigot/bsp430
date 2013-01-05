@@ -1,8 +1,12 @@
 /** This file is in the public domain.
  *
  * Basic demonstration of the BSP430 DMA interface.  Shows memcpy and
- * memset about 2-3x faster than code, and UART transmission about 10x
- * faster than polling.
+ * memset about 2-3x faster than code.
+ *
+ * UART DMA transmission is about the same speed as polling, and about
+ * 100% faster than ISR at 9600 (10% faster at 115200); the data rates
+ * don't allow for much better improvement in throughput, though load
+ * on the system should be significantly less with DMA.
  *
  * @homepage http://github.com/pabigot/bsp430
  */
@@ -27,8 +31,8 @@ const char message[] = "This is text that should be transmitted over the console
 struct sChannel {
   sBSP430halISRIndexedChainNode cb;
   int stage;
-  unsigned int t0;
-  unsigned int t1;
+  unsigned long t0;
+  unsigned long t1;
 };
 
 static int
@@ -42,10 +46,10 @@ dma_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
   int rv = 0;
 
   if (0 == statep->stage) {
-    statep->t0 = uiBSP430timerSafeCounterRead_ni(xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE));
+    statep->t0 = ulBSP430uptime_ni();
     chp->ctl |= DMAEN;
   } else {
-    statep->t1 = uiBSP430timerSafeCounterRead_ni(xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE));
+    statep->t1 = ulBSP430uptime_ni();
     chp->ctl &= ~DMAEN;
     rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
   }
@@ -66,6 +70,11 @@ void main ()
   unsigned int timing_overhead;
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
+  unsigned long lt0;
+  unsigned long lt1;
+
+  /* Disable ISR-driven output for most of this application. */
+  (void)iBSP430consoleTransmitUseInterrupts_ni(0);
 
   cprintf("\n\ndma " __DATE__ " " __TIME__ "\n");
 
@@ -158,13 +167,33 @@ void main ()
   buffer[chp->sz] = 0;
   cprintf("Buffer copy done in %u, result:\n\t%s\n", t1 - t0, buffer);
 
-  cprintf("Writing %u bytes through console interface:\n\t", chp->sz);
-  iBSP430consoleFlush();
-  t0 = uiBSP430timerSafeCounterRead_ni(hrt);
+  cprintf("UART transmission is %u bytes, no less than about %lu ms at %lu baud\n",
+          chp->sz, ((BSP430_CONSOLE_BAUD_RATE / 2) + chp->sz * 10000UL) / BSP430_CONSOLE_BAUD_RATE,
+          (unsigned long)BSP430_CONSOLE_BAUD_RATE);
+
+  cprintf("Writing %u bytes through busy-waiting console interface:\n\t", chp->sz);
+  lt0 = ulBSP430uptime_ni();
   cputtext_ni(message);
-  iBSP430consoleFlush();
-  t1 = uiBSP430timerSafeCounterRead_ni(hrt);
-  cprintf("console output took %u\n", t1 - t0);
+  lt1 = ulBSP430uptime_ni();
+  /* Delay to allow last character to get out the serial port */
+  BSP430_UPTIME_DELAY_MS_NI(10, LPM0_bits, 0);
+  cprintf("polled console output took %lu = %lu us\n", lt1 - lt0, BSP430_UPTIME_UTT_TO_US(lt1 - lt0));
+
+#if 0 < BSP430_CONSOLE_TX_BUFFER_SIZE
+  (void)iBSP430consoleTransmitUseInterrupts_ni(1);
+  cprintf("Writing %u bytes through %u-octet interrupt-driven console interface:\n\t", chp->sz, BSP430_CONSOLE_TX_BUFFER_SIZE);
+  lt0 = ulBSP430uptime_ni();
+  cputtext_ni(message);
+  /* Low-overhead flush */
+  while (0 != iBSP430consoleWaitForTxSpace_ni(-1)) {
+    /* nop */
+  }
+  lt1 = ulBSP430uptime_ni();
+  (void)iBSP430consoleTransmitUseInterrupts_ni(0);
+  /* Delay to allow last character to get out the serial port */
+  BSP430_UPTIME_DELAY_MS_NI(10, LPM0_bits, 0);
+  cprintf("isr console output took %lu = %lu us\n", lt1 - lt0, BSP430_UPTIME_UTT_TO_US(lt1 - lt0));
+#endif
 
   BSP430_HPL_DMA->ctl0 = CONSOLE_DMATSEL * DMA0TSEL0;
   chp->ctl = DMADT_0 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
@@ -172,9 +201,10 @@ void main ()
 
   channel0.stage = 0;
   channel0.t0 = channel0.t1 = 0;
-  cprintf("Triggering interrupt-driven TX: CTL %04x\n\t", chp->ctl);
+  cprintf("Triggering DMA-driven TX: CTL %04x\n\t", chp->ctl);
   iBSP430consoleFlush();
   chp->ctl |= DMAIE | DMAIFG;
   BSP430_UPTIME_DELAY_MS_NI(10000, LPM0_bits, 1 < channel0.stage);
-  cprintf("We're back, did it happen? CTL %04x t0 %u t1 %u delta %u\n", chp->ctl, channel0.t0, channel0.t1, channel0.t1-channel0.t0);
+  cprintf("We're back, did it happen? CTL %04x t0 %lu t1 %lu\n", chp->ctl, channel0.t0, channel0.t1);
+  cprintf("dma console output took %lu = %lu us\n", channel0.t1-channel0.t0, BSP430_UPTIME_UTT_TO_US(channel0.t1-channel0.t0));
 }
