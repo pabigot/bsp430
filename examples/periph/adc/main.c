@@ -356,9 +356,16 @@ void displayVoltage (const sSample * sp)
 void main ()
 {
   int rc;
+  unsigned long next_wake_utt;
+  unsigned long delta_wake_utt;
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
+
+  cprintf("\n\nadc demo, " __DATE__ " " __TIME__ "\n");
+
+  delta_wake_utt = ulBSP430uptimeConversionFrequency_Hz_ni();
+
   rc = initializeADC();
   cprintf("%s initialized, returned %d, ADC cal at %p, REF cal at %p\n",
 #if defined(__MSP430_HAS_ADC10__)
@@ -385,7 +392,9 @@ void main ()
     cprintf("\t2.5V T30 %u T85 %u\n", cal_adc->cal_adc_25t30, cal_adc->cal_adc_25t85);
   }
 
+  next_wake_utt = ulBSP430uptime_ni();
   while (1) {
+    char timestamp[BSP430_UPTIME_AS_TEXT_LENGTH];
     int valid = 0;
     sSample t15;
     sSample t20;
@@ -418,7 +427,7 @@ void main ()
         valid |= VALID_V_2p5;
       }
     }
-    cprintf("%lu: valid %x", ulBSP430uptime_ni(), valid);
+    cprintf("%s: valid %x", xBSP430uptimeAsText(ulBSP430uptime_ni(), timestamp), valid);
     if (valid & (VALID_T_1p5 | VALID_V_1p5)) {
       cprintf("\n\t1.5V: ");
       if (valid & VALID_T_1p5) {
@@ -447,6 +456,9 @@ void main ()
       }
     }
     cputchar_ni('\n');
-    BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ);
+    next_wake_utt += delta_wake_utt;
+    while (0 < lBSP430uptimeSleepUntil_ni(next_wake_utt, LPM4_bits)) {
+      /* nop */
+    }
   }
 }
