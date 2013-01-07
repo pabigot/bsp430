@@ -606,7 +606,7 @@ void main ()
       flags &= ~eBSP430cliConsole_REPAINT;
     }
     if (flags & eBSP430cliConsole_REPAINT_BEL) {
-      cputchar_ni('\a');
+      cputchar('\a');
       flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
     BSP430_CORE_DISABLE_INTERRUPT();

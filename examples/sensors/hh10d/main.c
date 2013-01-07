@@ -178,6 +178,6 @@ void main ()
     if (0 != hh10d_sens) {
       cprintf(": RH %u ppt", (unsigned int)(((hh10d_offs - hh10d.last_period_count) * (10UL * hh10d_sens)) / 4096));
     }
-    cputchar_ni('\n');
+    cputchar('\n');
   }
 }

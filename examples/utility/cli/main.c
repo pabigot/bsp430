@@ -40,12 +40,12 @@ cmd_h234 (sBSP430cliCommandLink * chain,
           const char * argstr,
           size_t argstr_len)
 {
-  cputtext_ni("Display: ");
+  cputtext("Display: ");
   vBSP430cliConsoleDisplayChain(chain, argstr);
   if (0 == argstr_len) {
     cputs("\nWTH are we fighting for? Walk!");
   }
-  cputchar_ni('\n');
+  cputchar('\n');
   return 0;
 }
 
@@ -106,9 +106,9 @@ cmd_expand_ (sBSP430cliCommandLink * chain,
              const char * argstr,
              size_t argstr_len)
 {
-  cputtext_ni("Expanded: ");
+  cputtext("Expanded: ");
   vBSP430cliConsoleDisplayChain(chain, argstr);
-  cputchar_ni('\n');
+  cputchar('\n');
   return 0;
 }
 static int
@@ -213,7 +213,7 @@ cmd_quote (const char * argstr)
     const char * tp = xBSP430cliNextQToken(&argstr, &arglen, &len);
     cprintf("%u-char token <", len);
     while (len--) {
-      cputchar_ni(*tp++);
+      cputchar(*tp++);
     }
     cprintf(">\n");
   }
@@ -401,7 +401,7 @@ void main ()
       flags &= ~eBSP430cliConsole_REPAINT;
     }
     if (flags & eBSP430cliConsole_REPAINT_BEL) {
-      cputchar_ni('\a');
+      cputchar('\a');
       flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
     BSP430_CORE_DISABLE_INTERRUPT();

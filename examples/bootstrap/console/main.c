@@ -53,11 +53,6 @@ void main ()
   console = hBSP430console();
 #endif /* APP_VERBOSE */
 
-#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
-  /* If we're using interrupt-driven transmission or reception, we'd
-   * better enable interrupts. */
-  BSP430_CORE_ENABLE_INTERRUPT();
-#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);
@@ -76,7 +71,15 @@ void main ()
     while (1) {
       int rc;
       BSP430_CORE_WATCHDOG_CLEAR();
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
+      /* If we're using interrupt-driven transmission or reception, we'd
+       * better enable interrupts. */
+      BSP430_CORE_ENABLE_INTERRUPT();
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
       BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
+      BSP430_CORE_DISABLE_INTERRUPT();
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
       while (0 <= ((rc = cgetchar_ni()))) {
         cputtext_ni(" rx char ");
         cputu_ni(rc, 10);

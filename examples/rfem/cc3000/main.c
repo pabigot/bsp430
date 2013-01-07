@@ -336,7 +336,7 @@ cmd_wlan_status (const char * argstr)
   if ((0 <= rl) && (rl < (sizeof(status_str)/sizeof(*status_str)))) {
     cprintf(": %s", status_str[rl]);
   }
-  cputchar_ni('\n');
+  cputchar('\n');
   return 0;
 }
 static sBSP430cliCommand dcmd_wlan_status = {
@@ -771,7 +771,7 @@ void main (void)
       flags &= ~eBSP430cliConsole_REPAINT;
     }
     if (flags & eBSP430cliConsole_REPAINT_BEL) {
-      cputchar_ni('\a');
+      cputchar('\a');
       flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
     BSP430_CORE_DISABLE_INTERRUPT();
