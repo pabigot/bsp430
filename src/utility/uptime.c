@@ -81,6 +81,11 @@ delayCallback_ (hBSP430timerAlarm alarm)
 {
   struct sDelayAlarm * ap = (struct sDelayAlarm *)alarm;
   ap->flags |= DELAY_ALARM_FIRED;
+  /* lBSP430uptimeSleepUntil_ni() expects #GIE to be cleared when it
+   * wakes, which this handler will do.  If the system wakes due to
+   * other events, #GIE may not be cleared, which would be wrong, but
+   * that's why #configBSP430_CORE_LPM_EXIT_CLEAR_GIE is available and
+   * should be used. */
   return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
 }
 
@@ -251,7 +256,8 @@ lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
 
   /* NOTE: GIE may be set here if whatever woke the MCU did not clear
    * it.  That is probably an application error but is not something
-   * this routine should attempt to fix. */
+   * this routine should attempt to fix.  It could be worth an assert,
+   * though. */
 
   /* Cancel the alarm if it hasn't fired yet. */
   if (! (delayAlarm_.flags & DELAY_ALARM_FIRED)) {
