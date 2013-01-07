@@ -228,7 +228,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
 
   /* Restore SCG0 (if was clear on entry, clear it now) */
   if (! scg0) {
-    __bic_status_register(scg0);
+    __bic_status_register(SCG0);
   }
   return 0;
 }
