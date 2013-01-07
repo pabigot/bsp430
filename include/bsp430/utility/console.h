@@ -408,24 +408,6 @@ int vcprintf (const char * format, va_list ap);
  */
 int cputs (const char * s);
 
-/** Like puts(3) to the console UART without trailing newline and
- * with explicit length instead of a terminating NUL.
- *
- * As with #cprintf, interrupts are disabled for the duration of the
- * invocation.
- *
- * @note Any errors returned by the underlying UART implementation
- * while writing are ignored.
- *
- * @param cp first of a series of characters to be emitted to the
- * console
- *
- * @param len number of characters to emit
- *
- * @return the number of characters written
- */
-int cputchars (const char * cp, size_t len);
-
 /** Like putchar(3) to the console UART, with interrupts already disabled
  *
  * @param c character to be output
@@ -465,6 +447,20 @@ cputchar (int c)
  */
 int cputtext_ni (const char * s);
 
+/** Like puts(3) to the console UART without trailing newline
+ *
+ * As with #cprintf, interrupts are disabled for the duration of the
+ * invocation.
+ *
+ * @note Any errors returned by the underlying UART implementation
+ * while writing are ignored.
+ *
+ * @param s a NUL-terminated string to be emitted to the console
+ *
+ * @return the number of characters written
+ */
+int cputtext (const char * s);
+
 /** Like puts(3) to the console UART without trailing newline and
  * with explicit length instead of a terminating NUL.
  *
@@ -479,6 +475,24 @@ int cputtext_ni (const char * s);
  * @return the number of characters written
  */
 int cputchars_ni (const char * cp, size_t len);
+
+/** Like puts(3) to the console UART without trailing newline and
+ * with explicit length instead of a terminating NUL.
+ *
+ * As with #cprintf, interrupts are disabled for the duration of the
+ * invocation.
+ *
+ * @note Any errors returned by the underlying UART implementation
+ * while writing are ignored.
+ *
+ * @param cp first of a series of characters to be emitted to the
+ * console
+ *
+ * @param len number of characters to emit
+ *
+ * @return the number of characters written
+ */
+int cputchars (const char * cp, size_t len);
 
 /** Format an int using itoa and emit it to the console.
  *

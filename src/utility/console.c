@@ -278,6 +278,23 @@ cputs (const char * s)
 }
 
 int
+cputtext (const char * cp)
+{
+  int rv = 0;
+  hBSP430halSERIAL uart = console_hal_;
+  BSP430_CORE_INTERRUPT_STATE_T istate;
+
+  if (! uart) {
+    return 0;
+  }
+  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = emit_text_ni(cp, uart);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+int
 cputtext_ni (const char * s)
 {
   return emit_text_ni(s, console_hal_);

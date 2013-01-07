@@ -390,7 +390,7 @@ vBSP430cliConsoleDisplayChain (struct sBSP430cliCommandLink * chain,
     do {
       if (cp->cmd) {
         if (0 < nlinks++) {
-          cputchar_ni(' ');
+          cputchar(' ');
         }
         cprintf("%s", cp->cmd->key);
       }
@@ -412,22 +412,22 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
   const sBSP430cliCommand * cmds = chain->command_set;
   switch (errtype) {
     case eBSP430_CLI_ERR_Config:
-      cputtext_ni("Command configuration error: ");
+      cputtext("Command configuration error: ");
       break;
     case eBSP430_CLI_ERR_Missing:
-      cputtext_ni("Expected something after: ");
+      cputtext("Expected something after: ");
       if (chain->cmd) {
         cmds = chain->cmd->child;
       }
       break;
     case eBSP430_CLI_ERR_Unrecognized:
-      cputtext_ni("Unrecognized: ");
+      cputtext("Unrecognized: ");
       break;
     case eBSP430_CLI_ERR_MultiMatch:
-      cputtext_ni("Ambiguous command: ");
+      cputtext("Ambiguous command: ");
       break;
     case eBSP430_CLI_ERR_Invalid:
-      cputtext_ni("Invalid value: ");
+      cputtext("Invalid value: ");
       break;
     default:
       cprintf("ERROR %u at: ", errtype);
@@ -451,7 +451,7 @@ iBSP430cliConsoleDiagnostic (struct sBSP430cliCommandLink * chain,
     cbs.callback = display_cmd;
     (void)iBSP430cliMatchCommand(cmds, argstr, argstr_len, 0, &cbs, 0, 0);
   }
-  cputchar_ni('\n');
+  cputchar('\n');
   return -(int)errtype;
 }
 
@@ -876,7 +876,7 @@ iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
       if (ci < ccd.ncandidates) {
         cprintf(" (+ %u more)", ccd.ncandidates - ci);
       }
-      cputchar_ni('\n');
+      cputchar('\n');
       flags |= eBSP430cliConsole_REPAINT;
     }
   }
