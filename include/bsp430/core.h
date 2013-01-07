@@ -254,9 +254,9 @@
  * This macro may be defined to a true value to request that #SCG0 be
  * set after vBSP430platformInitialize_ni() configures the clocks,
  * preventing the FLL from changing the DCO configuration without
- * application intervention.  It may be referenced in other
- * situations, such as leaving low-power mode, to determine whether
- * the bit should remain set.
+ * application intervention.  It also enables steps to prevent #SCG0
+ * from being cleared in other situations, such as leaving low-power
+ * mode.
  *
  * The UCS peripheral has several errata which result in severe clock
  * instabilities when the FLL is allowed to run unmanaged.  These
@@ -267,17 +267,21 @@
  * Guidance</a>.  The UCS implementation of
  * #iBSP430ucsTrimDCOCLKDIV_ni() supports the UCS10 workaround.
  *
- * Stability in the presence of UCS7 and UCS10 may be further enhanced
- * by setting this option.  It is made generic in case there are other
- * cases where #SCG0 should left set throughout application execution.
+ * Because of the severe impact of UCS7 and UCS10, this flag is
+ * enabled by default on any platform that uses the UCS peripheral and
+ * is not known to have the erratum fixed.  It is made generic in case
+ * there are other cases where #SCG0 should left set throughout
+ * application execution.
  *
  * @note If the application manipulates the status register directly,
- * the effect of this option may not be preserved.
+ * the effect of this option may not be preserved.  See
+ * #BSP430_CORE_LPM_EXIT_MASK for a value that may assist with
+ * preserving the configuration.
  *
  * @cppflag
  * @defaulted  */
 #ifndef configBSP430_CORE_DISABLE_FLL
-#define configBSP430_CORE_DISABLE_FLL 0
+#define configBSP430_CORE_DISABLE_FLL (defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__))
 #endif /* configBSP430_CORE_DISABLE_FLL */
 
 /** Define to true to have BSP430 ISRs clear #GIE when exiting LPM.
