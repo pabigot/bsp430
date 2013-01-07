@@ -26,13 +26,38 @@
 uint8_t buffer[BUFFER_SIZE];
 uint8_t src8 = 1;
 uint16_t src16 = 1;
-const char message[] = "This is text that should be transmitted over the console\r\n";
+const char message[] =
+  "0000 Text should be transmitted over the console\r\n"
+  "0050 Text should be transmitted over the console\r\n"
+#if 9600 < BSP430_CONSOLE_BAUD_RATE
+  "0100 Text should be transmitted over the console\r\n"
+  "0150 Text should be transmitted over the console\r\n"
+#if 115200 < BSP430_CONSOLE_BAUD_RATE
+  "0200 Text should be transmitted over the console\r\n"
+  "0250 Text should be transmitted over the console\r\n"
+  "0300 Text should be transmitted over the console\r\n"
+  "0350 Text should be transmitted over the console\r\n"
+  "0400 Text should be transmitted over the console\r\n"
+  "0450 Text should be transmitted over the console\r\n"
+  "0500 Text should be transmitted over the console\r\n"
+  "0550 Text should be transmitted over the console\r\n"
+  "0600 Text should be transmitted over the console\r\n"
+  "0650 Text should be transmitted over the console\r\n"
+  "0700 Text should be transmitted over the console\r\n"
+  "0750 Text should be transmitted over the console\r\n"
+  "0800 Text should be transmitted over the console\r\n"
+  "0850 Text should be transmitted over the console\r\n"
+  "0900 Text should be transmitted over the console\r\n"
+  "0950 Text should be transmitted over the console\r\n"
+#endif /* 115200 */
+#endif /* 9600 */
+  ;
 
 struct sChannel {
   sBSP430halISRIndexedChainNode cb;
-  int stage;
-  unsigned long t0;
-  unsigned long t1;
+  volatile int stage;
+  volatile unsigned long t0;
+  volatile unsigned long t1;
 };
 
 static int
@@ -50,7 +75,7 @@ dma_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
     chp->ctl |= DMAEN;
   } else {
     statep->t1 = ulBSP430uptime_ni();
-    chp->ctl &= ~DMAEN;
+    chp->ctl &= ~(DMAEN | DMAIE);
     rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
   }
   ++statep->stage;
@@ -72,6 +97,7 @@ void main ()
   (void)iBSP430consoleInitialize();
   unsigned long lt0;
   unsigned long lt1;
+  unsigned long lc;
 
   /* Disable ISR-driven output for most of this application. */
   (void)iBSP430consoleTransmitUseInterrupts_ni(0);
@@ -170,6 +196,7 @@ void main ()
   cprintf("UART transmission is %u bytes, no less than about %lu ms at %lu baud\n",
           chp->sz, ((BSP430_CONSOLE_BAUD_RATE / 2) + chp->sz * 10000UL) / BSP430_CONSOLE_BAUD_RATE,
           (unsigned long)BSP430_CONSOLE_BAUD_RATE);
+  cprintf("Bytes-per-second is about %lu\n", (BSP430_CONSOLE_BAUD_RATE / 10UL));
 
   cprintf("Writing %u bytes through busy-waiting console interface:\n\t", chp->sz);
   lt0 = ulBSP430uptime_ni();
@@ -201,10 +228,28 @@ void main ()
 
   channel0.stage = 0;
   channel0.t0 = channel0.t1 = 0;
-  cprintf("Triggering DMA-driven TX: CTL %04x\n\t", chp->ctl);
+  cprintf("Triggering DMA-driven TX during LPM0: CTL %04x\n\t", chp->ctl);
   iBSP430consoleFlush();
+  lc = 0;
   chp->ctl |= DMAIE | DMAIFG;
   BSP430_UPTIME_DELAY_MS_NI(10000, LPM0_bits, 1 < channel0.stage);
   cprintf("We're back, did it happen? CTL %04x t0 %lu t1 %lu\n", chp->ctl, channel0.t0, channel0.t1);
   cprintf("dma console output took %lu = %lu us\n", channel0.t1-channel0.t0, BSP430_UPTIME_UTT_TO_US(channel0.t1-channel0.t0));
+  cprintf("Counter incremented to %lu\n", lc);
+
+  BSP430_HPL_DMA->ctl0 = CONSOLE_DMATSEL * DMA0TSEL0;
+  chp->ctl = DMADT_0 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
+  channel0.stage = 0;
+  channel0.t0 = channel0.t1 = 0;
+  lc = 0;
+  cprintf("Triggering DMA-driven TX while CPU active: CTL %04x\n\t", chp->ctl);
+  iBSP430consoleFlush();
+  chp->ctl |= DMAIE | DMAIFG;
+  BSP430_CORE_ENABLE_INTERRUPT();
+  do {
+    ++lc;
+  } while (1 >= channel0.stage);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  cprintf("Counter incremented to %lu while dma output took %lu = %lu us\n",
+          lc, channel0.t1-channel0.t0, BSP430_UPTIME_UTT_TO_US(channel0.t1-channel0.t0));
 }
