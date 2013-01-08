@@ -27,6 +27,14 @@
 #if (BSP430_PLATFORM_TRXEB - 0)
 #define CONSOLE_DMATSEL 21
 #define CONSOLE_DMADA &UCA1TXBUF
+/* I'd rather initiate DMAs using ACLK as a trigger, but TB0 CCI6B
+ * which is the only ACLK timer capture trigger is not available as a
+ * DMA trigger, so we're going to have to use TA1.0. */
+#define DMA_TIMER_PERIPH_HANDLE BSP430_PERIPH_TA1
+#define DMA_TIMER_CCIDX 0
+#define configBSP430_HAL_TA1 1
+#define configBSP430_HAL_TA1_CC0_ISR 1
+#define ONEMS_DMATSEL 3
 #elif (BSP430_PLATFORM_EXP430FG4618 - 0)
 #define CONSOLE_DMATSEL 4
 #define CONSOLE_DMADA &UCA0TXBUF

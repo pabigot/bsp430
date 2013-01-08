@@ -17,11 +17,16 @@
 #include <bsp430/utility/console.h>
 #include <bsp430/periph/dma.h>
 #include <bsp430/utility/led.h>
+#include <bsp430/periph/timer.h>
 #include <string.h>
 
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 2048
 #endif /* BUFFER_SIZE */
+
+#ifndef CAPTURE_LENGTH
+#define CAPTURE_LENGTH 32
+#endif /* CAPTURE_LENGTH */
 
 uint8_t buffer[BUFFER_SIZE];
 uint8_t src8 = 1;
@@ -53,9 +58,19 @@ const char message[] =
 #endif /* 9600 */
   ;
 
+unsigned int captures[CAPTURE_LENGTH];
+
+typedef enum eChannelStages {
+  CS_idle,
+  CS_needEnable,
+  CS_completed,
+  CS_countdown,
+} eChannelStages;
+
 struct sChannel {
   sBSP430halISRIndexedChainNode cb;
   volatile int stage;
+  volatile int counter;
   volatile unsigned long t0;
   volatile unsigned long t1;
 };
@@ -70,20 +85,28 @@ dma_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
   volatile sBSP430hplDMAchannel * chp = dma->hpl->ch + idx;
   int rv = 0;
 
-  if (0 == statep->stage) {
+  if (CS_needEnable == statep->stage) {
     statep->t0 = ulBSP430uptime_ni();
+    statep->stage = CS_completed;
     chp->ctl |= DMAEN;
+  } else if (CS_countdown == statep->stage) {
+    statep->counter -= 1;
+    if (0 >= statep->counter) {
+      chp->ctl &= ~(DMAEN | DMAIE);
+      statep->stage = CS_idle;
+      rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
+    }
   } else {
     statep->t1 = ulBSP430uptime_ni();
     chp->ctl &= ~(DMAEN | DMAIE);
+    statep->stage = CS_idle;
     rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
   }
-  ++statep->stage;
   return rv;
 }
 
 static struct sChannel channel0 = {
-  .cb = { .callback = dma_isr_ni },
+  .cb = { .callback = dma_isr_ni }
 };
 
 void main ()
@@ -119,8 +142,10 @@ void main ()
 
   /* Hook the DMA interrupt in, though we don't use it until the last
    * step. */
-  channel0.cb.next_ni = BSP430_HAL_DMA->ch_cbchain_ni[0];
-  BSP430_HAL_DMA->ch_cbchain_ni[0] = &channel0.cb;
+  BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
+                                  BSP430_HAL_DMA->ch_cbchain_ni[0],
+                                  channel0.cb,
+                                  next_ni);
 
 #if defined(DMARMWDIS)
   /* Good practice where this is available, avoids corrupted data */
@@ -226,20 +251,20 @@ void main ()
   chp->ctl = DMADT_0 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
   chp->da = (uintptr_t)CONSOLE_DMADA;
 
-  channel0.stage = 0;
+  channel0.stage = CS_needEnable;
   channel0.t0 = channel0.t1 = 0;
   cprintf("Triggering DMA-driven TX during LPM0: CTL %04x\n\t", chp->ctl);
   iBSP430consoleFlush();
   lc = 0;
   chp->ctl |= DMAIE | DMAIFG;
-  BSP430_UPTIME_DELAY_MS_NI(10000, LPM0_bits, 1 < channel0.stage);
+  BSP430_UPTIME_DELAY_MS_NI(10000, LPM0_bits, CS_idle == channel0.stage);
   cprintf("We're back, did it happen? CTL %04x t0 %lu t1 %lu\n", chp->ctl, channel0.t0, channel0.t1);
   cprintf("dma console output took %lu = %lu us\n", channel0.t1-channel0.t0, BSP430_UPTIME_UTT_TO_US(channel0.t1-channel0.t0));
   cprintf("Counter incremented to %lu\n", lc);
 
   BSP430_HPL_DMA->ctl0 = CONSOLE_DMATSEL * DMA0TSEL0;
   chp->ctl = DMADT_0 | DMASRCINCR_3 | DMADSTBYTE | DMASRCBYTE | DMALEVEL;
-  channel0.stage = 0;
+  channel0.stage = CS_needEnable;
   channel0.t0 = channel0.t1 = 0;
   lc = 0;
   cprintf("Triggering DMA-driven TX while CPU active: CTL %04x\n\t", chp->ctl);
@@ -248,8 +273,83 @@ void main ()
   BSP430_CORE_ENABLE_INTERRUPT();
   do {
     ++lc;
-  } while (1 >= channel0.stage);
+  } while (CS_idle != channel0.stage);
   BSP430_CORE_DISABLE_INTERRUPT();
   cprintf("Counter incremented to %lu while dma output took %lu = %lu us\n",
           lc, channel0.t1-channel0.t0, BSP430_UPTIME_UTT_TO_US(channel0.t1-channel0.t0));
+
+#if defined(DMA_TIMER_PERIPH_HANDLE)
+  do {
+    sBSP430halTIMER * const dmat_hal = hBSP430timerLookup(DMA_TIMER_PERIPH_HANDLE);
+    volatile sBSP430hplTIMER * dmat_hpl;
+    static unsigned int const ccidx = 0;
+    unsigned int * cp = captures;
+    unsigned int * const cpe = cp + sizeof(captures)/sizeof(*captures);
+    
+    if (! dmat_hal) {
+      cprintf("No DMA-trigger timer available\n");
+      break;
+    }
+
+    /* Source from SMCLK counting up to 1 ms. */
+    dmat_hpl = dmat_hal->hpl;
+    dmat_hpl->ctl = TASSEL_2 | TACLR;
+    dmat_hpl->ccr[ccidx] = ulBSP430clockSMCLK_Hz_ni() / 1000;
+    dmat_hpl->cctl[ccidx] = 0;
+    
+    cprintf("Capture at %u ticks of %lu Hz clock on %s.%u\n",
+            dmat_hpl->ccr[ccidx],
+            ulBSP430timerFrequency_Hz_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE),
+            xBSP430timerName(DMA_TIMER_PERIPH_HANDLE),
+            ccidx);
+
+    memset(captures, 0, sizeof(captures));
+    dmat_hpl->ctl |= MC_1 | TACLR;
+    while (cp < cpe) {
+      while (! (CCIFG & dmat_hpl->cctl[ccidx])) {
+        /* nop */
+      }
+      *cp++ = hBSP430uptimeTimer()->hpl->r;
+      dmat_hpl->cctl[ccidx] &= ~CCIFG;
+    }
+    dmat_hpl->ctl &= ~(MC0 | MC1);
+    cprintf("Manual capture %u entries; deltas:\n", cpe - captures);
+    cp = captures;
+    while (++cp < cpe) {
+      cprintf(" %7u", cp[0] - cp[-1]);
+    }
+    cputchar('\n');
+
+    memset(captures, 0, sizeof(captures));
+
+    /* Repeated word transfer from uptime clock to captures array
+     * triggered at 1ms intervals. */
+    BSP430_HPL_DMA->ctl0 = ONEMS_DMATSEL * DMA0TSEL0;
+    chp->ctl = DMADT_0 | DMADSTINCR_3 | DMASRCINCR_0;
+    chp->da = (uintptr_t)captures;
+    chp->sa = (uintptr_t)&hBSP430uptimeTimer()->hpl->r;
+    chp->sz = (cpe - captures);
+
+    /* Enable interrupt in countdown mode */
+    channel0.stage = CS_completed;
+    chp->ctl |= DMAEN | DMAIE;
+
+    cprintf("DMA capture %u on timer\n", channel0.counter);
+    
+    lt0 = ulBSP430uptime_ni();
+    dmat_hpl->cctl[ccidx] &= ~CCIFG;
+    dmat_hpl->ctl |= MC_1 | TACLR;
+    BSP430_UPTIME_DELAY_MS_NI(5000, LPM0_bits, CS_idle == channel0.stage);
+    dmat_hpl->ctl &= ~(MC0 | MC1);
+    lt1 = ulBSP430uptime_ni();
+    
+    cprintf("DMA capture %u entries counter %d in %lu ms; deltas:\n", channel0.counter, cpe - captures, BSP430_UPTIME_UTT_TO_MS(lt1 - lt0));
+    cp = captures;
+    while (++cp < cpe) {
+      cprintf(" %7u", cp[0] - cp[-1]);
+    }
+    cputchar('\n');
+    
+  } while (0);
+#endif /* DMA_TIMER_PERIPH_HANDLE */
 }
