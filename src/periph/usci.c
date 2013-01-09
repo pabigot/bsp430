@@ -207,7 +207,7 @@ hBSP430usciOpenSPI (hBSP430halSERIAL hal,
     return NULL;
   }
   /* Reject invalid mode */
-  if (UCMODE_3 == (ctl1_byte & (UCMODE0 | UCMODE1))) {
+  if (UCMODE_3 == (ctl0_byte & (UCMODE0 | UCMODE1))) {
     return NULL;
   }
   /* Reject invalid prescaler */
