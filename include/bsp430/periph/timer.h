@@ -2615,12 +2615,84 @@ vBSP430timerSafeCounterInitialize_ni (tBSP430periphHandle periph)
 #endif
 }
 
+/** Inline function to read the counter of a timer synchronous to MCLK.
+ *
+ * This simply reads and returns the counter register of the
+ * underlying peripheral.
+ *
+ * This call takes about 3 clock cycles on a CPUX MCU.
+ *
+ * @warning If the clock source for the timer is asynchronous to the
+ * CPU clock there is a chance that the counter value read will be
+ * corrupt.  Consider using uiBSP430timerAsyncCounterRead_ni() in that
+ * situation.
+ *
+ * @param hpl Reference to the underlying timer.
+ *
+ * @return the instantaneous counter value.
+ */
+static unsigned int
+BSP430_CORE_INLINE_FORCED
+uiBSP430timerSyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
+{
+  return hpl->r;
+}
+
+/** Inline function to read the counter of a timer not synchronous to MCLK.
+ *
+ * This uses a pre-configured dedicated capture/compare register
+ * (#BSP430_TIMER_SAFE_COUNTER_READ_CCIDX) to get the value of the
+ * timer counter reliably when the timer source is not synchronous to
+ * the CPU clock.
+ *
+ * It has slightly higher overhead than
+ * uiBSP430timerSyncCounterRead_ni(), but is not subject to returning
+ * an invalid counter value.  It also requires that a capture/compare
+ * register be initialized using
+ * iBSP430timerSafeCounterInitialize_ni() and dedicated to this
+ * purpose on all timers on which this function may be invoked.
+ *
+ * This call takes about 8 clock cycles on a CPUX MCU.
+ *
+ * @warning This version of the function does not validate the
+ * capture/compare configuration.  Use
+ * uiBSP430timerSafeCounterRead_ni() in situations where somebody
+ * might have failed to meet this function's requirements.
+ *
+ * @param hpl Reference to the underlying timer.
+ *
+ * @return the instantaneous counter value.
+ *
+ * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
+ */
+#if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
+static unsigned int
+BSP430_CORE_INLINE_FORCED
+uiBSP430timerAsyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
+{
+  /* Latch the current counter into a capture register and return it. */
+  hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] ^= CCIS0;
+  return hpl->ccr[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX];
+}
+#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+
 /** Inline function to read the timer counter.
  *
- * @note This function is 13 cycles faster (8 instead of 21 cycles) if
- * #BSP430_CORE_NDEBUG is defined to a true value and the checks that
- * the counter value is correctly read are eliminated.  But it'd be
- * really hard to figure out what was going wrong in that case.
+ * This call takes about 21 clock cycles on a CPUX MCU.
+ *
+ * When #configBSP430_TIMER_SAFE_COUNTER_READ is disabled this
+ * function is equivalent to uiBSP430timerSyncCounterRead_ni().
+ *
+ * When #configBSP430_TIMER_SAFE_COUNTER_READ is enabled in absence of
+ * #BSP430_CORE_NDEBUG this function validates that the
+ * capture/compare register is properly configured to read the
+ * counter.  When that requirement is not met, the CPU will spin in
+ * place allowing the developer to see what has gone wrong, instead of
+ * continuing to process invalid counter values.
+ *
+ * When #configBSP430_TIMER_SAFE_COUNTER_READ and #BSP430_CORE_NDEBUG
+ * are both enabled this function is equivalent to
+ * uiBSP430timerAsyncCounterRead_ni().
  *
  * @dependency #configBSP430_TIMER_SAFE_COUNTER_READ
  */
@@ -2628,22 +2700,27 @@ static unsigned int
 BSP430_CORE_INLINE_FORCED
 uiBSP430timerSafeCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
 {
+  unsigned int rv;
 #if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
 #if ! (BSP430_CORE_NDEBUG - 0)
+  /* Clear the flag; used only to prevent the following sanity check
+   * from falsely failing. */
   hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] &= ~CCIFG;
 #endif /* BSP430_CORE_NDEBUG */
-  /* Latch the current counter into a capture register and return it. */
-  hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] ^= CCIS0;
+  rv = uiBSP430timerAsyncCounterRead_ni(hpl);
 #if ! (BSP430_CORE_NDEBUG - 0)
+  /* If the capture/compare register is not configured properly to
+   * have done a capture, spin in place so this problem can be
+   * detected during development. */
   while ((CCIS1 | CCIFG) != (hpl->cctl[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX] & (CCIS1 | CCIFG))) {
     /* Spin to detect misconfiguration */
   }
 #endif /* NDEBUG */
-  return hpl->ccr[BSP430_TIMER_SAFE_COUNTER_READ_CCIDX];
 #else /* configBSP430_TIMER_SAFE_COUNTER_READ */
   /* Return the current counter without bothering to validate it */
-  return hpl->r;
+  rv = uiBSP430timerSyncCounterRead_ni(hpl);
 #endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+  return rv;
 }
 
 #endif /* BSP430_MODULE_TIMER */

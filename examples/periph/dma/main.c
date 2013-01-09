@@ -133,10 +133,15 @@ void main ()
     cprintf("High-resolution timer not available\n");
     return;
   }
+#if 0
+  /* Initializing for safe counter is only necessary when using
+   * uiBSP430timerAsyncCounterRead_ni() or
+   * uiBSP430timerSafeCounterRead_ni() */
   vBSP430timerSafeCounterInitialize_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+#endif
   hrt->ctl = TASSEL_2 | MC_2 | TACLR;
-  t0 = uiBSP430timerSafeCounterRead_ni(hrt);
-  t1 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t0 = uiBSP430timerSyncCounterRead_ni(hrt);
+  t1 = uiBSP430timerSyncCounterRead_ni(hrt);
   timing_overhead = t1 - t0;
   cprintf("Timing with SMCLK at %lu Hz, nominal timing overhead %u ticks\n", ulBSP430timerFrequency_Hz_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE), timing_overhead);
 
@@ -164,9 +169,9 @@ void main ()
   cprintf("Initial %u .. %u\n", buffer[0], buffer[sizeof(buffer)-1]);
 
   /* Time zeroing an array using memset */
-  t0 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t0 = uiBSP430timerSyncCounterRead_ni(hrt);
   memset(buffer, src8, sizeof(buffer));
-  t1 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t1 = uiBSP430timerSyncCounterRead_ni(hrt);
   cprintf("memset %u bytes took %u: %u .. %u\n", sizeof(buffer),
           t1 - t0, buffer[0], buffer[sizeof(buffer)-1]);
 
@@ -178,9 +183,9 @@ void main ()
   cprintf("DMA0: CTL %04x ; SA %04x ; DA %04x ; SZ %04x\n",
           chp->ctl, (unsigned int)chp->sa, (unsigned int)chp->da, chp->sz);
   ++src8;
-  t0 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t0 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl |= DMAREQ;
-  t1 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t1 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl &= ~DMAEN;
   cprintf("DMA init %u bytes from %u took %u: %u .. %u\n", sizeof(buffer), src8,
           t1 - t0, buffer[0], buffer[sizeof(buffer)-1]);
@@ -194,9 +199,9 @@ void main ()
 
   cprintf("DMA0: CTL %04x ; SA %04x ; DA %04x ; SZ %04x\n",
           chp->ctl, (unsigned int)chp->sa, (unsigned int)chp->da, chp->sz);
-  t0 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t0 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl |= DMAREQ;
-  t1 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t1 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl &= ~DMAEN;
 
   cprintf("DMA init %u words from %04x took %u: %u .. %u\n", sizeof(buffer), src16,
@@ -211,9 +216,9 @@ void main ()
   cprintf("DMA0: CTL %04x ; SA %04x ; DA %04x ; SZ %04x\n",
           chp->ctl, (unsigned int)chp->sa, (unsigned int)chp->da, chp->sz);
 
-  t0 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t0 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl |= DMAREQ;
-  t1 = uiBSP430timerSafeCounterRead_ni(hrt);
+  t1 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl &= ~DMAEN;
   buffer[chp->sz] = 0;
   cprintf("Buffer copy done in %u, result:\n\t%s\n", t1 - t0, buffer);
