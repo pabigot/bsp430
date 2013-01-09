@@ -96,10 +96,10 @@ void main ()
 
 
   /* Configure the SPI interface, but immediately put it into hold
-   * mode so we can check CHIP_RDYn on the MISO/GDO1 input */
+   * mode so we can check CHIP_RDYn on the MISO/GDO1 input. */
   spi = hBSP430serialOpenSPI(spi,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPH | UCMSB | UCMST),
-                             UCSSEL_2, 1);
+                             0, 0);
   if (spi) {
     rc = iBSP430serialSetHold_ni(spi, 1);
     /* GDO1 to input, pull-up */

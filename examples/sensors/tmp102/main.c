@@ -26,7 +26,7 @@ void main ()
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   i2c = hBSP430serialOpenI2C(i2c,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),
-                             UCSSEL_2, APP_TMP102_I2C_PRESCALER);
+                             0, 0);
   if (! i2c) {
     cprintf("I2C open failed.\n");
     return;

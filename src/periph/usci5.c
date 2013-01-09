@@ -141,7 +141,6 @@ usci5Configure (hBSP430halSERIAL hal,
   return hal;
 }
 
-
 hBSP430halSERIAL
 hBSP430usci5OpenUART (hBSP430halSERIAL hal,
                       unsigned char ctl0_byte,
@@ -197,9 +196,13 @@ hBSP430usci5OpenSPI (hBSP430halSERIAL hal,
   if (UCMODE_3 == (ctl0_byte & (UCMODE0 | UCMODE1))) {
     return NULL;
   }
-  /* Reject invalid prescaler */
+  /* Calculate default prescaler */
   if (0 == prescaler) {
-    return NULL;
+    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_SPI_BUS_SPEED_HZ - 1) / BSP430_SERIAL_SPI_BUS_SPEED_HZ;
+    if (0 == prescaler) {
+      prescaler = 1;
+    }
+    ctl1_byte |= UCSSEL1;
   }
 
   /* SPI is synchronous */
@@ -218,9 +221,13 @@ hBSP430usci5OpenI2C (hBSP430halSERIAL hal,
   if (NULL == hal) {
     return NULL;
   }
-  /* Reject invalid prescaler */
+  /* Calculate default prescaler */
   if (0 == prescaler) {
-    return NULL;
+    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_I2C_BUS_SPEED_HZ - 1) / BSP430_SERIAL_I2C_BUS_SPEED_HZ;
+    if (0 == prescaler) {
+      prescaler = 1;
+    }
+    ctl1_byte |= UCSSEL1;
   }
 
   /* I2C is synchronous mode 3 */

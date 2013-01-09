@@ -25,8 +25,6 @@
 #define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
 #define configBSP430_HAL_USCI_B0 1
 #endif
-/* Use SMCLK/100 (=80 kHz) for the I2C speed */
-#define APP_TMP102_I2C_PRESCALER 100
 /* Address for the thing.  0x48 when ADD0 is shorted to GND. */
 #define APP_TMP102_I2C_ADDRESS 0x48
 

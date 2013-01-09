@@ -251,7 +251,7 @@ void main ()
   /* Now configure for SPI. */
   spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_PLATFORM_TRXEB_FLASH_SPI_PERIPH_HANDLE),
                               BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST),
-                              UCSSEL_2, 100);
+                              UCSSEL_2, 1);
 
   BSP430_CORE_ENABLE_INTERRUPT();
 

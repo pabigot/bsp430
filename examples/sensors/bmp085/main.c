@@ -112,7 +112,7 @@ void main ()
 
   cprintf("BMP085 I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n",
           xBSP430serialName(APP_BMP085_I2C_PERIPH_HANDLE) ?: "UNKNOWN",
-          i2c, ulBSP430clockSMCLK_Hz_ni() / APP_BMP085_I2C_PRESCALER,
+          i2c, (unsigned long)BSP430_SERIAL_I2C_BUS_SPEED_HZ,
           APP_BMP085_I2C_ADDRESS);
 #if BSP430_PLATFORM_PERIPHERAL_HELP
   cprintf("BMP085 I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_BMP085_I2C_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_I2C));
@@ -124,7 +124,7 @@ void main ()
 
   i2c = hBSP430serialOpenI2C(i2c,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),
-                             UCSSEL_2, APP_BMP085_I2C_PRESCALER);
+                             0, 0);
   if (! i2c) {
     cprintf("I2C open failed.\n");
     return;

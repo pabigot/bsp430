@@ -210,9 +210,13 @@ hBSP430usciOpenSPI (hBSP430halSERIAL hal,
   if (UCMODE_3 == (ctl0_byte & (UCMODE0 | UCMODE1))) {
     return NULL;
   }
-  /* Reject invalid prescaler */
+  /* Calculate default prescaler */
   if (0 == prescaler) {
-    return NULL;
+    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_SPI_BUS_SPEED_HZ - 1) / BSP430_SERIAL_SPI_BUS_SPEED_HZ;
+    if (0 == prescaler) {
+      prescaler = 1;
+    }
+    ctl1_byte |= UCSSEL1;
   }
 
   /* SPI is synchronous */
@@ -233,9 +237,13 @@ hBSP430usciOpenI2C (hBSP430halSERIAL hal,
       || HAL_HPL_IS_USCI_A(hal)) {
     return NULL;
   }
-  /* Reject invalid prescaler */
+  /* Calculate default prescaler */
   if (0 == prescaler) {
-    return NULL;
+    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_I2C_BUS_SPEED_HZ - 1) / BSP430_SERIAL_I2C_BUS_SPEED_HZ;
+    if (0 == prescaler) {
+      prescaler = 1;
+    }
+    ctl1_byte |= UCSSEL1;
   }
 
   /* I2C is synchronous mode 3 */

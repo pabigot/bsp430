@@ -31,9 +31,6 @@
 #define APP_HIH6130_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0
 #define configBSP430_HAL_USCI_B0 1
 #endif
-/* HIH6130 wants I2C bus between 100kHz and 400 kHz.  Use SMCLK/30
- * (=267 kHz). */
-#define APP_HIH6130_I2C_PRESCALER 30
 /* Address for the thing. */
 #define APP_HIH6130_I2C_ADDRESS 0x27
 

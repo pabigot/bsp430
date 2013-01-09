@@ -129,6 +129,22 @@
 #define configBSP430_SERIAL_ENABLE_SPI 0
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
 
+/** Default speed for SPI bus transactions when application does not
+ * specify divisor.
+ *
+ * This is referenced by hBSP430serialOpenSPI() when the @p prescaler
+ * parameter is zero.
+ *
+ * SPI flash can often work at 20MHz; the ChipCon radios are good to
+ * 6MHz generally.  The default will be 4MHz although there are chips
+ * that will not operate at that speed (e.g., the CMA3000
+ * accelerometer).
+ *
+ * @defaulted */
+#ifndef BSP430_SERIAL_SPI_BUS_SPEED_HZ
+#define BSP430_SERIAL_SPI_BUS_SPEED_HZ 4000000UL
+#endif /* BSP430_SERIAL_SPI_BUS_SPEED_HZ */
+
 /** @def configBSP430_SERIAL_ENABLE_I2C
  *
  * Define to a true value to allow the general serial layer to
@@ -145,6 +161,24 @@
 #ifndef configBSP430_SERIAL_ENABLE_I2C
 #define configBSP430_SERIAL_ENABLE_I2C 0
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
+
+/** Default speed for I2C bus transactions when application does not
+ * specify divisor.
+ *
+ * This is referenced by hBSP430serialOpenI2C() when the @p prescaler
+ * parameter is zero.
+ *
+ * As most I2C devices accept the V1.0 specification maximum, the
+ * default value should be 400kHz.
+ *
+ * @warning The maximum speed is specified in the MCU data sheet;
+ * e.g. the MSP430F5438A will go up to 400 kHz.  Higher speeds may
+ * result in anomalous clocks and unreliable behavior.
+ *
+ * @defaulted */
+#ifndef BSP430_SERIAL_I2C_BUS_SPEED_HZ
+#define BSP430_SERIAL_I2C_BUS_SPEED_HZ 400000UL
+#endif /* BSP430_SERIAL_SPI_BUS_SPEED_HZ */
 
 /** @def BSP430_SERIAL
  *
@@ -167,7 +201,7 @@
  *
  * When the underlying implementation is an EUSCI device (as on FR5xx
  * chips), the header defines used to construct the value @p ctl0_byte
- * are specified for a 16-bit access.  The ctl0 byte in the upper byte
+ * are specified for a 16-bit access.  The ctl0 byte is the upper byte
  * of the ctlw0 word that comprises @a ctl0 and @a ctl1 on these MCUs.
  * On those devices you must use the @c _H suffix to select the
  * high-byte version of these constants or divide your configured
@@ -351,11 +385,16 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * ctl1 byte.  For SPI mode, potential values specified in the
  * <msp430.h> header are only configuration of the clock: #UCSSEL_0,
  * #UCSSEL_1, #UCSSEL_2, #UCSSEL_3.  The #UCSWRST field is controlled
- * by the function.
+ * by the function.  If @p prescaler is zero, the clock configuration
+ * in this will be overridden to select SMCLK.
  *
  * @param prescaler The value by which the clock selected in @p
  * ctl1_byte is divided to produce the SPI clock.  A value of zero
- * will result in this function returning an error.
+ * will select the minimum of 1 and
+ * ceil(ulBSP430clockSMCLK_Hz()/#BSP430_SERIAL_SPI_BUS_SPEED_HZ), resulting
+ * in the highest speed that does not exceed
+ * #BSP430_SERIAL_SPI_BUS_SPEED_HZ.  Use of this feature will override
+ * the clock selection in @p ctl1_byte.
  *
  * @return A peripheral-specific HAL handle if the allocation and
  * configuration is successful, and a null handle if something went
@@ -443,11 +482,17 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  * ctl1 byte.  For I2C mode, potential values specified in the
  * <msp430.h> header are configuration of the clock (#UCSSEL_0,
  * #UCSSEL_1, #UCSSEL_2, or #UCSSEL_3) and perhaps #UCTR.  The
- * #UCSWRST field is controlled by the function.
+ * #UCSWRST field is controlled by the function.  If @p prescaler is
+ * zero, the clock configuration in this will be overridden to select
+ * SMCLK.
  *
  * @param prescaler The value by which the clock selected in @p
  * ctl1_byte is divided to produce the I2C clock.  A value of zero
- * will result in this function returning an error.
+ * will select the minimum of 1 and
+ * ceil(ulBSP430clockSMCLK_Hz()/#BSP430_SERIAL_I2C_BUS_SPEED_HZ),
+ * resulting in the highest speed that does not exceed
+ * #BSP430_SERIAL_I2C_BUS_SPEED_HZ.  Use of this feature will override
+ * the clock selection in @p ctl1_byte.
  *
  * @return A peripheral-specific HAL handle if the allocation and
  * configuration is successful, and a null handle if something went

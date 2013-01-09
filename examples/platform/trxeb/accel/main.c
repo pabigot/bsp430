@@ -251,13 +251,14 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-  divisor = ulBSP430clockSMCLK_Hz_ni() / 300000U;
+  /* CMA3000 SPI maximum rate is 500 kHz. */
+  divisor = (ulBSP430clockSMCLK_Hz_ni() + 499999UL) / 500000UL;
   if (0 == divisor) {
     divisor = 1;
   }
   spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE),
                               BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMSB | UCMST),
-                              UCSSEL_2, divisor);
+                              0, 0); // UCSSEL_2, divisor);
   cprintf("SPI at %p is %s divisor %u\n", spi_, xBSP430serialName(BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE), divisor);
 
   /* Deassert chip select for accelerometer */

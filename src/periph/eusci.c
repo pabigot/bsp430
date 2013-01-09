@@ -218,9 +218,13 @@ hBSP430eusciOpenSPI (hBSP430halSERIAL hal,
     return NULL;
   }
 
-  /* Reject invalid prescaler */
+  /* Calculate default prescaler */
   if (0 == prescaler) {
-    return NULL;
+    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_SPI_BUS_SPEED_HZ - 1) / BSP430_SERIAL_SPI_BUS_SPEED_HZ;
+    if (0 == prescaler) {
+      prescaler = 1;
+    }
+    ctlw0 |= UCSSEL1;
   }
 
   /* SPI is synchronous */
@@ -261,14 +265,19 @@ hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
       || (! BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(hal))) {
     return NULL;
   }
-  /* Reject invalid prescaler */
-  if (0 == prescaler) {
-    return NULL;
-  }
 
   /* I2C is synchronous mode 3 */
   ctlw0 = (ctl0_byte << 8) | ctl1_byte;
   ctlw0 |= UCMODE_3 | UCSYNC;
+
+  /* Calculate default prescaler */
+  if (0 == prescaler) {
+    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_I2C_BUS_SPEED_HZ - 1) / BSP430_SERIAL_I2C_BUS_SPEED_HZ;
+    if (0 == prescaler) {
+      prescaler = 1;
+    }
+    ctlw0 |= UCSSEL1;
+  }
 
   /* Using UCASTP_2 is recommended for single-byte writes, but since
    * it can't be reconfigured without putting the device in reset,
