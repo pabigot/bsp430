@@ -135,7 +135,7 @@ void vBSP430unittestInitialize (void);
 /** Display a unit test result.
  *
  * @consoleoutput
- * 
+ *
  * @param line the line number on which the test occurred.
  *
  * @param passp a non-zero value if the test passed; a zero value
@@ -160,7 +160,7 @@ void vBSP430unittestResult_ (int line,
  *
  * If at least one test failed, #BSP430_UNITTEST_LED_FAILED flashes at
  * 1Hz and this function does not return.
- * 
+ *
  * @consoleoutput */
 void vBSP430unittestFinalize (void);
 

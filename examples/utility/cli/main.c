@@ -433,7 +433,7 @@ void main ()
         }
         /* Repeat if still nothing to do */
       } while (! flags);
-      
+
       /* Got something to do; get the command contents in place so
        * we can update the screen. */
       command = xBSP430cliConsoleBuffer_ni();

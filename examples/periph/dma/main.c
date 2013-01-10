@@ -290,7 +290,7 @@ void main ()
     static unsigned int const ccidx = 0;
     unsigned int * cp = captures;
     unsigned int * const cpe = cp + sizeof(captures)/sizeof(*captures);
-    
+
     if (! dmat_hal) {
       cprintf("No DMA-trigger timer available\n");
       break;
@@ -301,7 +301,7 @@ void main ()
     dmat_hpl->ctl = TASSEL_2 | TACLR;
     dmat_hpl->ccr[ccidx] = ulBSP430clockSMCLK_Hz_ni() / 1000;
     dmat_hpl->cctl[ccidx] = 0;
-    
+
     cprintf("Capture at %u ticks of %lu Hz clock on %s.%u\n",
             dmat_hpl->ccr[ccidx],
             ulBSP430timerFrequency_Hz_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE),
@@ -340,21 +340,21 @@ void main ()
     chp->ctl |= DMAEN | DMAIE;
 
     cprintf("DMA capture %u on timer\n", channel0.counter);
-    
+
     lt0 = ulBSP430uptime_ni();
     dmat_hpl->cctl[ccidx] &= ~CCIFG;
     dmat_hpl->ctl |= MC_1 | TACLR;
     BSP430_UPTIME_DELAY_MS_NI(5000, LPM0_bits, CS_idle == channel0.stage);
     dmat_hpl->ctl &= ~(MC0 | MC1);
     lt1 = ulBSP430uptime_ni();
-    
+
     cprintf("DMA capture %u entries counter %d in %lu ms; deltas:\n", channel0.counter, cpe - captures, BSP430_UPTIME_UTT_TO_MS(lt1 - lt0));
     cp = captures;
     while (++cp < cpe) {
       cprintf(" %7u", cp[0] - cp[-1]);
     }
     cputchar('\n');
-    
+
   } while (0);
 #endif /* DMA_TIMER_PERIPH_HANDLE */
 }

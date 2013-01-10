@@ -399,7 +399,7 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * and #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX, platform initialization
  * will hang attempting to configure the delay alarm.
  *
- * @defaulted 
+ * @defaulted
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
 #ifndef BSP430_UPTIME_DELAY_CCIDX

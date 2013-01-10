@@ -189,7 +189,7 @@ void main ()
   (void)iBSP430consoleInitialize();
 
   cprintf("\napplpm " __DATE__ " " __TIME__ "\n");
-  
+
 #if BSP430_MODULE_SYS - 0
   cprintf("System reset bitmask %lx; causes:\n", reset_causes);
   {

@@ -91,7 +91,7 @@
  * An alternative if you must do output in your event check loop is to
  * use iBSP430consoleTransmitUseInterrupts_ni() to disable and
  * re-enable interrupt-driven transmission:
- * 
+ *
  @code
    vBSP430consoleFlush();
    BSP430_CORE_DISABLE_INTERRUPT();
@@ -334,7 +334,7 @@ typedef int (* iBSP430consoleRxCallback_ni) (void);
  * the receive buffer.  The return value of the callback influences
  * how the console RX interrupt handler manages LPM wakeup and other
  * behavior; see @ref callback_retval.
- * 
+ *
  * If no callback is registered, the infrastructure will act as though
  * a registered callback did nothing but return
  * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.

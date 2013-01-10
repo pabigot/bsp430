@@ -66,7 +66,7 @@ void main ()
   (void)iBSP430consoleInitialize();
 
   cprintf("\nbutton " __DATE__ " " __TIME__ "\n");
-  
+
   cprintf("There's supposed to be a button at %s.%u\n",
           xBSP430portName(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE),
           b0pin);

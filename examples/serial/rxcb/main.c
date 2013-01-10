@@ -33,7 +33,7 @@ void main ()
     char timestamp[BSP430_UPTIME_AS_TEXT_LENGTH];
     int c;
     unsigned int events;
-    
+
     BSP430_CORE_DISABLE_INTERRUPT();
     events = events_ni;
     events_ni = 0;

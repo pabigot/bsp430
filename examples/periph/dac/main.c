@@ -5,7 +5,7 @@
  * one experimenter board.
  *
  * DAC12_0 output on P6.6 (H8.7) of FG4618.
- * 
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */
@@ -65,7 +65,7 @@ void main ()
   while (1) {
     unsigned long now_utt = ulBSP430uptime_ni();
     unsigned int out_mV = ((divisor / 2) + out_dac * (unsigned long)ref_mV) / divisor;
-    
+
     DAC12_0DAT = out_dac;
     cprintf("%s: out %u/%u = %u mV\n", xBSP430uptimeAsText_ni(now_utt),
             out_dac, divisor, out_mV);
