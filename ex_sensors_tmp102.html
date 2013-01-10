@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -107,7 +107,7 @@ main.c</h1>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>  i2c = <a class="code" href="serial_8h.html#a85fb70e450164721994aad656c24d6a0">hBSP430serialOpenI2C</a>(i2c,</div>
 <div class="line">                             <a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>),</div>
-<div class="line">                             <a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, APP_TMP102_I2C_PRESCALER);</div>
+<div class="line">                             0, 0);</div>
 <div class="line">  <span class="keywordflow">if</span> (! i2c) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C open failed.\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span>;</div>
@@ -115,29 +115,44 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">  (void)<a class="code" href="serial_8h.html#aaab8aec24c9fcd6a79789fe4085ee621">iBSP430i2cSetAddresses_ni</a>(i2c, -1, APP_TMP102_I2C_ADDRESS);</div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor">#define BSP430_TMP_xCel_TO_ddegF(xcel_) (320 + ((9 * (xcel_ &gt;&gt; 1)) / (4 &gt;&gt; (1 &amp; (xcel_)))))</span></div>
+<div class="line"><span class="preprocessor">#define TMP102_RAW_TO_dC_(raw_) (5 * ((raw_) &gt;&gt; 3) / 16)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define TMP102_RAW_TO_dC(raw_) ((0 &lt;= (int)(raw_)) ? TMP102_RAW_TO_dC_(raw_) : -TMP102_RAW_TO_dC_(-(int)(raw_)))</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define dC_TO_dF(dC_) (320 + 9 * (dC_) / 5)</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#if 0</span></div>
+<div class="line"><span class="preprocessor"></span>  {</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> data[] = { 0x7FF0, 0x4B00, 0x1900, 0xFFC0, 0xE700, 0xC908 };</div>
+<div class="line">    <span class="keywordtype">int</span> i;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0; i &lt; <span class="keyword">sizeof</span>(data)/<span class="keyword">sizeof</span>(*data); ++i) {</div>
+<div class="line">      <span class="keywordtype">int</span> temp_dC = TMP102_RAW_TO_dC(data[i]);</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;temp 0x%04x = %d dC = %d d[degF]\n&quot;</span>, data[i], temp_dC, dC_TO_dF(temp_dC));</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line">    <span class="keywordtype">int</span> rc;</div>
 <div class="line">    uint8_t data[2];</div>
-<div class="line">    uint16_t temp_xCel;</div>
+<div class="line">    uint16_t raw;</div>
 <div class="line"></div>
 <div class="line">    rc = <a class="code" href="serial_8h.html#acb6e6c371692d359a7f36a7df5418a22">iBSP430i2cTxData_ni</a>(i2c, &amp;pr, 1);</div>
 <div class="line">    <span class="keywordflow">if</span> (0 &gt; rc) {</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C TX ERROR\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">continue</span>;</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
 <div class="line">    memset(data, 0, <span class="keyword">sizeof</span>(data));</div>
 <div class="line">    rc = <a class="code" href="serial_8h.html#ae92b187fd34006fd855f425980b3904d">iBSP430i2cRxData_ni</a>(i2c, data, <span class="keyword">sizeof</span>(data));</div>
 <div class="line">    <span class="keywordflow">if</span> (0 &gt; rc) {</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C RX ERROR\n&quot;</span>);</div>
-<div class="line">      <span class="keywordflow">continue</span>;</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
-<div class="line">    temp_xCel = data[1] | (data[0] &lt;&lt; 8);</div>
+<div class="line">    raw = data[1] | (data[0] &lt;&lt; 8);</div>
 <div class="line">    <span class="keywordflow">if</span> (0 == pr) {</div>
-<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;temp 0x%04x = %d d[degF]\n&quot;</span>, temp_xCel, BSP430_TMP_xCel_TO_ddegF(temp_xCel));</div>
+<div class="line">      <span class="keywordtype">int</span> temp_dC = TMP102_RAW_TO_dC(raw);</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;temp 0x%04x = %d dC = %d d[degF]\n&quot;</span>, raw, temp_dC, dC_TO_dF(temp_dC));</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
-<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;reg %d is 0x%04x\n&quot;</span>, pr, temp_xCel);</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;reg %d is 0x%04x\n&quot;</span>, pr, raw);</div>
 <div class="line">    }</div>
 <div class="line">    pr = (pr + 1) &amp; 0x03;</div>
 <div class="line">    <a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
@@ -159,9 +174,12 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor">#define configBSP430_SERIAL_ENABLE_I2C 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* What we use to access the TMP102 */</span></div>
-<div class="line"><span class="preprocessor">#if BSP430_PLATFORM_EXP430F5438 - 0</span></div>
+<div class="line"><span class="preprocessor">#if (BSP430_PLATFORM_EXP430F5438 - 0) || (BSP430_PLATFORM_TRXEB - 0)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_USCI5_B3 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif (BSP430_PLATFORM_EXP430F5529 - 0)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_USCI5_B0 1</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif BSP430_PLATFORM_EXP430FR5739 - 0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_EUSCI_B0 1</span></div>
@@ -169,13 +187,11 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_TMP102_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_USCI_B0 1</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span><span class="comment">/* Use SMCLK/100 (=80 kHz) for the I2C speed */</span></div>
-<div class="line"><span class="preprocessor">#define APP_TMP102_I2C_PRESCALER 100</span></div>
 <div class="line"><span class="preprocessor"></span><span class="comment">/* Address for the thing.  0x48 when ADD0 is shorted to GND. */</span></div>
 <div class="line"><span class="preprocessor">#define APP_TMP102_I2C_ADDRESS 0x48</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Get platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_sensors_tmp102_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">PLATFORM ?= exp430fr5739</div>
@@ -187,7 +203,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

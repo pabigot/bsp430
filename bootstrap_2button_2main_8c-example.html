@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -123,55 +123,57 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  hpl-&gt;ies ^= sp-&gt;bit;</div>
 <div class="line">  <a name="a6"></a><a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, -1);</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* We let the infrastructure identify what LPM bits to clear, but</span></div>
-<div class="line"><span class="comment">   * also disable GIE on exit.  This ensures we don&#39;t overwrite the</span></div>
-<div class="line"><span class="comment">   * interrupt state due to a subsequent interrupt before we can print</span></div>
-<div class="line"><span class="comment">   * what we just stored. */</span></div>
-<div class="line">  <span class="keywordflow">return</span> <a name="a7"></a><a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> | <a name="a8"></a><a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
+<div class="line">  <span class="comment">/* Wakeup.  Whether this clears #GIE depends on</span></div>
+<div class="line"><span class="comment">   * #configBSP430_CORE_LPM_EXIT_CLEAR_GIE */</span></div>
+<div class="line">  <span class="keywordflow">return</span> <a name="a7"></a><a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> sButtonState button_state = {</div>
 <div class="line">  .button_cb = { .callback = button_isr_ni },</div>
-<div class="line">  .bit = <a name="a9"></a><a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a></div>
+<div class="line">  .bit = <a name="a8"></a><a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a></div>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> main ()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="structsBSP430halPORT.html">hBSP430halPORT</a> b0hal = <a name="a10"></a><a class="code" href="port_8h.html#a039c56ddc64f51922244aac149f7a853">hBSP430portLookup</a>(<a name="a11"></a><a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>);</div>
+<div class="line">  <a class="code" href="structsBSP430halPORT.html">hBSP430halPORT</a> b0hal = <a name="a9"></a><a class="code" href="port_8h.html#a039c56ddc64f51922244aac149f7a853">hBSP430portLookup</a>(<a name="a10"></a><a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>);</div>
 <div class="line">  <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplPORT__IE__8.html">sBSP430hplPORTIE</a> * b0hpl;</div>
-<div class="line">  <span class="keywordtype">int</span> b0pin = <a name="a12"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>);</div>
+<div class="line">  <span class="keywordtype">int</span> b0pin = <a name="a11"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>);</div>
 <div class="line"></div>
-<div class="line">  <a name="a13"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
-<div class="line">  (void)<a name="a14"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
+<div class="line">  <a name="a12"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
+<div class="line">  (void)<a name="a13"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line"></div>
-<div class="line">  <a name="a15"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;And we&#39;re up\n&quot;</span>);</div>
+<div class="line">  <a name="a14"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nbutton &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;There&#39;s supposed to be a button at %s.%u\n&quot;</span>,</div>
-<div class="line">          <a name="a16"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>),</div>
+<div class="line">          <a name="a15"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>),</div>
 <div class="line">          b0pin);</div>
 <div class="line">  <span class="keywordflow">if</span> (! b0hal) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Whoops, guess it&#39;s not really there\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span>;</div>
 <div class="line">  }</div>
 <div class="line">  b0hpl = <a class="code" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(b0hal);</div>
-<div class="line">  button_state.button_cb.next_ni = b0hal-&gt;<a name="a17"></a><a class="code" href="structsBSP430halPORT.html#a8b9fd95d1ee0929db93ae602b5e32767">pin_cbchain_ni</a>[b0pin];</div>
+<div class="line">  button_state.button_cb.next_ni = b0hal-&gt;<a name="a16"></a><a class="code" href="structsBSP430halPORT.html#a8b9fd95d1ee0929db93ae602b5e32767">pin_cbchain_ni</a>[b0pin];</div>
 <div class="line">  b0hal-&gt;<a class="code" href="structsBSP430halPORT.html#a8b9fd95d1ee0929db93ae602b5e32767">pin_cbchain_ni</a>[b0pin] = &amp;button_state.button_cb;</div>
-<div class="line">  b0hpl-&gt;<a name="a18"></a>sel &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
-<div class="line">  b0hpl-&gt;<a name="a19"></a>dir &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
+<div class="line">  b0hpl-&gt;<a name="a17"></a>sel &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
+<div class="line">  b0hpl-&gt;<a name="a18"></a>dir &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line"><span class="preprocessor">#if BSP430_PORT_SUPPORTS_REN - 0</span></div>
-<div class="line"><span class="preprocessor"></span>  <a name="a20"></a><a class="code" href="port_8h.html#a9addaf04ba38436b90d0dc9481c29425">BSP430_PORT_HAL_HPL_REN</a>(b0hal) |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
-<div class="line">  <a name="a21"></a><a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(b0hal) |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
+<div class="line"><span class="preprocessor"></span>  <a name="a19"></a><a class="code" href="port_8h.html#a9addaf04ba38436b90d0dc9481c29425">BSP430_PORT_HAL_HPL_REN</a>(b0hal) |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
+<div class="line">  <a name="a20"></a><a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(b0hal) |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PORT_SUPPORTS_REN */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="keywordflow">if</span> (b0hpl-&gt;<a name="a22"></a>in &amp; <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>) {</div>
+<div class="line"><span class="preprocessor"></span>  <span class="keywordflow">if</span> (b0hpl-&gt;<a name="a21"></a>in &amp; <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>) {</div>
 <div class="line">    button_state.in_mask = <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line">    b0hpl-&gt;ies |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line">    button_state.in_mask = 0;</div>
 <div class="line">    b0hpl-&gt;ies &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line">  }</div>
-<div class="line">  b0hpl-&gt;<a name="a23"></a>ifg &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
-<div class="line">  b0hpl-&gt;<a name="a24"></a>ie |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
+<div class="line">  b0hpl-&gt;<a name="a22"></a>ifg &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
+<div class="line">  b0hpl-&gt;<a name="a23"></a>ie |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Button is configured.  Try pressing it.  No debouncing is done.\n&quot;</span>);</div>
-<div class="line"></div>
+<div class="line"><span class="preprocessor">#if ! (configBSP430_CORE_LPM_EXIT_CLEAR_GIE - 0)</span></div>
+<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;WARNING: Interrupts remain enabled after wakeup\n&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
@@ -179,16 +181,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Count %u, in mask 0x%02x: %s\n&quot;</span>, button_state.count, button_state.in_mask, state_str[!button_state.in_mask]);</div>
 <div class="line"></div>
-<div class="line">    <span class="comment">/* Note that we&#39;ve never turned interrupts on, so we do so now</span></div>
-<div class="line"><span class="comment">     * when entering LPM.  The ISR will turn them off again before</span></div>
-<div class="line"><span class="comment">     * waking the MCU. */</span></div>
-<div class="line">    <a name="a25"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a26"></a><a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
-<div class="line">  }</div>
+<div class="line">    <span class="comment">/* Note that we&#39;ve never turned interrupts on, but</span></div>
+<div class="line"><span class="comment">     * BSP430_CORE_LPM_ENTER_NI() does so internally so the ISR can be</span></div>
+<div class="line"><span class="comment">     * executed.  Whether they are cleared before returning to this</span></div>
+<div class="line"><span class="comment">     * loop depends on #configBSP430_CORE_LPM_EXIT_CLEAR_GIE. */</span></div>
+<div class="line">    <a name="a24"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a25"></a><a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a>);</div>
+<div class="line"><span class="preprocessor">#if ! (configBSP430_CORE_LPM_EXIT_CLEAR_GIE - 0)</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="comment">/* Infrastructure didn&#39;t clear this, so we should */</span></div>
+<div class="line">    <a name="a26"></a><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:29 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

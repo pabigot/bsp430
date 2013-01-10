@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -125,12 +125,6 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span>  console = <a class="code" href="console_8h.html#a641b6419ca463bcb87d4ec1645928c0b">hBSP430console</a>();</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_VERBOSE */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)</span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="comment">/* If we&#39;re using interrupt-driven transmission or reception, we&#39;d</span></div>
-<div class="line"><span class="comment">   * better enable interrupts. */</span></div>
-<div class="line">  <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
-<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span></div>
 <div class="line">  <span class="comment">/* Indicate we made it this far. */</span></div>
 <div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(1, 1);</div>
 <div class="line"></div>
@@ -148,8 +142,16 @@ main.c</h1>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
 <div class="line">      <span class="keywordtype">int</span> rc;</div>
 <div class="line">      <a class="code" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR</a>();</div>
-<div class="line">      <a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
-<div class="line">      <span class="keywordflow">while</span> (0 &lt;= ((rc = <a class="code" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a>()))) {</div>
+<div class="line"><span class="preprocessor">#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)</span></div>
+<div class="line"><span class="preprocessor"></span>      <span class="comment">/* If we&#39;re using interrupt-driven transmission or reception, we&#39;d</span></div>
+<div class="line"><span class="comment">       * better enable interrupts. */</span></div>
+<div class="line">      <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>      <a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
+<div class="line"><span class="preprocessor">#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)</span></div>
+<div class="line"><span class="preprocessor"></span>      <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>      <span class="keywordflow">while</span> (0 &lt;= ((rc = <a class="code" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a>()))) {</div>
 <div class="line">        <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot; rx char &quot;</span>);</div>
 <div class="line">        <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a>(rc, 10);</div>
 <div class="line">        <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot; &#39;&quot;</span>);</div>
@@ -195,7 +197,7 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_VERBOSE 0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* APP_VERBOSE */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_bootstrap_console_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">PLATFORM ?= exp430fr5739</div>
@@ -205,7 +207,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

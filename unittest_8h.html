@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -156,8 +156,9 @@ Functions</h2></td></tr>
 <p>This abstracts the unit-test specific portions of <a href="https://sourceforge.net/projects/mspgcc/files/test430/">test430</a>, since BSP430 itself replaces the platform support portions of that package.</p>
 <p>It is not a full-featured xUnit style infrastructure, as there is no framework concept of test suites or setup/teardown functionality to restore a known configuration. Basically all it supports is verifying intermediate values and displaying unexpected results for further analysis.</p>
 <dl class="section note"><dt>Note</dt><dd>This facility depends on <a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> and <a class="el" href="led_8h.html#ab09948f90e7b002a67f4576b0815034e">BSP430_LED</a>. The corresponding modules must be linked into any application that uses it.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>All macros potentially involve console output and are subject to the material in <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="aa707a38545f82af15e5fcf5b72e389f2"></a>
 <div class="memitem">
@@ -634,7 +635,8 @@ Functions</h2></td></tr>
 <p>Finalize the unittest framework.</p>
 <p>This displays the results of the tests and emits a distinguished sequence (<code>...done</code>) to the console for use in external monitor applications.</p>
 <p>If tests pass, <a class="el" href="unittest_8h.html#a9b92386758a7749b13b21e49b383c3dc">BSP430_UNITTEST_LED_PASSED</a> is lit, and this function returns.</p>
-<p>If at least one test failed, <a class="el" href="unittest_8h.html#ada3ea164acff93c6ab330140ac1e96d1">BSP430_UNITTEST_LED_FAILED</a> flashes at 1Hz and this function does not return. </p>
+<p>If at least one test failed, <a class="el" href="unittest_8h.html#ada3ea164acff93c6ab330140ac1e96d1">BSP430_UNITTEST_LED_FAILED</a> flashes at 1Hz and this function does not return.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2unittest_2main_8c-example.html#a6">utility/unittest/main.c</a>.</dd>
 </dl>
 </div>
@@ -694,6 +696,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Display a unit test result.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">line</td><td>the line number on which the test occurred.</td></tr>
@@ -708,7 +711,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

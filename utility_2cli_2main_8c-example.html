@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="uptime_8h.html" title="Support for maintaining a system uptime counter.">bsp430/utility/uptime.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html" title="A generic console print capability.">bsp430/utility/console.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="cli_8h.html" title="Basic support for command line processing.">bsp430/utility/cli.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="led_8h.html" title="Support for platform-independent LED manipulation.">bsp430/utility/led.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;ctype.h&gt;</span></div>
 <div class="line"></div>
@@ -119,12 +120,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">          <span class="keyword">const</span> <span class="keywordtype">char</span> * argstr,</div>
 <div class="line">          <span class="keywordtype">size_t</span> argstr_len)</div>
 <div class="line">{</div>
-<div class="line">  <a name="a3"></a><a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;Display: &quot;</span>);</div>
+<div class="line">  <a name="a3"></a><a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;Display: &quot;</span>);</div>
 <div class="line">  <a name="a4"></a><a class="code" href="group__grp__utility__cli__cli.html#ga733c7b931476c5f02c297dd7e0f78283">vBSP430cliConsoleDisplayChain</a>(chain, argstr);</div>
 <div class="line">  <span class="keywordflow">if</span> (0 == argstr_len) {</div>
 <div class="line">    <a name="a5"></a><a class="code" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs</a>(<span class="stringliteral">&quot;\nWTH are we fighting for? Walk!&quot;</span>);</div>
 <div class="line">  }</div>
-<div class="line">  <a name="a6"></a><a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line">  <a name="a6"></a><a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -185,9 +186,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">             <span class="keyword">const</span> <span class="keywordtype">char</span> * argstr,</div>
 <div class="line">             <span class="keywordtype">size_t</span> argstr_len)</div>
 <div class="line">{</div>
-<div class="line">  <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot;Expanded: &quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;Expanded: &quot;</span>);</div>
 <div class="line">  <a class="code" href="group__grp__utility__cli__cli.html#ga733c7b931476c5f02c297dd7e0f78283">vBSP430cliConsoleDisplayChain</a>(chain, argstr);</div>
-<div class="line">  <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
@@ -292,7 +293,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span> * tp = <a name="a26"></a><a class="code" href="group__grp__utility__cli__hci.html#gabcda3dd127008a5cdcc5f40cac4e9e68">xBSP430cliNextQToken</a>(&amp;argstr, &amp;arglen, &amp;len);</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%u-char token &lt;&quot;</span>, len);</div>
 <div class="line">    <span class="keywordflow">while</span> (len--) {</div>
-<div class="line">      <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(*tp++);</div>
+<div class="line">      <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(*tp++);</div>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;&gt;\n&quot;</span>);</div>
 <div class="line">  }</div>
@@ -422,11 +423,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <a name="a34"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line">  (void)<a name="a35"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line">  <a name="a36"></a><a class="code" href="cli_8h.html#a0a5b3cee7e2d9002d5d301b36c814d55">vBSP430cliSetDiagnosticFunction</a>(<a name="a37"></a><a class="code" href="group__grp__utility__cli__cli.html#ga30922f40d6b2702628bb88d9e0069caf">iBSP430cliConsoleDiagnostic</a>);</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\n\n\nAnd we&#39;re up and running.\n&quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\ncli example &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"><span class="preprocessor">#if configBSP430_CLI_COMMAND_COMPLETION - 0</span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Command completion is available.\n&quot;</span>);</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CLI_COMMAND_COMPLETION */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>  <a name="a38"></a><a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 1);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nLED lit when not awaiting input\n&quot;</span>);</div>
+<div class="line"></div>
 <div class="line">  <span class="comment">/* NOTE: The control flow in this is a bit tricky, as we&#39;re trying</span></div>
 <div class="line"><span class="comment">   * to leave interrupts enabled during the main body of the loop,</span></div>
 <div class="line"><span class="comment">   * while they must be disabled when processing input to recognize a</span></div>
@@ -434,21 +437,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="comment">   * iterations until all relevant activities have completed. */</span></div>
 <div class="line">  commandSet = LAST_COMMAND;</div>
 <div class="line">  command = NULL;</div>
-<div class="line">  flags = <a name="a38"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3">eBSP430cliConsole_REPAINT</a>;</div>
+<div class="line">  flags = <a name="a39"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3">eBSP430cliConsole_REPAINT</a>;</div>
 <div class="line"></div>
-<div class="line">  <a name="a39"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line">  <a name="a40"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a40"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea5a05d17ffe59e202f061455f77b12c92">eBSP430cliConsole_ANY_ESCAPE</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a41"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea5a05d17ffe59e202f061455f77b12c92">eBSP430cliConsole_ANY_ESCAPE</a>) {</div>
 <div class="line">      <span class="keywordtype">int</span> c;</div>
-<div class="line">      <span class="keywordflow">while</span> (0 &lt;= ((c = <a name="a41"></a><a class="code" href="console_8h.html#a92d0f9aff946120aefa3ffbf359afe0f">cgetchar</a>()))) {</div>
+<div class="line">      <span class="keywordflow">while</span> (0 &lt;= ((c = <a name="a42"></a><a class="code" href="console_8h.html#a92d0f9aff946120aefa3ffbf359afe0f">cgetchar</a>()))) {</div>
 <div class="line">        <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;escape char 0x%02x (%u) &#39;%c&#39;\n&quot;</span>, c, c, isprint(c) ? c : <span class="charliteral">&#39;.&#39;</span>);</div>
 <div class="line">        <span class="comment">/* Technically CSI is a single character 0x9b representing</span></div>
 <div class="line"><span class="comment">         * ESC+[.  In the two-character mode accepted here, we use the</span></div>
 <div class="line"><span class="comment">         * value for the second character. */</span></div>
 <div class="line"><span class="preprocessor">#define KEY_CSI &#39;[&#39;</span></div>
-<div class="line"><span class="preprocessor"></span>        <span class="keywordflow">if</span> ((KEY_CSI == c) &amp;&amp; (flags &amp; <a name="a42"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea35ef4020932be71bd87834c27fd16c08">eBSP430cliConsole_PROCESS_ESCAPE</a>)) {</div>
+<div class="line"><span class="preprocessor"></span>        <span class="keywordflow">if</span> ((KEY_CSI == c) &amp;&amp; (flags &amp; <a name="a43"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea35ef4020932be71bd87834c27fd16c08">eBSP430cliConsole_PROCESS_ESCAPE</a>)) {</div>
 <div class="line">          flags &amp;= ~eBSP430cliConsole_PROCESS_ESCAPE;</div>
-<div class="line">          flags |= <a name="a43"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea736f64677f998edc054fef9479f388f0">eBSP430cliConsole_IN_ESCAPE</a>;</div>
+<div class="line">          flags |= <a name="a44"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea736f64677f998edc054fef9479f388f0">eBSP430cliConsole_IN_ESCAPE</a>;</div>
 <div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> ((64 &lt;= c) &amp;&amp; (c &lt;= 126)) {</div>
 <div class="line">          flags &amp;= ~eBSP430cliConsole_ANY_ESCAPE;</div>
 <div class="line">          <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Leaving escape mode\n&quot;</span>);</div>
@@ -456,14 +459,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">        }</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a44"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deafdfdebe7b8568728238e4069ae19cd09">eBSP430cliConsole_DO_COMPLETION</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a45"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deafdfdebe7b8568728238e4069ae19cd09">eBSP430cliConsole_DO_COMPLETION</a>) {</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_DO_COMPLETION;</div>
-<div class="line">      flags |= <a name="a45"></a><a class="code" href="group__grp__utility__cli__completion.html#ga5086d946e412fa4e9928819d664fc2cc">iBSP430cliConsoleBufferCompletion</a>(commandSet, &amp;command);</div>
+<div class="line">      flags |= <a name="a46"></a><a class="code" href="group__grp__utility__cli__completion.html#ga5086d946e412fa4e9928819d664fc2cc">iBSP430cliConsoleBufferCompletion</a>(commandSet, &amp;command);</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a46"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94">eBSP430cliConsole_READY</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a47"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94">eBSP430cliConsole_READY</a>) {</div>
 <div class="line">      <span class="keywordtype">int</span> rv;</div>
 <div class="line"></div>
-<div class="line">      rv = <a name="a47"></a><a class="code" href="cli_8h.html#adcdb159a40c5cb6737cf97b497b58a55">iBSP430cliExecuteCommand</a>(commandSet, 0, command);</div>
+<div class="line">      rv = <a name="a48"></a><a class="code" href="cli_8h.html#adcdb159a40c5cb6737cf97b497b58a55">iBSP430cliExecuteCommand</a>(commandSet, 0, command);</div>
 <div class="line">      <span class="keywordflow">if</span> (0 != rv) {</div>
 <div class="line">        <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Command execution returned %d\n&quot;</span>, rv);</div>
 <div class="line">      }</div>
@@ -479,34 +482,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\r&gt; %s&quot;</span>, command ? command : <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT;</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a48"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b">eBSP430cliConsole_REPAINT_BEL</a>) {</div>
-<div class="line">      <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a49"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b">eBSP430cliConsole_REPAINT_BEL</a>) {</div>
+<div class="line">      <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT_BEL;</div>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; eBSP430cliConsole_READY) {</div>
-<div class="line">      <span class="comment">/* Clear the command we just completed */</span></div>
-<div class="line">      <a name="a49"></a><a class="code" href="group__grp__utility__cli__cli.html#ga851a3ff12f32fc07f0e83b084dbd659d">vBSP430cliConsoleBufferClear_ni</a>();</div>
-<div class="line">    }</div>
-<div class="line">    <span class="comment">/* Unless we&#39;re processing escape characters, let</span></div>
-<div class="line"><span class="comment">     * iBSP430cliConsoleBufferProcessInput_ni() handle the blocking</span></div>
-<div class="line"><span class="comment">     * for input characters. */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (! (flags &amp; eBSP430cliConsole_ANY_ESCAPE)) {</div>
-<div class="line">      flags = <a name="a50"></a><a class="code" href="group__grp__utility__cli__cli.html#ga0dc701d6a0e8678616dbdc43219f2628">iBSP430cliConsoleBufferProcessInput_ni</a>();</div>
-<div class="line">      <span class="keywordflow">if</span> (flags) {</div>
-<div class="line">        <span class="comment">/* Got something to do; get the command contents in place */</span></div>
-<div class="line">        command = <a name="a51"></a><a class="code" href="group__grp__utility__cli__cli.html#gad0d2c92b96b17302159c049f7a9bfb17">xBSP430cliConsoleBuffer_ni</a>();</div>
-<div class="line">        <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
-<div class="line">        <span class="keywordflow">continue</span>;</div>
+<div class="line">    <span class="keywordflow">do</span> {</div>
+<div class="line">      <span class="keywordflow">if</span> (flags &amp; eBSP430cliConsole_READY) {</div>
+<div class="line">        <span class="comment">/* Clear the command we just completed */</span></div>
+<div class="line">        <a name="a50"></a><a class="code" href="group__grp__utility__cli__cli.html#ga851a3ff12f32fc07f0e83b084dbd659d">vBSP430cliConsoleBufferClear_ni</a>();</div>
+<div class="line">        flags &amp;= ~eBSP430cliConsole_READY;</div>
 <div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    <a name="a52"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a53"></a><a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a> | <a name="a54"></a><a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">      <span class="keywordflow">do</span> {</div>
+<div class="line">        <span class="comment">/* Unless we&#39;re processing application-specific escape</span></div>
+<div class="line"><span class="comment">         * characters let iBSP430cliConsoleBufferProcessInput_ni()</span></div>
+<div class="line"><span class="comment">         * process any input characters that have already been</span></div>
+<div class="line"><span class="comment">         * received. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (! (flags &amp; eBSP430cliConsole_ANY_ESCAPE)) {</div>
+<div class="line">          flags |= <a name="a51"></a><a class="code" href="group__grp__utility__cli__cli.html#ga0dc701d6a0e8678616dbdc43219f2628">iBSP430cliConsoleBufferProcessInput_ni</a>();</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">if</span> (0 == flags) {</div>
+<div class="line">          <span class="comment">/* Sleep until something wakes us, such as console input.</span></div>
+<div class="line"><span class="comment">           * Then turn off interrupts and loop back to read that</span></div>
+<div class="line"><span class="comment">           * input. */</span></div>
+<div class="line">          <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 0);</div>
+<div class="line">          <a name="a52"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a53"></a><a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a>);</div>
+<div class="line">          <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line">          <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 1);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">/* Repeat if still nothing to do */</span></div>
+<div class="line">      } <span class="keywordflow">while</span> (! flags);</div>
+<div class="line"></div>
+<div class="line">      <span class="comment">/* Got something to do; get the command contents in place so</span></div>
+<div class="line"><span class="comment">       * we can update the screen. */</span></div>
+<div class="line">      command = <a name="a54"></a><a class="code" href="group__grp__utility__cli__cli.html#gad0d2c92b96b17302159c049f7a9bfb17">xBSP430cliConsoleBuffer_ni</a>();</div>
+<div class="line">    } <span class="keywordflow">while</span> (0);</div>
+<div class="line">    <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

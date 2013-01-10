@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -115,8 +115,12 @@ Macros</h2></td></tr>
 <tr class="separator:ae603188bfe14e0dcb7847f65ad57331d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23f6bef8cddedeea579d8e15e4045ee5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a23f6bef8cddedeea579d8e15e4045ee5">configBSP430_SERIAL_ENABLE_SPI</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a23f6bef8cddedeea579d8e15e4045ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a923ef219777a585b737647ad335ff25a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a923ef219777a585b737647ad335ff25a">BSP430_SERIAL_SPI_BUS_SPEED_HZ</a>&#160;&#160;&#160;4000000UL</td></tr>
+<tr class="separator:a923ef219777a585b737647ad335ff25a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19e915aa21bdaf7e259a6ac99157a644"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a19e915aa21bdaf7e259a6ac99157a644">configBSP430_SERIAL_ENABLE_I2C</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a19e915aa21bdaf7e259a6ac99157a644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a04e22fd8e383a4986dcea9b58eec52"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>&#160;&#160;&#160;400000UL</td></tr>
+<tr class="separator:a1a04e22fd8e383a4986dcea9b58eec52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34692b8a5e5a11a401030db5d9a6dd19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a34692b8a5e5a11a401030db5d9a6dd19">BSP430_SERIAL</a></td></tr>
 <tr class="separator:a34692b8a5e5a11a401030db5d9a6dd19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84cdc2d11d71d5fd97b96f427c239cb9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(_i)&#160;&#160;&#160;(((_i) &gt;= 0x100) ? ((_i) &gt;&gt; 8) : (_i))</td></tr>
@@ -167,7 +171,7 @@ Functions</h2></td></tr>
 <div class="textblock"><p>Declarations for abstracted serial interface. </p>
 <p>The MSP430 line has a variety of peripherals that support serial communications, including the origin 2xx/4xx family USCI, 5xx USCI, and 5xx eUSCI. These are sufficiently similar in function that it is useful to have a hardware abstraction layer that delegates to the peripherals available on the current platform.</p>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a34692b8a5e5a11a401030db5d9a6dd19"></a>
 <div class="memitem">
@@ -199,10 +203,44 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>When the underlying implementation is an EUSCI device (as on FR5xx chips), the header defines used to construct the value <code>ctl0_byte</code> are specified for a 16-bit access. The ctl0 byte in the upper byte of the ctlw0 word that comprises <em>ctl0</em> and <em>ctl1</em> on these MCUs. On those devices you must use the <code>_H</code> suffix to select the high-byte version of these constants or divide your configured value by 256 to place it in the low byte of the argument. This applies to configuration values <a class="el" href="msp430_8h.html#a7fb6b3fbbb7fd56c8f11792ffb3e3d6c">UCPEN</a>, <a class="el" href="msp430_8h.html#a05da44320219dcbc56214c9fd424a219">UCPAR</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a17059906b161d93c430b7ee875e0f356">UCSPB</a>, <a class="el" href="msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd">UCCKPH</a>, <a class="el" href="msp430_8h.html#ab4313a6c37c97ba5cdba16c4ca56b517">UCCKPL</a>, <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>, and <a class="el" href="msp430_8h.html#a2f02e983d228152bb8491fb6cb0f1228">UCMODE_0</a> or <a class="el" href="msp430_8h.html#a207fbbe8ef93ccdd9774348ba0794b08">UCMODE_1</a> or <a class="el" href="msp430_8h.html#a57df40fcf2c24a4605e30a900d2b239e">UCMODE_2</a>, and perhaps others.</p>
+<p>When the underlying implementation is an EUSCI device (as on FR5xx chips), the header defines used to construct the value <code>ctl0_byte</code> are specified for a 16-bit access. The ctl0 byte is the upper byte of the ctlw0 word that comprises <em>ctl0</em> and <em>ctl1</em> on these MCUs. On those devices you must use the <code>_H</code> suffix to select the high-byte version of these constants or divide your configured value by 256 to place it in the low byte of the argument. This applies to configuration values <a class="el" href="msp430_8h.html#a7fb6b3fbbb7fd56c8f11792ffb3e3d6c">UCPEN</a>, <a class="el" href="msp430_8h.html#a05da44320219dcbc56214c9fd424a219">UCPAR</a>, <a class="el" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a>, <a class="el" href="msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4">UC7BIT</a>, <a class="el" href="msp430_8h.html#a17059906b161d93c430b7ee875e0f356">UCSPB</a>, <a class="el" href="msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd">UCCKPH</a>, <a class="el" href="msp430_8h.html#ab4313a6c37c97ba5cdba16c4ca56b517">UCCKPL</a>, <a class="el" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>, and <a class="el" href="msp430_8h.html#a2f02e983d228152bb8491fb6cb0f1228">UCMODE_0</a> or <a class="el" href="msp430_8h.html#a207fbbe8ef93ccdd9774348ba0794b08">UCMODE_1</a> or <a class="el" href="msp430_8h.html#a57df40fcf2c24a4605e30a900d2b239e">UCMODE_2</a>, and perhaps others.</p>
 <p>Given a <code>ctl0_byte</code> expression comprised of these constants, this macro will adjust it for you when the value appears to be outside the expected range (i.e., greater than <code>0xFF</code>) and will leave the values alone when it is not, so you can use the standard header constant names without having to worry about the underlying implementation. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a27">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a30">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a9">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a27">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a28">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a9">sensors/tmp102/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a1a04e22fd8e383a4986dcea9b58eec52"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_SERIAL_I2C_BUS_SPEED_HZ&#160;&#160;&#160;400000UL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Default speed for I2C bus transactions when application does not specify divisor.</p>
+<p>This is referenced by <a class="el" href="serial_8h.html#a85fb70e450164721994aad656c24d6a0">hBSP430serialOpenI2C()</a> when the <code>prescaler</code> parameter is zero.</p>
+<p>As most I2C devices accept the V1.0 specification maximum, the default value should be 400kHz.</p>
+<dl class="section warning"><dt>Warning</dt><dd>The maximum speed is specified in the MCU data sheet; e.g. the MSP430F5438A will go up to 400 kHz. Higher speeds may result in anomalous clocks and unreliable behavior.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a21">sensors/hh10d/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a923ef219777a585b737647ad335ff25a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_SERIAL_SPI_BUS_SPEED_HZ&#160;&#160;&#160;4000000UL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Default speed for SPI bus transactions when application does not specify divisor.</p>
+<p>This is referenced by <a class="el" href="serial_8h.html#a40983f5ed625fd352698117786691dd5">hBSP430serialOpenSPI()</a> when the <code>prescaler</code> parameter is zero.</p>
+<p>SPI flash can often work at 20MHz; the ChipCon radios are good to 6MHz generally. The default will be 4MHz although there are chips that will not operate at that speed (e.g., the CMA3000 accelerometer).</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a19e915aa21bdaf7e259a6ac99157a644"></a>
@@ -328,7 +366,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the HAL handle for the peripheral. A null pointer is returned if the handle does not correspond to a serial peripheral for which the HAL interface has been enabled. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a10">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a15">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a1">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2ccid_2main_8c-example.html#a10">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a12">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a1">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -386,14 +424,14 @@ Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>See <a class="el" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER()</a> regarding portable use of <code>ctl0_byte</code> header constants.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are configuration of the clock (<a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, or <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>) and perhaps <a class="el" href="msp430_8h.html#a311c1dc057c97e3b6e6e8fafaa82ffcd">UCTR</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function.</td></tr>
-    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the I2C clock. A value of zero will result in this function returning an error.</td></tr>
+    <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are configuration of the clock (<a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, or <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>) and perhaps <a class="el" href="msp430_8h.html#a311c1dc057c97e3b6e6e8fafaa82ffcd">UCTR</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function. If <code>prescaler</code> is zero, the clock configuration in this will be overridden to select SMCLK.</td></tr>
+    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the I2C clock. A value of zero will select the minimum of 1 and ceil(<a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz()</a>/<a class="el" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>), resulting in the highest speed that does not exceed <a class="el" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>. Use of this feature will override the clock selection in <code>ctl1_byte</code>.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A peripheral-specific HAL handle if the allocation and configuration is successful, and a null handle if something went wrong (e.g., absence of the requested peripheral or a zero-valued <code>prescaler</code>).</dd></dl>
 <dl class="section user"><dt>Delegated:</dt><dd>This function exists only as an inline delegate to a peripheral-specific implementation. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a29">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a8">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a27">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a8">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -451,8 +489,8 @@ Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>See <a class="el" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER()</a> regarding portable use of <code>ctl0_byte</code> header constants.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For SPI mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are only configuration of the clock: <a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function.</td></tr>
-    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the SPI clock. A value of zero will result in this function returning an error.</td></tr>
+    <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For SPI mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are only configuration of the clock: <a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function. If <code>prescaler</code> is zero, the clock configuration in this will be overridden to select SMCLK.</td></tr>
+    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the SPI clock. A value of zero will select the minimum of 1 and ceil(<a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz()</a>/<a class="el" href="serial_8h.html#a923ef219777a585b737647ad335ff25a">BSP430_SERIAL_SPI_BUS_SPEED_HZ</a>), resulting in the highest speed that does not exceed <a class="el" href="serial_8h.html#a923ef219777a585b737647ad335ff25a">BSP430_SERIAL_SPI_BUS_SPEED_HZ</a>. Use of this feature will override the clock selection in <code>ctl1_byte</code>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -517,7 +555,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For UART mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#ae54706b57b264155a533ba8673b8ed96">UCRXEIE</a>, <a class="el" href="msp430_8h.html#ac4f7aaa4d67ed80a4099d40e2dde3ccc">UCBRKIE</a>, and <a class="el" href="msp430_8h.html#a6d58a8e741c77478dafc016c41fd57b2">UCDORM</a>. The UCSSEL and UCSWRST elements of the byte are cleared as the function configures those. In most cases a value of 0 is appropriate.</td></tr>
-    <tr><td class="paramname">baud</td><td>The desired baud rate. This will be configured automatically. ACLK will be used as the baud rate clock if ACLK is both at least 20 kHz and at least three times faster than the requested baud rate; otherwise SMCLK will be used. The function invokes <a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz()</a> and <a class="el" href="clock_8h.html#a7e6b8510714bb26cac0b2c5cdcfdc0e0">uiBSP430clockACLK_Hz()</a> as necessary to determine the actual speed of the baud rate clock.</td></tr>
+    <tr><td class="paramname">baud</td><td>The desired baud rate. This will be configured automatically. ACLK will be used as the baud rate clock if ACLK is both at least 20 kHz and at least three times faster than the requested baud rate; otherwise SMCLK will be used. The function invokes <a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz()</a> and <a class="el" href="clock_8h.html#aeb12b1afa0629e4d4421038fb9b09d12">ulBSP430clockACLK_Hz()</a> as necessary to determine the actual speed of the baud rate clock.</td></tr>
   </table>
   </dd>
 </dl>
@@ -576,7 +614,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes stored in <code>rx_data</code>, or -1 if an error occcured. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a35">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a14">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a32">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a13">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -628,7 +666,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if successfully set, -1 if an error occurs. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a33">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a12">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a30">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a11">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -681,7 +719,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes transmitted, or -1 if an error occcured. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a34">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a13">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a31">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a12">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -761,7 +799,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if the transition was successful, -1 if an error occurred. Potential errors include inability to configure the peripheral pins. On error, the peripheral is left in reset mode. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a41">bootstrap/applpm/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a32">rfem/ccid/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a40">bootstrap/applpm/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a31">rfem/ccid/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -1096,14 +1134,14 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The short name of the port, e.g. "USCI_A0". If the peripheral is not recognized as a serial device, a null pointer is returned. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a42">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a23">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a23">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a5">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a43">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a23">rfem/ccid/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a20">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a5">sensors/tmp102/main.c</a>, and <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a30">sensors/venus6pps/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -89,6 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">console.h File Reference</div>  </div>
@@ -109,9 +110,9 @@ Macros</h2></td></tr>
 <tr class="separator:a7e7be9a93cd9726e38378c1736d3b239"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac415beb77c9981cd718e79fca118b46d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="separator:ac415beb77c9981cd718e79fca118b46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0ebb983a3ecf75fdc6d5990052c98bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#af0ebb983a3ecf75fdc6d5990052c98bf">configBSP430_CONSOLE_USE_DEFAULT_RESOURCE</a>&#160;&#160;&#160;(<a class="el" href="console_8h.html#a7e7be9a93cd9726e38378c1736d3b239">configBSP430_CONSOLE</a> - 0)</td></tr>
-<tr class="separator:af0ebb983a3ecf75fdc6d5990052c98bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c1b76277262c559e561cd58b2525cc1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">BSP430_CONSOLE_SERIAL_PERIPH_HANDLE</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="memitem:ab1c4b9f82c9f50ae94eb5efbf9e3bcb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">BSP430_CONSOLE_SERIAL_PERIPH_CPPID</a>&#160;&#160;&#160;include &quot;bsp430_config.h&quot;</td></tr>
+<tr class="separator:ab1c4b9f82c9f50ae94eb5efbf9e3bcb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1b76277262c559e561cd58b2525cc1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">BSP430_CONSOLE_SERIAL_PERIPH_HANDLE</a>&#160;&#160;&#160;derived platform or application specific</td></tr>
 <tr class="separator:a1c1b76277262c559e561cd58b2525cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81e4d81848e239a0f37c0e529a92d0e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a81e4d81848e239a0f37c0e529a92d0e6">BSP430_CONSOLE_BAUD_RATE</a>&#160;&#160;&#160;9600</td></tr>
 <tr class="separator:a81e4d81848e239a0f37c0e529a92d0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,6 +135,11 @@ Macros</h2></td></tr>
 <tr class="memitem:a1459f5b3ccb0c486550430a8f6c32241"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a1459f5b3ccb0c486550430a8f6c32241">configBSP430_CONSOLE_LIBC_HAS_ULTOA</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a1459f5b3ccb0c486550430a8f6c32241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ad8eb0b740ec0325dfc5a47d7364e14a4"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a> )(void)</td></tr>
+<tr class="separator:ad8eb0b740ec0325dfc5a47d7364e14a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ab51614b234cfd24eed353dde0d9f014c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a> (void)</td></tr>
@@ -142,6 +148,8 @@ Functions</h2></td></tr>
 <tr class="separator:a92d0f9aff946120aefa3ffbf359afe0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43b6e0953a6cc69cea9af7d3ddaf1d1b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a43b6e0953a6cc69cea9af7d3ddaf1d1b">cpeekchar_ni</a> (void)</td></tr>
 <tr class="separator:a43b6e0953a6cc69cea9af7d3ddaf1d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec7949d1ea9a80f4d20c79b137c440f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#aec7949d1ea9a80f4d20c79b137c440f2">vBSP430consoleSetRxCallback_ni</a> (<a class="el" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a> cb)</td></tr>
+<tr class="separator:aec7949d1ea9a80f4d20c79b137c440f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20188454c5c787938220b7bcf3179869"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a> (const char *format,...)</td></tr>
 <tr class="separator:a20188454c5c787938220b7bcf3179869"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88bc4e1137c425954f5e5624c95367ab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a88bc4e1137c425954f5e5624c95367ab">vcprintf</a> (const char *format, va_list ap)</td></tr>
@@ -154,6 +162,12 @@ Functions</h2></td></tr>
 <tr class="separator:add5a7f905ddc52c709f5ebec819ec1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90148fb44b9e9b2b952d6ba8e42b317d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a> (const char *s)</td></tr>
 <tr class="separator:a90148fb44b9e9b2b952d6ba8e42b317d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4ebbf60b8d0840b3039203c47f61c86"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a> (const char *s)</td></tr>
+<tr class="separator:ac4ebbf60b8d0840b3039203c47f61c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27e2ff7e39dfb73bbf4d86889d782ed7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a27e2ff7e39dfb73bbf4d86889d782ed7">cputchars_ni</a> (const char *cp, size_t len)</td></tr>
+<tr class="separator:a27e2ff7e39dfb73bbf4d86889d782ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83f67cf1cd5c672cc9dc947dd7d52f4b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b">cputchars</a> (const char *cp, size_t len)</td></tr>
+<tr class="separator:a83f67cf1cd5c672cc9dc947dd7d52f4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a039bc72010b9c423a7d9ce0908ffc37b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni</a> (int n, int radix)</td></tr>
 <tr class="separator:a039bc72010b9c423a7d9ce0908ffc37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eadeedb5083ccde64a4b88552ae0a62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a> (unsigned int n, int radix)</td></tr>
@@ -179,12 +193,43 @@ Functions</h2></td></tr>
 <div class="textblock"><p>A generic console print capability. </p>
 <p><a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a> is like <code>printf</code>.</p>
 <p>In the default configuration with interrupt-driven transmission disabled, it disables interrupts while operating to ensure that interleaved messages do not occur, transmits with direct UART writes, and is "safe" for call from within interrupt handlers.</p>
-<p><a class="el" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs()</a> is provided where the complexity of printf is not required but atomic output is desired. Other routines permit display of plain text without a newline (<a class="el" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni()</a>), single characters (<a class="el" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni()</a>), and integers (<a class="el" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni()</a>, <a class="el" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni()</a>, <a class="el" href="console_8h.html#aecbe49f4509a794f254611835c386ae2">cputl_ni()</a>, <a class="el" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni()</a>) without incurring the stack overhead of printf, which can be quite high (on the order of 100 bytes if 64-bit integer support is included). These all assume that interrupts are disabled when called.</p>
-<p>All these routines are safe to call even if the console was not initialized, or its initialization failed, or it is temporarily disabled: in that situation, they simply return immediately.</p>
-<p>As the console has proved to be extremely useful, it has also been enhanced with interrupt-driven transmision capabilities. By configuring <a class="el" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">BSP430_CONSOLE_TX_BUFFER_SIZE</a> to a positive value all console output routines will place their output into the buffer. If insufficient room remains, they will block.</p>
-<dl class="section warning"><dt>Warning</dt><dd>The console routines are not safe to call from interrupts when <a class="el" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">BSP430_CONSOLE_TX_BUFFER_SIZE</a> has been configured to enable interrupt-driven output. If, at runtime, you determine you need to do console output without interrupts, use <a class="el" href="console_8h.html#a9bbfc00a016e324e5f777e408e4ae6d3">iBSP430consoleTransmitUseInterrupts_ni()</a> to enable and disable interrupt-driven transmission.</dd></dl>
-<dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<p><a class="el" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs()</a> and <a class="el" href="console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b">cputchars()</a> are provided where the complexity of printf is not required but atomic output is desired. Other routines permit display of NUL-terminated plain text without a newline (<a class="el" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni()</a>), plain text of a fixed length (<a class="el" href="console_8h.html#a27e2ff7e39dfb73bbf4d86889d782ed7">cputchars_ni()</a>), single characters (<a class="el" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni()</a>), and integers (<a class="el" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni()</a>, <a class="el" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni()</a>, <a class="el" href="console_8h.html#aecbe49f4509a794f254611835c386ae2">cputl_ni()</a>, <a class="el" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni()</a>) without incurring the stack overhead of printf, which can be quite high (on the order of 100 bytes if 64-bit integer support is included). Following the standard BSP340 naming conventions some of these capabilities are available with wrappers that preserve interrupt state.</p>
+<p>All output functions are safe to call even if the console was not initialized, or its initialization failed, or it is temporarily disabled. In those situations they simply return immediately.</p>
+<h1><a class="anchor" id="h_utility_console_interrupts"></a>
+Console Output and Interrupts</h1>
+<p>As the console has proved to be extremely useful, it has been enhanced with interrupt-driven transmision capabilities. By configuring <a class="el" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">BSP430_CONSOLE_TX_BUFFER_SIZE</a> to a positive value all console output routines will place their output into the buffer. If insufficient room remains, they will sleep using <a class="el" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a> with interrupts enabled until the buffer drains enough to add more.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This feature overrides the safe use of these routines from within interrupt handlers and within critical sections. When interrupt-driven transmission is enabled all console output routines are allowed to block (enabling interrupts) if the transmission buffer is full. This is true even for output routines that are marked with the <code>_ni</code> suffix.</dd></dl>
+<p>As an example, the following pattern is unsafe:</p>
+<div class="fragment"><div class="line"><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><span class="keywordflow">do</span> {</div>
+<div class="line">  events = events_ni;</div>
+<div class="line">  events_ni = 0;</div>
+<div class="line">  <span class="keywordflow">if</span> (! events) {</div>
+<div class="line">    cputs_ni(<span class="stringliteral">&quot;Going to sleep now&quot;</span>);</div>
+<div class="line">    <span class="comment">// ERROR: Above call may have blocked allowing events_ni to be set.</span></div>
+<div class="line">    <span class="comment">// If the expected event has been missed LPM may never be awoken.</span></div>
+<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">  }</div>
+<div class="line">} <span class="keywordflow">while</span> (0);</div>
+<div class="line"><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+</div><!-- fragment --><p>An alternative if you must do output in your event check loop is to use <a class="el" href="console_8h.html#a9bbfc00a016e324e5f777e408e4ae6d3">iBSP430consoleTransmitUseInterrupts_ni()</a> to disable and re-enable interrupt-driven transmission:</p>
+<div class="fragment"><div class="line">vBSP430consoleFlush();</div>
+<div class="line"><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line">(void)<a class="code" href="console_8h.html#a9bbfc00a016e324e5f777e408e4ae6d3">iBSP430consoleTransmitUseInterrupts_ni</a>(0);</div>
+<div class="line"><span class="keywordflow">do</span> {</div>
+<div class="line">  events = events_ni;</div>
+<div class="line">  events_ni = 0;</div>
+<div class="line">  <span class="keywordflow">if</span> (! events) {</div>
+<div class="line">    cputs_ni(<span class="stringliteral">&quot;Going to sleep now&quot;</span>);</div>
+<div class="line">    <span class="comment">// Interrupts disabled, cputs_ni could not block and events_ni will</span></div>
+<div class="line">    <span class="comment">// remain unset.</span></div>
+<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">  }</div>
+<div class="line">} <span class="keywordflow">while</span> (0);</div>
+<div class="line">(void)<a class="code" href="console_8h.html#a9bbfc00a016e324e5f777e408e4ae6d3">iBSP430consoleTransmitUseInterrupts_ni</a>(1);</div>
+<div class="line"><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+</div><!-- fragment --><dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ac415beb77c9981cd718e79fca118b46d"></a>
 <div class="memitem">
@@ -195,7 +240,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Defined to a true value if <a class="el" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">BSP430_CONSOLE_SERIAL_PERIPH_HANDLE</a> has been provided, making the console infrastructure available.</p>
+<p>Defined to a true value if <a class="el" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">BSP430_CONSOLE_SERIAL_PERIPH_CPPID</a> has been provided, making the console infrastructure available.</p>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#a7e7be9a93cd9726e38378c1736d3b239">configBSP430_CONSOLE</a> </dd></dl>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
 
@@ -230,18 +275,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ab1c4b9f82c9f50ae94eb5efbf9e3bcb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CONSOLE_SERIAL_PERIPH_CPPID&#160;&#160;&#160;include &quot;bsp430_config.h&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define to the preprocessor-compatible identifier for the peripheral that should be used by platform-agnostic programs to create the console, for example <a class="el" href="core_8h.html#a123e46535dba1d895e7a071114de3d90">BSP430_PERIPH_CPPID_USCI5_A0</a>.</p>
+<p>The define must appear in the <a class="el" href="bsp430_config.html">BSP430 Configuration</a> subsystem so that functional resource requests are correctly propagated to the underlying resource instances. A default is provided based on the platform or available serial peripherals.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
+<dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro.</dd></dl>
+<dl class="section user"><dt>Affects:</dt><dd><a class="el" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">BSP430_CONSOLE_SERIAL_PERIPH_HANDLE</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a1c1b76277262c559e561cd58b2525cc1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td>
+          <td class="memname">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE&#160;&#160;&#160;derived platform or application specific</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The peripheral handle that should be used by platform-agnostic programs to create the console, for example <a class="el" href="usci5_8h.html#acea8698f877ebdb9b08d144d6a077c6f">BSP430_PERIPH_USCI5_A0</a>. A default is provided based on the platform or available serial peripherals.</p>
-<p>If you override this, be sure to set <a class="el" href="console_8h.html#af0ebb983a3ecf75fdc6d5990052c98bf">configBSP430_CONSOLE_USE_DEFAULT_RESOURCE</a> to false and to explicitly request the HAL resource in your bsp430_config.h file (e.g., enable <a class="el" href="usci5_8h.html#a85c627bed9577f2a10b4e3cee63f0d8f">configBSP430_HAL_USCI5_A0</a>).</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
+<p>The peripheral handle that should be used by platform-agnostic programs to create the console. This derives directly from <a class="el" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">BSP430_CONSOLE_SERIAL_PERIPH_CPPID</a>, but is a serial peripheral handle suitable for use in code.</p>
+<p>The corresponding HAL and ISR features are automatically enabled for this peripheral.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">BSP430_CONSOLE_SERIAL_PERIPH_CPPID</a> </dd></dl>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
 
 </div>
@@ -257,7 +319,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Define this to the size of a buffer to be used for interrupt-driven console output. The value must not exceed 254, and buffer management is most efficient if the value is a power of 2.</p>
 <p>If this has a value of zero, character output is not interrupt driven. <a class="el" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni()</a> will block until the UART is ready to accept a new character.</p>
-<dl class="section warning"><dt>Warning</dt><dd>By enabling interrupt-driven output the console output routines are no longer safe to call from within interrupt handlers. They may be called with interrupts disabled, but are entitled to enable interrupts in order to drain the transmission buffer to the point where they can complete their output. Use <a class="el" href="console_8h.html#a9bbfc00a016e324e5f777e408e4ae6d3">iBSP430consoleTransmitUseInterrupts_ni()</a> to enable and disable interrupt-driven transmission at runtime.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>By enabling interrupt-driven output the console output routines are no longer safe to call from within interrupt handlers. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
@@ -272,7 +334,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Define to a true value to request that a serial handle be identified to serve as a system console.</p>
-<p>See <a class="el" href="console_8h.html#af0ebb983a3ecf75fdc6d5990052c98bf">configBSP430_CONSOLE_USE_DEFAULT_RESOURCE</a>.</p>
+<p>See <a class="el" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">BSP430_CONSOLE_SERIAL_PERIPH_CPPID</a> for information about which serial peripheral will be used for this capability.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Affects:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
@@ -370,27 +432,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af0ebb983a3ecf75fdc6d5990052c98bf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_CONSOLE_USE_DEFAULT_RESOURCE&#160;&#160;&#160;(<a class="el" href="console_8h.html#a7e7be9a93cd9726e38378c1736d3b239">configBSP430_CONSOLE</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value to use the default (platform-specific) serial HAL handle. This is true by default if <a class="el" href="console_8h.html#a7e7be9a93cd9726e38378c1736d3b239">configBSP430_CONSOLE</a> is true.</p>
-<p>If you want to override the default, define this to a false value and provide definitions for: </p>
-<ul>
-<li>
-<a class="el" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">BSP430_CONSOLE_SERIAL_PERIPH_HANDLE</a> </li>
-</ul>
-<p>You are also responsible for requesting the inclusion of the corresponding device and its HAL interface in the application, e.g. by setting <a class="el" href="usci5_8h.html#acabe296f408e061e39c2b25b49cef938">configBSP430_HAL_USCI5_A1</a>.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a786264c47d20252b7ddb6142890d0c58"></a>
 <div class="memitem">
 <div class="memproto">
@@ -403,6 +444,22 @@ Functions</h2></td></tr>
 <p>If defined to true, the console display routines will always emit a carriage return before a newline. This provides compatibility with standard terminal programs like minicom.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ad8eb0b740ec0325dfc5a47d7364e14a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef int(*  iBSP430consoleRxCallback_ni)(void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Callback for alarm events.</p>
+<p>This function will be invoked by the console infrastructure in an interrupt context after received characters have been buffered.</p>
+<dl class="section return"><dt>Returns</dt><dd>As with <a class="el" href="periph_8h.html#ada4e594aec086cfbae21e574ae28c452">iBSP430halISRCallbackVoid()</a>. </dd></dl>
 
 </div>
 </div>
@@ -430,7 +487,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Return character disregarding interrupt state.</p>
 <p>This is a wrapper around <a class="el" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni()</a>. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2cli_2main_8c-example.html#a41">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2cli_2main_8c-example.html#a42">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -450,7 +507,7 @@ Functions</h2></td></tr>
 <p>Return a character that was input to the console.</p>
 <dl class="section return"><dt>Returns</dt><dd>the next character that was input to the console, or -1 if no characters are available.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function is available even if <a class="el" href="console_8h.html#a8f5e617854ea03057eb555413356a0d7">BSP430_CONSOLE_RX_BUFFER_SIZE</a> is zero. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a9">bootstrap/console/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2console_2main_8c-example.html#a10">bootstrap/console/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -501,6 +558,7 @@ Functions</h2></td></tr>
 <p>Like printf(3), but to the console UART.</p>
 <p>Interrupts are disabled during the duration of the invocation. On exit, interruptibility state is restored (if entered with interrupts disabled, they remain disabled).</p>
 <p>If xBSP430consoleInitialize() has not assigned a UART device, the call is a no-op.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">format</td><td>A printf(3) format string</td></tr>
@@ -509,7 +567,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of characters printed if the console is enabled; 0 if it is disabled; a negative error code if an error is encountered</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a8d514ef914bd654dcc9c4dd4b12349c8">configBSP430_CONSOLE_LIBC_HAS_VUPRINTF</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a23">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a15">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a31">bootstrap/clocks/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a3">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a0">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a14">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a5">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a18">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a4">sensors/tmp102/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a14">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a0">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a22">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a14">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a3">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a0">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a14">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a5">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a15">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a4">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a18">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a14">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a0">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -536,6 +594,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Like putchar(3) to the console UART</p>
 <p>This wraps <a class="el" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni()</a> with code to preserve the interrupt enable state.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>character to be output</td></tr>
@@ -543,7 +602,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the character that was output </dd></dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a8">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a44">sensors/hh10d/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a56">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a6">utility/cli/main.c</a>.</dd>
+</dl>
 </div>
 </div>
 <a class="anchor" id="a46ea793d7dd79b66e1c3a195d0d4a7b1"></a>
@@ -560,6 +620,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Like putchar(3) to the console UART, with interrupts already disabled</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>character to be output</td></tr>
@@ -567,8 +628,83 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the character that was output </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a29">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a29">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a12">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a10">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a8">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a42">sensors/hh10d/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a56">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a6">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a28">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a32">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a13">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a10">platform/exp430f5529/fatfs/main.c</a>, and <a class="el" href="rfem_2cc3000_2main_8c-example.html#a32">rfem/cc3000/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a83f67cf1cd5c672cc9dc947dd7d52f4b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cputchars </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>cp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Like puts(3) to the console UART without trailing newline and with explicit length instead of a terminating NUL.</p>
+<p>As with <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>, interrupts are disabled for the duration of the invocation (except see <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>).</p>
+<dl class="section note"><dt>Note</dt><dd>Any errors returned by the underlying UART implementation while writing are ignored.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cp</td><td>first of a series of characters to be emitted to the console</td></tr>
+    <tr><td class="paramname">len</td><td>number of characters to emit</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of characters written </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a27e2ff7e39dfb73bbf4d86889d782ed7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cputchars_ni </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>cp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Like puts(3) to the console UART without trailing newline and with explicit length instead of a terminating NUL.</p>
+<dl class="section note"><dt>Note</dt><dd>Any errors returned by the underlying UART implementation while writing are ignored.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cp</td><td>first of a series of characters to be emitted to the console</td></tr>
+    <tr><td class="paramname">len</td><td>number of characters to emit</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of characters written </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a039bc72010b9c423a7d9ce0908ffc37b"></a>
@@ -595,6 +731,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Format an int using itoa and emit it to the console.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>the integer value to be formatted </td></tr>
@@ -605,7 +742,7 @@ Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that <code>radix</code> is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a45dea9afedd2d38692468f4d590ad07a">configBSP430_CONSOLE_LIBC_HAS_ITOA</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a12">bootstrap/clocks/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a18">bootstrap/clocks/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -633,6 +770,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Format an int using ltoa and emit it to the console.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>the integer value to be formatted </td></tr>
@@ -643,7 +781,7 @@ Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the radix is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a3c0cce6af572fe01617ef6c7da2bccfa">configBSP430_CONSOLE_LIBC_HAS_LTOA</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a30">bootstrap/clocks/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a33">bootstrap/clocks/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -661,8 +799,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Like puts(3) to the console UART</p>
-<p>As with <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>, interrupts are disabled for the duration of the invocation.</p>
+<p>As with <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>, interrupts are disabled for the duration of the invocation (except see <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>).</p>
 <dl class="section note"><dt>Note</dt><dd>Any errors returned by the underlying UART implementation while writing are ignored.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>a string to be emitted to the console</td></tr>
@@ -670,7 +809,35 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters written, including the newline </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a45">bootstrap/applpm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a5">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a44">bootstrap/applpm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a5">utility/cli/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="ac4ebbf60b8d0840b3039203c47f61c86"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int cputtext </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Like puts(3) to the console UART without trailing newline</p>
+<p>As with <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>, interrupts are disabled for the duration of the invocation (except see <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>).</p>
+<dl class="section note"><dt>Note</dt><dd>Any errors returned by the underlying UART implementation while writing are ignored.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>a NUL-terminated string to be emitted to the console</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of characters written </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2cli_2main_8c-example.html#a3">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -689,14 +856,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Like puts(3) to the console UART without trailing newline</p>
 <dl class="section note"><dt>Note</dt><dd>Any errors returned by the underlying UART implementation while writing are ignored.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">s</td><td>a string to be emitted to the console</td></tr>
+    <tr><td class="paramname">s</td><td>a NUL-terminated string to be emitted to the console</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters written </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a25">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a2">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a10">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a5">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a28">rfem/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a3">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a24">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a2">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a11">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a5">platform/exp430f5529/fatfs/main.c</a>, and <a class="el" href="rfem_2cc3000_2main_8c-example.html#a28">rfem/cc3000/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -724,6 +892,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Format an int using utoa and emit it to the console.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>the integer value to be formatted </td></tr>
@@ -734,7 +903,7 @@ Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the radix is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a3c4508ec47a8acb913c91b16fe215665">configBSP430_CONSOLE_LIBC_HAS_UTOA</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a3">bootstrap/clocks/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a11">bootstrap/console/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a3">bootstrap/clocks/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a12">bootstrap/console/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -762,6 +931,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Format an int using itoa and emit it to the console.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>the integer value to be formatted </td></tr>
@@ -772,7 +942,7 @@ Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the radix is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a1459f5b3ccb0c486550430a8f6c32241">configBSP430_CONSOLE_LIBC_HAS_ULTOA</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a5">bootstrap/clocks/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a13">bootstrap/console/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a5">bootstrap/clocks/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a14">bootstrap/console/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -791,7 +961,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Return a reference to the console device.</p>
 <dl class="section return"><dt>Returns</dt><dd>the serial HAL instance used for console interaction. A null pointer is returned if the console has not been successfully initialized. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a40">bootstrap/applpm/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a4">bootstrap/console/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a39">bootstrap/applpm/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a4">bootstrap/console/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -852,7 +1022,7 @@ Functions</h2></td></tr>
 <p>This configures the platform-specified serial HAL instance identified by <a class="el" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">BSP430_CONSOLE_SERIAL_PERIPH_HANDLE</a> as specified by <a class="el" href="console_8h.html#a81e4d81848e239a0f37c0e529a92d0e6">BSP430_CONSOLE_BAUD_RATE</a>. If <a class="el" href="platform_8h.html#a5658121b6e4e9a02a759878c58807b43">BSP430_PLATFORM_SPIN_FOR_JUMPER</a> is true, it will invoke <a class="el" href="platform_8h.html#a2bf91c013585d7c2aaa6d7b4d0e35904">vBSP430platformSpinForJumper_ni()</a>. Once the console is configured and any required delays completed it will return, allowing use of <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a> and related functions.</p>
 <p>If this function is invoked multiple times without an intervening call to <a class="el" href="console_8h.html#a32249fa7e6144884aeecd30a1766e3fa">iBSP430consoleDeconfigure()</a>, the existing configuration is unchanged.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if the console was successfully initialized, -1 if an error occurred. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a22">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a14">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a1">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a3">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a2">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a22">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a13">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a4">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a17">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a3">sensors/tmp102/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a39">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a35">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a21">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a13">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a1">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a3">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a2">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a22">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a13">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a4">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a14">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a3">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a16">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a39">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a35">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -870,8 +1040,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Control whether console output uses interrupt-driven transmission.</p>
-<p>When <a class="el" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">BSP430_CONSOLE_TX_BUFFER_SIZE</a> is configured to a positive value, it is normally improper to use the console output routines from within interrupt handlers and in other cases where interrupts are disabled, since the routines might enable interrupts to allow the transmission buffer to drain. This routine can be used at runtime to disable the interrupt-based transmission, thus allowing use of direct, busy-waiting console output.</p>
-<dl class="section note"><dt>Note</dt><dd>You probably want to invoke vBSP430consoleFlush() prior to disabling interrupt-driven transmission. If you don't, whatever was unflushed will be displayed once the transmission is re-enabled.</dd></dl>
+<p>When <a class="el" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">BSP430_CONSOLE_TX_BUFFER_SIZE</a> is configured to a positive value, it is normally improper to use the console output routines from within interrupt handlers and in other cases where interrupts are disabled, since the routines might enable interrupts to allow the transmission buffer to drain. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>. This routine can be used at runtime to disable the interrupt-based transmission, thus allowing use of direct, busy-waiting console output.</p>
+<dl class="section note"><dt>Note</dt><dd>You probably want to invoke vBSP430consoleFlush() prior to disabling interrupt-driven transmission. If you don't, whatever was unflushed in the buffer will be displayed once the transmission is re-enabled.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">enablep</td><td>nonzero if interrupt-drive transmission is to be used; zero to disable the transmit interrupt on the console UART and use direct UART writes instead.</td></tr>
@@ -899,6 +1069,7 @@ Functions</h2></td></tr>
 <p>This function causes the caller to block until the interrupt-driven console transmit buffer has drained to the point where at least <code>want_available</code> bytes are available.</p>
 <p>If the console does not use interrupt-driven transmission, this function immediately returns zero.</p>
 <dl class="section note"><dt>Note</dt><dd>The return value of this function indicates whether it was necessary to enable interrupts in order to achieve the desired available space. In such a case an application may need to re-check other conditions to ensure there is no pending work prior to entering low power mode.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep until its completion conditions are met.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">want_available</td><td>the number of bytes that are requested. A negative number requires that the transmit buffer be empty (i.e., flushed).</td></tr>
@@ -911,6 +1082,34 @@ Functions</h2></td></tr>
 <li>-1 if <code>want_available</code> is larger than <a class="el" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">BSP430_CONSOLE_TX_BUFFER_SIZE</a>-1, which is the maximum number of bytes that can be made available. </li>
 </ul>
 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aec7949d1ea9a80f4d20c79b137c440f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vBSP430consoleSetRxCallback_ni </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a>&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Register a callback for console RX events.</p>
+<p>If a non-null callback is registered with the console, it will be invoked after each character received on the console is stored in the receive buffer. The return value of the callback influences how the console RX interrupt handler manages LPM wakeup and other behavior; see <a class="el" href="callbacks.html#callback_retval">Interrupt Callback Return Values</a>.</p>
+<p>If no callback is registered, the infrastructure will act as though a registered callback did nothing but return <a class="el" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>The infrastructure will add <a class="el" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a> to any value returned by this callback, including the value returned by a null (default) callback.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function is not available if <a class="el" href="console_8h.html#a8f5e617854ea03057eb555413356a0d7">BSP430_CONSOLE_RX_BUFFER_SIZE</a> is zero.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cb</td><td>the callback to be invoked on received characters, or a null pointer to cause the application to wake from LPM when characters are received.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#a8f5e617854ea03057eb555413356a0d7">BSP430_CONSOLE_RX_BUFFER_SIZE</a> </dd></dl>
 
 </div>
 </div>
@@ -938,6 +1137,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Like vprintf(3), but to the console UART.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">format</td><td>A printf(3) format string </td></tr>
@@ -952,7 +1152,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

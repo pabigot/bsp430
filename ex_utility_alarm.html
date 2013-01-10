@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -375,6 +375,10 @@ main.c</h1>
 <div class="line">      } <span class="keywordflow">else</span> {</div>
 <div class="line">        rv = <a class="code" href="group__grp__timer__alarm.html#ga9928ff05ac8f8067c2fc8e4a0b3be331">iBSP430timerAlarmDisable</a>(alarm[cc]);</div>
 <div class="line">      }</div>
+<div class="line">      <span class="keywordflow">if</span> (0 != rv) {</div>
+<div class="line">        <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Failed cc index %d: %d\n&quot;</span>, cc, rv);</div>
+<div class="line">        <span class="keywordflow">return</span> rv;</div>
+<div class="line">      }</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
 <div class="line">      rv = -1;</div>
 <div class="line">    }</div>
@@ -549,9 +553,9 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
 <div class="line"></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CPU clocks (Hz): MCLK %lu ; SMCLK %lu ; ACLK %u\n&quot;</span>,</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CPU clocks (Hz): MCLK %lu ; SMCLK %lu ; ACLK %lu\n&quot;</span>,</div>
 <div class="line">          <a class="code" href="clock_8h.html#aa749bb6b58228edd697cd4c33494404f">ulBSP430clockMCLK_Hz</a>(), <a class="code" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz</a>(),</div>
-<div class="line">          <a class="code" href="clock_8h.html#a7e6b8510714bb26cac0b2c5cdcfdc0e0">uiBSP430clockACLK_Hz</a>());</div>
+<div class="line">          <a class="code" href="clock_8h.html#aeb12b1afa0629e4d4421038fb9b09d12">ulBSP430clockACLK_Hz</a>());</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
@@ -621,6 +625,7 @@ main.c</h1>
 <div class="line">  <a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line">  (void)<a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line">  <a class="code" href="cli_8h.html#a0a5b3cee7e2d9002d5d301b36c814d55">vBSP430cliSetDiagnosticFunction</a>(<a class="code" href="group__grp__utility__cli__cli.html#ga30922f40d6b2702628bb88d9e0069caf">iBSP430cliConsoleDiagnostic</a>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;alarm: &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">  alarmHAL_ = <a class="code" href="timer_8h.html#afe3886cec73bfe10e638855dac7964dc">hBSP430timerLookup</a>(ALARM_TIMER_PERIPH_HANDLE);</div>
 <div class="line">  <span class="keywordflow">if</span> (! alarmHAL_) {</div>
@@ -679,7 +684,7 @@ main.c</h1>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (flags &amp; eBSP430cliConsole_REPAINT_BEL) {</div>
-<div class="line">      <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
+<div class="line">      <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT_BEL;</div>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
@@ -699,7 +704,7 @@ main.c</h1>
 <div class="line">        <span class="keywordflow">continue</span>;</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
-<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a>);</div>
 <div class="line">    ++wakeups;</div>
 <div class="line">  }</div>
 <div class="line"></div>
@@ -735,11 +740,11 @@ bsp430_config.h</h1>
 <div class="line"><span class="comment"> * support so we can count overflows, and the CC0 ISR so we can put</span></div>
 <div class="line"><span class="comment"> * alarms on it too. */</span></div>
 <div class="line"><span class="preprocessor">#define configBSP430_TIMER_CCACLK 1</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL 1</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_TIMER_CCACLK_HAL 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_TIMER_CCACLK_HAL_CC0_ISR 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Get platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_utility_alarm_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">PLATFORM ?= exp430f5438</div>
@@ -752,7 +757,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -110,10 +110,18 @@ Macros</h2></td></tr>
 <tr class="separator:a4cfe6f32391ffebb454ac32609505a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9263146121baf3bb2cfe973ef4fde8da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#a9263146121baf3bb2cfe973ef4fde8da">BSP430_BC2_TRIM_TO_MCLK</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="separator:a9263146121baf3bb2cfe973ef4fde8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;(BCSCTL3 &amp; (LFXT1S1 | LFXT1S0 | LFXT1OF))</td></tr>
+<tr class="memitem:a090b79e6d883a1f7579c2a77f526f23c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#a090b79e6d883a1f7579c2a77f526f23c">BSP430_BC2_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;(BCSCTL3 &amp; BSP430_BC2_LFXT1OF_)</td></tr>
+<tr class="separator:a090b79e6d883a1f7579c2a77f526f23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2366626addc8e36f6176e3fca2c549d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#af2366626addc8e36f6176e3fca2c549d">BSP430_BC2_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;(BC2CTL7 &amp; BSP430_BC2_XT2OF_)</td></tr>
+<tr class="separator:af2366626addc8e36f6176e3fca2c549d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;((BCSCTL3 &amp; (LFXT1S0 | LFXT1S1)) || <a class="el" href="bc2_8h.html#a090b79e6d883a1f7579c2a77f526f23c">BSP430_BC2_LFXT1_IS_FAULTED_NI</a>())</td></tr>
 <tr class="separator:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59021b5f9f12d0361bdcc8144859890"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#ae59021b5f9f12d0361bdcc8144859890">BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</a>()</td></tr>
-<tr class="separator:ae59021b5f9f12d0361bdcc8144859890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad464616a6b90463f1eae80399c34905"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#aad464616a6b90463f1eae80399c34905">BSP430_CLOCK_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;((BCSCTL1 &amp; XT2OFF) || <a class="el" href="bc2_8h.html#af2366626addc8e36f6176e3fca2c549d">BSP430_BC2_XT2_IS_FAULTED_NI</a>())</td></tr>
+<tr class="separator:aad464616a6b90463f1eae80399c34905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#a193ffc3b8d68bc1ec72dbeb887061af2">BSP430_CLOCK_CLEAR_FAULTS_NI</a>()</td></tr>
+<tr class="separator:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4253e74bf9b15ba67fac82790ec629f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#ab4253e74bf9b15ba67fac82790ec629f">BSP430_CLOCK_LFXT1_XCAP</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#af0c275c45d19c84f5edf7d7148935d95">XCAP_1</a></td></tr>
+<tr class="separator:ab4253e74bf9b15ba67fac82790ec629f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>&#160;&#160;&#160;12000U</td></tr>
 <tr class="separator:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c49529cfa0ba1ada6819dfe6c5d68e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc2_8h.html#a24c49529cfa0ba1ada6819dfe6c5d68e">BSP430_CLOCK_PUC_MCLK_HZ</a>&#160;&#160;&#160;1100000UL</td></tr>
@@ -151,8 +159,26 @@ Hardware Adaptation Layer</h1>
 <li>The implementation assumes that MCLK and SMCLK are both sourced from DCOCLK.</li>
 </ul>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a090b79e6d883a1f7579c2a77f526f23c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_BC2_LFXT1_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(BCSCTL3 &amp; BSP430_BC2_LFXT1OF_)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BC2-specific check for LFXT1 crystal fault condition.</p>
+<p>This checks exactly for the fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>A crystal that has never been enabled will not register as faulted. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a9263146121baf3bb2cfe973ef4fde8da"></a>
 <div class="memitem">
 <div class="memproto">
@@ -169,24 +195,42 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
-<a class="anchor" id="ae59021b5f9f12d0361bdcc8144859890"></a>
+<a class="anchor" id="af2366626addc8e36f6176e3fca2c549d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</td>
+          <td class="memname">#define BSP430_BC2_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(BC2CTL7 &amp; BSP430_BC2_XT2OF_)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>BC2-specific check for XT2 crystal fault condition.</p>
+<p>If the platform does not support an XT2 crystal no fault is diagnosed.</p>
+<dl class="section note"><dt>Note</dt><dd>A crystal that has never been enabled will not register as faulted. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a193ffc3b8d68bc1ec72dbeb887061af2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_CLEAR_FAULTS_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                   \</div>
-<div class="line">    <span class="comment">/* User&#39;s guide says BCSCTL3.LFXT1OF is read-only. */</span>   \</div>
-<div class="line">    IFG1 &amp;= ~OFIFG;                                             \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                             \</div>
+<div class="line">    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                                  \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment --><p>Clear the fault associated with LFXT1.</p>
-<p>This definition overrides the generic definition to clear the crystal-specific flags as well as the system flag. </p>
+</div><!-- fragment --><p>Clear all clock faults.</p>
+<p>The BC2 oscillator fault flags are read-only, so this only clears the system oscillator flag.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
 </div>
@@ -198,12 +242,27 @@ Hardware Adaptation Layer</h1>
           <td class="memname">#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;(BCSCTL3 &amp; (LFXT1S1 | LFXT1S0 | LFXT1OF))</td>
+          <td>&#160;&#160;&#160;((BCSCTL3 &amp; (LFXT1S0 | LFXT1S1)) || <a class="el" href="bc2_8h.html#a090b79e6d883a1f7579c2a77f526f23c">BSP430_BC2_LFXT1_IS_FAULTED_NI</a>())</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check whether the LFXT1 crystal has a fault condition.</p>
-<p>This definition overrides the generic definition to test the crystal-specific flags. The LFXT1OF bit reflects the stability of the external crystal only if the external crystal is the source for LFXT1, so check that too: all is good only if LFXT1S is an external crystal that is not faulted. </p>
+<p>Check whether the BC2-controlled LFXT1 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Unlike most other MSP430 clock peripherals, MCUs with BC2 power-up with the crystal pins in their peripheral mode and with the external crystal selected as the LFXT1 source. However, the fault flag is still valid only if the external crystal is selected. This check will indicate a fault if one is present, or if the LFXT1 source is not the external crystal.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="bc2_8h.html#a090b79e6d883a1f7579c2a77f526f23c">BSP430_BC2_LFXT1_IS_FAULTED_NI()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab4253e74bf9b15ba67fac82790ec629f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_LFXT1_XCAP&#160;&#160;&#160;<a class="el" href="msp430_8h.html#af0c275c45d19c84f5edf7d7148935d95">XCAP_1</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Peripheral default setting for platform-specific constant </p>
 
 </div>
 </div>
@@ -233,6 +292,25 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
+<a class="anchor" id="aad464616a6b90463f1eae80399c34905"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;((BCSCTL1 &amp; XT2OFF) || <a class="el" href="bc2_8h.html#af2366626addc8e36f6176e3fca2c549d">BSP430_BC2_XT2_IS_FAULTED_NI</a>())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check whether the BC2-controlled XT2 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Oscillator fault flags are not set unless a fault has been detected. If the crystal has never been enabled, no fault will have been detected. On power-up, the XT2IN function is not enabled and BCSCTL1.XT2OFF is set, and BSP430 treats BCSCTL1.XT2OFF as an indication that the pins are not configured for crystal use, either because XT2 has not been configured or has been configured and found to be faulted. Although it is perfectly acceptable to have BCSCTL1.XT2OFF set and the crystal working fine, the complexity of detecting that case is not supported by this implementation.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="bc2_8h.html#af2366626addc8e36f6176e3fca2c549d">BSP430_BC2_XT2_IS_FAULTED_NI()</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a8c2244a0754bddf775d1c4a0f79b8c82"></a>
 <div class="memitem">
 <div class="memproto">
@@ -257,7 +335,7 @@ Hardware Adaptation Layer</h1>
       </table>
 </div><div class="memdoc">
 <p>Define to a true value to request that ulBSP430bc2TrimToMCLK_ni() be made available.</p>
-<p>Because implementation of this function depends on <a class="el" href="group__grp__timer__ccaclk.html#gafaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a>, setting this option causes &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt; to default <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> to true.</p>
+<p>Because implementation of this function depends on <a class="el" href="group__grp__timer__ccaclk.html#gafaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a>, setting this option causes &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt; to default <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> to true.</p>
 <p>This value represents an application or system request for the feature; availability of the feature must be tested using <a class="el" href="bc2_8h.html#a9263146121baf3bb2cfe973ef4fde8da">BSP430_BC2_TRIM_TO_MCLK</a> before attempting to invoke the function.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Affects:</dt><dd><a class="el" href="bc2_8h.html#a9263146121baf3bb2cfe973ef4fde8da">BSP430_BC2_TRIM_TO_MCLK</a> </dd></dl>
@@ -283,7 +361,7 @@ Hardware Adaptation Layer</h1>
 <p>Adjust the DCO as necessary to reach the requested MCLK speed</p>
 <p>nThe BC2 peripheral supports only a small number of calibrated DCO clock frequencies, and it is not uncommon for them to be off by a significant amount for the cheaper ValueLine MCUs. If an ACLK source at a trusted rate is available, the MCU can implement a loop to converge on a DCO configuration that supports a specific requested clock speed.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if the requested speed could be reached, -1 if an error occurred. Potential errors are inability to access <a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The accuracy of the resulting frequency is proportional to the accuracy of the returned value of <a class="el" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni()</a>. If ACLK derives from VLOCLK, that estimate may be off by several percent, which will generally result in serial errors if SMCLK is used to generate a baud rate clock. You may wish to check <a class="el" href="bc2_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI()</a> prior to invoking this, as is done by <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a> for this peripheral.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The accuracy of the resulting frequency is proportional to the accuracy of the returned value of <a class="el" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni()</a>. If ACLK derives from VLOCLK, that estimate may be off by several percent, which will generally result in serial errors if SMCLK is used to generate a baud rate clock. You may wish to check <a class="el" href="bc2_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI()</a> prior to invoking this, as is done by <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a> for this peripheral.</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="bc2_8h.html#a9263146121baf3bb2cfe973ef4fde8da">BSP430_BC2_TRIM_TO_MCLK</a>, <a class="el" href="group__grp__timer__ccaclk.html#gafaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a> </dd></dl>
 
 </div>
@@ -291,7 +369,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

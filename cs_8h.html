@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -105,10 +105,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Macros</h2></td></tr>
 <tr class="memitem:a6c04d4f7058250c4ab5c9d220a4234a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a6c04d4f7058250c4ab5c9d220a4234a0">BSP430_MODULE_CS</a></td></tr>
 <tr class="separator:a6c04d4f7058250c4ab5c9d220a4234a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;((CSCTL4 &amp; XT1OFF) || (CSCTL5 &amp; XT1OFFG))</td></tr>
+<tr class="memitem:a975f44a73a1181b0fd58b353f0e49024"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a975f44a73a1181b0fd58b353f0e49024">BSP430_CS_NOMINAL_MODCLK_HZ</a>&#160;&#160;&#160;5000000UL</td></tr>
+<tr class="separator:a975f44a73a1181b0fd58b353f0e49024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8d8d8e53789714997a6ff5718836359"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#ac8d8d8e53789714997a6ff5718836359">BSP430_CS_NOMINAL_LFMODCLK_HZ</a>&#160;&#160;&#160;(<a class="el" href="cs_8h.html#a975f44a73a1181b0fd58b353f0e49024">BSP430_CS_NOMINAL_MODCLK_HZ</a> / 128)</td></tr>
+<tr class="separator:ac8d8d8e53789714997a6ff5718836359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02a5d0ea0118facd7fb5d4a701a98b29"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a02a5d0ea0118facd7fb5d4a701a98b29">BSP430_CS_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;(CSCTL5 &amp; BSP430_CS_XT1OFFG_)</td></tr>
+<tr class="separator:a02a5d0ea0118facd7fb5d4a701a98b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1bbe0ef1757703626cd14953359be7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#ac1bbe0ef1757703626cd14953359be7e">BSP430_CS_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;(CSCTL5 &amp; BSP430_CS_XT2OFFG_)</td></tr>
+<tr class="separator:ac1bbe0ef1757703626cd14953359be7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;((CSCTL4 &amp; BSP430_CS_XT1OFF_) || <a class="el" href="cs_8h.html#a02a5d0ea0118facd7fb5d4a701a98b29">BSP430_CS_LFXT1_IS_FAULTED_NI</a>())</td></tr>
 <tr class="separator:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59021b5f9f12d0361bdcc8144859890"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#ae59021b5f9f12d0361bdcc8144859890">BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</a>()</td></tr>
-<tr class="separator:ae59021b5f9f12d0361bdcc8144859890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad464616a6b90463f1eae80399c34905"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#aad464616a6b90463f1eae80399c34905">BSP430_CLOCK_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;((CSCTL4 &amp; BSP430_CS_XT2OFF_) || <a class="el" href="cs_8h.html#ac1bbe0ef1757703626cd14953359be7e">BSP430_CS_XT2_IS_FAULTED_NI</a>())</td></tr>
+<tr class="separator:aad464616a6b90463f1eae80399c34905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a735f0669e36e96cad718a8c831a168cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a735f0669e36e96cad718a8c831a168cf">BSP430_CS_CLEAR_FAULTS_NI</a>()</td></tr>
+<tr class="separator:a735f0669e36e96cad718a8c831a168cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a193ffc3b8d68bc1ec72dbeb887061af2">BSP430_CLOCK_CLEAR_FAULTS_NI</a>()</td></tr>
+<tr class="separator:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>&#160;&#160;&#160;10000U</td></tr>
 <tr class="separator:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c49529cfa0ba1ada6819dfe6c5d68e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a24c49529cfa0ba1ada6819dfe6c5d68e">BSP430_CLOCK_PUC_MCLK_HZ</a>&#160;&#160;&#160;1048576UL</td></tr>
@@ -116,7 +128,7 @@ Macros</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hardware presentation/abstraction for Clock System (CS). </p>
-<p>The Clock System (CS) peripheral is present in FR5xx-family devices.</p>
+<p>The Clock System (CS) peripheral is present in FR5xx-family devices. Variant CS is used in FR57xx devices; variant CS_A is used in FR58xx/FR59xx devices. They differ in the names for constants related to low and high frequency crystals, in the set of supported DCOCLK frequencies, and in whether DCOCLK can source ACLK.</p>
 <h1><a class="anchor" id="h_periph_cs_opt"></a>
 Module Configuration Options</h1>
 <p>None supported.</p>
@@ -128,35 +140,35 @@ Hardware Adaptation Layer</h1>
 <p>As there can be only one instance of CS on any MCU, there is no structure supporting a CS HAL.</p>
 <p>The standard set of capabilities in the bsp430/clocks.h header are supported, with the following details:</p>
 <ul>
-<li>The peripheral supports only a few factory-trimmed frequencies: 5.33, 6.67, and 8 MHz on low-speed devices. On high-speed&ndash;capable devices the speed may also be set to 16, 20, and 24 MHz. <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a> will select and return the closest available frequency.</li>
+<li>(CS) The peripheral supports only a few factory-trimmed frequencies: for CS these are 5.33, 6.67, and 8 MHz on low-speed devices, and additionally 16, 20, and 24 MHz on high-speed&ndash;capable devices. For CS_A these are 1, 2.67, 3.33, 4.0, 5.33, and 6.67 MHz on low-speed devices, and additionally 8, 16, 20, and 24 MHz on high-speed-capable devices. <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a> will select and return the closest available frequency.</li>
 </ul>
 <ul>
 <li>The implementation assumes that MCLK and SMCLK are both sourced from DCOCLK.</li>
 </ul>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ae59021b5f9f12d0361bdcc8144859890"></a>
+<a class="anchor" id="a193ffc3b8d68bc1ec72dbeb887061af2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</td>
+          <td class="memname">#define BSP430_CLOCK_CLEAR_FAULTS_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {    \</div>
-<div class="line">    CSCTL0_H = 0xA5;                                    \</div>
-<div class="line">    CSCTL5 &amp;= ~XT1OFFG;                                 \</div>
-<div class="line">    CSCTL0_H = !0xA5;                                   \</div>
-<div class="line">    SFRIFG1 &amp;= ~OFIFG;                                  \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                     \</div>
+<div class="line">    CSCTL0_H = 0xA5;                                            \</div>
+<div class="line">    BSP430_CS_CLEAR_FAULTS_NI();                                \</div>
+<div class="line">    CSCTL0_H = !0xA5;                                           \</div>
+<div class="line">    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                          \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment --><p>Clear the fault associated with LFXT1.</p>
+</div><!-- fragment --><p>Clear all clock faults.</p>
 <p>This definition overrides the generic definition to clear the crystal-specific flags as well as the system flag.</p>
-<dl class="section warning"><dt>Warning</dt><dd>Because the CS registers must be unlocked when being modified, this macro will unlock and then re-lock them. It should not be invoked in a situation where the CS registers are already locked. </dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
 </div>
@@ -168,12 +180,14 @@ Hardware Adaptation Layer</h1>
           <td class="memname">#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;((CSCTL4 &amp; XT1OFF) || (CSCTL5 &amp; XT1OFFG))</td>
+          <td>&#160;&#160;&#160;((CSCTL4 &amp; BSP430_CS_XT1OFF_) || <a class="el" href="cs_8h.html#a02a5d0ea0118facd7fb5d4a701a98b29">BSP430_CS_LFXT1_IS_FAULTED_NI</a>())</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check whether the LFXT1 crystal has a fault condition.</p>
-<p>This definition overrides the generic definition to test the crystal-specific flags. Note that if somebody has turned off the crystal by setting CSCTL4.XT1OFF, the crystal is assumed to be faulted. </p>
+<p>Check whether the CS-controlled LFXT1 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Oscillator fault flags are not set unless a fault has been detected. If the crystal has never been enabled, no fault will have been detected. On power-up, the XIN function is not enabled and CSCTL4.XT1OFF is set, and BSP430 treats CSCTL4.XT1OFF as an indication that the pins are not configured for crystal use, either because LFXT1 has not been configured or has been configured and found to be faulted. Although it is perfectly acceptable to have CSCTL4.XT1OFF set and the crystal working fine, the complexity of detecting that case is not supported by this implementation.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="cs_8h.html#a02a5d0ea0118facd7fb5d4a701a98b29">BSP430_CS_LFXT1_IS_FAULTED_NI()</a> </dd></dl>
 
 </div>
 </div>
@@ -203,6 +217,109 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
+<a class="anchor" id="aad464616a6b90463f1eae80399c34905"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;((CSCTL4 &amp; BSP430_CS_XT2OFF_) || <a class="el" href="cs_8h.html#ac1bbe0ef1757703626cd14953359be7e">BSP430_CS_XT2_IS_FAULTED_NI</a>())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check whether the CS-controlled XT2 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Oscillator fault flags are not set unless a fault has been detected. If the crystal has never been enabled, no fault will have been detected. On power-up, the XT2IN function is not enabled and CSCTL4.XT2OFF is set, and BSP430 treats CSCTL4.XT2OFF as an indication that the pins are not configured for crystal use, either because XT2 has not been configured or has been configured and found to be faulted. Although it is perfectly acceptable to have CSCTL4.XT2OFF set and the crystal working fine, the complexity of detecting that case is not supported by this implementation.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="cs_8h.html#ac1bbe0ef1757703626cd14953359be7e">BSP430_CS_XT2_IS_FAULTED_NI()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a735f0669e36e96cad718a8c831a168cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CS_CLEAR_FAULTS_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                        \</div>
+<div class="line">    CSCTL5 &amp;= ~(BSP430_CS_XT2OFFG_ | BSP430_CS_XT1OFFG_);       \</div>
+<div class="line">  } <span class="keywordflow">while</span> (0)                                                   \</div>
+</div><!-- fragment --><p>Clear all CS-specific faults.</p>
+<dl class="section note"><dt>Note</dt><dd>This does not unlock the CS registers. Invoking it while registers are locked will result in a restart. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a02a5d0ea0118facd7fb5d4a701a98b29"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CS_LFXT1_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(CSCTL5 &amp; BSP430_CS_XT1OFFG_)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CS-specific check for LFXT1 crystal fault condition.</p>
+<p>This checks exactly for the fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>A crystal that has never been enabled will not register as faulted. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac8d8d8e53789714997a6ff5718836359"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CS_NOMINAL_LFMODCLK_HZ&#160;&#160;&#160;(<a class="el" href="cs_8h.html#a975f44a73a1181b0fd58b353f0e49024">BSP430_CS_NOMINAL_MODCLK_HZ</a> / 128)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Nominal rate of the CS_A peripheral LFMODCLK.</p>
+<p>This source exists only in the CS_A version of the CS peripheral. It is driven by an internal low-power oscillator. </p>
+
+</div>
+</div>
+<a class="anchor" id="a975f44a73a1181b0fd58b353f0e49024"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CS_NOMINAL_MODCLK_HZ&#160;&#160;&#160;5000000UL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Nominal rate of the CS_A peripheral MODCLK.</p>
+<p>This source exists only in the CS_A version of the CS peripheral. It is driven by an internal low-power oscillator. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac1bbe0ef1757703626cd14953359be7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CS_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(CSCTL5 &amp; BSP430_CS_XT2OFFG_)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CS-specific check for XT2 crystal fault condition.</p>
+<p>If the platform does not support an XT2 crystal no fault is diagnosed.</p>
+<dl class="section note"><dt>Note</dt><dd>A crystal that has never been enabled will not register as faulted. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a6c04d4f7058250c4ab5c9d220a4234a0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -213,7 +330,7 @@ Hardware Adaptation Layer</h1>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">(defined(__MSP430_HAS_CS__)            \</div>
-<div class="line">                          || defined(__MSP430_HAS_CS_A__))      \</div>
+<div class="line">                          || defined(__MSP430_HAS_CS_A__))</div>
 </div><!-- fragment --><p>Defined on inclusion of &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction for Clock System (CS).">bsp430/periph/cs.h</a>&gt;. The value evaluates to true if the target MCU supports the Clock System peripheral, and false if it does not.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
 
@@ -222,7 +339,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -144,7 +144,7 @@ SSID: myssid
 cc3000spi.c</h1>
 <p>The CC3000 Host Driver library is independent of the underlying interface via SPI. A demonstration interface for specific MSP430 processors is part of the TI example programs, but it is rather confusing and has board-specific material tightly integrated.</p>
 <p>The file below bridges between the host driver and BSP430's serial abstraction following the specfication at the <a href="http://processors.wiki.ti.com/index.php/CC3000_Host_Driver_Porting_Guide">CC3000 Host Driver Porting Guide</a>.</p>
-<div class="fragment"><div class="line"><span class="comment">/* Copyright (c) 2012, Peter A. Bigot</span></div>
+<div class="fragment"><div class="line"><span class="comment">/* Copyright 2012-2013, Peter A. Bigot</span></div>
 <div class="line"><span class="comment"> *</span></div>
 <div class="line"><span class="comment"> * All rights reserved.</span></div>
 <div class="line"><span class="comment"> *</span></div>
@@ -825,7 +825,7 @@ main.c</h1>
 <div class="line">  <span class="keywordflow">if</span> ((0 &lt;= rl) &amp;&amp; (rl &lt; (<span class="keyword">sizeof</span>(status_str)/<span class="keyword">sizeof</span>(*status_str)))) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;: %s&quot;</span>, status_str[rl]);</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_wlan_status = {</div>
@@ -1167,7 +1167,7 @@ main.c</h1>
 <div class="line">  (void)<a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line">  <a class="code" href="cli_8h.html#a0a5b3cee7e2d9002d5d301b36c814d55">vBSP430cliSetDiagnosticFunction</a>(<a class="code" href="group__grp__utility__cli__cli.html#ga30922f40d6b2702628bb88d9e0069caf">iBSP430cliConsoleDiagnostic</a>);</div>
 <div class="line">  <a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\n\nWLAN test program\n&quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\ncc3000 &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#if BSP430_MODULE_SYS - 0</span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;System reset bitmask %lx; causes:\n&quot;</span>, reset_causes);</div>
@@ -1260,7 +1260,7 @@ main.c</h1>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (flags &amp; <a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b">eBSP430cliConsole_REPAINT_BEL</a>) {</div>
-<div class="line">      <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
+<div class="line">      <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT_BEL;</div>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
@@ -1275,7 +1275,7 @@ main.c</h1>
 <div class="line">      <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line">      <span class="keywordflow">continue</span>;</div>
 <div class="line">    }</div>
-<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a>);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_rfem_cc3000_config"></a>
@@ -1306,7 +1306,7 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor">#define configBSP430_RFEM 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Get platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_rfem_cc3000_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">PLATFORM ?= exp430f5438</div>
@@ -1331,7 +1331,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

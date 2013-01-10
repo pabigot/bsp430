@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -110,14 +110,26 @@ Macros</h2></td></tr>
 <tr class="separator:a487d75be1b22fcbfb6c371b9fd34f58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b278cfc9dc95e656ea096c5263ed59e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a3b278cfc9dc95e656ea096c5263ed59e">BSP430_UCS_TRIM_DCOCLKDIV</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="separator:a3b278cfc9dc95e656ea096c5263ed59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83eaf7e6f8e5caf1bef7d6e52e9c1372"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a83eaf7e6f8e5caf1bef7d6e52e9c1372">configBSP430_UCS_FLLREFCLK_IS_XT1CLK</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a83eaf7e6f8e5caf1bef7d6e52e9c1372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cd85342395cf92f461ce0a3683c05c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a2cd85342395cf92f461ce0a3683c05c6">configBSP430_UCS_TRIM_ACLK_IS_XT1CLK</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a2cd85342395cf92f461ce0a3683c05c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;((UCSCTL6 &amp; XT1OFF) || (UCSCTL7 &amp; XT1LFOFFG))</td></tr>
+<tr class="memitem:abad2320aeb13b65c846841d957f9dd39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#abad2320aeb13b65c846841d957f9dd39">BSP430_UCS_FLL_SELREF</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a23efe8df30c23012fc0693861f5945e5">SELREF__XT1CLK</a></td></tr>
+<tr class="separator:abad2320aeb13b65c846841d957f9dd39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a7fc35f409c746874cdfe5c6504121"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#aa6a7fc35f409c746874cdfe5c6504121">BSP430_UCS_DCO_IS_FAULTED_NI</a>()&#160;&#160;&#160;(UCSCTL7 &amp; DCOFFG)</td></tr>
+<tr class="separator:aa6a7fc35f409c746874cdfe5c6504121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a481dc0e205f4f3d1266c046c0048dcb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a481dc0e205f4f3d1266c046c0048dcb2">BSP430_UCS_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;(UCSCTL7 &amp; XT1LFOFFG)</td></tr>
+<tr class="separator:a481dc0e205f4f3d1266c046c0048dcb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac414873a9494ebb25a4c76fc943680b7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#ac414873a9494ebb25a4c76fc943680b7">BSP430_UCS_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;(UCSCTL7 &amp; BSP430_UCS_XT2OFFG_)</td></tr>
+<tr class="separator:ac414873a9494ebb25a4c76fc943680b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;((UCSCTL6 &amp; XT1OFF) || <a class="el" href="ucs_8h.html#a481dc0e205f4f3d1266c046c0048dcb2">BSP430_UCS_LFXT1_IS_FAULTED_NI</a>())</td></tr>
 <tr class="separator:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59021b5f9f12d0361bdcc8144859890"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#ae59021b5f9f12d0361bdcc8144859890">BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</a>()</td></tr>
-<tr class="separator:ae59021b5f9f12d0361bdcc8144859890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad464616a6b90463f1eae80399c34905"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#aad464616a6b90463f1eae80399c34905">BSP430_CLOCK_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;((UCSCTL6 &amp; BSP430_UCS_XT2OFF_) || <a class="el" href="ucs_8h.html#ac414873a9494ebb25a4c76fc943680b7">BSP430_UCS_XT2_IS_FAULTED_NI</a>())</td></tr>
+<tr class="separator:aad464616a6b90463f1eae80399c34905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1438a6247f046287fbcbd6d4aecca486"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a1438a6247f046287fbcbd6d4aecca486">BSP430_UCS_CLEAR_FAULTS_NI</a>()</td></tr>
+<tr class="separator:a1438a6247f046287fbcbd6d4aecca486"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a193ffc3b8d68bc1ec72dbeb887061af2">BSP430_CLOCK_CLEAR_FAULTS_NI</a>()</td></tr>
+<tr class="separator:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4253e74bf9b15ba67fac82790ec629f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#ab4253e74bf9b15ba67fac82790ec629f">BSP430_CLOCK_LFXT1_XCAP</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#af0c275c45d19c84f5edf7d7148935d95">XCAP_1</a></td></tr>
+<tr class="separator:ab4253e74bf9b15ba67fac82790ec629f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad464616a6b90463f1eae80399c34905"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#aad464616a6b90463f1eae80399c34905">BSP430_CLOCK_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;(UCSCTL7 &amp; XT2OFFG)</td></tr>
+<tr class="separator:aad464616a6b90463f1eae80399c34905"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>&#160;&#160;&#160;10000U</td></tr>
 <tr class="separator:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c49529cfa0ba1ada6819dfe6c5d68e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ucs_8h.html#a24c49529cfa0ba1ada6819dfe6c5d68e">BSP430_CLOCK_PUC_MCLK_HZ</a>&#160;&#160;&#160;1048576UL</td></tr>
@@ -138,12 +150,6 @@ Module Configuration Options</h1>
 <ul>
 <li><a class="el" href="ucs_8h.html#a487d75be1b22fcbfb6c371b9fd34f58b">configBSP430_UCS_TRIM_DCOCLKDIV</a> enables specific MCLK frequencies to be configured</li>
 </ul>
-<ul>
-<li><a class="el" href="ucs_8h.html#a83eaf7e6f8e5caf1bef7d6e52e9c1372">configBSP430_UCS_FLLREFCLK_IS_XT1CLK</a> controls the selection of clock used for the FLL</li>
-</ul>
-<ul>
-<li><a class="el" href="ucs_8h.html#a2cd85342395cf92f461ce0a3683c05c6">configBSP430_UCS_TRIM_ACLK_IS_XT1CLK</a> controls the selection of clock used for DCO trimming</li>
-</ul>
 <h1><a class="anchor" id="h_periph_ucs_hpl"></a>
 Hardware Presentation Layer</h1>
 <p>As there can be only one instance of UCS on any MCU, there is no structure supporting a UCS <a class="el" href="layer.html#HPL">HPL</a>. Manipulate the peripheral through its registers directly.</p>
@@ -152,7 +158,7 @@ Hardware Adaptation Layer</h1>
 <p>As there can be only one instance of UCS on any MCU, there is no structure supporting a UCS <a class="el" href="layer.html#HAL">HAL</a>.</p>
 <p>The standard set of capabilities in the bsp430/clocks.h header are supported, with the following details:</p>
 <ul>
-<li>Comparison of SMCLK against a clock of known frequency is required to set MCLK frequencies as there are no DCO calibration constants for this peripheral. <a class="el" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a> will automatically request the required <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> in support of this unless <a class="el" href="ucs_8h.html#a487d75be1b22fcbfb6c371b9fd34f58b">configBSP430_UCS_TRIM_DCOCLKDIV</a> is explicitly disabled.</li>
+<li>Comparison of SMCLK against a clock of known frequency is required to set MCLK frequencies as there are no DCO calibration constants for this peripheral. <a class="el" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a> will automatically request the required <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> in support of this unless <a class="el" href="ucs_8h.html#a487d75be1b22fcbfb6c371b9fd34f58b">configBSP430_UCS_TRIM_DCOCLKDIV</a> is explicitly disabled.</li>
 </ul>
 <ul>
 <li>FLLREFDIV is /1.</li>
@@ -170,29 +176,30 @@ Hardware Adaptation Layer</h1>
 <li>Executing an FLL trim (either directly or due to having invoked <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a>) will record in private state the measured clock frequency.</li>
 </ul>
 <ul>
-<li><a class="el" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni()</a> and <a class="el" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni()</a> return values are calculated by applying the relevant clock dividers as read from the UCS registers to the recorded measured clock frequency.</li>
+<li><a class="el" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni()</a> and <a class="el" href="clock_8h.html#a0642c6f082ed8feafd057ff8132b75da">ulBSP430clockSMCLK_Hz_ni()</a> return values are calculated by applying the relevant clock dividers as read from the UCS registers to the recorded measured clock frequency.</li>
 </ul>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ae59021b5f9f12d0361bdcc8144859890"></a>
+<a class="anchor" id="a193ffc3b8d68bc1ec72dbeb887061af2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</td>
+          <td class="memname">#define BSP430_CLOCK_CLEAR_FAULTS_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {    \</div>
-<div class="line">    UCSCTL7 &amp;= ~XT1LFOFFG;                      \</div>
-<div class="line">    SFRIFG1 &amp;= ~OFIFG;                          \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                             \</div>
+<div class="line">    BSP430_UCS_CLEAR_FAULTS_NI();                                       \</div>
+<div class="line">    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                                  \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment --><p>Clear the fault associated with LFXT1.</p>
-<p>This definition overrides the generic definition to clear the crystal-specific flags as well as the system flag. </p>
+</div><!-- fragment --><p>Clear all clock faults.</p>
+<p>This definition overrides the generic definition to clear the crystal-specific flags as well as the system flag.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
 </div>
@@ -204,12 +211,27 @@ Hardware Adaptation Layer</h1>
           <td class="memname">#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;((UCSCTL6 &amp; XT1OFF) || (UCSCTL7 &amp; XT1LFOFFG))</td>
+          <td>&#160;&#160;&#160;((UCSCTL6 &amp; XT1OFF) || <a class="el" href="ucs_8h.html#a481dc0e205f4f3d1266c046c0048dcb2">BSP430_UCS_LFXT1_IS_FAULTED_NI</a>())</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check whether the LFXT1 crystal has a fault condition.</p>
-<p>This definition overrides the generic definition to test the crystal-specific flags. Note that if somebody has turned off the crystal by setting UCSCTL6.XT1OFF, the crystal is assumed to be faulted. </p>
+<p>Check whether the UCS-controlled LFXT1 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Oscillator fault flags are not set unless a fault has been detected. If the crystal has never been enabled, no fault will have been detected. On power-up, the XIN function is not enabled and UCSCTL6.XT1OFF is set, and BSP430 treats UCSCTL6.XT1OFF as an indication that the pins are not configured for crystal use, either because LFXT1 has not been configured or has been configured and found to be faulted. Although it is perfectly acceptable to have UCSCTL6.XT1OFF set and the crystal working fine, the complexity of detecting that case is not supported by this implementation.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="ucs_8h.html#a481dc0e205f4f3d1266c046c0048dcb2">BSP430_UCS_LFXT1_IS_FAULTED_NI()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab4253e74bf9b15ba67fac82790ec629f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_LFXT1_XCAP&#160;&#160;&#160;<a class="el" href="msp430_8h.html#af0c275c45d19c84f5edf7d7148935d95">XCAP_1</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Peripheral default setting for platform-specific constant </p>
 
 </div>
 </div>
@@ -239,6 +261,50 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
+<a class="anchor" id="aad464616a6b90463f1eae80399c34905"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;((UCSCTL6 &amp; BSP430_UCS_XT2OFF_) || <a class="el" href="ucs_8h.html#ac414873a9494ebb25a4c76fc943680b7">BSP430_UCS_XT2_IS_FAULTED_NI</a>())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check whether the UCS-controlled XT2 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Oscillator fault flags are not set unless a fault has been detected. If the crystal has never been enabled, no fault will have been detected. On power-up, the XT2IN function is not enabled and UCSCTL6.XT2OFF is set, and BSP430 treats UCSCTL6.XT2OFF as an indication that the pins are not configured for crystal use, either because XT2 has not been configured or has been configured and found to be faulted. Although it is perfectly acceptable to have UCSCTL6.XT2OFF set and the crystal working fine, the complexity of detecting that case is not supported by this implementation.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="ucs_8h.html#ac414873a9494ebb25a4c76fc943680b7">BSP430_UCS_XT2_IS_FAULTED_NI()</a></dd></dl>
+<p>Check whether the XT2 crystal has a fault condition.</p>
+<p>This definition overrides the generic definition to test the crystal-specific flags. It applies only when the MCU supports XT2 as determined by an available platform definition for <a class="el" href="periph_8h.html#af75a5f76a171a5dba8c94a6d06371026">BSP430_PERIPH_XT2</a>.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="periph_8h.html#af75a5f76a171a5dba8c94a6d06371026">BSP430_PERIPH_XT2</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aad464616a6b90463f1eae80399c34905"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(UCSCTL7 &amp; XT2OFFG)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check whether the UCS-controlled XT2 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Oscillator fault flags are not set unless a fault has been detected. If the crystal has never been enabled, no fault will have been detected. On power-up, the XT2IN function is not enabled and UCSCTL6.XT2OFF is set, and BSP430 treats UCSCTL6.XT2OFF as an indication that the pins are not configured for crystal use, either because XT2 has not been configured or has been configured and found to be faulted. Although it is perfectly acceptable to have UCSCTL6.XT2OFF set and the crystal working fine, the complexity of detecting that case is not supported by this implementation.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="ucs_8h.html#ac414873a9494ebb25a4c76fc943680b7">BSP430_UCS_XT2_IS_FAULTED_NI()</a></dd></dl>
+<p>Check whether the XT2 crystal has a fault condition.</p>
+<p>This definition overrides the generic definition to test the crystal-specific flags. It applies only when the MCU supports XT2 as determined by an available platform definition for <a class="el" href="periph_8h.html#af75a5f76a171a5dba8c94a6d06371026">BSP430_PERIPH_XT2</a>.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="periph_8h.html#af75a5f76a171a5dba8c94a6d06371026">BSP430_PERIPH_XT2</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a999080243c756fa394083717b7908e1d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -252,6 +318,75 @@ Hardware Adaptation Layer</h1>
 <div class="line">                           || defined(__MSP430_HAS_UCS_RF__))</div>
 </div><!-- fragment --><p>Defined on inclusion of &lt;<a class="el" href="ucs_8h.html" title="Hardware presentation/abstraction for Unified Clock System (UCS).">bsp430/periph/ucs.h</a>&gt;. The value evaluates to true if the target MCU supports the Unified Clock System, and false if it does not.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1438a6247f046287fbcbd6d4aecca486"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_UCS_CLEAR_FAULTS_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                               \</div>
+<div class="line">    UCSCTL7 &amp;= ~(BSP430_UCS_XT2OFFG_ | BSP430_UCS_XT1HFOFFG_ | XT1LFOFFG | DCOFFG); \</div>
+<div class="line">  } <span class="keywordflow">while</span> (0)                                                           \</div>
+</div><!-- fragment --><p>Clear all UCS-specific faults. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa6a7fc35f409c746874cdfe5c6504121"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_UCS_DCO_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(UCSCTL7 &amp; DCOFFG)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UCS-specific check for DCO fault condition </p>
+
+</div>
+</div>
+<a class="anchor" id="abad2320aeb13b65c846841d957f9dd39"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_UCS_FLL_SELREF&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a23efe8df30c23012fc0693861f5945e5">SELREF__XT1CLK</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Preferred source for FLL clock</p>
+<p>This should be a constant denoting the bits to be set in the UCS control register for SELREF selecting the FLL reference clock. The default value selects XT1CLK, which will internally fall back to REFOCLK if XT1CLK is faulted.</p>
+<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a36">bootstrap/clocks/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a481dc0e205f4f3d1266c046c0048dcb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_UCS_LFXT1_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(UCSCTL7 &amp; XT1LFOFFG)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UCS-specific check for LFXT1 crystal fault condition.</p>
+<p>This checks exactly for the fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>A crystal that has never been enabled will not register as faulted. </dd></dl>
 
 </div>
 </div>
@@ -284,36 +419,21 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
-<a class="anchor" id="a83eaf7e6f8e5caf1bef7d6e52e9c1372"></a>
+<a class="anchor" id="ac414873a9494ebb25a4c76fc943680b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define configBSP430_UCS_FLLREFCLK_IS_XT1CLK&#160;&#160;&#160;0</td>
+          <td class="memname">#define BSP430_UCS_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(UCSCTL7 &amp; BSP430_UCS_XT2OFFG_)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The UCS module supports a variety of potential sources for the FLL reference clock; the implementation here supports either LFXT1 or REFO.</p>
-<p>Define this to true if you want to use LFXT1; otherwise REFO is used.</p>
-<dl class="section warning"><dt>Warning</dt><dd>If this is selected, DCOCLKDIV trim will hang if LFXT1 is faulted and cannot be cleared.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a2cd85342395cf92f461ce0a3683c05c6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_UCS_TRIM_ACLK_IS_XT1CLK&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When measuring the actual clock speed to determine whether the FLL has drifted, a reliable clock at a known frequency is required. The implementation here configures ACLK to source from that clock for the duration of the trim operation.</p>
-<p>Alternative sources supported here are LFXT1 and REFO, both of which are nominally 32 KiHz though LFXT1 could be a different speed. As LFXT1 is likely more accurate than REFO, there may be some benefit in using it when FLLREFCLK is REFO.</p>
-<p>Define this to true if you want to use LFXT1; otherwise REFO is used.</p>
-<dl class="section warning"><dt>Warning</dt><dd>If this is selected, FLL trim will hang if LFXT1 is faulted and cannot be cleared.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
+<p>UCS-specific check for XT2 crystal fault condition.</p>
+<p>If the platform does not support an XT2 crystal no fault is diagnosed.</p>
+<dl class="section note"><dt>Note</dt><dd>A crystal that has never been enabled will not register as faulted. </dd></dl>
 
 </div>
 </div>
@@ -327,7 +447,7 @@ Hardware Adaptation Layer</h1>
       </table>
 </div><div class="memdoc">
 <p>Define to a true value to request that ulBSP430ucsTrimDCOCLKDIV_ni() be made available.</p>
-<p>Because implementation of this function depends on <a class="el" href="group__grp__timer__ccaclk.html#gafaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a>, setting this option causes &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt; to default <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> to true.</p>
+<p>Because implementation of this function depends on <a class="el" href="group__grp__timer__ccaclk.html#gafaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a>, setting this option causes &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt; to default <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> to true.</p>
 <p>This value represents an application or system request for the feature; availability of the feature must be tested using <a class="el" href="ucs_8h.html#a3b278cfc9dc95e656ea096c5263ed59e">BSP430_UCS_TRIM_DCOCLKDIV</a> before attempting to invoke the function.</p>
 <dl class="section note"><dt>Note</dt><dd>This function is the only mechanism by which the UCS DCO can be configured by BSP430.</dd></dl>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
@@ -353,8 +473,9 @@ Hardware Adaptation Layer</h1>
 <p>Adjust the FLL as necessary to maintain the last configured DCOCLKDIV speed</p>
 <p>This function is most likely to be used if <a class="el" href="core_8h.html#a6c655623731b60f2257aedfb35e3cfa1">configBSP430_CORE_DISABLE_FLL</a> is set, but is also a required subroutine of the UCS implementation of <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a>.</p>
 <p>The function is expected to be used periodically to maintain an already configured clock in the face of varying voltage, temperature, and other factors such as chip errata that introduce clock drift. The implementation is not entitled to reconfigure to a different DCO range selection, should that be supported by the clock. Consequently, oscillator faults may result if the system drifts so far that the target frequency cannot be represented within the current range. In such a situation, <a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni()</a> should be re-invoked to configure the clock.</p>
+<p>Trimming is done relative to XT1CLK (if available) or REFOCLK (otherwise).</p>
 <dl class="section warning"><dt>Warning</dt><dd>This function will temporarily reconfigure MCLK, SMCLK, and ACLK. Any peripherals that depend on those clocks should be disabled while the function is executing.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>0 if the trimming was completed successfully, -1 if an error occurred. Potential errors are a dependency on XT1CLK while that is faulted and inability to access <a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if the trimming was completed successfully, -1 if an error occurred. Potential errors are inability to access <a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>, and use of XT2CLK for FLLREFCLK.</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="ucs_8h.html#a3b278cfc9dc95e656ea096c5263ed59e">BSP430_UCS_TRIM_DCOCLKDIV</a> </dd></dl>
 
 </div>
@@ -362,7 +483,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -133,7 +133,7 @@ Hardware Adaptation Layer</h1>
 <p>As there can be only one instance of PMM on any MCU, there is no structure supporting a PMM <a class="el" href="layer.html#HAL">HAL</a>.</p>
 <p>Inline functions defined in this module support forcing processor resets that include a complete reset of all registers and peripherals.</p>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="af9f6a1ab23247e37c030abdfef888798"></a>
 <div class="memitem">
@@ -189,7 +189,7 @@ Hardware Adaptation Layer</h1>
 <p>This should be invoked when <a class="el" href="core_8h.html#ac98f22bd2238bfdadf9c7d2a7a8bcc8f">BSP430_CORE_LPM_LPMXp5</a> or some other cue indicates that ultra-low-power sleep is desired.</p>
 <dl class="section note"><dt>Note</dt><dd>This macro is unavailable on 5xx/6xx chips for which PM5CTL0 is not provided by the MCU headers, possibly due to the presence of erratum PMM8. In particular, it is not available on the CC430F5137 used in the EM430 and SuRF platforms. User code can test whether the macro is defined in order to determine whether the feature is supported.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the PMM control registers are locked. The macro will unlock the registers, set the bit for LPMx.5, then lock the registers again. If used in a context where the PMM registers are already unlocked, this will probably not be what you want. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a64">bootstrap/applpm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a63">bootstrap/applpm/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -217,7 +217,7 @@ Hardware Adaptation Layer</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>-1 if the <code>target_level</code> is invalid, otherwise the level at which power is left. This may be less than <code>target_level</code> if the requested level could not be reached due to inadequate supply voltage.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function is available only on non-FRAM 5xx PMM implementations. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a58">bootstrap/applpm/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a11">platform/exp430f5529/fatfs/main.c</a>, and <a class="el" href="rfem_2cc3000_2main_8c-example.html#a32">rfem/cc3000/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a57">bootstrap/applpm/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a11">platform/exp430f5529/fatfs/main.c</a>, and <a class="el" href="rfem_2cc3000_2main_8c-example.html#a33">rfem/cc3000/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -274,7 +274,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

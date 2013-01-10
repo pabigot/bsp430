@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -105,12 +105,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Macros</h2></td></tr>
 <tr class="memitem:a7d969185d54cd717a69437a0500127ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a7d969185d54cd717a69437a0500127ca">BSP430_MODULE_FLLPLUS</a></td></tr>
 <tr class="separator:a7d969185d54cd717a69437a0500127ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;(FLL_CTL0 &amp; LFOF)</td></tr>
+<tr class="memitem:a5b36c7306b04783a751ba44364825d52"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a5b36c7306b04783a751ba44364825d52">BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;(FLL_CTL0 &amp; LFOF)</td></tr>
+<tr class="separator:a5b36c7306b04783a751ba44364825d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f2cf64194f1a4a9ccc7cc9123dfd4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a91f2cf64194f1a4a9ccc7cc9123dfd4e">BSP430_FLLPLUS_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;(FLL_CTL0 &amp; BSP430_FLLPLUS_XT2OF_)</td></tr>
+<tr class="separator:a91f2cf64194f1a4a9ccc7cc9123dfd4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a201aee87eb447dd8d89ca3a19a869b85"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a201aee87eb447dd8d89ca3a19a869b85">BSP430_FLLPLUS_DCO_IS_FAULTED_NI</a>()&#160;&#160;&#160;(FLL_CTL0 &amp; DCOF)</td></tr>
+<tr class="separator:a201aee87eb447dd8d89ca3a19a869b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>()&#160;&#160;&#160;<a class="el" href="fllplus_8h.html#a5b36c7306b04783a751ba44364825d52">BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI</a>()</td></tr>
 <tr class="separator:a7a0cdc169aac90a5c877b3ca09a4608d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae59021b5f9f12d0361bdcc8144859890"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#ae59021b5f9f12d0361bdcc8144859890">BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</a>()</td></tr>
-<tr class="separator:ae59021b5f9f12d0361bdcc8144859890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a576df122bbbc9c2c5c22476402b0f13f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a576df122bbbc9c2c5c22476402b0f13f">BSP430_FLLPLUS_XCAPxPF</a>&#160;&#160;&#160;XCAP0PF</td></tr>
+<tr class="memitem:aad464616a6b90463f1eae80399c34905"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#aad464616a6b90463f1eae80399c34905">BSP430_CLOCK_XT2_IS_FAULTED_NI</a>()&#160;&#160;&#160;((BCSCTL1 &amp; XT2OFF) || <a class="el" href="fllplus_8h.html#a91f2cf64194f1a4a9ccc7cc9123dfd4e">BSP430_FLLPLUS_XT2_IS_FAULTED_NI</a>())</td></tr>
+<tr class="separator:aad464616a6b90463f1eae80399c34905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a193ffc3b8d68bc1ec72dbeb887061af2">BSP430_CLOCK_CLEAR_FAULTS_NI</a>()</td></tr>
+<tr class="separator:a193ffc3b8d68bc1ec72dbeb887061af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a576df122bbbc9c2c5c22476402b0f13f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a576df122bbbc9c2c5c22476402b0f13f">BSP430_FLLPLUS_XCAPxPF</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a738d7a5b235bae599531b299235a8ba8">XCAP0PF</a></td></tr>
 <tr class="separator:a576df122bbbc9c2c5c22476402b0f13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4253e74bf9b15ba67fac82790ec629f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#ab4253e74bf9b15ba67fac82790ec629f">BSP430_CLOCK_LFXT1_XCAP</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a738d7a5b235bae599531b299235a8ba8">XCAP0PF</a></td></tr>
+<tr class="separator:ab4253e74bf9b15ba67fac82790ec629f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">BSP430_CLOCK_NOMINAL_VLOCLK_HZ</a>&#160;&#160;&#160;12000U</td></tr>
 <tr class="separator:ae2ace757e68c3bc4206f0ff4a3a39d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c49529cfa0ba1ada6819dfe6c5d68e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fllplus_8h.html#a24c49529cfa0ba1ada6819dfe6c5d68e">BSP430_CLOCK_PUC_MCLK_HZ</a>&#160;&#160;&#160;1048576UL</td></tr>
@@ -140,26 +150,26 @@ Hardware Adaptation Layer</h1>
 <li>The implementation does not support configuring ACLK to anything other than <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa71286517a83aeb014d841071bc7794d8">eBSP430clockSRC_XT1CLK</a> or a fallback from that clock. (The issue is that not all chips with FLLPLUS support selecting the <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaad127090299761a8dbd1b8248b7ab2c0e">eBSP430clockSRC_VLOCLK</a>.)</li>
 </ul>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ae59021b5f9f12d0361bdcc8144859890"></a>
+<a class="anchor" id="a193ffc3b8d68bc1ec72dbeb887061af2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</td>
+          <td class="memname">#define BSP430_CLOCK_CLEAR_FAULTS_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {           \</div>
-<div class="line">    <span class="comment">/* User&#39;s guide says FLL_CTL0.LFOF is read-only. */</span> \</div>
-<div class="line">    IFG1 &amp;= ~OFIFG;                                     \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                             \</div>
+<div class="line">    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                                  \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment --><p>Clear the fault associated with LFXT1.</p>
-<p>This definition overrides the generic definition to clear the crystal-specific flags as well as the system flag. </p>
+</div><!-- fragment --><p>Clear all clock faults.</p>
+<p>The FLL+ oscillator fault flags are read-only, so this only clears the system oscillator flag.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
 </div>
@@ -171,13 +181,28 @@ Hardware Adaptation Layer</h1>
           <td class="memname">#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;(FLL_CTL0 &amp; LFOF)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="fllplus_8h.html#a5b36c7306b04783a751ba44364825d52">BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI</a>()</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Check whether the LFXT1 crystal has a fault condition.</p>
-<p>This definition overrides the generic definition to test the crystal-specific flags.</p>
-<dl class="section warning"><dt>Warning</dt><dd>MSP430F41x2 devices support an FLL_CTL2 register which can select an alternative source for LFXT1. This macro does not verify whether that register exists and is in fact selecting the external crystal. In all other MCUs with FLLPLUS, it is believed that the crystal is mandatory and cannot be deselected. </dd></dl>
+<p>Check whether the FLL+-controlled LFXT1 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>BSP430 currently does not support MSP430F41x2 devices which allow LXFT1 to be something other than a crystal, so the standard check for disabled LFXT1 does not apply on this peripheral.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="fllplus_8h.html#a5b36c7306b04783a751ba44364825d52">BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab4253e74bf9b15ba67fac82790ec629f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_LFXT1_XCAP&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a738d7a5b235bae599531b299235a8ba8">XCAP0PF</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Peripheral default setting for platform-specific constant.</p>
+<p>Note: TI examples tend to use XCAP14PF but on the EXP430FG4618 that results in a clock rate of 32765, or 100 ppm error. XCAP0F is the power-up default, and measures 32769 or only 30ppm error. </p>
 
 </div>
 </div>
@@ -207,18 +232,88 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
+<a class="anchor" id="aad464616a6b90463f1eae80399c34905"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CLOCK_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;((BCSCTL1 &amp; XT2OFF) || <a class="el" href="fllplus_8h.html#a91f2cf64194f1a4a9ccc7cc9123dfd4e">BSP430_FLLPLUS_XT2_IS_FAULTED_NI</a>())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check whether the FLL+-controlled XT2 crystal has a fault condition.</p>
+<dl class="section note"><dt>Note</dt><dd>Oscillator fault flags are not set unless a fault has been detected. If the crystal has never been enabled, no fault will have been detected. On power-up, the XT2IN function is not enabled and BCSCTL1.XT2OFF is set, and BSP430 treats BCSCTL1.XT2OFF as an indication that the pins are not configured for crystal use, either because XT2 has not been configured or has been configured and found to be faulted. Although it is perfectly acceptable to have BCSCTL1.XT2OFF set and the crystal working fine, the complexity of detecting that case is not supported by this implementation.</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="fllplus_8h.html#a91f2cf64194f1a4a9ccc7cc9123dfd4e">BSP430_FLLPLUS_XT2_IS_FAULTED_NI()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a201aee87eb447dd8d89ca3a19a869b85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_FLLPLUS_DCO_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(FLL_CTL0 &amp; DCOF)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>FLL+-specific check for DCO fault condition.</p>
+<p>This checks exactly for the fault condition. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5b36c7306b04783a751ba44364825d52"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_FLLPLUS_LFXT1_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(FLL_CTL0 &amp; LFOF)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>FLL+-specific check for LFXT1 crystal fault condition.</p>
+<p>This checks exactly for the fault condition. </p>
+
+</div>
+</div>
 <a class="anchor" id="a576df122bbbc9c2c5c22476402b0f13f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_FLLPLUS_XCAPxPF&#160;&#160;&#160;XCAP0PF</td>
+          <td class="memname">#define BSP430_FLLPLUS_XCAPxPF&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a738d7a5b235bae599531b299235a8ba8">XCAP0PF</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Oscillator capacitor section to be applied to FLL_CTL0 by <a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>Most examples use XCAP14PF, but my crude tests suggest that of the capacitances available 0pF produces the closest to 32768 Hz, at least on the EXP430FG4618 board. This also happens to be the power-up default.</dd></dl>
+<dl class="section user"><dt>Deprecated:</dt><dd>Use <a class="el" href="fllplus_8h.html#ab4253e74bf9b15ba67fac82790ec629f">BSP430_CLOCK_LFXT1_XCAP</a></dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a91f2cf64194f1a4a9ccc7cc9123dfd4e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_FLLPLUS_XT2_IS_FAULTED_NI</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td>&#160;&#160;&#160;(FLL_CTL0 &amp; BSP430_FLLPLUS_XT2OF_)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>FLL+-specific check for XT2 crystal fault condition.</p>
+<p>If the platform does not support an XT2 crystal no fault is diagnosed.</p>
+<dl class="section note"><dt>Note</dt><dd>A crystal that has never been enabled will not register as faulted. </dd></dl>
 
 </div>
 </div>
@@ -241,7 +336,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -92,7 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <a href="unittest_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">/* Copyright (c) 2012, Peter A. Bigot</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">/* Copyright 2012-2013, Peter A. Bigot</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * All rights reserved.</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *</span></div>
@@ -123,106 +123,106 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> * POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#ifndef BSP430_UTILITY_UNITTEST_H</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UTILITY_UNITTEST_H</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt;</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &lt;inttypes.h&gt;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#ifndef configBSP430_UNITTEST</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="unittest_8h.html#a8bca8417e59cbed71535153bac9354fb">   74</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_UNITTEST 0</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_UNITTEST */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="unittest_8h.html#aa707a38545f82af15e5fcf5b72e389f2">   86</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST (configBSP430_UNITTEST - 0)</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (defined(BSP430_LED_GREEN) &amp;&amp; defined(BSP430_LED_RED))</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="unittest_8h.html#ada3ea164acff93c6ab330140ac1e96d1">   95</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_LED_FAILED BSP430_LED_RED</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00103"></a><span class="lineno"><a class="code" href="unittest_8h.html#a9b92386758a7749b13b21e49b383c3dc">  103</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_LED_PASSED BSP430_LED_GREEN</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UNITTEST_LED_FAILED 0</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UNITTEST_LED_PASSED 1</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#ifndef configBSP430_UNITTEST_FAILFAST</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="code" href="unittest_8h.html#ae9f4d2292f29af7e385140c33dc5dc54">  122</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_UNITTEST_FAILFAST 0</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_UNITTEST_FAILFAST */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordtype">void</span> <a class="code" href="unittest_8h.html#a3220284c913cc7bd22754ce0078f1d94">vBSP430unittestInitialize</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="keywordtype">void</span> <a class="code" href="unittest_8h.html#a92310aad1c12a8e73477b5a13f333df9">vBSP430unittestResult_</a> (<span class="keywordtype">int</span> line,</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;                             <span class="keywordtype">int</span> passp,</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;                             <span class="keyword">const</span> <span class="keywordtype">char</span> * format,</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;                             ...);</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keywordtype">void</span> <a class="code" href="unittest_8h.html#adb812494059862a4b57674b8011da8b1">vBSP430unittestFinalize</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00161"></a><span class="lineno"><a class="code" href="unittest_8h.html#a33a67b41f5a8fb5cde823cd8e7fa3c4f">  161</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_FAIL(msg_) do {         \</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, 0, msg_);  \</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00166"></a><span class="lineno"><a class="code" href="unittest_8h.html#acabfbba159793032859c6ff2e0253a4b">  166</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_TRUE(expr_) do {                 \</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #expr_;                     \</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, !!(expr_), expr_str_);     \</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00172"></a><span class="lineno"><a class="code" href="unittest_8h.html#a5ddc2c0d11c3d2d081c794ef210e175c">  172</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_FALSE(expr_) do {                        \</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #expr_;                             \</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, !(expr_), &quot;NOT %s&quot;, expr_str_);    \</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00178"></a><span class="lineno"><a class="code" href="unittest_8h.html#a04d1b56a4fc511d65e21bbf7b4c0b347">  178</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL(v1_,v2_) do {                      \</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #v1_ &quot;==&quot; #v2_;                     \</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, (v1_) == (v2_), expr_str_);        \</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="unittest_8h.html#ada838d3c304db464219062c4ed9a37db">  184</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ(v1_,v2_) do {               \</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #v1_ &quot;==&quot; #v2_;                     \</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">    const char * v1v_ = (v1_);                                          \</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">    const char * v2v_ = (v2_);                                          \</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, 0 == strcmp(v1v_, v2v_), expr_str_); \</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00203"></a><span class="lineno"><a class="code" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">  203</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,type_,pri_) do {      \</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #v1_ &quot;==&quot; #v2_;                     \</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor">    type_ v1v_ = (v1_);                                                 \</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor">    type_ v2v_ = (v2_);                                                 \</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">    if (v1v_ == v2v_) {                                                 \</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor">      vBSP430unittestResult_(__LINE__, 1, &quot;%s&quot;, expr_str_);           \</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">    } else {                                                            \</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">      vBSP430unittestResult_(__LINE__, 0, &quot;%s: &quot; pri_ &quot; != &quot; pri_, expr_str_, v1v_, v2v_); \</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">    }                                                                   \</span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00219"></a><span class="lineno"><a class="code" href="unittest_8h.html#a928c29e5201332d07f84df40c0e5e4a5">  219</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTd(v1_,v2_) \</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,&quot;%&quot; PRId16)</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00226"></a><span class="lineno"><a class="code" href="unittest_8h.html#a395dd7976d07c4fefb310d10788ca1fa">  226</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTu(v1_,v2_) \</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,&quot;%&quot; PRIu16)</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#ifndef BSP430_UTILITY_UNITTEST_H</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UTILITY_UNITTEST_H</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &lt;inttypes.h&gt;</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#ifndef configBSP430_UNITTEST</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="code" href="unittest_8h.html#a8bca8417e59cbed71535153bac9354fb">   77</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_UNITTEST 0</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_UNITTEST */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="unittest_8h.html#aa707a38545f82af15e5fcf5b72e389f2">   89</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST (configBSP430_UNITTEST - 0)</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (defined(BSP430_LED_GREEN) &amp;&amp; defined(BSP430_LED_RED))</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="code" href="unittest_8h.html#ada3ea164acff93c6ab330140ac1e96d1">   98</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_LED_FAILED BSP430_LED_RED</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="code" href="unittest_8h.html#a9b92386758a7749b13b21e49b383c3dc">  106</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_LED_PASSED BSP430_LED_GREEN</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UNITTEST_LED_FAILED 0</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UNITTEST_LED_PASSED 1</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#ifndef configBSP430_UNITTEST_FAILFAST</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="code" href="unittest_8h.html#ae9f4d2292f29af7e385140c33dc5dc54">  125</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_UNITTEST_FAILFAST 0</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_UNITTEST_FAILFAST */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keywordtype">void</span> <a class="code" href="unittest_8h.html#a3220284c913cc7bd22754ce0078f1d94">vBSP430unittestInitialize</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="keywordtype">void</span> <a class="code" href="unittest_8h.html#a92310aad1c12a8e73477b5a13f333df9">vBSP430unittestResult_</a> (<span class="keywordtype">int</span> line,</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                             <span class="keywordtype">int</span> passp,</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;                             <span class="keyword">const</span> <span class="keywordtype">char</span> * format,</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                             ...);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keywordtype">void</span> <a class="code" href="unittest_8h.html#adb812494059862a4b57674b8011da8b1">vBSP430unittestFinalize</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00168"></a><span class="lineno"><a class="code" href="unittest_8h.html#a33a67b41f5a8fb5cde823cd8e7fa3c4f">  168</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_FAIL(msg_) do {         \</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, 0, msg_);  \</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00173"></a><span class="lineno"><a class="code" href="unittest_8h.html#acabfbba159793032859c6ff2e0253a4b">  173</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_TRUE(expr_) do {                 \</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #expr_;                     \</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, !!(expr_), expr_str_);     \</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00179"></a><span class="lineno"><a class="code" href="unittest_8h.html#a5ddc2c0d11c3d2d081c794ef210e175c">  179</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_FALSE(expr_) do {                        \</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #expr_;                             \</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, !(expr_), &quot;NOT %s&quot;, expr_str_);    \</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="code" href="unittest_8h.html#a04d1b56a4fc511d65e21bbf7b4c0b347">  185</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL(v1_,v2_) do {                      \</span></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #v1_ &quot;==&quot; #v2_;                     \</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, (v1_) == (v2_), expr_str_);        \</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00191"></a><span class="lineno"><a class="code" href="unittest_8h.html#ada838d3c304db464219062c4ed9a37db">  191</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ(v1_,v2_) do {               \</span></div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #v1_ &quot;==&quot; #v2_;                     \</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">    const char * v1v_ = (v1_);                                          \</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">    const char * v2v_ = (v2_);                                          \</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor">    vBSP430unittestResult_(__LINE__, 0 == strcmp(v1v_, v2v_), expr_str_); \</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00210"></a><span class="lineno"><a class="code" href="unittest_8h.html#a90abb69b4cffc6e251ca163c19c09c95">  210</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,type_,pri_) do {      \</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">    static const char * expr_str_ = #v1_ &quot;==&quot; #v2_;                     \</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">    type_ v1v_ = (v1_);                                                 \</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="preprocessor">    type_ v2v_ = (v2_);                                                 \</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="preprocessor">    if (v1v_ == v2v_) {                                                 \</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">      vBSP430unittestResult_(__LINE__, 1, &quot;%s&quot;, expr_str_);           \</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor">    } else {                                                            \</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="preprocessor">      vBSP430unittestResult_(__LINE__, 0, &quot;%s: &quot; pri_ &quot; != &quot; pri_, expr_str_, v1v_, v2v_); \</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="preprocessor">    }                                                                   \</span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
+<div class="line"><a name="l00226"></a><span class="lineno"><a class="code" href="unittest_8h.html#a928c29e5201332d07f84df40c0e5e4a5">  226</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTd(v1_,v2_) \</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,&quot;%&quot; PRId16)</span></div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00233"></a><span class="lineno"><a class="code" href="unittest_8h.html#af92f4fb326b34ed262b138ff89c8fdb3">  233</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTx(v1_,v2_) \</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,&quot;%#&quot; PRIx16)</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno"><a class="code" href="unittest_8h.html#a395dd7976d07c4fefb310d10788ca1fa">  233</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTu(v1_,v2_) \</span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,&quot;%&quot; PRIu16)</span></div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="unittest_8h.html#a9105a26a02cd4e9e8441a368d242b2d6">  240</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTld(v1_,v2_) \</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,&quot;%&quot; PRId32)</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="unittest_8h.html#af92f4fb326b34ed262b138ff89c8fdb3">  240</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTx(v1_,v2_) \</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,&quot;%#&quot; PRIx16)</span></div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="code" href="unittest_8h.html#a8e271619f85bbe656d62ff925b7db1bf">  247</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTlu(v1_,v2_) \</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,&quot;%&quot; PRIu32)</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno"><a class="code" href="unittest_8h.html#a9105a26a02cd4e9e8441a368d242b2d6">  247</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTld(v1_,v2_) \</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,&quot;%&quot; PRId32)</span></div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00254"></a><span class="lineno"><a class="code" href="unittest_8h.html#a82497b482d89742b2ca338dd6402b1b9">  254</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTlx(v1_,v2_) \</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int, &quot;%#&quot; PRIx32)</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="code" href="unittest_8h.html#a8e271619f85bbe656d62ff925b7db1bf">  254</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTlu(v1_,v2_) \</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,&quot;%&quot; PRIu32)</span></div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="code" href="unittest_8h.html#a551519507b92a02192023edd0c9ef7f0">  260</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTp(v1_,v2_) \</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,const void *,&quot;%p&quot;)</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_UNITTEST_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="unittest_8h.html#a82497b482d89742b2ca338dd6402b1b9">  261</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTlx(v1_,v2_) \</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int, &quot;%#&quot; PRIx32)</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="code" href="unittest_8h.html#a551519507b92a02192023edd0c9ef7f0">  267</a></span>&#160;<span class="preprocessor">#define BSP430_UNITTEST_ASSERT_EQUAL_FMTp(v1_,v2_) \</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,const void *,&quot;%p&quot;)</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_UNITTEST_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

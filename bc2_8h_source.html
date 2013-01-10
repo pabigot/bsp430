@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">bc2.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="bc2_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* Copyright (c) 2012, Peter A. Bigot</span></div>
+<a href="bc2_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* Copyright 2012-2013, Peter A. Bigot</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -149,28 +149,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="keywordtype">int</span> <a class="code" href="bc2_8h.html#a761fecab60615a591909cef0bc74121b">iBSP430bc2TrimToMCLK_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> mclk_Hz);</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_BC2_TRIM_TO_MCLK */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor">#undef BSP430_CLOCK_LFXT1_IS_FAULTED_NI</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00170"></a><span class="lineno"><a class="code" href="bc2_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">  170</a></span>&#160;<span class="preprocessor">#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() (BCSCTL3 &amp; (LFXT1S1 | LFXT1S0 | LFXT1OF))</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#undef BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00177"></a><span class="lineno"><a class="code" href="bc2_8h.html#ae59021b5f9f12d0361bdcc8144859890">  177</a></span>&#160;<span class="preprocessor">#define BSP430_CLOCK_LFXT1_CLEAR_FAULT_NI() do {                   \</span></div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="preprocessor">    </span><span class="comment">/* User&#39;s guide says BCSCTL3.LFXT1OF is read-only. */</span><span class="preprocessor">   \</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="preprocessor">    IFG1 &amp;= ~OFIFG;                                             \</span></div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00183"></a><span class="lineno"><a class="code" href="bc2_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">  183</a></span>&#160;<span class="preprocessor">#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00186"></a><span class="lineno"><a class="code" href="bc2_8h.html#a24c49529cfa0ba1ada6819dfe6c5d68e">  186</a></span>&#160;<span class="preprocessor">#define BSP430_CLOCK_PUC_MCLK_HZ 1100000UL</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_BC2 */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_BC2_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="comment">/* Simplify conditionally-defined macros to avoid reference to</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment"> * non-existent values.  The chip supports an external crystal for</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment"> * LFXT1 iff LFXT1S_0 is defined */</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#if defined(XT2OF)</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_BC2_XT2OF_ XT2OF</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* XT2OF */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_BC2_XT2OF_ 0</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* XT2OF */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(LFXT1OF)</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_BC2_LFXT1OF_ LFXT1OF</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* LFXT1OF */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_BC2_LFXT1OF_ 0</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* LFXT1OF */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="bc2_8h.html#a090b79e6d883a1f7579c2a77f526f23c">  184</a></span>&#160;<span class="preprocessor">#define BSP430_BC2_LFXT1_IS_FAULTED_NI() (BCSCTL3 &amp; BSP430_BC2_LFXT1OF_)</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="code" href="bc2_8h.html#af2366626addc8e36f6176e3fca2c549d">  193</a></span>&#160;<span class="preprocessor">#define BSP430_BC2_XT2_IS_FAULTED_NI() (BC2CTL7 &amp; BSP430_BC2_XT2OF_)</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_LFXT1_IS_FAULTED_NI)</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="code" href="bc2_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">  208</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ((BCSCTL3 &amp; (LFXT1S0 | LFXT1S1)) || BSP430_BC2_LFXT1_IS_FAULTED_NI())</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CLOCK_LFXT1_IS_FAULTED_NI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_XT2_IS_FAULTED_NI)</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno"><a class="code" href="bc2_8h.html#aad464616a6b90463f1eae80399c34905">  227</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CLOCK_XT2_IS_FAULTED_NI() ((BCSCTL1 &amp; XT2OFF) || BSP430_BC2_XT2_IS_FAULTED_NI())</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CLOCK_XT2_IS_FAULTED_NI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || ! defined(BSP430_CLOCK_CLEAR_FAULTS_NI)</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno"><a class="code" href="bc2_8h.html#a193ffc3b8d68bc1ec72dbeb887061af2">  237</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CLOCK_CLEAR_FAULTS_NI() do {                             \</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">    BSP430_CLOCK_OSC_CLEAR_FAULT_NI();                                  \</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/*  BSP430_CLOCK_CLEAR_FAULTS_NI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor">#ifndef BSP430_CLOCK_LFXT1_XCAP</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00244"></a><span class="lineno"><a class="code" href="bc2_8h.html#ab4253e74bf9b15ba67fac82790ec629f">  244</a></span>&#160;<span class="preprocessor">#define BSP430_CLOCK_LFXT1_XCAP XCAP_1</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CLOCK_LFXT1_XCAP */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="code" href="bc2_8h.html#ae2ace757e68c3bc4206f0ff4a3a39d13">  248</a></span>&#160;<span class="preprocessor">#define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 12000U</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00251"></a><span class="lineno"><a class="code" href="bc2_8h.html#a24c49529cfa0ba1ada6819dfe6c5d68e">  251</a></span>&#160;<span class="preprocessor">#define BSP430_CLOCK_PUC_MCLK_HZ 1100000UL</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_BC2 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_BC2_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

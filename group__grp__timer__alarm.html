@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -146,13 +146,13 @@ Functions</h2></td></tr>
 <tr>
 <th align="left">Underlying Timer </th><th align="left">HAL Request </th><th align="left">CC0 ISR Request</th></tr>
 <tr>
-<td align="left"><a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a> </td><td align="left"><em>automatic</em> </td><td align="left"><a class="el" href="uptime_8h.html#a6f0075826a6164ffd4b9272ab9c5d748">configBSP430_UPTIME_USE_DEFAULT_CC0_ISR</a> </td></tr>
+<td align="left"><a class="el" href="timer_8h.html#a34075fc8b8835a19127605e153a41478">BSP430_PERIPH_TA3</a> </td><td align="left"><a class="el" href="group__grp__config__core.html#gac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> </td><td align="left"><a class="el" href="group__grp__config__core.html#ga351ead2eb55696db432fd6bc1621b513">configBSP430_HAL_TA3_CC0_ISR</a> </td></tr>
 <tr>
-<td align="left"><a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a> </td><td align="left"><a class="el" href="group__grp__timer__ccaclk.html#gaa0fd6b1700e0806c47062702cae49a9f">configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL</a> </td><td align="left"><a class="el" href="group__grp__timer__ccaclk.html#ga54510adf84b110a4e86b1233ae40e34b">configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR</a> </td></tr>
+<td align="left"><a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a> </td><td align="left"><em>automatic</em> </td><td align="left"><a class="el" href="group__grp__config__functional.html#gaa14b0b52fb6f36c07294924bea45b36a">configBSP430_UPTIME_TIMER_HAL_CC0_ISR</a> </td></tr>
 <tr>
-<td align="left"><a class="el" href="timer_8h.html#a34075fc8b8835a19127605e153a41478">BSP430_PERIPH_TA3</a> </td><td align="left"><a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> </td><td align="left"><a class="el" href="timer_8h.html#a351ead2eb55696db432fd6bc1621b513">configBSP430_HAL_TA3_CC0_ISR</a> </td></tr>
+<td align="left"><a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a> </td><td align="left"><a class="el" href="group__grp__config__functional.html#ga954232351119aa8475038652f880f46d">configBSP430_TIMER_CCACLK_HAL</a> </td><td align="left"><a class="el" href="group__grp__config__functional.html#ga6d3d4b4ec6998ad676bbe635d6a157b3">configBSP430_TIMER_CCACLK_HAL_CC0_ISR</a> </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>It is the responsibility of the application to configure the underlying timer to continuous mode with the appropriate clock source, any desired dividers, and enabling the interrupt that maintains the 32-bit overflow counter timer HAL infrastructure. For example: <div class="fragment"><div class="line">alarmHAL_ = <a class="code" href="timer_8h.html#afe3886cec73bfe10e638855dac7964dc">hBSP430timerLookup</a>(ALARM_TIMER_PERIPH_HANDLE);</div>
+<dl class="section note"><dt>Note</dt><dd>It is the responsibility of the application to configure the underlying timer to continuous mode with the appropriate clock source, any desired dividers, and enabling the interrupt that maintains the 32-bit overflow counter timer HAL infrastructure. If you are using <a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a> the timer is already configured this way. For other timers, use something like: <div class="fragment"><div class="line">alarmHAL_ = <a class="code" href="timer_8h.html#afe3886cec73bfe10e638855dac7964dc">hBSP430timerLookup</a>(ALARM_TIMER_PERIPH_HANDLE);</div>
 <div class="line"><span class="keywordflow">if</span> (alarmHAL_) {</div>
 <div class="line">  alarmHAL_-&gt;<a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a class="code" href="structsBSP430hplTIMER.html#af7e38ca9803b3645a8abb261608a7957">ctl</a> = 0;</div>
 <div class="line">  <a class="code" href="timer_8h.html#adbda3deda56fd4453c32f47f51c3f861">vBSP430timerResetCounter_ni</a>(alarmHAL_);</div>
@@ -165,8 +165,9 @@ Functions</h2></td></tr>
 <p>Alarms that are set may be reliably cancelled using <a class="el" href="group__grp__timer__alarm.html#ga916a200cdb0920d14d47e3763ed3388c">iBSP430timerAlarmCancel_ni()</a>. This should always be done with interrupts disabled, to ensure that the alarm is not firing while the cancellation occurs. The return value will indicate if the alarm cancellation failed, e.g. due to it having already gone off.</p>
 <p>When the alarm fires, the callback registered in <a class="el" href="structsBSP430timerAlarm.html#afca4ba6a409f01eef0e2000668ee9b48">sBSP430timerAlarm::callback</a> is invoked. The callback may invoke <a class="el" href="group__grp__timer__alarm.html#ga691c60553180266436fbea9a9a8bfed7">iBSP430timerAlarmSet_ni()</a> to reschedule a periodic alarm, but complex processing should not be done. The callback should instead set a volatile global variable and return a value such as <a class="el" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>. See <a class="el" href="group__grp__timer__alarm.html#ga9995237b87fbe59fcb5b31806f91b4ca">iBSP430timerAlarmCallback_ni</a>.</p>
 <p>The <a class="el" href="ex_utility_alarm.html">Utilities: Alarms</a> example program provides an environment where the behavior of alarms can be interactively probed.</p>
+<dl class="section warning"><dt>Warning</dt><dd>The alarm infrastructure requires that <a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni()</a> have been invoked on the underlying timer. This is done by the infrastructure for <a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>, but you must do so for other timers that may be used for alarms.</dd></dl>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gaa5de1dec0ca2a7bc98597562a270a4ab"></a>
 <div class="memitem">
@@ -346,7 +347,13 @@ Functions</h2></td></tr>
     <tr><td class="paramname">alarm</td><td>a pointer to the structure holding alarm configuration data.</td></tr>
     <tr><td class="paramname">periph</td><td>the handle identifier, such as <a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>.</td></tr>
     <tr><td class="paramname">ccidx</td><td>the capture/compare index within the timer. It is the user's responsibility to ensure that the selected timer supports the selected capture/compare register.</td></tr>
-    <tr><td class="paramname">callback</td><td>the callback function to be invoked when the alarm goes off. This may be a null pointer, in which case the alarm will be disabled and the system will return from low power mode if necessary.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is enabled (as it is by default), attempts to configure an alarm on <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> will be rejected.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">callback</td><td>the callback function to be invoked when the alarm goes off. This may be a null pointer, in which case the infrastructure will behave as though a registered callback did nothing but return <a class="el" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -376,7 +383,7 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Wrapper to invoke iBSP430timerCancel_ni() when interrupts are enabled. </p>
+<p>Wrapper to invoke <a class="el" href="group__grp__timer__alarm.html#ga916a200cdb0920d14d47e3763ed3388c">iBSP430timerAlarmCancel_ni()</a> when interrupts are enabled. </p>
 
 </div>
 </div>
@@ -535,7 +542,7 @@ Functions</h2></td></tr>
 <li>The positive value <a class="el" href="group__grp__timer__alarm.html#gac953994f53e720e2e09f34d699d54649">BSP430_TIMER_ALARM_SET_NOW</a> if <code>setting_tck</code> is too near for the alarm infrastructure to guarantee delivery of the alarm event; </li>
 <li>The positive value <a class="el" href="group__grp__timer__alarm.html#gafcfa39b36bcff291c2a2bb1e02e8d9ad">BSP430_TIMER_ALARM_SET_PAST</a> if <code>setting_tck</code> appears to be in the recent past; </li>
 <li>The negative value <a class="el" href="group__grp__timer__alarm.html#ga58a61d83b21c4613db1e77f5c771b749">BSP430_TIMER_ALARM_SET_ALREADY</a> if the alarm was already scheduled; </li>
-<li>other negative values indicating errors. </li>
+<li>other negative values indicating specific or generic errors. </li>
 </ul>
 </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a5">utility/alarm/main.c</a>.</dd>
@@ -583,7 +590,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

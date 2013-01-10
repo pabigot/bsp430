@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -88,12 +88,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 </div>
 <div class="textblock"><p>The BSP430 configuration structure is implemented using the standard C preprocessor. As a general rule, if an application wishes to use a peripheral, it specifies this by defining a macro to 1. The specific peripheral, and the desired capability, are reflected in the macro name.</p>
-<p>For example, to use the <a class="el" href="layer.html#HPL">HPL</a> interface to digital I/O port 1 it is necessary to define <a class="el" href="port_8h.html#ae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>:</p>
+<p>For example, to use the <a class="el" href="layer.html#HPL">HPL</a> interface to digital I/O port 1 it is necessary to define <a class="el" href="group__grp__config__core.html#gae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define configBSP430_HPL_PORT1 1</span></div>
 </div><!-- fragment --><p>If the <a class="el" href="layer.html#HAL">HAL</a> interface is desired, that must be requested using:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define configBSP430_HAL_PORT1 1</span></div>
 </div><!-- fragment --><p>The HAL interface will always depend on the corresponding HPL interface, but BSP430 will automatically enable the underlying capabilities by default, so you don't need to ask for them explicitly.</p>
 <p>Failure to correctly request a resource that your application depends on will result in either compile-time or link-time errors.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="group__grp__config__core.html">Configuration of Core Peripheral Resources</a> </dd>
+<dd>
+<a class="el" href="group__grp__config__functional.html">Configuration of Functional Resources</a></dd></dl>
 <h1><a class="anchor" id="cfg_placement"></a>
 Placement of Configuration Information</h1>
 <p>Because the BSP430 infrastructure enables and disables features within separate object files based on the flags presented at the time the source file is compiled, it is critical that all object files in an application have consistent flag definitions.</p>
@@ -102,7 +105,7 @@ Placement of Configuration Information</h1>
 </div><!-- fragment --><p>Unlike all other BSP430 headers, this file is not accessed with a path that places it within the BSP430 hierarchy, and is assumed to exist within the application source area. It is in this file that application-specific configuration information should be placed.</p>
 <p>The application-specific configuration file should end with:</p>
 <div class="fragment"><div class="line"><span class="comment">/* Include platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><p>This file consults the existing definitions (e.g. <a class="el" href="platform_8h.html#ababc41a3cb834f76137a81137c75f484">BSP430_PLATFORM_EXP430G2</a> or <a class="el" href="platform_8h.html#a33caa59d1913e09742abeefb9d00aad2">BSP430_PLATFORM_CUSTOM</a>) to identify a platform-specific configuration file, which it then includes. In that file any previous requests for specific features, such as <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a>, are translated to requests for the underlying peripheral supported on that platform.</p>
 <p>Finally, each header that specifies a configuration option sets a default for that option if no previous header or the environment provided an explicit request for or rejection of the option.</p>
 <h1><a class="anchor" id="cfg_use"></a>
@@ -115,8 +118,7 @@ Use of Configuration-Dependent Information</h1>
 <div class="line"><span class="preprocessor"></span><span class="comment">/* The capture/compare-on-aclk feature is available */</span></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_TIMER_CCACLK */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p><a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a> should be the first BSP430-related include file in implementation files, so that both the configuration information obtained through <a class="el" href="core_8h.html" title="Common header included by all BSP430 leaf headers.">bsp430/core.h</a> and any platform-specific restrictions/overrides are available.</p>
-<p>In other cases like <a class="el" href="port_8h.html#a5afcb529d6a3d330aa4c79c634ec429e">configBSP430_HPL_PORT7</a> simple use of the feature (viz., reference to <a class="el" href="port_8h.html#a211c90a9d207b2dff496de31f2aa8c4d">BSP430_HPL_PORT7</a>) will produce a compile-time error if the requested feature is not available on the target, so it is generally not necessary to explicitly check for success.</p>
-<p>Some configuration macros such as <a class="el" href="group__grp__timer__ccaclk.html#ga2d9f6514833dda162d50bc1616863793">configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE</a> serve only to influence a choice of solution, and there is no specific facility to determine whether the setting was successful. For these macros there is no <b>Affects</b> annotation in the documentation.</p>
+<p>In other cases like <a class="el" href="group__grp__config__core.html#ga5afcb529d6a3d330aa4c79c634ec429e">configBSP430_HPL_PORT7</a> simple use of the feature (viz., reference to <a class="el" href="port_8h.html#a211c90a9d207b2dff496de31f2aa8c4d">BSP430_HPL_PORT7</a>) will produce a compile-time error if the requested feature is not available on the target, so it is generally not necessary to explicitly check for success.</p>
 <h1><a class="anchor" id="cfg_module"></a>
 Checking for Module Capabilities</h1>
 <p>Internally BSP430 checks functional presence macro definitions that are internal to the MCU-specific headers provided by Texas Instruments. In some cases, it may be desirable to detect whether a feature is present without hard-coding checks of those internal macros.</p>
@@ -125,11 +127,11 @@ Checking for Module Capabilities</h1>
 <div class="line"><span class="preprocessor">#if BSP430_MODULE_PMM - 0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="comment">/* Include declarations related to LPMx.5 mode */</span></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
-</div><!-- fragment --><p>Copyright 2012, Peter A. Bigot </p>
+</div><!-- fragment --><p>Copyright 2012-2013, Peter A. Bigot </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

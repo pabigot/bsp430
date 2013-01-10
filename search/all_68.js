@@ -1,7 +1,7 @@
 var searchData=
 [
   ['h',['h',['../unionuBSP430hplPORT__16.html#acd1942f7f84a3f4de844de7e8a1a0299',1,'uBSP430hplPORT_16']]],
-  ['hal_5fstate',['hal_state',['../structsBSP430halPORT.html#a5acd0de9c604085a502465a72a1bbcd4',1,'sBSP430halPORT::hal_state()'],['../structsBSP430halTIMER.html#a893745ac836014dd39c19ce87a6ffec0',1,'sBSP430halTIMER::hal_state()'],['../structsBSP430halSERIAL.html#a59430e1cc6d0160f161b382d51d798f3',1,'sBSP430halSERIAL::hal_state()']]],
+  ['hal_5fstate',['hal_state',['../structsBSP430halDMA.html#af8a258efda950cfee4bfab4f698a8c4d',1,'sBSP430halDMA::hal_state()'],['../structsBSP430halPORT.html#a5acd0de9c604085a502465a72a1bbcd4',1,'sBSP430halPORT::hal_state()'],['../structsBSP430halTIMER.html#a893745ac836014dd39c19ce87a6ffec0',1,'sBSP430halTIMER::hal_state()'],['../structsBSP430halSERIAL.html#a59430e1cc6d0160f161b382d51d798f3',1,'sBSP430halSERIAL::hal_state()']]],
   ['handler',['handler',['../structsBSP430cliCommand.html#a896e8594759400c197809d7e346eabd8',1,'sBSP430cliCommand']]],
   ['hardware_5frevision',['hardware_revision',['../structsBSP430tlvTable5xx.html#acb7f2710d7b865b9f64a282a888df1b8',1,'sBSP430tlvTable5xx']]],
   ['hbsp430console',['hBSP430console',['../console_8h.html#a641b6419ca463bcb87d4ec1645928c0b',1,'console.h']]],
@@ -9,6 +9,7 @@ var searchData=
   ['hbsp430eusciopeni2c',['hBSP430eusciOpenI2C',['../eusci_8h.html#a9eee56bc961776b89104888aaaa4345e',1,'eusci.h']]],
   ['hbsp430eusciopenspi',['hBSP430eusciOpenSPI',['../eusci_8h.html#a105be2a888ebe0a32ea54935986ba8cb',1,'eusci.h']]],
   ['hbsp430eusciopenuart',['hBSP430eusciOpenUART',['../eusci_8h.html#a979f8d655b638d5ee057fad3eb18f5dd',1,'eusci.h']]],
+  ['hbsp430haldma',['hBSP430halDMA',['../dma_8h.html#a8a1c59559839040bba5def9a828552b6',1,'dma.h']]],
   ['hbsp430halport',['hBSP430halPORT',['../port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af',1,'port.h']]],
   ['hbsp430halserial',['hBSP430halSERIAL',['../serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb',1,'serial_.h']]],
   ['hbsp430haltimer',['hBSP430halTIMER',['../timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8',1,'timer.h']]],
@@ -20,14 +21,18 @@ var searchData=
   ['hbsp430timeralarm',['hBSP430timerAlarm',['../group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f',1,'timer.h']]],
   ['hbsp430timeralarminitialize',['hBSP430timerAlarmInitialize',['../group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81',1,'timer.h']]],
   ['hbsp430timerlookup',['hBSP430timerLookup',['../timer_8h.html#afe3886cec73bfe10e638855dac7964dc',1,'timer.h']]],
+  ['hbsp430uptimetimer',['hBSP430uptimeTimer',['../uptime_8h.html#a65ad8857f1ae12028ee2547099e3f3f8',1,'uptime.h']]],
+  ['hbsp430usci5lookup',['hBSP430usci5Lookup',['../usci5_8h.html#a58773959576322350cbed7180c32a981',1,'usci5.h']]],
   ['hbsp430usci5openspi',['hBSP430usci5OpenSPI',['../usci5_8h.html#a3a04f2b3eb37ea1f7bfb4ed98f0494cd',1,'usci5.h']]],
   ['hbsp430usci5openuart',['hBSP430usci5OpenUART',['../usci5_8h.html#a37a7c9c342c51ebb947fe1d6342ec087',1,'usci5.h']]],
   ['hbsp430uscilookup',['hBSP430usciLookup',['../usci_8h.html#a91f3238ecb90e7e83c9d5557e7aa818f',1,'usci.h']]],
   ['hbsp430usciopeni2c',['hBSP430usciOpenI2C',['../usci_8h.html#a853eb4776b201dbc1d1bdd9de5d977e3',1,'usci.h']]],
   ['hbsp430usciopenspi',['hBSP430usciOpenSPI',['../usci_8h.html#adec638cfb7be839761882915ddde7f71',1,'usci.h']]],
   ['hbsp430usciopenuart',['hBSP430usciOpenUART',['../usci_8h.html#a3b931d90b152b41a9b5bdfebc94c2143',1,'usci.h']]],
+  ['hdop_5fpc_5fbe',['hdop_pc_be',['../structsSkyTraqMsgOut__NAV__DATA.html#ad6e5dc3ac81af07c13b69d7d356c47f0',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['hdr',['hdr',['../structsBSP430tlvDIERECORD.html#a096c234f817f418699adb704e24d63ae',1,'sBSP430tlvDIERECORD::hdr()'],['../structsBSP430tlvREFCAL.html#ab8642a512bc9b6c47390ad15a1e44d92',1,'sBSP430tlvREFCAL::hdr()'],['../structsBPS430tlvADCCAL.html#ac7438c534902a5388f46dbc8758c14a7',1,'sBPS430tlvADCCAL::hdr()'],['../structsBSP430tlvDCO.html#ad92bdae77517af276473f7b34fe72548',1,'sBSP430tlvDCO::hdr()'],['../structsBPS430tlvADC.html#aad1ce276fb02c30b007035f9aaaac4c3',1,'sBPS430tlvADC::hdr()']]],
   ['help',['help',['../structsBSP430cliCommand.html#a92d535f231bea8e65f95011a0843670c',1,'sBSP430cliCommand']]],
   ['helper',['helper',['../structsBSP430cliCompletionHelper.html#aa4eedca5d94e913b7946c1ac32539579',1,'sBSP430cliCompletionHelper']]],
-  ['hpl',['hpl',['../structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716',1,'sBSP430halTIMER']]]
+  ['hour',['hour',['../structsSkyTraqMsgIn__RESTART.html#af3590dd3d228a1565c2535a54646667b',1,'sSkyTraqMsgIn_RESTART']]],
+  ['hpl',['hpl',['../structsBSP430halDMA.html#a0885d5289c4e9e1b90b436c755b25d4e',1,'sBSP430halDMA::hpl()'],['../structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716',1,'sBSP430halTIMER::hpl()']]]
 ];

@@ -12,6 +12,8 @@ var searchData=
   ['hbsp430serialopenuart',['hBSP430serialOpenUART',['../serial_8h.html#a32f608fdca583bd1c68b1eb2617426e5',1,'serial.h']]],
   ['hbsp430timeralarminitialize',['hBSP430timerAlarmInitialize',['../group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81',1,'timer.h']]],
   ['hbsp430timerlookup',['hBSP430timerLookup',['../timer_8h.html#afe3886cec73bfe10e638855dac7964dc',1,'timer.h']]],
+  ['hbsp430uptimetimer',['hBSP430uptimeTimer',['../uptime_8h.html#a65ad8857f1ae12028ee2547099e3f3f8',1,'uptime.h']]],
+  ['hbsp430usci5lookup',['hBSP430usci5Lookup',['../usci5_8h.html#a58773959576322350cbed7180c32a981',1,'usci5.h']]],
   ['hbsp430usci5openspi',['hBSP430usci5OpenSPI',['../usci5_8h.html#a3a04f2b3eb37ea1f7bfb4ed98f0494cd',1,'usci5.h']]],
   ['hbsp430usci5openuart',['hBSP430usci5OpenUART',['../usci5_8h.html#a37a7c9c342c51ebb947fe1d6342ec087',1,'usci5.h']]],
   ['hbsp430uscilookup',['hBSP430usciLookup',['../usci_8h.html#a91f3238ecb90e7e83c9d5557e7aa818f',1,'usci.h']]],

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -84,7 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#callback_functions">Application Callback Functions</a></li>
 <li class="level1"><a href="#callback_chains">Callback Chain Nodes</a></li>
-<li class="level1"><a href="#callback_retval">Influencing Callback Chain Execution</a></li>
+<li class="level1"><a href="#callback_retval">Interrupt Callback Return Values</a></li>
 <li class="level1"><a href="#callback_appinfo">Providing Extended Information to the Callback</a></li>
 </ul>
 </div>
@@ -132,8 +132,20 @@ Callback Chain Nodes</h1>
 <div class="line">  <a class="code" href="periph_8h.html#a7a61d11ba7620c04e05cd290fff08ca0">BSP430_HAL_ISR_CALLBACK_UNLINK_NI</a>(<a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a>, hal-&gt;rx_cb_chain_ni, cb_node, next_ni);</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>In many cases, you will never have cause to unlink a callback from a chain. However, if you do, understand that the interrupt handler walks this chain, and any attempt to modify the chain from within a callback that is part of the chain may result in wild pointers.</dd></dl>
 <h1><a class="anchor" id="callback_retval"></a>
-Influencing Callback Chain Execution</h1>
-<p>The callback chain infrastructure supports an arbitrary number of notifications resulting from a single event. In many cases, it would be improper to invoke chain elements past the point where the event was completely handled. In addition, it is necessary to inform the interrupt handler top half when a low power mode should be exited. This information is conveyed to the interrupt through the return value of the callback handler, using bit values defined in &lt;<a class="el" href="periph_8h.html" title="Generic peripheral support for MSP430 MCUs.">bsp430/periph.h</a>&gt;</p>
+Interrupt Callback Return Values</h1>
+<p>The callback chain infrastructure supports an arbitrary number of notifications resulting from a single event. In many cases, it would be improper to invoke chain elements past the point where the event was completely handled. In addition, it is necessary to inform the interrupt handler top half when a low power mode should be exited. This information is conveyed to the interrupt through the return value of the callback handler, using a set of flags formed by combining bit values defined in &lt;<a class="el" href="periph_8h.html" title="Generic peripheral support for MSP430 MCUs.">bsp430/periph.h</a>&gt;. The current set of callback flags is:</p>
+<table class="doxtable">
+<tr>
+<th align="left">Name </th><th align="left">Purpose</th></tr>
+<tr>
+<td align="left"><a class="el" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a> </td><td align="left">Interrupt handler wakes from LPM by clearing the <a class="el" href="core_8h.html#a2b4afc21563d1222ddc2cda30168c052">BSP430_CORE_LPM_EXIT_MASK</a> bits in the status register stored on interrupt entry </td></tr>
+<tr>
+<td align="left"><a class="el" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a> </td><td align="left">Interrupt handler does not invoke any subsequent callbacks in the chain </td></tr>
+<tr>
+<td align="left"><a class="el" href="periph_8h.html#a91d408b6d97a12b296903e07b095d9c4">BSP430_HAL_ISR_CALLBACK_YIELD</a> </td><td align="left">Interrupt handler should inform an RTOS that a context switch is required </td></tr>
+<tr>
+<td align="left"><a class="el" href="periph_8h.html#a94d022aee289b5f9350fbce9e6973078">BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT</a> </td><td align="left">Interrupt handler should disable the peripheral-specific interrupt </td></tr>
+</table>
 <p>The return value from a handler which receives an input character is likely to be:</p>
 <div class="fragment"><div class="line"><span class="keywordflow">return</span> <a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a></div>
 <div class="line">     | <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
@@ -168,11 +180,11 @@ Providing Extended Information to the Callback</h1>
 <div class="line"><span class="keyword">static</span> sConsoleRxBuffer rx_buffer_ = {</div>
 <div class="line">  .cb_node = { .callback = console_rx_isr_ni },</div>
 <div class="line">};</div>
-</div><!-- fragment --><p>Copyright 2012, Peter A. Bigot </p>
+</div><!-- fragment --><p>Copyright 2012-2013, Peter A. Bigot </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

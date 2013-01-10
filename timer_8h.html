@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -122,26 +122,60 @@ Macros</h2></td></tr>
 <tr class="separator:a311de479b1fbc5c5cb1d21323f9270b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga21a5d22e80e4fecc6242b1530632ba85"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:ga21a5d22e80e4fecc6242b1530632ba85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2d9f6514833dda162d50bc1616863793"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga2d9f6514833dda162d50bc1616863793">configBSP430_TIMER_CCACLK_USE_DEFAULT_RESOURCE</a>&#160;&#160;&#160;(<a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> - 0)</td></tr>
-<tr class="separator:ga2d9f6514833dda162d50bc1616863793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0fd6b1700e0806c47062702cae49a9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaa0fd6b1700e0806c47062702cae49a9f">configBSP430_TIMER_CCACLK_USE_DEFAULT_TIMER_HAL</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:gaa0fd6b1700e0806c47062702cae49a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ebda16cd559b58f00ef7c6711037dbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga9ebda16cd559b58f00ef7c6711037dbf">configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga9ebda16cd559b58f00ef7c6711037dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga54510adf84b110a4e86b1233ae40e34b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga54510adf84b110a4e86b1233ae40e34b">configBSP430_TIMER_CCACLK_USE_DEFAULT_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga54510adf84b110a4e86b1233ae40e34b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafaa65b8c2e6832c51e73ab8c929af856"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gafaa65b8c2e6832c51e73ab8c929af856">BSP430_TIMER_CCACLK</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="separator:gafaa65b8c2e6832c51e73ab8c929af856"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf21a38de49b7d31cba4066c0ce80720"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="memitem:gaa3525a9334a422e17cac7783a0801594"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaa3525a9334a422e17cac7783a0801594">BSP430_TIMER_CCACLK_PERIPH_CPPID</a>&#160;&#160;&#160;include &quot;bsp430_config.h&quot;</td></tr>
+<tr class="separator:gaa3525a9334a422e17cac7783a0801594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf21a38de49b7d31cba4066c0ce80720"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>&#160;&#160;&#160;derived platform or application specific</td></tr>
 <tr class="separator:gaaf21a38de49b7d31cba4066c0ce80720"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcade66d19fee425db29af20df802511"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gabcade66d19fee425db29af20df802511">BSP430_TIMER_CCACLK_CC_INDEX</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
-<tr class="separator:gabcade66d19fee425db29af20df802511"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53632d8aa76afc31766f6d48bc02369f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga53632d8aa76afc31766f6d48bc02369f">BSP430_TIMER_CCACLK_CCIS</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
-<tr class="separator:ga53632d8aa76afc31766f6d48bc02369f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf35c9363e9d7375950058e26ab50ed8b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaf35c9363e9d7375950058e26ab50ed8b">BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="memitem:ga954232351119aa8475038652f880f46d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__functional.html#ga954232351119aa8475038652f880f46d">configBSP430_TIMER_CCACLK_HAL</a>&#160;&#160;&#160;indirectly defaulted</td></tr>
+<tr class="separator:ga954232351119aa8475038652f880f46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95b9821e9bee0ee309ed09910f7c9949"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__functional.html#ga95b9821e9bee0ee309ed09910f7c9949">configBSP430_TIMER_CCACLK_HAL_ISR</a>&#160;&#160;&#160;indirectly defaulted</td></tr>
+<tr class="separator:ga95b9821e9bee0ee309ed09910f7c9949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d3d4b4ec6998ad676bbe635d6a157b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__functional.html#ga6d3d4b4ec6998ad676bbe635d6a157b3">configBSP430_TIMER_CCACLK_HAL_CC0_ISR</a>&#160;&#160;&#160;indirectly defaulted</td></tr>
+<tr class="separator:ga6d3d4b4ec6998ad676bbe635d6a157b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90ef5b44b3af8aae69e6598217917f49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga90ef5b44b3af8aae69e6598217917f49">configBSP430_TIMER_CCACLK_CLK_PORT</a>&#160;&#160;&#160;indirectly defaulted</td></tr>
+<tr class="separator:ga90ef5b44b3af8aae69e6598217917f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822fc3037f2ef326ad7637f8a4b796e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__functional.html#ga822fc3037f2ef326ad7637f8a4b796e4">configBSP430_TIMER_CCACLK_CLK_PORT_HAL</a>&#160;&#160;&#160;indirectly defaulted 0</td></tr>
+<tr class="separator:ga822fc3037f2ef326ad7637f8a4b796e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga223d8ba1bd2826c409aba946fbeac82b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga223d8ba1bd2826c409aba946fbeac82b">configBSP430_TIMER_CCACLK_CC0_PORT</a>&#160;&#160;&#160;indirectly defaulted</td></tr>
+<tr class="separator:ga223d8ba1bd2826c409aba946fbeac82b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b368468d63045669e2ec51d1d80b5de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__functional.html#ga7b368468d63045669e2ec51d1d80b5de">configBSP430_TIMER_CCACLK_CC0_PORT_HAL</a>&#160;&#160;&#160;indirectly defaulted 0</td></tr>
+<tr class="separator:ga7b368468d63045669e2ec51d1d80b5de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfde95353a0ea0e4168eb96a59dde5e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gacfde95353a0ea0e4168eb96a59dde5e5">configBSP430_TIMER_CCACLK_CC1_PORT</a>&#160;&#160;&#160;indirectly defaulted</td></tr>
+<tr class="separator:gacfde95353a0ea0e4168eb96a59dde5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga639cba6d52112831ae17d22355b9ad16"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__functional.html#ga639cba6d52112831ae17d22355b9ad16">configBSP430_TIMER_CCACLK_CC1_PORT_HAL</a>&#160;&#160;&#160;indirectly defaulted 0</td></tr>
+<tr class="separator:ga639cba6d52112831ae17d22355b9ad16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9ac11f10dcbc3950e072d2f89b0fac3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaa9ac11f10dcbc3950e072d2f89b0fac3">BSP430_TIMER_CCACLK_ACLK_CCIDX</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="separator:gaa9ac11f10dcbc3950e072d2f89b0fac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95d6514c2619c6065b819598e5e4d530"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga95d6514c2619c6065b819598e5e4d530">BSP430_TIMER_CCACLK_ACLK_CCIS</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="separator:ga95d6514c2619c6065b819598e5e4d530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9729bb92d3589400442a6c0b9d72bcf9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga9729bb92d3589400442a6c0b9d72bcf9">BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID</a>&#160;&#160;&#160;platform or application specific</td></tr>
+<tr class="separator:ga9729bb92d3589400442a6c0b9d72bcf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf35c9363e9d7375950058e26ab50ed8b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaf35c9363e9d7375950058e26ab50ed8b">BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE</a>&#160;&#160;&#160;derived platform or application specific</td></tr>
 <tr class="separator:gaf35c9363e9d7375950058e26ab50ed8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga88c937b1f3fec2fc66afe553b6b9da7c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga88c937b1f3fec2fc66afe553b6b9da7c">BSP430_TIMER_CCACLK_CLK_PORT_BIT</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
 <tr class="separator:ga88c937b1f3fec2fc66afe553b6b9da7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5ac6bb1bc4f9aef3a654744b96ca252"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaa5ac6bb1bc4f9aef3a654744b96ca252">BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID</a>&#160;&#160;&#160;platform or application specific</td></tr>
+<tr class="separator:gaa5ac6bb1bc4f9aef3a654744b96ca252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4dcbd863f012570f0fb47dd2b9e03e63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga4dcbd863f012570f0fb47dd2b9e03e63">BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE</a>&#160;&#160;&#160;derived platform or application specific</td></tr>
+<tr class="separator:ga4dcbd863f012570f0fb47dd2b9e03e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4e11ea4e22fe535ae1055ad5e7c3d6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gac4e11ea4e22fe535ae1055ad5e7c3d6d">BSP430_TIMER_CCACLK_CC0_PORT_BIT</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="separator:gac4e11ea4e22fe535ae1055ad5e7c3d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a42d2777d31ab9f04c0c9f5dabdabac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga4a42d2777d31ab9f04c0c9f5dabdabac">BSP430_TIMER_CCACLK_CC0_CCIS</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a9ba6a151f54a33e229f22f57bba8c7f2">CCIS_0</a></td></tr>
+<tr class="separator:ga4a42d2777d31ab9f04c0c9f5dabdabac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c3de101a221465622c4da1b950a49f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga8c3de101a221465622c4da1b950a49f2">BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID</a>&#160;&#160;&#160;platform or application specific</td></tr>
+<tr class="separator:ga8c3de101a221465622c4da1b950a49f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1de7be81a963c67a9722a4bd35443cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gac1de7be81a963c67a9722a4bd35443cd">BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE</a>&#160;&#160;&#160;derived platform or application specific</td></tr>
+<tr class="separator:gac1de7be81a963c67a9722a4bd35443cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c17e99de1ca6bf9f46670cc049a53a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#ga7c17e99de1ca6bf9f46670cc049a53a7">BSP430_TIMER_CCACLK_CC1_PORT_BIT</a>&#160;&#160;&#160;include &lt;bsp430/platform.h&gt;</td></tr>
+<tr class="separator:ga7c17e99de1ca6bf9f46670cc049a53a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb8cf9a270296605b91d7b56974a1b37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaeb8cf9a270296605b91d7b56974a1b37">BSP430_TIMER_CCACLK_CC1_CCIS</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a9ba6a151f54a33e229f22f57bba8c7f2">CCIS_0</a></td></tr>
+<tr class="separator:gaeb8cf9a270296605b91d7b56974a1b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabc91e75098e4ea4d9bc3384dc8d7ff4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:aabc91e75098e4ea4d9bc3384dc8d7ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad30dd3941041dfa851bffbfe82ad780"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:aad30dd3941041dfa851bffbfe82ad780"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81ae7994f15cca7ebc25063f351d4f17"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a81ae7994f15cca7ebc25063f351d4f17">BSP430_TIMER_HAL_HPL_VARIANT_TIMER</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a81ae7994f15cca7ebc25063f351d4f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga21bb8801633b35ea742bb88d804e5674"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga21bb8801633b35ea742bb88d804e5674">BSP430_TIMER_ALARM_FLAG_SET</a>&#160;&#160;&#160;0x01</td></tr>
@@ -158,60 +192,60 @@ Macros</h2></td></tr>
 <tr class="separator:gafcfa39b36bcff291c2a2bb1e02e8d9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga58a61d83b21c4613db1e77f5c771b749"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga58a61d83b21c4613db1e77f5c771b749">BSP430_TIMER_ALARM_SET_ALREADY</a>&#160;&#160;&#160;-2</td></tr>
 <tr class="separator:ga58a61d83b21c4613db1e77f5c771b749"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f939e49e1683ad64a97595a9ff252d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a2f939e49e1683ad64a97595a9ff252d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f939e49e1683ad64a97595a9ff252d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga2f939e49e1683ad64a97595a9ff252d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05c61c146ce6f6a86a5f38575de6ef0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a05c61c146ce6f6a86a5f38575de6ef0b">BSP430_HAL_TA0</a>&#160;&#160;&#160;(&amp;xBSP430hal_TA0_)</td></tr>
 <tr class="separator:a05c61c146ce6f6a86a5f38575de6ef0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32887ebd177ce7a4899b2e51cda922a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a32887ebd177ce7a4899b2e51cda922a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32887ebd177ce7a4899b2e51cda922a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga32887ebd177ce7a4899b2e51cda922a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ffe5d2ed77ccb68e93a9655e1df5571"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a8ffe5d2ed77ccb68e93a9655e1df5571">BSP430_HAL_TA1</a>&#160;&#160;&#160;(&amp;xBSP430hal_TA1_)</td></tr>
 <tr class="separator:a8ffe5d2ed77ccb68e93a9655e1df5571"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a648f1ce5fdf49130f7c1632f721021"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a1a648f1ce5fdf49130f7c1632f721021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a648f1ce5fdf49130f7c1632f721021"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga1a648f1ce5fdf49130f7c1632f721021"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e206dc77a110a72ae6fb8efcce5abba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a3e206dc77a110a72ae6fb8efcce5abba">BSP430_HAL_TA2</a>&#160;&#160;&#160;(&amp;xBSP430hal_TA2_)</td></tr>
 <tr class="separator:a3e206dc77a110a72ae6fb8efcce5abba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0297e9387752c2ca7877fe482df2806"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ac0297e9387752c2ca7877fe482df2806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0297e9387752c2ca7877fe482df2806"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gac0297e9387752c2ca7877fe482df2806"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a171e40dd91968797612207ca194a9be6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a171e40dd91968797612207ca194a9be6">BSP430_HAL_TA3</a>&#160;&#160;&#160;(&amp;xBSP430hal_TA3_)</td></tr>
 <tr class="separator:a171e40dd91968797612207ca194a9be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96aa8a80be457f5a86dcd9a4e2889eb8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a96aa8a80be457f5a86dcd9a4e2889eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96aa8a80be457f5a86dcd9a4e2889eb8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga96aa8a80be457f5a86dcd9a4e2889eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcc2cb199d32a26180aaef25d8ca4137"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#afcc2cb199d32a26180aaef25d8ca4137">BSP430_HAL_TB0</a>&#160;&#160;&#160;(&amp;xBSP430hal_TB0_)</td></tr>
 <tr class="separator:afcc2cb199d32a26180aaef25d8ca4137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4354abdc5755c379d6ee0cd2a35a4421"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a4354abdc5755c379d6ee0cd2a35a4421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4354abdc5755c379d6ee0cd2a35a4421"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga4354abdc5755c379d6ee0cd2a35a4421"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0542af7d78b66cc89ed2c4d0f73543c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a0542af7d78b66cc89ed2c4d0f73543c8">BSP430_HAL_TB1</a>&#160;&#160;&#160;(&amp;xBSP430hal_TB1_)</td></tr>
 <tr class="separator:a0542af7d78b66cc89ed2c4d0f73543c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1268fbcbbf93c38ff23fdb09e5528934"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a1268fbcbbf93c38ff23fdb09e5528934"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1268fbcbbf93c38ff23fdb09e5528934"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga1268fbcbbf93c38ff23fdb09e5528934"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81f166a6a0664c95c817bef9e15b4b4d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a81f166a6a0664c95c817bef9e15b4b4d">BSP430_HAL_TB2</a>&#160;&#160;&#160;(&amp;xBSP430hal_TB2_)</td></tr>
 <tr class="separator:a81f166a6a0664c95c817bef9e15b4b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a330dd41c7c537feca9d67c5aff49683b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> - 0)</td></tr>
-<tr class="separator:a330dd41c7c537feca9d67c5aff49683b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga330dd41c7c537feca9d67c5aff49683b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> - 0)</td></tr>
+<tr class="separator:ga330dd41c7c537feca9d67c5aff49683b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f1f35990892a20c7ace8c88a1dce998"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a2f1f35990892a20c7ace8c88a1dce998">BSP430_PERIPH_TA0</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(BSP430_PERIPH_TA0_BASEADDRESS_))</td></tr>
 <tr class="separator:a2f1f35990892a20c7ace8c88a1dce998"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f72508dabbf0392a4a5a7ac6a6064b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> - 0)</td></tr>
-<tr class="separator:a2f72508dabbf0392a4a5a7ac6a6064b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f72508dabbf0392a4a5a7ac6a6064b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> - 0)</td></tr>
+<tr class="separator:ga2f72508dabbf0392a4a5a7ac6a6064b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa811147838571017c01dd6f987035f5f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aa811147838571017c01dd6f987035f5f">BSP430_PERIPH_TA1</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(BSP430_PERIPH_TA1_BASEADDRESS_))</td></tr>
 <tr class="separator:aa811147838571017c01dd6f987035f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c720262018e03bc7dc4310525e4115f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> - 0)</td></tr>
-<tr class="separator:a2c720262018e03bc7dc4310525e4115f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c720262018e03bc7dc4310525e4115f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> - 0)</td></tr>
+<tr class="separator:ga2c720262018e03bc7dc4310525e4115f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27f359942f48d8db442e1f4ea3f266d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a27f359942f48d8db442e1f4ea3f266d0">BSP430_PERIPH_TA2</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(BSP430_PERIPH_TA2_BASEADDRESS_))</td></tr>
 <tr class="separator:a27f359942f48d8db442e1f4ea3f266d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af37ec764721a3e27eca4db3377edc7c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#af37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> - 0)</td></tr>
-<tr class="separator:af37ec764721a3e27eca4db3377edc7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf37ec764721a3e27eca4db3377edc7c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gaf37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#gac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> - 0)</td></tr>
+<tr class="separator:gaf37ec764721a3e27eca4db3377edc7c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34075fc8b8835a19127605e153a41478"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a34075fc8b8835a19127605e153a41478">BSP430_PERIPH_TA3</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(BSP430_PERIPH_TA3_BASEADDRESS_))</td></tr>
 <tr class="separator:a34075fc8b8835a19127605e153a41478"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12edbccde7a2b5826888ad4daa258bec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> - 0)</td></tr>
-<tr class="separator:a12edbccde7a2b5826888ad4daa258bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12edbccde7a2b5826888ad4daa258bec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> - 0)</td></tr>
+<tr class="separator:ga12edbccde7a2b5826888ad4daa258bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac348881fa13d14298015bb1ce192f9a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ac348881fa13d14298015bb1ce192f9a4">BSP430_PERIPH_TB0</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(BSP430_PERIPH_TB0_BASEADDRESS_))</td></tr>
 <tr class="separator:ac348881fa13d14298015bb1ce192f9a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a764dfedfd48007de08bfad154355f32a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> - 0)</td></tr>
-<tr class="separator:a764dfedfd48007de08bfad154355f32a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga764dfedfd48007de08bfad154355f32a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> - 0)</td></tr>
+<tr class="separator:ga764dfedfd48007de08bfad154355f32a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9a4e7d41f81dd30caf11f998b7dd789"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ae9a4e7d41f81dd30caf11f998b7dd789">BSP430_PERIPH_TB1</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(BSP430_PERIPH_TB1_BASEADDRESS_))</td></tr>
 <tr class="separator:ae9a4e7d41f81dd30caf11f998b7dd789"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada5b6045a8246159fdbfaf29c3fb019a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> - 0)</td></tr>
-<tr class="separator:ada5b6045a8246159fdbfaf29c3fb019a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada5b6045a8246159fdbfaf29c3fb019a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> - 0)</td></tr>
+<tr class="separator:gada5b6045a8246159fdbfaf29c3fb019a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab22cdbf5827315189c6bc5a320f4d138"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ab22cdbf5827315189c6bc5a320f4d138">BSP430_PERIPH_TB2</a>&#160;&#160;&#160;((<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>)(BSP430_PERIPH_TB2_BASEADDRESS_))</td></tr>
 <tr class="separator:ab22cdbf5827315189c6bc5a320f4d138"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4169b1f8e9d4f24998c248097f7fd5de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a4169b1f8e9d4f24998c248097f7fd5de">BSP430_HPL_TA0</a>&#160;&#160;&#160;((volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *)<a class="el" href="timer_8h.html#a2f1f35990892a20c7ace8c88a1dce998">BSP430_PERIPH_TA0</a>)</td></tr>
@@ -228,34 +262,34 @@ Macros</h2></td></tr>
 <tr class="separator:a227ff89b0424f4c56fdcc07eaeab98e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e2495b7f10f5c58866967522ccd6809"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a2e2495b7f10f5c58866967522ccd6809">BSP430_HPL_TB2</a>&#160;&#160;&#160;((volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *)<a class="el" href="timer_8h.html#ab22cdbf5827315189c6bc5a320f4d138">BSP430_PERIPH_TB2</a>)</td></tr>
 <tr class="separator:a2e2495b7f10f5c58866967522ccd6809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdbe916777e481f9efc3e4852554412a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#afdbe916777e481f9efc3e4852554412a">configBSP430_HAL_TA0_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:afdbe916777e481f9efc3e4852554412a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c93336fb2ce3874fda57b3408fa51a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a7c93336fb2ce3874fda57b3408fa51a3">configBSP430_HAL_TA0_ISR</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> - 0)</td></tr>
-<tr class="separator:a7c93336fb2ce3874fda57b3408fa51a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e7ba4e26de99442172db01739fadfd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a7e7ba4e26de99442172db01739fadfd4">configBSP430_HAL_TA1_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a7e7ba4e26de99442172db01739fadfd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0028c9a043565a31a90d14f2aa90fc51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a0028c9a043565a31a90d14f2aa90fc51">configBSP430_HAL_TA1_ISR</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> - 0)</td></tr>
-<tr class="separator:a0028c9a043565a31a90d14f2aa90fc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae01b49fc8e454b223d1a242c8e085022"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ae01b49fc8e454b223d1a242c8e085022">configBSP430_HAL_TA2_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ae01b49fc8e454b223d1a242c8e085022"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5eb1246480738ec190321becbe564d81"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a5eb1246480738ec190321becbe564d81">configBSP430_HAL_TA2_ISR</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> - 0)</td></tr>
-<tr class="separator:a5eb1246480738ec190321becbe564d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a351ead2eb55696db432fd6bc1621b513"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a351ead2eb55696db432fd6bc1621b513">configBSP430_HAL_TA3_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a351ead2eb55696db432fd6bc1621b513"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4adf6306a8d64b12f8841ef0d9fead27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a4adf6306a8d64b12f8841ef0d9fead27">configBSP430_HAL_TA3_ISR</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> - 0)</td></tr>
-<tr class="separator:a4adf6306a8d64b12f8841ef0d9fead27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec58c720315693faf35490a3316fe975"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aec58c720315693faf35490a3316fe975">configBSP430_HAL_TB0_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:aec58c720315693faf35490a3316fe975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a395d583c8ed3e4d300650e479795bdf0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a395d583c8ed3e4d300650e479795bdf0">configBSP430_HAL_TB0_ISR</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> - 0)</td></tr>
-<tr class="separator:a395d583c8ed3e4d300650e479795bdf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac53b9bc798c0dba3cb5c0eacd9cf436e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ac53b9bc798c0dba3cb5c0eacd9cf436e">configBSP430_HAL_TB1_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ac53b9bc798c0dba3cb5c0eacd9cf436e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b855988f8f2ee7b5fb456815298c14c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a1b855988f8f2ee7b5fb456815298c14c">configBSP430_HAL_TB1_ISR</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> - 0)</td></tr>
-<tr class="separator:a1b855988f8f2ee7b5fb456815298c14c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa501104826b2047b5c2d46d313e0ada5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aa501104826b2047b5c2d46d313e0ada5">configBSP430_HAL_TB2_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:aa501104826b2047b5c2d46d313e0ada5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b825fd5d638847a80cd2aa79649c9e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a0b825fd5d638847a80cd2aa79649c9e9">configBSP430_HAL_TB2_ISR</a>&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> - 0)</td></tr>
-<tr class="separator:a0b825fd5d638847a80cd2aa79649c9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdbe916777e481f9efc3e4852554412a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gafdbe916777e481f9efc3e4852554412a">configBSP430_HAL_TA0_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gafdbe916777e481f9efc3e4852554412a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c93336fb2ce3874fda57b3408fa51a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga7c93336fb2ce3874fda57b3408fa51a3">configBSP430_HAL_TA0_ISR</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> - 0)</td></tr>
+<tr class="separator:ga7c93336fb2ce3874fda57b3408fa51a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e7ba4e26de99442172db01739fadfd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga7e7ba4e26de99442172db01739fadfd4">configBSP430_HAL_TA1_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga7e7ba4e26de99442172db01739fadfd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0028c9a043565a31a90d14f2aa90fc51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga0028c9a043565a31a90d14f2aa90fc51">configBSP430_HAL_TA1_ISR</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> - 0)</td></tr>
+<tr class="separator:ga0028c9a043565a31a90d14f2aa90fc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae01b49fc8e454b223d1a242c8e085022"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gae01b49fc8e454b223d1a242c8e085022">configBSP430_HAL_TA2_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gae01b49fc8e454b223d1a242c8e085022"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5eb1246480738ec190321becbe564d81"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga5eb1246480738ec190321becbe564d81">configBSP430_HAL_TA2_ISR</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> - 0)</td></tr>
+<tr class="separator:ga5eb1246480738ec190321becbe564d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga351ead2eb55696db432fd6bc1621b513"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga351ead2eb55696db432fd6bc1621b513">configBSP430_HAL_TA3_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga351ead2eb55696db432fd6bc1621b513"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4adf6306a8d64b12f8841ef0d9fead27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga4adf6306a8d64b12f8841ef0d9fead27">configBSP430_HAL_TA3_ISR</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#gac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> - 0)</td></tr>
+<tr class="separator:ga4adf6306a8d64b12f8841ef0d9fead27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec58c720315693faf35490a3316fe975"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gaec58c720315693faf35490a3316fe975">configBSP430_HAL_TB0_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gaec58c720315693faf35490a3316fe975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga395d583c8ed3e4d300650e479795bdf0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga395d583c8ed3e4d300650e479795bdf0">configBSP430_HAL_TB0_ISR</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> - 0)</td></tr>
+<tr class="separator:ga395d583c8ed3e4d300650e479795bdf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac53b9bc798c0dba3cb5c0eacd9cf436e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gac53b9bc798c0dba3cb5c0eacd9cf436e">configBSP430_HAL_TB1_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gac53b9bc798c0dba3cb5c0eacd9cf436e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b855988f8f2ee7b5fb456815298c14c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga1b855988f8f2ee7b5fb456815298c14c">configBSP430_HAL_TB1_ISR</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> - 0)</td></tr>
+<tr class="separator:ga1b855988f8f2ee7b5fb456815298c14c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa501104826b2047b5c2d46d313e0ada5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#gaa501104826b2047b5c2d46d313e0ada5">configBSP430_HAL_TB2_CC0_ISR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gaa501104826b2047b5c2d46d313e0ada5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b825fd5d638847a80cd2aa79649c9e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__config__core.html#ga0b825fd5d638847a80cd2aa79649c9e9">configBSP430_HAL_TB2_ISR</a>&#160;&#160;&#160;(<a class="el" href="group__grp__config__core.html#ga1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> - 0)</td></tr>
+<tr class="separator:ga0b825fd5d638847a80cd2aa79649c9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -309,6 +343,17 @@ volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *&#
 <tr class="separator:aad872aaa82973fd3accca3bcc004ea69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2e001792494a2b2f060db5e5a5b5f32"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ae2e001792494a2b2f060db5e5a5b5f32">iBSP430timerSupportedCCs</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 <tr class="separator:ae2e001792494a2b2f060db5e5a5b5f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea58cea215db6dd462e3513ca56ad9f"><td class="memItemLeft" align="right" valign="top">static void <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
+<tr class="separator:a3ea58cea215db6dd462e3513ca56ad9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209b04774c23ae4ca47c248b6b9c88d6"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a209b04774c23ae4ca47c248b6b9c88d6">uiBSP430timerSyncCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
+<tr class="separator:a209b04774c23ae4ca47c248b6b9c88d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a137d1b0c5b372640d4df83d001aa6b6a"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a137d1b0c5b372640d4df83d001aa6b6a">uiBSP430timerAsyncCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
+<tr class="separator:a137d1b0c5b372640d4df83d001aa6b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a74d238a91c2c1a77c909442089ff24"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a9a74d238a91c2c1a77c909442089ff24">uiBSP430timerSafeCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
+<tr class="separator:a9a74d238a91c2c1a77c909442089ff24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hardware presentation/abstraction for generic timers (Timer_A/Timer_B) </p>
@@ -320,16 +365,16 @@ In BSP430 timer instance names uniformly begin with instance zero, even on MCUs 
 <h1><a class="anchor" id="h_periph_timer_opt"></a>
 Module Configuration Options</h1>
 <ul>
-<li><a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> to enable the HPL handle declarations</li>
+<li><a class="el" href="group__grp__config__core.html#ga330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> to enable the HPL handle declarations</li>
 </ul>
 <ul>
-<li><a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> to enable the HAL infrastructure</li>
+<li><a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> to enable the HAL infrastructure</li>
 </ul>
 <ul>
-<li><a class="el" href="timer_8h.html#a7c93336fb2ce3874fda57b3408fa51a3">configBSP430_HAL_TA0_ISR</a> to enable the HAL ISR for overflow and capture/compare blocks 1 and higher</li>
+<li><a class="el" href="group__grp__config__core.html#ga7c93336fb2ce3874fda57b3408fa51a3">configBSP430_HAL_TA0_ISR</a> to enable the HAL ISR for overflow and capture/compare blocks 1 and higher</li>
 </ul>
 <ul>
-<li><a class="el" href="timer_8h.html#afdbe916777e481f9efc3e4852554412a">configBSP430_HAL_TA0_CC0_ISR</a> to enable the HAL ISR for capture/compare block 0</li>
+<li><a class="el" href="group__grp__config__core.html#gafdbe916777e481f9efc3e4852554412a">configBSP430_HAL_TA0_CC0_ISR</a> to enable the HAL ISR for capture/compare block 0</li>
 </ul>
 <ul>
 <li><a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a> to request a platform-specific clock with certain capture/compare capabilities be identified</li>
@@ -341,8 +386,8 @@ Hardware Presentation Layer</h1>
 <h1><a class="anchor" id="h_periph_timer_hal"></a>
 Hardware Adaptation Layer</h1>
 <p>The timer <a class="el" href="layer.html#HAL">HAL</a> uses the <a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> structure.</p>
-<p>Enabling <a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> also enables <a class="el" href="timer_8h.html#a7c93336fb2ce3874fda57b3408fa51a3">configBSP430_HAL_TA0_ISR</a> unless previously disabled. When this primary ISR is enabled an interrupt service routine is provided supporting interrupts related to timer overflow and capture/compare events in CC blocks 1 and higher. The corresponding interrupts must be enabled by the application. On an overflow interrupt, the <a class="el" href="structsBSP430halTIMER.html#a94c752d47f766f39ee94040222184741">sBSP430halTIMER.overflow_count</a> is incremented and the <a class="el" href="structsBSP430halTIMER.html#a953b52777cd1ae3628fb7b80cdc9afb4">sBSP430halTIMER.overflow_cbchain_ni</a> callback chain is invoked. On a capture/compare interrupt, the corresponding chain from <a class="el" href="structsBSP430halTIMER.html#a9915eb5d218f89f78fd3efff305f7bb2">sBSP430halTIMER.cc_cbchain_ni</a> is invoked. (Note that the index in this array is the CC number.)</p>
-<p>The secondary ISR controlled by <a class="el" href="timer_8h.html#afdbe916777e481f9efc3e4852554412a">configBSP430_HAL_TA0_CC0_ISR</a> is left disabled unless explicitly enabled. If enabled, an interrupt service routine is provided supporting capture/compare interrupts related to CC0. The first chain in the <a class="el" href="structsBSP430halTIMER.html#a9915eb5d218f89f78fd3efff305f7bb2">sBSP430halTIMER.cc_cbchain_ni</a> array is invoked by this ISR. The interrupt enable bit is controlled by the application.</p>
+<p>Enabling <a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> also enables <a class="el" href="group__grp__config__core.html#ga7c93336fb2ce3874fda57b3408fa51a3">configBSP430_HAL_TA0_ISR</a> unless previously disabled. When this primary ISR is enabled an interrupt service routine is provided supporting interrupts related to timer overflow and capture/compare events in CC blocks 1 and higher. The corresponding interrupts must be enabled by the application. On an overflow interrupt, the <a class="el" href="structsBSP430halTIMER.html#a94c752d47f766f39ee94040222184741">sBSP430halTIMER.overflow_count</a> is incremented and the <a class="el" href="structsBSP430halTIMER.html#a953b52777cd1ae3628fb7b80cdc9afb4">sBSP430halTIMER.overflow_cbchain_ni</a> callback chain is invoked. On a capture/compare interrupt, the corresponding chain from <a class="el" href="structsBSP430halTIMER.html#a9915eb5d218f89f78fd3efff305f7bb2">sBSP430halTIMER.cc_cbchain_ni</a> is invoked. (Note that the index in this array is the CC number.)</p>
+<p>The secondary ISR controlled by <a class="el" href="group__grp__config__core.html#gafdbe916777e481f9efc3e4852554412a">configBSP430_HAL_TA0_CC0_ISR</a> is left disabled unless explicitly enabled. If enabled, an interrupt service routine is provided supporting capture/compare interrupts related to CC0. The first chain in the <a class="el" href="structsBSP430halTIMER.html#a9915eb5d218f89f78fd3efff305f7bb2">sBSP430halTIMER.cc_cbchain_ni</a> array is invoked by this ISR. The interrupt enable bit is controlled by the application.</p>
 <h1><a class="anchor" id="h_periph_timer_extra"></a>
 Additional Capabilities</h1>
 <p>Some of the material provided by this header is documented in separate sections:</p>
@@ -351,7 +396,7 @@ Additional Capabilities</h1>
 <li><a class="el" href="group__grp__timer__ccaclk.html">Platform-independent Secondary Timer Functionality</a></li>
 </ul>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a05c61c146ce6f6a86a5f38575de6ef0b"></a>
 <div class="memitem">
@@ -362,9 +407,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BSP430 HAL handle for TA0.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> </dd></dl>
+<p><a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> HAL handle for <a class="el" href="timer_8h.html#a2f1f35990892a20c7ace8c88a1dce998">BSP430_PERIPH_TA0</a>.</p>
+<p>This pointer may be used only if <a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> </dd></dl>
 
 </div>
 </div>
@@ -377,9 +422,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BSP430 HAL handle for TA1.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> </dd></dl>
+<p><a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> HAL handle for <a class="el" href="timer_8h.html#aa811147838571017c01dd6f987035f5f">BSP430_PERIPH_TA1</a>.</p>
+<p>This pointer may be used only if <a class="el" href="group__grp__config__core.html#ga32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> </dd></dl>
 
 </div>
 </div>
@@ -392,9 +437,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BSP430 HAL handle for TA2.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> </dd></dl>
+<p><a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> HAL handle for <a class="el" href="timer_8h.html#a27f359942f48d8db442e1f4ea3f266d0">BSP430_PERIPH_TA2</a>.</p>
+<p>This pointer may be used only if <a class="el" href="group__grp__config__core.html#ga1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> </dd></dl>
 
 </div>
 </div>
@@ -407,9 +452,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BSP430 HAL handle for TA3.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> </dd></dl>
+<p><a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> HAL handle for <a class="el" href="timer_8h.html#a34075fc8b8835a19127605e153a41478">BSP430_PERIPH_TA3</a>.</p>
+<p>This pointer may be used only if <a class="el" href="group__grp__config__core.html#gac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#gac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> </dd></dl>
 
 </div>
 </div>
@@ -422,9 +467,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BSP430 HAL handle for TB0.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> </dd></dl>
+<p><a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> HAL handle for <a class="el" href="timer_8h.html#ac348881fa13d14298015bb1ce192f9a4">BSP430_PERIPH_TB0</a>.</p>
+<p>This pointer may be used only if <a class="el" href="group__grp__config__core.html#ga96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> </dd></dl>
 
 </div>
 </div>
@@ -437,9 +482,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BSP430 HAL handle for TB1.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> </dd></dl>
+<p><a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> HAL handle for <a class="el" href="timer_8h.html#ae9a4e7d41f81dd30caf11f998b7dd789">BSP430_PERIPH_TB1</a>.</p>
+<p>This pointer may be used only if <a class="el" href="group__grp__config__core.html#ga4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> </dd></dl>
 
 </div>
 </div>
@@ -452,9 +497,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>BSP430 HAL handle for TB2.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> </dd></dl>
+<p><a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> HAL handle for <a class="el" href="timer_8h.html#ab22cdbf5827315189c6bc5a320f4d138">BSP430_PERIPH_TB2</a>.</p>
+<p>This pointer may be used only if <a class="el" href="group__grp__config__core.html#ga1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> </dd></dl>
 
 </div>
 </div>
@@ -467,10 +512,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HPL pointer for TA0.</p>
-<p>Typed pointer to a volatile structure overlaying the TA0 peripheral register map.</p>
-<p>The pointer may be used only if <a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> </dd></dl>
+<p><a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> HPL pointer for <a class="el" href="timer_8h.html#a2f1f35990892a20c7ace8c88a1dce998">BSP430_PERIPH_TA0</a>.</p>
+<p>This pointer to a volatile structure overlaying the TA0 peripheral register map may be used only if <a class="el" href="group__grp__config__core.html#ga330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> </dd></dl>
 
 </div>
 </div>
@@ -483,10 +527,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HPL pointer for TA1.</p>
-<p>Typed pointer to a volatile structure overlaying the TA1 peripheral register map.</p>
-<p>The pointer may be used only if <a class="el" href="timer_8h.html#a2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> </dd></dl>
+<p><a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> HPL pointer for <a class="el" href="timer_8h.html#aa811147838571017c01dd6f987035f5f">BSP430_PERIPH_TA1</a>.</p>
+<p>This pointer to a volatile structure overlaying the TA1 peripheral register map may be used only if <a class="el" href="group__grp__config__core.html#ga2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> </dd></dl>
 
 </div>
 </div>
@@ -499,10 +542,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HPL pointer for TA2.</p>
-<p>Typed pointer to a volatile structure overlaying the TA2 peripheral register map.</p>
-<p>The pointer may be used only if <a class="el" href="timer_8h.html#a2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> </dd></dl>
+<p><a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> HPL pointer for <a class="el" href="timer_8h.html#a27f359942f48d8db442e1f4ea3f266d0">BSP430_PERIPH_TA2</a>.</p>
+<p>This pointer to a volatile structure overlaying the TA2 peripheral register map may be used only if <a class="el" href="group__grp__config__core.html#ga2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> </dd></dl>
 
 </div>
 </div>
@@ -515,10 +557,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HPL pointer for TA3.</p>
-<p>Typed pointer to a volatile structure overlaying the TA3 peripheral register map.</p>
-<p>The pointer may be used only if <a class="el" href="timer_8h.html#af37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#af37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> </dd></dl>
+<p><a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> HPL pointer for <a class="el" href="timer_8h.html#a34075fc8b8835a19127605e153a41478">BSP430_PERIPH_TA3</a>.</p>
+<p>This pointer to a volatile structure overlaying the TA3 peripheral register map may be used only if <a class="el" href="group__grp__config__core.html#gaf37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#gaf37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> </dd></dl>
 
 </div>
 </div>
@@ -531,10 +572,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HPL pointer for TB0.</p>
-<p>Typed pointer to a volatile structure overlaying the TB0 peripheral register map.</p>
-<p>The pointer may be used only if <a class="el" href="timer_8h.html#a12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> </dd></dl>
+<p><a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> HPL pointer for <a class="el" href="timer_8h.html#ac348881fa13d14298015bb1ce192f9a4">BSP430_PERIPH_TB0</a>.</p>
+<p>This pointer to a volatile structure overlaying the TB0 peripheral register map may be used only if <a class="el" href="group__grp__config__core.html#ga12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> </dd></dl>
 
 </div>
 </div>
@@ -547,10 +587,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HPL pointer for TB1.</p>
-<p>Typed pointer to a volatile structure overlaying the TB1 peripheral register map.</p>
-<p>The pointer may be used only if <a class="el" href="timer_8h.html#a764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> </dd></dl>
+<p><a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> HPL pointer for <a class="el" href="timer_8h.html#ae9a4e7d41f81dd30caf11f998b7dd789">BSP430_PERIPH_TB1</a>.</p>
+<p>This pointer to a volatile structure overlaying the TB1 peripheral register map may be used only if <a class="el" href="group__grp__config__core.html#ga764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> </dd></dl>
 
 </div>
 </div>
@@ -563,10 +602,9 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HPL pointer for TB2.</p>
-<p>Typed pointer to a volatile structure overlaying the TB2 peripheral register map.</p>
-<p>The pointer may be used only if <a class="el" href="timer_8h.html#ada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#ada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> </dd></dl>
+<p><a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> HPL pointer for <a class="el" href="timer_8h.html#ab22cdbf5827315189c6bc5a320f4d138">BSP430_PERIPH_TB2</a>.</p>
+<p>This pointer to a volatile structure overlaying the TB2 peripheral register map may be used only if <a class="el" href="group__grp__config__core.html#gada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#gada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> </dd></dl>
 
 </div>
 </div>
@@ -631,8 +669,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Handle for the raw TA0 device.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> </dd></dl>
+<p>The handle may be used only if <a class="el" href="group__grp__config__core.html#ga330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> </dd></dl>
 
 </div>
 </div>
@@ -646,8 +684,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Handle for the raw TA1 device.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> </dd></dl>
+<p>The handle may be used only if <a class="el" href="group__grp__config__core.html#ga2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> </dd></dl>
 
 </div>
 </div>
@@ -661,8 +699,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Handle for the raw TA2 device.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> </dd></dl>
+<p>The handle may be used only if <a class="el" href="group__grp__config__core.html#ga2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> </dd></dl>
 
 </div>
 </div>
@@ -676,8 +714,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Handle for the raw TA3 device.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#af37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#af37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> </dd></dl>
+<p>The handle may be used only if <a class="el" href="group__grp__config__core.html#gaf37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#gaf37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> </dd></dl>
 
 </div>
 </div>
@@ -691,8 +729,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Handle for the raw TB0 device.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> </dd></dl>
+<p>The handle may be used only if <a class="el" href="group__grp__config__core.html#ga12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> </dd></dl>
 
 </div>
 </div>
@@ -706,8 +744,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Handle for the raw TB1 device.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#a764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> </dd></dl>
+<p>The handle may be used only if <a class="el" href="group__grp__config__core.html#ga764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#ga764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> </dd></dl>
 
 </div>
 </div>
@@ -721,8 +759,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Handle for the raw TB2 device.</p>
-<p>The handle may be used only if <a class="el" href="timer_8h.html#ada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> is defined to a true value.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#ada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> </dd></dl>
+<p>The handle may be used only if <a class="el" href="group__grp__config__core.html#gada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> is defined to a true value.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__config__core.html#gada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> </dd></dl>
 
 </div>
 </div>
@@ -739,478 +777,46 @@ Additional Capabilities</h1>
 
 </div>
 </div>
-<a class="anchor" id="a2f939e49e1683ad64a97595a9ff252d5"></a>
+<a class="anchor" id="aad30dd3941041dfa851bffbfe82ad780"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define configBSP430_HAL_TA0&#160;&#160;&#160;0</td>
+          <td class="memname">#define BSP430_TIMER_SAFE_COUNTER_READ_CCIDX&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA0</code> peripheral HAL interface. This defines a global object supporting enhanced functionality for the peripheral, and a macro BSP430_HAL_TA0 that is a reference to that object.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling this defaults <a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a> to true, since the HAL infrastructure requires the underlying HPL infrastructure.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+<p>Capture/compare index reserved for safe reading of timer counters.</p>
+<p>CC 0 is normally reserved for high-priority capture/compare operations using the dedicated interrupt handler. It is also used with <a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a> by <a class="el" href="ucs_8h.html#a12d4e6a1d8f43f1ee6af044d952d8441">iBSP430ucsTrimDCOCLKDIV_ni()</a>.</p>
+<p>CC 1 is normally reserved for use by <a class="el" href="group__grp__timer__ccaclk.html#ga223d8ba1bd2826c409aba946fbeac82b">configBSP430_TIMER_CCACLK_CC0_PORT</a> functionality, and is the standard choice for <a class="el" href="uptime_8h.html#abc74e7198f189c84941a73c523863191">BSP430_UPTIME_DELAY_CCIDX</a>.</p>
+<p>Therefore this functionality normally uses CC 2. To keep the infrastructure as simple as possible, the same index is used for all timers on which safe counter reading is required. If a timer does not support the requested index, the attempt to enable safe reading will hang.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Certain low-end value-line MCUS such as the MSP430G2231 do not have a third capture/compare register. Platforms targeting those MCUs should provide an alternative definition for this macro in their bsp430_config.h file.</dd>
+<dd>
+If you assign the same value to <a class="el" href="uptime_8h.html#abc74e7198f189c84941a73c523863191">BSP430_UPTIME_DELAY_CCIDX</a> and <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a>, platform initialization will hang attempting to configure the delay alarm.</dd>
+<dd>
+If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a>, make sure your use of <a class="el" href="group__grp__timer__ccaclk.html#gaa9ac11f10dcbc3950e072d2f89b0fac3">BSP430_TIMER_CCACLK_ACLK_CCIDX</a> does not interfere with the expectation that the configuration of <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> is never changed. Consider adding the following after any use of <a class="el" href="group__grp__timer__ccaclk.html#gaa9ac11f10dcbc3950e072d2f89b0fac3">BSP430_TIMER_CCACLK_ACLK_CCIDX</a>: <div class="fragment"><div class="line"><span class="preprocessor">#if ((configBSP430_TIMER_SAFE_COUNTER_READ - 0) \</span></div>
+<div class="line"><span class="preprocessor">     &amp;&amp; (BSP430_TIMER_CCACLK_ACLK_CCIDX == BSP430_TIMER_SAFE_COUNTER_READ_CCIDX))</span></div>
+<div class="line"><span class="preprocessor"></span>   <a class="code" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni</a>(<a class="code" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+<dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="afdbe916777e481f9efc3e4852554412a"></a>
+<a class="anchor" id="aabc91e75098e4ea4d9bc3384dc8d7ff4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define configBSP430_HAL_TA0_CC0_ISR&#160;&#160;&#160;0</td>
+          <td class="memname">#define configBSP430_TIMER_SAFE_COUNTER_READ&#160;&#160;&#160;1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This is the TIMERx_t0_VECTOR interrupt, handling only CC0.</p>
-<p>Define to a true value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA0</code>, and want to BSP430 to provide an interrupt service routine that dispatches CC0 events.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="timer_8h.html#a7c93336fb2ce3874fda57b3408fa51a3">configBSP430_HAL_TA0_ISR</a>, enabling <a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> does not default to enable this feature.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>No Default:</dt><dd>A value must be provided explicitly if the feature is to be used.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a7c93336fb2ce3874fda57b3408fa51a3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA0_ISR&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.</p>
-<p>This option defaults to true when <a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> is enabled.</p>
-<p>Define it a false value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA0</code> but want to define your own interrupt service routine for the peripheral.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a32887ebd177ce7a4899b2e51cda922a2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA1&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA1</code> peripheral HAL interface. This defines a global object supporting enhanced functionality for the peripheral, and a macro BSP430_HAL_TA1 that is a reference to that object.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling this defaults <a class="el" href="timer_8h.html#a2f72508dabbf0392a4a5a7ac6a6064b3">configBSP430_HPL_TA1</a> to true, since the HAL infrastructure requires the underlying HPL infrastructure.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a7e7ba4e26de99442172db01739fadfd4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA1_CC0_ISR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t0_VECTOR interrupt, handling only CC0.</p>
-<p>Define to a true value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA1</code>, and want to BSP430 to provide an interrupt service routine that dispatches CC0 events.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="timer_8h.html#a0028c9a043565a31a90d14f2aa90fc51">configBSP430_HAL_TA1_ISR</a>, enabling <a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> does not default to enable this feature.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>No Default:</dt><dd>A value must be provided explicitly if the feature is to be used.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a0028c9a043565a31a90d14f2aa90fc51"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA1_ISR&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.</p>
-<p>This option defaults to true when <a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> is enabled.</p>
-<p>Define it a false value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA1</code> but want to define your own interrupt service routine for the peripheral.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a1a648f1ce5fdf49130f7c1632f721021"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA2&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA2</code> peripheral HAL interface. This defines a global object supporting enhanced functionality for the peripheral, and a macro BSP430_HAL_TA2 that is a reference to that object.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling this defaults <a class="el" href="timer_8h.html#a2c720262018e03bc7dc4310525e4115f">configBSP430_HPL_TA2</a> to true, since the HAL infrastructure requires the underlying HPL infrastructure.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ae01b49fc8e454b223d1a242c8e085022"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA2_CC0_ISR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t0_VECTOR interrupt, handling only CC0.</p>
-<p>Define to a true value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA2</code>, and want to BSP430 to provide an interrupt service routine that dispatches CC0 events.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="timer_8h.html#a5eb1246480738ec190321becbe564d81">configBSP430_HAL_TA2_ISR</a>, enabling <a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> does not default to enable this feature.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>No Default:</dt><dd>A value must be provided explicitly if the feature is to be used.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a5eb1246480738ec190321becbe564d81"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA2_ISR&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.</p>
-<p>This option defaults to true when <a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> is enabled.</p>
-<p>Define it a false value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA2</code> but want to define your own interrupt service routine for the peripheral.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac0297e9387752c2ca7877fe482df2806"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA3&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA3</code> peripheral HAL interface. This defines a global object supporting enhanced functionality for the peripheral, and a macro BSP430_HAL_TA3 that is a reference to that object.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling this defaults <a class="el" href="timer_8h.html#af37ec764721a3e27eca4db3377edc7c1">configBSP430_HPL_TA3</a> to true, since the HAL infrastructure requires the underlying HPL infrastructure.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a351ead2eb55696db432fd6bc1621b513"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA3_CC0_ISR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t0_VECTOR interrupt, handling only CC0.</p>
-<p>Define to a true value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA3</code>, and want to BSP430 to provide an interrupt service routine that dispatches CC0 events.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="timer_8h.html#a4adf6306a8d64b12f8841ef0d9fead27">configBSP430_HAL_TA3_ISR</a>, enabling <a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> does not default to enable this feature.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>No Default:</dt><dd>A value must be provided explicitly if the feature is to be used.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a4adf6306a8d64b12f8841ef0d9fead27"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TA3_ISR&#160;&#160;&#160;(<a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.</p>
-<p>This option defaults to true when <a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> is enabled.</p>
-<p>Define it a false value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TA3</code> but want to define your own interrupt service routine for the peripheral.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a96aa8a80be457f5a86dcd9a4e2889eb8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB0&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TB0</code> peripheral HAL interface. This defines a global object supporting enhanced functionality for the peripheral, and a macro BSP430_HAL_TB0 that is a reference to that object.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling this defaults <a class="el" href="timer_8h.html#a12edbccde7a2b5826888ad4daa258bec">configBSP430_HPL_TB0</a> to true, since the HAL infrastructure requires the underlying HPL infrastructure.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aec58c720315693faf35490a3316fe975"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB0_CC0_ISR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t0_VECTOR interrupt, handling only CC0.</p>
-<p>Define to a true value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TB0</code>, and want to BSP430 to provide an interrupt service routine that dispatches CC0 events.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="timer_8h.html#a395d583c8ed3e4d300650e479795bdf0">configBSP430_HAL_TB0_ISR</a>, enabling <a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> does not default to enable this feature.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>No Default:</dt><dd>A value must be provided explicitly if the feature is to be used.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a395d583c8ed3e4d300650e479795bdf0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB0_ISR&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.</p>
-<p>This option defaults to true when <a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> is enabled.</p>
-<p>Define it a false value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TB0</code> but want to define your own interrupt service routine for the peripheral.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a4354abdc5755c379d6ee0cd2a35a4421"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB1&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TB1</code> peripheral HAL interface. This defines a global object supporting enhanced functionality for the peripheral, and a macro BSP430_HAL_TB1 that is a reference to that object.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling this defaults <a class="el" href="timer_8h.html#a764dfedfd48007de08bfad154355f32a">configBSP430_HPL_TB1</a> to true, since the HAL infrastructure requires the underlying HPL infrastructure.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac53b9bc798c0dba3cb5c0eacd9cf436e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB1_CC0_ISR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t0_VECTOR interrupt, handling only CC0.</p>
-<p>Define to a true value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TB1</code>, and want to BSP430 to provide an interrupt service routine that dispatches CC0 events.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="timer_8h.html#a1b855988f8f2ee7b5fb456815298c14c">configBSP430_HAL_TB1_ISR</a>, enabling <a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> does not default to enable this feature.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>No Default:</dt><dd>A value must be provided explicitly if the feature is to be used.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a1b855988f8f2ee7b5fb456815298c14c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB1_ISR&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.</p>
-<p>This option defaults to true when <a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> is enabled.</p>
-<p>Define it a false value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TB1</code> but want to define your own interrupt service routine for the peripheral.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a1268fbcbbf93c38ff23fdb09e5528934"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB2&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TB2</code> peripheral HAL interface. This defines a global object supporting enhanced functionality for the peripheral, and a macro BSP430_HAL_TB2 that is a reference to that object.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling this defaults <a class="el" href="timer_8h.html#ada5b6045a8246159fdbfaf29c3fb019a">configBSP430_HPL_TB2</a> to true, since the HAL infrastructure requires the underlying HPL infrastructure.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="aa501104826b2047b5c2d46d313e0ada5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB2_CC0_ISR&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t0_VECTOR interrupt, handling only CC0.</p>
-<p>Define to a true value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TB2</code>, and want to BSP430 to provide an interrupt service routine that dispatches CC0 events.</p>
-<dl class="section note"><dt>Note</dt><dd>Unlike <a class="el" href="timer_8h.html#a0b825fd5d638847a80cd2aa79649c9e9">configBSP430_HAL_TB2_ISR</a>, enabling <a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> does not default to enable this feature.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>No Default:</dt><dd>A value must be provided explicitly if the feature is to be used.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a0b825fd5d638847a80cd2aa79649c9e9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HAL_TB2_ISR&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the TIMERx_t1_VECTOR interrupt, handling overflows and CC1-CC6.</p>
-<p>This option defaults to true when <a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> is enabled.</p>
-<p>Define it a false value in <code>bsp430_config.h</code> if you are using the BSP430 HAL interface for <code>TB2</code> but want to define your own interrupt service routine for the peripheral.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a330dd41c7c537feca9d67c5aff49683b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HPL_TA0&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA0</code> peripheral HPL interface. Only do this if the MCU supports this device.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling <a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a> defaults this to true, so you only need to explicitly request this if you want the HPL interface without the HAL interface.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a2f72508dabbf0392a4a5a7ac6a6064b3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HPL_TA1&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA1</code> peripheral HPL interface. Only do this if the MCU supports this device.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling <a class="el" href="timer_8h.html#a32887ebd177ce7a4899b2e51cda922a2">configBSP430_HAL_TA1</a> defaults this to true, so you only need to explicitly request this if you want the HPL interface without the HAL interface.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a2c720262018e03bc7dc4310525e4115f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HPL_TA2&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA2</code> peripheral HPL interface. Only do this if the MCU supports this device.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling <a class="el" href="timer_8h.html#a1a648f1ce5fdf49130f7c1632f721021">configBSP430_HAL_TA2</a> defaults this to true, so you only need to explicitly request this if you want the HPL interface without the HAL interface.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="af37ec764721a3e27eca4db3377edc7c1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HPL_TA3&#160;&#160;&#160;(<a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TA3</code> peripheral HPL interface. Only do this if the MCU supports this device.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling <a class="el" href="timer_8h.html#ac0297e9387752c2ca7877fe482df2806">configBSP430_HAL_TA3</a> defaults this to true, so you only need to explicitly request this if you want the HPL interface without the HAL interface.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a12edbccde7a2b5826888ad4daa258bec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HPL_TB0&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TB0</code> peripheral HPL interface. Only do this if the MCU supports this device.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling <a class="el" href="timer_8h.html#a96aa8a80be457f5a86dcd9a4e2889eb8">configBSP430_HAL_TB0</a> defaults this to true, so you only need to explicitly request this if you want the HPL interface without the HAL interface.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a764dfedfd48007de08bfad154355f32a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HPL_TB1&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TB1</code> peripheral HPL interface. Only do this if the MCU supports this device.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling <a class="el" href="timer_8h.html#a4354abdc5755c379d6ee0cd2a35a4421">configBSP430_HAL_TB1</a> defaults this to true, so you only need to explicitly request this if you want the HPL interface without the HAL interface.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ada5b6045a8246159fdbfaf29c3fb019a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_HPL_TB2&#160;&#160;&#160;(<a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to a true value in <code>bsp430_config.h</code> to enable use of the <code>TB2</code> peripheral HPL interface. Only do this if the MCU supports this device.</p>
-<dl class="section note"><dt>Note</dt><dd>Enabling <a class="el" href="timer_8h.html#a1268fbcbbf93c38ff23fdb09e5528934">configBSP430_HAL_TB2</a> defaults this to true, so you only need to explicitly request this if you want the HPL interface without the HAL interface.</dd></dl>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
+<p>Provide safe counter reads for timers.</p>
+<p>The MSP430 timer infrastructure does not guarantee that a read of a timer counter produces a valid result when the timer clock is asynchronous to MCLK. Where the timer is significantly slower than MCLK a majority vote approach can ensure the result is valid. If the timer runs at a similar speed this will fail.</p>
+<p>The problem can be avoided by capturing the counter into a capture register instead of reading it directly. Doing this costs a couple cycles extra when reading the counter, and due to infrastructure limitations prevents use of that capture/compare register for other purposes.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> </dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
@@ -1226,7 +832,7 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>The timer internal state is protected. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a7">sensors/hh10d/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a3">sensors/hh10d/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -1285,7 +891,7 @@ Additional Capabilities</h1>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the HAL handle for the timer. A null pointer is returned if the handle does not correspond to a timer for which the HAL interface has been enabled (e.g., with <a class="el" href="timer_8h.html#a2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a>). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the HAL handle for the timer. A null pointer is returned if the handle does not correspond to a timer for which the HAL interface has been enabled (e.g., with <a class="el" href="group__grp__config__core.html#ga2f939e49e1683ad64a97595a9ff252d5">configBSP430_HAL_TA0</a>). </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a42">utility/alarm/main.c</a>.</dd>
 </dl>
 </div>
@@ -1313,6 +919,43 @@ Additional Capabilities</h1>
 <dl class="section return"><dt>Returns</dt><dd>the number of CCs on the timer. -1 is returned if the timer does not exist or the resource was not configured. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a47">utility/alarm/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a137d1b0c5b372640d4df83d001aa6b6a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned int <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> uiBSP430timerAsyncCounterRead_ni </td>
+          <td>(</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
+          <td class="paramname"><em>hpl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Inline function to read the counter of a timer not synchronous to MCLK.</p>
+<p>This uses a pre-configured dedicated capture/compare register (<a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a>) to get the value of the timer counter reliably when the timer source is not synchronous to the CPU clock.</p>
+<p>It has slightly higher overhead than <a class="el" href="timer_8h.html#a209b04774c23ae4ca47c248b6b9c88d6">uiBSP430timerSyncCounterRead_ni()</a>, but is not subject to returning an invalid counter value. It also requires that a capture/compare register be initialized using iBSP430timerSafeCounterInitialize_ni() and dedicated to this purpose on all timers on which this function may be invoked.</p>
+<p>This call takes about 8 clock cycles on a CPUX MCU.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This version of the function does not validate the capture/compare configuration. Use <a class="el" href="timer_8h.html#a9a74d238a91c2c1a77c909442089ff24">uiBSP430timerSafeCounterRead_ni()</a> in situations where somebody might have failed to meet this function's requirements.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hpl</td><td>Reference to the underlying timer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value.</dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a278d5f6aabe3c57d96f5861e1ca7af04"></a>
@@ -1359,7 +1002,9 @@ Additional Capabilities</h1>
 <p>Count number of timer transitions over a span of ACLK ticks</p>
 <p>This function uses the timer capture/compare infrastructure to count clock cycles. The source for a timer is configured externally (for example, to SMCLK, or to an external source). The capture/control block <code>ccidx</code> is configured based on <code>capture_mode</code>. The code synchronizes with a capture, then loops for <code>period</code> captures. The timer counter is recorded at the start of the first and end of the last cycle. The capture/control block control is reset, and the difference between first and last counters is returned.</p>
 <p>The expectation is that the events triggered by the input selection are slow relative to the MCLK and timer sources. If the timer is slower than the input, the use of the <a class="el" href="msp430_8h.html#a57d06a9e6a8f5abc296f987d4552894c">SCS</a> flag in the implementation will result in the function returning <code>count</code>.</p>
-<dl class="section note"><dt>Note</dt><dd>The function does not modify the timer-level configuration; the timer source must be assigned and the timer started prior to invoking this function.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The function does not modify the timer-level configuration; the timer source must be assigned and the timer started prior to invoking this function.</dd>
+<dd>
+If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is enabled and <code>ccidx</code> is equal to <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> this function will invoke <a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni</a>(<code>periph</code>) prior to returning.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">periph</td><td>the peripheral identifier for the timer on which the capture is to be made.</td></tr>
@@ -1371,8 +1016,74 @@ Additional Capabilities</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>-1 if <code>capture_mode</code> is not valid or the timer is unrecognized or stopped. Otherwise the delta in the counter of the timer over <code>count</code> captures. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a25">bootstrap/clocks/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a28">bootstrap/clocks/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a9a74d238a91c2c1a77c909442089ff24"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned int <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> uiBSP430timerSafeCounterRead_ni </td>
+          <td>(</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
+          <td class="paramname"><em>hpl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Inline function to read the timer counter.</p>
+<p>This call takes about 21 clock cycles on a CPUX MCU.</p>
+<p>When <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is disabled this function is equivalent to <a class="el" href="timer_8h.html#a209b04774c23ae4ca47c248b6b9c88d6">uiBSP430timerSyncCounterRead_ni()</a>.</p>
+<p>When <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is enabled in absence of <a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> this function validates that the capture/compare register is properly configured to read the counter. When that requirement is not met, the CPU will spin in place allowing the developer to see what has gone wrong, instead of continuing to process invalid counter values.</p>
+<p>When <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> and <a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> are both enabled this function is equivalent to <a class="el" href="timer_8h.html#a137d1b0c5b372640d4df83d001aa6b6a">uiBSP430timerAsyncCounterRead_ni()</a>.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a5">sensors/hh10d/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a209b04774c23ae4ca47c248b6b9c88d6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static unsigned int <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> uiBSP430timerSyncCounterRead_ni </td>
+          <td>(</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
+          <td class="paramname"><em>hpl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Inline function to read the counter of a timer synchronous to MCLK.</p>
+<p>This simply reads and returns the counter register of the underlying peripheral.</p>
+<p>This call takes about 3 clock cycles on a CPUX MCU.</p>
+<dl class="section warning"><dt>Warning</dt><dd>If the clock source for the timer is asynchronous to the CPU clock there is a chance that the counter value read will be corrupt. Consider using <a class="el" href="timer_8h.html#a137d1b0c5b372640d4df83d001aa6b6a">uiBSP430timerAsyncCounterRead_ni()</a> in that situation.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hpl</td><td>Reference to the underlying timer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value. </dd></dl>
+
 </div>
 </div>
 <a class="anchor" id="a73cf4f30824d57dead07b2aa52614b2f"></a>
@@ -1445,7 +1156,8 @@ Additional Capabilities</h1>
       </table>
 </div><div class="memdoc">
 <p>Read the timer counter assuming interrupts are disabled.</p>
-<dl class="section note"><dt>Note</dt><dd>This routine accounts for the possibility of a single as-yet-unhandled overflow event in the timer, but the counter will generally be wrong if interrupts are disabled most of the time resulting in lost overflow events.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This routine accounts for the possibility of a single pending overflow event in the timer by adjusting the returned value to account for that. However, it does not clear the overflow event because there may be overflow callbacks that must be invoked through the interrupt handler, and it only detects a single pending overflow event. Times will be wrong if interrupts remain disabled so long that a second overflow occurs before the first is processed by the interrupt handler.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This call will hang if <a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni()</a> has not been invoked on the underlying timer, or if the <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> capture/compare register has been reconfigured since that was done.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">timer</td><td>The timer for which the count is desired.</td></tr>
@@ -1502,6 +1214,42 @@ Additional Capabilities</h1>
 </dl>
 </div>
 </div>
+<a class="anchor" id="a3ea58cea215db6dd462e3513ca56ad9f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> vBSP430timerSafeCounterInitialize_ni </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
+          <td class="paramname"><em>periph</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Configure the timer for safe reads.</p>
+<p>This function must be invoked before any other function that might attempt to invoke <a class="el" href="timer_8h.html#a9a74d238a91c2c1a77c909442089ff24">uiBSP430timerSafeCounterRead_ni()</a> on the peripheral. This includes <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>It is safe to call this function multiple times, and in fact it must be called again if you need to use <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> for some other purpose.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">periph</td><td>the timer peripheral for which safe counter reads are desired.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> does not exist on <em>periph</em> this call will hang. Since this is a configuration error, the situation should be detected during development.</dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a26">sensors/hh10d/main.c</a>.</dd>
+</dl>
+</div>
+</div>
 <a class="anchor" id="aad15c4346f91b47e4a18bbdf05fb8ed7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1530,8 +1278,8 @@ Additional Capabilities</h1>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A typed pointer that can be used to manipulate the timer. A null pointer is returned if the handle does not correspond to a timer for which the HPL interface been enabled (e.g., with <a class="el" href="timer_8h.html#a330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a>). </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a21">bootstrap/clocks/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a21">sensors/hh10d/main.c</a>.</dd>
+<dl class="section return"><dt>Returns</dt><dd>A typed pointer that can be used to manipulate the timer. A null pointer is returned if the handle does not correspond to a timer for which the HPL interface been enabled (e.g., with <a class="el" href="group__grp__config__core.html#ga330dd41c7c537feca9d67c5aff49683b">configBSP430_HPL_TA0</a>). </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a24">bootstrap/clocks/main.c</a>, and <a class="el" href="sensors_2hh10d_2main_8c-example.html#a18">sensors/hh10d/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -1556,14 +1304,14 @@ Additional Capabilities</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The name of the timer, e.g. "TA0". If the peripheral is not recognized as a timer, a null pointer is returned. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a27">sensors/hh10d/main.c</a>, and <a class="el" href="utility_2alarm_2main_8c-example.html#a33">utility/alarm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a24">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a32">sensors/venus6pps/main.c</a>, and <a class="el" href="utility_2alarm_2main_8c-example.html#a33">utility/alarm/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

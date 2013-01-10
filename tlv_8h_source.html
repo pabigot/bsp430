@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">tlv.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="tlv_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* Copyright (c) 2012, Peter A. Bigot</span></div>
+<a href="tlv_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* Copyright 2012-2013, Peter A. Bigot</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -181,29 +181,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment">/* Standard definitions when missing from header */</span></div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">#ifndef TLV_LDTAG</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_LDTAG 0x01</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_LDTAG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00187"></a><span class="lineno"><a class="code" href="tlv_8h.html#adfce44c423e1a442442325211403dbd2">  187</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_LDTAG             (0x01)      </span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_LDTAG */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TLV_PDTAG</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_PDTAG 0x02</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_PDTAG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00190"></a><span class="lineno"><a class="code" href="tlv_8h.html#aece20c9fedfc40f829fba7bbe11c4772">  190</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_PDTAG             (0x02)      </span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_PDTAG */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TLV_BLANK</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_BLANK 0x05</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_BLANK */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="code" href="tlv_8h.html#afe47d4196e2c9ea6638a7e946b4d43a7">  193</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_BLANK             (0x05)      </span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_BLANK */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TLV_DIERECORD</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_DIERECORD 0x08</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_DIERECORD */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="code" href="tlv_8h.html#aeaec1507ca60b9cefdd050d3d8760778">  196</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_DIERECORD         (0x08)      </span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_DIERECORD */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TLV_ADC12CAL</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_ADC12CAL 0x11</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_ADC12CAL */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00199"></a><span class="lineno"><a class="code" href="tlv_8h.html#a705977844312a275696f04a03d0f8342">  199</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_ADC12CAL          (0x11)      </span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_ADC12CAL */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TLV_REFCAL</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_REFCAL 0x12</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_REFCAL */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00202"></a><span class="lineno"><a class="code" href="tlv_8h.html#aee14810940aa9ee4f2543886d1cb2253">  202</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_REFCAL            (0x12)      </span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_REFCAL */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TLV_ADC10CAL</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_ADC10CAL 0x13</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_ADC10CAL */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00205"></a><span class="lineno"><a class="code" href="tlv_8h.html#a437b56896ac8bbd6a752a8a41c9af769">  205</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_ADC10CAL          (0x13)      </span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_ADC10CAL */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TLV_TAGEXT</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_TAGEXT 0xFE</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TLV_TAGEXT */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="code" href="tlv_8h.html#ace35a875a10e42a450af150d7ee54788">  208</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_TAGEXT            (0xFE)      </span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TLV_TAGEXT */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00216"></a><span class="lineno"><a class="code" href="structsBSP430tlvDIERECORD.html">  216</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430tlvDIERECORD.html">sBSP430tlvDIERECORD</a> {</div>
 <div class="line"><a name="l00217"></a><span class="lineno"><a class="code" href="structsBSP430tlvDIERECORD.html#a096c234f817f418699adb704e24d63ae">  217</a></span>&#160;  <a class="code" href="structsBSP430tlvEntry.html">sBSP430tlvEntry</a> <a class="code" href="structsBSP430tlvDIERECORD.html#a096c234f817f418699adb704e24d63ae">hdr</a>;          </div>
@@ -249,11 +249,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="comment">/* Standard definitions when missing from header */</span></div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#ifndef TAG_DCO_30</span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TAG_DCO_30             (0x01)</span></div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TAG_DCO_30 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="code" href="tlv_8h.html#af49fa09b89feef6cb6bae0e0c4421e96">  269</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TAG_DCO_30             (0x01)    </span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TAG_DCO_30 */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef TAG_EMPTY</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TAG_EMPTY              (0xFE)</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TAG_EMPTY */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00272"></a><span class="lineno"><a class="code" href="tlv_8h.html#ad4f6abc385643b4b4790ecb36aaa3d2b">  272</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TAG_EMPTY              (0xFE)    </span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TAG_EMPTY */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00281"></a><span class="lineno"><a class="code" href="structsBSP430tlvDCO.html">  281</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430tlvDCO.html">sBSP430tlvDCO</a> {</div>
 <div class="line"><a name="l00282"></a><span class="lineno"><a class="code" href="structsBSP430tlvDCO.html#ad92bdae77517af276473f7b34fe72548">  282</a></span>&#160;  <a class="code" href="structsBSP430tlvEntry.html">sBSP430tlvEntry</a> <a class="code" href="structsBSP430tlvDCO.html#ad92bdae77517af276473f7b34fe72548">hdr</a>;          </div>
@@ -313,7 +313,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

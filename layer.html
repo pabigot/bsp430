@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -99,7 +99,7 @@ Peripheral Handles</h1>
 Hardware Presentation Layer (HPL)</h1>
 <p>The hardware presentation layer, frequently abbreviated as HPL in BSP430 documentation and interface, is a minimal abstraction of the underlying peripheral registers, in the form of a C structure defining the layout of registers that control a peripheral.</p>
 <p>A hardware presentation layer is defined only for peripherals that normally have multiple instances within a single MCU, such as <a class="el" href="timer_8h.html">timers</a> and <a class="el" href="port_8h.html">ports</a>. Peripherals such as clocks that normally exist in only one instance per MCU are not abstracted into an HPL.</p>
-<p>The primary purpose of the HPL is to allow code to be written that is decoupled from the specific peripheral instance (e.g., PORT1 or PORT2). No attempt is made to provide functions that do what is normally done by setting and clearing bits in peripheral registers. An application that intends to use a peripheral instance through its HPL must enable it through the <a class="el" href="bsp430_config.html">configuration interface</a> (e.g., <a class="el" href="port_8h.html#ae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>). The application may then reference the HPL through a constant expression such as <a class="el" href="port_8h.html#a393e897b2b3eeb5ec688e2ac7c490573">BSP430_HPL_PORT1</a>. HPL references are normally pointers to volatile structures. The structure tags correspond to the standard register names, excluding any prefix that identifies a specific peripheral instance. For example, the register <code>P1IFG</code> may be accessed as <code>BSP430_HPL_PORT1-&gt;ifg</code>.</p>
+<p>The primary purpose of the HPL is to allow code to be written that is decoupled from the specific peripheral instance (e.g., PORT1 or PORT2). No attempt is made to provide functions that do what is normally done by setting and clearing bits in peripheral registers. An application that intends to use a peripheral instance through its HPL must enable it through the <a class="el" href="bsp430_config.html">configuration interface</a> (e.g., <a class="el" href="group__grp__config__core.html#gae2fc54db8e042a1a968b60deddfe065c">configBSP430_HPL_PORT1</a>). The application may then reference the HPL through a constant expression such as <a class="el" href="port_8h.html#a393e897b2b3eeb5ec688e2ac7c490573">BSP430_HPL_PORT1</a>. HPL references are normally pointers to volatile structures. The structure tags correspond to the standard register names, excluding any prefix that identifies a specific peripheral instance. For example, the register <code>P1IFG</code> may be accessed as <code>BSP430_HPL_PORT1-&gt;ifg</code>.</p>
 <p><a class="anchor" id="HAL"></a></p>
 <h1><a class="anchor" id="layer_hal"></a>
 Hardware Abstraction Layer (HAL)</h1>
@@ -135,11 +135,11 @@ Functional Abstraction Layers</h1>
 <ul>
 <li>the <a class="el" href="onewire_8h.html">1-Wire</a> interface</li>
 </ul>
-<p>Copyright 2012, Peter A. Bigot </p>
+<p>Copyright 2012-2013, Peter A. Bigot </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

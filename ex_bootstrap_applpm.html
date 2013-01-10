@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -243,9 +243,7 @@ main.c</h1>
 <div class="line">  (void)context;</div>
 <div class="line">  (void)idx;</div>
 <div class="line">  ++button;</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code" href="periph_8h.html#a94d022aee289b5f9350fbce9e6973078">BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT</a></div>
-<div class="line">         | <a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a></div>
-<div class="line">         | <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code" href="periph_8h.html#a0ff53da75572326697c26bef9dae0351">BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN</a> | <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">const</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> button_cb = {</div>
@@ -298,6 +296,9 @@ main.c</h1>
 <div class="line">  <span class="keywordflow">if</span> (rx_head == rx_tail) {</div>
 <div class="line">    (void)consume_rx_ni;</div>
 <div class="line">  }</div>
+<div class="line">  <span class="comment">/* NOTE: For this test intentionally clear all LPM bits, not just</span></div>
+<div class="line"><span class="comment">   * the ones in BSP430_CORE_LPM_EXIT_MASK as would happen with</span></div>
+<div class="line"><span class="comment">   * BSP430_HAL_ISR_CALLBACK_EXIT_LPM. */</span></div>
 <div class="line">  <span class="keywordflow">return</span> <a class="code" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a>;</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -346,7 +347,8 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">  (void)<a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line"></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Application is running\n&quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\napplpm &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"></div>
 <div class="line"><span class="preprocessor">#if BSP430_MODULE_SYS - 0</span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;System reset bitmask %lx; causes:\n&quot;</span>, reset_causes);</div>
 <div class="line">  {</div>
@@ -461,8 +463,8 @@ main.c</h1>
 <div class="line">            }</div>
 <div class="line">            <span class="keywordflow">case</span> CMD_STATE:</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;MCLK rate: %lu Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a>());</div>
-<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SMCLK rate: %lu Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni</a>());</div>
-<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ACLK rate: %u Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a81d3191393783b4479969fed1019f40b">uiBSP430clockACLK_Hz_ni</a>());</div>
+<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SMCLK rate: %lu Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a0642c6f082ed8feafd057ff8132b75da">ulBSP430clockSMCLK_Hz_ni</a>());</div>
+<div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ACLK rate: %lu Hz\n&quot;</span>, <a class="code" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a>());</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;LFXT1: %s\n&quot;</span>, <a class="code" href="clock_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI</a>() ? <span class="stringliteral">&quot;FAULTED&quot;</span> : <span class="stringliteral">&quot;stable&quot;</span>);</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Uptime (ACLK ticks): %lu\n&quot;</span>, <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>());</div>
 <div class="line">              <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Selected idle state: %s\n&quot;</span>, state.lpm_description);</div>
@@ -548,8 +550,10 @@ main.c</h1>
 <div class="line">        <a class="code" href="pmm_8h.html#a77f7471bb2f76ad4c4173a9a4afa3055">BSP430_PMM_ENTER_LPMXp5_NI</a>();</div>
 <div class="line">      }</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_ENTER_LPMXp5_NI */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span>      <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(state.lpm_bits | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line"><span class="preprocessor"></span>      <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(state.lpm_bits);</div>
+<div class="line">      <span class="comment">/* Interrupts probably left enabled */</span></div>
 <div class="line">    }</div>
+<div class="line"></div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
 <div class="line">    wake_utt = <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>();</div>
 <div class="line">    <span class="keywordflow">if</span> (state.hold_serial) {</div>
@@ -593,7 +597,7 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* APP_CONFIGURE_PORTS_FOR_LPM */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Get platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_bootstrap_applpm_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">MCLK ?= 1000000</div>
@@ -611,7 +615,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

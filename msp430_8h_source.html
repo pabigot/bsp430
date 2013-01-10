@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -94,7 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="msp430_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;*</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">/* ============================================================================ */</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">/* Copyright (c) 2012, Texas Instruments Incorporated                           */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">/* Copyright 2012, Texas Instruments Incorporated                           */</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">/*  All rights reserved.                                                        */</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">/*                                                                              */</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">/*  Redistribution and use in source and binary forms, with or without          */</span></div>
@@ -277,258 +277,316 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00238"></a><span class="lineno"><a class="code" href="msp430_8h.html#ac95ecb647a4c1f1cc41685af4248b58d">  238</a></span>&#160;<span class="preprocessor">#define TLV_END               (0x1AFF)    </span></div>
 <div class="line"><a name="l00240"></a><span class="lineno"><a class="code" href="msp430_8h.html#adfce44c423e1a442442325211403dbd2">  240</a></span>&#160;<span class="preprocessor">#define TLV_LDTAG             (0x01)      </span></div>
 <div class="line"><a name="l00241"></a><span class="lineno"><a class="code" href="msp430_8h.html#aece20c9fedfc40f829fba7bbe11c4772">  241</a></span>&#160;<span class="preprocessor">#define TLV_PDTAG             (0x02)      </span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor">#define TLV_Reserved3         (0x03)      </span><span class="comment">/*  Future usage */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_Reserved4         (0x04)      </span><span class="comment">/*  Future usage */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00244"></a><span class="lineno"><a class="code" href="msp430_8h.html#afe47d4196e2c9ea6638a7e946b4d43a7">  244</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_BLANK             (0x05)      </span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="preprocessor">#define TLV_Reserved6         (0x06)      </span><span class="comment">/*  Future usage */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_Reserved7         (0x07)      </span><span class="comment">/*  Serial Number */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="code" href="msp430_8h.html#aeaec1507ca60b9cefdd050d3d8760778">  247</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TLV_DIERECORD         (0x08)      </span></div>
-<div class="line"><a name="l00248"></a><span class="lineno"><a class="code" href="msp430_8h.html#a74b01a17793b5bde9e6e16001996e3b4">  248</a></span>&#160;<span class="preprocessor">#define TLV_ADCCAL            (0x11)      </span></div>
-<div class="line"><a name="l00249"></a><span class="lineno"><a class="code" href="msp430_8h.html#a705977844312a275696f04a03d0f8342">  249</a></span>&#160;<span class="preprocessor">#define TLV_ADC12CAL          (0x11)      </span></div>
-<div class="line"><a name="l00250"></a><span class="lineno"><a class="code" href="msp430_8h.html#a437b56896ac8bbd6a752a8a41c9af769">  250</a></span>&#160;<span class="preprocessor">#define TLV_ADC10CAL          (0x13)      </span></div>
-<div class="line"><a name="l00251"></a><span class="lineno"><a class="code" href="msp430_8h.html#aee14810940aa9ee4f2543886d1cb2253">  251</a></span>&#160;<span class="preprocessor">#define TLV_REFCAL            (0x12)      </span></div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="code" href="msp430_8h.html#ace35a875a10e42a450af150d7ee54788">  252</a></span>&#160;<span class="preprocessor">#define TLV_TAGEXT            (0xFE)      </span></div>
-<div class="line"><a name="l00254"></a><span class="lineno"><a class="code" href="msp430_8h.html#af49fa09b89feef6cb6bae0e0c4421e96">  254</a></span>&#160;<span class="preprocessor">#define TAG_DCO_30             (0x01)    </span></div>
-<div class="line"><a name="l00255"></a><span class="lineno"><a class="code" href="msp430_8h.html#ad1dbde5392a503d12b441103c5282470">  255</a></span>&#160;<span class="preprocessor">#define TAG_ADC10_1            (0x08)    </span></div>
-<div class="line"><a name="l00256"></a><span class="lineno"><a class="code" href="msp430_8h.html#af7b5664aa714a65649218b966c8dcb5e">  256</a></span>&#160;<span class="preprocessor">#define TAG_ADC12_1            (0x08)    </span></div>
-<div class="line"><a name="l00257"></a><span class="lineno"><a class="code" href="msp430_8h.html#ad4f6abc385643b4b4790ecb36aaa3d2b">  257</a></span>&#160;<span class="preprocessor">#define TAG_EMPTY              (0xFE)    </span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor"></span><span class="comment">/* FLASH-related information */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="code" href="msp430_8h.html#a9f5c34e700abf075b1a6f7a0558b44aa">  260</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define LOCKA               (0x0040)  </span></div>
-<div class="line"><a name="l00261"></a><span class="lineno"><a class="code" href="msp430_8h.html#a63c1feb96e8e23b66c4b952415e64486">  261</a></span>&#160;<span class="preprocessor">#define LOCKINFO            (0x0080)  </span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="comment">* ADC10_A</span></div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="comment">************************************************************/</span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_ADC10_A__        </span></div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_ADC10_B__        </span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">* ADC12 PLUS</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_ADC12_PLUS__     </span></div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="comment">* ADC12_B</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_ADC12_B__         </span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="comment">* AES256 Accelerator</span></div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_AES256__          </span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="comment">* Backup RAM Module</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_BACKUP_RAM__      </span></div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="comment">* Battery Charger Module</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_BATTERY_CHARGER__   </span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment">* CapSence_IO 0</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CAP_SENSE_IO_0__ </span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="comment">* CapSence_IO 1</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CAP_SENSE_IO_1__ </span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="comment">* Comparator B</span></div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_COMPB__          </span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="comment">* Comparator D</span></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_COMPD__          </span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="comment">* CRC Module</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CRC__            </span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="comment">* CLOCK SYSTEM</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CS__              </span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment">* CLOCK SYSTEM</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CS_A__            </span></div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="comment">* DAC12</span></div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_DAC12_2__          </span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="comment">* DMA_X</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_DMAX_3__           </span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="comment">* DMA_X</span></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_DMAX_6__           </span></div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="comment">* Flash Memory</span></div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_FLASH__         </span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="comment">* FRAM Memory</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_FRAM_FR5XX__     </span></div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="comment">* FRAM Memory</span></div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_FRAM__           </span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="comment">* Memory Protection Unit</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_MPU__             </span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="comment">* Memory Protection Unit A</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_MPU_A__           </span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="comment">* LCD_B</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_LCD_B__          </span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="comment">* HARDWARE MULTIPLIER 32Bit</span></div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_MPY32__          </span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment">* DIGITAL I/O Port1/2 Pull up / Pull down Resistors</span></div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT1_R__        </span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT2_R__        </span></div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTA_R__        </span></div>
+<div class="line"><a name="l00242"></a><span class="lineno"><a class="code" href="msp430_8h.html#afe47d4196e2c9ea6638a7e946b4d43a7">  242</a></span>&#160;<span class="preprocessor">#define TLV_BLANK             (0x05)      </span></div>
+<div class="line"><a name="l00243"></a><span class="lineno"><a class="code" href="msp430_8h.html#aeaec1507ca60b9cefdd050d3d8760778">  243</a></span>&#160;<span class="preprocessor">#define TLV_DIERECORD         (0x08)      </span></div>
+<div class="line"><a name="l00244"></a><span class="lineno"><a class="code" href="msp430_8h.html#a74b01a17793b5bde9e6e16001996e3b4">  244</a></span>&#160;<span class="preprocessor">#define TLV_ADCCAL            (0x11)      </span></div>
+<div class="line"><a name="l00245"></a><span class="lineno"><a class="code" href="msp430_8h.html#a705977844312a275696f04a03d0f8342">  245</a></span>&#160;<span class="preprocessor">#define TLV_ADC12CAL          (0x11)      </span></div>
+<div class="line"><a name="l00246"></a><span class="lineno"><a class="code" href="msp430_8h.html#a437b56896ac8bbd6a752a8a41c9af769">  246</a></span>&#160;<span class="preprocessor">#define TLV_ADC10CAL          (0x13)      </span></div>
+<div class="line"><a name="l00247"></a><span class="lineno"><a class="code" href="msp430_8h.html#aee14810940aa9ee4f2543886d1cb2253">  247</a></span>&#160;<span class="preprocessor">#define TLV_REFCAL            (0x12)      </span></div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="code" href="msp430_8h.html#ace35a875a10e42a450af150d7ee54788">  248</a></span>&#160;<span class="preprocessor">#define TLV_TAGEXT            (0xFE)      </span></div>
+<div class="line"><a name="l00250"></a><span class="lineno"><a class="code" href="msp430_8h.html#af49fa09b89feef6cb6bae0e0c4421e96">  250</a></span>&#160;<span class="preprocessor">#define TAG_DCO_30             (0x01)    </span></div>
+<div class="line"><a name="l00251"></a><span class="lineno"><a class="code" href="msp430_8h.html#ad1dbde5392a503d12b441103c5282470">  251</a></span>&#160;<span class="preprocessor">#define TAG_ADC10_1            (0x08)    </span></div>
+<div class="line"><a name="l00252"></a><span class="lineno"><a class="code" href="msp430_8h.html#af7b5664aa714a65649218b966c8dcb5e">  252</a></span>&#160;<span class="preprocessor">#define TAG_ADC12_1            (0x08)    </span></div>
+<div class="line"><a name="l00253"></a><span class="lineno"><a class="code" href="msp430_8h.html#ad4f6abc385643b4b4790ecb36aaa3d2b">  253</a></span>&#160;<span class="preprocessor">#define TAG_EMPTY              (0xFE)    </span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="preprocessor"></span><span class="comment">/* FLASH-related information */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00256"></a><span class="lineno"><a class="code" href="msp430_8h.html#a9f5c34e700abf075b1a6f7a0558b44aa">  256</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define LOCKA               (0x0040)  </span></div>
+<div class="line"><a name="l00257"></a><span class="lineno"><a class="code" href="msp430_8h.html#a63c1feb96e8e23b66c4b952415e64486">  257</a></span>&#160;<span class="preprocessor">#define LOCKINFO            (0x0080)  </span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor"></span><span class="comment">/* SYSRSTIV aggregated candidate names */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00260"></a><span class="lineno"><a class="code" href="msp430_8h.html#affd9dd903ff3d0173acdd69f99ca0131">  260</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SYSRSTIV_BOR       (0x0002)    </span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#define SYSRSTIV_RSTNMI    (0x0004)    </span></div>
+<div class="line"><a name="l00262"></a><span class="lineno"><a class="code" href="msp430_8h.html#a28f39629ca79ba41a9d82f18944e2b78">  262</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SVMBOR    (0x0004)    </span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="preprocessor">#define SYSRSTIV_DOBOR     (0x0006)    </span></div>
+<div class="line"><a name="l00264"></a><span class="lineno"><a class="code" href="msp430_8h.html#a049af8b0d7d69d6d0fa72e91c9acf788">  264</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_RSTNMI    (0x0006)    </span></div>
+<div class="line"><a name="l00265"></a><span class="lineno"><a class="code" href="msp430_8h.html#a062007a634e1376ef52ed860d952255b">  265</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_DOBOR     (0x0008)    </span></div>
+<div class="line"><a name="l00266"></a><span class="lineno"><a class="code" href="msp430_8h.html#a95fcdce2f7e8b7a4662fe27c8dca5942">  266</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_LPM5WU    (0x0008)    </span></div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="code" href="msp430_8h.html#a0bcefd96ce31aaa909bf02bd23e67cae">  267</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SECYV     (0x000A)    </span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#define SYSRSTIV_DOPOR     (0x000C)    </span></div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="code" href="msp430_8h.html#ad7b8011078bfcea751754861087f5e8c">  269</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SVSL      (0x000C)    </span></div>
+<div class="line"><a name="l00270"></a><span class="lineno"><a class="code" href="msp430_8h.html#a34f591a06fb0e1b1a0eb11a65eefa350">  270</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SVSLIFG   (0x000C)    </span></div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="code" href="msp430_8h.html#a43e2006a6a43e72d8b52ddb4a5675760">  271</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SVSH      (0x000E)    </span></div>
+<div class="line"><a name="l00272"></a><span class="lineno"><a class="code" href="msp430_8h.html#aca88000e6e047877295793efc0fca305">  272</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SVSHIFG   (0x000E)    </span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#define SYSRSTIV_WDTTO     (0x000E)    </span></div>
+<div class="line"><a name="l00274"></a><span class="lineno"><a class="code" href="msp430_8h.html#a7c565df3b9b2adfe00909c94f84ed1ae">  274</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SVML_OVP  (0x0010)    </span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="preprocessor">#define SYSRSTIV_WDTKEY    (0x0010)    </span></div>
+<div class="line"><a name="l00276"></a><span class="lineno"><a class="code" href="msp430_8h.html#a70748ffd63e59970b7ae24befb404c78">  276</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_CCSKEY    (0x0012)    </span></div>
+<div class="line"><a name="l00277"></a><span class="lineno"><a class="code" href="msp430_8h.html#a22d2362da276baac27ecfa7dd96ab9f7">  277</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_SVMH_OVP  (0x0012)    </span></div>
+<div class="line"><a name="l00278"></a><span class="lineno"><a class="code" href="msp430_8h.html#a34e04d668c13351da7180d2ab8718009">  278</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_DOPOR     (0x0014)    </span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="preprocessor">#define SYSRSTIV_PMMKEY    (0x0014)    </span></div>
+<div class="line"><a name="l00280"></a><span class="lineno"><a class="code" href="msp430_8h.html#a7cf8d1e50cd29094aafe7fe8a5f85d4a">  280</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_WDTTO     (0x0016)    </span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="preprocessor">#define SYSRSTIV_PERF      (0x0016)    </span></div>
+<div class="line"><a name="l00282"></a><span class="lineno"><a class="code" href="msp430_8h.html#a2ad616dd5a12f61558359f92a0fb97a0">  282</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_WDTKEY    (0x0018)    </span></div>
+<div class="line"><a name="l00283"></a><span class="lineno"><a class="code" href="msp430_8h.html#ab54d1ddef8c5f07bd25696ea12dc4760">  283</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_FRCTLPW   (0x001A)    </span></div>
+<div class="line"><a name="l00284"></a><span class="lineno"><a class="code" href="msp430_8h.html#a7d8fd104cf9a1b4b5cad345770ec481d">  284</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_KEYV      (0x001A)    </span></div>
+<div class="line"><a name="l00285"></a><span class="lineno"><a class="code" href="msp430_8h.html#a3640f1b0c2f54f5b372f16be8b0ee59c">  285</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_FLLUL     (0x001C)    </span></div>
+<div class="line"><a name="l00286"></a><span class="lineno"><a class="code" href="msp430_8h.html#a637bc63bd90a05660256c9185f5158c1">  286</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_DBDIFG    (0x001C)    </span></div>
+<div class="line"><a name="l00287"></a><span class="lineno"><a class="code" href="msp430_8h.html#ab64d499e28e50c39724585e95fb0fb7e">  287</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_UBDIFG    (0x001C)    </span></div>
+<div class="line"><a name="l00288"></a><span class="lineno"><a class="code" href="msp430_8h.html#aab182465cb7bb6f760cbc473552a1064">  288</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_PLLUL     (0x001C)    </span></div>
+<div class="line"><a name="l00289"></a><span class="lineno"><a class="code" href="msp430_8h.html#afb124c3ad39ecac5cf7f48cfb403534e">  289</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_PERF      (0x001E)    </span></div>
+<div class="line"><a name="l00290"></a><span class="lineno"><a class="code" href="msp430_8h.html#a117fbf4fa3d6e284a41c449e372bce4a">  290</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_PSSKEY    (0x0020)    </span></div>
+<div class="line"><a name="l00291"></a><span class="lineno"><a class="code" href="msp430_8h.html#a2b092884626a63f0930f50e7b924db01">  291</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_PMMPW     (0x0020)    </span></div>
+<div class="line"><a name="l00292"></a><span class="lineno"><a class="code" href="msp430_8h.html#a758b24c88c0d136e6a7a4cc23d853981">  292</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_PMMKEY    (0x0020)    </span></div>
+<div class="line"><a name="l00293"></a><span class="lineno"><a class="code" href="msp430_8h.html#affc1217537029166b76c30ab0eb549d4">  293</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_MPUPW     (0x0022)    </span></div>
+<div class="line"><a name="l00294"></a><span class="lineno"><a class="code" href="msp430_8h.html#a6b2d33a8e53bc700f2602ef4c8f3732d">  294</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_MPUKEY    (0x0022)    </span></div>
+<div class="line"><a name="l00295"></a><span class="lineno"><a class="code" href="msp430_8h.html#a495aae29276c28d0dcd77d8cf9b5d6c2">  295</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_CSPW      (0x0024)    </span></div>
+<div class="line"><a name="l00296"></a><span class="lineno"><a class="code" href="msp430_8h.html#aa8cfa5df56c391adc26344476df1543f">  296</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_CSKEY     (0x0024)    </span></div>
+<div class="line"><a name="l00297"></a><span class="lineno"><a class="code" href="msp430_8h.html#ae979acb9257d1008eb34221841293166">  297</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_MPUSEGIIFG (0x0026)   </span></div>
+<div class="line"><a name="l00298"></a><span class="lineno"><a class="code" href="msp430_8h.html#a5caff68fd150e5ab9ed1cf7cac2f141b">  298</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_MPUSEGPIFG (0x0026)   </span></div>
+<div class="line"><a name="l00299"></a><span class="lineno"><a class="code" href="msp430_8h.html#a6b9b15fa347f10ac56c43bf87ea5bf5a">  299</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_MPUSEG1IFG (0x0028)   </span></div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="code" href="msp430_8h.html#aa0bb628e97b641e7ef80b12f71c1c1bf">  300</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_MPUSEG2IFG (0x002A)   </span></div>
+<div class="line"><a name="l00301"></a><span class="lineno"><a class="code" href="msp430_8h.html#adc53a2ad4c853cd1a3d92fa5374ce633">  301</a></span>&#160;<span class="preprocessor">#define SYSRSTIV_MPUSEG3IFG (0x002C)   </span></div>
+<div class="line"><a name="l00303"></a><span class="lineno"><a class="code" href="msp430_8h.html#af28a9eaf0ef2cf6fe4fa5286082416b1">  303</a></span>&#160;<span class="preprocessor">#define SELREF_0            (0x0000)    </span></div>
+<div class="line"><a name="l00304"></a><span class="lineno"><a class="code" href="msp430_8h.html#a995052d95cbed48428fb3baf30d355e7">  304</a></span>&#160;<span class="preprocessor">#define SELREF_1            (0x0010)    </span></div>
+<div class="line"><a name="l00305"></a><span class="lineno"><a class="code" href="msp430_8h.html#a4f37126bb67be554dacdaf0d76e98df1">  305</a></span>&#160;<span class="preprocessor">#define SELREF_2            (0x0020)    </span></div>
+<div class="line"><a name="l00306"></a><span class="lineno"><a class="code" href="msp430_8h.html#a3e526a63f06919415e6a46bf84694732">  306</a></span>&#160;<span class="preprocessor">#define SELREF_3            (0x0030)    </span></div>
+<div class="line"><a name="l00307"></a><span class="lineno"><a class="code" href="msp430_8h.html#ada661dd9da7ece003814badfc0dd423a">  307</a></span>&#160;<span class="preprocessor">#define SELREF_4            (0x0040)    </span></div>
+<div class="line"><a name="l00308"></a><span class="lineno"><a class="code" href="msp430_8h.html#a018630c1fc25c4788fcdf547b10f3758">  308</a></span>&#160;<span class="preprocessor">#define SELREF_5            (0x0050)    </span></div>
+<div class="line"><a name="l00309"></a><span class="lineno"><a class="code" href="msp430_8h.html#a4f7636d0a3feffa6ef892961d7914d5a">  309</a></span>&#160;<span class="preprocessor">#define SELREF_6            (0x0060)    </span></div>
+<div class="line"><a name="l00310"></a><span class="lineno"><a class="code" href="msp430_8h.html#aa49ea833c16ad7b79dd98a4f0484d653">  310</a></span>&#160;<span class="preprocessor">#define SELREF_7            (0x0070)    </span></div>
+<div class="line"><a name="l00311"></a><span class="lineno"><a class="code" href="msp430_8h.html#a23efe8df30c23012fc0693861f5945e5">  311</a></span>&#160;<span class="preprocessor">#define SELREF__XT1CLK      (0x0000)    </span></div>
+<div class="line"><a name="l00312"></a><span class="lineno"><a class="code" href="msp430_8h.html#aac99d34a443aea2a8051ca5977345cf1">  312</a></span>&#160;<span class="preprocessor">#define SELREF__REFOCLK     (0x0020)    </span></div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="code" href="msp430_8h.html#a5c041fc623aa8235020736653e196c68">  313</a></span>&#160;<span class="preprocessor">#define SELREF__XT2CLK      (0x0050)    </span></div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="code" href="msp430_8h.html#a3e1ab7354b6b42d7f8aa219af529dbda">  315</a></span>&#160;<span class="preprocessor">#define XCAP_0              (0x00)      </span></div>
+<div class="line"><a name="l00316"></a><span class="lineno"><a class="code" href="msp430_8h.html#af0c275c45d19c84f5edf7d7148935d95">  316</a></span>&#160;<span class="preprocessor">#define XCAP_1              (0x04)      </span></div>
+<div class="line"><a name="l00317"></a><span class="lineno"><a class="code" href="msp430_8h.html#a589aa43c062ec99964795c11ffe8bf38">  317</a></span>&#160;<span class="preprocessor">#define XCAP_2              (0x08)      </span></div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="code" href="msp430_8h.html#a87d2ff960bbfa72c9551a76a8bc867d0">  318</a></span>&#160;<span class="preprocessor">#define XCAP_3              (0x0C)      </span></div>
+<div class="line"><a name="l00320"></a><span class="lineno"><a class="code" href="msp430_8h.html#a738d7a5b235bae599531b299235a8ba8">  320</a></span>&#160;<span class="preprocessor">#define XCAP0PF             (0x00)      </span></div>
+<div class="line"><a name="l00321"></a><span class="lineno"><a class="code" href="msp430_8h.html#aecfd9d7e2fa45d6e254520fd003ac744">  321</a></span>&#160;<span class="preprocessor">#define XCAP10PF            (0x10)      </span></div>
+<div class="line"><a name="l00322"></a><span class="lineno"><a class="code" href="msp430_8h.html#abad130c94b4f5cf8e1fa91ac5eb50160">  322</a></span>&#160;<span class="preprocessor">#define XCAP14PF            (0x20)      </span></div>
+<div class="line"><a name="l00323"></a><span class="lineno"><a class="code" href="msp430_8h.html#abce8e69efb94e66e5e0dd6984221ffea">  323</a></span>&#160;<span class="preprocessor">#define XCAP18PF            (0x30)      </span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="comment">* ADC10_A</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="comment">************************************************************/</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_ADC10_A__        </span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_ADC10_B__        </span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="comment">* ADC12 PLUS</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_ADC12_PLUS__     </span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="comment">* ADC12_B</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_ADC12_B__         </span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="comment">* AES256 Accelerator</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_AES256__          </span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="comment">* Backup RAM Module</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_BACKUP_RAM__      </span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="comment">* Battery Charger Module</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_BATTERY_CHARGER__   </span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="comment">* CapSence_IO 0</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CAP_SENSE_IO_0__ </span></div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;<span class="comment">* CapSence_IO 1</span></div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CAP_SENSE_IO_1__ </span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="comment">* Comparator B</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_COMPB__          </span></div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="comment">* DIGITAL I/O Port3/4 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="comment">* Comparator D</span></div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT3_R__        </span></div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT4_R__        </span></div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTB_R__        </span></div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="comment">* DIGITAL I/O Port5/6 Pull up / Pull down Resistors</span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT5_R__        </span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT6_R__        </span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTC_R__        </span></div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_COMPD__          </span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="comment">* CRC Module</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CRC__            </span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="comment">* CLOCK SYSTEM</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CS__              </span></div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="comment">* DIGITAL I/O Port7/8 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="comment">* CLOCK SYSTEM</span></div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT7_R__        </span></div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT8_R__        </span></div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTD_R__        </span></div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="comment">* DIGITAL I/O Port9/10 Pull up / Pull down Resistors</span></div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT9_R__        </span></div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT10_R__        </span></div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTE_R__        </span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_CS_A__            </span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="comment">* DAC12</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_DAC12_2__          </span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="comment">* DMA_X</span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_DMAX_3__           </span></div>
 <div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="comment">* DIGITAL I/O Port11 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="comment">* DMA_X</span></div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT11_R__        </span></div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTF_R__        </span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="comment">* DIGITAL I/O PortJ Pull up / Pull down Resistors</span></div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORTJ_R__        </span></div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="comment">* PORT MAPPING CONTROLLER</span></div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT_MAPPING__   </span></div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;<span class="comment">* PORT 2 MAPPING CONTROLLER</span></div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT2_MAPPING__   </span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="comment">* PMM - Power Management System</span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PMM__            </span></div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="comment">* PMM - Power Management System</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PMM_FR5xx__      </span></div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="comment">* PMM - Power Management System for FRAM</span></div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PMM_FRAM__       </span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="comment">* Port U</span></div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PU__             </span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;<span class="comment">* RAM Control Module</span></div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RC__             </span></div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="comment">* Shared Reference</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_REF__          </span></div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="comment">* Shared Reference</span></div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_REF_A__           </span></div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="comment">* Real Time Clock</span></div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC__            </span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment">* Real Time Clock</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC_B__          </span></div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="comment">* Real Time Clock</span></div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC_C__          </span></div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="comment">* Real Time Clock</span></div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC_CE__         </span></div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;<span class="comment">* SFR - Special Function Register Module</span></div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_SFR__            </span></div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;<span class="comment">* SYS - System Module</span></div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_SYS__            </span></div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="comment">* Timerx_A7</span></div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_TxA7__            </span></div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="comment">* Timerx_B3</span></div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_TxB7__            </span></div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="comment">* Timerx_D7</span></div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_TxD7__            </span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="comment">* UNIFIED CLOCK SYSTEM</span></div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_UCS__            </span></div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="comment">* USB</span></div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_USB__            </span></div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="comment">* USCI Ax</span></div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_USCI_Ax__       </span></div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="comment">* USCI Ax</span></div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_EUSCI_Ax__      </span></div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="comment">* WATCHDOG TIMER A</span></div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_WDT_A__          </span></div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment">* TLV Descriptors</span></div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __MSP430_HAS_TLV__              </span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_DMAX_6__           </span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="comment">* Flash Memory</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_FLASH__         </span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="comment">* FRAM Memory</span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_FRAM_FR5XX__     </span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="comment">* FRAM Memory</span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_FRAM__           </span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="comment">* Memory Protection Unit</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_MPU__             </span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="comment">* Memory Protection Unit A</span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_MPU_A__           </span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="comment">* LCD_B</span></div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_LCD_B__          </span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="comment">* HARDWARE MULTIPLIER 32Bit</span></div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_MPY32__          </span></div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="comment">* DIGITAL I/O Port1/2 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT1_R__        </span></div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT2_R__        </span></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTA_R__        </span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="comment">* DIGITAL I/O Port3/4 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT3_R__        </span></div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT4_R__        </span></div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTB_R__        </span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="comment">* DIGITAL I/O Port5/6 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT5_R__        </span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT6_R__        </span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTC_R__        </span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">* DIGITAL I/O Port7/8 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT7_R__        </span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT8_R__        </span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTD_R__        </span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="comment">* DIGITAL I/O Port9/10 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT9_R__        </span></div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORT10_R__        </span></div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTE_R__        </span></div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="comment">* DIGITAL I/O Port11 Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT11_R__        </span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;<span class="preprocessor">#define  __MSP430_HAS_PORTF_R__        </span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="comment">* DIGITAL I/O PortJ Pull up / Pull down Resistors</span></div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORTJ_R__        </span></div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="comment">* PORT MAPPING CONTROLLER</span></div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT_MAPPING__   </span></div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="comment">* PORT 2 MAPPING CONTROLLER</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PORT2_MAPPING__   </span></div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="comment">* PMM - Power Management System</span></div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PMM__            </span></div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="comment">* PMM - Power Management System</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PMM_FR5xx__      </span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;<span class="comment">* PMM - Power Management System for FRAM</span></div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PMM_FRAM__       </span></div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="comment">* Port U</span></div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_PU__             </span></div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="preprocessor"></span><span class="comment">/*************************************************************</span></div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="comment">* RAM Control Module</span></div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="comment">*************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RC__             </span></div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="comment">* Shared Reference</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_REF__          </span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="comment">* Shared Reference</span></div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_REF_A__           </span></div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;<span class="comment">* Real Time Clock</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC__            </span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;<span class="comment">* Real Time Clock</span></div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC_B__          </span></div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<span class="comment">* Real Time Clock</span></div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC_C__          </span></div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;<span class="comment">* Real Time Clock</span></div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_RTC_CE__         </span></div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;<span class="comment">* SFR - Special Function Register Module</span></div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_SFR__            </span></div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment">* SYS - System Module</span></div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_SYS__            </span></div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;<span class="comment">* Timerx_A7</span></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_TxA7__            </span></div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;<span class="comment">* Timerx_B3</span></div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_TxB7__            </span></div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;<span class="comment">* Timerx_D7</span></div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_TxD7__            </span></div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="comment">* UNIFIED CLOCK SYSTEM</span></div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_UCS__            </span></div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;<span class="comment">* USB</span></div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_USB__            </span></div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;<span class="comment">* USCI Ax</span></div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_USCI_Ax__       </span></div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;<span class="comment">* USCI Ax</span></div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_EUSCI_Ax__      </span></div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;<span class="comment">* WATCHDOG TIMER A</span></div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define  __MSP430_HAS_WDT_A__          </span></div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;<span class="preprocessor"></span><span class="comment">/************************************************************</span></div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;<span class="comment">* TLV Descriptors</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="comment">************************************************************/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __MSP430_HAS_TLV__              </span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -40,6 +40,8 @@ var searchData=
   ['cctl5',['cctl5',['../structsBSP430hplTIMER.html#ab1f13b4e0252b059f6039d268e3ba19e',1,'sBSP430hplTIMER']]],
   ['cctl6',['cctl6',['../structsBSP430hplTIMER.html#aa27a846d675a0b3818949a86697fc31e',1,'sBSP430hplTIMER']]],
   ['cflags',['cflags',['../structsBSP430hplHALStatePrefix.html#a084198259512be6e4429df8b7abe908d',1,'sBSP430hplHALStatePrefix']]],
+  ['ch',['ch',['../structsBSP430hplDMA.html#ab411c2ca712675fdfbd8793325d7f908',1,'sBSP430hplDMA']]],
+  ['ch_5fcbchain_5fni',['ch_cbchain_ni',['../structsBSP430halDMA.html#af5feba32f8c1e078958626245f792b86',1,'sBSP430halDMA']]],
   ['child',['child',['../structsBSP430cliCommand.html#a6a9989a8bbebdd6246f647ab54a9123e',1,'sBSP430cliCommand']]],
   ['cmd',['cmd',['../structsBSP430cliCommandLink.html#a1abd6b2e5174e42795a7c73191732520',1,'sBSP430cliCommandLink']]],
   ['command',['command',['../structsBSP430cliCompletionData.html#a72e45013ab9e5a54b2d8a0c4c0b9ebb0',1,'sBSP430cliCompletionData']]],
@@ -48,9 +50,9 @@ var searchData=
   ['completion_5fhelper',['completion_helper',['../structsBSP430cliCompletionHelperStrings.html#ab09d101593e2936842b9913a052bb8d5',1,'sBSP430cliCompletionHelperStrings::completion_helper()'],['../structsBSP430cliCommand.html#ae5d3985a0d36a1161043b098a9e64418',1,'sBSP430cliCommand::completion_helper()']]],
   ['crc',['crc',['../structsBSP430tlvTable2xx.html#a9d7a7738b495fcbdb9bf2c8731d8cc87',1,'sBSP430tlvTable2xx::crc()'],['../structsBSP430tlvTable5xx.html#a32ddd002906b89c0f63de2927d951336',1,'sBSP430tlvTable5xx::crc()']]],
   ['crc_5flen_5flg2',['crc_len_lg2',['../structsBSP430tlvTable5xx.html#a5e8d8bb8c5e3a4c919d3dc3383886169',1,'sBSP430tlvTable5xx']]],
-  ['ctl',['ctl',['../structsBSP430hplTIMER.html#af7e38ca9803b3645a8abb261608a7957',1,'sBSP430hplTIMER']]],
-  ['ctl0',['ctl0',['../structsBSP430hplEUSCIA.html#ae0f5b8c61001f78b87ceac4f38b7252d',1,'sBSP430hplEUSCIA::ctl0()'],['../structsBSP430hplEUSCIB.html#aecbbc6a9a7bb879429dbc0609bf454b1',1,'sBSP430hplEUSCIB::ctl0()'],['../structsBSP430hplUSCI.html#a928fa1b70f4d40ef970184225c85d610',1,'sBSP430hplUSCI::ctl0()'],['../structsBSP430hplUSCI5.html#ab001aaafad425344eb99b179fd04c722',1,'sBSP430hplUSCI5::ctl0()']]],
-  ['ctl1',['ctl1',['../structsBSP430hplEUSCIA.html#a1928840466f89c7eb22abe318c3a69ec',1,'sBSP430hplEUSCIA::ctl1()'],['../structsBSP430hplEUSCIB.html#af1b4d269068a2d1c167853a22a6060be',1,'sBSP430hplEUSCIB::ctl1()'],['../structsBSP430hplUSCI.html#a83c1ab0de1413b4bff604e3cdb85c72c',1,'sBSP430hplUSCI::ctl1()'],['../structsBSP430hplUSCI5.html#a5625b48f285452cc998aa16f4722cb80',1,'sBSP430hplUSCI5::ctl1()']]],
+  ['ctl',['ctl',['../structsBSP430hplDMAchannel.html#a2a8c29da164c779410eef6d4e7b58729',1,'sBSP430hplDMAchannel::ctl()'],['../structsBSP430hplTIMER.html#af7e38ca9803b3645a8abb261608a7957',1,'sBSP430hplTIMER::ctl()']]],
+  ['ctl0',['ctl0',['../structsBSP430hplDMA.html#a74348393405b6d38d53b8f098e713013',1,'sBSP430hplDMA::ctl0()'],['../structsBSP430hplEUSCIA.html#ae0f5b8c61001f78b87ceac4f38b7252d',1,'sBSP430hplEUSCIA::ctl0()'],['../structsBSP430hplEUSCIB.html#aecbbc6a9a7bb879429dbc0609bf454b1',1,'sBSP430hplEUSCIB::ctl0()'],['../structsBSP430hplUSCI.html#a928fa1b70f4d40ef970184225c85d610',1,'sBSP430hplUSCI::ctl0()'],['../structsBSP430hplUSCI5.html#ab001aaafad425344eb99b179fd04c722',1,'sBSP430hplUSCI5::ctl0()']]],
+  ['ctl1',['ctl1',['../structsBSP430hplDMA.html#a96ddae12c4f5bb99c220cc61322e8dd3',1,'sBSP430hplDMA::ctl1()'],['../structsBSP430hplEUSCIA.html#a1928840466f89c7eb22abe318c3a69ec',1,'sBSP430hplEUSCIA::ctl1()'],['../structsBSP430hplEUSCIB.html#af1b4d269068a2d1c167853a22a6060be',1,'sBSP430hplEUSCIB::ctl1()'],['../structsBSP430hplUSCI.html#a83c1ab0de1413b4bff604e3cdb85c72c',1,'sBSP430hplUSCI::ctl1()'],['../structsBSP430hplUSCI5.html#a5625b48f285452cc998aa16f4722cb80',1,'sBSP430hplUSCI5::ctl1()']]],
   ['ctlw0',['ctlw0',['../structsBSP430hplEUSCIA.html#ab7246b027491b66bd46a9fe3e047f845',1,'sBSP430hplEUSCIA::ctlw0()'],['../structsBSP430hplEUSCIB.html#adc35ce050acb0de9bbe52884aef9019a',1,'sBSP430hplEUSCIB::ctlw0()'],['../structsBSP430hplUSCI5.html#a6ec759713a16ea9bf4921c79317a7d26',1,'sBSP430hplUSCI5::ctlw0()']]],
   ['ctlw1',['ctlw1',['../structsBSP430hplEUSCIA.html#a60ca65b6894c483fcd098a57f9569522',1,'sBSP430hplEUSCIA::ctlw1()'],['../structsBSP430hplEUSCIB.html#a90647d96aff799e92fac141311e4d497',1,'sBSP430hplEUSCIB::ctlw1()']]]
 ];

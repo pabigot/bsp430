@@ -2,6 +2,7 @@ var searchData=
 [
   ['periph_2eh',['periph.h',['../periph_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_8h.html',1,'']]],
+  ['platform_2eh',['platform.h',['../platform_2wolverine_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2em430_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2surf_2platform_8h.html',1,'']]],
   ['platform_2eh',['platform.h',['../platform_2rf2500t_2platform_8h.html',1,'']]],

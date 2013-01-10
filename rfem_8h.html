@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -189,7 +189,7 @@ Macros</h2></td></tr>
 <td align="left">RF2.18 (RF3.11) </td><td align="left">BT_HCI_RTS, <a class="el" href="rfem_8h.html#ac52b2516b4d61f2d8cf38c8eed7d3bab">BSP430_RFEM_GPIO3_PORT_PERIPH_HANDLE</a> </td><td align="left">aka SPI1_CLK </td></tr>
 </table>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="aca5e58766e3ec902d0fcd5e35c7c6c69"></a>
 <div class="memitem">
@@ -427,7 +427,7 @@ If the platform does not support this signal, this identifier will remain undefi
       </table>
 </div><div class="memdoc">
 <p>Alias to GDO0 for CC3000 TiWi radios </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a37">rfem/cc3000/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a38">rfem/cc3000/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -441,7 +441,7 @@ If the platform does not support this signal, this identifier will remain undefi
       </table>
 </div><div class="memdoc">
 <p>Alias to GDO0 for CC3000 TiWi radios </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a35">rfem/cc3000/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a36">rfem/cc3000/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -457,7 +457,7 @@ If the platform does not support this signal, this identifier will remain undefi
 <p>The BSP430 peripheral handle for the primary SPI interface.</p>
 <p>On most evaluation boards, this corresponds to <a class="el" href="usci_8h.html#a04f77ab94dc563e830915125094199f8">BSP430_PERIPH_USCI_B0</a> or its family-specific equivalent.</p>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a43">rfem/cc3000/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a11">rfem/ccid/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a44">rfem/cc3000/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a11">rfem/ccid/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -471,7 +471,7 @@ If the platform does not support this signal, this identifier will remain undefi
       </table>
 </div><div class="memdoc">
 <p>Bit mask within <a class="el" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a> for the CSn signal </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a41">rfem/cc3000/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a22">rfem/ccid/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a42">rfem/cc3000/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a22">rfem/ccid/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -488,7 +488,7 @@ If the platform does not support this signal, this identifier will remain undefi
 <dl class="section note"><dt>Note</dt><dd>Only the <a class="el" href="port_8h.html#aa63f0e6fe0ee84d00dae3e5a9f9a8c3f">HPL interface </a> is enabled by its reference for this purpose. The <a class="el" href="port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af">HAL port interface </a> will be enabled only if it is required for other signals on the same port. In most cases, the port for chip select is also used for a GDO signal, so the HAL interface is almost certainly available.</dd></dl>
 <p>This pin enables the radio to operate on the SPI bus when set low. When set high, <a class="el" href="rfem_8h.html#aef98a690f3207112d7be0a612bd7b9d1">BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE</a> operates as a signal from the radio to the MCU.</p>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a40">rfem/cc3000/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a9">rfem/ccid/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a41">rfem/cc3000/main.c</a>, and <a class="el" href="rfem_2ccid_2main_8c-example.html#a9">rfem/ccid/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -502,7 +502,7 @@ If the platform does not support this signal, this identifier will remain undefi
       </table>
 </div><div class="memdoc">
 <p>Alias to GDO2 for CC3000 TiWi radios </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a39">rfem/cc3000/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a40">rfem/cc3000/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -516,7 +516,7 @@ If the platform does not support this signal, this identifier will remain undefi
       </table>
 </div><div class="memdoc">
 <p>Alias to GDO2 for CC3000 TiWi radios </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a38">rfem/cc3000/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a39">rfem/cc3000/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -539,7 +539,7 @@ If the platform does not support this signal, this identifier will remain undefi
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

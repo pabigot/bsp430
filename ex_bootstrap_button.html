@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -127,11 +127,9 @@ main.c</h1>
 <div class="line">  hpl-&gt;ies ^= sp-&gt;bit;</div>
 <div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, -1);</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* We let the infrastructure identify what LPM bits to clear, but</span></div>
-<div class="line"><span class="comment">   * also disable GIE on exit.  This ensures we don&#39;t overwrite the</span></div>
-<div class="line"><span class="comment">   * interrupt state due to a subsequent interrupt before we can print</span></div>
-<div class="line"><span class="comment">   * what we just stored. */</span></div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> | <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
+<div class="line">  <span class="comment">/* Wakeup.  Whether this clears #GIE depends on</span></div>
+<div class="line"><span class="comment">   * #configBSP430_CORE_LPM_EXIT_CLEAR_GIE */</span></div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> sButtonState button_state = {</div>
@@ -148,7 +146,8 @@ main.c</h1>
 <div class="line">  <a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line">  (void)<a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line"></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;And we&#39;re up\n&quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nbutton &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;There&#39;s supposed to be a button at %s.%u\n&quot;</span>,</div>
 <div class="line">          <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="platform_8h.html#a76fba1d2647ebe8bbd077521557efc39">BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE</a>),</div>
 <div class="line">          b0pin);</div>
@@ -175,7 +174,10 @@ main.c</h1>
 <div class="line">  b0hpl-&gt;ifg &amp;= ~<a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line">  b0hpl-&gt;ie |= <a class="code" href="platform_8h.html#a2d2bb16f09ab8d94f795e717a946a509">BSP430_PLATFORM_BUTTON0_PORT_BIT</a>;</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Button is configured.  Try pressing it.  No debouncing is done.\n&quot;</span>);</div>
-<div class="line"></div>
+<div class="line"><span class="preprocessor">#if ! (configBSP430_CORE_LPM_EXIT_CLEAR_GIE - 0)</span></div>
+<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;WARNING: Interrupts remain enabled after wakeup\n&quot;</span>);</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
@@ -183,11 +185,16 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Count %u, in mask 0x%02x: %s\n&quot;</span>, button_state.count, button_state.in_mask, state_str[!button_state.in_mask]);</div>
 <div class="line"></div>
-<div class="line">    <span class="comment">/* Note that we&#39;ve never turned interrupts on, so we do so now</span></div>
-<div class="line"><span class="comment">     * when entering LPM.  The ISR will turn them off again before</span></div>
-<div class="line"><span class="comment">     * waking the MCU. */</span></div>
-<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
-<div class="line">  }</div>
+<div class="line">    <span class="comment">/* Note that we&#39;ve never turned interrupts on, but</span></div>
+<div class="line"><span class="comment">     * BSP430_CORE_LPM_ENTER_NI() does so internally so the ISR can be</span></div>
+<div class="line"><span class="comment">     * executed.  Whether they are cleared before returning to this</span></div>
+<div class="line"><span class="comment">     * loop depends on #configBSP430_CORE_LPM_EXIT_CLEAR_GIE. */</span></div>
+<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a>);</div>
+<div class="line"><span class="preprocessor">#if ! (configBSP430_CORE_LPM_EXIT_CLEAR_GIE - 0)</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="comment">/* Infrastructure didn&#39;t clear this, so we should */</span></div>
+<div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span>  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_bootstrap_button_confic"></a>
 bsp430_config.h</h1>
@@ -201,6 +208,11 @@ bsp430_config.h</h1>
 <div class="line"><span class="comment">/* Support console output */</span></div>
 <div class="line"><span class="preprocessor">#define configBSP430_CONSOLE 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="comment">/* By default run with interrupts disabled whenever CPU is in active mode */</span></div>
+<div class="line"><span class="preprocessor">#ifndef configBSP430_CORE_LPM_EXIT_CLEAR_GIE</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Monitor uptime and provide generic ACLK-driven timer */</span></div>
 <div class="line"><span class="preprocessor">#define configBSP430_UPTIME 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -208,7 +220,7 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor">#define configBSP430_PLATFORM_BUTTON0 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Get platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_bootstrap_button_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">PLATFORM ?= exp430fr5739</div>
@@ -221,7 +233,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

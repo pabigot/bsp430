@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -265,7 +265,7 @@ Functions</h2></td></tr>
 </ul>
 <p>See <a class="el" href="ex_utility_cli.html">Utilities: Command Line Interface</a> for a detailed example demonstrating most capabilities of this module.</p>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="a8b31c95acfa3f078e1cb028ead0c5acb"></a>
 <div class="memitem">
@@ -452,7 +452,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a negative error code if a unique command is not identifiable from the first token in <code>command</code>, otherwise the value returned by the <a class="el" href="structsBSP430cliCommand.html#a896e8594759400c197809d7e346eabd8">sBSP430cliCommand::handler</a>. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a52">rfem/cc3000/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a54">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a47">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a53">rfem/cc3000/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a54">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a48">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -568,8 +568,8 @@ Functions</h2></td></tr>
     <tr><td class="paramname">cmds</td><td>the first in a sequence of sibling commands that may appear at the beginning of the remainder of the command string. This must not be a null pointer.</td></tr>
     <tr><td class="paramname">command</td><td>the unprocessed remainder of the command string. If there is no non-empty token in what remains, <code>match_cb</code> (if provided) is invoked on all commands in <code>cmds</code>, and the number of available commands is returned as a negative number.</td></tr>
     <tr><td class="paramname">command_len</td><td>the number of characters in <code>command</code>, possibly including leading and trailing whitespace.</td></tr>
-    <tr><td class="paramname">matchp</td><td>an optional pointer to where the uniquely identified next command should be stored. If  is null, no action is taken; otherwise if a unique command could be identified the pointer to that command is stored in <code>*matchp</code>; otherwise a null pointer is stored in <code>*matchp</code>.</td></tr>
-    <tr><td class="paramname">match_cb</td><td>an optional callback that is invoked on each matching command. If null, no action is taken; otherwise when the key of a command in <code>cmds</code> has the first token of <code>command</code> as a prefix <code>match_cb()</code> is invoked on that command. The primary use of this parameter is to determine the potential matching commands for the purposes of diagnostics or command completion.</td></tr>
+    <tr><td class="paramname">matchp</td><td>an optional pointer to where the uniquely identified next command should be stored. If <code>matchp</code> is null, no action is taken; otherwise if a unique command could be identified the pointer to that command is stored in <code>*matchp</code>; otherwise a null pointer is stored in <code>*matchp</code>.</td></tr>
+    <tr><td class="paramname">match_callback</td><td>an optional callback that is invoked on each matching command. If null, no action is taken; otherwise when the key of a command in <code>cmds</code> has the first token of <code>command</code> as a prefix <code>match_callback()</code> is invoked on that command. The primary use of this parameter is to determine the potential matching commands for the purposes of diagnostics or command completion.</td></tr>
     <tr><td class="paramname">argstrp</td><td>if null no action is taken, otherwise the pointer to the remainder of <code>command</code> after the initial token has been removed is stored in <code>*argstrp</code>.</td></tr>
     <tr><td class="paramname">argstr_lenp</td><td>if null no action is taken, otherwise the length of the string (that would be) stored in <code>*argstrp</code> is stored in <code>*argstr_lenp</code>.</td></tr>
   </table>
@@ -731,7 +731,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

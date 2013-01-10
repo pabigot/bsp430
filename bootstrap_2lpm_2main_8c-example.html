@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -120,14 +120,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  __delay_cycles(<a class="code" href="clock_8h.html#a24c49529cfa0ba1ada6819dfe6c5d68e">BSP430_CLOCK_PUC_MCLK_HZ</a>);</div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
 <div class="line"><span class="preprocessor">#if (0 &lt;= APP_LPM) &amp;&amp; (APP_LPM &lt;= 4)</span></div>
-<div class="line"><span class="preprocessor"></span>    <a name="a9"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(lpm_bits[APP_LPM] | <a name="a10"></a><a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line"><span class="preprocessor"></span>    <a name="a9"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(lpm_bits[APP_LPM]);</div>
+<div class="line">    <span class="comment">/* For this application it doesn&#39;t matter that GIE is now set */</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:29 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

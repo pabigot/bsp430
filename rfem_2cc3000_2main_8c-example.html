@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -412,7 +412,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="keywordflow">if</span> ((0 &lt;= rl) &amp;&amp; (rl &lt; (<span class="keyword">sizeof</span>(status_str)/<span class="keyword">sizeof</span>(*status_str)))) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;: %s&quot;</span>, status_str[rl]);</div>
 <div class="line">  }</div>
-<div class="line">  <a name="a8"></a><a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line">  <a name="a8"></a><a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_wlan_status = {</div>
@@ -754,7 +754,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  (void)<a name="a22"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line">  <a name="a23"></a><a class="code" href="cli_8h.html#a0a5b3cee7e2d9002d5d301b36c814d55">vBSP430cliSetDiagnosticFunction</a>(<a name="a24"></a><a class="code" href="group__grp__utility__cli__cli.html#ga30922f40d6b2702628bb88d9e0069caf">iBSP430cliConsoleDiagnostic</a>);</div>
 <div class="line">  <a name="a25"></a><a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a name="a26"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\n\nWLAN test program\n&quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\ncc3000 &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#if BSP430_MODULE_SYS - 0</span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;System reset bitmask %lx; causes:\n&quot;</span>, reset_causes);</div>
@@ -785,33 +785,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line">    <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a>(<span class="stringliteral">&quot; no data&quot;</span>);</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line">  <a name="a32"></a><a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_SYS */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#if (BSP430_MODULE_PMM - 0) &amp;&amp; ! (BSP430_MODULE_PMM_FRAM - 0)</span></div>
-<div class="line"><span class="preprocessor"></span>  rv = <a name="a32"></a><a class="code" href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a>(<a name="a33"></a><a class="code" href="msp430_8h.html#a4aa3f2a0135a48433168c58a596e88da">PMMCOREV_3</a>);</div>
+<div class="line"><span class="preprocessor"></span>  rv = <a name="a33"></a><a class="code" href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a>(<a name="a34"></a><a class="code" href="msp430_8h.html#a4aa3f2a0135a48433168c58a596e88da">PMMCOREV_3</a>);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Vcore at %d\n&quot;</span>, rv);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;PWR_EN at %s.%u\n&quot;</span>, <a name="a34"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a name="a35"></a><a class="code" href="rfem_8h.html#a8ef1d1dc188b30379f946635a3920f07">BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE</a>), <a name="a36"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a37"></a><a class="code" href="rfem_8h.html#a02b8877017074eff5126882bdee9f840">BSP430_RFEM_PWR_EN_PORT_BIT</a>));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI_IRQ HAL at %s.%u\n&quot;</span>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a name="a38"></a><a class="code" href="rfem_8h.html#a526c15df0b78d0e456a1d8777a47ec43">BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a39"></a><a class="code" href="rfem_8h.html#a2d4b63fe5eaa2695edfbd8ed4058b119">BSP430_RFEM_SPI_IRQ_PORT_BIT</a>));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CSn HAL at %s.%u\n&quot;</span>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a name="a40"></a><a class="code" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a41"></a><a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI is %s\n&quot;</span>, <a name="a42"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(<a name="a43"></a><a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;PWR_EN at %s.%u\n&quot;</span>, <a name="a35"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a name="a36"></a><a class="code" href="rfem_8h.html#a8ef1d1dc188b30379f946635a3920f07">BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE</a>), <a name="a37"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a38"></a><a class="code" href="rfem_8h.html#a02b8877017074eff5126882bdee9f840">BSP430_RFEM_PWR_EN_PORT_BIT</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI_IRQ HAL at %s.%u\n&quot;</span>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a name="a39"></a><a class="code" href="rfem_8h.html#a526c15df0b78d0e456a1d8777a47ec43">BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a40"></a><a class="code" href="rfem_8h.html#a2d4b63fe5eaa2695edfbd8ed4058b119">BSP430_RFEM_SPI_IRQ_PORT_BIT</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CSn HAL at %s.%u\n&quot;</span>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a name="a41"></a><a class="code" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a42"></a><a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI is %s\n&quot;</span>, <a name="a43"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(<a name="a44"></a><a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>));</div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
-<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI Pins: %s\n&quot;</span>, <a name="a44"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(<a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>, <a name="a45"></a><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>));</div>
+<div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI Pins: %s\n&quot;</span>, <a name="a45"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(<a class="code" href="rfem_8h.html#a591494d7035a46d6f8e7d47151378b84">BSP430_RFEM_SPI0_PERIPH_HANDLE</a>, <a name="a46"></a><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>));</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(__DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Initialization can be done with interrupts disabled, since the</span></div>
 <div class="line"><span class="comment">   * function does nothing but store callbacks. */</span></div>
-<div class="line">  rv = <a name="a46"></a><a class="code" href="cc3000spi_8h.html#a18c48988f94c6984548d28e802377344">iBSP430cc3000spiInitialize</a>(wlan_cb, NULL, NULL, NULL);</div>
+<div class="line">  rv = <a name="a47"></a><a class="code" href="cc3000spi_8h.html#a18c48988f94c6984548d28e802377344">iBSP430cc3000spiInitialize</a>(wlan_cb, NULL, NULL, NULL);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%s Initialize returned %d\n&quot;</span>, <a class="code" href="uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1">xBSP430uptimeAsText_ni</a>(<a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>()), rv);</div>
 <div class="line"></div>
 <div class="line">  commandSet = LAST_COMMAND;</div>
 <div class="line">  command = NULL;</div>
-<div class="line">  flags = <a name="a47"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3">eBSP430cliConsole_REPAINT</a>;</div>
+<div class="line">  flags = <a name="a48"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3">eBSP430cliConsole_REPAINT</a>;</div>
 <div class="line"></div>
-<div class="line">  <a name="a48"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line">  <a name="a49"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* wlan_start() MUST be invoked with interrupts enabled. */</span></div>
 <div class="line">  wlan_start(0);</div>
@@ -825,14 +825,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a49"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deafdfdebe7b8568728238e4069ae19cd09">eBSP430cliConsole_DO_COMPLETION</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a50"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deafdfdebe7b8568728238e4069ae19cd09">eBSP430cliConsole_DO_COMPLETION</a>) {</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_DO_COMPLETION;</div>
-<div class="line">      flags |= <a name="a50"></a><a class="code" href="group__grp__utility__cli__completion.html#ga5086d946e412fa4e9928819d664fc2cc">iBSP430cliConsoleBufferCompletion</a>(commandSet, &amp;command);</div>
+<div class="line">      flags |= <a name="a51"></a><a class="code" href="group__grp__utility__cli__completion.html#ga5086d946e412fa4e9928819d664fc2cc">iBSP430cliConsoleBufferCompletion</a>(commandSet, &amp;command);</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a51"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94">eBSP430cliConsole_READY</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a52"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94">eBSP430cliConsole_READY</a>) {</div>
 <div class="line">      <span class="keywordtype">int</span> rv;</div>
 <div class="line"></div>
-<div class="line">      rv = <a name="a52"></a><a class="code" href="cli_8h.html#adcdb159a40c5cb6737cf97b497b58a55">iBSP430cliExecuteCommand</a>(commandSet, 0, command);</div>
+<div class="line">      rv = <a name="a53"></a><a class="code" href="cli_8h.html#adcdb159a40c5cb6737cf97b497b58a55">iBSP430cliExecuteCommand</a>(commandSet, 0, command);</div>
 <div class="line">      <span class="keywordflow">if</span> (0 != rv) {</div>
 <div class="line">        <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Command execution returned %d\n&quot;</span>, rv);</div>
 <div class="line">      }</div>
@@ -846,29 +846,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;&gt; %s&quot;</span>, command ? command : <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT;</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a53"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b">eBSP430cliConsole_REPAINT_BEL</a>) {</div>
-<div class="line">      <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a54"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b">eBSP430cliConsole_REPAINT_BEL</a>) {</div>
+<div class="line">      <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT_BEL;</div>
 <div class="line">    }</div>
 <div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
 <div class="line">    <span class="keywordflow">if</span> (flags &amp; eBSP430cliConsole_READY) {</div>
 <div class="line">      <span class="comment">/* Clear the command we just completed */</span></div>
-<div class="line">      <a name="a54"></a><a class="code" href="group__grp__utility__cli__cli.html#ga851a3ff12f32fc07f0e83b084dbd659d">vBSP430cliConsoleBufferClear_ni</a>();</div>
+<div class="line">      <a name="a55"></a><a class="code" href="group__grp__utility__cli__cli.html#ga851a3ff12f32fc07f0e83b084dbd659d">vBSP430cliConsoleBufferClear_ni</a>();</div>
 <div class="line">    }</div>
-<div class="line">    flags = <a name="a55"></a><a class="code" href="group__grp__utility__cli__cli.html#ga0dc701d6a0e8678616dbdc43219f2628">iBSP430cliConsoleBufferProcessInput_ni</a>();</div>
+<div class="line">    flags = <a name="a56"></a><a class="code" href="group__grp__utility__cli__cli.html#ga0dc701d6a0e8678616dbdc43219f2628">iBSP430cliConsoleBufferProcessInput_ni</a>();</div>
 <div class="line">    <span class="keywordflow">if</span> (flags) {</div>
 <div class="line">      <span class="comment">/* Got something to do; get the command contents in place */</span></div>
-<div class="line">      command = <a name="a56"></a><a class="code" href="group__grp__utility__cli__cli.html#gad0d2c92b96b17302159c049f7a9bfb17">xBSP430cliConsoleBuffer_ni</a>();</div>
+<div class="line">      command = <a name="a57"></a><a class="code" href="group__grp__utility__cli__cli.html#gad0d2c92b96b17302159c049f7a9bfb17">xBSP430cliConsoleBuffer_ni</a>();</div>
 <div class="line">      <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line">      <span class="keywordflow">continue</span>;</div>
 <div class="line">    }</div>
-<div class="line">    <a name="a57"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a58"></a><a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a> | <a name="a59"></a><a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">    <a name="a58"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a59"></a><a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a>);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:29 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">onewire.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="onewire_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* Copyright (c) 2012, Peter A. Bigot</span></div>
+<a href="onewire_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* Copyright 2012-2013, Peter A. Bigot</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -138,15 +138,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} <a class="code" href="onewire_8h.html#abbba8ba6511cee0ac789115cf3c3fc9b">sBSP430onewireSerialNumber</a>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">enum</span> {</div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a60f9e2a5bba3b3bd8c2d792000d88e31">   70</a></span>&#160;  <a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a60f9e2a5bba3b3bd8c2d792000d88e31">BSP430_ONEWIRE_CMD_READ_ROM</a> = 0x33,</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a60f9e2a5bba3b3bd8c2d792000d88e31">   70</a></span>&#160;  <a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a60f9e2a5bba3b3bd8c2d792000d88e31">BSP430_ONEWIRE_CMD_READ_ROM</a> = 0x33,</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a2a898fe3f4a2f201aada6440e5924e63">   73</a></span>&#160;  <a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a2a898fe3f4a2f201aada6440e5924e63">BSP430_ONEWIRE_CMD_SKIP_ROM</a> = 0xcc,</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a2a898fe3f4a2f201aada6440e5924e63">   73</a></span>&#160;  <a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a2a898fe3f4a2f201aada6440e5924e63">BSP430_ONEWIRE_CMD_SKIP_ROM</a> = 0xcc,</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493aefae19a8200ec44875d4b3a0aaf80f2c">   76</a></span>&#160;  <a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493aefae19a8200ec44875d4b3a0aaf80f2c">BSP430_ONEWIRE_CMD_RECALL_EE</a> = 0xb8,</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62aefae19a8200ec44875d4b3a0aaf80f2c">   76</a></span>&#160;  <a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62aefae19a8200ec44875d4b3a0aaf80f2c">BSP430_ONEWIRE_CMD_RECALL_EE</a> = 0xb8,</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a04017905ef6495033238818d08b842df">   79</a></span>&#160;  <a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a04017905ef6495033238818d08b842df">BSP430_ONEWIRE_CMD_READ_SCRATCHPAD</a> = 0xbe,</div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a04017905ef6495033238818d08b842df">   79</a></span>&#160;  <a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a04017905ef6495033238818d08b842df">BSP430_ONEWIRE_CMD_READ_SCRATCHPAD</a> = 0xbe,</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a7ff0f82564acda535fba12dc3d203438">   90</a></span>&#160;  <a class="code" href="onewire_8h.html#a531c35e38ede3ea4e5ba5afb24b29493a7ff0f82564acda535fba12dc3d203438">BSP430_ONEWIRE_CMD_CONVERT_T</a> = 0x44,</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a7ff0f82564acda535fba12dc3d203438">   90</a></span>&#160;  <a class="code" href="onewire_8h.html#a8628933cde20921c453a6d2607bdad62a7ff0f82564acda535fba12dc3d203438">BSP430_ONEWIRE_CMD_CONVERT_T</a> = 0x44,</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">int</span> <a class="code" href="onewire_8h.html#a8dddf72d73da142236207efa28d09c44">iBSP430onewireReset_ni</a> (<span class="keyword">const</span> <a class="code" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> * bus);</div>
@@ -183,7 +183,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -85,6 +85,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <ul><li class="level1"><a href="#enh_watchdog">Watchdog Support</a></li>
 <li class="level1"><a href="#enh_lpm">Low Power Mode</a></li>
 <li class="level1"><a href="#enh_interrupts">Interrupts and Critical Sections</a></li>
+<li class="level1"><a href="#enh_arch">Application Architecture</a><ul><li class="level2"><a href="#enh_arch_isr">Interrupt-Driven</a></li>
+<li class="level2"><a href="#enh_arch_superloop">Super Loop</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="textblock"><h1><a class="anchor" id="enh_watchdog"></a>
@@ -98,15 +102,20 @@ Watchdog Support</h1>
 <h1><a class="anchor" id="enh_lpm"></a>
 Low Power Mode</h1>
 <p>As the intrinsics used to enter and leave low power mode are not entirely consistent across MSP430 toolchains, BSP430 provides several macros to assist with this.</p>
-<p><a class="el" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<code>lpm_bits</code>) places the CPU into a low power mode as specified by <code>lpm_bits</code>. The bits are the same ones that are normally used in <code>__bis_status_register()</code> in MSPGCC, but BSP430 will mask them using <a class="el" href="core_8h.html#a1054ff5339d5fc04a83cbfd493ccb4fb">BSP430_CORE_LPM_SR_MASK</a> to ensure that other bits are not set.</p>
+<p><a class="el" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<code>lpm_bits</code>) places the CPU into a low power mode as specified by <code>lpm_bits</code>. The bits are the same ones that are normally used in <code>__bis_status_register()</code> in MSPGCC, but BSP430 will mask them using <a class="el" href="core_8h.html#a1054ff5339d5fc04a83cbfd493ccb4fb">BSP430_CORE_LPM_SR_MASK</a> to ensure that other bits are not set. Use this macro when entering a low-power mode from a state where interrupts are currently enabled.</p>
+<p><a class="el" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<code>lpm_bits</code>) is similar but enables <a class="el" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> prior to entering low-power mode, so that the CPU can be awoken by actions taken while processing an interrupt. Be aware that under normal circumstances interrupts will be enabled when this "call" completes (see <a class="el" href="core_8h.html#afdd85450dfaf0dd630d60220d7f3ec1a">configBSP430_CORE_LPM_EXIT_CLEAR_GIE</a> for unusual circumstances).</p>
 <p><a class="el" href="core_8h.html#a4111253dbed7f8ac33b659e332616623">BSP430_CORE_LPM_EXIT_FROM_ISR</a>(<code>lpm_bits</code>) serves as an abstraction of <code>__bic_status_tegister_on_exit()</code> in MSPGCC, again filtering the bits for validity.</p>
 <p>The flag <a class="el" href="core_8h.html#ac98f22bd2238bfdadf9c7d2a7a8bcc8f">BSP430_CORE_LPM_LPMXp5</a> is defined as a way of consistently representing a desire to enter the ultra-low-power LPMx.5 modes. The macros above do not examine this bit; see <a class="el" href="pmm_8h.html#a77f7471bb2f76ad4c4173a9a4afa3055">BSP430_PMM_ENTER_LPMXp5_NI()</a> and the <a class="el" href="ex_bootstrap_applpm.html">application LPM example</a> for a demonstration of how to enter these modes on MCUs that support them.</p>
 <h1><a class="anchor" id="enh_interrupts"></a>
 Interrupts and Critical Sections</h1>
-<p>BSP430 provides several function macros that support interrupt management in a toolchain-independent manner. A core promise of BSP430 is that BSP430 it will never enable interrupts on its own. The application code must do so after all configuration, if it desires to receive interrupts.</p>
-<p>Recall that on a power-up-clear ("PUC", i.e. any reset condition), the status register is reset, meaning that all interrupts are disabled when <code>main()</code> begins executing.</p>
-<p>Many function names have a suffix <code>_ni</code>. This indicates that the function is intended to be called in a context where interrupts are disabled. Failure to disable interrupts may result in non-deterministic behavior including application lockup. Functions that do not have this suffix are either considered to be robust in the presence of interrupts, or will temporarily disable them in a critical section prior to restoring the incoming interrupt state before returning.</p>
-<p>The function macro <a class="el" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT()</a> will invoke the toolchain intrinsic to enable interrupts by setting the <a class="el" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> bit in the MSP430 status register. The function macro <a class="el" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT()</a> will invoke the toolchain intrinsic to disable interrupts by clearing the <a class="el" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> bit in the MSP430 status register.</p>
+<p>BSP430 provides several function macros that support interrupt management in a toolchain-independent manner. A core promise of BSP430 is that BSP430 it will preserve the application interrupt state over API calls unless specifically documented to do otherwise.</p>
+<p>Recall that on a power-up-clear ("PUC", i.e. any reset condition), the status register is reset, meaning that all interrupts are disabled when <code>main()</code> begins executing. If the application wishes to accept interrupts, it must explicitly enable them after configuration is complete.</p>
+<p>Many function names have a suffix <code>_ni</code>. This indicates that the function is intended to be called in a context where interrupts are disabled. Functions that do not have this suffix are either considered to be robust in the presence of interrupts, or will temporarily disable them in a critical section prior to restoring the incoming interrupt state before returning.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Failure to disable interrupts prior to invoking functions with the <code>_ni</code> suffix may result in non-deterministic behavior including application lockup.</dd>
+<dd>
+The <code>_ni</code> suffix does not guarantee that the function will not enable interrupts internally if its operation requires waiting for some condition. It only guarantees that, if this happens, they will be disabled again when the function returns. Any function (with or without an <code>_ni</code> suffix) that could enable interrupts should clearly state this in its description; see for example <a class="el" href="uptime_8h.html#a2b46df1d5bcff71178146409ae0baffa">lBSP430uptimeSleepUntil_ni()</a> and <a class="el" href="console_8h.html#h_utility_console_interrupts">Console Output and Interrupts</a>.</dd></dl>
+<p>The function macro <a class="el" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT()</a> will invoke the toolchain intrinsic to enable interrupts by setting the <a class="el" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> bit in the MSP430 status register.</p>
+<p>The function macro <a class="el" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT()</a> will invoke the toolchain intrinsic to disable interrupts by clearing the <a class="el" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> bit in the MSP430 status register.</p>
 <p>Critical sections may be implemented by saving the current interrupt state, disabling interrupts, performing the critical operations, then restoring interrupt state. The recommended pattern for this is:</p>
 <div class="fragment"><div class="line"><a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
 <div class="line"><span class="keywordtype">int</span> rv;</div>
@@ -130,11 +139,96 @@ Interrupts and Critical Sections</h1>
 <div class="line">}</div>
 <div class="line"><span class="comment">/* non-critical code */</span></div>
 </div><!-- fragment --><p>See the <a class="el" href="ex_bootstrap_button.html">button example</a> for an interesting application architecture that leaves interrupts disabled at all times that the MCU is active, simplifying the application logic by eliminating non-deterministic signals.</p>
-<p>Copyright 2012, Peter A. Bigot </p>
+<h1><a class="anchor" id="enh_arch"></a>
+Application Architecture</h1>
+<p>The choice of application architecture is up to the implementer; BSP430 is intended to support all but the most contorted architectures. Pure examples of two standard solutions that it should support are described in this section.</p>
+<h2><a class="anchor" id="enh_arch_isr"></a>
+Interrupt-Driven</h2>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">callback (<span class="comment">/* ... */</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">/* ... */</span></div>
+<div class="line">  <span class="keywordflow">return</span> 0; <span class="comment">/* Return without waking */</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> main (<span class="comment">/* ... */</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">/* Initialization */</span></div>
+<div class="line">  <span class="keywordflow">while</span> (1) { <span class="comment">/* Gratuitous loop in case of error */</span></div>
+<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a>);</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Features of the interrupt-only architecture:</p>
+<ul>
+<li>Interrupts are never enabled while the CPU is in active mode, only while in low-power mode entered through <a class="el" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI()</a>;</li>
+</ul>
+<ul>
+<li>Interrupt handlers never invoke <code>__bic_status_register_on_exit()</code> to clear LPM flags and waking the CPU on completion;</li>
+</ul>
+<ul>
+<li>Events are handled in strict order of delivery, which is controlled by timing and MCU-specific interrupt priority;</li>
+</ul>
+<ul>
+<li>If processing a particular event takes too long, subsequent events may be lost because they were not handled in a timely manner;</li>
+</ul>
+<ul>
+<li>Synchronizing on events ("join") is more difficult since logic must be placed in (functions invoked from) multiple ISRs;</li>
+</ul>
+<h2><a class="anchor" id="enh_arch_superloop"></a>
+Super Loop</h2>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> tEventSet;</div>
+<div class="line"><span class="keyword">volatile</span> tEventSet events_ni;</div>
+<div class="line"><span class="comment">/* ... */</span></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">callback (<span class="comment">/* ... */</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">/* ... */</span></div>
+<div class="line">  events_ni |= EVT_FLAG;</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> main (<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  tEventSet events;</div>
+<div class="line">  <span class="comment">/* Initialization with interrupts disabled, including setting up callback */</span></div>
+<div class="line">  <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line">  <span class="comment">/* Initialization with interrupts enabled. */</span></div>
+<div class="line">  <span class="keywordflow">while</span> (1) { <span class="comment">/* Super Loop */</span></div>
+<div class="line">    <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line">    <span class="comment">/* Record and reset current event set */</span></div>
+<div class="line">    events = events_ni;</div>
+<div class="line">    events_ni = 0;</div>
+<div class="line">    <span class="keywordflow">if</span> (! events) {</div>
+<div class="line">      <span class="comment">/* Sleep with interrupts enabled until events occur */</span></div>
+<div class="line">      <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a44fde789b84d1b15c41e577d6a080eff">LPM0_bits</a>);</div>
+<div class="line">      <span class="comment">/* Interrupts enabled during sleep and normally enabled when wakeup.</span></div>
+<div class="line"><span class="comment">         Restart at loop top to check events again */</span></div>
+<div class="line">      <span class="keywordflow">continue</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">/* Other preparation with interrupts disabled */</span></div>
+<div class="line">    <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line">    <span class="comment">/* Process events */</span></div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Features of this architecture:</p>
+<ul>
+<li>Interrupts are enabled most of the time, whether in low-power mode or while actively processing;</li>
+</ul>
+<ul>
+<li>Events are less likely to be lost because interrupts are enabled even when CPU is active;</li>
+</ul>
+<ul>
+<li>Interrupt handlers (callbacks) need only wake the processor if the event they process requires complex calculation or synchronization;</li>
+</ul>
+<ul>
+<li>The application can prioritize the events it captures, overriding MCU priorities if necessary;</li>
+</ul>
+<p>As a special case, the super loop architecture can be supported while retaining the strict priority of the interrupt-driven architecture by using <a class="el" href="core_8h.html#afdd85450dfaf0dd630d60220d7f3ec1a">configBSP430_CORE_LPM_EXIT_CLEAR_GIE</a> to so that when <a class="el" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI()</a> returns interrupts remain disabled. This architecture never leaves interrupts enabled while the CPU is active, but still allows event processing to be prioritized relative to other activity.</p>
+<p>Copyright 2012-2013, Peter A. Bigot </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

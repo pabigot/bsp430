@@ -6,6 +6,7 @@ var searchData=
   ['xbsp430clinexttoken',['xBSP430cliNextToken',['../group__grp__utility__cli__hci.html#gad8ad62488676a6ef0de220019d635c29',1,'cli.h']]],
   ['xbsp430clireversechain',['xBSP430cliReverseChain',['../cli_8h.html#ae4f4115cef094484843bd48ef24af08d',1,'cli.h']]],
   ['xbsp430eusciname',['xBSP430eusciName',['../eusci_8h.html#a543ffe8b48f4ca7cde657e222aca8d33',1,'eusci.h']]],
+  ['xbsp430gpsconvertgpstoutc_5fni',['xBSP430gpsConvertGPStoUTC_ni',['../gps_8h.html#a3c372f07bd98a2de291929c21a749caa',1,'gps.h']]],
   ['xbsp430halled_5f',['xBSP430halLED_',['../led_8h.html#aaf319eee3d004a0a6733cd7fb0b31b66',1,'led.h']]],
   ['xbsp430hpllookupeuscia',['xBSP430hplLookupEUSCIA',['../eusci_8h.html#afc9b676a8acb765fedf300703c493785',1,'eusci.h']]],
   ['xbsp430hpllookupeuscib',['xBSP430hplLookupEUSCIB',['../eusci_8h.html#a49dea8a749f4d2f16ff5c780e8c076ed',1,'eusci.h']]],
@@ -20,9 +21,16 @@ var searchData=
   ['xbsp430serialname',['xBSP430serialName',['../serial_8h.html#a7f2e6f39abd1faca343663917e34840a',1,'serial.h']]],
   ['xbsp430syssysrstivdescription',['xBSP430sysSYSRSTIVDescription',['../sys_8h.html#a2012d634fbc0045a010a2158b37248f2',1,'sys.h']]],
   ['xbsp430timername',['xBSP430timerName',['../timer_8h.html#aad872aaa82973fd3accca3bcc004ea69',1,'timer.h']]],
+  ['xbsp430uptimeastext',['xBSP430uptimeAsText',['../uptime_8h.html#a1cb1310c769f028347010502456fb918',1,'uptime.h']]],
   ['xbsp430uptimeastext_5fni',['xBSP430uptimeAsText_ni',['../uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1',1,'uptime.h']]],
-  ['xbsp430uptimetimer',['xBSP430uptimeTimer',['../uptime_8h.html#a179923d3d8e44110187bdfe8ed50a8d1',1,'uptime.h']]],
-  ['xbsp430usci5lookup',['xBSP430usci5Lookup',['../usci5_8h.html#ae97efa5cf75c7146b636184883859a91',1,'usci5.h']]],
   ['xbsp430usci5name',['xBSP430usci5Name',['../usci5_8h.html#a597e0da824a01c3f4815cd6ebff10e92',1,'usci5.h']]],
-  ['xbsp430usciname',['xBSP430usciName',['../usci_8h.html#a97bf39464ced25c9db924952faa72495',1,'usci.h']]]
+  ['xbsp430usciname',['xBSP430usciName',['../usci_8h.html#a97bf39464ced25c9db924952faa72495',1,'usci.h']]],
+  ['xcap0pf',['XCAP0PF',['../msp430_8h.html#a738d7a5b235bae599531b299235a8ba8',1,'msp430.h']]],
+  ['xcap10pf',['XCAP10PF',['../msp430_8h.html#aecfd9d7e2fa45d6e254520fd003ac744',1,'msp430.h']]],
+  ['xcap14pf',['XCAP14PF',['../msp430_8h.html#abad130c94b4f5cf8e1fa91ac5eb50160',1,'msp430.h']]],
+  ['xcap18pf',['XCAP18PF',['../msp430_8h.html#abce8e69efb94e66e5e0dd6984221ffea',1,'msp430.h']]],
+  ['xcap_5f0',['XCAP_0',['../msp430_8h.html#a3e1ab7354b6b42d7f8aa219af529dbda',1,'msp430.h']]],
+  ['xcap_5f1',['XCAP_1',['../msp430_8h.html#af0c275c45d19c84f5edf7d7148935d95',1,'msp430.h']]],
+  ['xcap_5f2',['XCAP_2',['../msp430_8h.html#a589aa43c062ec99964795c11ffe8bf38',1,'msp430.h']]],
+  ['xcap_5f3',['XCAP_3',['../msp430_8h.html#a87d2ff960bbfa72c9551a76a8bc867d0',1,'msp430.h']]]
 ];

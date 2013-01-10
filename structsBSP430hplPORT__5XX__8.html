@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -85,7 +85,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">sBSP430hplPORT_5XX_8 Struct Reference</div>  </div>
@@ -94,11 +93,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="port_8h_source.html">bsp430/periph/port.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a5d80b2bdf78497eac11b189499a1c1f8"><td class="memItemLeft" align="right" valign="top">union&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsBSP430hplPORT__5XX__8.html#a5d80b2bdf78497eac11b189499a1c1f8">__attribute__</a> ((__packed__))</td></tr>
-<tr class="separator:a5d80b2bdf78497eac11b189499a1c1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr class="memitem:a8b92c5c12320217eec547df4a29b84c7"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsBSP430hplPORT__5XX__8.html#a8b92c5c12320217eec547df4a29b84c7">in</a></td></tr>
@@ -126,6 +120,14 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>_reserved_x0
 <tr class="memitem:ae819dd3328e57bf2fd857577fea84aff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae819dd3328e57bf2fd857577fea84aff"></a>
 unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>_reserved_x09</b></td></tr>
 <tr class="separator:ae819dd3328e57bf2fd857577fea84aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d670ff7b36a748801ea440f044660a5"><td class="memItemLeft" ><a class="anchor" id="a6d670ff7b36a748801ea440f044660a5"></a>
+union {</td></tr>
+<tr class="memitem:a77a264e91970dea4cebb929b67f4ea05"><td class="memItemLeft" >&#160;&#160;&#160;unsigned char&#160;&#160;&#160;<a class="el" href="structsBSP430hplPORT__5XX__8.html#acfc0d4c4c4edac1794ddcf5baef8ff8e">sel</a></td></tr>
+<tr class="separator:a77a264e91970dea4cebb929b67f4ea05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a825bebd1610b3596535c6d20cbd714fb"><td class="memItemLeft" >&#160;&#160;&#160;unsigned char&#160;&#160;&#160;<a class="el" href="structsBSP430hplPORT__5XX__8.html#afbd78bd3b6d8b719252da98a3ded1c9f">sel0</a></td></tr>
+<tr class="separator:a825bebd1610b3596535c6d20cbd714fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d670ff7b36a748801ea440f044660a5"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:a6d670ff7b36a748801ea440f044660a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16f7b5798710c9d904d96a248fb3dddb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16f7b5798710c9d904d96a248fb3dddb"></a>
 unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>_reserved_x0B</b></td></tr>
 <tr class="separator:a16f7b5798710c9d904d96a248fb3dddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,34 +181,7 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>_reserved_x1
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Layout for 5xx family ports, 8-bit access</p>
 <p>This structure includes the necessary padding to maintain alignment when referencing the second 8-bit register in a 16-bit bank. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a5d80b2bdf78497eac11b189499a1c1f8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">union sBSP430hplPORT_5XX_8::__attribute__ </td>
-          <td>(</td>
-          <td class="paramtype">(__packed__)&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">write</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>&lt; PxSEL (non-FR5xx devices)</p>
-<p>&lt; PxSEL0 (FR5xx devices) </p>
-
-</div>
-</div>
-<h2 class="groupheader">Field Documentation</h2>
+</div><h2 class="groupheader">Field Documentation</h2>
 <a class="anchor" id="a9b48acebc0d12376850cb91e56ba6776"></a>
 <div class="memitem">
 <div class="memproto">
@@ -311,6 +286,32 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>_reserved_x1
 
 </div>
 </div>
+<a class="anchor" id="acfc0d4c4c4edac1794ddcf5baef8ff8e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char sBSP430hplPORT_5XX_8::sel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PxSEL (non-FR5xx devices) </p>
+
+</div>
+</div>
+<a class="anchor" id="afbd78bd3b6d8b719252da98a3ded1c9f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned char sBSP430hplPORT_5XX_8::sel0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PxSEL0 (FR5xx devices) </p>
+
+</div>
+</div>
 <a class="anchor" id="a64bfd0523bcd377ec02e7b54fdafe433"></a>
 <div class="memitem">
 <div class="memproto">
@@ -343,7 +344,7 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>_reserved_x1
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

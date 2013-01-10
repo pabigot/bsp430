@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -115,17 +115,6 @@ main.c</h1>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> last_period_count;</div>
 <div class="line">};</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span></div>
-<div class="line">register_hh10d_ni (<span class="keyword">struct</span> sHH10D * sp)</div>
-<div class="line">{</div>
-<div class="line">  <span class="comment">/* Hook into the uptime infrastructure and have the HH10D callback</span></div>
-<div class="line"><span class="comment">   * invoked once per second, starting as soon as interrupts are</span></div>
-<div class="line"><span class="comment">   * enabled. */</span></div>
-<div class="line">  sp-&gt;cb.next_ni = <a class="code" href="uptime_8h.html#a179923d3d8e44110187bdfe8ed50a8d1">xBSP430uptimeTimer</a>()-&gt;<a class="code" href="structsBSP430halTIMER.html#a9915eb5d218f89f78fd3efff305f7bb2">cc_cbchain_ni</a>[sp-&gt;uptime_ccidx];</div>
-<div class="line">  <a class="code" href="uptime_8h.html#a179923d3d8e44110187bdfe8ed50a8d1">xBSP430uptimeTimer</a>()-&gt;<a class="code" href="structsBSP430halTIMER.html#a9915eb5d218f89f78fd3efff305f7bb2">cc_cbchain_ni</a>[sp-&gt;uptime_ccidx] = &amp;sp-&gt;cb;</div>
-<div class="line">  <a class="code" href="uptime_8h.html#a179923d3d8e44110187bdfe8ed50a8d1">xBSP430uptimeTimer</a>()-&gt;<a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a class="code" href="structsBSP430hplTIMER.html#a58b606ac397c9b2a4c65847d1ddfd67f">cctl</a>[sp-&gt;uptime_ccidx] = CCIFG | CCIE;</div>
-<div class="line">}</div>
-<div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
 <div class="line">hh10d_1Hz_isr_ni (<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *cb,</div>
 <div class="line">                  <span class="keywordtype">void</span> *context,</div>
@@ -138,11 +127,11 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Record the HH10D counter, schedule the next wakeup, then return</span></div>
 <div class="line"><span class="comment">   * waking the MCU and inhibiting further interrupts when active. */</span></div>
-<div class="line">  capture = hh10d-&gt;freq_timer-&gt;r;</div>
+<div class="line">  capture = <a class="code" href="timer_8h.html#a9a74d238a91c2c1a77c909442089ff24">uiBSP430timerSafeCounterRead_ni</a>(hh10d-&gt;freq_timer);</div>
 <div class="line">  hh10d-&gt;last_period_count = capture - hh10d-&gt;last_capture;</div>
 <div class="line">  hh10d-&gt;last_capture = capture;</div>
 <div class="line">  timer-&gt;<a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a class="code" href="structsBSP430hplTIMER.html#a485ff74654c58d73be4762b01f90f795">ccr</a>[idx] += hh10d-&gt;sample_duration_utt;</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>;</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>;</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keyword">struct </span>sHH10D hh10d = {</div>
@@ -187,7 +176,7 @@ main.c</h1>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;HH10D I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n&quot;</span>,</div>
 <div class="line">          <a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(APP_HH10D_I2C_PERIPH_HANDLE) ?: <span class="stringliteral">&quot;UNKNOWN&quot;</span>,</div>
-<div class="line">          i2c, <a class="code" href="clock_8h.html#a3a4574eaba535c1f3fc60a9063daa1b6">ulBSP430clockSMCLK_Hz_ni</a>() / APP_HH10D_I2C_PRESCALER,</div>
+<div class="line">          i2c, (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>)<a class="code" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>,</div>
 <div class="line">          APP_HH10D_I2C_ADDRESS);</div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;HH10D I2C Pins: %s\n&quot;</span>, <a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(APP_HH10D_I2C_PERIPH_HANDLE, <a class="code" href="periph_8h.html#aaf5e8738e695389f357acad95ac286ec">BSP430_PERIPHCFG_SERIAL_I2C</a>));</div>
@@ -200,9 +189,13 @@ main.c</h1>
 <div class="line">          <a class="code" href="timer_8h.html#aad872aaa82973fd3accca3bcc004ea69">xBSP430timerName</a>(<a class="code" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>),</div>
 <div class="line">          APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);</div>
 <div class="line"></div>
+<div class="line">  <span class="comment">/* Set up so we can safely read the counter value, since the clock</span></div>
+<div class="line"><span class="comment">   * is asynchronous to MCLK. */</span></div>
+<div class="line">  <a class="code" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni</a>(APP_HH10D_TIMER_PERIPH_HANDLE);</div>
+<div class="line"></div>
 <div class="line">  i2c = <a class="code" href="serial_8h.html#a85fb70e450164721994aad656c24d6a0">hBSP430serialOpenI2C</a>(i2c,</div>
 <div class="line">                             <a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>),</div>
-<div class="line">                             <a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, APP_HH10D_I2C_PRESCALER);</div>
+<div class="line">                             0, 0);</div>
 <div class="line">  <span class="keywordflow">if</span> (! i2c) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;I2C open failed.\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">return</span>;</div>
@@ -238,21 +231,32 @@ main.c</h1>
 <div class="line">  <a class="code" href="port_8h.html#a464269017051d0faa11317c6627db1b5">BSP430_PORT_HAL_HPL_DIR</a>(hh10d_port) &amp;= ~APP_HH10D_PORT_BIT;</div>
 <div class="line">  hh10d.freq_timer-&gt;ctl = TASSEL_0 | <a class="code" href="msp430_8h.html#ad367be228fa82c3f35290c9141138710">MC_2</a> | TACLR;</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* Hook into the uptime infrastructure and have the HH10D callback</span></div>
-<div class="line"><span class="comment">   * invoked once per second, starting one second from now */</span></div>
-<div class="line">  register_hh10d_ni(&amp;hh10d);</div>
+<div class="line">  <span class="comment">/* Hook into the uptime infrastructure */</span></div>
+<div class="line">  <a class="code" href="periph_8h.html#a146bd2251e2e6028ba774b98f35eea71">BSP430_HAL_ISR_CALLBACK_LINK_NI</a>(<a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a>,</div>
+<div class="line">                                  <a class="code" href="uptime_8h.html#a65ad8857f1ae12028ee2547099e3f3f8">hBSP430uptimeTimer</a>()-&gt;cc_cbchain_ni[hh10d.uptime_ccidx],</div>
+<div class="line">                                  hh10d.cb,</div>
+<div class="line">                                  next_ni);</div>
+<div class="line">  <a class="code" href="uptime_8h.html#a65ad8857f1ae12028ee2547099e3f3f8">hBSP430uptimeTimer</a>()-&gt;<a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a class="code" href="structsBSP430hplTIMER.html#a58b606ac397c9b2a4c65847d1ddfd67f">cctl</a>[hh10d.uptime_ccidx] = CCIFG | CCIE;</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* Go to low power mode with interrupts enabled */</span></div>
-<div class="line">  <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
+<div class="line">  <span class="comment">/* Configuration done; enable interrupts */</span></div>
+<div class="line">  <a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* The first capture is just for initialization; the count isn&#39;t</span></div>
+<div class="line"><span class="comment">   * useful.  The second will be the first aligned capture, which is</span></div>
+<div class="line"><span class="comment">   * the basis for subsequent delta calculations. */</span></div>
+<div class="line">  <a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a>);</div>
+<div class="line">  <a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a>);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Initial %u\n&quot;</span>, hh10d.last_capture);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
-<div class="line">    <a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a> | <a class="code" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a>);</div>
-<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%lu: Sample %u in %u uptime ticks&quot;</span>, <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>(), hh10d.last_period_count, hh10d.sample_duration_utt);</div>
+<div class="line">    <a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<a class="code" href="msp430_8h.html#a1de78c710e50d6f742f5676dfbffdedf">LPM1_bits</a>);</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%s: Sample %u in %u uptime ticks&quot;</span>,</div>
+<div class="line">            <a class="code" href="uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1">xBSP430uptimeAsText_ni</a>(<a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>()),</div>
+<div class="line">            hh10d.last_period_count, hh10d.sample_duration_utt);</div>
 <div class="line">    <span class="keywordflow">if</span> (0 != hh10d_sens) {</div>
-<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;: RH %u%%&quot;</span>, (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)(((hh10d_offs - hh10d.last_period_count) * (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>) hh10d_sens) / 4096));</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;: RH %u ppt&quot;</span>, (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)(((hh10d_offs - hh10d.last_period_count) * (10UL * hh10d_sens)) / 4096));</div>
 <div class="line">    }</div>
-<div class="line">    <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line">    <a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_sensors_hh10d_confic"></a>
@@ -260,10 +264,6 @@ bsp430_config.h</h1>
 <div class="fragment"><div class="line"><span class="comment">/* Use a crystal if one is installed.  Much more accurate timing</span></div>
 <div class="line"><span class="comment"> * results. */</span></div>
 <div class="line"><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="comment">/* Then pick the best available source for ACLK, allowing for an</span></div>
-<div class="line"><span class="comment"> * absent crystal */</span></div>
-<div class="line"><span class="preprocessor">#define BSP430_PLATFORM_BOOT_ACLKSRC eBSP430clockSRC_XT1CLK_FALLBACK</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Application does output: support spin-for-jumper */</span></div>
 <div class="line"><span class="preprocessor">#define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1</span></div>
@@ -276,9 +276,10 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* We&#39;re going to need a timer to capture a frequency, which is what</span></div>
 <div class="line"><span class="comment"> * BSP430_TIMER_CCACLK does.  We only need the HPL for the timer, but</span></div>
-<div class="line"><span class="comment"> * we need the HAL for the port. */</span></div>
+<div class="line"><span class="comment"> * we need the CLK port and its HAL. */</span></div>
 <div class="line"><span class="preprocessor">#define configBSP430_TIMER_CCACLK 1</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_TIMER_CCACLK_USE_DEFAULT_PORT_HAL 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_TIMER_CCACLK_CLK_PORT 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_TIMER_CCACLK_CLK_PORT_HAL 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* We need to know the port and pin to attach the HH10D to, which is</span></div>
 <div class="line"><span class="comment"> * the clock source for the timer we&#39;re going to use. */</span></div>
@@ -288,29 +289,35 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* And we need a CC block on the uptime counter that we can use to</span></div>
 <div class="line"><span class="comment"> * determine the frequency of the HH10D signal.  Don&#39;t use CC0; we</span></div>
-<div class="line"><span class="comment"> * didn&#39;t ask for configBSP430_UPTIME_USE_DEFAULT_CC0_ISR. */</span></div>
+<div class="line"><span class="comment"> * didn&#39;t ask for configBSP430_UPTIME_TIMER_HAL_CC0_ISR. */</span></div>
 <div class="line"><span class="preprocessor">#define APP_HH10D_UPTIME_CC_INDEX 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Need I2C to access the calibration constants */</span></div>
 <div class="line"><span class="preprocessor">#define configBSP430_SERIAL_ENABLE_I2C 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#if BSP430_PLATFORM_EXP430F5438 - 0</span></div>
+<div class="line"><span class="preprocessor">#if (BSP430_PLATFORM_EXP430F5438 - 0) || (BSP430_PLATFORM_TRXEB - 0)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_USCI5_B3 1</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif BSP430_PLATFORM_EXP430FR5739 - 0</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif (BSP430_PLATFORM_EXP430F5529 - 0)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_USCI5_B0 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif (BSP430_PLATFORM_EXP430FR5739 - 0)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_EUSCI_B0 1</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#else</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_HH10D_I2C_PERIPH_HANDLE BSP430_PERIPH_USCI_B0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_USCI_B0 1</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span><span class="comment">/* Use SMCLK/100 (=80 kHz) for the I2C speed */</span></div>
-<div class="line"><span class="preprocessor">#define APP_HH10D_I2C_PRESCALER 100</span></div>
 <div class="line"><span class="preprocessor"></span><span class="comment">/* Address for the thing. */</span></div>
 <div class="line"><span class="preprocessor">#define APP_HH10D_I2C_ADDRESS 0x51</span></div>
 <div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="comment">/* Need CLK capability on CCACLK for EXP430F5529 */</span></div>
+<div class="line"><span class="preprocessor">#if (BSP430_PLATFORM_EXP430F5529 - 0)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_EXP430F5529 */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Get platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_sensors_hh10d_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">PLATFORM ?= exp430fr5739</div>
@@ -323,7 +330,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

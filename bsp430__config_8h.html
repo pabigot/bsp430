@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -92,15 +92,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>BSP430 configuration directives for generic platform support.  
+<p>BSP430 application and platform configuration directives.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="msp430_8h_source.html">msp430.h</a>&gt;</code><br/>
 </div>
 <p><a href="bsp430__config_8h_source.html">Go to the source code of this file.</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>BSP430 configuration directives for generic platform support. </p>
-<p>This simplifies management of application-specific bsp430_config.h files. First define anything for your application, then include this file.</p>
-<p>This file will first include any platform-specific <code>bsp430_config.h</code> files. Platform-specific configuration headers are included based on the definitions of: </p>
+<div class="textblock"><p>BSP430 application and platform configuration directives. </p>
+<p>This infrastructure supports management of <a class="el" href="bsp430_config.html">application-specific bsp430_config.h files</a>. In your application's <code>bsp430_config.h</code> header define your specific requests then include &lt;<a class="el" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;.</p>
+<p>This file will first include any platform-specific <code>bsp430_config.h</code> files. Platform-specific configuration headers are included based on the definitions of:</p>
 <ul>
 <li>
 <a class="el" href="platform_8h.html#ababc41a3cb834f76137a81137c75f484">BSP430_PLATFORM_EXP430G2</a> </li>
@@ -121,16 +121,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>
 <a class="el" href="platform_8h.html#a5a5c1abaed74ea2fe6ec9463df714abc">BSP430_PLATFORM_TRXEB</a> </li>
 <li>
+<a class="el" href="platform_8h.html#aad60e11f22b7eb059cc4080c569eb4d6">BSP430_PLATFORM_WOLVERINE</a> </li>
+<li>
 <a class="el" href="platform_8h.html#a33caa59d1913e09742abeefb9d00aad2">BSP430_PLATFORM_CUSTOM</a> </li>
 </ul>
-<p>After platform-specific configuration has been read, this file may provide additional BSP430-generic configuration.</p>
+<p>After platform-specific configuration has been read, this file may provide additional BSP430-generic configuration such as processing requests for functional resources.</p>
 <p>Each inclusion will respect previous configuration values.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="group__grp__config__core.html">Configuration of Core Peripheral Resources</a> </dd>
+<dd>
+<a class="el" href="group__grp__config__functional.html">Configuration of Functional Resources</a></dd></dl>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

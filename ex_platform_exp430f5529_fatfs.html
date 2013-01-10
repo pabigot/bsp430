@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -121,9 +121,9 @@ bsp430mmc.c</h1>
 <div class="line"><span class="comment">   * need to stay below 400 kHz, and have chosen 380 kHz in case of</span></div>
 <div class="line"><span class="comment">   * clock variances.  After initialization, we can go faster. */</span></div>
 <div class="line">  <span class="keywordflow">if</span> (fastp) {</div>
-<div class="line">    init_spi_divisor = (smclk_hz + BSP430_MMC_FAST_HZ) / BSP430_MMC_FAST_HZ;</div>
+<div class="line">    init_spi_divisor = (smclk_hz + BSP430_MMC_FAST_HZ - 1) / BSP430_MMC_FAST_HZ;</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">    init_spi_divisor = (smclk_hz + 380000UL) / 380000UL;</div>
+<div class="line">    init_spi_divisor = (smclk_hz + 380000UL - 1) / 380000UL;</div>
 <div class="line">  }</div>
 <div class="line">  <span class="comment">/* SPI divisor must not be zero */</span></div>
 <div class="line">  <span class="keywordflow">if</span> (0 == init_spi_divisor) {</div>
@@ -371,7 +371,7 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor">#define BSP430_SERIAL_SPI_READ_TX_BYTE(i_) 0xFF</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* Get platform defaults */</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 configuration directives for generic platform support.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="bsp430__config_8h.html" title="BSP430 application and platform configuration directives.">bsp430/platform/bsp430_config.h</a>&gt;</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="ex_platform_exp430f5529_fatfs_make"></a>
 Makefile</h1>
 <div class="fragment"><div class="line">PLATFORM ?= exp430f5529</div>
@@ -387,7 +387,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:30 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

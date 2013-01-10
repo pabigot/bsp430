@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20121013</span>
+   &#160;<span id="projectnumber">20130110</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -147,8 +147,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">  <a name="a12"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line">  (void)<a name="a13"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
+<div class="line">  <a name="a14"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nccid &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
-<div class="line">  <a name="a14"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO0 %p at %s.%u\n&quot;</span>, gdo0, <a name="a15"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#adfc1522139eeee33ba5d43d6f814dfef">BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE</a>), <a name="a16"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a17"></a><a class="code" href="rfem_8h.html#a740d598b5d5bfd61421b29f5742d47e8">BSP430_RFEM_GDO0_PORT_BIT</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO0 %p at %s.%u\n&quot;</span>, gdo0, <a name="a15"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#adfc1522139eeee33ba5d43d6f814dfef">BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE</a>), <a name="a16"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a17"></a><a class="code" href="rfem_8h.html#a740d598b5d5bfd61421b29f5742d47e8">BSP430_RFEM_GDO0_PORT_BIT</a>));</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO1 HAL %p HPL %p at %s.%u\n&quot;</span>, hgdo1, hgdo1-&gt;<a name="a18"></a>hpl.<a name="a19"></a><a class="code" href="structsBSP430halPORT.html#af26a6d2ec27e51f8210d93882633d2b8">any</a>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#aef98a690f3207112d7be0a612bd7b9d1">BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a20"></a><a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>));</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;GDO2 %p at %s.%u\n&quot;</span>, gdo2, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#a3f4ce51dd2737f0a681ef5fc3c972817">BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a21"></a><a class="code" href="rfem_8h.html#a53273a8129fcbbde7b6f405394df52a5">BSP430_RFEM_GDO2_PORT_BIT</a>));</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CSn HAL %p HPL %p at %s.%u\n&quot;</span>, hcsn, hcsn-&gt;hpl.<a class="code" href="structsBSP430halPORT.html#af26a6d2ec27e51f8210d93882633d2b8">any</a>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="rfem_8h.html#af2db206437914504f599c7edd1aa6443">BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE</a>), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(<a name="a22"></a><a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>));</div>
@@ -160,16 +161,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Configure the SPI interface, but immediately put it into hold</span></div>
-<div class="line"><span class="comment">   * mode so we can check CHIP_RDYn on the MISO/GDO1 input */</span></div>
+<div class="line"><span class="comment">   * mode so we can check CHIP_RDYn on the MISO/GDO1 input. */</span></div>
 <div class="line">  spi = <a name="a26"></a><a class="code" href="serial_8h.html#a40983f5ed625fd352698117786691dd5">hBSP430serialOpenSPI</a>(spi,</div>
 <div class="line">                             <a name="a27"></a><a class="code" href="serial_8h.html#a84cdc2d11d71d5fd97b96f427c239cb9">BSP430_SERIAL_ADJUST_CTL0_INITIALIZER</a>(<a name="a28"></a><a class="code" href="msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd">UCCKPH</a> | <a name="a29"></a><a class="code" href="msp430_8h.html#a199ca0dc5cd21e551af5c23d9beec934">UCMSB</a> | <a name="a30"></a><a class="code" href="msp430_8h.html#a83010f7d75e7283b79244ce5a4fa7870">UCMST</a>),</div>
-<div class="line">                             <a name="a31"></a><a class="code" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, 1);</div>
+<div class="line">                             0, 0);</div>
 <div class="line">  <span class="keywordflow">if</span> (spi) {</div>
-<div class="line">    rc = <a name="a32"></a><a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(spi, 1);</div>
+<div class="line">    rc = <a name="a31"></a><a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(spi, 1);</div>
 <div class="line">    <span class="comment">/* GDO1 to input, pull-up */</span></div>
-<div class="line">    <a name="a33"></a><a class="code" href="port_8h.html#a464269017051d0faa11317c6627db1b5">BSP430_PORT_HAL_HPL_DIR</a>(hgdo1) &amp;= ~<a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
-<div class="line">    <a name="a34"></a><a class="code" href="port_8h.html#a9addaf04ba38436b90d0dc9481c29425">BSP430_PORT_HAL_HPL_REN</a>(hgdo1) |= <a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
-<div class="line">    <a name="a35"></a><a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(hgdo1) |= <a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
+<div class="line">    <a name="a32"></a><a class="code" href="port_8h.html#a464269017051d0faa11317c6627db1b5">BSP430_PORT_HAL_HPL_DIR</a>(hgdo1) &amp;= ~<a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
+<div class="line">    <a name="a33"></a><a class="code" href="port_8h.html#a9addaf04ba38436b90d0dc9481c29425">BSP430_PORT_HAL_HPL_REN</a>(hgdo1) |= <a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
+<div class="line">    <a name="a34"></a><a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(hgdo1) |= <a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>;</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI device %p hold returned %d\n&quot;</span>, spi, rc);</div>
@@ -179,7 +180,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Configure CSn initial high to ensure we have a falling edge when</span></div>
 <div class="line"><span class="comment">   * we first enable the radio. */</span></div>
-<div class="line">  <a name="a36"></a><a class="code" href="port_8h.html#addcee1f09dededbda080135ec93f65a4">BSP430_PORT_HAL_HPL_SEL</a>(hcsn) &amp;= ~<a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>;</div>
+<div class="line">  <a name="a35"></a><a class="code" href="port_8h.html#addcee1f09dededbda080135ec93f65a4">BSP430_PORT_HAL_HPL_SEL</a>(hcsn) &amp;= ~<a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>;</div>
 <div class="line">  <a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(hcsn) |= <a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>;</div>
 <div class="line">  <a class="code" href="port_8h.html#a464269017051d0faa11317c6627db1b5">BSP430_PORT_HAL_HPL_DIR</a>(hcsn) |= <a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>;</div>
 <div class="line"></div>
@@ -187,9 +188,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(hcsn) &amp;= ~<a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Spin until GDO1 (CHP_RDYn) is clear indicating radio is responsive */</span></div>
-<div class="line">  <span class="keywordflow">while</span> (<a name="a37"></a><a class="code" href="port_8h.html#a942c2ff4c4f1a23607d98aa9767308b6">BSP430_PORT_HAL_HPL_IN</a>(hgdo1) &amp; <a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>) {</div>
+<div class="line">  <span class="keywordflow">while</span> (<a name="a36"></a><a class="code" href="port_8h.html#a942c2ff4c4f1a23607d98aa9767308b6">BSP430_PORT_HAL_HPL_IN</a>(hgdo1) &amp; <a class="code" href="rfem_8h.html#a8dea898b88cb586134480e282c5bf74c">BSP430_RFEM_GDO1_PORT_BIT</a>) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Waiting for radio ready\n&quot;</span>);</div>
-<div class="line">    <a name="a38"></a><a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a name="a39"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
+<div class="line">    <a name="a37"></a><a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">BSP430_CORE_DELAY_CYCLES</a>(<a name="a38"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Enable SPI */</span></div>
@@ -233,13 +234,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  rc = <a class="code" href="serial_8h.html#a4e6aa007adea01b8d1760fd3dc31b5e2">iBSP430serialSetHold_ni</a>(spi, 1);</div>
 <div class="line">  <a class="code" href="port_8h.html#a4c6f6b6b83c5ffd5f8b6468065a8d209">BSP430_PORT_HAL_HPL_OUT</a>(hcsn) |= <a class="code" href="rfem_8h.html#ac34b2d6647910584c94c65e19cae23f4">BSP430_RFEM_SPI0CSn_PORT_BIT</a>;</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* This gets the RF2500T power down to about 120 nA. */</span></div>
-<div class="line">  <a name="a40"></a><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(<a name="a41"></a><a class="code" href="msp430_8h.html#a97eaedd508e6f77e34a49433f8e9e2eb">LPM4_bits</a>);</div>
+<div class="line">  <span class="comment">/* This gets the RF2500T power down to about 120 nA.  Note:</span></div>
+<div class="line"><span class="comment">   * Purposefully enter LPM with #GIE off since we do not intend to</span></div>
+<div class="line"><span class="comment">   * wake up.*/</span></div>
+<div class="line">  <a name="a39"></a><a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<a name="a40"></a><a class="code" href="msp430_8h.html#ae8217664a1729103e247c6984d1744cc">LPM3_bits</a>);</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 13 2012 17:41:29 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
