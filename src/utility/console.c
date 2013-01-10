@@ -475,6 +475,8 @@ iBSP430consoleTransmitUseInterrupts_ni (int enablep)
   } else {
     if (uartTransmit_ni != iBSP430uartTxByte_ni) {
       uartTransmit_ni = iBSP430uartTxByte_ni;
+      /* This flushes any character currently in the UART; it does not
+       * flush anything left in the transmission buffer. */
       vBSP430serialFlush_ni(console_hal_);
       iBSP430serialSetHold_ni(console_hal_, 1);
       BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);

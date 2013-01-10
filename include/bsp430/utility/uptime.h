@@ -420,12 +420,7 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * window between wakeup and when this function clears #GIE again in
  * which additional interrupts may execute.  See @ref enh_interrupts.
  *
- * @warning This function is intended to be called when interrupts are
- * disabled.  To ensure lower-priority interrupts are not processed
- * after the application wakes from the delay applications that use
- * this routine should define #configBSP430_CORE_LPM_EXIT_CLEAR_GIE.
- * This routine does not disable #GIE after waking if that was not
- * done by whatever caused LPM exit.
+ * @blocking
  *
  * @param setting_utt The uptime counter value at which the
  * application wishes to be awakened if no events have occured before

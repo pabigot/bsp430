@@ -95,17 +95,29 @@ status register is reset, meaning that all interrupts are disabled when
 
 Many function names have a suffix @c _ni.  This indicates that the function
 is intended to be called in a context where interrupts are disabled.
-Failure to disable interrupts may result in non-deterministic behavior
-including application lockup.  Functions that do not have this suffix are
-either considered to be robust in the presence of interrupts, or will
-temporarily disable them in a critical section prior to restoring the
-incoming interrupt state before returning.
+Functions that do not have this suffix are either considered to be robust in
+the presence of interrupts, or will temporarily disable them in a critical
+section prior to restoring the incoming interrupt state before returning.
+
+@warning Failure to disable interrupts prior to invoking functions with the
+@c _ni suffix may result in non-deterministic behavior including application
+lockup.
+
+@warning The @c _ni suffix does not guarantee that the function will not
+enable interrupts internally if its operation requires waiting for some
+condition.  It only guarantees that, if this happens, they will be disabled
+again when the function returns.  Any function (with or without an @c _ni
+suffix) that could enable interrupts should clearly state this in its
+description; see for example lBSP430uptimeSleepUntil_ni() and @ref
+h_utility_console_interrupts.
 
 The function macro #BSP430_CORE_ENABLE_INTERRUPT() will invoke the toolchain
 intrinsic to enable interrupts by setting the #GIE bit in the MSP430 status
-register.  The function macro #BSP430_CORE_ENABLE_INTERRUPT() will invoke
-the toolchain intrinsic to disable interrupts by clearing the #GIE bit in
-the MSP430 status register.
+register.
+
+The function macro #BSP430_CORE_DISABLE_INTERRUPT() will invoke the
+toolchain intrinsic to disable interrupts by clearing the #GIE bit in the
+MSP430 status register.
 
 Critical sections may be implemented by saving the current interrupt state,
 disabling interrupts, performing the critical operations, then restoring

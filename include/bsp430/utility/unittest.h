@@ -49,6 +49,9 @@
  * The corresponding modules must be linked into any application that
  * uses it.
  *
+ * @warning All macros potentially involve console output and are
+ * subject to the material in @ref h_utility_console_interrupts.
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -131,6 +134,8 @@ void vBSP430unittestInitialize (void);
 
 /** Display a unit test result.
  *
+ * @consoleoutput
+ * 
  * @param line the line number on which the test occurred.
  *
  * @param passp a non-zero value if the test passed; a zero value
@@ -154,7 +159,9 @@ void vBSP430unittestResult_ (int line,
  * function returns.
  *
  * If at least one test failed, #BSP430_UNITTEST_LED_FAILED flashes at
- * 1Hz and this function does not return. */
+ * 1Hz and this function does not return.
+ * 
+ * @consoleoutput */
 void vBSP430unittestFinalize (void);
 
 /** Diagnose an unconditional failure */

@@ -887,6 +887,7 @@ int iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
  * iBSP430cliSetDiagnosticFunction() after configuring the console but
  * before accepting any user input; see @ref ex_utility_cli.
  *
+ * @consoleoutput
  * @dependency #BSP430_CONSOLE
  * @ingroup grp_utility_cli_cli */
 #if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE - 0)
@@ -905,6 +906,8 @@ int iBSP430cliConsoleDiagnostic (sBSP430cliCommandLink * chain,
  * do this it reverses the chain, then restores it to its original
  * direction before returning.)
  *
+ * @consoleoutput
+ *
  * @param chain the chain of commands from the innermost to the outermost
  *
  * @param argstr the unprocessed remainder of the original command string
@@ -919,6 +922,8 @@ void vBSP430cliConsoleDisplayChain (struct sBSP430cliCommandLink * chain,
 /** Display the deep command structure on the console.
  *
  * Nested commands are displayed indented from their parent command.
+ *
+ * @consoleoutput
  *
  * @param cmd pointer to the first in a sequence of sibling commands
  *

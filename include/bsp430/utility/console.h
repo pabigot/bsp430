@@ -43,29 +43,72 @@
  * cputs() and cputchars() are provided where the complexity of printf
  * is not required but atomic output is desired.  Other routines
  * permit display of NUL-terminated plain text without a newline
- * (cputtext_ni()), plain text without termination (cputchars_ni()),
+ * (cputtext_ni()), plain text of a fixed length (cputchars_ni()),
  * single characters (cputchar_ni()), and integers (cputi_ni(),
  * cputu_ni(), cputl_ni(), cputul_ni()) without incurring the stack
  * overhead of printf, which can be quite high (on the order of 100
- * bytes if 64-bit integer support is included).  These all assume
- * that interrupts are disabled when called.
+ * bytes if 64-bit integer support is included).  Following the
+ * standard BSP340 naming conventions some of these capabilities are
+ * available with wrappers that preserve interrupt state.
  *
- * All these routines are safe to call even if the console was not
+ * All output functions are safe to call even if the console was not
  * initialized, or its initialization failed, or it is temporarily
- * disabled: in that situation, they simply return immediately.
+ * disabled. In those situations they simply return immediately.
  *
- * As the console has proved to be extremely useful, it has also been
+ * @section h_utility_console_interrupts Console Output and Interrupts
+ *
+ * As the console has proved to be extremely useful, it has been
  * enhanced with interrupt-driven transmision capabilities.  By
  * configuring #BSP430_CONSOLE_TX_BUFFER_SIZE to a positive value all
  * console output routines will place their output into the buffer.
- * If insufficient room remains, they will block.
+ * If insufficient room remains, they will sleep using #LPM0_bits with
+ * interrupts enabled until the buffer drains enough to add more.
  *
- * @warning The console routines are not safe to call from interrupts
- * when #BSP430_CONSOLE_TX_BUFFER_SIZE has been configured to enable
- * interrupt-driven output.  If, at runtime, you determine you need to
- * do console output without interrupts, use
- * iBSP430consoleTransmitUseInterrupts_ni() to enable and disable
- * interrupt-driven transmission.
+ * @warning This feature overrides the safe use of these routines from
+ * within interrupt handlers and within critical sections.  When
+ * interrupt-driven transmission is enabled all console output
+ * routines are allowed to block (enabling interrupts) if the
+ * transmission buffer is full.  This is true even for output routines
+ * that are marked with the @c _ni suffix.
+ *
+ * As an example, the following pattern is unsafe:
+ *
+ @code
+   BSP430_CORE_DISABLE_INTERRUPT();
+   do {
+     events = events_ni;
+     events_ni = 0;
+     if (! events) {
+       cputs_ni("Going to sleep now");
+       // ERROR: Above call may have blocked allowing events_ni to be set.
+       // If the expected event has been missed LPM may never be awoken.
+       BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+     }
+   } while (0);
+   BSP430_CORE_ENABLE_INTERRUPT();
+ @endcode
+ *
+ * An alternative if you must do output in your event check loop is to
+ * use iBSP430consoleTransmitUseInterrupts_ni() to disable and
+ * re-enable interrupt-driven transmission:
+ * 
+ @code
+   vBSP430consoleFlush();
+   BSP430_CORE_DISABLE_INTERRUPT();
+   (void)iBSP430consoleTransmitUseInterrupts_ni(0);
+   do {
+     events = events_ni;
+     events_ni = 0;
+     if (! events) {
+       cputs_ni("Going to sleep now");
+       // Interrupts disabled, cputs_ni could not block and events_ni will
+       // remain unset.
+       BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+     }
+   } while (0);
+   (void)iBSP430consoleTransmitUseInterrupts_ni(1);
+   BSP430_CORE_ENABLE_INTERRUPT();
+ @endcode
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -229,11 +272,7 @@
  *
  * @warning By enabling interrupt-driven output the console output
  * routines are no longer safe to call from within interrupt handlers.
- * They may be called with interrupts disabled, but are entitled to
- * enable interrupts in order to drain the transmission buffer to the
- * point where they can complete their output.  Use
- * iBSP430consoleTransmitUseInterrupts_ni() to enable and disable
- * interrupt-driven transmission at runtime.
+ * See @ref h_utility_console_interrupts.
  *
  * @defaulted */
 #ifndef BSP430_CONSOLE_TX_BUFFER_SIZE
@@ -410,6 +449,8 @@ void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
  * If xBSP430consoleInitialize() has not assigned a UART device, the
  * call is a no-op.
  *
+ * @consoleoutput
+ *
  * @param format A printf(3) format string
  *
  * @return Number of characters printed if the console is enabled; 0
@@ -425,6 +466,8 @@ __attribute__((__format__(printf, 1, 2)))
 
 /** Like vprintf(3), but to the console UART.
  *
+ * @consoleoutput
+ *
  * @param format A printf(3) format string
  * @param ap A stdarg reference to variable arguments to a calling function.
  * @return as with cprintf(). */
@@ -433,10 +476,12 @@ int vcprintf (const char * format, va_list ap);
 /** Like puts(3) to the console UART
  *
  * As with #cprintf, interrupts are disabled for the duration of the
- * invocation.
+ * invocation (except see @ref h_utility_console_interrupts).
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
+ *
+ * @consoleoutput
  *
  * @param s a string to be emitted to the console
  *
@@ -445,6 +490,8 @@ int vcprintf (const char * format, va_list ap);
 int cputs (const char * s);
 
 /** Like putchar(3) to the console UART, with interrupts already disabled
+ *
+ * @consoleoutput
  *
  * @param c character to be output
  *
@@ -455,6 +502,8 @@ int cputchar_ni (int c);
  *
  * This wraps cputchar_ni() with code to preserve the interrupt enable
  * state.
+ *
+ * @consoleoutput
  *
  * @param c character to be output
  *
@@ -477,6 +526,8 @@ cputchar (int c)
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
  *
+ * @consoleoutput
+ *
  * @param s a NUL-terminated string to be emitted to the console
  *
  * @return the number of characters written
@@ -486,10 +537,12 @@ int cputtext_ni (const char * s);
 /** Like puts(3) to the console UART without trailing newline
  *
  * As with #cprintf, interrupts are disabled for the duration of the
- * invocation.
+ * invocation (except see @ref h_utility_console_interrupts).
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
+ *
+ * @consoleoutput
  *
  * @param s a NUL-terminated string to be emitted to the console
  *
@@ -502,6 +555,8 @@ int cputtext (const char * s);
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
+ *
+ * @consoleoutput
  *
  * @param cp first of a series of characters to be emitted to the
  * console
@@ -516,10 +571,12 @@ int cputchars_ni (const char * cp, size_t len);
  * with explicit length instead of a terminating NUL.
  *
  * As with #cprintf, interrupts are disabled for the duration of the
- * invocation.
+ * invocation (except see @ref h_utility_console_interrupts).
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
+ *
+ * @consoleoutput
  *
  * @param cp first of a series of characters to be emitted to the
  * console
@@ -531,6 +588,8 @@ int cputchars_ni (const char * cp, size_t len);
 int cputchars (const char * cp, size_t len);
 
 /** Format an int using itoa and emit it to the console.
+ *
+ * @consoleoutput
  *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
@@ -545,6 +604,8 @@ int cputi_ni (int n, int radix);
 
 /** Format an int using utoa and emit it to the console.
  *
+ * @consoleoutput
+ *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
@@ -558,6 +619,8 @@ int cputu_ni (unsigned int n, int radix);
 
 /** Format an int using ltoa and emit it to the console.
  *
+ * @consoleoutput
+ *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
@@ -570,6 +633,8 @@ int cputu_ni (unsigned int n, int radix);
 int cputl_ni (long n, int radix);
 
 /** Format an int using itoa and emit it to the console.
+ *
+ * @consoleoutput
  *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
@@ -625,14 +690,15 @@ hBSP430halSERIAL hBSP430console (void);
  * value, it is normally improper to use the console output routines
  * from within interrupt handlers and in other cases where interrupts
  * are disabled, since the routines might enable interrupts to allow
- * the transmission buffer to drain.  This routine can be used at
- * runtime to disable the interrupt-based transmission, thus allowing
- * use of direct, busy-waiting console output.
+ * the transmission buffer to drain.  See @ref
+ * h_utility_console_interrupts.  This routine can be used at runtime
+ * to disable the interrupt-based transmission, thus allowing use of
+ * direct, busy-waiting console output.
  *
  * @note You probably want to invoke vBSP430consoleFlush() prior to
  * disabling interrupt-driven transmission.  If you don't, whatever
- * was unflushed will be displayed once the transmission is
- * re-enabled.
+ * was unflushed in the buffer will be displayed once the transmission
+ * is re-enabled.
  *
  * @param enablep nonzero if interrupt-drive transmission is to be
  * used; zero to disable the transmit interrupt on the console UART
@@ -658,6 +724,8 @@ int iBSP430consoleTransmitUseInterrupts_ni (int enablep);
  * available space.  In such a case an application may need to
  * re-check other conditions to ensure there is no pending work prior
  * to entering low power mode.
+ *
+ * @blocking
  *
  * @param want_available the number of bytes that are requested.  A
  * negative number requires that the transmit buffer be empty (i.e.,
