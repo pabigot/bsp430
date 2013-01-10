@@ -151,7 +151,7 @@ typedef struct sBSP430hplDMA {
   unsigned int ctl1;            /**< Control for channels 2 and 3 : 0x02 */
   unsigned int iv;              /**< Interrupt vector word : 0x04 */
   unsigned int _reserved_skip[(0x1D0 - 0x128) / sizeof(unsigned int)];
-  sBSP430hplDMAchannel ch[BSP430_DMA_NUM_CHANNELS];
+  sBSP430hplDMAchannel ch[BSP430_DMA_NUM_CHANNELS]; /**< HPL for each supported channel */
 } sBSP430hplDMA;
 #endif /* BSP430_CORE_FAMILY_IS_5XX */
 
@@ -170,7 +170,7 @@ typedef struct sBSP430hplDMA {
   unsigned int ctl0;            /**< Trigger select control : 0x00 */
   unsigned int ctl1;            /**< General peripheral configuration: 0x02 */
   unsigned int _reserved_skip[(0x1E0 - 0x126) / sizeof(unsigned int)];
-  sBSP430hplDMAchannel ch[DMA_NUM_CHANNELS];
+  sBSP430hplDMAchannel ch[DMA_NUM_CHANNELS]; /**< HPL for each supported channel */
 } sBSP430hplDMA;
 
 #endif /* BSP430_MODULE_DMAX */

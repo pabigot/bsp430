@@ -400,7 +400,6 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * will hang attempting to configure the delay alarm.
  *
  * @defaulted 
- * @bsp430_config
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
 #ifndef BSP430_UPTIME_DELAY_CCIDX

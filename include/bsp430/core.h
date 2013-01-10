@@ -447,7 +447,7 @@
  * window for additional interrupts to be processed before the CPU
  * becomes active.
  *
- * @param lpm_bits as with #BSP430_CORE_LPM_ENTER()
+ * @param lpm_bits_ as with #BSP430_CORE_LPM_ENTER()
  */
 #define BSP430_CORE_LPM_ENTER_NI(lpm_bits_) BSP430_CORE_LPM_ENTER(GIE | (lpm_bits_))
 
