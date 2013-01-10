@@ -287,7 +287,7 @@
 /** Define to true to have BSP430 ISRs clear #GIE when exiting LPM.
  *
  * #GIE must be set in the status register for maskable interrupts to
- * be processed.  In many cases applications may wish to have #GIE
+ * be processed.  In special cases applications may wish to have #GIE
  * cleared by interrupt handlers, so when control returns to the
  * program the effects of already-handled interrupts can be processed
  * before any new interrupts are handled.
@@ -296,11 +296,7 @@
  * #BSP430_CORE_LPM_EXIT_MASK, meaning that it will be cleared along
  * with LPM bits when #BSP430_HAL_ISR_CALLBACK_EXIT_LPM is specified
  * in the return value of an @link iBSP430halISRCallbackVoid interrupt
- * callback@endlink.  For more fine-grained control, the flag can be
- * cleared for specific callbacks by using
- * #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE, but be aware that this
- * flag may not be present in all infrastructure-provided interrupt
- * handlers. */
+ * callback@endlink. */
 #ifndef configBSP430_CORE_LPM_EXIT_CLEAR_GIE
 #define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 0
 #endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
@@ -336,7 +332,7 @@
  *
  * These are #SCG1, #SCG0, #OSCOFF, #CPUOFF, and (just in case) #GIE.
  * Other bits are eliminated from any LPM bit value before mutating a
- * status register setting in either #BSP430_CORE_LPM_ENTER_NI() or
+ * status register setting in either #BSP430_CORE_LPM_ENTER() or
  * #BSP430_CORE_LPM_EXIT_FROM_ISR(). */
 #define BSP430_CORE_LPM_SR_MASK (SCG1 | SCG0 | OSCOFF | CPUOFF | GIE)
 
@@ -347,10 +343,10 @@
  * that the LPMx.5 mode feature supported by the Power Management
  * Module should also apply.
  *
- * @note #BSP430_CORE_LPM_ENTER_NI() does not pay attention to this
+ * @note #BSP430_CORE_LPM_ENTER() does not pay attention to this
  * bit.  Use it and #BSP430_MODULE_PMM to determine whether it is
  * necessary to invoke #BSP430_PMM_ENTER_LPMXp5_NI() prior to invoking
- * #BSP430_CORE_LPM_ENTER_NI(). */
+ * #BSP430_CORE_LPM_ENTER(). */
 #define BSP430_CORE_LPM_LPMXp5 0x0100
 
 /** Defined to a true value if GCC is being used */
@@ -415,10 +411,45 @@
  * This sets the status register bits in accordance to the bits
  * specified in @p lpm_bits_.
  *
+ * This macro is normally intended to be invoked when interrupts are
+ * enabled. It does not add #GIE to @p lpm_bits.  If invoked when
+ * interrupts are disabled and #GIE is not in @p lpm_bits it is
+ * unlikely to ever return.
+ *
+ * Interrupts normally remain enabled after #BSP430_CORE_LPM_ENTER()
+ * completes.
+ *
+ * @note If #configBSP430_CORE_LPM_EXIT_CLEAR_GIE is enabled
+ * interrupts will be disabled during wakeup and remain disabled when
+ * #BSP430_CORE_LPM_ENTER() completes.
+ *
  * @param lpm_bits_ bits to be set in the status register.  The value
  * is masked by #BSP430_CORE_LPM_SR_MASK before being written.
  */
-#define BSP430_CORE_LPM_ENTER_NI(lpm_bits_) __bis_status_register(BSP430_CORE_LPM_SR_MASK & (lpm_bits_))
+#define BSP430_CORE_LPM_ENTER(lpm_bits_) __bis_status_register(BSP430_CORE_LPM_SR_MASK & (lpm_bits_))
+
+/** Enter a low-power mode while interrupts are disabled
+ *
+ * This invokes #BSP430_CORE_LPM_ENTER(@p lpm_bits | #GIE).  It exists
+ * to explicitly note that entering LPM when interrupts are disabled
+ * should normally set #GIE so that the application can be woken.
+ *
+ * Interrupts normally remain enabled after
+ * #BSP430_CORE_LPM_ENTER_NI() completes.  Using
+ * #BSP430_CORE_DISABLE_INTERRUPT() immediately after
+ * #BSP430_CORE_LPM_ENTER_NI() will disable interrupts again, though
+ * there is a window where additional interrupts may be processed
+ * before this can happen.
+ *
+ * @note If #configBSP430_CORE_LPM_EXIT_CLEAR_GIE is enabled
+ * interrupts will be disabled during wakeup and remain disabled when
+ * #BSP430_CORE_LPM_ENTER_NI() completes, eliminating any possible
+ * window for additional interrupts to be processed before the CPU
+ * becomes active.
+ *
+ * @param lpm_bits as with #BSP430_CORE_LPM_ENTER()
+ */
+#define BSP430_CORE_LPM_ENTER_NI(lpm_bits_) BSP430_CORE_LPM_ENTER(GIE | (lpm_bits_))
 
 /** Exit low-power mode on return from ISR
  *

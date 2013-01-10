@@ -53,7 +53,7 @@ capture_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
 
   cp->count = now_tt + ((int)timer->hpl->ccr[idx] - (unsigned int)now_tt);
   cp->nsamples += 1;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
 static struct sCaptures captures = {
@@ -132,11 +132,14 @@ void main ()
   vBSP430timerResetCounter_ni(timer);
   timer->hpl->ctl = tassel | MC_2 | TACLR | TAIE;
 
-  BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+  /* Align to capture then clear the state */
+  BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
+  BSP430_CORE_DISABLE_INTERRUPT();
   memset(sums, 0, sizeof(sums));
   memset(samples, 0, sizeof(samples));
   captures.last_count = captures.count;
   captures.nsamples = 0;
+  BSP430_CORE_ENABLE_INTERRUPT();
   while (1) {
     unsigned int nsamples;
     unsigned long delta;
@@ -145,7 +148,8 @@ void main ()
     int i;
     int si;
 
-    BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+    BSP430_CORE_LPM_ENTER(LPM0_bits);
+    BSP430_CORE_DISABLE_INTERRUPT();
     delta = captures.count - captures.last_count;
     captures.last_count = captures.count;
     nsamples = captures.nsamples;

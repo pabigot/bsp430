@@ -8,6 +8,11 @@
 /* Support console output */
 #define configBSP430_CONSOLE 1
 
+/* By default run with interrupts disabled whenever CPU is in active mode */
+#ifndef configBSP430_CORE_LPM_EXIT_CLEAR_GIE
+#define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 1
+#endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
+
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1
 

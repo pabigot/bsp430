@@ -35,17 +35,6 @@ struct sHH10D {
   unsigned int last_period_count;
 };
 
-static void
-register_hh10d_ni (struct sHH10D * sp)
-{
-  /* Hook into the uptime infrastructure and have the HH10D callback
-   * invoked once per second, starting as soon as interrupts are
-   * enabled. */
-  sp->cb.next_ni = hBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx];
-  hBSP430uptimeTimer()->cc_cbchain_ni[sp->uptime_ccidx] = &sp->cb;
-  hBSP430uptimeTimer()->hpl->cctl[sp->uptime_ccidx] = CCIFG | CCIE;
-}
-
 static int
 hh10d_1Hz_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
                   void *context,
@@ -62,7 +51,7 @@ hh10d_1Hz_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
   hh10d->last_period_count = capture - hh10d->last_capture;
   hh10d->last_capture = capture;
   timer->hpl->ccr[idx] += hh10d->sample_duration_utt;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
 static struct sHH10D hh10d = {
@@ -162,16 +151,25 @@ void main ()
   BSP430_PORT_HAL_HPL_DIR(hh10d_port) &= ~APP_HH10D_PORT_BIT;
   hh10d.freq_timer->ctl = TASSEL_0 | MC_2 | TACLR;
 
-  /* Hook into the uptime infrastructure and have the HH10D callback
-   * invoked once per second, starting one second from now */
-  register_hh10d_ni(&hh10d);
+  /* Hook into the uptime infrastructure */
+  BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
+                                  hBSP430uptimeTimer()->cc_cbchain_ni[hh10d.uptime_ccidx],
+                                  hh10d.cb,
+                                  next_ni);
+  hBSP430uptimeTimer()->hpl->cctl[hh10d.uptime_ccidx] = CCIFG | CCIE;
 
-  /* Go to low power mode with interrupts enabled */
-  BSP430_CORE_LPM_ENTER_NI(LPM1_bits | GIE);
+  /* Configuration done; enable interrupts */
+  BSP430_CORE_ENABLE_INTERRUPT();
+
+  /* The first capture is just for initialization; the count isn't
+   * useful.  The second will be the first aligned capture, which is
+   * the basis for subsequent delta calculations. */
+  BSP430_CORE_LPM_ENTER(LPM1_bits);
+  BSP430_CORE_LPM_ENTER(LPM1_bits);
   cprintf("Initial %u\n", hh10d.last_capture);
 
   while (1) {
-    BSP430_CORE_LPM_ENTER_NI(LPM1_bits | GIE);
+    BSP430_CORE_LPM_ENTER(LPM1_bits);
     cprintf("%s: Sample %u in %u uptime ticks",
             xBSP430uptimeAsText_ni(ulBSP430uptime_ni()),
             hh10d.last_period_count, hh10d.sample_duration_utt);

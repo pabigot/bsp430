@@ -317,7 +317,7 @@ struct sBSP430halISRIndexedChainNode;
  *
  * 0x0001 -- SR C, used for #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN
  * 0x0002 -- SR Z, used for #BSP430_HAL_ISR_CALLBACK_EXIT_LPM
- * 0x0004 -- SR N, used for #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE
+ * 0x0004 -- SR N, available
  * 0x00F8 -- SR bits used for their SR purpose
  * 0x0100 -- SR V, available
  * 0x0E00 -- Reserved, available
@@ -337,6 +337,8 @@ struct sBSP430halISRIndexedChainNode;
  * return this flag.  Subsequent handlers will not be invoked, and the
  * ISR itself will be informed whether data has been made available.
  *
+ * See @ref callback_retval.
+ *
  * (The value of this flag is specifically selected to be a value
  * supported by the constant generator, to optimize the callback
  * loop.) */
@@ -344,10 +346,10 @@ struct sBSP430halISRIndexedChainNode;
 
 /** Indicate that LPM mode should be exited
  *
- * This flag may be marked in the return value of
- * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
- * callbacks to indicate that the top-half should clear the standard
- * LPM bits prior to exit, causing the MCU to return to active mode.
+ * This flag may be marked in a callback return value per @ref
+ * callback_retval to indicate that the top-half should clear the
+ * standard LPM bits prior to exit, causing the MCU to return to
+ * active mode.
  *
  * Use of this flag is preferred to use of #LPM4_bits or a similar
  * value because #configBSP430_CORE_DISABLE_FLL can influence the
@@ -358,36 +360,12 @@ struct sBSP430halISRIndexedChainNode;
  * loop.) */
 #define BSP430_HAL_ISR_CALLBACK_EXIT_LPM 0x0002
 
-/** Indicate that #GIE should be cleared on interrupt return
- *
- * This flag may be marked in the return value of
- * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
- * callbacks to indicate that the top-half should clear #GIE to exit,
- * causing the MCU to return to active mode with interrupts disabled.
- * This ensures that no other interrupts will be processed before the
- * application has a chance to deal with the results of the current
- * interrupt.
- *
- * As an alternative to adding this to each interrupt handler, you may
- * use #configBSP430_CORE_LPM_EXIT_CLEAR_GIE to add #GIE to the set of
- * flags normally cleared when waking due to an interrupt.
- *
- * @warning Using this flag without using
- * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM will leave the MCU in LPM with
- * interrupts disabled, which is usually not what you intend.
- *
- * (The value of this flag is specifically selected to be a value
- * supported by the constant generator, to optimize the callback
- * loop.) */
-#define BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE 0x0004
-
 /** Indicate ISR top half should yield on return.
  *
  * In some cases, a chained ISR handler might perform an operation
  * that enables a higher-priority task.  This bit may be set in the
- * return value of #iBSP430halISRCallbackVoid and
- * #iBSP430halISRCallbackIndexed to indicate that the interrupt should
- * yield to that task when it returns. */
+ * return value per @ref callback_retval to indicate that the
+ * interrupt should yield to that task when it returns. */
 #define BSP430_HAL_ISR_CALLBACK_YIELD 0x1000
 
 /** Indicate ISR top half should disable the corresponding peripheral
@@ -399,12 +377,14 @@ struct sBSP430halISRIndexedChainNode;
  * transmission interrupt handler that has determined that no further
  * data will be transmitted.
  *
- * This bit may be set in the return value of
- * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
+ * This bit may be set in the return value per @ref callback_retval
  * to indicate that the top-half should clear the corresponding IE bit
  * before returning returns.
  *
- * @see #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE */
+ * @note This feature controls the enable bit for peripheral-specific
+ * interrupts.  It has nothing to do with
+ * #BSP430_CORE_DISABLE_INTERRUPT() or the effects of
+ * #configBSP430_CORE_LPM_EXIT_CLEAR_GIE. */
 #define BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT 0x2000
 
 /** Callback for ISR chains that require no special arguments.
@@ -418,9 +398,8 @@ struct sBSP430halISRIndexedChainNode;
  * for the interrupt that occurred, such as a timer.
  *
  * @return An integral value used by the ISR top half to wake up from
- * low power modes and otherwise affect subsequent execution.  It
- * should be a combination of bits like #LPM4_bits and
- * #BSP430_HAL_ISR_CALLBACK_YIELD. */
+ * low power modes and otherwise affect subsequent execution.  See
+ * @ref callback_retval. */
 typedef int (* iBSP430halISRCallbackVoid) (const struct sBSP430halISRVoidChainNode * cb,
                                            void * context);
 
@@ -528,9 +507,6 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
     unsigned int return_flags_ = (_return_flags);                       \
     if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {             \
       return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;                       \
-    }                                                                   \
-    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE) {       \
-      return_flags_ |= GIE;                                             \
     }                                                                   \
     BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);                       \
     if (return_flags_ & BSP430_HAL_ISR_CALLBACK_YIELD) {                \

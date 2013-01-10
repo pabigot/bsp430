@@ -94,13 +94,13 @@ dma_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
     if (0 >= statep->counter) {
       chp->ctl &= ~(DMAEN | DMAIE);
       statep->stage = CS_idle;
-      rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
+      rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
     }
   } else {
     statep->t1 = ulBSP430uptime_ni();
     chp->ctl &= ~(DMAEN | DMAIE);
     statep->stage = CS_idle;
-    rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
+    rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
   }
   return rv;
 }

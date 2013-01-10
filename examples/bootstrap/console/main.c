@@ -53,7 +53,6 @@ void main ()
   console = hBSP430console();
 #endif /* APP_VERBOSE */
 
-
   /* Indicate we made it this far. */
   vBSP430ledSet(1, 1);
 

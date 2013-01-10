@@ -5,10 +5,6 @@
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 
-/* Interrupts should always be disabled on wakeup, to allow safe
- * processing of any recorded events. */
-#define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 1
-
 /* Support console buffered input and output at a higher-than-normal
  * data rate. */
 #define configBSP430_CONSOLE 1

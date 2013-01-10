@@ -67,10 +67,18 @@ As the intrinsics used to enter and leave low power mode are not entirely
 consistent across MSP430 toolchains, BSP430 provides several macros to
 assist with this.
 
-#BSP430_CORE_LPM_ENTER_NI(@c lpm_bits) places the CPU into a low power mode as
+#BSP430_CORE_LPM_ENTER(@c lpm_bits) places the CPU into a low power mode as
 specified by @c lpm_bits.  The bits are the same ones that are normally used
 in @c \__bis_status_register() in MSPGCC, but BSP430 will mask them using
-#BSP430_CORE_LPM_SR_MASK to ensure that other bits are not set.
+#BSP430_CORE_LPM_SR_MASK to ensure that other bits are not set.  Use this
+macro when entering a low-power mode from a state where interrupts are
+currently enabled.
+
+#BSP430_CORE_LPM_ENTER_NI(@c lpm_bits) is similar but enables #GIE prior to
+entering low-power mode, so that the CPU can be awoken by actions taken
+while processing an interrupt.  Be aware that under normal circumstances
+interrupts will be enabled when this "call" completes (see
+#configBSP430_CORE_LPM_EXIT_CLEAR_GIE for unusual circumstances).
 
 #BSP430_CORE_LPM_EXIT_FROM_ISR(@c lpm_bits) serves as an abstraction of @c
 \__bic_status_tegister_on_exit() in MSPGCC, again filtering the bits for
@@ -86,12 +94,13 @@ demonstration of how to enter these modes on MCUs that support them.
 
 BSP430 provides several function macros that support interrupt management in
 a toolchain-independent manner.  A core promise of BSP430 is that BSP430 it
-will never enable interrupts on its own.  The application code must do so
-after all configuration, if it desires to receive interrupts.
+will preserve the application interrupt state over API calls unless
+specifically documented to do otherwise.
 
 Recall that on a power-up-clear ("PUC", i.e. any reset condition), the
 status register is reset, meaning that all interrupts are disabled when
-<c>main()</c> begins executing.
+<c>main()</c> begins executing.  If the application wishes to accept
+interrupts, it must explicitly enable them after configuration is complete.
 
 Many function names have a suffix @c _ni.  This indicates that the function
 is intended to be called in a context where interrupts are disabled.
@@ -151,6 +160,110 @@ See the @link ex_bootstrap_button button example@endlink for an interesting
 application architecture that leaves interrupts disabled at all times that
 the MCU is active, simplifying the application logic by eliminating
 non-deterministic signals.
+
+\section enh_arch Application Architecture
+
+The choice of application architecture is up to the implementer; BSP430 is
+intended to support all but the most contorted architectures.  Pure examples
+of two standard solutions that it should support are described in this
+section.
+
+\subsection enh_arch_isr Interrupt-Driven
+
+@code
+static int
+callback (/* ... */)
+{
+  /* ... */
+  return 0; /* Return without waking */
+}
+
+void main (/* ... */)
+{
+  /* Initialization */
+  while (1) { /* Gratuitous loop in case of error */
+    BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
+  }
+}
+@endcode
+
+Features of the interrupt-only architecture:
+
+@li Interrupts are never enabled while the CPU is in active mode, only while
+in low-power mode entered through #BSP430_CORE_LPM_ENTER_NI();
+
+@li Interrupt handlers never invoke @c __bic_status_register_on_exit() to
+clear LPM flags and waking the CPU on completion;
+
+@li Events are handled in strict order of delivery, which is controlled by
+timing and MCU-specific interrupt priority;
+
+@li If processing a particular event takes too long, subsequent events may
+be lost because they were not handled in a timely manner;
+
+@li Synchronizing on events ("join") is more difficult since logic must be
+placed in (functions invoked from) multiple ISRs;
+
+\subsection enh_arch_superloop Super Loop
+
+@code
+
+typedef unsigned int tEventSet;
+volatile tEventSet events_ni;
+/* ... */
+static int
+callback (/* ... */)
+{
+  /* ... */
+  events_ni |= EVT_FLAG;
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+}
+
+void main (void)
+{
+  tEventSet events;
+  /* Initialization with interrupts disabled, including setting up callback */
+  BSP430_CORE_ENABLE_INTERRUPT();
+  /* Initialization with interrupts enabled. */
+  while (1) { /* Super Loop */
+    BSP430_CORE_DISABLE_INTERRUPT();
+    /* Record and reset current event set */
+    events = events_ni;
+    events_ni = 0;
+    if (! events) {
+      /* Sleep with interrupts enabled until events occur */
+      BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
+      /* Interrupts enabled during sleep and normally enabled when wakeup.
+       * Restart at loop top to check events again */
+      continue;
+    }
+    /* Other preparation with interrupts disabled */
+    BSP430_CORE_ENABLE_INTERRUPT();
+    /* Process events */
+  }
+}
+@endcode
+
+Features of this architecture:
+
+@li Interrupts are enabled most of the time, whether in low-power mode or
+while actively processing;
+
+@li Events are less likely to be lost because interrupts are enabled even
+when CPU is active;
+
+@li Interrupt handlers (callbacks) need only wake the processor if the event
+they process requires complex calculation or synchronization;
+
+@li The application can prioritize the events it captures, overriding MCU
+priorities if necessary;
+
+As a special case, the super loop architecture can be supported while
+retaining the strict priority of the interrupt-driven architecture by using
+#configBSP430_CORE_LPM_EXIT_CLEAR_GIE to so that when
+#BSP430_CORE_LPM_ENTER_NI() returns interrupts remain disabled.  This
+architecture never leaves interrupts enabled while the CPU is active, but
+still allows event processing to be prioritized relative to other activity.
 
 @copyright_doc
 */

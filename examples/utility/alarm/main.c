@@ -626,7 +626,7 @@ void main ()
         continue;
       }
     }
-    BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
+    BSP430_CORE_LPM_ENTER_NI(LPM2_bits);
     ++wakeups;
   }
 

@@ -46,11 +46,9 @@ button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
   hpl->ies ^= sp->bit;
   vBSP430ledSet(0, -1);
 
-  /* We let the infrastructure identify what LPM bits to clear, and
-   * have it disable GIE on exit.  This ensures we don't overwrite the
-   * interrupt state due to a subsequent interrupt before we can print
-   * what we just stored. */
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM | BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE;
+  /* Wakeup.  Whether this clears #GIE depends on
+   * #configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
 static sButtonState button_state = {
@@ -67,7 +65,8 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-  cprintf("And we're up\n");
+  cprintf("\nbutton " __DATE__ " " __TIME__ "\n");
+  
   cprintf("There's supposed to be a button at %s.%u\n",
           xBSP430portName(BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE),
           b0pin);
@@ -94,6 +93,9 @@ void main ()
   b0hpl->ifg &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   b0hpl->ie |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
   cprintf("Button is configured.  Try pressing it.  No debouncing is done.\n");
+#if ! (configBSP430_CORE_LPM_EXIT_CLEAR_GIE - 0)
+  cprintf("WARNING: Interrupts remain enabled after wakeup\n");
+#endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
 
   vBSP430ledSet(0, 1);
 
@@ -102,9 +104,14 @@ void main ()
 
     cprintf("Count %u, in mask 0x%02x: %s\n", button_state.count, button_state.in_mask, state_str[!button_state.in_mask]);
 
-    /* Note that we've never turned interrupts on, so we do so now
-     * when entering LPM.  The ISR will turn them off again before
-     * waking the MCU. */
-    BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+    /* Note that we've never turned interrupts on, but
+     * BSP430_CORE_LPM_ENTER_NI() does so internally so the ISR can be
+     * executed.  Whether they are cleared before returning to this
+     * loop depends on #configBSP430_CORE_LPM_EXIT_CLEAR_GIE. */
+    BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
+#if ! (configBSP430_CORE_LPM_EXIT_CLEAR_GIE - 0)
+    /* Infrastructure didn't clear this, so we should */
+    BSP430_CORE_DISABLE_INTERRUPT();
+#endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
   }
 }

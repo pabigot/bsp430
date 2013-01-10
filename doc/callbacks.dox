@@ -136,7 +136,6 @@ handler, using a set of flags formed by combining bit values defined in
 Name                                       | Purpose
 :----------------------------------------- | :---------------------------------------------------
 #BSP430_HAL_ISR_CALLBACK_EXIT_LPM          | Interrupt handler wakes from LPM by clearing the #BSP430_CORE_LPM_EXIT_MASK bits in the status register stored on interrupt entry
-#BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE    | Interrupt handler clears #GIE prior to waking, so application restarts with interrupts disabled
 #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN       | Interrupt handler does not invoke any subsequent callbacks in the chain
 #BSP430_HAL_ISR_CALLBACK_YIELD             | Interrupt handler should inform an RTOS that a context switch is required
 #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT | Interrupt handler should disable the peripheral-specific interrupt

@@ -60,6 +60,8 @@ void main ()
   iBSP430consoleInitialize();
 
   console = hBSP430console();
+  cprintf("\ntxcb " __DATE__ " " __TIME__ "\n");
+
   cprintf("\nConsole %p is on %s: %s\n", console,
           xBSP430serialName(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE),
           xBSP430platformPeripheralHelp(BSP430_CONSOLE_SERIAL_PERIPH_HANDLE, 0));
@@ -93,23 +95,14 @@ void main ()
     ob_end = obp + sizeof(tx_buffer_.buffer);
     obp += snprintf(obp, ob_end - obp, "prep %lu emit %lu\r\n", emit_utt - prep_utt, done_utt - emit_utt);
     ob_end = obp;
-    emit_utt = ulBSP430uptime();
+    BSP430_CORE_DISABLE_INTERRUPT();
+    emit_utt = ulBSP430uptime_ni();
     prep_utt = next_prep_utt;
-    {
-      BSP430_CORE_INTERRUPT_STATE_T istate;
-      BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
-      BSP430_CORE_DISABLE_INTERRUPT();
-      do {
-        tx_buffer_.tail = 0;
-        tx_buffer_.head = obp - tx_buffer_.buffer;
-        vBSP430serialWakeupTransmit_ni(uart);
-        while (tx_buffer_.tail != tx_buffer_.head) {
-          BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
-          BSP430_CORE_DISABLE_INTERRUPT();
-        }
-      } while (0);
-      BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-    }
+    tx_buffer_.tail = 0;
+    tx_buffer_.head = obp - tx_buffer_.buffer;
+    vBSP430serialWakeupTransmit_ni(uart);
+    BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
+    /* Expect tail == head otherwise should not have awoken */
     done_utt = ulBSP430uptime();
   }
 }

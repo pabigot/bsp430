@@ -8,7 +8,8 @@
 /* Support console output */
 #define configBSP430_CONSOLE 1
 
-/* Monitor uptime and provide generic timer, with delay support. */
+/* Monitor uptime and provide generic timer, with delay support.
+ * Application normally runs with interrupts disabled. */
 #define configBSP430_UPTIME 1
 #define configBSP430_UPTIME_DELAY 1
 #define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 1

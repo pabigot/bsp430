@@ -678,7 +678,7 @@ void main (void)
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
-  cprintf("\n\nWLAN test program\n");
+  cprintf("\ncc3000 " __DATE__ " " __TIME__ "\n");
 
 #if BSP430_MODULE_SYS - 0
   cprintf("System reset bitmask %lx; causes:\n", reset_causes);
@@ -786,6 +786,6 @@ void main (void)
       BSP430_CORE_ENABLE_INTERRUPT();
       continue;
     }
-    BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
+    BSP430_CORE_LPM_ENTER_NI(LPM2_bits);
   }
 }

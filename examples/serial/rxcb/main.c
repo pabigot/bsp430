@@ -38,7 +38,7 @@ void main ()
     events = events_ni;
     events_ni = 0;
     if (! events) {
-      BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+      BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
       continue;
     }
     BSP430_CORE_ENABLE_INTERRUPT();

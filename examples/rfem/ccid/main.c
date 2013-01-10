@@ -83,6 +83,7 @@ void main ()
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
+  cprintf("\nccid " __DATE__ " " __TIME__ "\n");
 
   cprintf("GDO0 %p at %s.%u\n", gdo0, xBSP430portName(BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_GDO0_PORT_BIT));
   cprintf("GDO1 HAL %p HPL %p at %s.%u\n", hgdo1, hgdo1->hpl.any, xBSP430portName(BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_GDO1_PORT_BIT));
@@ -169,6 +170,8 @@ void main ()
   rc = iBSP430serialSetHold_ni(spi, 1);
   BSP430_PORT_HAL_HPL_OUT(hcsn) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
 
-  /* This gets the RF2500T power down to about 120 nA. */
-  BSP430_CORE_LPM_ENTER_NI(LPM3_bits);
+  /* This gets the RF2500T power down to about 120 nA.  Note:
+   * Purposefully enter LPM with #GIE off since we do not intend to
+   * wake up.*/
+  BSP430_CORE_LPM_ENTER(LPM3_bits);
 }

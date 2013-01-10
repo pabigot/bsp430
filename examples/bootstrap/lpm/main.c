@@ -56,7 +56,8 @@ void main ()
   __delay_cycles(BSP430_CLOCK_PUC_MCLK_HZ);
   while (1) {
 #if (0 <= APP_LPM) && (APP_LPM <= 4)
-    BSP430_CORE_LPM_ENTER_NI(lpm_bits[APP_LPM] | GIE);
+    BSP430_CORE_LPM_ENTER_NI(lpm_bits[APP_LPM]);
+    /* For this application it doesn't matter that GIE is now set */
 #endif
   }
 }

@@ -8,6 +8,7 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/cli.h>
+#include <bsp430/utility/led.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -343,10 +344,12 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
-  cprintf("\n\n\nAnd we're up and running.\n");
+  cprintf("\ncli example " __DATE__ " " __TIME__ "\n");
 #if configBSP430_CLI_COMMAND_COMPLETION - 0
   cprintf("Command completion is available.\n");
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
+  vBSP430ledSet(0, 1);
+  cprintf("\nLED lit when not awaiting input\n");
 
   /* NOTE: The control flow in this is a bit tricky, as we're trying
    * to leave interrupts enabled during the main body of the loop,
@@ -405,22 +408,36 @@ void main ()
       flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
     BSP430_CORE_DISABLE_INTERRUPT();
-    if (flags & eBSP430cliConsole_READY) {
-      /* Clear the command we just completed */
-      vBSP430cliConsoleBufferClear_ni();
-    }
-    /* Unless we're processing escape characters, let
-     * iBSP430cliConsoleBufferProcessInput_ni() handle the blocking
-     * for input characters. */
-    if (! (flags & eBSP430cliConsole_ANY_ESCAPE)) {
-      flags = iBSP430cliConsoleBufferProcessInput_ni();
-      if (flags) {
-        /* Got something to do; get the command contents in place */
-        command = xBSP430cliConsoleBuffer_ni();
-        BSP430_CORE_ENABLE_INTERRUPT();
-        continue;
+    do {
+      if (flags & eBSP430cliConsole_READY) {
+        /* Clear the command we just completed */
+        vBSP430cliConsoleBufferClear_ni();
+        flags &= ~eBSP430cliConsole_READY;
       }
-    }
-    BSP430_CORE_LPM_ENTER_NI(LPM2_bits | GIE);
+      do {
+        /* Unless we're processing application-specific escape
+         * characters let iBSP430cliConsoleBufferProcessInput_ni()
+         * process any input characters that have already been
+         * received. */
+        if (! (flags & eBSP430cliConsole_ANY_ESCAPE)) {
+          flags |= iBSP430cliConsoleBufferProcessInput_ni();
+        }
+        if (0 == flags) {
+          /* Sleep until something wakes us, such as console input.
+           * Then turn off interrupts and loop back to read that
+           * input. */
+          vBSP430ledSet(0, 0);
+          BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
+          BSP430_CORE_DISABLE_INTERRUPT();
+          vBSP430ledSet(0, 1);
+        }
+        /* Repeat if still nothing to do */
+      } while (! flags);
+      
+      /* Got something to do; get the command contents in place so
+       * we can update the screen. */
+      command = xBSP430cliConsoleBuffer_ni();
+    } while (0);
+    BSP430_CORE_ENABLE_INTERRUPT();
   }
 }

@@ -173,7 +173,10 @@ console_tx_queue_ni (hBSP430halSERIAL uart, uint8_t c)
       if (0 == bufp->wake_available) {
         bufp->wake_available = 1;
       }
-      BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+      /* Sleep until the tx callback indicates space is available or
+       * something else wakes us up.  Then immediately disable the
+       * interrupts as that probably was not done during wakeup. */
+      BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
       BSP430_CORE_DISABLE_INTERRUPT();
       continue;
     }
@@ -593,7 +596,10 @@ iBSP430consoleWaitForTxSpace_ni (int want_available)
       tx_buffer_.wake_available = want_available;
     }
     rv = 1;
-    BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
+    /* Sleep until the tx callback indicates space is available or
+     * something else wakes us up.  Then immediately disable the
+     * interrupts as that probably was not done during wakeup. */
+    BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
     BSP430_CORE_DISABLE_INTERRUPT();
   }
 #endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */

@@ -84,9 +84,7 @@ button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
   (void)context;
   (void)idx;
   ++button;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE
-         | BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN
-         | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+  return BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN | BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
 const sBSP430halISRIndexedChainNode button_cb = {
@@ -190,7 +188,8 @@ void main ()
 
   (void)iBSP430consoleInitialize();
 
-  cprintf("Application is running\n");
+  cprintf("\napplpm " __DATE__ " " __TIME__ "\n");
+  
 #if BSP430_MODULE_SYS - 0
   cprintf("System reset bitmask %lx; causes:\n", reset_causes);
   {
@@ -392,8 +391,10 @@ void main ()
         BSP430_PMM_ENTER_LPMXp5_NI();
       }
 #endif /* BSP430_PMM_ENTER_LPMXp5_NI */
-      BSP430_CORE_LPM_ENTER_NI(state.lpm_bits | GIE);
+      BSP430_CORE_LPM_ENTER_NI(state.lpm_bits);
+      /* Interrupts probably left enabled */
     }
+
     BSP430_CORE_DISABLE_INTERRUPT();
     wake_utt = ulBSP430uptime_ni();
     if (state.hold_serial) {

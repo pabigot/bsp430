@@ -54,7 +54,7 @@ void main ()
    * information. */
 #if BSP430_CONSOLE - 0
   (void)iBSP430consoleInitialize();
-  cputtext_ni("\nSystem running\n");
+  cputtext_ni("\nclocks " __DATE__ " " __TIME__ "\n");
   cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1: ");
   cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1, 10);
   cputtext_ni("\nBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES: ");
