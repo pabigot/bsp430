@@ -544,7 +544,7 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
  * orderings, you're on your own.
  *
  * @param type_ the type of the structure that contains the link,
- * e.g. #sBSP430halISRVoidChainNode.
+ * e.g. #sBSP430halISRVoidChainNode or #sBSP430halISRIndexedChainNode.
  *
  * @param root_ the global root of the chain of nodes.  This is
  * expected to have been declared as <c>const type_ * root_</c>.
