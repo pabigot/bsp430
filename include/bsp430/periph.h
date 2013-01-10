@@ -313,33 +313,19 @@ struct sBSP430halISRVoidChainNode;
 struct sBSP430halISRIndexedChainNode;
 
 /* BSP430_HAL_ISR bits must not use 0x00F8 which are SCG1, SCG0,
- * OSCOFF, CPUOFF, and GIE. */
-
-/** Indicate ISR top half should yield on return.
+ * OSCOFF, CPUOFF, and GIE.
  *
- * In some cases, a chained ISR handler might perform an operation
- * that enables a higher-priority task.  This bit may be set in the
- * return value of #iBSP430halISRCallbackVoid and
- * #iBSP430halISRCallbackIndexed to indicate that the interrupt should
- * yield to that task when it returns. */
-#define BSP430_HAL_ISR_CALLBACK_YIELD 0x1000
-
-/** Indicate ISR top half should disable the corresponding peripheral
- * interrupt on return.
- *
- * In some cases, the handler can determine that the peripheral
- * interrupt is no longer needed, but cannot itself disable the
- * interrupt enable bit.  An example would be a peripheral-independent
- * transmission interrupt handler that has determined that no further
- * data will be transmitted.
- *
- * This bit may be set in the return value of
- * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
- * to indicate that the top-half should clear the corresponding IE bit
- * before returning returns.
- *
- * @see #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE */
-#define BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT 0x2000
+ * 0x0001 -- SR C, used for #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN
+ * 0x0002 -- SR Z, used for #BSP430_HAL_ISR_CALLBACK_EXIT_LPM
+ * 0x0004 -- SR N, used for #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE
+ * 0x00F8 -- SR bits used for their SR purpose
+ * 0x0100 -- SR V, available
+ * 0x0E00 -- Reserved, available
+ * 0x1000 -- Reserved, used for #BSP430_HAL_ISR_CALLBACK_YIELD
+ * 0x2000 -- Reserved, used for #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT
+ * 0x4000 -- Reserved, available
+ * 0x8000 -- Reserved, available (use this last)
+ */
 
 /** Indicate that no further ISR callbacks should be invoked.
  *
@@ -394,6 +380,32 @@ struct sBSP430halISRIndexedChainNode;
  * supported by the constant generator, to optimize the callback
  * loop.) */
 #define BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE 0x0004
+
+/** Indicate ISR top half should yield on return.
+ *
+ * In some cases, a chained ISR handler might perform an operation
+ * that enables a higher-priority task.  This bit may be set in the
+ * return value of #iBSP430halISRCallbackVoid and
+ * #iBSP430halISRCallbackIndexed to indicate that the interrupt should
+ * yield to that task when it returns. */
+#define BSP430_HAL_ISR_CALLBACK_YIELD 0x1000
+
+/** Indicate ISR top half should disable the corresponding peripheral
+ * interrupt on return.
+ *
+ * In some cases, the handler can determine that the peripheral
+ * interrupt is no longer needed, but cannot itself disable the
+ * interrupt enable bit.  An example would be a peripheral-independent
+ * transmission interrupt handler that has determined that no further
+ * data will be transmitted.
+ *
+ * This bit may be set in the return value of
+ * #iBSP430halISRCallbackVoid and #iBSP430halISRCallbackIndexed
+ * to indicate that the top-half should clear the corresponding IE bit
+ * before returning returns.
+ *
+ * @see #BSP430_HAL_ISR_CALLBACK_EXIT_CLEAR_GIE */
+#define BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT 0x2000
 
 /** Callback for ISR chains that require no special arguments.
  *
