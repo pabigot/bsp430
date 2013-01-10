@@ -280,6 +280,42 @@ cgetchar (void)
  * @dependency #BSP430_CONSOLE_RX_BUFFER_SIZE */
 int cpeekchar_ni (void);
 
+/** Callback for alarm events.
+ *
+ * This function will be invoked by the console infrastructure in an
+ * interrupt context after received characters have been buffered.
+ *
+ * @return As with iBSP430halISRCallbackVoid(). */
+typedef int (* iBSP430consoleRxCallback_ni) (void);
+
+/** Register a callback for console RX events.
+ *
+ * If a non-null callback is registered with the console, it will be
+ * invoked after each character received on the console is stored in
+ * the receive buffer.  The return value of the callback influences
+ * how the console RX interrupt handler manages LPM wakeup and other
+ * behavior; see @ref callback_retval.
+ * 
+ * If no callback is registered, the infrastructure will act as though
+ * a registered callback did nothing but return
+ * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.
+ *
+ * @note The infrastructure will add
+ * #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN to any value returned by this
+ * callback, including the value returned by a null (default)
+ * callback.
+ *
+ * @warning This function is not available if
+ * #BSP430_CONSOLE_RX_BUFFER_SIZE is zero.
+ *
+ * @param cb the callback to be invoked on received characters, or a
+ * null pointer to cause the application to wake from LPM when
+ * characters are received.
+ *
+ * @dependency #BSP430_CONSOLE_RX_BUFFER_SIZE
+ */
+void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
+
 /** @def configBSP430_CONSOLE_PROVIDES_PUTCHAR
  *
  * If defined to a true value, the individual character display

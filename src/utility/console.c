@@ -59,6 +59,7 @@ typedef struct sConsoleRxBuffer {
   char buffer[BSP430_CONSOLE_RX_BUFFER_SIZE];
   volatile unsigned char head;
   volatile unsigned char tail;
+  iBSP430consoleRxCallback_ni callback;
 } sConsoleRxBuffer;
 
 static int
@@ -68,6 +69,7 @@ console_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
   sConsoleRxBuffer * bufp = (sConsoleRxBuffer *)cb;
   sBSP430halSERIAL * hal = (sBSP430halSERIAL *) context;
   unsigned char head = bufp->head;
+  int rv;
 
   bufp->buffer[head] = hal->rx_byte;
   head = (head + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
@@ -75,12 +77,24 @@ console_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
     bufp->tail = (bufp->tail + 1) % (sizeof(bufp->buffer) / sizeof(*bufp->buffer));
   }
   bufp->head = head;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+  if (NULL != bufp->callback) {
+    rv = bufp->callback();
+  } else {
+    rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+  }
+  rv |= BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN;
+  return rv;
 }
 
 static sConsoleRxBuffer rx_buffer_ = {
   .cb_node = { .callback = console_rx_isr_ni },
 };
+
+void
+vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb)
+{
+  rx_buffer_.callback = cb;
+}
 
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 

@@ -1301,10 +1301,10 @@ struct sBSP430timerAlarm {
  * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX will be rejected.
  *
  * @param callback the callback function to be invoked when the alarm
- * goes off.  This may be a null pointer, in which case the alarm will
- * be disabled and the system will return from low power mode if
- * necessary.
- *
+ * goes off.  This may be a null pointer, in which case the
+ * infrastructure will behave as though a registered callback did
+ * nothing but return #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.
+ * 
  * @return A non-null handle for the alarm.  A null handle will be
  * returned if initialization failed, e.g. because @p periph could not
  * be identified as a timer with a HAL supporting an alarm.

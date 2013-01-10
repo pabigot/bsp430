@@ -419,9 +419,10 @@ alarmCCcb_ni (const struct sBSP430halISRIndexedChainNode *cb,
   }
   malarmp->flags &= ~BSP430_TIMER_ALARM_FLAG_SET;
   malarmp->timer->hpl->cctl[malarmp->ccidx] &= ~CCIE;
-  rv |= BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
   if (NULL != malarmp->callback) {
     rv = malarmp->callback(malarmp);
+  } else {
+    rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
   }
   return rv;
 }

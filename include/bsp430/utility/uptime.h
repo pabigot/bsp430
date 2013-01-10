@@ -415,7 +415,10 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * interrupt wakes the processor.
  *
  * @note Interrupts are enabled during this sleep, and an interrupt
- * unrelated to the wakeup alarm will cause an early return.
+ * unrelated to the wakeup alarm will cause an early return.  If such
+ * an interrupt does not clear #GIE on exit there will be a short
+ * window between wakeup and when this function clears #GIE again in
+ * which additional interrupts may execute.  See @ref enh_interrupts.
  *
  * @warning This function is intended to be called when interrupts are
  * disabled.  To ensure lower-priority interrupts are not processed
