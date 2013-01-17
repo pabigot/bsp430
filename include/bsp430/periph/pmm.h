@@ -90,7 +90,11 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)
 
-#if defined(BSP430_DOXYGEN) || defined(PM5CTL0)
+#if defined(BSP430_DOXYGEN) || defined(LOCKLPM5)
+/* LOCKLPM5 is the clue to whether LPMx.5 mode is supported.  The
+ * PM5CTL0 register exists on all MCUs with PMM except the pre-A
+ * MSP430F54xx and the CC430x1xx chips (at least, it is not declared
+ * on those chips). */
 
 /** Macro to enter LPMx.5 mode
  *
@@ -115,7 +119,7 @@
     PMMCTL0_H = !PMMPW_H;                       \
   } while (0)
 
-#endif /* PM5CTL0 */
+#endif /* LOCKLPM5 */
 
 /** Cause a brown-out reset */
 static void

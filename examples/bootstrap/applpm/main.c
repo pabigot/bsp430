@@ -314,6 +314,11 @@ void main ()
 #if APP_ENABLE_COREV
               cprintf("Core voltage level %d\n", PMMCTL0 & PMMCOREV_3);
 #endif /* APP_ENABLE_COREV */
+#ifdef BSP430_PMM_ENTER_LPMXp5_NI
+              cprintf("LPM X.5 supported\n");
+#else /* BSP430_PMM_ENTER_LPMXp5_NI */
+              cprintf("LPM X.5 is NOT supported\n");
+#endif /* BSP430_PMM_ENTER_LPMXp5_NI */
               break;
             case CMD_HOLD_SERIAL:
               state.hold_serial = ! state.hold_serial;
