@@ -45,24 +45,36 @@ const unsigned char nBSP430led = 4;
 /* TrxEB LEDs board are active-low, which isn't supported by the
  * generic interface.  They're nicely in order from P4.0 through
  * P4.3. */
+#define LED_BITS (BIT0 | BIT1 | BIT2 | BIT3)
+
 void vBSP430ledInitialize_ni (void)
 {
-  P4DIR |= BIT0 | BIT1 | BIT2 | BIT3;
-  P4OUT |= BIT0 | BIT1 | BIT2 | BIT3;
-  P4SEL &= ~(BIT0 | BIT1 | BIT2 | BIT3);
+  P4DIR |= LED_BITS;
+  P4OUT |= LED_BITS;
+  P4SEL &= LED_BITS;
 }
 
 void vBSP430ledSet (int led_idx,
                     int value)
 {
   unsigned int bit = 1 << led_idx;
-  if (value > 0) {
-    P4OUT &= ~bit;
-  } else if (value < 0) {
-    P4OUT ^= bit;
-  } else {
-    P4OUT |= bit;
+  if (bit & LED_BITS) {
+    if (value > 0) {
+      P4OUT &= ~bit;
+    } else if (value < 0) {
+      P4OUT ^= bit;
+    } else {
+      P4OUT |= bit;
+    }
   }
+}
+
+int
+vBSP430ledGet (int led_idx)
+{
+  unsigned int bit = 1 << led_idx;
+  /* Active low, remember? */
+  return bit & LED_BITS & ~P4OUT;
 }
 
 #endif /* BSP430_LED */

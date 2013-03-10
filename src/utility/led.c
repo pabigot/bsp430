@@ -126,4 +126,16 @@ vBSP430ledSet (int led_idx,
   }
 }
 
+int
+vBSP430ledGet (int led_idx)
+{
+  int rv = 0;
+  
+  if (led_idx < nBSP430led) {
+    const sBSP430halLED * lp = xBSP430halLED_ + led_idx;
+    rv = lp->bit & *lp->outp;
+  }
+  return rv;
+}
+
 #endif /* BSP430_LED */

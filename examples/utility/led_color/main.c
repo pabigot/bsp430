@@ -69,6 +69,22 @@ const sColor colors[] = {
 };
 const int ncolors = sizeof(colors) / sizeof(*colors);
 
+static unsigned int
+read_leds ()
+{
+  unsigned int rv = 0;
+  const sColor * cp = colors;
+  const sColor * const ecp = colors + sizeof(colors) / sizeof(*colors);
+
+  while (cp < ecp) {
+    if (vBSP430ledGet(cp->idx)) {
+      rv |= (1 << cp->idx);
+    }
+    ++cp;
+  }
+  return rv;
+}
+
 void main ()
 {
   const sColor * cp = colors;
@@ -81,7 +97,7 @@ void main ()
       cprintf("%s is not available\n", cp->name);
     } else {
       vBSP430ledSet(cp->idx, 1);
-      cprintf("%s lit\n", cp->name);
+      cprintf("%s lit; mask 0x%x\n", cp->name, read_leds());
       BSP430_CORE_DELAY_CYCLES(5 * BSP430_CLOCK_NOMINAL_MCLK_HZ);
       vBSP430ledSet(cp->idx, 0);
     }

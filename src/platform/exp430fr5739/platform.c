@@ -78,6 +78,20 @@ void vBSP430ledSet (int led_idx,
     *pxout &= ~bit;
   }
 }
+
+int
+vBSP430ledGet (int led_idx)
+{
+  unsigned int bit = 1 << led_idx;
+  if (bit & 0x0F) {
+    return bit & PJOUT;
+  }
+  if (bit & 0xF0) {
+    return bit & P3OUT;
+  }
+  return 0;
+}
+
 #endif /* BSP430_LED */
 
 int

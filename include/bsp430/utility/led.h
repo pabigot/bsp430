@@ -107,6 +107,17 @@ void vBSP430ledSet (int led_idx,
 #define vBSP430ledSet(led_idx, value) do { (void)(led_idx); (void)(value); } while (0)
 #endif /* BSP430_LED */
 
+/** Return a true value iff the given LED is lit.
+ *
+ * @param led_idx the index of the LED to test.  Non-existent LEDs are considered to be off.
+ *
+ * @return 0 if the LED is absent or off; non-zero if it is on. */
+#if defined(BSP430_DOXYGEN) || (configBSP430_LED - 0)
+int vBSP430ledGet (int led_idx);
+#else /* BSP430_LED */
+#define vBSP430ledGet(led_idx) 0
+#endif /* BSP430_LED */
+
 /** @def BSP430_LED_GREEN
  *
  * The platform-specific index for the first green LED.
