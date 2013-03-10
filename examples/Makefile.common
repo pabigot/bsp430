@@ -39,9 +39,12 @@ ifdef PLATFORM
 -include $(BSP430_ROOT)/src/platform/$(PLATFORM)/Makefile.common
 endif # PLATFORM
 
-# TARGET_FLAGS: Target-specific flags controlling MCU selection,
+# TARGET_*FLAGS: Target-specific flags controlling MCU selection,
 # memory model, etc.
-ifndef TARGET_FLAGS
+
+TARGET_CPPFLAGS ?=
+TARGET_CFLAGS ?=
+TARGET_LDFLAGS ?=
 
 # MCU: The specific microcontroller for which the application is to be
 # built.  Must be defined; a suitable default may be provided by the
@@ -51,21 +54,18 @@ $(error No MCU identified)
 endif # MCU
 
 ifneq (0,$(WITH_GCC))
-TARGET_FLAGS = -mmcu=$(MCU)
+TARGET_CFLAGS += -mmcu=$(MCU)
+TARGET_LDFLAGS += -mmcu=$(MCU)
 
 # MEMORY_MODEL: Level of 20-bit support, assuming this is a CPUX MCU.
 ifdef MEMORY_MODEL
-TARGET_FLAGS += -mmemory-model=$(MEMORY_MODEL)
+TARGET_CFLAGS += -mmemory-model=$(MEMORY_MODEL)
 endif # MEMORY_MODEL
 endif # WITH_GCC
-ifneq (0,$(WITH_CCS))
-TARGET_FLAGS = -D__$(shell echo $(MCU)|tr '[a-z]' '[A-Z]')__
-endif # WITH_CCS
 
-# Extend the derived configuration with application Makefile (AUX_*)
-# and externally provided (EXT_*) refinements.
-TARGET_FLAGS += $(AUX_TARGET_FLAGS) $(EXT_TARGET_FLAGS)
-endif # TARGET_FLAGS
+ifneq (0,$(WITH_CCS))
+TARGET_CPPFLAGS += -D__$(shell echo $(MCU)|tr '[a-z]' '[A-Z]')__
+endif # WITH_CCS
 
 # OPT_CFLAGS: CFLAGS related to optimization and debugging.  The
 # default enables debugging and optimizes for size, and puts each
@@ -110,11 +110,14 @@ ifneq (0,$(WITH_GCC))
 CLEAN += $(SRC:.c=.lst)
 endif # WITH_GCC
 
+CPPFLAGS += $(TARGET_CPPFLAGS)
+
 CFLAGS += $(WARN_CFLAGS)
 CFLAGS += $(OPT_CFLAGS)
-CFLAGS += $(TARGET_FLAGS)
+CFLAGS += $(TARGET_CFLAGS)
 
 LDFLAGS += $(OPT_LDFLAGS)
+LDFLAGS += $(TARGET_LDFLAGS)
 
 # Assume the application-specific bsp430_config.h is same directory as the
 # Makefile.
