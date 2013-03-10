@@ -353,9 +353,23 @@ ulBSP430timerCounter_ni (hBSP430halTIMER timer,
 void
 vBSP430timerResetCounter_ni (hBSP430halTIMER timer)
 {
+  unsigned int mc = timer->hpl->ctl & (MC0 | MC1);
+  timer->hpl->ctl &= ~(MC0 | MC1);
   timer->overflow_count = 0;
   timer->hpl->r = 0;
-  timer->hpl->ctl &= ~TAIFG;
+  timer->hpl->ctl |= mc;
+}
+
+void
+vBSP430timerSetCounter_ni (hBSP430halTIMER timer,
+                           unsigned int overflow,
+                           unsigned long counter)
+{
+  unsigned int mc = timer->hpl->ctl & (MC0 | MC1);
+  timer->hpl->ctl &= ~(MC0 | MC1);
+  timer->overflow_count = ((unsigned long)overflow << 16) | (counter >> 16);
+  timer->hpl->r = (counter & 0xFFFF);
+  timer->hpl->ctl |= mc;
 }
 
 /** Set the interrupt flags based on the alarm needs.

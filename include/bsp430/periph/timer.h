@@ -1163,8 +1163,27 @@ unsigned long ulBSP430timerCounter (hBSP430halTIMER timer,
 /** Reset the timer counter.
  *
  * This clears both the overflow count and the timer internal counter.
- * It does not start or stop the timer. */
+ * If the timer is running it is stopped while the internal counter is
+ * updated, then is restarted. */
 void vBSP430timerResetCounter_ni (hBSP430halTIMER timer);
+
+/** Set the timer counter.
+ *
+ * This sets both the overflow count and the timer internal counter.
+ * If the timer is running it is stopped while the internal counter is
+ * updated, then is restarted.
+ *
+ * @param timer the timer to be modified
+ *
+ * @param overflow the overflow value as would be returned though a
+ * pointer assignment by vBSP430timerCounter_ni().
+ *
+ * @param counter the counter value that would be returned as a value
+ * by vBSP430timerCounter_ni().
+ */
+void vBSP430timerSetCounter_ni (hBSP430halTIMER timer,
+                                unsigned int overflow,
+                                unsigned long counter);
 
 /* Forward declaration */
 struct sBSP430timerAlarm;
