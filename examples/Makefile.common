@@ -271,5 +271,7 @@ install: $(AOUT)
 	$(MSPDEBUG) $(MSPDEBUG_OPTIONS) $(MSPDEBUG_DRIVER) '$(MSPDEBUG_PROG) $(AOUT)'
 endif # WITH_MSPDEBUG
 
-# Include dependency files
+# Include dependencies unless we're cleaning
+ifneq ($(MAKECMDGOALS:realclean=clean),clean)
 -include $(DEP)
+endif # make [real]clean
