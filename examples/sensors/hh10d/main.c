@@ -111,7 +111,7 @@ void main ()
 
   /* Set up so we can safely read the counter value, since the clock
    * is asynchronous to MCLK. */
-  vBSP430timerSafeCounterInitialize_ni(APP_HH10D_TIMER_PERIPH_HANDLE);
+  vBSP430timerSafeCounterInitialize_ni(hh10d.freq_timer);
 
   i2c = hBSP430serialOpenI2C(i2c,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),

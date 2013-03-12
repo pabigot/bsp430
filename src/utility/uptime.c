@@ -112,8 +112,8 @@ delayAlarmSetRegistered_ni_ (int enablep)
 void
 vBSP430uptimeStart_ni (void)
 {
-  vBSP430timerSafeCounterInitialize_ni(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
   xBSP430uptimeTIMER_ = hBSP430timerLookup(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
+  vBSP430timerSafeCounterInitialize_ni(xBSP430uptimeTIMER_->hpl);
   xBSP430uptimeTIMER_->hpl->ctl = 0;
   vBSP430timerResetCounter_ni(xBSP430uptimeTIMER_);
   xBSP430uptimeTIMER_->hpl->ctl =

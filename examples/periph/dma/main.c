@@ -137,7 +137,7 @@ void main ()
   /* Initializing for safe counter is only necessary when using
    * uiBSP430timerAsyncCounterRead_ni() or
    * uiBSP430timerSafeCounterRead_ni() */
-  vBSP430timerSafeCounterInitialize_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  vBSP430timerSafeCounterInitialize_ni(hrt);
 #endif
   hrt->ctl = TASSEL_2 | MC_2 | TACLR;
   t0 = uiBSP430timerSyncCounterRead_ni(hrt);

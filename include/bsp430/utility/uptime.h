@@ -45,7 +45,7 @@
  * timer.
  *
  * @warning The capture/compare register for
- * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX is reserved for use in
+ * #BSP430_TIMER_VALID_COUNTER_READ_CCIDX is reserved for use in
  * overflow management.  Do not use or reconfigure this register.
  *
  * @homepage http://github.com/pabigot/bsp430
@@ -271,9 +271,10 @@ unsigned long ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_H
  * event that occurs while interrupts are disabled, but will be wrong
  * if interrupts remain disabled long enough for a second overflow to
  * occur.  See ulBSP430timerCounter_ni() for details.
+ *
  * vBSP430timerSafeCounterInitialize_ni() will have been called on
  * #BSP430_UPTIME_TIMER_PERIPH_HANDLE so
- * #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX is reserved to support
+ * #BSP430_TIMER_VALID_COUNTER_READ_CCIDX is reserved to support
  * accurate counter reads. */
 static unsigned long
 BSP430_CORE_INLINE
@@ -391,12 +392,15 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * using the @ref grp_timer_alarm infrastructure.
  *
  * @note Most applications should avoid using CC 0 because it is
- * reserved for RTOS context switch support, and CC 2 because it is
- * used in uiBSP430timerSafeCounterRead_ni().  The uptime timer is
- * generally asynchronous to MCLK so safe counter reads are critical.
+ * normally reserved for RTOS context switch support, and CC 2 because
+ * it is normally used in uiBSP430timerSafeCounterRead_ni() from
+ * ulBSP430timerCounter_ni() when
+ * #configBSP430_TIMER_VALID_COUNTER_READ is enabled.  The uptime
+ * timer is generally asynchronous to MCLK so valid counter reads are
+ * critical.
  *
  * @warning If you assign the same value to #BSP430_UPTIME_DELAY_CCIDX
- * and #BSP430_TIMER_SAFE_COUNTER_READ_CCIDX, platform initialization
+ * and #BSP430_TIMER_VALID_COUNTER_READ_CCIDX, platform initialization
  * will hang attempting to configure the delay alarm.
  *
  * @defaulted

@@ -22,7 +22,7 @@
 /* Need a CC register, preferably on the uptime timer, to use for 1PPS
  * capture.  Remember that CC0 is for RTOS switching, CC1 is the
  * default for configBSP430_UPTIME_DELAY, and CC2 is the default for
- * BSP430_TIMER_SAFE_COUNTER_READ_CCIDX.  If your TA0 only has three
+ * BSP430_TIMER_VALID_COUNTER_READ_CCIDX.  If your TA0 only has three
  * capture/compare registers, you may want to override
  * BSP430_UPTIME_TIMER_PERIPH_CPPID to select a more capable timer. */
 #if ((BSP430_PLATFORM_TRXEB - 0)                \

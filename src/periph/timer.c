@@ -304,12 +304,12 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
   /* Reset the CCTL */
   tp->cctl[ccidx] = 0;
 
-#if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
-  if (ccidx == BSP430_TIMER_SAFE_COUNTER_READ_CCIDX) {
-    /* Reset the safe counter CC configuration for this timer */
-    vBSP430timerSafeCounterInitialize_ni(periph);
+#if (configBSP430_TIMER_VALID_COUNTER_READ - 0)
+  if (ccidx == BSP430_TIMER_VALID_COUNTER_READ_CCIDX) {
+    /* Reset the safe counter read configuration for this timer */
+    vBSP430timerSafeCounterInitialize_ni(tp);
   }
-#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+#endif /* configBSP430_TIMER_VALID_COUNTER_READ */
 
   return c1 - c0;
 }
@@ -455,8 +455,8 @@ hBSP430timerAlarmInitialize (struct sBSP430timerAlarm * alarm,
   if (NULL == alarm->timer) {
     return NULL;
   }
-#if (configBSP430_TIMER_SAFE_COUNTER_READ - 0)
-  if (BSP430_TIMER_SAFE_COUNTER_READ_CCIDX == ccidx) {
+#if (configBSP430_TIMER_VALID_COUNTER_READ - 0)
+  if (BSP430_TIMER_VALID_COUNTER_READ_CCIDX == ccidx) {
     return NULL;
   }
   {
@@ -464,11 +464,11 @@ hBSP430timerAlarmInitialize (struct sBSP430timerAlarm * alarm,
     BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
     BSP430_CORE_DISABLE_INTERRUPT();
     do {
-      vBSP430timerSafeCounterInitialize_ni(periph);
+      vBSP430timerSafeCounterInitialize_ni(xBSP430hplLookupTIMER(periph));
     } while (0);
     BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   }
-#endif /* configBSP430_TIMER_SAFE_COUNTER_READ */
+#endif /* configBSP430_TIMER_VALID_COUNTER_READ */
   alarm->ccidx = ccidx;
   alarm->callback = callback;
   alarm->overflow_cb.callback = alarmOFcb_ni;

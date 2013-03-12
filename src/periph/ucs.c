@@ -153,7 +153,7 @@ iBSP430ucsTrimDCOCLKDIV_ni (void)
   UCSCTL5 = 0;
 
   /* Ensure we can read the CCACLK counter safely */
-  vBSP430timerSafeCounterInitialize_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  vBSP430timerSafeCounterInitialize_ni(tp);
 
   /* Almost-certainly-invalid UCSCTL0 value.  This includes reserved
    * bits that read back as zero, so we "know" we won't terminate
