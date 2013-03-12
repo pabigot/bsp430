@@ -70,9 +70,8 @@
 
 /** @def BSP430_TLV
  *
- * Indicate that the TLV interface is available on the platform.  This
- * is normally set by <bsp430/platform.h> when #configBSP430_TLV is
- * true.
+ * Indicate that the TLV interface is available on the platform.  The
+ * value is true iff #configBSP430_TLV is true.
  *
  * This flag is defined only if #configBSP430_TLV is true.
  *
