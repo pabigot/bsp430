@@ -77,6 +77,26 @@
 #endif /* BSP430_EUI64 */
 #endif /* BSP430_DOXYGEN */
 
+/** Define to a true value to use the platform-provided EUI-64 infrastructure.
+ *
+ * Many platforms will provide an implementation of iBSP430eui64(),
+ * either the common one that creates a value from device-specific
+ * calibration data or a custom one derived from available peripherals
+ * like a DS18B20.  If this macro is defined as false by the
+ * application these platform-provided implementations will be omitted
+ * during builds, allowing the application to provide its own
+ * implementation.
+ *
+ * @note If you define this to @c 0 be sure to define @c MODULE_EUI64
+ * in your application @c Makefile to be empty or the name of the source file that provides the function.
+ *
+ * @cppflag
+ * @defaulted
+ */
+#ifndef configBSP430_EUI64_USE_PLATFORM
+#define configBSP430_EUI64_USE_PLATFORM 1
+#endif /*  configBSP430_EUI64_USE_PLATFORM */
+
 /** Value indicating stored EUI-64 is valid and was permanently
  * assigned by something that guarantees uniqueness within the
  * platform. */

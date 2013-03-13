@@ -36,6 +36,8 @@
 #include <string.h>
 
 #if (BSP430_EUI64 - 0)
+
+#if (configBSP430_EUI64_USE_PLATFORM - 0)
 int
 iBSP430eui64 (hBSP430eui64 eui64)
 {
@@ -81,5 +83,6 @@ iBSP430eui64 (hBSP430eui64 eui64)
   }
   return rv;
 }
+#endif /* configBSP430_EUI64_USE_PLATFORM */
 
 #endif /* BSP430_EUI64 */

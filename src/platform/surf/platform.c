@@ -34,6 +34,7 @@
 #include <bsp430/periph/usci5.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/periph/port.h>
+#include <string.h>
 #include <bsp430/platform/surf/platform.h>
 
 #include <bsp430/platform/standard.inc>
@@ -50,12 +51,46 @@ const unsigned char nBSP430led = sizeof(xBSP430halLED_) / sizeof(*xBSP430halLED_
 #endif /* BSP430_LED */
 
 #if (configBSP430_PLATFORM_SURF_DS1825 - 0)
+#include <bsp430/utility/onewire.h>
+
 const struct sBSP430onewireBus xBSP430surfDS1825 = {
   .port = BSP430_PLATFORM_SURF_DS1825_PORT_HAL,
   .bit = BSP430_PLATFORM_SURF_DS1825_PORT_BIT,
   .use_ren = 1,
 };
 #endif /* configBSP430_PLATFORM_SURF_DS1825 */
+
+#include <bsp430/utility/eui64.h>
+#if (configBSP430_EUI64_USE_PLATFORM - 0)
+
+/* The SuRF board was built and sold by People Power Co for use with
+ * the OSIAN/TinyOS infrastructure.  For that purpose this OUI was
+ * obtained to ensure each device had a unique identifier. */
+
+#define PEOPLEPOWERCO_OUI 0xB0C8AD
+
+int
+iBSP430eui64 (hBSP430eui64 eui64)
+{
+  sBSP430onewireSerialNumber serial;
+  memset(eui64->bytes, 0xFF, sizeof(eui64->bytes));
+  if (0 != iBSP430onewireReadSerialNumber(&xBSP430surfDS1825, &serial)) {
+    return -1;
+  }
+  eui64->bytes[0] = 0xFF & (PEOPLEPOWERCO_OUI >> 16);
+  eui64->bytes[1] = 0xFF & (PEOPLEPOWERCO_OUI >> 8);
+  eui64->bytes[2] = 0xFF & (PEOPLEPOWERCO_OUI >> 0);
+  /* The full OSIAN Device Identifier detail is not used for the
+   * derived EUI-64; a zero in the middle two bytes indicates an
+   * unregistered device with no specific capabilities or purpose. */
+  eui64->bytes[3] = 0;
+  eui64->bytes[4] = 0;
+  eui64->bytes[5] = serial.id[3];
+  eui64->bytes[6] = serial.id[4];
+  eui64->bytes[7] = serial.id[5];
+  return 0;
+}
+#endif /* configBSP430_EUI64_USE_PLATFORM */
 
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,

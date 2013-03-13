@@ -96,6 +96,16 @@
 #endif /* configBSP430_HPL_PORT1 */
 #endif /* configBSP430_PLATFORM_SURF_FLASH */
 
+/* Use platform-provided EUI64 unless told not to */
+#ifndef configBSP430_EUI64_USE_PLATFORM
+#define configBSP430_EUI64_USE_PLATFORM 1
+#endif /* configBSP430_EUI64_USE_PLATFORM */
+
+#if (configBSP430_EUI64_USE_PLATFORM - 0)
+/* Platform-specific EUI-64 requires DS1825 access */
+#define configBSP430_PLATFORM_SURF_DS1825 1
+#endif /* configBSP430_PLATFORM_SURF_DS1825 */
+
 #if (configBSP430_PLATFORM_SURF_DS1825 - 0)
 /* DS1825 is on P3.7 */
 #define configBSP430_HAL_PORT3 1

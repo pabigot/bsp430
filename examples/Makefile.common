@@ -195,9 +195,9 @@ MODULES_LED ?= utility/led
 # facility.
 MODULES_CONSOLE = $(MODULES_SERIAL) utility/console
 
-# MODULES_EUI64: Support for EUI-64 values.  Platform specific may be
-# supplied by the platform Makefile.common; otherwise use the shared
-# implementation.
+# MODULES_EUI64: Support for EUI-64 values.  Application-specific provided
+# by application; platform specific may be defaulted by the platform
+# Makefile.common; otherwise use the shared implementation.
 MODULES_EUI64 ?= utility/eui64
 
 # MODULES_PLATFORM: The platform-specific platform module, together with the
