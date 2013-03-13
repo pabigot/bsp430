@@ -94,6 +94,10 @@
 #define BSP430_LED_WHITE 3
 #define BSP430_LED_BLUE 4
 
+/* DS1825 on P3.7 */
+#define BSP430_PLATFORM_SURF_DS1825_PORT_HAL BSP430_HAL_PORT3
+#define BSP430_PLATFORM_SURF_DS1825_PORT_BIT BIT7
+
 #else /* BSP430_PLATFORM_SURF_REVISION */
 
 #error BSP430_PLATFORM_SURF_REVISION not supported
@@ -154,6 +158,28 @@
 #define BSP430_PLATFORM_SURF_FLASH_CSn_PORT_BIT BIT7
 
 #endif /* configBSP430_PLATFORM_SURF_FLASH */
+
+/** Define to true to provide definitions for the DS1825 one-wire interface.
+ *
+ * If true, this allocates the port HAL required to interact with the
+ * DS1825 temperature sensor on P3.7 and adds the declaration for
+ * #xBSP430surfDS1825.
+ *
+ * @defaulted
+ */
+#ifndef configBSP430_PLATFORM_SURF_DS1825
+#define configBSP430_PLATFORM_SURF_DS1825 0
+#endif /* configBSP430_PLATFORM_SURF_DS1825 */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_SURF_DS1825 - 0)
+#include <bsp430/utility/onewire.h>
+
+/** The 1-Wire(R) interface for the DS1825 temperature sensor.
+ *
+ * @dependency #configBSP430_PLATFORM_SURF_DS1825
+ */
+extern const sBSP430onewireBus xBSP430surfDS1825;
+#endif /* configBSP430_PLATFORM_SURF_DS1825 */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

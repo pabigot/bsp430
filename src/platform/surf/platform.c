@@ -49,6 +49,14 @@ const sBSP430halLED xBSP430halLED_[] = {
 const unsigned char nBSP430led = sizeof(xBSP430halLED_) / sizeof(*xBSP430halLED_);
 #endif /* BSP430_LED */
 
+#if (configBSP430_PLATFORM_SURF_DS1825 - 0)
+const struct sBSP430onewireBus xBSP430surfDS1825 = {
+  .port = BSP430_PLATFORM_SURF_DS1825_PORT_HAL,
+  .bit = BSP430_PLATFORM_SURF_DS1825_PORT_BIT,
+  .use_ren = 1,
+};
+#endif /* configBSP430_PLATFORM_SURF_DS1825 */
+
 int
 iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
                                            int periph_config,

@@ -23,6 +23,8 @@
 #error Uptime is not configured correctly
 #endif
 
+#ifndef APP_DS18B20_BUS
+#define APP_DS18B20_BUS ds18b20
 /* Where the device can be found */
 const struct sBSP430onewireBus ds18b20 = {
   .port = APP_DS18B20_PORT_HAL,
@@ -39,6 +41,7 @@ const struct sBSP430onewireBus ds18b20 = {
   1
 #endif /* BSP430_PLATFORM_EXP430G2 */
 };
+#endif /* APP_DS18B20_BUS */
 
 /* The serial number read from the device on startup */
 struct sBSP430onewireSerialNumber serial;
@@ -46,7 +49,7 @@ struct sBSP430onewireSerialNumber serial;
 void main ()
 {
   int rc;
-  const struct sBSP430onewireBus * bus = &ds18b20;
+  const struct sBSP430onewireBus * const bus = &APP_DS18B20_BUS;
 
   vBSP430platformInitialize_ni();
 
@@ -57,9 +60,9 @@ void main ()
           ulBSP430uptime_ni(), ulBSP430uptimeConversionFrequency_Hz_ni());
 
   cprintf("Monitoring DS18xx on %s.%u bit %x\n",
-          xBSP430portName(BSP430_PORT_HAL_GET_PERIPH_HANDLE(APP_DS18B20_PORT_HAL)) ?: "P?",
-          iBSP430portBitPosition(APP_DS18B20_BIT),
-          APP_DS18B20_BIT);
+          xBSP430portName(BSP430_PORT_HAL_GET_PERIPH_HANDLE(bus->port)) ?: "P?",
+          iBSP430portBitPosition(bus->bit),
+          bus->bit);
 
   do {
     rc = iBSP430onewireReadSerialNumber(bus, &serial);

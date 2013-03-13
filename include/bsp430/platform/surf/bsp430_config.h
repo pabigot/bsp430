@@ -96,6 +96,11 @@
 #endif /* configBSP430_HPL_PORT1 */
 #endif /* configBSP430_PLATFORM_SURF_FLASH */
 
+#if (configBSP430_PLATFORM_SURF_DS1825 - 0)
+/* DS1825 is on P3.7 */
+#define configBSP430_HAL_PORT3 1
+#endif /* configBSP430_PLATFORM_SURF_DS1825 */
+
 /** @endcond */
 
 #endif /* BSP430_PLATFORM_EM430_BSP430_CONFIG_H */
