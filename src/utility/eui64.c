@@ -68,7 +68,7 @@ iBSP430eui64 (hBSP430eui64 eui64)
     if (0 > rv) {
       unsigned int next = 1; /* Seed value */
       int i;
-      
+
       for (i = 0; i < sizeof(eui64->bytes); ++i) {
         eui64->bytes[i] = rand_r(&next);
       }

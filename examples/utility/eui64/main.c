@@ -16,7 +16,7 @@ void main ()
   int rv;
   uBSP430eui64 eui64;
   int i;
-  
+
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 

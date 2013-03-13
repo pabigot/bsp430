@@ -84,7 +84,7 @@ void main ()
     t1 = uiBSP430timerSyncCounterRead_ni(hrt);
     BSP430_CORE_ENABLE_INTERRUPT();
     cprintf("%u hrt to configure latched counter\n", t1-t0-hrto);
-    
+
     BSP430_CORE_DISABLE_INTERRUPT();
     t0 = uiBSP430timerSyncCounterRead_ni(hrt);
     s = uiBSP430timerLatchedCounterRead_ni(lrt, BSP430_TIMER_VALID_COUNTER_READ_CCIDX);
@@ -99,7 +99,7 @@ void main ()
     t1 = uiBSP430timerSyncCounterRead_ni(hrt);
     BSP430_CORE_ENABLE_INTERRUPT();
     cprintf("%u hrt to configure safe counter\n", t1-t0-hrto);
-    
+
     BSP430_CORE_DISABLE_INTERRUPT();
     t0 = uiBSP430timerSyncCounterRead_ni(hrt);
     s = uiBSP430timerSafeCounterRead_ni(lrt);

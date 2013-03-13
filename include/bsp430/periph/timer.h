@@ -86,7 +86,7 @@
  *
  * For convenience several alternative methods of accessing a timer
  * counter are provided:
- * 
+ *
  * @li uiBSP430timerSyncCounterRead_ni() reads the peripheral counter
  * register without validating it.  It is the fastest approach, but
  * can produce invalid results when the timer clock is asynchronous to
@@ -97,7 +97,7 @@
  * timer is asynchronous to the CPU clock (e.g., timers using ACLK
  * derived from LFXT1).  Calls to it may hang if the timer runs so
  * fast that the counter changes between successive reads.
- * 
+ *
  * @li uiBSP430timerLatchedCounterRead_ni() reserves a capture/compare
  * register to be used to latch the counter value and return it.  It
  * is safe and valid for synchronous and asynchronous timers at any
@@ -116,7 +116,7 @@
  * #BSP430_CORE_NDEBUG is false.  It is the slowest but also the most
  * reliable absent information about how the timer is configured, so
  * is the solution underlying ulBSP430timerCounter_ni().
- * 
+ *
  * @section h_periph_timer_hal Hardware Adaptation Layer
  *
  * The timer @HAL uses the sBSP430halTIMER structure.
@@ -2683,13 +2683,13 @@ uiBSP430timerSyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
  * asynchronous to MCLK, but it is safe to use only when the counter
  * update rate is significantly slower than MCLK, e.g. when the timer
  * is driven by LFXT1.
- * 
+ *
  * This call takes about 9 clock cycles on a CPUX MCU if the first two
  * reads are equal.
  *
  * @warning The time taken by this function is only probabilistically
  * constant.
- * 
+ *
  * @warning If the timer frequency is not at least a factor of 10
  * slower than MCLK, this routine may hang since two counter values
  * read consecutively may never be equal.
@@ -2697,7 +2697,7 @@ uiBSP430timerSyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
  * @param hpl reference to the underlying timer.
  *
  * @return the instantaneous counter value.
- * 
+ *
  * @see uiBSP430timerSyncCounterRead_ni()
  * @see uiBSP430timerLatchedCounterRead_ni()
  * @see uiBSP430timerSafeCounterRead_ni()
@@ -2824,7 +2824,7 @@ vBSP430timerSafeCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl)
  *
  * This function uses uiBSP430timerLatchedCounterRead_ni() along with
  * #BSP430_TIMER_VALID_COUNTER_READ_CCIDX to read the timer.
- * 
+ *
  * This call takes about 21 clock cycles on a CPUX MCU when
  * #configBSP430_TIMER_VALID_COUNTER_READ is enabled.
  *
@@ -2836,7 +2836,7 @@ vBSP430timerSafeCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl)
  *
  * @dependency #configBSP430_TIMER_VALID_COUNTER_READ
  * @dependency #BSP430_CORE_NDEBUG
- * 
+ *
  * @see uiBSP430timerAsyncCounterRead_ni()
  * @see uiBSP430timerSyncCounterRead_ni()
  * @see uiBSP430timerLatchedCounterRead_ni()
