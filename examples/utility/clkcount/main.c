@@ -131,6 +131,7 @@ void main ()
   timer->hpl->ctl = 0;
   vBSP430timerResetCounter_ni(timer);
   timer->hpl->ctl = tassel | MC_2 | TACLR | TAIE;
+  vBSP430timerInferHints_ni(timer);
 
   /* Align to capture then clear the state */
   BSP430_CORE_LPM_ENTER_NI(LPM0_bits);

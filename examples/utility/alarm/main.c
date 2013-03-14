@@ -556,6 +556,7 @@ void main ()
   }
   vBSP430timerResetCounter_ni(alarmHAL_);
   alarmHAL_->hpl->ctl = APP_TASSEL | MC_2 | TACLR | TAIE;
+  vBSP430timerInferHints_ni(alarmHAL_);
   alarm_Hz = ulBSP430timerFrequency_Hz_ni(ALARM_TIMER_PERIPH_HANDLE);
 
   nTimers = iBSP430timerSupportedCCs(ALARM_TIMER_PERIPH_HANDLE);

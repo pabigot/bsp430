@@ -277,12 +277,13 @@ typedef struct sBSP430hplHALStatePrefix {
    * structure type, and whether the HAL layer includes ISR support.
    * See #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT. */
   const unsigned char cflags;
+  
   /** HAL-specific flags recording peripheral state
    *
-   * This primarily exists for alignment, though at some point there
-   * may be flags that are worth having at this level, such as a
-   * resource-in-use marker. */
-  unsigned char flags;
+   * This primarily exists for alignment, though certain peripherals
+   * also support flags such as hints about how the peripheral is
+   * configured. */
+  volatile unsigned char flags;
 } sBSP430hplHALStatePrefix;
 
 /** Get the peripheral handle corresponding to an HPL handle

@@ -81,6 +81,36 @@ iBSP430clockConfigureLFXT1_ni (int enablep,
   return rc;
 }
 
+eBSP430clockSource xBSP430clockACLKSource ()
+{
+  switch (BCSCTL3 & SELA_MASK) {
+    case LFXT1S_0: return eBSP430clockSRC_XT1CLK;
+    case LFXT1S_1: return eBSP430clockSRC_UNKNOWN_1;
+    case LFXT1S_2: return eBSP430clockSRC_VLOCLK;
+    case LFXT1S_3: return eBSP430clockSRC_XT2CLK;
+  }
+  return eBSP430clockSRC_NONE;
+}
+
+eBSP430clockSource xBSP430clockSMCLKSource ()
+{
+  if (BCSCTL2 & SELS) {
+    return eBSP430clockSRC_DCOCLK;
+  }
+  return eBSP430clockSRC_XT2CLK;
+}
+
+eBSP430clockSource xBSP430clockMCLKSource ()
+{
+  switch (BCSCTL2 & SELM_MASK) {
+    case SELM_0: return eBSP430clockSRC_DCOCLK;
+    case SELM_1: return eBSP430clockSRC_DCOCLK;
+    case SELM_2: return eBSP430clockSRC_XT2CLK;
+    case SELM_3: return eBSP430clockSRC_XT1CLK;
+  }
+  return eBSP430clockSRC_NONE;
+}
+
 int
 iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
                               unsigned int dividing_shift)

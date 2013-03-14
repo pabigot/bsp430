@@ -396,7 +396,66 @@ typedef enum eBSP430clockSource {
    * determine what the actual (nominal) speed is. */
   eBSP430clockSRC_XT1CLK_FALLBACK,
 
+  /** A unique unrecognized value.  Not a valid source for clock
+   * configuration. */
+  eBSP430clockSRC_UNKNOWN_1,
+
+  /** A unique unrecognized value.  Not a valid source for clock
+   * configuration. */
+  eBSP430clockSRC_UNKNOWN_6,
+
+  /** A unique unrecognized value.  Not a valid source for clock
+   * configuration. */
+  eBSP430clockSRC_UNKNOWN_7,
+
+  /** A value representing an external clock, potentially used as a
+   * timer source.  Not a valid source for clock configuration, and
+   * will never compare equal to a clock source value. Only returned
+   * from xBSP430timerClockSource(). */
+  eBSP430clockSRC_TCLK,
+
+  /** A value representing an inverted external clock, potentially
+   * used as a timer source.  Not a valid source for clock
+   * configuration, and will never compare equal to a clock source
+   * value.  Only returned from xBSP430timerClockSource(). */
+  eBSP430clockSRC_ITCLK,
+
 } eBSP430clockSource;
+
+/** True iff the two clock sources are synchronous. */
+static int
+BSP430_CORE_INLINE
+iBSP430clockSourceSynchronous (eBSP430clockSource s1,
+                               eBSP430clockSource s2)
+{
+  return ((s1 == s2) 
+          || ((eBSP430clockSRC_DCOCLK == s1) && (eBSP430clockSRC_DCOCLKDIV == s2))
+          || ((eBSP430clockSRC_DCOCLK == s2) && (eBSP430clockSRC_DCOCLKDIV == s1)));
+}
+
+/** Return a reconstructed source for ACLK.
+ *
+ * @note This may not be the same value as was used for the
+ * configuration.  It will not take into account resolved fallbacks or
+ * faulted crystals.  It will be one that uniquely identifies the
+ * source for the purposes of source comparison. */
+eBSP430clockSource xBSP430clockACLKSource ();
+
+/** Return a reconstructed source for SMCLK.
+ *
+ * @note This may not be the same value as was used for the
+ * configuration.  It will not take into account resolved fallbacks or
+ * faulted crystals.  It will be one that uniquely identifies the
+ * source for the purposes of source comparison. */
+eBSP430clockSource xBSP430clockSMCLKSource ();
+
+/** Return a reconstructed source for MCLK.
+ *
+ * @note This may not be the same value as was used for the
+ * configuration.  It will not take into account resolved fallbacks or
+ * faulted crystals.  It will be one that uniquely identifies the
+ * source for the purposes of source comparison. */
+eBSP430clockSource xBSP430clockMCLKSource ();
 
 /** Configure MCLK to a desired frequency.
  *

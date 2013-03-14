@@ -188,6 +188,7 @@
     alarmHAL_->hpl->ctl = 0;
     vBSP430timerResetCounter_ni(alarmHAL_);
     alarmHAL_->hpl->ctl = APP_TASSEL | MC_2 | TACLR | TAIE;
+    vBSP430timerInferHints_ni(alarmHAL_);
   }
 
  * @endcode
@@ -270,6 +271,7 @@
 /* !BSP430! instance=@timers */
 
 #include <bsp430/periph.h>
+#include <bsp430/clock.h>
 
 /** @def BSP430_MODULE_TIMER_A
  *
@@ -1086,15 +1088,34 @@ typedef struct sBSP430hplTIMER {
 
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/** Field value for variant stored in sBSP430halTIMER.hal_state.cflags
- * when HPL reference is to an #sBSP430hplTIMER. */
+/** Field value for variant stored in #sBSP430halTIMER field
+ * hal_state.cflags when HPL reference is to an #sBSP430hplTIMER. */
 #define BSP430_TIMER_HAL_HPL_VARIANT_TIMER 1
+
+/** Bit set in sBSP430halTIMER::hal_state @c flags to indicate a timer
+ * is known to be synchronous to the system clock.  In this case a
+ * faster counter read approach (uiBSP430timerSyncCounterRead_ni())
+ * can be used.
+ *
+ * @note */
+#define BSP430_TIMER_FLAG_MCLKSYNC 0x01
+
+/** Bit set in sBSP430halTIMER::hal_state @c flags to indicate a timer
+ * is known to be significantly slower than the system clock.  In this
+ * case a faster counter read approach
+ * (iBSP430timerAsyncCounterRead_ni()) can be used with asynchronous
+ * timers.
+ *
+ * @note The BSP430 infrastructure infers this flag only if the clock
+ * is at least a factor of 64x slower than MCLK. */
+#define BSP430_TIMER_FLAG_SLOW 0x02
 
 /** Structure holding hardware abstraction layer state for Timer_A and
  * Timer_B. */
 typedef struct sBSP430halTIMER {
   /** Common header used to extract the correct HPL pointer type from
-   * the hpl union. */
+   * the hpl union and to hold hints about the timer's
+   * configuration. */
   sBSP430hplHALStatePrefix hal_state;
 
   /** The underlying timer peripheral register structure */
@@ -1132,6 +1153,41 @@ typedef struct sBSP430halTIMER {
 
 /** The timer internal state is protected. */
 typedef struct sBSP430halTIMER * hBSP430halTIMER;
+
+/** Infer the appropriate hints about timer configuration
+ *
+ * Some timer operations such as safe and valid reading of the counter
+ * can be optimized by selecting between alternative techniques based
+ * on configuration hints including #BSP430_TIMER_FLAG_MCLKSYNC and
+ * #BSP430_TIMER_FLAG_SLOW.
+ *
+ * Invoking this function will determine the appropriate value of the
+ * @c flags field of the timer's sBSP430hplHALStatePrefix::hal_state
+ * structure:
+ *
+ * @li The function infers #BSP430_TIMER_FLAG_MCLKSYNC when the clock
+ * source for the timer is equal to the clock source for MCLK, based
+ * on xBSP430timerClockSource() and xBSP430clockMCLKSource().  Be
+ * aware that #eBSP430clkSource_DCOCLK is not considered synchronous
+ * with #eBSP430clkSource_DCOCLKDIV under this rule.
+ *
+ * @li The function infers #BSP430_TIMER_FLAG_SLOW when MCLK
+ * frequency is at least 16 times faster than timer frequency.
+ *
+ * @param timer the timer for which flags are to be determined
+ */
+void vBSP430timerInferHints_ni (hBSP430halTIMER timer);
+
+/** Return a reconstructed source for the timer.
+ *
+ * @note This should be used only in equality tests to determine
+ * whether the source for a timer is the same as the source for a
+ * system clock or another timer.  Do not interpret the value as
+ * identifying a specific source.  For example, sometimes
+ * #eBSP430clkSource_XT2CLK will mean a crystal and sometimes it will
+ * mean an external clock or VLOCLK, depending on the MCU and its
+ * supporting hardware. */
+eBSP430clockSource xBSP430timerClockSource (volatile sBSP430hplTIMER * hpl);
 
 /** Provide the frequency of the timer source, if that can be determined.
  *
@@ -2724,7 +2780,6 @@ uiBSP430timerAsyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
  *
  * @param ccidx the index of the capture/compare register to be used
  * for latched timer reads
- *
  */
 static void
 BSP430_CORE_INLINE_FORCED
@@ -2754,6 +2809,8 @@ vBSP430timerLatchedCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl,
  *
  * @param ccidx the index of the capture/compare register to be used
  * for latched timer reads
+ *
+ * @return the instantaneous counter value.
  *
  * @see uiBSP430timerAsyncCounterRead_ni()
  * @see uiBSP430timerSyncCounterRead_ni()
@@ -2785,8 +2842,7 @@ uiBSP430timerLatchedCounterRead_ni (volatile sBSP430hplTIMER * const hpl,
  * it must be called again if you need to use
  * #BSP430_TIMER_VALID_COUNTER_READ_CCIDX for some other purpose.
  *
- * @param periph the timer peripheral for which safe counter reads are
- * desired.
+ * @param hpl reference to the underlying timer
  *
  * @warning If #BSP430_TIMER_VALID_COUNTER_READ_CCIDX does not exist on
  * @a periph and #BSP430_CORE_NDEBUG is false this call will hang.
@@ -2834,6 +2890,10 @@ vBSP430timerSafeCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl)
  * in place allowing the developer to see what has gone wrong, instead
  * of continuing to process invalid counter values.
  *
+ * @param hpl reference to the underlying timer
+ *
+ * @return the instantaneous counter value.
+ *
  * @dependency #configBSP430_TIMER_VALID_COUNTER_READ
  * @dependency #BSP430_CORE_NDEBUG
  *
@@ -2867,6 +2927,52 @@ uiBSP430timerSafeCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
   rv = uiBSP430timerSyncCounterRead_ni(hpl);
 #endif /* configBSP430_TIMER_VALID_COUNTER_READ */
   return rv;
+}
+
+/** Select the best counter read solution based on a hint.
+ *
+ * When the application knows exactly how the timer is configured at
+ * the point the counter is read, it can select the optimal counter
+ * read function and use it directly for the least overhead.  When the
+ * application or infrastructure can record information about how the
+ * timer is configured but the counter is read in shared code the
+ * hints may be used to get a better or faster answer than would be
+ * obtained from uiBSP430timerSafeCounterRead_ni(), which is the only
+ * solution when no information is available.
+ *
+ * If #BSP430_TIMER_FLAG_MCLKSYNC is set in @a flags,
+ * uiBSP430timerSyncCounterRead_ni() is used. There's about an 8 cycle
+ * overhead to select this case at runtime, resulting in a measurement
+ * cost of 11 cycles.
+ *
+ * Otherwise, if #BSP430_TIMER_FLAG_SLOW is set in @a flags,
+ * uiBSP430timerAsyncCounterRead_ni() is used.  There's about an 11
+ * cycle overhead to select this case at runtime, resulting in a
+ * measurement cost of 20 cycles.
+ *
+ * Otherwise, uiBSP430timerSafeCounterRead_ni() is used.
+ *
+ * @param hpl reference to the underlying timer
+ *
+ * @param flags bit mask including potentially
+ * #BSP430_TIMER_FLAG_MCLKSYNC and #BSP430_TIMER_FLAG_SLOW.  This can
+ * be obtained from the @c flags field of the corresponding
+ * sBSP430halTIMER::hal_state field, if something updated that when
+ * the timer was configured.
+ *
+ * @return the instantaneous counter value. */
+static unsigned int
+BSP430_CORE_INLINE_FORCED
+uiBSP430timerBestCounterRead_ni (volatile sBSP430hplTIMER * const hpl,
+                                 int flags)
+{
+  if (flags & BSP430_TIMER_FLAG_MCLKSYNC) {
+    return uiBSP430timerSyncCounterRead_ni(hpl);
+  }
+  if (flags & BSP430_TIMER_FLAG_SLOW) {
+    return uiBSP430timerAsyncCounterRead_ni(hpl);
+  }
+  return uiBSP430timerSafeCounterRead_ni(hpl);
 }
 
 #endif /* BSP430_MODULE_TIMER */

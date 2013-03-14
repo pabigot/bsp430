@@ -390,6 +390,32 @@ iBSP430clockConfigureXT2_ni (int enablep,
 }
 #endif /* BSP430_CLOCK_NOMINAL_XT2CLK_HZ */
 
+static const eBSP430clockSource cselMap_[8] = {
+  eBSP430clockSRC_XT1CLK,
+  eBSP430clockSRC_VLOCLK,
+  eBSP430clockSRC_REFOCLK,
+  eBSP430clockSRC_DCOCLK,
+  eBSP430clockSRC_DCOCLKDIV,
+  eBSP430clockSRC_XT2CLK,
+  eBSP430clockSRC_UNKNOWN_6,
+  eBSP430clockSRC_UNKNOWN_7,
+};
+
+eBSP430clockSource xBSP430clockACLKSource ()
+{
+  return cselMap_[(UCSCTL4 & SELA_MASK) / SELA0];
+}
+
+eBSP430clockSource xBSP430clockSMCLKSource ()
+{
+  return cselMap_[(UCSCTL4 & SELS_MASK) / SELS0];
+}
+
+eBSP430clockSource xBSP430clockMCLKSource ()
+{
+  return cselMap_[(UCSCTL4 & SELM_MASK) / SELM0];
+}
+
 static unsigned long
 cselToFreq_Hz_ (int csel)
 {

@@ -120,6 +120,7 @@ vBSP430uptimeStart_ni (void)
     ((TASSEL0 | TASSEL1) & (BSP430_UPTIME_TASSEL))
     | ((ID0 | ID1) & (BSP430_UPTIME_DIVIDING_SHIFT * ID0))
     | TACLR | TAIE;
+  vBSP430timerInferHints_ni(xBSP430uptimeTIMER_);
 #if (configBSP430_UPTIME_DELAY - 0)
   {
     hBSP430timerAlarm delay_alarm;

@@ -232,6 +232,36 @@ sBSP430halTIMER xBSP430hal_TB2_ = {
 };
 #endif /* configBSP430_HAL_TB2 */
 
+eBSP430clockSource
+xBSP430timerClockSource (volatile sBSP430hplTIMER * hpl)
+{
+  switch (hpl->ctl & TASSEL_3) {
+    case TASSEL_0: return eBSP430clockSRC_TCLK;
+    case TASSEL_1: return xBSP430clockACLKSource();
+    case TASSEL_2: return xBSP430clockSMCLKSource();
+    case TASSEL_3: return eBSP430clockSRC_ITCLK;
+  }
+  return eBSP430clockSRC_NONE;
+}
+
+void
+vBSP430timerInferHints_ni (hBSP430halTIMER timer)
+{
+  unsigned char flags = timer->hal_state.flags & ~(BSP430_TIMER_FLAG_MCLKSYNC | BSP430_TIMER_FLAG_SLOW);
+  unsigned long timer_Hz;
+  unsigned long mclk_Hz;
+  
+  if (xBSP430timerClockSource(timer->hpl) == xBSP430clockMCLKSource()) {
+    flags |= BSP430_TIMER_FLAG_MCLKSYNC;
+  }
+  timer_Hz = ulBSP430timerFrequency_Hz_ni(xBSP430periphFromHPL(timer->hpl));
+  mclk_Hz = ulBSP430clockMCLK_Hz_ni();
+  if ((0 != timer_Hz) && (0 <= mclk_Hz) && (timer_Hz <= (mclk_Hz / 16))) {
+    flags |= BSP430_TIMER_FLAG_SLOW;
+  }
+  timer->hal_state.flags = flags;
+}
+
 unsigned long
 ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph)
 {
@@ -329,7 +359,7 @@ ulBSP430timerCounter_ni (hBSP430halTIMER timer,
    * reflected in that CTL word applies to the counter value. */
   do {
     ctla = timer->hpl->ctl;
-    r = uiBSP430timerSafeCounterRead_ni(timer->hpl);
+    r = uiBSP430timerBestCounterRead_ni(timer->hpl, timer->hal_state.flags);
     ctlb = timer->hpl->ctl;
   } while (ctla != ctlb);
 
@@ -396,7 +426,7 @@ void alarmConfigureInterrupts_ni (struct sBSP430timerAlarm * map)
     hpl->cctl[map->ccidx] |= CCIE;
 
     /* If it looks like we missed the count-to-lo event, set one. */
-    if (uiBSP430timerSafeCounterRead_ni(hpl) >= lo) {
+    if (uiBSP430timerBestCounterRead_ni(hpl, map->timer->hal_state.flags) >= lo) {
       hpl->cctl[map->ccidx] |= CCIFG;
     }
   }

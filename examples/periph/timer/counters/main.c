@@ -17,10 +17,12 @@
 void main ()
 {
   volatile sBSP430hplTIMER * const lrt = xBSP430hplLookupTIMER(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
+  hBSP430halTIMER uthal;
   volatile sBSP430hplTIMER * const hrt = xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
+  uthal = hBSP430uptimeTimer();
 
   cprintf("\n\nTimer counter analysis " __DATE__ " " __TIME__ "\n");
 
@@ -33,18 +35,20 @@ void main ()
   vBSP430timerSafeCounterInitialize_ni(hrt);
   hrt->ctl = TASSEL_2 | MC_2 | TACLR;
 
-  cprintf("MCLK %lu Hz, SMCLK %lu Hz, ACLK %lu Hz\n",
-          ulBSP430clockMCLK_Hz_ni(),
-          ulBSP430clockSMCLK_Hz_ni(),
-          ulBSP430clockACLK_Hz_ni());
-  cprintf("LRT is %s at %lu Hz, CTL %04x\n",
+  cprintf("ACLK %lu Hz source %u\n", ulBSP430clockACLK_Hz_ni(), (int)xBSP430clockACLKSource());
+  cprintf("SMCLK %lu Hz source %u\n", ulBSP430clockSMCLK_Hz_ni(), (int)xBSP430clockSMCLKSource());
+  cprintf("MCLK %lu Hz source %u\n", ulBSP430clockMCLK_Hz_ni(), (int)xBSP430clockMCLKSource());
+  cprintf("LRT is %s source %u at %lu Hz, CTL %04x\n",
           xBSP430timerName(xBSP430periphFromHPL(lrt)),
+          (int)xBSP430timerClockSource(lrt), 
           ulBSP430timerFrequency_Hz_ni(xBSP430periphFromHPL(lrt)),
           lrt->ctl);
-  cprintf("HRT is %s at %lu Hz, CTL %04x\n",
+  cprintf("HRT is %s source %u at %lu Hz, CTL %04x\n",
           xBSP430timerName(xBSP430periphFromHPL(hrt)),
+          (int)xBSP430timerClockSource(hrt),
           ulBSP430timerFrequency_Hz_ni(xBSP430periphFromHPL(hrt)),
           hrt->ctl);
+  cprintf("Uptime clock flags 0x%02x\n", uthal->hal_state.flags);
 
   /* Need to enable interrupts so timer overflow events are properly
    * acknowledged. */
@@ -70,13 +74,17 @@ void main ()
     BSP430_CORE_ENABLE_INTERRUPT();
     cprintf("%u hrt to sync read value %u\n", t1-t0-hrto, s);
 
-    BSP430_CORE_DISABLE_INTERRUPT();
-    t0 = uiBSP430timerSyncCounterRead_ni(hrt);
-    s = uiBSP430timerAsyncCounterRead_ni(lrt);
-    t1 = uiBSP430timerSyncCounterRead_ni(hrt);
-    BSP430_CORE_ENABLE_INTERRUPT();
-    cprintf("%u hrt to async read value %u\n", t1-t0-hrto, s);
-
+    if (uthal->hal_state.flags & BSP430_TIMER_FLAG_SLOW) {
+      BSP430_CORE_DISABLE_INTERRUPT();
+      t0 = uiBSP430timerSyncCounterRead_ni(hrt);
+      s = uiBSP430timerAsyncCounterRead_ni(lrt);
+      t1 = uiBSP430timerSyncCounterRead_ni(hrt);
+      BSP430_CORE_ENABLE_INTERRUPT();
+      cprintf("%u hrt to async read value %u\n", t1-t0-hrto, s);
+    } else {
+      cprintf("async read skipped, not slow\n");
+    }
+    
 #if (configBSP430_TIMER_VALID_COUNTER_READ - 0)
     BSP430_CORE_DISABLE_INTERRUPT();
     t0 = uiBSP430timerSyncCounterRead_ni(hrt);
@@ -106,6 +114,13 @@ void main ()
     t1 = uiBSP430timerSyncCounterRead_ni(hrt);
     BSP430_CORE_ENABLE_INTERRUPT();
     cprintf("%u hrt to read safe counter %u\n", t1-t0-hrto, s);
+
+    BSP430_CORE_DISABLE_INTERRUPT();
+    t0 = uiBSP430timerSyncCounterRead_ni(hrt);
+    s = uiBSP430timerBestCounterRead_ni(lrt, uthal->hal_state.flags);
+    t1 = uiBSP430timerSyncCounterRead_ni(hrt);
+    BSP430_CORE_ENABLE_INTERRUPT();
+    cprintf("%u hrt to read best counter %u\n", t1-t0-hrto, s);
 
     BSP430_CORE_DISABLE_INTERRUPT();
     t0 = uiBSP430timerSyncCounterRead_ni(hrt);
