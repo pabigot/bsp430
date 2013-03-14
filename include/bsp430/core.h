@@ -644,9 +644,21 @@
  *
  * Set the status register #GIE bit so that interrupts are enabled.
  *
+ * @note BSP430 will insert a @c nop after the @c eint when
+ * #BSP430_CORE_FAMILY_IS_5XX is true, on the assumption that MSP430
+ * erratum CPU42 is present and has not been worked around by the
+ * compiler.
+ *
  * @defaulted */
 #ifndef BSP430_CORE_ENABLE_INTERRUPT
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
+#define BSP430_CORE_ENABLE_INTERRUPT() do {     \
+    __enable_interrupt();                       \
+    __nop();                                    \
+  } while (0)
+#else /* BSP430_CORE_FAMILY_IS_5XX */
 #define BSP430_CORE_ENABLE_INTERRUPT() __enable_interrupt()
+#endif /* BSP430_CORE_FAMILY_IS_5XX */
 #endif /* BSP430_CORE_ENABLE_INTERRUPT */
 
 /** @def BSP430_CORE_DISABLE_INTERRUPT()
