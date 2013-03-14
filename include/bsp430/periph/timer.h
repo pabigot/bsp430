@@ -1568,6 +1568,8 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * sBSP430timerAlarm::setting_tck value may be so far in the past that
  * new settings are mis-interpreted as being in the far future.
  *
+ * @note The alarm is set only if the return value is zero.
+ *
  * @param alarm a pointer to an alarm structure initialized using
  * iBSP430timerAlarmInitialize().
  *
@@ -1587,6 +1589,32 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * @ingroup grp_timer_alarm */
 int iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
                              unsigned long setting_tck);
+
+/** Forced an alarm at the specified time even if it is late.
+ *
+ * Like iBSP430timerAlarmSet_ni() except that a positive error
+ * (#BSP430_TIMER_ALARM_SET_NOW or #BSP430_TIMER_ALARM_SET_PAST)
+ * forces the alarm to be configured and the interrupt set to execute
+ * as soon as possible.
+ *
+ * This is useful when initially configuring an alarm for system
+ * timeslices, where the underlying timer has already been started and
+ * what would normally be the first tick may have already passed.
+ *
+ * @note The alarm is set only if the return value is non-negative.
+ * For positive return values the alarm interrupt may already be
+ * pending.
+ *
+ * @param alarm a pointer to an alarm structure initialized using
+ * iBSP430timerAlarmInitialize().
+ *
+ * @param setting_tck the time at which the alarm should go off.
+ *
+ * @return
+ * @li Zero to indicate the alarm was successfully scheduled
+ */
+int iBSP430timerAlarmSetForced_ni (hBSP430timerAlarm alarm,
+                                   unsigned long setting_tck);
 
 /** Wrapper to invoke iBSP430timerAlarmSet_ni() when interrupts are
  * enabled.

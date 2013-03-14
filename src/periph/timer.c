@@ -547,11 +547,13 @@ iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
   return 0;
 }
 
-int
-iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
-                         unsigned long setting_tck)
+static int
+timerAlarmSet_ni (hBSP430timerAlarm alarm,
+                  unsigned long setting_tck,
+                  int force)
 {
   struct sBSP430timerAlarm * malarmp = (struct sBSP430timerAlarm *)alarm;
+  int rv = 0;
   unsigned long now_tck;
   unsigned long delay_tck;
 
@@ -560,31 +562,53 @@ iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
   }
   now_tck = ulBSP430timerCounter_ni(alarm->timer, NULL);
   delay_tck = setting_tck - now_tck;
-  /* Alarm must be enabled... */
   if (! (BSP430_TIMER_ALARM_FLAG_ENABLED & alarm->flags)) {
-    return -1;
-  }
-  /* ... and not already set */
-  if (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags) {
-    return BSP430_TIMER_ALARM_SET_ALREADY;
-  }
-  if (BSP430_TIMER_ALARM_FUTURE_LIMIT > delay_tck) {
-    return BSP430_TIMER_ALARM_SET_NOW;
-  }
-  if (BSP430_TIMER_ALARM_PAST_LIMIT > (now_tck - setting_tck)) {
-    return BSP430_TIMER_ALARM_SET_PAST;
+    /* Can't set an alarm that's not enabled */
+    rv = -1;
+  } else if (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags) {
+    /* Can't set an alarm that's already set */
+    rv = BSP430_TIMER_ALARM_SET_ALREADY;
+  } else if (BSP430_TIMER_ALARM_FUTURE_LIMIT > delay_tck) {
+    /* Maybe can't set an alarm that's coming up too fast */
+    rv = BSP430_TIMER_ALARM_SET_NOW;
+  } else if (BSP430_TIMER_ALARM_PAST_LIMIT > (now_tck - setting_tck)) {
+    /* Maybe can't set an alarm that's in the past */
+    rv = BSP430_TIMER_ALARM_SET_PAST;
+  } else {
+    /* Can set the alarm */
+    rv = 0;
   }
 
-  /* Record the time at which the event occurs, and that the alarm is
-   * scheduled.  Also set the CCR to match the point in the cycle at
-   * which the event should be raised.  We don't enable an interrupt
-   * on the event until the timer overflow is consistent with the
-   * upper word of the scheduled time. */
-  malarmp->setting_tck = setting_tck;
-  malarmp->flags |= BSP430_TIMER_ALARM_FLAG_SET;
-  alarm->timer->hpl->ccr[alarm->ccidx] = (unsigned int)setting_tck;
-  alarmConfigureInterrupts_ni(malarmp);
-  return 0;
+  if ((0 == rv) || (0 < rv && force)) {
+    /* Record the time at which the event occurs, and that the alarm is
+     * scheduled.  Also set the CCR to match the point in the cycle at
+     * which the event should be raised.  We don't enable an interrupt
+     * on the event until the timer overflow is consistent with the
+     * upper word of the scheduled time. */
+    malarmp->setting_tck = setting_tck;
+    malarmp->flags |= BSP430_TIMER_ALARM_FLAG_SET;
+    alarm->timer->hpl->ccr[alarm->ccidx] = (unsigned int)setting_tck;
+    alarmConfigureInterrupts_ni(malarmp);
+    if (0 < rv) {
+      volatile sBSP430hplTIMER * hpl = malarmp->timer->hpl;
+      hpl->cctl[malarmp->ccidx] |= CCIFG;
+    }
+  }
+  return rv;
+}
+
+int
+iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
+                         unsigned long setting_tck)
+{
+  return timerAlarmSet_ni(alarm, setting_tck, 0);
+}
+
+int
+iBSP430timerAlarmSetForced_ni (hBSP430timerAlarm alarm,
+                               unsigned long setting_tck)
+{
+  return timerAlarmSet_ni(alarm, setting_tck, 1);
 }
 
 int
