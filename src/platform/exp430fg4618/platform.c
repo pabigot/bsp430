@@ -54,7 +54,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
                                            int enablep)
 {
   unsigned char bits = 0;
-  unsigned int pba = 0;
+  uintptr_t pba = 0;
   volatile sBSP430hplPORT_IE_8 * hpl;
 
   if (BSP430_PERIPH_LFXT1 == device) {
