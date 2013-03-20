@@ -197,10 +197,12 @@ typedef struct sBSP430hplEUSCIB {
 #define BSP430_PERIPH_EUSCI_A0_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_A0__
 #define BSP430_PERIPH_EUSCI_A1_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_A1__
 #define BSP430_PERIPH_EUSCI_A2_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_A2__
+#define BSP430_PERIPH_EUSCI_A3_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_A3__
 #define BSP430_PERIPH_EUSCI_B0_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_B0__
+#define BSP430_PERIPH_EUSCI_B1_BASEADDRESS_ __MSP430_BASEADDRESS_EUSCI_B1__
 /** @endcond */ /* DOXYGEN_INTERNAL */
 
-/* !BSP430! periph=serial instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_B0 insert=hal_decl */
+/* !BSP430! periph=serial instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_A3,EUSCI_B0,EUSCI_B1 insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_A0
  *
@@ -313,6 +315,43 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #define BSP430_HAL_EUSCI_A2 (&xBSP430hal_EUSCI_A2_)
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_A3
+ *
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
+ *
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_A3.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_A3).
+ *
+ * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_A3 is default-enabled
+ * @ingroup grp_config_core
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_A3
+#define configBSP430_HAL_EUSCI_A3 0
+#endif /* configBSP430_HAL_EUSCI_A3 */
+
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_A3 - 0
+/* You do not need to know about this */
+extern sBSP430halSERIAL xBSP430hal_EUSCI_A3_;
+#endif /* configBSP430_HAL_EUSCI_A3 */
+/** @endcond */
+
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_A3.
+ *
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_A3
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_EUSCI_A3 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_A3 - 0)
+#define BSP430_HAL_EUSCI_A3 (&xBSP430hal_EUSCI_A3_)
+#endif /* configBSP430_HAL_EUSCI_A3 */
+
 /** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_B0
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
@@ -350,10 +389,47 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #define BSP430_HAL_EUSCI_B0 (&xBSP430hal_EUSCI_B0_)
 #endif /* configBSP430_HAL_EUSCI_B0 */
 
+/** Control inclusion of the @HAL interface to #BSP430_PERIPH_EUSCI_B1
+ *
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
+ *
+ * When enabled, the sBSP430halSERIAL structure reference is
+ * available as #BSP430_HAL_EUSCI_B1.
+ *
+ * It may also be obtained using
+ * #hBSP430serialLookup(#BSP430_PERIPH_EUSCI_B1).
+ *
+ * @cppflag
+ * @affects #configBSP430_HPL_EUSCI_B1 is default-enabled
+ * @ingroup grp_config_core
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B1
+#define configBSP430_HAL_EUSCI_B1 0
+#endif /* configBSP430_HAL_EUSCI_B1 */
+
+/** @cond DOXYGEN_EXCLUDE */
+#if configBSP430_HAL_EUSCI_B1 - 0
+/* You do not need to know about this */
+extern sBSP430halSERIAL xBSP430hal_EUSCI_B1_;
+#endif /* configBSP430_HAL_EUSCI_B1 */
+/** @endcond */
+
+/** sBSP430halSERIAL HAL handle for #BSP430_PERIPH_EUSCI_B1.
+ *
+ * This pointer may be used only if #configBSP430_HAL_EUSCI_B1
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HAL_EUSCI_B1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HAL_EUSCI_B1 - 0)
+#define BSP430_HAL_EUSCI_B1 (&xBSP430hal_EUSCI_B1_)
+#endif /* configBSP430_HAL_EUSCI_B1 */
+
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
 
-/* !BSP430! periph=euscia instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 insert=periph_decl */
+/* !BSP430! periph=euscia instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_A3 insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
 /** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_A0
  *
@@ -454,6 +530,39 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #define BSP430_PERIPH_EUSCI_A2 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_A2_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_A2 */
 
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_A3
+ *
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
+ *
+ * When enabled, the sBSP430hplEUSCIA structure reference is
+ * available as #BSP430_HPL_EUSCI_A3.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIA(#BSP430_PERIPH_EUSCI_A3).
+ *
+ * @cppflag
+ * @ingroup grp_config_core
+ * @defaulted */
+#ifndef configBSP430_HPL_EUSCI_A3
+#define configBSP430_HPL_EUSCI_A3 (configBSP430_HAL_EUSCI_A3 - 0)
+#endif /* configBSP430_HPL_EUSCI_A3 */
+
+#if (configBSP430_HAL_EUSCI_A3 - 0) && ! (configBSP430_HPL_EUSCI_A3 - 0)
+#warning configBSP430_HAL_EUSCI_A3 requested without configBSP430_HPL_EUSCI_A3
+#endif /* HAL and not HPL */
+
+/** Handle for the raw EUSCI_A3 device.
+ *
+ * The handle may be used only if #configBSP430_HPL_EUSCI_A3
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_A3 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A3 - 0)
+#define BSP430_PERIPH_EUSCI_A3 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_A3_BASEADDRESS_))
+#endif /* configBSP430_HPL_EUSCI_A3 */
+
 /* END AUTOMATICALLY GENERATED CODE [periph_decl] */
 /* !BSP430! end=periph_decl */
 
@@ -491,6 +600,17 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A2 - 0)
 #define BSP430_HPL_EUSCI_A2 ((volatile sBSP430hplEUSCIA *)BSP430_PERIPH_EUSCI_A2)
 #endif /* configBSP430_HPL_EUSCI_A2 */
+
+/** sBSP430hplEUSCIA HPL pointer for #BSP430_PERIPH_EUSCI_A3.
+ *
+ * This pointer to a volatile structure overlaying the EUSCI_A3
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_A3 is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_A3 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_A3 - 0)
+#define BSP430_HPL_EUSCI_A3 ((volatile sBSP430hplEUSCIA *)BSP430_PERIPH_EUSCI_A3)
+#endif /* configBSP430_HPL_EUSCI_A3 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
 /* !BSP430! end=hpl_decl */
@@ -566,10 +686,33 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #warning configBSP430_HAL_EUSCI_A2_ISR requested without configBSP430_HAL_EUSCI_A2
 #endif /* HAL_ISR and not HAL */
 
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_A3
+ *
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_A3 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
+ *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_A3.
+ *
+ * @cppflag
+ * @ingroup grp_config_core
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_A3_ISR
+#define configBSP430_HAL_EUSCI_A3_ISR (configBSP430_HAL_EUSCI_A3 - 0)
+#endif /* configBSP430_HAL_EUSCI_A3_ISR */
+
+#if (configBSP430_HAL_EUSCI_A3_ISR - 0) && ! (configBSP430_HAL_EUSCI_A3 - 0)
+#warning configBSP430_HAL_EUSCI_A3_ISR requested without configBSP430_HAL_EUSCI_A3
+#endif /* HAL_ISR and not HAL */
+
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
 /* !BSP430! end=hal_isr_decl */
 
-/* !BSP430! periph=euscib instance=EUSCI_B0 insert=periph_decl */
+/* !BSP430! periph=euscib instance=EUSCI_B0,EUSCI_B1 insert=periph_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
 /** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_B0
  *
@@ -604,6 +747,39 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #define BSP430_PERIPH_EUSCI_B0 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_B0_BASEADDRESS_))
 #endif /* configBSP430_HPL_EUSCI_B0 */
 
+/** Control inclusion of the @HPL interface to #BSP430_PERIPH_EUSCI_B1
+ *
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interface be included, and 0 to request it be excluded.  By default
+ * the interface is excluded.
+ *
+ * When enabled, the sBSP430hplEUSCIB structure reference is
+ * available as #BSP430_HPL_EUSCI_B1.
+ *
+ * It may also be obtained using
+ * #xBSP430hplLookupEUSCIB(#BSP430_PERIPH_EUSCI_B1).
+ *
+ * @cppflag
+ * @ingroup grp_config_core
+ * @defaulted */
+#ifndef configBSP430_HPL_EUSCI_B1
+#define configBSP430_HPL_EUSCI_B1 (configBSP430_HAL_EUSCI_B1 - 0)
+#endif /* configBSP430_HPL_EUSCI_B1 */
+
+#if (configBSP430_HAL_EUSCI_B1 - 0) && ! (configBSP430_HPL_EUSCI_B1 - 0)
+#warning configBSP430_HAL_EUSCI_B1 requested without configBSP430_HPL_EUSCI_B1
+#endif /* HAL and not HPL */
+
+/** Handle for the raw EUSCI_B1 device.
+ *
+ * The handle may be used only if #configBSP430_HPL_EUSCI_B1
+ * is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B1 - 0)
+#define BSP430_PERIPH_EUSCI_B1 ((tBSP430periphHandle)(BSP430_PERIPH_EUSCI_B1_BASEADDRESS_))
+#endif /* configBSP430_HPL_EUSCI_B1 */
+
 /* END AUTOMATICALLY GENERATED CODE [periph_decl] */
 /* !BSP430! end=periph_decl */
 
@@ -619,6 +795,17 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B0 - 0)
 #define BSP430_HPL_EUSCI_B0 ((volatile sBSP430hplEUSCIB *)BSP430_PERIPH_EUSCI_B0)
 #endif /* configBSP430_HPL_EUSCI_B0 */
+
+/** sBSP430hplEUSCIB HPL pointer for #BSP430_PERIPH_EUSCI_B1.
+ *
+ * This pointer to a volatile structure overlaying the EUSCI_B1
+ * peripheral register map may be used only if
+ * #configBSP430_HPL_EUSCI_B1 is defined to a true value.
+ *
+ * @dependency #configBSP430_HPL_EUSCI_B1 */
+#if defined(BSP430_DOXYGEN) || (configBSP430_HPL_EUSCI_B1 - 0)
+#define BSP430_HPL_EUSCI_B1 ((volatile sBSP430hplEUSCIB *)BSP430_PERIPH_EUSCI_B1)
+#endif /* configBSP430_HPL_EUSCI_B1 */
 
 /* END AUTOMATICALLY GENERATED CODE [hpl_decl] */
 /* !BSP430! end=hpl_decl */
@@ -646,6 +833,29 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 
 #if (configBSP430_HAL_EUSCI_B0_ISR - 0) && ! (configBSP430_HAL_EUSCI_B0 - 0)
 #warning configBSP430_HAL_EUSCI_B0_ISR requested without configBSP430_HAL_EUSCI_B0
+#endif /* HAL_ISR and not HAL */
+
+/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_EUSCI_B1
+ *
+ * This must be defined to 1 in @c bsp430_config.h to request the
+ * interrupt handler be included, and 0 to request it be excluded.
+ * Use of the interrupt handler requires that the corresponding @HAL
+ * be requested.  By default the interface is included when
+ * #configBSP430_HAL_EUSCI_B1 is set, but it may be explicitly
+ * disabled if you intend to provide your own implementation or will
+ * not be using the interrupt features.
+ *
+ * Interact with the handler using the @ref callbacks via #BSP430_HAL_EUSCI_B1.
+ *
+ * @cppflag
+ * @ingroup grp_config_core
+ * @defaulted */
+#ifndef configBSP430_HAL_EUSCI_B1_ISR
+#define configBSP430_HAL_EUSCI_B1_ISR (configBSP430_HAL_EUSCI_B1 - 0)
+#endif /* configBSP430_HAL_EUSCI_B1_ISR */
+
+#if (configBSP430_HAL_EUSCI_B1_ISR - 0) && ! (configBSP430_HAL_EUSCI_B1 - 0)
+#warning configBSP430_HAL_EUSCI_B1_ISR requested without configBSP430_HAL_EUSCI_B1
 #endif /* HAL_ISR and not HAL */
 
 /* END AUTOMATICALLY GENERATED CODE [hal_isr_decl] */
@@ -728,7 +938,7 @@ int iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
 static BSP430_CORE_INLINE
 volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph)
 {
-  /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2 */
+  /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_A2 */
   /* !BSP430! insert=periph_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
 #if configBSP430_HPL_EUSCI_A0 - 0
@@ -742,6 +952,12 @@ volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph)
     return BSP430_HPL_EUSCI_A1;
   }
 #endif /* configBSP430_HPL_EUSCI_A1 */
+
+#if configBSP430_HPL_EUSCI_A2 - 0
+  if (BSP430_PERIPH_EUSCI_A2 == periph) {
+    return BSP430_HPL_EUSCI_A2;
+  }
+#endif /* configBSP430_HPL_EUSCI_A2 */
 
 #if configBSP430_HPL_EUSCI_A2 - 0
   if (BSP430_PERIPH_EUSCI_A2 == periph) {
@@ -766,7 +982,7 @@ volatile sBSP430hplEUSCIA * xBSP430hplLookupEUSCIA (tBSP430periphHandle periph)
 static BSP430_CORE_INLINE
 volatile sBSP430hplEUSCIB * xBSP430hplLookupEUSCIB (tBSP430periphHandle periph)
 {
-  /* !BSP430! periph=eusci instance=EUSCI_B0 */
+  /* !BSP430! periph=eusci instance=EUSCI_B0,EUSCI_B1 */
   /* !BSP430! insert=periph_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
 #if configBSP430_HPL_EUSCI_B0 - 0
@@ -774,6 +990,12 @@ volatile sBSP430hplEUSCIB * xBSP430hplLookupEUSCIB (tBSP430periphHandle periph)
     return BSP430_HPL_EUSCI_B0;
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
+
+#if configBSP430_HPL_EUSCI_B1 - 0
+  if (BSP430_PERIPH_EUSCI_B1 == periph) {
+    return BSP430_HPL_EUSCI_B1;
+  }
+#endif /* configBSP430_HPL_EUSCI_B1 */
 
   /* END AUTOMATICALLY GENERATED CODE [periph_hpl_demux] */
   /* !BSP430! end=periph_hpl_demux */
@@ -791,7 +1013,7 @@ volatile sBSP430hplEUSCIB * xBSP430hplLookupEUSCIB (tBSP430periphHandle periph)
 static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430eusciLookup (tBSP430periphHandle periph)
 {
-  /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_B0 */
+  /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_A3,EUSCI_B0,EUSCI_B1 */
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
 #if configBSP430_HAL_EUSCI_A0 - 0
@@ -812,11 +1034,23 @@ hBSP430halSERIAL hBSP430eusciLookup (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
+#if configBSP430_HAL_EUSCI_A3 - 0
+  if (BSP430_PERIPH_EUSCI_A3 == periph) {
+    return BSP430_HAL_EUSCI_A3;
+  }
+#endif /* configBSP430_HAL_EUSCI_A3 */
+
 #if configBSP430_HAL_EUSCI_B0 - 0
   if (BSP430_PERIPH_EUSCI_B0 == periph) {
     return BSP430_HAL_EUSCI_B0;
   }
 #endif /* configBSP430_HAL_EUSCI_B0 */
+
+#if configBSP430_HAL_EUSCI_B1 - 0
+  if (BSP430_PERIPH_EUSCI_B1 == periph) {
+    return BSP430_HAL_EUSCI_B1;
+  }
+#endif /* configBSP430_HAL_EUSCI_B1 */
 
   /* END AUTOMATICALLY GENERATED CODE [periph_hal_demux] */
   /* !BSP430! end=periph_hal_demux */
