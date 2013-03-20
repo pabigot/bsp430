@@ -40,7 +40,7 @@ void main ()
   cprintf("MCLK %lu Hz source %u\n", ulBSP430clockMCLK_Hz_ni(), (int)xBSP430clockMCLKSource());
   cprintf("LRT is %s source %u at %lu Hz, CTL %04x\n",
           xBSP430timerName(xBSP430periphFromHPL(lrt)),
-          (int)xBSP430timerClockSource(lrt), 
+          (int)xBSP430timerClockSource(lrt),
           ulBSP430timerFrequency_Hz_ni(xBSP430periphFromHPL(lrt)),
           lrt->ctl);
   cprintf("HRT is %s source %u at %lu Hz, CTL %04x\n",
@@ -84,7 +84,7 @@ void main ()
     } else {
       cprintf("async read skipped, not slow\n");
     }
-    
+
 #if (configBSP430_TIMER_VALID_COUNTER_READ - 0)
     BSP430_CORE_DISABLE_INTERRUPT();
     t0 = uiBSP430timerSyncCounterRead_ni(hrt);

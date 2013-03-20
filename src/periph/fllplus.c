@@ -41,10 +41,14 @@ eBSP430clockSource xBSP430clockACLKSource ()
 {
 #if 0
   switch (BCSCTL3 & SELA_MASK) {
-    case LFXT1S_0: return eBSP430clockSRC_XT1CLK;
-    case LFXT1S_1: return eBSP430clockSRC_UNKNOWN_1;
-    case LFXT1S_2: return eBSP430clockSRC_VLOCLK;
-    case LFXT1S_3: return eBSP430clockSRC_XT2CLK;
+    case LFXT1S_0:
+      return eBSP430clockSRC_XT1CLK;
+    case LFXT1S_1:
+      return eBSP430clockSRC_UNKNOWN_1;
+    case LFXT1S_2:
+      return eBSP430clockSRC_VLOCLK;
+    case LFXT1S_3:
+      return eBSP430clockSRC_XT2CLK;
   }
 #endif
   return eBSP430clockSRC_XT1CLK;
@@ -65,10 +69,14 @@ eBSP430clockSource xBSP430clockMCLKSource ()
 #if 0
   /* Only available on certain chips, not yet supported */
   switch (FLL_CTL2 & SELM_MASK) {
-    case SELM_0: return eBSP430clockSRC_DCOCLK;
-    case SELM_1: return eBSP430clockSRC_DCOCLK;
-    case SELM_2: return eBSP430clockSRC_XT2CLK;
-    case SELM_3: return eBSP430clockSRC_XT1CLK;
+    case SELM_0:
+      return eBSP430clockSRC_DCOCLK;
+    case SELM_1:
+      return eBSP430clockSRC_DCOCLK;
+    case SELM_2:
+      return eBSP430clockSRC_XT2CLK;
+    case SELM_3:
+      return eBSP430clockSRC_XT1CLK;
   }
 #endif /* SELM_MASK */
   return eBSP430clockSRC_DCOCLK;

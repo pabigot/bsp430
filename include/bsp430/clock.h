@@ -428,7 +428,7 @@ BSP430_CORE_INLINE
 iBSP430clockSourceSynchronous (eBSP430clockSource s1,
                                eBSP430clockSource s2)
 {
-  return ((s1 == s2) 
+  return ((s1 == s2)
           || ((eBSP430clockSRC_DCOCLK == s1) && (eBSP430clockSRC_DCOCLKDIV == s2))
           || ((eBSP430clockSRC_DCOCLK == s2) && (eBSP430clockSRC_DCOCLKDIV == s1)));
 }

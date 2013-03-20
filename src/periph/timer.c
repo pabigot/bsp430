@@ -236,10 +236,14 @@ eBSP430clockSource
 xBSP430timerClockSource (volatile sBSP430hplTIMER * hpl)
 {
   switch (hpl->ctl & TASSEL_3) {
-    case TASSEL_0: return eBSP430clockSRC_TCLK;
-    case TASSEL_1: return xBSP430clockACLKSource();
-    case TASSEL_2: return xBSP430clockSMCLKSource();
-    case TASSEL_3: return eBSP430clockSRC_ITCLK;
+    case TASSEL_0:
+      return eBSP430clockSRC_TCLK;
+    case TASSEL_1:
+      return xBSP430clockACLKSource();
+    case TASSEL_2:
+      return xBSP430clockSMCLKSource();
+    case TASSEL_3:
+      return eBSP430clockSRC_ITCLK;
   }
   return eBSP430clockSRC_NONE;
 }
@@ -250,7 +254,7 @@ vBSP430timerInferHints_ni (hBSP430halTIMER timer)
   unsigned char flags = timer->hal_state.flags & ~(BSP430_TIMER_FLAG_MCLKSYNC | BSP430_TIMER_FLAG_SLOW);
   unsigned long timer_Hz;
   unsigned long mclk_Hz;
-  
+
   if (xBSP430timerClockSource(timer->hpl) == xBSP430clockMCLKSource()) {
     flags |= BSP430_TIMER_FLAG_MCLKSYNC;
   }

@@ -277,7 +277,7 @@ typedef struct sBSP430hplHALStatePrefix {
    * structure type, and whether the HAL layer includes ISR support.
    * See #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT. */
   const unsigned char cflags;
-  
+
   /** HAL-specific flags recording peripheral state
    *
    * This primarily exists for alignment, though certain peripherals
