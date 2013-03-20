@@ -133,6 +133,27 @@ Board</a>
 \li <a href="http://www.ti.com/tool/msp-ts430rgz48c">MSP430FR5969 in a TS430RGZ48C carrier ("Wolverine")</a>
 \li <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a>
 
+\section mp_external Useful External Libraries
+
+\subsection mp_external_embtextf embtextf (Embedded System Text Formatting)
+@see http://pabigot.github.com/embtextf/
+
+BSP430 was initially developed using the <a
+href="http://sourceforge.net/projects/mspgcc/">MSPGCC</a> toolchain, a port
+of the GNU compiler collection to the MSP430.  The msp430-libc library that
+is part of this toolchain includes a space-efficient formatting print
+capability compatible with C's @c printf(3c) functionality using a callback
+that allows it to output to an application-provided location (a memory
+buffer, a serial console, an LCD screen, etc.).  Subsequently those
+capabilities have been extracted, refactored, and extended as the <a
+href="http://pabigot.github.com/embtextf/">embtextf</a> library, making the
+same features available to Code Composer Studio and for toolchains that do
+not have an efficient generic formatted print capability.  These functions
+are used in <bsp430/utility/console.h> by defining
+#BSP430_CONSOLE_USE_EMBTEXTF, which is enabled by the default when @c
+EMBTEXTF_ROOT is defined for use by
+<tt>${BSP430_ROOT}/examples/Makefile.common</tt>.
+
 \section mp_examples Provided Examples
 
 \subsection ex_utility Value-Added Utility Examples

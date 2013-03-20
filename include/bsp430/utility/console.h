@@ -31,25 +31,30 @@
 
 /** @file
  *
- * @brief A generic console print capability.
- *
- * cprintf() is like @c printf.
+ * @brief A generic console output capability.
  *
  * In the default configuration with interrupt-driven transmission
  * disabled, it disables interrupts while operating to ensure that
  * interleaved messages do not occur, transmits with direct UART
  * writes, and is "safe" for call from within interrupt handlers.
  *
- * cputs() and cputchars() are provided where the complexity of printf
+ * cputs() and cputchars() are provided where the complexity of cprintf()
  * is not required but atomic output is desired.  Other routines
  * permit display of NUL-terminated plain text without a newline
- * (cputtext_ni()), plain text of a fixed length (cputchars_ni()),
- * single characters (cputchar_ni()), and integers (cputi_ni(),
- * cputu_ni(), cputl_ni(), cputul_ni()) without incurring the stack
- * overhead of printf, which can be quite high (on the order of 100
- * bytes if 64-bit integer support is included).  Following the
- * standard BSP430 naming conventions some of these capabilities are
- * available with wrappers that preserve interrupt state.
+ * (cputtext_ni()), plain text of a fixed length (cputchars_ni()), and
+ * single characters (cputchar_ni()).
+ *
+ * With library support through #BSP430_CONSOLE_USE_EMBTEXTF or <a
+ * href="https://sourceforge.net/projects/mspgcc/files/msp430-libc/">msp430-libc</a>
+ * in the MSPGCC toolchain full support for formatted output via
+ * cprintf() is possible.  Optimized routines are provided to convert
+ * integers in standard bases with minimal space overhead (cputi_ni(),
+ * cputu_ni(), cputl_ni(), cputul_ni()).  The integer routines are
+ * more cumbersome but necessary when the platform cannot accommodate
+ * the stack overhead of cprintf() (on the order of 100 bytes if
+ * 64-bit integer support is included).  Following the standard
+ * BSP430 naming conventions some of these capabilities are available
+ * with wrappers that preserve interrupt state.
  *
  * All output functions are safe to call even if the console was not
  * initialized, or its initialization failed, or it is temporarily
@@ -279,6 +284,23 @@
 #define BSP430_CONSOLE_TX_BUFFER_SIZE 0
 #endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
 
+/** Define to indicate build infrastructure support for embtextf
+ *
+ * This flag should be defined to a true value by the build
+ * infrastructure when the external @ref mp_external_embtextf library
+ * is to supply enhanced formatting functions.  This enables:
+ * @li cprintf(), vcprintf()
+ * @li cputi_ni(), cputu_ni(), cputl_ni(), cputul_ni()
+ *
+ * @note When using the MSPGCC toolchain this capability is available
+ * implicitly through msp430-libc.  #BSP430_CONSOLE_USE_EMBTEXTF
+ * should be defined only when the external version of these functions
+ * is to be used instead.
+ */
+#ifndef BSP430_CONSOLE_USE_EMBTEXTF
+#define BSP430_CONSOLE_USE_EMBTEXTF 0
+#endif /* BSP430_CONSOLE_USE_EMBTEXTF */
+
 /** Return a character that was input to the console.
  *
  * @return the next character that was input to the console, or -1 if
@@ -383,95 +405,6 @@ void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
 #ifndef configBSP430_CONSOLE_USE_ONLCR
 #define configBSP430_CONSOLE_USE_ONLCR 1
 #endif /* configBSP430_CONSOLE_USE_ONLCR */
-
-/** @def configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
- *
- * Define to false if your libc does not provide vuprintf.
- * msp430-libc does provide this, and it is used to implement
- * cprintf.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
-#define configBSP430_CONSOLE_LIBC_HAS_VUPRINTF 1
-#endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
-
-/** @def configBSP430_CONSOLE_LIBC_HAS_ITOA
- *
- * Define to false if your libc does not provide itoa.  msp430-libc
- * does provide this, and it is used to implement cputi.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_CONSOLE_LIBC_HAS_ITOA
-#define configBSP430_CONSOLE_LIBC_HAS_ITOA 1
-#endif /* configBSP430_CONSOLE_LIBC_HAS_ITOA */
-
-/** @def configBSP430_CONSOLE_LIBC_HAS_UTOA
- *
- * Define to false if your libc does not provide utoa.  msp430-libc
- * does provide this, and it is used to implement cputu.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_CONSOLE_LIBC_HAS_UTOA
-#define configBSP430_CONSOLE_LIBC_HAS_UTOA 1
-#endif /* configBSP430_CONSOLE_LIBC_HAS_UTOA */
-
-/** @def configBSP430_CONSOLE_LIBC_HAS_LTOA
- *
- * Define to false if your libc does not provide ltoa.  msp430-libc
- * does provide this, and it is used to implement cputl.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_CONSOLE_LIBC_HAS_LTOA
-#define configBSP430_CONSOLE_LIBC_HAS_LTOA 1
-#endif /* configBSP430_CONSOLE_LIBC_HAS_LTOA */
-
-/** @def configBSP430_CONSOLE_LIBC_HAS_ULTOA
- *
- * Define to false if your libc does not provide ultoa.  msp430-libc
- * does provide this, and it is used to implement cputul.
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_CONSOLE_LIBC_HAS_ULTOA
-#define configBSP430_CONSOLE_LIBC_HAS_ULTOA 1
-#endif /* configBSP430_CONSOLE_LIBC_HAS_ULTOA */
-
-/** Like printf(3), but to the console UART.
- *
- * Interrupts are disabled during the duration of the invocation.  On
- * exit, interruptibility state is restored (if entered with
- * interrupts disabled, they remain disabled).
- *
- * If xBSP430consoleInitialize() has not assigned a UART device, the
- * call is a no-op.
- *
- * @consoleoutput
- *
- * @param format A printf(3) format string
- *
- * @return Number of characters printed if the console is enabled; 0
- * if it is disabled; a negative error code if an error is
- * encountered
- *
- * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
-int cprintf (const char * format, ...)
-#if __GNUC__ - 0
-__attribute__((__format__(printf, 1, 2)))
-#endif /* __GNUC__ */
-;
-
-/** Like vprintf(3), but to the console UART.
- *
- * @consoleoutput
- *
- * @param format A printf(3) format string
- * @param ap A stdarg reference to variable arguments to a calling function.
- * @return as with cprintf(). */
-int vcprintf (const char * format, va_list ap);
 
 /** Like puts(3) to the console UART
  *
@@ -587,6 +520,43 @@ int cputchars_ni (const char * cp, size_t len);
  */
 int cputchars (const char * cp, size_t len);
 
+#if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE_USE_EMBTEXTF - 0) || (__MSPGCC__ - 0)
+
+/** Like printf(3), but to the console UART.
+ *
+ * Interrupts are disabled during the duration of the invocation.  On
+ * exit, interruptibility state is restored (if entered with
+ * interrupts disabled, they remain disabled).
+ *
+ * If xBSP430consoleInitialize() has not assigned a UART device, the
+ * call is a no-op.
+ *
+ * @consoleoutput
+ *
+ * @param format A printf(3) format string
+ *
+ * @return Number of characters printed if the console is enabled; 0
+ * if it is disabled; a negative error code if an error is
+ * encountered
+ *
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
+int cprintf (const char * format, ...)
+#if __GNUC__ - 0
+__attribute__((__format__(printf, 1, 2)))
+#endif /* __GNUC__ */
+;
+
+/** Like vprintf(3), but to the console UART.
+ *
+ * @consoleoutput
+ *
+ * @param format A printf(3) format string
+ * @param ap A stdarg reference to variable arguments to a calling function.
+ * @return as with cprintf().
+ *
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
+int vcprintf (const char * format, va_list ap);
+
 /** Format an int using itoa and emit it to the console.
  *
  * @consoleoutput
@@ -599,7 +569,7 @@ int cputchars (const char * cp, size_t len);
  *
  * @return the number of characters emitted
  *
- * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_ITOA */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
 int cputi_ni (int n, int radix);
 
 /** Format an int using utoa and emit it to the console.
@@ -614,7 +584,7 @@ int cputi_ni (int n, int radix);
  *
  * @return the number of characters emitted
  *
- * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_UTOA */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
 int cputu_ni (unsigned int n, int radix);
 
 /** Format an int using ltoa and emit it to the console.
@@ -629,7 +599,7 @@ int cputu_ni (unsigned int n, int radix);
  *
  * @return the number of characters emitted
  *
- * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_LTOA */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
 int cputl_ni (long n, int radix);
 
 /** Format an int using itoa and emit it to the console.
@@ -644,8 +614,10 @@ int cputl_ni (long n, int radix);
  *
  * @return the number of characters emitted
  *
- * @dependency #BSP430_CONSOLE, #configBSP430_CONSOLE_LIBC_HAS_ULTOA */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
 int cputul_ni (unsigned long n, int radix);
+
+#endif /* BSP430_CONSOLE_USE_EMBTEXTF */
 
 /** Initialize and return the console serial HAL instance.
  *

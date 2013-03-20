@@ -96,6 +96,16 @@ WARN_CFLAGS += -Werror
 endif # WITH_GCC
 endif # WITH_WARN_ERROR
 
+# External capabilities
+
+# EMBTEXTF_ROOT: If defined use http://pabigot.github.com/embtextf/ to
+# supply enhanced text formatting capabilities for the console.
+ifdef EMBTEXTF_ROOT
+CPPFLAGS += -DBSP430_CONSOLE_USE_EMBTEXTF -I"$(EMBTEXTF_ROOT)/include"
+AUX_LDLIBS += $(EMBTEXTF_ROOT)/lib/libembtextf.a
+endif # EMBTEXTF_ROOT
+
+ifneq (0,$(WITH_GCC))
 # Use GCC to generate dependency files
 %.d: %.c
 	set -e; $(RM) $@; \

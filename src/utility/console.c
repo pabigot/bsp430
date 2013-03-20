@@ -44,8 +44,25 @@
 #include <stdlib.h>
 
 #if BSP430_CONSOLE - 0
-
 /* Inhibit definition if required components were not provided. */
+
+#if (BSP430_CONSOLE_USE_EMBTEXTF - 0)
+#define HAVE_EMBTEXTF 1
+#include <embtextf/uprintf.h>
+#include <embtextf/xtoa.h>
+
+#define itoa embtextf_itoa
+#define utoa embtextf_utoa
+#define ltoa embtextf_ltoa
+#define ultoa embtextf_ultoa
+#define vuprintf embtextf_vuprintf
+#elif (__MSPGCC__ - 0)
+/* Technically this should use __MSP430_LIBC__ which will be obtained
+ * implicitly from <msp430libc.h> via <inttypes.h>, but since that's
+ * not available in the header we'll use __MSPGCC__ as a
+ * substitute. */
+#define HAVE_EMBTEXTF 1
+#endif /* BSP430_CONSOLE_USE_EMBTEXTF */
 
 static hBSP430halSERIAL console_hal_;
 
@@ -341,43 +358,35 @@ cputchars_ni (const char * cp,
 }
 
 
-#if configBSP430_CONSOLE_LIBC_HAS_ITOA - 0
+#if HAVE_EMBTEXTF
 int
 cputi_ni (int n, int radix)
 {
   char buffer[sizeof("-32767")];
   return emit_text_ni(itoa(n, buffer, radix), console_hal_);
 }
-#endif /* configBSP430_CONSOLE_LIBC_HAS_ITOA */
 
-#if configBSP430_CONSOLE_LIBC_HAS_UTOA - 0
 int
 cputu_ni (unsigned int n, int radix)
 {
   char buffer[sizeof("65535")];
   return emit_text_ni(utoa(n, buffer, radix), console_hal_);
 }
-#endif /* configBSP430_CONSOLE_LIBC_HAS_UTOA */
 
-#if configBSP430_CONSOLE_LIBC_HAS_LTOA - 0
 int
 cputl_ni (long n, int radix)
 {
   char buffer[sizeof("-2147483647")];
   return emit_text_ni(ltoa(n, buffer, radix), console_hal_);
 }
-#endif /* configBSP430_CONSOLE_LIBC_HAS_LTOA */
 
-#if configBSP430_CONSOLE_LIBC_HAS_ULTOA - 0
 int
 cputul_ni (unsigned long n, int radix)
 {
   char buffer[sizeof("4294967295")];
   return emit_text_ni(ultoa(n, buffer, radix), console_hal_);
 }
-#endif /* configBSP430_CONSOLE_LIBC_HAS_ULTOA */
 
-#if configBSP430_CONSOLE_LIBC_HAS_VUPRINTF - 0
 int
 #if __GNUC__ - 0
 __attribute__((__format__(printf, 1, 2)))
@@ -409,7 +418,7 @@ vcprintf (const char * fmt, va_list ap)
   return rv;
 }
 
-#endif /* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */
+#endif /* HAVE_EMBTEXTF */
 
 hBSP430halSERIAL
 hBSP430console (void)
