@@ -1240,8 +1240,8 @@ unsigned long ulBSP430timerCounter_ni (hBSP430halTIMER timer,
  *
  * @warning See warnings at ulBSP430timerCounter_ni().
  */
-static unsigned long
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned long
 ulBSP430timerCounter (hBSP430halTIMER timer,
                       unsigned int * overflowp)
 {
@@ -2753,8 +2753,8 @@ int iBSP430timerSupportedCCs (tBSP430periphHandle periph);
  * @see uiBSP430timerLatchedCounterRead_ni()
  * @see uiBSP430timerSafeCounterRead_ni()
  */
-static unsigned int
-BSP430_CORE_INLINE_FORCED
+static BSP430_CORE_INLINE_FORCED
+unsigned int
 uiBSP430timerSyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
 {
   return hpl->r;
@@ -2786,8 +2786,8 @@ uiBSP430timerSyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
  * @see uiBSP430timerLatchedCounterRead_ni()
  * @see uiBSP430timerSafeCounterRead_ni()
  */
-static unsigned int
-BSP430_CORE_INLINE_FORCED
+static BSP430_CORE_INLINE_FORCED
+unsigned int
 uiBSP430timerAsyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
 {
   unsigned int v1;
@@ -2809,8 +2809,8 @@ uiBSP430timerAsyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
  * @param ccidx the index of the capture/compare register to be used
  * for latched timer reads
  */
-static void
-BSP430_CORE_INLINE_FORCED
+static BSP430_CORE_INLINE_FORCED
+void
 vBSP430timerLatchedCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl,
                                          int ccidx)
 {
@@ -2845,8 +2845,8 @@ vBSP430timerLatchedCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl,
  * @see uiBSP430timerLatchedCounterRead_ni()
  * @see uiBSP430timerSafeCounterRead_ni()
  */
-static unsigned int
-BSP430_CORE_INLINE_FORCED
+static BSP430_CORE_INLINE_FORCED
+unsigned int
 uiBSP430timerLatchedCounterRead_ni (volatile sBSP430hplTIMER * const hpl,
                                     int ccidx)
 {
@@ -2880,8 +2880,8 @@ uiBSP430timerLatchedCounterRead_ni (volatile sBSP430hplTIMER * const hpl,
  * @dependency #configBSP430_TIMER_VALID_COUNTER_READ
  * @dependency #BSP430_CORE_NDEBUG
  */
-static void
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+void
 vBSP430timerSafeCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl)
 {
 #if (configBSP430_TIMER_VALID_COUNTER_READ - 0)
@@ -2929,8 +2929,8 @@ vBSP430timerSafeCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl)
  * @see uiBSP430timerSyncCounterRead_ni()
  * @see uiBSP430timerLatchedCounterRead_ni()
  */
-static unsigned int
-BSP430_CORE_INLINE_FORCED
+static BSP430_CORE_INLINE_FORCED
+unsigned int
 uiBSP430timerSafeCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
 {
   unsigned int rv;
@@ -2989,8 +2989,8 @@ uiBSP430timerSafeCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
  * the timer was configured.
  *
  * @return the instantaneous counter value. */
-static unsigned int
-BSP430_CORE_INLINE_FORCED
+static BSP430_CORE_INLINE_FORCED
+unsigned int
 uiBSP430timerBestCounterRead_ni (volatile sBSP430hplTIMER * const hpl,
                                  int flags)
 {

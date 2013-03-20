@@ -196,8 +196,8 @@ extern hBSP430halTIMER xBSP430uptimeTIMER_;
  * Don't hook into the overflow callback, please.
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
-static hBSP430halTIMER
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+hBSP430halTIMER
 hBSP430uptimeTimer (void)
 {
   return xBSP430uptimeTIMER_;
@@ -276,16 +276,16 @@ unsigned long ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_H
  * #BSP430_UPTIME_TIMER_PERIPH_HANDLE so
  * #BSP430_TIMER_VALID_COUNTER_READ_CCIDX is reserved to support
  * accurate counter reads. */
-static unsigned long
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned long
 ulBSP430uptime_ni (void)
 {
   return ulBSP430timerCounter_ni(hBSP430uptimeTimer(), 0);
 }
 
 /** Return the system uptime in clock ticks. */
-static unsigned long
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned long
 ulBSP430uptime (void)
 {
   return ulBSP430timerCounter(hBSP430uptimeTimer(), 0);

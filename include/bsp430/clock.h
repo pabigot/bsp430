@@ -423,8 +423,8 @@ typedef enum eBSP430clockSource {
 } eBSP430clockSource;
 
 /** True iff the two clock sources are synchronous. */
-static int
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+int
 iBSP430clockSourceSynchronous (eBSP430clockSource s1,
                                eBSP430clockSource s2)
 {
@@ -519,8 +519,8 @@ unsigned long ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz);
 unsigned long ulBSP430clockMCLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for #ulBSP430clockMCLK_Hz_ni */
-static unsigned long
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned long
 ulBSP430clockMCLK_Hz (void)
 {
   unsigned long rv;
@@ -561,8 +561,8 @@ int iBSP430clockConfigureSMCLK_ni (eBSP430clockSource sel,
 unsigned long ulBSP430clockSMCLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for #ulBSP430clockSMCLK_Hz_ni */
-static unsigned long
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned long
 ulBSP430clockSMCLK_Hz (void)
 {
   unsigned long rv;
@@ -660,8 +660,8 @@ int iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
 unsigned long ulBSP430clockACLK_Hz_ni (void);
 
 /** Interruptible-preserving wrapper for ulBSP430clockACLK_Hz_ni() */
-static unsigned long
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned long
 ulBSP430clockACLK_Hz (void)
 {
   unsigned long rv;
@@ -679,8 +679,8 @@ ulBSP430clockACLK_Hz (void)
  * low-frequency clock.
  *
  * @deprecated: Use ulBSP430clockACLK_Hz_ni() */
-static unsigned int
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned int
 uiBSP430clockACLK_Hz_ni (void)
 {
   return ulBSP430clockACLK_Hz_ni();
@@ -688,8 +688,8 @@ uiBSP430clockACLK_Hz_ni (void)
 
 /** Interruptible-preserving wrapper for uiBSP430clockACLK_Hz_ni()
  * @deprecated: Use ulBSP430clockACLK_Hz() */
-static unsigned int
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+unsigned int
 uiBSP430clockACLK_Hz (void)
 {
   unsigned int rv;

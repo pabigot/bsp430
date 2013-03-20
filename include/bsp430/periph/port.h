@@ -1955,7 +1955,8 @@ extern sBSP430halPORT xBSP430hal_PORT11_;
  * support interrupts (see #xBSP430hplLookupPORT)
  */
 static BSP430_CORE_INLINE
-volatile sBSP430hplPORTIE * xBSP430hplLookupPORTIE (tBSP430periphHandle periph)
+volatile sBSP430hplPORTIE *
+xBSP430hplLookupPORTIE (tBSP430periphHandle periph)
 {
   /* !BSP430! ie_test=<= subst=ie_test insert=periph_hpl_port_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
@@ -2041,7 +2042,8 @@ volatile sBSP430hplPORTIE * xBSP430hplLookupPORTIE (tBSP430periphHandle periph)
  * interrupts (see #xBSP430hplLookupPORTIE)
  */
 static BSP430_CORE_INLINE
-volatile sBSP430hplPORT * xBSP430hplLookupPORT (tBSP430periphHandle periph)
+volatile sBSP430hplPORT *
+xBSP430hplLookupPORT (tBSP430periphHandle periph)
 {
   /* !BSP430! ie_test=> subst=ie_test insert=periph_hpl_port_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_port_demux] */
@@ -2125,7 +2127,8 @@ volatile sBSP430hplPORT * xBSP430hplLookupPORT (tBSP430periphHandle periph)
  * interface has been enabled (e.g., with #configBSP430_HAL_PORT1).
  */
 static BSP430_CORE_INLINE
-hBSP430halPORT hBSP430portLookup (tBSP430periphHandle periph)
+hBSP430halPORT
+hBSP430portLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
@@ -2222,7 +2225,8 @@ const char * xBSP430portName (tBSP430periphHandle periph);
  * ports, and cannot be used to detect the position of the lowest set
  * bit in a wider integer. */
 static BSP430_CORE_INLINE
-int iBSP430portBitPosition (unsigned int bitx)
+int
+iBSP430portBitPosition (unsigned int bitx)
 {
   unsigned char bit = 0x01;
   int rv = 0;

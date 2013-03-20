@@ -122,16 +122,16 @@
 #endif /* LOCKLPM5 */
 
 /** Cause a brown-out reset */
-static void
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+void
 vBSP430pmmInduceBOR (void)
 {
   PMMCTL0 = PMMPW | PMMSWBOR;
 }
 
 /** Cause a power-on reset */
-static void
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+void
 vBSP430pmmInducePOR (void)
 {
   PMMCTL0 = PMMPW | PMMSWPOR;

@@ -292,8 +292,8 @@ int cgetchar_ni (void);
 /** Return character disregarding interrupt state.
  *
  * This is a wrapper around cgetchar_ni(). */
-static int
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+int
 cgetchar (void)
 {
   int rv;
@@ -508,8 +508,8 @@ int cputchar_ni (int c);
  * @param c character to be output
  *
  * @return the character that was output */
-static int
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+int
 cputchar (int c)
 {
   int rv;

@@ -195,8 +195,8 @@ int iBSP430onewireRequestTemperature_ni (const sBSP430onewireBus * bus);
  * iBSP430onewireRequestTemperature_ni().
  *
  * @return 0 if the device is still busy; 1 if the sample is ready. */
-static int
-BSP430_CORE_INLINE
+static BSP430_CORE_INLINE
+int
 iBSP430onewireTemperatureReady_ni (const sBSP430onewireBus * bus)
 {
   return iBSP430onewireReadBit_ni(bus);
