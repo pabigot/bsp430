@@ -48,7 +48,7 @@
  * cputu_ni(), cputl_ni(), cputul_ni()) without incurring the stack
  * overhead of printf, which can be quite high (on the order of 100
  * bytes if 64-bit integer support is included).  Following the
- * standard BSP340 naming conventions some of these capabilities are
+ * standard BSP430 naming conventions some of these capabilities are
  * available with wrappers that preserve interrupt state.
  *
  * All output functions are safe to call even if the console was not

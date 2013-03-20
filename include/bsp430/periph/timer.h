@@ -2823,7 +2823,7 @@ vBSP430timerLatchedCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl,
  *
  * This approach uses a pre-configured capture/compare register to
  * latch the counter value, which is then returned.  It is generally
- * slower than uiBSP340timerSyncCounterRead_ni(), but is faster than
+ * slower than uiBSP430timerSyncCounterRead_ni(), but is faster than
  * uiBSP430timerAsyncCounterRead_ni() and is also safe to use
  * regardless of the relationship between MCLK and the accessed timer.
  *

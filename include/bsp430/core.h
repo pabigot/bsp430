@@ -389,7 +389,7 @@
 /* GCC wants both directives */
 #define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE __attribute__((__always_inline__))
 #else /* TOOLCHAIN */
-#define BSP430_CORE_INLINE_FORCED BSP340_CORE_INLINE
+#define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE
 #endif /* TOOLCHAIN */
 
 /** @def BSP430_CORE_PACKED_STRUCT
