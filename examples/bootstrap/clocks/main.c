@@ -221,7 +221,7 @@ void main ()
   cprintf("\nCS RSEL %d DCOFSEL %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
           "\n CTL4 %04x CTL5 %04x CTL6 %04x",
-          !!(DCORSEL & CSCTL1), 0x03 & (CSCTL1 / DCOFSEL0),
+          !!(DCORSEL & CSCTL1), 0x07 & (CSCTL1 / DCOFSEL0),
           CSCTL0, CSCTL1, CSCTL2, CSCTL3,
           CSCTL4, CSCTL5, CSCTL6);
 #endif /* CS */
