@@ -2,6 +2,7 @@
 /html/
 # Object files and executables
 *.o
+*.obj
 *.elf
 # Generated dependency files
 *.d
