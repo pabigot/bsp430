@@ -374,11 +374,12 @@
 /************************************************************
 * CLOCK SYSTEM
 ************************************************************/
-#define  __MSP430_HAS_CS__              /**< Definition to show that Module is available */
+#define  __MSP430_HAS_CS__              /**< Definition to show that Module is available (either FR57xx or FR58xx/FR59xx variant) */
 /************************************************************
 * CLOCK SYSTEM
 ************************************************************/
-#define  __MSP430_HAS_CS_A__            /**< Definition to show that Module is available */
+#define  __MSP430_HAS_CS_A__            /**< Definition to show that Module is available (FR58xx/FR59xx variant, only TI headers prior to 20130311) */
+#define DCOFSEL2            (0x0008)    /**< DCO frequency select Bit: 2 (only defined for FR58xx/FR59xx variant of CS peripheral) */
 /************************************************************
 * DAC12
 ************************************************************/

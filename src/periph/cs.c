@@ -33,7 +33,7 @@
 #include <bsp430/platform.h>
 #include <stdlib.h>
 
-#ifdef __MSP430_HAS_CS_A__
+#if (BSP430_CS_IS_FR58XX - 0)
 /* Provide aliases for name change from CS peripheral */
 #define XT1DRIVE_3 LFXTDRIVE_3
 #define XT1BYPASS LFXTBYPASS
@@ -43,7 +43,7 @@
 #define XT1DRIVE1 LFXTDRIVE1
 #define SELA__XT1CLK SELA__LFXTCLK
 #define XTS 0
-#endif /* __MSP430_HAS_CS_A__ */
+#endif /* BSP430_CS_IS_FR58XX */
 
 /* Basic clock sources on both CS and CS_A.  These values may be used
  * within CS registers. */
@@ -55,10 +55,10 @@
 /* Mask for legal CSEL value range */
 #define CSEL_MASK 0x07
 
-#if defined(__MSP430_HAS_CS__)
+#if (BSP430_CS_IS_FR57XX - 0)
 #define DCOFSEL_MASK (DCOFSEL0 | DCOFSEL1)
 
-#elif defined(__MSP430_HAS_CS_A__)
+#elif (BSP430_CS_IS_FR58XX - 0)
 #define DCOFSEL_MASK (DCOFSEL0 | DCOFSEL1 | DCOFSEL2)
 
 /* Additional clock sources on CS_A.  These values may be used within
@@ -68,9 +68,9 @@
 #define CSEL_MODCLK 4
 #define CSEL_HFXTCLK CSEL_XT2CLK
 
-#else /* __MSP430_HAS_CS__ */
+#else /* BSP430_CS_IS_FR57XX */
 #error Unrecognized peripheral
-#endif /* __MSP430_HAS_CS__ */
+#endif /* BSP430_CS_IS_FR57XX */
 
 /* Mask for SELA bits in CSCTL2 */
 #define SELA_MASK (SELA0 | SELA1 | SELA2)
@@ -94,13 +94,13 @@
 #define DIV_MAX_VALUE 5
 
 static const int32_t supported_freq[] = {
-#if defined(__MSP430_HAS_CS__)
+#if (BSP430_CS_IS_FR57XX - 0)
   /*  0       DCORSEL */
   5330000UL, 16000000UL,        /* DCOFSEL_0 */
   6670000UL, 20000000UL,        /* DCOFSEL_1 */
   5330000UL, 16000000UL,        /* DCOFSEL_2 */
   8000000UL, 24000000UL         /* DCOFSEL_3 */
-#elif defined(__MSP430_HAS_CS_A__)
+#elif (BSP430_CS_IS_FR58XX - 0)
   /*  0       DCORSEL */
   1000000UL, 1000000UL,        /* DCOFSEL_0 */
   2670000UL, 5330000UL,        /* DCOFSEL_1 */
@@ -110,9 +110,9 @@ static const int32_t supported_freq[] = {
   6670000UL, 20000000UL,       /* DCOFSEL_5 */
   8000000UL, 24000000UL,       /* DCOFSEL_6 */
   8000000UL, 24000000UL,       /* DCOFSEL_7 */
-#else /* __MSP430_HAS_CS__ */
+#else /* BSP430_CS_IS_FR57XX */
 #error Unrecognized peripheral
-#endif /* __MSP430_HAS_CS__*/
+#endif /* BSP430_CS_IS_FR57XX*/
 };
 
 static unsigned long
@@ -224,7 +224,7 @@ static unsigned long
 cselToFreq_Hz_ (int csel)
 {
   switch (csel & CSEL_MASK) {
-#if defined(__MSP430_HAS_CS__)
+#if (BSP430_CS_IS_FR57XX - 0)
     case 0: /* XT1CLK */
       if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
         return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
@@ -242,7 +242,7 @@ cselToFreq_Hz_ (int csel)
     case 3: /* DCOCLK */
     case 4: /* Reserved, DCOCLK */
       return ulBSP430csDCOCLK_Hz_ni();
-#elif defined(__MSP430_HAS_CS_A__)
+#elif (BSP430_CS_IS_FR58XX - 0)
     case 0: /* XT1CLK */
       if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
         return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
@@ -287,12 +287,12 @@ sourceToCSEL_ (eBSP430clockSource sel)
     case eBSP430clockSRC_XT2CLK:
       return CSEL_XT2CLK;
 #endif /* XT2CLK supported */
-#if defined(__MSP430_HAS_CS_A__)
+#if (BSP430_CS_IS_FR58XX - 0)
     case eBSP430clockSRC_MODCLK:
       return CSEL_MODCLK;
     case eBSP430clockSRC_LFMODCLK:
       return CSEL_LFMODCLK;
-#endif /* __MSP430_HAS_CS_A__ */
+#endif /* BSP430_CS_IS_FR58XX */
     case eBSP430clockSRC_XT1CLK_FALLBACK:
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
@@ -349,13 +349,13 @@ iBSP430clockConfigureACLK_ni (eBSP430clockSource sel,
   if (DIV_MAX_VALUE < dividing_shift) {
     dividing_shift = DIV_MAX_VALUE;
   }
-#if defined(__MSP430_HAS_CS_A__)
+#if (BSP430_CS_IS_FR58XX - 0)
   if (csel >= CSEL_DCOCLK) {
     /* CS_A does not permit use of DCOCLK as source for ACLK.
      * All values above LFMODCLK default to LFMODCLK*/
     csel = CSEL_LFMODCLK;
   }
-#endif /* __MSP430_HAS_CS_A__ */
+#endif /* BSP430_CS_IS_FR58XX */
   CSCTL0_H = 0xA5;
   CSCTL3 = (CSCTL3 & ~DIVA_MASK) | (DIVA_MASK & (dividing_shift * DIVA0));
   CSCTL2 = (CSCTL2 & ~SELA_MASK) | (csel * SELA0);

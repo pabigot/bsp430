@@ -79,6 +79,35 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
+/** Determine whether target has a CS or CS_A peripheral.
+ *
+ * The base CS peripheral as defined in the FR57xx family has a
+ * different set of available clocks and differences in register
+ * layout and configurable clock rates from the variant in the
+ * FR58xx/FR59xx, which was distinguished as CS_A in the header files
+ * originally released for the Wolverine chips.  Subsequently TI
+ * decided to eliminate the difference in name, while retaining the
+ * difference in interface and functionality.  This occurs in public
+ * release version 1.073 of the MSP430 headers.
+ *
+ * This macro is defined to a true value if the target peripheral has
+ * the FR58xx variant of the CS module.  It uses @c
+ * __MSP430_HAS_CS_A__ if available, otherwise depends on the presence
+ * of @c DCOFSEL2, a bit not available on the original CS peripheral.
+ *
+ * @cppconfig */
+#define BSP430_CS_IS_FR58XX (defined(__MSP430_HAS_CS_A__) || (defined(__MSP430_HAS_CS__) && defined(DCOFSEL2)))
+
+/** Determine whether target has a CS or CS_A peripheral.
+ *
+ * This macro is defined to a true value if the target peripheral has
+ * the FR57xx variant of the CS module.
+ *
+ * @see #BSP430_CS_IS_FR58XX
+ *
+ * @cppconfig */
+#define BSP430_CS_IS_FR57XX (defined(__MSP430_HAS_CS__) && (! (defined(__MSP430_HAS_CS_A__) || defined(DCOFSEL2))))
+
 /** @def BSP430_MODULE_CS
  *
  * Defined on inclusion of <bsp430/periph/cs.h>.  The value evaluates
@@ -87,15 +116,14 @@
  *
  * @cppflag
  */
-#define BSP430_MODULE_CS (defined(__MSP430_HAS_CS__)            \
-                          || defined(__MSP430_HAS_CS_A__))
+#define BSP430_MODULE_CS ((BSP430_CS_IS_FR57XX - 0) || (BSP430_CS_IS_FR58XX - 0))
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_CS - 0)
 
 /** @cond DOXYGEN_INTERNAL */
 /* Simplify conditionally-defined macros to avoid reference to
  * non-existent values and inconsistencies between CS and CS_A. */
-#if defined(__MSP430_HAS_CS_A__)
+#if (BSP430_CS_IS_FR58XX - 0)
 #define BSP430_CS_XT2DRIVE_ HFXTDRIVE
 #define BSP430_CS_XT2OFF_ HFXTOFF
 #define BSP430_CS_XT1DRIVE_ LFXTDRIVE
@@ -120,7 +148,7 @@
 #endif /* CS or CS_A */
 /** @endcond */
 
-#if defined(BSP430_DOXYGEN) || defined(__MSP430_HAS_CS_A__)
+#if defined(BSP430_DOXYGEN) || (BSP430_CS_IS_FR58XX - 0)
 /* CS_A has a significantly different set of capabilities */
 
 /** Nominal rate of the CS_A peripheral MODCLK.
@@ -134,7 +162,7 @@
  * This source exists only in the CS_A version of the CS peripheral.
  * It is driven by an internal low-power oscillator. */
 #define BSP430_CS_NOMINAL_LFMODCLK_HZ (BSP430_CS_NOMINAL_MODCLK_HZ / 128)
-#endif /* __MSP430_HAS_CS_A__ */
+#endif /* BSP430_CS_IS_FR58XX */
 
 /** CS-specific check for LFXT1 crystal fault condition.
  *
