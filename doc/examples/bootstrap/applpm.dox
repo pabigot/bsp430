@@ -116,6 +116,22 @@ Note that LPM3.5 doesn't seem to be different from LPM3, and unlike the
 FR5739 LPM4.5 is not entered if either the serial or the timer are left
 enabled.
 
+\subsection Wolverine
+
+Place the ammeter between a 3.3V source and the external power header.
+
+uA (+S,+U) | uA (-S,+U) | uA (-S,-U) | Description
+---------: | ---------: | ---------: | -----------
+228        | 228        | 228        | active mode with CPU running (reading USCI)
+206        | 207        | 207        | in active mode "idle"
+ 62.6      |  62.6      |  62.6      | LPM0
+ 27.3      |  27.2      |  27.2      | LPM1
+  0.45     |   0.52	|   0.48     | LPM2
+  0.24     |   0.26     |   0.20     | LPM3
+  0.24     |   0.26     |   0.13     | LPM4
+
+LPMX.5 modes could not be reliably measured.
+
 \section ex_bootstrap_applpm_main main.c
 \include bootstrap/applpm/main.c
 
