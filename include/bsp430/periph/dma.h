@@ -220,9 +220,6 @@ typedef struct sBSP430halDMA * hBSP430halDMA;
  * When enabled, the sBSP430halDMA structure reference is
  * available as #BSP430_HAL_DMA.
  *
- * It may also be obtained using
- * #hBSP430dmaLookup(#BSP430_PERIPH_DMA).
- *
  * @cppflag
  * @affects #configBSP430_HPL_DMA is default-enabled
  * @ingroup grp_config_core
@@ -261,9 +258,6 @@ extern sBSP430halDMA xBSP430hal_DMA_;
  *
  * When enabled, the sBSP430hplDMA structure reference is
  * available as #BSP430_HPL_DMA.
- *
- * It may also be obtained using
- * #xBSP430hplLookupDMA(#BSP430_PERIPH_DMA).
  *
  * @cppflag
  * @ingroup grp_config_core

@@ -170,9 +170,9 @@ typedef uBSP430eui64 * hBSP430eui64;
  * once and the @a eui64 contents retained for the life of the
  * program.
  *
- * @note This is an EUI-64, not the modified EUI-64 expected by @link
- * http://tools.ietf.org/html/rfc4291#appendix-A Appendix A of RFC
- * 4291@endlink.  To convert between them invert
+ * @note This is an EUI-64, not the modified EUI-64 expected by <a
+ * href="http://tools.ietf.org/html/rfc4291#appendix-A">Appendix A of
+ * RFC 4291</a>.  To convert between them invert
  * #BSP430_EUI64_MASK_LOCAL.
  *
  * @param eui64 a pointer to a memory location into which the EUI-64

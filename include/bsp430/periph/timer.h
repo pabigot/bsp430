@@ -1168,8 +1168,8 @@ typedef struct sBSP430halTIMER * hBSP430halTIMER;
  * @li The function infers #BSP430_TIMER_FLAG_MCLKSYNC when the clock
  * source for the timer is equal to the clock source for MCLK, based
  * on xBSP430timerClockSource() and xBSP430clockMCLKSource().  Be
- * aware that #eBSP430clkSource_DCOCLK is not considered synchronous
- * with #eBSP430clkSource_DCOCLKDIV under this rule.
+ * aware that #eBSP430clockSRC_DCOCLK is not considered synchronous
+ * with #eBSP430clockSRC_DCOCLKDIV under this rule.
  *
  * @li The function infers #BSP430_TIMER_FLAG_SLOW when MCLK
  * frequency is at least 16 times faster than timer frequency.
@@ -1184,7 +1184,7 @@ void vBSP430timerInferHints_ni (hBSP430halTIMER timer);
  * whether the source for a timer is the same as the source for a
  * system clock or another timer.  Do not interpret the value as
  * identifying a specific source.  For example, sometimes
- * #eBSP430clkSource_XT2CLK will mean a crystal and sometimes it will
+ * #eBSP430clockSRC_XT2CLK will mean a crystal and sometimes it will
  * mean an external clock or VLOCLK, depending on the MCU and its
  * supporting hardware. */
 eBSP430clockSource xBSP430timerClockSource (volatile sBSP430hplTIMER * hpl);

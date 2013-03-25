@@ -95,7 +95,7 @@
  * __MSP430_HAS_CS_A__ if available, otherwise depends on the presence
  * of @c DCOFSEL2, a bit not available on the original CS peripheral.
  *
- * @cppconfig */
+ * @cppflag */
 #define BSP430_CS_IS_FR58XX (defined(__MSP430_HAS_CS_A__) || (defined(__MSP430_HAS_CS__) && defined(DCOFSEL2)))
 
 /** Determine whether target has a CS or CS_A peripheral.
@@ -105,7 +105,7 @@
  *
  * @see #BSP430_CS_IS_FR58XX
  *
- * @cppconfig */
+ * @cppflag */
 #define BSP430_CS_IS_FR57XX (defined(__MSP430_HAS_CS__) && (! (defined(__MSP430_HAS_CS_A__) || defined(DCOFSEL2))))
 
 /** @def BSP430_MODULE_CS
