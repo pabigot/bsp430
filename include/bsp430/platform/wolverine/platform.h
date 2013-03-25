@@ -56,7 +56,11 @@
 
 /** @cond DOXYGEN_EXCLUDE */
 
-/* No buttons */
+/* SW2 on P1.3.  Not necessarily populated.  When not populated, can
+ * sometimes be faked by shorting the south pad of R14 to the north
+ * pad of SW2, but result may leave button pressed. */
+#define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT3
 
 /* One LED on P1.0.  Unpopulated LEDs on P1.1 and P1.2. */
 #define BSP430_LED_GREEN 0
