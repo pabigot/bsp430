@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -159,21 +159,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>configBSP430_CONSOLE
 : <a class="el" href="console_8h.html#a7e7be9a93cd9726e38378c1736d3b239">console.h</a>
 </li>
-<li>configBSP430_CONSOLE_LIBC_HAS_ITOA
-: <a class="el" href="console_8h.html#a45dea9afedd2d38692468f4d590ad07a">console.h</a>
-</li>
-<li>configBSP430_CONSOLE_LIBC_HAS_LTOA
-: <a class="el" href="console_8h.html#a3c0cce6af572fe01617ef6c7da2bccfa">console.h</a>
-</li>
-<li>configBSP430_CONSOLE_LIBC_HAS_ULTOA
-: <a class="el" href="console_8h.html#a1459f5b3ccb0c486550430a8f6c32241">console.h</a>
-</li>
-<li>configBSP430_CONSOLE_LIBC_HAS_UTOA
-: <a class="el" href="console_8h.html#a3c4508ec47a8acb913c91b16fe215665">console.h</a>
-</li>
-<li>configBSP430_CONSOLE_LIBC_HAS_VUPRINTF
-: <a class="el" href="console_8h.html#a8d514ef914bd654dcc9c4dd4b12349c8">console.h</a>
-</li>
 <li>configBSP430_CONSOLE_PROVIDES_PUTCHAR
 : <a class="el" href="console_8h.html#aa6d5f61057e52b70dbaf40efc79449fd">console.h</a>
 </li>
@@ -191,6 +176,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>configBSP430_CORE_SUPPORT_WATCHDOG
 : <a class="el" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">core.h</a>
+</li>
+<li>configBSP430_EUI64
+: <a class="el" href="eui64_8h.html#aa0ce16a5df40c1cedb75e16996da455d">eui64.h</a>
+</li>
+<li>configBSP430_EUI64_USE_PLATFORM
+: <a class="el" href="eui64_8h.html#a40387a475eff10b6c6960a9f88f3218d">eui64.h</a>
 </li>
 <li>configBSP430_FREERTOS_SCHEDULER
 : <a class="el" href="freertos_8h.html#a318d7880d649db41bbd72f6d156b4c36">freertos.h</a>
@@ -219,11 +210,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>configBSP430_HAL_EUSCI_A2_ISR
 : <a class="el" href="group__grp__config__core.html#gaac42c853a95aa2c01bae3917883907b5">eusci.h</a>
 </li>
+<li>configBSP430_HAL_EUSCI_A3
+: <a class="el" href="group__grp__config__core.html#ga5e33185e9b49c04b0992be0401d2c805">eusci.h</a>
+</li>
+<li>configBSP430_HAL_EUSCI_A3_ISR
+: <a class="el" href="group__grp__config__core.html#ga42fa16ecb757cbcea74ecf8723251c21">eusci.h</a>
+</li>
 <li>configBSP430_HAL_EUSCI_B0
 : <a class="el" href="group__grp__config__core.html#ga951e6641ff0abfa69835ffa72ac7d4a7">eusci.h</a>
 </li>
 <li>configBSP430_HAL_EUSCI_B0_ISR
 : <a class="el" href="group__grp__config__core.html#gad63cb61ab988058ec613c9eaf143fab4">eusci.h</a>
+</li>
+<li>configBSP430_HAL_EUSCI_B1
+: <a class="el" href="group__grp__config__core.html#ga2cd64326c6aaa9f244ba90fae275d765">eusci.h</a>
+</li>
+<li>configBSP430_HAL_EUSCI_B1_ISR
+: <a class="el" href="group__grp__config__core.html#gae53ec78ebf37ccdee191acd22e21e393">eusci.h</a>
 </li>
 <li>configBSP430_HAL_PORT1
 : <a class="el" href="group__grp__config__core.html#ga151b93a7aa5871c26a8f53bdd21bd5dd">port.h</a>
@@ -439,8 +442,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>configBSP430_HPL_EUSCI_A2
 : <a class="el" href="group__grp__config__core.html#gad054bb809a4c58af388185b800b969c0">eusci.h</a>
 </li>
+<li>configBSP430_HPL_EUSCI_A3
+: <a class="el" href="group__grp__config__core.html#ga9e72511791a5b6fb010bf0f53057d2ae">eusci.h</a>
+</li>
 <li>configBSP430_HPL_EUSCI_B0
 : <a class="el" href="group__grp__config__core.html#gaed3e8f16fa16d4e35961efd5e71b3131">eusci.h</a>
+</li>
+<li>configBSP430_HPL_EUSCI_B1
+: <a class="el" href="group__grp__config__core.html#ga03627626d0af2f3ff7f1906d16a30e85">eusci.h</a>
 </li>
 <li>configBSP430_HPL_PORT1
 : <a class="el" href="group__grp__config__core.html#gae2fc54db8e042a1a968b60deddfe065c">port.h</a>
@@ -543,7 +552,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="periph_8h.html#a29371426578462373619c52609a223f3">periph.h</a>
 </li>
 <li>configBSP430_PERIPH_XT2
-: <a class="el" href="periph_8h.html#a10d1f39414ade605be2fed5ea634375c">periph.h</a>
+: <a class="el" href="em430_2bsp430__config_8h.html#a10d1f39414ade605be2fed5ea634375c">bsp430_config.h</a>
+, <a class="el" href="periph_8h.html#a10d1f39414ade605be2fed5ea634375c">periph.h</a>
 , <a class="el" href="surf_2bsp430__config_8h.html#a10d1f39414ade605be2fed5ea634375c">bsp430_config.h</a>
 </li>
 <li>configBSP430_PLATFORM_BUTTON0
@@ -558,6 +568,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>configBSP430_PLATFORM_SPIN_FOR_JUMPER
 : <a class="el" href="platform_8h.html#a006b3512ad0ff450ea836862ccb302d5">platform.h</a>
+</li>
+<li>configBSP430_PLATFORM_SURF_DS1825
+: <a class="el" href="platform_2surf_2platform_8h.html#a6b95f475daae74a7f8e53a056ae737b1">platform.h</a>
 </li>
 <li>configBSP430_PLATFORM_SURF_FLASH
 : <a class="el" href="platform_2surf_2platform_8h.html#a3ce6699efc712f5b64eb66e6a24008cd">platform.h</a>
@@ -634,8 +647,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>configBSP430_TIMER_CCACLK_HAL_ISR
 : <a class="el" href="group__grp__config__functional.html#ga95b9821e9bee0ee309ed09910f7c9949">timer.h</a>
 </li>
-<li>configBSP430_TIMER_SAFE_COUNTER_READ
-: <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">timer.h</a>
+<li>configBSP430_TIMER_VALID_COUNTER_READ
+: <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">timer.h</a>
 </li>
 <li>configBSP430_TLV
 : <a class="el" href="tlv_8h.html#a03f62c75b6c16e6bd82f8947505fb25b">tlv.h</a>
@@ -665,7 +678,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

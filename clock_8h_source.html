@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -226,106 +226,132 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;</div>
 <div class="line"><a name="l00397"></a><span class="lineno"><a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa509e9b965e91f15094b75169f550b95d">  397</a></span>&#160;  <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa509e9b965e91f15094b75169f550b95d">eBSP430clockSRC_XT1CLK_FALLBACK</a>,</div>
 <div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;} <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> mclk_Hz);</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00465"></a><span class="lineno"><a class="code" href="clock_8h.html#aa749bb6b58228edd697cd4c33494404f">  465</a></span>&#160;<a class="code" href="clock_8h.html#aa749bb6b58228edd697cd4c33494404f">ulBSP430clockMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;{</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;  rv = <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a>();</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;  <span class="keywordflow">return</span> rv;</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;}</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#a476e5bfcb4213f2a11ea69805e47e6d5">iBSP430clockConfigureSMCLK_ni</a> (<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> sel,</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;                                   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> dividing_shift);</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a0642c6f082ed8feafd057ff8132b75da">ulBSP430clockSMCLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00507"></a><span class="lineno"><a class="code" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">  507</a></span>&#160;<a class="code" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;{</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;  rv = <a class="code" href="clock_8h.html#a0642c6f082ed8feafd057ff8132b75da">ulBSP430clockSMCLK_Hz_ni</a>();</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;  <span class="keywordflow">return</span> rv;</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;}</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a> (<span class="keywordtype">int</span> enablep,</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;                                   <span class="keywordtype">int</span> loop_limit);</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#ac9de38fe153ba8cc065218b887ec174d">iBSP430clockConfigureXT2_ni</a> (<span class="keywordtype">int</span> enablep,</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;                                 <span class="keywordtype">int</span> loop_limit);</div>
+<div class="line"><a name="l00401"></a><span class="lineno"><a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaae55d22b2f0d8c7a2feee84c11b528d6e">  401</a></span>&#160;  <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaae55d22b2f0d8c7a2feee84c11b528d6e">eBSP430clockSRC_UNKNOWN_1</a>,</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
+<div class="line"><a name="l00405"></a><span class="lineno"><a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa48e420b1e5f10595e426b9ab67f57905">  405</a></span>&#160;  <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa48e420b1e5f10595e426b9ab67f57905">eBSP430clockSRC_UNKNOWN_6</a>,</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;</div>
+<div class="line"><a name="l00409"></a><span class="lineno"><a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa1c00de48da23afef0ca851f55dda2cf5">  409</a></span>&#160;  <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa1c00de48da23afef0ca851f55dda2cf5">eBSP430clockSRC_UNKNOWN_7</a>,</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;</div>
+<div class="line"><a name="l00415"></a><span class="lineno"><a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa4da308307cfa270930b1ae8e00def287">  415</a></span>&#160;  <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa4da308307cfa270930b1ae8e00def287">eBSP430clockSRC_TCLK</a>,</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;</div>
+<div class="line"><a name="l00421"></a><span class="lineno"><a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa8685286d76fe50e6801b1d98b638a08f">  421</a></span>&#160;  <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa8685286d76fe50e6801b1d98b638a08f">eBSP430clockSRC_ITCLK</a>,</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;} <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="keywordtype">int</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno"><a class="code" href="clock_8h.html#af5fb0f553f31dc47a507ccf4fe919a74">  428</a></span>&#160;<a class="code" href="clock_8h.html#af5fb0f553f31dc47a507ccf4fe919a74">iBSP430clockSourceSynchronous</a> (<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> s1,</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;                               <a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> s2)</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;{</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;  <span class="keywordflow">return</span> ((s1 == s2)</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;          || ((<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa08fe6b5e068e82d29fe98632bc2f4b32">eBSP430clockSRC_DCOCLK</a> == s1) &amp;&amp; (<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa003c26ac0b1326d3423e705dd4ab5dab">eBSP430clockSRC_DCOCLKDIV</a> == s2))</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;          || ((<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa08fe6b5e068e82d29fe98632bc2f4b32">eBSP430clockSRC_DCOCLK</a> == s2) &amp;&amp; (<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa003c26ac0b1326d3423e705dd4ab5dab">eBSP430clockSRC_DCOCLKDIV</a> == s1)));</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;}</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> <a class="code" href="clock_8h.html#ac935555e3b12a0bc4a799eb193d54101">xBSP430clockACLKSource</a> ();</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> <a class="code" href="clock_8h.html#a117adb1cb741b31f0abf81ae08f052c4">xBSP430clockSMCLKSource</a> ();</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> <a class="code" href="clock_8h.html#ac4b770a224b729588068d009a19e620d">xBSP430clockMCLKSource</a> ();</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> mclk_Hz);</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
+<div class="line"><a name="l00524"></a><span class="lineno"><a class="code" href="clock_8h.html#a0555ddf2f79611fff8ce2163fbca5d38">  524</a></span>&#160;<a class="code" href="clock_8h.html#a0555ddf2f79611fff8ce2163fbca5d38">ulBSP430clockMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;{</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;  rv = <a class="code" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a>();</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;  <span class="keywordflow">return</span> rv;</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;}</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#a476e5bfcb4213f2a11ea69805e47e6d5">iBSP430clockConfigureSMCLK_ni</a> (<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> sel,</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;                                   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> dividing_shift);</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a0642c6f082ed8feafd057ff8132b75da">ulBSP430clockSMCLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;</div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#a777ca1d5afd1e5d321c438f980e2bf5b">iBSP430clockConfigureACLK_ni</a> (<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> sel,</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;                                  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> dividing_shift);</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;</div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;</div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00606"></a><span class="lineno"><a class="code" href="clock_8h.html#aeb12b1afa0629e4d4421038fb9b09d12">  606</a></span>&#160;<a class="code" href="clock_8h.html#aeb12b1afa0629e4d4421038fb9b09d12">ulBSP430clockACLK_Hz</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;{</div>
-<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;  rv = <a class="code" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a>();</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;  <span class="keywordflow">return</span> rv;</div>
-<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;}</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00625"></a><span class="lineno"><a class="code" href="clock_8h.html#a5cd3cc6dcc7dcd02229c750d95891bdd">  625</a></span>&#160;<a class="code" href="clock_8h.html#a5cd3cc6dcc7dcd02229c750d95891bdd">uiBSP430clockACLK_Hz_ni</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;{</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a>();</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;}</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;<span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00634"></a><span class="lineno"><a class="code" href="clock_8h.html#a7e6b8510714bb26cac0b2c5cdcfdc0e0">  634</a></span>&#160;<a class="code" href="clock_8h.html#a7e6b8510714bb26cac0b2c5cdcfdc0e0">uiBSP430clockACLK_Hz</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;{</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> rv;</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;  rv = <a class="code" href="clock_8h.html#a5cd3cc6dcc7dcd02229c750d95891bdd">uiBSP430clockACLK_Hz_ni</a>();</div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;  <span class="keywordflow">return</span> rv;</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;}</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
+<div class="line"><a name="l00566"></a><span class="lineno"><a class="code" href="clock_8h.html#aae393938e85c471bb779ca0d5baa705f">  566</a></span>&#160;<a class="code" href="clock_8h.html#aae393938e85c471bb779ca0d5baa705f">ulBSP430clockSMCLK_Hz</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;{</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;  rv = <a class="code" href="clock_8h.html#a0642c6f082ed8feafd057ff8132b75da">ulBSP430clockSMCLK_Hz_ni</a>();</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;  <span class="keywordflow">return</span> rv;</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;}</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a> (<span class="keywordtype">int</span> enablep,</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;                                   <span class="keywordtype">int</span> loop_limit);</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#ac9de38fe153ba8cc065218b887ec174d">iBSP430clockConfigureXT2_ni</a> (<span class="keywordtype">int</span> enablep,</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;                                 <span class="keywordtype">int</span> loop_limit);</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;<span class="keywordtype">int</span> <a class="code" href="clock_8h.html#a777ca1d5afd1e5d321c438f980e2bf5b">iBSP430clockConfigureACLK_ni</a> (<a class="code" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> sel,</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;                                  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> dividing_shift);</div>
 <div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;<span class="comment">/* Include peripheral-specific header where recognized */</span></div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;<span class="preprocessor">#if defined(__MSP430_HAS_BC2__)</span></div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="bc2_8h.html" title="Hardware presentation/abstraction for Basic Clock Module+ (BC2).">bsp430/periph/bc2.h</a>&gt;</span></div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_BC2__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(__MSP430_HAS_FLLPLUS__) || defined(__MSP430_HAS_FLLPLUS_SMALL__)</span></div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="fllplus_8h.html" title="Hardware presentation/abstraction for FLL Plus (FLLPLUS).">bsp430/periph/fllplus.h</a>&gt;</span></div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_FLLPLUS__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)</span></div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="ucs_8h.html" title="Hardware presentation/abstraction for Unified Clock System (UCS).">bsp430/periph/ucs.h</a>&gt;</span></div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_UCS__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)</span></div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="cs_8h.html" title="Hardware presentation/abstraction for Clock System (CS).">bsp430/periph/cs.h</a>&gt;</span></div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_CS__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_CLOCK_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <a class="code" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span></div>
+<div class="line"><a name="l00665"></a><span class="lineno"><a class="code" href="clock_8h.html#a9997899ae094a0e809c01239328f2e0b">  665</a></span>&#160;<a class="code" href="clock_8h.html#a9997899ae094a0e809c01239328f2e0b">ulBSP430clockACLK_Hz</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;{</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rv;</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;  rv = <a class="code" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a>();</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;  <span class="keywordflow">return</span> rv;</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;}</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00684"></a><span class="lineno"><a class="code" href="clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87">  684</a></span>&#160;<a class="code" href="clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87">uiBSP430clockACLK_Hz_ni</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;{</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a>();</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;}</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00693"></a><span class="lineno"><a class="code" href="clock_8h.html#afde95d4cde4586775d26e306cbdc9906">  693</a></span>&#160;<a class="code" href="clock_8h.html#afde95d4cde4586775d26e306cbdc9906">uiBSP430clockACLK_Hz</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;{</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> rv;</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;  rv = <a class="code" href="clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87">uiBSP430clockACLK_Hz_ni</a>();</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;  <span class="keywordflow">return</span> rv;</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;}</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;<span class="comment">/* Include peripheral-specific header where recognized */</span></div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;<span class="preprocessor">#if defined(__MSP430_HAS_BC2__)</span></div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="bc2_8h.html" title="Hardware presentation/abstraction for Basic Clock Module+ (BC2).">bsp430/periph/bc2.h</a>&gt;</span></div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_BC2__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(__MSP430_HAS_FLLPLUS__) || defined(__MSP430_HAS_FLLPLUS_SMALL__)</span></div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="fllplus_8h.html" title="Hardware presentation/abstraction for FLL Plus (FLLPLUS).">bsp430/periph/fllplus.h</a>&gt;</span></div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_FLLPLUS__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)</span></div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="ucs_8h.html" title="Hardware presentation/abstraction for Unified Clock System (UCS).">bsp430/periph/ucs.h</a>&gt;</span></div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_UCS__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)</span></div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="cs_8h.html" title="Hardware presentation/abstraction for Clock System (CS).">bsp430/periph/cs.h</a>&gt;</span></div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __MSP430_HAS_CS__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_CLOCK_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

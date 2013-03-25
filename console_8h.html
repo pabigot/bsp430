@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>A generic console print capability.  
+<p>A generic console output capability.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="serial_8h_source.html">bsp430/serial.h</a>&gt;</code><br/>
 <code>#include &lt;<a class="el" href="platform_8h_source.html">bsp430/platform.h</a>&gt;</code><br/>
@@ -120,20 +120,12 @@ Macros</h2></td></tr>
 <tr class="separator:a8f5e617854ea03057eb555413356a0d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01ff3a75e82d8b3ec7833d2e4ac4f36c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">BSP430_CONSOLE_TX_BUFFER_SIZE</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a01ff3a75e82d8b3ec7833d2e4ac4f36c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad00f4e0aa91311e9593b973df63a7458"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ad00f4e0aa91311e9593b973df63a7458"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6d5f61057e52b70dbaf40efc79449fd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#aa6d5f61057e52b70dbaf40efc79449fd">configBSP430_CONSOLE_PROVIDES_PUTCHAR</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:aa6d5f61057e52b70dbaf40efc79449fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a786264c47d20252b7ddb6142890d0c58"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a786264c47d20252b7ddb6142890d0c58">configBSP430_CONSOLE_USE_ONLCR</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a786264c47d20252b7ddb6142890d0c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d514ef914bd654dcc9c4dd4b12349c8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a8d514ef914bd654dcc9c4dd4b12349c8">configBSP430_CONSOLE_LIBC_HAS_VUPRINTF</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a8d514ef914bd654dcc9c4dd4b12349c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45dea9afedd2d38692468f4d590ad07a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a45dea9afedd2d38692468f4d590ad07a">configBSP430_CONSOLE_LIBC_HAS_ITOA</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a45dea9afedd2d38692468f4d590ad07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c4508ec47a8acb913c91b16fe215665"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a3c4508ec47a8acb913c91b16fe215665">configBSP430_CONSOLE_LIBC_HAS_UTOA</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a3c4508ec47a8acb913c91b16fe215665"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c0cce6af572fe01617ef6c7da2bccfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a3c0cce6af572fe01617ef6c7da2bccfa">configBSP430_CONSOLE_LIBC_HAS_LTOA</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a3c0cce6af572fe01617ef6c7da2bccfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1459f5b3ccb0c486550430a8f6c32241"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a1459f5b3ccb0c486550430a8f6c32241">configBSP430_CONSOLE_LIBC_HAS_ULTOA</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a1459f5b3ccb0c486550430a8f6c32241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -144,22 +136,18 @@ Typedefs</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ab51614b234cfd24eed353dde0d9f014c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a> (void)</td></tr>
 <tr class="separator:ab51614b234cfd24eed353dde0d9f014c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92d0f9aff946120aefa3ffbf359afe0f"><td class="memItemLeft" align="right" valign="top">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a92d0f9aff946120aefa3ffbf359afe0f">cgetchar</a> (void)</td></tr>
-<tr class="separator:a92d0f9aff946120aefa3ffbf359afe0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4748fe84e66a49005dc7ba0a0e51704a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a4748fe84e66a49005dc7ba0a0e51704a">cgetchar</a> (void)</td></tr>
+<tr class="separator:a4748fe84e66a49005dc7ba0a0e51704a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43b6e0953a6cc69cea9af7d3ddaf1d1b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a43b6e0953a6cc69cea9af7d3ddaf1d1b">cpeekchar_ni</a> (void)</td></tr>
 <tr class="separator:a43b6e0953a6cc69cea9af7d3ddaf1d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec7949d1ea9a80f4d20c79b137c440f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#aec7949d1ea9a80f4d20c79b137c440f2">vBSP430consoleSetRxCallback_ni</a> (<a class="el" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a> cb)</td></tr>
 <tr class="separator:aec7949d1ea9a80f4d20c79b137c440f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20188454c5c787938220b7bcf3179869"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a> (const char *format,...)</td></tr>
-<tr class="separator:a20188454c5c787938220b7bcf3179869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88bc4e1137c425954f5e5624c95367ab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a88bc4e1137c425954f5e5624c95367ab">vcprintf</a> (const char *format, va_list ap)</td></tr>
-<tr class="separator:a88bc4e1137c425954f5e5624c95367ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e0a771b0a8f2034a7f49684b107542e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs</a> (const char *s)</td></tr>
 <tr class="separator:a6e0a771b0a8f2034a7f49684b107542e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46ea793d7dd79b66e1c3a195d0d4a7b1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a> (int c)</td></tr>
 <tr class="separator:a46ea793d7dd79b66e1c3a195d0d4a7b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add5a7f905ddc52c709f5ebec819ec1c2"><td class="memItemLeft" align="right" valign="top">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a> (int c)</td></tr>
-<tr class="separator:add5a7f905ddc52c709f5ebec819ec1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90f7ebaff29b80e288b6890ed9201f2c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a90f7ebaff29b80e288b6890ed9201f2c">cputchar</a> (int c)</td></tr>
+<tr class="separator:a90f7ebaff29b80e288b6890ed9201f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90148fb44b9e9b2b952d6ba8e42b317d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a> (const char *s)</td></tr>
 <tr class="separator:a90148fb44b9e9b2b952d6ba8e42b317d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4ebbf60b8d0840b3039203c47f61c86"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a> (const char *s)</td></tr>
@@ -168,6 +156,10 @@ Functions</h2></td></tr>
 <tr class="separator:a27e2ff7e39dfb73bbf4d86889d782ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83f67cf1cd5c672cc9dc947dd7d52f4b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b">cputchars</a> (const char *cp, size_t len)</td></tr>
 <tr class="separator:a83f67cf1cd5c672cc9dc947dd7d52f4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20188454c5c787938220b7bcf3179869"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a> (const char *format,...)</td></tr>
+<tr class="separator:a20188454c5c787938220b7bcf3179869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88bc4e1137c425954f5e5624c95367ab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a88bc4e1137c425954f5e5624c95367ab">vcprintf</a> (const char *format, va_list ap)</td></tr>
+<tr class="separator:a88bc4e1137c425954f5e5624c95367ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a039bc72010b9c423a7d9ce0908ffc37b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni</a> (int n, int radix)</td></tr>
 <tr class="separator:a039bc72010b9c423a7d9ce0908ffc37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eadeedb5083ccde64a4b88552ae0a62"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a> (unsigned int n, int radix)</td></tr>
@@ -190,10 +182,10 @@ Functions</h2></td></tr>
 <tr class="separator:a6316c3b1f9d530cb0aa1e0f9346933dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A generic console print capability. </p>
-<p><a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a> is like <code>printf</code>.</p>
+<div class="textblock"><p>A generic console output capability. </p>
 <p>In the default configuration with interrupt-driven transmission disabled, it disables interrupts while operating to ensure that interleaved messages do not occur, transmits with direct UART writes, and is "safe" for call from within interrupt handlers.</p>
-<p><a class="el" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs()</a> and <a class="el" href="console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b">cputchars()</a> are provided where the complexity of printf is not required but atomic output is desired. Other routines permit display of NUL-terminated plain text without a newline (<a class="el" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni()</a>), plain text of a fixed length (<a class="el" href="console_8h.html#a27e2ff7e39dfb73bbf4d86889d782ed7">cputchars_ni()</a>), single characters (<a class="el" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni()</a>), and integers (<a class="el" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni()</a>, <a class="el" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni()</a>, <a class="el" href="console_8h.html#aecbe49f4509a794f254611835c386ae2">cputl_ni()</a>, <a class="el" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni()</a>) without incurring the stack overhead of printf, which can be quite high (on the order of 100 bytes if 64-bit integer support is included). Following the standard BSP340 naming conventions some of these capabilities are available with wrappers that preserve interrupt state.</p>
+<p><a class="el" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs()</a> and <a class="el" href="console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b">cputchars()</a> are provided where the complexity of <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a> is not required but atomic output is desired. Other routines permit display of NUL-terminated plain text without a newline (<a class="el" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni()</a>), plain text of a fixed length (<a class="el" href="console_8h.html#a27e2ff7e39dfb73bbf4d86889d782ed7">cputchars_ni()</a>), and single characters (<a class="el" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni()</a>).</p>
+<p>With library support through <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> or <a href="https://sourceforge.net/projects/mspgcc/files/msp430-libc/">msp430-libc</a> in the MSPGCC toolchain full support for formatted output via <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a> is possible. Optimized routines are provided to convert integers in standard bases with minimal space overhead (<a class="el" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni()</a>, <a class="el" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni()</a>, <a class="el" href="console_8h.html#aecbe49f4509a794f254611835c386ae2">cputl_ni()</a>, <a class="el" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni()</a>). The integer routines are more cumbersome but necessary when the platform cannot accommodate the stack overhead of <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a> (on the order of 100 bytes if 64-bit integer support is included). Following the standard BSP430 naming conventions some of these capabilities are available with wrappers that preserve interrupt state.</p>
 <p>All output functions are safe to call even if the console was not initialized, or its initialization failed, or it is temporarily disabled. In those situations they simply return immediately.</p>
 <h1><a class="anchor" id="h_utility_console_interrupts"></a>
 Console Output and Interrupts</h1>
@@ -324,6 +316,25 @@ Console Output and Interrupts</h1>
 
 </div>
 </div>
+<a class="anchor" id="ad00f4e0aa91311e9593b973df63a7458"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CONSOLE_USE_EMBTEXTF&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define to indicate build infrastructure support for embtextf</p>
+<p>This flag should be defined to a true value by the build infrastructure when the external <a class="el" href="index.html#mp_external_embtextf">embtextf (Embedded System Text Formatting)</a> library is to supply enhanced formatting functions. This enables: </p>
+<ul>
+<li><a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a>, <a class="el" href="console_8h.html#a88bc4e1137c425954f5e5624c95367ab">vcprintf()</a> </li>
+<li><a class="el" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni()</a>, <a class="el" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni()</a>, <a class="el" href="console_8h.html#aecbe49f4509a794f254611835c386ae2">cputl_ni()</a>, <a class="el" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni()</a></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>When using the MSPGCC toolchain this capability is available implicitly through msp430-libc. <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> should be defined only when the external version of these functions is to be used instead. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a7e7be9a93cd9726e38378c1736d3b239"></a>
 <div class="memitem">
 <div class="memproto">
@@ -337,81 +348,6 @@ Console Output and Interrupts</h1>
 <p>See <a class="el" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">BSP430_CONSOLE_SERIAL_PERIPH_CPPID</a> for information about which serial peripheral will be used for this capability.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Affects:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a45dea9afedd2d38692468f4d590ad07a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_CONSOLE_LIBC_HAS_ITOA&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to false if your libc does not provide itoa. msp430-libc does provide this, and it is used to implement cputi.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a3c0cce6af572fe01617ef6c7da2bccfa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_CONSOLE_LIBC_HAS_LTOA&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to false if your libc does not provide ltoa. msp430-libc does provide this, and it is used to implement cputl.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a1459f5b3ccb0c486550430a8f6c32241"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_CONSOLE_LIBC_HAS_ULTOA&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to false if your libc does not provide ultoa. msp430-libc does provide this, and it is used to implement cputul.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a3c4508ec47a8acb913c91b16fe215665"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_CONSOLE_LIBC_HAS_UTOA&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to false if your libc does not provide utoa. msp430-libc does provide this, and it is used to implement cputu.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
-<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a8d514ef914bd654dcc9c4dd4b12349c8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define configBSP430_CONSOLE_LIBC_HAS_VUPRINTF&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Define to false if your libc does not provide vuprintf. msp430-libc does provide this, and it is used to implement cprintf.</p>
-<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
@@ -464,7 +400,7 @@ Console Output and Interrupts</h1>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a92d0f9aff946120aefa3ffbf359afe0f"></a>
+<a class="anchor" id="a4748fe84e66a49005dc7ba0a0e51704a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -472,7 +408,7 @@ Console Output and Interrupts</h1>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> cgetchar </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int cgetchar </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -566,12 +502,12 @@ Console Output and Interrupts</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of characters printed if the console is enabled; 0 if it is disabled; a negative error code if an error is encountered</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a8d514ef914bd654dcc9c4dd4b12349c8">configBSP430_CONSOLE_LIBC_HAS_VUPRINTF</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a22">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a14">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a3">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a0">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a14">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a5">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a15">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a4">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a18">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a14">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a0">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
-<a class="anchor" id="add5a7f905ddc52c709f5ebec819ec1c2"></a>
+<a class="anchor" id="a90f7ebaff29b80e288b6890ed9201f2c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -579,7 +515,7 @@ Console Output and Interrupts</h1>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> cputchar </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int cputchar </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>c</em></td><td>)</td>
@@ -602,7 +538,7 @@ Console Output and Interrupts</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the character that was output </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a8">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a44">sensors/hh10d/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a56">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a6">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a8">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a44">sensors/hh10d/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a57">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a6">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -741,7 +677,7 @@ Console Output and Interrupts</h1>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that <code>radix</code> is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a45dea9afedd2d38692468f4d590ad07a">configBSP430_CONSOLE_LIBC_HAS_ITOA</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a18">bootstrap/clocks/main.c</a>.</dd>
 </dl>
 </div>
@@ -780,7 +716,7 @@ Console Output and Interrupts</h1>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the radix is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a3c0cce6af572fe01617ef6c7da2bccfa">configBSP430_CONSOLE_LIBC_HAS_LTOA</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a33">bootstrap/clocks/main.c</a>.</dd>
 </dl>
 </div>
@@ -902,7 +838,7 @@ Console Output and Interrupts</h1>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the radix is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a3c4508ec47a8acb913c91b16fe215665">configBSP430_CONSOLE_LIBC_HAS_UTOA</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a3">bootstrap/clocks/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a12">bootstrap/console/main.c</a>.</dd>
 </dl>
 </div>
@@ -941,7 +877,7 @@ Console Output and Interrupts</h1>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>The implementation assumes that the radix is at least 10. Passing a smaller radix will likely result in stack corruption.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of characters emitted</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#a1459f5b3ccb0c486550430a8f6c32241">configBSP430_CONSOLE_LIBC_HAS_ULTOA</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a5">bootstrap/clocks/main.c</a>, and <a class="el" href="bootstrap_2console_2main_8c-example.html#a14">bootstrap/console/main.c</a>.</dd>
 </dl>
 </div>
@@ -1145,14 +1081,15 @@ Console Output and Interrupts</h1>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>as with <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>as with <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a>.</dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> </dd></dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

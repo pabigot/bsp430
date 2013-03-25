@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -101,7 +101,7 @@ main.c</h1>
 <div class="line"></div>
 <div class="line"><span class="comment">/* We will use a console if we can. */</span></div>
 <div class="line"><span class="preprocessor">#if BSP430_CONSOLE - 0</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html" title="A generic console print capability.">bsp430/utility/console.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html" title="A generic console output capability.">bsp430/utility/console.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* LPM bits are relevant when figuring out what clocks might be</span></div>
@@ -292,7 +292,7 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span>  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nCS RSEL %d DCOFSEL %d:&quot;</span></div>
 <div class="line">          <span class="stringliteral">&quot;\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x&quot;</span></div>
 <div class="line">          <span class="stringliteral">&quot;\n CTL4 %04x CTL5 %04x CTL6 %04x&quot;</span>,</div>
-<div class="line">          !!(DCORSEL &amp; CSCTL1), 0x03 &amp; (CSCTL1 / DCOFSEL0),</div>
+<div class="line">          !!(DCORSEL &amp; CSCTL1), 0x07 &amp; (CSCTL1 / DCOFSEL0),</div>
 <div class="line">          CSCTL0, CSCTL1, CSCTL2, CSCTL3,</div>
 <div class="line">          CSCTL4, CSCTL5, CSCTL6);</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* CS */</span><span class="preprocessor"></span></div>
@@ -406,7 +406,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

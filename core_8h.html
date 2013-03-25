@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -105,7 +105,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a6e454bbff10b4097999dc3b5b44f83a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#a6e454bbff10b4097999dc3b5b44f83a5">BSP430_VERSION</a>&#160;&#160;&#160;20130110</td></tr>
+<tr class="memitem:a6e454bbff10b4097999dc3b5b44f83a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#a6e454bbff10b4097999dc3b5b44f83a5">BSP430_VERSION</a>&#160;&#160;&#160;20130325</td></tr>
 <tr class="separator:a6e454bbff10b4097999dc3b5b44f83a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b8e83756234c87d8c5c2b5c2a027e9e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#a4b8e83756234c87d8c5c2b5c2a027e9e">BSP430_PERIPH_CCPID_NONE</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a4b8e83756234c87d8c5c2b5c2a027e9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,14 +195,14 @@ Macros</h2></td></tr>
 <tr class="separator:ac98f22bd2238bfdadf9c7d2a7a8bcc8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acaa6cf4d6e93f3ad16164fa0afad1b3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#acaa6cf4d6e93f3ad16164fa0afad1b3a">BSP430_CORE_TOOLCHAIN_GCC</a>&#160;&#160;&#160;(1 &lt; __GNUC__)</td></tr>
 <tr class="separator:acaa6cf4d6e93f3ad16164fa0afad1b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3c7eeefe4646b0c486f6c209b4e36d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#ac3c7eeefe4646b0c486f6c209b4e36d0">BSP430_CORE_TOOLCHAIN_CCS</a>&#160;&#160;&#160;(__TI_COMPILER_VERSION - 0)</td></tr>
-<tr class="separator:ac3c7eeefe4646b0c486f6c209b4e36d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc9bdec15b3ab4175315a6e0f6b6d142"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;&#160;&#160;__inline__</td></tr>
 <tr class="separator:acc9bdec15b3ab4175315a6e0f6b6d142"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1bc2d9022aabb8aa31e7c1f1eb4a0b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a>&#160;&#160;&#160;<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> __attribute__((__always_inline__))</td></tr>
 <tr class="separator:ac1bc2d9022aabb8aa31e7c1f1eb4a0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2153ff71877790bdf6e8efd5aa0d3bd3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#a2153ff71877790bdf6e8efd5aa0d3bd3">BSP430_CORE_PACKED_STRUCT</a>(nm_)&#160;&#160;&#160;struct __attribute__((__packed__)) nm_</td></tr>
 <tr class="separator:a2153ff71877790bdf6e8efd5aa0d3bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a313ebd2a45fdf2e32c7c35866d6a7528"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#a313ebd2a45fdf2e32c7c35866d6a7528">BSP430_CORE_DECLARE_INTERRUPT</a>(iv_)&#160;&#160;&#160;static void __attribute__((__interrupt__(iv_)))</td></tr>
+<tr class="separator:a313ebd2a45fdf2e32c7c35866d6a7528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b153003ca93d41bd574dcd4790feb6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(lpm_bits_)&#160;&#160;&#160;__bis_status_register(<a class="el" href="core_8h.html#a1054ff5339d5fc04a83cbfd493ccb4fb">BSP430_CORE_LPM_SR_MASK</a> &amp; (lpm_bits_))</td></tr>
 <tr class="separator:a1b153003ca93d41bd574dcd4790feb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3ba0bc9be345eb561a58747da602704"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">BSP430_CORE_LPM_ENTER_NI</a>(lpm_bits_)&#160;&#160;&#160;<a class="el" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<a class="el" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> | (lpm_bits_))</td></tr>
@@ -248,6 +248,30 @@ Macros</h2></td></tr>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a313ebd2a45fdf2e32c7c35866d6a7528"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CORE_DECLARE_INTERRUPT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">iv_</td><td>)</td>
+          <td>&#160;&#160;&#160;static void __attribute__((__interrupt__(iv_)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mark a function as an interrupt handler.</p>
+<p>The technique required varies among toolchains.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iv_</td><td>the TI header constant identifying the interrupt, e.g <code>USCI_B2_VECTOR</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a327cb5d1a1607c19c9551a18507bbb63"></a>
 <div class="memitem">
 <div class="memproto">
@@ -272,7 +296,7 @@ Macros</h2></td></tr>
   </dd>
 </dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">configBSP430_CORE_SUPPORT_WATCHDOG</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a4">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a7">bootstrap/console/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a25">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a37">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a12">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a16">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a14">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a4">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a7">bootstrap/console/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a25">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a37">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a13">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a16">sensors/hh10d/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a14">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -307,8 +331,9 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Set the status register <a class="el" href="msp430_8h.html#a1e3cee306f51b98da4e4c97ab118f506">GIE</a> bit so that interrupts are enabled.</p>
+<dl class="section note"><dt>Note</dt><dd>BSP430 will insert a <code>nop</code> after the <code>eint</code> when <a class="el" href="core_8h.html#a4c84fee0a5a393e76610a65ee1a6bf36">BSP430_CORE_FAMILY_IS_5XX</a> is true, on the assumption that MSP430 erratum CPU42 is present and has not been worked around by the compiler.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a43">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a6">bootstrap/console/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a49">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a39">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a48">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a50">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a40">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a43">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a6">bootstrap/console/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a49">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a39">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a48">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a51">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a40">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -335,7 +360,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Mark a function to be inlined.</p>
+<p>Defined to a true value if the Texas Instruments compiler is being used.</p>
+<p>The TI compiler is part of Code Composer Studio, but itself has no clear dependencies on CCS and internally uses a different version series. Since BSP430 has no IDE infrastructure, the toolchain is identified by the compiler (TI), not the IDE (CCS).</p>
+<dl class="section warning"><dt>Warning</dt><dd>Although this definition is present and used, the TI C/C++ compiler is not fully supported. At this time the issue is weaknesses in libc (itoa and printf). Mark a function to be inlined.</dd></dl>
 <p>Most toolchains support this feature, but the spelling of the request varies.</p>
 <p>The toolchain is free to ignore the request, which is after all only the developer's expert opinion. When optimizing for size toolchains are likely to ignore this if more than one call site is in the translation unit.</p>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> </dd></dl>
@@ -422,7 +449,7 @@ Macros</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a64">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a24">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2lpm_2main_8c-example.html#a9">bootstrap/lpm/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a58">rfem/cc3000/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a61">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a52">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a64">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a24">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2lpm_2main_8c-example.html#a9">bootstrap/lpm/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a58">rfem/cc3000/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a62">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a52">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -736,20 +763,6 @@ The result is rounded down.</dd></dl>
 <dd>
 The result is rounded down.</dd></dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="core_8h.html#a219559446b71e4adfab17e300c0c1ecb">BSP430_CORE_US_TO_TICKS</a>, <a class="el" href="core_8h.html#a5c82432f5b308110619c93d2ee32e892">BSP430_CORE_TICKS_TO_MS</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac3c7eeefe4646b0c486f6c209b4e36d0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BSP430_CORE_TOOLCHAIN_CCS&#160;&#160;&#160;(__TI_COMPILER_VERSION - 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Defined to a true value if Code Composer Studio is being used.</p>
-<dl class="section warning"><dt>Warning</dt><dd>Although this definition is present and used, Code Composer Studio cannot be used to build BSP430 because it does not support ISO C11 anonymous struct/union fields. </dd></dl>
 
 </div>
 </div>
@@ -1312,7 +1325,7 @@ The result is rounded down.</dd></dl>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_VERSION&#160;&#160;&#160;20130110</td>
+          <td class="memname">#define BSP430_VERSION&#160;&#160;&#160;20130325</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1394,7 +1407,7 @@ exiting active from ISRs for short periods of time" and UCS10 ("Modulation cause
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

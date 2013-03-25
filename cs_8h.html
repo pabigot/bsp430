@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -103,7 +103,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a6c04d4f7058250c4ab5c9d220a4234a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a6c04d4f7058250c4ab5c9d220a4234a0">BSP430_MODULE_CS</a></td></tr>
+<tr class="memitem:a63edacf57e89b945f6edc332d26ee9de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a63edacf57e89b945f6edc332d26ee9de">BSP430_CS_IS_FR58XX</a>&#160;&#160;&#160;(defined(__MSP430_HAS_CS_A__) || (defined(__MSP430_HAS_CS__) &amp;&amp; defined(DCOFSEL2)))</td></tr>
+<tr class="separator:a63edacf57e89b945f6edc332d26ee9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd5b34e1678b069772c9087173b9305"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#adbd5b34e1678b069772c9087173b9305">BSP430_CS_IS_FR57XX</a>&#160;&#160;&#160;(defined(__MSP430_HAS_CS__) &amp;&amp; (! (defined(__MSP430_HAS_CS_A__) || defined(DCOFSEL2))))</td></tr>
+<tr class="separator:adbd5b34e1678b069772c9087173b9305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c04d4f7058250c4ab5c9d220a4234a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a6c04d4f7058250c4ab5c9d220a4234a0">BSP430_MODULE_CS</a>&#160;&#160;&#160;((<a class="el" href="cs_8h.html#adbd5b34e1678b069772c9087173b9305">BSP430_CS_IS_FR57XX</a> - 0) || (<a class="el" href="cs_8h.html#a63edacf57e89b945f6edc332d26ee9de">BSP430_CS_IS_FR58XX</a> - 0))</td></tr>
 <tr class="separator:a6c04d4f7058250c4ab5c9d220a4234a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a975f44a73a1181b0fd58b353f0e49024"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cs_8h.html#a975f44a73a1181b0fd58b353f0e49024">BSP430_CS_NOMINAL_MODCLK_HZ</a>&#160;&#160;&#160;5000000UL</td></tr>
 <tr class="separator:a975f44a73a1181b0fd58b353f0e49024"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -256,6 +260,38 @@ Hardware Adaptation Layer</h1>
 
 </div>
 </div>
+<a class="anchor" id="adbd5b34e1678b069772c9087173b9305"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CS_IS_FR57XX&#160;&#160;&#160;(defined(__MSP430_HAS_CS__) &amp;&amp; (! (defined(__MSP430_HAS_CS_A__) || defined(DCOFSEL2))))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Determine whether target has a CS or CS_A peripheral.</p>
+<p>This macro is defined to a true value if the target peripheral has the FR57xx variant of the CS module.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="cs_8h.html#a63edacf57e89b945f6edc332d26ee9de">BSP430_CS_IS_FR58XX</a></dd></dl>
+<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a63edacf57e89b945f6edc332d26ee9de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CS_IS_FR58XX&#160;&#160;&#160;(defined(__MSP430_HAS_CS_A__) || (defined(__MSP430_HAS_CS__) &amp;&amp; defined(DCOFSEL2)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Determine whether target has a CS or CS_A peripheral.</p>
+<p>The base CS peripheral as defined in the FR57xx family has a different set of available clocks and differences in register layout and configurable clock rates from the variant in the FR58xx/FR59xx, which was distinguished as CS_A in the header files originally released for the Wolverine chips. Subsequently TI decided to eliminate the difference in name, while retaining the difference in interface and functionality. This occurs in public release version 1.073 of the MSP430 headers.</p>
+<p>This macro is defined to a true value if the target peripheral has the FR58xx variant of the CS module. It uses <code><b>MSP430_HAS_CS_A</b></code> if available, otherwise depends on the presence of <code>DCOFSEL2</code>, a bit not available on the original CS peripheral.</p>
+<dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a02a5d0ea0118facd7fb5d4a701a98b29"></a>
 <div class="memitem">
 <div class="memproto">
@@ -325,13 +361,11 @@ Hardware Adaptation Layer</h1>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_MODULE_CS</td>
+          <td class="memname">#define BSP430_MODULE_CS&#160;&#160;&#160;((<a class="el" href="cs_8h.html#adbd5b34e1678b069772c9087173b9305">BSP430_CS_IS_FR57XX</a> - 0) || (<a class="el" href="cs_8h.html#a63edacf57e89b945f6edc332d26ee9de">BSP430_CS_IS_FR58XX</a> - 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(defined(__MSP430_HAS_CS__)            \</div>
-<div class="line">                          || defined(__MSP430_HAS_CS_A__))</div>
-</div><!-- fragment --><p>Defined on inclusion of &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction for Clock System (CS).">bsp430/periph/cs.h</a>&gt;. The value evaluates to true if the target MCU supports the Clock System peripheral, and false if it does not.</p>
+<p>Defined on inclusion of &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction for Clock System (CS).">bsp430/periph/cs.h</a>&gt;. The value evaluates to true if the target MCU supports the Clock System peripheral, and false if it does not.</p>
 <dl class="section user"><dt>C Preprocessor Only:</dt><dd>This macro may have a value that permits its use only within C preprocessor conditional directives. </dd></dl>
 
 </div>
@@ -339,7 +373,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

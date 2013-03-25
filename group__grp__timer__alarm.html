@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -157,6 +157,7 @@ Functions</h2></td></tr>
 <div class="line">  alarmHAL_-&gt;<a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a class="code" href="structsBSP430hplTIMER.html#af7e38ca9803b3645a8abb261608a7957">ctl</a> = 0;</div>
 <div class="line">  <a class="code" href="timer_8h.html#adbda3deda56fd4453c32f47f51c3f861">vBSP430timerResetCounter_ni</a>(alarmHAL_);</div>
 <div class="line">  alarmHAL_-&gt;<a class="code" href="structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716">hpl</a>-&gt;<a class="code" href="structsBSP430hplTIMER.html#af7e38ca9803b3645a8abb261608a7957">ctl</a> = APP_TASSEL | <a class="code" href="msp430_8h.html#ad367be228fa82c3f35290c9141138710">MC_2</a> | TACLR | TAIE;</div>
+<div class="line">  <a class="code" href="timer_8h.html#a1a418c4722995ff9a7a9e766e7eeb6a6">vBSP430timerInferHints_ni</a>(alarmHAL_);</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 <p>Alarms depend on a persistent object that describes their current state and holds the callback structures necessary to connect them to the peripheral interrupt infrastructure. These objects must be initialized once using <a class="el" href="group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81">hBSP430timerAlarmInitialize()</a>. After that point, the objects are not directly referenced; operations on the alarm are performed using a <a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">handle</a>.</p>
@@ -165,7 +166,6 @@ Functions</h2></td></tr>
 <p>Alarms that are set may be reliably cancelled using <a class="el" href="group__grp__timer__alarm.html#ga916a200cdb0920d14d47e3763ed3388c">iBSP430timerAlarmCancel_ni()</a>. This should always be done with interrupts disabled, to ensure that the alarm is not firing while the cancellation occurs. The return value will indicate if the alarm cancellation failed, e.g. due to it having already gone off.</p>
 <p>When the alarm fires, the callback registered in <a class="el" href="structsBSP430timerAlarm.html#afca4ba6a409f01eef0e2000668ee9b48">sBSP430timerAlarm::callback</a> is invoked. The callback may invoke <a class="el" href="group__grp__timer__alarm.html#ga691c60553180266436fbea9a9a8bfed7">iBSP430timerAlarmSet_ni()</a> to reschedule a periodic alarm, but complex processing should not be done. The callback should instead set a volatile global variable and return a value such as <a class="el" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>. See <a class="el" href="group__grp__timer__alarm.html#ga9995237b87fbe59fcb5b31806f91b4ca">iBSP430timerAlarmCallback_ni</a>.</p>
 <p>The <a class="el" href="ex_utility_alarm.html">Utilities: Alarms</a> example program provides an environment where the behavior of alarms can be interactively probed.</p>
-<dl class="section warning"><dt>Warning</dt><dd>The alarm infrastructure requires that <a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni()</a> have been invoked on the underlying timer. This is done by the infrastructure for <a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>, but you must do so for other timers that may be used for alarms.</dd></dl>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2013, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -350,7 +350,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is enabled (as it is by default), attempts to configure an alarm on <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> will be rejected.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is enabled attempts to configure an alarm on <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> will be rejected.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">callback</td><td>the callback function to be invoked when the alarm goes off. This may be a null pointer, in which case the infrastructure will behave as though a registered callback did nothing but return <a class="el" href="periph_8h.html#a54d508be960943682bb59a2d4e7225da">BSP430_HAL_ISR_CALLBACK_EXIT_LPM</a>.</td></tr>
@@ -358,7 +358,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A non-null handle for the alarm. A null handle will be returned if initialization failed, e.g. because <code>periph</code> could not be identified as a timer with a HAL supporting an alarm. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a48">utility/alarm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a49">utility/alarm/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -530,6 +530,7 @@ Functions</h2></td></tr>
 <p>Set the alarm to go off at the specified time.</p>
 <p>This function may be invoked in normal user code, or within an alarm callback or other interrupt handler to reschedule the alarm.</p>
 <dl class="section warning"><dt>Warning</dt><dd>The default value for BSP430_TIMER_ALARM_PAST_LIMIT assumes the interrupt will be processed within a single overflow of the underlying 16-bit timer peripheral. When a busy system uses very high-speed timers, e.g. an undivided <code>SMCLK</code>, application code should take into account that the <a class="el" href="structsBSP430timerAlarm.html#aa42f23d79c51dc804e7e00a940b27277">sBSP430timerAlarm::setting_tck</a> value may be so far in the past that new settings are mis-interpreted as being in the far future.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The alarm is set only if the return value is zero.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">alarm</td><td>a pointer to an alarm structure initialized using iBSP430timerAlarmInitialize().</td></tr>
@@ -590,7 +591,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

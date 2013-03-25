@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -227,7 +227,7 @@ Hardware Adaptation Layer</h1>
 </div><div class="memdoc">
 <p>Generate the events recorded within the system reset vector.</p>
 <p>This routine can be used to determine the cause of a reset. It can also detect whether the reset involves a brownout reset (BOR), which restores everything to its power-on condition, or is a result of an LPMx.5 wakeup, or several other classes of reset.</p>
-<p>Recall that an MSP430 power on reset (POR) does not in fact return all values to power on defaults, nor does a power up clear (PUC). See <a class="el" href="pmm_8h.html#ad3964261b74c99a48cdbb8d0d1eeb416">vBSP430pmmInduceBOR()</a>.</p>
+<p>Recall that an MSP430 power on reset (POR) does not in fact return all values to power on defaults, nor does a power up clear (PUC). See <a class="el" href="pmm_8h.html#abaec56228be231bba18d6edd8b505869">vBSP430pmmInduceBOR()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">puiResetFlags</td><td>Optional pointer to a variable that indicates the class of reset causes encountered. On initial call, the value of the pointed-to variable should be zero; it is updated with <a class="el" href="sys_8h.html#a790d901e62558a64459412e0459d8d7a">BSP430_SYS_FLAG_SYSRST_BOR</a> and related flags as each reset cause is returned.</td></tr>
@@ -268,7 +268,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

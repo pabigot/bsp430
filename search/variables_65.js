@@ -9,5 +9,6 @@ var searchData=
   ['ell_5falt_5fcm_5fbe',['ell_alt_cm_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a7c97c7e882d378d1f78d03e0155518f3',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['entry',['entry',['../structsBSP430tlvTable2xx.html#a13fece3c9d2ff08acd6abe5b9d5e80e6',1,'sBSP430tlvTable2xx::entry()'],['../structsBSP430tlvTable5xx.html#a411eef39473a01835e6f6898cc6b4f42',1,'sBSP430tlvTable5xx::entry()']]],
   ['euscia',['euscia',['../structsBSP430halSERIAL.html#a30424a6ad26b1660f215a5a3b98e24d5',1,'sBSP430halSERIAL']]],
-  ['euscib',['euscib',['../structsBSP430halSERIAL.html#adbcfb934a8e21ec940154c8a830af399',1,'sBSP430halSERIAL']]]
+  ['euscib',['euscib',['../structsBSP430halSERIAL.html#adbcfb934a8e21ec940154c8a830af399',1,'sBSP430halSERIAL']]],
+  ['extension_5fid',['extension_id',['../structuBSP430eui64_1_1as48.html#a8c32e2c096f347a7e11d3315b125ec43',1,'uBSP430eui64::as48']]]
 ];

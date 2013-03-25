@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -84,6 +84,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#mp_capabilities">Capabilities Currently Supported</a></li>
 <li class="level1"><a href="#mp_platforms">Hardware Platforms Currently Supported</a></li>
+<li class="level1"><a href="#mp_external">Useful External Libraries</a><ul><li class="level2"><a href="#mp_external_embtextf">embtextf (Embedded System Text Formatting)</a></li>
+</ul>
+</li>
 <li class="level1"><a href="#mp_examples">Provided Examples</a><ul><li class="level2"><a href="#ex_utility">Value-Added Utility Examples</a></li>
 <li class="level2"><a href="#ex_sensors">Sensors</a></li>
 <li class="level2"><a href="#ex_bootstrap">Bootstrap Support Programs</a></li>
@@ -155,6 +158,12 @@ Hardware Platforms Currently Supported</h1>
 <li><a href="http://www.ti.com/tool/msp-ts430rgz48c">MSP430FR5969 in a TS430RGZ48C carrier ("Wolverine")</a> </li>
 <li><a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a></li>
 </ul>
+<h1><a class="anchor" id="mp_external"></a>
+Useful External Libraries</h1>
+<h2><a class="anchor" id="mp_external_embtextf"></a>
+embtextf (Embedded System Text Formatting)</h2>
+<dl class="section see"><dt>See Also</dt><dd><a href="http://pabigot.github.com/embtextf/">http://pabigot.github.com/embtextf/</a></dd></dl>
+<p>BSP430 was initially developed using the <a href="http://sourceforge.net/projects/mspgcc/">MSPGCC</a> toolchain, a port of the GNU compiler collection to the MSP430. The msp430-libc library that is part of this toolchain includes a space-efficient formatting print capability compatible with C's <code>printf(3c)</code> functionality using a callback that allows it to output to an application-provided location (a memory buffer, a serial console, an LCD screen, etc.). Subsequently those capabilities have been extracted, refactored, and extended as the <a href="http://pabigot.github.com/embtextf/">embtextf</a> library, making the same features available to Code Composer Studio and for toolchains that do not have an efficient generic formatted print capability. These functions are used in &lt;<a class="el" href="console_8h.html" title="A generic console output capability.">bsp430/utility/console.h</a>&gt; by defining <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a>, which is enabled by the default when <code>EMBTEXTF_ROOT</code> is defined for use by <code>${BSP430_ROOT}/examples/Makefile.common</code>.</p>
 <h1><a class="anchor" id="mp_examples"></a>
 Provided Examples</h1>
 <h2><a class="anchor" id="ex_utility"></a>
@@ -183,7 +192,7 @@ Sensors</h2>
 <li><a class="el" href="ex_sensors_ds18b20.html">Sensors: DS18B20</a> demonstrates temperature measurement with the DS18B20 (or similar) 1-wire temperature sensor </li>
 <li><a class="el" href="ex_sensors_tmp102.html">Sensors: TMP102</a> demonstrates the I2C interface with a TI TMP102 temperature sensor </li>
 <li><a class="el" href="ex_sensors_hh10d.html">Sensors: HH10D</a> demonstrates measuring the frequency of an input signal using the Hope RF Humidity Sensor </li>
-<li><a class="el" href="ex_sensors_venus6pps.html">Sensors: SkyTraq Venus 638FLPx as Time Source</a> demonstrates the <a class="el" href="gps_8h.html">BSP430 GPS interface</a> and synchronizing the <a class="el" href="uptime_8h.html#aad55bc14d03e0bba220051821ea275d6">uptime clock</a> with a 1PPS GPS time source</li>
+<li><a class="el" href="ex_sensors_venus6pps.html">Sensors: SkyTraq Venus 638FLPx as Time Source</a> demonstrates the <a class="el" href="gps_8h.html">BSP430 GPS interface</a> and synchronizing the <a class="el" href="uptime_8h.html#a7e0b8aeba63d7b2ce965a650125eb8ef">uptime clock</a> with a 1PPS GPS time source</li>
 </ul>
 <h2><a class="anchor" id="ex_bootstrap"></a>
 Bootstrap Support Programs</h2>
@@ -201,7 +210,7 @@ Bootstrap Support Programs</h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

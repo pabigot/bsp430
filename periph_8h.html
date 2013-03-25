@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -190,13 +190,13 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa42032dffb0bcb70079bcff34f67ac3b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> <br class="typebreak"/>
-<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">xBSP430periphFromHPL</a> (volatile void *hpl)</td></tr>
-<tr class="separator:aa42032dffb0bcb70079bcff34f67ac3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae37a5adf5eaab781cdd41d53ff1e423f"><td class="memItemLeft" align="right" valign="top">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#ae37a5adf5eaab781cdd41d53ff1e423f">iBSP430callbackInvokeISRVoid_ni</a> (const struct <a class="el" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> *volatile const *cbpp, void *context, int basis)</td></tr>
-<tr class="separator:ae37a5adf5eaab781cdd41d53ff1e423f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a778eb3874125f4c2527f9d1521e533be"><td class="memItemLeft" align="right" valign="top">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a778eb3874125f4c2527f9d1521e533be">iBSP430callbackInvokeISRIndexed_ni</a> (const struct <a class="el" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *volatile const *cbpp, void *context, int idx, int basis)</td></tr>
-<tr class="separator:a778eb3874125f4c2527f9d1521e533be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac66bae341c44d62f5c8fc6086e4abde7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#ac66bae341c44d62f5c8fc6086e4abde7">xBSP430periphFromHPL</a> (volatile void *hpl)</td></tr>
+<tr class="separator:ac66bae341c44d62f5c8fc6086e4abde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8715d31a61b9be98229d0bf501c8659e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a8715d31a61b9be98229d0bf501c8659e">iBSP430callbackInvokeISRVoid_ni</a> (const struct <a class="el" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> *volatile const *cbpp, void *context, int basis)</td></tr>
+<tr class="separator:a8715d31a61b9be98229d0bf501c8659e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ee70b2392b942ed9c194658ae96112c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="periph_8h.html#a2ee70b2392b942ed9c194658ae96112c">iBSP430callbackInvokeISRIndexed_ni</a> (const struct <a class="el" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *volatile const *cbpp, void *context, int idx, int basis)</td></tr>
+<tr class="separator:a2ee70b2392b942ed9c194658ae96112c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generic peripheral support for MSP430 MCUs. </p>
@@ -833,7 +833,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a778eb3874125f4c2527f9d1521e533be"></a>
+<a class="anchor" id="a2ee70b2392b942ed9c194658ae96112c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -841,7 +841,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> iBSP430callbackInvokeISRIndexed_ni </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int iBSP430callbackInvokeISRIndexed_ni </td>
           <td>(</td>
           <td class="paramtype">const struct <a class="el" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> *volatile const *&#160;</td>
           <td class="paramname"><em>cbpp</em>, </td>
@@ -877,21 +877,21 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </table>
 </div><div class="memdoc">
 <p>Execute a chain of <a class="el" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a> callbacks.</p>
-<p>Same as <a class="el" href="periph_8h.html#ae37a5adf5eaab781cdd41d53ff1e423f">iBSP430callbackInvokeISRVoid_ni</a>, but providing an index to the callback.</p>
+<p>Same as <a class="el" href="periph_8h.html#a8715d31a61b9be98229d0bf501c8659e">iBSP430callbackInvokeISRVoid_ni</a>, but providing an index to the callback.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cbpp</td><td>As with <a class="el" href="periph_8h.html#ae37a5adf5eaab781cdd41d53ff1e423f">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
-    <tr><td class="paramname">context</td><td>As with <a class="el" href="periph_8h.html#ae37a5adf5eaab781cdd41d53ff1e423f">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
+    <tr><td class="paramname">cbpp</td><td>As with <a class="el" href="periph_8h.html#a8715d31a61b9be98229d0bf501c8659e">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
+    <tr><td class="paramname">context</td><td>As with <a class="el" href="periph_8h.html#a8715d31a61b9be98229d0bf501c8659e">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
     <tr><td class="paramname">idx</td><td>The index to be passed to each <a class="el" href="periph_8h.html#a1169756f418622f216dfd92dbf95d5a1">iBSP430halISRCallbackIndexed</a> handler </td></tr>
-    <tr><td class="paramname">basis</td><td>As with <a class="el" href="periph_8h.html#ae37a5adf5eaab781cdd41d53ff1e423f">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
+    <tr><td class="paramname">basis</td><td>As with <a class="el" href="periph_8h.html#a8715d31a61b9be98229d0bf501c8659e">iBSP430callbackInvokeISRVoid_ni</a> </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>As with <a class="el" href="periph_8h.html#ae37a5adf5eaab781cdd41d53ff1e423f">iBSP430callbackInvokeISRVoid_ni</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>As with <a class="el" href="periph_8h.html#a8715d31a61b9be98229d0bf501c8659e">iBSP430callbackInvokeISRVoid_ni</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ae37a5adf5eaab781cdd41d53ff1e423f"></a>
+<a class="anchor" id="a8715d31a61b9be98229d0bf501c8659e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -899,7 +899,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> iBSP430callbackInvokeISRVoid_ni </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int iBSP430callbackInvokeISRVoid_ni </td>
           <td>(</td>
           <td class="paramtype">const struct <a class="el" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> *volatile const *&#160;</td>
           <td class="paramname"><em>cbpp</em>, </td>
@@ -942,7 +942,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 
 </div>
 </div>
-<a class="anchor" id="aa42032dffb0bcb70079bcff34f67ac3b"></a>
+<a class="anchor" id="ac66bae341c44d62f5c8fc6086e4abde7"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -950,7 +950,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> xBSP430periphFromHPL </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> xBSP430periphFromHPL </td>
           <td>(</td>
           <td class="paramtype">volatile void *&#160;</td>
           <td class="paramname"><em>hpl</em></td><td>)</td>
@@ -978,7 +978,7 @@ A <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a> instance
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

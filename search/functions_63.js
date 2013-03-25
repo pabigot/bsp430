@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['cgetchar',['cgetchar',['../console_8h.html#a92d0f9aff946120aefa3ffbf359afe0f',1,'console.h']]],
+  ['cgetchar',['cgetchar',['../console_8h.html#a4748fe84e66a49005dc7ba0a0e51704a',1,'console.h']]],
   ['cgetchar_5fni',['cgetchar_ni',['../console_8h.html#ab51614b234cfd24eed353dde0d9f014c',1,'console.h']]],
   ['cpeekchar_5fni',['cpeekchar_ni',['../console_8h.html#a43b6e0953a6cc69cea9af7d3ddaf1d1b',1,'console.h']]],
   ['cprintf',['cprintf',['../console_8h.html#a20188454c5c787938220b7bcf3179869',1,'console.h']]],
-  ['cputchar',['cputchar',['../console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2',1,'console.h']]],
+  ['cputchar',['cputchar',['../console_8h.html#a90f7ebaff29b80e288b6890ed9201f2c',1,'console.h']]],
   ['cputchar_5fni',['cputchar_ni',['../console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1',1,'console.h']]],
   ['cputchars',['cputchars',['../console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b',1,'console.h']]],
   ['cputchars_5fni',['cputchars_ni',['../console_8h.html#a27e2ff7e39dfb73bbf4d86889d782ed7',1,'console.h']]],

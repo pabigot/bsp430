@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -88,7 +88,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">platform.h File Reference</div>  </div>
 </div><!--header-->
@@ -96,7 +97,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>Platform-specific include for SuRF board.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="platform_8h_source.html">bsp430/platform.h</a>&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="onewire_8h_source.html">bsp430/utility/onewire.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="platform_8h_source.html">bsp430/platform.h</a>&gt;</code><br/>
 </div>
 <p><a href="platform_2surf_2platform_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -116,6 +118,13 @@ Macros</h2></td></tr>
 <tr class="separator:a6816690e40b3e93d2688346dc228ca96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cee0bc740cda4571a527a41208b35e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_2surf_2platform_8h.html#a2cee0bc740cda4571a527a41208b35e7">BSP430_PLATFORM_SURF_FLASH_CSn_PORT_BIT</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#aa6b8f3261ae9e2e1043380c192f7b5f0">BIT7</a></td></tr>
 <tr class="separator:a2cee0bc740cda4571a527a41208b35e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b95f475daae74a7f8e53a056ae737b1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_2surf_2platform_8h.html#a6b95f475daae74a7f8e53a056ae737b1">configBSP430_PLATFORM_SURF_DS1825</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a6b95f475daae74a7f8e53a056ae737b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a7fb01279de60cb159fc242b57414b04b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="platform_2surf_2platform_8h.html#a7fb01279de60cb159fc242b57414b04b">xBSP430surfDS1825</a></td></tr>
+<tr class="separator:a7fb01279de60cb159fc242b57414b04b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Platform-specific include for SuRF board. </p>
@@ -219,6 +228,21 @@ A value of 2 indicates a Rev B2 board, which was the production version. </li>
 
 </div>
 </div>
+<a class="anchor" id="a6b95f475daae74a7f8e53a056ae737b1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define configBSP430_PLATFORM_SURF_DS1825&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define to true to provide definitions for the DS1825 one-wire interface.</p>
+<p>If true, this allocates the port HAL required to interact with the DS1825 temperature sensor on P3.7 and adds the declaration for <a class="el" href="platform_2surf_2platform_8h.html#a7fb01279de60cb159fc242b57414b04b">xBSP430surfDS1825</a>.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a3ce6699efc712f5b64eb66e6a24008cd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -233,10 +257,25 @@ A value of 2 indicates a Rev B2 board, which was the production version. </li>
 
 </div>
 </div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="a7fb01279de60cb159fc242b57414b04b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> xBSP430surfDS1825</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The 1-Wire(R) interface for the DS1825 temperature sensor.</p>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="platform_2surf_2platform_8h.html#a6b95f475daae74a7f8e53a056ae737b1">configBSP430_PLATFORM_SURF_DS1825</a> </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

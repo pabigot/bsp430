@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -87,7 +87,7 @@ main.c</h1>
 <div class="fragment"><div class="line"></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="port_8h.html" title="Hardware presentation/abstraction for Digital I/O Port (PORT#/PORT#_R)">bsp430/periph/port.h</a>&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html" title="A generic console print capability.">bsp430/utility/console.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html" title="A generic console output capability.">bsp430/utility/console.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="uptime_8h.html" title="Support for maintaining a system uptime counter.">bsp430/utility/uptime.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="onewire_8h.html" title="Basic support for 1-Wire(R) communications.">bsp430/utility/onewire.h</a>&gt;</span></div>
 <div class="line"></div>
@@ -100,7 +100,9 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#error Uptime is not configured correctly</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="comment">/* Where the device can be found */</span></div>
+<div class="line"><span class="preprocessor">#ifndef APP_DS18B20_BUS</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_DS18B20_BUS ds18b20</span></div>
+<div class="line"><span class="preprocessor"></span><span class="comment">/* Where the device can be found */</span></div>
 <div class="line"><span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> ds18b20 = {</div>
 <div class="line">  .<a class="code" href="structsBSP430onewireBus.html#af742d947e297240f097ab80fd296f92a">port</a> = APP_DS18B20_PORT_HAL,</div>
 <div class="line">  .bit = APP_DS18B20_BIT,</div>
@@ -116,14 +118,15 @@ main.c</h1>
 <div class="line"><span class="preprocessor"></span>  1</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_EXP430G2 */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor"></span>};</div>
-<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_DS18B20_BUS */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="comment">/* The serial number read from the device on startup */</span></div>
 <div class="line"><span class="keyword">struct </span><a class="code" href="structsBSP430onewireSerialNumber.html">sBSP430onewireSerialNumber</a> serial;</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> main ()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordtype">int</span> rc;</div>
-<div class="line">  <span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> * bus = &amp;ds18b20;</div>
+<div class="line">  <span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="structsBSP430onewireBus.html">sBSP430onewireBus</a> * <span class="keyword">const</span> bus = &amp;APP_DS18B20_BUS;</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line"></div>
@@ -131,12 +134,12 @@ main.c</h1>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nHere we go...\n&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Uptime now %lu with frequency %lu Hz\n&quot;</span>,</div>
-<div class="line">          <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>(), <a class="code" href="uptime_8h.html#abee524dac4c6d777b5493f1c16bc1c2a">ulBSP430uptimeConversionFrequency_Hz_ni</a>());</div>
+<div class="line">          <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>(), <a class="code" href="uptime_8h.html#abee524dac4c6d777b5493f1c16bc1c2a">ulBSP430uptimeConversionFrequency_Hz_ni</a>());</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Monitoring DS18xx on %s.%u bit %x\n&quot;</span>,</div>
-<div class="line">          <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="port_8h.html#aa76914b00157adbd8e691cfaeff48fa6">BSP430_PORT_HAL_GET_PERIPH_HANDLE</a>(APP_DS18B20_PORT_HAL)) ?: <span class="stringliteral">&quot;P?&quot;</span>,</div>
-<div class="line">          <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(APP_DS18B20_BIT),</div>
-<div class="line">          APP_DS18B20_BIT);</div>
+<div class="line">          <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(<a class="code" href="port_8h.html#aa76914b00157adbd8e691cfaeff48fa6">BSP430_PORT_HAL_GET_PERIPH_HANDLE</a>(bus-&gt;<a class="code" href="structsBSP430onewireBus.html#af742d947e297240f097ab80fd296f92a">port</a>)) ?: <span class="stringliteral">&quot;P?&quot;</span>,</div>
+<div class="line">          <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(bus-&gt;<a class="code" href="structsBSP430onewireBus.html#abf7811733d78e59de4c15fdcf62cdc81">bit</a>),</div>
+<div class="line">          bus-&gt;<a class="code" href="structsBSP430onewireBus.html#abf7811733d78e59de4c15fdcf62cdc81">bit</a>);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">do</span> {</div>
 <div class="line">    rc = <a class="code" href="onewire_8h.html#a37588f8966ba3a6ec70da4f10c86ca4f">iBSP430onewireReadSerialNumber</a>(bus, &amp;serial);</div>
@@ -156,7 +159,7 @@ main.c</h1>
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> duration_ms;</div>
 <div class="line">    <span class="keywordtype">int</span> t_c;</div>
 <div class="line"></div>
-<div class="line">    start_tck = <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>();</div>
+<div class="line">    start_tck = <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
 <div class="line">    rc = -1;</div>
 <div class="line">    <span class="keywordflow">if</span> (0 == <a class="code" href="onewire_8h.html#add5078955c0e48264eed9a65763925cc">iBSP430onewireRequestTemperature_ni</a>(bus)) {</div>
 <div class="line">      <span class="comment">/* Wait for read to complete.  Conversion time can be as long as</span></div>
@@ -171,7 +174,7 @@ main.c</h1>
 <div class="line">      }</div>
 <div class="line">      rc = <a class="code" href="onewire_8h.html#a586ac794112164ca1df2538f5874c6f7">iBSP430onewireReadTemperature_ni</a>(bus, &amp;t_c);</div>
 <div class="line">    }</div>
-<div class="line">    end_tck = <a class="code" href="uptime_8h.html#ae3e58aab92925d2ee1d3fd8f06031c9b">ulBSP430uptime_ni</a>();</div>
+<div class="line">    end_tck = <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
 <div class="line">    duration_ms = <a class="code" href="uptime_8h.html#a3cde1e0939c712781836c79428c5996d">BSP430_UPTIME_UTT_TO_MS</a>(end_tck - start_tck);</div>
 <div class="line"></div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%s: &quot;</span>, <a class="code" href="uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1">xBSP430uptimeAsText_ni</a>(end_tck));</div>
@@ -204,10 +207,10 @@ bsp430_config.h</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_UPTIME_DELAY 1</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_SURF - 0</span></div>
-<div class="line"><span class="preprocessor"></span><span class="comment">/* SuRF has a DS1825 on P3.7, but the software is the same */</span></div>
-<div class="line"><span class="preprocessor">#define APP_DS18B20_PORT_HAL BSP430_HAL_PORT3</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_DS18B20_BIT BIT7</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define configBSP430_HAL_PORT3 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="comment">/* SuRF has a DS1825 on P3.7, but the software is the same.  We use</span></div>
+<div class="line"><span class="comment"> * the platform-provided resource. */</span></div>
+<div class="line"><span class="preprocessor">#define configBSP430_PLATFORM_SURF_DS1825 1</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_DS18B20_BUS xBSP430surfDS1825</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif (BSP430_PLATFORM_EXP430F5529 - 0)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_DS18B20_PORT_HAL BSP430_HAL_PORT7</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define APP_DS18B20_BIT BIT7</span></div>
@@ -237,7 +240,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -190,7 +190,7 @@ Macros</h2></td></tr>
 <tr class="separator:a8f62d9b887454399e0478ddd0ebf3ea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b123ae1b2c5133e723175b46aada008"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a4b123ae1b2c5133e723175b46aada008">BSP430_PORT_HAL_GET_HPLAUX_PORTW</a>(_hal)&#160;&#160;&#160;((<a class="el" href="port_8h.html#ab3d9986c3a4969cb977ecbec08b191b2">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW</a>(_hal)) ? (_hal)-&gt;hpl_aux.portw : (void *)0)</td></tr>
 <tr class="separator:a4b123ae1b2c5133e723175b46aada008"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa76914b00157adbd8e691cfaeff48fa6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#aa76914b00157adbd8e691cfaeff48fa6">BSP430_PORT_HAL_GET_PERIPH_HANDLE</a>(_hal)&#160;&#160;&#160;<a class="el" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td></tr>
+<tr class="memitem:aa76914b00157adbd8e691cfaeff48fa6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#aa76914b00157adbd8e691cfaeff48fa6">BSP430_PORT_HAL_GET_PERIPH_HANDLE</a>(_hal)&#160;&#160;&#160;<a class="el" href="periph_8h.html#ac66bae341c44d62f5c8fc6086e4abde7">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td></tr>
 <tr class="separator:aa76914b00157adbd8e691cfaeff48fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a942c2ff4c4f1a23607d98aa9767308b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a942c2ff4c4f1a23607d98aa9767308b6">BSP430_PORT_HAL_HPL_IN</a>(_hal)&#160;&#160;&#160;(*(<a class="el" href="port_8h.html#aabb453e9a174fbf5a1ddf65b424d1cbe">BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE</a>(_hal) ? &amp;<a class="el" href="port_8h.html#a3859a31c104fca29a2a3c00aa2e72e93">BSP430_PORT_HAL_GET_HPL_PORTIE</a>(_hal)-&gt;in : &amp;<a class="el" href="port_8h.html#a9ebc2bd94816d535484c94b158f241d6">BSP430_PORT_HAL_GET_HPL_PORT</a>(_hal)-&gt;in))</td></tr>
 <tr class="separator:a942c2ff4c4f1a23607d98aa9767308b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1254,7 +1254,7 @@ Hardware Adaptation Layer</h1>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">_hal</td><td>)</td>
-          <td>&#160;&#160;&#160;<a class="el" href="periph_8h.html#aa42032dffb0bcb70079bcff34f67ac3b">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="periph_8h.html#ac66bae341c44d62f5c8fc6086e4abde7">xBSP430periphFromHPL</a>((_hal)-&gt;hpl.any)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1928,7 +1928,7 @@ Hardware Adaptation Layer</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

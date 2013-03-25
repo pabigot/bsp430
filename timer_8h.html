@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -100,6 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Hardware presentation/abstraction for generic timers (Timer_A/Timer_B)  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="periph_8h_source.html">bsp430/periph.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="clock_8h_source.html">bsp430/clock.h</a>&gt;</code><br/>
 </div>
 <p><a href="timer_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -172,12 +173,16 @@ Macros</h2></td></tr>
 <tr class="separator:ga7c17e99de1ca6bf9f46670cc049a53a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb8cf9a270296605b91d7b56974a1b37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__ccaclk.html#gaeb8cf9a270296605b91d7b56974a1b37">BSP430_TIMER_CCACLK_CC1_CCIS</a>&#160;&#160;&#160;<a class="el" href="msp430_8h.html#a9ba6a151f54a33e229f22f57bba8c7f2">CCIS_0</a></td></tr>
 <tr class="separator:gaeb8cf9a270296605b91d7b56974a1b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabc91e75098e4ea4d9bc3384dc8d7ff4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:aabc91e75098e4ea4d9bc3384dc8d7ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad30dd3941041dfa851bffbfe82ad780"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:aad30dd3941041dfa851bffbfe82ad780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc4328b5e870935dd880856eba42648"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:abbc4328b5e870935dd880856eba42648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8183989e9233a73453351037bc04c29"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:ad8183989e9233a73453351037bc04c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81ae7994f15cca7ebc25063f351d4f17"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a81ae7994f15cca7ebc25063f351d4f17">BSP430_TIMER_HAL_HPL_VARIANT_TIMER</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a81ae7994f15cca7ebc25063f351d4f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2d2ce1e7059aed8cc6b415ff2706fa4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ad2d2ce1e7059aed8cc6b415ff2706fa4">BSP430_TIMER_FLAG_MCLKSYNC</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ad2d2ce1e7059aed8cc6b415ff2706fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1372424614ff0ef39c88c2d6e349145b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a1372424614ff0ef39c88c2d6e349145b">BSP430_TIMER_FLAG_SLOW</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:a1372424614ff0ef39c88c2d6e349145b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga21bb8801633b35ea742bb88d804e5674"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga21bb8801633b35ea742bb88d804e5674">BSP430_TIMER_ALARM_FLAG_SET</a>&#160;&#160;&#160;0x01</td></tr>
 <tr class="separator:ga21bb8801633b35ea742bb88d804e5674"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5de1dec0ca2a7bc98597562a270a4ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#gaa5de1dec0ca2a7bc98597562a270a4ab">BSP430_TIMER_ALARM_FLAG_ENABLED</a>&#160;&#160;&#160;0x02</td></tr>
@@ -308,15 +313,21 @@ Typedefs</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a278d5f6aabe3c57d96f5861e1ca7af04"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a278d5f6aabe3c57d96f5861e1ca7af04">uiBSP430timerCaptureDelta_ni</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph, int ccidx, unsigned int capture_mode, unsigned int ccis, unsigned int count)</td></tr>
 <tr class="separator:a278d5f6aabe3c57d96f5861e1ca7af04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a418c4722995ff9a7a9e766e7eeb6a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a1a418c4722995ff9a7a9e766e7eeb6a6">vBSP430timerInferHints_ni</a> (<a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a> timer)</td></tr>
+<tr class="separator:a1a418c4722995ff9a7a9e766e7eeb6a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3538758f690143471a3224c2cd222867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a3538758f690143471a3224c2cd222867">xBSP430timerClockSource</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *hpl)</td></tr>
+<tr class="separator:a3538758f690143471a3224c2cd222867"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bbdf693689d7631cbada96054c065f8"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a6bbdf693689d7631cbada96054c065f8">ulBSP430timerFrequency_Hz_ni</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 <tr class="separator:a6bbdf693689d7631cbada96054c065f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24b984912d7624627b33023f76c14d31"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni</a> (<a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a> timer, unsigned int *overflowp)</td></tr>
 <tr class="separator:a24b984912d7624627b33023f76c14d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73cf4f30824d57dead07b2aa52614b2f"><td class="memItemLeft" align="right" valign="top">static unsigned long <br class="typebreak"/>
-<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a73cf4f30824d57dead07b2aa52614b2f">ulBSP430timerCounter</a> (<a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a> timer, unsigned int *overflowp)</td></tr>
+<tr class="memitem:a73cf4f30824d57dead07b2aa52614b2f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a73cf4f30824d57dead07b2aa52614b2f">ulBSP430timerCounter</a> (<a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a> timer, unsigned int *overflowp)</td></tr>
 <tr class="separator:a73cf4f30824d57dead07b2aa52614b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbda3deda56fd4453c32f47f51c3f861"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#adbda3deda56fd4453c32f47f51c3f861">vBSP430timerResetCounter_ni</a> (<a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a> timer)</td></tr>
 <tr class="separator:adbda3deda56fd4453c32f47f51c3f861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a925d0536b8f3add41e0c35f273d6fb27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a925d0536b8f3add41e0c35f273d6fb27">vBSP430timerSetCounter_ni</a> (<a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a> timer, unsigned int overflow, unsigned long counter)</td></tr>
+<tr class="separator:a925d0536b8f3add41e0c35f273d6fb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga683a7d272e6c6e48fe3ed1752dbafd81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81">hBSP430timerAlarmInitialize</a> (struct <a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> *alarm, <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph, int ccidx, <a class="el" href="group__grp__timer__alarm.html#ga9995237b87fbe59fcb5b31806f91b4ca">iBSP430timerAlarmCallback_ni</a> callback)</td></tr>
 <tr class="separator:ga683a7d272e6c6e48fe3ed1752dbafd81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf78fc60de828bc03bb7c93624f384ef1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#gaf78fc60de828bc03bb7c93624f384ef1">iBSP430timerAlarmSetEnabled_ni</a> (<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm, int enablep)</td></tr>
@@ -327,6 +338,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga9928ff05ac8f8067c2fc8e4a0b3be331"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga691c60553180266436fbea9a9a8bfed7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga691c60553180266436fbea9a9a8bfed7">iBSP430timerAlarmSet_ni</a> (<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm, unsigned long setting_tck)</td></tr>
 <tr class="separator:ga691c60553180266436fbea9a9a8bfed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9649f82ab433e10123d5118671f8e91c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a9649f82ab433e10123d5118671f8e91c">iBSP430timerAlarmSetForced_ni</a> (<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm, unsigned long setting_tck)</td></tr>
+<tr class="separator:a9649f82ab433e10123d5118671f8e91c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a20e3f41fc5389746951c0a106d9d91"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga5a20e3f41fc5389746951c0a106d9d91">iBSP430timerAlarmSet</a> (<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm, unsigned long setting_tck)</td></tr>
 <tr class="separator:ga5a20e3f41fc5389746951c0a106d9d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga916a200cdb0920d14d47e3763ed3388c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga916a200cdb0920d14d47e3763ed3388c">iBSP430timerAlarmCancel_ni</a> (<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm)</td></tr>
@@ -343,17 +356,31 @@ volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *&#
 <tr class="separator:aad872aaa82973fd3accca3bcc004ea69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2e001792494a2b2f060db5e5a5b5f32"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ae2e001792494a2b2f060db5e5a5b5f32">iBSP430timerSupportedCCs</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
 <tr class="separator:ae2e001792494a2b2f060db5e5a5b5f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ea58cea215db6dd462e3513ca56ad9f"><td class="memItemLeft" align="right" valign="top">static void <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni</a> (<a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph)</td></tr>
-<tr class="separator:a3ea58cea215db6dd462e3513ca56ad9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a209b04774c23ae4ca47c248b6b9c88d6"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
-<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a209b04774c23ae4ca47c248b6b9c88d6">uiBSP430timerSyncCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
-<tr class="separator:a209b04774c23ae4ca47c248b6b9c88d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a137d1b0c5b372640d4df83d001aa6b6a"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
-<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a137d1b0c5b372640d4df83d001aa6b6a">uiBSP430timerAsyncCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
-<tr class="separator:a137d1b0c5b372640d4df83d001aa6b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a74d238a91c2c1a77c909442089ff24"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
-<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a9a74d238a91c2c1a77c909442089ff24">uiBSP430timerSafeCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
-<tr class="separator:a9a74d238a91c2c1a77c909442089ff24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4bfe7c6eee0c1e7da07b5b6ffd1454a"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> <br class="typebreak"/>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
+<tr class="separator:aa4bfe7c6eee0c1e7da07b5b6ffd1454a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a265d31e59ba5fbed9a1425e15c714277"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> <br class="typebreak"/>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
+<tr class="separator:a265d31e59ba5fbed9a1425e15c714277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a160fd84b638c67b105e8768febd6c829"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a160fd84b638c67b105e8768febd6c829">vBSP430timerLatchedCounterInitialize_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl, int ccidx)</td></tr>
+<tr class="separator:a160fd84b638c67b105e8768febd6c829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acebfeaf22b6ac94e4ce006f22ea18261"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> <br class="typebreak"/>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl, int ccidx)</td></tr>
+<tr class="separator:acebfeaf22b6ac94e4ce006f22ea18261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a381b6669a4c008a40d74947890f1e463"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a381b6669a4c008a40d74947890f1e463">vBSP430timerSafeCounterInitialize_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
+<tr class="separator:a381b6669a4c008a40d74947890f1e463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e250ebcd2e7538ba568455318eede59"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> <br class="typebreak"/>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl)</td></tr>
+<tr class="separator:a5e250ebcd2e7538ba568455318eede59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c35695352c5e3ba9870a87e49b338b0"><td class="memItemLeft" align="right" valign="top">static <br class="typebreak"/>
+<a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> <br class="typebreak"/>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a5c35695352c5e3ba9870a87e49b338b0">uiBSP430timerBestCounterRead_ni</a> (volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const hpl, int flags)</td></tr>
+<tr class="separator:a5c35695352c5e3ba9870a87e49b338b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hardware presentation/abstraction for generic timers (Timer_A/Timer_B) </p>
@@ -383,6 +410,19 @@ Module Configuration Options</h1>
 <h1><a class="anchor" id="h_periph_timer_hpl"></a>
 Hardware Presentation Layer</h1>
 <p>Though Timer_A and Timer_B have distinct capabilities, their underlying register maps are compatible and <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> is used for both. The structure includes space for all eight potential capture/compare registers, but only the ones supported by the device should be accessed.</p>
+<p>For convenience several alternative methods of accessing a timer counter are provided:</p>
+<ul>
+<li><a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a> reads the peripheral counter register without validating it. It is the fastest approach, but can produce invalid results when the timer clock is asynchronous to the CPU clock.</li>
+</ul>
+<ul>
+<li><a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni()</a> repeatedly reads the counter until the same value is read twice. It is appropriate when the timer is asynchronous to the CPU clock (e.g., timers using ACLK derived from LFXT1). Calls to it may hang if the timer runs so fast that the counter changes between successive reads.</li>
+</ul>
+<ul>
+<li><a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni()</a> reserves a capture/compare register to be used to latch the counter value and return it. It is safe and valid for synchronous and asynchronous timers at any rate, but requires a capture/compare register be identified and pre-configured using <a class="el" href="timer_8h.html#a160fd84b638c67b105e8768febd6c829">vBSP430timerLatchedCounterInitialize_ni()</a>.</li>
+</ul>
+<ul>
+<li><a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a> selects between <a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a> and <a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni()</a> depending on how the application has configured <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a>. Here "safe" means it will return the best counter value that can be found in constant time. Validity of the returned value is guaranteed only when <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is enabled. This routine also does some validation on the configuration of the capture/compare register if <a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> is false. It is the slowest but also the most reliable absent information about how the timer is configured, so is the solution underlying <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni()</a>.</li>
+</ul>
 <h1><a class="anchor" id="h_periph_timer_hal"></a>
 Hardware Adaptation Layer</h1>
 <p>The timer <a class="el" href="layer.html#HAL">HAL</a> uses the <a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> structure.</p>
@@ -764,6 +804,34 @@ Additional Capabilities</h1>
 
 </div>
 </div>
+<a class="anchor" id="ad2d2ce1e7059aed8cc6b415ff2706fa4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_TIMER_FLAG_MCLKSYNC&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bit set in <a class="el" href="structsBSP430halTIMER.html#a893745ac836014dd39c19ce87a6ffec0">sBSP430halTIMER::hal_state</a> <code>flags</code> to indicate a timer is known to be synchronous to the system clock. In this case a faster counter read approach (<a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a>) can be used.</p>
+<dl class="section note"><dt>Note</dt><dd></dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1372424614ff0ef39c88c2d6e349145b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_TIMER_FLAG_SLOW&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bit set in <a class="el" href="structsBSP430halTIMER.html#a893745ac836014dd39c19ce87a6ffec0">sBSP430halTIMER::hal_state</a> <code>flags</code> to indicate a timer is known to be significantly slower than the system clock. In this case a faster counter read approach (iBSP430timerAsyncCounterRead_ni()) can be used with asynchronous timers.</p>
+<dl class="section note"><dt>Note</dt><dd>The BSP430 infrastructure infers this flag only if the clock is at least a factor of 64x slower than MCLK. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a81ae7994f15cca7ebc25063f351d4f17"></a>
 <div class="memitem">
 <div class="memproto">
@@ -773,50 +841,51 @@ Additional Capabilities</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field value for variant stored in sBSP430halTIMER.hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a>. </p>
+<p>Field value for variant stored in <a class="el" href="structsBSP430halTIMER.html">sBSP430halTIMER</a> field hal_state.cflags when HPL reference is to an <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="aad30dd3941041dfa851bffbfe82ad780"></a>
+<a class="anchor" id="ad8183989e9233a73453351037bc04c29"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_TIMER_SAFE_COUNTER_READ_CCIDX&#160;&#160;&#160;2</td>
+          <td class="memname">#define BSP430_TIMER_VALID_COUNTER_READ_CCIDX&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Capture/compare index reserved for safe reading of timer counters.</p>
+<p>Capture/compare index reserved for valid reading of timer counters.</p>
 <p>CC 0 is normally reserved for high-priority capture/compare operations using the dedicated interrupt handler. It is also used with <a class="el" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a> by <a class="el" href="ucs_8h.html#a12d4e6a1d8f43f1ee6af044d952d8441">iBSP430ucsTrimDCOCLKDIV_ni()</a>.</p>
 <p>CC 1 is normally reserved for use by <a class="el" href="group__grp__timer__ccaclk.html#ga223d8ba1bd2826c409aba946fbeac82b">configBSP430_TIMER_CCACLK_CC0_PORT</a> functionality, and is the standard choice for <a class="el" href="uptime_8h.html#abc74e7198f189c84941a73c523863191">BSP430_UPTIME_DELAY_CCIDX</a>.</p>
-<p>Therefore this functionality normally uses CC 2. To keep the infrastructure as simple as possible, the same index is used for all timers on which safe counter reading is required. If a timer does not support the requested index, the attempt to enable safe reading will hang.</p>
+<p>Therefore this functionality normally uses CC 2. To keep the infrastructure as simple as possible, the same index is used for all timers on which valid counter reading is required. If a timer does not support the requested index, the attempt to enable valid reading will hang.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Certain low-end value-line MCUS such as the MSP430G2231 do not have a third capture/compare register. Platforms targeting those MCUs should provide an alternative definition for this macro in their bsp430_config.h file.</dd>
 <dd>
-If you assign the same value to <a class="el" href="uptime_8h.html#abc74e7198f189c84941a73c523863191">BSP430_UPTIME_DELAY_CCIDX</a> and <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a>, platform initialization will hang attempting to configure the delay alarm.</dd>
+If you assign the same value to <a class="el" href="uptime_8h.html#abc74e7198f189c84941a73c523863191">BSP430_UPTIME_DELAY_CCIDX</a> and <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a>, platform initialization will hang attempting to configure the delay alarm.</dd>
 <dd>
-If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a>, make sure your use of <a class="el" href="group__grp__timer__ccaclk.html#gaa9ac11f10dcbc3950e072d2f89b0fac3">BSP430_TIMER_CCACLK_ACLK_CCIDX</a> does not interfere with the expectation that the configuration of <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> is never changed. Consider adding the following after any use of <a class="el" href="group__grp__timer__ccaclk.html#gaa9ac11f10dcbc3950e072d2f89b0fac3">BSP430_TIMER_CCACLK_ACLK_CCIDX</a>: <div class="fragment"><div class="line"><span class="preprocessor">#if ((configBSP430_TIMER_SAFE_COUNTER_READ - 0) \</span></div>
-<div class="line"><span class="preprocessor">     &amp;&amp; (BSP430_TIMER_CCACLK_ACLK_CCIDX == BSP430_TIMER_SAFE_COUNTER_READ_CCIDX))</span></div>
-<div class="line"><span class="preprocessor"></span>   <a class="code" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni</a>(<a class="code" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>);</div>
+If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d22e80e4fecc6242b1530632ba85">configBSP430_TIMER_CCACLK</a>, make sure your use of <a class="el" href="group__grp__timer__ccaclk.html#gaa9ac11f10dcbc3950e072d2f89b0fac3">BSP430_TIMER_CCACLK_ACLK_CCIDX</a> does not interfere with the expectation that the configuration of <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> is never changed. Consider adding the following after any use of <a class="el" href="group__grp__timer__ccaclk.html#gaa9ac11f10dcbc3950e072d2f89b0fac3">BSP430_TIMER_CCACLK_ACLK_CCIDX</a>: <div class="fragment"><div class="line"><span class="preprocessor">#if ((configBSP430_TIMER_VALID_COUNTER_READ - 0) \</span></div>
+<div class="line"><span class="preprocessor">     &amp;&amp; (BSP430_TIMER_CCACLK_ACLK_CCIDX == BSP430_TIMER_VALID_COUNTER_READ_CCIDX))</span></div>
+<div class="line"><span class="preprocessor"></span>   <a class="code" href="timer_8h.html#a381b6669a4c008a40d74947890f1e463">vBSP430timerSafeCounterInitialize_ni</a>(<a class="code" href="group__grp__timer__ccaclk.html#gaaf21a38de49b7d31cba4066c0ce80720">BSP430_TIMER_CCACLK_PERIPH_HANDLE</a>);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> </dd></dl>
 <dl class="section user"><dt>Platform-Dependent Default:</dt><dd>Undefined here; include &lt;<a class="el" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt; to obtain the correct value of this macro. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="aabc91e75098e4ea4d9bc3384dc8d7ff4"></a>
+<a class="anchor" id="abbc4328b5e870935dd880856eba42648"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define configBSP430_TIMER_SAFE_COUNTER_READ&#160;&#160;&#160;1</td>
+          <td class="memname">#define configBSP430_TIMER_VALID_COUNTER_READ&#160;&#160;&#160;1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Provide safe counter reads for timers.</p>
-<p>The MSP430 timer infrastructure does not guarantee that a read of a timer counter produces a valid result when the timer clock is asynchronous to MCLK. Where the timer is significantly slower than MCLK a majority vote approach can ensure the result is valid. If the timer runs at a similar speed this will fail.</p>
+<p>Provide valid counter reads for timers.</p>
+<p>The MSP430 timer infrastructure does not guarantee that a read of a timer counter (e.g. using uiBSP430timerSyncCounterRead_ni_()) produces a valid result when the timer clock is asynchronous to MCLK. Where the timer is significantly slower than MCLK a majority vote approach (e.g. using uiBSP430timerAsyncCounterRead_ni_()) can ensure the result is valid, but if the timer runs at a similar speed this may fail.</p>
 <p>The problem can be avoided by capturing the counter into a capture register instead of reading it directly. Doing this costs a couple cycles extra when reading the counter, and due to infrastructure limitations prevents use of that capture/compare register for other purposes.</p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> </dd></dl>
+<p>Since most asynchronous reads involve access to an LFXT1-based timer while using a much-faster MCLK, and <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni()</a> depends on <a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a>, this defaults to enabled so that safe reads are also valid reads.</p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> </dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
@@ -896,6 +965,47 @@ If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d2
 </dl>
 </div>
 </div>
+<a class="anchor" id="a9649f82ab433e10123d5118671f8e91c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int iBSP430timerAlarmSetForced_ni </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a>&#160;</td>
+          <td class="paramname"><em>alarm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>setting_tck</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Forced an alarm at the specified time even if it is late.</p>
+<p>Like <a class="el" href="group__grp__timer__alarm.html#ga691c60553180266436fbea9a9a8bfed7">iBSP430timerAlarmSet_ni()</a> except that a positive error (<a class="el" href="group__grp__timer__alarm.html#gac953994f53e720e2e09f34d699d54649">BSP430_TIMER_ALARM_SET_NOW</a> or <a class="el" href="group__grp__timer__alarm.html#gafcfa39b36bcff291c2a2bb1e02e8d9ad">BSP430_TIMER_ALARM_SET_PAST</a>) forces the alarm to be configured and the interrupt set to execute as soon as possible.</p>
+<p>This is useful when initially configuring an alarm for system timeslices, where the underlying timer has already been started and what would normally be the first tick may have already passed.</p>
+<dl class="section note"><dt>Note</dt><dd>The alarm is set only if the return value is non-negative. For positive return values the alarm interrupt may already be pending.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">alarm</td><td>a pointer to an alarm structure initialized using iBSP430timerAlarmInitialize().</td></tr>
+    <tr><td class="paramname">setting_tck</td><td>the time at which the alarm should go off.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ul>
+<li>Zero to indicate the alarm was successfully scheduled </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ae2e001792494a2b2f060db5e5a5b5f32"></a>
 <div class="memitem">
 <div class="memproto">
@@ -917,11 +1027,11 @@ If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d2
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of CCs on the timer. -1 is returned if the timer does not exist or the resource was not configured. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a47">utility/alarm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a48">utility/alarm/main.c</a>.</dd>
 </dl>
 </div>
 </div>
-<a class="anchor" id="a137d1b0c5b372640d4df83d001aa6b6a"></a>
+<a class="anchor" id="a265d31e59ba5fbed9a1425e15c714277"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -929,7 +1039,7 @@ If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d2
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned int <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> uiBSP430timerAsyncCounterRead_ni </td>
+          <td class="memname">static <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> unsigned int uiBSP430timerAsyncCounterRead_ni </td>
           <td>(</td>
           <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
           <td class="paramname"><em>hpl</em></td><td>)</td>
@@ -943,18 +1053,70 @@ If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d2
 </table>
 </div><div class="memdoc">
 <p>Inline function to read the counter of a timer not synchronous to MCLK.</p>
-<p>This uses a pre-configured dedicated capture/compare register (<a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a>) to get the value of the timer counter reliably when the timer source is not synchronous to the CPU clock.</p>
-<p>It has slightly higher overhead than <a class="el" href="timer_8h.html#a209b04774c23ae4ca47c248b6b9c88d6">uiBSP430timerSyncCounterRead_ni()</a>, but is not subject to returning an invalid counter value. It also requires that a capture/compare register be initialized using iBSP430timerSafeCounterInitialize_ni() and dedicated to this purpose on all timers on which this function may be invoked.</p>
-<p>This call takes about 8 clock cycles on a CPUX MCU.</p>
-<dl class="section warning"><dt>Warning</dt><dd>This version of the function does not validate the capture/compare configuration. Use <a class="el" href="timer_8h.html#a9a74d238a91c2c1a77c909442089ff24">uiBSP430timerSafeCounterRead_ni()</a> in situations where somebody might have failed to meet this function's requirements.</dd></dl>
+<p>This approach reads the counter repeatedly until the same value is read twice. The technique is appropriate when the counter is asynchronous to MCLK, but it is safe to use only when the counter update rate is significantly slower than MCLK, e.g. when the timer is driven by LFXT1.</p>
+<p>This call takes about 9 clock cycles on a CPUX MCU if the first two reads are equal.</p>
+<dl class="section warning"><dt>Warning</dt><dd>The time taken by this function is only probabilistically constant.</dd>
+<dd>
+If the timer frequency is not at least a factor of 10 slower than MCLK, this routine may hang since two counter values read consecutively may never be equal.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hpl</td><td>Reference to the underlying timer.</td></tr>
+    <tr><td class="paramname">hpl</td><td>reference to the underlying timer.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5c35695352c5e3ba9870a87e49b338b0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> unsigned int uiBSP430timerBestCounterRead_ni </td>
+          <td>(</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
+          <td class="paramname"><em>hpl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Select the best counter read solution based on a hint.</p>
+<p>When the application knows exactly how the timer is configured at the point the counter is read, it can select the optimal counter read function and use it directly for the least overhead. When the application or infrastructure can record information about how the timer is configured but the counter is read in shared code the hints may be used to get a better or faster answer than would be obtained from <a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a>, which is the only solution when no information is available.</p>
+<p>If <a class="el" href="timer_8h.html#ad2d2ce1e7059aed8cc6b415ff2706fa4">BSP430_TIMER_FLAG_MCLKSYNC</a> is set in <em>flags</em>, <a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a> is used. There's about an 8 cycle overhead to select this case at runtime, resulting in a measurement cost of 11 cycles.</p>
+<p>Otherwise, if <a class="el" href="timer_8h.html#a1372424614ff0ef39c88c2d6e349145b">BSP430_TIMER_FLAG_SLOW</a> is set in <em>flags</em>, <a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni()</a> is used. There's about an 11 cycle overhead to select this case at runtime, resulting in a measurement cost of 20 cycles.</p>
+<p>Otherwise, <a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a> is used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hpl</td><td>reference to the underlying timer</td></tr>
+    <tr><td class="paramname">flags</td><td>bit mask including potentially <a class="el" href="timer_8h.html#ad2d2ce1e7059aed8cc6b415ff2706fa4">BSP430_TIMER_FLAG_MCLKSYNC</a> and <a class="el" href="timer_8h.html#a1372424614ff0ef39c88c2d6e349145b">BSP430_TIMER_FLAG_SLOW</a>. This can be obtained from the <code>flags</code> field of the corresponding <a class="el" href="structsBSP430halTIMER.html#a893745ac836014dd39c19ce87a6ffec0">sBSP430halTIMER::hal_state</a> field, if something updated that when the timer was configured.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value. </dd></dl>
 
 </div>
 </div>
@@ -1004,7 +1166,7 @@ If you have selected <a class="el" href="group__grp__timer__ccaclk.html#ga21a5d2
 <p>The expectation is that the events triggered by the input selection are slow relative to the MCLK and timer sources. If the timer is slower than the input, the use of the <a class="el" href="msp430_8h.html#a57d06a9e6a8f5abc296f987d4552894c">SCS</a> flag in the implementation will result in the function returning <code>count</code>.</p>
 <dl class="section note"><dt>Note</dt><dd>The function does not modify the timer-level configuration; the timer source must be assigned and the timer started prior to invoking this function.</dd>
 <dd>
-If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is enabled and <code>ccidx</code> is equal to <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> this function will invoke <a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni</a>(<code>periph</code>) prior to returning.</dd></dl>
+If <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is enabled and <code>ccidx</code> is equal to <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> this function will invoke <a class="el" href="timer_8h.html#a381b6669a4c008a40d74947890f1e463">vBSP430timerSafeCounterInitialize_ni</a>(<code>periph</code>) prior to returning.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">periph</td><td>the peripheral identifier for the timer on which the capture is to be made.</td></tr>
@@ -1015,12 +1177,12 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>-1 if <code>capture_mode</code> is not valid or the timer is unrecognized or stopped. Otherwise the delta in the counter of the timer over <code>count</code> captures. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>-1 (cast to unsigned int) if <code>capture_mode</code> is not valid or the timer is unrecognized or stopped. Otherwise the delta in the counter of the timer over <code>count</code> captures. </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a28">bootstrap/clocks/main.c</a>.</dd>
 </dl>
 </div>
 </div>
-<a class="anchor" id="a9a74d238a91c2c1a77c909442089ff24"></a>
+<a class="anchor" id="acebfeaf22b6ac94e4ce006f22ea18261"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1028,7 +1190,60 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned int <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> uiBSP430timerSafeCounterRead_ni </td>
+          <td class="memname">static <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> unsigned int uiBSP430timerLatchedCounterRead_ni </td>
+          <td>(</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
+          <td class="paramname"><em>hpl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ccidx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Inline function to read a timer counter using a capture register.</p>
+<p>This approach uses a pre-configured capture/compare register to latch the counter value, which is then returned. It is generally slower than <a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a>, but is faster than <a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni()</a> and is also safe to use regardless of the relationship between MCLK and the accessed timer.</p>
+<p>This call takes about 8 clock cycles on a CPUX MCU.</p>
+<dl class="section warning"><dt>Warning</dt><dd>If the selected capture/compare register has not been configured using vBSP430timerLachedCounterInitialize_ni() the return value will not represent the timer counter.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hpl</td><td>reference to the underlying timer</td></tr>
+    <tr><td class="paramname">ccidx</td><td>the index of the capture/compare register to be used for latched timer reads</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5e250ebcd2e7538ba568455318eede59"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> unsigned int uiBSP430timerSafeCounterRead_ni </td>
           <td>(</td>
           <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
           <td class="paramname"><em>hpl</em></td><td>)</td>
@@ -1042,16 +1257,29 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
 </table>
 </div><div class="memdoc">
 <p>Inline function to read the timer counter.</p>
-<p>This call takes about 21 clock cycles on a CPUX MCU.</p>
-<p>When <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is disabled this function is equivalent to <a class="el" href="timer_8h.html#a209b04774c23ae4ca47c248b6b9c88d6">uiBSP430timerSyncCounterRead_ni()</a>.</p>
-<p>When <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> is enabled in absence of <a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> this function validates that the capture/compare register is properly configured to read the counter. When that requirement is not met, the CPU will spin in place allowing the developer to see what has gone wrong, instead of continuing to process invalid counter values.</p>
-<p>When <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> and <a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> are both enabled this function is equivalent to <a class="el" href="timer_8h.html#a137d1b0c5b372640d4df83d001aa6b6a">uiBSP430timerAsyncCounterRead_ni()</a>.</p>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Here "safe" means that call will return a counter value regardless of how the timer clock is related to MCLK. When <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is disabled this function is equivalent to <a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a>; in that case, the counter value may not be valid if the timer clock is asynchronous to MCLK. The remainder of this description assumes that <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is enabled.</dd></dl>
+<p>This function uses <a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni()</a> along with <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> to read the timer.</p>
+<p>This call takes about 21 clock cycles on a CPUX MCU when <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is enabled.</p>
+<p>When <a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> is false (default) this function validates that the capture/compare register is properly configured to read the counter. When that requirement is not met, the CPU will spin in place allowing the developer to see what has gone wrong, instead of continuing to process invalid counter values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hpl</td><td>reference to the underlying timer</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value.</dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a></dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a">uiBSP430timerSyncCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni()</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a5">sensors/hh10d/main.c</a>.</dd>
 </dl>
 </div>
 </div>
-<a class="anchor" id="a209b04774c23ae4ca47c248b6b9c88d6"></a>
+<a class="anchor" id="aa4bfe7c6eee0c1e7da07b5b6ffd1454a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1059,7 +1287,7 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned int <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> uiBSP430timerSyncCounterRead_ni </td>
+          <td class="memname">static <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> unsigned int uiBSP430timerSyncCounterRead_ni </td>
           <td>(</td>
           <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
           <td class="paramname"><em>hpl</em></td><td>)</td>
@@ -1075,14 +1303,19 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
 <p>Inline function to read the counter of a timer synchronous to MCLK.</p>
 <p>This simply reads and returns the counter register of the underlying peripheral.</p>
 <p>This call takes about 3 clock cycles on a CPUX MCU.</p>
-<dl class="section warning"><dt>Warning</dt><dd>If the clock source for the timer is asynchronous to the CPU clock there is a chance that the counter value read will be corrupt. Consider using <a class="el" href="timer_8h.html#a137d1b0c5b372640d4df83d001aa6b6a">uiBSP430timerAsyncCounterRead_ni()</a> in that situation.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If the clock source for the timer is asynchronous to the CPU clock there is a chance that the counter value read will be corrupt. Consider using <a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni()</a> in that situation.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hpl</td><td>Reference to the underlying timer.</td></tr>
+    <tr><td class="paramname">hpl</td><td>reference to the underlying timer.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the instantaneous counter value.</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="timer_8h.html#a265d31e59ba5fbed9a1425e15c714277">uiBSP430timerAsyncCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#acebfeaf22b6ac94e4ce006f22ea18261">uiBSP430timerLatchedCounterRead_ni()</a> </dd>
+<dd>
+<a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a> </dd></dl>
 
 </div>
 </div>
@@ -1119,6 +1352,7 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
 </div><div class="memdoc">
 <p>Read timer counter regardless of interrupt enable state.</p>
 <p>This wraps <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni</a> with code that saves the interrupt state, reads the timer, then restores the entry interrupt state prior to returning the timer counts.</p>
+<dl class="section warning"><dt>Warning</dt><dd>See warnings at <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni()</a>.</dd></dl>
 <p>Read the timer counter.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1157,7 +1391,9 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
 </div><div class="memdoc">
 <p>Read the timer counter assuming interrupts are disabled.</p>
 <dl class="section note"><dt>Note</dt><dd>This routine accounts for the possibility of a single pending overflow event in the timer by adjusting the returned value to account for that. However, it does not clear the overflow event because there may be overflow callbacks that must be invoked through the interrupt handler, and it only detects a single pending overflow event. Times will be wrong if interrupts remain disabled so long that a second overflow occurs before the first is processed by the interrupt handler.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>This call will hang if <a class="el" href="timer_8h.html#a3ea58cea215db6dd462e3513ca56ad9f">vBSP430timerSafeCounterInitialize_ni()</a> has not been invoked on the underlying timer, or if the <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> capture/compare register has been reconfigured since that was done.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This routine uses <a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a> underneath. For timers that are asynchronous to the CPU clock the returned value may be incorrect unless <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is enabled.</dd>
+<dd>
+If <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is enabled this call will hang if <a class="el" href="timer_8h.html#a381b6669a4c008a40d74947890f1e463">vBSP430timerSafeCounterInitialize_ni()</a> has not been invoked on the underlying timer or if the <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> capture/compare register has been reconfigured since that was done. BSP430 will invoke this method at configuration time for all timers that it configures (including the <a class="el" href="uptime_8h.html">uptime infrastructure</a> and <a class="el" href="group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81">hBSP430timerAlarmInitialize()</a>).</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">timer</td><td>The timer for which the count is desired.</td></tr>
@@ -1190,9 +1426,84 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 if the timer is stopped; -1 if the frequency cannot be determined, a positive value for a known source. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if the timer is stopped; -1 (cast to unsigned long) if the frequency cannot be determined; otherwise the frequency of the source scaled by any relevant dividers. </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a47">utility/alarm/main.c</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a1a418c4722995ff9a7a9e766e7eeb6a6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vBSP430timerInferHints_ni </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a>&#160;</td>
+          <td class="paramname"><em>timer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Infer the appropriate hints about timer configuration</p>
+<p>Some timer operations such as safe and valid reading of the counter can be optimized by selecting between alternative techniques based on configuration hints including <a class="el" href="timer_8h.html#ad2d2ce1e7059aed8cc6b415ff2706fa4">BSP430_TIMER_FLAG_MCLKSYNC</a> and <a class="el" href="timer_8h.html#a1372424614ff0ef39c88c2d6e349145b">BSP430_TIMER_FLAG_SLOW</a>.</p>
+<p>Invoking this function will determine the appropriate value of the <code>flags</code> field of the timer's sBSP430hplHALStatePrefix::hal_state structure:</p>
+<ul>
+<li>The function infers <a class="el" href="timer_8h.html#ad2d2ce1e7059aed8cc6b415ff2706fa4">BSP430_TIMER_FLAG_MCLKSYNC</a> when the clock source for the timer is equal to the clock source for MCLK, based on <a class="el" href="timer_8h.html#a3538758f690143471a3224c2cd222867">xBSP430timerClockSource()</a> and <a class="el" href="clock_8h.html#ac4b770a224b729588068d009a19e620d">xBSP430clockMCLKSource()</a>. Be aware that <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa08fe6b5e068e82d29fe98632bc2f4b32">eBSP430clockSRC_DCOCLK</a> is not considered synchronous with <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa003c26ac0b1326d3423e705dd4ab5dab">eBSP430clockSRC_DCOCLKDIV</a> under this rule.</li>
+</ul>
+<ul>
+<li>The function infers <a class="el" href="timer_8h.html#a1372424614ff0ef39c88c2d6e349145b">BSP430_TIMER_FLAG_SLOW</a> when MCLK frequency is at least 16 times faster than timer frequency.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timer</td><td>the timer for which flags are to be determined </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a46">utility/alarm/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a160fd84b638c67b105e8768febd6c829"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">BSP430_CORE_INLINE_FORCED</a> void vBSP430timerLatchedCounterInitialize_ni </td>
+          <td>(</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
+          <td class="paramname"><em>hpl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ccidx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Configure a timer CC to support uiBBSP430timerLatchedCounterRead_ni().</p>
+<p>Latched counter reads rely on a pre-configured capture/compare register. This routine configures that register.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hpl</td><td>reference to the underlying timer</td></tr>
+    <tr><td class="paramname">ccidx</td><td>the index of the capture/compare register to be used for latched timer reads </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a class="anchor" id="adbda3deda56fd4453c32f47f51c3f861"></a>
@@ -1209,12 +1520,12 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
       </table>
 </div><div class="memdoc">
 <p>Reset the timer counter.</p>
-<p>This clears both the overflow count and the timer internal counter. It does not start or stop the timer. </p>
+<p>This clears both the overflow count and the timer internal counter. If the timer is running it is stopped while the internal counter is updated, then is restarted. </p>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a43">utility/alarm/main.c</a>.</dd>
 </dl>
 </div>
 </div>
-<a class="anchor" id="a3ea58cea215db6dd462e3513ca56ad9f"></a>
+<a class="anchor" id="a381b6669a4c008a40d74947890f1e463"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1222,10 +1533,10 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> vBSP430timerSafeCounterInitialize_ni </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> void vBSP430timerSafeCounterInitialize_ni </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>&#160;</td>
-          <td class="paramname"><em>periph</em></td><td>)</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *const&#160;</td>
+          <td class="paramname"><em>hpl</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1236,18 +1547,62 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
 </table>
 </div><div class="memdoc">
 <p>Configure the timer for safe reads.</p>
-<p>This function must be invoked before any other function that might attempt to invoke <a class="el" href="timer_8h.html#a9a74d238a91c2c1a77c909442089ff24">uiBSP430timerSafeCounterRead_ni()</a> on the peripheral. This includes <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni()</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>It is safe to call this function multiple times, and in fact it must be called again if you need to use <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> for some other purpose.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Here "safe" means that call will return a counter value regardless of how the timer clock is related to MCLK. When <a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> is disabled this function has no effect.</dd></dl>
+<p>This function must be invoked before any other function that might attempt to invoke <a class="el" href="timer_8h.html#a5e250ebcd2e7538ba568455318eede59">uiBSP430timerSafeCounterRead_ni()</a> on the peripheral. This includes <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>It is safe to call this function multiple times, and in fact it must be called again if you need to use <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> for some other purpose.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">periph</td><td>the timer peripheral for which safe counter reads are desired.</td></tr>
+    <tr><td class="paramname">hpl</td><td>reference to the underlying timer</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="timer_8h.html#aad30dd3941041dfa851bffbfe82ad780">BSP430_TIMER_SAFE_COUNTER_READ_CCIDX</a> does not exist on <em>periph</em> this call will hang. Since this is a configuration error, the situation should be detected during development.</dd></dl>
-<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBSP430_TIMER_SAFE_COUNTER_READ</a> </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> does not exist on <em>periph</em> and <a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> is false this call will hang. Since this is a configuration error, the situation should be detected during development.</dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="timer_8h.html#abbc4328b5e870935dd880856eba42648">configBSP430_TIMER_VALID_COUNTER_READ</a> </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="core_8h.html#af4ecfa4368324d6b1217f79a49f96f81">BSP430_CORE_NDEBUG</a> </dd></dl>
 <dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2hh10d_2main_8c-example.html#a26">sensors/hh10d/main.c</a>.</dd>
 </dl>
+</div>
+</div>
+<a class="anchor" id="a925d0536b8f3add41e0c35f273d6fb27"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void vBSP430timerSetCounter_ni </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="timer_8h.html#a05821bb5b9c3c49fbc7ced58b7a4eaa8">hBSP430halTIMER</a>&#160;</td>
+          <td class="paramname"><em>timer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>overflow</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>counter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the timer counter.</p>
+<p>This sets both the overflow count and the timer internal counter. If the timer is running it is stopped while the internal counter is updated, then is restarted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timer</td><td>the timer to be modified</td></tr>
+    <tr><td class="paramname">overflow</td><td>the overflow value as would be returned though a pointer assignment by vBSP430timerCounter_ni().</td></tr>
+    <tr><td class="paramname">counter</td><td>the counter value that would be returned as a value by vBSP430timerCounter_ni(). </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a class="anchor" id="aad15c4346f91b47e4a18bbdf05fb8ed7"></a>
@@ -1283,6 +1638,24 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
 </dl>
 </div>
 </div>
+<a class="anchor" id="a3538758f690143471a3224c2cd222867"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> xBSP430timerClockSource </td>
+          <td>(</td>
+          <td class="paramtype">volatile <a class="el" href="structsBSP430hplTIMER.html">sBSP430hplTIMER</a> *&#160;</td>
+          <td class="paramname"><em>hpl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a reconstructed source for the timer.</p>
+<dl class="section note"><dt>Note</dt><dd>This should be used only in equality tests to determine whether the source for a timer is the same as the source for a system clock or another timer. Do not interpret the value as identifying a specific source. For example, sometimes <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaacd6b3df0e86d9a98bcd7e044d4aac248">eBSP430clockSRC_XT2CLK</a> will mean a crystal and sometimes it will mean an external clock or VLOCLK, depending on the MCU and its supporting hardware. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aad872aaa82973fd3accca3bcc004ea69"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1311,7 +1684,7 @@ If <a class="el" href="timer_8h.html#aabc91e75098e4ea4d9bc3384dc8d7ff4">configBS
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

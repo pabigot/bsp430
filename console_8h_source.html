@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -122,200 +122,188 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> * POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#ifndef BSP430_UTILITY_CONSOLE_H</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UTILITY_CONSOLE_H</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="serial_8h.html" title="Declarations for abstracted serial interface.">bsp430/serial.h</a>&gt;</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt;</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#include &lt;stdarg.h&gt;</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno"><a class="code" href="console_8h.html#a7e7be9a93cd9726e38378c1736d3b239">  137</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE 0</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="code" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">  149</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE include &lt;bsp430/platform.h&gt;</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno"><a class="code" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">  167</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_CPPID include &quot;bsp430_config.h&quot;</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
-<div class="line"><a name="l00183"></a><span class="lineno"><a class="code" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">  183</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE derived platform or application specific</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor"></span><span class="comment">/* !BSP430! instance=@serial functional=console_serial subst=functional insert=periph_sethandle */</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment">/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_A0</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_A0</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_A1</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_A1</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_B0</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_B0</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_B1</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_B1</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A0</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A0</span></div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A1</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A1</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A2</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A2</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A3</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A3</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B0</span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B1</span></div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B1</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B2</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B2</span></div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B3</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3</span></div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A0</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A0</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A1</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A1</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A2</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A2</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_B0</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B0</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor"></span><span class="comment">/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment">/* !BSP430! end=periph_sethandle */</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#ifndef BSP430_CONSOLE_BAUD_RATE</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno"><a class="code" href="console_8h.html#a81e4d81848e239a0f37c0e529a92d0e6">  245</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_BAUD_RATE 9600</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_BAUD_RATE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#ifndef BSP430_CONSOLE_RX_BUFFER_SIZE</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="code" href="console_8h.html#a8f5e617854ea03057eb555413356a0d7">  260</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_RX_BUFFER_SIZE 0</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="preprocessor">#ifndef BSP430_CONSOLE_TX_BUFFER_SIZE</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno"><a class="code" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">  279</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_TX_BUFFER_SIZE 0</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_TX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00297"></a><span class="lineno"><a class="code" href="console_8h.html#a92d0f9aff946120aefa3ffbf359afe0f">  297</a></span>&#160;<a class="code" href="console_8h.html#a92d0f9aff946120aefa3ffbf359afe0f">cgetchar</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;{</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keywordtype">int</span> rv;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  rv = <a class="code" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a>();</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keywordflow">return</span> rv;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;}</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a43b6e0953a6cc69cea9af7d3ddaf1d1b">cpeekchar_ni</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
-<div class="line"><a name="l00328"></a><span class="lineno"><a class="code" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">  328</a></span>&#160;<span class="keyword">typedef</span> int (* <a class="code" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a>) (void);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#ifndef BSP430_UTILITY_CONSOLE_H</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_UTILITY_CONSOLE_H</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="serial_8h.html" title="Declarations for abstracted serial interface.">bsp430/serial.h</a>&gt;</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="platform_8h.html" title="Entrypoint for platform-specific capabilities.">bsp430/platform.h</a>&gt;</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#include &lt;stdarg.h&gt;</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="code" href="console_8h.html#a7e7be9a93cd9726e38378c1736d3b239">  142</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE 0</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="code" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">  154</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE include &lt;bsp430/platform.h&gt;</span></div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno"><a class="code" href="console_8h.html#ab1c4b9f82c9f50ae94eb5efbf9e3bcb2">  172</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_CPPID include &quot;bsp430_config.h&quot;</span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno"><a class="code" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">  188</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE derived platform or application specific</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor"></span><span class="comment">/* !BSP430! instance=@serial functional=console_serial subst=functional insert=periph_sethandle */</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="comment">/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_A0</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_A0</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_A1</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_A1</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_B0</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_B0</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI_B1</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI_B1</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A0</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A0</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A1</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A1</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A2</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A2</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_A3</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_A3</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B0</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B1</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B1</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B2</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B2</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_USCI5_B3</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_USCI5_B3</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A0</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A0</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A1</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A1</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_A2</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_A2</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor">#elif BSP430_CONSOLE_SERIAL_PERIPH_CPPID == BSP430_PERIPH_CPPID_EUSCI_B0</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE BSP430_PERIPH_EUSCI_B0</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="preprocessor"></span><span class="comment">/* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment">/* !BSP430! end=periph_sethandle */</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">#ifndef BSP430_CONSOLE_BAUD_RATE</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno"><a class="code" href="console_8h.html#a81e4d81848e239a0f37c0e529a92d0e6">  250</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_BAUD_RATE 9600</span></div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_BAUD_RATE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="preprocessor">#ifndef BSP430_CONSOLE_RX_BUFFER_SIZE</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno"><a class="code" href="console_8h.html#a8f5e617854ea03057eb555413356a0d7">  265</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_RX_BUFFER_SIZE 0</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="preprocessor">#ifndef BSP430_CONSOLE_TX_BUFFER_SIZE</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno"><a class="code" href="console_8h.html#a01ff3a75e82d8b3ec7833d2e4ac4f36c">  284</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_TX_BUFFER_SIZE 0</span></div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_TX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="preprocessor">#ifndef BSP430_CONSOLE_USE_EMBTEXTF</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno"><a class="code" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">  301</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CONSOLE_USE_EMBTEXTF 0</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_USE_EMBTEXTF */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="keywordtype">int</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno"><a class="code" href="console_8h.html#a4748fe84e66a49005dc7ba0a0e51704a">  319</a></span>&#160;<a class="code" href="console_8h.html#a4748fe84e66a49005dc7ba0a0e51704a">cgetchar</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;{</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  <span class="keywordtype">int</span> rv;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  rv = <a class="code" href="console_8h.html#ab51614b234cfd24eed353dde0d9f014c">cgetchar_ni</a>();</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordflow">return</span> rv;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;}</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="keywordtype">void</span> <a class="code" href="console_8h.html#aec7949d1ea9a80f4d20c79b137c440f2">vBSP430consoleSetRxCallback_ni</a> (<a class="code" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a> cb);</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_PROVIDES_PUTCHAR</span></div>
-<div class="line"><a name="l00372"></a><span class="lineno"><a class="code" href="console_8h.html#aa6d5f61057e52b70dbaf40efc79449fd">  372</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0</span></div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_PROVIDES_PUTCHAR */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_USE_ONLCR</span></div>
-<div class="line"><a name="l00384"></a><span class="lineno"><a class="code" href="console_8h.html#a786264c47d20252b7ddb6142890d0c58">  384</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_USE_ONLCR 1</span></div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_USE_ONLCR */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_LIBC_HAS_VUPRINTF</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno"><a class="code" href="console_8h.html#a8d514ef914bd654dcc9c4dd4b12349c8">  396</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_LIBC_HAS_VUPRINTF 1</span></div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_LIBC_HAS_VUPRINTF */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_LIBC_HAS_ITOA</span></div>
-<div class="line"><a name="l00407"></a><span class="lineno"><a class="code" href="console_8h.html#a45dea9afedd2d38692468f4d590ad07a">  407</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_LIBC_HAS_ITOA 1</span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_LIBC_HAS_ITOA */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_LIBC_HAS_UTOA</span></div>
-<div class="line"><a name="l00418"></a><span class="lineno"><a class="code" href="console_8h.html#a3c4508ec47a8acb913c91b16fe215665">  418</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_LIBC_HAS_UTOA 1</span></div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_LIBC_HAS_UTOA */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_LIBC_HAS_LTOA</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno"><a class="code" href="console_8h.html#a3c0cce6af572fe01617ef6c7da2bccfa">  429</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_LIBC_HAS_LTOA 1</span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_LIBC_HAS_LTOA */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_LIBC_HAS_ULTOA</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno"><a class="code" href="console_8h.html#a1459f5b3ccb0c486550430a8f6c32241">  440</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_LIBC_HAS_ULTOA 1</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_LIBC_HAS_ULTOA */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * format, ...)</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="preprocessor">#if __GNUC__ - 0</span></div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="preprocessor"></span>__attribute__((__format__(printf, 1, 2)))</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __GNUC__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="preprocessor"></span>;</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a88bc4e1137c425954f5e5624c95367ab">vcprintf</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * format, va_list ap);</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a> (<span class="keywordtype">int</span> c);</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00513"></a><span class="lineno"><a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">  513</a></span>&#160;<a class="code" href="console_8h.html#add5a7f905ddc52c709f5ebec819ec1c2">cputchar</a> (<span class="keywordtype">int</span> c)</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;{</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;  <span class="keywordtype">int</span> rv;</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;  rv = <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(c);</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;  <span class="keywordflow">return</span> rv;</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;}</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;</div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a27e2ff7e39dfb73bbf4d86889d782ed7">cputchars_ni</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * cp, <span class="keywordtype">size_t</span> len);</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b">cputchars</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * cp, <span class="keywordtype">size_t</span> len);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a43b6e0953a6cc69cea9af7d3ddaf1d1b">cpeekchar_ni</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
+<div class="line"><a name="l00350"></a><span class="lineno"><a class="code" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">  350</a></span>&#160;<span class="keyword">typedef</span> int (* <a class="code" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a>) (void);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="keywordtype">void</span> <a class="code" href="console_8h.html#aec7949d1ea9a80f4d20c79b137c440f2">vBSP430consoleSetRxCallback_ni</a> (<a class="code" href="console_8h.html#ad8eb0b740ec0325dfc5a47d7364e14a4">iBSP430consoleRxCallback_ni</a> cb);</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_PROVIDES_PUTCHAR</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno"><a class="code" href="console_8h.html#aa6d5f61057e52b70dbaf40efc79449fd">  394</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0</span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_PROVIDES_PUTCHAR */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="preprocessor">#ifndef configBSP430_CONSOLE_USE_ONLCR</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno"><a class="code" href="console_8h.html#a786264c47d20252b7ddb6142890d0c58">  406</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CONSOLE_USE_ONLCR 1</span></div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CONSOLE_USE_ONLCR */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a6e0a771b0a8f2034a7f49684b107542e">cputs</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a> (<span class="keywordtype">int</span> c);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="keywordtype">int</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno"><a class="code" href="console_8h.html#a90f7ebaff29b80e288b6890ed9201f2c">  446</a></span>&#160;<a class="code" href="console_8h.html#a90f7ebaff29b80e288b6890ed9201f2c">cputchar</a> (<span class="keywordtype">int</span> c)</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;{</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;  <span class="keywordtype">int</span> rv;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;  <a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">BSP430_CORE_INTERRUPT_STATE_T</a> istate;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;  <a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">BSP430_CORE_SAVE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;  rv = <a class="code" href="console_8h.html#a46ea793d7dd79b66e1c3a195d0d4a7b1">cputchar_ni</a>(c);</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;  <a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;  <span class="keywordflow">return</span> rv;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;}</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a90148fb44b9e9b2b952d6ba8e42b317d">cputtext_ni</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * s);</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a27e2ff7e39dfb73bbf4d86889d782ed7">cputchars_ni</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * cp, <span class="keywordtype">size_t</span> len);</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a83f67cf1cd5c672cc9dc947dd7d52f4b">cputchars</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * cp, <span class="keywordtype">size_t</span> len);</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE_USE_EMBTEXTF - 0) || (__MSPGCC__ - 0)</span></div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * format, ...)</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;<span class="preprocessor">#if __GNUC__ - 0</span></div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;<span class="preprocessor"></span>__attribute__((__format__(printf, 1, 2)))</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __GNUC__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;<span class="preprocessor"></span>;</div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a88bc4e1137c425954f5e5624c95367ab">vcprintf</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> * format, va_list ap);</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni</a> (<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> radix);</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n, <span class="keywordtype">int</span> radix);</div>
 <div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;</div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a039bc72010b9c423a7d9ce0908ffc37b">cputi_ni</a> (<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> radix);</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#aecbe49f4509a794f254611835c386ae2">cputl_ni</a> (<span class="keywordtype">long</span> n, <span class="keywordtype">int</span> radix);</div>
 <div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a9eadeedb5083ccde64a4b88552ae0a62">cputu_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n, <span class="keywordtype">int</span> radix);</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> n, <span class="keywordtype">int</span> radix);</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#aecbe49f4509a794f254611835c386ae2">cputl_ni</a> (<span class="keywordtype">long</span> n, <span class="keywordtype">int</span> radix);</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ab775380be085f01d132f9ccf8a70a2c2">cputul_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> n, <span class="keywordtype">int</span> radix);</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a32249fa7e6144884aeecd30a1766e3fa">iBSP430consoleDeconfigure</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="console_8h.html#a641b6419ca463bcb87d4ec1645928c0b">hBSP430console</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a9bbfc00a016e324e5f777e408e4ae6d3">iBSP430consoleTransmitUseInterrupts_ni</a> (<span class="keywordtype">int</span> enablep);</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ac70a972356e94579642541cb58064cdf">iBSP430consoleWaitForTxSpace_ni</a> (<span class="keywordtype">int</span> want_available);</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a6316c3b1f9d530cb0aa1e0f9346933dc">iBSP430consoleFlush</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_CONSOLE_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_USE_EMBTEXTF */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a32249fa7e6144884aeecd30a1766e3fa">iBSP430consoleDeconfigure</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="console_8h.html#a641b6419ca463bcb87d4ec1645928c0b">hBSP430console</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a9bbfc00a016e324e5f777e408e4ae6d3">iBSP430consoleTransmitUseInterrupts_ni</a> (<span class="keywordtype">int</span> enablep);</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#ac70a972356e94579642541cb58064cdf">iBSP430consoleWaitForTxSpace_ni</a> (<span class="keywordtype">int</span> want_available);</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;<span class="keywordtype">int</span> <a class="code" href="console_8h.html#a6316c3b1f9d530cb0aa1e0f9346933dc">iBSP430consoleFlush</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_CONSOLE_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

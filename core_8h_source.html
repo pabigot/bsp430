@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -129,7 +129,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span>             <span class="comment">/* Size-annotated integral types (uint8_t) */</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span>             <span class="comment">/* NULL and size_t */</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="core_8h.html#a6e454bbff10b4097999dc3b5b44f83a5">   59</a></span>&#160;<span class="preprocessor">#define BSP430_VERSION 20130110</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="code" href="core_8h.html#a6e454bbff10b4097999dc3b5b44f83a5">   59</a></span>&#160;<span class="preprocessor">#define BSP430_VERSION 20130325</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00075"></a><span class="lineno"><a class="code" href="core_8h.html#a4b8e83756234c87d8c5c2b5c2a027e9e">   75</a></span>&#160;<span class="preprocessor">#define BSP430_PERIPH_CCPID_NONE 0</span></div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span></div>
@@ -252,141 +252,171 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00353"></a><span class="lineno"><a class="code" href="core_8h.html#acaa6cf4d6e93f3ad16164fa0afad1b3a">  353</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_TOOLCHAIN_GCC (1 &lt; __GNUC__)</span></div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00360"></a><span class="lineno"><a class="code" href="core_8h.html#ac3c7eeefe4646b0c486f6c209b4e36d0">  360</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_TOOLCHAIN_CCS (__TI_COMPILER_VERSION - 0)</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno"><a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">  375</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE __inline__</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#elif BSP430_CORE_TOOLCHAIN_CCS - 0</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE __inline</span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE inline</span></div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor"></span><span class="comment">/* GCC wants both directives */</span></div>
-<div class="line"><a name="l00390"></a><span class="lineno"><a class="code" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">  390</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE __attribute__((__always_inline__))</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE_FORCED BSP340_CORE_INLINE</span></div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
-<div class="line"><a name="l00406"></a><span class="lineno"><a class="code" href="core_8h.html#a2153ff71877790bdf6e8efd5aa0d3bd3">  406</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_PACKED_STRUCT(nm_) struct __attribute__((__packed__)) nm_</span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00429"></a><span class="lineno"><a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">  429</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_LPM_ENTER(lpm_bits_) __bis_status_register(BSP430_CORE_LPM_SR_MASK &amp; (lpm_bits_))</span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00452"></a><span class="lineno"><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">  452</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_LPM_ENTER_NI(lpm_bits_) BSP430_CORE_LPM_ENTER(GIE | (lpm_bits_))</span></div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00470"></a><span class="lineno"><a class="code" href="core_8h.html#a4111253dbed7f8ac33b659e332616623">  470</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_LPM_EXIT_FROM_ISR(lpm_bits_) __bic_status_register_on_exit(BSP430_CORE_LPM_SR_MASK &amp; (lpm_bits_))</span></div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="preprocessor">#ifndef configBSP430_CORE_SUPPORT_WATCHDOG</span></div>
-<div class="line"><a name="l00495"></a><span class="lineno"><a class="code" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">  495</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CORE_SUPPORT_WATCHDOG 0</span></div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="preprocessor">#if configBSP430_CORE_SUPPORT_WATCHDOG - 0</span></div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef BSP430_CORE_WATCHDOG_CLEAR</span></div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if 20120406 &lt; __MSPGCC__</span></div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_WATCHDOG_CLEAR() __watchdog_clear()</span></div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* MSPGCC */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_WATCHDOG_CLEAR */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#undef BSP430_CORE_WATCHDOG_CLEAR</span></div>
-<div class="line"><a name="l00525"></a><span class="lineno"><a class="code" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">  525</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_WATCHDOG_CLEAR() do { } while (0)</span></div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES</span></div>
-<div class="line"><a name="l00537"></a><span class="lineno"><a class="code" href="core_8h.html#a253c0eeb9c1e39b3b5dbb601927d925f">  537</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES 10000U</span></div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;<span class="preprocessor">#if configBSP430_CORE_SUPPORT_WATCHDOG - 0</span></div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) do {                   \</span></div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;<span class="preprocessor">    if ((_duration_mclk) &gt; BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES) {     \</span></div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;<span class="preprocessor">      unsigned int _watchdog_iterations = (_duration_mclk) / BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES; \</span></div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;<span class="preprocessor">      while (0 &lt; _watchdog_iterations--) {                              \</span></div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;<span class="preprocessor">        __delay_cycles(BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES);          \</span></div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;<span class="preprocessor">        BSP430_CORE_WATCHDOG_CLEAR();                                   \</span></div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;<span class="preprocessor">      }                                                                 \</span></div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;<span class="preprocessor">    }                                                                   \</span></div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;<span class="preprocessor">    __delay_cycles((_duration_mclk) % BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES); \</span></div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00584"></a><span class="lineno"><a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">  584</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) __delay_cycles(_duration_mclk)</span></div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_INTERRUPT_STATE_T</span></div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
-<div class="line"><a name="l00595"></a><span class="lineno"><a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">  595</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INTERRUPT_STATE_T __istate_t</span></div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INTERRUPT_STATE_T unsigned int</span></div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_INTERRUPT_STATE_T */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_SAVE_INTERRUPT_STATE</span></div>
-<div class="line"><a name="l00623"></a><span class="lineno"><a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">  623</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_SAVE_INTERRUPT_STATE(_state) do {   \</span></div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;<span class="preprocessor">    (_state) = __get_interrupt_state();                 \</span></div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_SAVE_INTERRUPT_STATE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_RESTORE_INTERRUPT_STATE</span></div>
-<div class="line"><a name="l00638"></a><span class="lineno"><a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">  638</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_RESTORE_INTERRUPT_STATE(_state) do {        \</span></div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;<span class="preprocessor">    __set_interrupt_state(_state);                              \</span></div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_RESTORE_INTERRUPT_STATE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_ENABLE_INTERRUPT</span></div>
-<div class="line"><a name="l00649"></a><span class="lineno"><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">  649</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_ENABLE_INTERRUPT() __enable_interrupt()</span></div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_ENABLE_INTERRUPT */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_DISABLE_INTERRUPT</span></div>
-<div class="line"><a name="l00658"></a><span class="lineno"><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">  658</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DISABLE_INTERRUPT() __disable_interrupt()</span></div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_DISABLE_INTERRUPT */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00669"></a><span class="lineno"><a class="code" href="core_8h.html#a219559446b71e4adfab17e300c0c1ecb">  669</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_US_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000000UL)</span></div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00679"></a><span class="lineno"><a class="code" href="core_8h.html#a3f5213f6fd15b49cb3a6e0b511ba6787">  679</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_TICKS_TO_US(ticks_, hz_) ((1000000UL * (ticks_)) / (hz_))</span></div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00689"></a><span class="lineno"><a class="code" href="core_8h.html#a9316a29a4688017236770d501848fa18">  689</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_MS_TO_TICKS(ms_, hz_) (((ms_) * (unsigned long)(hz_)) / 1000UL)</span></div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00699"></a><span class="lineno"><a class="code" href="core_8h.html#a5c82432f5b308110619c93d2ee32e892">  699</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_TICKS_TO_MS(ticks_, hz_) ((1000UL * (ticks_)) / (hz_))</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="preprocessor">#ifdef __TI_COMPILER_VERSION__</span></div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="preprocessor"></span><span class="comment">/* TI&#39;s compiler isn&#39;t GCC even if somebody added --gcc to the command</span></div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="comment"> * line, which causes __GNUC__ to be defined (apparently as 3). */</span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="preprocessor">#undef BSP430_CORE_TOOLCHAIN_GCC</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_TOOLCHAIN_TI 1</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* __TI_COMPILER_VERSION__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;<span class="preprocessor">#if BSP430_CORE_TOOLCHAIN_TI - 0</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __read_stack_register() _get_SP_register()</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __read_status_register() _get_SR_register()</span></div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __bis_status_register(_v) _bis_SR_register(_v)</span></div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __bic_status_register(_v) _bic_SR_register(_v)</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __bic_status_register_on_exit(_v) _bic_SR_register_on_exit(_v)</span></div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __nop() _nop()</span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_TOOLCHAIN_TI */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno"><a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">  396</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE __inline__</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#elif BSP430_CORE_TOOLCHAIN_TI - 0</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE __inline</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE inline</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="preprocessor"></span><span class="comment">/* GCC wants both directives */</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno"><a class="code" href="core_8h.html#ac1bc2d9022aabb8aa31e7c1f1eb4a0b4">  411</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE __attribute__((__always_inline__))</span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
+<div class="line"><a name="l00427"></a><span class="lineno"><a class="code" href="core_8h.html#a2153ff71877790bdf6e8efd5aa0d3bd3">  427</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_PACKED_STRUCT(nm_) struct __attribute__((__packed__)) nm_</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="preprocessor">#if BSP430_CORE_TOOLCHAIN_TI - 0</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DECLARE_INTERRUPT(iv_) _BSP430_CORE_TOOLCHAIN_TI_PRAGMA(vector=##iv_) __interrupt void</span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="preprocessor"></span><span class="comment">/* Helper function required to make the _Pragma argument a single</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment"> * string literal */</span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="preprocessor">#define _BSP430_CORE_TOOLCHAIN_TI_PRAGMA(x_) _Pragma(#x_)</span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else  </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00443"></a><span class="lineno"><a class="code" href="core_8h.html#a313ebd2a45fdf2e32c7c35866d6a7528">  443</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DECLARE_INTERRUPT(iv_) static void __attribute__((__interrupt__(iv_)))</span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00466"></a><span class="lineno"><a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">  466</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_LPM_ENTER(lpm_bits_) __bis_status_register(BSP430_CORE_LPM_SR_MASK &amp; (lpm_bits_))</span></div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00489"></a><span class="lineno"><a class="code" href="core_8h.html#ab3ba0bc9be345eb561a58747da602704">  489</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_LPM_ENTER_NI(lpm_bits_) BSP430_CORE_LPM_ENTER(GIE | (lpm_bits_))</span></div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00507"></a><span class="lineno"><a class="code" href="core_8h.html#a4111253dbed7f8ac33b659e332616623">  507</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_LPM_EXIT_FROM_ISR(lpm_bits_) __bic_status_register_on_exit(BSP430_CORE_LPM_SR_MASK &amp; (lpm_bits_))</span></div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;<span class="preprocessor">#ifndef configBSP430_CORE_SUPPORT_WATCHDOG</span></div>
+<div class="line"><a name="l00532"></a><span class="lineno"><a class="code" href="core_8h.html#a835e2732faf93f44f6d6f00eb04236dc">  532</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define configBSP430_CORE_SUPPORT_WATCHDOG 0</span></div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;<span class="preprocessor">#if configBSP430_CORE_SUPPORT_WATCHDOG - 0</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef BSP430_CORE_WATCHDOG_CLEAR</span></div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if 20120406 &lt; __MSPGCC__</span></div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_WATCHDOG_CLEAR() __watchdog_clear()</span></div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* MSPGCC */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_WATCHDOG_CLEAR */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#undef BSP430_CORE_WATCHDOG_CLEAR</span></div>
+<div class="line"><a name="l00562"></a><span class="lineno"><a class="code" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">  562</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_WATCHDOG_CLEAR() do { } while (0)</span></div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES</span></div>
+<div class="line"><a name="l00574"></a><span class="lineno"><a class="code" href="core_8h.html#a253c0eeb9c1e39b3b5dbb601927d925f">  574</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES 10000U</span></div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;<span class="preprocessor">#if configBSP430_CORE_SUPPORT_WATCHDOG - 0</span></div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) do {                   \</span></div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;<span class="preprocessor">    if ((_duration_mclk) &gt; BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES) {     \</span></div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="preprocessor">      unsigned int _watchdog_iterations = (_duration_mclk) / BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES; \</span></div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;<span class="preprocessor">      while (0 &lt; _watchdog_iterations--) {                              \</span></div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;<span class="preprocessor">        __delay_cycles(BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES);          \</span></div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;<span class="preprocessor">        BSP430_CORE_WATCHDOG_CLEAR();                                   \</span></div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;<span class="preprocessor">      }                                                                 \</span></div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;<span class="preprocessor">    }                                                                   \</span></div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;<span class="preprocessor">    __delay_cycles((_duration_mclk) % BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES); \</span></div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00621"></a><span class="lineno"><a class="code" href="core_8h.html#a327cb5d1a1607c19c9551a18507bbb63">  621</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) __delay_cycles(_duration_mclk)</span></div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_CORE_SUPPORT_WATCHDOG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_INTERRUPT_STATE_T</span></div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
+<div class="line"><a name="l00632"></a><span class="lineno"><a class="code" href="core_8h.html#a15976e4890ec6eacf5cbddf25c5b11c7">  632</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INTERRUPT_STATE_T __istate_t</span></div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_INTERRUPT_STATE_T unsigned int</span></div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* TOOLCHAIN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_INTERRUPT_STATE_T */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_SAVE_INTERRUPT_STATE</span></div>
+<div class="line"><a name="l00660"></a><span class="lineno"><a class="code" href="core_8h.html#ae4bfa3ada65bbdf28947828ce7966ec1">  660</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_SAVE_INTERRUPT_STATE(_state) do {   \</span></div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;<span class="preprocessor">    (_state) = __get_interrupt_state();                 \</span></div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_SAVE_INTERRUPT_STATE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_RESTORE_INTERRUPT_STATE</span></div>
+<div class="line"><a name="l00675"></a><span class="lineno"><a class="code" href="core_8h.html#a5e9ec46fa426727b23b14cd505e5bbec">  675</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_RESTORE_INTERRUPT_STATE(_state) do {        \</span></div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="preprocessor">    __set_interrupt_state(_state);                              \</span></div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_RESTORE_INTERRUPT_STATE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_ENABLE_INTERRUPT</span></div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if (BSP430_CORE_FAMILY_IS_5XX - 0)</span></div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_ENABLE_INTERRUPT() do {     \</span></div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;<span class="preprocessor">    __enable_interrupt();                       \</span></div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;<span class="preprocessor">    __nop();                                    \</span></div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* BSP430_CORE_FAMILY_IS_5XX */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00697"></a><span class="lineno"><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">  697</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_ENABLE_INTERRUPT() __enable_interrupt()</span></div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_FAMILY_IS_5XX */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_ENABLE_INTERRUPT */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;<span class="preprocessor">#if (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;byteswap.h&gt;</span></div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="preprocessor">#define BSP430_CORE_SWAP_16(w_) bswap_16(w_)</span></div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00709"></a><span class="lineno"><a class="code" href="core_8h.html#a84c412651d14e0096737c2458a67be72">  709</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_SWAP_16(w_) ((  ((w_) &amp; 0xFF00) &gt;&gt; 8)       \</span></div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;<span class="preprocessor">                                 | (((w_) &amp; 0x00FF) &lt;&lt; 8) )</span></div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="preprocessor">#if (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;byteswap.h&gt;</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="preprocessor">#define BSP430_CORE_SWAP_32(lw_) bswap_32(lw_)</span></div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00721"></a><span class="lineno"><a class="code" href="core_8h.html#aad9ad180984ee45b1b8fe2be4084173e">  721</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_SWAP_32(lw_) ((  ((lw_) &amp; 0xFF000000) &gt;&gt; 24)     \</span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;<span class="preprocessor">                                  | (((lw_) &amp; 0x00FF0000) &gt;&gt; 8)      \</span></div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;<span class="preprocessor">                                  | (((lw_) &amp; 0x0000FF00) &lt;&lt; 8)      \</span></div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;<span class="preprocessor">                                  | (((lw_) &amp; 0x000000FF) &lt;&lt; 24) )</span></div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;<span class="comment">/* See &lt;bsp430/rtos/freertos.h&gt; */</span></div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;<span class="preprocessor">#if configBSP430_RTOS_FREERTOS - 0</span></div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;<span class="preprocessor"></span><span class="comment">/* FreeRTOS defines application behavior in a shared header.  Read it</span></div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;<span class="comment"> * in here so everybody agrees on its contents. */</span></div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;<span class="preprocessor">#include &quot;FreeRTOS.h&quot;</span></div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;<span class="preprocessor">#define BSP430_RTOS_YIELD_FROM_ISR() portYIELD_FROM_ISR(1)</span></div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_RTOS_FREERTOS */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;<span class="preprocessor">#ifndef BSP430_RTOS_YIELD_FROM_ISR</span></div>
-<div class="line"><a name="l00751"></a><span class="lineno"><a class="code" href="core_8h.html#a15a07b5efea8b66be572787a37455578">  751</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_RTOS_YIELD_FROM_ISR() do { } while (0)</span></div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_RTOS_YIELD_FROM_ISR */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="preprocessor">#ifndef BSP430_CORE_DISABLE_INTERRUPT</span></div>
+<div class="line"><a name="l00707"></a><span class="lineno"><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">  707</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_DISABLE_INTERRUPT() __disable_interrupt()</span></div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_DISABLE_INTERRUPT */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00718"></a><span class="lineno"><a class="code" href="core_8h.html#a219559446b71e4adfab17e300c0c1ecb">  718</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_US_TO_TICKS(us_, hz_) (((us_) * (unsigned long)(hz_)) / 1000000UL)</span></div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00728"></a><span class="lineno"><a class="code" href="core_8h.html#a3f5213f6fd15b49cb3a6e0b511ba6787">  728</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_TICKS_TO_US(ticks_, hz_) ((1000000UL * (ticks_)) / (hz_))</span></div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00738"></a><span class="lineno"><a class="code" href="core_8h.html#a9316a29a4688017236770d501848fa18">  738</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_MS_TO_TICKS(ms_, hz_) (((ms_) * (unsigned long)(hz_)) / 1000UL)</span></div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00748"></a><span class="lineno"><a class="code" href="core_8h.html#a5c82432f5b308110619c93d2ee32e892">  748</a></span>&#160;<span class="preprocessor">#define BSP430_CORE_TICKS_TO_MS(ticks_, hz_) ((1000UL * (ticks_)) / (hz_))</span></div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;<span class="preprocessor">#if (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;byteswap.h&gt;</span></div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;<span class="preprocessor">#define BSP430_CORE_SWAP_16(w_) bswap_16(w_)</span></div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00758"></a><span class="lineno"><a class="code" href="core_8h.html#a84c412651d14e0096737c2458a67be72">  758</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_SWAP_16(w_) ((  ((w_) &amp; 0xFF00) &gt;&gt; 8)       \</span></div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;<span class="preprocessor">                                 | (((w_) &amp; 0x00FF) &lt;&lt; 8) )</span></div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;<span class="preprocessor">#if (BSP430_CORE_TOOLCHAIN_GCC - 0)</span></div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;byteswap.h&gt;</span></div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;<span class="preprocessor">#define BSP430_CORE_SWAP_32(lw_) bswap_32(lw_)</span></div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00770"></a><span class="lineno"><a class="code" href="core_8h.html#aad9ad180984ee45b1b8fe2be4084173e">  770</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_CORE_SWAP_32(lw_) ((  ((lw_) &amp; 0xFF000000) &gt;&gt; 24)     \</span></div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;<span class="preprocessor">                                  | (((lw_) &amp; 0x00FF0000) &gt;&gt; 8)      \</span></div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;<span class="preprocessor">                                  | (((lw_) &amp; 0x0000FF00) &lt;&lt; 8)      \</span></div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;<span class="preprocessor">                                  | (((lw_) &amp; 0x000000FF) &lt;&lt; 24) )</span></div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;<span class="comment">/* See &lt;bsp430/rtos/freertos.h&gt; */</span></div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;<span class="preprocessor">#if configBSP430_RTOS_FREERTOS - 0</span></div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;<span class="preprocessor"></span><span class="comment">/* FreeRTOS defines application behavior in a shared header.  Read it</span></div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;<span class="comment"> * in here so everybody agrees on its contents. */</span></div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;<span class="preprocessor">#include &quot;FreeRTOS.h&quot;</span></div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;</div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;<span class="preprocessor">#define BSP430_RTOS_YIELD_FROM_ISR() portYIELD_FROM_ISR(1)</span></div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_RTOS_FREERTOS */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;<span class="preprocessor">#ifndef BSP430_RTOS_YIELD_FROM_ISR</span></div>
+<div class="line"><a name="l00800"></a><span class="lineno"><a class="code" href="core_8h.html#a15a07b5efea8b66be572787a37455578">  800</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_RTOS_YIELD_FROM_ISR() do { } while (0)</span></div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_RTOS_YIELD_FROM_ISR */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_CORE_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

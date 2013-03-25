@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -425,7 +425,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For I2C mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are configuration of the clock (<a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, or <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>) and perhaps <a class="el" href="msp430_8h.html#a311c1dc057c97e3b6e6e8fafaa82ffcd">UCTR</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function. If <code>prescaler</code> is zero, the clock configuration in this will be overridden to select SMCLK.</td></tr>
-    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the I2C clock. A value of zero will select the minimum of 1 and ceil(<a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz()</a>/<a class="el" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>), resulting in the highest speed that does not exceed <a class="el" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>. Use of this feature will override the clock selection in <code>ctl1_byte</code>.</td></tr>
+    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the I2C clock. A value of zero will select the minimum of 1 and ceil(<a class="el" href="clock_8h.html#aae393938e85c471bb779ca0d5baa705f">ulBSP430clockSMCLK_Hz()</a>/<a class="el" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>), resulting in the highest speed that does not exceed <a class="el" href="serial_8h.html#a1a04e22fd8e383a4986dcea9b58eec52">BSP430_SERIAL_I2C_BUS_SPEED_HZ</a>. Use of this feature will override the clock selection in <code>ctl1_byte</code>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -490,7 +490,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For SPI mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header are only configuration of the clock: <a class="el" href="msp430_8h.html#afc67af00f443bcf35e6864137fc64056">UCSSEL_0</a>, <a class="el" href="msp430_8h.html#a73c578a990628e924d98da6dffaf0629">UCSSEL_1</a>, <a class="el" href="msp430_8h.html#a1d80b08053e2c8dcad61e17d520da303">UCSSEL_2</a>, <a class="el" href="msp430_8h.html#ae659974d98f91adde08c264fe5fa8165">UCSSEL_3</a>. The <a class="el" href="msp430_8h.html#a5ed16d537b5b0bc2315389cea834a1a0">UCSWRST</a> field is controlled by the function. If <code>prescaler</code> is zero, the clock configuration in this will be overridden to select SMCLK.</td></tr>
-    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the SPI clock. A value of zero will select the minimum of 1 and ceil(<a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz()</a>/<a class="el" href="serial_8h.html#a923ef219777a585b737647ad335ff25a">BSP430_SERIAL_SPI_BUS_SPEED_HZ</a>), resulting in the highest speed that does not exceed <a class="el" href="serial_8h.html#a923ef219777a585b737647ad335ff25a">BSP430_SERIAL_SPI_BUS_SPEED_HZ</a>. Use of this feature will override the clock selection in <code>ctl1_byte</code>.</td></tr>
+    <tr><td class="paramname">prescaler</td><td>The value by which the clock selected in <code>ctl1_byte</code> is divided to produce the SPI clock. A value of zero will select the minimum of 1 and ceil(<a class="el" href="clock_8h.html#aae393938e85c471bb779ca0d5baa705f">ulBSP430clockSMCLK_Hz()</a>/<a class="el" href="serial_8h.html#a923ef219777a585b737647ad335ff25a">BSP430_SERIAL_SPI_BUS_SPEED_HZ</a>), resulting in the highest speed that does not exceed <a class="el" href="serial_8h.html#a923ef219777a585b737647ad335ff25a">BSP430_SERIAL_SPI_BUS_SPEED_HZ</a>. Use of this feature will override the clock selection in <code>ctl1_byte</code>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -555,7 +555,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ctl1_byte</td><td>The configuration to be written to the device's ctl1 byte. For UART mode, potential values specified in the &lt;<a class="el" href="msp430_8h.html" title="Stripped &lt;msp430.h&gt; header supporting Doxygen links.">msp430.h</a>&gt; header include <a class="el" href="msp430_8h.html#ae54706b57b264155a533ba8673b8ed96">UCRXEIE</a>, <a class="el" href="msp430_8h.html#ac4f7aaa4d67ed80a4099d40e2dde3ccc">UCBRKIE</a>, and <a class="el" href="msp430_8h.html#a6d58a8e741c77478dafc016c41fd57b2">UCDORM</a>. The UCSSEL and UCSWRST elements of the byte are cleared as the function configures those. In most cases a value of 0 is appropriate.</td></tr>
-    <tr><td class="paramname">baud</td><td>The desired baud rate. This will be configured automatically. ACLK will be used as the baud rate clock if ACLK is both at least 20 kHz and at least three times faster than the requested baud rate; otherwise SMCLK will be used. The function invokes <a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz()</a> and <a class="el" href="clock_8h.html#aeb12b1afa0629e4d4421038fb9b09d12">ulBSP430clockACLK_Hz()</a> as necessary to determine the actual speed of the baud rate clock.</td></tr>
+    <tr><td class="paramname">baud</td><td>The desired baud rate. This will be configured automatically. ACLK will be used as the baud rate clock if ACLK is both at least 20 kHz and at least three times faster than the requested baud rate; otherwise SMCLK will be used. The function invokes <a class="el" href="clock_8h.html#aae393938e85c471bb779ca0d5baa705f">ulBSP430clockSMCLK_Hz()</a> and <a class="el" href="clock_8h.html#a9997899ae094a0e809c01239328f2e0b">ulBSP430clockACLK_Hz()</a> as necessary to determine the actual speed of the baud rate clock.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1141,7 +1141,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

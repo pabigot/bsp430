@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130110</span>
+   &#160;<span id="projectnumber">20130325</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -164,27 +164,41 @@ Enumerations</h2></td></tr>
 <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa0b31074786d75cdbc65a1be576a20786">eBSP430clockSRC_XT1CLK_OR_VLOCLK</a>, 
 <br/>
 &#160;&#160;<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa3480b90ace81a2b9f2c25d22d18fc4d6">eBSP430clockSRC_XT1CLK_OR_REFOCLK</a>, 
-<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa509e9b965e91f15094b75169f550b95d">eBSP430clockSRC_XT1CLK_FALLBACK</a>
+<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa509e9b965e91f15094b75169f550b95d">eBSP430clockSRC_XT1CLK_FALLBACK</a>, 
+<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaae55d22b2f0d8c7a2feee84c11b528d6e">eBSP430clockSRC_UNKNOWN_1</a>, 
+<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa48e420b1e5f10595e426b9ab67f57905">eBSP430clockSRC_UNKNOWN_6</a>, 
+<br/>
+&#160;&#160;<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa1c00de48da23afef0ca851f55dda2cf5">eBSP430clockSRC_UNKNOWN_7</a>, 
+<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa4da308307cfa270930b1ae8e00def287">eBSP430clockSRC_TCLK</a>, 
+<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa8685286d76fe50e6801b1d98b638a08f">eBSP430clockSRC_ITCLK</a>
 <br/>
  }</td></tr>
 <tr class="separator:afad775d35ca969034172f0955cf1bcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:af5fb0f553f31dc47a507ccf4fe919a74"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#af5fb0f553f31dc47a507ccf4fe919a74">iBSP430clockSourceSynchronous</a> (<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> s1, <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> s2)</td></tr>
+<tr class="separator:af5fb0f553f31dc47a507ccf4fe919a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac935555e3b12a0bc4a799eb193d54101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#ac935555e3b12a0bc4a799eb193d54101">xBSP430clockACLKSource</a> ()</td></tr>
+<tr class="separator:ac935555e3b12a0bc4a799eb193d54101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a117adb1cb741b31f0abf81ae08f052c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a117adb1cb741b31f0abf81ae08f052c4">xBSP430clockSMCLKSource</a> ()</td></tr>
+<tr class="separator:a117adb1cb741b31f0abf81ae08f052c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b770a224b729588068d009a19e620d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#ac4b770a224b729588068d009a19e620d">xBSP430clockMCLKSource</a> ()</td></tr>
+<tr class="separator:ac4b770a224b729588068d009a19e620d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a538f01f39cf54267229fe04877d3185e"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a538f01f39cf54267229fe04877d3185e">ulBSP430clockConfigureMCLK_ni</a> (unsigned long mclk_Hz)</td></tr>
 <tr class="separator:a538f01f39cf54267229fe04877d3185e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d5257ff00b9fafcd86e4f5eaa73ee79"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79">ulBSP430clockMCLK_Hz_ni</a> (void)</td></tr>
 <tr class="separator:a5d5257ff00b9fafcd86e4f5eaa73ee79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa749bb6b58228edd697cd4c33494404f"><td class="memItemLeft" align="right" valign="top">static unsigned long <br class="typebreak"/>
-<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#aa749bb6b58228edd697cd4c33494404f">ulBSP430clockMCLK_Hz</a> (void)</td></tr>
-<tr class="separator:aa749bb6b58228edd697cd4c33494404f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0555ddf2f79611fff8ce2163fbca5d38"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a0555ddf2f79611fff8ce2163fbca5d38">ulBSP430clockMCLK_Hz</a> (void)</td></tr>
+<tr class="separator:a0555ddf2f79611fff8ce2163fbca5d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a476e5bfcb4213f2a11ea69805e47e6d5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a476e5bfcb4213f2a11ea69805e47e6d5">iBSP430clockConfigureSMCLK_ni</a> (<a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> sel, unsigned int dividing_shift)</td></tr>
 <tr class="separator:a476e5bfcb4213f2a11ea69805e47e6d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0642c6f082ed8feafd057ff8132b75da"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a0642c6f082ed8feafd057ff8132b75da">ulBSP430clockSMCLK_Hz_ni</a> (void)</td></tr>
 <tr class="separator:a0642c6f082ed8feafd057ff8132b75da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d2d63023653a5c93ea6c555609917ab"><td class="memItemLeft" align="right" valign="top">static unsigned long <br class="typebreak"/>
-<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a8d2d63023653a5c93ea6c555609917ab">ulBSP430clockSMCLK_Hz</a> (void)</td></tr>
-<tr class="separator:a8d2d63023653a5c93ea6c555609917ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae393938e85c471bb779ca0d5baa705f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#aae393938e85c471bb779ca0d5baa705f">ulBSP430clockSMCLK_Hz</a> (void)</td></tr>
+<tr class="separator:aae393938e85c471bb779ca0d5baa705f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11303f50d951e4d623afe1f656bda7a8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a11303f50d951e4d623afe1f656bda7a8">iBSP430clockConfigureLFXT1_ni</a> (int enablep, int loop_limit)</td></tr>
 <tr class="separator:a11303f50d951e4d623afe1f656bda7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9de38fe153ba8cc065218b887ec174d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#ac9de38fe153ba8cc065218b887ec174d">iBSP430clockConfigureXT2_ni</a> (int enablep, int loop_limit)</td></tr>
@@ -193,15 +207,15 @@ Functions</h2></td></tr>
 <tr class="separator:a777ca1d5afd1e5d321c438f980e2bf5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50f0e84be872123b2fae87995681a600"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni</a> (void)</td></tr>
 <tr class="separator:a50f0e84be872123b2fae87995681a600"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb12b1afa0629e4d4421038fb9b09d12"><td class="memItemLeft" align="right" valign="top">static unsigned long <br class="typebreak"/>
-<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#aeb12b1afa0629e4d4421038fb9b09d12">ulBSP430clockACLK_Hz</a> (void)</td></tr>
-<tr class="separator:aeb12b1afa0629e4d4421038fb9b09d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cd3cc6dcc7dcd02229c750d95891bdd"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
-<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a5cd3cc6dcc7dcd02229c750d95891bdd">uiBSP430clockACLK_Hz_ni</a> (void)</td></tr>
-<tr class="separator:a5cd3cc6dcc7dcd02229c750d95891bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e6b8510714bb26cac0b2c5cdcfdc0e0"><td class="memItemLeft" align="right" valign="top">static unsigned int <br class="typebreak"/>
-<a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a7e6b8510714bb26cac0b2c5cdcfdc0e0">uiBSP430clockACLK_Hz</a> (void)</td></tr>
-<tr class="separator:a7e6b8510714bb26cac0b2c5cdcfdc0e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9997899ae094a0e809c01239328f2e0b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a9997899ae094a0e809c01239328f2e0b">ulBSP430clockACLK_Hz</a> (void)</td></tr>
+<tr class="separator:a9997899ae094a0e809c01239328f2e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e9f412bb9376a2bcb150fc66f010a87"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87">uiBSP430clockACLK_Hz_ni</a> (void)</td></tr>
+<tr class="separator:a8e9f412bb9376a2bcb150fc66f010a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afde95d4cde4586775d26e306cbdc9906"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> <br class="typebreak"/>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clock_8h.html#afde95d4cde4586775d26e306cbdc9906">uiBSP430clockACLK_Hz</a> (void)</td></tr>
+<tr class="separator:afde95d4cde4586775d26e306cbdc9906"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Clock-related functions implemented on all MSP430 MCUs. </p>
@@ -350,7 +364,7 @@ The CS_A module uses HFXT to refer to XT2. BSP430 uniformly uses XT2.</dd></dl>
 <dd>
 Applications may wish to provide an alternative value suited to specific needs. It is suggested that the value include the suffix L in case the compiler does not automatically promote constants as necessary.</dd></dl>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a5">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a10">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a8">bootstrap/console/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a26">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a38">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a13">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a15">sensors/tmp102/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2blink_2main_8c-example.html#a5">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a10">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a8">bootstrap/console/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a26">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a38">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a14">sensors/ds18b20/main.c</a>, and <a class="el" href="sensors_2tmp102_2main_8c-example.html#a15">sensors/tmp102/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -604,6 +618,21 @@ Applications may wish to provide an alternative value suited to specific needs. 
 <p>Fallback: use XT1CLK if <a class="el" href="clock_8h.html#a7a0cdc169aac90a5c877b3ca09a4608d">BSP430_CLOCK_LFXT1_IS_FAULTED_NI()</a> is false, otherwise use the most precise available internal reference clock.</p>
 <p>Generally this will be equivalent to <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa0b31074786d75cdbc65a1be576a20786">eBSP430clockSRC_XT1CLK_OR_VLOCLK</a> or <a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcdaa3480b90ace81a2b9f2c25d22d18fc4d6">eBSP430clockSRC_XT1CLK_OR_REFOCLK</a>, depending on what clock peripheral is available. Use <a class="el" href="clock_8h.html#a50f0e84be872123b2fae87995681a600">ulBSP430clockACLK_Hz_ni()</a> to determine what the actual (nominal) speed is. </p>
 </td></tr>
+<tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaae55d22b2f0d8c7a2feee84c11b528d6e"></a>eBSP430clockSRC_UNKNOWN_1</em>&nbsp;</td><td>
+<p>A unique unrecognized value. Not a valid source for clock configuration. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa48e420b1e5f10595e426b9ab67f57905"></a>eBSP430clockSRC_UNKNOWN_6</em>&nbsp;</td><td>
+<p>A unique unrecognized value. Not a valid source for clock configuration. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa1c00de48da23afef0ca851f55dda2cf5"></a>eBSP430clockSRC_UNKNOWN_7</em>&nbsp;</td><td>
+<p>A unique unrecognized value. Not a valid source for clock configuration. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa4da308307cfa270930b1ae8e00def287"></a>eBSP430clockSRC_TCLK</em>&nbsp;</td><td>
+<p>A value representing an external clock, potentially used as a timer source. Not a valid source for clock configuration, and will never compare equal to a clock source value. Only returned from <a class="el" href="timer_8h.html#a3538758f690143471a3224c2cd222867">xBSP430timerClockSource()</a>. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="afad775d35ca969034172f0955cf1bcdaa8685286d76fe50e6801b1d98b638a08f"></a>eBSP430clockSRC_ITCLK</em>&nbsp;</td><td>
+<p>A value representing an inverted external clock, potentially used as a timer source. Not a valid source for clock configuration, and will never compare equal to a clock source value. Only returned from <a class="el" href="timer_8h.html#a3538758f690143471a3224c2cd222867">xBSP430timerClockSource()</a>. </p>
+</td></tr>
 </table>
 </dd>
 </dl>
@@ -750,7 +779,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
 
 </div>
 </div>
-<a class="anchor" id="a7e6b8510714bb26cac0b2c5cdcfdc0e0"></a>
+<a class="anchor" id="af5fb0f553f31dc47a507ccf4fe919a74"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -758,7 +787,42 @@ Applications may wish to provide an alternative value suited to specific needs. 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> uiBSP430clockACLK_Hz </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int iBSP430clockSourceSynchronous </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>&#160;</td>
+          <td class="paramname"><em>s1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a>&#160;</td>
+          <td class="paramname"><em>s2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>True iff the two clock sources are synchronous. </p>
+
+</div>
+</div>
+<a class="anchor" id="afde95d4cde4586775d26e306cbdc9906"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> unsigned int uiBSP430clockACLK_Hz </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -771,12 +835,12 @@ Applications may wish to provide an alternative value suited to specific needs. 
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Interruptible-preserving wrapper for <a class="el" href="clock_8h.html#a5cd3cc6dcc7dcd02229c750d95891bdd">uiBSP430clockACLK_Hz_ni()</a> </p>
-<dl class="section user"><dt>Deprecated:</dt><dd>: Use <a class="el" href="clock_8h.html#aeb12b1afa0629e4d4421038fb9b09d12">ulBSP430clockACLK_Hz()</a> </dd></dl>
+<p>Interruptible-preserving wrapper for <a class="el" href="clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87">uiBSP430clockACLK_Hz_ni()</a> </p>
+<dl class="section user"><dt>Deprecated:</dt><dd>: Use <a class="el" href="clock_8h.html#a9997899ae094a0e809c01239328f2e0b">ulBSP430clockACLK_Hz()</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a5cd3cc6dcc7dcd02229c750d95891bdd"></a>
+<a class="anchor" id="a8e9f412bb9376a2bcb150fc66f010a87"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -784,7 +848,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned int <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> uiBSP430clockACLK_Hz_ni </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> unsigned int uiBSP430clockACLK_Hz_ni </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -803,7 +867,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
 
 </div>
 </div>
-<a class="anchor" id="aeb12b1afa0629e4d4421038fb9b09d12"></a>
+<a class="anchor" id="a9997899ae094a0e809c01239328f2e0b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -811,7 +875,7 @@ Applications may wish to provide an alternative value suited to specific needs. 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned long <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> ulBSP430clockACLK_Hz </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> unsigned long ulBSP430clockACLK_Hz </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -894,7 +958,7 @@ The &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction
 
 </div>
 </div>
-<a class="anchor" id="aa749bb6b58228edd697cd4c33494404f"></a>
+<a class="anchor" id="a0555ddf2f79611fff8ce2163fbca5d38"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -902,7 +966,7 @@ The &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned long <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> ulBSP430clockMCLK_Hz </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> unsigned long ulBSP430clockMCLK_Hz </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -941,7 +1005,7 @@ The &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction
 </dl>
 </div>
 </div>
-<a class="anchor" id="a8d2d63023653a5c93ea6c555609917ab"></a>
+<a class="anchor" id="aae393938e85c471bb779ca0d5baa705f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -949,7 +1013,7 @@ The &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static unsigned long <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> ulBSP430clockSMCLK_Hz </td>
+          <td class="memname">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> unsigned long ulBSP430clockSMCLK_Hz </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -986,10 +1050,61 @@ The &lt;<a class="el" href="cs_8h.html" title="Hardware presentation/abstraction
 </dl>
 </div>
 </div>
+<a class="anchor" id="ac935555e3b12a0bc4a799eb193d54101"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> xBSP430clockACLKSource </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a reconstructed source for ACLK.</p>
+<dl class="section note"><dt>Note</dt><dd>This may not be the same value as was used for the configuration. It will not take into account resolved fallbacks or faulted crystals. It will be one that uniquely identifies the source for the purposes of source comparison. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac4b770a224b729588068d009a19e620d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> xBSP430clockMCLKSource </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a reconstructed source for MCLK.</p>
+<dl class="section note"><dt>Note</dt><dd>This may not be the same value as was used for the configuration. It will not take into account resolved fallbacks or faulted crystals. It will be one that uniquely identifies the source for the purposes of source comparison. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a117adb1cb741b31f0abf81ae08f052c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="clock_8h.html#afad775d35ca969034172f0955cf1bcda">eBSP430clockSource</a> xBSP430clockSMCLKSource </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return a reconstructed source for SMCLK.</p>
+<dl class="section note"><dt>Note</dt><dd>This may not be the same value as was used for the configuration. It will not take into account resolved fallbacks or faulted crystals. It will be one that uniquely identifies the source for the purposes of source comparison. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 10 2013 15:09:12 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 25 2013 11:56:36 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
