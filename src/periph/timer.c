@@ -260,7 +260,7 @@ vBSP430timerInferHints_ni (hBSP430halTIMER timer)
   }
   timer_Hz = ulBSP430timerFrequency_Hz_ni(xBSP430periphFromHPL(timer->hpl));
   mclk_Hz = ulBSP430clockMCLK_Hz_ni();
-  if ((0 != timer_Hz) && (0 <= mclk_Hz) && (timer_Hz <= (mclk_Hz / 16))) {
+  if ((0 != timer_Hz) && (timer_Hz <= (mclk_Hz / 16))) {
     flags |= BSP430_TIMER_FLAG_SLOW;
   }
   timer->hal_state.flags = flags;
@@ -273,7 +273,7 @@ ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph)
   unsigned long freq_Hz;
 
   if (0 == tp) {
-    return -1;
+    return (unsigned long)-1;
   }
   switch (tp->ctl & TASSEL_3) {
     case TASSEL_0:
@@ -286,7 +286,7 @@ ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph)
       break;
     default:
     case TASSEL_3:
-      return -1;
+      return (unsigned long)-1;
   }
   return freq_Hz >> ((tp->ctl & ID_3) / ID0);
 }
@@ -311,7 +311,7 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
   if ((0 == capture_mode)
       || (NULL == tp)
       || (0 == (tp->ctl & (MC0 | MC1)))) {
-    return -1;
+    return (unsigned int)-1;
   }
 
   /* Configure synchronous capture.  SCS is not defined on a small

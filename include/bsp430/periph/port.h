@@ -439,7 +439,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_8
-typedef sBSP430hplPORT_8 sBSP430hplPORT;
 #endif /* 5XX */
 
 /** Field value for variant stored in sBSP430halPORT.hal_state.cflags

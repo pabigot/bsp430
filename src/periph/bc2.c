@@ -281,6 +281,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   /* Calculate absolute error from _freq_Hz to target */
 #define ERROR_HZ(_freq_Hz) ((mclk_Hz < _freq_Hz) ? (_freq_Hz - mclk_Hz) : (mclk_Hz - _freq_Hz))
   error_Hz = ERROR_HZ(freq_Hz);
+  (void)error_Hz;
 
   /* Test a candidate to see if it's better than what we've got now */
 #define TRY_FREQ(_tag, _cand_Hz) do {                   \

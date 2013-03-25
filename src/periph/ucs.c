@@ -462,11 +462,9 @@ sourceToCSEL_ (eBSP430clockSource sel)
 #if defined(SELA__XT2CLK) && (configBSP430_PERIPH_XT2 - 0)
     case eBSP430clockSRC_XT2CLK:
       return CSEL_XT2CLK;
-      break;
 #endif /* XT2CLK supported */
     case eBSP430clockSRC_XT1CLK_OR_VLOCLK:
       return BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? CSEL_VLOCLK : CSEL_XT1CLK;
-      break;
     case eBSP430clockSRC_XT1CLK_FALLBACK:
     case eBSP430clockSRC_XT1CLK_OR_REFOCLK:
       return BSP430_CLOCK_LFXT1_IS_FAULTED_NI() ? CSEL_REFOCLK : CSEL_XT1CLK;

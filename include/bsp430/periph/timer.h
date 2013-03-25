@@ -964,10 +964,9 @@
  * @param count the number of capture events over which the delta is
  * measured.
  *
- * @return -1 if @p capture_mode is not valid or the timer is
- * unrecognized or stopped.  Otherwise the delta in the counter of the
- * timer over @p count captures.
- * */
+ * @return -1 (cast to unsigned int) if @p capture_mode is not valid
+ * or the timer is unrecognized or stopped.  Otherwise the delta in
+ * the counter of the timer over @p count captures. */
 unsigned int uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
                                            int ccidx,
                                            unsigned int capture_mode,
@@ -1193,8 +1192,9 @@ eBSP430clockSource xBSP430timerClockSource (volatile sBSP430hplTIMER * hpl);
  *
  * @param periph The handle identifier, such as #BSP430_PERIPH_TA0.
  *
- * @return 0 if the timer is stopped; -1 if the frequency cannot be
- * determined, a positive value for a known source. */
+ * @return 0 if the timer is stopped; -1 (cast to unsigned long) if
+ * the frequency cannot be determined; otherwise the frequency of the
+ * source scaled by any relevant dividers. */
 unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph);
 
 /** Read the timer counter assuming interrupts are disabled.
