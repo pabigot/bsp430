@@ -365,7 +365,7 @@ struct sBSP430halSERIAL xBSP430hal_%(INSTANCE)s_ = {
 ''',
 
     'hal_port_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
-BSP430_CORE_DECLARE_INTERRUPT(TIMER%(INSTANCE)s_VECTOR)
+BSP430_CORE_DECLARE_INTERRUPT(%(INSTANCE)s_VECTOR)
 isr_%(INSTANCE)s (void)
 {
   int idx = 0;
