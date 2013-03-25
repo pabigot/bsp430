@@ -88,7 +88,8 @@
  * implementation.
  *
  * @note If you define this to @c 0 be sure to define @c MODULE_EUI64
- * in your application @c Makefile to be empty or the name of the source file that provides the function.
+ * in your application @c Makefile to be empty or the name of the
+ * source file that provides the function.
  *
  * @cppflag
  * @defaulted
