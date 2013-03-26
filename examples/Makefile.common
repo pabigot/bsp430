@@ -142,28 +142,6 @@ CPPFLAGS += -DBSP430_CONSOLE_USE_EMBTEXTF -I"$(EMBTEXTF_ROOT)/include"
 AUX_LDLIBS += $(EMBTEXTF_ROOT)/lib/libembtextf.a
 endif # EMBTEXTF_ROOT
 
-ifneq (0,$(WITH_GCC))
-# Use GCC to generate dependency files
-%.d: %.c
-	set -e; $(RM) $@; \
-	 $(CC) -MM -MT$*.o $(CPPFLAGS) $(CFLAGS) $< > $@.$$$$; \
-	 sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-	 $(RM) $@.$$$$
-endif # WITH_GCC
-
-ifneq (0,$(WITH_CCS))
-# Rule for CCS compiler which insists on placing output in foo.obj
-%.obj: %.c
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
-endif # WITH_CCS
-
-ifneq (0,$(WITH_GCC))
-# Interleaved source/object-code/asm listing
-%.lst: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) -ggdb -Wa,-ahdlns=$@ -c $<
-CLEAN += $(SRC:.c=.lst)
-endif # WITH_GCC
-
 CPPFLAGS += $(TARGET_CPPFLAGS)
 
 CFLAGS += $(WARN_CFLAGS)
@@ -197,10 +175,6 @@ CPPFLAGS += $(AUX_CPPFLAGS) $(EXT_CPPFLAGS)
 CFLAGS += $(AUX_CFLAGS) $(EXT_CFLAGS)
 LDFLAGS += $(AUX_LDFLAGS) $(EXT_LDFLAGS)
 LDLIBS += $(AUX_LDLIBS) $(EXT_LDLIBS)
-
-# Object file derived from assembler source including preprocessor
-%.o: %.S
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
 # Since the same BSP430 capability (e.g., timer or serial) may be needed for
 # multiple purposes, the SRC variable cannot simply accrue each dependency
@@ -293,26 +267,6 @@ OBJ += $(SRC:.c=$(OBJ_EXT)) $(SRC_S:.S=$(OBJ_EXT))
 # Also see http://locklessinc.com/articles/makefile_tricks/
 DEP += $(SRC:.c=.d) $(SRC_S:.S=.d)
 
-# AOUT: The name of the application image.
-AOUT ?= app.elf
-$(AOUT): $(OBJ)
-ifneq (0,$(WITH_CCS))
-	$(CC) $(CFLAGS) -z $(LDFLAGS) -o $@ $(OBJ) $(LDLIBS) $(CCS_BASE_ROOT)/msp430/include/lnk_$(MCU).cmd
-else # WITH_CCS
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ) $(LDLIBS)
-endif # WITH_CCS
-ifneq (0,$(WITH_GCC))
-	$(SIZE) $@
-endif # WITH_GCC
-
-# CLEAN: Additional files to be removed on make clean
-clean:
-	-$(RM) $(OBJ) $(CLEAN)
-
-# REALCLEAN: Additional files to be removed on make realclean
-realclean: clean
-	-$(RM) $(AOUT) $(DEP) $(REALCLEAN) *.d *.o
-
 # MSPDEBUG: Path to the mspdebug application (http://mspdebug.sourceforge.net/)
 MSPDEBUG ?= mspdebug
 
@@ -333,6 +287,59 @@ MSPDEBUG_DRIVER ?= -j uif
 # downloaded to the board using mspdebug.  If this is zero, an install
 # rule must be provided externally.
 WITH_MSPDEBUG ?= 1
+
+# BSP430_INHIBIT_MAKE_RULES: Define to a nonzero value to exclude the
+# Make rules while leaving all the variable declarations in place.
+# This allows the BSP430 build infrastructure to provide toolchain
+# and platform declarations to an external build infrastructure
+# like that for Contiki, which wants to provide its own rules.
+BSP430_INHIBIT_MAKE_RULES ?= 0
+ifeq (0,$(BSP430_INHIBIT_MAKE_RULES))
+
+ifneq (0,$(WITH_GCC))
+# Use GCC to generate dependency files
+%.d: %.c
+	set -e; $(RM) $@; \
+	 $(CC) -MM -MT$*.o $(CPPFLAGS) $(CFLAGS) $< > $@.$$$$; \
+	 sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	 $(RM) $@.$$$$
+
+# Object file derived from assembler source including preprocessor
+%.o: %.S
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+
+# Interleaved source/object-code/asm listing
+%.lst: %.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -ggdb -Wa,-ahdlns=$@ -c $<
+CLEAN += $(SRC:.c=.lst)
+endif # WITH_GCC
+
+ifneq (0,$(WITH_CCS))
+# Rule for CCS compiler which insists on placing output in foo.obj
+%.obj: %.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
+endif # WITH_CCS
+
+# AOUT: The name of the application image.
+AOUT ?= app.elf
+$(AOUT): $(OBJ)
+ifneq (0,$(WITH_CCS))
+	$(CC) $(CFLAGS) -z $(LDFLAGS) -o $@ $(OBJ) $(LDLIBS) $(CCS_BASE_ROOT)/msp430/include/lnk_$(MCU).cmd
+else # WITH_CCS
+	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ) $(LDLIBS)
+endif # WITH_CCS
+ifneq (0,$(WITH_GCC))
+	$(SIZE) $@
+endif # WITH_GCC
+
+# CLEAN: Additional files to be removed on make clean
+clean:
+	-$(RM) $(OBJ) $(CLEAN)
+
+# REALCLEAN: Additional files to be removed on make realclean
+realclean: clean
+	-$(RM) $(AOUT) $(DEP) $(REALCLEAN) *.d *.o
+
 ifneq (0,$(WITH_MSPDEBUG))
 install: $(AOUT)
 	$(MSPDEBUG) $(MSPDEBUG_OPTIONS) $(MSPDEBUG_DRIVER) '$(MSPDEBUG_PROG) $(AOUT)'
@@ -342,3 +349,5 @@ endif # WITH_MSPDEBUG
 ifneq ($(MAKECMDGOALS:realclean=clean),clean)
 -include $(DEP)
 endif # make [real]clean
+
+endif # BSP430_INHIBIT_MAKE_RULES
