@@ -65,6 +65,25 @@ LDFLAGS += -i"$(CG_TOOL_ROOT)/lib"
 LDFLAGS += --rom_model
 endif # WITH_CCS
 
+# TEST_PLATFORMS: Space-separated list of platforms to use for testing a
+# given application.  Defaults to all known platforms.
+TEST_PLATFORMS ?= \
+    em430 \
+    exp430f5438 \
+    exp430f5529 \
+    exp430fg4618 \
+    exp430fr5739 \
+    exp430g2 \
+    rf2500t \
+    surf \
+    trxeb \
+    wolverine
+
+# TEST_PLATFORMS_EXCLUDE: Space-separated list of platforms not to use for
+# testing a given application.  These platforms are removed from
+# TEST_PLATFORMS in the emit-test-platforms goal.
+TEST_PLATFORMS_EXCLUDE ?=
+
 # PLATFORM: Standard nomenclature for a particular board with
 # particular features.  If defined, other settings such as the MCU and
 # how to flash the application might be read from a common file.
@@ -346,8 +365,31 @@ install: $(AOUT)
 endif # WITH_MSPDEBUG
 
 # Include dependencies unless we're cleaning
-ifneq ($(MAKECMDGOALS:realclean=clean),clean)
+ifeq ($(filter realclean clean emit-test-platforms, $(MAKECMDGOALS)),$(MAKECMDGOALS))
 -include $(DEP)
 endif # make [real]clean
+
+TEST_PLATFORMS_=$(filter-out $(TEST_PLATFORMS_EXCLUDE), $(TEST_PLATFORMS))
+
+.PHONY: emit-test-platforms
+emit-test-platforms:
+	@echo $(TEST_PLATFORMS_)
+
+.PHONY: test-platforms
+test-platforms:
+	@$(MAKE) realclean >/dev/null 2>&1 ;        \
+	for p in $(TEST_PLATFORMS_) ; do            \
+	     echo "=== Building for $${p}" ;        \
+	     ( ( $(MAKE) PLATFORM=$${p} app.elf )   \
+               > $${p}.log 2>&1                     \
+               && tail -3 $${p}.log                 \
+	       && $(MAKE) realclean >/dev/null 2>&1 \
+               && rm -f $${p}.log )                 \
+             || break ;                             \
+	done ;                                      \
+	if test -f $${p}.log ; then                 \
+           echo "FAILED on $${p}:" ;                \
+	   cat $${p}.log ;                          \
+	fi
 
 endif # BSP430_INHIBIT_MAKE_RULES
