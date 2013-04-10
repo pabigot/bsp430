@@ -5,5 +5,6 @@ MODULES += $(MODULES_UPTIME)
 MODULES += $(MODULES_CONSOLE)
 MODULES += $(MODULES_SERIAL)
 MODULES += periph/port
+MODULES += utility/m25p
 SRC=main.c
 include $(BSP430_ROOT)/examples/Makefile.common

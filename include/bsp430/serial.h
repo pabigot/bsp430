@@ -446,7 +446,8 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
  * incoming data is not of interest.  If the pointer is not null, the
  * space available must be at least @p tx_len + @p rx_len.
  *
- * @return the total number of bytes stored in @p rx_data, or -1 if an
+ * @return the total number of bytes stored in @p rx_data (or that
+ * would have been stored if @p rx_data were not null), or -1 if an
  * error occcured.
  */
 static BSP430_CORE_INLINE

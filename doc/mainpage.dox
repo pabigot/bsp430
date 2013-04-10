@@ -173,6 +173,9 @@ experimenter boards by displaying information about a connected ChipCon
 radio.  The same demonstration works on the #BSP430_PLATFORM_EM430 and
 #BSP430_PLATFORM_SURF platforms.
 
+\li \ref ex_platform_trxeb_flash demonstrates use of a serial flash device
+through the <bsp430/utility/m25p.h> interface.
+
 \li \ref ex_platform_exp430f5529_fatfs demonstrates use of <a
 href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430
 SPI serial abstraction
