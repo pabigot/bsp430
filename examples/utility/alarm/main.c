@@ -30,7 +30,7 @@ static hBSP430halTIMER alarmHAL_;
 unsigned long alarm_Hz;
 
 #define MAX_TIMERS 7
-struct sBSP430timerAlarm alarm_data[MAX_TIMERS];
+sBSP430timerAlarm alarm_data[MAX_TIMERS];
 hBSP430timerAlarm alarm[MAX_TIMERS];
 size_t nTimers;
 unsigned long wakeups;

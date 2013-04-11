@@ -415,7 +415,7 @@ vBSP430timerSetCounter_ni (hBSP430halTIMER timer,
  * the low word of the set time.  If not, we'll let the counter change
  * cue the interrupt; otherwise we'll force one immediately. */
 static inline
-void alarmConfigureInterrupts_ni (struct sBSP430timerAlarm * map)
+void alarmConfigureInterrupts_ni (sBSP430timerAlarm * map)
 {
   unsigned int olo = map->timer->overflow_count;
   unsigned int hi = map->setting_tck >> 16;
@@ -440,10 +440,10 @@ void alarmConfigureInterrupts_ni (struct sBSP430timerAlarm * map)
  * responsible for enabling an interrupt on compare match within the
  * cycle at which the alarm event is due. */
 static int
-alarmOFcb_ni (const struct sBSP430halISRVoidChainNode *cb,
-              void *context)
+alarmOFcb_ni (const struct sBSP430halISRVoidChainNode * cb,
+              void * context)
 {
-  struct sBSP430timerAlarm * malarmp = (struct sBSP430timerAlarm *)(-offsetof(struct sBSP430timerAlarm, overflow_cb) + (unsigned char *)cb);
+  sBSP430timerAlarm * malarmp = (sBSP430timerAlarm *)(-offsetof(sBSP430timerAlarm, overflow_cb) + (unsigned char *)cb);
 
   if (malarmp->flags & BSP430_TIMER_ALARM_FLAG_SET) {
     alarmConfigureInterrupts_ni(malarmp);
@@ -455,11 +455,11 @@ alarmOFcb_ni (const struct sBSP430halISRVoidChainNode *cb,
  * responsible for clearing the alarm and invoking the user-provided
  * callback. */
 static int
-alarmCCcb_ni (const struct sBSP430halISRIndexedChainNode *cb,
-              void *context,
+alarmCCcb_ni (const struct sBSP430halISRIndexedChainNode * cb,
+              void * context,
               int idx)
 {
-  struct sBSP430timerAlarm * malarmp = (struct sBSP430timerAlarm *)(-offsetof(struct sBSP430timerAlarm, cc_cb) + (unsigned char *)cb);
+  sBSP430timerAlarm * malarmp = (sBSP430timerAlarm *)(-offsetof(sBSP430timerAlarm, cc_cb) + (unsigned char *)cb);
   int rv = 0;
 
   if (! (malarmp->flags & BSP430_TIMER_ALARM_FLAG_SET)) {
@@ -476,7 +476,7 @@ alarmCCcb_ni (const struct sBSP430halISRIndexedChainNode *cb,
 }
 
 hBSP430timerAlarm
-hBSP430timerAlarmInitialize (struct sBSP430timerAlarm * alarm,
+hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
                              tBSP430periphHandle periph,
                              int ccidx,
                              iBSP430timerAlarmCallback_ni callback)
@@ -514,7 +514,7 @@ int
 iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
                                 int enablep)
 {
-  struct sBSP430timerAlarm * malarm = (struct sBSP430timerAlarm *)alarm;
+  sBSP430timerAlarm * malarm = (sBSP430timerAlarm *)alarm;
 
   if (NULL == alarm) {
     return -1;
@@ -556,7 +556,7 @@ timerAlarmSet_ni (hBSP430timerAlarm alarm,
                   unsigned long setting_tck,
                   int force)
 {
-  struct sBSP430timerAlarm * malarmp = (struct sBSP430timerAlarm *)alarm;
+  sBSP430timerAlarm * malarmp = (sBSP430timerAlarm *)alarm;
   int rv = 0;
   unsigned long now_tck;
   unsigned long delay_tck;
@@ -618,7 +618,7 @@ iBSP430timerAlarmSetForced_ni (hBSP430timerAlarm alarm,
 int
 iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm)
 {
-  struct sBSP430timerAlarm * malarm = (struct sBSP430timerAlarm *)alarm;
+  sBSP430timerAlarm * malarm = (sBSP430timerAlarm *)alarm;
   if (NULL == alarm) {
     return -1;
   }

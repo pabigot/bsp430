@@ -87,13 +87,16 @@ type:  @c i is used for @c int, @c ul for <c>unsigned long</c>, @c v for @c
 void, and @c h for a @HAL handle.  The letter @c x is used as a prefix for
 more complex types, such as <c>const char *</c>.
 
-@li Type names (tags and typedefs) are intercapped.  @c struct, @c union,
-and @c enum types have typedef aliases that use the tag as the type name.
-An initial letter distinguishes the "type" of type: @c s is a @c struct, @c
-u is a @c union, @c e is an @c enum.  @c h indicates a handle for (pointer
-to) a @HAL structure type; for example #hBSP430halSERIAL is a typedef for a
-pointer to #sBSP430halSERIAL.  @c t is used for any typedef for a normal
-type, such as #tBSP430periphHandle.
+@li Type names (tags and typedefs) are intercapped.  An initial letter
+distinguishes the "type" of type: @c s is a @c struct, @c u is a @c union,
+@c e is an @c enum.  @c h indicates a handle for (pointer to) a @HAL
+structure type; for example #hBSP430halSERIAL is a typedef for a pointer to
+#sBSP430halSERIAL.  @c t is used for any typedef for a normal type, such as
+#tBSP430periphHandle.
+
+@li Where user code may define or reference instances of a BSP430 @c struct,
+@c union, and @c enum type directly (i.e. not through a handle), those types
+should have typedef aliases that use the tag as the type name.
 
 @li Enumeration values are intercapped and begin with @c e.
 

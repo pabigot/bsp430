@@ -66,7 +66,7 @@ unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
 struct sDelayAlarm {
   /** The underlying alarm infrastructure.  First in the structure so
    * we can access the delay-specific metadata from the handler. */
-  struct sBSP430timerAlarm alarm;
+  sBSP430timerAlarm alarm;
 
   /** Other information related to delay management */
   volatile unsigned int flags;

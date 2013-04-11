@@ -1342,7 +1342,7 @@ typedef int (* iBSP430timerAlarmCallback_ni) (hBSP430timerAlarm alarm);
  * sBSP430timerAlarm::setting_tck are likely to be of great interest.
  *
  * @ingroup grp_timer_alarm */
-struct sBSP430timerAlarm {
+typedef struct sBSP430timerAlarm {
   /** The timer registered as owner of this alarm structure. */
   hBSP430halTIMER timer;
 
@@ -1398,7 +1398,7 @@ struct sBSP430timerAlarm {
    * be manipulated by user code. should not be manipulated by user
    * code. */
   sBSP430halISRIndexedChainNode cc_cb;
-};
+} sBSP430timerAlarm;
 
 /** Initialize an alarm structure.
  *
@@ -1435,7 +1435,7 @@ struct sBSP430timerAlarm {
  * be identified as a timer with a HAL supporting an alarm.
  *
  * @ingroup grp_timer_alarm */
-hBSP430timerAlarm hBSP430timerAlarmInitialize (struct sBSP430timerAlarm * alarm,
+hBSP430timerAlarm hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
                                                tBSP430periphHandle periph,
                                                int ccidx,
                                                iBSP430timerAlarmCallback_ni callback);
