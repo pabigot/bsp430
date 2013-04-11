@@ -70,7 +70,7 @@
  * configuration. */
 static BSP430_CORE_INLINE
 int
-peripheralConfigFlag (unsigned int ctl0)
+peripheralConfigFlag (unsigned char ctl0)
 {
   if (0 == (ctl0 & UCSYNC)) {
     return BSP430_PERIPHCFG_SERIAL_UART;

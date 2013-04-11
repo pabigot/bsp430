@@ -82,12 +82,12 @@
  * configuration. */
 static BSP430_CORE_INLINE
 int
-peripheralConfigFlag (unsigned int ctlw0)
+peripheralConfigFlag (unsigned char ctl0)
 {
-  if (0 == (ctlw0 & UCSYNC)) {
+  if (0 == (ctl0 & UCSYNC)) {
     return BSP430_PERIPHCFG_SERIAL_UART;
   }
-  switch (ctlw0 & (UCMODE1 | UCMODE0)) {
+  switch (ctl0 & (UCMODE1 | UCMODE0)) {
     case 0:
       return BSP430_PERIPHCFG_SERIAL_SPI3;
     case UCMODE0:
@@ -241,7 +241,7 @@ iBSP430usci5SetHold_ni (hBSP430halSERIAL hal,
                         int holdp)
 {
   int rc;
-  int periph_config = peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctlw0);
+  int periph_config = peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctl0);
 
   SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   if (holdp) {
@@ -268,7 +268,7 @@ iBSP430usci5Close (hBSP430halSERIAL hal)
   SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));
   rc = iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)),
-                                                 peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctlw0),
+                                                 peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctl0),
                                                  0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
