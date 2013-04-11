@@ -65,7 +65,7 @@
 
 /** @def configBSP430_UNITTEST
  *
- * Define to a true value to enable the uni ttest infrastructure.  In
+ * Define to a true value to enable the unit test infrastructure.  In
  * addition, the <bsp430/utility/unittest.h> header must be included,
  * and the @c utility/unittest module linked in.
  *
