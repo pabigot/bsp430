@@ -247,6 +247,11 @@ MODULES_CONSOLE = $(MODULES_SERIAL) utility/console
 # Makefile.common; otherwise use the shared implementation.
 MODULES_EUI64 ?= utility/eui64
 
+# MODULES_M25P: Support for platform M25P serial flash memory.  Only defined
+# on platforms that have such a chip wired in and supported using
+# #configBSP430_PLATFORM_M25P.
+MODULES_M25P ?=
+
 # MODULES_PLATFORM: The platform-specific platform module, together with the
 # clock and LED modules.  The combination is non-orthogonal, but convenient.
 MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED)

@@ -639,6 +639,21 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #endif /* BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE */
 #endif /* configBSP430_PLATFORM_BUTTON0 */
 
+/* If configBSP430_PLATFORM_M25P was requested, then mark the feature
+ * as available or not based on whether the platform provided a
+ * peripheral handle to use to access the device. */
+#if configBSP430_PLATFORM_M25P - 0
+#ifdef BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE
+#define BSP430_PLATFORM_M25P 1
+#else /* BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE */
+#define BSP430_PLATFORM_M25P 0
+#endif /* BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE */
+#endif /* configBSP430_PLATFORM_M25P */
+
+/* Set other M25P defaults */
+#if (BSP430_PLATFORM_M25P - 0)
+#endif /* BSP430_PLATFORM_M25P */
+
 /** @def BSP430_PLATFORM_SPIN_FOR_JUMPER
  *
  * Defined to indicate that the application or infrastructure supports

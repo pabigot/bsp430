@@ -12,10 +12,7 @@
 #define configBSP430_UPTIME 1
 
 /* Request the SPI flash */
-#define configBSP430_PLATFORM_TRXEB_FLASH 1
-
-/* SPI for this device expects zero during reads? */
-#define BSP430_SERIAL_SPI_READ_TX_BYTE(i_) 0
+#define configBSP430_PLATFORM_M25P 1
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

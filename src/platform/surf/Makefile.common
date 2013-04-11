@@ -9,3 +9,6 @@ MODULES_PLATFORM_SERIAL=periph/usci5
 # The SuRF platform.c module provides a custom EUI-64 derived from the
 # DS1825 serial number and the OSIAN (People Power Co) OUI.
 MODULES_EUI64 ?= utility/onewire periph/port
+
+# The SuRF module has an M25P10A serial flash
+MODULES_M25P=$(MODULES_PLATFORM_SERIAL) periph/port utility/m25p

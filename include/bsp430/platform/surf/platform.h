@@ -136,28 +136,37 @@
  * RSTn are hard-wired.  Defining this constant to a true value
  * enables the HPL interface to port 1, SPI on USCI_B0, and provides
  * constants for applications to use the flash. */
-#ifndef configBSP430_PLATFORM_SURF_FLASH
-#define configBSP430_PLATFORM_SURF_FLASH 0
-#endif /* configBSP430_PLATFORM_SURF_FLASH */
+#ifndef configBSP430_PLATFORM_M25P
+#define configBSP430_PLATFORM_M25P 0
+#endif /* configBSP430_PLATFORM_M25P */
 
-#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_SURF_FLASH - 0)
+#if (configBSP430_PLATFORM_M25P - 0)
 
 /** BSP430 SPI peripheral handle for flash.
- * @dependency #configBSP430_PLATFORM_SURF_FLASH
+ * @dependency #configBSP430_PLATFORM_M25P
  */
-#define BSP430_PLATFORM_SURF_FLASH_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0
+#define BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI5_B0
 
 /** BSP430 peripheral handle for port on which SPI flash chip-select (inverted) is placed.
- * @dependency #configBSP430_PLATFORM_SURF_FLASH
+ * @dependency #configBSP430_PLATFORM_M25P
  */
-#define BSP430_PLATFORM_SURF_FLASH_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
+#define BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT1
 
-/** Port bit on #BSP430_PLATFORM_SURF_FLASH_CSn_PORT_PERIPH_HANDLE for SPI flash CSn
- * @dependency #configBSP430_PLATFORM_SURF_FLASH
+/** Port bit on #BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE for SPI flash CSn
+ * @dependency #configBSP430_PLATFORM_M25P
  */
-#define BSP430_PLATFORM_SURF_FLASH_CSn_PORT_BIT BIT7
+#define BSP430_PLATFORM_M25P_CSn_PORT_BIT BIT7
 
-#endif /* configBSP430_PLATFORM_SURF_FLASH */
+/* M25P10A does not support #BSP430_M25P_CMD_PE or
+ * #BSP430_M25P_CMD_PW, and does not support subsectors. */
+
+/* M25P10A has four 32 kiB sectors */
+#define BSP430_PLATFORM_M25P_SECTOR_SIZE 0x8000L
+
+/* M25P10A has four 32 kiB sectors */
+#define BSP430_PLATFORM_M25P_SECTOR_COUNT 4
+
+#endif /* configBSP430_PLATFORM_M25P */
 
 /** Define to true to provide definitions for the DS1825 one-wire interface.
  *

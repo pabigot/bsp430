@@ -41,6 +41,11 @@
  * declarations for module functions that encode and transmit
  * commands.
  *
+ * The module also supports #configBSP430_PLATFORM_M25P and
+ * #BSP430_PLATFORM_M25P to allow applications to request access to a
+ * platform-supplied flash memory chip without encoding platform
+ * dependencies in the source code.
+ *
  * As with other parts of BSP430, this is a low-level interface that
  * does not provide convenience wrappers for functions like erasing a
  * sector or chip, or reading and writing the device contents.  It
@@ -50,7 +55,11 @@
  * interrupt-driven SPI transactions, or DMA, based on the
  * application's needs.
  *
- * @ref ex_platform_trxeb_flash shows how to use this interface.
+ * @note The commands constants defined in this module (e.g.,
+ * #BSP430_M25P_CMD_PW) cover all known M25P implementations.  Not all
+ * commands are supported on all devices.
+ *
+ * @ref ex_utility_m25p shows how to use this interface.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -62,6 +71,116 @@
 #include <bsp430/core.h>
 #include <bsp430/serial.h>
 #include <bsp430/periph/port.h>
+
+/** Define to request that platform enable its M25P flash.
+ *
+ * Some platforms have an external serial flash memory suitable for
+ * control by the <bsp430/utility/m25p.h> interface.  Defining this
+ * macro in your <bsp430_config.h> will register a request for that
+ * device. */
+/** Define to a true value to enable any platform-provided M25P serial
+ * flash memory.
+ *
+ * @cppflag
+ * @affects #BSP430_PLATFORM_M25P
+ * @defaulted
+ */
+#ifndef configBSP430_PLATFORM_M25P
+#define configBSP430_PLATFORM_M25P 0
+#endif /* configBSP430_PLATFORM_M25P */
+
+/** Indicate that an M25P serial flash device is available on the
+ * platform.  This is set by the platform-specific header when
+ * #configBSP430_PLATFORM_M25P is true and the platform supports an
+ * M25P device.
+ *
+ * See @ref ex_utility_m25p for how to use the following identifiers
+ * to configure and use the platform device:
+ *
+ * @li #BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE
+ * @li #BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE and #BSP430_PLATFORM_M25P_CSn_PORT_BIT
+ * @li #BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE and #BSP430_PLATFORM_M25P_RSTn_PORT_BIT
+ * @li #BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE and #BSP430_PLATFORM_M25P_PWR_PORT_BIT
+ * @li Device size: #BSP430_PLATFORM_M25P_SUBSECTOR_SIZE, #BSP430_PLATFORM_M25P_SECTOR_SIZE, #BSP430_PLATFORM_M25P_SECTOR_COUNT
+ * @li Device capability: #BSP430_PLATFORM_M25P_SUPPORTS_PE, #BSP430_PLATFORM_M25P_SUPPORTS_PW,
+ *
+ * @cppflag
+ * @dependency #configBSP430_PLATFORM_M25P
+ * @defaulted */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_PLATFORM_M25P include <bsp430/platform.h>
+#endif /* BSP430_DOXYGEN */
+
+#if defined(BSP430_DOXYGEN)
+
+/** Peripheral handle for SPI access to platform-provided M25P serial flash
+ * @dependency #BSP430_PLATFORM_M25P */
+#define BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE include <bsp430/platform.h>
+
+/** BSP430 peripheral handle for port on which SPI flash power is placed.
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+
+/** Port bit on #BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE for SPI flash power
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_PWR_PORT_BIT include <bsp430/platform.h>
+
+/** BSP430 peripheral handle for port on which SPI flash power is placed.
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+
+/** Port bit on #BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE for SPI flash power
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_RSTn_PORT_BIT include <bsp430/platform.h>
+
+/** BSP430 peripheral handle for port on which SPI flash chip-select (inverted) is placed.
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+
+/** Port bit on #BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE for SPI flash CSn
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_CSn_PORT_BIT include <bsp430/platform.h>
+
+/** Defined to a true value iff the M25P flash on the platform
+ * supports the #BSP430_M25P_CMD_PE PAGE ERASE command.  If false or
+ * absent, assume the device may be erased only by using
+ * #BSP430_M25P_CMD_SE or #BSP430_M25P_CMD_BE. */
+#define BSP430_PLATFORM_M25P_SUPPORTS_PE include <bsp430/platform.h>
+
+/** Defined to a true value iff the M25P flash on the platform
+ * supports the #BSP430_M25P_CMD_PW PAGE WRITE command.  If false or
+ * absent, assume the device may be written only by following a @link
+ * BSP430_M25P_CMD_PE page erase@endlink, @link BSP430_M25P_CMD_SSE
+ * subsector erase@endlink, @link BSP430_M25P_CMD_SE sector
+ * erase@endlink, or @link BSP430_M25P_CMD_BE bulk erase@endlink with
+ * #BSP430_M25P_CMD_PP. */
+#define BSP430_PLATFORM_M25P_SUPPORTS_PW include <bsp430/platform.h>
+
+/** The number of bytes in each sector of the platform M25P device.
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_SECTOR_SIZE include <bsp430/platform.h>
+
+/** The number of bytes in each subsector of the platform M25P device.
+ *
+ * Undefined if the device does not support subsector operations.
+ *
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_SUBSECTOR_SIZE include <bsp430/platform.h>
+
+/** The number of sectors in the platform M25P device.
+ * @dependency #BSP430_PLATFORM_M25P
+ */
+#define BSP430_PLATFORM_M25P_SECTOR_COUNT include <bsp430/platform.h>
+
+#endif /* BSP430_DOXYGEN */
 
 /** Information required to access an M25P-based serial SPI flash
  * device.  Boards that allow control of power to the device must do
@@ -92,7 +211,7 @@ typedef sBSP430m25p * hBSP430m25p;
 #define BSP430_M25P_CMD_WREN 0x06
 /** WRITE DISABLE command */
 #define BSP430_M25P_CMD_WRDI 0x04
-/** READ IDENTIFICATION command */
+/** READ IDENTIFICATION command. */
 #define BSP430_M25P_CMD_RDID 0x9f
 /** READ STATUS REGISTER command */
 #define BSP430_M25P_CMD_RDSR 0x05
@@ -108,11 +227,13 @@ typedef sBSP430m25p * hBSP430m25p;
 #define BSP430_M25P_CMD_FAST_READ 0x0b
 /** PAGE WRITE command */
 #define BSP430_M25P_CMD_PW 0x0a
-/** PAGE PROGRAM command */
+/** PAGE PROGRAM command.  Not available on all devices.  See #BSP430_PLATFORM_M25P_SUPPORTS_PE.  */
 #define BSP430_M25P_CMD_PP 0x02
-/** PAGE ERASE command */
+/** PAGE ERASE command.  Not available on all devices.  See #BSP430_PLATFORM_M25P_SUPPORTS_PE. */
 #define BSP430_M25P_CMD_PE 0xdb
-/** SUBSECTOR ERASE command */
+/** SUBSECTOR ERASE command.  Not available on all devices.
+ * #BSP430_PLATFORM_M25P_SUBSECTOR_SIZE may indicate that support is
+ * available. */
 #define BSP430_M25P_CMD_SSE 0x20
 /** SECTOR ERASE command */
 #define BSP430_M25P_CMD_SE 0xd8
@@ -122,6 +243,8 @@ typedef sBSP430m25p * hBSP430m25p;
 #define BSP430_M25P_CMD_DP 0xb9
 /** RELEASE from DEEP POWER-DOWN command */
 #define BSP430_M25P_CMD_RELDP 0xab
+/** READ ELECTRONIC SIGNATURE command.  Overloads #BSP430_M25P_CMD_RELDP on some devices. */
+#define BSP430_M25P_CMD_RES 0xab
 
 /** Write-in-progress bit within M25P status register.  Bit is read-only. */
 #define BSP430_M25P_SR_WIP 0x01
@@ -139,12 +262,16 @@ typedef sBSP430m25p * hBSP430m25p;
 
 /** Set the RESET# signal to place the device into reset */
 #define BSP430_M25P_RESET_SET(_dev) do {                \
-    (_dev)->rstn_port->out &= ~(_dev)->rstn_bit;        \
+    if (NULL != (_dev)->rstn_port) {                    \
+      (_dev)->rstn_port->out &= ~(_dev)->rstn_bit;      \
+    }                                                   \
   } while (0)
 
 /** Clear the RESET# signal to take the device out of reset */
 #define BSP430_M25P_RESET_CLEAR(_dev) do {      \
-    (_dev)->rstn_port->out |= (_dev)->rstn_bit; \
+    if (NULL != (_dev)->rstn_port) {                    \
+      (_dev)->rstn_port->out |= (_dev)->rstn_bit;       \
+    }                                                   \
   } while (0)
 
 /** Assert the CS# signal in preparation for interacting with the
@@ -177,7 +304,7 @@ typedef sBSP430m25p * hBSP430m25p;
  * @param ctl0_byte as with hBSP430serialOpenSPI()
  *
  * @param ctl1_byte as with hBSP430serialOpenSPI()
- * 
+ *
  * @param prescaler as with hBSP430serialOpenSPI()
  *
  * @return @p dev if the initialization was successful, or a null
@@ -217,7 +344,7 @@ int iBSP430m25pStatus (hBSP430m25p dev)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
-  
+
 /** Strobe an M25P device command.
  *
  * The CS# signal is asserted, the @p cmd transmitted, and CS# is
@@ -270,7 +397,7 @@ int iBSP430m25pStrobeAddressCommand_ni (hBSP430m25p dev,
  *
  * To use programmed I/O to complete a read or write operation, see
  * iBSP430m25pCompleteTxRx_ni().
- * 
+ *
  * @note CS# is left asserted after a successful call to this
  * function.
  *
@@ -322,13 +449,13 @@ int iBSP430m25pInitiateAddressCommand_ni (hBSP430m25p dev,
  * @param dev the M25P device handle
  *
  * @param tx_data as with iBSP430spiTxRx_ni()
- * 
+ *
  * @param tx_len as with iBSP430spiTxRx_ni()
- * 
+ *
  * @param rx_len as with iBSP430spiTxRx_ni()
- * 
+ *
  * @param rx_data as with iBSP430spiTxRx_ni()
- * 
+ *
  * @return as with iBSP430spiTxRx_ni() */
 int iBSP430m25pCompleteTxRx_ni (hBSP430m25p dev,
                                 const uint8_t * tx_data,

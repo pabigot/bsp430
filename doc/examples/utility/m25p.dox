@@ -29,19 +29,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** \page ex_platform_trxeb_flash M25PE20 SPI flash memory on a TrxEB
+/** \page ex_utility_m25p M25PE20 SPI flash memory on TrxEB or SuRF
 
 This example shows how to communicate with a Micron serial flash memory
-using the <bsp430/utility/m25p.h> interface.
+using the <bsp430/utility/m25p.h> interface on platforms that provide such a
+device.
 
-\section ex_platform_trxeb_flash_main main.c
-\include platform/trxeb/flash/main.c
+\section ex_utility_m25p_main main.c
+\include utility/m25p/main.c
 
-\section ex_platform_trxeb_flash_config bsp430_config.h
-\include platform/trxeb/flash/bsp430_config.h
+\section ex_utility_m25p_config bsp430_config.h
+\include utility/m25p/bsp430_config.h
 
-\section ex_platform_trxeb_flash_make Makefile
-\include platform/trxeb/flash/Makefile
+\section ex_utility_m25p_make Makefile
+\include utility/m25p/Makefile
 
-\example platform/trxeb/flash/main.c
+\example utility/m25p/main.c
 */

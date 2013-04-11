@@ -1,8 +1,8 @@
-PLATFORM = surf
-TEST_PLATFORMS=surf
+PLATFORM = trxeb
+TEST_PLATFORMS=trxeb
 MODULES=$(MODULES_PLATFORM)
 MODULES += $(MODULES_UPTIME)
 MODULES += $(MODULES_CONSOLE)
-MODULES += periph/port
+MODULES += $(MODULES_M25P)
 SRC=main.c
 include $(BSP430_ROOT)/examples/Makefile.common

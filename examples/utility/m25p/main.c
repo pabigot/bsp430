@@ -1,7 +1,7 @@
 /** This file is in the public domain.
  *
  * This program demonstrates use of the M25PE20 SPI serial flash on
- * the TrxEB board.
+ * the TrxEB board, or the M25P10A SPI serial flash on the SuRF board.
  *
  * @homepage http://github.com/pabigot/bsp430
  *
@@ -127,7 +127,6 @@ void main ()
   int rc;
   sBSP430m25p m25p_data;
   hBSP430m25p m25p;
-  volatile sBSP430hplPORT * pwr_hpl;
   unsigned long addr;
   unsigned long t0;
   unsigned long t1;
@@ -137,22 +136,36 @@ void main ()
 
   cprintf("\nBuild " __DATE__ " " __TIME__ "\n");
   cprintf("SPI is %s: %s\n",
-          xBSP430serialName(BSP430_PLATFORM_TRXEB_FLASH_SPI_PERIPH_HANDLE),
-          xBSP430platformPeripheralHelp(BSP430_PLATFORM_TRXEB_FLASH_SPI_PERIPH_HANDLE, 0));
+          xBSP430serialName(BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE),
+          xBSP430platformPeripheralHelp(BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE, 0));
 
-  cprintf("PWR at %s.%u ; RSTn at %s.%u ; CSn at %s.%u\n",
-          xBSP430portName(BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_PERIPH_HANDLE),
-          iBSP430portBitPosition(BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_BIT),
-          xBSP430portName(BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_PERIPH_HANDLE),
-          iBSP430portBitPosition(BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_BIT),
-          xBSP430portName(BSP430_PLATFORM_TRXEB_FLASH_CSn_PORT_PERIPH_HANDLE),
-          iBSP430portBitPosition(BSP430_PLATFORM_TRXEB_FLASH_CSn_PORT_BIT));
+#ifdef BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE
+  cprintf("PWR at %s.%u\n",
+          xBSP430portName(BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE),
+          iBSP430portBitPosition(BSP430_PLATFORM_M25P_PWR_PORT_BIT));
+#else /* BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE */
+  cprintf("PWR is hard-wired\n");
+#endif /* BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE */
 
-  m25p_data.spi = hBSP430serialLookup(BSP430_PLATFORM_TRXEB_FLASH_SPI_PERIPH_HANDLE);
-  m25p_data.csn_port = xBSP430hplLookupPORT(BSP430_PLATFORM_TRXEB_FLASH_CSn_PORT_PERIPH_HANDLE);
-  m25p_data.csn_bit = BSP430_PLATFORM_TRXEB_FLASH_CSn_PORT_BIT;
-  m25p_data.rstn_port = xBSP430hplLookupPORT(BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_PERIPH_HANDLE);
-  m25p_data.rstn_bit = BSP430_PLATFORM_TRXEB_FLASH_RSTn_PORT_BIT;
+#ifdef BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE
+  cprintf("RSTn at %s.%u\n",
+          xBSP430portName(BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE),
+          iBSP430portBitPosition(BSP430_PLATFORM_M25P_RSTn_PORT_BIT));
+#else /* BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE */
+  cprintf("RSTn is hard-wired\n");
+#endif /* BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE */
+  cprintf("CSn at %s.%u\n",
+          xBSP430portName(BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE),
+          iBSP430portBitPosition(BSP430_PLATFORM_M25P_CSn_PORT_BIT));
+
+  memset(&m25p_data, 0, sizeof(m25p_data));
+  m25p_data.spi = hBSP430serialLookup(BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE);
+  m25p_data.csn_port = xBSP430hplLookupPORT(BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE);
+  m25p_data.csn_bit = BSP430_PLATFORM_M25P_CSn_PORT_BIT;
+#ifdef BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE
+  m25p_data.rstn_port = xBSP430hplLookupPORT(BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE);
+  m25p_data.rstn_bit = BSP430_PLATFORM_M25P_RSTn_PORT_BIT;
+#endif /* BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE */
 
   m25p = hBSP430m25pInitialize(&m25p_data,
                                BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST),
@@ -162,12 +175,17 @@ void main ()
     return;
   }
 
-  /* Turn on power, then wait 10 ms for chip to stabilize before releasing RSTn. */
-  pwr_hpl = xBSP430hplLookupPORT(BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_PERIPH_HANDLE);
-  pwr_hpl->out &= ~BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_BIT;
-  pwr_hpl->dir |= BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_BIT;
-  pwr_hpl->out |= BSP430_PLATFORM_TRXEB_FLASH_PWR_PORT_BIT;
-  BSP430_CORE_DELAY_CYCLES(10 * (BSP430_CLOCK_NOMINAL_MCLK_HZ / 1000));
+#ifdef BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE
+  {
+    volatile sBSP430hplPORT * pwr_hpl;
+    /* Turn on power, then wait 10 ms for chip to stabilize before releasing RSTn. */
+    pwr_hpl = xBSP430hplLookupPORT(BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE);
+    pwr_hpl->out &= ~BSP430_PLATFORM_M25P_PWR_PORT_BIT;
+    pwr_hpl->dir |= BSP430_PLATFORM_M25P_PWR_PORT_BIT;
+    pwr_hpl->out |= BSP430_PLATFORM_M25P_PWR_PORT_BIT;
+    BSP430_CORE_DELAY_CYCLES(10 * (BSP430_CLOCK_NOMINAL_MCLK_HZ / 1000));
+  }
+#endif /* BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE */
   BSP430_M25P_RESET_CLEAR(m25p);
 
   cprintf("Status register %d\n", iBSP430m25pStatus_ni(m25p));
@@ -176,22 +194,28 @@ void main ()
   rc = iBSP430m25pStrobeCommand_ni(m25p, BSP430_M25P_CMD_WRDI);
   cprintf("WRDI got %d, status register %d\n", rc, iBSP430m25pStatus_ni(m25p));
 
+  rc = iBSP430m25pInitiateCommand_ni(m25p, BSP430_M25P_CMD_RDID);
+  if (0 == rc) {
+    rc = iBSP430m25pCompleteTxRx_ni(m25p, NULL, 0, 20, buffer);
+  }
+
   BSP430_CORE_ENABLE_INTERRUPT();
-
-
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    rc = iBSP430m25pInitiateCommand_ni(m25p, BSP430_M25P_CMD_RDID);
-    if (0 == rc) {
-      rc = iBSP430m25pCompleteTxRx_ni(m25p, NULL, 0, 20, buffer);
-    }
-  } while (0);
-  BSP430_CORE_ENABLE_INTERRUPT();
-
   cprintf("READ_IDENTIFICATION got %d\n", rc);
   if (0 <= rc) {
     dumpMemory(buffer, rc, 0);
   }
+  cprintf("Config identified %u sectors of %lu bytes each: %lu bytes total\n",
+          BSP430_PLATFORM_M25P_SECTOR_COUNT,
+          (unsigned long)BSP430_PLATFORM_M25P_SECTOR_SIZE,
+          BSP430_PLATFORM_M25P_SECTOR_COUNT * (unsigned long)BSP430_PLATFORM_M25P_SECTOR_SIZE);
+#if (BSP430_PLATFORM_M25P_SUBSECTOR_SIZE - 0)
+  cprintf("Config supports access as %u sub-sectors of %u bytes each\n",
+          (unsigned int)(BSP430_PLATFORM_M25P_SECTOR_COUNT * (BSP430_PLATFORM_M25P_SECTOR_SIZE / BSP430_PLATFORM_M25P_SUBSECTOR_SIZE)),
+          (unsigned int)BSP430_PLATFORM_M25P_SUBSECTOR_SIZE);
+#else /* BSP430_PLATFORM_M25P_SUBSECTOR_SIZE */
+  cprintf("Config indicates device is not sub-sector addressable\n");
+#endif /* BSP430_PLATFORM_M25P_SUBSECTOR_SIZE */
+  cprintf("RDID identified %lu bytes total capacity\n", 0x1UL << buffer[2]);
 
   addr = 0;
 
@@ -205,8 +229,13 @@ void main ()
     }
   }
 
+#if (BSP430_PLATFORM_M25P_SUPPORTS_PE - 0)
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PE, addr, NULL, 0);
   cprintf("PAGE_ERASE got %d\n", rc);
+#else /* BSP430_PLATFORM_M25P_SUPPORTS_PE */
+  rc = writeToAddress(m25p, BSP430_M25P_CMD_SE, addr, NULL, 0);
+  cprintf("SECTOR_ERASE got %d\n", rc);
+#endif /* BSP430_PLATFORM_M25P_SUPPORTS_PE */
   rc = readFromAddress(m25p, addr, sizeof(buffer));
   if (0 < rc) {
     dumpMemory(buffer, rc, addr);
@@ -220,7 +249,7 @@ void main ()
   }
 
   /* PAGE PROGRAM is the one that only clears 1s to 0s so needs a
-   * prior page erase */
+   * prior page or sector erase */
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PP, addr, flashContents + 4, 4);
   cprintf("PAGE_PROGRAM to %lx returned %d\n", addr, rc);
   rc = readFromAddress(m25p, 0, sizeof(flashContents));
@@ -233,8 +262,13 @@ void main ()
 
   /* PAGE_WRITE is the one that does not need a prior erase cycle */
   addr = 8;
+#if (BSP430_PLATFORM_M25P_SUPPORTS_PW - 0)
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PW, addr, flashContents + 4, 4);
   cprintf("PAGE_WRITE to %lx returned %d\n", addr, rc);
+#else
+  rc = writeToAddress(m25p, BSP430_M25P_CMD_PP, addr, flashContents + 4, 4);
+  cprintf("overwrite PAGE_PROGRAM to unerased %lx returned %d\n", addr, rc);
+#endif
   rc = readFromAddress(m25p, 0, sizeof(flashContents));
   dumpMemory(buffer, rc, 0);
   /*
@@ -253,7 +287,7 @@ void main ()
     }
     if (0 == rc) {
       int sr;
-      
+
       t0 = ulBSP430uptime_ni();
       do {
         sr = iBSP430m25pStatus_ni(m25p);
@@ -270,7 +304,7 @@ void main ()
   rc = readFromAddress(m25p, 0, sizeof(flashContents));
   dumpMemory(buffer, rc, 0);
 
-  rc = writeToAddress(m25p, BSP430_M25P_CMD_PW, 0, flashContents, sizeof(flashContents));
+  rc = writeToAddress(m25p, BSP430_M25P_CMD_PP, 0, flashContents, sizeof(flashContents));
   cprintf("Restore got %d\n", rc);
 
   addr = 0;

@@ -7,3 +7,6 @@ MODULES_LED=platform/$(PLATFORM)/platform
 # UCS needs CCACLK for DCO configuration
 MODULES_CLOCK=periph/ucs periph/timer
 MODULES_PLATFORM_SERIAL=periph/usci5
+
+# The TRxEB board has an M25P20E serial flash
+MODULES_M25P=$(MODULES_PLATFORM_SERIAL) periph/port utility/m25p

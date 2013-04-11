@@ -34,6 +34,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <bsp430/utility/console.h>
+
 hBSP430m25p
 hBSP430m25pInitialize (hBSP430m25p dev,
                        unsigned char ctl0_byte,
@@ -77,7 +79,7 @@ iBSP430m25pStrobeCommand_ni (hBSP430m25p dev,
                              uint8_t cmd)
 {
   int rc = -1;
-  
+
   BSP430_M25P_CS_ASSERT(dev);
   rc = iBSP430spiTxRx_ni(dev->spi, &cmd, sizeof(cmd), 0, NULL);
   if (sizeof(cmd) == rc) {
@@ -103,7 +105,7 @@ iBSP430m25pInitiateCommand_ni (hBSP430m25p dev,
                                uint8_t cmd)
 {
   int rc;
-  
+
   BSP430_M25P_CS_ASSERT(dev);
   rc = iBSP430spiTxRx_ni(dev->spi, &cmd, sizeof(cmd), 0, NULL);
   if (sizeof(cmd) == rc) {

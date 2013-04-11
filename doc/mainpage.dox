@@ -112,9 +112,14 @@ detection of reboot cause and control of ultra-low-power LPMx.5 modes;
 \li Pre-configured support for the @link bsp430/utility/rfem.h RF Evaluation
 Module@endlink headers on many experimenter boards;
 
+\li Support for @link bsp430/utility/m25p.h M25P-compatible SPI flash
+memory@endlink modules common to wireless sensor nodes;
+
 \li Utilities for a bi-directional @link bsp430/utility/console.h serial
 console@endlink with a @link bsp430/utility/cli.h command line
-interface@endlink that supports editing input; @link bsp430/utility/led.h
+interface@endlink that supports editing input; 
+
+\li Miscellaneous utilities including @link bsp430/utility/led.h
 LEDs@endlink; @link bsp430/utility/uptime.h ACLK-driven system timer@endlink
 and @ref grp_timer_alarm; and demonstration @link bsp430/utility/onewire.h
 1-Wire bus@endlink
@@ -173,8 +178,8 @@ experimenter boards by displaying information about a connected ChipCon
 radio.  The same demonstration works on the #BSP430_PLATFORM_EM430 and
 #BSP430_PLATFORM_SURF platforms.
 
-\li \ref ex_platform_trxeb_flash demonstrates use of a serial flash device
-through the <bsp430/utility/m25p.h> interface.
+\li \ref ex_utility m25p demonstrates use of a serial flash device through
+the <bsp430/utility/m25p.h> interface.
 
 \li \ref ex_platform_exp430f5529_fatfs demonstrates use of <a
 href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430

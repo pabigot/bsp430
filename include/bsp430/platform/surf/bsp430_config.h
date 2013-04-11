@@ -86,7 +86,7 @@
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID */
 #endif /* configBSP430_TIMER_CCACLK */
 
-#if (configBSP430_PLATFORM_SURF_FLASH - 0)
+#if (configBSP430_PLATFORM_M25P - 0)
 /* Flash is on USCI_B0 */
 #define configBSP430_SERIAL_ENABLE_SPI 1
 #define configBSP430_HAL_USCI5_B0 1
@@ -94,7 +94,7 @@
 #ifndef configBSP430_HPL_PORT1
 #define configBSP430_HPL_PORT1 1
 #endif /* configBSP430_HPL_PORT1 */
-#endif /* configBSP430_PLATFORM_SURF_FLASH */
+#endif /* configBSP430_PLATFORM_M25P */
 
 /* Use platform-provided EUI64 unless told not to */
 #ifndef configBSP430_EUI64_USE_PLATFORM
