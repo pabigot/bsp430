@@ -83,8 +83,8 @@ obtained by cloning the git repository:
 git clone git://github.com/pabigot/bsp430.git
 @endcode
 
-or by downloading a <a href="http://github.com/pabigot/bsp430/tarball/master">tar
-file</a> of the complete source.
+or by downloading a <a href="http://github.com/pabigot/bsp430/tarball/stable">tar
+file</a> of the latest stable source release.
 
 Please file support requests and bug reports on the <a
 href="http://github.com/pabigot/bsp430/issues">issue tracker</a>.
