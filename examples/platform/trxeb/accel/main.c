@@ -258,8 +258,10 @@ void main ()
   }
   spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE),
                               BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMSB | UCMST),
-                              0, 0); // UCSSEL_2, divisor);
-  cprintf("SPI at %p is %s divisor %u\n", spi_, xBSP430serialName(BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE), divisor);
+                              UCSSEL__SMCLK, divisor);
+  cprintf("SPI at %p is %s divisor %u\n", spi_,
+          xBSP430serialName(BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE),
+          BSP430_SERIAL_HAL_GET_HPL_USCI5(spi_)->brw);
 
   /* Deassert chip select for accelerometer */
   hplCSn_ = xBSP430hplLookupPORT(BSP430_PLATFORM_TRXEB_ACCEL_CSn_PORT_PERIPH_HANDLE);
