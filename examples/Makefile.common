@@ -370,7 +370,7 @@ install: $(AOUT)
 endif # WITH_MSPDEBUG
 
 # Include dependencies unless we're cleaning
-ifeq ($(filter realclean clean emit-test-platforms, $(MAKECMDGOALS)),$(MAKECMDGOALS))
+ifeq ($(filter-out realclean clean emit-test-platforms, $(MAKECMDGOALS)),$(MAKECMDGOALS))
 -include $(DEP)
 endif # make [real]clean
 
