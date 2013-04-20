@@ -233,7 +233,7 @@
  *
  * The TrxEB has a M25PE20 2 Mib (256 kiB) serial flash from Micron on
  * board.  It receives power through P7.6, and has RESETn on P7.2.
- * Interface to it uses IO_SPI1.  Defining this constant to a true
+ * Interface to it uses IO_SPI0.  Defining this constant to a true
  * value enables the configuration of port 7 as well as provides
  * constants for applications to use the flash. */
 #define configBSP430_PLATFORM_M25P 0
@@ -242,7 +242,7 @@
 #if (configBSP430_PLATFORM_M25P - 0)
 
 /** Peripheral handle for SPI access to serial flash */
-#define BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI1_PERIPH_HANDLE
+#define BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE
 
 /** BSP430 peripheral handle for port on which SPI flash power is placed.
  * @dependency #configBSP430_PLATFORM_M25P
@@ -297,18 +297,6 @@
 #ifndef configBSP430_PLATFORM_TRXEB_IO_SPI0
 /** Enable use of IO_SPI0 peripheral.
  *
- * This peripheral services the accelerometer, and is default enabled
- * when #configBSP430_PLATFORM_TRXEB_ACCEL is enabled.
- *
- * @defaulted
- * @cppflag
- */
-#define configBSP430_PLATFORM_TRXEB_IO_SPI0 (configBSP430_PLATFORM_TRXEB_ACCEL - 0)
-#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */
-
-#ifndef configBSP430_PLATFORM_TRXEB_IO_SPI1
-/** Enable use of IO_SPI1 peripheral.
- *
  * This peripheral services the SPI flash and LCD, and is default
  * enabled when #configBSP430_PLATFORM_M25P or
  * #configBSP430PLATFORM_TRXEB_LCD is enabled.
@@ -316,28 +304,40 @@
  * @defaulted
  * @cppflag
  */
-#define configBSP430_PLATFORM_TRXEB_IO_SPI1 ((configBSP430_PLATFORM_M25P - 0) || (configBSP430_PLATFORM_TRXEB_LCD - 0))
+#define configBSP430_PLATFORM_TRXEB_IO_SPI0 ((configBSP430_PLATFORM_M25P - 0) || (configBSP430_PLATFORM_TRXEB_LCD - 0))
+#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */
+
+#ifndef configBSP430_PLATFORM_TRXEB_IO_SPI1
+/** Enable use of IO_SPI1 peripheral.
+ *
+ * This peripheral services the accelerometer, and is default enabled
+ * when #configBSP430_PLATFORM_TRXEB_ACCEL is enabled.
+ *
+ * @defaulted
+ * @cppflag
+ */
+#define configBSP430_PLATFORM_TRXEB_IO_SPI1 (configBSP430_PLATFORM_TRXEB_ACCEL - 0)
 #endif /* configBSP430_PLATFORM_TRXEB_IO_SPI1 */
 
 #if configBSP430_PLATFORM_TRXEB_ACCEL - 0
 /** Peripheral handle for SPI access to accelerometer */
-#define BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE
+#define BSP430_PLATFORM_TRXEB_ACCEL_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI1_PERIPH_HANDLE
 #endif /* configBSP430_PLATFORM_TRXEB_ACCEL */
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_IO_SPI0 - 0)
 /** BSP430 port peripheral handle for IO_SPI0.
  *
- * IO_SPI0 services the accelerometer.
+ * IO_SPI0 on USCI_B2 services the LCD and the serial flash.
  * @dependency #configBSP430_PLATFORM_TRXEB_IO_SPI0 */
-#define BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE BSP430_PERIPH_USCI5_A2
+#define BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE BSP430_PERIPH_USCI5_B2
 #endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_IO_SPI1 - 0)
 /** BSP430 port peripheral handle for IO_SPI1.
  *
- * IO_SPI1 services the LCD and the serial flash.
+ * IO_SPI1 on USCI_A2 services the accelerometer.
  * @dependency #configBSP430_PLATFORM_TRXEB_IO_SPI1 */
-#define BSP430_PLATFORM_TRXEB_IO_SPI1_PERIPH_HANDLE BSP430_PERIPH_USCI5_B2
+#define BSP430_PLATFORM_TRXEB_IO_SPI1_PERIPH_HANDLE BSP430_PERIPH_USCI5_A2
 #endif /* configBSP430_PLATFORM_TRXEB_IO_SPI1 */
 
 /* Include generic file, in case this is being included directly */

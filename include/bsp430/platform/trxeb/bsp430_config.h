@@ -104,8 +104,8 @@
 #endif /* configBSP430_PLATFORM_TRXEB_ALS */
 
 #if (configBSP430_PLATFORM_TRXEB_ACCEL - 0)
-/* Accelerometer is on IO_SPI0 */
-#define configBSP430_PLATFORM_TRXEB_IO_SPI0 1
+/* Accelerometer is on IO_SPI1 */
+#define configBSP430_PLATFORM_TRXEB_IO_SPI1 1
 /* P6.1 is accelerometer power */
 #ifndef configBSP430_HPL_PORT6
 #define configBSP430_HPL_PORT6 1
@@ -123,8 +123,8 @@
 #endif /* configBSP430_PLATFORM_TRXEB_ACCEL */
 
 #if (configBSP430_PLATFORM_M25P - 0)
-/* Flash is on IO_SPI1 */
-#define configBSP430_PLATFORM_TRXEB_IO_SPI1 1
+/* Flash is on IO_SPI0 */
+#define configBSP430_PLATFORM_TRXEB_IO_SPI0 1
 /* P7.6 is FLASH_PWR */
 #ifndef configBSP430_HPL_PORT7
 #define configBSP430_HPL_PORT7 1
@@ -137,13 +137,13 @@
 
 #if (configBSP430_PLATFORM_TRXEB_IO_SPI0 - 0)
 #define configBSP430_SERIAL_ENABLE_SPI 1
-#define configBSP430_HAL_USCI5_A2 1
-#endif /* configBSP430_RFEM */
+#define configBSP430_HAL_USCI5_B2 1
+#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI0 */
 
 #if (configBSP430_PLATFORM_TRXEB_IO_SPI1 - 0)
 #define configBSP430_SERIAL_ENABLE_SPI 1
-#define configBSP430_HAL_USCI5_B2 1
-#endif /* configBSP430_RFEM */
+#define configBSP430_HAL_USCI5_A2 1
+#endif /* configBSP430_PLATFORM_TRXEB_IO_SPI1 */
 
 /** @endcond */
 
