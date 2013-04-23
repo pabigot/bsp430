@@ -109,7 +109,72 @@
 #define BSP430_RFEM_SPI0CSn_PORT_BIT BIT0
 #endif /* configBSP430_RFEM */
 
+/* Enable U8GLIB if requested */
+#define BSP430_UTILITY_U8GLIB (configBSP430_UTILITY_U8GLIB - 0)
+
 /** @endcond */
+
+#ifndef configBSP430_PLATFORM_EXP430F5438_LCD
+/** Enable HPL support for on-board LCD
+ *
+ * The EXP430F5438 has a Hitachi HD66754 4-level greyscale 138x110
+ * pixel LCD on board, including back-light.  Power is hard-wired,
+ * with backlight PWM on TA0.3 and control through pins on port 9.
+ *
+ * Defining this constant to a true value enables the configuration of
+ * the HPL for port 9 and the SPI interface.
+ *
+ * @see #configBSP430_UTILITY_U8GLIB
+ * @defaulted
+ * @cppflag */
+#define configBSP430_PLATFORM_EXP430F5438_LCD 0
+#endif /* configBSP430_PLATFORM_EXP430F5438_LCD */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_EXP430F5438_LCD - 0)
+
+/** Peripheral handle for SPI access to LCD */
+#define BSP430_PLATFORM_EXP430F5438_LCD_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI5_B2
+
+/** BSP430 peripheral handle for port to which LCD RSTn and CSn lines are connected.
+ * @dependency #configBSP430_PLATFORM_EXP430F5438_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5438_LCD_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT9
+
+/** Port bit on #BSP430_PLATFORM_EXP430F5438_LCD_PORT_PERIPH_HANDLE for LCD RSTn
+ * @dependency #configBSP430_PLATFORM_EXP430F5438_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5438_LCD_RSTn_PORT_BIT BIT7
+
+/** Port bit on #BSP430_PLATFORM_EXP430F5438_LCD_PORT_PERIPH_HANDLE for LCD CSn
+ * @dependency #configBSP430_PLATFORM_EXP430F5438_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5438_LCD_CSn_PORT_BIT BIT6
+
+/** Width, in pixel columns, of the HD66753 display.  Though the
+ * device is documented as having 168 columns, the displayable area
+ * contains only 138 columns. */
+#define BSP430_PLATFORM_EXP430F5438_LCD_COLUMNS 138
+
+/** Height, in pixel rows, of the HD66753 display. Though the device
+ * can go to 132 rows, the displayable area contains only 110 rows. */
+#define BSP430_PLATFORM_EXP430F5438_LCD_ROWS 110
+
+/** BSP430 peripheral handle for port to which LCD backlight line is connected.
+ * @dependency #configBSP430_PLATFORM_EXP430F5438_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5438_LCD_BL_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT8
+
+/** Port bit on #BSP430_PLATFORM_EXP430F5438_LCD_BL_PORT_PERIPH_HANDLE for LCD backlight
+ *
+ * This bit can be set to turn on the backlight.  This pin corresponds
+ * to TA0.3 and can support PWM backlight control if you are not using
+ * TA0 for other purposes.
+ * 
+ * @dependency #configBSP430_PLATFORM_EXP430F5438_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5438_LCD_BL_PORT_BIT BIT3
+
+#endif /* configBSP430_PLATFORM_EXP430F5438_LCD */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

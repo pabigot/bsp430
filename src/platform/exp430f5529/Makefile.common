@@ -5,3 +5,6 @@ MSPDEBUG_DRIVER=-j uif
 # UCS needs CCACLK for DCO configuration
 MODULES_CLOCK=periph/ucs periph/timer
 MODULES_PLATFORM_SERIAL=periph/usci5
+
+# U8GLIB uses vertical 1-bit pixels
+PLATFORM_U8G_PB_C=$(U8GLIB_CSRC)/u8g_pb8v1.c

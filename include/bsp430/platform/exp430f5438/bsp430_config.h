@@ -92,6 +92,24 @@
 #define configBSP430_HAL_PORT3 1
 #endif /* configBSP430_RFEM */
 
+#if (configBSP430_UTILITY_U8GLIB - 0) && (! defined(configBSP430_PLATFORM_EXP430F5438_LCD))
+#define configBSP430_PLATFORM_EXP430F5438_LCD 1
+#endif /* U8GLIB */
+
+#if (configBSP430_PLATFORM_EXP430F5438_LCD - 0)
+/* LCD uses USCI_B2 */
+#define configBSP430_SERIAL_ENABLE_SPI 1
+#define configBSP430_HAL_USCI5_B2 1
+/* CSn (P9.6) and RSTn (P9.7) */
+#ifndef configBSP430_HPL_PORT9
+#define configBSP430_HPL_PORT9 1
+#endif /* configBSP430_HPL_PORT9 */
+/* Backlight on P8.3 (TA0.3) */
+#ifndef configBSP430_HPL_PORT8
+#define configBSP430_HPL_PORT8 1
+#endif /* configBSP430_HPL_PORT8 */
+#endif /* configBSP430_PLATFORM_EXP430F5438_LCD */
+
 /** @endcond */
 
 #endif /* BSP430_PLATFORM_EXP430F5438_BSP430_CONFIG_H */

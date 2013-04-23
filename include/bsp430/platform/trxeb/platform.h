@@ -135,6 +135,9 @@
 #define BSP430_RFEM_SPI0CSn_PORT_BIT BIT0
 #endif /* configBSP430_RFEM */
 
+/* Enable U8GLIB if requested */
+#define BSP430_UTILITY_U8GLIB (configBSP430_UTILITY_U8GLIB - 0)
+
 /** @endcond */
 
 #ifndef configBSP430_PLATFORM_TRXEB_ALS
@@ -294,12 +297,89 @@
 
 #endif /* configBSP430_PLATFORM_M25P */
 
+#ifndef configBSP430_PLATFORM_TRXEB_LCD
+
+/** Enable HPL support for on-board LCD
+ *
+ * The TrxEB has a DOGM128E-6 monochromatic 128x64 pixel LCD on board.
+ * It receives power and does control through pins on ports 7 and 9.
+ *
+ * There is a backlight infrastructure on P3.6, but the additional
+ * circuitry for the module is not included on the board.
+ *
+ * The LCD is controlled using IO_SPI0.
+ *
+ * Defining this constant to a true value enables the configuration of
+ * the HPL for ports 7 and 9 and the SPI interface.
+ *
+ * @see #configBSP430_UTILITY_U8GLIB
+ * @defaulted
+ * @cppflag */
+#define configBSP430_PLATFORM_TRXEB_LCD 0
+#endif /* configBSP430_PLATFORM_TRXEB_LCD */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_TRXEB_LCD - 0)
+
+/** Peripheral handle for SPI access to TrxEB LCD */
+#define BSP430_PLATFORM_TRXEB_LCD_SPI_PERIPH_HANDLE BSP430_PLATFORM_TRXEB_IO_SPI0_PERIPH_HANDLE
+
+/** BSP430 peripheral handle for port to which LCD power is connected.
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_PWR_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_LCD_PWR_PORT_PERIPH_HANDLE for LCD power
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_PWR_PORT_BIT BIT7
+
+/** BSP430 peripheral handle for port to which LCD reset (inverted) is connected.
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_RSTn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_LCD_RSTn_PORT_PERIPH_HANDLE for LCD RSTn
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_RSTn_PORT_BIT BIT3
+
+/** BSP430 peripheral handle for port to which LCD chip-select (inverted) is connected.
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT9
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_LCD_CSn_PORT_PERIPH_HANDLE for LCD CSn
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_CSn_PORT_BIT BIT6
+
+/** BSP430 peripheral handle for port to which LCD A0 (CMD=0, DATA=1) is connected.
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_A0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT9
+
+/** Port bit on #BSP430_PLATFORM_TRXEB_LCD_A0_PORT_PERIPH_HANDLE for LCD A0
+ * @dependency #configBSP430_PLATFORM_TRXEB_LCD
+ */
+#define BSP430_PLATFORM_TRXEB_LCD_A0_PORT_BIT BIT7
+
+/** Width, in pixel columns, of the DOGM128E-6 display */
+#define BSP430_PLATFORM_TRXEB_LCD_COLUMNS 128
+
+/** Height, in pages, of the DOGM128E-6 display */
+#define BSP430_PLATFORM_TRXEB_LCD_PAGES 8
+
+/** Height, in pixel rows, of each page of the DOGM128E-6 display */
+#define BSP430_PLATFORM_TRXEB_LCD_ROWS_PER_PAGE 8
+
+#endif /* configBSP430_PLATFORM_TRXEB_LCD */
+
 #ifndef configBSP430_PLATFORM_TRXEB_IO_SPI0
 /** Enable use of IO_SPI0 peripheral.
  *
  * This peripheral services the SPI flash and LCD, and is default
  * enabled when #configBSP430_PLATFORM_M25P or
- * #configBSP430PLATFORM_TRXEB_LCD is enabled.
+ * #configBSP430_PLATFORM_TRXEB_LCD is enabled.
  *
  * @defaulted
  * @cppflag

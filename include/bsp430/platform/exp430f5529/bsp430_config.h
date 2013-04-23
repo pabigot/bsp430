@@ -135,6 +135,24 @@
 #define configBSP430_HAL_PORT3 1
 #endif /* configBSP430_RFEM */
 
+#if (configBSP430_UTILITY_U8GLIB - 0) && (! defined(configBSP430_PLATFORM_EXP430F5529_LCD))
+#define configBSP430_PLATFORM_EXP430F5529_LCD 1
+#endif /* U8GLIB */
+
+#if (configBSP430_PLATFORM_EXP430F5529_LCD - 0)
+/* LCD uses USCI_B1 */
+#define configBSP430_SERIAL_ENABLE_SPI 1
+#define configBSP430_HAL_USCI5_B1 1
+/* A0 (P5.6) and RSTn (P5.7) */
+#ifndef configBSP430_HPL_PORT5
+#define configBSP430_HPL_PORT5 1
+#endif /* configBSP430_HPL_PORT5 */
+/* CSn (P7.4) */
+#ifndef configBSP430_HPL_PORT7
+#define configBSP430_HPL_PORT7 1
+#endif /* configBSP430_HPL_PORT7 */
+#endif /* configBSP430_PLATFORM_EXP430F5529_LCD */
+
 /** @endcond */
 
 #endif /* BSP430_PLATFORM_EXP430F5529_BSP430_CONFIG_H */

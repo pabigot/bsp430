@@ -10,3 +10,6 @@ MODULES_PLATFORM_SERIAL=periph/usci5
 
 # The TRxEB board has an M25P20E serial flash
 MODULES_M25P=$(MODULES_PLATFORM_SERIAL) periph/port utility/m25p
+
+# U8GLIB uses vertical 1-bit pixels
+PLATFORM_U8G_PB_C=$(U8GLIB_CSRC)/u8g_pb8v1.c

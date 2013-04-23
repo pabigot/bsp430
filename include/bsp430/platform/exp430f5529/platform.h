@@ -160,7 +160,72 @@
 #define BSP430_RFEM_SPI0CSn_PORT_BIT BIT6
 #endif /* configBSP430_RFEM */
 
+/* Enable U8GLIB if requested */
+#define BSP430_UTILITY_U8GLIB (configBSP430_UTILITY_U8GLIB - 0)
+
 /** @endcond */
+
+#ifndef configBSP430_PLATFORM_EXP430F5529_LCD
+/** Enable HPL support for on-board LCD
+ *
+ * The EXP430F5529 has a DOGS102-6 monochromatic 102x64 pixel LCD on
+ * board, including back-light.  Power is hard-wired, with backlight
+ * PWM on TB0.4 and control through pins on ports 5 and 7.
+ *
+ * Defining this constant to a true value enables the configuration of
+ * the HPL for ports 5 and 7 and the SPI interface.
+ *
+ * @see #configBSP430_UTILITY_U8GLIB
+ * @defaulted
+ * @cppflag */
+#define configBSP430_PLATFORM_EXP430F5529_LCD 0
+#endif /* configBSP430_PLATFORM_EXP430F5529_LCD */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_PLATFORM_EXP430F5529_LCD - 0)
+
+/** Peripheral handle for SPI access to LCD */
+#define BSP430_PLATFORM_EXP430F5529_LCD_SPI_PERIPH_HANDLE BSP430_PERIPH_USCI5_B1
+
+/** BSP430 peripheral handle for port to which LCD reset (inverted) is connected.
+ * @dependency #configBSP430_PLATFORM_EXP430F5529_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5529_LCD_RSTn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT5
+
+/** Port bit on #BSP430_PLATFORM_EXP430F5529_LCD_RSTn_PORT_PERIPH_HANDLE for LCD RSTn
+ * @dependency #configBSP430_PLATFORM_EXP430F5529_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5529_LCD_RSTn_PORT_BIT BIT7
+
+/** BSP430 peripheral handle for port to which LCD chip-select (inverted) is connected.
+ * @dependency #configBSP430_PLATFORM_EXP430F5529_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5529_LCD_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT7
+
+/** Port bit on #BSP430_PLATFORM_EXP430F5529_LCD_CSn_PORT_PERIPH_HANDLE for LCD CSn
+ * @dependency #configBSP430_PLATFORM_EXP430F5529_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5529_LCD_CSn_PORT_BIT BIT4
+
+/** BSP430 peripheral handle for port to which LCD A0 (CMD=0, DATA=1) is connected.
+ * @dependency #configBSP430_PLATFORM_EXP430F5529_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5529_LCD_A0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT5
+
+/** Port bit on #BSP430_PLATFORM_EXP430F5529_LCD_A0_PORT_PERIPH_HANDLE for LCD A0
+ * @dependency #configBSP430_PLATFORM_EXP430F5529_LCD
+ */
+#define BSP430_PLATFORM_EXP430F5529_LCD_A0_PORT_BIT BIT6
+
+/** Width, in pixel columns, of the DOGS102-6 display */
+#define BSP430_PLATFORM_EXP430F5529_LCD_COLUMNS 102
+
+/** Height, in pages, of the DOGS102-6 display */
+#define BSP430_PLATFORM_EXP430F5529_LCD_PAGES 8
+
+/** Height, in pixel rows, of each page of the DOGS102-6 display */
+#define BSP430_PLATFORM_EXP430F5529_LCD_ROWS_PER_PAGE 8
+
+#endif /* configBSP430_PLATFORM_EXP430F5529_LCD */
 
 /* Include generic file, in case this is being included directly */
 #include <bsp430/platform.h>

@@ -135,6 +135,23 @@
 #endif /* configBSP430_HPL_PORT8 */
 #endif /* configBSP430_PLATFORM_M25P */
 
+#if (configBSP430_UTILITY_U8GLIB - 0) && (! defined(configBSP430_PLATFORM_TRXEB_LCD))
+#define configBSP430_PLATFORM_TRXEB_LCD 1
+#endif /* U8GLIB */
+
+#if (configBSP430_PLATFORM_TRXEB_LCD - 0)
+/* LCD is on IO_SPI0 */
+#define configBSP430_PLATFORM_TRXEB_IO_SPI0 1
+/* PWR (P7.7) and RSTn (P7.3) */
+#ifndef configBSP430_HPL_PORT7
+#define configBSP430_HPL_PORT7 1
+#endif /* configBSP430_HPL_PORT7 */
+/* CSn (P9.6) and A0 (P9.7) */
+#ifndef configBSP430_HPL_PORT9
+#define configBSP430_HPL_PORT9 1
+#endif /* configBSP430_HPL_PORT9 */
+#endif /* configBSP430_PLATFORM_TRXEB_LCD */
+
 #if (configBSP430_PLATFORM_TRXEB_IO_SPI0 - 0)
 #define configBSP430_SERIAL_ENABLE_SPI 1
 #define configBSP430_HAL_USCI5_B2 1
