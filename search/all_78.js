@@ -26,6 +26,7 @@ var searchData=
   ['xbsp430syssysrstivdescription',['xBSP430sysSYSRSTIVDescription',['../sys_8h.html#a2012d634fbc0045a010a2158b37248f2',1,'sys.h']]],
   ['xbsp430timerclocksource',['xBSP430timerClockSource',['../timer_8h.html#a3538758f690143471a3224c2cd222867',1,'timer.h']]],
   ['xbsp430timername',['xBSP430timerName',['../timer_8h.html#aad872aaa82973fd3accca3bcc004ea69',1,'timer.h']]],
+  ['xbsp430u8gdevice',['xBSP430u8gDevice',['../u8glib_8h.html#ab5d211ea5b3e864d8919f7cbd48e16c4',1,'u8glib.h']]],
   ['xbsp430uptimeastext',['xBSP430uptimeAsText',['../uptime_8h.html#a1cb1310c769f028347010502456fb918',1,'uptime.h']]],
   ['xbsp430uptimeastext_5fni',['xBSP430uptimeAsText_ni',['../uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1',1,'uptime.h']]],
   ['xbsp430usci5name',['xBSP430usci5Name',['../usci5_8h.html#a597e0da824a01c3f4815cd6ebff10e92',1,'usci5.h']]],

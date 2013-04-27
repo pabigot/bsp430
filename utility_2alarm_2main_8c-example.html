@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -102,7 +102,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> alarm_Hz;</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#define MAX_TIMERS 7</span></div>
-<div class="line"><span class="preprocessor"></span><span class="keyword">struct </span><a name="_a1"></a><a class="code" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> alarm_data[MAX_TIMERS];</div>
+<div class="line"><span class="preprocessor"></span><a name="_a1"></a><a class="code" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> alarm_data[MAX_TIMERS];</div>
 <div class="line"><a class="code" href="structsBSP430timerAlarm.html">hBSP430timerAlarm</a> alarm[MAX_TIMERS];</div>
 <div class="line"><span class="keywordtype">size_t</span> nTimers;</div>
 <div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> wakeups;</div>
@@ -637,7 +637,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">for</span> (ai = 0; ai &lt; nTimers; ++ai) {</div>
-<div class="line">    alarm[ai] = <a name="a49"></a><a class="code" href="group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81">hBSP430timerAlarmInitialize</a>(alarm_data + ai, ALARM_TIMER_PERIPH_HANDLE, ai, alarmCallback_ni);</div>
+<div class="line">    alarm[ai] = <a name="a49"></a><a class="code" href="group__grp__timer__alarm.html#ga006a132cabb227524de5203697814c12">hBSP430timerAlarmInitialize</a>(alarm_data + ai, ALARM_TIMER_PERIPH_HANDLE, ai, alarmCallback_ni);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Alarm testing with timer %s having %u CCs\n&quot;</span>,</div>
@@ -707,7 +707,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:53 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:22 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

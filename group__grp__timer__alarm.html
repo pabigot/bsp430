@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -118,11 +118,13 @@ Typedefs</h2></td></tr>
 <tr class="separator:gaddc59374b0dce2695bf42e8d12501a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9995237b87fbe59fcb5b31806f91b4ca"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga9995237b87fbe59fcb5b31806f91b4ca">iBSP430timerAlarmCallback_ni</a> )(<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm)</td></tr>
 <tr class="separator:ga9995237b87fbe59fcb5b31806f91b4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8ab7898617be7936c00e18e65d42df6"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#gaa8ab7898617be7936c00e18e65d42df6">sBSP430timerAlarm</a></td></tr>
+<tr class="separator:gaa8ab7898617be7936c00e18e65d42df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga683a7d272e6c6e48fe3ed1752dbafd81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81">hBSP430timerAlarmInitialize</a> (struct <a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> *alarm, <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph, int ccidx, <a class="el" href="group__grp__timer__alarm.html#ga9995237b87fbe59fcb5b31806f91b4ca">iBSP430timerAlarmCallback_ni</a> callback)</td></tr>
-<tr class="separator:ga683a7d272e6c6e48fe3ed1752dbafd81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga006a132cabb227524de5203697814c12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga006a132cabb227524de5203697814c12">hBSP430timerAlarmInitialize</a> (<a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> *alarm, <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph, int ccidx, <a class="el" href="group__grp__timer__alarm.html#ga9995237b87fbe59fcb5b31806f91b4ca">iBSP430timerAlarmCallback_ni</a> callback)</td></tr>
+<tr class="separator:ga006a132cabb227524de5203697814c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf78fc60de828bc03bb7c93624f384ef1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#gaf78fc60de828bc03bb7c93624f384ef1">iBSP430timerAlarmSetEnabled_ni</a> (<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm, int enablep)</td></tr>
 <tr class="separator:gaf78fc60de828bc03bb7c93624f384ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga10216d360cb1c02108e0347b628854d7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a> int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__timer__alarm.html#ga10216d360cb1c02108e0347b628854d7">iBSP430timerAlarmEnable</a> (<a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> alarm)</td></tr>
@@ -160,7 +162,7 @@ Functions</h2></td></tr>
 <div class="line">  <a class="code" href="timer_8h.html#a1a418c4722995ff9a7a9e766e7eeb6a6">vBSP430timerInferHints_ni</a>(alarmHAL_);</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
-<p>Alarms depend on a persistent object that describes their current state and holds the callback structures necessary to connect them to the peripheral interrupt infrastructure. These objects must be initialized once using <a class="el" href="group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81">hBSP430timerAlarmInitialize()</a>. After that point, the objects are not directly referenced; operations on the alarm are performed using a <a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">handle</a>.</p>
+<p>Alarms depend on a persistent object that describes their current state and holds the callback structures necessary to connect them to the peripheral interrupt infrastructure. These objects must be initialized once using <a class="el" href="group__grp__timer__alarm.html#ga006a132cabb227524de5203697814c12">hBSP430timerAlarmInitialize()</a>. After that point, the objects are not directly referenced; operations on the alarm are performed using a <a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">handle</a>.</p>
 <p>Alarms are <a class="el" href="group__grp__timer__alarm.html#ga10216d360cb1c02108e0347b628854d7">enabled</a> and <a class="el" href="group__grp__timer__alarm.html#ga9928ff05ac8f8067c2fc8e4a0b3be331">disabled</a> as needed. The act of enabling an alarm links its callbacks into the timer interrupt system. Because these callbacks introduce overhead even when the alarm is not set, alarms should only be enabled when they are likely to be used.</p>
 <p>Alarms are set with <a class="el" href="group__grp__timer__alarm.html#ga5a20e3f41fc5389746951c0a106d9d91">iBSP430timerAlarmSet()</a> using the absolute time of the underlying 32-bit timer, which can be obtained through <a class="el" href="timer_8h.html#a73cf4f30824d57dead07b2aa52614b2f">ulBSP430timerCounter()</a>. Because timers run asynchronously to the code, even when interrupts are disabled, the set function return value should be examined to ensure that the alarm was, in fact, set. Alarms may not be set if the duration is too short to reliably implement them, or if the time specified appears to be in the past. The infrastructure detects times that are past the 16-bit overflow of the underlying timer and uses the overflow interrupt to enable the capture/compare register interrupt in the correct cycle.</p>
 <p>Alarms that are set may be reliably cancelled using <a class="el" href="group__grp__timer__alarm.html#ga916a200cdb0920d14d47e3763ed3388c">iBSP430timerAlarmCancel_ni()</a>. This should always be done with interrupts disabled, to ensure that the alarm is not firing while the cancellation occurs. The return value will indicate if the alarm cancellation failed, e.g. due to it having already gone off.</p>
@@ -303,15 +305,29 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gaa8ab7898617be7936c00e18e65d42df6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a>  <a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A structure holding information related to timer-based alarms.</p>
+<dl class="section warning"><dt>Warning</dt><dd>The contents of this structure must not be manipulated by user code at any time. The primary reason the internals are exposed is so that alarm structures can be statically allocated. Fields may be inspected, though only <a class="el" href="structsBSP430timerAlarm.html#ab2ac4d51eccde7bff81031a9bf4cf8b1">sBSP430timerAlarm::flags</a> and <a class="el" href="structsBSP430timerAlarm.html#aa42f23d79c51dc804e7e00a940b27277">sBSP430timerAlarm::setting_tck</a> are likely to be of great interest. </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga683a7d272e6c6e48fe3ed1752dbafd81"></a>
+<a class="anchor" id="ga006a132cabb227524de5203697814c12"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="group__grp__timer__alarm.html#gaddc59374b0dce2695bf42e8d12501a7f">hBSP430timerAlarm</a> hBSP430timerAlarmInitialize </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> *&#160;</td>
           <td class="paramname"><em>alarm</em>, </td>
         </tr>
         <tr>
@@ -591,7 +607,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:54 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:23 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

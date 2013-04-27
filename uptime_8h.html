@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -201,7 +201,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <p>Expected length for a buffer used by <a class="el" href="uptime_8h.html#a1cb1310c769f028347010502456fb918">xBSP430uptimeAsText()</a>.</p>
 <p>This macro may be used to allocate such a buffer.</p>
 <p>At 32 kHz resolution a 32-bit integer holding ticks can only represent 36 hours before wrapping, but at 10 kHz resolution the same counter might express up to 119 hours, so this allows durations up to up to 999:59:59.999 to be expressed. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2venus6pps_2main_8c-example.html#a41">sensors/venus6pps/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2venus6pps_2main_8c-example.html#a41">sensors/venus6pps/main.c</a>, and <a class="el" href="utility_2m25p_2main_8c-example.html#a61">utility/m25p/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -552,7 +552,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </table>
 </div><div class="memdoc">
 <p>Return the system uptime in clock ticks. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a35">utility/alarm/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="utility_2alarm_2main_8c-example.html#a35">utility/alarm/main.c</a>, and <a class="el" href="utility_2m25p_2main_8c-example.html#a12">utility/m25p/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -580,7 +580,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <p>Return system uptime in clock ticks with disabled interrupts.</p>
 <dl class="section note"><dt>Note</dt><dd>The returned value is adjusted for a single pending overflow event that occurs while interrupts are disabled, but will be wrong if interrupts remain disabled long enough for a second overflow to occur. See <a class="el" href="timer_8h.html#a24b984912d7624627b33023f76c14d31">ulBSP430timerCounter_ni()</a> for details.</dd></dl>
 <p><a class="el" href="timer_8h.html#a381b6669a4c008a40d74947890f1e463">vBSP430timerSafeCounterInitialize_ni()</a> will have been called on <a class="el" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a> so <a class="el" href="timer_8h.html#ad8183989e9233a73453351037bc04c29">BSP430_TIMER_VALID_COUNTER_READ_CCIDX</a> is reserved to support accurate counter reads. </p>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a54">bootstrap/applpm/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a2">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a6">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a43">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a47">sensors/venus6pps/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a15">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a54">bootstrap/applpm/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a2">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a6">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a43">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a47">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2cli_2main_8c-example.html#a15">utility/cli/main.c</a>, <a class="el" href="utility_2m25p_2main_8c-example.html#a60">utility/m25p/main.c</a>, and <a class="el" href="utility_2u8glib_2main_8c-example.html#a12">utility/u8glib/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -722,7 +722,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>buffer</code> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2venus6pps_2main_8c-example.html#a49">sensors/venus6pps/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="sensors_2venus6pps_2main_8c-example.html#a49">sensors/venus6pps/main.c</a>, and <a class="el" href="utility_2m25p_2main_8c-example.html#a62">utility/m25p/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -756,7 +756,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:54 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:22 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

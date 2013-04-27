@@ -2,6 +2,7 @@ var searchData=
 [
   ['uibsp430clockaclk_5fhz',['uiBSP430clockACLK_Hz',['../clock_8h.html#afde95d4cde4586775d26e306cbdc9906',1,'clock.h']]],
   ['uibsp430clockaclk_5fhz_5fni',['uiBSP430clockACLK_Hz_ni',['../clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87',1,'clock.h']]],
+  ['uibsp430serialsmclkprescaler',['uiBSP430serialSMCLKPrescaler',['../serial_8h.html#a55ba4b6d332a2ea1a0c0c077b169bacc',1,'serial.h']]],
   ['uibsp430syssysrstgenerator_5fni',['uiBSP430sysSYSRSTGenerator_ni',['../sys_8h.html#a49bc446977f788990eaf4de3e3b3d234',1,'sys.h']]],
   ['uibsp430timerasynccounterread_5fni',['uiBSP430timerAsyncCounterRead_ni',['../timer_8h.html#a265d31e59ba5fbed9a1425e15c714277',1,'timer.h']]],
   ['uibsp430timerbestcounterread_5fni',['uiBSP430timerBestCounterRead_ni',['../timer_8h.html#a5c35695352c5e3ba9870a87e49b338b0',1,'timer.h']]],

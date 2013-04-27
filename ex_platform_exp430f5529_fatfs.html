@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -113,7 +113,6 @@ bsp430mmc.c</h1>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
 <div class="line">configureSPIforSD (<span class="keywordtype">int</span> fastp)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> smclk_hz = <a class="code" href="clock_8h.html#aae393938e85c471bb779ca0d5baa705f">ulBSP430clockSMCLK_Hz</a>();</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> init_spi_divisor;</div>
 <div class="line">  <span class="keyword">volatile</span> <a class="code" href="structsBSP430hplPORT__8.html">sBSP430hplPORT</a> * miso_port = <a class="code" href="port_8h.html#af85295c41d6419afb9df641ae90d0213">xBSP430hplLookupPORT</a>(APP_SD_MISO_PORT_PERIPH_HANDLE);</div>
 <div class="line"></div>
@@ -121,9 +120,9 @@ bsp430mmc.c</h1>
 <div class="line"><span class="comment">   * need to stay below 400 kHz, and have chosen 380 kHz in case of</span></div>
 <div class="line"><span class="comment">   * clock variances.  After initialization, we can go faster. */</span></div>
 <div class="line">  <span class="keywordflow">if</span> (fastp) {</div>
-<div class="line">    init_spi_divisor = (smclk_hz + BSP430_MMC_FAST_HZ - 1) / BSP430_MMC_FAST_HZ;</div>
+<div class="line">    init_spi_divisor = <a class="code" href="serial_8h.html#a55ba4b6d332a2ea1a0c0c077b169bacc">uiBSP430serialSMCLKPrescaler</a>(BSP430_MMC_FAST_HZ);</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
-<div class="line">    init_spi_divisor = (smclk_hz + 380000UL - 1) / 380000UL;</div>
+<div class="line">    init_spi_divisor = <a class="code" href="serial_8h.html#a55ba4b6d332a2ea1a0c0c077b169bacc">uiBSP430serialSMCLKPrescaler</a>(380000UL);</div>
 <div class="line">  }</div>
 <div class="line">  <span class="comment">/* SPI divisor must not be zero */</span></div>
 <div class="line">  <span class="keywordflow">if</span> (0 == init_spi_divisor) {</div>
@@ -388,7 +387,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:54 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:23 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

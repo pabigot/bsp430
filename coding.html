@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -128,7 +128,10 @@ Identifiers and Naming Conventions</h1>
 <li>Function names are intercapped. An initial letter indicates the return type: <code>i</code> is used for <code>int</code>, <code>ul</code> for <code>unsigned long</code>, <code>v</code> for <code>void</code>, and <code>h</code> for a <a class="el" href="layer.html#HAL">HAL</a> handle. The letter <code>x</code> is used as a prefix for more complex types, such as <code>const char *</code>.</li>
 </ul>
 <ul>
-<li>Type names (tags and typedefs) are intercapped. <code>struct</code>, <code>union</code>, and <code>enum</code> types have typedef aliases that use the tag as the type name. An initial letter distinguishes the "type" of type: <code>s</code> is a <code>struct</code>, <code>u</code> is a <code>union</code>, <code>e</code> is an <code>enum</code>. <code>h</code> indicates a handle for (pointer to) a <a class="el" href="layer.html#HAL">HAL</a> structure type; for example <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> is a typedef for a pointer to <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a>. <code>t</code> is used for any typedef for a normal type, such as <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>.</li>
+<li>Type names (tags and typedefs) are intercapped. An initial letter distinguishes the "type" of type: <code>s</code> is a <code>struct</code>, <code>u</code> is a <code>union</code>, <code>e</code> is an <code>enum</code>. <code>h</code> indicates a handle for (pointer to) a <a class="el" href="layer.html#HAL">HAL</a> structure type; for example <a class="el" href="serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb">hBSP430halSERIAL</a> is a typedef for a pointer to <a class="el" href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a>. <code>t</code> is used for any typedef for a normal type, such as <a class="el" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a>.</li>
+</ul>
+<ul>
+<li>Where user code may define or reference instances of a BSP430 <code>struct</code>, <code>union</code>, and <code>enum</code> type directly (i.e. not through a handle), those types should have typedef aliases that use the tag as the type name.</li>
 </ul>
 <ul>
 <li>Enumeration values are intercapped and begin with <code>e</code>.</li>
@@ -225,7 +228,7 @@ Preprocessor Feature Tests</h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:54 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:22 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

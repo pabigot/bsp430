@@ -2,7 +2,9 @@ var searchData=
 [
   ['utilities_3a_20alarms',['Utilities: Alarms',['../ex_utility_alarm.html',1,'']]],
   ['utilities_3a_20command_20line_20interface',['Utilities: Command Line Interface',['../ex_utility_cli.html',1,'']]],
+  ['u8glib_20lcd_20text_20and_20graphics',['U8GLIB LCD Text and Graphics',['../ex_utility_u8glib.html',1,'']]],
   ['utilities_3a_20unit_20test',['Utilities: Unit Test',['../ex_utility_unittest.html',1,'']]],
+  ['u8glib_2eh',['u8glib.h',['../u8glib_8h.html',1,'']]],
   ['ubsp430eui64',['uBSP430eui64',['../unionuBSP430eui64.html',1,'uBSP430eui64'],['../eui64_8h.html#a18c522c0a7fe69fafa349e4640ec233e',1,'uBSP430eui64():&#160;eui64.h']]],
   ['ubsp430hplport_5f16',['uBSP430hplPORT_16',['../unionuBSP430hplPORT__16.html',1,'uBSP430hplPORT_16'],['../port_8h.html#a8b2f67a9cf3035d4ae75ca5ded4227d5',1,'uBSP430hplPORT_16():&#160;port.h']]],
   ['uc7bit',['UC7BIT',['../msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4',1,'msp430.h']]],
@@ -38,6 +40,7 @@ var searchData=
   ['uctxstt',['UCTXSTT',['../msp430_8h.html#a29b01fc2d0d6715b33ba6f2d2a4e5e02',1,'msp430.h']]],
   ['uibsp430clockaclk_5fhz',['uiBSP430clockACLK_Hz',['../clock_8h.html#afde95d4cde4586775d26e306cbdc9906',1,'clock.h']]],
   ['uibsp430clockaclk_5fhz_5fni',['uiBSP430clockACLK_Hz_ni',['../clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87',1,'clock.h']]],
+  ['uibsp430serialsmclkprescaler',['uiBSP430serialSMCLKPrescaler',['../serial_8h.html#a55ba4b6d332a2ea1a0c0c077b169bacc',1,'serial.h']]],
   ['uibsp430syssysrstgenerator_5fni',['uiBSP430sysSYSRSTGenerator_ni',['../sys_8h.html#a49bc446977f788990eaf4de3e3b3d234',1,'sys.h']]],
   ['uibsp430timerasynccounterread_5fni',['uiBSP430timerAsyncCounterRead_ni',['../timer_8h.html#a265d31e59ba5fbed9a1425e15c714277',1,'timer.h']]],
   ['uibsp430timerbestcounterread_5fni',['uiBSP430timerBestCounterRead_ni',['../timer_8h.html#a5c35695352c5e3ba9870a87e49b338b0',1,'timer.h']]],

@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -503,7 +503,7 @@ Console Output and Interrupts</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Number of characters printed if the console is enabled; 0 if it is disabled; a negative error code if an error is encountered</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a>, <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a22">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a14">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a3">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a0">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a14">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a5">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a15">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a4">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a18">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a14">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a0">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a22">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a14">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a34">bootstrap/clocks/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a3">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a0">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a14">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a5">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a15">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a4">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a18">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a14">utility/alarm/main.c</a>, <a class="el" href="utility_2cli_2main_8c-example.html#a0">utility/cli/main.c</a>, <a class="el" href="utility_2m25p_2main_8c-example.html#a0">utility/m25p/main.c</a>, and <a class="el" href="utility_2u8glib_2main_8c-example.html#a3">utility/u8glib/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -538,7 +538,7 @@ Console Output and Interrupts</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the character that was output </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a8">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a44">sensors/hh10d/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a57">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a6">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rfem_2cc3000_2main_8c-example.html#a8">rfem/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a44">sensors/hh10d/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a57">utility/alarm/main.c</a>, <a class="el" href="utility_2cli_2main_8c-example.html#a6">utility/cli/main.c</a>, and <a class="el" href="utility_2m25p_2main_8c-example.html#a1">utility/m25p/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -958,7 +958,7 @@ Console Output and Interrupts</h1>
 <p>This configures the platform-specified serial HAL instance identified by <a class="el" href="console_8h.html#a1c1b76277262c559e561cd58b2525cc1">BSP430_CONSOLE_SERIAL_PERIPH_HANDLE</a> as specified by <a class="el" href="console_8h.html#a81e4d81848e239a0f37c0e529a92d0e6">BSP430_CONSOLE_BAUD_RATE</a>. If <a class="el" href="platform_8h.html#a5658121b6e4e9a02a759878c58807b43">BSP430_PLATFORM_SPIN_FOR_JUMPER</a> is true, it will invoke <a class="el" href="platform_8h.html#a2bf91c013585d7c2aaa6d7b4d0e35904">vBSP430platformSpinForJumper_ni()</a>. Once the console is configured and any required delays completed it will return, allowing use of <a class="el" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf()</a> and related functions.</p>
 <p>If this function is invoked multiple times without an intervening call to <a class="el" href="console_8h.html#a32249fa7e6144884aeecd30a1766e3fa">iBSP430consoleDeconfigure()</a>, the existing configuration is unchanged.</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if the console was successfully initialized, -1 if an error occurred. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a21">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a13">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a1">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a3">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a2">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a22">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a13">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a4">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a14">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a3">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a16">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a39">utility/alarm/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a35">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a21">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a13">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a1">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a3">bootstrap/console/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a2">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rfem_2cc3000_2main_8c-example.html#a22">rfem/cc3000/main.c</a>, <a class="el" href="rfem_2ccid_2main_8c-example.html#a13">rfem/ccid/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a4">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a14">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a3">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a16">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2alarm_2main_8c-example.html#a39">utility/alarm/main.c</a>, <a class="el" href="utility_2cli_2main_8c-example.html#a35">utility/cli/main.c</a>, <a class="el" href="utility_2m25p_2main_8c-example.html#a16">utility/m25p/main.c</a>, and <a class="el" href="utility_2u8glib_2main_8c-example.html#a2">utility/u8glib/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -1089,7 +1089,7 @@ Console Output and Interrupts</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:54 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:22 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

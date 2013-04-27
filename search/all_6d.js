@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['m25pe20_20spi_20flash_20memory_20on_20trxeb_20or_20surf',['M25PE20 SPI flash memory on TrxEB or SuRF',['../ex_utility_m25p.html',1,'']]],
+  ['m25p_2eh',['m25p.h',['../m25p_8h.html',1,'']]],
   ['max_5freturned_5fcandidates',['max_returned_candidates',['../structsBSP430cliCompletionData.html#a7ce75c9f6969582bbd980f9064a448d7',1,'sBSP430cliCompletionData']]],
   ['mc_5f0',['MC_0',['../msp430_8h.html#a3b2ed176100dbd3914f8d0a6a1da50fc',1,'msp430.h']]],
   ['mc_5f1',['MC_1',['../msp430_8h.html#ac74d5cf24d8aeca91ba722e5229657f2',1,'msp430.h']]],

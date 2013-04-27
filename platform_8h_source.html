@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -354,66 +354,81 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_PLATFORM_BUTTON0 */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_SPIN_FOR_JUMPER)</span></div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef BSP430_PLATFORM_SPIN_FOR_JUMPER</span></div>
-<div class="line"><a name="l00653"></a><span class="lineno"><a class="code" href="platform_8h.html#a5658121b6e4e9a02a759878c58807b43">  653</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_SPIN_FOR_JUMPER 0 </span><span class="comment">/* False unless platform explicitly enabled it */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_SPIN_FOR_JUMPER */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;<span class="comment">/* If configBSP430_PLATFORM_M25P was requested, then mark the feature</span></div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;<span class="comment"> * as available or not based on whether the platform provided a</span></div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;<span class="comment"> * peripheral handle to use to access the device. */</span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;<span class="preprocessor">#if configBSP430_PLATFORM_M25P - 0</span></div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifdef BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE</span></div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_M25P 1</span></div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#else </span><span class="comment">/* BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_M25P 0</span></div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* configBSP430_PLATFORM_M25P */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;<span class="comment">/* Set other M25P defaults */</span></div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;<span class="preprocessor">#if (BSP430_PLATFORM_M25P - 0)</span></div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_M25P */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_PERIPHERAL_HELP)</span></div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
-<div class="line"><a name="l00669"></a><span class="lineno"><a class="code" href="platform_8h.html#ab6710fe3c15825a6d4cfad92debe14bd">  669</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_PERIPHERAL_HELP 1 </span><span class="comment">/* True unless platform explicitly disabled it */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG</span></div>
-<div class="line"><a name="l00690"></a><span class="lineno"><a class="code" href="platform_8h.html#a136722b0c2fec7d74f088cf8211aab2c">  690</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG (! (configBSP430_CORE_SUPPORT_WATCHDOG - 0))</span></div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LEDS</span></div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(BSP430_PLATFORM_BOOT_CONFIGURE_LED)</span></div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#warning BSP430_PLATFORM_BOOT_CONFIGURE_LEDS is not spelled BSP430_PLATFORM_BOOT_CONFIGURE_LED</span></div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_LED */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00707"></a><span class="lineno"><a class="code" href="platform_8h.html#ad7358fbc82a593d4ae9525e36dcfb84a">  707</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_LEDS 1</span></div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_LEDS */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS</span></div>
-<div class="line"><a name="l00723"></a><span class="lineno"><a class="code" href="platform_8h.html#a9ccb62d7259bf01a8d3d099359d0042a">  723</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS 1</span></div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1</span></div>
-<div class="line"><a name="l00757"></a><span class="lineno"><a class="code" href="platform_8h.html#a790f6f3589071c3ec5061512072d9d5b">  757</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 0</span></div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_XT2</span></div>
-<div class="line"><a name="l00770"></a><span class="lineno"><a class="code" href="platform_8h.html#a6b95b8c02457a875961430edacd9b1b8">  770</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_XT2 0</span></div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_XT2 */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC</span></div>
-<div class="line"><a name="l00786"></a><span class="lineno"><a class="code" href="platform_8h.html#a2eb4c14d2e207025278b4ba3ada572b9">  786</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC 1</span></div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_ACLK_SOURCE</span></div>
-<div class="line"><a name="l00809"></a><span class="lineno"><a class="code" href="platform_8h.html#a572ae9f904cae21d87841d9632de4959">  809</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_ACLK_SOURCE eBSP430clockSRC_XT1CLK_FALLBACK</span></div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_ACLK_SOURCE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT</span></div>
-<div class="line"><a name="l00825"></a><span class="lineno"><a class="code" href="platform_8h.html#aaa97dfe2d669dacdec1f2cc5ebaa9231">  825</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT 0</span></div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_SMCLK_SOURCE</span></div>
-<div class="line"><a name="l00838"></a><span class="lineno"><a class="code" href="platform_8h.html#a85c03ed7ace4006182078718c8353b3b">  838</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_SMCLK_SOURCE eBSP430clockSRC_SMCLK_PU_DEFAULT</span></div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_SMCLK_SOURCE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT</span></div>
-<div class="line"><a name="l00854"></a><span class="lineno"><a class="code" href="platform_8h.html#a37ff11dae292d60a82227843638dcb2e">  854</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT 0</span></div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_SPIN_FOR_JUMPER)</span></div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef BSP430_PLATFORM_SPIN_FOR_JUMPER</span></div>
+<div class="line"><a name="l00668"></a><span class="lineno"><a class="code" href="platform_8h.html#a5658121b6e4e9a02a759878c58807b43">  668</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_SPIN_FOR_JUMPER 0 </span><span class="comment">/* False unless platform explicitly enabled it */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_SPIN_FOR_JUMPER */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_PERIPHERAL_HELP)</span></div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifndef BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
+<div class="line"><a name="l00684"></a><span class="lineno"><a class="code" href="platform_8h.html#ab6710fe3c15825a6d4cfad92debe14bd">  684</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_PERIPHERAL_HELP 1 </span><span class="comment">/* True unless platform explicitly disabled it */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG</span></div>
+<div class="line"><a name="l00705"></a><span class="lineno"><a class="code" href="platform_8h.html#a136722b0c2fec7d74f088cf8211aab2c">  705</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG (! (configBSP430_CORE_SUPPORT_WATCHDOG - 0))</span></div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LEDS</span></div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#if defined(BSP430_PLATFORM_BOOT_CONFIGURE_LED)</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#warning BSP430_PLATFORM_BOOT_CONFIGURE_LEDS is not spelled BSP430_PLATFORM_BOOT_CONFIGURE_LED</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_LED */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00722"></a><span class="lineno"><a class="code" href="platform_8h.html#ad7358fbc82a593d4ae9525e36dcfb84a">  722</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_LEDS 1</span></div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_LEDS */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS</span></div>
+<div class="line"><a name="l00738"></a><span class="lineno"><a class="code" href="platform_8h.html#a9ccb62d7259bf01a8d3d099359d0042a">  738</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS 1</span></div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1</span></div>
+<div class="line"><a name="l00772"></a><span class="lineno"><a class="code" href="platform_8h.html#a790f6f3589071c3ec5061512072d9d5b">  772</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 0</span></div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_CONFIGURE_XT2</span></div>
+<div class="line"><a name="l00785"></a><span class="lineno"><a class="code" href="platform_8h.html#a6b95b8c02457a875961430edacd9b1b8">  785</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_CONFIGURE_XT2 0</span></div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_CONFIGURE_XT2 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC</span></div>
+<div class="line"><a name="l00801"></a><span class="lineno"><a class="code" href="platform_8h.html#a2eb4c14d2e207025278b4ba3ada572b9">  801</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC 1</span></div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_ACLK_SOURCE</span></div>
+<div class="line"><a name="l00824"></a><span class="lineno"><a class="code" href="platform_8h.html#a572ae9f904cae21d87841d9632de4959">  824</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_ACLK_SOURCE eBSP430clockSRC_XT1CLK_FALLBACK</span></div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_ACLK_SOURCE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT</span></div>
+<div class="line"><a name="l00840"></a><span class="lineno"><a class="code" href="platform_8h.html#aaa97dfe2d669dacdec1f2cc5ebaa9231">  840</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT 0</span></div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_SMCLK_SOURCE</span></div>
+<div class="line"><a name="l00853"></a><span class="lineno"><a class="code" href="platform_8h.html#a85c03ed7ace4006182078718c8353b3b">  853</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_SMCLK_SOURCE eBSP430clockSRC_SMCLK_PU_DEFAULT</span></div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_SMCLK_SOURCE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;<span class="preprocessor">#ifndef BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT</span></div>
+<div class="line"><a name="l00869"></a><span class="lineno"><a class="code" href="platform_8h.html#a37ff11dae292d60a82227843638dcb2e">  869</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT 0</span></div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_H */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:53 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:22 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

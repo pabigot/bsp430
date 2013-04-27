@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -85,6 +85,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <ul><li class="level1"><a href="#mp_capabilities">Capabilities Currently Supported</a></li>
 <li class="level1"><a href="#mp_platforms">Hardware Platforms Currently Supported</a></li>
 <li class="level1"><a href="#mp_external">Useful External Libraries</a><ul><li class="level2"><a href="#mp_external_embtextf">embtextf (Embedded System Text Formatting)</a></li>
+<li class="level2"><a href="#mp_external_u8glib">u8glib (Graphics for Embedded Systems)</a></li>
+<li class="level2"><a href="#mp_external_fatfs">FatFs (FAT file system)</a></li>
 </ul>
 </li>
 <li class="level1"><a href="#mp_examples">Provided Examples</a><ul><li class="level2"><a href="#ex_utility">Value-Added Utility Examples</a></li>
@@ -122,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>For further details, please see the Background, Philosophy, <a class="el" href="coding.html">Coding Style</a>, and Maintenance pages.</p>
 <p>The project page is at <a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a>. Releases can be obtained by cloning the git repository:</p>
 <div class="fragment"><div class="line">git clone git:<span class="comment">//github.com/pabigot/bsp430.git</span></div>
-</div><!-- fragment --><p>or by downloading a <a href="http://github.com/pabigot/bsp430/tarball/master">tar file</a> of the complete source.</p>
+</div><!-- fragment --><p>or by downloading a <a href="http://github.com/pabigot/bsp430/tarball/stable">tar file</a> of the latest stable source release.</p>
 <p>Please file support requests and bug reports on the <a href="http://github.com/pabigot/bsp430/issues">issue tracker</a>.</p>
 <h1><a class="anchor" id="mp_capabilities"></a>
 Capabilities Currently Supported</h1>
@@ -142,7 +144,13 @@ Capabilities Currently Supported</h1>
 <li>Pre-configured support for the <a class="el" href="rfem_8h.html">RF Evaluation Module</a> headers on many experimenter boards;</li>
 </ul>
 <ul>
-<li>Utilities for a bi-directional <a class="el" href="console_8h.html">serial console</a> with a <a class="el" href="cli_8h.html">command line interface</a> that supports editing input; <a class="el" href="led_8h.html">LEDs</a>; <a class="el" href="uptime_8h.html">ACLK-driven system timer</a> and <a class="el" href="group__grp__timer__alarm.html">Alarm-related Timer Functionality</a>; and demonstration <a class="el" href="onewire_8h.html">1-Wire bus</a></li>
+<li>Support for <a class="el" href="m25p_8h.html">M25P-compatible SPI flash memory</a> modules common to wireless sensor nodes;</li>
+</ul>
+<ul>
+<li>Utilities for a bi-directional <a class="el" href="console_8h.html">serial console</a> with a <a class="el" href="cli_8h.html">command line interface</a> that supports editing input;</li>
+</ul>
+<ul>
+<li>Miscellaneous utilities including <a class="el" href="led_8h.html">LEDs</a>; <a class="el" href="uptime_8h.html">ACLK-driven system timer</a> and <a class="el" href="group__grp__timer__alarm.html">Alarm-related Timer Functionality</a>; and demonstration <a class="el" href="onewire_8h.html">1-Wire bus</a></li>
 </ul>
 <h1><a class="anchor" id="mp_platforms"></a>
 Hardware Platforms Currently Supported</h1>
@@ -164,6 +172,14 @@ Useful External Libraries</h1>
 embtextf (Embedded System Text Formatting)</h2>
 <dl class="section see"><dt>See Also</dt><dd><a href="http://pabigot.github.com/embtextf/">http://pabigot.github.com/embtextf/</a></dd></dl>
 <p>BSP430 was initially developed using the <a href="http://sourceforge.net/projects/mspgcc/">MSPGCC</a> toolchain, a port of the GNU compiler collection to the MSP430. The msp430-libc library that is part of this toolchain includes a space-efficient formatting print capability compatible with C's <code>printf(3c)</code> functionality using a callback that allows it to output to an application-provided location (a memory buffer, a serial console, an LCD screen, etc.). Subsequently those capabilities have been extracted, refactored, and extended as the <a href="http://pabigot.github.com/embtextf/">embtextf</a> library, making the same features available to Code Composer Studio and for toolchains that do not have an efficient generic formatted print capability. These functions are used in &lt;<a class="el" href="console_8h.html" title="A generic console output capability.">bsp430/utility/console.h</a>&gt; by defining <a class="el" href="console_8h.html#ad00f4e0aa91311e9593b973df63a7458">BSP430_CONSOLE_USE_EMBTEXTF</a>, which is enabled by the default when <code>EMBTEXTF_ROOT</code> is defined for use by <code>${BSP430_ROOT}/examples/Makefile.common</code>.</p>
+<h2><a class="anchor" id="mp_external_u8glib"></a>
+u8glib (Graphics for Embedded Systems)</h2>
+<dl class="section see"><dt>See Also</dt><dd><a href="http://code.google.com/p/u8glib/">http://code.google.com/p/u8glib/</a></dd></dl>
+<p>This library is a general-purpose graphics library supporting liquid crystal displays (LCDs) commonly used on embedded platforms. It provides a variety of fonts as well as graphical elements. The library with some patches as validated in BSP430 is available in a <a href="https://github.com/pabigot/u8glib">github repository</a>.</p>
+<h2><a class="anchor" id="mp_external_fatfs"></a>
+FatFs (FAT file system)</h2>
+<dl class="section see"><dt>See Also</dt><dd><a href="http://elm-chan.org/fsw/ff/00index_e.html">http://elm-chan.org/fsw/ff/00index_e.html</a></dd></dl>
+<p>This library is a generic FAT file system module for embedded systems. The library as validated in BSP430 is available in a <a href="https://github.com/pabigot/FatFs">github repository</a>.</p>
 <h1><a class="anchor" id="mp_examples"></a>
 Provided Examples</h1>
 <h2><a class="anchor" id="ex_utility"></a>
@@ -179,6 +195,12 @@ Value-Added Utility Examples</h2>
 </ul>
 <ul>
 <li><a class="el" href="ex_rfem_ccid.html">RF Evaluation Module and ChipCon Radios</a> demonstrates the abstraction of the <a class="el" href="rfem_8h.html">RF Evaluation Module </a> available on many MSP430 experimenter boards by displaying information about a connected ChipCon radio. The same demonstration works on the <a class="el" href="platform_8h.html#aa2b5bcad983b3f82fe33feaab4d5710b">BSP430_PLATFORM_EM430</a> and <a class="el" href="platform_8h.html#a4c34c7ca812427345dd932ff2288467b">BSP430_PLATFORM_SURF</a> platforms.</li>
+</ul>
+<ul>
+<li><a class="el" href="ex_utility_m25p.html">M25PE20 SPI flash memory on TrxEB or SuRF</a> demonstrates use of a serial flash device through the &lt;<a class="el" href="m25p_8h.html" title="Support for M25P-compatible serial SPI flash memory devices.">bsp430/utility/m25p.h</a>&gt; interface.</li>
+</ul>
+<ul>
+<li><a class="el" href="ex_utility_u8glib.html">U8GLIB LCD Text and Graphics</a> demonstrates use of the onboard LCD on several TI experimenter boards through the &lt;<a class="el" href="u8glib_8h.html" title="Declarations related to platform-specific u8glib support.">bsp430/utility/u8glib.h</a>&gt; interface.</li>
 </ul>
 <ul>
 <li><a class="el" href="ex_platform_exp430f5529_fatfs.html">FatFs on an EXP430F5529</a> demonstrates use of <a href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430 SPI serial abstraction</li>
@@ -210,7 +232,7 @@ Bootstrap Support Programs</h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:54 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:23 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

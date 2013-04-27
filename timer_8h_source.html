@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20130327</span>
+   &#160;<span id="projectnumber">20130427</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -579,7 +579,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l01334"></a><span class="lineno"><a class="code" href="group__grp__timer__alarm.html#gaa5de1dec0ca2a7bc98597562a270a4ab"> 1334</a></span>&#160;<span class="preprocessor">#define BSP430_TIMER_ALARM_FLAG_ENABLED 0x02</span></div>
 <div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l01345"></a><span class="lineno"><a class="code" href="structsBSP430timerAlarm.html"> 1345</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> {</div>
+<div class="line"><a name="l01345"></a><span class="lineno"><a class="code" href="structsBSP430timerAlarm.html"> 1345</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> {</div>
 <div class="line"><a name="l01347"></a><span class="lineno"><a class="code" href="structsBSP430timerAlarm.html#a24d34f70d968e0cde40d35c6c0e21637"> 1347</a></span>&#160;  hBSP430halTIMER <a class="code" href="structsBSP430timerAlarm.html#a24d34f70d968e0cde40d35c6c0e21637">timer</a>;</div>
 <div class="line"><a name="l01348"></a><span class="lineno"> 1348</span>&#160;</div>
 <div class="line"><a name="l01353"></a><span class="lineno"><a class="code" href="structsBSP430timerAlarm.html#a7b8be8801ce97b2e017c489d316d70c8"> 1353</a></span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="structsBSP430timerAlarm.html#a7b8be8801ce97b2e017c489d316d70c8">ccidx</a>;</div>
@@ -593,9 +593,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l01391"></a><span class="lineno"><a class="code" href="structsBSP430timerAlarm.html#a46ddf40273f6f9febaf308d9a791f5c7"> 1391</a></span>&#160;  <a class="code" href="structsBSP430halISRVoidChainNode.html">sBSP430halISRVoidChainNode</a> <a class="code" href="structsBSP430timerAlarm.html#a46ddf40273f6f9febaf308d9a791f5c7">overflow_cb</a>;</div>
 <div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;</div>
 <div class="line"><a name="l01400"></a><span class="lineno"><a class="code" href="structsBSP430timerAlarm.html#aac4beece1f0a5568013fc39d73215d14"> 1400</a></span>&#160;  <a class="code" href="structsBSP430halISRIndexedChainNode.html">sBSP430halISRIndexedChainNode</a> <a class="code" href="structsBSP430timerAlarm.html#aac4beece1f0a5568013fc39d73215d14">cc_cb</a>;</div>
-<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;};</div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;} <a class="code" href="group__grp__timer__alarm.html#gaa8ab7898617be7936c00e18e65d42df6">sBSP430timerAlarm</a>;</div>
 <div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;</div>
-<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;hBSP430timerAlarm <a class="code" href="group__grp__timer__alarm.html#ga683a7d272e6c6e48fe3ed1752dbafd81">hBSP430timerAlarmInitialize</a> (<span class="keyword">struct</span> <a class="code" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> * alarm,</div>
+<div class="line"><a name="l01438"></a><span class="lineno"> 1438</span>&#160;hBSP430timerAlarm <a class="code" href="group__grp__timer__alarm.html#ga006a132cabb227524de5203697814c12">hBSP430timerAlarmInitialize</a> (<a class="code" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> * alarm,</div>
 <div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;                                               <a class="code" href="periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9">tBSP430periphHandle</a> periph,</div>
 <div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;                                               <span class="keywordtype">int</span> ccidx,</div>
 <div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;                                               <a class="code" href="group__grp__timer__alarm.html#ga9995237b87fbe59fcb5b31806f91b4ca">iBSP430timerAlarmCallback_ni</a> callback);</div>
@@ -1221,7 +1221,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 27 2013 12:01:53 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 27 2013 18:46:22 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

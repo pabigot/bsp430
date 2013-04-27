@@ -29,6 +29,7 @@ var searchData=
   ['sbsp430hpltimer',['sBSP430hplTIMER',['../structsBSP430hplTIMER.html',1,'']]],
   ['sbsp430hplusci',['sBSP430hplUSCI',['../structsBSP430hplUSCI.html',1,'']]],
   ['sbsp430hplusci5',['sBSP430hplUSCI5',['../structsBSP430hplUSCI5.html',1,'']]],
+  ['sbsp430m25p',['sBSP430m25p',['../structsBSP430m25p.html',1,'']]],
   ['sbsp430onewirebus',['sBSP430onewireBus',['../structsBSP430onewireBus.html',1,'']]],
   ['sbsp430onewireserialnumber',['sBSP430onewireSerialNumber',['../structsBSP430onewireSerialNumber.html',1,'']]],
   ['sbsp430timeralarm',['sBSP430timerAlarm',['../structsBSP430timerAlarm.html',1,'']]],
