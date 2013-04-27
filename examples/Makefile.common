@@ -370,7 +370,7 @@ install: $(AOUT)
 endif # WITH_MSPDEBUG
 
 # Include dependencies unless we're cleaning
-ifeq ($(filter-out realclean clean emit-test-platforms, $(MAKECMDGOALS)),$(MAKECMDGOALS))
+ifeq ($(filter-out realclean clean emit-test-platforms test-platforms, $(MAKECMDGOALS)),$(MAKECMDGOALS))
 -include $(DEP)
 endif # make [real]clean
 
@@ -380,6 +380,9 @@ TEST_PLATFORMS_=$(filter-out $(TEST_PLATFORMS_EXCLUDE), $(TEST_PLATFORMS))
 emit-test-platforms:
 	@echo $(TEST_PLATFORMS_)
 
+# Goal to rebuild all example programs on all supported platforms.
+# Drive this with:
+# for tc in $(find examples -name Makefile | egrep -v '/fragpool/') ; do make -C $(dirname ${tc}) test-platforms || break ; done
 .PHONY: test-platforms
 test-platforms:
 	@$(MAKE) realclean >/dev/null 2>&1 ;        \
