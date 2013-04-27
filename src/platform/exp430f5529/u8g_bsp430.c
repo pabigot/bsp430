@@ -91,10 +91,10 @@ u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
         }
         break;
       case U8G_COM_MSG_INIT:
-        /* TODO: Share this with M25P initialization */
+        /* Maximum SPI clock period provided in data sheet is 100ns so limit this to 10MHz */
         spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_PLATFORM_EXP430F5529_LCD_SPI_PERIPH_HANDLE),
                                     BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPH | UCMSB | UCMST),
-                                    UCSSEL__SMCLK, 0);
+                                    UCSSEL__SMCLK, uiBSP430serialSMCLKPrescaler(10000000UL));
         if (0 == spi_) {
           rc = 0;
           break;

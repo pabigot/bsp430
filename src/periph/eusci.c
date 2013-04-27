@@ -220,10 +220,7 @@ hBSP430eusciOpenSPI (hBSP430halSERIAL hal,
 
   /* Calculate default prescaler */
   if (0 == prescaler) {
-    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_SPI_BUS_SPEED_HZ - 1) / BSP430_SERIAL_SPI_BUS_SPEED_HZ;
-    if (0 == prescaler) {
-      prescaler = 1;
-    }
+    prescaler = uiBSP430serialSMCLKPrescaler(BSP430_SERIAL_SPI_BUS_SPEED_HZ);
     ctlw0 |= UCSSEL1;
   }
 
@@ -272,10 +269,7 @@ hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
 
   /* Calculate default prescaler */
   if (0 == prescaler) {
-    prescaler = (ulBSP430clockSMCLK_Hz() + BSP430_SERIAL_I2C_BUS_SPEED_HZ - 1) / BSP430_SERIAL_I2C_BUS_SPEED_HZ;
-    if (0 == prescaler) {
-      prescaler = 1;
-    }
+    prescaler = uiBSP430serialSMCLKPrescaler(BSP430_SERIAL_I2C_BUS_SPEED_HZ);
     ctlw0 |= UCSSEL1;
   }
 

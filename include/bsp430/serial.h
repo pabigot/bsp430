@@ -219,6 +219,23 @@
  */
 #define BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(_i) (((_i) >= 0x100) ? ((_i) >> 8) : (_i))
 
+
+/** Calculate prescaler to obtain desired clock from SMCLK.
+ *
+ * The prescaler returned is designed to produce the fastest clock
+ * based on an integer division of ulBSP430clockSMCLK_Hz() that does
+ * not exceed @p freq_Hz, except that if @p freq_Hz is too slow to be
+ * produced by dividing SMCLK by a 16-bit prescaler then 65535 will be
+ * returned.
+ *
+ * @param freq_Hz Desired clock frequency in Hz.
+ *
+ * @return A prescaler, as used in hBSP430serialOpenSPI() or
+ * hBSP430serialOpenI2C().  The value will never be zero, and will
+ * saturate at 65535.
+ */
+unsigned int uiBSP430serialSMCLKPrescaler (unsigned long freq_Hz);
+
 #if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_UART - 0)
 
 /** Request and configure a serial device in UART mode.

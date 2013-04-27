@@ -51,7 +51,6 @@ static hBSP430halSERIAL sdspi;
 static int
 configureSPIforSD (int fastp)
 {
-  unsigned long smclk_hz = ulBSP430clockSMCLK_Hz();
   unsigned int init_spi_divisor;
   volatile sBSP430hplPORT * miso_port = xBSP430hplLookupPORT(APP_SD_MISO_PORT_PERIPH_HANDLE);
 
@@ -59,9 +58,9 @@ configureSPIforSD (int fastp)
    * need to stay below 400 kHz, and have chosen 380 kHz in case of
    * clock variances.  After initialization, we can go faster. */
   if (fastp) {
-    init_spi_divisor = (smclk_hz + BSP430_MMC_FAST_HZ - 1) / BSP430_MMC_FAST_HZ;
+    init_spi_divisor = uiBSP430serialSMCLKPrescaler(BSP430_MMC_FAST_HZ);
   } else {
-    init_spi_divisor = (smclk_hz + 380000UL - 1) / 380000UL;
+    init_spi_divisor = uiBSP430serialSMCLKPrescaler(380000UL);
   }
   /* SPI divisor must not be zero */
   if (0 == init_spi_divisor) {

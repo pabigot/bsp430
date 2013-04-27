@@ -37,6 +37,8 @@
  */
 
 #include <bsp430/serial.h>
+#include <bsp430/clock.h>
+#include <limits.h>
 
 const char *
 xBSP430serialName (tBSP430periphHandle periph)
@@ -58,4 +60,20 @@ xBSP430serialName (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_SERIAL_USE_EUSCI */
   return rv;
+}
+
+unsigned int
+uiBSP430serialSMCLKPrescaler (unsigned long freq_Hz)
+{
+  unsigned long smclk_Hz = ulBSP430clockSMCLK_Hz();
+  unsigned long prescaler;
+  
+  if ((0 == freq_Hz) || (freq_Hz >= smclk_Hz)) {
+    return 1U;
+  }
+  prescaler = (smclk_Hz + freq_Hz - 1) / freq_Hz;
+  if (prescaler > UINT_MAX) {
+    return UINT_MAX;
+  }
+  return (unsigned int)prescaler;
 }

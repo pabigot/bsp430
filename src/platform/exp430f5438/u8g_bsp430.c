@@ -189,10 +189,11 @@ u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
         }
         break;
       case U8G_COM_MSG_INIT:
-        /* Limit this to 4 MHz */
+        /* Maximum clock period during reads is 250ns so limit this to
+         * 4 MHz */
         spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_PLATFORM_EXP430F5438_LCD_SPI_PERIPH_HANDLE),
                                     BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST),
-                                    UCSSEL__SMCLK, 4);
+                                    UCSSEL__SMCLK, uiBSP430serialSMCLKPrescaler(4000000UL));
         rc = (0 != spi_);
         break;
     }
