@@ -34,7 +34,7 @@
 #include "diskio.h"
 #include "ff.h"
 
-unsigned char buffer[1024];
+char buffer[1024];
 
 void main ()
 {
@@ -105,28 +105,27 @@ void main ()
     }
     cprintf("%s %lu %u %u %#x\n", finfo.fname, finfo.fsize, finfo.fdate, finfo.ftime, finfo.fattrib);
   }
-#if 0
   {
     FIL fil_obj;
 
-    /* This should write to a file.  In fact, what it does is cause a
-     * board reset when the file is closed and the write actually
-     * occurs.  The next three times the board is reset the SD card
-     * can't be accessed (the opendir above fails); then the fourth
-     * time it behaves like the first.  I'm guessing it's inadequate
-     * power, though I'm using the ez430 USB as the power source and
-     * that's usually pretty good.  Increasing VCORE doesn't help, and
-     * probably shouldn't. */
+    /* Append a boot log message to the file BOOT.LOG.  NB: This had
+     * failed with version combinations prior to FatFs 0.9b and BSP430
+     * 20130427. */
     rv = f_open(&fil_obj, "0:BOOT.LOG", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
     cprintf("Boot log open returned %d\n", rv);
     if (FR_OK == rv) {
       UINT nbytes = -1;
       rv = f_read(&fil_obj, buffer, sizeof(buffer), &nbytes);
       cprintf("Read boot log %u got %d with %u read\n", sizeof(buffer), rv, nbytes);
+      if (0 == rv) {
+        buffer[nbytes] = 0;
+        cputs("Contents:");
+        cputs(buffer);
+      }
       rv = f_lseek(&fil_obj, f_size(&fil_obj));
       cprintf("Seek to end got %d\n", rv);
       if (FR_OK == rv) {
-        int nb = snprintf((char*)buffer, sizeof(buffer), "Booted " __DATE__ " " __TIME__ "\n");
+        int nb = snprintf(buffer, sizeof(buffer), "Booted build " __DATE__ " " __TIME__ "\n");
         UINT nw;
         rv = f_write(&fil_obj, buffer, nb, &nw);
         cprintf("write %u got %d nw %u\n", nb, rv, nw);
@@ -134,7 +133,7 @@ void main ()
       f_close(&fil_obj);
     }
   }
-#endif
+
   f_mount(0, NULL);
   cprintf("Exiting application\n");
 
