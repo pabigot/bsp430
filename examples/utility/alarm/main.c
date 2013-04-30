@@ -387,16 +387,20 @@ cmd_stats (const char * command)
   cprintf("Alarm statistics:\n");
   for (ai = 0; ai < nTimers; ++ai) {
     volatile sAlarmStats * sp = alarm_stats + ai;
-    cprintf(" %u: %cset %cenab %cwake %cskip cnt %lu, rc %d, inter %lu\n"
-            "    lost %lu; late: last %lu, max %lu, ave %lu\n",
-            ai,
-            (alarm[ai]->flags & BSP430_TIMER_ALARM_FLAG_SET) ? '+' : '-',
-            (alarm[ai]->flags & BSP430_TIMER_ALARM_FLAG_ENABLED) ? '+' : '-',
-            (sp->flags & FLG_WakeFromLPM) ? '+' : '-',
-            (sp->flags & FLG_SkipLost) ? '+' : '-',
-            sp->count, sp->rc, sp->interval_tck,
-            sp->lost, sp->last_late, sp->max_late,
-            (0 == sp->count) ? 0 : (sp->sum_late / sp->count));
+    if (NULL == alarm[ai]) {
+      cprintf(" %u: not available\n", ai);
+    } else {
+      cprintf(" %u: %cset %cenab %cwake %cskip cnt %lu, rc %d, inter %lu\n"
+              "    lost %lu; late: last %lu, max %lu, ave %lu\n",
+              ai,
+              (alarm[ai]->flags & BSP430_TIMER_ALARM_FLAG_SET) ? '+' : '-',
+              (alarm[ai]->flags & BSP430_TIMER_ALARM_FLAG_ENABLED) ? '+' : '-',
+              (sp->flags & FLG_WakeFromLPM) ? '+' : '-',
+              (sp->flags & FLG_SkipLost) ? '+' : '-',
+              sp->count, sp->rc, sp->interval_tck,
+              sp->lost, sp->last_late, sp->max_late,
+              (0 == sp->count) ? 0 : (sp->sum_late / sp->count));
+    }
   }
   return 0;
 }
@@ -423,10 +427,15 @@ cmd_dump (const char * command)
   cprintf("Alarm internals:\n");
   for (ai = 0; ai < nTimers; ++ai) {
     hBSP430timerAlarm ap = alarm[ai];
-    int ci = ap->ccidx;
-    cprintf("\tcc %u, flg 0x%02x, setting %lu ; CCTL %04x CCR %04x\n",
-            ci, ap->flags, ap->setting_tck,
-            alarmHAL_->hpl->cctl[ci], alarmHAL_->hpl->ccr[ci]);
+
+    if (NULL == ap) {
+      cprintf("\tcc %u is not available\n", ai);
+    } else {
+      int ci = ap->ccidx;
+      cprintf("\tcc %u, flg 0x%02x, setting %lu ; CCTL %04x CCR %04x\n",
+              ci, ap->flags, ap->setting_tck,
+              alarmHAL_->hpl->cctl[ci], alarmHAL_->hpl->ccr[ci]);
+    }
   }
   return 0;
 }
@@ -461,8 +470,7 @@ static const sBSP430cliCommand dcmd_convert = {
   .key = "convert",
   .help = "{tt} # show tt value in human time",
   .next = LAST_COMMAND,
-  .handler = iBSP430cliHandlerSimple,
-  .param = cmd_convert
+  .handler = cmd_convert
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_convert)
