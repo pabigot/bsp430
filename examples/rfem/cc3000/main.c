@@ -88,7 +88,7 @@ static sBSP430cliCommand dcmd_wlan_stop = {
   .help = HELP_STRING("# shut down CC3000"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_stop
+  .param.simple_handler = cmd_wlan_stop
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_stop
@@ -107,7 +107,7 @@ static sBSP430cliCommand dcmd_wlan_disconnect = {
   .help = HELP_STRING("# disconnect from AP"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_disconnect
+  .param.simple_handler = cmd_wlan_disconnect
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_disconnect
@@ -149,7 +149,7 @@ static sBSP430cliCommand dcmd_wlan_ipconfig = {
   .help = HELP_STRING("# show IP parameters"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_ipconfig
+  .param.simple_handler = cmd_wlan_ipconfig
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_ipconfig
@@ -282,28 +282,28 @@ static sBSP430cliCommand dcmd_wlan_ssid = {
   .help = HELP_STRING("[{ssid}] # Display or set AP SSID for connect"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_ssid
+  .param.simple_handler = cmd_wlan_ssid
 };
 static sBSP430cliCommand dcmd_wlan_passphrase = {
   .key = "passphrase",
   .help = HELP_STRING("[{passphrase}] # Display or set AP passphrase"),
   .next = &dcmd_wlan_ssid,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_passphrase
+  .param.simple_handler = cmd_wlan_passphrase
 };
 static sBSP430cliCommand dcmd_wlan_sectype = {
   .key = "sectype",
   .help = HELP_STRING("[{sectype}] # Display or set AP sectype"),
   .next = &dcmd_wlan_passphrase,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_sectype
+  .param.simple_handler = cmd_wlan_sectype
 };
 static sBSP430cliCommand dcmd_wlan_connect = {
   .key = "connect",
   .help = HELP_STRING("# connect to specified access point using AP config"),
   .next = &dcmd_wlan_sectype,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_connect
+  .param.simple_handler = cmd_wlan_connect
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_connect
@@ -344,7 +344,7 @@ static sBSP430cliCommand dcmd_wlan_status = {
   .help = HELP_STRING("# get CC3000 status and AP config"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_status
+  .param.simple_handler = cmd_wlan_status
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_status
@@ -366,7 +366,7 @@ static sBSP430cliCommand dcmd_wlan_start = {
   .help = HELP_STRING("# power-up CC3000"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_wlan_start
+  .param.simple_handler = cmd_wlan_start
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_start
@@ -401,7 +401,7 @@ static sBSP430cliCommand dcmd_nvmem_sp = {
   .help = HELP_STRING("# read firmware service pack level"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_nvmem_sp
+  .param.simple_handler = cmd_nvmem_sp
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_sp
@@ -478,7 +478,7 @@ static sBSP430cliCommand dcmd_nvmem_read = {
   .help = HELP_STRING("fileid [len(=128) [ofs(=0)]] # read block from nvmem file"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_nvmem_read
+  .param.simple_handler = cmd_nvmem_read
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_read
@@ -506,7 +506,7 @@ static sBSP430cliCommand dcmd_nvmem_mac = {
   .help = HELP_STRING("# get mac address"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_nvmem_mac
+  .param.simple_handler = cmd_nvmem_mac
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_mac
@@ -598,21 +598,21 @@ static sBSP430cliCommand dcmd_info_store = {
   .help = HELP_STRING("# store wlan AP params in INFO_B"),
   .next = NULL,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_info_store
+  .param.simple_handler = cmd_info_store
 };
 static sBSP430cliCommand dcmd_info_erase = {
   .key = "erase",
   .help = HELP_STRING("# erase INFO_B"),
   .next = &dcmd_info_store,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_info_erase
+  .param.simple_handler = cmd_info_erase
 };
 static sBSP430cliCommand dcmd_info_load = {
   .key = "load",
   .help = HELP_STRING("# load wlan AP params from INFO_B"),
   .next = &dcmd_info_erase,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_info_load
+  .param.simple_handler = cmd_info_load
 };
 static sBSP430cliCommand dcmd_info = {
   .key = "info",

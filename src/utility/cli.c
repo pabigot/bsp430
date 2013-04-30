@@ -265,10 +265,10 @@ iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
                          const char * argstr,
                          size_t argstr_len)
 {
-  if (0 == chain->cmd->param) {
+  if (0 == chain->cmd->param.simple_handler) {
     return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, argstr, argstr_len);
   }
-  return ((iBSP430cliSimpleHandler)chain->cmd->param)(argstr);
+  return ((iBSP430cliSimpleHandler)chain->cmd->param.simple_handler)(argstr);
 }
 
 #define GEN_STORE_EXTRACTED_VALUE(tag_,type_,strtov_,maxvalstr_)        \
@@ -322,10 +322,10 @@ GEN_STORE_EXTRACTED_VALUE(L,long int,strtol,"-020000000000")
     const sBSP430cliCommand * cmd = chain->cmd;                         \
     int rv;                                                             \
                                                                         \
-    if (NULL == cmd->param) {                                           \
+    if (NULL == cmd->param.ptr) {                                       \
       return diagnosticFunction(chain, eBSP430_CLI_ERR_Config, argstr, argstr_len); \
     }                                                                   \
-    rv = iBSP430cliStoreExtracted##tag_(&argstr, &argstr_len, (type_*)cmd->param); \
+    rv = iBSP430cliStoreExtracted##tag_(&argstr, &argstr_len, (type_*)cmd->param.ptr); \
     if (0 != rv) {                                                      \
       return diagnosticFunction(chain, eBSP430_CLI_ERR_Invalid, argstr, argstr_len); \
     }                                                                   \

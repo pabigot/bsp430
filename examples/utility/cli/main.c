@@ -71,7 +71,7 @@ static const sBSP430cliCommand dcmd_hup_two = {
   .help = "# valid if no three",
   .child = &dcmd_hup_two_three,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_hup_two
+  .param.simple_handler = cmd_hup_two
 };
 static const sBSP430cliCommand dcmd_hup = {
   .key = "hup",
@@ -96,7 +96,7 @@ static const sBSP430cliCommand dcmd_uptime = {
   .help = "# Show system uptime",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_uptime
+  .param.simple_handler = cmd_uptime
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_uptime
@@ -122,7 +122,7 @@ static const sBSP430cliCommand dcmd_expand = {
   .help = "[command...] # Show the expansion of the command without executing it",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_expand
+  .param.simple_handler = cmd_expand
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_expand
@@ -138,7 +138,7 @@ static const sBSP430cliCommand dcmd_show = {
   .help = "# Display the value of variables",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_show
+  .param.simple_handler = cmd_show
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_show
@@ -165,35 +165,35 @@ static const sBSP430cliCommand dcmd_set_all = {
   .key = "all",
   .help = "[ival] [ [uival] [ [lval] [ [ulval] ] ] ]",
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_set_all
+  .param.simple_handler = cmd_set_all
 };
 static const sBSP430cliCommand dcmd_set_ival = {
   .key = "ival",
   .help = "[signed 16-bit integer in octal, decimal, or hex]",
   .next = &dcmd_set_all,
   .handler = iBSP430cliHandlerStoreI,
-  .param = &data.ival
+  .param.ptr = &data.ival
 };
 static const sBSP430cliCommand dcmd_set_uival = {
   .key = "uival",
   .help = "[unsigned 16-bit integer in octal, decimal, or hex]",
   .next = &dcmd_set_ival,
   .handler = iBSP430cliHandlerStoreUI,
-  .param = &data.uival
+  .param.ptr = &data.uival
 };
 static const sBSP430cliCommand dcmd_set_lval = {
   .key = "lval",
   .help = "[signed 32-bit integer in octal, decimal, or hex]",
   .next = &dcmd_set_uival,
   .handler = iBSP430cliHandlerStoreL,
-  .param = &data.lval
+  .param.ptr = &data.lval
 };
 static const sBSP430cliCommand dcmd_set_ulval = {
   .key = "ulval",
   .help = "[unsigned 32-bit integer in octal, decimal, or hex]",
   .next = &dcmd_set_lval,
   .handler = iBSP430cliHandlerStoreUL,
-  .param = &data.ulval
+  .param.ptr = &data.ulval
 };
 static const sBSP430cliCommand dcmd_set = {
   .key = "set",
@@ -225,7 +225,7 @@ static const sBSP430cliCommand dcmd_quote = {
   .help = "[qstr]... # Extract one or more quoted tokens",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_quote
+  .param.simple_handler = cmd_quote
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_quote
@@ -243,7 +243,7 @@ static const sBSP430cliCommand dcmd_complete_common = {
   .key = "common",
   .next = LAST_SUBCOMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_dummy
+  .param.simple_handler = cmd_dummy
 };
 #undef LAST_SUBCOMMAND
 #define LAST_SUBCOMMAND &dcmd_complete_common
@@ -251,7 +251,7 @@ static const sBSP430cliCommand dcmd_complete_component = {
   .key = "component",
   .next = LAST_SUBCOMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_dummy
+  .param.simple_handler = cmd_dummy
 };
 #undef LAST_SUBCOMMAND
 #define LAST_SUBCOMMAND &dcmd_complete_component

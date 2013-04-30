@@ -125,7 +125,7 @@ static const sBSP430cliCommand dcmd_cancel = {
   .help = "{cc} # cancel alarm cc",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_cancel
+  .param.simple_handler = cmd_cancel
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_cancel)
@@ -170,7 +170,7 @@ static const sBSP430cliCommand dcmd_alarm = {
   .help = "{cc} {rel_when} # set alarm for rel_when ticks",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_alarm
+  .param.simple_handler = cmd_alarm
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_alarm)
@@ -237,7 +237,7 @@ static const sBSP430cliCommand dcmd_flags = {
   .help = "{cc} {[+-]flg}... # enable/disable wake skip",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_flags
+  .param.simple_handler = cmd_flags
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_flags)
@@ -272,7 +272,7 @@ static const sBSP430cliCommand dcmd_interval = {
   .help = "{cc} {interval} # set alarm interval, 0 one-shot",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_interval
+  .param.simple_handler = cmd_interval
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_interval)
@@ -322,7 +322,7 @@ static const sBSP430cliCommand dcmd_disable = {
   .help = "{cc}... # disable alarm cc",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_disable
+  .param.simple_handler = cmd_disable
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_disable)
@@ -337,7 +337,7 @@ static const sBSP430cliCommand dcmd_enable = {
   .help = "{cc}... # enable alarm cc",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_enable
+  .param.simple_handler = cmd_enable
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_enable)
@@ -374,7 +374,7 @@ static const sBSP430cliCommand dcmd_reset = {
   .help = "{cc}... # reset alarm statistics",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_reset
+  .param.simple_handler = cmd_reset
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_reset)
@@ -409,7 +409,7 @@ static const sBSP430cliCommand dcmd_stats = {
   .help = "# Show alarm stats",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_stats
+  .param.simple_handler = cmd_stats
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_stats)
@@ -444,7 +444,7 @@ static const sBSP430cliCommand dcmd_dump = {
   .help = "# Show alarm internals",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_dump
+  .param.simple_handler = cmd_dump
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_dump)
@@ -507,7 +507,7 @@ static const sBSP430cliCommand dcmd_clocks = {
   .help = "# Clock/timer information",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_clocks
+  .param.simple_handler = cmd_clocks
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_clocks
@@ -523,7 +523,7 @@ static const sBSP430cliCommand dcmd_uptime = {
   .help = "# Show system uptime",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_uptime
+  .param.simple_handler = cmd_uptime
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_uptime)

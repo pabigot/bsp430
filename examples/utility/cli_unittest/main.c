@@ -124,7 +124,7 @@ static const sBSP430cliCommand dcmd_complete_common = {
   .key = "common",
   .next = LAST_SUBCOMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_dummy
+  .param.simple_handler = cmd_dummy
 };
 #undef LAST_SUBCOMMAND
 #define LAST_SUBCOMMAND (&dcmd_complete_common)
@@ -132,7 +132,7 @@ static const sBSP430cliCommand dcmd_complete_component = {
   .key = "component",
   .next = LAST_SUBCOMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_dummy
+  .param.simple_handler = cmd_dummy
 };
 #undef LAST_SUBCOMMAND
 #define LAST_SUBCOMMAND (&dcmd_complete_component)
@@ -148,7 +148,7 @@ static const sBSP430cliCommand dcmd_other = {
   .key = "other",
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_dummy
+  .param.simple_handler = cmd_dummy
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_other)
@@ -170,7 +170,7 @@ static const sBSP430cliCommand dcmd_say = {
   .completion_helper = &completion_helper_say.completion_helper,
   .next = LAST_COMMAND,
   .handler = iBSP430cliHandlerSimple,
-  .param = cmd_dummy
+  .param.simple_handler = cmd_dummy
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_say)

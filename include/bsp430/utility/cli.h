@@ -405,6 +405,18 @@ typedef int (* iBSP430cliHandlerFunction) (struct sBSP430cliCommandLink * chain,
                                            const char * argstr,
                                            size_t argstr_len);
 
+/** Type for a command handler that needs only the remainder of the
+ * command string.
+ *
+ * When the sBSP430cliCommand::handler field is set to this handler,
+ * the corresponding sBSP430cliCommand::uParam::simple_handler field
+ * should be the address of a conforming function which will be
+ * invoked.
+ *
+ * @param argstr the remainder of the command string
+ */
+typedef int (* iBSP430cliSimpleHandler) (const char * argstr);
+
 /** The definition of a command, including the token that identifies
  * it, optional help, subordinate and sibling command structures, and
  * the handler that implements the operation given user input. */
@@ -460,9 +472,18 @@ typedef struct sBSP430cliCommand {
    * command.  The value is generally used by
    * sBSP430cliCommand::handler in this or a parent command structure.
    * For example, iBSP430cliHandlerStoreUI() extracts the address of
-   * the variable into which the value should be stored from this
-   * field. */
-  void * const param;
+   * the variable into which the value should be stored from
+   * uParam::ptr. */
+  union uParam {
+    /** The parameter field used for a pointer to a data object. */
+    void * const ptr;
+
+    /** The parameter field used for iBSP430cliHandlerSimple().  This
+     * is a pointer-to-function which is not type-compatible with @p
+     * ptr. */
+    iBSP430cliSimpleHandler const simple_handler;
+  } param;
+
 } sBSP430cliCommand;
 
 /** Callback support for iBSP430cliMatchCommand().  In addition to
@@ -685,20 +706,10 @@ int iBSP430cliStoreExtractedUL (const char * * argstrp,
                                 size_t * argstr_lenp,
                                 unsigned long * destp);
 
-/** Type for a command handler that needs only the remainder of the
- * command string.
- *
- * When the sBSP430cliCommand::handler field is set to this handler,
- * the corresponding sBSP430cliCommand::param field should be the
- * address of a conforming function which will be invoked.
- *
- * @param argstr the remainder of the command string
- */
-typedef int (* iBSP430cliSimpleHandler) (const char * argstr);
-
 /** Handler to invoke a simple command
  *
- * The sBSP430cliCommand::param field should be the
+ * The @link sBSP430cliCommand::uParam::simple_handler @a
+ * chain->cmd->param.simple_handler @endlink field should be the
  * #iBSP430cliSimpleHandler that is to be invoked.
  *
  * See iBSP430cliHandlerFunction().
@@ -718,7 +729,7 @@ int iBSP430cliHandlerSimple (sBSP430cliCommandLink * chain,
  * See iBSP430cliHandlerFunction() and iBSP430cliStoreI().
  *
  * @param chain Pointer to the end of the command chain.  @link
- * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected
+ * sBSP430cliCommand::uParam::ptr @a chain->cmd->param.ptr @endlink is expected
  * to be a <c>int *</c> value.
  *
  * @param param unused
@@ -740,8 +751,8 @@ int iBSP430cliHandlerStoreI (struct sBSP430cliCommandLink * chain,
  * See iBSP430cliHandlerFunction() and iBSP430cliStoreUI().
  *
  * @param chain Pointer to the end of the command chain.  @link
- * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected to be a
- * <c>unsigned int *</c> value.
+ * sBSP430cliCommand::uParam::ptr @a chain->cmd->param.ptr @endlink is
+ * expected to be a <c>unsigned int *</c> value.
  *
  * @param param unused
  *
@@ -762,8 +773,8 @@ int iBSP430cliHandlerStoreUI (struct sBSP430cliCommandLink * chain,
  * See iBSP430cliHandlerFunction() and iBSP430cliStoreL().
  *
  * @param chain Pointer to the end of the command chain.  @link
- * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected to
- * be a <c>long *</c> value.
+ * sBSP430cliCommand::uParam::ptr @a chain->cmd->param.ptr @endlink is
+ * expected to be a <c>long *</c> value.
  *
  * @param param unused
  *
@@ -784,8 +795,8 @@ int iBSP430cliHandlerStoreL (struct sBSP430cliCommandLink * chain,
  * See iBSP430cliHandlerFunction() and iBSP430cliStoreUL().
  *
  * @param chain Pointer to the end of the command chain.  @link
- * sBSP430cliCommand::param @a chain->cmd->param @endlink is expected to
- * be a <c>unsigned long *</c> value.
+ * sBSP430cliCommand::uParam::ptr @a chain->cmd->param.ptr @endlink is
+ * expected to be a <c>unsigned long *</c> value.
  *
  * @param param unused
  *
