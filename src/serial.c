@@ -67,7 +67,7 @@ uiBSP430serialSMCLKPrescaler (unsigned long freq_Hz)
 {
   unsigned long smclk_Hz = ulBSP430clockSMCLK_Hz();
   unsigned long prescaler;
-  
+
   if ((0 == freq_Hz) || (freq_Hz >= smclk_Hz)) {
     return 1U;
   }

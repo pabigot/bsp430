@@ -169,7 +169,7 @@
  * This bit can be set to turn on the backlight.  This pin corresponds
  * to TA0.3 and can support PWM backlight control if you are not using
  * TA0 for other purposes.
- * 
+ *
  * @dependency #configBSP430_PLATFORM_EXP430F5438_LCD
  */
 #define BSP430_PLATFORM_EXP430F5438_LCD_BL_PORT_BIT BIT3
