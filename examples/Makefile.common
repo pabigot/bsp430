@@ -112,6 +112,7 @@ TARGET_LDFLAGS += -mmcu=$(MCU)
 # MEMORY_MODEL: Level of 20-bit support, assuming this is a CPUX MCU.
 ifdef MEMORY_MODEL
 TARGET_CFLAGS += -mmemory-model=$(MEMORY_MODEL)
+TARGET_LDFLAGS += -mmemory-model=$(MEMORY_MODEL)
 endif # MEMORY_MODEL
 endif # WITH_GCC
 
