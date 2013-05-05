@@ -463,11 +463,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_IE_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_IE_8(_hal)) ? (_hal)->hpl.port_ie_8 : (void *)0)
 
-/** Get the port HPL auxiliary pointer if the HAL is a PORT_IE_8 variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORT_IE_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_IE_8(_hal)) ? (_hal)->hpl_aux.port_ie_8 : (void *)0)
-
 /** True iff the HPL pointer of the port HAL is a PORT_8 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_8(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
@@ -475,11 +470,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_8(_hal)) ? (_hal)->hpl.port_8 : (void *)0)
-
-/** Get the port HPL auxiliary pointer if the HAL is a PORT_8 variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORT_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_8(_hal)) ? (_hal)->hpl_aux.port_8 : (void *)0)
 
 /** True iff the HPL pointer of the port HAL is a PORT_16 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_16(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_16 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
@@ -489,11 +479,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_16(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_16(_hal)) ? (_hal)->hpl.port_16 : (void *)0)
 
-/** Get the port HPL auxiliary pointer if the HAL is a PORT_16 variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORT_16(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_16(_hal)) ? (_hal)->hpl_aux.port_16 : (void *)0)
-
 /** True iff the HPL pointer of the port HAL is a PORT_5XX_8 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_8(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
@@ -501,11 +486,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_5XX_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_8(_hal)) ? (_hal)->hpl.port_5xx_8 : (void *)0)
-
-/** Get the port HPL auxiliary pointer if the HAL is a PORT_5XX_8 variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORT_5XX_8(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_8(_hal)) ? (_hal)->hpl_aux.port_5xx_8 : (void *)0)
 
 /** True iff the HPL pointer of the port HAL is a PORT_5XX_16 variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_16(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_16 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
@@ -515,11 +495,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT_5XX_16(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_16(_hal)) ? (_hal)->hpl.port_5xx_16 : (void *)0)
 
-/** Get the port HPL auxiliary pointer if the HAL is a PORT_5XX_16 variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORT_5XX_16(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT_5XX_16(_hal)) ? (_hal)->hpl_aux.port_5xx_16 : (void *)0)
-
 /** True iff the HPL pointer of the port HAL is a PORT variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORT(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORT == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
@@ -527,11 +502,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORT(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT(_hal)) ? (_hal)->hpl.port : (void *)0)
-
-/** Get the port HPL auxiliary pointer if the HAL is a PORT variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORT(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORT(_hal)) ? (_hal)->hpl_aux.port : (void *)0)
 
 /** True iff the HPL pointer of the port HAL is a PORTIE variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORTIE == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
@@ -541,11 +511,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORTIE(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal)) ? (_hal)->hpl.portie : (void *)0)
 
-/** Get the port HPL auxiliary pointer if the HAL is a PORTIE variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORTIE(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal)) ? (_hal)->hpl_aux.portie : (void *)0)
-
 /** True iff the HPL pointer of the port HAL is a PORTW variant. */
 #define BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW(_hal) (BSP430_PORT_HAL_HPL_VARIANT_PORTW == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
 
@@ -553,11 +518,6 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * Value is a null pointer if the HAL references a different HPL type. */
 #define BSP430_PORT_HAL_GET_HPL_PORTW(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW(_hal)) ? (_hal)->hpl.portw : (void *)0)
-
-/** Get the port HPL auxiliary pointer if the HAL is a PORTW variant.
- *
- * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_PORT_HAL_GET_HPLAUX_PORTW(_hal) ((BSP430_PORT_HAL_HPL_VARIANT_IS_PORTW(_hal)) ? (_hal)->hpl_aux.portw : (void *)0)
 
 /* END AUTOMATICALLY GENERATED CODE [hal_variant_hpl_macro] */
 /* !BSP430! end=hal_variant_hpl_macro */
