@@ -39,11 +39,17 @@
  * is intended to be included multiple times after defining
  * #BSP430_WANT_PERIPH_CPPID and other macros in terms of the
  * functional-specific request macros.
+ *
+ * See #BSP430_PERIPH_CPPID_NONE for an overview of how specific
+ * peripherals are identified.
  */
 
 /** Identify the core peripheral for which resource requests are needed.
  *
- * This should be defined to a constant such as #BSP430_PERIPH_CPPID_TA0. */
+ * This should be defined to a constant such as #BSP430_PERIPH_CPPID_TA0.
+ *
+ * @see #BSP430_PERIPH_CPPID_NONE
+ */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_WANT_PERIPH_CPPID context specific
 #endif /* BSP430_DOXYGEN */
@@ -78,7 +84,7 @@
 
 /** @cond DOXYGEN_INTERNAL */
 
-#if BSP430_PERIPH_CCPID_NONE == BSP430_WANT_PERIPH_CPPID
+#if BSP430_PERIPH_CPPID_NONE == BSP430_WANT_PERIPH_CPPID
 /* !BSP430! instance=@periphs insert=periph_want */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_want] */
 
@@ -593,9 +599,9 @@
 #endif /* ISR */
 /* END AUTOMATICALLY GENERATED CODE [periph_want] */
 /* !BSP430! end=periph_want */
-#endif /* BSP430_WANT_PERIPH_CCPID */
+#endif /* BSP430_WANT_PERIPH_CPPID */
 
-#if BSP430_PERIPH_CCPID_NONE == BSP430_WANT_PERIPH_CPPID
+#if BSP430_PERIPH_CPPID_NONE == BSP430_WANT_PERIPH_CPPID
 /* !BSP430! instance=@timers insert=periph_want_cc0_isr */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_want_cc0_isr] */
 
@@ -663,6 +669,6 @@
 #endif /* CC0_ISR */
 /* END AUTOMATICALLY GENERATED CODE [periph_want_cc0_isr] */
 /* !BSP430! end=periph_want_cc0_isr */
-#endif /* BSP430_WANT_PERIPH_CCPID */
+#endif /* BSP430_WANT_PERIPH_CPPID */
 
 /** @endcond */

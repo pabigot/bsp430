@@ -63,16 +63,32 @@
  * Where a functional resource may be specified by either an
  * application or a platform, we need a way to identify it that
  * permits preprocessor checks that default the corresponding core
- * resource capability.  For example, if
- * #BSP430_UPTIME_TIMER_PERIPH_CPPID is defined to
- * #BSP430_PERIPH_CPPID_TB0, then setting #configBSP430_UPTIME will
- * ensure that #configBSP430_HAL_TB0 and #configBSP430_HAL_TB0_ISR are
- * both defined to 1.
+ * resource capability.  The peripheral handle values such as
+ * #BSP430_PERIPH_TB0 cannot be used for this, since their expansion
+ * includes cast operations that cannot be used in preprocessor
+ * expressions.  Consequently there is a parallel integral-valued C
+ * pre-processor identifier for each MCU peripheral.
  *
- * This particular value indicates that no core resource is associated
- * with the functional resource.
+ * For example, if #BSP430_UPTIME_TIMER_PERIPH_CPPID is defined to
+ * #BSP430_PERIPH_CPPID_TB0, then the following code ensures that
+ * #configBSP430_HAL_TB0 and #configBSP430_HAL_TB0_ISR are both
+ * defined to 1.
+ *
+ * @code
+ * #if BSP430_UPTIME_TIMER_PERIPH_CPPID == BSP430_PERIPH_CPPID_TB0
+ * #define configBSP430_HAL_TB0 1
+ * #define configBSP430_HAL_TB0_ISR 1
+ * #endif // BSP430_UPTIME_TIMER_PERIPH_CPPID
+ * @endcode
+ *
+ * See <bsp430/periph/want_.h> for an infrastructure that uses these
+ * constants to enable features without complex preprocessor
+ * manipulation within user code.
+ *
+ * The value for #BSP430_PERIPH_CPPID_NONE indicates that no core
+ * resource is associated with the functional resource.
  */
-#define BSP430_PERIPH_CCPID_NONE 0
+#define BSP430_PERIPH_CPPID_NONE 0
 
 /* !BSP430! insert=periph_cppid */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_cppid] */
