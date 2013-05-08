@@ -8,3 +8,6 @@
 *.d
 # Generated listing files
 *.lst
+# Compiled Python files
+*.pyc
+*.pyo
