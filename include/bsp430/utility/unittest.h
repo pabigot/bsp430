@@ -59,7 +59,7 @@
 #ifndef BSP430_UTILITY_UNITTEST_H
 #define BSP430_UTILITY_UNITTEST_H
 
-#include <bsp430/platform.h>
+#include <bsp430/core.h>
 #include <string.h>
 #include <inttypes.h>
 
