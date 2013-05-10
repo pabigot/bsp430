@@ -2,9 +2,59 @@ import sys
 import re
 import os.path
 import argparse
+import os
+import types
 
-templates = {
-    'hal_decl' : '''/** Control inclusion of the @HAL interface to #BSP430_PERIPH_%(INSTANCE)s
+def expandStringTemplate (template, subst_map, idmap):
+    text = []
+    periph = idmap.get('periph', 'nop')
+    subst_map.update({ 'periph': periph.lower(),
+                       'PERIPH': periph.upper() })
+    subst_keys = idmap.get('subst')
+    if subst_keys is not None:
+        for sm in subst_keys.split(','):
+            subst_map[sm.lower()] = idmap[sm].lower()
+            subst_map[sm.upper()] = idmap[sm].upper()
+
+    instance_str = idmap.get('instance')
+    if instance_str: # Non-empty value
+        if instance_str.startswith('@'):
+            instances = instance_atmap[instance_str[1:]]
+        else:
+            instances = instance_str.split(',')
+        for i in instances:
+            if i.startswith(periph.upper()):
+                subst_map.update({ '#' : i[len(periph):] })
+            subst_map.update({ 'instance': i.lower(), 'INSTANCE': i.upper() })
+            subst_map.update({ 'baseinstance' : subst_map.get('instance'),
+                               'BASEINSTANCE' : subst_map.get('INSTANCE') })
+            uscifrom = idmap.get('uscifrom', None)
+            if uscifrom is not None:
+                subst_map.update({ 'baseinstance' : subst_map.get('instance').replace(uscifrom.lower(), 'usci'),
+                                   'BASEINSTANCE' : subst_map.get('INSTANCE').replace(uscifrom.upper(), 'USCI') })
+            if idmap.get('portexpand', False):
+                subst_map.update({ 'PORTA' : 'PORT' + i[0],
+                                   'PORT1': 'PORT%d' % (1 + 2 * (ord(i[0]) - ord('A')),),
+                                   'PORT2': 'PORT%d' % (2 + 2 * (ord(i[0]) - ord('A')),) })
+            try:
+                text.append(template % subst_map)
+            except TypeError as e:
+                print 'Exception expanding %s with %s: %s' % (insert_name, subst_map, e)
+                print template
+                raise
+            subst_map.pop('#', None)
+    else:
+        try:
+            text.append(template % subst_map)
+        except TypeError as e:
+            print 'Exception expanding %s with %s: %s' % (insert_name, subst_map, e)
+            print template
+            raise
+    return text
+
+def fn_hal_decl (subst_map, idmap):
+    with_lookup = int(idmap.get('with_lookup', 1))
+    elements = ['''/** Control inclusion of the @HAL interface to #BSP430_PERIPH_%(INSTANCE)s
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
  * interface be included, and 0 to request it be excluded.  By default
@@ -13,10 +63,13 @@ templates = {
  * When enabled, the sBSP430hal%(PERIPH)s structure reference is
  * available as #BSP430_HAL_%(INSTANCE)s.
  *
- * It may also be obtained using
+''']
+    if with_lookup:
+        elements.append(''' * It may also be obtained using
  * #hBSP430%(periph)sLookup(#BSP430_PERIPH_%(INSTANCE)s).
  *
- * @cppflag
+''')
+    elements.append(''' * @cppflag
  * @affects #configBSP430_HPL_%(INSTANCE)s is default-enabled
  * @ingroup grp_config_core
  * @defaulted */
@@ -40,9 +93,12 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HAL_%(INSTANCE)s - 0)
 #define BSP430_HAL_%(INSTANCE)s (&xBSP430hal_%(INSTANCE)s_)
 #endif /* configBSP430_HAL_%(INSTANCE)s */
-''',
+''')
+    return expandStringTemplate(''.join(elements), subst_map, idmap)
 
-    'periph_decl' : '''/** Control inclusion of the @HPL interface to #BSP430_PERIPH_%(INSTANCE)s
+def fn_periph_decl (subst_map, idmap):
+    with_lookup = int(idmap.get('with_lookup', 1))
+    elements = [ '''/** Control inclusion of the @HPL interface to #BSP430_PERIPH_%(INSTANCE)s
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
  * interface be included, and 0 to request it be excluded.  By default
@@ -51,10 +107,13 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
  * When enabled, the sBSP430hpl%(PERIPH)s structure reference is
  * available as #BSP430_HPL_%(INSTANCE)s.
  *
- * It may also be obtained using
+''' ]
+    if with_lookup:
+        elements.append(''' * It may also be obtained using
  * #xBSP430hplLookup%(PERIPH)s(#BSP430_PERIPH_%(INSTANCE)s).
  *
- * @cppflag
+''')
+    elements.append(''' * @cppflag
  * @ingroup grp_config_core
  * @defaulted */
 #ifndef configBSP430_HPL_%(INSTANCE)s
@@ -74,7 +133,14 @@ extern sBSP430hal%(PERIPH)s xBSP430hal_%(INSTANCE)s_;
 #if defined(BSP430_DOXYGEN) || (configBSP430_HPL_%(INSTANCE)s - 0)
 #define BSP430_PERIPH_%(INSTANCE)s ((tBSP430periphHandle)(BSP430_PERIPH_%(INSTANCE)s_BASEADDRESS_))
 #endif /* configBSP430_HPL_%(INSTANCE)s */
-''',
+''')
+    return expandStringTemplate(''.join(elements), subst_map, idmap)
+    
+
+templates = {
+    'hal_decl' : fn_hal_decl,
+
+    'periph_decl' : fn_periph_decl,
 
     'hpl_decl' : '''/** sBSP430hpl%(PERIPH)s HPL pointer for #BSP430_PERIPH_%(INSTANCE)s.
  *
@@ -365,7 +431,6 @@ struct sBSP430halSERIAL xBSP430hal_%(INSTANCE)s_ = {
 #define BSP430_%(PERIPH)s_HAL_GET_HPLAUX_%(INSTANCE)s(_hal) ((BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal)) ? (_hal)->hpl_aux.%(instance)s : (void *)0)
 ''',
 
-
     'hal_port_isr_defn' : '''#if configBSP430_HAL_%(INSTANCE)s_ISR - 0
 BSP430_CORE_DECLARE_INTERRUPT(%(INSTANCE)s_VECTOR)
 isr_%(INSTANCE)s (void)
@@ -509,7 +574,6 @@ isr_%(INSTANCE)s (void)
 #define BSP430_%(FUNCTIONAL)s_PERIPH_HANDLE BSP430_PERIPH_%(INSTANCE)s''',
     }
 
-
 # Generate a list of the core resource tags for all instances of core
 # resource groups.
 import itertools
@@ -553,57 +617,21 @@ directive_re = re.compile('!BSP430!\s*(?P<keywords>.*)$')
 # Directives:
 #  insert=<name> : identify the template to be expanded
 #  subst=<name,...> : populate subst_map from idmap entries for name,...
+#  instance=<@name|name,...> : generate for each instance in standard or provided list
 
 def expandTemplate (tplname, idmap):
     global templates
 
     template = templates[tplname]
     subst_map = { 'template' : tplname }
-    periph = idmap.get('periph', 'nop')
-    subst_map.update({ 'periph': periph.lower(),
-                       'PERIPH': periph.upper() })
-    subst_keys = idmap.get('subst')
-    if subst_keys is not None:
-        for sm in subst_keys.split(','):
-            subst_map[sm.lower()] = idmap[sm].lower()
-            subst_map[sm.upper()] = idmap[sm].upper()
     text = []
     text.append('/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [%(template)s] */' % subst_map)
 
-    instance_str = idmap.get('instance')
-    if instance_str: # Non-empty value
-        if instance_str.startswith('@'):
-            instances = instance_atmap[instance_str[1:]]
-        else:
-            instances = instance_str.split(',')
-        for i in instances:
-            if i.startswith(periph.upper()):
-                subst_map.update({ '#' : i[len(periph):] })
-            subst_map.update({ 'instance': i.lower(), 'INSTANCE': i.upper() })
-            subst_map.update({ 'baseinstance' : subst_map.get('instance'),
-                               'BASEINSTANCE' : subst_map.get('INSTANCE') })
-            uscifrom = idmap.get('uscifrom', None)
-            if uscifrom is not None:
-                subst_map.update({ 'baseinstance' : subst_map.get('instance').replace(uscifrom.lower(), 'usci'),
-                                   'BASEINSTANCE' : subst_map.get('INSTANCE').replace(uscifrom.upper(), 'USCI') })
-            if idmap.get('portexpand', False):
-                subst_map.update({ 'PORTA' : 'PORT' + i[0],
-                                   'PORT1': 'PORT%d' % (1 + 2 * (ord(i[0]) - ord('A')),),
-                                   'PORT2': 'PORT%d' % (2 + 2 * (ord(i[0]) - ord('A')),) })
-            try:
-                text.append(template % subst_map)
-            except TypeError as e:
-                print 'Exception expanding %s with %s: %s' % (insert_name, subst_map, e)
-                print template
-                raise
-            subst_map.pop('#', None)
+    if isinstance(template, types.FunctionType):
+        text.extend(template(subst_map, idmap))
     else:
-        try:
-            text.append(template % subst_map)
-        except TypeError as e:
-            print 'Exception expanding %s with %s: %s' % (insert_name, subst_map, e)
-            print template
-            raise
+        text.extend(expandStringTemplate(template, subst_map, idmap))
+
     text.append('/* END AUTOMATICALLY GENERATED CODE [%(template)s] */' % subst_map)
     text.append('')
     return '\n'.join(text)

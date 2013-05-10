@@ -209,7 +209,7 @@ typedef struct sBSP430halDMA {
 /** Mild obscuration of the HAL internal structure */
 typedef struct sBSP430halDMA * hBSP430halDMA;
 
-/* !BSP430! insert=hal_decl */
+/* !BSP430! insert=hal_decl with_lookup=0 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** Control inclusion of the @HAL interface to #BSP430_PERIPH_DMA
  *
@@ -248,7 +248,7 @@ extern sBSP430halDMA xBSP430hal_DMA_;
 /* END AUTOMATICALLY GENERATED CODE [hal_decl] */
 /* !BSP430! end=hal_decl */
 
-/* !BSP430! insert=periph_decl */
+/* !BSP430! insert=periph_decl with_lookup=0 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_decl] */
 /** Control inclusion of the @HPL interface to #BSP430_PERIPH_DMA
  *
