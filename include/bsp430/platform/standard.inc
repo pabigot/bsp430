@@ -29,8 +29,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BSP430_PLATFORM_STANDARD_INC
-#define BSP430_PLATFORM_STANDARD_INC
+/** @file
+ *
+ * @brief Common implementation of platform functions
+ *
+ * This file provides a customizable implementations of functions
+ * like vBSP430platformInitialize_ni().  It is intended to be
+ * included into platform-specific implementation files.
+ *
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ */
 
 #include <bsp430/platform.h>
 #include <bsp430/clock.h>
@@ -38,10 +47,24 @@
 #include <bsp430/utility/led.h>
 
 #ifndef BSP430_PLATFORM_STANDARD_USE_INITIALIZE
-/** Define to true value to include default initialization routine */
+/** Define to true value to include default vBSP430platformInitialize_ni() implementation */
 #define BSP430_PLATFORM_STANDARD_USE_INITIALIZE 1
 #endif /* BSP430_PLATFORM_STANDARD_USE_INITIALIZE */
 
+#ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE
+/** Define to a C statement to do platform-specific operations in
+ * vBSP340platformInitialize_ni() after initializing watchdog but
+ * before anything else. */
+#define BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE do { } while (0)
+#endif /* BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE */
+
+#ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE
+/** Define to a C statement to do platform-specific operations before
+ * leaving vBSP340platformInitialize_ni(). */
+#define BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE do { } while (0)
+#endif /* BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE */
+
+/** @cond DOXYGEN_EXCLUDE */
 #if (BSP430_PLATFORM_STANDARD_USE_INITIALIZE - 0)
 void
 vBSP430platformInitialize_ni (void)
@@ -50,6 +73,8 @@ vBSP430platformInitialize_ni (void)
   /* Hold off watchdog */
   WDTCTL = WDTPW | WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
+
+  BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE;
 
 #if (BSP430_PLATFORM_BOOT_CONFIGURE_LEDS - 0) && (BSP430_LED - 0)
   vBSP430ledInitialize_ni();
@@ -85,10 +110,12 @@ vBSP430platformInitialize_ni (void)
 #if BSP430_UPTIME - 0
   vBSP430uptimeStart_ni();
 #endif /* BSP430_UPTIME */
+
+  BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE;
 }
 #endif /* BSP430_PLATFORM_STANDARD_USE_INITIALIZE */
 
-#endif /* BSP430_PLATFORM_STANDARD_INC */
+/** @endcond */
 
 /*
  * Local Variables:
