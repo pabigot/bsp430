@@ -36,6 +36,12 @@
 #include <bsp430/periph/port.h>
 #include <bsp430/platform/rf2500t/platform.h>
 
+/* Ensure CC2500 CSn is held high to avoid issues with use of I2C. */
+#define BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE do {       \
+    P3DIR |= BIT0;                                              \
+    P3OUT |= BIT0;                                              \
+  } while (0)
+
 #include <bsp430/platform/standard.inc>
 
 #if BSP430_LED - 0

@@ -45,6 +45,13 @@
  *
  * </ul>
  *
+ * @note The RF2500T has a CC2500 radio built-in, with its chip select
+ * on P3.0.  At power-up, the port registers may be set so that the
+ * CC2500 is receiving a low signal on that line, causing it to
+ * interfere with pull-ups on I2C devices that use USCI_B0.  This
+ * platform reconfigures P3.0 to output high during
+ * vBSP430platformInitialize_ni().
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
