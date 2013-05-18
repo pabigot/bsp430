@@ -39,6 +39,17 @@
 #ifndef BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H
 #define BSP430_PLATFORM_RF2500T_BSP430_CONFIG_H
 
+#ifndef configBSP430_RF_RF2500T
+/** Define to a true value to enable the built-in CC2500 on the RF2500T platform.
+ *
+ * If defined false or left undefined the HPL macros and HAL/HPL
+ * resources required to use the CC2500 will not be provided.
+ *
+ * @cppflag
+ * @defaulted */
+#define configBSP430_RF_RF2500T (configBSP430_PLATFORM_RF - 0)
+#endif /* configBSP430_RF_RF2500T */
+
 /** @cond DOXYGEN_EXCLUDE */
 
 /** Platform does not support a crystal
@@ -87,13 +98,37 @@
 #endif /* configBSP430_HAL_PORT1 */
 #endif /* configBSP430_PLATFORM_BUTTON0 */
 
-/* Enable RFEM resources if requested */
-#if (configBSP430_RFEM - 0)
+/* !BSP430! insert=emk_config emk=rf2500t mcu=msp430f2274 spi=UCB0SOMI tag=cc2500 gpio=GDO0,GDO1,GDO2 */
+/* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_config] */
+#if (configBSP430_RF_RF2500T - 0)
+#define BSP430_RF_CC2500_SPI_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI_B0
 #define configBSP430_SERIAL_ENABLE_SPI 1
 #define configBSP430_HAL_USCI_B0 1
-#define configBSP430_HAL_PORT2 1
-#define configBSP430_HAL_PORT3 1
-#endif /* configBSP430_RFEM */
+#define BSP430_RF_CC2500_GDO0_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT2
+#define BSP430_RF_CC2500_GDO1_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT3
+#define BSP430_RF_CC2500_GDO2_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT2
+#define BSP430_RF_CC2500_CSn_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_PORT3
+/* Request HAL (and HPL) for all GPIO ports */
+#define BSP430_WANT_CONFIG_HAL 1
+#define BSP430_WANT_PERIPH_CPPID BSP430_RF_CC2500_GDO0_PORT_PERIPH_CPPID
+#include <bsp430/periph/want_.h>
+#undef BSP430_WANT_PERIPH_CPPID
+#define BSP430_WANT_PERIPH_CPPID BSP430_RF_CC2500_GDO1_PORT_PERIPH_CPPID
+#include <bsp430/periph/want_.h>
+#undef BSP430_WANT_PERIPH_CPPID
+#define BSP430_WANT_PERIPH_CPPID BSP430_RF_CC2500_GDO2_PORT_PERIPH_CPPID
+#include <bsp430/periph/want_.h>
+#undef BSP430_WANT_PERIPH_CPPID
+#undef BSP430_WANT_CONFIG_HAL
+/* Request HPL for all non-GPIO ports */
+#define BSP430_WANT_CONFIG_HPL 1
+#define BSP430_WANT_PERIPH_CPPID BSP430_RF_CC2500_CSn_PORT_PERIPH_CPPID
+#include <bsp430/periph/want_.h>
+#undef BSP430_WANT_PERIPH_CPPID
+#undef BSP430_WANT_CONFIG_HPL
+#endif /* configBSP430_RF_RF2500T */
+/* END AUTOMATICALLY GENERATED CODE [emk_config] */
+/* !BSP430! end=emk_config */
 
 /** @endcond */
 

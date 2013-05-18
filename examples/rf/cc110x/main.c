@@ -1,18 +1,10 @@
 /** This file is in the public domain.
  *
- * Basic validation of SPI using the RF2500T to query the CC2500 for its
- * part number and version.
+ * Basic validation of SPI using an RFEM+CC110XEMK or EXP430G2+Anaren
+ * AIR to query the CC110X for its part number and version.
  *
- * Recognized MCUs/platforms are:
- *
- * | MCU            | EXP          | GDO0 | GDO2 | CSn  | SCL  | MOSI | MISO/GDO1 |
- * | -------------- | ------------ | ---- | ---- | ---- | ---- | ---- | --------- |
- * |                |  RF1 Header  |  P10 |  P12 |  P14 |  P16 |  P18 |  P20      |
- * | msp430f2274    | RF2500T      | P2.6 | P2.7 | P3.0 | P3.3 | P3.1 | P3.2      |
- * | msp430f5438(a) | EXP430F5438  | P1.7 | P1.3 | P3.0 | P3.3 | P3.1 | P3.2      |
- * | msp430fr5739   | EXP430FR5739 | P4.1 | P2.3 | P1.3 | P2.2 | P1.6 | P1.7      |
- * | msp430f5529    | EXP430F5529  | P2.3 | P2.4 | P2.6 | P3.2 | P3.0 | P3.1      |
- * | msp430g2553    | Anaren Air   | P2.6 | P1.0 | P2.7 | P1.5 | P1.7 | P1.6      |
+ * This also works for CC2500 radios if the EMK hardware is used; the
+ * difference will be evident in PARTNUM and VERSION output.
  *
  * @homepage http://github.com/pabigot/bsp430
  *
@@ -24,11 +16,7 @@
 #include <bsp430/utility/console.h>
 #include <bsp430/serial.h>
 #include <bsp430/periph/port.h>
-#include <bsp430/utility/rfem.h>
-
-#if ! (BSP430_RFEM - 0)
-#error No RFEM support on platform
-#endif /* BSP430_RFEM */
+#include <bsp430/rf/cc110x.h>
 
 hBSP430halSERIAL spi;
 
@@ -74,39 +62,37 @@ void main ()
   int rc = 0;
 
   /* GDO0 and GDO2 are always interrupt-capable. */
-  volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE);
-  volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE);
-  hBSP430halPORT hgdo1 = hBSP430portLookup(BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE);
-  hBSP430halPORT hcsn = hBSP430portLookup(BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * gdo0 = xBSP430hplLookupPORTIE(BSP430_RF_CC110X_GDO0_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * gdo2 = xBSP430hplLookupPORTIE(BSP430_RF_CC110X_GDO2_PORT_PERIPH_HANDLE);
+  hBSP430halPORT hgdo1 = hBSP430portLookup(BSP430_RF_CC110X_GDO1_PORT_PERIPH_HANDLE);
+  hBSP430halPORT hcsn = hBSP430portLookup(BSP430_RF_CC110X_CSn_PORT_PERIPH_HANDLE);
 
-  spi = hBSP430serialLookup(BSP430_RFEM_SPI0_PERIPH_HANDLE);
+  spi = hBSP430serialLookup(BSP430_RF_CC110X_SPI_PERIPH_HANDLE);
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
   cprintf("\nccid " __DATE__ " " __TIME__ "\n");
 
-  cprintf("GDO0 %p at %s.%u\n", gdo0, xBSP430portName(BSP430_RFEM_GDO0_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_GDO0_PORT_BIT));
-  cprintf("GDO1 HAL %p HPL %p at %s.%u\n", hgdo1, hgdo1->hpl.any, xBSP430portName(BSP430_RFEM_GDO1_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_GDO1_PORT_BIT));
-  cprintf("GDO2 %p at %s.%u\n", gdo2, xBSP430portName(BSP430_RFEM_GDO2_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_GDO2_PORT_BIT));
-  cprintf("CSn HAL %p HPL %p at %s.%u\n", hcsn, hcsn->hpl.any, xBSP430portName(BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_SPI0CSn_PORT_BIT));
-  cprintf("SPI %p is %s\n", spi, xBSP430serialName(BSP430_RFEM_SPI0_PERIPH_HANDLE));
+  cprintf("GDO0 %p at %s.%u\n", gdo0, xBSP430portName(BSP430_RF_CC110X_GDO0_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC110X_GDO0_PORT_BIT));
+  cprintf("GDO1 HAL %p HPL %p at %s.%u\n", hgdo1, hgdo1->hpl.any, xBSP430portName(BSP430_RF_CC110X_GDO1_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC110X_GDO1_PORT_BIT));
+  cprintf("GDO2 %p at %s.%u\n", gdo2, xBSP430portName(BSP430_RF_CC110X_GDO2_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC110X_GDO2_PORT_BIT));
+  cprintf("CSn HAL %p HPL %p at %s.%u\n", hcsn, hcsn->hpl.any, xBSP430portName(BSP430_RF_CC110X_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC110X_CSn_PORT_BIT));
+  cprintf("SPI %p is %s\n", spi, xBSP430serialName(BSP430_RF_CC110X_SPI_PERIPH_HANDLE));
 #if BSP430_PLATFORM_PERIPHERAL_HELP
-  cprintf("SPI Pins: %s\n", xBSP430platformPeripheralHelp(BSP430_RFEM_SPI0_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_SPI3));
+  cprintf("SPI Pins: %s\n", xBSP430platformPeripheralHelp(BSP430_RF_CC110X_SPI_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_SPI3));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf(__DATE__ " " __TIME__ "\n");
 
 
   /* Configure the SPI interface, but immediately put it into hold
    * mode so we can check CHIP_RDYn on the MISO/GDO1 input. */
-  spi = hBSP430serialOpenSPI(spi,
-                             BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPH | UCMSB | UCMST),
-                             0, 0);
+  spi = hBSP430serialOpenSPI(spi, BSP430_RF_CC110X_SPI_CTL0_BYTE, 0, 0);
   if (spi) {
     rc = iBSP430serialSetHold_ni(spi, 1);
     /* GDO1 to input, pull-up */
-    BSP430_PORT_HAL_HPL_DIR(hgdo1) &= ~BSP430_RFEM_GDO1_PORT_BIT;
-    BSP430_PORT_HAL_HPL_REN(hgdo1) |= BSP430_RFEM_GDO1_PORT_BIT;
-    BSP430_PORT_HAL_HPL_OUT(hgdo1) |= BSP430_RFEM_GDO1_PORT_BIT;
+    BSP430_PORT_HAL_HPL_DIR(hgdo1) &= ~BSP430_RF_CC110X_GDO1_PORT_BIT;
+    BSP430_PORT_HAL_HPL_REN(hgdo1) |= BSP430_RF_CC110X_GDO1_PORT_BIT;
+    BSP430_PORT_HAL_HPL_OUT(hgdo1) |= BSP430_RF_CC110X_GDO1_PORT_BIT;
   }
 
   cprintf("SPI device %p hold returned %d\n", spi, rc);
@@ -116,15 +102,15 @@ void main ()
 
   /* Configure CSn initial high to ensure we have a falling edge when
    * we first enable the radio. */
-  BSP430_PORT_HAL_HPL_SEL(hcsn) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;
-  BSP430_PORT_HAL_HPL_OUT(hcsn) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
-  BSP430_PORT_HAL_HPL_DIR(hcsn) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_SEL(hcsn) &= ~BSP430_RF_CC110X_CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_OUT(hcsn) |= BSP430_RF_CC110X_CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_DIR(hcsn) |= BSP430_RF_CC110X_CSn_PORT_BIT;
 
   /* Now enable the radio */
-  BSP430_PORT_HAL_HPL_OUT(hcsn) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_OUT(hcsn) &= ~BSP430_RF_CC110X_CSn_PORT_BIT;
 
   /* Spin until GDO1 (CHP_RDYn) is clear indicating radio is responsive */
-  while (BSP430_PORT_HAL_HPL_IN(hgdo1) & BSP430_RFEM_GDO1_PORT_BIT) {
+  while (BSP430_PORT_HAL_HPL_IN(hgdo1) & BSP430_RF_CC110X_GDO1_PORT_BIT) {
     cprintf("Waiting for radio ready\n");
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ);
   }
@@ -168,7 +154,7 @@ void main ()
   /* Disable SPI before removing CSn otherwise the sequence isn't
    * right. */
   rc = iBSP430serialSetHold_ni(spi, 1);
-  BSP430_PORT_HAL_HPL_OUT(hcsn) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
+  BSP430_PORT_HAL_HPL_OUT(hcsn) |= BSP430_RF_CC110X_CSn_PORT_BIT;
 
   /* This gets the RF2500T power down to about 120 nA.  Note:
    * Purposefully enter LPM with #GIE off since we do not intend to

@@ -19,7 +19,6 @@
 #include <bsp430/clock.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
-#include <bsp430/utility/rfem.h>
 #include <bsp430/serial.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/periph/sys.h>

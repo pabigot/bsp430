@@ -29,20 +29,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** \page ex_rfem_ccid RF Evaluation Module and ChipCon Radios
+/** \page ex_rf_cc2500 RF Evaluation Module and ChipCon Radios
 
-The <bsp430/utility/rfem.h> header provides a standard set of resources for
-interacting with a radio module plugged into the RF headers on many MSP430
-evaluation modules.
+The <bsp430/rf/cc2500.h> header provides a standard set of resources for
+interacting with a ChipCon CC2500 radio module, either plugged into the RF
+headers on many MSP430 evaluation modules or built-in as with the @link
+BSP430_PLATFORM_RF2500T RF2500T@endlink.
 
-\section ex_rfem_ccid_main main.c
-\include rfem/ccid/main.c
+\section ex_rf_cc2500_main main.c
+\include rf/cc2500/main.c
 
-\section ex_rfem_ccid_config bsp430_config.h
-\include rfem/ccid/bsp430_config.h
+\section ex_rf_cc2500_config bsp430_config.h
+\include rf/cc2500/bsp430_config.h
 
-\section ex_rfem_ccid_make Makefile
-\include rfem/ccid/Makefile
+\section ex_rf_cc2500_make Makefile
+\include rf/cc2500/Makefile
 
-\example rfem/ccid/main.c
+\example rf/cc2500/main.c
 */

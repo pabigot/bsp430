@@ -92,12 +92,12 @@ static gcSpiHandleRx rxCallback_ni_;
 
 /* Assert chip select by clearing CSn */
 #define CS_ASSERT() do {                                                \
-    BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RFEM_SPI0CSn_PORT_BIT;  \
+    BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RF_CC3000_CSn_PORT_BIT;  \
   } while (0)
 
 /* De-assert chip select by setting CSn */
 #define CS_DEASSERT() do {                                              \
-    BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;   \
+    BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RF_CC3000_CSn_PORT_BIT;   \
   } while (0)
 
 /* Implementation of tWlanReadInterruptPin for wlan_init().
@@ -107,7 +107,7 @@ static gcSpiHandleRx rxCallback_ni_;
 static long
 readWlanInterruptPin_ (void)
 {
-  return spiIRQport_->in & BSP430_RFEM_SPI_IRQ_PORT_BIT;
+  return spiIRQport_->in & BSP430_RF_CC3000_IRQn_PORT_BIT;
 }
 
 /* Implementation of tWlanInterruptEnable for wlan_init().
@@ -117,7 +117,7 @@ readWlanInterruptPin_ (void)
 static void
 wlanInterruptEnable_ (void)
 {
-  spiIRQport_->ie |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
+  spiIRQport_->ie |= BSP430_RF_CC3000_IRQn_PORT_BIT;
 }
 
 /* Implementation of tWlanInterruptDisable for wlan_init().
@@ -127,7 +127,7 @@ wlanInterruptEnable_ (void)
 static void
 wlanInterruptDisable_ (void)
 {
-  spiIRQport_->ie &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+  spiIRQport_->ie &= ~BSP430_RF_CC3000_IRQn_PORT_BIT;
 }
 
 /* Implementation of tWriteWlanPin for wlan_init().
@@ -137,12 +137,12 @@ wlanInterruptDisable_ (void)
 static void
 writeWlanPin_ (unsigned char val)
 {
-  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
 
   if (val) {
-    pwr_en_port->out |= BSP430_RFEM_PWR_EN_PORT_BIT;
+    pwr_en_port->out |= BSP430_RF_CC3000_PWR_EN_PORT_BIT;
   } else {
-    pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
+    pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
     spiFlags_ &= ~SPIFLAG_INITIALIZED;
   }
 }
@@ -153,16 +153,16 @@ iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
                             tDriverPatches driver_patch_fn,
                             tBootLoaderPatches boot_loader_patch_fn)
 {
-  if (NULL == hBSP430serialLookup(BSP430_RFEM_SPI0_PERIPH_HANDLE)) {
+  if (NULL == hBSP430serialLookup(BSP430_RF_CC3000_SPI_PERIPH_HANDLE)) {
     return -1;
   }
 
-  spiIRQport_ = xBSP430hplLookupPORTIE(BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE);
+  spiIRQport_ = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE);
   if (NULL == spiIRQport_) {
     return -1;
   }
 
-  halCSn_ = hBSP430portLookup(BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE);
+  halCSn_ = hBSP430portLookup(BSP430_RF_CC3000_CSn_PORT_PERIPH_HANDLE);
   if (NULL == halCSn_) {
     return -1;
   }
@@ -223,9 +223,9 @@ static sBSP430halISRIndexedChainNode spi_irq_cb = { .callback = processSpiIRQ_ }
 void
 SpiOpen (gcSpiHandleRx pfRxHandler)
 {
-  hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE);
-  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
-  unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RFEM_SPI_IRQ_PORT_BIT);
+  hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
+  unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT);
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
@@ -239,7 +239,7 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
      * http://processors.wiki.ti.com/index.php/CC3000_Host_Programming_Guide#CC3000_SPI_Operation
      * the CC3000 can accept clock speeds up to 26MHz, so we might as
      * well just use undivided SMCLK. */
-    spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_RFEM_SPI0_PERIPH_HANDLE),
+    spi_ = hBSP430serialOpenSPI(hBSP430serialLookup(BSP430_RF_CC3000_SPI_PERIPH_HANDLE),
                                 BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMSB | UCMST),
                                 UCSSEL_2, 1);
     if (! spi_) {
@@ -254,12 +254,12 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
 
     /* Configure CC3000 power-enable pin and turn off power.  It'll be
      * turned on in wlan_start(). */
-    pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
-    pwr_en_port->dir |= BSP430_RFEM_PWR_EN_PORT_BIT;
+    pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
+    pwr_en_port->dir |= BSP430_RF_CC3000_PWR_EN_PORT_BIT;
 
     /* Clear chip select (set value before making it an output) */
     CS_DEASSERT();
-    BSP430_PORT_HAL_HPL_DIR(halCSn_) |= BSP430_RFEM_SPI0CSn_PORT_BIT;
+    BSP430_PORT_HAL_HPL_DIR(halCSn_) |= BSP430_RF_CC3000_CSn_PORT_BIT;
 
     /* Hook into the interrupt vector for the SPI IRQ, then enable
      * interrupts on falling edge.  When wlan_start() turns on power,
@@ -267,9 +267,9 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
      * also busy-waits internally for this event). */
     spi_irq_cb.next_ni = spi_irq_hal->pin_cbchain_ni[spi_irq_pin];
     spi_irq_hal->pin_cbchain_ni[spi_irq_pin] = &spi_irq_cb;
-    spiIRQport_->ies |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
-    spiIRQport_->dir &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
-    spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    spiIRQport_->ies |= BSP430_RF_CC3000_IRQn_PORT_BIT;
+    spiIRQport_->dir &= ~BSP430_RF_CC3000_IRQn_PORT_BIT;
+    spiIRQport_->ifg &= ~BSP430_RF_CC3000_IRQn_PORT_BIT;
     wlanInterruptEnable_();
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -278,9 +278,9 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
 void
 SpiClose (void)
 {
-  hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE);
-  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE);
-  unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RFEM_SPI_IRQ_PORT_BIT);
+  hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE);
+  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
+  unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT);
   BSP430_CORE_INTERRUPT_STATE_T istate;
 
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
@@ -293,10 +293,10 @@ SpiClose (void)
     /* Disable interrupts, clear pending interrupt, and unhook from
      * the ISR chain.  Set the GPIO to output low. */
     tSLInformation.WlanInterruptDisable();
-    spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    spiIRQport_->ifg &= ~BSP430_RF_CC3000_IRQn_PORT_BIT;
     spi_irq_hal->pin_cbchain_ni[spi_irq_pin] = spi_irq_cb.next_ni;
-    spiIRQport_->out &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
-    spiIRQport_->dir |= BSP430_RFEM_SPI_IRQ_PORT_BIT;
+    spiIRQport_->out &= ~BSP430_RF_CC3000_IRQn_PORT_BIT;
+    spiIRQport_->dir |= BSP430_RF_CC3000_IRQn_PORT_BIT;
 
     /* Close down SPI peripheral */
     (void)iBSP430serialClose(spi_);
@@ -306,7 +306,7 @@ SpiClose (void)
 
     /* Power down the CC3000.  In fact, this was already done by
      * wlan_stop(). */
-    pwr_en_port->out &= ~BSP430_RFEM_PWR_EN_PORT_BIT;
+    pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
 
     rxCallback_ni_ = NULL;
     spi_ = NULL;
@@ -347,7 +347,7 @@ SpiWrite (unsigned char * tx_buffer,
   while (0 != readWlanInterruptPin_()) {
     ;
   }
-  spiIRQport_->ifg &= ~BSP430_RFEM_SPI_IRQ_PORT_BIT;
+  spiIRQport_->ifg &= ~BSP430_RF_CC3000_IRQn_PORT_BIT;
 
   /* Special handling for first write */
   if (! (spiFlags_ & SPIFLAG_DID_FIRST_WRITE)) {

@@ -1,4 +1,6 @@
 #!/bin/sh
 
+PYTHONPATH=${BSP430_ROOT}/maintainer/lib/python
+export PYTHONPATH
 git grep -l '!BSP430!' include src \
   | xargs python maintainer/expandtemplate.py "${@}"

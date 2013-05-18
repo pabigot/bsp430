@@ -4,6 +4,7 @@ import os.path
 import argparse
 import os
 import types
+import bsp430.pinmap
 
 def expandStringTemplate (template, subst_map, idmap):
     text = []
@@ -573,6 +574,180 @@ isr_%(INSTANCE)s (void)
 #elif BSP430_%(FUNCTIONAL)s_PERIPH_CPPID == BSP430_PERIPH_CPPID_%(INSTANCE)s
 #define BSP430_%(FUNCTIONAL)s_PERIPH_HANDLE BSP430_PERIPH_%(INSTANCE)s''',
     }
+
+def RFEMPlatformMap (platform):
+    platform_path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', 'platform', '%s.pinmap' % (platform))
+    rfmap = {}
+    for l in bsp430.pinmap.GenerateLines(platform_path):
+        (hdr, pin) = l.split()
+        rfem = bsp430.pinmap.RFEMPin.Create(hdr)
+        port = bsp430.pinmap.Port.Create(pin)
+        if not (rfem and port):
+            continue
+        assert not rfem in rfmap
+        rfmap[rfem] = port
+    return rfmap
+
+def RFEMMCUFunctionMap (mcu, serial_port):
+    mcu_path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', 'mcu', '%s.pinmap' % (mcu))
+    mcumap = {}
+    serial_periph = None
+    for l in bsp430.pinmap.GenerateLines(mcu_path):
+        functions = l.split()
+        port_pin = functions.pop(0)
+        port = bsp430.pinmap.Port.Create(port_pin)
+        if port is None:
+            continue
+        mcumap[port] = None
+        if not functions:
+            continue
+        sel = 1
+        for fs in functions:
+            for f in fs.split(','):
+                timer = bsp430.pinmap.Timer.Create(f)
+                if (1 == sel) and (timer is not None):
+                    mcumap[port] = timer
+                serial = bsp430.pinmap.Serial.Create(f)
+                # To avoid confusing things, we do not record serial
+                # function on individual ports.  The RFEM serial port
+                # may not be accessed through the primary selection
+                # function, but we assume the desired port is the one
+                # with the lowest selector on the port.
+                if (serial_port == port) and (serial is not None) and (serial_periph is None) and ('SOMI' == serial.role):
+                    serial_periph = serial
+            sel += 1
+    return (serial_periph, mcumap)
+
+def RFEMBuildHeaderMCULinkage (platform, mcu):
+    rfmap = RFEMPlatformMap(platform)
+    (serial_periph, mcumap) = RFEMMCUFunctionMap(mcu, rfmap[bsp430.pinmap.RFEMPin(1, 20)])
+    return (serial_periph, rfmap, mcumap)
+
+def fn_rfem_expand (subst_map, idmap, is_config):
+    text = []
+    (serial_periph, rfmap, mcumap) = RFEMBuildHeaderMCULinkage(idmap['platform'], idmap['mcu'])
+    if is_config:
+        text.append('#if (configBSP430_RFEM - 0)')
+    else:
+        text.append('#if (configBSP430_RFEM - 0)')
+        text.append('#define BSP430_RFEM 1')
+        text.append('#endif /* configBSP430_RFEM */')
+        text.append('#if (BSP430_RFEM - 0)')
+    if serial_periph is not None:
+        text.append(serial_periph.expandTemplate('RFEM_SERIAL', is_config=is_config))
+        if is_config:
+            text.append('#define configBSP430_SERIAL_ENABLE_SPI 1')
+            text.append('#define configBSP430_HAL_%s 1' % (serial_periph.periph(),))
+    for k in sorted(rfmap.keys()):
+        port = rfmap[k]
+        tag = k.prefix()
+        text.append(port.expandTemplate(tag, is_config))
+        if mcumap.get(port, None) is not None:
+            text.append(mcumap[port].expandTemplate(tag, is_config))
+    if is_config:
+        text.append('#endif /* configBSP430_RFEM */')
+    else:
+        text.append('#endif /* BSP430_RFEM */')
+    return text
+
+def fn_rfem_config (subst_map, idmap):
+    return fn_rfem_expand(subst_map, idmap, is_config=True)
+templates['rfem_config'] = fn_rfem_config
+
+def fn_rfem_platform (subst_map, idmap):
+    return fn_rfem_expand(subst_map, idmap, is_config=False)
+templates['rfem_platform'] = fn_rfem_platform
+
+def appendDefine (text, test_def, source_prefix, result_prefix, *suffixes):
+    if test_def is not None:
+        text.append('#if defined(%s)' % (test_def,))
+    text.extend([ '#define %s%s %s%s' % (result_prefix, _s, source_prefix, _s) for _s in suffixes])
+    if test_def is not None:
+        text.append('#endif /* %s */' % (test_def,))
+
+def fn_emk_expand (subst_map, idmap, is_config):
+    text = []
+    serial_periph = None
+    mcu = idmap.get('mcu', None)
+    emk = idmap['emk']
+    emktag = idmap.get('emktag', emk)
+    tag = idmap['tag']
+    cpp_cond = 'configBSP430_RF_%s' % (emktag.upper(),)
+    text.append('#if (%s - 0)' % (cpp_cond,))
+    if not is_config:
+        text.append('#define BSP430_RF_%s 1' % (tag.upper(),))
+    serial_type = idmap.get('serial_type', 'spi')
+    if mcu is not None:
+        (_, mcumap) = RFEMMCUFunctionMap(mcu, None)
+        serial_periph = bsp430.pinmap.Serial.Create(idmap['spi'])
+        assert serial_periph is not None
+        text.append(serial_periph.expandTemplate('RF_%s_%s' % (tag.upper(), serial_type.upper()), is_config=is_config))
+        if is_config:
+            text.append('#define configBSP430_SERIAL_ENABLE_%s 1' % (serial_type.upper(),))
+            text.append('#define configBSP430_HAL_%s 1' % (serial_periph.periph(),))
+    else:
+        if not is_config:
+            text.append('#define BSP430_RF_%s_%s_PERIPH_HANDLE BSP430_RFEM_SERIAL_PERIPH_HANDLE' % (tag.upper(), serial_type.upper()))
+        
+    gpio_signals = idmap.get('gpio')
+    if gpio_signals is not None:
+        gpio_signals = frozenset(gpio_signals.split(','))
+    signals = []
+    emk_path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', 'rfem', '%s.pinmap' % (emk,))
+    for l in bsp430.pinmap.GenerateLines(emk_path):
+        (signal, pin) = l.split()
+        sig_tag = 'RF_%s_%s' % (tag.upper(), signal)
+        sig_prefix = 'BSP430_%s' % (sig_tag,)
+        is_gpio = (gpio_signals is not None) and (signal in gpio_signals)
+        signals.append( (sig_prefix, is_gpio) )
+        if mcu:
+            port = bsp430.pinmap.Port.Create(pin)
+            assert port is not None
+            timer = mcumap[port]
+            text.append(port.expandTemplate(sig_tag, is_config))
+            if is_gpio and (timer is not None) and (timer.ccis is not None):
+                text.append(timer.expandTemplate(sig_tag, is_config))
+        else:
+            rf = bsp430.pinmap.RFEMPin.Create(pin)
+            rf_prefix = 'BSP430_%s' % (rf.prefix(),)
+            assert rf is not None, 'no rf %s on %s' % (pin, emk)
+            for sfx in bsp430.pinmap.Port.TemplateSuffixes(is_config):
+                appendDefine(text, '%s%s' % (rf_prefix, sfx), rf_prefix, sig_prefix, sfx)
+            if is_gpio:
+                for sfx in bsp430.pinmap.Timer.TemplateSuffixes(is_config):
+                    appendDefine(text, '%s%s' % (rf_prefix, sfx), rf_prefix, sig_prefix, sfx)
+    if is_config:
+        hal_text = []
+        hpl_text = []
+        for (sig_prefix, is_gpio) in signals:
+            want_text = []
+            want_text.append("#define BSP430_WANT_PERIPH_CPPID %s_PORT_PERIPH_CPPID" % (sig_prefix,))
+            want_text.append("#include <bsp430/periph/want_.h>")
+            want_text.append("#undef BSP430_WANT_PERIPH_CPPID")
+            if is_gpio:
+                hal_text.extend(want_text)
+            else:
+                hpl_text.extend(want_text)
+        if hal_text:
+            text.append("/* Request HAL (and HPL) for all GPIO ports */")
+            text.append("#define BSP430_WANT_CONFIG_HAL 1")
+            text.extend(hal_text)
+            text.append("#undef BSP430_WANT_CONFIG_HAL")
+        if hpl_text:
+            text.append("/* Request HPL for all non-GPIO ports */")
+            text.append("#define BSP430_WANT_CONFIG_HPL 1")
+            text.extend(hpl_text)
+            text.append("#undef BSP430_WANT_CONFIG_HPL")
+    text.append('#endif /* %s */' % (cpp_cond,))
+    return text
+
+def fn_emk_config (subst_map, idmap):
+    return fn_emk_expand(subst_map, idmap, True)
+templates['emk_config'] = fn_emk_config
+
+def fn_emk_platform (subst_map, idmap):
+    return fn_emk_expand(subst_map, idmap, False)
+templates['emk_platform'] = fn_emk_platform
 
 # Generate a list of the core resource tags for all instances of core
 # resource groups.

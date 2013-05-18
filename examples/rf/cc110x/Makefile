@@ -1,0 +1,8 @@
+PLATFORM ?= exp430g2
+TEST_PLATFORMS=exp430f5438 exp430f5529 exp430fr5739 exp430g2 trxeb
+MODULES=$(MODULES_PLATFORM)
+MODULES += $(MODULES_UPTIME)
+MODULES += $(MODULES_CONSOLE)
+MODULES += periph/port
+SRC=main.c
+include $(BSP430_ROOT)/examples/Makefile.common

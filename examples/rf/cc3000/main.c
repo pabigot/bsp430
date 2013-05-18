@@ -717,12 +717,12 @@ void main (void)
   cprintf("Vcore at %d\n", rv);
 #endif
 
-  cprintf("PWR_EN at %s.%u\n", xBSP430portName(BSP430_RFEM_PWR_EN_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_PWR_EN_PORT_BIT));
-  cprintf("SPI_IRQ HAL at %s.%u\n", xBSP430portName(BSP430_RFEM_SPI_IRQ_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_SPI_IRQ_PORT_BIT));
-  cprintf("CSn HAL at %s.%u\n", xBSP430portName(BSP430_RFEM_SPI0CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RFEM_SPI0CSn_PORT_BIT));
-  cprintf("SPI is %s\n", xBSP430serialName(BSP430_RFEM_SPI0_PERIPH_HANDLE));
+  cprintf("PWR_EN at %s.%u\n", xBSP430portName(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC3000_PWR_EN_PORT_BIT));
+  cprintf("SPI_IRQ HAL at %s.%u\n", xBSP430portName(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT));
+  cprintf("CSn HAL at %s.%u\n", xBSP430portName(BSP430_RF_CC3000_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC3000_CSn_PORT_BIT));
+  cprintf("SPI is %s\n", xBSP430serialName(BSP430_RF_CC3000_SPI_PERIPH_HANDLE));
 #if BSP430_PLATFORM_PERIPHERAL_HELP
-  cprintf("SPI Pins: %s\n", xBSP430platformPeripheralHelp(BSP430_RFEM_SPI0_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_SPI3));
+  cprintf("SPI Pins: %s\n", xBSP430platformPeripheralHelp(BSP430_RF_CC3000_SPI_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_SPI3));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf(__DATE__ " " __TIME__ "\n");
 
@@ -730,6 +730,10 @@ void main (void)
    * function does nothing but store callbacks. */
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
+  if (0 > rv) {
+    cprintf("Aborting due to failure to initialized\n");
+    return;
+  }
 
   commandSet = LAST_COMMAND;
   command = NULL;

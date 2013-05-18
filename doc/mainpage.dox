@@ -66,7 +66,7 @@ POSIX command-line environment supported by GNU Make;
 
 \li Value-added capabilities including a @link bsp430/utility/cli.h command
 line interface@endlink, @link bsp430/utility/unittest.h unit test
-framework@endlink, and @link bsp430/utility/rfem.h RF Evaluation
+framework@endlink, and @link bsp430/rf/rfem.h RF Evaluation
 Module@endlink interface
 
 BSP430 is released as open source under the <a
@@ -109,8 +109,10 @@ bsp430/periph/eusci.h FR5xx @endlink families;
 bsp430/periph/pmm.h PMM@endlink modules for 5xx/6xx/FR5xx devices allowing
 detection of reboot cause and control of ultra-low-power LPMx.5 modes;
 
-\li Pre-configured support for the @link bsp430/utility/rfem.h RF Evaluation
-Module@endlink headers on many experimenter boards;
+\li Pre-configured support for the @link bsp430/rf/rfem.h RF Evaluation
+Module@endlink headers on many experimenter boards along with hardware
+presentation definitions supporting specific radios like the CC110x, CC112x,
+CC2500, CC2520, and CC3000.
 
 \li Support for @link bsp430/utility/m25p.h M25P-compatible SPI flash
 memory@endlink modules common to wireless sensor nodes;
@@ -188,11 +190,11 @@ based on the @link bsp430/utility/console.h console capability @endlink.
 \li \ref ex_utility_alarm provides an interactive program for using one-shot
 and repeating alarms with the @ref grp_timer_alarm.
 
-\li \ref ex_rfem_ccid demonstrates the abstraction of the @link
-bsp430/utility/rfem.h RF Evaluation Module @endlink available on many MSP430
+\li \ref ex_rf_cc2500 demonstrates the abstraction of the @link
+bsp430/rf/rfem.h RF Evaluation Module @endlink available on many MSP430
 experimenter boards by displaying information about a connected ChipCon
-radio.  The same demonstration works on the #BSP430_PLATFORM_EM430 and
-#BSP430_PLATFORM_SURF platforms.
+CC2500 radio.  Similar examples are presented for the <bsp430/rf/cc110x.h>,
+<bsp430/rf/cc2520.h>, and <bsp430/rf/cc1125.h> abstractions.
 
 \li \ref ex_utility_m25p demonstrates use of a serial flash device through
 the <bsp430/utility/m25p.h> interface.
@@ -204,14 +206,14 @@ experimenter boards through the <bsp430/utility/u8glib.h> interface.
 href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> with the BSP430
 SPI serial abstraction
 
-\li \ref ex_rfem_cc3000 is a fairly complex example providing interactive
+\li \ref ex_rf_cc3000 is a fairly complex example providing interactive
 exploration of the <a
 href="http://processors.wiki.ti.com/index.php/CC3000_Wi-Fi_for_MCU">Texas
 Instruments CC3000 SimpleLink(tm) Wi-Fi</a> evaluation module.  It
 demonstrates advanced use of the BSP430 @link bsp430/utility/cli.h command
 line interface @endlink as well as a @link bsp430/serial.h SPI interface
 @endlink to the on most TI experimenter boards through the @link
-bsp430/utility/rfem.h RFEM @endlink capabilities of BSP430.
+bsp430/rf/rfem.h RFEM @endlink capabilities of BSP430.
 
 \subsection ex_sensors Sensors
 

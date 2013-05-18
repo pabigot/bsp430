@@ -1,0 +1,7 @@
+# http://www.ti.com/tool/cc3000em
+PWR_EN	RF1.10	# Active high power enable
+IRQn	RF1.12	# Active low SPI interrupt request
+CSn	RF1.14	# Active low SPI chip select
+#SCLK	RF1.16	# Host interface SPI clock
+#SI	RF1.18	# Host interface SPI data input
+#SO	RF1.20	# Host interface SPI data output

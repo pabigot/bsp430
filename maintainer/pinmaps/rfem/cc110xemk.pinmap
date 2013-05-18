@@ -1,0 +1,8 @@
+# http://www.ti.com/tool/cc1101emk433
+# Also applies to all other CC1100/CC1101 EMKs at various frequencies
+GDO0	RF1.10
+GDO1	RF1.20	# Provides SO when CSn is deasserted
+GDO2	RF1.12
+CSn	RF1.14
+#SCLK	RF1.16
+#SI	RF1.18

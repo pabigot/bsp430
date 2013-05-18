@@ -248,7 +248,7 @@
 #define BSP430_CONSOLE_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_NONE
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
 
-#if 0
+#if 0 /* DO NOT REMOVE THIS: it avoids a special initial case for what follows */
 /* !BSP430! instance=@serial functional=console_serial subst=functional insert=periph_sethandle */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_sethandle] */
 
@@ -393,5 +393,16 @@
 #endif /* configBSP430_TIMER_CCACLK_CC1_PORT */
 
 #endif /* configBSP430_TIMER_CCACLK */
+
+/* Explicitly disable RFEM if not previously explicitly configured */
+#ifndef configBSP430_RFEM
+#define configBSP430_RFEM 0
+#endif /* configBSP430_RFEM */
+
+#if (configBSP430_RFEM - 0)
+/* If using the RFEM feature, incorporate the header that maps RFEM
+ * constants to specific EMK functions. */
+#include <bsp430/rf/emk_bsp430_config.h>
+#endif /* configBSP430_RFEM */
 
 #endif /* BSP430_PLATFORM_BSP430_CONFIG_H */

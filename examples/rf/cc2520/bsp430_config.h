@@ -24,6 +24,8 @@
 
 /* Request RFEM interface resources */
 #define configBSP430_RFEM 1
+#define configBSP430_PLATFORM_RF 1
+#define configBSP430_RF_CC2520EMK 1
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

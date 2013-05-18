@@ -29,7 +29,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** \page ex_rfem_cc3000 CC3000 SimpleLink Exploration
+/** \page ex_rf_cc3000 CC3000 SimpleLink Exploration
 
 This example is a fairly complex program demonstrating the basic goal that
 drove BSP430 development: the ability to quickly develop tools to explore
@@ -130,7 +130,7 @@ the application namespace, support MSPGCC, fix a few bugs, and support
 building as a library that can be linked into an application.  It can be
 obtained from: http://github.com/pabigot/cc3000
 
-\section ex_rfem_cc3000_spi cc3000spi.c
+\section ex_rf_cc3000_spi cc3000spi.c
 
 The CC3000 Host Driver library is independent of the underlying interface
 via SPI.  A demonstration interface for specific MSP430 processors is part
@@ -142,22 +142,22 @@ abstraction following the specfication at the <a
 href="http://processors.wiki.ti.com/index.php/CC3000_Host_Driver_Porting_Guide">CC3000
 Host Driver Porting Guide</a>.
 
-\include rfem/cc3000/cc3000spi.c
+\include rf/cc3000/cc3000spi.c
 
-\section ex_rfem_cc3000_main main.c
+\section ex_rf_cc3000_main main.c
 
 The bulk of the application is taken up with bridge code that interprets
 user input and invokes CC3000 host API calls.  It is mostly of interest in
 that it demonstrates how to arrange command definitions so they can be
 easily included/excluded based on available memory.
 
-\include rfem/cc3000/main.c
+\include rf/cc3000/main.c
 
-\section ex_rfem_cc3000_config bsp430_config.h
-\include rfem/cc3000/bsp430_config.h
+\section ex_rf_cc3000_config bsp430_config.h
+\include rf/cc3000/bsp430_config.h
 
-\section ex_rfem_cc3000_make Makefile
-\include rfem/cc3000/Makefile
+\section ex_rf_cc3000_make Makefile
+\include rf/cc3000/Makefile
 
-\example rfem/cc3000/main.c
+\example rf/cc3000/main.c
 */

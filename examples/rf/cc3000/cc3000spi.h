@@ -50,7 +50,7 @@
 #ifndef BSP430_UTILITY_CC3000SPI_H
 #define BSP430_UTILITY_CC3000SPI_H
 
-#include <bsp430/utility/rfem.h>
+#include <bsp430/platform.h>
 #include <cc3000/cc3000_common.h>
 
 /** Size of the cc3000spi receive buffer, in octets.

@@ -1,0 +1,8 @@
+# RF2500T uses MSP430F2274
+# Note that none of the GDO signals are on a timer-enabled port.
+GDO0	P2.6
+GDO1	P3.2	# Provides SO when CSn is deasserted
+GDO2	P2.7
+CSn	P3.0
+#SCLK	P3.3
+#SI	P3.1

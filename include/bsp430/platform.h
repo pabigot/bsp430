@@ -201,6 +201,23 @@ void vBSP430platformSpinForJumper_ni (void);
  */
 const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int periph_config);
 
+#ifndef configBSP430_PLATFORM_RF
+/** Define to a true value to enable any built-in radio platform.
+ *
+ * For example, this enables #configBSP430_RF_RF2500T when on
+ * #BSP430_PLATFORM_RF2500T.
+ *
+ * Platforms reference this macro only when there is a hard-wired
+ * radio.  For pluggable radios specific defines like
+ * #configBSP430_RF_CC2500EMK or #configBSP430_RF_ANAREN_CC110L must
+ * be used.
+ *
+ * @cppflag
+ * @defaulted
+ */
+#define configBSP430_PLATFORM_RF 0
+#endif /* configBSP430_PLATFORM_RF */
+
 /** @def configBSP430_PLATFORM_BUTTON0
  *
  * Define to a true value if the application will want to use the
@@ -868,5 +885,11 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #ifndef BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT
 #define BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT 0
 #endif /* BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT */
+
+#if (BSP430_RFEM - 0)
+/* If using the RFEM feature, incorporate the header that maps RFEM
+ * constants to specific EMK functions. */
+#include <bsp430/rf/emk_platform.h>
+#endif /* BSP430_RFEM */
 
 #endif /* BSP430_PLATFORM_H */
