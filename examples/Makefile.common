@@ -143,6 +143,12 @@ endif # WITH_GCC
 ifneq (0,$(WITH_GCC))
 WARN_CFLAGS ?= -Wall -Wno-main
 endif # WITH_GCC
+ifneq (0,$(WITH_CCS))
+# Suppress various TI compiler warnings.  Use -pden to add diagnostic number
+# to output.
+# 10374 : Interrupt vector "PERIPHERAL" does not have an interrupt handler routine
+WARN_CFLAGS ?= --diag_suppress=10374
+endif # WITH_CCS
 
 # WITH_WARN_ERROR: If not set to zero, adds -Werror which causes all
 # warnings to be treated as errors.
