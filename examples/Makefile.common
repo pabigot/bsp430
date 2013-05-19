@@ -52,7 +52,8 @@ endif # CG_TOOL_ROOT
 CC=cl430
 OBJ_EXT=.obj
 CFLAGS = --abi=eabi --relaxed_ansi
-CPPFLAGS = --include_path="$(CCS_BASE_ROOT)/msp430/include"
+CPPFLAGS ?=
+CPPFLAGS += --include_path="$(CCS_BASE_ROOT)/msp430/include"
 CPPFLAGS += --include_path="$(CG_TOOL_ROOT)/include"
 
 # The default linker script; can be overridden when the application
