@@ -16,7 +16,6 @@ endif # BSP430_ROOT
 # WITH_CCS: Indicate that Code Composer Studio is installed and the TI
 # compiler used in it should be preferred.  Unless defined to 1, assumes CCS
 # will not be used.
-# WARNING: This is a stub.  CCS is not supported by BSP430.
 # NOTE: Within the source, the toolchain is identified as the TI compiler,
 # not CCS.
 WITH_CCS ?= 0
