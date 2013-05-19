@@ -349,7 +349,14 @@ ifneq (0,$(WITH_CCS))
 # Rule for CCS compiler which insists on placing output in foo.obj
 %.obj: %.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
+REALCLEAN_OBJ ?= *.obj
 endif # WITH_CCS
+
+# On realclean remove all object files even if they aren't in $(OBJ)
+# (e.g., when PLATFORM is not set).  Note the pattern may be
+# toolchain-dependent.
+REALCLEAN_OBJ ?= *.o
+REALCLEAN += $(REALCLEAN_OBJ)
 
 # AOUT: The name of the application image.
 AOUT ?= app.elf
