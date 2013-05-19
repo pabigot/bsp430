@@ -408,3 +408,7 @@ test-platforms:
 	fi
 
 endif # BSP430_INHIBIT_MAKE_RULES
+
+# Local Variables:
+# mode:makefile
+# End:
