@@ -10,5 +10,9 @@ MODULES_PLATFORM_SERIAL=periph/usci5
 # DS1825 serial number and the OSIAN (People Power Co) OUI.
 MODULES_EUI64 ?= utility/onewire periph/port
 
+# SuRF default-enables configBSP430_EUI64_USE_PLATFORM so make sure the
+# required HAL elements are present in the link.
+MODULES_PLATFORM_AUX = $(MODULES_EUI64)
+
 # The SuRF module has an M25P10A serial flash
 MODULES_M25P=$(MODULES_PLATFORM_SERIAL) periph/port utility/m25p

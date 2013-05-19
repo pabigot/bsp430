@@ -259,9 +259,10 @@ MODULES_EUI64 ?= utility/eui64
 # #configBSP430_PLATFORM_M25P.
 MODULES_M25P ?=
 
-# MODULES_PLATFORM: The platform-specific platform module, together with the
-# clock and LED modules.  The combination is non-orthogonal, but convenient.
-MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED)
+# MODULES_PLATFORM: The platform-specific platform module, together
+# with the clock and LED modules and anything the platform thinks is
+# important.  The combination is non-orthogonal, but convenient.
+MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED) $(MODULES_PLATFORM_AUX)
 
 # Add all selected modules to the SRC, eliminating any duplicates
 
