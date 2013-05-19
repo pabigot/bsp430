@@ -36,6 +36,7 @@ AR=$(CROSS_COMPILE)ar
 SIZE=$(CROSS_COMPILE)size
 endif # WITH_GCC
 ifneq (0,$(WITH_CCS))
+# The Code Composer Studio root containing the TI toolchain
 CCS_INSTALL_ROOT ?= /usr/local/ccs/ccsv5
 
 # CCS_BASE_ROOT is the name used in CCS Eclipse project files for the
@@ -53,6 +54,10 @@ OBJ_EXT=.obj
 CFLAGS = --abi=eabi --relaxed_ansi
 CPPFLAGS = --include_path="$(CCS_BASE_ROOT)/msp430/include"
 CPPFLAGS += --include_path="$(CG_TOOL_ROOT)/include"
+
+# The default linker script; can be overridden when the application
+# needs a different layout.
+CCS_LNK_CMD ?= $(CCS_BASE_ROOT)/msp430/include/lnk_$(MCU).cmd
 
 # This one allows the MCU-specific linker file to include more generic
 # linker files.
@@ -146,8 +151,9 @@ endif # WITH_GCC
 ifneq (0,$(WITH_CCS))
 # Suppress various TI compiler warnings.  Use -pden to add diagnostic number
 # to output.
+# 10229 : (FRAM) output section ".data" refers to load symbol cannot be compressed
 # 10374 : Interrupt vector "PERIPHERAL" does not have an interrupt handler routine
-WARN_CFLAGS ?= --diag_suppress=10374
+WARN_CFLAGS ?= --diag_suppress=10229,10374
 endif # WITH_CCS
 
 # WITH_WARN_ERROR: If not set to zero, adds -Werror which causes all
@@ -363,7 +369,7 @@ REALCLEAN += $(REALCLEAN_OBJ)
 AOUT ?= app.elf
 $(AOUT): $(OBJ)
 ifneq (0,$(WITH_CCS))
-	$(CC) $(CFLAGS) -z $(LDFLAGS) -o $@ $(OBJ) $(LDLIBS) $(CCS_BASE_ROOT)/msp430/include/lnk_$(MCU).cmd
+	$(CC) $(CFLAGS) -z $(LDFLAGS) -o $@ $(OBJ) $(LDLIBS) $(CCS_LNK_CMD)
 else # WITH_CCS
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ) $(LDLIBS)
 endif # WITH_CCS
