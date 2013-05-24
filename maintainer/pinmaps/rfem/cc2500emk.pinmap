@@ -1,6 +1,6 @@
 # http://www.ti.com/tool/cc2500emk
 GDO0	RF1.10
-GDO1	RF1.20	# Provides SO when CSn is deasserted
+GDO1	RF1.20	# Provides SO when CS is asserted
 GDO2	RF1.12
 CSn	RF1.14
 #SCLK	RF1.16

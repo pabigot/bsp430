@@ -1,4 +1,4 @@
-# http://www.ti.com/tool/cc1125dk
+# http://www.ti.com/tool/CC1200EMK-868-930
 GPIO0	RF1.10
 GPIO1	RF1.20	# Provides MISO when CS is asserted
 GPIO2	RF1.12
