@@ -20,7 +20,9 @@
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 
 /* Application does output: support spin-for-jumper */
+#ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 /* Support console output.  Use an output buffer so we can transmit
  * while in LPM with interrupts enabled. */
