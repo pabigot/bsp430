@@ -1,4 +1,14 @@
-/** This file is in the public domain.
+/** This file is in the public domain, except as noted below:
+ *
+ * The sBMP085calibration structure definition and the algorithm to
+ * calculate pressure and temperature from uncompensated sensor values
+ * are directly derived from Figure 3 of the BST-BMP085-DS000-06.pdf
+ * which specifies:
+ *
+ * Copyright [2011] Bosch Sensortec GmbH reserves all rights even in
+ * the event of industrial property rights. We reserve all rights of
+ * disposal such as copying and passing on to third parties. BOSCH and
+ * the symbol are registered trademarks of Robert Bosch GmbH, Germany.
  *
  * @homepage http://github.com/pabigot/bsp430
  *
