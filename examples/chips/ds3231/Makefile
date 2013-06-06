@@ -1,0 +1,9 @@
+PLATFORM ?= exp430fr5739
+TEST_PLATFORMS_EXCLUDE=em430 surf wolverine
+MODULES=$(MODULES_PLATFORM)
+MODULES += $(MODULES_UPTIME)
+MODULES += $(MODULES_CONSOLE)
+VPATH += $(BSP430_ROOT)/src/chips
+MODULES += chips/ds3231
+SRC=main.c
+include $(BSP430_ROOT)/examples/Makefile.common
