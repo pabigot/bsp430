@@ -479,11 +479,13 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
       /* This will be last character, and we're not using auto-stop.
        * Wait for any in-progress start to complete then issue
        * stop. */
-      do {
-        if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-          return -1;
-        }
-      } while (hpl->ctlw0 & UCTXSTT);
+      if (hpl->ctlw0 & UCTXSTT) {
+        do {
+          if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
+            return -1;
+          }
+        } while (hpl->ctlw0 & UCTXSTT);
+      }
       hpl->ctlw0 |= UCTXSTP;
     }
     do {

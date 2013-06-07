@@ -424,11 +424,13 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
     if (dpe == (dp+1)) {
       /* This will be last character: wait for any in-progress start
        * to complete then issue stop */
-      do {
-        if (hpl->stat & (UCNACKIFG | UCALIFG)) {
-          return -1;
-        }
-      } while (hpl->ctl1 & UCTXSTT);
+      if (hpl->ctl1 & UCTXSTT) {
+        do {
+          if (hpl->stat & (UCNACKIFG | UCALIFG)) {
+            return -1;
+          }
+        } while (hpl->ctl1 & UCTXSTT);
+      }
       hpl->ctl1 |= UCTXSTP;
     }
     do {
