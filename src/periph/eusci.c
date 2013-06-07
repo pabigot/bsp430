@@ -276,7 +276,7 @@ hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
 
 void
 vBSP430eusciSetReset_ni (hBSP430halSERIAL hal,
-                        int resetp)
+                         int resetp)
 {
   if (resetp) {
     HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;

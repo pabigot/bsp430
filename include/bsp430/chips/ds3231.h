@@ -58,7 +58,8 @@ MODULES += chips/ds3231
 #define DS3231_I2C_ADDRESS 0x68
 
 /** DS3231 register map */
-BSP430_CORE_PACKED_STRUCT(sDS3231registers) {
+BSP430_CORE_PACKED_STRUCT(sDS3231registers)
+{
   uint8_t seconds;              /**< 0x00 Seconds (0-59) (BCD) */
   uint8_t minutes;              /**< 0x01 Minutes (0-59) (BCD) */
   uint8_t hours;                /**< 0x02 Hours (0-23) (BCD plus) */
