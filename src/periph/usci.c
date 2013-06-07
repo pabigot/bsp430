@@ -141,12 +141,8 @@ usciConfigure (hBSP430halSERIAL hal,
     /* Mark the hal active */
     hal->num_rx = hal->num_tx = 0;
 
-    /* Attempt to release the device for use; if that failed, reset it
-     * and return an error */
-    if (0 != iBSP430usciSetHold_ni(hal, 0)) {
-      SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
-      hal = NULL;
-    }
+    /* Release the device for use */
+    vBSP430usciSetReset_ni(hal, 0);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -246,6 +242,22 @@ hBSP430usciOpenI2C (hBSP430halSERIAL hal,
   return usciConfigure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
 }
 
+void
+vBSP430usciSetReset_ni (hBSP430halSERIAL hal,
+                        int resetp)
+{
+  if (resetp) {
+    SERIAL_HAL_HPL(hal)->ctl1 |= UCSWRST;
+  } else {
+    /* Release the USCI and enable the interrupts.  Interrupts are
+     * disabled and cleared when UCSWRST is set. */
+    SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
+    if (hal->rx_cbchain_ni) {
+      *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
+    }
+  }
+}
+
 int
 iBSP430usciSetHold_ni (hBSP430halSERIAL hal,
                        int holdp)
@@ -253,14 +265,13 @@ iBSP430usciSetHold_ni (hBSP430halSERIAL hal,
   int rc;
   int periph_config = peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctl0);
 
-  FLUSH_HAL_NI(hal);
   if (holdp) {
+    FLUSH_HAL_NI(hal);
     SERIAL_HAL_HPL(hal)->ctl1 |= UCSWRST;
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
     if (0 == rc) {
-      SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
       /* Release the USCI and enable the interrupts.  Interrupts are
        * disabled and cleared when UCSWRST is set. */
       SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
@@ -506,6 +517,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .i2cRxData_ni = iBSP430usciI2CrxData_ni,
   .i2cTxData_ni = iBSP430usciI2CtxData_ni,
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
+  .setReset_ni = vBSP430usciSetReset_ni,
   .setHold_ni = iBSP430usciSetHold_ni,
   .close = iBSP430usciClose,
   .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,

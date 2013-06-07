@@ -879,6 +879,9 @@ hBSP430halSERIAL hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
                                       unsigned char ctl1_byte,
                                       unsigned int prescaler);
 
+/** eUSCI-specific implementation of vBSP430serialSetReset_ni() */
+void vBSP430eusciSetReset_ni (hBSP430halSERIAL hal, int resetp);
+
 /** eUSCI-specific implementation of iBSP430serialSetHold_ni() */
 int iBSP430eusciSetHold_ni (hBSP430halSERIAL hal, int holdp);
 

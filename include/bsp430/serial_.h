@@ -294,6 +294,7 @@ struct sBSP430serialDispatch {
   int (* i2cRxData_ni) (hBSP430halSERIAL hal, uint8_t * rx_data, size_t rx_len);
   int (* i2cTxData_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len);
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
+  void (* setReset_ni) (hBSP430halSERIAL hal, int resetp);
   int (* setHold_ni) (hBSP430halSERIAL hal, int holdp);
   int (* close) (hBSP430halSERIAL hal);
   void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);

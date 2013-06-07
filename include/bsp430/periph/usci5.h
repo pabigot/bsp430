@@ -1043,6 +1043,9 @@ hBSP430halSERIAL hBSP430usci5OpenSPI (hBSP430halSERIAL hal,
                                       unsigned char ctl1_byte,
                                       unsigned int prescaler);
 
+/** USCI5-specific implementation of iBSP430serialSetReset_ni() */
+void vBSP430usci5SetReset_ni (hBSP430halSERIAL hal, int resetp);
+
 /** USCI5-specific implementation of iBSP430serialSetHold_ni() */
 int iBSP430usci5SetHold_ni (hBSP430halSERIAL hal, int holdp);
 

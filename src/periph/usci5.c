@@ -129,12 +129,8 @@ usci5Configure (hBSP430halSERIAL hal,
     /* Reset device statistics */
     hal->num_rx = hal->num_tx = 0;
 
-    /* Attempt to release the device for use; if that failed, reset it
-     * and return an error */
-    if (0 != iBSP430usci5SetHold_ni(hal, 0)) {
-      SERIAL_HAL_HPL(hal)->ctlw0 = UCSWRST;
-      hal = NULL;
-    }
+    /* Release the device for use */
+    vBSP430usci5SetReset_ni(hal, 0);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -230,6 +226,18 @@ hBSP430usci5OpenI2C (hBSP430halSERIAL hal,
   return usci5Configure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
 }
 
+void
+vBSP430usci5SetReset_ni (hBSP430halSERIAL hal,
+                         int resetp)
+{
+  if (resetp) {
+    SERIAL_HAL_HPL(hal)->ctlw0 |= UCSWRST;
+  } else {
+    SERIAL_HAL_HPL(hal)->ctlw0 &= ~UCSWRST;
+    SERIAL_HPL_RELEASE_HPL_NI(hal, SERIAL_HAL_HPL(hal));
+  }
+}
+
 int
 iBSP430usci5SetHold_ni (hBSP430halSERIAL hal,
                         int holdp)
@@ -237,8 +245,8 @@ iBSP430usci5SetHold_ni (hBSP430halSERIAL hal,
   int rc;
   int periph_config = peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctl0);
 
-  SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   if (holdp) {
+    SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
     SERIAL_HAL_HPL(hal)->ctlw0 |= UCSWRST;
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
@@ -560,6 +568,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .i2cRxData_ni = iBSP430usci5I2CrxData_ni,
   .i2cTxData_ni = iBSP430usci5I2CtxData_ni,
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
+  .setReset_ni = vBSP430usci5SetReset_ni,
   .setHold_ni = iBSP430usci5SetHold_ni,
   .close = iBSP430usci5Close,
   .wakeupTransmit_ni = vBSP430usci5WakeupTransmit_ni,

@@ -124,12 +124,8 @@ eusciConfigure (hBSP430halSERIAL hal,
     /* Reset device statistics */
     hal->num_rx = hal->num_tx = 0;
 
-    /* Attempt to release the device for use; if that failed, reset it
-     * and return an error */
-    if (0 != iBSP430eusciSetHold_ni(hal, 0)) {
-      HAL_HPL_FIELD(hal, ctlw0) = UCSWRST;
-      hal = NULL;
-    }
+    /* Release the device for use */
+    vBSP430eusciSetReset_ni(hal, 0);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -230,23 +226,21 @@ hBSP430eusciOpenSPI (hBSP430halSERIAL hal,
   return eusciConfigure(hal, ctlw0, 0, prescaler, 0, 0);
 }
 
-static int
+static void
 i2cSetAutoStop_ni (hBSP430halSERIAL hal,
                    int enablep)
 {
-  int rc = 0;
+  /* Only reconfigure if not already in the desired mode */
   if (!!enablep != !!(UCASTP_2 == (UCASTP_3 & HAL_HPL_FIELD(hal, ctlw1)))) {
-    /* Need to reconfigure device. */
-    rc = iBSP430eusciSetHold_ni(hal, 1);
-    if (0 == rc) {
-      unsigned int ctlw1 = HAL_HPL_FIELD(hal, ctlw1);
-      ctlw1 &= ~UCASTP_3;
-      ctlw1 |= (enablep ? UCASTP_2 : UCASTP_0);
-      HAL_HPL_FIELD(hal, ctlw1) = ctlw1;
-      rc = iBSP430eusciSetHold_ni(hal, 0);
-    }
+    unsigned int ctlw1;
+
+    vBSP430eusciSetReset_ni(hal, 1);
+    ctlw1 = HAL_HPL_FIELD(hal, ctlw1);
+    ctlw1 &= ~UCASTP_3;
+    ctlw1 |= (enablep ? UCASTP_2 : UCASTP_0);
+    HAL_HPL_FIELD(hal, ctlw1) = ctlw1;
+    vBSP430eusciSetReset_ni(hal, 0);
   }
-  return rc;
 }
 
 hBSP430halSERIAL
@@ -280,6 +274,18 @@ hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
   return eusciConfigure(hal, ctlw0, UCASTP_2, prescaler, 0, 0);
 }
 
+void
+vBSP430eusciSetReset_ni (hBSP430halSERIAL hal,
+                        int resetp)
+{
+  if (resetp) {
+    HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;
+  } else {
+    HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
+    SERIAL_HAL_RELEASE_NI(hal);
+  }
+}
+
 int
 iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
                         int holdp)
@@ -287,8 +293,8 @@ iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
   int rc;
   int periph_config = peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0));
 
-  SERIAL_HAL_FLUSH_NI(hal);
   if (holdp) {
+    SERIAL_HAL_FLUSH_NI(hal);
     HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
@@ -443,7 +449,6 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
   volatile struct sBSP430hplEUSCIB * hpl = SERIAL_HAL_HPL_B(hal);
   uint8_t * dp = data;
   int use_auto_stop;
-  int rc;
   const uint8_t * const dpe = data + len;
 
   /* Check for errors while waiting for previous activity to
@@ -462,10 +467,7 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
    * to positive 8-bit lengths fall back to the manual mode in other
    * cases. */
   use_auto_stop = (0 < len) && (255 >= len);
-  rc = i2cSetAutoStop_ni(hal, use_auto_stop);
-  if (0 != rc) {
-    return rc;
-  }
+  i2cSetAutoStop_ni(hal, use_auto_stop);
 
   /* Store the receive length.  This is ignored if not using auto-stop. */
   hpl->tbcnt = len;
@@ -506,7 +508,6 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
 {
   volatile struct sBSP430hplEUSCIB * hpl = SERIAL_HAL_HPL_B(hal);
   int use_auto_stop;
-  int rc;
   int i;
 
   /* Check for errors while waiting for previous activity to
@@ -522,10 +523,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
    * to positive 8-bit lengths fall back to the manual mode in other
    * cases. */
   use_auto_stop = (0 < len) && (255 >= len);
-  rc = i2cSetAutoStop_ni(hal, use_auto_stop);
-  if (0 != rc) {
-    return rc;
-  }
+  i2cSetAutoStop_ni(hal, use_auto_stop);
 
   /* Set the transaction length.  If we're not using auto-stop this
    * won't hurt. */
@@ -710,6 +708,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .i2cRxData_ni = iBSP430eusciI2CrxData_ni,
   .i2cTxData_ni = iBSP430eusciI2CtxData_ni,
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
+  .setReset_ni = vBSP430eusciSetReset_ni,
   .setHold_ni = iBSP430eusciSetHold_ni,
   .close = iBSP430eusciClose,
   .wakeupTransmit_ni = vBSP430eusciWakeupTransmit_ni,

@@ -617,21 +617,61 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
 }
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
 
-/** Place a serial device in hold mode
+/** Control serial device reset mode.
  *
- * When placed in hold mode, the #UCSWRST bit (or peripheral-specific
- * analog) is set, clearing all errors and stopping all activity but
- * retaining all configuration information.  In addition, the function
- * reconfigures the associated port pins to their digital I/O
- * function.  When the hold is released, the port pins are
- * reconfigured to their peripheral function, the #UCSWRST bit is
- * cleared, and any interrupts for which callbacks are registered are
- * re-enabled.  (Note that enabling the interrupts at the peripheral
- * level does not change the #GIE state, which should be cleared while
- * this function is executing.)
+ * When placed into reset mode, the #UCSWRST bit (or
+ * peripheral-specific analog) is set, clearing all errors and
+ * stopping all activity but retaining all configuration information.
+ * Interrupts are disabled.  When the hold is released the #UCSWRST
+ * bit is cleared, and any interrupts for which callbacks are
+ * registered are re-enabled.  (Note that enabling the interrupts at
+ * the peripheral level does not change the #GIE state, which should
+ * be cleared while this function is executing.)
  *
- * @note Placing a serial peripheral into hold mode prior to entering
- * a low power mode will often reduce current consumption.
+ * Placing a serial peripheral into reset mode prior to entering a low
+ * power mode will often reduce current consumption.  Entering and
+ * leaving reset mode is also the simplest way to clear peripheral
+ * errors and flush pending data.
+ *
+ * @note This function differs from iBSP430serialSetHold_ni() in that it:
+ * @li Does not wait for any pending activity to complete before
+ * placing the peripheral in reset mode.  This could result in loss of
+ * data; if this is a concern, use vBSP430serialFlush_ni().
+ * @li Does not reconfigure port pins; these remain in their
+ * peripheral function role preventing their use as GPIOs while reset.
+ *
+ * @see iBSP430serialSetHold_ni()
+ *
+ * @param hal a serial HAL handle to a peripheral that has been
+ * opened
+ *
+ * @param resetp a nonzero value if the peripheral is to be placed into
+ * reset mode, and a zero value to release it from reset mode
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
+static BSP430_CORE_INLINE
+void vBSP430serialSetReset_ni (hBSP430halSERIAL hal,
+                               int resetp)
+{
+  hal->dispatch->setReset_ni(hal, resetp);
+}
+
+/** Control serial device hold mode
+ *
+ * When a serial peripheral is placed in hold mode the code blocks
+ * until the peripheral completes any pending activity per
+ * vBSP430serialFlush_ni().  It then paces the peripheral into reset
+ * mode.  In addition, the function reconfigures the associated port
+ * pins to their digital I/O function per
+ * iBSP430platformConfigurePeripheralPins_ni().
+ *
+ * When the hold is released, the port pins are reconfigured to their
+ * peripheral function per
+ * iBSP430platformConfigurePeripheralPins_ni(), and the device is
+ * taken out of reset mode.
+ *
+ * @see vBSP430serialSetReset_ni()
  *
  * @param hal a serial HAL handle to a peripheral that has been
  * opened
@@ -642,7 +682,9 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
  * @return 0 if the transition was successful, -1 if an error
  * occurred.  Potential errors include inability to configure the
  * peripheral pins.  On error, the peripheral is left in reset mode.
- */
+ *
+ * @delegated This function exists only as an inline delegate to a
+ * peripheral-specific implementation. */
 static BSP430_CORE_INLINE
 int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
                              int holdp)
