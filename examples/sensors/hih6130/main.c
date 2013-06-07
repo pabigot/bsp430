@@ -47,6 +47,7 @@ void main ()
     return;
   }
 
+  vBSP430serialSetReset_ni(i2c, 1);
   (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_HIH6130_I2C_ADDRESS);
 
   /* HIH-613x wants max 60ms on power-up. */
@@ -62,40 +63,49 @@ void main ()
    * manipulating timers and doing I2C.  Leave disabled except when
    * sleeping. */
   while (1) {
-    uint8_t data[4];
     unsigned long t0;
     unsigned long t1;
-    unsigned int status;
-    unsigned int hum_raw;
-    unsigned int temp_raw;
+    unsigned int hum_raw = 0;
+    unsigned int temp_raw = 0;
 
+    vBSP430serialSetReset_ni(i2c, 0);
     t0 = ulBSP430uptime_ni();
-    rc = iBSP430i2cTxData_ni(i2c, NULL, 0);
-    if (0 != rc) {
-      cprintf("ERROR IN REQUEST: %d\n", rc);
+    do {
+      uint8_t data[4];
+      unsigned int status;
+
+      rc = iBSP430i2cTxData_ni(i2c, NULL, 0);
+      if (0 != rc) {
+        cprintf("ERROR IN REQUEST: %d\n", rc);
+        break;
+      }
+
+      /* HIH-6130 gets pissy if you're impatient.  App note says it
+       * typically takes 36.65ms to complete a combined temperature and
+       * humidity reading.  Short it so we can verify that, but don't
+       * ask more than once per millisecond. */
+      BSP430_UPTIME_DELAY_MS_NI(30, LPM3_bits, 0);
+      do {
+        rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+        status = 0x03 & (data[0] >> 6);
+        hum_raw = data[1] | (data[0] & 0x3F) << 8;
+        temp_raw = (data[2] << 6) | (data [3] >> 2);
+        if (1 < status) {
+          cprintf("BOGUS STATUS: %d\n", status);
+          rc = -1;
+          break;
+        }
+        if (0 == status) {
+          break;
+        }
+        BSP430_UPTIME_DELAY_MS_NI(1, LPM3_bits, 0);
+      } while (1 == status);
+    } while (0);
+    t1 = ulBSP430uptime_ni();
+    vBSP430serialSetReset_ni(i2c, 1);
+    if (0 > rc) {
       break;
     }
-
-    /* HIH-6130 gets pissy if you're impatient.  App note says it
-     * typically takes 36.65ms to complete a combined temperature and
-     * humidity reading.  Short it so we can verify that, but don't
-     * ask more than once per millisecond. */
-    BSP430_UPTIME_DELAY_MS_NI(30, LPM3_bits, 0);
-    do {
-      rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
-      status = 0x03 & (data[0] >> 6);
-      hum_raw = data[1] | (data[0] & 0x3F) << 8;
-      temp_raw = (data[2] << 6) | (data [3] >> 2);
-      if (1 < status) {
-        cprintf("BOGUS STATUS: %d\n", status);
-        break;
-      }
-      if (0 == status) {
-        break;
-      }
-      BSP430_UPTIME_DELAY_MS_NI(1, LPM3_bits, 0);
-    } while (1 == status);
-    t1 = ulBSP430uptime_ni();
     cprintf("%s: ", xBSP430uptimeAsText_ni(t0));
     cprintf("Temp %d dF, humidity %u ppt, in %s\n", TEMPERATURE_dC_TO_dF(TEMPERATURE_RAW_TO_dC(temp_raw)),
             HUMIDITY_RAW_TO_PPT(hum_raw),
