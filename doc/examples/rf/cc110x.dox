@@ -1,21 +1,21 @@
 /* Copyright 2012-2013, Peter A. Bigot
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -29,21 +29,24 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/** \page ex_rf_cc2500 RF Evaluation Module and ChipCon Radios
+/** \page ex_rf_cc110x RF Evaluation Module and ChipCon Radios
 
-The <bsp430/rf/cc2500.h> header provides a standard set of resources for
-interacting with a ChipCon CC2500 radio module, either plugged into the RF
-headers on many MSP430 evaluation modules or built-in as with the @link
-BSP430_PLATFORM_RF2500T RF2500T@endlink.
+The <bsp430/rf/cc110x.h> header provides a standard set of resources for
+interacting with a TI/ChipCon CC1101, CC2500, or compatible radio module,
+either plugged into the RF headers on many MSP430 evaluation modules or
+built-in as with the @link BSP430_PLATFORM_RF2500T RF2500T@endlink.
 
-\section ex_rf_cc2500_main main.c
-\include rf/cc2500/main.c
+The <bsp430/rf/cc1125.h> header provides a similar set of resources for the
+TI/ChipCon CC112x, CC120x, or compatible radio module.
 
-\section ex_rf_cc2500_config bsp430_config.h
-\include rf/cc2500/bsp430_config.h
+\section ex_rf_cc110x_main main.c
+\include rf/cc110x/main.c
 
-\section ex_rf_cc2500_make Makefile
-\include rf/cc2500/Makefile
+\section ex_rf_cc110x_config bsp430_config.h
+\include rf/cc110x/bsp430_config.h
 
-\example rf/cc2500/main.c
+\section ex_rf_cc110x_make Makefile
+\include rf/cc110x/Makefile
+
+\example rf/cc110x/main.c
 */

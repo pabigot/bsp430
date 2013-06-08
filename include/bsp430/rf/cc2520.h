@@ -51,12 +51,12 @@
 /** @def configBSP430_RF_CC2520EMK
  *
  * Define to a true value to indicate intent to use a <a
- * href="http://www.ti.com/tool/cc2500emk">CC2520 RF Evaluation
+ * href="http://www.ti.com/tool/cc2520emk">CC2520 RF Evaluation
  * Module</a> accessed through the RFEM header.
  *
  * A true value requests that <bsp430/platform.h> map
  * platform-specific RFEM resources as described in <bsp430/rf/rfem.h>
- * into the standard names described in the <bsp430/rf/cc2500.h>
+ * into the standard names described in the <bsp430/rf/cc2520.h>
  * header.
  *
  * Platforms that have a CC2520 radio hard-wired may instead request

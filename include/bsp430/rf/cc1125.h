@@ -34,14 +34,20 @@
  * @brief BSP430 HPL macros for signals corresponding to the CC1125, CC1121, CC1120, etc. radio interface
  *
  * The <a href="http://www.ti.com/product/cc1101">CC1125</a> and
- * related products are ultra-high performance RF narrowband
- * transceivers.  This header provides declarations enabling BSP430
- * applications to access its resources through platform-specific
- * hardware presentation adaptation.
+ * related products (CC1121, CC1175, CC1200) are high performance RF
+ * narrowband transceivers.  This header provides declarations
+ * enabling BSP430 applications to access its resources through
+ * platform-specific hardware presentation adaptation.
  *
  * The hardware presentation is probably identifical for the
- * CC112x/CC117x variants of the radio.  This module probably supports
- * them all, with differences handled by software drivers.
+ * CC112x/CC117x/CC120x variants of the radio.  This module probably
+ * supports them all, with differences handled by software drivers.
+ *
+ * This interface is different from the previous low-power transceiver
+ * line, which is supported by <bsp430/rf/cc110x.h>.
+ *
+ * If TI ever cleans up their model numbering, this header may be
+ * renamed to be CC120x, parallel to CC110x.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>

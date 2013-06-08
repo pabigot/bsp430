@@ -190,11 +190,13 @@ based on the @link bsp430/utility/console.h console capability @endlink.
 \li \ref ex_utility_alarm provides an interactive program for using one-shot
 and repeating alarms with the @ref grp_timer_alarm.
 
-\li \ref ex_rf_cc2500 demonstrates the abstraction of the @link
+\li \ref ex_rf_cc110x demonstrates the abstraction of the @link
 bsp430/rf/rfem.h RF Evaluation Module @endlink available on many MSP430
 experimenter boards by displaying information about a connected ChipCon
-CC2500 radio.  Similar examples are presented for the <bsp430/rf/cc110x.h>,
-<bsp430/rf/cc2520.h>, and <bsp430/rf/cc1125.h> abstractions.
+CC1101, CC2500, or compatible radio that is accessed with the SPI
+configuration and pins described in <bsp430/rf/cc110x.h>.  Similar examples
+are presented for the <bsp430/rf/cc2520.h> and <bsp430/rf/cc1125.h>
+abstractions.
 
 \li \ref ex_utility_m25p demonstrates use of a serial flash device through
 the <bsp430/utility/m25p.h> interface.
