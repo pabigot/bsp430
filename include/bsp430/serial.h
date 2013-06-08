@@ -552,11 +552,9 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
   return hal->dispatch->i2cSetAddresses_ni(hal, own_address, slave_address);
 }
 
-/** Transmit using an I2C-configured device
+/** Transmit using a master I2C-configured device
  *
- * This routine transmits @p tx_len octets from @p tx_data.  It will
- * return an error if the device is configured with a transmit
- * callback.
+ * This routine transmits @p tx_len octets from @p tx_data.
  *
  * This routine should only be invoked when @link
  * sBSP430halSERIAL.tx_cbchain_ni @a hal->tx_cbchain_ni @endlink is
@@ -564,6 +562,12 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
  * provide data for transmission.  Note that such a callback must
  * handle I2C start and stop conditions, which are
  * peripheral-specific.
+ *
+ * @warning This routine supports the common case of the MSP430 as
+ * single I2C master.  It does not support repeated-start.  It will
+ * not work for slave operations, and may not work with multimaster
+ * configurations.  BSP430 does not currently provide abstractions for
+ * these alternative I2C configurations.
  *
  * @param hal the serial device over which the data is transmitted and
  * received
@@ -584,11 +588,10 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
   return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
 }
 
-/** Receive using an I2C-configured device
+/** Receive using a master I2C-configured device
  *
  * This routine receives @p rx_len octets into @p rx_data, storing the
- * octets received in response into @p rx_data.  It will return an
- * error if the device is configured with a receive callback.
+ * octets received in response into @p rx_data.
  *
  * This routine should only be invoked when @link
  * sBSP430halSERIAL.tx_cbchain_ni @a hal->tx_cbchain_ni @endlink is
@@ -596,6 +599,12 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * provide data for transmission.  Note that such a callback must
  * handle I2C start and stop conditions, which are
  * peripheral-specific.
+ *
+ * @warning This routine supports the common case of the MSP430 as
+ * single I2C master.  It does not support repeated-start.  It will
+ * not work for slave operations, and may not work with multimaster
+ * configurations.  BSP430 does not currently provide abstractions for
+ * these alternative I2C configurations.
  *
  * @param hal the serial device from which the data is received
  *
