@@ -76,7 +76,7 @@ void main ()
 
       rc = iBSP430i2cTxData_ni(i2c, NULL, 0);
       if (0 != rc) {
-        cprintf("ERROR IN REQUEST: %d\n", rc);
+        cprintf("I2C TX error %d\n", rc);
         break;
       }
 
@@ -87,6 +87,10 @@ void main ()
       BSP430_UPTIME_DELAY_MS_NI(30, LPM3_bits, 0);
       do {
         rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+        if (sizeof(data) != rc) {
+          cprintf("I2C RX error %d\n", rc);
+          break;
+        }
         status = 0x03 & (data[0] >> 6);
         hum_raw = data[1] | (data[0] & 0x3F) << 8;
         temp_raw = (data[2] << 6) | (data [3] >> 2);
@@ -112,4 +116,5 @@ void main ()
             xBSP430uptimeAsText_ni(t1 - t0));
     BSP430_UPTIME_DELAY_MS_NI(5000, LPM3_bits, 0);
   }
+  cprintf("Aborted due to result code %d\n", rc);
 }

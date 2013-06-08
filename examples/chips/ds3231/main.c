@@ -126,13 +126,12 @@ void main ()
     memset(&regs, 0, sizeof(regs));
     rc = iBSP430i2cRxData_ni(i2c, (uint8_t*)&regs, sizeof(regs));
     if (0 > rc) {
-      cprintf("I2C RX ERROR\n");
+      cprintf("I2C RX ERROR: %d\n", rc);
       break;
     }
     dumpMemory((uint8_t*)&regs, sizeof(regs), 0);
 
     cputs(asctime(xDS3231registersToTm(&regs, &tms)));
-    cputs(asctime(xDS3231registersToTm(xDS3231tmToRegisters(&tms, &regs), &tms)));
     {
       int t_raw;
       int t_dC;
