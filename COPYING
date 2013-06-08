@@ -13,7 +13,7 @@ examples/platform/exp430f5529/fatfs/bsp430mmc.c \
                      ChaN           2012 ChaN                  Derivative work
 src/periph/flash.c   BSD-3-Clause   2012 Texas Instruments     Derivative work
 src/periph/pmm.c     BSD-3-Clause   2012 Texas Instruments     Derivative work
-examples/rfem/cc3000/cc3000spi.* \
+examples/rf/cc3000/cc3000spi.* \
                      BSD-3-Clause   2012 Peter A. Bigot        Credit worthy
 examples/sensors/bmp085/main.c \
                      Other          2011 Bosch Sensortec GmbH  Derivative work

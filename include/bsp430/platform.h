@@ -209,7 +209,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  *
  * Platforms reference this macro only when there is a hard-wired
  * radio.  For pluggable radios specific defines like
- * #configBSP430_RF_CC2500EMK or #configBSP430_RF_ANAREN_CC110L must
+ * #configBSP430_RF_CC2520EMK or #configBSP430_RF_ANAREN_CC110L must
  * be used.
  *
  * @cppflag

@@ -63,7 +63,7 @@
  *
  * Platforms that have a CC110X radio hard-wired may instead request
  * this functionality through #configBSP430_PLATFORM_RF.  It may also
- * be requested through #configBSP430_RF_ANAREN.
+ * be requested through #configBSP430_RF_ANAREN_CC110L.
  *
  * @cppflag
  * @affects #BSP430_RF_CC110X
