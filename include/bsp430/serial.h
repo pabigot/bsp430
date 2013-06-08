@@ -479,6 +479,45 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
 
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
 
+/** Control the duration of I2C loops waiting for bus conditions.
+ *
+ * A positive value enables a loop limit; the number of loops
+ * attempted ranges from 1 to 65536.  A zero or negative value
+ * disables the loop limit.
+ *
+ * @note A positive value that is equal to zero modulo 2^16 will
+ * result in the maximum iteration count of 2^16. */
+#define BSP430_I2C_SPIN_LIMIT 65536
+
+/** Bit set in absolute value of I2C error codes to indicate a
+ * protocol error.
+ *
+ * I2C error codes are negative values.  The absolute value may encode
+ * information on the cause of an error.
+ *
+ * If #BSP430_I2C_ERRFLAG_PROTOCOL is set in the absolute value, the
+ * low 8 bits encode peripheral-specific error data, taken from (for
+ * example) UCBxIFG.  Generally protocol errors include receipt of a
+ * NACK or loss of arbitration.
+ *
+ * @see #BSP430_I2C_ERRFLAG_SPINLIMIT */
+#define BSP430_I2C_ERRFLAG_PROTOCOL 0x4000
+
+/** Bit set in absolute value of I2C error codes to indicate spin
+ * limit exceeded.
+ *
+ * I2C error codes are negative values.  The absolute value may encode
+ * information on the cause of an error.
+ *
+ * If #BSP430_I2C_ERRFLAG_SPINLIMIT is set in the absolute value then
+ * a loop awaiting an expected condition executed for
+ * #BSP430_I2C_SPIN_LIMIT times without detecting the desired
+ * condition.  The I2C operation aborts immediately, but no
+ * restorative action is taken by the infrastructure.
+ *
+ * @see #BSP430_I2C_ERRFLAG_PROTOCOL */
+#define BSP430_I2C_ERRFLAG_SPINLIMIT 0x2000
+
 #if defined(BSP430_DOXYGEN) || (configBSP430_SERIAL_ENABLE_I2C - 0)
 
 /** Request and configure a serial device in I2C mode.
@@ -534,6 +573,10 @@ hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
  * I2C peripheral.  The device should have been opened as an I2C
  * device prior to invoking this function.
  *
+ * @warning On some families the underlying peripheral must be @link
+ * vBSP430serialSetReset_ni held in reset@endlink if @p own_address is
+ * to be set.
+ *
  * @param hal the serial device to be configured
  *
  * @param own_address the value to use as this device's address.  A
@@ -577,8 +620,10 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
  * @param tx_len the number of bytes to transmit.  A transaction
  * writing more than 255 bytes may be rejected.
  *
- * @return the total number of bytes transmitted, or -1 if an error
- * occcured.
+ * @return the total number of bytes transmitted, or a negative error
+ * code (see #BSP430_I2C_ERRFLAG_PROTOCOL and
+ * #BSP430_I2C_ERRFLAG_SPINLIMIT).  This function will not return -1,
+ * reserving that as a generic error code for higher-level functions.
  */
 static BSP430_CORE_INLINE
 int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
@@ -614,8 +659,10 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * @param rx_len the number of bytes expected in response.  A
  * transaction reading more than 255 bytes may be rejected.
  *
- * @return the total number of bytes stored in @p rx_data, or -1 if an
- * error occcured.
+ * @return the total number of bytes stored in @p rx_data, or a
+ * negative error code (see #BSP430_I2C_ERRFLAG_PROTOCOL and
+ * #BSP430_I2C_ERRFLAG_SPINLIMIT).  This function will not return -1,
+ * reserving that as a generic error code for higher-level functions.
  */
 static BSP430_CORE_INLINE
 int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,

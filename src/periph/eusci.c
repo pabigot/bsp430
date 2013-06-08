@@ -441,6 +441,50 @@ iBSP430eusciI2CsetAddresses_ni (hBSP430halSERIAL hal,
   return 0;
 }
 
+/** Check for standard I2C transaction-aborting errors; if present,
+ * return from the containing function with a negative error code. */
+#define I2C_ERRCHECK_RETURN() do {                              \
+    unsigned int ifg = hpl->ifg;                                \
+    if (ifg & (UCNACKIFG | UCALIFG)) {                          \
+      return -(BSP430_I2C_ERRFLAG_PROTOCOL | (0x0FF & ifg));    \
+    }                                                           \
+  } while (0)
+
+/** @def I2C_ERRCHECK_SPIN_WHILE_COND
+ *
+ * Loop repeatedly (at least once) until @a c_ evaluates to false.
+ *
+ * Within the loop, an I2C transaction-aborting error will result in
+ * the containing function returning a negative error code
+ * <tt>-(#BSP430_I2C_ERRFLAG_PROTOCOL | code)</tt> for some code.
+ *
+ * If #BSP430_I2C_SPIN_LIMIT is positive and @a c_ remains true while
+ * the loop executes #BSP430_I2C_SPIN_LIMIT times, the containing
+ * function will return the negative error code
+ * #BSP430_I2C_ERRFLAG_SPINLIMIT.
+ *
+ * If #BSP430_I2C_SPIN_LIMIT is zero or negative, the loop will
+ * execute an unbounded number of times until @a c_ becomes false.
+ */
+#if defined(BSP430_DOXYGEN) || (0 < BSP430_I2C_SPIN_LIMIT)
+#define I2C_ERRCHECK_SPIN_WHILE_COND(c_) do {                   \
+    unsigned int limit = (unsigned int)BSP430_I2C_SPIN_LIMIT;   \
+    while (1) {                                                 \
+      I2C_ERRCHECK_RETURN();                                    \
+      if (! (c_)) {                                             \
+        break;                                                  \
+      }                                                         \
+      if (0 == --limit) {                                       \
+        return -BSP430_I2C_ERRFLAG_SPINLIMIT;                   \
+      }                                                         \
+    }                                                           \
+  } while (0)
+#else
+#define I2C_ERRCHECK_SPIN_WHILE_COND(c_) do {                   \
+    I2C_ERRCHECK_RETURN();                                      \
+  } while (c_);
+#endif
+
 int
 iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
                           uint8_t * data,
@@ -453,11 +497,7 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
 
   /* Check for errors while waiting for previous activity to
    * complete */
-  do {
-    if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-      return -1;
-    }
-  } while (hpl->statw & UCBBUSY);
+  I2C_ERRCHECK_SPIN_WHILE_COND(hpl->statw & UCBBUSY);
 
   /* Set for receive */
   hpl->ctlw0 &= ~UCTR;
@@ -482,19 +522,11 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
        * Wait for any in-progress start to complete then issue
        * stop. */
       if (hpl->ctlw0 & UCTXSTT) {
-        do {
-          if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-            return -1;
-          }
-        } while (hpl->ctlw0 & UCTXSTT);
+        I2C_ERRCHECK_SPIN_WHILE_COND(hpl->ctlw0 & UCTXSTT);
       }
       hpl->ctlw0 |= UCTXSTP;
     }
-    do {
-      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-        return -1;
-      }
-    } while (! (hpl->ifg & UCRXIFG));
+    I2C_ERRCHECK_SPIN_WHILE_COND(! (hpl->ifg & UCRXIFG));
     ++hal->num_rx;
     *dp++ = hpl->rxbuf;
   }
@@ -512,11 +544,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
 
   /* Check for errors while waiting for previous activity to
    * complete */
-  do {
-    if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-      return -1;
-    }
-  } while (hpl->statw & UCBBUSY);
+  I2C_ERRCHECK_SPIN_WHILE_COND(hpl->statw & UCBBUSY);
 
   /* Prefer to use UCASTP_2 via UCBxTBCNT because this is recommended
    * for single-byte transfers.  Since this would limit transmissions
@@ -535,11 +563,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
   /* Spit it all out as soon as there's space */
   i = 0;
   while (i < len) {
-    do {
-      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-        return -1;
-      }
-    } while (! (hpl->ifg & UCTXIFG));
+    I2C_ERRCHECK_SPIN_WHILE_COND(! (hpl->ifg & UCTXIFG));
     ++hal->num_tx;
     hpl->txbuf = data[i];
     ++i;
@@ -547,11 +571,7 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
   if (! use_auto_stop) {
     /* Wait for any queued data to be transmitted before we stop, lest
      * it get dropped. */
-    do {
-      if (hpl->ifg & (UCNACKIFG | UCALIFG)) {
-        return -1;
-      }
-    } while (! (hpl->ifg & UCTXIFG));
+    I2C_ERRCHECK_SPIN_WHILE_COND(! (hpl->ifg & UCTXIFG));
 
     /* Send the stop. */
     hpl->ctlw0 |= UCTXSTP;
