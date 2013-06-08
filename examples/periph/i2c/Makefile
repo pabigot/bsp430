@@ -1,0 +1,7 @@
+PLATFORM ?= trxeb
+TEST_PLATFORMS=trxeb
+MODULES=$(MODULES_PLATFORM)
+MODULES += $(MODULES_UPTIME)
+MODULES += $(MODULES_CONSOLE)
+SRC=main.c
+include $(BSP430_ROOT)/examples/Makefile.common
