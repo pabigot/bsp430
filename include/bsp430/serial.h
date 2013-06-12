@@ -486,8 +486,12 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  * disables the loop limit.
  *
  * @note A positive value that is equal to zero modulo 2^16 will
- * result in the maximum iteration count of 2^16. */
+ * result in the maximum iteration count of 2^16.
+ *
+ * @defaulted */
+#ifndef BSP430_I2C_SPIN_LIMIT
 #define BSP430_I2C_SPIN_LIMIT 65536
+#endif /* BSP430_I2C_SPIN_LIMIT */
 
 /** Bit set in absolute value of I2C error codes to indicate a
  * protocol error.
