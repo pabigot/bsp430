@@ -184,8 +184,8 @@ void main ()
       break;
     }
 
-    /* 3 ms plus 1.5 ms for each sample. */
-    BSP430_UPTIME_DELAY_MS_NI(3 + (2 << oss), LPM0_bits, 0);
+    /* 1.5 ms plus 3 ms for each sample. */
+    BSP430_UPTIME_DELAY_MS_NI(2 + (3 << oss), LPM0_bits, 0);
     data[0] = BMP085_REG_DATA;
     rc = iBSP430i2cTxData_ni(i2c, data, 1);
     if (0 > rc) {
