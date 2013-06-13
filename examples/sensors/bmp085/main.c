@@ -71,15 +71,22 @@ getCalibration_ni (hBSP430halSERIAL i2c,
   uint16_t * wp;
 
   data[0] = BMP085_REG_CALIBRATION;
-  rc = iBSP430i2cTxData_ni(i2c, data, 1);
+  vBSP430serialSetReset_ni(i2c, 0);
+  do {
+    rc = iBSP430i2cTxData_ni(i2c, data, 1);
+    if (0 > rc) {
+      cprintf("I2C TX ERROR %d\n", rc);
+      break;
+    }
+    memset(data, 0, sizeof(data));
+    rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+    if (0 > rc) {
+      cprintf("I2C RX ERROR %d\n", rc);
+      break;
+    }
+  } while (0);
+  vBSP430serialSetReset_ni(i2c, 1);
   if (0 > rc) {
-    cprintf("I2C TX ERROR %d\n", rc);
-    return;
-  }
-  memset(data, 0, sizeof(data));
-  rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
-  if (0 > rc) {
-    cprintf("I2C RX ERROR %d\n", rc);
     return;
   }
   cprintf("Read got %d: ", rc);
@@ -140,6 +147,7 @@ void main ()
     return;
   }
 
+  vBSP430serialSetReset_ni(i2c, 1);
   (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_BMP085_I2C_ADDRESS);
 
   getCalibration_ni(i2c, &calib);
@@ -147,54 +155,62 @@ void main ()
   do {
     sBMP085calibration * const cp = &calib;
     uint8_t data[4];
-    int32_t ut;
-    int32_t up;
+    int32_t ut = 0;
+    int32_t up = 0;
     int temp_dC;
     int temp_dF;
     long pres_Pa;
     long pres_cinHg;
     int oss = 3;
 
-    data[0] = BMP085_REG_CMD;
-    data[1] = BMP085_VAL_TEMP;
-    rc = iBSP430i2cTxData_ni(i2c, data, 2);
+    vBSP430serialSetReset_ni(i2c, 0);
+    do {
+      data[0] = BMP085_REG_CMD;
+      data[1] = BMP085_VAL_TEMP;
+      rc = iBSP430i2cTxData_ni(i2c, data, 2);
+      if (0 > rc) {
+        break;
+      }
+
+      /* 4.5 ms but make it 5 */
+      BSP430_UPTIME_DELAY_MS_NI(5, LPM0_bits, 0);
+
+      data[0] = BMP085_REG_DATA;
+      rc = iBSP430i2cTxData_ni(i2c, data, 1);
+      if (0 > rc) {
+        break;
+      }
+      rc = iBSP430i2cRxData_ni(i2c, data, 2);
+      if (0 > rc) {
+        break;
+      }
+      ut = data[0];
+      ut = (ut << 8) | data[1];
+
+      data[0] = BMP085_REG_CMD;
+      data[1] = BMP085_VAL_PRESSURE(oss);
+      rc = iBSP430i2cTxData_ni(i2c, data, 2);
+      if (0 > rc) {
+        break;
+      }
+
+      /* 1.5 ms plus 3 ms for each sample. */
+      BSP430_UPTIME_DELAY_MS_NI(2 + (3 << oss), LPM0_bits, 0);
+      data[0] = BMP085_REG_DATA;
+      rc = iBSP430i2cTxData_ni(i2c, data, 1);
+      if (0 > rc) {
+        break;
+      }
+      rc = iBSP430i2cRxData_ni(i2c, data, 3);
+      if (0 > rc) {
+        break;
+      }
+    } while (0);
+    vBSP430serialSetReset_ni(i2c, 1);
     if (0 > rc) {
       break;
     }
 
-    /* 4.5 ms but make it 5 */
-    BSP430_UPTIME_DELAY_MS_NI(5, LPM0_bits, 0);
-
-    data[0] = BMP085_REG_DATA;
-    rc = iBSP430i2cTxData_ni(i2c, data, 1);
-    if (0 > rc) {
-      break;
-    }
-    rc = iBSP430i2cRxData_ni(i2c, data, 2);
-    if (0 > rc) {
-      break;
-    }
-    ut = data[0];
-    ut = (ut << 8) | data[1];
-
-    data[0] = BMP085_REG_CMD;
-    data[1] = BMP085_VAL_PRESSURE(oss);
-    rc = iBSP430i2cTxData_ni(i2c, data, 2);
-    if (0 > rc) {
-      break;
-    }
-
-    /* 1.5 ms plus 3 ms for each sample. */
-    BSP430_UPTIME_DELAY_MS_NI(2 + (3 << oss), LPM0_bits, 0);
-    data[0] = BMP085_REG_DATA;
-    rc = iBSP430i2cTxData_ni(i2c, data, 1);
-    if (0 > rc) {
-      break;
-    }
-    rc = iBSP430i2cRxData_ni(i2c, data, 3);
-    if (0 > rc) {
-      break;
-    }
     up = data[0];
     up = (up << 8) | data[1];
     up = (up << 8) | data[2];

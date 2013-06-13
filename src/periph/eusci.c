@@ -530,6 +530,12 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
     ++hal->num_rx;
     *dp++ = hpl->rxbuf;
   }
+
+  if (! use_auto_stop) {
+    /* Wait for STP transmission to complete */
+    I2C_ERRCHECK_SPIN_WHILE_COND(hpl->ctlw0 & UCTXSTP);
+  }
+
   return dp - data;
 }
 
@@ -573,8 +579,9 @@ iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
      * it get dropped. */
     I2C_ERRCHECK_SPIN_WHILE_COND(! (hpl->ifg & UCTXIFG));
 
-    /* Send the stop. */
+    /* Send the stop and wait for it to complete. */
     hpl->ctlw0 |= UCTXSTP;
+    I2C_ERRCHECK_SPIN_WHILE_COND(hpl->ctlw0 & UCTXSTP);
   }
 
   /* eUSCI module handles stop */

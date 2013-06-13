@@ -445,7 +445,8 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
   uint8_t * dp = data;
   const uint8_t * dpe = data + len;
 
-  /* Delay for any in-progress activity to complete */
+  /* Check for errors while waiting for any in-progress activity to
+   * complete */
   I2C_ERRCHECK_SPIN_WHILE_COND(hpl->stat & UCBUSY);
 
   /* Set for receive */
@@ -456,7 +457,8 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
   while (dp < dpe) {
     if (dpe == (dp+1)) {
       /* This will be last character: wait for any in-progress start
-       * to complete then issue stop. */
+       * to complete then issue stop to be transmitted with next
+       * receive. */
       if (hpl->ctl1 & UCTXSTT) {
         I2C_ERRCHECK_SPIN_WHILE_COND(hpl->ctl1 & UCTXSTT);
       }
@@ -466,6 +468,10 @@ iBSP430usci5I2CrxData_ni (hBSP430halSERIAL hal,
     ++hal->num_rx;
     *dp++ = hpl->rxbuf;
   }
+
+  /* Wait for STP transmission to complete */
+  I2C_ERRCHECK_SPIN_WHILE_COND(hpl->ctl1 & UCTXSTP);
+
   return dp - data;
 }
 
@@ -477,7 +483,8 @@ iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
   volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
   int i = 0;
 
-  /* Delay for any in-progress activity to complete */
+  /* Check for errors while waiting for any in-progress activity to
+   * complete */
   I2C_ERRCHECK_SPIN_WHILE_COND(hpl->stat & UCBUSY);
 
   /* Issue a start for transmit */
@@ -494,8 +501,10 @@ iBSP430usci5I2CtxData_ni (hBSP430halSERIAL hal,
    * it get dropped. */
   I2C_ERRCHECK_SPIN_WHILE_COND(! (hpl->ifg & UCTXIFG));
 
-  /* Send the stop.  No need to wait for it to complete. */
+  /* Send the stop and wait for it to complete. */
   hpl->ctl1 |= UCTXSTP;
+  I2C_ERRCHECK_SPIN_WHILE_COND(hpl->ctl1 & UCTXSTP);
+
   return i;
 }
 
