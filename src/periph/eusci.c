@@ -38,6 +38,8 @@
 #define SERIAL_HAL_HPL_B(_hal) (_hal)->hpl.euscib
 #define HAL_HPL_FIELD(_hal,_fld) (*(BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal) ? &(_hal)->hpl.euscib->_fld : &(_hal)->hpl.euscia->_fld))
 
+#define MODE_IS_I2C(_hal) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & HAL_HPL_FIELD(_hal,ctlw0)))
+
 #define SERIAL_HAL_WAKEUP_TRANSMIT_NI(_hal) do {                        \
     HAL_HPL_FIELD(_hal,ie) |= UCTXIE;                                   \
   } while (0)
@@ -279,8 +281,14 @@ vBSP430eusciSetReset_ni (hBSP430halSERIAL hal,
                          int resetp)
 {
   if (resetp) {
+    if (0 > resetp) {
+      SERIAL_HAL_FLUSH_NI(hal);
+    }
     HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;
   } else {
+    if (MODE_IS_I2C(hal)) {
+      HAL_HPL_FIELD(hal,ctlw0) &= ~(UCTXACK | UCTXNACK | UCTXSTP | UCTXSTT);
+    }
     HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
     SERIAL_HAL_RELEASE_NI(hal);
   }
@@ -294,14 +302,12 @@ iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
   int periph_config = peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0));
 
   if (holdp) {
-    SERIAL_HAL_FLUSH_NI(hal);
-    HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;
+    vBSP430eusciSetReset_ni(hal, -1);
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
     if (0 == rc) {
-      HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
-      SERIAL_HAL_RELEASE_NI(hal);
+      vBSP430eusciSetReset_ni(hal, 0);
     }
   }
   return rc;

@@ -40,6 +40,8 @@
 #define SERIAL_HAL_HPL(_hal) (_hal)->hpl.usci
 #define SERIAL_HAL_HPLAUX(_hal) (_hal)->hpl_aux.usci
 
+#define MODE_IS_I2C(_hal) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & SERIAL_HAL_HPL(_hal)->ctl0))
+
 #define WAKEUP_TRANSMIT_HAL_NI(_hal) do {                               \
     *SERIAL_HAL_HPLAUX(_hal)->iep |= SERIAL_HAL_HPLAUX(_hal)->tx_bit;   \
   } while (0)
@@ -247,8 +249,14 @@ vBSP430usciSetReset_ni (hBSP430halSERIAL hal,
                         int resetp)
 {
   if (resetp) {
+    if (0 > resetp) {
+      FLUSH_HAL_NI(hal);
+    }
     SERIAL_HAL_HPL(hal)->ctl1 |= UCSWRST;
   } else {
+    if (MODE_IS_I2C(hal)) {
+      SERIAL_HAL_HPL(hal)->ctl1 &= ~(UCTXNACK | UCTXSTP | UCTXSTT);
+    }
     /* Release the USCI and enable the interrupts.  Interrupts are
      * disabled and cleared when UCSWRST is set. */
     SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
@@ -266,18 +274,14 @@ iBSP430usciSetHold_ni (hBSP430halSERIAL hal,
   int periph_config = peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctl0);
 
   if (holdp) {
-    FLUSH_HAL_NI(hal);
-    SERIAL_HAL_HPL(hal)->ctl1 |= UCSWRST;
+    vBSP430usciSetReset_ni(hal, -1);
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
     if (0 == rc) {
       /* Release the USCI and enable the interrupts.  Interrupts are
        * disabled and cleared when UCSWRST is set. */
-      SERIAL_HAL_HPL(hal)->ctl1 &= ~UCSWRST;
-      if (hal->rx_cbchain_ni) {
-        *SERIAL_HAL_HPLAUX(hal)->iep |= SERIAL_HAL_HPLAUX(hal)->rx_bit;
-      }
+      vBSP430usciSetReset_ni(hal, 0);
     }
   }
   return rc;

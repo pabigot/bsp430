@@ -688,15 +688,25 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
  * the peripheral level does not change the #GIE state, which should
  * be cleared while this function is executing.)
  *
+ * When the peripheral is in I2C mode, any pending #UCTXNACK,
+ * #UCTXSTP, #UCTXSTT, or similar family-specific requests will be
+ * cleared before the reset is released.
+ *
  * Placing a serial peripheral into reset mode prior to entering a low
  * power mode will often reduce current consumption.  Entering and
  * leaving reset mode is also the simplest way to clear peripheral
  * errors and flush pending data.
  *
- * @note This function differs from iBSP430serialSetHold_ni() in that it:
- * @li Does not wait for any pending activity to complete before
- * placing the peripheral in reset mode.  This could result in loss of
- * data; if this is a concern, use vBSP430serialFlush_ni().
+ * @note A positive value for @a resetp places the peripheral into
+ * reset mode immediately.  This can result in data loss if
+ * transmitted data is still in progress.  Passing a negative value
+ * for @a resetp does the functional equivalent of invoking
+ * vBSP430serialFlush_ni() prior to placing the device in reset.
+ *
+ * @note This function differs from iBSP430serialSetHold_ni() in that
+ * it:
+ * @li Allows caller to determine whether to wait for pending activity
+ * to complete before placing the peripheral in reset mode.
  * @li Does not reconfigure port pins; these remain in their
  * peripheral function role preventing their use as GPIOs while reset.
  *
@@ -705,8 +715,10 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
  * @param hal a serial HAL handle to a peripheral that has been
  * opened
  *
- * @param resetp a nonzero value if the peripheral is to be placed into
- * reset mode, and a zero value to release it from reset mode
+ * @param resetp A positive value places peripheral into reset mode.
+ * A negative value places peripheral into reset mode after blocking
+ * until peripheral is no longer busy.  A zero value releases
+ * peripheral from reset mode.
  *
  * @delegated This function exists only as an inline delegate to a
  * peripheral-specific implementation. */
@@ -719,17 +731,22 @@ void vBSP430serialSetReset_ni (hBSP430halSERIAL hal,
 
 /** Control serial device hold mode
  *
- * When a serial peripheral is placed in hold mode the code blocks
- * until the peripheral completes any pending activity per
- * vBSP430serialFlush_ni().  It then paces the peripheral into reset
- * mode.  In addition, the function reconfigures the associated port
- * pins to their digital I/O function per
+ * When a serial peripheral is placed in hold mode the peripheral is
+ * reset per vBSP430serialSetReset_ni() with @a resetp set to a
+ * negative value to force a wait for pending activity to complete.
+ * In addition, the function reconfigures the associated port pins to
+ * their digital I/O function per
  * iBSP430platformConfigurePeripheralPins_ni().
  *
  * When the hold is released, the port pins are reconfigured to their
  * peripheral function per
  * iBSP430platformConfigurePeripheralPins_ni(), and the device is
  * taken out of reset mode.
+ *
+ * @warning The GPIO configuration of peripheral pins is not preserved
+ * or restored by this function; the pins must be reconfigured for any
+ * specific GPIO use each time the peripheral is placed into hold
+ * mode.
  *
  * @see vBSP430serialSetReset_ni()
  *
@@ -797,6 +814,15 @@ void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
 /** Spin until any in-progress transmission or reception is complete.
  *
  * This is used to ensure the device is idle prior to reconfiguring it.
+ *
+ * @warning This waits for #UCBUSY to be clear in the peripheral.  For
+ * I2C that flag may be set when another device is active on the I2C
+ * bus; further, it may be clear while this device is still
+ * transmitting special signals such as #UCTXSTP.  Alternative
+ * techniques are required to ensure I2C operations are complete prior
+ * to placing the peripheral into reset mode.  This is done in the
+ * reference iBSP430i2cRxData_ni() and iBSP430i2cTxData_ni()
+ * single-master routines.
  *
  * @param hal a serial HAL handle
  *

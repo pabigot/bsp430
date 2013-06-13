@@ -185,6 +185,7 @@
 #define LFXT1S_2            (0x20)   /**< Mode 2 for LFXT1 : VLO */
 #define LFXT1S_3            (0x30)   /**< Mode 3 for LFXT1 : Digital input signal */
 
+#define UCBUSY              (0x01)    /**< USCI Busy Flag */
 
 #define UCPEN               (0x80)    /**< UART ctl0 : Async. Mode: Parity enable */
 #define UCCKPH              (0x80)    /**< SPI ctl0 : Sync. Mode: Clock Phase */
