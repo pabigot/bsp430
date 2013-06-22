@@ -273,5 +273,121 @@ success of the configuration request should be tested by:
 The documentation for @c configFEATURE_FOO and @c BSP430_FOO_PERIPH_HANDLE
 will indicate when this alternative success test should being used.
 
+\section coding_doc Documentation Expectations
+
+BSP430 uses Doxygen for architectural and API documentation.  The following
+macros are used in API documentation to highlight expectations of particular
+macros, variables, and functions.
+
+\subsection coding_doc_defaulted @@defaulted
+
+Annotation to indicate that the value provided by the infrastructure may be
+overridden by an application.  The overriding value is normally provided
+through @c bsp430_config.h.  Example: #BSP430_CLOCK_NOMINAL_MCLK_HZ
+
+Produces:
+
+@defaulted
+
+\subsection coding_doc_dependentvalue @@dependentvalue
+
+Annotation to highlight that the value provided by the infrastructure is
+dependent on other settings in a complex manner.  Normally used for
+configuration flags for dependent features.  Example:
+#configBSP430_UPTIME_TIMER_HAL_CC0_ISR.
+
+Produces:
+
+@dependentvalue
+
+\subsection coding_doc_platformvalue @@platformvalue
+
+Annotation to indicate that the macro is only defined after
+<bsp430/platform.h> is included, and that the value of the macro is
+platform-dependent.  This may be combined with @ref coding_doc_defaulted if
+the value may be overridden.  Example: #BSP430_CLOCK_LFXT1_XCAP
+
+Produces:
+
+@platformvalue
+
+\subsection coding_doc_platformdep @@platformdep
+
+Annotation to indicate that the value of the macro depends on platform
+information (such as the type of peripheral providing the clock
+abstraction), so the value displayed in the documentation may not be
+correct.  This may or may not be combined with @ref coding_doc_defaulted.
+Example: #BSP430_CLOCK_IS_FAULTED_NI
+
+Produces:
+
+@platformdep
+
+\subsection coding_doc_deprecated @@deprecated
+
+Annotation to note that a function or capability has been superseded by an
+alternative that should be used in new code.  Such annotations @em should
+indicate a date by which the deprecated capability may be expected to be
+removed.
+
+Produces:
+
+@deprecated
+
+\subsection coding_doc_affects @@affects
+
+Annotation to note that the setting for the given macro affects one or more
+other settings.  Normally used for @c configBSP430_FOO which determines the
+value of @c BSP430_FOO which uses the companion @ref coding_doc_dependency
+annotation.  Example: #configBSP430_PLATFORM_SPIN_FOR_JUMPER
+
+Produces:
+
+@affects <em>resource links</em>
+
+\subsection coding_doc_affects @@dependency
+
+Annotation to note that the setting for the given macro is affected by the
+one or more other settings.  Normally used for @c BSP430_FOO when the value
+depends on @c configBSP430_FOO which uses the companion @ref
+coding_doc_affects annotation.  Example: #BSP430_PLATFORM_SPIN_FOR_JUMPER
+
+Produces:
+
+@dependency <em>resource links</em>
+
+\subsection coding_doc_cppflag @@cppflag
+
+Annotation to indicate that the value of a macro may include preprocessor
+operations such as <tt>defined(BSP430_FOO)</tt>, so may be used only within
+preprocessor directives.  Example: #configBSP430_HAL_PORT1_ISR
+
+Produces:
+
+@cppflag
+
+\subsection coding_doc_blocking @@blocking
+
+Annotation to indicate that a function that normally runs with interrupts
+disabled may enable interrupts and block until conditions allow it to
+return.  Example: iBSP430consoleWaitForTxSpace_ni()
+
+@todo This should be reflected in the function name when the
+non-interruptable and resource lock frameworks are revised.
+
+Produces:
+
+@blocking
+
+\subsection coding_doc_consoleoutput @@consoleoutput
+
+Annotation to indicate that the function may enable interrupts and block due
+to an internal dependence on iBSP430consoleWaitForTxSpace_ni().  Example:
+cputchar_ni()
+
+Produces:
+
+@consoleoutput
+
 @copyright_doc
 */

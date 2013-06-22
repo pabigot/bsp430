@@ -66,12 +66,7 @@
 /** Basic configuration for the platform.
  *
  * Applications should assume that invoking this in main() will
- * configure the system based on requested settings.  Most platforms
- * should use something like:
- *
- *
- * @platformdep
- */
+ * configure the system based on requested settings. */
 void vBSP430platformInitialize_ni (void);
 
 /** Basic configuration for the platform.
