@@ -181,8 +181,9 @@
  * The corresponding HAL and ISR features are automatically enabled
  * for this peripheral.
  *
- * @dependency #BSP430_CONSOLE_SERIAL_PERIPH_CPPID
- * @platformvalue */
+ * @defaulted
+ * @platformvalue
+ * @dependency #BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */

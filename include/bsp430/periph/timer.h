@@ -590,6 +590,7 @@
  * @warning See cautionary notes at #BSP430_TIMER_VALID_COUNTER_READ_CCIDX.
  *
  * @dependency #BSP430_TIMER_CCACLK
+ * @defaulted
  * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
@@ -601,6 +602,7 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
  * @dependency #BSP430_TIMER_CCACLK
+ * @defaulted
  * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
@@ -669,6 +671,7 @@
  * external clock source for #BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
  * connected.
  *
+ * @defaulted
  * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
@@ -737,6 +740,7 @@
  * the external trigger for CC0 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * can be connected.
  *
+ * @defaulted
  * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
@@ -749,7 +753,7 @@
  *
  * The default setting corresponds to CCIxA.
  *
- * @platformvalue
+ * @defaulted
  * @ingroup grp_timer_ccaclk */
 #ifndef BSP430_TIMER_CCACLK_CC0_CCIS
 #define BSP430_TIMER_CCACLK_CC0_CCIS CCIS_0
@@ -817,6 +821,7 @@
  * the external trigger for CC1 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * can be connected.
  *
+ * @defaulted
  * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
@@ -829,7 +834,7 @@
  *
  * The default setting corresponds to CCIxA.
  *
- * @platformvalue
+ * @defaulted
  * @ingroup grp_timer_ccaclk */
 #ifndef BSP430_TIMER_CCACLK_CC1_CCIS
 #define BSP430_TIMER_CCACLK_CC1_CCIS CCIS_0
@@ -909,7 +914,7 @@
  * @endcode
  *
  * @dependency #configBSP430_TIMER_VALID_COUNTER_READ
- * @platformvalue
+ * @defaulted
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_TIMER_VALID_COUNTER_READ - 0)
 #ifndef BSP430_TIMER_VALID_COUNTER_READ_CCIDX
