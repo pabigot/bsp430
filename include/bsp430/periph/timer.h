@@ -817,7 +817,7 @@
  * the external trigger for CC1 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * can be connected.
  *
- * @overridable
+ * @platformdefault
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT include <bsp430/platform.h>
