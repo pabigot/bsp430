@@ -378,7 +378,9 @@ Produces:
 Annotation to indicate that the macro is only defined after
 <bsp430/platform.h> is included, and that the value of the macro is
 platform-dependent.  This may be combined with @ref coding_doc_defaulted if
-the value may be overridden.  Example: #BSP430_CLOCK_LFXT1_XCAP
+the value may be overridden.  It differs from @ref coding_doc_platformdep in
+that the latter may be referenced without including <bsp430/platform.h>.
+Example: #BSP430_CLOCK_LFXT1_XCAP
 
 Produces:
 
@@ -389,8 +391,11 @@ Produces:
 Annotation to indicate that the value of the macro depends on platform
 information (such as the type of peripheral providing the clock
 abstraction), so the value displayed in the documentation may not be
-correct.  This may or may not be combined with @ref coding_doc_defaulted.
-Example: #BSP430_CLOCK_IS_FAULTED_NI
+correct.  This may be combined with @ref coding_doc_defaulted if the value
+may be overridden.  It differs from @ref coding_doc_platformvalue in that
+the value is dependent only on the header in which it is declared so may be
+used without including <bsp430/platform.h>.  Example:
+#BSP430_CLOCK_IS_FAULTED_NI
 
 Produces:
 
