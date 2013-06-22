@@ -63,7 +63,7 @@
 #endif /* configBSP430_PLATFORM_BUTTON[01] */
 
 /* What to use as a console */
-#if configBSP430_CONSOLE - 0
+#if (configBSP430_CONSOLE - 0)
 #ifndef BSP430_CONSOLE_SERIAL_PERIPH_CPPID
 #define BSP430_CONSOLE_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI5_A0
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
@@ -71,7 +71,7 @@
 
 /* How to use ACLK as a capture/compare input source */
 /* Settings for TA1: T1A2 ccis=1 ; clk P2.0 ; cc0 P2.1 ; cc1 P2.2 */
-#if configBSP430_TIMER_CCACLK - 0
+#if (configBSP430_TIMER_CCACLK - 0)
 #ifndef BSP430_TIMER_CCACLK_PERIPH_CPPID
 #define BSP430_TIMER_CCACLK_PERIPH_CPPID BSP430_PERIPH_CPPID_TA1
 #endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */

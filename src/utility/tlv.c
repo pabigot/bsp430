@@ -39,7 +39,7 @@
 
 #include <bsp430/utility/tlv.h>
 
-#if BSP430_TLV - 0
+#if (BSP430_TLV - 0)
 
 unsigned int
 uiBSP430tlvChecksum (const unsigned char * data,

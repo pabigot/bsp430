@@ -45,7 +45,7 @@
 #include <stdlib.h>
 #include <bsp430/platform.h>
 
-#if BSP430_UNITTEST - 0
+#if (BSP430_UNITTEST - 0)
 
 static unsigned int num_passed;
 static unsigned int num_failed;
@@ -84,7 +84,7 @@ vBSP430unittestResult_ (int line,
   vcprintf(format, argp);
   cputchar_ni('\n');
   va_end(argp);
-#if configBSP430_UNITTEST_FAILFAST - 0
+#if (configBSP430_UNITTEST_FAILFAST - 0)
   cputs("# FAILFAST");
   vBSP430unittestFinalize();
 #endif /* configBSP430_UNITTEST_FAILFAST */

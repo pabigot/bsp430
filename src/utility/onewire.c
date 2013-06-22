@@ -79,7 +79,7 @@ iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
   /* Release bus and switch to input until presence pulse should be
    * visible. */
   BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
-#if BSP430_PORT_SUPPORTS_REN - 0
+#if (BSP430_PORT_SUPPORTS_REN - 0)
   /* If PORT1 has resistor capability, all ports do.  In case the
    * device isn't wired correctly, pull up the bus so the device
    * detection is correct.
@@ -125,7 +125,7 @@ vBSP430onewireWriteByte_ni (const sBSP430onewireBus * bus,
     if (byte & 0x01) {
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW1_us));
       BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
-#if BSP430_PORT_SUPPORTS_REN - 0
+#if (BSP430_PORT_SUPPORTS_REN - 0)
       if (bus->use_ren) {
         /* Leave REN set from reset command, configure for pullup */
         BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
@@ -135,7 +135,7 @@ vBSP430onewireWriteByte_ni (const sBSP430onewireBus * bus,
     } else {
       __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_LOW0_us));
       BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~bus->bit;
-#if BSP430_PORT_SUPPORTS_REN - 0
+#if (BSP430_PORT_SUPPORTS_REN - 0)
       if (bus->use_ren) {
         /* Leave REN set from reset command, configure for pullup */
         BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;

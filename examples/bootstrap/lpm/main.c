@@ -35,7 +35,7 @@ void main ()
 {
   WDTCTL = WDTPW | WDTHOLD;
 
-#if BSP430_LED - 0
+#if (BSP430_LED - 0)
   vBSP430ledInitialize_ni();
   {
     int i;

@@ -43,7 +43,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#if BSP430_CONSOLE - 0
+#if (BSP430_CONSOLE - 0)
 /* Inhibit definition if required components were not provided. */
 
 #if (BSP430_CONSOLE_USE_EMBTEXTF - 0)
@@ -66,7 +66,7 @@
 
 static hBSP430halSERIAL console_hal_;
 
-#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
 #if 254 < (BSP430_CONSOLE_RX_BUFFER_SIZE)
 #error BSP430_CONSOLE_RX_BUFFER_SIZE is too large
 #endif /* validate BSP430_CONSOLE_RX_BUFFER_SIZE */
@@ -115,7 +115,7 @@ vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb)
 
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
-#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
 #if 254 < (BSP430_CONSOLE_TX_BUFFER_SIZE)
 #error BSP430_CONSOLE_TX_BUFFER_SIZE is too large
 #endif /* validate BSP430_CONSOLE_TX_BUFFER_SIZE */
@@ -223,7 +223,7 @@ static BSP430_CORE_INLINE
 int
 emit_char2_ni (int c, hBSP430halSERIAL uart)
 {
-#if configBSP430_CONSOLE_USE_ONLCR - 0
+#if (configBSP430_CONSOLE_USE_ONLCR - 0)
   if ('\n' == c) {
     UART_TRANSMIT(uart, '\r');
   }
@@ -244,7 +244,7 @@ emit_char_ni (int c)
   return emit_char2_ni(c, uart);
 }
 
-#if configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0
+#if (configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0)
 int putchar (c)
 {
   return emit_char_ni(c);
@@ -388,7 +388,7 @@ cputul_ni (unsigned long n, int radix)
 }
 
 int
-#if __GNUC__ - 0
+#if (__GNUC__ - 0)
 __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
 cprintf (const char *fmt, ...)
@@ -426,7 +426,7 @@ hBSP430console (void)
   return console_hal_;
 }
 
-#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
 
 static int
 console_getchar_ (int do_pop)
@@ -470,7 +470,7 @@ cgetchar_ni (void)
 int
 iBSP430consoleTransmitUseInterrupts_ni (int enablep)
 {
-#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
   if (enablep) {
     if (uartTransmit_ni != console_tx_queue_ni) {
       uartTransmit_ni = console_tx_queue_ni;
@@ -520,14 +520,14 @@ iBSP430consoleInitialize (void)
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
 
-#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
     /* Associate the callback before opening the device, so the
      * interrupts are enabled properly. */
     rx_buffer_.head = rx_buffer_.tail = 0;
     BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, hal->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
-#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
     uartTransmit_ni = console_tx_queue_ni;
     tx_buffer_.wake_available = 0;
     tx_buffer_.head = tx_buffer_.tail = 0;
@@ -538,12 +538,12 @@ iBSP430consoleInitialize (void)
     console_hal_ = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
     if (! console_hal_) {
       /* Open failed, revert the callback association. */
-#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
       BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, hal->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
       break;
     }
-#if BSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#if (BSP430_PLATFORM_SPIN_FOR_JUMPER - 0)
     vBSP430platformSpinForJumper_ni();
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
     /* All is good */
@@ -565,10 +565,10 @@ iBSP430consoleDeconfigure (void)
   BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430serialClose(console_hal_);
-#if BSP430_CONSOLE_RX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
   BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
-#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
   BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
   console_hal_ = NULL;
@@ -580,7 +580,7 @@ int
 iBSP430consoleWaitForTxSpace_ni (int want_available)
 {
   int rv = 0;
-#if BSP430_CONSOLE_TX_BUFFER_SIZE - 0
+#if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
   if (((int)sizeof(tx_buffer_.buffer) - 1) < want_available) {
     return -1;
   }

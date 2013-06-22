@@ -200,7 +200,7 @@ typedef struct sBSP430hplUSCI5 {
 #endif /* configBSP430_HAL_USCI5_A0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_A0 - 0
+#if (configBSP430_HAL_USCI5_A0 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A0_;
 #endif /* configBSP430_HAL_USCI5_A0 */
@@ -237,7 +237,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A0_;
 #endif /* configBSP430_HAL_USCI5_A1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_A1 - 0
+#if (configBSP430_HAL_USCI5_A1 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A1_;
 #endif /* configBSP430_HAL_USCI5_A1 */
@@ -274,7 +274,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A1_;
 #endif /* configBSP430_HAL_USCI5_A2 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_A2 - 0
+#if (configBSP430_HAL_USCI5_A2 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A2_;
 #endif /* configBSP430_HAL_USCI5_A2 */
@@ -311,7 +311,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A2_;
 #endif /* configBSP430_HAL_USCI5_A3 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_A3 - 0
+#if (configBSP430_HAL_USCI5_A3 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_A3_;
 #endif /* configBSP430_HAL_USCI5_A3 */
@@ -348,7 +348,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_A3_;
 #endif /* configBSP430_HAL_USCI5_B0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_B0 - 0
+#if (configBSP430_HAL_USCI5_B0 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B0_;
 #endif /* configBSP430_HAL_USCI5_B0 */
@@ -385,7 +385,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B0_;
 #endif /* configBSP430_HAL_USCI5_B1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_B1 - 0
+#if (configBSP430_HAL_USCI5_B1 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B1_;
 #endif /* configBSP430_HAL_USCI5_B1 */
@@ -422,7 +422,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B1_;
 #endif /* configBSP430_HAL_USCI5_B2 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_B2 - 0
+#if (configBSP430_HAL_USCI5_B2 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B2_;
 #endif /* configBSP430_HAL_USCI5_B2 */
@@ -459,7 +459,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI5_B2_;
 #endif /* configBSP430_HAL_USCI5_B3 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI5_B3 - 0
+#if (configBSP430_HAL_USCI5_B3 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI5_B3_;
 #endif /* configBSP430_HAL_USCI5_B3 */
@@ -1106,49 +1106,49 @@ volatile sBSP430hplUSCI5 * xBSP430hplLookupUSCI5 (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
-#if configBSP430_HPL_USCI5_A0 - 0
+#if (configBSP430_HPL_USCI5_A0 - 0)
   if (BSP430_PERIPH_USCI5_A0 == periph) {
     return BSP430_HPL_USCI5_A0;
   }
 #endif /* configBSP430_HPL_USCI5_A0 */
 
-#if configBSP430_HPL_USCI5_A1 - 0
+#if (configBSP430_HPL_USCI5_A1 - 0)
   if (BSP430_PERIPH_USCI5_A1 == periph) {
     return BSP430_HPL_USCI5_A1;
   }
 #endif /* configBSP430_HPL_USCI5_A1 */
 
-#if configBSP430_HPL_USCI5_A2 - 0
+#if (configBSP430_HPL_USCI5_A2 - 0)
   if (BSP430_PERIPH_USCI5_A2 == periph) {
     return BSP430_HPL_USCI5_A2;
   }
 #endif /* configBSP430_HPL_USCI5_A2 */
 
-#if configBSP430_HPL_USCI5_A3 - 0
+#if (configBSP430_HPL_USCI5_A3 - 0)
   if (BSP430_PERIPH_USCI5_A3 == periph) {
     return BSP430_HPL_USCI5_A3;
   }
 #endif /* configBSP430_HPL_USCI5_A3 */
 
-#if configBSP430_HPL_USCI5_B0 - 0
+#if (configBSP430_HPL_USCI5_B0 - 0)
   if (BSP430_PERIPH_USCI5_B0 == periph) {
     return BSP430_HPL_USCI5_B0;
   }
 #endif /* configBSP430_HPL_USCI5_B0 */
 
-#if configBSP430_HPL_USCI5_B1 - 0
+#if (configBSP430_HPL_USCI5_B1 - 0)
   if (BSP430_PERIPH_USCI5_B1 == periph) {
     return BSP430_HPL_USCI5_B1;
   }
 #endif /* configBSP430_HPL_USCI5_B1 */
 
-#if configBSP430_HPL_USCI5_B2 - 0
+#if (configBSP430_HPL_USCI5_B2 - 0)
   if (BSP430_PERIPH_USCI5_B2 == periph) {
     return BSP430_HPL_USCI5_B2;
   }
 #endif /* configBSP430_HPL_USCI5_B2 */
 
-#if configBSP430_HPL_USCI5_B3 - 0
+#if (configBSP430_HPL_USCI5_B3 - 0)
   if (BSP430_PERIPH_USCI5_B3 == periph) {
     return BSP430_HPL_USCI5_B3;
   }
@@ -1172,49 +1172,49 @@ hBSP430halSERIAL hBSP430usci5Lookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_HAL_USCI5_A0 - 0
+#if (configBSP430_HAL_USCI5_A0 - 0)
   if (BSP430_PERIPH_USCI5_A0 == periph) {
     return BSP430_HAL_USCI5_A0;
   }
 #endif /* configBSP430_HAL_USCI5_A0 */
 
-#if configBSP430_HAL_USCI5_A1 - 0
+#if (configBSP430_HAL_USCI5_A1 - 0)
   if (BSP430_PERIPH_USCI5_A1 == periph) {
     return BSP430_HAL_USCI5_A1;
   }
 #endif /* configBSP430_HAL_USCI5_A1 */
 
-#if configBSP430_HAL_USCI5_A2 - 0
+#if (configBSP430_HAL_USCI5_A2 - 0)
   if (BSP430_PERIPH_USCI5_A2 == periph) {
     return BSP430_HAL_USCI5_A2;
   }
 #endif /* configBSP430_HAL_USCI5_A2 */
 
-#if configBSP430_HAL_USCI5_A3 - 0
+#if (configBSP430_HAL_USCI5_A3 - 0)
   if (BSP430_PERIPH_USCI5_A3 == periph) {
     return BSP430_HAL_USCI5_A3;
   }
 #endif /* configBSP430_HAL_USCI5_A3 */
 
-#if configBSP430_HAL_USCI5_B0 - 0
+#if (configBSP430_HAL_USCI5_B0 - 0)
   if (BSP430_PERIPH_USCI5_B0 == periph) {
     return BSP430_HAL_USCI5_B0;
   }
 #endif /* configBSP430_HAL_USCI5_B0 */
 
-#if configBSP430_HAL_USCI5_B1 - 0
+#if (configBSP430_HAL_USCI5_B1 - 0)
   if (BSP430_PERIPH_USCI5_B1 == periph) {
     return BSP430_HAL_USCI5_B1;
   }
 #endif /* configBSP430_HAL_USCI5_B1 */
 
-#if configBSP430_HAL_USCI5_B2 - 0
+#if (configBSP430_HAL_USCI5_B2 - 0)
   if (BSP430_PERIPH_USCI5_B2 == periph) {
     return BSP430_HAL_USCI5_B2;
   }
 #endif /* configBSP430_HAL_USCI5_B2 */
 
-#if configBSP430_HAL_USCI5_B3 - 0
+#if (configBSP430_HAL_USCI5_B3 - 0)
   if (BSP430_PERIPH_USCI5_B3 == periph) {
     return BSP430_HAL_USCI5_B3;
   }

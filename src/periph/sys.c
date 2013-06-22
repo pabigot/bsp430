@@ -36,7 +36,7 @@
 
 #include <bsp430/periph/sys.h>
 
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
 
 /* The list of relevant system reset vector values can be obtained by
  * filtering the MCU-specific headers using this pipe:

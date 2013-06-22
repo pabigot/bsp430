@@ -367,7 +367,7 @@ iBSP430cliNullDiagnostic (sBSP430cliCommandLink * chain,
 }
 
 
-#if BSP430_CONSOLE - 0
+#if (BSP430_CONSOLE - 0)
 
 static void
 display_cmd (sBSP430cliMatchCallback * self,
@@ -545,7 +545,7 @@ iBSP430cliConsoleBufferProcessInput_ni ()
         --cbEnd_;
         cputtext_ni("\b \b");
       }
-#if configBSP430_CLI_COMMAND_COMPLETION - 0
+#if (configBSP430_CLI_COMMAND_COMPLETION - 0)
     } else if (KEY_HT == c) {
       rv |= eBSP430cliConsole_DO_COMPLETION;
       break;
@@ -589,7 +589,7 @@ iBSP430cliConsoleBufferProcessInput_ni ()
 
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
-#if configBSP430_CLI_COMMAND_COMPLETION - 0
+#if (configBSP430_CLI_COMMAND_COMPLETION - 0)
 
 struct sCallbackParam {
   /** The callback record used on a match.  This must be first in the

@@ -63,7 +63,7 @@
 /** @cond DOXYGEN_EXCLUDE */
 
 /* Enable if requested */
-#if configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0
+#if (configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0)
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 

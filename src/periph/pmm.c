@@ -43,7 +43,7 @@
 
 #include <bsp430/periph/pmm.h>
 
-#if BSP430_MODULE_PMM - 0
+#if (BSP430_MODULE_PMM - 0)
 
 #if ! (BSP430_MODULE_PMM_FRAM - 0)
 

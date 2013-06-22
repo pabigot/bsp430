@@ -489,7 +489,7 @@ int cputchars (const char * cp, size_t len);
  *
  * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
 int cprintf (const char * format, ...)
-#if __GNUC__ - 0
+#if (__GNUC__ - 0)
 __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
 ;

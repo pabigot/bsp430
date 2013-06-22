@@ -81,7 +81,7 @@ void main ()
 
   cprintf("\nclkcounter " __DATE__ " " __TIME__ "\n");
   cprintf("BSP430_CLOCK_LFXT1_IS_FAULTED_NI(): %u\n", !!BSP430_CLOCK_LFXT1_IS_FAULTED_NI());
-#if APP_USE_SMCLK - 0
+#if (APP_USE_SMCLK - 0)
   nominal_Hz = ulBSP430clockSMCLK_Hz_ni();
   cprintf("Expected SMCLK clock freq: %lu Hz\n", nominal_Hz);
   tassel = TASSEL_2;

@@ -67,7 +67,7 @@
  * @platformvalue */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_LED)
 #ifndef BSP430_LED
-#if configBSP430_LED - 0
+#if (configBSP430_LED - 0)
 #define BSP430_LED 1
 #else /* configBSP430_LED */
 #define BSP430_LED 0
@@ -191,7 +191,7 @@ typedef struct sBSP430halLED {
   unsigned char const flags;
 } sBSP430halLED;
 
-#if configBSP430_LED_USE_COMMON - 0
+#if (configBSP430_LED_USE_COMMON - 0)
 
 /** Platform should define the LED configuration available to it.
  * @dependency #BSP430_LED */

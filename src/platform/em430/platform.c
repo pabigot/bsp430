@@ -38,7 +38,7 @@
 
 #include <bsp430/platform/standard.inc>
 
-#if BSP430_LED - 0
+#if (BSP430_LED - 0)
 const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Green */
   { .outp = &P3OUT, .bit = BIT6 }, /* Red */
@@ -65,7 +65,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     return 0;
   }
 #endif /* configBSP430_PERIPH_XT2 */
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     /* Note: The datasheet is incorrect in its claim that PxDIR is
      * don't care: it must be set to output for the clocks to appear.
@@ -87,7 +87,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_USCI5_A0 - 0
+#if (configBSP430_HPL_USCI5_A0 - 0)
   else if (BSP430_PERIPH_USCI5_A0 == device) {
     bits = BIT5 | BIT6;
     if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
@@ -98,7 +98,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     pba = BSP430_PERIPH_PORT1_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI5_A0 */
-#if configBSP430_HPL_USCI5_B0 - 0
+#if (configBSP430_HPL_USCI5_B0 - 0)
   else if (BSP430_PERIPH_USCI5_B0 == device) {
     bits = BIT2 | BIT3;
     if (BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config) {
@@ -130,17 +130,17 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
   if (BSP430_PERIPH_LFXT1 == device) {
     return "XIN=P5.0, XOUT=P5.1";
   }
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     return "SMCLK=P3.7; ACLK=P2.6";
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_USCI5_A0 - 0
+#if (configBSP430_HPL_USCI5_A0 - 0)
   if (BSP430_PERIPH_USCI5_A0 == device) {
     return "MOSI/TXD=P1.6; MISO/RXD=P1.5; CLK=P1.7; STE=P1.4";
   }
 #endif /* configBSP430_HPL_USCI5_A0 */
-#if configBSP430_HPL_USCI5_B0 - 0
+#if (configBSP430_HPL_USCI5_B0 - 0)
   if (BSP430_PERIPH_USCI5_B0 == device) {
     return "MOSI/SDA=P1.3; MISO/SCL=P1.2; CLK=P1.4; STE=P1.7";
   }

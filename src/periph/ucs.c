@@ -115,7 +115,7 @@ static unsigned long lastTrimDCOCLKDIV_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 /** Convert from Trim Sample Periods to Hz */
 #define TSP_TO_HZ(_clk_tsp) (((_clk_tsp) * (unsigned long)TRIM_ACLK_HZ) / TRIM_SAMPLE_PERIOD_ACLK)
 
-#if BSP430_UCS_TRIM_DCOCLKDIV - 0
+#if (BSP430_UCS_TRIM_DCOCLKDIV - 0)
 #include <bsp430/periph/timer.h>
 
 /* The target frequency expressed as the number of SMCLK ticks
@@ -542,7 +542,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   if (0 == mclk_Hz) {
     mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
   }
-#if BSP430_UCS_TRIM_DCOCLKDIV - 0
+#if (BSP430_UCS_TRIM_DCOCLKDIV - 0)
   vBSP430ucsConfigureMCLK_ni(mclk_Hz, -1);
 #endif /* BSP430_UCS_TRIM_DCOCLKDIV */
   return ulBSP430clockMCLK_Hz_ni();

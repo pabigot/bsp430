@@ -154,12 +154,12 @@ void main ()
   volatile sBSP430hplPORTIE * b0hpl;
   int b0pin;
   sState state;
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   unsigned long reset_causes = 0;
   unsigned int reset_flags = 0;
 #endif /* BSP430_MODULE_SYS */
 
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   {
     unsigned int sysrstiv;
 
@@ -190,7 +190,7 @@ void main ()
 
   cprintf("\napplpm " __DATE__ " " __TIME__ "\n");
 
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   cprintf("System reset bitmask %lx; causes:\n", reset_causes);
   {
     int bit = 0;
@@ -226,7 +226,7 @@ void main ()
   b0hpl->sel &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   b0hpl->dir &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
 
-#if BSP430_PORT_SUPPORTS_REN - 0
+#if (BSP430_PORT_SUPPORTS_REN - 0)
   BSP430_PORT_HAL_HPL_REN(b0hal) |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
   BSP430_PORT_HAL_HPL_OUT(b0hal) |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
 #endif /* BSP430_PORT_SUPPORTS_REN */

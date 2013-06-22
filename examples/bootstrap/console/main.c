@@ -36,7 +36,7 @@
 void main ()
 {
   int rv;
-#if APP_VERBOSE - 0
+#if (APP_VERBOSE - 0)
   hBSP430halSERIAL console;
 #endif /* APP_VERBOSE */
 
@@ -49,7 +49,7 @@ void main ()
   /* Configure the console to use the default UART handle */
   rv = iBSP430consoleInitialize();
   /* assert(0 == rv); */
-#if APP_VERBOSE - 0
+#if (APP_VERBOSE - 0)
   console = hBSP430console();
 #endif /* APP_VERBOSE */
 
@@ -88,19 +88,19 @@ void main ()
       }
       cputtext_ni("\nctr ");
       cputu_ni(counter, 10);
-#if APP_VERBOSE - 0
+#if (APP_VERBOSE - 0)
       cputtext_ni("; tx ");
       cputul_ni(console->num_tx, 10);
       cputtext_ni("; rx ");
       cputul_ni(console->num_rx, 10);
       cputtext_ni("; stat 0x");
-#if configBSP430_SERIAL_USE_USCI - 0
+#if (configBSP430_SERIAL_USE_USCI - 0)
       cputu_ni(console->hpl.usci->stat, 16);
 #endif
-#if configBSP430_SERIAL_USE_USCI5 - 0
+#if (configBSP430_SERIAL_USE_USCI5 - 0)
       cputu_ni(console->hpl.usci5->stat, 16);
 #endif
-#if configBSP430_SERIAL_USE_EUSCI - 0
+#if (configBSP430_SERIAL_USE_EUSCI - 0)
       cputu_ni(console->hpl.euscia->statw, 16);
 #endif
 #endif /* APP_VERBOSE */

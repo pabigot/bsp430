@@ -158,7 +158,7 @@
 #endif /* UCS */
 
 /* BC2 feature request also requires CCACLK be enabled */
-#if configBSP430_BC2_TRIM_TO_MCLK - 0
+#if (configBSP430_BC2_TRIM_TO_MCLK - 0)
 #ifndef configBSP430_TIMER_CCACLK
 #define configBSP430_TIMER_CCACLK 1
 #endif /* configBSP430_TIMER_CCACLK */
@@ -167,50 +167,50 @@
 /* !BSP430! instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2,em430,rf2500t,wolverine,trxeb,surf */
 /* !BSP430! insert=platform_bsp430_config */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_bsp430_config] */
-#if BSP430_PLATFORM_EXP430F5438 - 0
+#if (BSP430_PLATFORM_EXP430F5438 - 0)
 #include <bsp430/platform/exp430f5438/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
-#if BSP430_PLATFORM_EXP430F5529 - 0
+#if (BSP430_PLATFORM_EXP430F5529 - 0)
 #include <bsp430/platform/exp430f5529/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430F5529 */
 
-#if BSP430_PLATFORM_EXP430FR5739 - 0
+#if (BSP430_PLATFORM_EXP430FR5739 - 0)
 #include <bsp430/platform/exp430fr5739/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
-#if BSP430_PLATFORM_EXP430FG4618 - 0
+#if (BSP430_PLATFORM_EXP430FG4618 - 0)
 #include <bsp430/platform/exp430fg4618/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
-#if BSP430_PLATFORM_EXP430G2 - 0
+#if (BSP430_PLATFORM_EXP430G2 - 0)
 #include <bsp430/platform/exp430g2/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
-#if BSP430_PLATFORM_EM430 - 0
+#if (BSP430_PLATFORM_EM430 - 0)
 #include <bsp430/platform/em430/bsp430_config.h>
 #endif /* BSP430_PLATFORM_EM430 */
 
-#if BSP430_PLATFORM_RF2500T - 0
+#if (BSP430_PLATFORM_RF2500T - 0)
 #include <bsp430/platform/rf2500t/bsp430_config.h>
 #endif /* BSP430_PLATFORM_RF2500T */
 
-#if BSP430_PLATFORM_WOLVERINE - 0
+#if (BSP430_PLATFORM_WOLVERINE - 0)
 #include <bsp430/platform/wolverine/bsp430_config.h>
 #endif /* BSP430_PLATFORM_WOLVERINE */
 
-#if BSP430_PLATFORM_TRXEB - 0
+#if (BSP430_PLATFORM_TRXEB - 0)
 #include <bsp430/platform/trxeb/bsp430_config.h>
 #endif /* BSP430_PLATFORM_TRXEB */
 
-#if BSP430_PLATFORM_SURF - 0
+#if (BSP430_PLATFORM_SURF - 0)
 #include <bsp430/platform/surf/bsp430_config.h>
 #endif /* BSP430_PLATFORM_SURF */
 
 /* END AUTOMATICALLY GENERATED CODE [platform_bsp430_config] */
 /* !BSP430! end=platform_bsp430_config */
 
-#if BSP430_PLATFORM_CUSTOM - 0
+#if (BSP430_PLATFORM_CUSTOM - 0)
 #include <bsp430/platform/custom/bsp430_config.h>
 #endif /* BSP430_PLATFORM_CUSTOM */
 
@@ -219,7 +219,7 @@
  * default values for BSP430-supported features must be provided in
  * the platform-specific bsp430_config.h not the platform.h file. */
 
-#if configBSP430_UPTIME - 0
+#if (configBSP430_UPTIME - 0)
 /* Set a default resource if none encountered so far */
 #ifndef BSP430_UPTIME_TIMER_PERIPH_CPPID
 #define BSP430_UPTIME_TIMER_PERIPH_CPPID BSP430_PERIPH_CPPID_TA0
@@ -242,7 +242,7 @@
 #undef BSP430_WANT_PERIPH_CPPID
 #endif /* configBSP430_UPTIME */
 
-#if configBSP430_CONSOLE - 0
+#if (configBSP430_CONSOLE - 0)
 /* Set a default resource if none encountered so far */
 #ifndef BSP430_CONSOLE_SERIAL_PERIPH_CPPID
 #define BSP430_CONSOLE_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_NONE
@@ -340,7 +340,7 @@
 #undef BSP430_WANT_CONFIG_HPL
 #undef BSP430_WANT_PERIPH_CPPID
 
-#if configBSP430_TIMER_CCACLK_CLK_PORT - 0
+#if (configBSP430_TIMER_CCACLK_CLK_PORT - 0)
 
 #ifndef BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_NONE
@@ -358,7 +358,7 @@
 #undef BSP430_WANT_PERIPH_CPPID
 #endif /* configBSP430_TIMER_CCACLK_CLK_PORT */
 
-#if configBSP430_TIMER_CCACLK_CC0_PORT - 0
+#if (configBSP430_TIMER_CCACLK_CC0_PORT - 0)
 #ifndef BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID
 #define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_NONE
 #endif /* BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID */
@@ -375,7 +375,7 @@
 #undef BSP430_WANT_PERIPH_CPPID
 #endif /* configBSP430_TIMER_CCACLK_CC0_PORT */
 
-#if configBSP430_TIMER_CCACLK_CC1_PORT - 0
+#if (configBSP430_TIMER_CCACLK_CC1_PORT - 0)
 #ifndef BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID
 #define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID BSP430_PERIPH_CPPID_NONE
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID */

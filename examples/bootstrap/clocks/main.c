@@ -29,7 +29,7 @@
 #include <bsp430/periph/timer.h>
 
 /* We will use a console if we can. */
-#if BSP430_CONSOLE - 0
+#if (BSP430_CONSOLE - 0)
 #include <bsp430/utility/console.h>
 #endif /* BSP430_CONSOLE */
 
@@ -41,7 +41,7 @@
 
 void main ()
 {
-#if BSP430_CONSOLE - 0
+#if (BSP430_CONSOLE - 0)
   const char * help;
   unsigned long smclk_Hz;
   unsigned long aclk_Hz;
@@ -52,7 +52,7 @@ void main ()
 
   /* If we support a console, dump out a bunch of configuration
    * information. */
-#if BSP430_CONSOLE - 0
+#if (BSP430_CONSOLE - 0)
   (void)iBSP430consoleInitialize();
   cputtext_ni("\nclocks " __DATE__ " " __TIME__ "\n");
   cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1: ");
@@ -64,24 +64,24 @@ void main ()
   cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS: ");
   cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS, 10);
 #if defined(__MSP430_HAS_BC2__)
-#if configBSP430_BC2_TRIM_TO_MCLK - 0
+#if (configBSP430_BC2_TRIM_TO_MCLK - 0)
   cputtext_ni("\nconfigBSP430_BC2_TRIM_TO_MCLK: 1");
 #else /* configBSP430_BC2_TRIM_TO_MCLK */
   cputtext_ni("\nconfigBSP430_BC2_TRIM_TO_MCLK: 0");
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
-#if BSP430_BC2_TRIM_TO_MCLK - 0
+#if (BSP430_BC2_TRIM_TO_MCLK - 0)
   cputtext_ni("\nBSP430_BC2_TRIM_TO_MCLK: 1");
 #else /* BSP430_BC2_TRIM_TO_MCLK */
   cputtext_ni("\nBSP430_BC2_TRIM_TO_MCLK: 0");
 #endif /* BSP430_BC2_TRIM_TO_MCLK */
 #endif /* BC2 */
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
-#if configBSP430_UCS_TRIM_DCOCLKDIV - 0
+#if (configBSP430_UCS_TRIM_DCOCLKDIV - 0)
   cputtext_ni("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 1");
 #else /* configBSP430_UCS_TRIM_DCOCLKDIV */
   cputtext_ni("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 0");
 #endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
-#if BSP430_UCS_TRIM_DCOCLKDIV - 0
+#if (BSP430_UCS_TRIM_DCOCLKDIV - 0)
   cputtext_ni("\nBSP430_UCS_TRIM_DCOCLKDIV: 1");
 #else /* BSP430_UCS_TRIM_DCOCLKDIV */
   cputtext_ni("\nBSP430_UCS_TRIM_DCOCLKDIV: 0");
@@ -119,7 +119,7 @@ void main ()
   aclk_Hz = ulBSP430clockACLK_Hz_ni();
   cputul_ni(aclk_Hz, 10);
 
-#if BSP430_TIMER_CCACLK - 0
+#if (BSP430_TIMER_CCACLK - 0)
   if (1000000UL <= aclk_Hz) {
     cputtext_ni("\nUnable to use high-speed ACLK for differential timing of SMCLK");
   } else {
@@ -229,7 +229,7 @@ void main ()
 #endif /* BSP430_CONSOLE */
 
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 0, 1)) {
-#if BSP430_CONSOLE - 0
+#if (BSP430_CONSOLE - 0)
     cputtext_ni("\n\nClock signals exposed:\n ");
     help = NULL;
 #ifdef BSP430_PLATFORM_PERIPHERAL_HELP
@@ -259,7 +259,7 @@ void main ()
       BSP430_CORE_WATCHDOG_CLEAR();
     }
   } else {
-#if BSP430_CONSOLE - 0
+#if (BSP430_CONSOLE - 0)
     cputtext_ni("\nFailed to expose clock signals\n");
 #endif /* BSP430_CONSOLE */
   }

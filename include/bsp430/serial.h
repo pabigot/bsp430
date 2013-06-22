@@ -804,13 +804,13 @@ void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
 
 #endif /* BSP430_SERIAL - 0 */
 
-#if configBSP430_SERIAL_USE_USCI - 0
+#if (configBSP430_SERIAL_USE_USCI - 0)
 #include <bsp430/periph/usci.h>
 #endif /* configBSP430_SERIAL_USE_USCI */
-#if configBSP430_SERIAL_USE_USCI5 - 0
+#if (configBSP430_SERIAL_USE_USCI5 - 0)
 #include <bsp430/periph/usci5.h>
 #endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCI - 0
+#if (configBSP430_SERIAL_USE_EUSCI - 0)
 #include <bsp430/periph/eusci.h>
 #endif /* configBSP430_SERIAL_USE_EUSCI */
 
@@ -826,17 +826,17 @@ static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph)
 {
   hBSP430halSERIAL rv = NULL;
-#if configBSP430_SERIAL_USE_USCI - 0
+#if (configBSP430_SERIAL_USE_USCI - 0)
   if (NULL == rv) {
     rv = hBSP430usciLookup(periph);
   }
 #endif /* configBSP430_SERIAL_USE_USCI */
-#if configBSP430_SERIAL_USE_USCI5 - 0
+#if (configBSP430_SERIAL_USE_USCI5 - 0)
   if (NULL == rv) {
     rv = hBSP430usci5Lookup(periph);
   }
 #endif /* configBSP430_SERIAL_USE_USCI5 */
-#if configBSP430_SERIAL_USE_EUSCI - 0
+#if (configBSP430_SERIAL_USE_EUSCI - 0)
   if (NULL == rv) {
     rv = hBSP430eusciLookup(periph);
   }

@@ -32,7 +32,7 @@
 #include <msp430.h>
 #include <bsp430/utility/led.h>
 
-#if BSP430_LED - 0
+#if (BSP430_LED - 0)
 
 /* Some MSP430 MCUs use two selector registers.  At this time, it
  * appears that if an MCU has two selectors for one port, it has two

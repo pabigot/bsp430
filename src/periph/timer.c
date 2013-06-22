@@ -34,7 +34,7 @@
 #include <bsp430/clock.h>
 #include <string.h>
 
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 /* In 5xx Timer_A and Timer_B use the same layout with 0x0E denoting
  * overflow */
 #define TA_OVERFLOW 0x0E
@@ -49,7 +49,7 @@
 /* !BSP430! periph=timer */
 /* !BSP430! instance=TA0,TA1,TA2,TA3,TB0,TB1,TB2 */
 
-#if configBSP430_HAL_TA0 - 0
+#if (configBSP430_HAL_TA0 - 0)
 
 static const sBSP430halISRIndexedChainNode * cc_callback_TA0[
 #if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
@@ -64,10 +64,10 @@ static const sBSP430halISRIndexedChainNode * cc_callback_TA0[
 sBSP430halTIMER xBSP430hal_TA0_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
-#if configBSP430_HAL_TA0_ISR - 0
+#if (configBSP430_HAL_TA0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_TA0_ISR */
-#if configBSP430_HAL_TA0_CC0_ISR - 0
+#if (configBSP430_HAL_TA0_CC0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
   },
@@ -76,7 +76,7 @@ sBSP430halTIMER xBSP430hal_TA0_ = {
 };
 #endif /* configBSP430_HAL_TA0 */
 
-#if configBSP430_HAL_TA1 - 0
+#if (configBSP430_HAL_TA1 - 0)
 
 static const sBSP430halISRIndexedChainNode * cc_callback_TA1[
 #if defined(__MSP430_HAS_T1A2__)
@@ -91,10 +91,10 @@ static const sBSP430halISRIndexedChainNode * cc_callback_TA1[
 sBSP430halTIMER xBSP430hal_TA1_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
-#if configBSP430_HAL_TA1_ISR - 0
+#if (configBSP430_HAL_TA1_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_TA1_ISR */
-#if configBSP430_HAL_TA1_CC0_ISR - 0
+#if (configBSP430_HAL_TA1_CC0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
   },
@@ -103,7 +103,7 @@ sBSP430halTIMER xBSP430hal_TA1_ = {
 };
 #endif /* configBSP430_HAL_TA1 */
 
-#if configBSP430_HAL_TA2 - 0
+#if (configBSP430_HAL_TA2 - 0)
 
 static const sBSP430halISRIndexedChainNode * cc_callback_TA2[
 #if defined(__MSP430_HAS_T2A2__)
@@ -118,10 +118,10 @@ static const sBSP430halISRIndexedChainNode * cc_callback_TA2[
 sBSP430halTIMER xBSP430hal_TA2_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
-#if configBSP430_HAL_TA2_ISR - 0
+#if (configBSP430_HAL_TA2_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_TA2_ISR */
-#if configBSP430_HAL_TA2_CC0_ISR - 0
+#if (configBSP430_HAL_TA2_CC0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
   },
@@ -130,7 +130,7 @@ sBSP430halTIMER xBSP430hal_TA2_ = {
 };
 #endif /* configBSP430_HAL_TA2 */
 
-#if configBSP430_HAL_TA3 - 0
+#if (configBSP430_HAL_TA3 - 0)
 
 static const sBSP430halISRIndexedChainNode * cc_callback_TA3[
 #if defined(__MSP430_HAS_T3A2__)
@@ -145,10 +145,10 @@ static const sBSP430halISRIndexedChainNode * cc_callback_TA3[
 sBSP430halTIMER xBSP430hal_TA3_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
-#if configBSP430_HAL_TA3_ISR - 0
+#if (configBSP430_HAL_TA3_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_TA3_ISR */
-#if configBSP430_HAL_TA3_CC0_ISR - 0
+#if (configBSP430_HAL_TA3_CC0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
   },
@@ -157,7 +157,7 @@ sBSP430halTIMER xBSP430hal_TA3_ = {
 };
 #endif /* configBSP430_HAL_TA3 */
 
-#if configBSP430_HAL_TB0 - 0
+#if (configBSP430_HAL_TB0 - 0)
 
 static const sBSP430halISRIndexedChainNode * cc_callback_TB0[
 #if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
@@ -170,10 +170,10 @@ static const sBSP430halISRIndexedChainNode * cc_callback_TB0[
 sBSP430halTIMER xBSP430hal_TB0_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
-#if configBSP430_HAL_TB0_ISR - 0
+#if (configBSP430_HAL_TB0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_TB0_ISR */
-#if configBSP430_HAL_TB0_CC0_ISR - 0
+#if (configBSP430_HAL_TB0_CC0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
   },
@@ -182,7 +182,7 @@ sBSP430halTIMER xBSP430hal_TB0_ = {
 };
 #endif /* configBSP430_HAL_TB0 */
 
-#if configBSP430_HAL_TB1 - 0
+#if (configBSP430_HAL_TB1 - 0)
 
 static const sBSP430halISRIndexedChainNode * cc_callback_TB1[
 #if defined(__MSP430_HAS_T1B3__)
@@ -195,10 +195,10 @@ static const sBSP430halISRIndexedChainNode * cc_callback_TB1[
 sBSP430halTIMER xBSP430hal_TB1_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
-#if configBSP430_HAL_TB1_ISR - 0
+#if (configBSP430_HAL_TB1_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_TB1_ISR */
-#if configBSP430_HAL_TB1_CC0_ISR - 0
+#if (configBSP430_HAL_TB1_CC0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
   },
@@ -207,7 +207,7 @@ sBSP430halTIMER xBSP430hal_TB1_ = {
 };
 #endif /* configBSP430_HAL_TB1 */
 
-#if configBSP430_HAL_TB2 - 0
+#if (configBSP430_HAL_TB2 - 0)
 
 static const sBSP430halISRIndexedChainNode * cc_callback_TB2[
 #if defined(__MSP430_HAS_T2B3__)
@@ -220,10 +220,10 @@ static const sBSP430halISRIndexedChainNode * cc_callback_TB2[
 sBSP430halTIMER xBSP430hal_TB2_ = {
   .hal_state = {
     .cflags = BSP430_TIMER_HAL_HPL_VARIANT_TIMER
-#if configBSP430_HAL_TB2_ISR - 0
+#if (configBSP430_HAL_TB2_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_TB2_ISR */
-#if configBSP430_HAL_TB2_CC0_ISR - 0
+#if (configBSP430_HAL_TB2_CC0_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
   },
@@ -637,7 +637,7 @@ iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm)
 
 /* !BSP430! TYPE=A subst=TYPE instance=0,1,2,3 insert=hal_timer_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_defn] */
-#if configBSP430_HAL_TA0_CC0_ISR - 0
+#if (configBSP430_HAL_TA0_CC0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER0_A0_VECTOR)
 isr_cc0_TA0 (void)
 {
@@ -647,7 +647,7 @@ isr_cc0_TA0 (void)
 }
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
 
-#if configBSP430_HAL_TA0_ISR - 0
+#if (configBSP430_HAL_TA0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER0_A1_VECTOR)
 isr_TA0 (void)
 {
@@ -667,7 +667,7 @@ isr_TA0 (void)
 }
 #endif /* configBSP430_HAL_TA0_ISR */
 
-#if configBSP430_HAL_TA1_CC0_ISR - 0
+#if (configBSP430_HAL_TA1_CC0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER1_A0_VECTOR)
 isr_cc0_TA1 (void)
 {
@@ -677,7 +677,7 @@ isr_cc0_TA1 (void)
 }
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
 
-#if configBSP430_HAL_TA1_ISR - 0
+#if (configBSP430_HAL_TA1_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER1_A1_VECTOR)
 isr_TA1 (void)
 {
@@ -697,7 +697,7 @@ isr_TA1 (void)
 }
 #endif /* configBSP430_HAL_TA1_ISR */
 
-#if configBSP430_HAL_TA2_CC0_ISR - 0
+#if (configBSP430_HAL_TA2_CC0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER2_A0_VECTOR)
 isr_cc0_TA2 (void)
 {
@@ -707,7 +707,7 @@ isr_cc0_TA2 (void)
 }
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
 
-#if configBSP430_HAL_TA2_ISR - 0
+#if (configBSP430_HAL_TA2_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER2_A1_VECTOR)
 isr_TA2 (void)
 {
@@ -727,7 +727,7 @@ isr_TA2 (void)
 }
 #endif /* configBSP430_HAL_TA2_ISR */
 
-#if configBSP430_HAL_TA3_CC0_ISR - 0
+#if (configBSP430_HAL_TA3_CC0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER3_A0_VECTOR)
 isr_cc0_TA3 (void)
 {
@@ -737,7 +737,7 @@ isr_cc0_TA3 (void)
 }
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
 
-#if configBSP430_HAL_TA3_ISR - 0
+#if (configBSP430_HAL_TA3_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER3_A1_VECTOR)
 isr_TA3 (void)
 {
@@ -761,7 +761,7 @@ isr_TA3 (void)
 /* !BSP430! end=hal_timer_isr_defn */
 /* !BSP430! TYPE=B subst=TYPE instance=0,1,2 insert=hal_timer_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_timer_isr_defn] */
-#if configBSP430_HAL_TB0_CC0_ISR - 0
+#if (configBSP430_HAL_TB0_CC0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER0_B0_VECTOR)
 isr_cc0_TB0 (void)
 {
@@ -771,7 +771,7 @@ isr_cc0_TB0 (void)
 }
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
 
-#if configBSP430_HAL_TB0_ISR - 0
+#if (configBSP430_HAL_TB0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER0_B1_VECTOR)
 isr_TB0 (void)
 {
@@ -791,7 +791,7 @@ isr_TB0 (void)
 }
 #endif /* configBSP430_HAL_TB0_ISR */
 
-#if configBSP430_HAL_TB1_CC0_ISR - 0
+#if (configBSP430_HAL_TB1_CC0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER1_B0_VECTOR)
 isr_cc0_TB1 (void)
 {
@@ -801,7 +801,7 @@ isr_cc0_TB1 (void)
 }
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
 
-#if configBSP430_HAL_TB1_ISR - 0
+#if (configBSP430_HAL_TB1_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER1_B1_VECTOR)
 isr_TB1 (void)
 {
@@ -821,7 +821,7 @@ isr_TB1 (void)
 }
 #endif /* configBSP430_HAL_TB1_ISR */
 
-#if configBSP430_HAL_TB2_CC0_ISR - 0
+#if (configBSP430_HAL_TB2_CC0_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER2_B0_VECTOR)
 isr_cc0_TB2 (void)
 {
@@ -831,7 +831,7 @@ isr_cc0_TB2 (void)
 }
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
 
-#if configBSP430_HAL_TB2_ISR - 0
+#if (configBSP430_HAL_TB2_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(TIMER2_B1_VECTOR)
 isr_TB2 (void)
 {
@@ -860,43 +860,43 @@ xBSP430timerName (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_name_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_name_demux] */
-#if configBSP430_HPL_TA0 - 0
+#if (configBSP430_HPL_TA0 - 0)
   if (BSP430_PERIPH_TA0 == periph) {
     return "TA0";
   }
 #endif /* configBSP430_HPL_TA0 */
 
-#if configBSP430_HPL_TA1 - 0
+#if (configBSP430_HPL_TA1 - 0)
   if (BSP430_PERIPH_TA1 == periph) {
     return "TA1";
   }
 #endif /* configBSP430_HPL_TA1 */
 
-#if configBSP430_HPL_TA2 - 0
+#if (configBSP430_HPL_TA2 - 0)
   if (BSP430_PERIPH_TA2 == periph) {
     return "TA2";
   }
 #endif /* configBSP430_HPL_TA2 */
 
-#if configBSP430_HPL_TA3 - 0
+#if (configBSP430_HPL_TA3 - 0)
   if (BSP430_PERIPH_TA3 == periph) {
     return "TA3";
   }
 #endif /* configBSP430_HPL_TA3 */
 
-#if configBSP430_HPL_TB0 - 0
+#if (configBSP430_HPL_TB0 - 0)
   if (BSP430_PERIPH_TB0 == periph) {
     return "TB0";
   }
 #endif /* configBSP430_HPL_TB0 */
 
-#if configBSP430_HPL_TB1 - 0
+#if (configBSP430_HPL_TB1 - 0)
   if (BSP430_PERIPH_TB1 == periph) {
     return "TB1";
   }
 #endif /* configBSP430_HPL_TB1 */
 
-#if configBSP430_HPL_TB2 - 0
+#if (configBSP430_HPL_TB2 - 0)
   if (BSP430_PERIPH_TB2 == periph) {
     return "TB2";
   }
@@ -910,7 +910,7 @@ xBSP430timerName (tBSP430periphHandle periph)
 int
 iBSP430timerSupportedCCs (tBSP430periphHandle periph)
 {
-#if configBSP430_HPL_TA0 - 0
+#if (configBSP430_HPL_TA0 - 0)
   if (BSP430_PERIPH_TA0 == periph) {
 #if defined(__MSP430_HAS_TA2__) || defined(__MSP430_HAS_T0A2__)
     return 2;
@@ -922,7 +922,7 @@ iBSP430timerSupportedCCs (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_TA0 */
 
-#if configBSP430_HPL_TA1 - 0
+#if (configBSP430_HPL_TA1 - 0)
   if (BSP430_PERIPH_TA1 == periph) {
 #if defined(__MSP430_HAS_T1A2__)
     return 2;
@@ -934,7 +934,7 @@ iBSP430timerSupportedCCs (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_TA1 */
 
-#if configBSP430_HPL_TA2 - 0
+#if (configBSP430_HPL_TA2 - 0)
   if (BSP430_PERIPH_TA2 == periph) {
 #if defined(__MSP430_HAS_T2A2__)
     return 2;
@@ -946,7 +946,7 @@ iBSP430timerSupportedCCs (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_TA2 */
 
-#if configBSP430_HPL_TA3 - 0
+#if (configBSP430_HPL_TA3 - 0)
   if (BSP430_PERIPH_TA3 == periph) {
 #if defined(__MSP430_HAS_T3A2__)
     return 2;
@@ -958,7 +958,7 @@ iBSP430timerSupportedCCs (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_TA3 */
 
-#if configBSP430_HPL_TB0 - 0
+#if (configBSP430_HPL_TB0 - 0)
   if (BSP430_PERIPH_TB0 == periph) {
 #if defined(__MSP430_HAS_TB3__) || defined(__MSP430_HAS_T0B3__)
     return 3;
@@ -968,7 +968,7 @@ iBSP430timerSupportedCCs (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_TB0 */
 
-#if configBSP430_HPL_TB1 - 0
+#if (configBSP430_HPL_TB1 - 0)
   if (BSP430_PERIPH_TB1 == periph) {
 #if defined(__MSP430_HAS_T1B3__)
     return 3;
@@ -978,7 +978,7 @@ iBSP430timerSupportedCCs (tBSP430periphHandle periph)
   }
 #endif /* configBSP430_HPL_TB1 */
 
-#if configBSP430_HPL_TB2 - 0
+#if (configBSP430_HPL_TB2 - 0)
   if (BSP430_PERIPH_TB2 == periph) {
 #if defined(__MSP430_HAS_T2B3__)
     return 3;

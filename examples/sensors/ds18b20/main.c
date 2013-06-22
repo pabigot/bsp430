@@ -35,7 +35,7 @@ const struct sBSP430onewireBus ds18b20 = {
    * undiagnosed reasons but possibly due to capacitive sense support on
    * P1.7, using REN on onewire prevents the LaunchPad from reading from
    * the sensor; we'll live with it not being able to detect absence. */
-#if BSP430_PLATFORM_EXP430G2 - 0
+#if (BSP430_PLATFORM_EXP430G2 - 0)
   0
 #else /* BSP430_PLATFORM_EXP430G2 */
   1

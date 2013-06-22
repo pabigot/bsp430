@@ -36,7 +36,7 @@
 
 /* !BSP430! insert=hal_port_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_defn] */
-#if configBSP430_HAL_PORT1 - 0
+#if (configBSP430_HAL_PORT1 - 0)
 struct sBSP430halPORT xBSP430hal_PORT1_ = {
   .hal_state = {
     .cflags =
@@ -45,7 +45,7 @@ struct sBSP430halPORT xBSP430hal_PORT1_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT1_ISR - 0
+#if (configBSP430_HAL_PORT1_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT1_ISR */
   },
@@ -63,7 +63,7 @@ struct sBSP430halPORT xBSP430hal_PORT1_ = {
 };
 #endif /* configBSP430_HAL_PORT1 */
 
-#if configBSP430_HAL_PORT2 - 0
+#if (configBSP430_HAL_PORT2 - 0)
 struct sBSP430halPORT xBSP430hal_PORT2_ = {
   .hal_state = {
     .cflags =
@@ -72,7 +72,7 @@ struct sBSP430halPORT xBSP430hal_PORT2_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT2_ISR - 0
+#if (configBSP430_HAL_PORT2_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT2_ISR */
   },
@@ -90,7 +90,7 @@ struct sBSP430halPORT xBSP430hal_PORT2_ = {
 };
 #endif /* configBSP430_HAL_PORT2 */
 
-#if configBSP430_HAL_PORT3 - 0
+#if (configBSP430_HAL_PORT3 - 0)
 struct sBSP430halPORT xBSP430hal_PORT3_ = {
   .hal_state = {
     .cflags =
@@ -99,7 +99,7 @@ struct sBSP430halPORT xBSP430hal_PORT3_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT3_ISR - 0
+#if (configBSP430_HAL_PORT3_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT3_ISR */
   },
@@ -117,7 +117,7 @@ struct sBSP430halPORT xBSP430hal_PORT3_ = {
 };
 #endif /* configBSP430_HAL_PORT3 */
 
-#if configBSP430_HAL_PORT4 - 0
+#if (configBSP430_HAL_PORT4 - 0)
 struct sBSP430halPORT xBSP430hal_PORT4_ = {
   .hal_state = {
     .cflags =
@@ -126,7 +126,7 @@ struct sBSP430halPORT xBSP430hal_PORT4_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT4_ISR - 0
+#if (configBSP430_HAL_PORT4_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT4_ISR */
   },
@@ -144,7 +144,7 @@ struct sBSP430halPORT xBSP430hal_PORT4_ = {
 };
 #endif /* configBSP430_HAL_PORT4 */
 
-#if configBSP430_HAL_PORT5 - 0
+#if (configBSP430_HAL_PORT5 - 0)
 struct sBSP430halPORT xBSP430hal_PORT5_ = {
   .hal_state = {
     .cflags =
@@ -153,7 +153,7 @@ struct sBSP430halPORT xBSP430hal_PORT5_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT5_ISR - 0
+#if (configBSP430_HAL_PORT5_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT5_ISR */
   },
@@ -171,7 +171,7 @@ struct sBSP430halPORT xBSP430hal_PORT5_ = {
 };
 #endif /* configBSP430_HAL_PORT5 */
 
-#if configBSP430_HAL_PORT6 - 0
+#if (configBSP430_HAL_PORT6 - 0)
 struct sBSP430halPORT xBSP430hal_PORT6_ = {
   .hal_state = {
     .cflags =
@@ -180,7 +180,7 @@ struct sBSP430halPORT xBSP430hal_PORT6_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT6_ISR - 0
+#if (configBSP430_HAL_PORT6_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT6_ISR */
   },
@@ -198,7 +198,7 @@ struct sBSP430halPORT xBSP430hal_PORT6_ = {
 };
 #endif /* configBSP430_HAL_PORT6 */
 
-#if configBSP430_HAL_PORT7 - 0
+#if (configBSP430_HAL_PORT7 - 0)
 struct sBSP430halPORT xBSP430hal_PORT7_ = {
   .hal_state = {
     .cflags =
@@ -207,7 +207,7 @@ struct sBSP430halPORT xBSP430hal_PORT7_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT7_ISR - 0
+#if (configBSP430_HAL_PORT7_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT7_ISR */
   },
@@ -225,7 +225,7 @@ struct sBSP430halPORT xBSP430hal_PORT7_ = {
 };
 #endif /* configBSP430_HAL_PORT7 */
 
-#if configBSP430_HAL_PORT8 - 0
+#if (configBSP430_HAL_PORT8 - 0)
 struct sBSP430halPORT xBSP430hal_PORT8_ = {
   .hal_state = {
     .cflags =
@@ -234,7 +234,7 @@ struct sBSP430halPORT xBSP430hal_PORT8_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT8_ISR - 0
+#if (configBSP430_HAL_PORT8_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT8_ISR */
   },
@@ -252,7 +252,7 @@ struct sBSP430halPORT xBSP430hal_PORT8_ = {
 };
 #endif /* configBSP430_HAL_PORT8 */
 
-#if configBSP430_HAL_PORT9 - 0
+#if (configBSP430_HAL_PORT9 - 0)
 struct sBSP430halPORT xBSP430hal_PORT9_ = {
   .hal_state = {
     .cflags =
@@ -261,7 +261,7 @@ struct sBSP430halPORT xBSP430hal_PORT9_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT9_ISR - 0
+#if (configBSP430_HAL_PORT9_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT9_ISR */
   },
@@ -279,7 +279,7 @@ struct sBSP430halPORT xBSP430hal_PORT9_ = {
 };
 #endif /* configBSP430_HAL_PORT9 */
 
-#if configBSP430_HAL_PORT10 - 0
+#if (configBSP430_HAL_PORT10 - 0)
 struct sBSP430halPORT xBSP430hal_PORT10_ = {
   .hal_state = {
     .cflags =
@@ -288,7 +288,7 @@ struct sBSP430halPORT xBSP430hal_PORT10_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT10_ISR - 0
+#if (configBSP430_HAL_PORT10_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT10_ISR */
   },
@@ -306,7 +306,7 @@ struct sBSP430halPORT xBSP430hal_PORT10_ = {
 };
 #endif /* configBSP430_HAL_PORT10 */
 
-#if configBSP430_HAL_PORT11 - 0
+#if (configBSP430_HAL_PORT11 - 0)
 struct sBSP430halPORT xBSP430hal_PORT11_ = {
   .hal_state = {
     .cflags =
@@ -315,7 +315,7 @@ struct sBSP430halPORT xBSP430hal_PORT11_ = {
 #else /* IE */
     BSP430_PORT_HAL_HPL_VARIANT_PORT
 #endif /* IE */
-#if configBSP430_HAL_PORT11_ISR - 0
+#if (configBSP430_HAL_PORT11_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_PORT11_ISR */
   },
@@ -363,13 +363,13 @@ port_isr (hBSP430halPORT device,
 
 /* !BSP430! insert=hal_port_isr_defn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_port_isr_defn] */
-#if configBSP430_HAL_PORT1_ISR - 0
+#if (configBSP430_HAL_PORT1_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT1_VECTOR)
 isr_PORT1 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P1IV;
 
   if (0 == iv) {
@@ -393,13 +393,13 @@ isr_PORT1 (void)
 }
 #endif /* configBSP430_HAL_PORT1_ISR */
 
-#if configBSP430_HAL_PORT2_ISR - 0
+#if (configBSP430_HAL_PORT2_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT2_VECTOR)
 isr_PORT2 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P2IV;
 
   if (0 == iv) {
@@ -423,13 +423,13 @@ isr_PORT2 (void)
 }
 #endif /* configBSP430_HAL_PORT2_ISR */
 
-#if configBSP430_HAL_PORT3_ISR - 0
+#if (configBSP430_HAL_PORT3_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT3_VECTOR)
 isr_PORT3 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P3IV;
 
   if (0 == iv) {
@@ -453,13 +453,13 @@ isr_PORT3 (void)
 }
 #endif /* configBSP430_HAL_PORT3_ISR */
 
-#if configBSP430_HAL_PORT4_ISR - 0
+#if (configBSP430_HAL_PORT4_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT4_VECTOR)
 isr_PORT4 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P4IV;
 
   if (0 == iv) {
@@ -483,13 +483,13 @@ isr_PORT4 (void)
 }
 #endif /* configBSP430_HAL_PORT4_ISR */
 
-#if configBSP430_HAL_PORT5_ISR - 0
+#if (configBSP430_HAL_PORT5_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT5_VECTOR)
 isr_PORT5 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P5IV;
 
   if (0 == iv) {
@@ -513,13 +513,13 @@ isr_PORT5 (void)
 }
 #endif /* configBSP430_HAL_PORT5_ISR */
 
-#if configBSP430_HAL_PORT6_ISR - 0
+#if (configBSP430_HAL_PORT6_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT6_VECTOR)
 isr_PORT6 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P6IV;
 
   if (0 == iv) {
@@ -543,13 +543,13 @@ isr_PORT6 (void)
 }
 #endif /* configBSP430_HAL_PORT6_ISR */
 
-#if configBSP430_HAL_PORT7_ISR - 0
+#if (configBSP430_HAL_PORT7_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT7_VECTOR)
 isr_PORT7 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P7IV;
 
   if (0 == iv) {
@@ -573,13 +573,13 @@ isr_PORT7 (void)
 }
 #endif /* configBSP430_HAL_PORT7_ISR */
 
-#if configBSP430_HAL_PORT8_ISR - 0
+#if (configBSP430_HAL_PORT8_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT8_VECTOR)
 isr_PORT8 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P8IV;
 
   if (0 == iv) {
@@ -603,13 +603,13 @@ isr_PORT8 (void)
 }
 #endif /* configBSP430_HAL_PORT8_ISR */
 
-#if configBSP430_HAL_PORT9_ISR - 0
+#if (configBSP430_HAL_PORT9_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT9_VECTOR)
 isr_PORT9 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P9IV;
 
   if (0 == iv) {
@@ -633,13 +633,13 @@ isr_PORT9 (void)
 }
 #endif /* configBSP430_HAL_PORT9_ISR */
 
-#if configBSP430_HAL_PORT10_ISR - 0
+#if (configBSP430_HAL_PORT10_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT10_VECTOR)
 isr_PORT10 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P10IV;
 
   if (0 == iv) {
@@ -663,13 +663,13 @@ isr_PORT10 (void)
 }
 #endif /* configBSP430_HAL_PORT10_ISR */
 
-#if configBSP430_HAL_PORT11_ISR - 0
+#if (configBSP430_HAL_PORT11_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(PORT11_VECTOR)
 isr_PORT11 (void)
 {
   int idx = 0;
   int rv;
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
   unsigned int iv = P11IV;
 
   if (0 == iv) {
@@ -701,67 +701,67 @@ xBSP430portName (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_name_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_name_demux] */
-#if configBSP430_HPL_PORT1 - 0
+#if (configBSP430_HPL_PORT1 - 0)
   if (BSP430_PERIPH_PORT1 == periph) {
     return "PORT1";
   }
 #endif /* configBSP430_HPL_PORT1 */
 
-#if configBSP430_HPL_PORT2 - 0
+#if (configBSP430_HPL_PORT2 - 0)
   if (BSP430_PERIPH_PORT2 == periph) {
     return "PORT2";
   }
 #endif /* configBSP430_HPL_PORT2 */
 
-#if configBSP430_HPL_PORT3 - 0
+#if (configBSP430_HPL_PORT3 - 0)
   if (BSP430_PERIPH_PORT3 == periph) {
     return "PORT3";
   }
 #endif /* configBSP430_HPL_PORT3 */
 
-#if configBSP430_HPL_PORT4 - 0
+#if (configBSP430_HPL_PORT4 - 0)
   if (BSP430_PERIPH_PORT4 == periph) {
     return "PORT4";
   }
 #endif /* configBSP430_HPL_PORT4 */
 
-#if configBSP430_HPL_PORT5 - 0
+#if (configBSP430_HPL_PORT5 - 0)
   if (BSP430_PERIPH_PORT5 == periph) {
     return "PORT5";
   }
 #endif /* configBSP430_HPL_PORT5 */
 
-#if configBSP430_HPL_PORT6 - 0
+#if (configBSP430_HPL_PORT6 - 0)
   if (BSP430_PERIPH_PORT6 == periph) {
     return "PORT6";
   }
 #endif /* configBSP430_HPL_PORT6 */
 
-#if configBSP430_HPL_PORT7 - 0
+#if (configBSP430_HPL_PORT7 - 0)
   if (BSP430_PERIPH_PORT7 == periph) {
     return "PORT7";
   }
 #endif /* configBSP430_HPL_PORT7 */
 
-#if configBSP430_HPL_PORT8 - 0
+#if (configBSP430_HPL_PORT8 - 0)
   if (BSP430_PERIPH_PORT8 == periph) {
     return "PORT8";
   }
 #endif /* configBSP430_HPL_PORT8 */
 
-#if configBSP430_HPL_PORT9 - 0
+#if (configBSP430_HPL_PORT9 - 0)
   if (BSP430_PERIPH_PORT9 == periph) {
     return "PORT9";
   }
 #endif /* configBSP430_HPL_PORT9 */
 
-#if configBSP430_HPL_PORT10 - 0
+#if (configBSP430_HPL_PORT10 - 0)
   if (BSP430_PERIPH_PORT10 == periph) {
     return "PORT10";
   }
 #endif /* configBSP430_HPL_PORT10 */
 
-#if configBSP430_HPL_PORT11 - 0
+#if (configBSP430_HPL_PORT11 - 0)
   if (BSP430_PERIPH_PORT11 == periph) {
     return "PORT11";
   }

@@ -3,7 +3,7 @@
  * same line as the Anaren CSn, and if we happen to run the
  * application on a board with that populated it'd be used for the
  * serial clock. */
-#if BSP430_PLATFORM_EXP430G2 - 0
+#if (BSP430_PLATFORM_EXP430G2 - 0)
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 0
 #else /* BSP430_PLATFORM_EXP430G2 */
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1

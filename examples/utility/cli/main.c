@@ -277,7 +277,7 @@ static const char * const numbers[] = {
   "ten"
 };
 static const size_t number_len = sizeof(numbers)/sizeof(*numbers);
-#if configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0
+#if (configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0)
 static const sBSP430cliCompletionHelperStrings completion_helper_say = {
   .completion_helper = { .helper = vBSP430cliCompletionHelperStrings },
   .strings = numbers,
@@ -309,7 +309,7 @@ cmd_say (sBSP430cliCommandLink * chain,
 static const sBSP430cliCommand dcmd_say = {
   .key = "say",
   .help = "{word}... # Customized completion demonstration",
-#if configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0
+#if (configBSP430_CLI_COMMAND_COMPLETION_HELPER - 0)
   .completion_helper = &completion_helper_say.completion_helper,
 #endif /* configBSP430_CLI_COMMAND_COMPLETION_HELPER */
   .next = LAST_COMMAND,
@@ -345,7 +345,7 @@ void main ()
   (void)iBSP430consoleInitialize();
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   cprintf("\ncli example " __DATE__ " " __TIME__ "\n");
-#if configBSP430_CLI_COMMAND_COMPLETION - 0
+#if (configBSP430_CLI_COMMAND_COMPLETION - 0)
   cprintf("Command completion is available.\n");
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
   vBSP430ledSet(0, 1);

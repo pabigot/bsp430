@@ -39,7 +39,7 @@
 #include <bsp430/periph/timer.h>
 #include "FreeRTOS.h"
 
-#if configBSP430_HAL_TA0_CC0_ISR - 0
+#if (configBSP430_HAL_TA0_CC0_ISR - 0)
 #error FreeRTOS override reserves TA0 CC0 for internal use
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
 

@@ -224,7 +224,7 @@
 #define configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE 1
 #endif /* configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE */
 
-#if configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE - 0
+#if (configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE - 0)
 #include "bsp430_config.h"
 #endif /* configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE */
 
@@ -337,7 +337,7 @@
  * @dependency #configBSP430_CORE_DISABLE_FLL
  */
 #ifndef BSP430_CORE_LPM_EXIT_MASK
-#if configBSP430_CORE_DISABLE_FLL - 0
+#if (configBSP430_CORE_DISABLE_FLL - 0)
 #define BSP430_CORE_LPM_EXIT_MASK (BSP430_CORE_LPM_EXIT_CLEAR_GIE_ | (LPM4_bits & ~SCG0))
 #else /* configBSP430_CORE_DISABLE_FLL */
 #define BSP430_CORE_LPM_EXIT_MASK (BSP430_CORE_LPM_EXIT_CLEAR_GIE_ | LPM4_bits)
@@ -387,7 +387,7 @@
 #define BSP430_CORE_TOOLCHAIN_TI 1
 #endif /* __TI_COMPILER_VERSION__ */
 
-#if BSP430_CORE_TOOLCHAIN_TI - 0
+#if (BSP430_CORE_TOOLCHAIN_TI - 0)
 #define __read_stack_register() _get_SP_register()
 #define __read_status_register() _get_SR_register()
 #define __bis_status_register(_v) _bis_SR_register(_v)
@@ -450,7 +450,7 @@
  * @param iv_ the TI header constant identifying the interrupt, e.g @c
  * USCI_B2_VECTOR
  */
-#if BSP430_CORE_TOOLCHAIN_TI - 0
+#if (BSP430_CORE_TOOLCHAIN_TI - 0)
 #define BSP430_CORE_DECLARE_INTERRUPT(iv_) _BSP430_CORE_TOOLCHAIN_TI_PRAGMA(vector=##iv_) __interrupt void
 /* Helper function required to make the _Pragma argument a single
  * string literal */
@@ -567,7 +567,7 @@
  * @see #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG
  *
  * @defaulted */
-#if configBSP430_CORE_SUPPORT_WATCHDOG - 0
+#if (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
 #ifndef BSP430_CORE_WATCHDOG_CLEAR
 #if 20120406 < __MSPGCC__
 #define BSP430_CORE_WATCHDOG_CLEAR() __watchdog_clear()
@@ -622,7 +622,7 @@
  * issued after every such period.
  *
  * @dependency #configBSP430_CORE_SUPPORT_WATCHDOG */
-#if configBSP430_CORE_SUPPORT_WATCHDOG - 0
+#if (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
 #define BSP430_CORE_DELAY_CYCLES(_duration_mclk) do {                   \
     if ((_duration_mclk) > BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES) {     \
       unsigned int _watchdog_iterations = (_duration_mclk) / BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES; \
@@ -790,7 +790,7 @@
 #endif
 
 /* See <bsp430/rtos/freertos.h> */
-#if configBSP430_RTOS_FREERTOS - 0
+#if (configBSP430_RTOS_FREERTOS - 0)
 /* FreeRTOS defines application behavior in a shared header.  Read it
  * in here so everybody agrees on its contents. */
 

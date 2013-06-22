@@ -37,7 +37,7 @@
 
 #include <bsp430/platform/standard.inc>
 
-#if BSP430_LED - 0
+#if (BSP430_LED - 0)
 const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Red */
   { .outp = &P1OUT, .bit = BIT6 }, /* Green */
@@ -64,7 +64,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     }
     return 0;
   }
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT0 | BIT4;
     if (enablep) {
@@ -77,7 +77,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_USCI_A0 - 0
+#if (configBSP430_HPL_USCI_A0 - 0)
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT1 | BIT2;
     if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
@@ -99,7 +99,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     return 0;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
-#if configBSP430_HPL_USCI_B0 - 0
+#if (configBSP430_HPL_USCI_B0 - 0)
   else if (BSP430_PERIPH_USCI_B0 == device) {
     bits = BIT6 | BIT7;
     if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
@@ -131,23 +131,23 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
   if (BSP430_PERIPH_LFXT1 == device) {
     return "XIN=P2.6; XOUT=P2.7";
   }
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     return "SMCLK on P1.4; ACLK on P1.0 (red LED)";
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_USCI_A0 - 0
+#if (configBSP430_HPL_USCI_A0 - 0)
   if (BSP430_PERIPH_USCI_A0 == device) {
     return "MOSI/TXD=P1.2; MISO/RXD=P1.1; CLK=P1.4; STE=P1.5";
   }
 #endif /* configBSP430_HPL_USCI_A0 */
-#if configBSP430_HPL_USCI_B0 - 0
+#if (configBSP430_HPL_USCI_B0 - 0)
   if (BSP430_PERIPH_USCI_B0 == device) {
     /* Yes, MISO/MOSI are a different order than other chips */
     return "MOSI/SDA=P1.7; MISO/SCL=P1.6; CLK=P1.5; STE=P1.4";
   }
 #endif /* configBSP430_HPL_USCI_B0 */
-#if configBSP430_HPL_TA0 - 0
+#if (configBSP430_HPL_TA0 - 0)
   if (BSP430_PERIPH_TA0 == device) {
     return "INCLK=P1.0";
   }

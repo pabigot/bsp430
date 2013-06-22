@@ -69,7 +69,7 @@
 void
 vBSP430platformInitialize_ni (void)
 {
-#if BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG - 0
+#if (BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG - 0)
   /* Hold off watchdog */
   WDTCTL = WDTPW | WDTHOLD;
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
@@ -98,16 +98,16 @@ vBSP430platformInitialize_ni (void)
   /* Configure clocks.  Start with MCLK, which may need to use ACLK or
    * SMCLK during trimming operations.  Then finish up with SMCLK and
    * ACLK. */
-#if BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS - 0
+#if (BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS - 0)
   ulBSP430clockConfigureMCLK_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ);
-#if configBSP430_CORE_DISABLE_FLL - 0
+#if (configBSP430_CORE_DISABLE_FLL - 0)
   __bis_status_register(SCG0);
 #endif /* configBSP430_CORE_DISABLE_FLL */
   iBSP430clockConfigureSMCLK_ni(BSP430_PLATFORM_BOOT_SMCLK_SOURCE, BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT);
   iBSP430clockConfigureACLK_ni(BSP430_PLATFORM_BOOT_ACLK_SOURCE, BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT);
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
 
-#if BSP430_UPTIME - 0
+#if (BSP430_UPTIME - 0)
   vBSP430uptimeStart_ni();
 #endif /* BSP430_UPTIME */
 

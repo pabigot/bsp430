@@ -64,7 +64,7 @@
 #endif /* configBSP430_SERIAL_USE_USCI */
 
 /* What to use as a console */
-#if configBSP430_CONSOLE - 0
+#if (configBSP430_CONSOLE - 0)
 #ifndef BSP430_CONSOLE_SERIAL_PERIPH_CPPID
 #define BSP430_CONSOLE_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI_A0
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
@@ -72,7 +72,7 @@
 
 /* How to use ACLK as a capture/compare input source */
 /* Settings for TB0: T0B2 ccis=1 ; clk P4.7 ; cc0 P4.0 ; cc1 P4.1 */
-#if configBSP430_TIMER_CCACLK - 0
+#if (configBSP430_TIMER_CCACLK - 0)
 #ifndef BSP430_TIMER_CCACLK_PERIPH_CPPID
 #define BSP430_TIMER_CCACLK_PERIPH_CPPID BSP430_PERIPH_CPPID_TB0
 #endif /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
@@ -88,7 +88,7 @@
 #endif /* configBSP430_TIMER_CCACLK */
 
 /* Enable buttons as requested */
-#if configBSP430_PLATFORM_BUTTON0 - 0
+#if (configBSP430_PLATFORM_BUTTON0 - 0)
 #if !defined(configBSP430_HAL_PORT1)
 #define configBSP430_HAL_PORT1 1
 #else /* configBSP430_HAL_PORT1 */

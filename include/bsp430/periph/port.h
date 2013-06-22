@@ -318,7 +318,7 @@ typedef struct sBSP430hplPORT_5XX_8 {
 /** Structure used to access ports with interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 typedef sBSP430hplPORT_5XX_8 sBSP430hplPORTIE;
 #else /* 5XX */
 typedef sBSP430hplPORT_IE_8 sBSP430hplPORTIE;
@@ -327,7 +327,7 @@ typedef sBSP430hplPORT_IE_8 sBSP430hplPORTIE;
 /** Structure used to access ports without interrupt capability.
  *
  * The underlying structure selected depends on the MCU family. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 typedef sBSP430hplPORT_5XX_8 sBSP430hplPORT;
 #else /* 5XX */
 typedef sBSP430hplPORT_8 sBSP430hplPORT;
@@ -336,7 +336,7 @@ typedef sBSP430hplPORT_8 sBSP430hplPORT;
 /** Structure used to access 16-bit ports.
  *
  * The underlying structure selected depends on the MCU family. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 typedef sBSP430hplPORT_5XX_16 sBSP430hplPORTW;
 #else /* 5XX */
 typedef sBSP430hplPORT_16 sBSP430hplPORTW;
@@ -351,7 +351,7 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  * requiring access to the "real" HPL handles for the peripheral
  * ports. */
 
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 /* All 5xx ports are resistor enabled */
 #define BSP430_PERIPH_PORTA_BASEADDRESS_ __MSP430_BASEADDRESS_PORTA_R__
 #define BSP430_PERIPH_PORTB_BASEADDRESS_ __MSP430_BASEADDRESS_PORTB_R__
@@ -423,7 +423,7 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * This identifies the appropriate structure-specific variant value
  * based on the MCU capabilities. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTIE BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTIE BSP430_PORT_HAL_HPL_VARIANT_PORT_IE_8
@@ -435,7 +435,7 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * This identifies the appropriate structure-specific variant value
  * based on the MCU capabilities. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_8
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORT BSP430_PORT_HAL_HPL_VARIANT_PORT_8
@@ -446,7 +446,7 @@ typedef sBSP430hplPORT_16 sBSP430hplPORTW;
  *
  * This identifies the appropriate structure-specific variant value
  * based on the MCU capabilities. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTW BSP430_PORT_HAL_HPL_VARIANT_PORT_5XX_16
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_VARIANT_PORTW BSP430_PORT_HAL_HPL_VARIANT_PORT_16
@@ -582,25 +582,25 @@ typedef struct sBSP430halPORT {
 typedef struct sBSP430halPORT * hBSP430halPORT;
 
 /** Macro to reference a port IN register regardless of HPL layout. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_IN(_hal) ((_hal)->hpl.portie->in)
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_IN(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->in : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->in))
 #endif /* 5XX */
 /** Macro to reference a port OUT register regardless of HPL layout. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_OUT(_hal) ((_hal)->hpl.portie->out)
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_OUT(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->out : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->out))
 #endif /* 5XX */
 /** Macro to reference a port DIR register regardless of HPL layout. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_DIR(_hal) ((_hal)->hpl.portie->dir)
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_DIR(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->dir : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->dir))
 #endif /* 5XX */
 /** Macro to reference a port SEL register regardless of HPL layout. */
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_SEL(_hal) ((_hal)->hpl.portie->sel)
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_SEL(_hal) (*(BSP430_PORT_HAL_HPL_VARIANT_IS_PORTIE(_hal) ? &BSP430_PORT_HAL_GET_HPL_PORTIE(_hal)->sel : &BSP430_PORT_HAL_GET_HPL_PORT(_hal)->sel))
@@ -609,7 +609,7 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
  *
  * @dependency Selected MCU must support REN function */
 #if defined(BSP430_DOXYGEN) || (BSP430_PORT_SUPPORTS_REN - 0)
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #define BSP430_PORT_HAL_HPL_REN(_hal) ((_hal)->hpl.portie->ren)
 #else /* 5XX */
 #define BSP430_PORT_HAL_HPL_REN(_hal) (*(_hal)->renp)
@@ -639,7 +639,7 @@ typedef struct sBSP430halPORT * hBSP430halPORT;
 #endif /* configBSP430_HAL_PORT1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT1 - 0
+#if (configBSP430_HAL_PORT1 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT1_;
 #endif /* configBSP430_HAL_PORT1 */
@@ -676,7 +676,7 @@ extern sBSP430halPORT xBSP430hal_PORT1_;
 #endif /* configBSP430_HAL_PORT2 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT2 - 0
+#if (configBSP430_HAL_PORT2 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT2_;
 #endif /* configBSP430_HAL_PORT2 */
@@ -713,7 +713,7 @@ extern sBSP430halPORT xBSP430hal_PORT2_;
 #endif /* configBSP430_HAL_PORT3 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT3 - 0
+#if (configBSP430_HAL_PORT3 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT3_;
 #endif /* configBSP430_HAL_PORT3 */
@@ -750,7 +750,7 @@ extern sBSP430halPORT xBSP430hal_PORT3_;
 #endif /* configBSP430_HAL_PORT4 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT4 - 0
+#if (configBSP430_HAL_PORT4 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT4_;
 #endif /* configBSP430_HAL_PORT4 */
@@ -787,7 +787,7 @@ extern sBSP430halPORT xBSP430hal_PORT4_;
 #endif /* configBSP430_HAL_PORT5 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT5 - 0
+#if (configBSP430_HAL_PORT5 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT5_;
 #endif /* configBSP430_HAL_PORT5 */
@@ -824,7 +824,7 @@ extern sBSP430halPORT xBSP430hal_PORT5_;
 #endif /* configBSP430_HAL_PORT6 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT6 - 0
+#if (configBSP430_HAL_PORT6 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT6_;
 #endif /* configBSP430_HAL_PORT6 */
@@ -861,7 +861,7 @@ extern sBSP430halPORT xBSP430hal_PORT6_;
 #endif /* configBSP430_HAL_PORT7 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT7 - 0
+#if (configBSP430_HAL_PORT7 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT7_;
 #endif /* configBSP430_HAL_PORT7 */
@@ -898,7 +898,7 @@ extern sBSP430halPORT xBSP430hal_PORT7_;
 #endif /* configBSP430_HAL_PORT8 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT8 - 0
+#if (configBSP430_HAL_PORT8 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT8_;
 #endif /* configBSP430_HAL_PORT8 */
@@ -935,7 +935,7 @@ extern sBSP430halPORT xBSP430hal_PORT8_;
 #endif /* configBSP430_HAL_PORT9 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT9 - 0
+#if (configBSP430_HAL_PORT9 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT9_;
 #endif /* configBSP430_HAL_PORT9 */
@@ -972,7 +972,7 @@ extern sBSP430halPORT xBSP430hal_PORT9_;
 #endif /* configBSP430_HAL_PORT10 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT10 - 0
+#if (configBSP430_HAL_PORT10 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT10_;
 #endif /* configBSP430_HAL_PORT10 */
@@ -1009,7 +1009,7 @@ extern sBSP430halPORT xBSP430hal_PORT10_;
 #endif /* configBSP430_HAL_PORT11 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_PORT11 - 0
+#if (configBSP430_HAL_PORT11 - 0)
 /* You do not need to know about this */
 extern sBSP430halPORT xBSP430hal_PORT11_;
 #endif /* configBSP430_HAL_PORT11 */
@@ -2091,67 +2091,67 @@ hBSP430portLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_HAL_PORT1 - 0
+#if (configBSP430_HAL_PORT1 - 0)
   if (BSP430_PERIPH_PORT1 == periph) {
     return BSP430_HAL_PORT1;
   }
 #endif /* configBSP430_HAL_PORT1 */
 
-#if configBSP430_HAL_PORT2 - 0
+#if (configBSP430_HAL_PORT2 - 0)
   if (BSP430_PERIPH_PORT2 == periph) {
     return BSP430_HAL_PORT2;
   }
 #endif /* configBSP430_HAL_PORT2 */
 
-#if configBSP430_HAL_PORT3 - 0
+#if (configBSP430_HAL_PORT3 - 0)
   if (BSP430_PERIPH_PORT3 == periph) {
     return BSP430_HAL_PORT3;
   }
 #endif /* configBSP430_HAL_PORT3 */
 
-#if configBSP430_HAL_PORT4 - 0
+#if (configBSP430_HAL_PORT4 - 0)
   if (BSP430_PERIPH_PORT4 == periph) {
     return BSP430_HAL_PORT4;
   }
 #endif /* configBSP430_HAL_PORT4 */
 
-#if configBSP430_HAL_PORT5 - 0
+#if (configBSP430_HAL_PORT5 - 0)
   if (BSP430_PERIPH_PORT5 == periph) {
     return BSP430_HAL_PORT5;
   }
 #endif /* configBSP430_HAL_PORT5 */
 
-#if configBSP430_HAL_PORT6 - 0
+#if (configBSP430_HAL_PORT6 - 0)
   if (BSP430_PERIPH_PORT6 == periph) {
     return BSP430_HAL_PORT6;
   }
 #endif /* configBSP430_HAL_PORT6 */
 
-#if configBSP430_HAL_PORT7 - 0
+#if (configBSP430_HAL_PORT7 - 0)
   if (BSP430_PERIPH_PORT7 == periph) {
     return BSP430_HAL_PORT7;
   }
 #endif /* configBSP430_HAL_PORT7 */
 
-#if configBSP430_HAL_PORT8 - 0
+#if (configBSP430_HAL_PORT8 - 0)
   if (BSP430_PERIPH_PORT8 == periph) {
     return BSP430_HAL_PORT8;
   }
 #endif /* configBSP430_HAL_PORT8 */
 
-#if configBSP430_HAL_PORT9 - 0
+#if (configBSP430_HAL_PORT9 - 0)
   if (BSP430_PERIPH_PORT9 == periph) {
     return BSP430_HAL_PORT9;
   }
 #endif /* configBSP430_HAL_PORT9 */
 
-#if configBSP430_HAL_PORT10 - 0
+#if (configBSP430_HAL_PORT10 - 0)
   if (BSP430_PERIPH_PORT10 == periph) {
     return BSP430_HAL_PORT10;
   }
 #endif /* configBSP430_HAL_PORT10 */
 
-#if configBSP430_HAL_PORT11 - 0
+#if (configBSP430_HAL_PORT11 - 0)
   if (BSP430_PERIPH_PORT11 == periph) {
     return BSP430_HAL_PORT11;
   }

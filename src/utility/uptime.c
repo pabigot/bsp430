@@ -33,7 +33,7 @@
 #include <bsp430/utility/uptime.h>
 #include <stdio.h>
 
-#if BSP430_UPTIME - 0
+#if (BSP430_UPTIME - 0)
 /* Inhibit definition if required components were not provided. */
 
 hBSP430halTIMER xBSP430uptimeTIMER_;

@@ -38,7 +38,7 @@
 
 #include <bsp430/platform/standard.inc>
 
-#if BSP430_LED - 0
+#if (BSP430_LED - 0)
 const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Yellow (on-board)*/
   { .outp = &P1OUT, .bit = BIT1 }, /* Red (external) */
@@ -69,7 +69,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     PJSEL1 &= ~bits;
     return 0;
   }
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     unsigned char bits = BIT0 | BIT1 | BIT2;
     PJDIR |= bits;
@@ -83,7 +83,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     return 0;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_EUSCI_A0 - 0
+#if (configBSP430_HPL_EUSCI_A0 - 0)
   else if (BSP430_PERIPH_EUSCI_A0 == device) {
     bits2 = BIT0 | BIT1;
     if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
@@ -95,7 +95,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     }
   }
 #endif /* configBSP430_HPL_EUSCI_A0 */
-#if configBSP430_HPL_EUSCI_A1 - 0
+#if (configBSP430_HPL_EUSCI_A1 - 0)
   else if (BSP430_PERIPH_EUSCI_A1 == device) {
     bits2 = BIT5 | BIT6;
     if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
@@ -107,7 +107,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     }
   }
 #endif /* configBSP430_HPL_EUSCI_A1 */
-#if configBSP430_HPL_EUSCI_B0 - 0
+#if (configBSP430_HPL_EUSCI_B0 - 0)
   else if (BSP430_PERIPH_EUSCI_B0 == device) {
     bits1 = BIT6 | BIT7;
     if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
@@ -151,22 +151,22 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
   if (BSP430_PERIPH_LFXT1 == device) {
     return "XIN=PJ.4, XOUT=PJ.5";
   }
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     return "SMCLK on PJ.0 @ 12 ; MCLK on PJ.1 @ 13 ; ACLK on PJ.2 @ 14";
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_EUSCI_A0 - 0
+#if (configBSP430_HPL_EUSCI_A0 - 0)
   if (BSP430_PERIPH_EUSCI_A0 == device) {
     return "MOSI/TXD=P2.0; MISO/RXD=P2.1; CLK=P1.5; STE=P1.4";
   }
 #endif /* configBSP430_HPL_EUSCI_A0 */
-#if configBSP430_HPL_EUSCI_A1 - 0
+#if (configBSP430_HPL_EUSCI_A1 - 0)
   if (BSP430_PERIPH_EUSCI_A1 == device) {
     return "MOSI/TXD=P2.5; MISO/RXD=P2.6; CLK=P2.4; STE=P2.3";
   }
 #endif /* configBSP430_HPL_EUSCI_A1 */
-#if configBSP430_HPL_EUSCI_B0 - 0
+#if (configBSP430_HPL_EUSCI_B0 - 0)
   if (BSP430_PERIPH_EUSCI_B0 == device) {
     return "MOSI/SDA=P1.6; MISO/SCL=P1.7; CLK=P2.2; STE=P1.3";
   }

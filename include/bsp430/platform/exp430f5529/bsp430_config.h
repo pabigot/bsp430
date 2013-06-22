@@ -72,14 +72,14 @@
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 
 /* Enable buttons as requested */
-#if configBSP430_PLATFORM_BUTTON0 - 0
+#if (configBSP430_PLATFORM_BUTTON0 - 0)
 #if !defined(configBSP430_HAL_PORT1)
 #define configBSP430_HAL_PORT1 1
 #else /* configBSP430_HAL_PORT1 */
 #define configBSP430_HPL_PORT1 1
 #endif /* configBSP430_HAL_PORT1 */
 #endif /* configBSP430_PLATFORM_BUTTON0 */
-#if configBSP430_PLATFORM_BUTTON1 - 0
+#if (configBSP430_PLATFORM_BUTTON1 - 0)
 #if !defined(configBSP430_HAL_PORT2)
 #define configBSP430_HAL_PORT2 1
 #else /* configBSP430_HAL_PORT2 */
@@ -88,7 +88,7 @@
 #endif /* configBSP430_PLATFORM_BUTTON1 */
 
 /* What to use as a console */
-#if configBSP430_CONSOLE - 0
+#if (configBSP430_CONSOLE - 0)
 #ifndef BSP430_CONSOLE_SERIAL_PERIPH_CPPID
 #define BSP430_CONSOLE_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI5_A1
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
@@ -102,7 +102,7 @@
  *
  * Without CLK: Settings for TA2: T2A2 ccis=1 ; clk P2.2 ; cc0 P2.3 ; cc1 P2.4 -- CLK PIN NOT ACCESSIBLE
  */
-#if configBSP430_TIMER_CCACLK - 0
+#if (configBSP430_TIMER_CCACLK - 0)
 #ifndef BSP430_TIMER_CCACLK_PERIPH_CPPID
 #if (configBSP430_PLATFORM_EXP430F5529_CCACLK_NEED_CLK - 0)
 /* Option preferring CLK */

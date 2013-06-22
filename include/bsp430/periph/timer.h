@@ -1696,7 +1696,7 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
 #endif /* configBSP430_HAL_TA0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_TA0 - 0
+#if (configBSP430_HAL_TA0 - 0)
 /* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA0_;
 #endif /* configBSP430_HAL_TA0 */
@@ -1733,7 +1733,7 @@ extern sBSP430halTIMER xBSP430hal_TA0_;
 #endif /* configBSP430_HAL_TA1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_TA1 - 0
+#if (configBSP430_HAL_TA1 - 0)
 /* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA1_;
 #endif /* configBSP430_HAL_TA1 */
@@ -1770,7 +1770,7 @@ extern sBSP430halTIMER xBSP430hal_TA1_;
 #endif /* configBSP430_HAL_TA2 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_TA2 - 0
+#if (configBSP430_HAL_TA2 - 0)
 /* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA2_;
 #endif /* configBSP430_HAL_TA2 */
@@ -1807,7 +1807,7 @@ extern sBSP430halTIMER xBSP430hal_TA2_;
 #endif /* configBSP430_HAL_TA3 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_TA3 - 0
+#if (configBSP430_HAL_TA3 - 0)
 /* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TA3_;
 #endif /* configBSP430_HAL_TA3 */
@@ -1844,7 +1844,7 @@ extern sBSP430halTIMER xBSP430hal_TA3_;
 #endif /* configBSP430_HAL_TB0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_TB0 - 0
+#if (configBSP430_HAL_TB0 - 0)
 /* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TB0_;
 #endif /* configBSP430_HAL_TB0 */
@@ -1881,7 +1881,7 @@ extern sBSP430halTIMER xBSP430hal_TB0_;
 #endif /* configBSP430_HAL_TB1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_TB1 - 0
+#if (configBSP430_HAL_TB1 - 0)
 /* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TB1_;
 #endif /* configBSP430_HAL_TB1 */
@@ -1918,7 +1918,7 @@ extern sBSP430halTIMER xBSP430hal_TB1_;
 #endif /* configBSP430_HAL_TB2 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_TB2 - 0
+#if (configBSP430_HAL_TB2 - 0)
 /* You do not need to know about this */
 extern sBSP430halTIMER xBSP430hal_TB2_;
 #endif /* configBSP430_HAL_TB2 */
@@ -2610,43 +2610,43 @@ volatile sBSP430hplTIMER * xBSP430hplLookupTIMER (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
-#if configBSP430_HPL_TA0 - 0
+#if (configBSP430_HPL_TA0 - 0)
   if (BSP430_PERIPH_TA0 == periph) {
     return BSP430_HPL_TA0;
   }
 #endif /* configBSP430_HPL_TA0 */
 
-#if configBSP430_HPL_TA1 - 0
+#if (configBSP430_HPL_TA1 - 0)
   if (BSP430_PERIPH_TA1 == periph) {
     return BSP430_HPL_TA1;
   }
 #endif /* configBSP430_HPL_TA1 */
 
-#if configBSP430_HPL_TA2 - 0
+#if (configBSP430_HPL_TA2 - 0)
   if (BSP430_PERIPH_TA2 == periph) {
     return BSP430_HPL_TA2;
   }
 #endif /* configBSP430_HPL_TA2 */
 
-#if configBSP430_HPL_TA3 - 0
+#if (configBSP430_HPL_TA3 - 0)
   if (BSP430_PERIPH_TA3 == periph) {
     return BSP430_HPL_TA3;
   }
 #endif /* configBSP430_HPL_TA3 */
 
-#if configBSP430_HPL_TB0 - 0
+#if (configBSP430_HPL_TB0 - 0)
   if (BSP430_PERIPH_TB0 == periph) {
     return BSP430_HPL_TB0;
   }
 #endif /* configBSP430_HPL_TB0 */
 
-#if configBSP430_HPL_TB1 - 0
+#if (configBSP430_HPL_TB1 - 0)
   if (BSP430_PERIPH_TB1 == periph) {
     return BSP430_HPL_TB1;
   }
 #endif /* configBSP430_HPL_TB1 */
 
-#if configBSP430_HPL_TB2 - 0
+#if (configBSP430_HPL_TB2 - 0)
   if (BSP430_PERIPH_TB2 == periph) {
     return BSP430_HPL_TB2;
   }
@@ -2670,43 +2670,43 @@ hBSP430halTIMER hBSP430timerLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_HAL_TA0 - 0
+#if (configBSP430_HAL_TA0 - 0)
   if (BSP430_PERIPH_TA0 == periph) {
     return BSP430_HAL_TA0;
   }
 #endif /* configBSP430_HAL_TA0 */
 
-#if configBSP430_HAL_TA1 - 0
+#if (configBSP430_HAL_TA1 - 0)
   if (BSP430_PERIPH_TA1 == periph) {
     return BSP430_HAL_TA1;
   }
 #endif /* configBSP430_HAL_TA1 */
 
-#if configBSP430_HAL_TA2 - 0
+#if (configBSP430_HAL_TA2 - 0)
   if (BSP430_PERIPH_TA2 == periph) {
     return BSP430_HAL_TA2;
   }
 #endif /* configBSP430_HAL_TA2 */
 
-#if configBSP430_HAL_TA3 - 0
+#if (configBSP430_HAL_TA3 - 0)
   if (BSP430_PERIPH_TA3 == periph) {
     return BSP430_HAL_TA3;
   }
 #endif /* configBSP430_HAL_TA3 */
 
-#if configBSP430_HAL_TB0 - 0
+#if (configBSP430_HAL_TB0 - 0)
   if (BSP430_PERIPH_TB0 == periph) {
     return BSP430_HAL_TB0;
   }
 #endif /* configBSP430_HAL_TB0 */
 
-#if configBSP430_HAL_TB1 - 0
+#if (configBSP430_HAL_TB1 - 0)
   if (BSP430_PERIPH_TB1 == periph) {
     return BSP430_HAL_TB1;
   }
 #endif /* configBSP430_HAL_TB1 */
 
-#if configBSP430_HAL_TB2 - 0
+#if (configBSP430_HAL_TB2 - 0)
   if (BSP430_PERIPH_TB2 == periph) {
     return BSP430_HAL_TB2;
   }

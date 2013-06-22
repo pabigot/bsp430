@@ -157,7 +157,7 @@ typedef struct sBSP430hplUSCI {
 #endif /* configBSP430_HAL_USCI_A0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI_A0 - 0
+#if (configBSP430_HAL_USCI_A0 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI_A0_;
 #endif /* configBSP430_HAL_USCI_A0 */
@@ -194,7 +194,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_A0_;
 #endif /* configBSP430_HAL_USCI_A1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI_A1 - 0
+#if (configBSP430_HAL_USCI_A1 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI_A1_;
 #endif /* configBSP430_HAL_USCI_A1 */
@@ -231,7 +231,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_A1_;
 #endif /* configBSP430_HAL_USCI_B0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI_B0 - 0
+#if (configBSP430_HAL_USCI_B0 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI_B0_;
 #endif /* configBSP430_HAL_USCI_B0 */
@@ -268,7 +268,7 @@ extern sBSP430halSERIAL xBSP430hal_USCI_B0_;
 #endif /* configBSP430_HAL_USCI_B1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_USCI_B1 - 0
+#if (configBSP430_HAL_USCI_B1 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_USCI_B1_;
 #endif /* configBSP430_HAL_USCI_B1 */
@@ -662,25 +662,25 @@ volatile sBSP430hplUSCI * xBSP430hplLookupUSCI (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
-#if configBSP430_HPL_USCI_A0 - 0
+#if (configBSP430_HPL_USCI_A0 - 0)
   if (BSP430_PERIPH_USCI_A0 == periph) {
     return BSP430_HPL_USCI_A0;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
 
-#if configBSP430_HPL_USCI_A1 - 0
+#if (configBSP430_HPL_USCI_A1 - 0)
   if (BSP430_PERIPH_USCI_A1 == periph) {
     return BSP430_HPL_USCI_A1;
   }
 #endif /* configBSP430_HPL_USCI_A1 */
 
-#if configBSP430_HPL_USCI_B0 - 0
+#if (configBSP430_HPL_USCI_B0 - 0)
   if (BSP430_PERIPH_USCI_B0 == periph) {
     return BSP430_HPL_USCI_B0;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
 
-#if configBSP430_HPL_USCI_B1 - 0
+#if (configBSP430_HPL_USCI_B1 - 0)
   if (BSP430_PERIPH_USCI_B1 == periph) {
     return BSP430_HPL_USCI_B1;
   }
@@ -704,25 +704,25 @@ hBSP430halSERIAL hBSP430usciLookup (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_HAL_USCI_A0 - 0
+#if (configBSP430_HAL_USCI_A0 - 0)
   if (BSP430_PERIPH_USCI_A0 == periph) {
     return BSP430_HAL_USCI_A0;
   }
 #endif /* configBSP430_HAL_USCI_A0 */
 
-#if configBSP430_HAL_USCI_A1 - 0
+#if (configBSP430_HAL_USCI_A1 - 0)
   if (BSP430_PERIPH_USCI_A1 == periph) {
     return BSP430_HAL_USCI_A1;
   }
 #endif /* configBSP430_HAL_USCI_A1 */
 
-#if configBSP430_HAL_USCI_B0 - 0
+#if (configBSP430_HAL_USCI_B0 - 0)
   if (BSP430_PERIPH_USCI_B0 == periph) {
     return BSP430_HAL_USCI_B0;
   }
 #endif /* configBSP430_HAL_USCI_B0 */
 
-#if configBSP430_HAL_USCI_B1 - 0
+#if (configBSP430_HAL_USCI_B1 - 0)
   if (BSP430_PERIPH_USCI_B1 == periph) {
     return BSP430_HAL_USCI_B1;
   }

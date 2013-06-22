@@ -43,7 +43,7 @@
 #define CMD_INFO 1
 #define CMD_HELP 1
 
-#if NO_HELP - 0
+#if (NO_HELP - 0)
 #define HELP_STRING(h_) NULL
 #else /* NO_HELP */
 #define HELP_STRING(h_) h_
@@ -72,11 +72,11 @@ static void wlan_cb (long event_type,
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
-#if CMD_WLAN - 0
+#if (CMD_WLAN - 0)
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND NULL
 
-#if CMD_WLAN_STOP - 0
+#if (CMD_WLAN_STOP - 0)
 static int
 cmd_wlan_stop (const char * argstr)
 {
@@ -94,7 +94,7 @@ static sBSP430cliCommand dcmd_wlan_stop = {
 #define LAST_SUB_COMMAND &dcmd_wlan_stop
 #endif /* CMD_WLAN_STOP */
 
-#if CMD_WLAN_DISCONNECT - 0
+#if (CMD_WLAN_DISCONNECT - 0)
 static int
 cmd_wlan_disconnect (const char * argstr)
 {
@@ -113,7 +113,7 @@ static sBSP430cliCommand dcmd_wlan_disconnect = {
 #define LAST_SUB_COMMAND &dcmd_wlan_disconnect
 #endif /* CMD_WLAN_DISCONNECT */
 
-#if CMD_WLAN_IPCONFIG - 0
+#if (CMD_WLAN_IPCONFIG - 0)
 const char *
 ipv4AsText (const unsigned char * ipaddr)
 {
@@ -155,7 +155,7 @@ static sBSP430cliCommand dcmd_wlan_ipconfig = {
 #define LAST_SUB_COMMAND &dcmd_wlan_ipconfig
 #endif /* CMD_WLAN_IPCONFIG */
 
-#if CMD_WLAN_CONNECT - 0
+#if (CMD_WLAN_CONNECT - 0)
 typedef struct sWlanSecMap {
   unsigned int val;
   const char * tag;
@@ -309,7 +309,7 @@ static sBSP430cliCommand dcmd_wlan_connect = {
 #define LAST_SUB_COMMAND &dcmd_wlan_connect
 #endif /* CMD_WLAN_CONNECT */
 
-#if CMD_WLAN_STATUS - 0
+#if (CMD_WLAN_STATUS - 0)
 static int
 cmd_wlan_status (const char * argstr)
 {
@@ -322,7 +322,7 @@ cmd_wlan_status (const char * argstr)
     "connected"
   };
   long rl = wlan_ioctl_statusget();
-#if CMD_WLAN_CONNECT - 0
+#if (CMD_WLAN_CONNECT - 0)
   {
     const sWlanSecMap * mp;
     mp = wlanSecMapFromValue(connectParams.security_type);
@@ -350,7 +350,7 @@ static sBSP430cliCommand dcmd_wlan_status = {
 #define LAST_SUB_COMMAND &dcmd_wlan_status
 #endif /* CMD_WLAN_STATUS */
 
-#if CMD_WLAN_START - 0
+#if (CMD_WLAN_START - 0)
 static int
 cmd_wlan_start (const char * argstr)
 {
@@ -529,7 +529,7 @@ static sBSP430cliCommand dcmd_nvmem = {
 #undef CMD_INFO
 #endif
 
-#if CMD_INFO - 0
+#if (CMD_INFO - 0)
 
 static sConnectParams * const infoConnectParams = (sConnectParams *)__infob;
 
@@ -648,12 +648,12 @@ void main (void)
   int rv;
   const char * command;
   int flags;
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   unsigned long reset_causes = 0;
   unsigned int reset_flags = 0;
 #endif /* BSP430_MODULE_SYS */
 
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   {
     unsigned int sysrstiv;
 
@@ -680,7 +680,7 @@ void main (void)
   BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
   cprintf("\ncc3000 " __DATE__ " " __TIME__ "\n");
 
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   cprintf("System reset bitmask %lx; causes:\n", reset_causes);
   {
     int bit = 0;
@@ -746,7 +746,7 @@ void main (void)
 
   cprintf("\nAnd wlan has been started.\n");
 
-#if CMD_INFO - 0
+#if (CMD_INFO - 0)
   if (0 == cmd_info_load("")) {
     cmd_wlan_status("");
   }

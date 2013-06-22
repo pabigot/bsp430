@@ -229,7 +229,7 @@ typedef struct sBSP430halDMA * hBSP430halDMA;
 #endif /* configBSP430_HAL_DMA */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_DMA - 0
+#if (configBSP430_HAL_DMA - 0)
 /* You do not need to know about this */
 extern sBSP430halDMA xBSP430hal_DMA_;
 #endif /* configBSP430_HAL_DMA */

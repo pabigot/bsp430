@@ -225,7 +225,7 @@ typedef struct sBSP430hplEUSCIB {
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_EUSCI_A0 - 0
+#if (configBSP430_HAL_EUSCI_A0 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_A0_;
 #endif /* configBSP430_HAL_EUSCI_A0 */
@@ -262,7 +262,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A0_;
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_EUSCI_A1 - 0
+#if (configBSP430_HAL_EUSCI_A1 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_A1_;
 #endif /* configBSP430_HAL_EUSCI_A1 */
@@ -299,7 +299,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A1_;
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_EUSCI_A2 - 0
+#if (configBSP430_HAL_EUSCI_A2 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #endif /* configBSP430_HAL_EUSCI_A2 */
@@ -336,7 +336,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A2_;
 #endif /* configBSP430_HAL_EUSCI_A3 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_EUSCI_A3 - 0
+#if (configBSP430_HAL_EUSCI_A3 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_A3_;
 #endif /* configBSP430_HAL_EUSCI_A3 */
@@ -373,7 +373,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_A3_;
 #endif /* configBSP430_HAL_EUSCI_B0 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_EUSCI_B0 - 0
+#if (configBSP430_HAL_EUSCI_B0 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #endif /* configBSP430_HAL_EUSCI_B0 */
@@ -410,7 +410,7 @@ extern sBSP430halSERIAL xBSP430hal_EUSCI_B0_;
 #endif /* configBSP430_HAL_EUSCI_B1 */
 
 /** @cond DOXYGEN_EXCLUDE */
-#if configBSP430_HAL_EUSCI_B1 - 0
+#if (configBSP430_HAL_EUSCI_B1 - 0)
 /* You do not need to know about this */
 extern sBSP430halSERIAL xBSP430hal_EUSCI_B1_;
 #endif /* configBSP430_HAL_EUSCI_B1 */
@@ -945,25 +945,25 @@ xBSP430hplLookupEUSCIA (tBSP430periphHandle periph)
   /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_A2 */
   /* !BSP430! insert=periph_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
-#if configBSP430_HPL_EUSCI_A0 - 0
+#if (configBSP430_HPL_EUSCI_A0 - 0)
   if (BSP430_PERIPH_EUSCI_A0 == periph) {
     return BSP430_HPL_EUSCI_A0;
   }
 #endif /* configBSP430_HPL_EUSCI_A0 */
 
-#if configBSP430_HPL_EUSCI_A1 - 0
+#if (configBSP430_HPL_EUSCI_A1 - 0)
   if (BSP430_PERIPH_EUSCI_A1 == periph) {
     return BSP430_HPL_EUSCI_A1;
   }
 #endif /* configBSP430_HPL_EUSCI_A1 */
 
-#if configBSP430_HPL_EUSCI_A2 - 0
+#if (configBSP430_HPL_EUSCI_A2 - 0)
   if (BSP430_PERIPH_EUSCI_A2 == periph) {
     return BSP430_HPL_EUSCI_A2;
   }
 #endif /* configBSP430_HPL_EUSCI_A2 */
 
-#if configBSP430_HPL_EUSCI_A2 - 0
+#if (configBSP430_HPL_EUSCI_A2 - 0)
   if (BSP430_PERIPH_EUSCI_A2 == periph) {
     return BSP430_HPL_EUSCI_A2;
   }
@@ -990,13 +990,13 @@ xBSP430hplLookupEUSCIB (tBSP430periphHandle periph)
   /* !BSP430! periph=eusci instance=EUSCI_B0,EUSCI_B1 */
   /* !BSP430! insert=periph_hpl_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hpl_demux] */
-#if configBSP430_HPL_EUSCI_B0 - 0
+#if (configBSP430_HPL_EUSCI_B0 - 0)
   if (BSP430_PERIPH_EUSCI_B0 == periph) {
     return BSP430_HPL_EUSCI_B0;
   }
 #endif /* configBSP430_HPL_EUSCI_B0 */
 
-#if configBSP430_HPL_EUSCI_B1 - 0
+#if (configBSP430_HPL_EUSCI_B1 - 0)
   if (BSP430_PERIPH_EUSCI_B1 == periph) {
     return BSP430_HPL_EUSCI_B1;
   }
@@ -1022,37 +1022,37 @@ hBSP430eusciLookup (tBSP430periphHandle periph)
   /* !BSP430! periph=eusci instance=EUSCI_A0,EUSCI_A1,EUSCI_A2,EUSCI_A3,EUSCI_B0,EUSCI_B1 */
   /* !BSP430! insert=periph_hal_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_hal_demux] */
-#if configBSP430_HAL_EUSCI_A0 - 0
+#if (configBSP430_HAL_EUSCI_A0 - 0)
   if (BSP430_PERIPH_EUSCI_A0 == periph) {
     return BSP430_HAL_EUSCI_A0;
   }
 #endif /* configBSP430_HAL_EUSCI_A0 */
 
-#if configBSP430_HAL_EUSCI_A1 - 0
+#if (configBSP430_HAL_EUSCI_A1 - 0)
   if (BSP430_PERIPH_EUSCI_A1 == periph) {
     return BSP430_HAL_EUSCI_A1;
   }
 #endif /* configBSP430_HAL_EUSCI_A1 */
 
-#if configBSP430_HAL_EUSCI_A2 - 0
+#if (configBSP430_HAL_EUSCI_A2 - 0)
   if (BSP430_PERIPH_EUSCI_A2 == periph) {
     return BSP430_HAL_EUSCI_A2;
   }
 #endif /* configBSP430_HAL_EUSCI_A2 */
 
-#if configBSP430_HAL_EUSCI_A3 - 0
+#if (configBSP430_HAL_EUSCI_A3 - 0)
   if (BSP430_PERIPH_EUSCI_A3 == periph) {
     return BSP430_HAL_EUSCI_A3;
   }
 #endif /* configBSP430_HAL_EUSCI_A3 */
 
-#if configBSP430_HAL_EUSCI_B0 - 0
+#if (configBSP430_HAL_EUSCI_B0 - 0)
   if (BSP430_PERIPH_EUSCI_B0 == periph) {
     return BSP430_HAL_EUSCI_B0;
   }
 #endif /* configBSP430_HAL_EUSCI_B0 */
 
-#if configBSP430_HAL_EUSCI_B1 - 0
+#if (configBSP430_HAL_EUSCI_B1 - 0)
   if (BSP430_PERIPH_EUSCI_B1 == periph) {
     return BSP430_HAL_EUSCI_B1;
   }

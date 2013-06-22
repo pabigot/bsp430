@@ -11,7 +11,7 @@
 #define configBSP430_UPTIME 1
 #define configBSP430_UPTIME_DELAY 1
 
-#if BSP430_PLATFORM_SURF - 0
+#if (BSP430_PLATFORM_SURF - 0)
 /* SuRF has a DS1825 on P3.7, but the software is the same.  We use
  * the platform-provided resource. */
 #define configBSP430_PLATFORM_SURF_DS1825 1

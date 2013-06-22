@@ -52,7 +52,7 @@ const sBSP430tlvREFCAL * cal_ref;
 #else
 const void * cal_ref;
 #endif /* HAVE_REF */
-#if BSP430_TLV_IS_5XX - 0
+#if (BSP430_TLV_IS_5XX - 0)
 typedef const sBSP430tlvADCCAL * cal_adc_ptr_type;
 #else /* BSP430_TLV_IS_5XX */
 typedef const sBSP430tlvADC * cal_adc_ptr_type;

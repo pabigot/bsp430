@@ -51,7 +51,7 @@ void main ()
           (crc == tp->crc) ? "valid data" : "CORRUPTED DATA");
   while (ep < (const sBSP430tlvEntry*)TLV_END) {
     cprintf("%p tag %02x len %u\n", ep, ep->tag, ep->len);
-#if BSP430_TLV_IS_5XX - 0
+#if (BSP430_TLV_IS_5XX - 0)
     if (TLV_DIERECORD == ep->tag) {
       const sBSP430tlvDIERECORD * rp = (const sBSP430tlvDIERECORD *)ep;
       cprintf("\tLot ID: 0x%08lx ; position %u, %u ; test results 0x%04x\n",

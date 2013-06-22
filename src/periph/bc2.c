@@ -31,7 +31,7 @@
 
 #include <bsp430/platform.h>
 #include <bsp430/periph/bc2.h>
-#if BSP430_BC2_TRIM_TO_MCLK - 0
+#if (BSP430_BC2_TRIM_TO_MCLK - 0)
 #include <bsp430/periph/timer.h>
 #endif /* BSP430_BC2_TRIM_TO_MCLK */
 
@@ -201,7 +201,7 @@ ulBSP430clockACLK_Hz_ni (void)
   return clk_hz >> div;
 }
 
-#if BSP430_BC2_TRIM_TO_MCLK - 0
+#if (BSP430_BC2_TRIM_TO_MCLK - 0)
 
 int
 iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz)
@@ -321,7 +321,7 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   configuredMCLK_Hz = freq_Hz;
 
   if (use_trim_to_mclk) {
-#if BSP430_BC2_TRIM_TO_MCLK - 0
+#if (BSP430_BC2_TRIM_TO_MCLK - 0)
     (void)iBSP430bc2TrimToMCLK_ni(mclk_Hz);
 #endif /* BSP430_BC2_TRIM_TO_MCLK */
   }

@@ -46,7 +46,7 @@ vBSP430lpmConfigurePortsForLPM_ni (void)
     P##_p##OUT = 0;                             \
   } while (0)
 
-#if BSP430_CORE_FAMILY_IS_5XX - 0
+#if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #if defined(__MSP430_HAS_PORTA__) || defined(__MSP430_HAS_PORTA_R__)
   CONFIGURE_FOR_LPM(A);
 #endif /* PORTA */

@@ -532,20 +532,20 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
   return i;
 }
 
-#if BSP430_SERIAL - 0
+#if (BSP430_SERIAL - 0)
 static struct sBSP430serialDispatch dispatch_ = {
-#if configBSP430_SERIAL_ENABLE_UART - 0
+#if (configBSP430_SERIAL_ENABLE_UART - 0)
   .openUART = hBSP430usciOpenUART,
   .uartRxByte_ni = iBSP430usciUARTrxByte_ni,
   .uartTxByte_ni = iBSP430usciUARTtxByte_ni,
   .uartTxData_ni = iBSP430usciUARTtxData_ni,
   .uartTxASCIIZ_ni = iBSP430usciUARTtxASCIIZ_ni,
 #endif /* configBSP430_SERIAL_ENABLE_UART */
-#if configBSP430_SERIAL_ENABLE_SPI - 0
+#if (configBSP430_SERIAL_ENABLE_SPI - 0)
   .openSPI = hBSP430usciOpenSPI,
   .spiTxRx_ni = iBSP430usciSPITxRx_ni,
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
-#if configBSP430_SERIAL_ENABLE_I2C - 0
+#if (configBSP430_SERIAL_ENABLE_I2C - 0)
   .openI2C = hBSP430usciOpenI2C,
   .i2cSetAddresses_ni = iBSP430usciI2CsetAddresses_ni,
   .i2cRxData_ni = iBSP430usciI2CrxData_ni,
@@ -559,7 +559,7 @@ static struct sBSP430serialDispatch dispatch_ = {
 };
 #endif /* BSP430_SERIAL */
 
-#if configBSP430_HAL_USCI_A0 - 0
+#if (configBSP430_HAL_USCI_A0 - 0)
 static struct sBSP430usciHPLAux xBSP430hplaux_USCI_A0_ = {
   .iep = &IE2,
   .ifgp = &IFG2,
@@ -569,10 +569,10 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_A0_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_A0_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCI_AB0RX_ISR - 0
+#if (configBSP430_HAL_USCI_AB0RX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_USCI_AB0RX_ISR */
-#if configBSP430_HAL_USCI_AB0TX_ISR - 0
+#if (configBSP430_HAL_USCI_AB0TX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
@@ -582,7 +582,7 @@ struct sBSP430halSERIAL xBSP430hal_USCI_A0_ = {
 };
 #endif /* configBSP430_HAL_USCI_A0 */
 
-#if configBSP430_HAL_USCI_A1 - 0
+#if (configBSP430_HAL_USCI_A1 - 0)
 static struct sBSP430usciHPLAux xBSP430hplaux_USCI_A1_ = {
   .iep = &UC1IE,
   .ifgp = &UC1IFG,
@@ -592,10 +592,10 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_A1_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_A1_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCI_AB1RX_ISR - 0
+#if (configBSP430_HAL_USCI_AB1RX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_USCI_AB0RX_ISR */
-#if configBSP430_HAL_USCI_AB1TX_ISR - 0
+#if (configBSP430_HAL_USCI_AB1TX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
@@ -605,7 +605,7 @@ struct sBSP430halSERIAL xBSP430hal_USCI_A1_ = {
 };
 #endif /* configBSP430_HAL_USCI_A1 */
 
-#if configBSP430_HAL_USCI_B0 - 0
+#if (configBSP430_HAL_USCI_B0 - 0)
 static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
   .iep = &IE2,
   .ifgp = &IFG2,
@@ -617,10 +617,10 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_B0_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCI_AB0RX_ISR - 0
+#if (configBSP430_HAL_USCI_AB0RX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_USCI_AB0RX_ISR */
-#if configBSP430_HAL_USCI_AB0TX_ISR - 0
+#if (configBSP430_HAL_USCI_AB0TX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
@@ -630,7 +630,7 @@ struct sBSP430halSERIAL xBSP430hal_USCI_B0_ = {
 };
 #endif /* configBSP430_HAL_USCI_B0 */
 
-#if configBSP430_HAL_USCI_B1 - 0
+#if (configBSP430_HAL_USCI_B1 - 0)
 static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
   .iep = &UC1IE,
   .ifgp = &UC1IFG,
@@ -642,10 +642,10 @@ static struct sBSP430usciHPLAux xBSP430hplaux_USCI_B0_ = {
 struct sBSP430halSERIAL xBSP430hal_USCI_B1_ = {
   .hal_state = {
     .cflags = BSP430_SERIAL_HAL_HPL_VARIANT_USCI
-#if configBSP430_HAL_USCI_AB1RX_ISR - 0
+#if (configBSP430_HAL_USCI_AB1RX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR
 #endif /* configBSP430_HAL_USCI_AB0RX_ISR */
-#if configBSP430_HAL_USCI_AB1TX_ISR - 0
+#if (configBSP430_HAL_USCI_AB1TX_ISR - 0)
     | BSP430_PERIPH_HAL_STATE_CFLAGS_ISR2
 #endif /* configBSP430_HAL_USCI_AB0TX_ISR */
   },
@@ -668,7 +668,7 @@ usciabrx_isr (hBSP430halSERIAL hal)
   return iBSP430callbackInvokeISRVoid_ni(&hal->rx_cbchain_ni, hal, 0);
 }
 
-#if configBSP430_HAL_USCI_AB0RX_ISR - 0
+#if (configBSP430_HAL_USCI_AB0RX_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(USCIAB0RX_VECTOR)
 isr_USCI_AB0RX (void)
 {
@@ -677,12 +677,12 @@ isr_USCI_AB0RX (void)
 
   if (0) {
   }
-#if configBSP430_HAL_USCI_A0 - 0
+#if (configBSP430_HAL_USCI_A0 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A0)->rx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A0)->ifgp)) {
     usci = BSP430_HAL_USCI_A0;
   }
 #endif /* configBSP430_HAL_USCI_A0 */
-#if configBSP430_HAL_USCI_B0 - 0
+#if (configBSP430_HAL_USCI_B0 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B0)->rx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B0)->ifgp)) {
     usci = BSP430_HAL_USCI_B0;
   }
@@ -694,7 +694,7 @@ isr_USCI_AB0RX (void)
 }
 #endif /* HAL USCI_AB0RX ISR */
 
-#if configBSP430_HAL_USCI_AB1RX_ISR - 0
+#if (configBSP430_HAL_USCI_AB1RX_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(USCIAB1RX_VECTOR)
 isr_USCI_AB1RX (void)
 {
@@ -703,12 +703,12 @@ isr_USCI_AB1RX (void)
 
   if (0) {
   }
-#if configBSP430_HAL_USCI_A1 - 0
+#if (configBSP430_HAL_USCI_A1 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->rx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->ifgp)) {
     usci = BSP430_HAL_USCI_A1;
   }
 #endif /* configBSP430_HAL_USCI_A1 */
-#if configBSP430_HAL_USCI_B1 - 0
+#if (configBSP430_HAL_USCI_B1 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->rx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->ifgp)) {
     usci = BSP430_HAL_USCI_B1;
   }
@@ -754,7 +754,7 @@ usciabtx_isr (hBSP430halSERIAL hal)
   return rv;
 }
 
-#if configBSP430_HAL_USCI_AB0TX_ISR - 0
+#if (configBSP430_HAL_USCI_AB0TX_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(USCIAB0TX_VECTOR)
 isr_USCI_AB0TX (void)
 {
@@ -763,12 +763,12 @@ isr_USCI_AB0TX (void)
 
   if (0) {
   }
-#if configBSP430_HAL_USCI_A0 - 0
+#if (configBSP430_HAL_USCI_A0 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A0)->tx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A0)->ifgp)) {
     usci = BSP430_HAL_USCI_A0;
   }
 #endif /* configBSP430_HAL_USCI_A0 */
-#if configBSP430_HAL_USCI_B0 - 0
+#if (configBSP430_HAL_USCI_B0 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B0)->tx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B0)->ifgp)) {
     usci = BSP430_HAL_USCI_B0;
   }
@@ -780,7 +780,7 @@ isr_USCI_AB0TX (void)
 }
 #endif /* HAL USCI_AB0TX ISR */
 
-#if configBSP430_HAL_USCI_AB1TX_ISR - 0
+#if (configBSP430_HAL_USCI_AB1TX_ISR - 0)
 BSP430_CORE_DECLARE_INTERRUPT(USCIAB1TX_VECTOR)
 isr_USCI_AB1TX (void)
 {
@@ -789,12 +789,12 @@ isr_USCI_AB1TX (void)
 
   if (0) {
   }
-#if configBSP430_HAL_USCI_A1 - 0
+#if (configBSP430_HAL_USCI_A1 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->tx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_A1)->ifgp)) {
     usci = BSP430_HAL_USCI_A1;
   }
 #endif /* configBSP430_HAL_USCI_A1 */
-#if configBSP430_HAL_USCI_B1 - 0
+#if (configBSP430_HAL_USCI_B1 - 0)
   else if (SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->tx_bit & *(SERIAL_HAL_HPLAUX(BSP430_HAL_USCI_B1)->ifgp)) {
     usci = BSP430_HAL_USCI_B1;
   }
@@ -813,25 +813,25 @@ xBSP430usciName (tBSP430periphHandle periph)
 {
   /* !BSP430! insert=periph_name_demux */
   /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [periph_name_demux] */
-#if configBSP430_HPL_USCI_A0 - 0
+#if (configBSP430_HPL_USCI_A0 - 0)
   if (BSP430_PERIPH_USCI_A0 == periph) {
     return "USCI_A0";
   }
 #endif /* configBSP430_HPL_USCI_A0 */
 
-#if configBSP430_HPL_USCI_A1 - 0
+#if (configBSP430_HPL_USCI_A1 - 0)
   if (BSP430_PERIPH_USCI_A1 == periph) {
     return "USCI_A1";
   }
 #endif /* configBSP430_HPL_USCI_A1 */
 
-#if configBSP430_HPL_USCI_B0 - 0
+#if (configBSP430_HPL_USCI_B0 - 0)
   if (BSP430_PERIPH_USCI_B0 == periph) {
     return "USCI_B0";
   }
 #endif /* configBSP430_HPL_USCI_B0 */
 
-#if configBSP430_HPL_USCI_B1 - 0
+#if (configBSP430_HPL_USCI_B1 - 0)
   if (BSP430_PERIPH_USCI_B1 == periph) {
     return "USCI_B1";
   }

@@ -309,7 +309,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_EXP430F5438 0
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
-#if BSP430_PLATFORM_EXP430F5438 - 0
+#if (BSP430_PLATFORM_EXP430F5438 - 0)
 #include <bsp430/platform/exp430f5438/platform.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
@@ -332,7 +332,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_EXP430F5529 0
 #endif /* BSP430_PLATFORM_EXP430F5529 */
 
-#if BSP430_PLATFORM_EXP430F5529 - 0
+#if (BSP430_PLATFORM_EXP430F5529 - 0)
 #include <bsp430/platform/exp430f5529/platform.h>
 #endif /* BSP430_PLATFORM_EXP430F5529 */
 
@@ -355,7 +355,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_EXP430FR5739 0
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
-#if BSP430_PLATFORM_EXP430FR5739 - 0
+#if (BSP430_PLATFORM_EXP430FR5739 - 0)
 #include <bsp430/platform/exp430fr5739/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
@@ -378,7 +378,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_EXP430FG4618 0
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
-#if BSP430_PLATFORM_EXP430FG4618 - 0
+#if (BSP430_PLATFORM_EXP430FG4618 - 0)
 #include <bsp430/platform/exp430fg4618/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
@@ -401,7 +401,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_EXP430G2 0
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
-#if BSP430_PLATFORM_EXP430G2 - 0
+#if (BSP430_PLATFORM_EXP430G2 - 0)
 #include <bsp430/platform/exp430g2/platform.h>
 #endif /* BSP430_PLATFORM_EXP430G2 */
 
@@ -429,7 +429,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_RF2500T 0
 #endif /* BSP430_PLATFORM_RF2500T */
 
-#if BSP430_PLATFORM_RF2500T - 0
+#if (BSP430_PLATFORM_RF2500T - 0)
 #include <bsp430/platform/rf2500t/platform.h>
 #endif /* BSP430_PLATFORM_RF2500T */
 
@@ -457,7 +457,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_EM430 0
 #endif /* BSP430_PLATFORM_EM430 */
 
-#if BSP430_PLATFORM_EM430 - 0
+#if (BSP430_PLATFORM_EM430 - 0)
 #include <bsp430/platform/em430/platform.h>
 #endif /* BSP430_PLATFORM_EM430 */
 
@@ -485,7 +485,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_SURF 0
 #endif /* BSP430_PLATFORM_SURF */
 
-#if BSP430_PLATFORM_SURF - 0
+#if (BSP430_PLATFORM_SURF - 0)
 #include <bsp430/platform/surf/platform.h>
 #endif /* BSP430_PLATFORM_SURF */
 
@@ -513,7 +513,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_TRXEB 0
 #endif /* BSP430_PLATFORM_TRXEB */
 
-#if BSP430_PLATFORM_TRXEB - 0
+#if (BSP430_PLATFORM_TRXEB - 0)
 #include <bsp430/platform/trxeb/platform.h>
 #endif /* BSP430_PLATFORM_TRXEB */
 
@@ -541,7 +541,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_WOLVERINE 0
 #endif /* BSP430_PLATFORM_WOLVERINE */
 
-#if BSP430_PLATFORM_WOLVERINE - 0
+#if (BSP430_PLATFORM_WOLVERINE - 0)
 #include <bsp430/platform/wolverine/platform.h>
 #endif /* BSP430_PLATFORM_WOLVERINE */
 
@@ -577,14 +577,14 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_CUSTOM 0
 #endif /* BSP430_PLATFORM_CUSTOM */
 
-#if BSP430_PLATFORM_CUSTOM - 0
+#if (BSP430_PLATFORM_CUSTOM - 0)
 #include <bsp430/platform/custom/platform.h>
 #endif /* BSP430_PLATFORM_CUSTOM */
 
 /* If configBSP430_TIMER_CCACLK was requested, then mark the feature as
  * available or not based on whether the platform provided a serial
  * peripheral for the console's use. */
-#if configBSP430_TIMER_CCACLK - 0
+#if (configBSP430_TIMER_CCACLK - 0)
 #if BSP430_PERIPH_CPPID_NONE != BSP430_TIMER_CCACLK_PERIPH_CPPID
 #define BSP430_TIMER_CCACLK 1
 #else /* BSP430_TIMER_CCACLK_PERIPH_CPPID */
@@ -595,8 +595,8 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* If configBSP430_UCS_TRIM_DCOCLKDIV was requested and the platform
  * supports BSP430_TIMER_CCACLK, then mark the feature as
  * available. */
-#if configBSP430_UCS_TRIM_DCOCLKDIV - 0
-#if BSP430_TIMER_CCACLK - 0
+#if (configBSP430_UCS_TRIM_DCOCLKDIV - 0)
+#if (BSP430_TIMER_CCACLK - 0)
 #define BSP430_UCS_TRIM_DCOCLKDIV 1
 #else /* BSP430_TIMER_CCACLK */
 #define BSP430_UCS_TRIM_DCOCLKDIV 0
@@ -606,8 +606,8 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* If configBSP430_BC2_TRIM_TO_MCLK was requested and the platform
  * supports BSP430_TIMER_CCACLK, then mark the feature as
  * available. */
-#if configBSP430_BC2_TRIM_TO_MCLK - 0
-#if BSP430_TIMER_CCACLK - 0
+#if (configBSP430_BC2_TRIM_TO_MCLK - 0)
+#if (BSP430_TIMER_CCACLK - 0)
 #define BSP430_BC2_TRIM_TO_MCLK 1
 #else /* BSP430_TIMER_CCACLK */
 #define BSP430_BC2_TRIM_TO_MCLK 0
@@ -617,7 +617,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* If configBSP430_CONSOLE was requested, then mark the feature as
  * available or not based on whether the platform provided a serial
  * peripheral for the console's use. */
-#if configBSP430_CONSOLE - 0
+#if (configBSP430_CONSOLE - 0)
 #if BSP430_PERIPH_CPPID_NONE != BSP430_CONSOLE_SERIAL_PERIPH_CPPID
 #define BSP430_CONSOLE 1
 #else /* BSP430_CONSOLE_SERIAL_PERIPH_CPPID */
@@ -643,7 +643,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * NOTE: This file is responsible only for processing button 0.
  * Additional buttons must be handled in the platform-specific
  * header. */
-#if configBSP430_PLATFORM_BUTTON0 - 0
+#if (configBSP430_PLATFORM_BUTTON0 - 0)
 #ifdef BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE
 #define BSP430_PLATFORM_BUTTON0 1
 #else /* BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE */
@@ -654,7 +654,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* If configBSP430_PLATFORM_M25P was requested, then mark the feature
  * as available or not based on whether the platform provided a
  * peripheral handle to use to access the device. */
-#if configBSP430_PLATFORM_M25P - 0
+#if (configBSP430_PLATFORM_M25P - 0)
 #ifdef BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE
 #define BSP430_PLATFORM_M25P 1
 #else /* BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE */

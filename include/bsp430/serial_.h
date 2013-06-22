@@ -253,7 +253,7 @@ typedef struct sBSP430halSERIAL {
   /** Total number of transmitted octets */
   unsigned long num_tx;
 
-#if BSP430_SERIAL - 0
+#if (BSP430_SERIAL - 0)
   /** @cond DOXYGEN_EXCLUDE */
   const struct sBSP430serialDispatch * const dispatch;
   /** @endcond */
@@ -265,7 +265,7 @@ typedef struct sBSP430halSERIAL * hBSP430halSERIAL;
 
 /** @cond DOXYGEN_EXCLUDE */
 struct sBSP430serialDispatch {
-#if configBSP430_SERIAL_ENABLE_UART - 0
+#if (configBSP430_SERIAL_ENABLE_UART - 0)
   hBSP430halSERIAL (* openUART) (hBSP430halSERIAL hal,
                                  unsigned char ctl0_byte,
                                  unsigned char ctl1_byte,
@@ -278,14 +278,14 @@ struct sBSP430serialDispatch {
                          size_t len);
   int (* uartTxASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
 #endif /* configBSP430_SERIAL_ENABLE_UART */
-#if configBSP430_SERIAL_ENABLE_SPI - 0
+#if (configBSP430_SERIAL_ENABLE_SPI - 0)
   hBSP430halSERIAL (* openSPI) (hBSP430halSERIAL hal,
                                 unsigned char ctl0_byte,
                                 unsigned char ctl1_byte,
                                 unsigned int prescaler);
   int (* spiTxRx_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
-#if configBSP430_SERIAL_ENABLE_I2C - 0
+#if (configBSP430_SERIAL_ENABLE_I2C - 0)
   hBSP430halSERIAL (* openI2C) (hBSP430halSERIAL hal,
                                 unsigned char ctl0_byte,
                                 unsigned char ctl1_byte,

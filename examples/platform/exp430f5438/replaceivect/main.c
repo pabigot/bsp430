@@ -42,12 +42,12 @@ void dumpRegion (const char * header,
 void main ()
 {
   BSP430_CORE_INTERRUPT_STATE_T istate;
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   unsigned long reset_causes = 0;
   unsigned int reset_flags = 0;
 #endif /* BSP430_MODULE_SYS */
 
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   {
     unsigned int sysrstiv;
 
@@ -61,7 +61,7 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-#if BSP430_MODULE_SYS - 0
+#if (BSP430_MODULE_SYS - 0)
   cprintf("System reset bitmask %lx; causes:\n", reset_causes);
   {
     int bit = 0;

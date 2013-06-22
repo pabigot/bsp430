@@ -44,7 +44,7 @@
 
 #include <bsp430/platform/standard.inc>
 
-#if BSP430_LED - 0
+#if (BSP430_LED - 0)
 const sBSP430halLED xBSP430halLED_[] = {
   { .outp = &P1OUT, .bit = BIT0 }, /* Red */
   { .outp = &P1OUT, .bit = BIT1 }, /* Green */
@@ -64,13 +64,13 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
   /* This platform does not support a crystal */
   if (0) {
   }
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT0 | BIT1;
     hplie = (volatile sBSP430hplPORT_IE_8 *)BSP430_PERIPH_PORT2_BASEADDRESS_;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_USCI_A0 - 0
+#if (configBSP430_HPL_USCI_A0 - 0)
   else if (BSP430_PERIPH_USCI_A0 == device) {
     bits = BIT4 | BIT5;
     if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
@@ -83,7 +83,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     hpl = (volatile sBSP430hplPORT_8 *)BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
-#if configBSP430_HPL_USCI_B0 - 0
+#if (configBSP430_HPL_USCI_B0 - 0)
   else if (BSP430_PERIPH_USCI_B0 == device) {
     bits = BIT1 | BIT2;
     if ((BSP430_PERIPHCFG_SERIAL_SPI3 == periph_config)
@@ -126,17 +126,17 @@ xBSP430platformPeripheralHelp (tBSP430periphHandle device,
   if (BSP430_PERIPH_LFXT1 == device) {
     return "XIN=P2.6; XOUT=P2.7";
   }
-#if configBSP430_PERIPH_EXPOSED_CLOCKS - 0
+#if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     return "SMCLK on P2.1 (P4); ACLK on P2.0 (P3)";
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
-#if configBSP430_HPL_USCI_A0 - 0
+#if (configBSP430_HPL_USCI_A0 - 0)
   if (BSP430_PERIPH_USCI_A0 == device) {
     return "MOSI/TXD=P3.4; MISO/RXD=P3.5; CLK=P3.0; STE=P3.3";
   }
 #endif /* configBSP430_HPL_USCI_A0 */
-#if configBSP430_HPL_USCI_B0 - 0
+#if (configBSP430_HPL_USCI_B0 - 0)
   if (BSP430_PERIPH_USCI_B0 == device) {
     return "MOSI/SDA=P3.1; MISO/SCL=P3.2; CLK=P3.3; STE=P3.0";
   }
