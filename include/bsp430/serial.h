@@ -271,9 +271,6 @@ unsigned int uiBSP430serialSMCLKPrescaler (unsigned long freq_Hz);
  * configuration is successful, and a null handle if something went
  * wrong.
  *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation.
- *
  * @dependency #configBSP430_SERIAL_ENABLE_UART */
 static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
@@ -295,10 +292,7 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
  * transmitted
  *
  * @return the character received if any is ready to return, or -1 if
- * the device has no data available
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * the device has no data available. */
 static BSP430_CORE_INLINE
 int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
 {
@@ -318,10 +312,7 @@ int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
  * @param c a data byte to be transmitted
  *
  * @return the input character @p c if transmitted, or -1 if an error
- * occurred
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * occurred. */
 static BSP430_CORE_INLINE
 int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 {
@@ -343,9 +334,7 @@ int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
  * @param len the number of octets to be transmitted
  *
  * @return the number of octets successfully transmitted
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ */
 static BSP430_CORE_INLINE
 int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
                           const uint8_t * data,
@@ -369,10 +358,7 @@ int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
  * not transmitted.
  *
  * @return the number of bytes transmitted, or -1 if an error
- * occurs
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * occurs */
 static BSP430_CORE_INLINE
 int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 {
@@ -416,10 +402,7 @@ int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
  * @return A peripheral-specific HAL handle if the allocation and
  * configuration is successful, and a null handle if something went
  * wrong (e.g., absence of the requested peripheral, an invalid mode
- * in @p ctl0_byte or a zero-valued @p prescaler).
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * in @p ctl0_byte or a zero-valued @p prescaler). */
 static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
                                        unsigned char ctl0_byte,
@@ -558,10 +541,7 @@ int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
  * @return A peripheral-specific HAL handle if the allocation and
  * configuration is successful, and a null handle if something went
  * wrong (e.g., absence of the requested peripheral or a zero-valued
- * @p prescaler).
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * @p prescaler). */
 static BSP430_CORE_INLINE
 hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
                                        unsigned char ctl0_byte,
@@ -718,10 +698,7 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
  * @param resetp A positive value places peripheral into reset mode.
  * A negative value places peripheral into reset mode after blocking
  * until peripheral is no longer busy.  A zero value releases
- * peripheral from reset mode.
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * peripheral from reset mode. */
 static BSP430_CORE_INLINE
 void vBSP430serialSetReset_ni (hBSP430halSERIAL hal,
                                int resetp)
@@ -758,10 +735,8 @@ void vBSP430serialSetReset_ni (hBSP430halSERIAL hal,
  *
  * @return 0 if the transition was successful, -1 if an error
  * occurred.  Potential errors include inability to configure the
- * peripheral pins.  On error, the peripheral is left in reset mode.
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * peripheral pins.  On error, the peripheral is left in reset
+ * mode. */
 static BSP430_CORE_INLINE
 int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
                              int holdp)
@@ -779,10 +754,7 @@ int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
  * hBSP430serialOpenUART(), hBSP430serialOpenSPI(), or
  * hBSP430serialOpenI2C().
  *
- * @return 0 if the close occurred without error.
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ * @return 0 if the close occurred without error. */
 static BSP430_CORE_INLINE
 int iBSP430serialClose (hBSP430halSERIAL hal)
 {
@@ -802,9 +774,7 @@ int iBSP430serialClose (hBSP430halSERIAL hal)
  * the transmission infrastructure may be idle.
  *
  * @param hal a serial HAL handle
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ */
 static BSP430_CORE_INLINE
 void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
 {
@@ -825,9 +795,7 @@ void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
  * single-master routines.
  *
  * @param hal a serial HAL handle
- *
- * @delegated This function exists only as an inline delegate to a
- * peripheral-specific implementation. */
+ */
 static BSP430_CORE_INLINE
 void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
 {
