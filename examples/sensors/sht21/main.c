@@ -37,7 +37,7 @@
 
 int
 iSHT21ComputeCRC (const unsigned char * romp,
-                        int len)
+                  int len)
 {
   static const uint16_t SHT_CRC_POLY = 0x131;
   uint8_t crc = 0;

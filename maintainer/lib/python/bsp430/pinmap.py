@@ -5,7 +5,7 @@ class PinmapBase (object):
     # named subclass constructor arguments plus whatever derived
     # information the subclass adds during construction.
     _dict = {}
-    
+
     # A compiled regular expression that extracts from a standard peripheral description
     Template_re = None
 
@@ -63,7 +63,7 @@ class PeripheralBase (PinmapBase):
         return self.template(is_config) % tmap
 
 class Timer (PeripheralBase):
-    
+
     Template_re = re.compile('T(?P<variant>.)(?P<instance>\d+)\.(?P<ccidx>\d+)(?P<ccisc>[AB])?$')
 
     def __init__ (self, variant, instance, ccidx, ccisc):
@@ -133,9 +133,9 @@ class Port (PeripheralBase):
 
 class Serial (PeripheralBase):
     Template_re = re.compile('UC(?P<variant>.)(?P<instance>\d)(?P<role>\w+)$')
-    
+
     Periph = None
-    
+
     def __init__ (self, variant, instance, role):
         self.variant = variant
         self.instance = int(instance)

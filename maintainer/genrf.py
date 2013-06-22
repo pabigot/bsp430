@@ -35,7 +35,7 @@ class SignalType (object):
 
     def expand (self, tag, signal):
         return self.template % { 'tag': tag, 'signal': signal, 'idtype': self._idtype }
-    
+
 SignalType('PORT_PERIPH_HANDLE', '''
 /** BSP430 peripheral handle for port on which %(signal)s is placed.
  *
@@ -107,7 +107,7 @@ for fn in ( 'emk_bsp430_config.h', 'emk_platform.h' ):
         signals.setdefault(signal, []).append(sigtype)
 
 for (tag, signals) in emksignals.iteritems():
-    
+
     customized = []
     defaulted = ['']
     for s in sorted(signals.keys()):
@@ -121,5 +121,5 @@ for (tag, signals) in emksignals.iteritems():
     outf.write('\n'.join(customized))
     outf.write('\n/* *** END OF CUSTOMIZED DECLARATIONS */\n')
     outf.write('\n'.join(defaulted))
-    
-    
+
+

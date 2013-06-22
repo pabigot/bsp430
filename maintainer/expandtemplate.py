@@ -136,7 +136,7 @@ def fn_periph_decl (subst_map, idmap):
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''')
     return expandStringTemplate(''.join(elements), subst_map, idmap)
-    
+
 
 templates = {
     'hal_decl' : fn_hal_decl,
@@ -154,12 +154,12 @@ templates = {
 #define BSP430_HPL_%(INSTANCE)s ((volatile sBSP430hpl%(PERIPH)s *)BSP430_PERIPH_%(INSTANCE)s)
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
-    
+
     'port_hpl_decl' : '''/** HPL pointer for %(INSTANCE)s.
  *
  * Typed pointer to a volatile structure overlaying the %(INSTANCE)s
  * peripheral register map.
- * 
+ *
  * The pointer may be used only if #configBSP430_HPL_%(INSTANCE)s
  * is defined to a true value.
  *
@@ -177,7 +177,7 @@ templates = {
 #endif /* IE */
 #endif /* configBSP430_HPL_%(INSTANCE)s */
 ''',
-    
+
     'hal_isr_decl' : '''/** Control inclusion of the primary @HAL interrupt handler for #BSP430_PERIPH_%(INSTANCE)s
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
@@ -374,7 +374,7 @@ isr_T%(TYPE)s%(INSTANCE)s (void)
 }
 #endif /* configBSP430_HAL_T%(TYPE)s%(INSTANCE)s_ISR */
 ''',
-    
+
     'hal_port_defn' : '''#if configBSP430_HAL_%(INSTANCE)s - 0
 struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
   .hal_state = { .cflags =
@@ -688,7 +688,7 @@ def fn_emk_expand (subst_map, idmap, is_config):
     else:
         if not is_config:
             text.append('#define BSP430_RF_%s_%s_PERIPH_HANDLE BSP430_RFEM_SERIAL_PERIPH_HANDLE' % (tag.upper(), serial_type.upper()))
-        
+
     gpio_signals = idmap.get('gpio')
     if gpio_signals is not None:
         gpio_signals = frozenset(gpio_signals.split(','))
@@ -765,7 +765,7 @@ periph_serial = []
 periph_serial.extend(periph_usci)
 periph_serial.extend(periph_usci5)
 periph_serial.extend(periph_eusci)
-    
+
 periphs = []
 periphs.extend(periph_ports)
 periphs.extend(periph_timers)
@@ -836,7 +836,7 @@ for fn in args.files:
         mo = directive_re.search(line)
         if mo:
             kw = filter(lambda _s: 0 < _s.find('='), mo.group('keywords').strip().split())
-         
+
             for (k, v) in [ _s.split('=', 1) for _s in kw ]:
                 if 0 < k.find(':'):
                     (pfx, op) = k.split(':', 1)
