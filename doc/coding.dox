@@ -181,9 +181,12 @@ indeed:
 
 \subsection coding_misc_incl Include Files
 
-Include file protection symbols encode the path by which the include
-file is normally accessed; e.g. the protection sequence for
-<bsp430/platform/exp430fr5739/platform.h> is:
+\subsubsection coding_misc_incl_protection Protection Against Nested Inclusion
+
+Include file protection symbols encode the path by which the include file is
+normally accessed, with non-alphanumeric characters replaced by underscores
+and the resulting token expressed in upper case.  For example, the
+protection sequence for <bsp430/platform/exp430fr5739/platform.h> is:
 
 @code
 #ifndef BSP430_PLATFORM_EXP430FR5739_PLATFORM_H
@@ -191,6 +194,54 @@ file is normally accessed; e.g. the protection sequence for
 /* ... */
 #endif /* BSP430_PLATFORM_EXP430FR5739_PLATFORM_H */
 @endcode
+
+\subsubsection coding_misc_incl_use Standard Order for Include Files
+
+See also @ref bsp430_config for naming conventions and standards related
+overriding default configurations.
+
+\par Header Files (*.h)
+
+Every header file that does not include another BSP430 header file must
+include <bsp430/core.h> first to ensure the necessary preprocessor
+directives that are affected by @c bsp430_config.h are applied in the
+standard order.  (It is not strictly necessary to do this if the first file
+included is another BSP430 header, but it does not hurt to do so and it
+helps with consistency.)
+
+<bsp430/core.h> may be expected to include the following external material:
+
+@code
+#include <msp430.h>             /* MSP430 MCU-specific information */
+#include <stdint.h>             /* Size-annotated integral types (uint8_t) */
+#include <stddef.h>             /* NULL and size_t */
+@endcode
+
+@note At this time, infrastructure header files should not introduce a
+dependency on <bsp430/platform.h>.  While it should be safe to do this,
+<bsp430/platform.h> resolves default values that might otherwise be affected
+by subsequent activities.  (At one point BSP430 permitted configuration
+options to be undefined and redefined to a different value; it was in
+<bsp430/platform.h> that the options value would finally be applied, making
+subsequent redefinition problematic.  That approach is not currently used,
+but it should not be precluded in case it becomes necessary in the future.)
+
+\par Implementation Files (*.c)
+
+Every implementation file should include <bsp430/platform.h> first to ensure
+that platform-specific overrides have been evaluated and are available to
+override defaults in other headers.
+
+<bsp430/platform.h> may be expected to include the following external
+material:
+
+@code
+#include <msp430.h>             /* MSP430 MCU-specific information */
+#include <bsp430/core.h>        /* Core BSP430 headers and declarations */
+@endcode
+
+It may include additional material such as <bsp430/periph.h> but that should
+not be assumed.
 
 \subsection coding_misc_cpp Preprocessor Feature Tests
 
@@ -201,7 +252,7 @@ Where a macro value is used for conditional compilation, the state of
 being true is determined with the following pattern:
 
 @code
-#if FEATURE_FLAG - 0
+#if (FEATURE_FLAG - 0)
 /* Feature is enabled */
 #else /* MACRO_VALUE */
 /* Feature is not enabled */
@@ -214,21 +265,28 @@ This technique allows use of:
 #define FEATURE_FLAG 0
 @endcode
 
-to denote that the feature is being explicitly disabled.  BSP430 should
-ensure that any feature test flag has a definition to either 1 or 0 (or to
-an expression that will evaluate to either a true or false value when used
-within a preprocessor condition).  The documentation explicitly marks macro
-definitions that are expected to have such values with the following
-annotation:
+to denote that the feature is being explicitly disabled.  Developers of
+application or infrastructure code should ensure that any feature test flag
+has a definition to either 1 or 0 (or to an expression that will evaluate to
+either a true or false value when used within a preprocessor condition).
+The documentation explicitly marks macro definitions that are expected to
+have such values with the <tt>@@cppflag</tt> annotation in the documentation
+block, which will produce:
 
 @cppflag
+
+@note While other macros may be documented to have true or false values that
+are valid in both code and preprocessor expressions, macros with the
+<tt>@@cppflag</tt> may have values that include preprocessor operators like
+@c defined which restrict their use to preprocessor directives.
 
 The ability to explicitly disable features that default to being enabled is
 critical and requires a value-based comparison.  The subtraction of 0 in the
 conditional expression allows syntactic correctness when somebody
 inappropriately defines the feature flag with no value: such a case is
-equivalent to setting it false.  The syntax also makes clear that the code
-was not intended to be <c>\#ifdef FEATURE_FLAG</c>.
+equivalent to disabling the feature.  For consistency these tests should be
+enclosed in parentheses.  The syntax also makes clear that the code was not
+intended to be <c>\#ifdef FEATURE_FLAG</c>.
 
 @warning When features identified with null macro definitions are processed
 according to the BSP430 standard conditional directives, they are
@@ -242,7 +300,7 @@ MCU-specific headers, is to use code like:
 @endcode
 
 with a null expansion to the macro.  Here is simply the existence of a
-definition, not its value, that indicates feature is present.
+definition, not its value, that indicates a feature is present.
 
 The correct way of detecting features when interoperating with external
 libraries using the null-definition style is:
@@ -260,10 +318,12 @@ test if no further conditions are required, but is discouraged for
 consistency.
 
 In a very few cases, a @c configFEATURE_FOO flag is a request to supply a
-specific resource such as @c BSP430_FOO_PERIPH_HANDLE.  If the platform is
-unable to provide the resource, it will leave the handle macro undefined
-When there is no independent reason also define a @c FEATURE_FOO flag,
-success of the configuration request should be tested by:
+specific resource such as @c BSP430_FOO_PERIPH_HANDLE; an example is
+#configBSP430_PERIPH_EXPOSED_CLOCKS which causes
+#BSP430_PERIPH_EXPOSED_CLOCKS to be defined.  If the platform is unable to
+provide the resource, it will leave the handle macro undefined.  When there
+is no independent reason to provide a @c FEATURE_FOO flag, success of the
+configuration request should be tested by:
 
 @code
 #if defined(BSP430_FOO_PERIPH_HANDLE)
@@ -271,13 +331,26 @@ success of the configuration request should be tested by:
 @endcode
 
 The documentation for @c configFEATURE_FOO and @c BSP430_FOO_PERIPH_HANDLE
-will indicate when this alternative success test should being used.
+will include the @ref coding_doc_affects and @ref coding_doc_dependency
+annotations respectively, to indicate when this alternative success test
+should being used and what macro to test.
+
+When a macro defines a parameter affecting behavior or selection of resource
+that is not a flag and the value may be overridden by the user, its
+documentation should include the @ref coding_doc_defaulted annotation.  The
+value should be provided in a way that respects prior definitions:
+
+@code
+#ifndef BSP430_FOO_PARAMETER
+#define BSP430_FOO_PARAMETER 42
+#endif /* BSP430_FOO_PARAMETER */
+@endcode
 
 \section coding_doc Documentation Expectations
 
-BSP430 uses Doxygen for architectural and API documentation.  The following
-macros are used in API documentation to highlight expectations of particular
-macros, variables, and functions.
+BSP430 uses <a href="http://www.doxygen.org/">Doxygen</a> for architectural
+and API documentation.  The following macros are used in API documentation
+to highlight expectations of particular macros, variables, and functions.
 
 \subsection coding_doc_defaulted @@defaulted
 
@@ -345,7 +418,7 @@ Produces:
 
 @affects <em>resource links</em>
 
-\subsection coding_doc_affects @@dependency
+\subsection coding_doc_dependency @@dependency
 
 Annotation to note that the setting for the given macro is affected by the
 one or more other settings.  Normally used for @c BSP430_FOO when the value

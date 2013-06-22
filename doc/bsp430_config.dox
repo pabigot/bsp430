@@ -33,9 +33,67 @@
 \tableofcontents
 
 The BSP430 configuration structure is implemented using the standard C
-preprocessor.  As a general rule, if an application wishes to use a
-peripheral, it specifies this by defining a macro to 1.  The specific
-peripheral, and the desired capability, are reflected in the macro name.
+preprocessor.
+
+\section cfg_consistency Ensuring Consistency
+
+Because the BSP430 infrastructure enables and disables features within
+separate object files based on the flags presented at the time the source
+file is compiled, it is critical that all object files in an application
+have consistent flag definitions.
+
+Each header in BSP430 that does not include another BSP430 file includes the
+file bsp430/core.h.  Subject to
+#configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE, the first thing this file
+does is:
+
+@code
+#include "bsp430_config.h"
+@endcode
+
+Unlike all other BSP430 headers, the <tt>bsp430_config.h</tt> file is not
+accessed with a path that places it within the BSP430 hierarchy, but is
+assumed to exist within the application source area.  It is in this file
+that application-specific configuration information should be placed.
+
+The application-specific configuration file should end with:
+
+@code
+/* Include platform defaults */
+#include <bsp430/platform/bsp430_config.h>
+@endcode
+
+This file consults the existing definitions (e.g. #BSP430_PLATFORM_EXP430G2
+or #BSP430_PLATFORM_CUSTOM) to identify a platform-specific configuration
+file, which it then includes.  In that file any previous requests for
+specific features, such as #configBSP430_TIMER_CCACLK, are translated to
+requests for the underlying peripheral supported on that platform.
+
+Every header that specifies a configuration option or parameter sets a
+default for that option if no previously encountered header provides an
+alternative.  Not all parameters may be overridden by previous definitions;
+see @ref coding_doc_defaulted.
+
+\section cfg_type Setting Configuration Options
+
+All overridable feature and parameter values must be provided in a way that
+ensures all source files see the same value.  In most cases, they will be
+specified in the application @c bsp430_config.h.  For temporary settings to
+evaluate alternatives they may be set by passing flags to the compiler
+through the @c EXT_CPPFLAGS environment or make variable.
+
+\subsection cfg_type_flags Enabling/Disabling Features
+
+If an application wishes to use a peripheral or enable a particular feature
+such as a @link bsp430/utility/console.h serial console@endlink, it
+specifies this by defining a macro to 1 (to enable) or 0 (to disable).  The
+specific peripheral or feature is reflected in the macro name.  These macros
+are annotated with @ref coding_doc_cppflag to indicate that their values
+must evaluate to true or false within the context of a C preprocessor
+expression.  In most cases the controlling macro has a lower-case prefix
+<tt>config</tt>, further highlighting that it is used for configuration
+requests and does not indicate that the feature is actually available; see
+@ref cfg_use.
 
 For example, to use the @HPL interface to digital I/O port 1 it is necessary
 to define #configBSP430_HPL_PORT1:
@@ -54,72 +112,64 @@ The HAL interface will always depend on the corresponding HPL interface, but
 BSP430 will automatically enable the underlying capabilities by default, so
 you don't need to ask for them explicitly.
 
-Failure to correctly request a resource that your application depends on
-will result in either compile-time or link-time errors.
+Features that are expected to be used commonly such as #configBSP430_LED are
+enabled by default and may be explicitly disabled if they are unused, but
+most features including microcontroller peripheral are disabled by default
+and must be explicitly enabled.  Failure to correctly enable a resource that
+your application depends on can result in either compile-time or link-time
+errors.
 
 @see @ref grp_config_core
 @see @ref grp_config_functional
 
-\section cfg_placement Placement of Configuration Information
+\subsection cfg_type_parameter Influencing Parametric Options
 
-Because the BSP430 infrastructure enables and disables features within
-separate object files based on the flags presented at the time the source
-file is compiled, it is critical that all object files in an application
-have consistent flag definitions.
+BSP430 allows control of all values that an application or platform might
+wish to override, from common ones like #BSP430_CLOCK_NOMINAL_MCLK_HZ to
+low-level ones like #BSP430_UPTIME_DELAY_CCIDX where platform capabilities
+may require use of the default resource be re-assigned to an
+application-specific purpose.  All such parameters are given default values,
+and are annotated with @b Defaulted in their description to highlight that
+their values may be overridden.
 
-Each header in BSP430 that does not include another BSP430 file includes the
-file bsp430/core.h.  Subject to
-#configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE, the first thing this file
-does is:
-
-@code
-#include "bsp430_config.h"
-@endcode
-
-Unlike all other BSP430 headers, this file is not accessed with a path that
-places it within the BSP430 hierarchy, and is assumed to exist within the
-application source area.  It is in this file that application-specific
-configuration information should be placed.
-
-The application-specific configuration file should end with:
+The override mechanism is to simply define a preferred value in the
+application or platform @c bsp430_config.h, as:
 
 @code
-/* Include platform defaults */
-#include <bsp430/platform/bsp430_config.h>
+/* Run this at 20MHz */
+#define BSP430_CLOCK_NOMINAL_MCLK_HZ 20000000UL
 @endcode
-
-This file consults the existing definitions (e.g. #BSP430_PLATFORM_EXP430G2
-or #BSP430_PLATFORM_CUSTOM) to identify a platform-specific configuration
-file, which it then includes.  In that file any previous requests for
-specific features, such as #configBSP430_TIMER_CCACLK, are translated to
-requests for the underlying peripheral supported on that platform.
-
-Finally, each header that specifies a configuration option sets a default
-for that option if no previous header or the environment provided an
-explicit request for or rejection of the option.
 
 \section cfg_use Use of Configuration-Dependent Information
 
-As a general rule, an option <b>configBSP430_FOO</b> serves as an indication
+As a general rule, an option @c configBSP430_FOO serves as an indication
 that an application or library function requests that the named feature be
 made available.  It is @b not a guarantee that the feature could be
-provided; for example, #configBSP430_TIMER_CCACLK requests a timer be
-assigned that supports capturing events when an ACLK-based timer tick
-occurs, but whether such a timer is available is dependent on whether the
-platform headers define one.
+provided.  The documentation for feature request macros (@c
+configBSP430_FOO) will always identify the functional macro (@c BSP430_FOO)
+that confirms availability of the feature.  When this general rule applies,
+application code should check @c BSP430_FOO to see whether the request made
+through @c configBSP430_FOO could be satisfied.
 
-When this general rule applies, application code should check
-<b>BSP430_FOO</b> to see whether the request made through
-<b>configBSP430_FOO</b> could be satisfied.  In the documentation, there
-will be (for example) an @b Affects link from #configBSP430_TIMER_CCACLK
-to #BSP430_TIMER_CCACLK and a @b Dependency link in the reverse direction.
+For example, #configBSP430_TIMER_CCACLK requests a timer be assigned that
+supports capturing events when an ACLK-based timer tick occurs, but whether
+such a timer is available is dependent on whether the platform headers
+supply a definition for #BSP430_TIMER_CCACLK_PERIPH_CPPID.  In the
+documentation, there is an @b Affects link from #configBSP430_TIMER_CCACLK
+to #BSP430_TIMER_CCACLK_PERIPH_CPPID and a @b Dependency link in the reverse
+direction.  (This is a complex example: for technical reasons involving
+dependency separation #BSP430_TIMER_CCACLK_PERIPH_CPPID is provided within
+the @c bsp430_config.h hierarchy; it in turn determines the value of
+#BSP430_TIMER_CCACLK which is defined only once <bsp430/periph/timer.h> has
+been included.)
+
 In cases where the affected macro is a C preprocessor symbol it should be
 checked following the standard for those macros:
 
 @code
 #include <bsp430/platform.h>
 /* ... */
-#if BSP430_TIMER_CCACLK - 0
+#if (BSP430_TIMER_CCACLK - 0)
 /* The capture/compare-on-aclk feature is available */
 #endif /* BSP430_TIMER_CCACLK */
 @endcode

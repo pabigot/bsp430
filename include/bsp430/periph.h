@@ -157,8 +157,9 @@ typedef int tBSP430periphHandle;
  * This is used by application code as a debug facility, invoking
  * #iBSP430platformConfigurePeripheralPins_ni to expose MCLK, SMCLK, and
  * ACLK on pins where they may be monitored.  Its availability is
- * conditional on platform support and
- * #configBSP430_PERIPH_EXPOSED_CLOCKS. */
+ * conditional on platform support.
+ *
+ * @dependency #configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if defined(BSP430_DOXYGEN) || (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
 #define BSP430_PERIPH_EXPOSED_CLOCKS ((tBSP430periphHandle)0x4005)
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
