@@ -153,12 +153,13 @@
  * implementation, thereby allowing BSP430 to dispatch CC0 events to
  * callbacks registered in #sBSP430halTIMER.
  *
- * Set this flag to 0 (or leave it unset) if don't need CC0 or intend
- * to implement your own CC0 ISR.
+ * Set this flag to 0 (or leave it unset) if you don't need CC0 or
+ * intend to implement your own CC0 ISR.
  *
  * @cppflag
- * @ingroup grp_config_functional
- * @nodefault */
+ * @defaulted
+ * @dependentvalue
+ * @ingroup grp_config_functional */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_UPTIME_TIMER_HAL_CC0_ISR indirectly defaulted
 #endif /* BSP430_DOXYGEN */

@@ -282,14 +282,13 @@ templates = {
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_%(INSTANCE)s.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_%(INSTANCE)s */
 #if defined(BSP430_DOXYGEN)

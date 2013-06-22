@@ -282,9 +282,13 @@
  * would be done in the platform-specified header obtained through
  * <bsp430/platform.h>.
  *
- * @nodefault */
+ * If the platform does not support a secondary external clock, or it
+ * is normally left unpopulated, this macro will be undefined.
+ *
+ * @defaulted
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_CLOCK_NOMINAL_XT2CLK_HZ must be externally provided
+#define BSP430_CLOCK_NOMINAL_XT2CLK_HZ include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
 /** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ

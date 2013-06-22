@@ -439,7 +439,8 @@
  * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
- * @nodefault
+ * @defaulted
+ * @dependentvalue
  * @ingroup grp_config_functional */
 #ifndef configBSP430_TIMER_CCACLK_HAL
 #define configBSP430_TIMER_CCACLK_HAL indirectly defaulted
@@ -451,7 +452,8 @@
  * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
- * @nodefault
+ * @defaulted
+ * @dependentvalue
  * @ingroup grp_config_functional */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_TIMER_CCACLK_HAL_ISR indirectly defaulted
@@ -463,7 +465,8 @@
  * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
- * @nodefault
+ * @defaulted
+ * @dependentvalue
  * @ingroup grp_config_functional */
 #if defined(BSP430_DOXYGEN)
 #define configBSP430_TIMER_CCACLK_HAL_CC0_ISR indirectly defaulted
@@ -2259,14 +2262,13 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA0.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA0 */
 #if defined(BSP430_DOXYGEN)
@@ -2308,14 +2310,13 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA1.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA1 */
 #if defined(BSP430_DOXYGEN)
@@ -2357,14 +2358,13 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA2.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA2 */
 #if defined(BSP430_DOXYGEN)
@@ -2406,14 +2406,13 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_TA3.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TA3 */
 #if defined(BSP430_DOXYGEN)
@@ -2455,14 +2454,13 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB0.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB0 */
 #if defined(BSP430_DOXYGEN)
@@ -2504,14 +2502,13 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB1.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB1 */
 #if defined(BSP430_DOXYGEN)
@@ -2553,14 +2550,13 @@ extern sBSP430halTIMER xBSP430hal_TB2_;
  * This is the TIMERx_t0_VECTOR interrupt, handling only CC0.
  *
  * This must be defined to 1 in @c bsp430_config.h to request the
- * interrupt handler be included, and 0 to request it be excluded.
+ * interrupt handler be included, or 0 to request it be excluded.
  * Use of the interrupt handler requires that the corresponding @HAL
  * be requested.  By default the interface is not enabled.
  *
  * Interact with the handler using the @ref callbacks via #BSP430_HAL_TB2.
  *
  * @cppflag
- * @nodefault
  * @ingroup grp_config_core
  * @dependency #configBSP430_HAL_TB2 */
 #if defined(BSP430_DOXYGEN)
