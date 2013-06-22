@@ -78,7 +78,7 @@
  * been provided, making the uptime infrastructure available.
  *
  * @dependency #configBSP430_UPTIME
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UPTIME include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -92,7 +92,7 @@
  * the underlying resource instances.
  *
  * @defaulted
- * @platformdefault
+ * @platformvalue
  * @affects #BSP430_UPTIME_TIMER_PERIPH_HANDLE */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UPTIME_TIMER_PERIPH_CPPID include "bsp430_config.h"

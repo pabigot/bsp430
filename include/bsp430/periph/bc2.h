@@ -126,7 +126,7 @@
  * available and must not be referenced.
  *
  * @dependency #configBSP430_BC2_TRIM_TO_MCLK, #BSP430_TIMER_CCACLK
- * @platformdefault
+ * @platformvalue
  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_BC2_TRIM_TO_MCLK include <bsp430/platform.h>

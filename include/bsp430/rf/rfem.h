@@ -97,7 +97,7 @@
  * This flag is defined only if #configBSP430_RFEM is true.
  *
  * @dependency #configBSP430_RFEM
- * @platformdefault */
+ * @platformvalue */
 #define BSP430_RFEM include <bsp430/platform.h>
 
 /** The @link #BSP430_PERIPH_CPPID_NONE CPPID@endlink associated with

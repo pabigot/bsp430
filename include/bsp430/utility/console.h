@@ -147,7 +147,7 @@
  * been provided, making the console infrastructure available.
  *
  * @dependency #configBSP430_CONSOLE
- * @platformdefault
+ * @platformvalue
  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CONSOLE include <bsp430/platform.h>
@@ -165,7 +165,7 @@
  * platform or available serial peripherals.
  *
  * @dependency #BSP430_CONSOLE
- * @platformdefault
+ * @platformvalue
  * @affects #BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CONSOLE_SERIAL_PERIPH_CPPID include <bsp430/platform.h>
@@ -182,7 +182,7 @@
  * for this peripheral.
  *
  * @dependency #BSP430_CONSOLE_SERIAL_PERIPH_CPPID
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */

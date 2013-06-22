@@ -374,7 +374,7 @@
  * occur.  This can be demonstrated on the EXP430G2 LaunchPad.
  *
  * @dependency #configBSP430_TIMER_CCACLK
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK include <bsp430/platform.h>
@@ -388,7 +388,7 @@
  * the underlying resource instances.
  *
  * @defaulted
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk
  * @affects #BSP430_TIMER_CCACLK_PERIPH_HANDLE */
 #if defined(BSP430_DOXYGEN)
@@ -590,7 +590,7 @@
  * @warning See cautionary notes at #BSP430_TIMER_VALID_COUNTER_READ_CCIDX.
  *
  * @dependency #BSP430_TIMER_CCACLK
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_ACLK_CCIDX include <bsp430/platform.h>
@@ -601,7 +601,7 @@
  * #BSP430_TIMER_CCACLK_PERIPH_HANDLE to use ACLK as an input signal.
  *
  * @dependency #BSP430_TIMER_CCACLK
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_ACLK_CCIS include <bsp430/platform.h>
@@ -669,7 +669,7 @@
  * external clock source for #BSP430_TIMER_CCACLK_PERIPH_HANDLE can be
  * connected.
  *
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_BIT include <bsp430/platform.h>
@@ -737,7 +737,7 @@
  * the external trigger for CC0 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * can be connected.
  *
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC0_PORT_BIT include <bsp430/platform.h>
@@ -749,7 +749,7 @@
  *
  * The default setting corresponds to CCIxA.
  *
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #ifndef BSP430_TIMER_CCACLK_CC0_CCIS
 #define BSP430_TIMER_CCACLK_CC0_CCIS CCIS_0
@@ -817,7 +817,7 @@
  * the external trigger for CC1 on #BSP430_TIMER_CCACLK_PERIPH_HANDLE
  * can be connected.
  *
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT include <bsp430/platform.h>
@@ -829,7 +829,7 @@
  *
  * The default setting corresponds to CCIxA.
  *
- * @platformdefault
+ * @platformvalue
  * @ingroup grp_timer_ccaclk */
 #ifndef BSP430_TIMER_CCACLK_CC1_CCIS
 #define BSP430_TIMER_CCACLK_CC1_CCIS CCIS_0
@@ -909,7 +909,7 @@
  * @endcode
  *
  * @dependency #configBSP430_TIMER_VALID_COUNTER_READ
- * @platformdefault
+ * @platformvalue
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_TIMER_VALID_COUNTER_READ - 0)
 #ifndef BSP430_TIMER_VALID_COUNTER_READ_CCIDX

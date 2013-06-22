@@ -70,7 +70,7 @@
  * This flag is defined only if #configBSP430_EUI64 is true.
  *
  * @dependency #configBSP430_EUI64
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_EUI64)
 #ifndef BSP430_EUI64
 #define BSP430_EUI64 (configBSP430_EUI64 - 0)

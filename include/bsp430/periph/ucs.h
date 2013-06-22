@@ -143,7 +143,7 @@
  * be available and must not be referenced.
  *
  * @dependency #configBSP430_UCS_TRIM_DCOCLKDIV, #BSP430_TIMER_CCACLK
- * @platformdefault
+ * @platformvalue
  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UCS_TRIM_DCOCLKDIV include <bsp430/platform.h>

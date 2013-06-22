@@ -116,7 +116,7 @@
  * the peripheral-specific register to control capacitance, normally
  * in the form of a header constant such as #XCAP_1 or #XCAP10PF.
  *
- * @platformdefault
+ * @platformvalue
  */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_CLOCK_LFXT1_XCAP include <bsp430/platform.h>

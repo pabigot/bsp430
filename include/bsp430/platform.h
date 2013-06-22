@@ -249,7 +249,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * BSP430_PLATFORM_BUTTON1_PORT_PERIPH_HANDLE) may also be defined, up
  * to button 3.
  *
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -269,7 +269,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * corresponding macros (e.g., @c BSP430_PLATFORM_BUTTON1_PORT_BIT)
  * may also be defined, up to button 3.
  *
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_PLATFORM_BUTTON0_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
@@ -679,7 +679,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * and is true only if the platform supports
  * vBSP430platformSpinForJumper_ni().
  *
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_SPIN_FOR_JUMPER)
 #ifndef BSP430_PLATFORM_SPIN_FOR_JUMPER
 #define BSP430_PLATFORM_SPIN_FOR_JUMPER 0 /* False unless platform explicitly enabled it */
@@ -695,7 +695,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
  * xBSP430platformPeripheralHelp().
  *
  * @dependency #configBSP430_PLATFORM_PERIPHERAL_HELP
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_PLATFORM_PERIPHERAL_HELP)
 #ifndef BSP430_PLATFORM_PERIPHERAL_HELP
 #define BSP430_PLATFORM_PERIPHERAL_HELP 1 /* True unless platform explicitly disabled it */

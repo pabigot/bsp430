@@ -77,7 +77,7 @@
  *
  * @cppflag
  * @dependency #configBSP430_TLV
- * @platformdefault */
+ * @platformvalue */
 #if defined(BSP430_DOXYGEN) || defined(configBSP430_TLV)
 #define BSP430_TLV (configBSP430_TLV - 0)
 #endif /* BSP430_TLV */
