@@ -129,8 +129,8 @@ wish to override, from common ones like #BSP430_CLOCK_NOMINAL_MCLK_HZ to
 low-level ones like #BSP430_UPTIME_DELAY_CCIDX where platform capabilities
 may require use of the default resource be re-assigned to an
 application-specific purpose.  All such parameters are given default values,
-and are annotated with @b Defaulted in their description to highlight that
-their values may be overridden.
+and are annotated with @ref coding_doc_defaulted in their description to
+highlight that their values may be overridden.
 
 The override mechanism is to simply define a preferred value in the
 application or platform @c bsp430_config.h, as:
@@ -155,13 +155,13 @@ For example, #configBSP430_TIMER_CCACLK requests a timer be assigned that
 supports capturing events when an ACLK-based timer tick occurs, but whether
 such a timer is available is dependent on whether the platform headers
 supply a definition for #BSP430_TIMER_CCACLK_PERIPH_CPPID.  In the
-documentation, there is an @b Affects link from #configBSP430_TIMER_CCACLK
-to #BSP430_TIMER_CCACLK_PERIPH_CPPID and a @b Dependency link in the reverse
-direction.  (This is a complex example: for technical reasons involving
-dependency separation #BSP430_TIMER_CCACLK_PERIPH_CPPID is provided within
-the @c bsp430_config.h hierarchy; it in turn determines the value of
-#BSP430_TIMER_CCACLK which is defined only once <bsp430/periph/timer.h> has
-been included.)
+documentation, there is an @ref coding_doc_affects link from
+#configBSP430_TIMER_CCACLK to #BSP430_TIMER_CCACLK_PERIPH_CPPID and a @ref
+coding_doc_dependency link in the reverse direction.  (This is a complex
+example: for technical reasons involving dependency separation
+#BSP430_TIMER_CCACLK_PERIPH_CPPID is provided within the @c bsp430_config.h
+hierarchy; it in turn determines the value of #BSP430_TIMER_CCACLK which is
+defined only once <bsp430/periph/timer.h> has been included.)
 
 In cases where the affected macro is a C preprocessor symbol it should be
 checked following the standard for those macros:
