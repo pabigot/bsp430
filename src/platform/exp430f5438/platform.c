@@ -36,6 +36,12 @@
 #include <bsp430/periph/port.h>
 #include <bsp430/platform/exp430f5438/platform.h>
 
+/* Ensure LCD backlight from P8.3 is powered off. */
+#define BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE do {       \
+    P8DIR |= BIT3;                                              \
+    P8OUT &= ~BIT3;                                             \
+  } while (0)
+
 #include <bsp430/platform/standard.inc>
 
 #if (BSP430_LED - 0)
