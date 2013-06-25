@@ -1,5 +1,6 @@
-PLATFORM ?= exp430fr5739
-TEST_PLATFORMS_EXCLUDE=em430 surf wolverine
+PLATFORM ?= trxeb
+# Test requires >2 kiB RAM for time conversion support
+TEST_PLATFORMS_EXCLUDE=exp430fr5739 exp430g2 rf2500t wolverine
 MODULES=$(MODULES_PLATFORM)
 MODULES += $(MODULES_UPTIME)
 MODULES += $(MODULES_CONSOLE)
