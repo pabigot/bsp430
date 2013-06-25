@@ -68,10 +68,9 @@ static hBSP430halSERIAL spi_;
 static uint8_t
 u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     switch (msg) {
@@ -132,7 +131,7 @@ u8g_dev_fn (u8g_t * u8g,
             uint8_t msg,
             void * arg)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   volatile sBSP430hplPORT * csna0_port;
   const uint8_t * cmdp = NULL;
   size_t cmdlen;
@@ -140,7 +139,6 @@ u8g_dev_fn (u8g_t * u8g,
   uint8_t * cp;
   int rc;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   csna0_port = xBSP430hplLookupPORT(BSP430_PLATFORM_TRXEB_LCD_CSn_PORT_PERIPH_HANDLE);
   while (0 == csna0_port) {

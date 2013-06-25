@@ -560,10 +560,9 @@ cmd_info_erase_ni (void)
 static int
 cmd_info_erase (const char * argstr)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     rv = cmd_info_erase_ni();
@@ -575,11 +574,9 @@ cmd_info_erase (const char * argstr)
 static int
 cmd_info_store (const char * argstr)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
 
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     rv = cmd_info_erase_ni();

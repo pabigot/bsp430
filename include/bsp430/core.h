@@ -678,6 +678,34 @@
   } while (0)
 #endif /* BSP430_CORE_SAVE_INTERRUPT_STATE */
 
+/** Declare a variable holding interrupt state and initialize it with current state.
+ *
+ * This macro supports a simpler canonical sequence:
+ * @code
+ *   {
+ *     BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+ *     ...
+ *     BSP430_CORE_DISABLE_INTERRUPT();
+ *     do {
+ *       // stuff with interrupts disabled
+ *     } while (0);
+ *     BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+ *     ...
+ *   }
+ * @endcode
+ *
+ * This approach results from the experience that in a large number of
+ * cases the declaration of the variable into which the state is
+ * stored is immediately followed by the command that stores the
+ * current state into that variable.
+ *
+ * @param _state where the interrupt enable/disable state is stored.
+ */
+#ifndef BSP430_CORE_SAVED_INTERRUPT_STATE
+#define BSP430_CORE_SAVED_INTERRUPT_STATE(_var)             \
+  BSP430_CORE_INTERRUPT_STATE_T _var = __get_interrupt_state()
+#endif /* BSP430_CORE_SAVED_INTERRUPT_STATE */
+
 /** @def BSP430_CORE_RESTORE_INTERRUPT_STATE(_state)
  *
  * A function macro that will enable or disable interrupts as recorded

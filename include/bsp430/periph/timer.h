@@ -1253,9 +1253,9 @@ unsigned long
 ulBSP430timerCounter (hBSP430halTIMER timer,
                       unsigned int * overflowp)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   unsigned long rv;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = ulBSP430timerCounter_ni(timer, overflowp);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -1486,9 +1486,9 @@ int iBSP430timerAlarmSetEnabled_ni (hBSP430timerAlarm alarm,
 static BSP430_CORE_INLINE
 int iBSP430timerAlarmEnable (hBSP430timerAlarm alarm)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430timerAlarmSetEnabled_ni(alarm, 1);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -1507,9 +1507,9 @@ int iBSP430timerAlarmEnable (hBSP430timerAlarm alarm)
 static BSP430_CORE_INLINE
 int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430timerAlarmSetEnabled_ni(alarm, 0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -1632,9 +1632,9 @@ static BSP430_CORE_INLINE
 int iBSP430timerAlarmSet (hBSP430timerAlarm alarm,
                           unsigned long setting_tck)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430timerAlarmSet_ni(alarm, setting_tck);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -1664,9 +1664,9 @@ int iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm);
 static BSP430_CORE_INLINE
 int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430timerAlarmCancel_ni(alarm);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);

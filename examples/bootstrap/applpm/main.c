@@ -114,10 +114,9 @@ consume_rx_ni ()
 static int
 consume_rx ()
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rc = consume_rx_ni();
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);

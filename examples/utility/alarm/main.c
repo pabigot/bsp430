@@ -107,8 +107,8 @@ cmd_cancel (const char * command)
   argstr_len = strlen(argstr);
   rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &cc);
   if ((0 == rv) && (0 <= cc) && (cc < nTimers)) {
-    BSP430_CORE_INTERRUPT_STATE_T istate;
-    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+    BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
     BSP430_CORE_DISABLE_INTERRUPT();
     do {
       rv = iBSP430timerAlarmCancel_ni(alarm[cc]);
@@ -146,9 +146,9 @@ cmd_alarm (const char * command)
   }
   if (0 == rv) {
     if ((0 <= cc) && (cc < nTimers)) {
+      BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
       unsigned long abs_when;
-      BSP430_CORE_INTERRUPT_STATE_T istate;
-      BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+
       BSP430_CORE_DISABLE_INTERRUPT();
       do {
         abs_when = ulBSP430timerCounter_ni(alarmHAL_, NULL) + rel_when;
@@ -349,13 +349,13 @@ cmd_reset (const char * command)
   unsigned int cc;
   const char * argstr = command;
   size_t argstr_len = strlen(argstr);
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   do {
     rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &cc);
     if ((0 == rv) && (0 <= cc) && (cc < nTimers)) {
+      BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
       volatile sAlarmStats * sp = alarm_stats + cc;
-      BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+
       BSP430_CORE_DISABLE_INTERRUPT();
       do {
         sp->count = 0;
@@ -478,16 +478,14 @@ static const sBSP430cliCommand dcmd_convert = {
 static int
 cmd_clocks (const char * argstr)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   unsigned long now_tck;
   unsigned long timer_overhead;
-
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   cprintf("CPU clocks (Hz): MCLK %lu ; SMCLK %lu ; ACLK %lu\n",
           ulBSP430clockMCLK_Hz(), ulBSP430clockSMCLK_Hz(),
           ulBSP430clockACLK_Hz());
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     unsigned long t0;

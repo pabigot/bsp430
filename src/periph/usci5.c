@@ -109,9 +109,8 @@ usci5Configure (hBSP430halSERIAL hal,
                 unsigned int brw,
                 int mctl)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_HPL(hal)->ctlw0 = UCSWRST;
   do {
@@ -268,10 +267,9 @@ iBSP430usci5SetHold_ni (hBSP430halSERIAL hal,
 int
 iBSP430usci5Close (hBSP430halSERIAL hal)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HPL_FLUSH_NI(SERIAL_HAL_HPL(hal));
   SERIAL_HPL_RESET_NI(SERIAL_HAL_HPL(hal));

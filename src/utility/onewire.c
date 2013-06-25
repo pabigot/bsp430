@@ -203,10 +203,9 @@ int
 iBSP430onewireReadSerialNumber (const sBSP430onewireBus * bus,
                                 sBSP430onewireSerialNumber * snp)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv = -1;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     int i;

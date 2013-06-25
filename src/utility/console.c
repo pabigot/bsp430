@@ -294,14 +294,13 @@ emit_chars_ni (const char * cp,
 int
 cputs (const char * s)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv = 0;
   hBSP430halSERIAL uart = console_hal_;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   if (! uart) {
     return 0;
   }
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = emit_text_ni(s, uart);
   emit_char2_ni('\n', uart);
@@ -312,14 +311,13 @@ cputs (const char * s)
 int
 cputtext (const char * cp)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv = 0;
   hBSP430halSERIAL uart = console_hal_;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   if (! uart) {
     return 0;
   }
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = emit_text_ni(cp, uart);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -336,14 +334,13 @@ int
 cputchars (const char * cp,
            size_t len)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv = 0;
   hBSP430halSERIAL uart = console_hal_;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   if (! uart) {
     return 0;
   }
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = emit_chars_ni(cp, len, uart);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -404,14 +401,13 @@ cprintf (const char *fmt, ...)
 int
 vcprintf (const char * fmt, va_list ap)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   /* Fail fast if printing is disabled */
   if (! console_hal_) {
     return 0;
   }
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = vuprintf(emit_char_ni, fmt, ap);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -502,7 +498,7 @@ iBSP430consoleTransmitUseInterrupts_ni (int enablep)
 int
 iBSP430consoleInitialize (void)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
   hBSP430halSERIAL hal;
 
@@ -516,7 +512,6 @@ iBSP430consoleInitialize (void)
   }
 
   rv = -1;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
 
@@ -556,13 +551,12 @@ iBSP430consoleInitialize (void)
 int
 iBSP430consoleDeconfigure (void)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv = 0;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   if (! console_hal_) {
     return rv;
   }
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430serialClose(console_hal_);
 #if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
@@ -616,13 +610,12 @@ iBSP430consoleWaitForTxSpace_ni (int want_available)
 int
 iBSP430consoleFlush (void)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
 
   if (! console_hal_) {
     return 0;
   }
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = iBSP430consoleWaitForTxSpace_ni(-1);
   vBSP430serialFlush_ni(console_hal_);

@@ -165,10 +165,9 @@ hd66753WriteCGRAM_ni (void)
 static uint8_t
 u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     switch (msg) {
@@ -208,11 +207,10 @@ u8g_dev_fn (u8g_t * u8g,
             uint8_t msg,
             void * arg)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   volatile sBSP430hplPORT * lcd_port;
   int rc = 0;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
 
   /* Sanity check on port lookup */

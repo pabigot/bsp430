@@ -494,8 +494,8 @@ hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
     return NULL;
   }
   {
-    BSP430_CORE_INTERRUPT_STATE_T istate;
-    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+    BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
     BSP430_CORE_DISABLE_INTERRUPT();
     do {
       vBSP430timerSafeCounterInitialize_ni(xBSP430hplLookupTIMER(periph));

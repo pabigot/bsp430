@@ -825,14 +825,13 @@ int
 iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
                                    const char * * commandp)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   sBSP430cliCompletionData ccd;
   const char * matches[BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS];
   int flags;
 
   memset(&ccd, 0, sizeof(ccd));
   if (NULL == *commandp) {
-    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
     BSP430_CORE_DISABLE_INTERRUPT();
     *commandp = xBSP430cliConsoleBuffer_ni();
     BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -845,7 +844,6 @@ iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
   if (NULL != ccd.append) {
     size_t app_len = 0;
 
-    BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
     BSP430_CORE_DISABLE_INTERRUPT();
     do {
       if (0 < ccd.append_len) {

@@ -68,14 +68,13 @@ int readFromAddress (hBSP430m25p m25p,
                      unsigned long addr,
                      unsigned int len)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc = -1;
 
   if (len > sizeof(buffer)) {
     len = sizeof(buffer);
   }
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     if (0 == iBSP430m25pInitiateAddressCommand_ni(m25p, BSP430_M25P_CMD_FAST_READ, addr)) {
@@ -92,13 +91,12 @@ int writeToAddress (hBSP430m25p m25p,
                     const uint8_t * data,
                     unsigned int len)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   unsigned long t0;
   unsigned long t1;
   int rc;
   int sr;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     if (0 != iBSP430m25pStrobeCommand_ni(m25p, BSP430_M25P_CMD_WREN)) {

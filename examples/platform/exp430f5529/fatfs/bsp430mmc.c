@@ -146,9 +146,8 @@ void xmit_mmc (
 	UINT bc				/* Number of bytes to send */
 )
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   (void)iBSP430spiTxRx_ni(sdspi, buff, bc, 0, 0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -166,9 +165,8 @@ void rcvr_mmc (
 	UINT bc		/* Number of bytes to receive */
 )
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   (void)iBSP430spiTxRx_ni(sdspi, NULL, 0, bc, buff);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);

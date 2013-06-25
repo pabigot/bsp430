@@ -94,12 +94,11 @@ enum CTRL_MODE {
 int cma3000read (uint8_t reg,
                  uint8_t * valp)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   uint8_t resp[2];
   int rc;
 
   reg = REG_TO_READ(reg);
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     CS_ASSERT();
@@ -134,14 +133,13 @@ int readreg (uint8_t reg)
 int cma3000write (uint8_t reg,
                   uint8_t val)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   uint8_t outbuf[2];
   int rc;
 
   outbuf[0] = REG_TO_WRITE(reg);
   outbuf[1] = val;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     CS_ASSERT();
@@ -183,6 +181,7 @@ int cma3000sample (int cpg,
                    int * py_mg,
                    int * pz_mg)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   static const uint8_t req_in[6] = { REG_TO_READ(R_DOUTX), 0,
                                      REG_TO_READ(R_DOUTY), 0,
                                      REG_TO_READ(R_DOUTZ), 0
@@ -191,9 +190,7 @@ int cma3000sample (int cpg,
   uint8_t last[3];
   int reps = 0;
   int rc;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     ++reps;

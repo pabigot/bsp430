@@ -223,12 +223,11 @@ static sBSP430halISRIndexedChainNode spi_irq_cb = { .callback = processSpiIRQ_ }
 void
 SpiOpen (gcSpiHandleRx pfRxHandler)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
   unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT);
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     if (spi_) {
@@ -278,12 +277,11 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
 void
 SpiClose (void)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE);
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
   unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT);
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     if (! spi_) {
@@ -318,9 +316,9 @@ long
 SpiWrite (unsigned char * tx_buffer,
           unsigned short len)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
   unsigned char * tp = tx_buffer;
-  BSP430_CORE_INTERRUPT_STATE_T istate;
 
   /* Total length of packet must be an even number of octets.  Packet
    * length is user-provided length plus the length of the SPI header,
@@ -338,7 +336,6 @@ SpiWrite (unsigned char * tx_buffer,
   *tp++ = 0;
   len += SPI_HEADER_SIZE;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
 
   CS_ASSERT();

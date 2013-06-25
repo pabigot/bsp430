@@ -84,8 +84,8 @@ static const sBSP430cliCommand dcmd_hup = {
 static int
 cmd_uptime (const char * argstr)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
   BSP430_CORE_DISABLE_INTERRUPT();
   cprintf("Up %s\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()));
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);

@@ -133,12 +133,11 @@ disabling interrupts, performing the critical operations, then restoring
 interrupt state.  The recommended pattern for this is:
 
 @code
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
 
   /* ... */
   /* non-critical code */
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   rv = 0; /* assume success */
   do {

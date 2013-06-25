@@ -120,9 +120,8 @@ usciConfigure (hBSP430halSERIAL hal,
                unsigned int brw,
                int mctl)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
   do {
@@ -290,10 +289,9 @@ iBSP430usciSetHold_ni (hBSP430halSERIAL hal,
 int
 iBSP430usciClose (hBSP430halSERIAL hal)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_HPL(hal)->ctl1 = UCSWRST;
   rc = iBSP430platformConfigurePeripheralPins_ni((tBSP430periphHandle)(uintptr_t)(SERIAL_HAL_HPL(hal)),

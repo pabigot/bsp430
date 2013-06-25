@@ -46,11 +46,10 @@ uiBSP430tlvChecksum (const unsigned char * data,
                      size_t len)
 {
 #ifdef __MSP430_HAS_CRC__
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   unsigned int rv;
   size_t i;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   CRCINIRES = 0xFFFF;
 

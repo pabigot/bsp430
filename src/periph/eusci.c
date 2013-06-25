@@ -103,9 +103,8 @@ eusciConfigure (hBSP430halSERIAL hal,
                 unsigned int mctlw,
                 int set_mctl)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   HAL_HPL_FIELD(hal,ctlw0) = UCSWRST;
   do {
@@ -316,10 +315,9 @@ iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
 int
 iBSP430eusciClose (hBSP430halSERIAL hal)
 {
-  BSP430_CORE_INTERRUPT_STATE_T istate;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc;
 
-  BSP430_CORE_SAVE_INTERRUPT_STATE(istate);
   BSP430_CORE_DISABLE_INTERRUPT();
   SERIAL_HAL_RESET_NI(hal);
   rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any),
