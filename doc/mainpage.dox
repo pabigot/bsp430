@@ -86,6 +86,8 @@ git clone git://github.com/pabigot/bsp430.git
 or by downloading a <a href="http://github.com/pabigot/bsp430/tarball/stable">tar
 file</a> of the latest stable source release.
 
+Information on specific releases is available in @ref releases.
+
 Please file support requests and bug reports on the <a
 href="http://github.com/pabigot/bsp430/issues">issue tracker</a>.
 
