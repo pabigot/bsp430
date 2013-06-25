@@ -700,7 +700,8 @@
  * current state into that variable.
  *
  * @param _state where the interrupt enable/disable state is stored.
- */
+ *
+ * @defaulted */
 #ifndef BSP430_CORE_SAVED_INTERRUPT_STATE
 #define BSP430_CORE_SAVED_INTERRUPT_STATE(_var)             \
   BSP430_CORE_INTERRUPT_STATE_T _var = __get_interrupt_state()
