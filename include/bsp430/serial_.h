@@ -56,6 +56,28 @@
 #include <bsp430/core.h>
 #include <bsp430/periph.h>
 
+/** Indicate whether serial HAL structures should include a resource object.
+ *
+ * The bulk of the serial interface requires exclusive access
+ * consistent with @ref enh_interrupts_rh.  By defining this to a true
+ * value the sBSP430halSERIAL::resource field will be available in
+ * each #hBSP430halSERIAL instance to simplify resource management
+ * between subsystems.
+ *
+ * @note It is the responsibility of application code to properly use
+ * or ignore the resource.
+ *
+ * @defaulted
+ * @cppflag
+ */
+#ifndef BSP430_SERIAL_ENABLE_RESOURCE
+#define BSP430_SERIAL_ENABLE_RESOURCE 0
+#endif /* BSP430_SERIAL_ENABLE_RESOURCE */
+
+#if defined(BSP430_DOXYGEN) || (BSP430_SERIAL_ENABLE_RESOURCE - 0)
+#include <bsp430/resource.h>
+#endif /* BSP430_SERIAL_ENABLE_RESOURCE */
+
 /** Field value for variant stored in
  * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplUSCI. */
@@ -173,6 +195,13 @@ typedef struct sBSP430halSERIAL {
    * the hpl union. */
   sBSP430hplHALStatePrefix hal_state;
 
+#if defined(BSP430_DOXYGEN) || (BSP430_SERIAL_ENABLE_RESOURCE - 0)
+  /** Optional resource management structure specific to this peripheral.
+   * @dependency #BSP430_SERIAL_ENABLE_RESOURCE
+   */
+  sBSP430resource resource;
+#endif /* BSP430_SERIAL_ENABLE_RESOURCE */
+
   /** Allow the HAL state to be independent of the underlying HPL layout.
    *
    * Use #BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(), or the selector
@@ -228,7 +257,13 @@ typedef struct sBSP430halSERIAL {
    *
    * A non-null value enables interrupt-driven reception, and data
    * will be provided to the callbacks on receiption.  The received
-   * character will be stored in #rx_byte */
+   * character will be stored in #rx_byte.
+   *
+   * @note This field has an @link enh_interrupts_ni _ni@endlink
+   * suffix and must not be traversed or manipulated unless interrupts
+   * are disabled.  However, the head of the chain may be compared
+   * against @c NULL in @link enh_interrupts_rh _rh@endlink functions
+   * even if interrupts are enabled. */
   const struct sBSP430halISRVoidChainNode * volatile rx_cbchain_ni;
 
   /** The callback chain to invoke when space is available in the
@@ -244,7 +279,13 @@ typedef struct sBSP430halSERIAL {
    * should also include #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT if
    * it is known that there will not be data available after the
    * transmission.  If the callback has no data to transmit, it should
-   * return zero. */
+   * return zero.
+   *
+   * @note This field has an @link enh_interrupts_ni _ni@endlink
+   * suffix and must not be traversed or manipulated unless interrupts
+   * are disabled.  However, the head of the chain may be compared
+   * against @c NULL in @link enh_interrupts_rh _rh@endlink functions
+   * even if interrupts are enabled. */
   const struct sBSP430halISRVoidChainNode * volatile tx_cbchain_ni;
 
   /** Total number of received octets */

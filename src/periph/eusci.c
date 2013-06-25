@@ -40,11 +40,11 @@
 
 #define MODE_IS_I2C(_hal) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & HAL_HPL_FIELD(_hal,ctlw0)))
 
-#define SERIAL_HAL_WAKEUP_TRANSMIT_NI(_hal) do {                        \
+#define SERIAL_HAL_WAKEUP_TRANSMIT_RH(_hal) do {                        \
     HAL_HPL_FIELD(_hal,ie) |= UCTXIE;                                   \
   } while (0)
 
-#define UART_RAW_TRANSMIT_NI(_hal, _c) do {             \
+#define UART_RAW_TRANSMIT_RH(_hal, _c) do {             \
     while (! (SERIAL_HAL_HPL_A(_hal)->ifg & UCTXIFG)) { \
       ;                                                 \
     }                                                   \
@@ -56,21 +56,6 @@
     while (HAL_HPL_FIELD(_hal,statw) & UCBUSY) {        \
       ;                                                 \
     }                                                   \
-  } while (0)
-
-#define SERIAL_HAL_RESET_NI(_hal) do {          \
-    HAL_HPL_FIELD(_hal,ctlw0) = UCSWRST;        \
-  } while (0)
-
-#define SERIAL_HAL_HOLD_NI(_hal) do {           \
-    HAL_HPL_FIELD(_hal,ctlw0) |= UCSWRST;       \
-  } while (0)
-
-#define SERIAL_HAL_RELEASE_NI(_hal) do {        \
-    HAL_HPL_FIELD(_hal,ctlw0) &= ~UCSWRST;      \
-    if ((_hal)->rx_cbchain_ni) {                \
-      HAL_HPL_FIELD(_hal,ie) |= UCRXIE;         \
-    }                                           \
   } while (0)
 
 /** Inspect bits in CTL0 to determine the appropriate peripheral
@@ -279,36 +264,51 @@ void
 vBSP430eusciSetReset_rh (hBSP430halSERIAL hal,
                          int resetp)
 {
-  if (resetp) {
-    if (0 > resetp) {
-      SERIAL_HAL_FLUSH_NI(hal);
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    if (resetp) {
+      if (0 > resetp) {
+        SERIAL_HAL_FLUSH_NI(hal);
+      }
+      HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;
+    } else {
+      if (MODE_IS_I2C(hal)) {
+        HAL_HPL_FIELD(hal,ctlw0) &= ~(UCTXACK | UCTXNACK | UCTXSTP | UCTXSTT);
+      }
+      HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
+      if (hal->rx_cbchain_ni) {
+        HAL_HPL_FIELD(hal,ie) |= UCRXIE;
+      }
     }
-    HAL_HPL_FIELD(hal,ctlw0) |= UCSWRST;
-  } else {
-    if (MODE_IS_I2C(hal)) {
-      HAL_HPL_FIELD(hal,ctlw0) &= ~(UCTXACK | UCTXNACK | UCTXSTP | UCTXSTT);
-    }
-    HAL_HPL_FIELD(hal,ctlw0) &= ~UCSWRST;
-    SERIAL_HAL_RELEASE_NI(hal);
-  }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
 }
 
 int
 iBSP430eusciSetHold_rh (hBSP430halSERIAL hal,
                         int holdp)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc;
   int periph_config = peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0));
 
-  if (holdp) {
-    vBSP430eusciSetReset_rh(hal, -1);
-    rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
-  } else {
-    rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
-    if (0 == rc) {
-      vBSP430eusciSetReset_rh(hal, 0);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    if (holdp) {
+      vBSP430eusciSetReset_rh(hal, -1);
+      rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
+    } else {
+      rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
+      if (0 == rc) {
+        vBSP430eusciSetReset_rh(hal, 0);
+      }
     }
-  }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
   return rc;
 }
 
@@ -319,11 +319,14 @@ iBSP430eusciClose (hBSP430halSERIAL hal)
   int rc;
 
   BSP430_CORE_DISABLE_INTERRUPT();
-  SERIAL_HAL_RESET_NI(hal);
-  rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any),
-                                                 peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0)),
-                                                 0);
+  do {
+    HAL_HPL_FIELD(hal,ctlw0) = UCSWRST;
+    rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any),
+                                                   peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0)),
+                                                   0);
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
   return rc;
 }
 
@@ -336,7 +339,7 @@ vBSP430eusciFlush_ni (hBSP430halSERIAL hal)
 void
 vBSP430eusciWakeupTransmit_rh (hBSP430halSERIAL hal)
 {
-  SERIAL_HAL_WAKEUP_TRANSMIT_NI(hal);
+  SERIAL_HAL_WAKEUP_TRANSMIT_RH(hal);
 }
 
 int
@@ -358,7 +361,7 @@ iBSP430eusciUARTtxByte_rh (hBSP430halSERIAL hal, uint8_t c)
   if (hal->tx_cbchain_ni) {
     return -1;
   }
-  UART_RAW_TRANSMIT_NI(hal, c);
+  UART_RAW_TRANSMIT_RH(hal, c);
   return c;
 }
 
@@ -373,7 +376,7 @@ iBSP430eusciUARTtxData_rh (hBSP430halSERIAL hal,
     return -1;
   }
   while (p < edata) {
-    UART_RAW_TRANSMIT_NI(hal, *p++);
+    UART_RAW_TRANSMIT_RH(hal, *p++);
   }
   return p - data;
 }
@@ -387,7 +390,7 @@ iBSP430eusciUARTtxASCIIZ_rh (hBSP430halSERIAL hal, const char * str)
     return -1;
   }
   while (*str) {
-    UART_RAW_TRANSMIT_NI(hal, *str);
+    UART_RAW_TRANSMIT_RH(hal, *str);
     ++str;
   }
   return str - in_string;

@@ -107,9 +107,10 @@ interrupts, it must explicitly enable them after configuration is complete.
 
 \subsection enh_interrupts_ni The _ni "not interrupt-able" suffix
 
-Many function names have a suffix @c _ni.  This indicates that the function
-is intended to be called in a context where interrupts are disabled.  Cases
-where the @c _ni suffix is required include:
+Several function and structure field names have a suffix @c _ni.  This
+indicates that the function or field is intended to be called or manipulated
+in a context where interrupts are disabled.  Cases where the @c _ni suffix
+is required include:
 
 @li Manipulation of peripheral registers related to clocks and timers where
 interrupts might change the state of the system;
@@ -123,7 +124,11 @@ in interrupts, as in @ref callback_chains.
 Functions that do not have the @c _ni suffix are either considered to be
 robust in the presence of interrupts, or will temporarily disable them in a
 critical section prior to restoring the incoming interrupt state before
-returning.
+returning.  In certain cases, structure fields with the @c _ni suffix may be
+atomically compared with @c NULL, but not manipulated; these cases are noted
+within the documentation for the field.  Structure fields and variables that
+do not have the @c _ni suffix may be accessed without concern for interrupt
+being enabled or disabled.
 
 \note The @c _ni suffix should not be overused.  See \ref enh_interrupts_rh
 for an alternative that has less impact on responsiveness.
@@ -156,7 +161,10 @@ or use it for another activity would result in errors;
 
 The <bsp430/resource.h> infrastructure may be used to prevent of undesired
 concurrent access in many situations that involve <em>resource held</em>
-functions, even if accessed from an interrupt handler.
+functions, even if accessed from an interrupt handler.  When resources are
+used for a HAL structure (e.g. #BSP430_SERIAL_ENABLE_RESOURCE) all fields in
+the structure should be manipulated only when the resource is held by the
+subsystem that is accessing it.
 
 \subsection enh_interrupts_eint Unconditionally Enabling and Disabling Interrupts
 

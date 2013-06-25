@@ -68,20 +68,14 @@ int readFromAddress (hBSP430m25p m25p,
                      unsigned long addr,
                      unsigned int len)
 {
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rc = -1;
 
   if (len > sizeof(buffer)) {
     len = sizeof(buffer);
   }
-
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    if (0 == iBSP430m25pInitiateAddressCommand_rh(m25p, BSP430_M25P_CMD_FAST_READ, addr)) {
-      rc = iBSP430m25pCompleteTxRx_rh(m25p, NULL, 0, len, buffer);
-    }
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  if (0 == iBSP430m25pInitiateAddressCommand_rh(m25p, BSP430_M25P_CMD_FAST_READ, addr)) {
+    rc = iBSP430m25pCompleteTxRx_rh(m25p, NULL, 0, len, buffer);
+  }
   return rc;
 }
 
@@ -91,26 +85,18 @@ int writeToAddress (hBSP430m25p m25p,
                     const uint8_t * data,
                     unsigned int len)
 {
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   unsigned long t0;
   unsigned long t1;
   int rc;
   int sr;
 
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    if (0 != iBSP430m25pStrobeCommand_rh(m25p, BSP430_M25P_CMD_WREN)) {
-      rc = -1;
-      break;
-    }
-    if (0 != iBSP430m25pInitiateAddressCommand_rh(m25p, cmd, addr)) {
-      rc = -1;
-      break;
-    }
+  rc = iBSP430m25pStrobeCommand_rh(m25p, BSP430_M25P_CMD_WREN);
+  if (0 == rc) {
+    rc = iBSP430m25pInitiateAddressCommand_rh(m25p, cmd, addr);
+  }
+  if (0 == rc) {
     rc = iBSP430m25pCompleteTxRx_rh(m25p, data, len, 0, NULL);
-  } while (0);
-
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  }
   t0 = ulBSP430uptime();
   do {
     sr = iBSP430m25pStatus(m25p);
@@ -276,24 +262,20 @@ void main ()
   */
 
   cprintf("Initiating bulk erase...");
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    t0 = t1 = 0;
-    rc = iBSP430m25pStrobeCommand_rh(m25p, BSP430_M25P_CMD_WREN);
-    if (0 == rc) {
-      rc = iBSP430m25pStrobeCommand_rh(m25p, BSP430_M25P_CMD_BE);
-    }
-    if (0 == rc) {
-      int sr;
+  t0 = t1 = 0;
+  rc = iBSP430m25pStrobeCommand_rh(m25p, BSP430_M25P_CMD_WREN);
+  if (0 == rc) {
+    rc = iBSP430m25pStrobeCommand_rh(m25p, BSP430_M25P_CMD_BE);
+  }
+  if (0 == rc) {
+    int sr;
 
-      t0 = ulBSP430uptime_ni();
-      do {
-        sr = iBSP430m25pStatus_rh(m25p);
-      } while ((0 <= sr) && (BSP430_M25P_SR_WIP & sr));
-      t1 = ulBSP430uptime();
-    }
-  } while (0);
-  BSP430_CORE_ENABLE_INTERRUPT();
+    t0 = ulBSP430uptime();
+    do {
+      sr = iBSP430m25pStatus_rh(m25p);
+    } while ((0 <= sr) && (BSP430_M25P_SR_WIP & sr));
+    t1 = ulBSP430uptime();
+  }
   cprintf("\nBULK_ERASE got %d\n", rc);
   if (0 == rc) {
     char tstr[BSP430_UPTIME_AS_TEXT_LENGTH];

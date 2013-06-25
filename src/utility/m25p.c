@@ -42,6 +42,8 @@ hBSP430m25pInitialize (hBSP430m25p dev,
                        unsigned char ctl1_byte,
                        unsigned int prescaler)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
   if ((NULL == dev) || (NULL == dev->spi) || (NULL == dev->csn_port)) {
     return NULL;
   }
@@ -49,12 +51,16 @@ hBSP430m25pInitialize (hBSP430m25p dev,
     return NULL;
   }
   /* Set the signal before making the port an output */
+  BSP430_CORE_DISABLE_INTERRUPT();
   BSP430_M25P_CS_DEASSERT(dev);
-  dev->csn_port->dir |= dev->csn_bit;
-  if (NULL != dev->rstn_port) {
-    BSP430_M25P_RESET_SET(dev);
-    dev->rstn_port->dir |= dev->rstn_bit;
-  }
+  do {
+    dev->csn_port->dir |= dev->csn_bit;
+    if (NULL != dev->rstn_port) {
+      BSP430_M25P_RESET_SET(dev);
+      dev->rstn_port->dir |= dev->rstn_bit;
+    }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return dev;
 }
 

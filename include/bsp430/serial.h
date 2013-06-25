@@ -785,6 +785,10 @@ void vBSP430serialWakeupTransmit_rh (hBSP430halSERIAL hal)
  *
  * This is used to ensure the device is idle prior to reconfiguring it.
  *
+ * @note This function must be executed with interrupts disabled lest
+ * an interrupt cause the peripheral to begin new work after any in
+ * progress work had been completed.
+ *
  * @warning This waits for #UCBUSY to be clear in the peripheral.  For
  * I2C that flag may be set when another device is active on the I2C
  * bus; further, it may be clear while this device is still
