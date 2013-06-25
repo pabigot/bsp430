@@ -59,14 +59,14 @@ hBSP430m25pInitialize (hBSP430m25p dev,
 }
 
 int
-iBSP430m25pStatus_ni (hBSP430m25p dev)
+iBSP430m25pStatus_rh (hBSP430m25p dev)
 {
   const uint8_t cmd = BSP430_M25P_CMD_RDSR;
   uint8_t res[2];
   int rc;
 
   BSP430_M25P_CS_ASSERT(dev);
-  rc = iBSP430spiTxRx_ni(dev->spi, &cmd, sizeof(cmd), sizeof(res[1]), res);
+  rc = iBSP430spiTxRx_rh(dev->spi, &cmd, sizeof(cmd), sizeof(res[1]), res);
   BSP430_M25P_CS_DEASSERT(dev);
   if (sizeof(cmd) + sizeof(res[1]) == rc) {
     return res[1];
@@ -75,13 +75,13 @@ iBSP430m25pStatus_ni (hBSP430m25p dev)
 }
 
 int
-iBSP430m25pStrobeCommand_ni (hBSP430m25p dev,
+iBSP430m25pStrobeCommand_rh (hBSP430m25p dev,
                              uint8_t cmd)
 {
   int rc = -1;
 
   BSP430_M25P_CS_ASSERT(dev);
-  rc = iBSP430spiTxRx_ni(dev->spi, &cmd, sizeof(cmd), 0, NULL);
+  rc = iBSP430spiTxRx_rh(dev->spi, &cmd, sizeof(cmd), 0, NULL);
   if (sizeof(cmd) == rc) {
     rc = 0;
   }
@@ -90,24 +90,24 @@ iBSP430m25pStrobeCommand_ni (hBSP430m25p dev,
 }
 
 int
-iBSP430m25pStrobeAddressCommand_ni (hBSP430m25p dev,
+iBSP430m25pStrobeAddressCommand_rh (hBSP430m25p dev,
                                     uint8_t cmd,
                                     unsigned long addr)
 {
-  int rv = iBSP430m25pInitiateAddressCommand_ni(dev, cmd, addr);
+  int rv = iBSP430m25pInitiateAddressCommand_rh(dev, cmd, addr);
   /* Safe enough to deassert regardless of success/failure */
   BSP430_M25P_CS_DEASSERT(dev);
   return rv;
 }
 
 int
-iBSP430m25pInitiateCommand_ni (hBSP430m25p dev,
+iBSP430m25pInitiateCommand_rh (hBSP430m25p dev,
                                uint8_t cmd)
 {
   int rc;
 
   BSP430_M25P_CS_ASSERT(dev);
-  rc = iBSP430spiTxRx_ni(dev->spi, &cmd, sizeof(cmd), 0, NULL);
+  rc = iBSP430spiTxRx_rh(dev->spi, &cmd, sizeof(cmd), 0, NULL);
   if (sizeof(cmd) == rc) {
     return 0;
   }
@@ -116,7 +116,7 @@ iBSP430m25pInitiateCommand_ni (hBSP430m25p dev,
 }
 
 int
-iBSP430m25pInitiateAddressCommand_ni (hBSP430m25p dev,
+iBSP430m25pInitiateAddressCommand_rh (hBSP430m25p dev,
                                       uint8_t cmd,
                                       unsigned long addr)
 {
@@ -136,7 +136,7 @@ iBSP430m25pInitiateAddressCommand_ni (hBSP430m25p dev,
   }
   len = cbp - cmdb;
   BSP430_M25P_CS_ASSERT(dev);
-  rc = iBSP430spiTxRx_ni(dev->spi, cmdb, len, 0, NULL);
+  rc = iBSP430spiTxRx_rh(dev->spi, cmdb, len, 0, NULL);
   if (len == rc) {
     return 0;
   }
@@ -145,14 +145,14 @@ iBSP430m25pInitiateAddressCommand_ni (hBSP430m25p dev,
 }
 
 int
-iBSP430m25pCompleteTxRx_ni (hBSP430m25p dev,
+iBSP430m25pCompleteTxRx_rh (hBSP430m25p dev,
                             const uint8_t * tx_data,
                             size_t tx_len,
                             size_t rx_len,
                             uint8_t * rx_data)
 {
   int rv;
-  rv = iBSP430spiTxRx_ni(dev->spi, tx_data, tx_len, rx_len, rx_data);
+  rv = iBSP430spiTxRx_rh(dev->spi, tx_data, tx_len, rx_len, rx_data);
   BSP430_M25P_CS_DEASSERT(dev);
   return rv;
 }

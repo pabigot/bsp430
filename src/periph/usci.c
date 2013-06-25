@@ -143,7 +143,7 @@ usciConfigure (hBSP430halSERIAL hal,
     hal->num_rx = hal->num_tx = 0;
 
     /* Release the device for use */
-    vBSP430usciSetReset_ni(hal, 0);
+    vBSP430usciSetReset_rh(hal, 0);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -244,7 +244,7 @@ hBSP430usciOpenI2C (hBSP430halSERIAL hal,
 }
 
 void
-vBSP430usciSetReset_ni (hBSP430halSERIAL hal,
+vBSP430usciSetReset_rh (hBSP430halSERIAL hal,
                         int resetp)
 {
   if (resetp) {
@@ -266,21 +266,21 @@ vBSP430usciSetReset_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430usciSetHold_ni (hBSP430halSERIAL hal,
+iBSP430usciSetHold_rh (hBSP430halSERIAL hal,
                        int holdp)
 {
   int rc;
   int periph_config = peripheralConfigFlag(SERIAL_HAL_HPL(hal)->ctl0);
 
   if (holdp) {
-    vBSP430usciSetReset_ni(hal, -1);
+    vBSP430usciSetReset_rh(hal, -1);
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
     if (0 == rc) {
       /* Release the USCI and enable the interrupts.  Interrupts are
        * disabled and cleared when UCSWRST is set. */
-      vBSP430usciSetReset_ni(hal, 0);
+      vBSP430usciSetReset_rh(hal, 0);
     }
   }
   return rc;
@@ -309,13 +309,13 @@ vBSP430usciFlush_ni (hBSP430halSERIAL hal)
 }
 
 void
-vBSP430usciWakeupTransmit_ni (hBSP430halSERIAL hal)
+vBSP430usciWakeupTransmit_rh (hBSP430halSERIAL hal)
 {
   WAKEUP_TRANSMIT_HAL_NI(hal);
 }
 
 int
-iBSP430usciUARTrxByte_ni (hBSP430halSERIAL hal)
+iBSP430usciUARTrxByte_rh (hBSP430halSERIAL hal)
 {
   if (hal->rx_cbchain_ni) {
     return -1;
@@ -327,7 +327,7 @@ iBSP430usciUARTrxByte_ni (hBSP430halSERIAL hal)
   return -1;
 }
 int
-iBSP430usciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
+iBSP430usciUARTtxByte_rh (hBSP430halSERIAL hal, uint8_t c)
 {
   if (hal->tx_cbchain_ni) {
     return -1;
@@ -337,7 +337,7 @@ iBSP430usciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 }
 
 int
-iBSP430usciUARTtxData_ni (hBSP430halSERIAL hal,
+iBSP430usciUARTtxData_rh (hBSP430halSERIAL hal,
                           const uint8_t * data,
                           size_t len)
 {
@@ -353,7 +353,7 @@ iBSP430usciUARTtxData_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430usciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+iBSP430usciUARTtxASCIIZ_rh (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
@@ -368,7 +368,7 @@ iBSP430usciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 }
 
 int
-iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
+iBSP430usciSPITxRx_rh (hBSP430halSERIAL hal,
                        const uint8_t * tx_data,
                        size_t tx_len,
                        size_t rx_len,
@@ -399,7 +399,7 @@ iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430usciI2CsetAddresses_ni (hBSP430halSERIAL hal,
+iBSP430usciI2CsetAddresses_rh (hBSP430halSERIAL hal,
                                int own_address,
                                int slave_address)
 {
@@ -457,7 +457,7 @@ iBSP430usciI2CsetAddresses_ni (hBSP430halSERIAL hal,
 #endif
 
 int
-iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
+iBSP430usciI2CrxData_rh (hBSP430halSERIAL hal,
                          uint8_t * data,
                          size_t len)
 {
@@ -497,7 +497,7 @@ iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
+iBSP430usciI2CtxData_rh (hBSP430halSERIAL hal,
                          const uint8_t * data,
                          size_t len)
 {
@@ -534,25 +534,25 @@ iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
 static struct sBSP430serialDispatch dispatch_ = {
 #if (configBSP430_SERIAL_ENABLE_UART - 0)
   .openUART = hBSP430usciOpenUART,
-  .uartRxByte_ni = iBSP430usciUARTrxByte_ni,
-  .uartTxByte_ni = iBSP430usciUARTtxByte_ni,
-  .uartTxData_ni = iBSP430usciUARTtxData_ni,
-  .uartTxASCIIZ_ni = iBSP430usciUARTtxASCIIZ_ni,
+  .uartRxByte_rh = iBSP430usciUARTrxByte_rh,
+  .uartTxByte_rh = iBSP430usciUARTtxByte_rh,
+  .uartTxData_rh = iBSP430usciUARTtxData_rh,
+  .uartTxASCIIZ_rh = iBSP430usciUARTtxASCIIZ_rh,
 #endif /* configBSP430_SERIAL_ENABLE_UART */
 #if (configBSP430_SERIAL_ENABLE_SPI - 0)
   .openSPI = hBSP430usciOpenSPI,
-  .spiTxRx_ni = iBSP430usciSPITxRx_ni,
+  .spiTxRx_rh = iBSP430usciSPITxRx_rh,
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
 #if (configBSP430_SERIAL_ENABLE_I2C - 0)
   .openI2C = hBSP430usciOpenI2C,
-  .i2cSetAddresses_ni = iBSP430usciI2CsetAddresses_ni,
-  .i2cRxData_ni = iBSP430usciI2CrxData_ni,
-  .i2cTxData_ni = iBSP430usciI2CtxData_ni,
+  .i2cSetAddresses_rh = iBSP430usciI2CsetAddresses_rh,
+  .i2cRxData_rh = iBSP430usciI2CrxData_rh,
+  .i2cTxData_rh = iBSP430usciI2CtxData_rh,
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
-  .setReset_ni = vBSP430usciSetReset_ni,
-  .setHold_ni = iBSP430usciSetHold_ni,
+  .setReset_rh = vBSP430usciSetReset_rh,
+  .setHold_rh = iBSP430usciSetHold_rh,
   .close = iBSP430usciClose,
-  .wakeupTransmit_ni = vBSP430usciWakeupTransmit_ni,
+  .wakeupTransmit_rh = vBSP430usciWakeupTransmit_rh,
   .flush_ni = vBSP430usciFlush_ni,
 };
 #endif /* BSP430_SERIAL */

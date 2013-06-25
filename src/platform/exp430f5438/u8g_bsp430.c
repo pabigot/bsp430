@@ -125,13 +125,13 @@ hd66753SetRegister_ni (unsigned int reg,
   cmdbuf[1] = (reg >> 8) & 0xFF;
   cmdbuf[2] = reg & 0xFF;
   LCD_CS_ASSERT();
-  (void)iBSP430spiTxRx_ni(spi_, cmdbuf, sizeof(cmdbuf), 0, NULL);
+  (void)iBSP430spiTxRx_rh(spi_, cmdbuf, sizeof(cmdbuf), 0, NULL);
   LCD_CS_DEASSERT();
   cmdbuf[0] |= HD66753_RS;
   cmdbuf[1] = (data >> 8) & 0xFF;
   cmdbuf[2] = data & 0xFF;
   LCD_CS_ASSERT();
-  (void)iBSP430spiTxRx_ni(spi_, cmdbuf, sizeof(cmdbuf), 0, NULL);
+  (void)iBSP430spiTxRx_rh(spi_, cmdbuf, sizeof(cmdbuf), 0, NULL);
   LCD_CS_DEASSERT();
 }
 
@@ -151,12 +151,12 @@ hd66753WriteCGRAM_ni (void)
     hd66753SetRegister_ni(LCD_R_CGRAM_ADDR, row * ROW_ADDRESS_INCREMENT);
     cmdbuf[0] = HD66753_START;
     LCD_CS_ASSERT();
-    (void)iBSP430spiTxRx_ni(spi_, cmdbuf, sizeof(cmdbuf), 0, NULL);
+    (void)iBSP430spiTxRx_rh(spi_, cmdbuf, sizeof(cmdbuf), 0, NULL);
     LCD_CS_DEASSERT();
     cmdbuf[0] |= HD66753_RS;
     LCD_CS_ASSERT();
-    (void)iBSP430spiTxRx_ni(spi_, cmdbuf, sizeof(cmdbuf[0]), 0, NULL);
-    (void)iBSP430spiTxRx_ni(spi_, cgp, ROW_WIDTH_BYTES, 0, NULL);
+    (void)iBSP430spiTxRx_rh(spi_, cmdbuf, sizeof(cmdbuf[0]), 0, NULL);
+    (void)iBSP430spiTxRx_rh(spi_, cgp, ROW_WIDTH_BYTES, 0, NULL);
     cgp += ROW_WIDTH_BYTES;
     LCD_CS_DEASSERT();
   }

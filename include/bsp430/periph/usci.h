@@ -599,52 +599,52 @@ hBSP430halSERIAL hBSP430usciOpenI2C (hBSP430halSERIAL hal,
                                      unsigned char ctl1_byte,
                                      unsigned int prescaler);
 
-/** USCI-specific implementation of vBSP430serialSetReset_ni() */
-void vBSP430usciSetReset_ni (hBSP430halSERIAL hal, int resetp);
+/** USCI-specific implementation of vBSP430serialSetReset_rh() */
+void vBSP430usciSetReset_rh (hBSP430halSERIAL hal, int resetp);
 
-/** USCI-specific implementation of iBSP430serialSetHold_ni() */
-int iBSP430usciSetHold_ni (hBSP430halSERIAL hal, int holdp);
+/** USCI-specific implementation of iBSP430serialSetHold_rh() */
+int iBSP430usciSetHold_rh (hBSP430halSERIAL hal, int holdp);
 
 /** USCI-specific implementation of iBSP430serialClose() */
 int iBSP430usciClose (hBSP430halSERIAL xUSCI);
 
-/** USCI-specific implementation of vBSP430serialWakeupTransmit_ni() */
-void vBSP430usciWakeupTransmit_ni (hBSP430halSERIAL device);
+/** USCI-specific implementation of vBSP430serialWakeupTransmit_rh() */
+void vBSP430usciWakeupTransmit_rh (hBSP430halSERIAL device);
 
 /** USCI-specific implementation of vBSP430serialFlush_ni() */
 void vBSP430usciFlush_ni (hBSP430halSERIAL device);
 
-/** USCI-specific implementation of iBSP430uartRxByte_ni() */
-int iBSP430usciUARTrxByte_ni (hBSP430halSERIAL device);
+/** USCI-specific implementation of iBSP430uartRxByte_rh() */
+int iBSP430usciUARTrxByte_rh (hBSP430halSERIAL device);
 
-/** USCI-specific implementation of iBSP430uartTxByte_ni() */
-int iBSP430usciUARTtxByte_ni (hBSP430halSERIAL device, uint8_t c);
+/** USCI-specific implementation of iBSP430uartTxByte_rh() */
+int iBSP430usciUARTtxByte_rh (hBSP430halSERIAL device, uint8_t c);
 
-/** USCI-specific implementation of iBSP430uartTxData_ni() */
-int iBSP430usciUARTtxData_ni (hBSP430halSERIAL device, const uint8_t * data, size_t len);
+/** USCI-specific implementation of iBSP430uartTxData_rh() */
+int iBSP430usciUARTtxData_rh (hBSP430halSERIAL device, const uint8_t * data, size_t len);
 
-/** USCI-specific implementation of iBSP430uartTxASCIIZ_ni() */
-int iBSP430usciUARTtxASCIIZ_ni (hBSP430halSERIAL device, const char * str);
+/** USCI-specific implementation of iBSP430uartTxASCIIZ_rh() */
+int iBSP430usciUARTtxASCIIZ_rh (hBSP430halSERIAL device, const char * str);
 
-/** USCI-specific implementation of iBSP430spiTxRx_ni() */
-int iBSP430usciSPITxRx_ni (hBSP430halSERIAL hal,
+/** USCI-specific implementation of iBSP430spiTxRx_rh() */
+int iBSP430usciSPITxRx_rh (hBSP430halSERIAL hal,
                            const uint8_t * tx_data,
                            size_t tx_len,
                            size_t rx_len,
                            uint8_t * rx_data);
 
-/** USCI-specific implementation of iBSP430i2cSetAddresses_ni() */
-int iBSP430usciI2CsetAddresses_ni (hBSP430halSERIAL hal,
+/** USCI-specific implementation of iBSP430i2cSetAddresses_rh() */
+int iBSP430usciI2CsetAddresses_rh (hBSP430halSERIAL hal,
                                    int own_address,
                                    int slave_address);
 
-/** USCI-specific implementation of iBSP430i2cRxData_ni() */
-int iBSP430usciI2CrxData_ni (hBSP430halSERIAL hal,
+/** USCI-specific implementation of iBSP430i2cRxData_rh() */
+int iBSP430usciI2CrxData_rh (hBSP430halSERIAL hal,
                              uint8_t * rx_data,
                              size_t rx_len);
 
-/** USCI-specific implementation of iBSP430i2cTxData_ni() */
-int iBSP430usciI2CtxData_ni (hBSP430halSERIAL hal,
+/** USCI-specific implementation of iBSP430i2cTxData_rh() */
+int iBSP430usciI2CtxData_rh (hBSP430halSERIAL hal,
                              const uint8_t * tx_data,
                              size_t tx_len);
 

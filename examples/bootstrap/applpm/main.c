@@ -233,10 +233,10 @@ void main ()
   rx_head = rx_tail = rx_buffer;
   /* A careful coder would check to return values in the following */
   tty = hBSP430console();
-  (void)iBSP430serialSetHold_ni(tty, 1);
+  (void)iBSP430serialSetHold_rh(tty, 1);
   rx_cb.next_ni = tty->rx_cbchain_ni;
   tty->rx_cbchain_ni = &rx_cb;
-  (void)iBSP430serialSetHold_ni(tty, 0);
+  (void)iBSP430serialSetHold_rh(tty, 0);
   *rx_head++ = CMD_MODE_ACTIVE;
   *rx_head++ = CMD_STATE;
 
@@ -375,7 +375,7 @@ void main ()
     }
     if (state.hold_serial) {
       cprintf("Disabling serial; press button to wake\n\n");
-      iBSP430serialSetHold_ni(tty, 1);
+      iBSP430serialSetHold_rh(tty, 1);
     }
     if (b0hpl->in & BSP430_PLATFORM_BUTTON0_PORT_BIT) {
       b0hpl->ies |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
@@ -402,7 +402,7 @@ void main ()
     BSP430_CORE_DISABLE_INTERRUPT();
     wake_utt = ulBSP430uptime_ni();
     if (state.hold_serial) {
-      iBSP430serialSetHold_ni(tty, 0);
+      iBSP430serialSetHold_rh(tty, 0);
       cprintf("Serial now awake\n");
     }
     if (state.hold_clock) {

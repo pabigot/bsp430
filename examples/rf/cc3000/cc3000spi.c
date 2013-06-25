@@ -191,11 +191,11 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
     CS_ASSERT();
     /* Read the header.  From that we'll extract the length. */
     rp = wlan_rx_buffer;
-    rv = iBSP430spiTxRx_ni(spi_, &opcode, sizeof(opcode), SPI_HEADER_SIZE-sizeof(opcode), rp);
+    rv = iBSP430spiTxRx_rh(spi_, &opcode, sizeof(opcode), SPI_HEADER_SIZE-sizeof(opcode), rp);
     if (SPI_HEADER_SIZE == rv) {
       len = (wlan_rx_buffer[HCI_PACKET_LENGTH_OFFSET] << 8) | wlan_rx_buffer[1 + HCI_PACKET_LENGTH_OFFSET];
       rp += SPI_HEADER_SIZE;
-      rv = iBSP430spiTxRx_ni(spi_, NULL, 0, len, rp);
+      rv = iBSP430spiTxRx_rh(spi_, NULL, 0, len, rp);
     } else {
       rv = -1;
     }
@@ -350,12 +350,12 @@ SpiWrite (unsigned char * tx_buffer,
   if (! (spiFlags_ & SPIFLAG_DID_FIRST_WRITE)) {
     BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
     tp = tx_buffer;
-    rv = iBSP430spiTxRx_ni(spi_, tp, 4, 0, NULL);
+    rv = iBSP430spiTxRx_rh(spi_, tp, 4, 0, NULL);
     tp += 4;
     len -= 4;
     BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
   }
-  rv = iBSP430spiTxRx_ni(spi_, tp, len, 0, NULL);
+  rv = iBSP430spiTxRx_rh(spi_, tp, len, 0, NULL);
   CS_DEASSERT();
 
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);

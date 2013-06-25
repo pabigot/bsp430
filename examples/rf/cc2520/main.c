@@ -41,7 +41,7 @@ sendStrobe (uint8_t reg)
 {
   uint8_t rc = 0;
 
-  (void)iBSP430spiTxRx_ni(spi, &reg, 1, 0, &rc);
+  (void)iBSP430spiTxRx_rh(spi, &reg, 1, 0, &rc);
   return rc;
 }
 
@@ -54,7 +54,7 @@ readRegister (unsigned int addr)
   /* MEMRD command */
   txbuf[0] = 0x10 | (0x03 & (addr >> 8));
   txbuf[1] = (addr & 0xFF);
-  (void)iBSP430spiTxRx_ni(spi, txbuf, sizeof(txbuf), 1, rxbuf);
+  (void)iBSP430spiTxRx_rh(spi, txbuf, sizeof(txbuf), 1, rxbuf);
   return rxbuf[sizeof(txbuf)];
 }
 
@@ -68,7 +68,7 @@ writeRegister (uint8_t reg,
 
   txbuf[0] = reg;
   txbuf[1] = val;
-  (void)iBSP430spiTxRx_ni(spi, txbuf, 2, 0, rxbuf);
+  (void)iBSP430spiTxRx_rh(spi, txbuf, 2, 0, rxbuf);
   return rxbuf[1];
 }
 #endif

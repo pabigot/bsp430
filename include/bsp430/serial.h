@@ -294,9 +294,9 @@ hBSP430halSERIAL hBSP430serialOpenUART (hBSP430halSERIAL hal,
  * @return the character received if any is ready to return, or -1 if
  * the device has no data available. */
 static BSP430_CORE_INLINE
-int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
+int iBSP430uartRxByte_rh (hBSP430halSERIAL hal)
 {
-  return hal->dispatch->uartRxByte_ni(hal);
+  return hal->dispatch->uartRxByte_rh(hal);
 }
 
 /** Transmit a byte over a UART-configured device.
@@ -314,9 +314,9 @@ int iBSP430uartRxByte_ni (hBSP430halSERIAL hal)
  * @return the input character @p c if transmitted, or -1 if an error
  * occurred. */
 static BSP430_CORE_INLINE
-int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
+int iBSP430uartTxByte_rh (hBSP430halSERIAL hal, uint8_t c)
 {
-  return hal->dispatch->uartTxByte_ni(hal, c);
+  return hal->dispatch->uartTxByte_rh(hal, c);
 }
 
 /** Transmit a block of data over a UART-configured device.
@@ -336,11 +336,11 @@ int iBSP430uartTxByte_ni (hBSP430halSERIAL hal, uint8_t c)
  * @return the number of octets successfully transmitted
  */
 static BSP430_CORE_INLINE
-int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
+int iBSP430uartTxData_rh (hBSP430halSERIAL hal,
                           const uint8_t * data,
                           size_t len)
 {
-  return hal->dispatch->uartTxData_ni(hal, data, len);
+  return hal->dispatch->uartTxData_rh(hal, data, len);
 }
 
 /** Transmit a sequence of characters over a UART-configured device.
@@ -360,9 +360,9 @@ int iBSP430uartTxData_ni (hBSP430halSERIAL hal,
  * @return the number of bytes transmitted, or -1 if an error
  * occurs */
 static BSP430_CORE_INLINE
-int iBSP430uartTxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+int iBSP430uartTxASCIIZ_rh (hBSP430halSERIAL hal, const char * str)
 {
-  return hal->dispatch->uartTxASCIIZ_ni(hal, str);
+  return hal->dispatch->uartTxASCIIZ_rh(hal, str);
 }
 #endif /* configBSP430_SERIAL_ENABLE_UART */
 
@@ -451,13 +451,13 @@ hBSP430halSERIAL hBSP430serialOpenSPI (hBSP430halSERIAL hal,
  * error occcured.
  */
 static BSP430_CORE_INLINE
-int iBSP430spiTxRx_ni (hBSP430halSERIAL hal,
+int iBSP430spiTxRx_rh (hBSP430halSERIAL hal,
                        const uint8_t * tx_data,
                        size_t tx_len,
                        size_t rx_len,
                        uint8_t * rx_data)
 {
-  return hal->dispatch->spiTxRx_ni(hal, tx_data, tx_len, rx_len, rx_data);
+  return hal->dispatch->spiTxRx_rh(hal, tx_data, tx_len, rx_len, rx_data);
 }
 
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
@@ -558,7 +558,7 @@ hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
  * device prior to invoking this function.
  *
  * @warning On some families the underlying peripheral must be @link
- * vBSP430serialSetReset_ni held in reset@endlink if @p own_address is
+ * vBSP430serialSetReset_rh held in reset@endlink if @p own_address is
  * to be set.
  *
  * @param hal the serial device to be configured
@@ -572,11 +572,11 @@ hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
  *
  * @return 0 if successfully set, -1 if an error occurs. */
 static BSP430_CORE_INLINE
-int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
+int iBSP430i2cSetAddresses_rh (hBSP430halSERIAL hal,
                                int own_address,
                                int slave_address)
 {
-  return hal->dispatch->i2cSetAddresses_ni(hal, own_address, slave_address);
+  return hal->dispatch->i2cSetAddresses_rh(hal, own_address, slave_address);
 }
 
 /** Transmit using a master I2C-configured device
@@ -610,11 +610,11 @@ int iBSP430i2cSetAddresses_ni (hBSP430halSERIAL hal,
  * reserving that as a generic error code for higher-level functions.
  */
 static BSP430_CORE_INLINE
-int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
+int iBSP430i2cTxData_rh (hBSP430halSERIAL hal,
                          const uint8_t * tx_data,
                          size_t tx_len)
 {
-  return hal->dispatch->i2cTxData_ni(hal, tx_data, tx_len);
+  return hal->dispatch->i2cTxData_rh(hal, tx_data, tx_len);
 }
 
 /** Receive using a master I2C-configured device
@@ -649,11 +649,11 @@ int iBSP430i2cTxData_ni (hBSP430halSERIAL hal,
  * reserving that as a generic error code for higher-level functions.
  */
 static BSP430_CORE_INLINE
-int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
+int iBSP430i2cRxData_rh (hBSP430halSERIAL hal,
                          uint8_t * rx_data,
                          size_t rx_len)
 {
-  return hal->dispatch->i2cRxData_ni(hal, rx_data, rx_len);
+  return hal->dispatch->i2cRxData_rh(hal, rx_data, rx_len);
 }
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
 
@@ -683,14 +683,14 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
  * for @a resetp does the functional equivalent of invoking
  * vBSP430serialFlush_ni() prior to placing the device in reset.
  *
- * @note This function differs from iBSP430serialSetHold_ni() in that
+ * @note This function differs from iBSP430serialSetHold_rh() in that
  * it:
  * @li Allows caller to determine whether to wait for pending activity
  * to complete before placing the peripheral in reset mode.
  * @li Does not reconfigure port pins; these remain in their
  * peripheral function role preventing their use as GPIOs while reset.
  *
- * @see iBSP430serialSetHold_ni()
+ * @see iBSP430serialSetHold_rh()
  *
  * @param hal a serial HAL handle to a peripheral that has been
  * opened
@@ -700,16 +700,16 @@ int iBSP430i2cRxData_ni (hBSP430halSERIAL hal,
  * until peripheral is no longer busy.  A zero value releases
  * peripheral from reset mode. */
 static BSP430_CORE_INLINE
-void vBSP430serialSetReset_ni (hBSP430halSERIAL hal,
+void vBSP430serialSetReset_rh (hBSP430halSERIAL hal,
                                int resetp)
 {
-  hal->dispatch->setReset_ni(hal, resetp);
+  hal->dispatch->setReset_rh(hal, resetp);
 }
 
 /** Control serial device hold mode
  *
  * When a serial peripheral is placed in hold mode the peripheral is
- * reset per vBSP430serialSetReset_ni() with @a resetp set to a
+ * reset per vBSP430serialSetReset_rh() with @a resetp set to a
  * negative value to force a wait for pending activity to complete.
  * In addition, the function reconfigures the associated port pins to
  * their digital I/O function per
@@ -725,7 +725,7 @@ void vBSP430serialSetReset_ni (hBSP430halSERIAL hal,
  * specific GPIO use each time the peripheral is placed into hold
  * mode.
  *
- * @see vBSP430serialSetReset_ni()
+ * @see vBSP430serialSetReset_rh()
  *
  * @param hal a serial HAL handle to a peripheral that has been
  * opened
@@ -738,10 +738,10 @@ void vBSP430serialSetReset_ni (hBSP430halSERIAL hal,
  * peripheral pins.  On error, the peripheral is left in reset
  * mode. */
 static BSP430_CORE_INLINE
-int iBSP430serialSetHold_ni (hBSP430halSERIAL hal,
+int iBSP430serialSetHold_rh (hBSP430halSERIAL hal,
                              int holdp)
 {
-  return hal->dispatch->setHold_ni(hal, holdp);
+  return hal->dispatch->setHold_rh(hal, holdp);
 }
 
 /** Release a serial device.
@@ -776,9 +776,9 @@ int iBSP430serialClose (hBSP430halSERIAL hal)
  * @param hal a serial HAL handle
  */
 static BSP430_CORE_INLINE
-void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
+void vBSP430serialWakeupTransmit_rh (hBSP430halSERIAL hal)
 {
-  hal->dispatch->wakeupTransmit_ni(hal);
+  hal->dispatch->wakeupTransmit_rh(hal);
 }
 
 /** Spin until any in-progress transmission or reception is complete.
@@ -791,7 +791,7 @@ void vBSP430serialWakeupTransmit_ni (hBSP430halSERIAL hal)
  * transmitting special signals such as #UCTXSTP.  Alternative
  * techniques are required to ensure I2C operations are complete prior
  * to placing the peripheral into reset mode.  This is done in the
- * reference iBSP430i2cRxData_ni() and iBSP430i2cTxData_ni()
+ * reference iBSP430i2cRxData_rh() and iBSP430i2cTxData_rh()
  * single-master routines.
  *
  * @param hal a serial HAL handle

@@ -126,7 +126,7 @@ eusciConfigure (hBSP430halSERIAL hal,
     hal->num_rx = hal->num_tx = 0;
 
     /* Release the device for use */
-    vBSP430eusciSetReset_ni(hal, 0);
+    vBSP430eusciSetReset_rh(hal, 0);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -235,12 +235,12 @@ i2cSetAutoStop_ni (hBSP430halSERIAL hal,
   if (!!enablep != !!(UCASTP_2 == (UCASTP_3 & HAL_HPL_FIELD(hal, ctlw1)))) {
     unsigned int ctlw1;
 
-    vBSP430eusciSetReset_ni(hal, 1);
+    vBSP430eusciSetReset_rh(hal, 1);
     ctlw1 = HAL_HPL_FIELD(hal, ctlw1);
     ctlw1 &= ~UCASTP_3;
     ctlw1 |= (enablep ? UCASTP_2 : UCASTP_0);
     HAL_HPL_FIELD(hal, ctlw1) = ctlw1;
-    vBSP430eusciSetReset_ni(hal, 0);
+    vBSP430eusciSetReset_rh(hal, 0);
   }
 }
 
@@ -276,7 +276,7 @@ hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
 }
 
 void
-vBSP430eusciSetReset_ni (hBSP430halSERIAL hal,
+vBSP430eusciSetReset_rh (hBSP430halSERIAL hal,
                          int resetp)
 {
   if (resetp) {
@@ -294,19 +294,19 @@ vBSP430eusciSetReset_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430eusciSetHold_ni (hBSP430halSERIAL hal,
+iBSP430eusciSetHold_rh (hBSP430halSERIAL hal,
                         int holdp)
 {
   int rc;
   int periph_config = peripheralConfigFlag(HAL_HPL_FIELD(hal,ctlw0));
 
   if (holdp) {
-    vBSP430eusciSetReset_ni(hal, -1);
+    vBSP430eusciSetReset_rh(hal, -1);
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
   } else {
     rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
     if (0 == rc) {
-      vBSP430eusciSetReset_ni(hal, 0);
+      vBSP430eusciSetReset_rh(hal, 0);
     }
   }
   return rc;
@@ -334,13 +334,13 @@ vBSP430eusciFlush_ni (hBSP430halSERIAL hal)
 }
 
 void
-vBSP430eusciWakeupTransmit_ni (hBSP430halSERIAL hal)
+vBSP430eusciWakeupTransmit_rh (hBSP430halSERIAL hal)
 {
   SERIAL_HAL_WAKEUP_TRANSMIT_NI(hal);
 }
 
 int
-iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL hal)
+iBSP430eusciUARTrxByte_rh (hBSP430halSERIAL hal)
 {
   if (hal->rx_cbchain_ni) {
     return -1;
@@ -353,7 +353,7 @@ iBSP430eusciUARTrxByte_ni (hBSP430halSERIAL hal)
 }
 
 int
-iBSP430eusciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
+iBSP430eusciUARTtxByte_rh (hBSP430halSERIAL hal, uint8_t c)
 {
   if (hal->tx_cbchain_ni) {
     return -1;
@@ -363,7 +363,7 @@ iBSP430eusciUARTtxByte_ni (hBSP430halSERIAL hal, uint8_t c)
 }
 
 int
-iBSP430eusciUARTtxData_ni (hBSP430halSERIAL hal,
+iBSP430eusciUARTtxData_rh (hBSP430halSERIAL hal,
                            const uint8_t * data,
                            size_t len)
 {
@@ -379,7 +379,7 @@ iBSP430eusciUARTtxData_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430eusciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
+iBSP430eusciUARTtxASCIIZ_rh (hBSP430halSERIAL hal, const char * str)
 {
   const char * in_string = str;
 
@@ -394,7 +394,7 @@ iBSP430eusciUARTtxASCIIZ_ni (hBSP430halSERIAL hal, const char * str)
 }
 
 int
-iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
+iBSP430eusciSPITxRx_rh (hBSP430halSERIAL hal,
                         const uint8_t * tx_data,
                         size_t tx_len,
                         size_t rx_len,
@@ -432,7 +432,7 @@ iBSP430eusciSPITxRx_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430eusciI2CsetAddresses_ni (hBSP430halSERIAL hal,
+iBSP430eusciI2CsetAddresses_rh (hBSP430halSERIAL hal,
                                 int own_address,
                                 int slave_address)
 {
@@ -490,7 +490,7 @@ iBSP430eusciI2CsetAddresses_ni (hBSP430halSERIAL hal,
 #endif
 
 int
-iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
+iBSP430eusciI2CrxData_rh (hBSP430halSERIAL hal,
                           uint8_t * data,
                           size_t len)
 {
@@ -544,7 +544,7 @@ iBSP430eusciI2CrxData_ni (hBSP430halSERIAL hal,
 }
 
 int
-iBSP430eusciI2CtxData_ni (hBSP430halSERIAL hal,
+iBSP430eusciI2CtxData_rh (hBSP430halSERIAL hal,
                           const uint8_t * data,
                           size_t len)
 {
@@ -724,25 +724,25 @@ euscib_isr (hBSP430halSERIAL hal)
 static struct sBSP430serialDispatch dispatch_ = {
 #if (configBSP430_SERIAL_ENABLE_UART - 0)
   .openUART = hBSP430eusciOpenUART,
-  .uartRxByte_ni = iBSP430eusciUARTrxByte_ni,
-  .uartTxByte_ni = iBSP430eusciUARTtxByte_ni,
-  .uartTxData_ni = iBSP430eusciUARTtxData_ni,
-  .uartTxASCIIZ_ni = iBSP430eusciUARTtxASCIIZ_ni,
+  .uartRxByte_rh = iBSP430eusciUARTrxByte_rh,
+  .uartTxByte_rh = iBSP430eusciUARTtxByte_rh,
+  .uartTxData_rh = iBSP430eusciUARTtxData_rh,
+  .uartTxASCIIZ_rh = iBSP430eusciUARTtxASCIIZ_rh,
 #endif /* configBSP430_SERIAL_ENABLE_UART */
 #if (configBSP430_SERIAL_ENABLE_SPI - 0)
   .openSPI = hBSP430eusciOpenSPI,
-  .spiTxRx_ni = iBSP430eusciSPITxRx_ni,
+  .spiTxRx_rh = iBSP430eusciSPITxRx_rh,
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
 #if (configBSP430_SERIAL_ENABLE_I2C - 0)
   .openI2C = hBSP430eusciOpenI2C,
-  .i2cSetAddresses_ni = iBSP430eusciI2CsetAddresses_ni,
-  .i2cRxData_ni = iBSP430eusciI2CrxData_ni,
-  .i2cTxData_ni = iBSP430eusciI2CtxData_ni,
+  .i2cSetAddresses_rh = iBSP430eusciI2CsetAddresses_rh,
+  .i2cRxData_rh = iBSP430eusciI2CrxData_rh,
+  .i2cTxData_rh = iBSP430eusciI2CtxData_rh,
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
-  .setReset_ni = vBSP430eusciSetReset_ni,
-  .setHold_ni = iBSP430eusciSetHold_ni,
+  .setReset_rh = vBSP430eusciSetReset_rh,
+  .setHold_rh = iBSP430eusciSetHold_rh,
   .close = iBSP430eusciClose,
-  .wakeupTransmit_ni = vBSP430eusciWakeupTransmit_ni,
+  .wakeupTransmit_rh = vBSP430eusciWakeupTransmit_rh,
   .flush_ni = vBSP430eusciFlush_ni,
 };
 #endif /* BSP430_SERIAL */

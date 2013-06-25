@@ -368,7 +368,7 @@ int iBSP430gpsTransmit_ni (const uint8_t * msg,
   tx_state_.idx = 0;
   tx_state_.state = STX_sos_1;
   tx_state_.complete_cb = complete_cb;
-  vBSP430serialWakeupTransmit_ni(uart_hal);
+  vBSP430serialWakeupTransmit_rh(uart_hal);
   return 0;
 }
 
@@ -420,7 +420,7 @@ iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
   }
 
   /* Put serial port into hold while callbacks configured */
-  iBSP430serialSetHold_ni(uart_hal, 1);
+  iBSP430serialSetHold_rh(uart_hal, 1);
 
   serial_cb = configp->serial_cb;
   pps_cb = configp->pps_cb;
@@ -481,6 +481,6 @@ iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
   tx_state_.msg = NULL;
   tx_state_.state = STX_idle;
 
-  iBSP430serialSetHold_ni(uart_hal, 0);
+  iBSP430serialSetHold_rh(uart_hal, 0);
   return 0;
 }

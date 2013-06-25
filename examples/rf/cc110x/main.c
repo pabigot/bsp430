@@ -25,7 +25,7 @@ sendStrobe (uint8_t reg)
 {
   uint8_t rc = 0;
 
-  (void)iBSP430spiTxRx_ni(spi, &reg, 1, 0, &rc);
+  (void)iBSP430spiTxRx_rh(spi, &reg, 1, 0, &rc);
   return rc;
 }
 
@@ -40,7 +40,7 @@ readRegister (uint8_t reg)
   }
   /* Add the READ bit */
   reg |= 0x80;
-  (void)iBSP430spiTxRx_ni(spi, &reg, 1, 1, rxbuf);
+  (void)iBSP430spiTxRx_rh(spi, &reg, 1, 1, rxbuf);
   return rxbuf[1];
 }
 
@@ -53,7 +53,7 @@ writeRegister (uint8_t reg,
 
   txbuf[0] = reg;
   txbuf[1] = val;
-  (void)iBSP430spiTxRx_ni(spi, txbuf, 2, 0, rxbuf);
+  (void)iBSP430spiTxRx_rh(spi, txbuf, 2, 0, rxbuf);
   return rxbuf[1];
 }
 
@@ -88,7 +88,7 @@ void main ()
    * mode so we can check CHIP_RDYn on the MISO/GDO1 input. */
   spi = hBSP430serialOpenSPI(spi, BSP430_RF_CC110X_SPI_CTL0_BYTE, 0, 0);
   if (spi) {
-    rc = iBSP430serialSetHold_ni(spi, 1);
+    rc = iBSP430serialSetHold_rh(spi, 1);
     /* GDO1 to input, pull-up */
     BSP430_PORT_HAL_HPL_DIR(hgdo1) &= ~BSP430_RF_CC110X_GDO1_PORT_BIT;
     BSP430_PORT_HAL_HPL_REN(hgdo1) |= BSP430_RF_CC110X_GDO1_PORT_BIT;
@@ -116,7 +116,7 @@ void main ()
   }
 
   /* Enable SPI */
-  rc = iBSP430serialSetHold_ni(spi, 0);
+  rc = iBSP430serialSetHold_rh(spi, 0);
   cprintf("Radio is up, hold release %d; sending SRES strobe\n", rc);
 
   /* Send a reset */
@@ -153,7 +153,7 @@ void main ()
 
   /* Disable SPI before removing CSn otherwise the sequence isn't
    * right. */
-  rc = iBSP430serialSetHold_ni(spi, 1);
+  rc = iBSP430serialSetHold_rh(spi, 1);
   BSP430_PORT_HAL_HPL_OUT(hcsn) |= BSP430_RF_CC110X_CSn_PORT_BIT;
 
   /* This gets the RF2500T power down to about 120 nA.  Note:

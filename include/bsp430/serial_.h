@@ -238,7 +238,7 @@ typedef struct sBSP430halSERIAL {
    * chain will be invoked as necessary.  The infrastructure must be
    * made aware of data to be transmitted, so it can enable the
    * interrupt that will request the data through the callback.  This
-   * is done using vBSP430serialWakeupTransmit_ni().  If the callback
+   * is done using vBSP430serialWakeupTransmit_rh().  If the callback
    * has data to transmit, it should store it in #tx_byte and include
    * #BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN in its return value.  It
    * should also include #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT if
@@ -270,34 +270,34 @@ struct sBSP430serialDispatch {
                                  unsigned char ctl0_byte,
                                  unsigned char ctl1_byte,
                                  unsigned long baud);
-  int (* uartRxByte_ni) (hBSP430halSERIAL hal);
-  int (* uartTxByte_ni) (hBSP430halSERIAL hal,
+  int (* uartRxByte_rh) (hBSP430halSERIAL hal);
+  int (* uartTxByte_rh) (hBSP430halSERIAL hal,
                          uint8_t c);
-  int (* uartTxData_ni) (hBSP430halSERIAL hal,
+  int (* uartTxData_rh) (hBSP430halSERIAL hal,
                          const uint8_t * data,
                          size_t len);
-  int (* uartTxASCIIZ_ni) (hBSP430halSERIAL hal, const char * str);
+  int (* uartTxASCIIZ_rh) (hBSP430halSERIAL hal, const char * str);
 #endif /* configBSP430_SERIAL_ENABLE_UART */
 #if (configBSP430_SERIAL_ENABLE_SPI - 0)
   hBSP430halSERIAL (* openSPI) (hBSP430halSERIAL hal,
                                 unsigned char ctl0_byte,
                                 unsigned char ctl1_byte,
                                 unsigned int prescaler);
-  int (* spiTxRx_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
+  int (* spiTxRx_rh) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len, size_t rx_len, uint8_t * rx_data);
 #endif /* configBSP430_SERIAL_ENABLE_SPI */
 #if (configBSP430_SERIAL_ENABLE_I2C - 0)
   hBSP430halSERIAL (* openI2C) (hBSP430halSERIAL hal,
                                 unsigned char ctl0_byte,
                                 unsigned char ctl1_byte,
                                 unsigned int prescaler);
-  int (* i2cSetAddresses_ni) (hBSP430halSERIAL hal, int own_address, int slave_address);
-  int (* i2cRxData_ni) (hBSP430halSERIAL hal, uint8_t * rx_data, size_t rx_len);
-  int (* i2cTxData_ni) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len);
+  int (* i2cSetAddresses_rh) (hBSP430halSERIAL hal, int own_address, int slave_address);
+  int (* i2cRxData_rh) (hBSP430halSERIAL hal, uint8_t * rx_data, size_t rx_len);
+  int (* i2cTxData_rh) (hBSP430halSERIAL hal, const uint8_t * tx_data, size_t tx_len);
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
-  void (* setReset_ni) (hBSP430halSERIAL hal, int resetp);
-  int (* setHold_ni) (hBSP430halSERIAL hal, int holdp);
+  void (* setReset_rh) (hBSP430halSERIAL hal, int resetp);
+  int (* setHold_rh) (hBSP430halSERIAL hal, int holdp);
   int (* close) (hBSP430halSERIAL hal);
-  void (* wakeupTransmit_ni) (hBSP430halSERIAL hal);
+  void (* wakeupTransmit_rh) (hBSP430halSERIAL hal);
   void (* flush_ni) (hBSP430halSERIAL hal);
 };
 /** @endcond */

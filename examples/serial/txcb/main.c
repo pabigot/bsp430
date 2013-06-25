@@ -100,7 +100,7 @@ void main ()
     prep_utt = next_prep_utt;
     tx_buffer_.tail = 0;
     tx_buffer_.head = obp - tx_buffer_.buffer;
-    vBSP430serialWakeupTransmit_ni(uart);
+    vBSP430serialWakeupTransmit_rh(uart);
     BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
     /* Expect tail == head otherwise should not have awoken */
     done_utt = ulBSP430uptime();

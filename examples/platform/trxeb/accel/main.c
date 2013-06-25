@@ -102,7 +102,7 @@ int cma3000read (uint8_t reg,
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     CS_ASSERT();
-    rc = iBSP430spiTxRx_ni(spi_, &reg, sizeof(reg), 1, resp);
+    rc = iBSP430spiTxRx_rh(spi_, &reg, sizeof(reg), 1, resp);
     CS_DEASSERT();
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -143,7 +143,7 @@ int cma3000write (uint8_t reg,
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     CS_ASSERT();
-    rc = iBSP430spiTxRx_ni(spi_, outbuf, sizeof(outbuf), 0, NULL);
+    rc = iBSP430spiTxRx_rh(spi_, outbuf, sizeof(outbuf), 0, NULL);
     CS_DEASSERT();
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -201,7 +201,7 @@ int cma3000sample (int cpg,
      * legal to have multiple 16-bit frames within a single cycle. */
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_US_TO_NOMINAL_MCLK(22));
     CS_ASSERT();
-    rc = iBSP430spiTxRx_ni(spi_, req_in, sizeof(req_in), 0, req_out);
+    rc = iBSP430spiTxRx_rh(spi_, req_in, sizeof(req_in), 0, req_out);
     CS_DEASSERT();
   } while ((sizeof(req_in) == rc)
            && ((1 == reps)

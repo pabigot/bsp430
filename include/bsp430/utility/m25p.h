@@ -51,7 +51,7 @@
  * sector or chip, or reading and writing the device contents.  It
  * does provide enough to allow the application to do this, including
  * the ability to initiate a read or write operation and complete it
- * using programmed I/O (iBSP430m25pCompleteTxRx_ni()),
+ * using programmed I/O (iBSP430m25pCompleteTxRx_rh()),
  * interrupt-driven SPI transactions, or DMA, based on the
  * application's needs.
  *
@@ -326,11 +326,11 @@ hBSP430m25p hBSP430m25pInitialize (hBSP430m25p dev,
  *
  * @return the non-negative value of the status register, or -1 if an
  * error occurred. */
-int iBSP430m25pStatus_ni (hBSP430m25p dev);
+int iBSP430m25pStatus_rh (hBSP430m25p dev);
 
 /** Read the M25P device status register regardless of interrupt state.
  *
- * This wraps iBSP430m25pStatus_ni() with code that saves the
+ * This wraps iBSP430m25pStatus_rh() with code that saves the
  * interrupt state, reads the status register, then restores the
  * interrupt state prior to returning the result. */
 static BSP430_CORE_INLINE
@@ -340,7 +340,7 @@ int iBSP430m25pStatus (hBSP430m25p dev)
   int rv;
 
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = iBSP430m25pStatus_ni(dev);
+  rv = iBSP430m25pStatus_rh(dev);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
@@ -361,7 +361,7 @@ int iBSP430m25pStatus (hBSP430m25p dev)
  * @param cmd the command to be executed, e.g. #BSP430_M25P_CMD_RDSR
  *
  * @return 0 on success, or a negative value to indicate an error. */
-int iBSP430m25pStrobeCommand_ni (hBSP430m25p dev,
+int iBSP430m25pStrobeCommand_rh (hBSP430m25p dev,
                                  uint8_t cmd);
 
 /** Strobe an M25P address-based command.
@@ -369,7 +369,7 @@ int iBSP430m25pStrobeCommand_ni (hBSP430m25p dev,
  * This interface is appropriate for commands like #BSP430_M25P_CMD_PE
  * which affect an address but require no data be written or read.  It
  * is functionally equivalent to
- * iBSP430m25pInitiateAddressCommand_ni() followed immediately by
+ * iBSP430m25pInitiateAddressCommand_rh() followed immediately by
  * #BSP430_M25P_CS_DEASSERT().
  *
  * Note that for many of these commands #BSP430_M25P_SR_WIP will
@@ -383,7 +383,7 @@ int iBSP430m25pStrobeCommand_ni (hBSP430m25p dev,
  * @param addr the address at which the command applies.
  *
  * @return 0 if successful, -1 on an error. */
-int iBSP430m25pStrobeAddressCommand_ni (hBSP430m25p dev,
+int iBSP430m25pStrobeAddressCommand_rh (hBSP430m25p dev,
                                         uint8_t cmd,
                                         unsigned long addr);
 
@@ -396,7 +396,7 @@ int iBSP430m25pStrobeAddressCommand_ni (hBSP430m25p dev,
  * I/O, interrupt-driven I/O, or DMA.
  *
  * To use programmed I/O to complete a read or write operation, see
- * iBSP430m25pCompleteTxRx_ni().
+ * iBSP430m25pCompleteTxRx_rh().
  *
  * @note CS# is left asserted after a successful call to this
  * function.
@@ -408,7 +408,7 @@ int iBSP430m25pStrobeAddressCommand_ni (hBSP430m25p dev,
  * @return 0 if successful, -1 on an error.  If successful CS# is left
  * asserted and the caller should invoke #BSP430_M25P_CS_DEASSERT()
  * after writing and reading command-specific data. */
-int iBSP430m25pInitiateCommand_ni (hBSP430m25p dev,
+int iBSP430m25pInitiateCommand_rh (hBSP430m25p dev,
                                    uint8_t cmd);
 
 /** Initiate an M25P address-based command.
@@ -420,7 +420,7 @@ int iBSP430m25pInitiateCommand_ni (hBSP430m25p dev,
  * through programmed I/O, interrupt-driven I/O, or DMA.
  *
  * To use programmed I/O to complete a read or write operation, see
- * iBSP430m25pCompleteTxRx_ni().
+ * iBSP430m25pCompleteTxRx_rh().
  *
  * @note CS# is left asserted after a successful call to this
  * function.
@@ -434,30 +434,30 @@ int iBSP430m25pInitiateCommand_ni (hBSP430m25p dev,
  * @return 0 if successful, -1 on an error.  If successful CS# is left
  * asserted and the caller should invoke #BSP430_M25P_CS_DEASSERT()
  * after writing and reading command-specific data. */
-int iBSP430m25pInitiateAddressCommand_ni (hBSP430m25p dev,
+int iBSP430m25pInitiateAddressCommand_rh (hBSP430m25p dev,
                                           uint8_t cmd,
                                           unsigned long addr);
 
 /** Complete an initiated command using programmed I/O.
  *
- * This simply wraps iBSP430spiTxRx_ni() to transmit data to the
+ * This simply wraps iBSP430spiTxRx_rh() to transmit data to the
  * device and/or receive data from the device, ensuring that
  * #BSP430_M25P_CS_DEASSERT() is invoked to complete the transaction
- * initiated by iBSP430m25pInitiateCommand_ni() or
- * iBSP430m25pInitiateAddressCommand_ni().
+ * initiated by iBSP430m25pInitiateCommand_rh() or
+ * iBSP430m25pInitiateAddressCommand_rh().
  *
  * @param dev the M25P device handle
  *
- * @param tx_data as with iBSP430spiTxRx_ni()
+ * @param tx_data as with iBSP430spiTxRx_rh()
  *
- * @param tx_len as with iBSP430spiTxRx_ni()
+ * @param tx_len as with iBSP430spiTxRx_rh()
  *
- * @param rx_len as with iBSP430spiTxRx_ni()
+ * @param rx_len as with iBSP430spiTxRx_rh()
  *
- * @param rx_data as with iBSP430spiTxRx_ni()
+ * @param rx_data as with iBSP430spiTxRx_rh()
  *
- * @return as with iBSP430spiTxRx_ni() */
-int iBSP430m25pCompleteTxRx_ni (hBSP430m25p dev,
+ * @return as with iBSP430spiTxRx_rh() */
+int iBSP430m25pCompleteTxRx_rh (hBSP430m25p dev,
                                 const uint8_t * tx_data,
                                 size_t tx_len,
                                 size_t rx_len,

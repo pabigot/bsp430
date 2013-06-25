@@ -157,7 +157,7 @@ deal with the event.
 The return value from a handler which transmits an output character and for
 which there are no additional output characters queued would add
 #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT, to inhibit the transmission
-interrupt from recurring.  See #vBSP430serialWakeupTransmit_ni.
+interrupt from recurring.  See #vBSP430serialWakeupTransmit_rh.
 
 \section callback_appinfo Providing Extended Information to the Callback
 

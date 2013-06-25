@@ -200,7 +200,7 @@ console_tx_queue_ni (hBSP430halSERIAL uart, uint8_t c)
     bufp->buffer[head] = c;
     bufp->head = next_head;
     if (head == bufp->tail) {
-      vBSP430serialWakeupTransmit_ni(uart);
+      vBSP430serialWakeupTransmit_rh(uart);
     }
     break;
   }
@@ -213,7 +213,7 @@ static int (* uartTransmit_ni) (hBSP430halSERIAL uart, uint8_t c);
 
 #else /* BSP430_CONSOLE_TX_BUFFER_SIZE */
 
-#define UART_TRANSMIT(uart_, c_) iBSP430uartTxByte_ni(uart_, c_)
+#define UART_TRANSMIT(uart_, c_) iBSP430uartTxByte_rh(uart_, c_)
 
 #endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
 
@@ -456,7 +456,7 @@ cgetchar_ni (void)
 {
   int rv = -1;
   if (NULL != console_hal_) {
-    rv = iBSP430uartRxByte_ni(console_hal_);
+    rv = iBSP430uartRxByte_rh(console_hal_);
   }
   return rv;
 }
@@ -471,22 +471,22 @@ iBSP430consoleTransmitUseInterrupts_ni (int enablep)
     if (uartTransmit_ni != console_tx_queue_ni) {
       uartTransmit_ni = console_tx_queue_ni;
       vBSP430serialFlush_ni(console_hal_);
-      iBSP430serialSetHold_ni(console_hal_, 1);
+      iBSP430serialSetHold_rh(console_hal_, 1);
       BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
-      iBSP430serialSetHold_ni(console_hal_, 0);
+      iBSP430serialSetHold_rh(console_hal_, 0);
       if (tx_buffer_.head != tx_buffer_.tail) {
-        vBSP430serialWakeupTransmit_ni(console_hal_);
+        vBSP430serialWakeupTransmit_rh(console_hal_);
       }
     }
   } else {
-    if (uartTransmit_ni != iBSP430uartTxByte_ni) {
-      uartTransmit_ni = iBSP430uartTxByte_ni;
+    if (uartTransmit_ni != iBSP430uartTxByte_rh) {
+      uartTransmit_ni = iBSP430uartTxByte_rh;
       /* This flushes any character currently in the UART; it does not
        * flush anything left in the transmission buffer. */
       vBSP430serialFlush_ni(console_hal_);
-      iBSP430serialSetHold_ni(console_hal_, 1);
+      iBSP430serialSetHold_rh(console_hal_, 1);
       BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
-      iBSP430serialSetHold_ni(console_hal_, 0);
+      iBSP430serialSetHold_rh(console_hal_, 0);
     }
   }
   return 0;

@@ -103,7 +103,7 @@ u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
         rc = 1;
         break;
       case U8G_COM_MSG_WRITE_SEQ:
-        rc = iBSP430spiTxRx_ni(spi_, arg_ptr, arg_val, 0, NULL);
+        rc = iBSP430spiTxRx_rh(spi_, arg_ptr, arg_val, 0, NULL);
         rc = (arg_val == rc);
         break;
     }
@@ -217,7 +217,7 @@ u8g_dev_fn (u8g_t * u8g,
         LCD_CS_ASSERT();
         do {
           /* Configure the page. */
-          rc = iBSP430spiTxRx_ni(spi_, cmdbuf, cp-cmdbuf, 0, NULL);
+          rc = iBSP430spiTxRx_rh(spi_, cmdbuf, cp-cmdbuf, 0, NULL);
           rc = (cp-cmdbuf == rc);
           if (! rc) {
             break;
@@ -267,7 +267,7 @@ u8g_dev_fn (u8g_t * u8g,
     if (cmdp) {
       /* Write the initialization sequence defined above. */
       LCD_CS_ASSERT();
-      rc = iBSP430spiTxRx_ni(spi_, cmdp, cmdlen, 0, NULL);
+      rc = iBSP430spiTxRx_rh(spi_, cmdp, cmdlen, 0, NULL);
       LCD_CS_DEASSERT();
       rc = (cmdlen == rc);
     }

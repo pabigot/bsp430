@@ -76,7 +76,7 @@ void main ()
     return;
   }
 
-  (void)iBSP430i2cSetAddresses_ni(i2c, -1, DS3231_I2C_ADDRESS);
+  (void)iBSP430i2cSetAddresses_rh(i2c, -1, DS3231_I2C_ADDRESS);
 
   memset(&regs, 0, sizeof(regs));
 #if 1
@@ -115,16 +115,16 @@ void main ()
     cprintf("Converted time: %s", asctime(&tms));
     memcpy(data+1, &regs, offsetof(sDS3231registers, alrm1_sec));
     dumpMemory(data, sizeof(data), 0);
-    rc = iBSP430i2cTxData_ni(i2c, data, sizeof(data));
+    rc = iBSP430i2cTxData_rh(i2c, data, sizeof(data));
     cprintf("Time write got %d\n", rc);
 #endif
-    rc = iBSP430i2cTxData_ni(i2c, data, 1);
+    rc = iBSP430i2cTxData_rh(i2c, data, 1);
     cprintf("Address set got %d\n", rc);
   }
   while (1) {
     cprintf("Regs %u long\n", sizeof(regs));
     memset(&regs, 0, sizeof(regs));
-    rc = iBSP430i2cRxData_ni(i2c, (uint8_t*)&regs, sizeof(regs));
+    rc = iBSP430i2cRxData_rh(i2c, (uint8_t*)&regs, sizeof(regs));
     if (0 > rc) {
       cprintf("I2C RX ERROR: %d\n", rc);
       break;

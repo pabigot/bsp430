@@ -149,7 +149,7 @@ void xmit_mmc (
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
 
   BSP430_CORE_DISABLE_INTERRUPT();
-  (void)iBSP430spiTxRx_ni(sdspi, buff, bc, 0, 0);
+  (void)iBSP430spiTxRx_rh(sdspi, buff, bc, 0, 0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 
@@ -168,7 +168,7 @@ void rcvr_mmc (
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
 
   BSP430_CORE_DISABLE_INTERRUPT();
-  (void)iBSP430spiTxRx_ni(sdspi, NULL, 0, bc, buff);
+  (void)iBSP430spiTxRx_rh(sdspi, NULL, 0, bc, buff);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 }
 

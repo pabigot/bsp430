@@ -47,8 +47,8 @@ void main ()
     return;
   }
 
-  vBSP430serialSetReset_ni(i2c, 1);
-  (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_HIH6130_I2C_ADDRESS);
+  vBSP430serialSetReset_rh(i2c, 1);
+  (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_HIH6130_I2C_ADDRESS);
 
   /* HIH-613x wants max 60ms on power-up. */
   BSP430_UPTIME_DELAY_MS_NI(60, LPM3_bits, 0);
@@ -68,13 +68,13 @@ void main ()
     unsigned int hum_raw = 0;
     unsigned int temp_raw = 0;
 
-    vBSP430serialSetReset_ni(i2c, 0);
+    vBSP430serialSetReset_rh(i2c, 0);
     t0 = ulBSP430uptime_ni();
     do {
       uint8_t data[4];
       unsigned int status;
 
-      rc = iBSP430i2cTxData_ni(i2c, NULL, 0);
+      rc = iBSP430i2cTxData_rh(i2c, NULL, 0);
       if (0 != rc) {
         cprintf("I2C TX error %d\n", rc);
         break;
@@ -86,7 +86,7 @@ void main ()
        * ask more than once per millisecond. */
       BSP430_UPTIME_DELAY_MS_NI(30, LPM3_bits, 0);
       do {
-        rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+        rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
         if (sizeof(data) != rc) {
           cprintf("I2C RX error %d\n", rc);
           break;
@@ -106,7 +106,7 @@ void main ()
       } while (1 == status);
     } while (0);
     t1 = ulBSP430uptime_ni();
-    vBSP430serialSetReset_ni(i2c, 1);
+    vBSP430serialSetReset_rh(i2c, 1);
     if (0 > rc) {
       break;
     }

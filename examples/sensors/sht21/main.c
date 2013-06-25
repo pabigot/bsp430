@@ -64,7 +64,7 @@ iSHT21readMeasurement_ni (hBSP430halSERIAL i2c,
   int rc;
   uint8_t data[3];
 
-  rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+  rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
   if (sizeof(data) != rc) {
     return rc;
   }
@@ -106,14 +106,14 @@ void main ()
     return;
   }
 
-  vBSP430serialSetReset_ni(i2c, 1);
-  (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_I2C_ADDRESS);
+  vBSP430serialSetReset_rh(i2c, 1);
+  (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_I2C_ADDRESS);
 
   {
     uint8_t cmd = SHT21_SOFT_RESET;
-    vBSP430serialSetReset_ni(i2c, 0);
-    rc = iBSP430i2cTxData_ni(i2c, &cmd, sizeof(cmd));
-    vBSP430serialSetReset_ni(i2c, 1);
+    vBSP430serialSetReset_rh(i2c, 0);
+    rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
+    vBSP430serialSetReset_rh(i2c, 1);
     cprintf("Reset got %d\n", rc);
   }
 
@@ -134,10 +134,10 @@ void main ()
     unsigned int rh_ms;
     int rh_ppt;
 
-    vBSP430serialSetReset_ni(i2c, 0);
+    vBSP430serialSetReset_rh(i2c, 0);
     t0 = ulBSP430uptime_ni();
     cmd = SHT21_TRIGGER_T_HM;
-    rc = iBSP430i2cTxData_ni(i2c, &cmd, sizeof(cmd));
+    rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
     if (1 != rc) {
       cprintf("T_HM failed %d\n", rc);
       break;
@@ -151,7 +151,7 @@ void main ()
 
     t0 = ulBSP430uptime_ni();
     cmd = SHT21_TRIGGER_RH_HM;
-    rc = iBSP430i2cTxData_ni(i2c, &cmd, sizeof(cmd));
+    rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
     if (1 != rc) {
       cprintf("RH_HM failed %d\n", rc);
       break;
@@ -163,7 +163,7 @@ void main ()
     t1 = ulBSP430uptime_ni();
     rh_ms = BSP430_UPTIME_UTT_TO_MS(t1-t0);
 
-    vBSP430serialSetReset_ni(i2c, 1);
+    vBSP430serialSetReset_rh(i2c, 1);
     t_dC = TEMPERATURE_RAW_TO_dC(t_raw);
     rh_ppt = HUMIDITY_RAW_TO_PPT(rh_raw);
     cprintf("%s: ", xBSP430uptimeAsText_ni(t0));

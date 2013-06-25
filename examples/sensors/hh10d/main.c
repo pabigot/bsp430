@@ -121,16 +121,16 @@ void main ()
     return;
   }
 
-  (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_HH10D_I2C_ADDRESS);
+  (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_HH10D_I2C_ADDRESS);
 
   hh10d_sens = 0;
   {
     int rc;
     uint8_t addr = 10;
     uint8_t data[4];
-    rc = iBSP430i2cTxData_ni(i2c, &addr, sizeof(addr));
+    rc = iBSP430i2cTxData_rh(i2c, &addr, sizeof(addr));
     if (sizeof(addr) == rc) {
-      rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+      rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
       if (sizeof(data) == rc) {
         hh10d_sens = (data[0] << 8) | data[1];
         hh10d_offs = (data[2] << 8) | data[3];

@@ -32,7 +32,7 @@ void main ()
     return;
   }
 
-  (void)iBSP430i2cSetAddresses_ni(i2c, -1, APP_TMP102_I2C_ADDRESS);
+  (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_TMP102_I2C_ADDRESS);
 
   /** Raw number is a 16 bit value.  First 12 bits represent the
    * temperature as a count of 0.0625C values.  (If the LSB is 1, then
@@ -61,13 +61,13 @@ void main ()
     uint8_t data[2];
     uint16_t raw;
 
-    rc = iBSP430i2cTxData_ni(i2c, &pr, 1);
+    rc = iBSP430i2cTxData_rh(i2c, &pr, 1);
     if (0 > rc) {
       cprintf("I2C TX ERROR\n");
       break;
     }
     memset(data, 0, sizeof(data));
-    rc = iBSP430i2cRxData_ni(i2c, data, sizeof(data));
+    rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
     if (0 > rc) {
       cprintf("I2C RX ERROR\n");
       break;

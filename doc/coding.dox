@@ -174,7 +174,7 @@ the correct test to see whether the I2C addresses were successfully set is
 indeed:
 
 @code
-  if (0 == iBSP430serialI2CsetAddresses_ni(i2c, oa, sa)) {
+  if (0 == iBSP430serialI2CsetAddresses_rh(i2c, oa, sa)) {
     /* Success here... */
   }
 @endcode
