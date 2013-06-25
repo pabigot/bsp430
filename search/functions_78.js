@@ -27,5 +27,7 @@ var searchData=
   ['xbsp430uptimeastext',['xBSP430uptimeAsText',['../uptime_8h.html#a1cb1310c769f028347010502456fb918',1,'uptime.h']]],
   ['xbsp430uptimeastext_5fni',['xBSP430uptimeAsText_ni',['../uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1',1,'uptime.h']]],
   ['xbsp430usci5name',['xBSP430usci5Name',['../usci5_8h.html#a597e0da824a01c3f4815cd6ebff10e92',1,'usci5.h']]],
-  ['xbsp430usciname',['xBSP430usciName',['../usci_8h.html#a97bf39464ced25c9db924952faa72495',1,'usci.h']]]
+  ['xbsp430usciname',['xBSP430usciName',['../usci_8h.html#a97bf39464ced25c9db924952faa72495',1,'usci.h']]],
+  ['xds3231registerstotm',['xDS3231registersToTm',['../ds3231_8h.html#a2c7db82f688f3f048297d25062dd0dab',1,'ds3231.h']]],
+  ['xds3231tmtoregisters',['xDS3231tmToRegisters',['../ds3231_8h.html#a1899946648ed582b0e2266bd5917c8d5',1,'ds3231.h']]]
 ];

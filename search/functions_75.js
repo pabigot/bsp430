@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['ucds3231encodehour',['ucDS3231encodeHour',['../ds3231_8h.html#ab9620cf66cb66f7609a3d23e2ba9d1f2',1,'ds3231.h']]],
   ['uibsp430clockaclk_5fhz',['uiBSP430clockACLK_Hz',['../clock_8h.html#afde95d4cde4586775d26e306cbdc9906',1,'clock.h']]],
   ['uibsp430clockaclk_5fhz_5fni',['uiBSP430clockACLK_Hz_ni',['../clock_8h.html#a8e9f412bb9376a2bcb150fc66f010a87',1,'clock.h']]],
   ['uibsp430serialsmclkprescaler',['uiBSP430serialSMCLKPrescaler',['../serial_8h.html#a55ba4b6d332a2ea1a0c0c077b169bacc',1,'serial.h']]],
@@ -11,6 +12,7 @@ var searchData=
   ['uibsp430timersafecounterread_5fni',['uiBSP430timerSafeCounterRead_ni',['../timer_8h.html#a5e250ebcd2e7538ba568455318eede59',1,'timer.h']]],
   ['uibsp430timersynccounterread_5fni',['uiBSP430timerSyncCounterRead_ni',['../timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a',1,'timer.h']]],
   ['uibsp430tlvchecksum',['uiBSP430tlvChecksum',['../tlv_8h.html#a3c805d05391e3b41d5372fb5bc0de901',1,'tlv.h']]],
+  ['uids3231decodehour',['uiDS3231decodeHour',['../ds3231_8h.html#a3d39895c934e87bc663dec6477dab343',1,'ds3231.h']]],
   ['ulbsp430clockaclk_5fhz',['ulBSP430clockACLK_Hz',['../clock_8h.html#a9997899ae094a0e809c01239328f2e0b',1,'clock.h']]],
   ['ulbsp430clockaclk_5fhz_5fni',['ulBSP430clockACLK_Hz_ni',['../clock_8h.html#a50f0e84be872123b2fae87995681a600',1,'clock.h']]],
   ['ulbsp430clockconfiguremclk_5fni',['ulBSP430clockConfigureMCLK_ni',['../clock_8h.html#a538f01f39cf54267229fe04877d3185e',1,'clock.h']]],

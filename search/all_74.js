@@ -9,6 +9,8 @@ var searchData=
   ['tbcnt',['tbcnt',['../structsBSP430hplEUSCIB.html#abc37e826ebcbfcf10836c3995f22e3af',1,'sBSP430hplEUSCIB']]],
   ['tbsp430periphhandle',['tBSP430periphHandle',['../periph_8h.html#a6a1c6c4a24d03d6306bf32f8dbde05a9',1,'periph.h']]],
   ['tdop_5fpc_5fbe',['tdop_pc_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a561fdad4b5d9b68f93056a2499456ec4',1,'sSkyTraqMsgOut_NAV_DATA']]],
+  ['temp_5flsb',['temp_lsb',['../structsDS3231registers.html#a7957b94e33f493b989fbbd28952982a4',1,'sDS3231registers']]],
+  ['temp_5fmsb',['temp_msb',['../structsDS3231registers.html#a418142586409be511a13de9ae2e4db77',1,'sDS3231registers']]],
   ['test_5fresults',['test_results',['../structsBSP430tlvDIERECORD.html#a8cd7c23f351e2a8914159425ebd10e44',1,'sBSP430tlvDIERECORD']]],
   ['timer',['timer',['../structsBSP430timerAlarm.html#a24d34f70d968e0cde40d35c6c0e21637',1,'sBSP430timerAlarm']]],
   ['timer_2eh',['timer.h',['../timer_8h.html',1,'']]],

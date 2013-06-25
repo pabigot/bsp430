@@ -44,6 +44,8 @@ var searchData=
   ['ecef_5fy_5fcm_5fbe',['ecef_y_cm_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a01ba77cf9cbefe0e311931b440d937d3',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['ecef_5fz_5fcm_5fbe',['ecef_z_cm_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a4425eb6e38c3ae9aa1744331d5e5b2a9',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['ell_5falt_5fcm_5fbe',['ell_alt_cm_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a7c97c7e882d378d1f78d03e0155518f3',1,'sSkyTraqMsgOut_NAV_DATA']]],
+  ['emk_5fbsp430_5fconfig_2eh',['emk_bsp430_config.h',['../emk__bsp430__config_8h.html',1,'']]],
+  ['emk_5fplatform_2eh',['emk_platform.h',['../emk__platform_8h.html',1,'']]],
   ['entry',['entry',['../structsBSP430tlvTable2xx.html#a13fece3c9d2ff08acd6abe5b9d5e80e6',1,'sBSP430tlvTable2xx::entry()'],['../structsBSP430tlvTable5xx.html#a411eef39473a01835e6f6898cc6b4f42',1,'sBSP430tlvTable5xx::entry()']]],
   ['eskytraqmessageid',['eSkyTraqMessageID',['../skytraq_8h.html#ab154e902f3b9f539b74cb95f21644341',1,'eSkyTraqMessageID():&#160;skytraq.h'],['../skytraq_8h.html#aa7e59722beab96f56dfc2b9a924f47e6',1,'eSkyTraqMessageID():&#160;skytraq.h']]],
   ['eskytraqmid_5fnmea',['eSkyTraqMID_NMEA',['../skytraq_8h.html#ab154e902f3b9f539b74cb95f21644341a009dddaafd735ecc166824348d0c5030',1,'skytraq.h']]],

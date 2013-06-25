@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rf_20evaluation_20module_20and_20chipcon_20radios',['RF Evaluation Module and ChipCon Radios',['../ex_rfem_ccid.html',1,'']]],
+  ['rf_20evaluation_20module_20and_20chipcon_20radios',['RF Evaluation Module and ChipCon Radios',['../ex_rf_cc110x.html',1,'']]],
   ['r',['r',['../structsBSP430hplTIMER.html#a5ae8e86c33f6f960e81fa27f708511b2',1,'sBSP430hplTIMER']]],
   ['ren',['ren',['../structsBSP430hplPORT__5XX__16.html#af40087661bbb154457b2753a17ac6c33',1,'sBSP430hplPORT_5XX_16::ren()'],['../structsBSP430hplPORT__5XX__8.html#ab3513d7df8e9570b77d9813f50ef2ed0',1,'sBSP430hplPORT_5XX_8::ren()']]],
   ['returned_5fcandidates',['returned_candidates',['../structsBSP430cliCompletionData.html#a6b8e5151cbce9d7440b7aa781b7f1b76',1,'sBSP430cliCompletionData']]],

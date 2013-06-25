@@ -3,6 +3,7 @@ var searchData=
   ['uc7bit',['UC7BIT',['../msp430_8h.html#ad69178fe7f891cc7fa438e804cbf92a4',1,'msp430.h']]],
   ['uca10',['UCA10',['../msp430_8h.html#a7aaa4e5d0a84cda0e759fe84dc059a75',1,'msp430.h']]],
   ['ucbrkie',['UCBRKIE',['../msp430_8h.html#ac4f7aaa4d67ed80a4099d40e2dde3ccc',1,'msp430.h']]],
+  ['ucbusy',['UCBUSY',['../msp430_8h.html#a9ae5503cf88ab5680e1bbb5f49e59e67',1,'msp430.h']]],
   ['ucckph',['UCCKPH',['../msp430_8h.html#a51ab25e3e65cd1bb9863b0e6d0b7b6bd',1,'msp430.h']]],
   ['ucckpl',['UCCKPL',['../msp430_8h.html#ab4313a6c37c97ba5cdba16c4ca56b517',1,'msp430.h']]],
   ['ucdorm',['UCDORM',['../msp430_8h.html#a6d58a8e741c77478dafc016c41fd57b2',1,'msp430.h']]],

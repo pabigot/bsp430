@@ -39,6 +39,7 @@ var searchData=
   ['sbsp430tlvrefcal',['sBSP430tlvREFCAL',['../structsBSP430tlvREFCAL.html',1,'']]],
   ['sbsp430tlvtable2xx',['sBSP430tlvTable2xx',['../structsBSP430tlvTable2xx.html',1,'']]],
   ['sbsp430tlvtable5xx',['sBSP430tlvTable5xx',['../structsBSP430tlvTable5xx.html',1,'']]],
+  ['sds3231registers',['sDS3231registers',['../structsDS3231registers.html',1,'']]],
   ['sskytraqmsg_5fgeneric',['sSkyTraqMsg_GENERIC',['../structsSkyTraqMsg__GENERIC.html',1,'']]],
   ['sskytraqmsgin_5fcfg_5fformat',['sSkyTraqMsgIn_CFG_FORMAT',['../structsSkyTraqMsgIn__CFG__FORMAT.html',1,'']]],
   ['sskytraqmsgin_5fcfg_5fnmea',['sSkyTraqMsgIn_CFG_NMEA',['../structsSkyTraqMsgIn__CFG__NMEA.html',1,'']]],

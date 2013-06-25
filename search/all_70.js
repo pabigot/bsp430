@@ -1,7 +1,6 @@
 var searchData=
 [
   ['platform_2dindependent_20secondary_20timer_20functionality',['Platform-independent Secondary Timer Functionality',['../group__grp__timer__ccaclk.html',1,'']]],
-  ['param',['param',['../structsBSP430cliCommand.html#afa4f2cf4e215e15a425d4d6d3f82aeb3',1,'sBSP430cliCommand']]],
   ['payload',['payload',['../structsSkyTraqMsg__GENERIC.html#a4e438094ab5ffa0cbc649300bcf31329',1,'sSkyTraqMsg_GENERIC']]],
   ['pdop_5fpc_5fbe',['pdop_pc_be',['../structsSkyTraqMsgOut__NAV__DATA.html#afe6f4606478f86798d136c5a7d4fe958',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['periph_2eh',['periph.h',['../periph_8h.html',1,'']]],
@@ -38,5 +37,6 @@ var searchData=
   ['pps_5fccis',['pps_ccis',['../structsBSP430gpsConfiguration.html#ad1551aa86e73f298bc9e13ab1cecba48',1,'sBSP430gpsConfiguration']]],
   ['pps_5fport',['pps_port',['../structsBSP430gpsConfiguration.html#ae95d838b0c7d30086936e66761859f26',1,'sBSP430gpsConfiguration']]],
   ['pps_5fport_5fbit',['pps_port_bit',['../structsBSP430gpsConfiguration.html#ac03d7f5d2c63ff906e50e8f33a80003d',1,'sBSP430gpsConfiguration']]],
-  ['pps_5ftimer',['pps_timer',['../structsBSP430gpsConfiguration.html#ab3f7481db3bd6f1c31cf8625209edb76',1,'sBSP430gpsConfiguration']]]
+  ['pps_5ftimer',['pps_timer',['../structsBSP430gpsConfiguration.html#ab3f7481db3bd6f1c31cf8625209edb76',1,'sBSP430gpsConfiguration']]],
+  ['ptr',['ptr',['../unionsBSP430cliCommand_1_1uParam.html#a494c597bf8604806c0aa45c1f0836ed3',1,'sBSP430cliCommand::uParam']]]
 ];
