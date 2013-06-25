@@ -204,12 +204,12 @@ iBSP430onewireReadSerialNumber (const sBSP430onewireBus * bus,
                                 sBSP430onewireSerialNumber * snp)
 {
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  uint8_t rom[8];
+  int i;
   int rv = -1;
 
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
-    int i;
-    uint8_t rom[8];
 
     if (! iBSP430onewireReset_ni(bus)) {
       break;
@@ -218,14 +218,18 @@ iBSP430onewireReadSerialNumber (const sBSP430onewireBus * bus,
     for (i = 0; i < sizeof(rom); ++i) {
       rom[i] = iBSP430onewireReadByte_ni(bus);
     }
-    if (0 == iBSP430onewireComputeCRC(rom, sizeof(rom))) {
+    rv = 0;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  if (0 == rv) {
+    if (0 != iBSP430onewireComputeCRC(rom, sizeof(rom))) {
+      rv = -1;
+    } else {
       for (i = 0; i < sizeof(snp->id); ++i) {
         snp->id[i] = rom[sizeof(rom) - 2 - i];
       }
-      rv = 0;
     }
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  }
   return rv;
 }
 

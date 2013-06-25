@@ -54,6 +54,8 @@ void main ()
   vBSP430platformInitialize_ni();
 
   (void)iBSP430consoleInitialize();
+
+  BSP430_CORE_ENABLE_INTERRUPT();
   cprintf("\nHere we go...\n");
 
   cprintf("Uptime now %lu with frequency %lu Hz\n",
