@@ -66,12 +66,12 @@ configureSPIforSD (int fastp)
   if (0 == init_spi_divisor) {
     init_spi_divisor = 1;
   }
-  
+
   /* Close the device if we already opened it. */
   if (sdspi) {
     (void)iBSP430serialClose(sdspi);
   }
-  
+
   /* For some SD cards, need MISO pullup, or so we're told.  Do that
    * first, hoping the platform peripheral configuration won't destroy
    * it. */
