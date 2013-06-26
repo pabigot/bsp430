@@ -33,6 +33,7 @@
 #include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
 #include <string.h>
+#include <bsp430/utility/console.h>
 
 #if (BSP430_CORE_FAMILY_IS_5XX - 0)
 /* In 5xx Timer_A and Timer_B use the same layout with 0x0E denoting
@@ -678,6 +679,7 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
   pulsecap->flags = flags;
   if ((NULL != pulsecap->callback_ni) && do_callback) {
     rv = pulsecap->callback_ni(pulsecap);
+    cprintf("rv %x\n", rv);
   }
   return rv;
 }
@@ -743,6 +745,9 @@ isr_cc0_TA0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA0;
   int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
+  if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    timer->hpl->cctl[0] &= ~CCIE;
+  }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA0_CC0_ISR */
@@ -758,9 +763,15 @@ isr_TA0 (void)
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
       rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->ctl &= ~TAIE;
+      }
     } else {
       int cc = iv / 2;
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->cctl[cc] &= ~CCIE;
+      }
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -773,6 +784,9 @@ isr_cc0_TA1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA1;
   int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
+  if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    timer->hpl->cctl[0] &= ~CCIE;
+  }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA1_CC0_ISR */
@@ -788,9 +802,15 @@ isr_TA1 (void)
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
       rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->ctl &= ~TAIE;
+      }
     } else {
       int cc = iv / 2;
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->cctl[cc] &= ~CCIE;
+      }
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -803,6 +823,9 @@ isr_cc0_TA2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA2;
   int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
+  if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    timer->hpl->cctl[0] &= ~CCIE;
+  }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA2_CC0_ISR */
@@ -818,9 +841,15 @@ isr_TA2 (void)
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
       rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->ctl &= ~TAIE;
+      }
     } else {
       int cc = iv / 2;
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->cctl[cc] &= ~CCIE;
+      }
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -833,6 +862,9 @@ isr_cc0_TA3 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TA3;
   int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
+  if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    timer->hpl->cctl[0] &= ~CCIE;
+  }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TA3_CC0_ISR */
@@ -848,9 +880,15 @@ isr_TA3 (void)
     if (TA_OVERFLOW == iv) {
       ++timer->overflow_count;
       rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->ctl &= ~TAIE;
+      }
     } else {
       int cc = iv / 2;
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->cctl[cc] &= ~CCIE;
+      }
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -867,6 +905,9 @@ isr_cc0_TB0 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB0;
   int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
+  if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    timer->hpl->cctl[0] &= ~CCIE;
+  }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB0_CC0_ISR */
@@ -882,9 +923,15 @@ isr_TB0 (void)
     if (TB_OVERFLOW == iv) {
       ++timer->overflow_count;
       rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->ctl &= ~TAIE;
+      }
     } else {
       int cc = iv / 2;
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->cctl[cc] &= ~CCIE;
+      }
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -897,6 +944,9 @@ isr_cc0_TB1 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB1;
   int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
+  if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    timer->hpl->cctl[0] &= ~CCIE;
+  }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB1_CC0_ISR */
@@ -912,9 +962,15 @@ isr_TB1 (void)
     if (TB_OVERFLOW == iv) {
       ++timer->overflow_count;
       rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->ctl &= ~TAIE;
+      }
     } else {
       int cc = iv / 2;
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->cctl[cc] &= ~CCIE;
+      }
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
@@ -927,6 +983,9 @@ isr_cc0_TB2 (void)
 {
   hBSP430halTIMER timer = BSP430_HAL_TB2;
   int rv = iBSP430callbackInvokeISRIndexed_ni(0 + timer->cc_cbchain_ni, timer, 0, 0);
+  if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+    timer->hpl->cctl[0] &= ~CCIE;
+  }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
 }
 #endif /* configBSP430_HAL_TB2_CC0_ISR */
@@ -942,9 +1001,15 @@ isr_TB2 (void)
     if (TB_OVERFLOW == iv) {
       ++timer->overflow_count;
       rv = iBSP430callbackInvokeISRVoid_ni(&timer->overflow_cbchain_ni, timer, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->ctl &= ~TAIE;
+      }
     } else {
       int cc = iv / 2;
       rv = iBSP430callbackInvokeISRIndexed_ni(cc + timer->cc_cbchain_ni, timer, cc, rv);
+      if (rv & BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT) {
+        timer->hpl->cctl[cc] &= ~CCIE;
+      }
     }
   }
   BSP430_HAL_ISR_CALLBACK_TAIL_NI(rv);
