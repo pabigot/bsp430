@@ -1673,6 +1673,201 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
   return rv;
 }
 
+/** Bit set in sBSP430timerPulseCapture::flags if the
+ * sBSP430timerPulseCapture::start_tt timestamp corresponds to the
+ * start of a pulse on a timer input. */
+#define BSP430_TIMER_PULSECAP_START_VALID 0x01
+
+/** Bit set in sBSP430timerPulseCapture::flags if the
+ * sBSP430timerPulseCapture::end_tt timestamp corresponds to the end
+ * of a pulse on a timer input. */
+#define BSP430_TIMER_PULSECAP_END_VALID 0x02
+
+/** Bit set in sBSP430timerPulseCapture::flags if the underlying
+ * timer recorded an overflow event, or if a transition was detected
+ * after the pulse end before the state was reset via
+ * vBSP430timerPulseCaptureClear. */
+#define BSP430_TIMER_PULSECAP_OVERFLOW 0x04
+
+/** Bit set in sBSP430timerPulseCapture::flags if the captured start
+ * time corresponded to a low-to-high transition.  The bit is cleared
+ * if the start corresponded to a high-to-low transition.
+ *
+ * @note This is not an input; if an active-high pulse is desired, the
+ * user must ensure the input signal is low prior to enabling the
+ * capture, or may choise to reset the state in @a callback_ni if the
+ * wrong transition was captured as the start of the pulse. */
+#define BSP430_TIMER_PULSECAP_ACTIVE_HIGH 0x08
+
+/** Bit set in sBSP430timerPulseCapture::flags if the
+ * sBSP430timerPulseCapture::callback_ni is to be invoked when a pulse
+ * start is captured. */
+#define BSP430_TIMER_PULSECAP_START_CALLBACK 0x10
+
+/** Bit set in sBSP430timerPulseCapture::flags if the
+ * sBSP430timerPulseCapture::callback_ni is to be invoked when a pulse
+ * end is captured. */
+#define BSP430_TIMER_PULSECAP_END_CALLBACK 0x20
+
+/** Bit set in sBSP430timerPulseCapture::flags if the pulse capture
+ * infrastructure is enabled. */
+#define BSP430_TIMER_PULSECAP_ENABLED 0x1000
+
+
+/* Forward declaration */
+struct sBSP430timerPulseCapture;
+
+/** Callback invoked on state changes related to a pulse capture.
+ *
+ * @param state the state of the pulse capture.  The callback is permitted to mutate this state.
+ *
+ * @return a value conformant with @ref callback_retval that is used
+ * as the return value from the interrupt callback handling pulse
+ * capture events. */
+typedef int (* iBSP430timerPulseCaptureCallback_ni) (struct sBSP430timerPulseCapture * state);
+
+/** Structure containing data related to measuring the duration of a
+ * pulse. */
+typedef struct sBSP430timerPulseCapture {
+  /** Structure to hook callback into timer interrupt chain.  This
+   * must be the first field in the structure. */
+  sBSP430halISRIndexedChainNode cb;
+
+  /** Handle for the timer HAL used for pulse captures */
+  hBSP430halTIMER hal;
+
+  /** Capture/compare index on @a hal used for pulse captures. */
+  int ccidx;
+
+  /** Capture/compare index selector used for pulse captures.  This is
+   * the #CCIS0|#CCIS1 setting. */
+  unsigned int ccis;
+
+  /** Callback invoked on overflow and optionally on start and end
+   * captures. */
+  iBSP430timerPulseCaptureCallback_ni callback_ni;
+
+  /** Flags indicating validity and configuration information.
+   * @warning This field must be treated as @link enh_interrupt_ni not
+   * interrupt-able@endlink while the pulse capture is enabled.  I.e.,
+   * its contents should be inspected and mutated only while
+   * interrupts are disabled. */
+  volatile unsigned int flags;
+
+  /** The pulse start time from the underlying clock.  The content is
+   * valid only if #BSP430_TIMER_PULSECAP_START_VALID is set in @a
+   * flags. */
+  volatile unsigned long start_tt;
+
+  /** The pulse end time from the underlying clock.  The content is
+   * valid only if #BSP430_TIMER_PULSECAP_END_VALID is set in @a
+   * flags. */
+  volatile unsigned long end_tt;
+} sBSP430timerPulseCapture;
+
+/** Handle for a structure used to capture the width of a pulse */
+typedef struct sBSP430timerPulseCapture * hBSP430timerPulseCapture;
+
+/** Configure the @p pulsecap structure to capture pulse widths.
+ *
+ * Capture/compare register @p ccidx in @p periph is configured to
+ * capture both rising and falling edges on input @p ccis.  The
+ * capture interrupt is not enabled by this function.
+ *
+ * It is the user's responsibility to ensure that @p ccidx exists on
+ * @p periph and that @p ccis is correct for the pulse signal.  The
+ * user must also separately configure @p periph to count
+ * continuously.
+ *
+ * @param pulsecap the structure holding the information about the
+ * pulse capture timer.
+ *
+ * @param periph the timer that is to be used for capturing the pulse,
+ * such as #BSP430_UPTIME_TIMER_PERIPH_HANDLE
+ *
+ * @param ccidx the capture/compare index within the timer.
+ *
+ * @param ccis the capture/compare input source on which the pulse
+ * will arrive
+ *
+ * @param flags the initial flags to be used to control event
+ * notification.  Only the #BSP430_TIMER_PULSECAP_START_CALLBACK and
+ * #BSP430_TIMER_PULSECAP_END_CALLBACK fields are used.
+ *
+ * @param callback the callback to be invoked on pulse capture events.
+ *
+ * @return The pulse capture handle if successful.  A null handle will
+ * be returned if initialization failed, e.g. because @p periph could
+ * not be located. */
+hBSP430timerPulseCapture
+iBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
+                                    tBSP430periphHandle periph,
+                                    int ccidx,
+                                    unsigned int ccis,
+                                    unsigned int flags,
+                                    iBSP430timerPulseCaptureCallback_ni callback);
+
+/** Enable or disable an initialized pulse capture structure.
+ *
+ * @param pulsecap a pulse capture structure initialized using
+ * iBSP430timerPulseCaptureInitialize().
+ *
+ * @param enablep If true, the state of @p pulsecap is reset and the
+ * capture/compare interrupt associated with the pulse is enabled.  If
+ * zero, the capture/compare interrupt is disabled.
+ *
+ * @return 0 on success, or a negative error code.
+ */
+int iBSP430timerPulseCaptureSetEnabled_ni (hBSP430timerPulseCapture pulsecap,
+                                           int enablep);
+
+/** Clear state in @p pulsecal so the next transition begins a new pulse.
+ *
+ * Only #BSP430_TIMER_PULSECAP_START_CALLBACK and
+ * #BSP430_TIMER_PULSECAP_END_CALLBACK are preserved.
+ *
+ * @param pulsecap the pulse capture structure
+ */
+static BSP430_CORE_INLINE
+void
+vBSP430timerPulseCaptureClear_ni (hBSP430timerPulseCapture pulsecap)
+{
+  pulsecap->flags &= (BSP430_TIMER_PULSECAP_START_CALLBACK
+                      | BSP430_TIMER_PULSECAP_END_CALLBACK);
+}
+
+/** Short-hand to invoke iBSP430timerPulseCaptureSetEnabled_ni() to enable @p pulsecap even if interrupts are enabled
+ * @param pulsecap a pulse capture structure initialized via iBSP430timerPulseCaptureInitialize()
+ * @return 0 if successful, or a negative error code */
+static BSP430_CORE_INLINE
+int
+iBSP430timerPulseCaptureEnable (hBSP430timerPulseCapture pulsecap)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerPulseCaptureSetEnabled_ni(pulsecap, 1);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+/** Short-hand to invoke iBSP430timerPulseCaptureSetEnabled_ni() to disable @p pulsecap even if interrupts are enabled
+ * @param pulsecap a pulse capture structure initialized via iBSP430timerPulseCaptureInitialize()
+ * @return 0 if successful, or a negative error code */
+static BSP430_CORE_INLINE
+int
+iBSP430timerPulseCaptureDisable (hBSP430timerPulseCapture pulsecap)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerPulseCaptureSetEnabled_ni(pulsecap, 0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
 /* !BSP430! insert=hal_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_decl] */
 /** Control inclusion of the @HAL interface to #BSP430_PERIPH_TA0
