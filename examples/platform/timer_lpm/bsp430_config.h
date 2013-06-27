@@ -2,6 +2,10 @@
  * results. */
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 1
 
+/* Use lower main clock rate; default may stress Vcore at some PMM
+ * settings */
+#define BSP430_NOMINAL_MCLK_HZ 4000000UL
+
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 

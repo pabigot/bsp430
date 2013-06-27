@@ -57,6 +57,8 @@ LPM3:  4616  4620     4    13470 13474     4    0048
 #include <bsp430/clock.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/periph/timer.h>
+#include <bsp430/periph/pmm.h>
+#include <bsp430/periph/sys.h>
 
 struct sLPMconfig {
   const char * tag;
@@ -96,14 +98,73 @@ void main ()
   unsigned int delta_ta0;
   const struct sLPMconfig * lcp = lpm_configs;
   const struct sLPMconfig * const elcp = lpm_configs + sizeof(lpm_configs)/sizeof(*lpm_configs);
+#if (BSP430_MODULE_SYS - 0)
+  unsigned long reset_causes = 0;
+  unsigned int reset_flags = 0;
+#endif /* BSP430_MODULE_SYS */
+
+#if (BSP430_MODULE_SYS - 0)
+  {
+    unsigned int sysrstiv;
+
+    /* Record all the reset causes */
+    while (0 != ((sysrstiv = uiBSP430sysSYSRSTGenerator_ni(&reset_flags)))) {
+      reset_causes |= 1UL << (sysrstiv / 2);
+    }
+
+#ifdef BSP430_PMM_ENTER_LPMXp5_NI
+    /* If we woke from LPMx.5, we need to clear the lock in PM5CTL0.
+     * We'll do it early, since we're not really interested in
+     * retaining the current IFG settings. */
+    if (reset_flags & BSP430_SYS_FLAG_SYSRST_LPM5WU) {
+      PMMCTL0_H = PMMPW_H;
+      PM5CTL0 = 0;
+      PMMCTL0_H = 0;
+    }
+#endif /* BSP430_PMM_ENTER_LPMXp5_NI */
+  }
+#endif /* BSP430_MODULE_SYS */
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
+  cprintf("\n\ntest_lpm " __DATE__ " " __TIME__ "\n");
+
+#if (BSP430_MODULE_SYS - 0)
+  cprintf("System reset bitmask %lx; causes:\n", reset_causes);
+  {
+    int bit = 0;
+    while (bit < (8 * sizeof(reset_causes))) {
+      if (reset_causes & (1UL << bit)) {
+        cprintf("\t%s\n", xBSP430sysSYSRSTIVDescription(2*bit));
+      }
+      ++bit;
+    }
+  }
+
+  cputtext_ni("System reset included:");
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_BOR) {
+    cputtext_ni(" BOR");
+  }
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_LPM5WU) {
+    cputtext_ni(" LPM5WU");
+  }
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_POR) {
+    cputtext_ni(" POR");
+  }
+  if (reset_flags & BSP430_SYS_FLAG_SYSRST_PUC) {
+    cputtext_ni(" PUC");
+  }
+  cputchar_ni('\n');
+
+#endif
+
   TA0CTL = TASSEL_1 | MC_2 | TACLR;
   ta0_Hz = ulBSP430timerFrequency_Hz_ni(BSP430_PERIPH_TA0);
 
-#if 0
+#if (BSP430_MODULE_PMM - 0)
+  cprintf("PMM is supported; boot SVSMLCTL %04x\n", SVSMLCTL);
+
   /* This sequence eliminates the wakeup delay on the MSP430F5438A.
    * The ramifications of doing this are to be found in the Power
    * Management Module and Supply Voltage Supervisor chapter of the
@@ -114,21 +175,45 @@ void main ()
    * appear relevant when changing the module from its power-up
    * state. */
   PMMCTL0_H = PMMPW_H;
+  /* This is the reset value */
+  SVSMLCTL = SVMLE | SVSLE;
 #if 1
-  /* This variant works */
-  SVSMLCTL &= ~(SVSLE | SVMLE);
-#else
-  /* This appears to have no effect, though it should work. */
-  SVSMLCTL |= SVSLFP;
+  /* Turning off the low-side supervision and monitoring sets the
+   * device in full power mode.  This variant works, and consumes no
+   * current.  It's probably the simplest approach, but make sure any
+   * changes to Vcore temporarily re-enable the module. */
+  SVSMLCTL = 0;
+#endif
+#if 0
+  /* Placing both SVS_L and SVM_L into automatic mode with full power
+   * mode enabled also works.  Current consumption is 1.5uA for each
+   * of SVS_L and SVS_M for MSP430F5438A, though I have been unable to
+   * demonstrate this by differentiating configurations.
+   *
+   * It's unlikely that both supervision and monitoring provide value,
+   * so consider turning off monitoring.  Doing so naively (viz., just
+   * setting SVSLFP | SVSLE) will not work, though: an SVSL interrupt
+   * causes a POR in LPM2.
+   *
+   * Adding SVMLOVPE would enable overvoltage protection.  Modifying
+   * SVSLRVL and SVSMLRRL would change the voltage thresholds, which
+   * might be appropriate if you're playing with Vcore.  For now we're
+   * just interested in decreasing wakeup time. */
+  SVSMLCTL = SVMLFP | SVMLE | SVSLFP | SVSLE | SVSMLACE | SVSLMD;
 #endif
   PMMCTL0_H = !PMMPW_H;
 #endif
 
+  cprintf("Test SVSMLCTL is %04x\n", SVSMLCTL);
+  do {
+    cprintf("... waiting for SVSMLDLYST to clear: %04x\n", SVSMLCTL);
+  } while (SVSMLCTL & SVSMLDLYST);
+
+
   BSP430_CORE_ENABLE_INTERRUPT();
 
-  cputs("\n\nTimer LPM wake delay test\n");
   delta_ta0 = ta0_Hz / 4;
-  cprintf("TA0 is at %lu Hz; sleep time %u ticks\n", ta0_Hz, delta_ta0);
+  cprintf("\nTA0 is at %lu Hz; sleep time %u ticks\n", ta0_Hz, delta_ta0);
   cprintf("Standard mode SR is %04x\n", __read_status_register());
   cprintf("SR bits: SCG0 %04x ; SCG1 %04x\n", SCG0, SCG1);
   cprintf("LPM exit from ISRs clears: %04x\n", BSP430_CORE_LPM_EXIT_MASK);

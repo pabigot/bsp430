@@ -241,6 +241,15 @@ void main ()
   *rx_head++ = CMD_STATE;
 
   memset(&state, 0, sizeof(state));
+#if 1 && (BSP430_MODULE_PMM - 0)
+  PMMCTL0_H = PMMPW_H;
+  SVSMLCTL = 0;
+  PMMCTL0_H = 0;
+  do {
+    cprintf("... waiting for SVSMLDLYST to clear: %04x\n", SVSMLCTL);
+  } while (SVSMLCTL & SVSMLDLYST);
+#endif /* BSP430_MODULE_PMM */
+
   BSP430_CORE_ENABLE_INTERRUPT();
   while (1) {
     int enter_sleep = 0;
@@ -311,7 +320,7 @@ void main ()
               cprintf("Clocks will %s\n", state.hold_clock ? "freeze" : "run");
               cprintf("Serial will %s\n", state.hold_serial ? "be held" : "be active");
 #if APP_ENABLE_COREV
-              cprintf("Core voltage level %d\n", PMMCTL0 & PMMCOREV_3);
+              cprintf("Core voltage level %d, SVSMLCTL %04x\n", PMMCTL0 & PMMCOREV_3, SVSMLCTL);
 #endif /* APP_ENABLE_COREV */
 #ifdef BSP430_PMM_ENTER_LPMXp5_NI
               cprintf("LPM X.5 supported\n");
