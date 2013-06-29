@@ -233,6 +233,36 @@
 #define PMMCOREV_2          (0x0002)  /**< PMM Core Voltage 2 (1.75V) */
 #define PMMCOREV_3          (0x0003)  /**< PMM Core Voltage 3 (1.85V) */
 
+extern unsigned int SVSMHCTL;    /**< SVS and SVM high side control register */
+extern unsigned int SVSMLCTL;    /**< SVS and SVM low side control register */
+#define SVSMHRRL1           (0x0002)  /**< SVS and SVM high side Reset Release Voltage Level Bit: 1 */
+#define SVSMHRRL2           (0x0004)  /**< SVS and SVM high side Reset Release Voltage Level Bit: 2 */
+#define SVSMHDLYST          (0x0008)  /**< SVS and SVM high side delay status */
+#define SVSHMD              (0x0010)  /**< SVS high side mode */
+#define SVSMHEVM            (0x0040)  /**< SVS and SVM high side event mask */
+#define SVSMHACE            (0x0080)  /**< SVS and SVM high side auto control enable */
+#define SVSHRVL0            (0x0100)  /**< SVS high side reset voltage level Bit: 0 */
+#define SVSHRVL1            (0x0200)  /**< SVS high side reset voltage level Bit: 1 */
+#define SVSHE               (0x0400)  /**< SVS high side enable */
+#define SVSHFP              (0x0800)  /**< SVS high side full performace mode */
+#define SVMHOVPE            (0x1000)  /**< SVM high side over-voltage enable */
+#define SVMHE               (0x4000)  /**< SVM high side enable */
+#define SVMHFP              (0x8000)  /**< SVM high side full performace mode */
+#define SVSMLRRL0           (0x0001)  /**< SVS and SVM low side Reset Release Voltage Level Bit: 0 */
+#define SVSMLRRL1           (0x0002)  /**< SVS and SVM low side Reset Release Voltage Level Bit: 1 */
+#define SVSMLRRL2           (0x0004)  /**< SVS and SVM low side Reset Release Voltage Level Bit: 2 */
+#define SVSMLDLYST          (0x0008)  /**< SVS and SVM low side delay status */
+#define SVSLMD              (0x0010)  /**< SVS low side mode */
+#define SVSMLEVM            (0x0040)  /**< SVS and SVM low side event mask */
+#define SVSMLACE            (0x0080)  /**< SVS and SVM low side auto control enable */
+#define SVSLRVL0            (0x0100)  /**< SVS low side reset voltage level Bit: 0 */
+#define SVSLRVL1            (0x0200)  /**< SVS low side reset voltage level Bit: 1 */
+#define SVSLE               (0x0400)  /**< SVS low side enable */
+#define SVSLFP              (0x0800)  /**< SVS low side full performace mode */
+#define SVMLOVPE            (0x1000)  /**< SVM low side over-voltage enable */
+#define SVMLE               (0x4000)  /**< SVM low side enable */
+#define SVMLFP              (0x8000)  /**< SVM low side full performace mode */
+
 /* TLV-related offsets and constants */
 
 #define TLV_START             (0x1A08)    /**< Start Address of the TLV structure (EXCLUDES HEADER) */

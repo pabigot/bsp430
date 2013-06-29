@@ -121,6 +121,55 @@
 
 #endif /* LOCKLPM5 */
 
+/** Macro to set the #SVSMLCTL and #SVSMLCTL registers
+ *
+ * The Supply Voltage Supervisor and Monitor High- and Low-Side
+ * Control registers affect the time required for waking from low
+ * power modes and the level of power consumption used.  Information
+ * on timing and power consumption is in the MCU-specific data sheet.
+ *
+ * To disable the supervisor and monitor without changing any other
+ * configuration, resulting in lowest power use and fastest wakeup,
+ * use:
+ *
+ * @code
+ * BSP430_PMM_SET_SVSMCTL_NI(SVSMHCTL & ~(SVMHE | SVSHE), SVSMLCTL & ~(SVMLE | SVSLE));
+ * @endcode
+ *
+ * @param _hctl The new value for #SVSMHCTL, e.g. <tt>#SVSMHCTL & ~(#SVMHE | #SVSHE)</tt>
+ * @param _lctl The new value for #SVSMLCTL, e.g. <tt>#SVSMLCTL & ~(#SVMLE | #SVSLE)</tt>
+ *
+ * @warning Changing any other flags, but particularly the core
+ * voltage, may requires care to wait for stability before making
+ * changes.  See iBSP430pmmSetCoreVoltageLevel_ni() and the peripheral
+ * documentation, errata, and application notes.
+ *
+ * @par For wake-up
+ *
+ * Each data sheet will specify @a t_WAKE-UP-FAST (~5 us MSP430F5438A)
+ * and @a t_WAKE-UP-SLOW (~150 us MSP430F5438A), which are the time to
+ * move from LPM2, LPM3, or LPM4 to active mode (MCLK running).  In
+ * the power-on configuration @a t_WAKE-UP-SLOW will be on by default,
+ * resulting in significant delays in interrupt handling, as
+ * demonstrated by @c examples/platform/timer_lpm.  Only #SVSMLCTL
+ * affects wakeup time.
+ *
+ * @par For power consumption
+ *
+ * Enabling the SVS increases power consumption (200 nA for
+ * MSP430F5438A).  In full-performance mode the cost is higher (1.5 uA
+ * for MSP430F5438A).  The cost is listed in the data sheet in the
+ * separately for each of high and low cross supervisory and
+ * monitoring functions.  Initial experimentation suggests that
+ * disabling all four capabilities reduces current by only 3uA in
+ * LPM3, though more may be reduced when active. */
+#define BSP430_PMM_SET_SVSMCTL_NI(_hctl,_lctl) do {   \
+    PMMCTL0_H = PMMPW_H;                              \
+    SVSMHCTL = (_hctl);                               \
+    SVSMLCTL = (_lctl);                               \
+    PMMCTL0_H = !PMMPW_H;                             \
+  } while (0)
+
 /** Cause a brown-out reset */
 static BSP430_CORE_INLINE
 void
