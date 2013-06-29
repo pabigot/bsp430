@@ -880,12 +880,12 @@
  * counters.
  *
  * CC 0 is normally reserved for high-priority capture/compare
- * operations using the dedicated interrupt handler.  It is also used
- * with #BSP430_TIMER_CCACLK_PERIPH_HANDLE by
- * iBSP430ucsTrimDCOCLKDIV_ni().
+ * operations or RTOS scheduling using the dedicated interrupt
+ * handler.  It is also used with #BSP430_TIMER_CCACLK_PERIPH_HANDLE
+ * by iBSP430ucsTrimDCOCLKDIV_ni().
  *
  * CC 1 is normally reserved for use by
- * #configBSP430_TIMER_CCACLK_CC0_PORT functionality, and is the
+ * #configBSP430_TIMER_CCACLK_CC1_PORT functionality, and is the
  * standard choice for #BSP430_UPTIME_DELAY_CCIDX.
  *
  * Therefore this functionality normally uses CC 2.  To keep the
