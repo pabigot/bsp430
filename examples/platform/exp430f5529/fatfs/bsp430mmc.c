@@ -80,9 +80,10 @@ configureSPIforSD (int fastp)
   miso_port->out |= APP_SD_MISO_PORT_BIT;
 
   /* Configure SPI.  Probably ought to have a way to return an error
-   * code. */
+   * code.  Note: Per http://elm-chan.org/docs/mmc/mmc_e.html use SPI
+   * mode 0 (CPOL=CPHA=0 via UCCKPH). */
   sdspi = hBSP430serialOpenSPI(hBSP430serialLookup(APP_SD_SPI_PERIPH_HANDLE),
-                               BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST | UCMODE_0),
+                               BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPH | UCMSB | UCMST | UCMODE_0),
                                UCSSEL__SMCLK, init_spi_divisor);
 
   /* Configure the chip-select port. */

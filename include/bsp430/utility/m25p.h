@@ -111,6 +111,24 @@
 #define BSP430_PLATFORM_M25P include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_PLATFORM_M25P_SPI_CTL0_BYTE)
+/** SPI initialization constant required for M25P serial flash.
+ *
+ * This value may be used by applications as the argument for @a
+ * ctl0_byte to hBSP430serialOpenSPI() when configuring SPI for an
+ * M25P serial flash memory.
+ *
+ * @note The M25P serial flash operates correctly in either of two modes.
+ * @li Mode 0 (CPOL=CPHA=0, or #UCCKPH) in which clock is low when inactive
+ * @li Mode 3 (CPOL=CPHA=1, or #UCCKPL) in which clock is high when inactive
+ * @note The default value for this constant provides the
+ * inactive-high configuration ("mode 3").
+ *
+ * @defaulted
+ */
+#define BSP430_PLATFORM_M25P_SPI_CTL0_BYTE BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST)
+#endif /* BSP430_PLATFORM_M25P_SPI_CTL0_BYTE */
+
 #if defined(BSP430_DOXYGEN)
 
 /** Peripheral handle for SPI access to platform-provided M25P serial flash

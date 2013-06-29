@@ -381,8 +381,18 @@ int iBSP430uartTxASCIIZ_rh (hBSP430halSERIAL hal, const char * str)
  * is cleared before being written.  Selection of #UCMODE_3 (I2C mode)
  * will result in this function returning an error.
  *
- * @warning See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
+ * @warning (1) See #BSP430_SERIAL_ADJUST_CTL0_INITIALIZER() regarding
  * portable use of @p ctl0_byte header constants.
+ *
+ * @warning (2) The MSP430's method of specifying SPI clock phase is
+ * opposite the industry standard.  Use this table:
+ * @warning
+ * Mode | CPOL | CPHA | ctl0_byte
+ * :--: | :--: | :--: | :-----------------
+ * 0    | 0    | 0    | #UCCKPH
+ * 1    | 0    | 1    | 0
+ * 2    | 1    | 0    | #UCCKPH \| #UCCKPL
+ * 3    | 1    | 1    | #UCCKPL
  *
  * @param ctl1_byte The configuration to be written to the device's
  * ctl1 byte.  For SPI mode, potential values specified in the

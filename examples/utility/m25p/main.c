@@ -57,10 +57,11 @@ void dumpMemory (const uint8_t * dp,
 }
 
 /* As-delivered TrxEB flash is completely erased except for the first
- * sixteen bytes. */
-const uint8_t flashContents[] = { 0xAA, 0x55, 0x0F, 0xF0, 0xCC, 0x33, 0xC3, 0x3C,
-                                  0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF
-                                };
+ * sixteen bytes which have this useful test pattern. */
+const uint8_t flashContents[] = {
+  0xAA, 0x55, 0x0F, 0xF0, 0xCC, 0x33, 0xC3, 0x3C,
+  0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF
+};
 
 uint8_t buffer[256];
 
@@ -117,7 +118,8 @@ void main ()
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
-
+  cputchar('\n');
+  BSP430_CORE_DELAY_CYCLES(100 * (BSP430_CLOCK_NOMINAL_MCLK_HZ / 1000));
   cprintf("\nBuild " __DATE__ " " __TIME__ "\n");
   cprintf("SPI is %s: %s\n",
           xBSP430serialName(BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE),
@@ -152,11 +154,36 @@ void main ()
 #endif /* BSP430_PLATFORM_M25P_RSTn_PORT_PERIPH_HANDLE */
 
   m25p = hBSP430m25pInitialize(&m25p_data,
-                               BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL | UCMSB | UCMST),
+                               BSP430_PLATFORM_M25P_SPI_CTL0_BYTE,
                                UCSSEL_2, 1);
   if (NULL == m25p) {
     cprintf("M25P device initialization failed.\n");
     return;
+  }
+
+  {
+#if (BSP430_MODULE_USCI5 - 0)
+    volatile sBSP430hplUSCI5 * hpl = BSP430_SERIAL_HAL_GET_HPL_USCI5(m25p->spi);
+#else
+    void * hpl = NULL;
+#endif
+    int sm = -1;
+
+    if (hpl) {
+      sm = 0;
+      if (hpl->ctl0 & BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPL)) {
+        sm |= 0x02;
+      }
+      if (! (hpl->ctl0 & BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCCKPH))) {
+        sm |= 0x01;
+      }
+    }
+    if (0 > sm) {
+      cprintf("Unable to extract SPI mode from %s\n",
+              xBSP430serialName(BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE));
+    } else {
+      cprintf("%s initialized in SPI mode %u\n", xBSP430serialName(BSP430_PLATFORM_M25P_SPI_PERIPH_HANDLE), sm);
+    }
   }
 
 #ifdef BSP430_PLATFORM_M25P_PWR_PORT_PERIPH_HANDLE
@@ -210,8 +237,13 @@ void main ()
     dumpMemory(buffer, rc, addr);
     if (0 == memcmp(flashContents, buffer, rc)) {
       cprintf("Found expected contents.\n");
+    } else {
+      cprintf("Did NOT find expected contents.\n");
     }
   }
+
+  cprintf("\nTest pattern (expected contents):");
+  dumpMemory(flashContents, sizeof(flashContents), 0);
 
 #if (BSP430_PLATFORM_M25P_SUPPORTS_PE - 0)
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PE, addr, NULL, 0);
