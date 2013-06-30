@@ -83,6 +83,9 @@
  * to true if the target MCU supports the FRAM version of the Power
  * Management Module, and false if it does not.
  *
+ * @note The FRAM version of the PMM does not support the supply
+ * voltage supervisory and monitoring capabilities.
+ *
  * @cppflag
  */
 #define BSP430_MODULE_PMM_FRAM (defined(__MSP430_HAS_PMM_FR5xx__)       \

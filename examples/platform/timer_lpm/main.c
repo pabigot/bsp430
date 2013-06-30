@@ -162,7 +162,8 @@ void main ()
   TA0CTL = TASSEL_1 | MC_2 | TACLR;
   ta0_Hz = ulBSP430timerFrequency_Hz_ni(BSP430_PERIPH_TA0);
 
-#if (BSP430_MODULE_PMM - 0)
+  /* FRAM PMM does not support SVS */
+#if (BSP430_MODULE_PMM - 0) && ! (BSP430_MODULE_PMM_FRAM - 0)
   cprintf("PMM is supported; boot SVSMLCTL %04x\n", SVSMLCTL);
 
   /* This sequence eliminates the wakeup delay on the MSP430F5438A.
@@ -202,13 +203,13 @@ void main ()
   SVSMLCTL = SVMLFP | SVMLE | SVSLFP | SVSLE | SVSMLACE | SVSLMD;
 #endif
   PMMCTL0_H = !PMMPW_H;
-#endif
 
   cprintf("Test SVSMLCTL is %04x\n", SVSMLCTL);
   do {
     cprintf("... waiting for SVSMLDLYST to clear: %04x\n", SVSMLCTL);
   } while (SVSMLCTL & SVSMLDLYST);
 
+#endif
 
   BSP430_CORE_ENABLE_INTERRUPT();
 
