@@ -45,7 +45,7 @@ console_tx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
 }
 
 static sConsoleTxBuffer tx_buffer_ = {
-  .cb_node = { .callback = console_tx_isr_ni },
+  .cb_node = { .callback_ni = console_tx_isr_ni },
 };
 
 void main ()

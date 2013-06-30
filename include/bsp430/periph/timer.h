@@ -1337,7 +1337,7 @@ typedef const struct sBSP430timerAlarm * hBSP430timerAlarm;
  *
  * @param cfg The structure describing the alarm configuration.
  *
- * @return As with iBSP430halISRCallbackVoid().
+ * @return As with iBSP430halISRCallbackVoid_ni().
  *
  * @ingroup grp_timer_alarm */
 typedef int (* iBSP430timerAlarmCallback_ni) (hBSP430timerAlarm alarm);
@@ -1398,7 +1398,7 @@ typedef struct sBSP430timerAlarm {
    *
    * @note This field is initialized by iBSP430timerAlarmInitialize()
    * and must not be manipulated by user code. */
-  iBSP430timerAlarmCallback_ni callback;
+  iBSP430timerAlarmCallback_ni callback_ni;
 
   /** The callback chain node used when the alarm must be hooked into
    * a timer overflow chain.

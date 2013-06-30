@@ -55,7 +55,7 @@ hh10d_1Hz_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
 }
 
 static struct sHH10D hh10d = {
-  .cb = { .callback = hh10d_1Hz_isr_ni },
+  .cb = { .callback_ni = hh10d_1Hz_isr_ni },
 };
 
 static int bitToPin (int v)

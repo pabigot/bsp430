@@ -294,7 +294,7 @@ int cpeekchar_ni (void);
  * This function will be invoked by the console infrastructure in an
  * interrupt context after received characters have been buffered.
  *
- * @return As with iBSP430halISRCallbackVoid(). */
+ * @return As with iBSP430halISRCallbackVoid_ni(). */
 typedef int (* iBSP430consoleRxCallback_ni) (void);
 
 /** Register a callback for console RX events.

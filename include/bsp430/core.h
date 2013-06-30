@@ -311,7 +311,7 @@
  * When this macro is defined to a true value, #GIE is added to
  * #BSP430_CORE_LPM_EXIT_MASK, meaning that it will be cleared along
  * with LPM bits when #BSP430_HAL_ISR_CALLBACK_EXIT_LPM is specified
- * in the return value of an @link iBSP430halISRCallbackVoid interrupt
+ * in the return value of an @link iBSP430halISRCallbackVoid_ni interrupt
  * callback@endlink. */
 #ifndef configBSP430_CORE_LPM_EXIT_CLEAR_GIE
 #define configBSP430_CORE_LPM_EXIT_CLEAR_GIE 0

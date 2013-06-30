@@ -218,7 +218,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
   return 0;
 }
 
-static sBSP430halISRIndexedChainNode spi_irq_cb = { .callback = processSpiIRQ_ };
+static sBSP430halISRIndexedChainNode spi_irq_cb = { .callback_ni = processSpiIRQ_ };
 
 void
 SpiOpen (gcSpiHandleRx pfRxHandler)

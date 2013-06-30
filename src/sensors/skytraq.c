@@ -252,7 +252,7 @@ validate:
 }
 
 static sRxState rx_state_ = {
-  .cb_node = { .callback = nmea_rx_isr_ni },
+  .cb_node = { .callback_ni = nmea_rx_isr_ni },
   .pool = &nmea_rx_pool_union.generic,
 };
 
@@ -353,7 +353,7 @@ nmea_tx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
 }
 
 static sTxState tx_state_ = {
-  .cb_node = { .callback = nmea_tx_isr_ni },
+  .cb_node = { .callback_ni = nmea_tx_isr_ni },
 };
 
 int iBSP430gpsTransmit_ni (const uint8_t * msg,
@@ -405,7 +405,7 @@ capture_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
 }
 
 static struct sPpsState pps_state_ = {
-  .cb = { .callback = capture_isr_ni },
+  .cb = { .callback_ni = capture_isr_ni },
 };
 
 int

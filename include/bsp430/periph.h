@@ -402,28 +402,28 @@ struct sBSP430halISRIndexedChainNode;
  * @return An integral value used by the ISR top half to wake up from
  * low power modes and otherwise affect subsequent execution.  See
  * @ref callback_retval. */
-typedef int (* iBSP430halISRCallbackVoid) (const struct sBSP430halISRVoidChainNode * cb,
-                                           void * context);
+typedef int (* iBSP430halISRCallbackVoid_ni) (const struct sBSP430halISRVoidChainNode * cb,
+                                              void * context);
 
 /** Callback for ISR chains where the event includes an index
  *
  * This type of callback is used for digital IO ports and
  * capture/compare events on timers.
  *
- * @param cb As with #iBSP430halISRCallbackVoid.
+ * @param cb As with #iBSP430halISRCallbackVoid_ni.
  *
- * @param context As with #iBSP430halISRCallbackVoid.
+ * @param context As with #iBSP430halISRCallbackVoid_ni.
  *
  * @param idx The sub-entity to which the event applies, such as a
  * specific pin on a port or capture/compare block on a timer.
  *
- * @return As with #iBSP430halISRCallbackVoid.
+ * @return As with #iBSP430halISRCallbackVoid_ni.
  */
-typedef int (* iBSP430halISRCallbackIndexed) (const struct sBSP430halISRIndexedChainNode * cb,
-                                              void * context,
-                                              int idx);
+typedef int (* iBSP430halISRCallbackIndexed_ni) (const struct sBSP430halISRIndexedChainNode * cb,
+                                                 void * context,
+                                                 int idx);
 
-/** Structure used to record #iBSP430halISRCallbackVoid chains. */
+/** Structure used to record #iBSP430halISRCallbackVoid_ni chains. */
 typedef struct sBSP430halISRVoidChainNode {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain.  @note This field must only be mutated when
@@ -432,10 +432,10 @@ typedef struct sBSP430halISRVoidChainNode {
   const struct sBSP430halISRVoidChainNode * volatile next_ni;
 
   /** The function to be invoked. */
-  iBSP430halISRCallbackVoid callback;
+  iBSP430halISRCallbackVoid_ni callback_ni;
 } sBSP430halISRVoidChainNode;
 
-/** Structure used to record #iBSP430halISRCallbackIndexed chains. */
+/** Structure used to record #iBSP430halISRCallbackIndexed_ni chains. */
 typedef struct sBSP430halISRIndexedChainNode {
   /** The next callback in the chain.  Assign a null pointer to
    * terminate the chain.  @note This field must only be mutated when
@@ -444,10 +444,10 @@ typedef struct sBSP430halISRIndexedChainNode {
   const struct sBSP430halISRIndexedChainNode * volatile next_ni;
 
   /** The function to be invoked. */
-  iBSP430halISRCallbackIndexed callback;
+  iBSP430halISRCallbackIndexed_ni callback_ni;
 } sBSP430halISRIndexedChainNode;
 
-/** Execute a chain of #iBSP430halISRCallbackVoid callbacks.
+/** Execute a chain of #iBSP430halISRCallbackVoid_ni callbacks.
  *
  * The return value of the callback is expected to be a bitmask
  * indicating bits to be cleared to wake from low power modes and bits
@@ -467,20 +467,20 @@ iBSP430callbackInvokeISRVoid_ni (const struct sBSP430halISRVoidChainNode * volat
                                  int basis)
 {
   while (*cbpp && ! (basis & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN)) {
-    basis |= (*cbpp)->callback(*cbpp, context);
+    basis |= (*cbpp)->callback_ni(*cbpp, context);
     cbpp = &(*cbpp)->next_ni;
   }
   return basis;
 }
 
-/** Execute a chain of #iBSP430halISRCallbackIndexed callbacks.
+/** Execute a chain of #iBSP430halISRCallbackIndexed_ni callbacks.
  *
  * Same as #iBSP430callbackInvokeISRVoid_ni, but providing an index to
  * the callback.
  *
  * @param cbpp As with #iBSP430callbackInvokeISRVoid_ni
  * @param context As with #iBSP430callbackInvokeISRVoid_ni
- * @param idx The index to be passed to each #iBSP430halISRCallbackIndexed handler
+ * @param idx The index to be passed to each #iBSP430halISRCallbackIndexed_ni handler
  * @param basis As with #iBSP430callbackInvokeISRVoid_ni
  * @return As with #iBSP430callbackInvokeISRVoid_ni */
 static BSP430_CORE_INLINE
@@ -491,7 +491,7 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
                                     int basis)
 {
   while (*cbpp && ! (basis & BSP430_HAL_ISR_CALLBACK_BREAK_CHAIN)) {
-    basis |= (*cbpp)->callback(*cbpp, context, idx);
+    basis |= (*cbpp)->callback_ni(*cbpp, context, idx);
     cbpp = &(*cbpp)->next_ni;
   }
   return basis;

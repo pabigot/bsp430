@@ -52,7 +52,7 @@ button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
 }
 
 static sButtonState button_state = {
-  .button_cb = { .callback = button_isr_ni },
+  .button_cb = { .callback_ni = button_isr_ni },
   .bit = BSP430_PLATFORM_BUTTON0_PORT_BIT
 };
 

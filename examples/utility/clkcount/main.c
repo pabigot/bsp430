@@ -57,7 +57,7 @@ capture_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
 }
 
 static struct sCaptures captures = {
-  .cb = { .callback = capture_isr_ni },
+  .cb = { .callback_ni = capture_isr_ni },
 };
 
 /* Simulate floating-point output */

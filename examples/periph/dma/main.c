@@ -106,7 +106,7 @@ dma_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
 }
 
 static struct sChannel channel0 = {
-  .cb = { .callback = dma_isr_ni }
+  .cb = { .callback_ni = dma_isr_ni }
 };
 
 void main ()

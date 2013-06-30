@@ -476,8 +476,8 @@ alarmCCcb_ni (const struct sBSP430halISRIndexedChainNode * cb,
   }
   malarmp->flags &= ~BSP430_TIMER_ALARM_FLAG_SET;
   malarmp->timer->hpl->cctl[malarmp->ccidx] &= ~CCIE;
-  if (NULL != malarmp->callback) {
-    rv = malarmp->callback(malarmp);
+  if (NULL != malarmp->callback_ni) {
+    rv = malarmp->callback_ni(malarmp);
   } else {
     rv = BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
   }
@@ -513,9 +513,9 @@ hBSP430timerAlarmInitialize (sBSP430timerAlarm * alarm,
   }
 #endif /* configBSP430_TIMER_VALID_COUNTER_READ */
   alarm->ccidx = ccidx;
-  alarm->callback = callback;
-  alarm->overflow_cb.callback = alarmOFcb_ni;
-  alarm->cc_cb.callback = alarmCCcb_ni;
+  alarm->callback_ni = callback;
+  alarm->overflow_cb.callback_ni = alarmOFcb_ni;
+  alarm->cc_cb.callback_ni = alarmCCcb_ni;
   return alarm;
 }
 
@@ -728,7 +728,7 @@ iBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
                                     iBSP430timerPulseCaptureCallback_ni callback)
 {
   memset(pulsecap, 0, sizeof(*pulsecap));
-  pulsecap->cb.callback = pulsecap_isr;
+  pulsecap->cb.callback_ni = pulsecap_isr;
   pulsecap->hal = hBSP430timerLookup(periph);
   if (NULL == pulsecap->hal) {
     return NULL;

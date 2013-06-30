@@ -89,7 +89,7 @@ button_isr_ni (const struct sBSP430halISRIndexedChainNode * cb,
 
 const sBSP430halISRIndexedChainNode button_cb = {
   .next_ni = NULL,
-  .callback = button_isr_ni,
+  .callback_ni = button_isr_ni,
 };
 
 char rx_buffer[16];
@@ -143,7 +143,7 @@ rx_cbchain_ni (const struct sBSP430halISRVoidChainNode * cb,
 }
 
 struct sBSP430halISRVoidChainNode rx_cb = {
-  .callback = rx_cbchain_ni
+  .callback_ni = rx_cbchain_ni
 };
 
 void main ()
