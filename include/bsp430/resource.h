@@ -100,15 +100,17 @@ typedef struct sBSP430resource * hBSP430resource;
  * resource's state.
  *
  * This callback is invoked by iBSP430resourceRelease_ni() when a
- * resource is released.  The intent is that the callback can notify a
- * waiting subsystem that the resource may be available.
- *
- * There is no guarantee that the resource is in fact available, as
- * this callback is also invoked when a waiting subsystem removes
- * itself from the list of waiters.
+ * resource is released, or if the wait list changes so that a new
+ * head may be able to claim the resource (possibly recursively).  The
+ * API specifically does not guarantee that the resource is in fact
+ * available when the callback is invoked.
  *
  * The callback is explicitly permitted to invoke
  * iBSP430resourceClaim_ni() in an attempt to claim the resource.
+ * Alternatively, it may set a flag and make the attempt to claim or
+ * decision to release at a later time, or invoke
+ * iBSP430resourceCancelWait_ni() if it no longer needs to be on the
+ * wait queue.
  *
  * @param resource the resource that has just been released
  *
@@ -118,14 +120,14 @@ typedef struct sBSP430resource * hBSP430resource;
  * @return An integral value consistent with @ref callback_retval that
  * allows the notified subsystem to affect subsequent execution if the
  * resource was released during an ISR top half. */
-typedef int (* iBSP430resourceWaitCallback) (hBSP430resource resource,
-                                             struct sBSP430resourceWaiter * waiter);
+typedef int (* iBSP430resourceWaitCallback_ni) (hBSP430resource resource,
+                                                struct sBSP430resourceWaiter * waiter);
 
 /** Structure registering a subsystem that needs to be informed when a
  * resource is released. */
 typedef struct sBSP430resourceWaiter {
   /** The function called by iBSP430resourceRelease_ni() */
-  iBSP430resourceWaitCallback callback_ni;
+  iBSP430resourceWaitCallback_ni callback_ni;
 
   /** Any additional information of value to the @a callback_ni
    * function.  Examples might be a pointer to
@@ -178,8 +180,17 @@ typedef struct sBSP430resourceWaiter * hBSP430resourceWaiter;
  * If the resource claim succeeds, any appearance of @p waiter is
  * removed from the resource sBSP430resource::waiter list prior to
  * return.  If the resource claim fails and @p waiter is not a null
- * pointer, @p waiter is placed into the sBSP430resource::waiter waiter
- * list in the order specified by @p wait_type.
+ * pointer, @p waiter is added into the sBSP430resource::waiter waiter
+ * list in the order specified by @p wait_type if absent from that
+ * list, and left in its original position if already present in the
+ * list.
+ *
+ * @note BSP430 does not aspire to be an RTOS, and the weak
+ * prioritization supported by @p wait_type is not affected by
+ * repeated failed resource claim attempts.  If necessary the waiter
+ * can be reprioritized by @link iBSP430resourceCancelWait_ni()
+ * removing it@endlink and making another attempt to claim the
+ * resource.
  *
  * @param resource a pointer to the structure associated with a
  * resource that may be shared among subsystems.
@@ -211,7 +222,9 @@ int iBSP430resourceClaim_ni (hBSP430resource resource,
 /** Release a resource held by a subsystem.
  *
  * Note that the return value does not indicate whether the resource
- * is still held by this subsystem.
+ * is still held by this subsystem.  If the resource was released, the
+ * first waiter on the resource's waiter list (if any) will be
+ * notified.
  *
  * @param resource a pointer to the structure associated with a
  * resource that may be shared among subsystems.
@@ -236,14 +249,25 @@ int iBSP430resourceRelease_ni (hBSP430resource resource,
  * This function is used when a subsystem that has requested a
  * resource determines that the resource is no longer needed.
  *
+ * If @p waiter was at the head of the resource's wait queue the
+ * callback of the new head of the queue (if any) will be recursively
+ * invoked and its return value used as the return value of this
+ * function.  This ensures that invocation of this function from
+ * within an iBSP430resourceWaitCallback_ni() will not cause the
+ * notification of availability to be lost, and that recursive
+ * resource allocation is satisfied as soon as possible.
+ *
+ * @note There is no validation (and no penalty) if @p waiter is not
+ * on the @p resource wait list.
+ *
  * @param resource a pointer to the structure associated with a shared
  * resource
  *
- * @param waiter the wait structure used for notification when the
+ * @param waiter the wait handle used for notification when the
  * resource becomes available.
  *
- * @return 0 if @p waiter had been in the resource wait queue; -1 if
- * it had not.
+ * @return The return value from the callback to the new head if that
+ * was invoked, or zero.
  */
 int iBSP430resourceCancelWait_ni (hBSP430resource resource,
                                   hBSP430resourceWaiter waiter);
@@ -264,7 +288,7 @@ typedef struct sBSP430resourceReleaseFlag {
   unsigned int flagv;
 } sBSP430resourceReleaseFlag;
 
-/** Function conforming to #iBSP430resourceWaitCallback
+/** Function conforming to #iBSP430resourceWaitCallback_ni
  *
  * In many cases the release of a resource can be communicated to a
  * waiting subsystem by setting a flag in the subsystem's event set

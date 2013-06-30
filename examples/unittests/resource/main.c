@@ -282,7 +282,7 @@ testMultiClaim (void)
   }
 }
 
-int
+static int
 callback_getval (hBSP430resource resource,
                  hBSP430resourceWaiter waiter)
 {
@@ -319,6 +319,118 @@ testCallbackReturnValue (void)
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(&waiter, resource.waiter);
 }
 
+static int
+callback_claim (hBSP430resource resource,
+                hBSP430resourceWaiter waiter)
+{
+  const sBSP430resourceReleaseFlag * rfp = (const sBSP430resourceReleaseFlag *)(waiter->context);
+  *(rfp->flagp) |= rfp->flagv;
+  if (0 == iBSP430resourceClaim_ni(resource, waiter, eBSP430resourceWait_FIFO, waiter)) {
+    return - rfp->flagv;
+  }
+  return rfp->flagv;
+}
+
+static int
+callback_cancel (hBSP430resource resource,
+                 hBSP430resourceWaiter waiter)
+{
+  const sBSP430resourceReleaseFlag * rfp = (const sBSP430resourceReleaseFlag *)(waiter->context);
+  *(rfp->flagp) |= rfp->flagv;
+  return iBSP430resourceCancelWait_ni(resource, waiter);
+}
+
+static int
+callback_nowake (hBSP430resource resource,
+                 hBSP430resourceWaiter waiter)
+{
+  const sBSP430resourceReleaseFlag * rfp = (const sBSP430resourceReleaseFlag *)(waiter->context);
+  *(rfp->flagp) |= rfp->flagv;
+  return rfp->flagv;
+}
+
+void
+testCancelWait (void)
+{
+  const sBSP430resourceReleaseFlag flagds[] = {
+    { .flagp = &flag_v, .flagv = 0x0000 },
+    { .flagp = &flag_v, .flagv = 0x1000 },
+    { .flagp = &flag_v, .flagv = 0x0200 },
+    { .flagp = &flag_v, .flagv = 0x0030 },
+    { .flagp = &flag_v, .flagv = 0x0004 },
+    { .flagp = &flag_v, .flagv = 0x5000 },
+  };
+  sBSP430resourceWaiter waiters[] = {
+    { .callback_ni = iBSP430resourceSetFlagOnRelease, .context = flagds+0, .next = waiters+5 },
+    { .callback_ni = callback_nowake, .context = flagds+1, .next = waiters+4 },
+    { .callback_ni = callback_claim, .context = flagds+2, .next = waiters+3 },
+    { .callback_ni = callback_cancel, .context = flagds+3, .next = waiters+2 },
+    { .callback_ni = callback_nowake, .context = flagds+4, .next = waiters+3 },
+    { .callback_ni = iBSP430resourceSetFlagOnRelease, .context = flagds+5, .next = waiters+1 },
+  };
+  static const size_t nwaiters = sizeof(waiters)/sizeof(*waiters);
+  int i;
+  sBSP430resource resource;
+  int rc;
+
+  cprintf("# testCallbackReturnValue\n");
+  flag_v = 0;
+  memset(&resource, 0, sizeof(resource));
+  for (i = 0; i < nwaiters; ++i) {
+    BSP430_UNITTEST_ASSERT_FALSE(NULL == waiters[i].next);
+    rc = iBSP430resourceClaim_ni(&resource, waiters+i, eBSP430resourceWait_FIFO, waiters+i);
+    BSP430_UNITTEST_ASSERT_EQUAL_FMTd(rc, (0 == i) ? i : -1);
+    BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, resource.count);
+  }
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTx(0, flag_v);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+1, resource.waiter);
+
+  /* Verify waiter not in list has no side effect. */
+  rc = iBSP430resourceCancelWait_ni(&resource, waiters+0);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(0, rc);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTx(0, flag_v);
+
+  /* Verify removal of waiter that is not head is successful with no
+   * side effect. */
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+5, waiters[4].next);
+  rc = iBSP430resourceCancelWait_ni(&resource, waiters+4);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(0, rc);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTx(0, flag_v);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+5, waiters[3].next);
+
+  /* Verify removal of waiter that is head when resource is not
+   * available invokes callback of next resource and returns its
+   * value. */
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+1, resource.waiter);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+2, waiters[1].next);
+  rc = iBSP430resourceCancelWait_ni(&resource, waiters+1);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(flagds[2].flagv, rc);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTx(0x0200, flag_v);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+2, resource.waiter);
+  flag_v = 0;
+
+  /* Release the resource.  The waiter that assisted with previous
+   * step will now claim it. */
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+0, resource.holder);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+2, resource.waiter);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+3, waiters[2].next);
+  rc = iBSP430resourceRelease_ni(&resource, waiters+0);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(rc, - flagds[2].flagv);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTx(0x0200, flag_v);
+  flag_v = 0;
+
+  /* Verify removal of waiter that is head within callback when
+   * resource invokes new head callback, and returns its value. */
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+2, resource.holder);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+3, resource.waiter);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+5, waiters[3].next);
+  rc = iBSP430resourceRelease_ni(&resource, waiters+2);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTd(rc, BSP430_HAL_ISR_CALLBACK_EXIT_LPM);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTx(0x5030, flag_v);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(NULL, resource.holder);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(waiters+5, resource.waiter);
+}
+
 void main ()
 {
   vBSP430platformInitialize_ni();
@@ -329,6 +441,7 @@ void main ()
   testMisorderedClaims();
   testMultiClaim();
   testCallbackReturnValue();
+  testCancelWait();
 
   vBSP430unittestFinalize();
 }

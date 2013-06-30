@@ -39,6 +39,36 @@
 #include <bsp430/resource.h>
 #include <bsp430/periph.h>
 
+static hBSP430resourceWaiter
+remove_waiter_ni (hBSP430resource resource,
+                  hBSP430resourceWaiter waiter)
+{
+  volatile hBSP430resourceWaiter * wp = &resource->waiter;
+  int num_removals = 0;
+
+  /* Remove the waiter from the list.  It should only appear there
+   * once, but we'll check the whole thing unless optimization
+   * supersedes correctness. */
+  while (NULL != *wp) {
+    if (waiter == *wp) {
+      ++num_removals;
+#if ! (BSP430_CORE_NDEBUG - 0)
+      while (1 < num_removals) {
+        /* block to allow diagnosis */
+      }
+#endif
+      *wp = (*wp)->next;
+#if (BSP430_CORE_NDEBUG - 0)
+      break;
+#else /* BSP430_CORE_NDEBUG */
+      continue;
+#endif /* BSP430_CORE_NDEBUG */
+    }
+    wp = &(*wp)->next;
+  }
+  return (0 == num_removals) ? NULL : waiter;
+}
+
 int
 iBSP430resourceClaim_ni (hBSP430resource resource,
                          void * self,
@@ -53,18 +83,10 @@ iBSP430resourceClaim_ni (hBSP430resource resource,
       || (self == resource->holder)) {
     if (0 == resource->count) {
       /* First-time success requires bookkeeping.  Record the holder
-       * of the resource. */
+       * of the resource and remove the waiter from the queue. */
       resource->holder = (NULL == self) ? resource : self;
       if (NULL != waiter) {
-        /* Remove the waiter from the list (it should only be in there
-         * once) */
-        while (NULL != *wp) {
-          if (waiter == *wp) {
-            *wp = (*wp)->next;
-            continue;
-          }
-          wp = &(*wp)->next;
-        }
+        (void)remove_waiter_ni (resource, waiter);
       }
     }
     resource->count += 1;
@@ -130,20 +152,16 @@ int
 iBSP430resourceCancelWait_ni (hBSP430resource resource,
                               hBSP430resourceWaiter waiter)
 {
-  volatile hBSP430resourceWaiter * wp = &resource->waiter;
-  int num_removals = 0;
+  int rc = 0;
+  int do_callback = (waiter == resource->waiter);
 
-  /* Remove the waiter from the list.  It should only appear there
-   * once, but we'll check the whole thing. */
-  while (NULL != *wp) {
-    if (waiter == *wp) {
-      *wp = (*wp)->next;
-      ++num_removals;
-      continue;
-    }
-    wp = &(*wp)->next;
+  if (NULL != waiter) {
+    waiter = remove_waiter_ni(resource, waiter);
   }
-  return (0 == num_removals) ? -1 : 0;
+  if (do_callback && (NULL != resource->waiter)) {
+    rc = resource->waiter->callback_ni(resource, resource->waiter);
+  }
+  return rc;
 }
 
 int
