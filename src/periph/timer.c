@@ -350,6 +350,24 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
 }
 
 unsigned long
+ulBSP430timerOverflow_ni (hBSP430halTIMER timer)
+{
+  unsigned long overflow_count = timer->overflow_count;
+
+  /* Get the overflow counter for this result.  If an overflow has
+   * occurred but has not been processed, register its effect locally
+   * but keep the flag set for handling by the interrupt handler so
+   * that overflow callbacks are invoked properly.
+   *
+   * Note that TAIFG, TBIFG, and TDIFG all have value 0x0001 so it
+   * doesn't matter which type of timer this is. */
+  if (timer->hpl->ctl & TAIFG) {
+    ++overflow_count;
+  }
+  return overflow_count;
+}
+
+unsigned long
 ulBSP430timerCounter_ni (hBSP430halTIMER timer,
                          unsigned int * overflowp)
 {
@@ -368,17 +386,7 @@ ulBSP430timerCounter_ni (hBSP430halTIMER timer,
     ctlb = timer->hpl->ctl;
   } while (ctla != ctlb);
 
-  overflow_count = timer->overflow_count;
-  /* Get the overflow counter for this result.  If an overflow has
-   * occurred but has not been processed, register its effect locally
-   * but keep the flag set for handling by the interrupt handler so
-   * that overflow callbacks are invoked properly.
-   *
-   * Note that TAIFG, TBIFG, and TDIFG all have value 0x0001 so it
-   * doesn't matter which type of timer this is. */
-  if (ctla & TAIFG) {
-    ++overflow_count;
-  }
+  overflow_count = ulBSP430timerOverflow_ni(timer);
   if (overflowp) {
     *overflowp = overflow_count >> 16;
   }

@@ -1205,6 +1205,17 @@ eBSP430clockSource xBSP430timerClockSource (volatile sBSP430hplTIMER * hpl);
  * source scaled by any relevant dividers. */
 unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph);
 
+/** Return the adjusted overflow counter for the timer.
+ *
+ * This is @link sBSP430halTIMER::overflow_count
+ * timer->overflow_count@endlink, adjusted to account for any
+ * registered but unhandled overflow event.
+ *
+ * @param timer the timer for which the overflow counter is desired.
+ *
+ * @return the adjusted overflow counter for @p timer */
+unsigned long ulBSP430timerOverflow_ni (hBSP430halTIMER timer);
+
 /** Read the timer counter assuming interrupts are disabled.
  *
  * @note This routine accounts for the possibility of a single pending
