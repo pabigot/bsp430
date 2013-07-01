@@ -1704,10 +1704,16 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
  * of a pulse on a timer input. */
 #define BSP430_TIMER_PULSECAP_END_VALID 0x02
 
-/** Bit set in sBSP430timerPulseCapture::flags if the underlying
- * timer recorded an overflow event, or if a transition was detected
- * after the pulse end before the state was reset via
- * vBSP430timerPulseCaptureClear. */
+/** Bit set in sBSP430timerPulseCapture::flags if any of these
+ * conditions hold:
+ *
+ * @li the underlying timer recorded an overflow event (hardware #COV);
+ * @li the underlying timer data was overwritten before the FLIH could extract it;
+ * @li a new transition was detected after the pulse end before the state was reset via
+ * vBSP430timerPulseCaptureClear (software).
+ *
+ * If this bit is set, neither counter values nor the
+ * #BSP430_TIMER_PULSECAP_ACTIVE_HIGH bit are reliable. */
 #define BSP430_TIMER_PULSECAP_OVERFLOW 0x04
 
 /** Bit set in sBSP430timerPulseCapture::flags if the captured start
@@ -1723,17 +1729,16 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
 /** Bit set in sBSP430timerPulseCapture::flags if the
  * sBSP430timerPulseCapture::callback_ni is to be invoked when a pulse
  * start is captured. */
-#define BSP430_TIMER_PULSECAP_START_CALLBACK 0x10
+#define BSP430_TIMER_PULSECAP_START_CALLBACK 0x100
 
 /** Bit set in sBSP430timerPulseCapture::flags if the
  * sBSP430timerPulseCapture::callback_ni is to be invoked when a pulse
  * end is captured. */
-#define BSP430_TIMER_PULSECAP_END_CALLBACK 0x20
+#define BSP430_TIMER_PULSECAP_END_CALLBACK 0x200
 
 /** Bit set in sBSP430timerPulseCapture::flags if the pulse capture
  * infrastructure is enabled. */
 #define BSP430_TIMER_PULSECAP_ENABLED 0x1000
-
 
 /* Forward declaration */
 struct sBSP430timerPulseCapture;

@@ -652,18 +652,26 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
   hBSP430halTIMER timer = (hBSP430halTIMER)context;
   hBSP430timerPulseCapture pulsecap = (hBSP430timerPulseCapture)(-offsetof(sBSP430timerPulseCapture, cb) + (unsigned char *)cb);
   unsigned int flags = pulsecap->flags;
-  unsigned int ccr = timer->hpl->ccr[idx];
-  unsigned int cctl = timer->hpl->cctl[idx];
+  unsigned int ccr;
+  unsigned int cctl;
   int do_callback = 0;
   int rv = 0;
 
-  if (cctl & COV) {
-    timer->hpl->cctl[idx] &= ~COV;
+  /* Record capture counter value then the state describing that
+   * value. */
+  ccr  = timer->hpl->ccr[idx];
+  cctl = timer->hpl->cctl[idx];
+
+  /* COV means a second capture occured before the interrupt handler
+   * was entered.  CCIFG means a second capture occured after the
+   * interrupt handler was entered but before this callback was
+   * invoked.  In both cases data was lost. */
+  if (cctl & (COV | CCIFG)) {
+    timer->hpl->cctl[idx] &= ~(COV | CCIFG);
     flags |= BSP430_TIMER_PULSECAP_OVERFLOW;
   }
   if (! (BSP430_TIMER_PULSECAP_OVERFLOW & flags)) {
-    unsigned long cap_tt = ulBSP430timerCounter_ni(timer, NULL);
-    cap_tt += (int)(ccr - (unsigned int)cap_tt);
+    unsigned long cap_tt = (ulBSP430timerOverflow_ni(timer) << 16) | ccr;
     if (! (BSP430_TIMER_PULSECAP_START_VALID & flags)) {
       pulsecap->start_tt = cap_tt;
       flags |= BSP430_TIMER_PULSECAP_START_VALID;

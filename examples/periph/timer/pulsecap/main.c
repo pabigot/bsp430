@@ -17,10 +17,9 @@
 #error No button available on this platform
 #endif /* BSP430_PLATFORM_BUTTON0 */
 
-unsigned long pulseWidth_tt;
-unsigned int overflows;
-unsigned int activehighs;
-
+volatile unsigned long pulseWidth_tt_v;
+volatile unsigned int overflows_v;
+volatile unsigned int activehighs_v;
 
 static int
 pulsecap_callback_ni (hBSP430timerPulseCapture pulsecap)
@@ -31,17 +30,16 @@ pulsecap_callback_ni (hBSP430timerPulseCapture pulsecap)
   int rv = 0;
 
   cprintf("pc flags %04x start %lu end %lu\n", pulsecap->flags, pulsecap->start_tt, pulsecap->end_tt);
-  if (both == (both & pulsecap->flags)) {
-    pulseWidth_tt = pulsecap->end_tt - pulsecap->start_tt;
+  if (both == ((both | BSP430_TIMER_PULSECAP_OVERFLOW) & pulsecap->flags)) {
+    pulseWidth_tt_v = pulsecap->end_tt - pulsecap->start_tt;
     do_clear = 1;
   }
-  if (active_high == (active_high & pulsecap->flags)) {
-    ++activehighs;
+  if (active_high == ((active_high | BSP430_TIMER_PULSECAP_OVERFLOW) & pulsecap->flags)) {
+    ++activehighs_v;
     do_clear = 1;
   }
   if (BSP430_TIMER_PULSECAP_OVERFLOW & pulsecap->flags) {
-    rv = BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;
-    ++overflows;
+    ++overflows_v;
     do_clear = 1;
   }
   if (do_clear) {
@@ -119,13 +117,25 @@ void main ()
   rc = iBSP430timerPulseCaptureEnable(pulsecap);
   cprintf("Enable got %d\n", rc);
   while (1) {
+    unsigned int flags;
+    unsigned long pulseWidth_tt;
+    unsigned int overflows;
+    unsigned int activehighs;
+
+    BSP430_CORE_DISABLE_INTERRUPT();
+    do {
+      flags = pulsecap_state.flags;
+      pulseWidth_tt = pulseWidth_tt_v;
+      overflows = overflows_v;
+      activehighs = activehighs_v;
+    } while (0);
+    BSP430_CORE_ENABLE_INTERRUPT();
     cprintf("Timer %lu flags %04x ; %u over %u activehigh\n",
             ulBSP430timerCounter(b0timer_hal, NULL),
-            pulsecap->flags,
-            overflows, activehighs);
+            flags, overflows, activehighs);
     if (0 != pulseWidth_tt) {
       cprintf("\tNew width: %lu ticks = %lu us\n", pulseWidth_tt,
-              (1000ul * pulseWidth_tt) / (freq_Hz / 1000UL));
+              (unsigned long)((1000ULL * pulseWidth_tt) / (freq_Hz / 1000UL)));
       pulseWidth_tt = 0;
     }
     BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ);
