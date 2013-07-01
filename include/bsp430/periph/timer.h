@@ -147,6 +147,7 @@
  *
  * @li @ref grp_timer_alarm
  * @li @ref grp_timer_ccaclk
+ * @li @ref grp_config_functional
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -260,6 +261,9 @@
  * infrastructure.  Use of CCACLK in this role can be seen in @ref
  * ex_utility_alarm.
  *
+ * @note Many of these features are enabled through functional
+ * configuration settings documented in @ref grp_config_functional.
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -350,7 +354,7 @@
  * @cppflag
  * @affects #BSP430_TIMER_CCACLK
  * @defaulted
- * @ingroup grp_timer_ccaclk */
+ * @ingroup grp_config_functional */
 #ifndef configBSP430_TIMER_CCACLK
 #define configBSP430_TIMER_CCACLK 0
 #endif /* configBSP430_TIMER_CCACLK */
@@ -435,8 +439,8 @@
 
 /** Indirect control inclusion of the @HAL interface for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
- * Propagated as the default for #configBSP430_HAL_TA0 or other flag
- * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
+ * Propagated as the default for #configBSP430_HAL_TA0 or other timer
+ * peripheral determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
  * @defaulted
@@ -448,8 +452,8 @@
 
 /** Indirect control inclusion of the primary @HAL interrupt handler for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
- * Propagated as default for #configBSP430_HAL_TA0_ISR or other flag
- * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
+ * Propagated as default for #configBSP430_HAL_TA0_ISR or other timer
+ * peripheral determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
  * @defaulted
@@ -461,8 +465,8 @@
 
 /** Indirect control inclusion of the CC0 @HAL interrupt handler for #BSP430_TIMER_CCACLK_PERIPH_HANDLE.
  *
- * Propagated as default for #configBSP430_HAL_TA0_CC0_ISR or other flag
- * determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
+ * Propagated as default for #configBSP430_HAL_TA0_CC0_ISR or other
+ * timer peripheral determined by #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
  * @cppflag
  * @defaulted
@@ -484,13 +488,14 @@
  * @note Setting this flag only enables the @HPL for
  * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE.  To delegate control
  * of additional capabilities see
- * #configBSP430_TIMER_CCACLK_CLK_PORT_HAL.  ISR capabilities are not
- * available through this interface.
+ * #configBSP430_TIMER_CCACLK_CLK_PORT_HAL.  Port ISR capabilities are
+ * not available through this interface.
  *
  * @cppflag
  * @defaulted
+ * @affects #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE
  * @see #configBSP430_TIMER_CCACLK_CLK_PORT_HAL
- * @ingroup grp_timer_ccaclk */
+ * @ingroup grp_config_functional */
 #ifndef configBSP430_TIMER_CCACLK_CLK_PORT
 #define configBSP430_TIMER_CCACLK_CLK_PORT indirectly defaulted
 #endif /* configBSP430_TIMER_CCACLK_CLK_PORT */
@@ -522,13 +527,14 @@
  * @note Setting this flag only enables the @HPL for
  * #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE.  To delegate control
  * of additional capabilities see
- * #configBSP430_TIMER_CCACLK_CC0_PORT_HAL.  ISR capabilities are not
- * available through this interface.
+ * #configBSP430_TIMER_CCACLK_CC0_PORT_HAL.  Port ISR capabilities are
+ * not available through this interface.
  *
  * @cppflag
  * @defaulted
+ * @affects #BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_HANDLE
  * @see #configBSP430_TIMER_CCACLK_CC0_PORT_HAL
- * @ingroup grp_timer_ccaclk */
+ * @ingroup grp_config_functional */
 #ifndef configBSP430_TIMER_CCACLK_CC0_PORT
 #define configBSP430_TIMER_CCACLK_CC0_PORT indirectly defaulted
 #endif /* configBSP430_TIMER_CCACLK_CC0_PORT */
@@ -560,13 +566,14 @@
  * @note Setting this flag only enables the @HPL for
  * #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE.  To delegate control
  * of additional capabilities see
- * #configBSP430_TIMER_CCACLK_CC1_PORT_HAL.  ISR capabilities are not
- * available through this interface.
+ * #configBSP430_TIMER_CCACLK_CC1_PORT_HAL.  Port ISR capabilities are
+ * not available through this interface.
  *
  * @cppflag
  * @defaulted
+ * @affects #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE
  * @see #configBSP430_TIMER_CCACLK_CC1_PORT_HAL
- * @ingroup grp_timer_ccaclk */
+ * @ingroup grp_config_functional */
 #ifndef configBSP430_TIMER_CCACLK_CC1_PORT
 #define configBSP430_TIMER_CCACLK_CC1_PORT indirectly defaulted
 #endif /* configBSP430_TIMER_CCACLK_CC1_PORT */
@@ -628,6 +635,7 @@
 /** The BSP430 port peripheral corresponding to
  * #BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_CPPID.
  *
+ * @dependency #configBSP430_TIMER_CCACLK_CLK_PORT
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CLK_PORT_PERIPH_HANDLE derived platform or application specific
@@ -689,6 +697,7 @@
  * underlying resource instances.
  *
  * @defaulted
+ * @dependency #configBSP430_TIMER_CCACLK_CC0_PORT
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC0_PORT_PERIPH_CPPID platform or application specific
@@ -778,6 +787,7 @@
 /** The BSP430 port peripheral corresponding to
  * #BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID.
  *
+ * @dependency #configBSP430_TIMER_CCACLK_CC1_PORT
  * @ingroup grp_timer_ccaclk */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_HANDLE derived platform or application specific

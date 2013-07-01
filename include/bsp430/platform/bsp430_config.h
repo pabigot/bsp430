@@ -132,8 +132,10 @@
  * @HAL, and primary interrupt capabilities enabled.
  *
  * @li #configBSP430_TIMER_CCACLK provides a secondary timer via
- * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.  See @ref grp_timer_ccaclk for
- * more details.
+ * #BSP430_TIMER_CCACLK_PERIPH_HANDLE.  Associated with this are
+ * additional optional functional resources that identify ports on
+ * which the secondary clock source and capture/compare inputs can be
+ * accessed.  See @ref grp_timer_ccaclk for more details.
  *
  * @li #configBSP430_CONSOLE provides a serial console via
  * #BSP430_CONSOLE_SERIAL_PERIPH_HANDLE with the corresponding @HPL,
