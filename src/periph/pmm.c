@@ -81,7 +81,7 @@ setVCoreUp (unsigned int level)
 
   /* Wait until SVM highside is settled */
   while ((PMMIFG & SVSMHDLYIFG) == 0) {
-    ;
+    BSP430_CORE_WATCHDOG_CLEAR();
   }
 
   /* Clear flag */
@@ -96,7 +96,7 @@ setVCoreUp (unsigned int level)
 
     /* Wait until SVM highside is settled */
     while ((PMMIFG & SVSMHDLYIFG) == 0) {
-      ;
+      BSP430_CORE_WATCHDOG_CLEAR();
     }
 
     /* Clear all Flags */
@@ -116,7 +116,7 @@ setVCoreUp (unsigned int level)
 
   /* Wait until SVM highside is settled */
   while ((PMMIFG & SVSMHDLYIFG) == 0) {
-    ;
+    BSP430_CORE_WATCHDOG_CLEAR();
   }
 
   /* Clear flag */
@@ -130,7 +130,7 @@ setVCoreUp (unsigned int level)
 
   /* Wait until SVM low side is settled */
   while ((PMMIFG & SVSMLDLYIFG) == 0) {
-    ;
+    BSP430_CORE_WATCHDOG_CLEAR();
   }
 
   /* Clear flag */
@@ -160,7 +160,7 @@ setVCoreUp (unsigned int level)
   /* Wait until SVM high side and low side are settled */
   while (((PMMIFG & SVSMLDLYIFG) == 0)
          || ((PMMIFG & SVSMHDLYIFG) == 0)) {
-    ;
+    BSP430_CORE_WATCHDOG_CLEAR();
   }
 
   /* Clear all Flags */
@@ -211,7 +211,7 @@ setVCoreDown (unsigned int level)
   /* Wait until SVM high side and SVM low side is settled */
   while (((PMMIFG & SVSMHDLYIFG) == 0)
          || (PMMIFG & SVSMLDLYIFG) == 0) {
-    ;
+    BSP430_CORE_WATCHDOG_CLEAR();
   }
 
   /* Clear flags */
@@ -244,7 +244,7 @@ setVCoreDown (unsigned int level)
   /* Wait until SVM high side and low side are settled */
   while (((PMMIFG & SVSMLDLYIFG) == 0)
          || ((PMMIFG & SVSMHDLYIFG) == 0)) {
-    ;
+    BSP430_CORE_WATCHDOG_CLEAR();
   }
 
   /* Clear all Flags */
