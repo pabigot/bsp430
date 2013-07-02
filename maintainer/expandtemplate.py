@@ -733,12 +733,26 @@ def fn_emk_expand (subst_map, idmap, is_config):
     if is_config:
         hal_text = []
         hpl_text = []
+        timer_text = []
         for (sig_prefix, is_gpio) in signals:
             want_text = []
             want_text.append("#define BSP430_WANT_PERIPH_CPPID %s_PORT_PERIPH_CPPID" % (sig_prefix,))
             want_text.append("#include <bsp430/periph/want_.h>")
             want_text.append("#undef BSP430_WANT_PERIPH_CPPID")
             if is_gpio:
+                timer_text.append('''
+#if (config%(gpio)s_TIMER - 0) && defined(%(gpio)s_TIMER_PERIPH_CPPID)
+#define BSP430_WANT_PERIPH_CPPID %(gpio)s_TIMER_PERIPH_CPPID
+#if 0 == %(gpio)s_TIMER_CCIDX
+#define BSP430_WANT_CONFIG_HAL_CC0_ISR 1
+#else /* %(gpio)s_TIMER_CCIDX */
+#define BSP430_WANT_CONFIG_HAL_ISR 1
+#endif /* %(gpio)s_TIMER_CCIDX */
+#include <bsp430/periph/want_.h>
+#undef BSP430_WANT_CONFIG_HAL_ISR
+#undef BSP430_WANT_CONFIG_HAL_CC0_ISR
+#undef BSP430_WANT_PERIPH_CPPID
+#endif /* config %(gpio)s timer */''' % { 'gpio' : sig_prefix } )
                 hal_text.extend(want_text)
             else:
                 hpl_text.extend(want_text)
@@ -752,6 +766,12 @@ def fn_emk_expand (subst_map, idmap, is_config):
             text.append("#define BSP430_WANT_CONFIG_HPL 1")
             text.extend(hpl_text)
             text.append("#undef BSP430_WANT_CONFIG_HPL")
+        if timer_text:
+            text.append("/* Request HAL for GPIO timers */");
+            text.append("#define BSP430_WANT_CONFIG_HAL 1");
+            text.extend(timer_text);
+            text.append("#undef BSP430_WANT_CONFIG_HAL");
+
     text.append('#endif /* %s */' % (cpp_cond,))
     return text
 
