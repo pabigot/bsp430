@@ -20,10 +20,6 @@
 #error No button available on this platform
 #endif /* BSP430_PLATFORM_BUTTON0 */
 
-/* Core voltage control is supported on 5xx/6xx modules with PMM
- * support but not on FRAM devices. */
-#define APP_ENABLE_COREV (BSP430_MODULE_PMM - 0) && ! (BSP430_MODULE_PMM_FRAM - 0)
-
 typedef struct sCommand {
   char cmd;
   const char * description;
@@ -58,12 +54,12 @@ const sCommand commands[] = {
   { CMD_STATE, "Display system state (clock speeds, etc.)" },
 #define CMD_SLEEP '$'
   { CMD_SLEEP, "Enter sleep mode" },
-#if APP_ENABLE_COREV
+#if (BSP430_PMM_SUPPORTS_COREV - 0)
 #define CMD_COREV_INCR '>'
   { CMD_COREV_INCR, "Increment core voltage" },
 #define CMD_COREV_DECR '<'
   { CMD_COREV_DECR, "Decrement core voltage" },
-#endif /* APP_ENABLE_COREV */
+#endif /* BSP430_PMM_SUPPORTS_COREV */
 };
 
 typedef struct sState {
@@ -314,10 +310,10 @@ void main ()
               cprintf("Selected idle state: %s\n", state.lpm_description);
               cprintf("Clocks will %s\n", state.hold_clock ? "freeze" : "run");
               cprintf("Serial will %s\n", state.hold_serial ? "be held" : "be active");
-#if APP_ENABLE_COREV
+#if (BSP430_PMM_SUPPORTS_COREV - 0)
               cprintf("Core voltage level %d, SVSMHCTL %04x SVSMLCTL %04x\n",
-                      PMMCTL0 & PMMCOREV_3, SVSMHCTL, SVSMLCTL);
-#endif /* APP_ENABLE_COREV */
+                      (PMMCTL0 & PMMCOREV_3)/PMMCOREV0, SVSMHCTL, SVSMLCTL);
+#endif /* BSP430_PMM_SUPPORTS_COREV */
 #ifdef BSP430_PMM_ENTER_LPMXp5_NI
               cprintf("LPM X.5 supported\n");
 #else /* BSP430_PMM_ENTER_LPMXp5_NI */
@@ -333,7 +329,7 @@ void main ()
             case CMD_SLEEP:
               enter_sleep = 1;
               break;
-#if APP_ENABLE_COREV
+#if (BSP430_PMM_SUPPORTS_COREV - 0)
             case CMD_COREV_INCR:
             case CMD_COREV_DECR: {
               int delta = 0;
@@ -360,7 +356,7 @@ void main ()
               cprintf("PMM: CTL0 %04x CTL1 %04x\n", PMMCTL0, PMMCTL1);
               break;
             }
-#endif /* APP_ENABLE_COREV */
+#endif /* BSP430_PMM_SUPPORTS_COREV */
           }
         } else {
           cprintf("Unrecognized command: %c\n", c);

@@ -3,7 +3,8 @@ MSPDEBUG_DRIVER=-j uif
 # You can program with the ezRF interface, but it's really slow.
 #MSPDEBUG_DRIVER=rf2500
 # UCS needs CCACLK for DCO configuration
-MODULES_CLOCK=periph/ucs periph/timer
+# MCLK configurations need PMM module
+MODULES_CLOCK=periph/ucs periph/timer periph/pmm
 MODULES_PLATFORM_SERIAL=periph/usci5
 
 # U8GLIB uses vertical 1-bit pixels

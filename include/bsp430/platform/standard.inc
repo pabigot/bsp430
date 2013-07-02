@@ -45,6 +45,7 @@
 #include <bsp430/clock.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/led.h>
+#include <bsp430/periph/pmm.h>
 
 #ifndef BSP430_PLATFORM_STANDARD_USE_INITIALIZE
 /** Define to true value to include default vBSP430platformInitialize_ni() implementation */
@@ -63,6 +64,18 @@
  * leaving vBSP340platformInitialize_ni(). */
 #define BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE do { } while (0)
 #endif /* BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE */
+
+#ifndef BSP430_PLATFORM_STANDARD_SET_CORE_VOLTAGE
+/** Define to a C statement to do platform-specific voltage initialization.
+ *
+ * On MCUs with the @link bsp430/periph/pmm.h PMM@endlink module it is
+ * recommended to adjust the processor core voltage prior to setting
+ * the clock above a certain frequency.  Based on clock ranges
+ * specified in the MCU data sheet the platform header file should
+ * define this macro to invoke iBSP430pmmSetCoreVoltageLevel_ni() with
+ * the necessary level. */
+#define BSP430_PLATFORM_STANDARD_SET_CORE_VOLTAGE do { } while (0)
+#endif /* BSP430_PLATFORM_STANDARD_SET_CORE_VOLTAGE */
 
 /** @cond DOXYGEN_EXCLUDE */
 #if (BSP430_PLATFORM_STANDARD_USE_INITIALIZE - 0)
@@ -94,6 +107,11 @@ vBSP430platformInitialize_ni (void)
 #if (BSP430_PLATFORM_BOOT_CONFIGURE_XT2 - 0)
   (void)iBSP430clockConfigureXT2_ni(1, (BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC * BSP430_CLOCK_PUC_MCLK_HZ) / BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES);
 #endif
+
+  /* Adjust core voltage to support high-speed clocks */
+#if (BSP430_PMM_SUPPORTS_COREV - 0)
+  (void)iBSP430pmmSetCoreVoltageLevel_ni(BSP430_PMM_COREV_FOR_MCLK(BSP430_CLOCK_NOMINAL_MCLK_HZ));
+#endif /* BSP430_PMM_SUPPORTS_COREV */
 
   /* Configure clocks.  Start with MCLK, which may need to use ACLK or
    * SMCLK during trimming operations.  Then finish up with SMCLK and

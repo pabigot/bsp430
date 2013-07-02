@@ -3,7 +3,8 @@ MCU=cc430f5137
 
 MSPDEBUG_DRIVER=-j uif
 # UCS needs CCACLK for DCO configuration
-MODULES_CLOCK=periph/ucs periph/timer
+# MCLK configurations need PMM module
+MODULES_CLOCK=periph/ucs periph/timer periph/pmm
 MODULES_PLATFORM_SERIAL=periph/usci5
 
 # The SuRF platform.c module provides a custom EUI-64 derived from the

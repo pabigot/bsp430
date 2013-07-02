@@ -95,6 +95,13 @@
 #define BSP430_LED_GREEN 2
 #define BSP430_LED_RED1 3
 
+/* Select core voltage: MSP430F5438A 8/12/20/25 */
+#define BSP430_PMM_COREV_FOR_MCLK(_mclk)    \
+  ((20000000UL < (_mclk)) ? PMMCOREV_3 :    \
+   ((12000000UL < (_mclk)) ? PMMCOREV_2 :   \
+    (((8000000UL < (_mclk)) ? PMMCOREV_1 :  \
+      PMMCOREV_0))))
+
 /* How to use ACLK as a capture/compare input source */
 /* Settings for TB0: T0B6 ccis=1 ; clk P4.7 ; cc0 P4.0 ; cc1 P4.1 */
 #ifndef BSP430_TIMER_CCACLK_ACLK_CCIDX

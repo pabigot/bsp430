@@ -4,7 +4,8 @@ MCU ?= msp430f5438a
 
 MSPDEBUG_DRIVER=-j uif
 # UCS needs CCACLK for DCO configuration
-MODULES_CLOCK=periph/ucs periph/timer
+# MCLK configurations need PMM module
+MODULES_CLOCK=periph/ucs periph/timer periph/pmm
 MODULES_PLATFORM_SERIAL=periph/usci5
 
 # U8GLIB uses horizontal 2-bit pixels

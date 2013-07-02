@@ -709,7 +709,7 @@ void main (void)
   cputchar_ni('\n');
 #endif /* BSP430_MODULE_SYS */
 
-#if (BSP430_MODULE_PMM - 0) && ! (BSP430_MODULE_PMM_FRAM - 0)
+#if (BSP430_PMM_SUPPORTS_COREV - 0)
   rv = iBSP430pmmSetCoreVoltageLevel_ni(PMMCOREV_3);
   cprintf("Vcore at %d\n", rv);
 #endif

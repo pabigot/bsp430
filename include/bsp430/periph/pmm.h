@@ -189,7 +189,32 @@ vBSP430pmmInducePOR (void)
   PMMCTL0 = PMMPW | PMMSWPOR;
 }
 
-#if defined(BSP430_DOXYGEN) || ! (BSP430_MODULE_PMM_FRAM - 0)
+/** Defined to a preprocessor true value when the PMM modules supports
+ * adjusting core voltage.
+ *
+ * This is limited to MCUs that have the PMM module and are not FRAM
+ * devices.
+ *
+ * @cppflag */
+#define BSP430_PMM_SUPPORTS_COREV (defined(BSP430_DOXYGEN) || ! (BSP430_MODULE_PMM_FRAM - 0))
+
+#if (BSP430_PMM_SUPPORTS_COREV - 0)
+
+/** Determine PMM core voltage setting for clock speed.
+ *
+ * This is a platform-specific macro to select the appropriate
+ * parameter for iBSP430pmmSetCoreVoltageLevel_ni() based on a desired
+ * system clock speed.  It should be defined in the platform.h header,
+ * based on values specified in the data sheet under Recommended
+ * Operating Conditions for f_SYSTEM.
+ *
+ * @param _mclk Desired f_SYSTEM (maximum MCLK frequency)
+ *
+ * @defaulted
+ * @platformvalue */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_PMM_COREV_FOR_MCLK(_mclk) include <bsp430/platform.h>
+#endif /* BSP430_PMM_COREV_FOR_MCLK */
 
 /** Safely adjust the PMM core voltage to a desired level.
  *

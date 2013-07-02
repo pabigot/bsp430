@@ -501,6 +501,11 @@ eBSP430clockSource xBSP430clockMCLKSource ();
  * clocks during platform initialization, see
  * #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS.
  *
+ * @warning On some MCUs with the @link bsp430/periph/pmm.h
+ * PMM@endlink module certain MCLK rates require adjusting the MCU
+ * core voltage.  See #BSP430_PMM_COREV_FOR_MCLK.  Platform
+ * initialization will do this based on #BSP430_CLOCK_NOMINAL_MCLK_HZ.
+ *
  * @param mclk_Hz Desired frequency for the master clock, in Hz.  If
  * zero, #BSP430_CLOCK_PUC_MCLK_HZ is used.
  *
