@@ -1834,7 +1834,7 @@ typedef struct sBSP430timerPulseCapture * hBSP430timerPulseCapture;
  * be returned if initialization failed, e.g. because @p periph could
  * not be located. */
 hBSP430timerPulseCapture
-iBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
+hBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
                                     tBSP430periphHandle periph,
                                     int ccidx,
                                     unsigned int ccis,
@@ -1844,7 +1844,7 @@ iBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
 /** Enable or disable an initialized pulse capture structure.
  *
  * @param pulsecap a pulse capture structure initialized using
- * iBSP430timerPulseCaptureInitialize().
+ * hBSP430timerPulseCaptureInitialize().
  *
  * @param enablep If true, the state of @p pulsecap is reset and the
  * capture/compare interrupt associated with the pulse is enabled.  If
@@ -1871,7 +1871,7 @@ vBSP430timerPulseCaptureClear_ni (hBSP430timerPulseCapture pulsecap)
 }
 
 /** Short-hand to invoke iBSP430timerPulseCaptureSetEnabled_ni() to enable @p pulsecap even if interrupts are enabled
- * @param pulsecap a pulse capture structure initialized via iBSP430timerPulseCaptureInitialize()
+ * @param pulsecap a pulse capture structure initialized via hBSP430timerPulseCaptureInitialize()
  * @return 0 if successful, or a negative error code */
 static BSP430_CORE_INLINE
 int
@@ -1887,7 +1887,7 @@ iBSP430timerPulseCaptureEnable (hBSP430timerPulseCapture pulsecap)
 }
 
 /** Short-hand to invoke iBSP430timerPulseCaptureSetEnabled_ni() to disable @p pulsecap even if interrupts are enabled
- * @param pulsecap a pulse capture structure initialized via iBSP430timerPulseCaptureInitialize()
+ * @param pulsecap a pulse capture structure initialized via hBSP430timerPulseCaptureInitialize()
  * @return 0 if successful, or a negative error code */
 static BSP430_CORE_INLINE
 int

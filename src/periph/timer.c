@@ -730,7 +730,7 @@ iBSP430timerPulseCaptureSetEnabled_ni (hBSP430timerPulseCapture pulsecap,
 }
 
 hBSP430timerPulseCapture
-iBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
+hBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
                                     tBSP430periphHandle periph,
                                     int ccidx,
                                     unsigned int ccis,

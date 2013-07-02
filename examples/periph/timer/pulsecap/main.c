@@ -93,7 +93,7 @@ void main ()
 #endif /* BSP430_PORT_SUPPORTS_REN */
   b0hpl->sel0 |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
 
-  pulsecap = iBSP430timerPulseCaptureInitialize(&pulsecap_state,
+  pulsecap = hBSP430timerPulseCaptureInitialize(&pulsecap_state,
                                                 BUTTON0_TIMER_PERIPH_HANDLE,
                                                 BUTTON0_TIMER_CCIDX,
                                                 BUTTON0_TIMER_CCIS,
