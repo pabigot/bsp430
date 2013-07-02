@@ -350,18 +350,20 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
 }
 
 unsigned long
-ulBSP430timerOverflow_ni (hBSP430halTIMER timer)
+ulBSP430timerOverflowAdjusted_ni (hBSP430halTIMER timer,
+                                  unsigned int ctr)
 {
   unsigned long overflow_count = timer->overflow_count;
 
   /* Get the overflow counter for this result.  If an overflow has
-   * occurred but has not been processed, register its effect locally
-   * but keep the flag set for handling by the interrupt handler so
-   * that overflow callbacks are invoked properly.
+   * occurred but has not been processed and the counter value is
+   * below the midway point, register the overflow effect locally but
+   * keep the flag set for handling by the interrupt handler so that
+   * overflow callbacks are invoked properly.
    *
    * Note that TAIFG, TBIFG, and TDIFG all have value 0x0001 so it
    * doesn't matter which type of timer this is. */
-  if (timer->hpl->ctl & TAIFG) {
+  if ((0 <= (int)ctr) && (timer->hpl->ctl & TAIFG)) {
     ++overflow_count;
   }
   return overflow_count;
@@ -386,7 +388,7 @@ ulBSP430timerCounter_ni (hBSP430halTIMER timer,
     ctlb = timer->hpl->ctl;
   } while (ctla != ctlb);
 
-  overflow_count = ulBSP430timerOverflow_ni(timer);
+  overflow_count = ulBSP430timerOverflowAdjusted_ni(timer, r);
   if (overflowp) {
     *overflowp = overflow_count >> 16;
   }
@@ -671,7 +673,7 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
     flags |= BSP430_TIMER_PULSECAP_OVERFLOW;
   }
   if (! (BSP430_TIMER_PULSECAP_OVERFLOW & flags)) {
-    unsigned long cap_tt = (ulBSP430timerOverflow_ni(timer) << 16) | ccr;
+    unsigned long cap_tt = (ulBSP430timerOverflowAdjusted_ni(timer, ccr) << 16) | ccr;
     if (! (BSP430_TIMER_PULSECAP_START_VALID & flags)) {
       pulsecap->start_tt = cap_tt;
       flags |= BSP430_TIMER_PULSECAP_START_VALID;

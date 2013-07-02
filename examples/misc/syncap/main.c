@@ -42,11 +42,13 @@ capture_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
 {
   struct sCapture * cdp = (struct sCapture *)cb;
   hBSP430halTIMER timer = (hBSP430halTIMER)context;
+  unsigned int ccr;
   unsigned int cctl;
 
+  ccr = timer->hpl->ccr[idx];
   cctl = timer->hpl->cctl[idx];
-  cdp->event_tt = (ulBSP430timerOverflow_ni(timer) << 16) + timer->hpl->ccr[idx];
   timer->hpl->cctl[idx] &= ~COV;
+  cdp->event_tt = (ulBSP430timerOverflowAdjusted_ni(timer, ccr) << 16) + ccr;
   cdp->count += 1;
   cdp->last_cci = !!(cctl & CCI);
 

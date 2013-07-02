@@ -1215,16 +1215,24 @@ eBSP430clockSource xBSP430timerClockSource (volatile sBSP430hplTIMER * hpl);
  * source scaled by any relevant dividers. */
 unsigned long ulBSP430timerFrequency_Hz_ni (tBSP430periphHandle periph);
 
-/** Return the adjusted overflow counter for the timer.
+/** Return the adjusted overflow counter for the timer and a 16-bit counter value.
  *
  * This is @link sBSP430halTIMER::overflow_count
  * timer->overflow_count@endlink, adjusted to account for any
- * registered but unhandled overflow event.
+ * registered but unhandled overflow event.  If @p ctr is greater than
+ * 32767 it is assumed the unhandled overflow event occurred after the
+ * counter was read and no adjustment is made.
  *
  * @param timer the timer for which the overflow counter is desired.
  *
+ * @param ctr A recently obtained 16-bit counter value from the timer.
+ * Interrupts must not have been enabled at any point since the
+ * counter was read, and this function must be invoked with one half
+ * of the timer's period.
+ *
  * @return the adjusted overflow counter for @p timer */
-unsigned long ulBSP430timerOverflow_ni (hBSP430halTIMER timer);
+unsigned long ulBSP430timerOverflowAdjusted_ni (hBSP430halTIMER timer,
+                                                unsigned int ctr);
 
 /** Read the timer counter assuming interrupts are disabled.
  *
