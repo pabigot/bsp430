@@ -46,7 +46,7 @@
 #ifndef BSP430_RF_CC2520_H
 #define BSP430_RF_CC2520_H
 
-#include <bsp430/core.h>
+#include <bsp430/rf/rf.h>
 
 /** @def configBSP430_RF_CC2520EMK
  *
@@ -89,6 +89,15 @@
 #endif /* BSP430_RF_CC2520 */
 
 #if defined(BSP430_DOXYGEN)
+
+/** The @link #BSP430_PERIPH_CPPID_NONE CPPID@endlink associated with
+ * the serial device serving as the SPI interface to the CC2520
+ * radio. */
+#define BSP430_RF_CC2520_SPI_PERIPH_CPPID include <bsp430/platform.h>
+
+/** The serial peripheral serving as the SPI interface to the CC2520
+ * radio. */
+#define BSP430_RF_CC2520_SPI_PERIPH_HANDLE include <bsp430/platform.h>
 
 /* -- Begin material from genrf */
 

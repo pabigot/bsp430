@@ -741,7 +741,7 @@ def fn_emk_expand (subst_map, idmap, is_config):
             want_text.append("#undef BSP430_WANT_PERIPH_CPPID")
             if is_gpio:
                 timer_text.append('''
-#if (config%(gpio)s_TIMER - 0) && defined(%(gpio)s_TIMER_PERIPH_CPPID)
+#if (configBSP430_RF_TIMER - 0) && defined(%(gpio)s_TIMER_PERIPH_CPPID)
 #define BSP430_WANT_PERIPH_CPPID %(gpio)s_TIMER_PERIPH_CPPID
 #if 0 == %(gpio)s_TIMER_CCIDX
 #define BSP430_WANT_CONFIG_HAL_CC0_ISR 1
@@ -752,7 +752,7 @@ def fn_emk_expand (subst_map, idmap, is_config):
 #undef BSP430_WANT_CONFIG_HAL_ISR
 #undef BSP430_WANT_CONFIG_HAL_CC0_ISR
 #undef BSP430_WANT_PERIPH_CPPID
-#endif /* config %(gpio)s timer */''' % { 'gpio' : sig_prefix } )
+#endif /* %(gpio)s timer */''' % { 'gpio' : sig_prefix } )
                 hal_text.extend(want_text)
             else:
                 hpl_text.extend(want_text)

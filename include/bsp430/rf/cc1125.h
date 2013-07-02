@@ -56,7 +56,7 @@
 #ifndef BSP430_RF_CC1125_H
 #define BSP430_RF_CC1125_H
 
-#include <bsp430/core.h>
+#include <bsp430/rf/rf.h>
 
 /** Define to a true value to indicate intent to use a <a
  * href="http://www.ti.com/tool/cc1125dk">CC1125 RF Evaluation
@@ -100,6 +100,15 @@
 #endif /* BSP430_RF_CC1125 */
 
 #if defined(BSP430_DOXYGEN)
+
+/** The @link #BSP430_PERIPH_CPPID_NONE CPPID@endlink associated with
+ * the serial device serving as the SPI interface to the CC1125
+ * radio. */
+#define BSP430_RF_CC1125_SPI_PERIPH_CPPID include <bsp430/platform.h>
+
+/** The serial peripheral serving as the SPI interface to the CC1125
+ * radio. */
+#define BSP430_RF_CC1125_SPI_PERIPH_HANDLE include <bsp430/platform.h>
 
 /* -- Begin material from genrf */
 

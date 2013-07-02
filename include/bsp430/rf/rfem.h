@@ -65,7 +65,7 @@
 #ifndef BSP430_RF_RFEM_H
 #define BSP430_RF_RFEM_H
 
-#include <bsp430/core.h>
+#include <bsp430/rf.h>
 
 /** @def configBSP430_RFEM
  *
