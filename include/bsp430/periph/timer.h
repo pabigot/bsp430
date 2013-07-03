@@ -1744,9 +1744,18 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
  * end is captured. */
 #define BSP430_TIMER_PULSECAP_END_CALLBACK 0x200
 
+/** Bit set in sBSP430timerPulseCapture::flags if the callback is
+ * being invoked.  This is used for diagnostics and error checking. */
+#define BSP430_TIMER_PULSECAP_CALLBACK_ACTIVE 0x0400
+
 /** Bit set in sBSP430timerPulseCapture::flags if the pulse capture
- * infrastructure is enabled. */
+ * infrastructure is enabled (i.e., linked into the interrupt callback
+ * chains). */
 #define BSP430_TIMER_PULSECAP_ENABLED 0x1000
+
+/** Bit set in sBSP430timerPulseCapture::flags if the pulse capture
+ * infrastructure is active (i.e., the interrupt is enabled). */
+#define BSP430_TIMER_PULSECAP_ACTIVE 0x2000
 
 /* Forward declaration */
 struct sBSP430timerPulseCapture;
@@ -1778,7 +1787,8 @@ typedef struct sBSP430timerPulseCapture {
   unsigned int ccis;
 
   /** Callback invoked on overflow and optionally on start and end
-   * captures. */
+   * captures.  This may be a null pointer if callbacks are not
+   * required. */
   iBSP430timerPulseCaptureCallback_ni callback_ni;
 
   /** Flags indicating validity and configuration information.
@@ -1786,17 +1796,17 @@ typedef struct sBSP430timerPulseCapture {
    * interrupt-able@endlink while the pulse capture is enabled.  I.e.,
    * its contents should be inspected and mutated only while
    * interrupts are disabled. */
-  volatile unsigned int flags;
+  volatile unsigned int flags_ni;
 
   /** The pulse start time from the underlying clock.  The content is
    * valid only if #BSP430_TIMER_PULSECAP_START_VALID is set in @a
    * flags. */
-  volatile unsigned long start_tt;
+  volatile unsigned long start_tt_ni;
 
   /** The pulse end time from the underlying clock.  The content is
    * valid only if #BSP430_TIMER_PULSECAP_END_VALID is set in @a
    * flags. */
-  volatile unsigned long end_tt;
+  volatile unsigned long end_tt_ni;
 } sBSP430timerPulseCapture;
 
 /** Handle for a structure used to capture the width of a pulse */
@@ -1829,6 +1839,7 @@ typedef struct sBSP430timerPulseCapture * hBSP430timerPulseCapture;
  * #BSP430_TIMER_PULSECAP_END_CALLBACK fields are used.
  *
  * @param callback the callback to be invoked on pulse capture events.
+ * This may be a NULL pointer.
  *
  * @return The pulse capture handle if successful.  A null handle will
  * be returned if initialization failed, e.g. because @p periph could
@@ -1843,35 +1854,107 @@ hBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
 
 /** Enable or disable an initialized pulse capture structure.
  *
+ * @warning This function must @b not be invoked from within an
+ * iBSP430timerPulseCaptureCallback_ni() as it manipulates the
+ * interrupt callback chains.
+ *
+ * @note If @p enablep is false, the capture will be deactivated
+ * before being disabled.  If @p enablep is true the capture will @em
+ * not be activated after being enabled.
+ *
  * @param pulsecap a pulse capture structure initialized using
  * hBSP430timerPulseCaptureInitialize().
  *
- * @param enablep If true, the state of @p pulsecap is reset and the
- * capture/compare interrupt associated with the pulse is enabled.  If
- * zero, the capture/compare interrupt is disabled.
+ * @param enablep If true, the @p pulsecal controlling callback is
+ * linked into the callback chain for the configured capture/compare
+ * register of the pulse timer peripheral.  If false, the callback is
+ * removed from that chain.
  *
  * @return 0 on success, or a negative error code.
+ *
+ * @see iBSP430timerPulseCaptureSetActive_ni()
  */
 int iBSP430timerPulseCaptureSetEnabled_ni (hBSP430timerPulseCapture pulsecap,
                                            int enablep);
 
-/** Clear state in @p pulsecal so the next transition begins a new pulse.
+/** Activate or deactivate an enabled pulse capture structure.
  *
- * Only #BSP430_TIMER_PULSECAP_START_CALLBACK and
- * #BSP430_TIMER_PULSECAP_END_CALLBACK are preserved.
+ * This does not inspect or modify the timer capture configuration; it
+ * only affects the #CCIE and #CCIFG flags of the peripheral
+ * interrupt.  If invoked when the capture infrastructure is not
+ * enabled it returns an error code.
  *
- * @param pulsecap the pulse capture structure
+ * It is permitted to invoke this function from within an
+ * iBSP430timerPulseCaptureCallback_ni(), and in fact doing so is
+ * preferable to setting #BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT.
+ *
+ * @param pulsecap a pulse capture structure initialized using
+ * hBSP430timerPulseCaptureInitialize() and enabled by
+ * iBSP430timerPulseCaptureSetEnabled_ni().
+ *
+ * @param activep If true, the underlying timer peripheral interrupt
+ * is enabled; if false the interrupt is disabled.
+ *
+ * @return 0 on success, or a negative error code.
+ *
+ * @see iBSP430timerPulseCaptureSetEnabled_ni()
+ */
+int iBSP430timerPulseCaptureSetActive_ni (hBSP430timerPulseCapture pulsecap,
+                                          int activep);
+
+/** Clear state in @p pulsecal so the next transition begins a new
+ * pulse.
+ *
+ * Bits #BSP430_TIMER_PULSECAP_START_VALID,
+ * #BSP430_TIMER_PULSECAP_END_VALID, #BSP430_TIMER_PULSECAP_OVERFLOW,
+ * and #BSP430_TIMER_PULSECAP_ACTIVE_HIGH are cleared.  All other bits
+ * remain unchanged.
+ *
+ * @note This does not re-activate an inactive pulse capture.
+ *
+ * @param pulsecap the pulse capture structure.  The pointer must not
+ * be null.
  */
 static BSP430_CORE_INLINE
 void
 vBSP430timerPulseCaptureClear_ni (hBSP430timerPulseCapture pulsecap)
 {
-  pulsecap->flags &= (BSP430_TIMER_PULSECAP_START_CALLBACK
-                      | BSP430_TIMER_PULSECAP_END_CALLBACK);
+  pulsecap->flags_ni &= ~(BSP430_TIMER_PULSECAP_START_VALID
+                          | BSP430_TIMER_PULSECAP_END_VALID
+                          | BSP430_TIMER_PULSECAP_OVERFLOW
+                          | BSP430_TIMER_PULSECAP_ACTIVE_HIGH);
 }
 
-/** Short-hand to invoke iBSP430timerPulseCaptureSetEnabled_ni() to enable @p pulsecap even if interrupts are enabled
- * @param pulsecap a pulse capture structure initialized via hBSP430timerPulseCaptureInitialize()
+/** Short-hand to disable a pulse capture using
+ * iBSP430timerPulseCaptureSetEnabled_ni() even if interrupts are
+ * enabled.
+ *
+ * @param pulsecap a pulse capture structure initialized via
+ * hBSP430timerPulseCaptureInitialize().
+ *
+ * @return 0 if successful, or a negative error code */
+static BSP430_CORE_INLINE
+int
+iBSP430timerPulseCaptureDisable (hBSP430timerPulseCapture pulsecap)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerPulseCaptureSetEnabled_ni(pulsecap, 0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+/** Short-hand to enable a pulse capture using
+ * iBSP430timerPulseCaptureSetEnabled_ni() even if interrupts are
+ * enabled.
+ *
+ * @note This does not activate the capture.
+ *
+ * @param pulsecap a pulse capture structure initialized via
+ * hBSP430timerPulseCaptureInitialize().
+ *
  * @return 0 if successful, or a negative error code */
 static BSP430_CORE_INLINE
 int
@@ -1886,18 +1969,54 @@ iBSP430timerPulseCaptureEnable (hBSP430timerPulseCapture pulsecap)
   return rv;
 }
 
-/** Short-hand to invoke iBSP430timerPulseCaptureSetEnabled_ni() to disable @p pulsecap even if interrupts are enabled
- * @param pulsecap a pulse capture structure initialized via hBSP430timerPulseCaptureInitialize()
- * @return 0 if successful, or a negative error code */
+/** Short-hand to re-activate an enabled pulse capture even if
+ * interrupts are enabled.
+ *
+ * @note This operation will clear the pulse state using
+ * vBSP430timerPulseCaptureClear_ni() prior to activating the
+ * interrupt.
+ *
+ * @param pulsecap a pulse capture structure initialized via
+ * hBSP430timerPulseCaptureInitialize() and enabled via
+ * iBSP430timerPulseCaptureSetEnabled_ni().
+ *
+ * @return 0 if successful, or a negative error code
+ *
+ * @see iBSP430timerPulseCaptureSetActive_ni()
+ */
 static BSP430_CORE_INLINE
 int
-iBSP430timerPulseCaptureDisable (hBSP430timerPulseCapture pulsecap)
+iBSP430timerPulseCaptureActivate (hBSP430timerPulseCapture pulsecap)
 {
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv;
 
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = iBSP430timerPulseCaptureSetEnabled_ni(pulsecap, 0);
+  vBSP430timerPulseCaptureClear_ni(pulsecap);
+  rv = iBSP430timerPulseCaptureSetActive_ni(pulsecap, 1);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+/** Short-hand to disable an active pulse capture even if interrupts
+ * are enabled
+ *
+ * @param pulsecap a pulse capture structure initialized via
+ * hBSP430timerPulseCaptureInitialize() and enabled via
+ * iBSP430timerPulseCaptureSetEnabled_ni().
+ *
+ * @return 0 if successful, or a negative error code
+ *
+ * @see iBSP430timerPulseCaptureSetActive_ni() */
+static BSP430_CORE_INLINE
+int
+iBSP430timerPulseCaptureDeactivate (hBSP430timerPulseCapture pulsecap)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = iBSP430timerPulseCaptureSetActive_ni(pulsecap, 0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }

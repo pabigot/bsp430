@@ -29,10 +29,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <string.h>
+#include <stdlib.h>
 #include <bsp430/platform.h>    /* BSP430_PLATFORM_TIMER_CCACLK defined by this */
 #include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
-#include <string.h>
 #include <bsp430/utility/console.h>
 
 #if (BSP430_CORE_FAMILY_IS_5XX - 0)
@@ -653,7 +654,7 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
 {
   hBSP430halTIMER timer = (hBSP430halTIMER)context;
   hBSP430timerPulseCapture pulsecap = (hBSP430timerPulseCapture)(-offsetof(sBSP430timerPulseCapture, cb) + (unsigned char *)cb);
-  unsigned int flags = pulsecap->flags;
+  unsigned int flags = pulsecap->flags_ni;
   unsigned int ccr;
   unsigned int cctl;
   int do_callback = 0;
@@ -675,7 +676,7 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
   if (! (BSP430_TIMER_PULSECAP_OVERFLOW & flags)) {
     unsigned long cap_tt = (ulBSP430timerOverflowAdjusted_ni(timer, ccr) << 16) | ccr;
     if (! (BSP430_TIMER_PULSECAP_START_VALID & flags)) {
-      pulsecap->start_tt = cap_tt;
+      pulsecap->start_tt_ni = cap_tt;
       flags |= BSP430_TIMER_PULSECAP_START_VALID;
       if (cctl & CCI) {
         flags |= BSP430_TIMER_PULSECAP_ACTIVE_HIGH;
@@ -684,7 +685,7 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
       }
       do_callback = !!(BSP430_TIMER_PULSECAP_START_CALLBACK & flags);
     } else if (! (BSP430_TIMER_PULSECAP_END_VALID & flags)) {
-      pulsecap->end_tt = cap_tt;
+      pulsecap->end_tt_ni = cap_tt;
       flags |= BSP430_TIMER_PULSECAP_END_VALID;
       do_callback = !!(BSP430_TIMER_PULSECAP_END_CALLBACK & flags);
     } else {
@@ -694,32 +695,66 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
   if (BSP430_TIMER_PULSECAP_OVERFLOW & flags) {
     do_callback = 1;
   }
-  pulsecap->flags = flags;
+  while (! (flags & (BSP430_TIMER_PULSECAP_START_CALLBACK | BSP430_TIMER_PULSECAP_END_CALLBACK))) {
+    ;
+  }
+  pulsecap->flags_ni = flags;
   if ((NULL != pulsecap->callback_ni) && do_callback) {
+    pulsecap->flags_ni |= BSP430_TIMER_PULSECAP_CALLBACK_ACTIVE;
     rv = pulsecap->callback_ni(pulsecap);
-    cprintf("rv %x\n", rv);
+    pulsecap->flags_ni &= ~BSP430_TIMER_PULSECAP_CALLBACK_ACTIVE;
   }
   return rv;
+}
+
+int
+iBSP430timerPulseCaptureSetActive_ni (hBSP430timerPulseCapture pulsecap,
+                                      int activep)
+{
+  if ((NULL == pulsecap)
+      || (NULL == pulsecap->hal)
+      || (! (BSP430_TIMER_PULSECAP_ENABLED & pulsecap->flags_ni))) {
+    return -1;
+  }
+  if (activep) {
+    pulsecap->flags_ni |= BSP430_TIMER_PULSECAP_ACTIVE;
+    pulsecap->hal->hpl->cctl[pulsecap->ccidx] &= ~(COV | CCIFG);
+    pulsecap->hal->hpl->cctl[pulsecap->ccidx] |= CCIE;
+  } else {
+    pulsecap->flags_ni &= ~BSP430_TIMER_PULSECAP_ACTIVE;
+    pulsecap->hal->hpl->cctl[pulsecap->ccidx] &= ~CCIE;
+  }
+  return 0;
 }
 
 int
 iBSP430timerPulseCaptureSetEnabled_ni (hBSP430timerPulseCapture pulsecap,
                                        int enablep)
 {
+  if ((NULL == pulsecap)
+      || (NULL == pulsecap->hal)) {
+    return -1;
+  }
+  /* Spin for diagnostic, or return error to avoid corruption, if this
+   * is invoked from the callback. */
+  while (BSP430_TIMER_PULSECAP_CALLBACK_ACTIVE & pulsecap->flags_ni) {
+#if (BSP430_CORE_NDEBUG - 0)
+    return -1;
+#endif /* BSP430_CORE_NDEBUG */
+  }
   if (enablep) {
-    if (! (pulsecap->flags & BSP430_TIMER_PULSECAP_ENABLED)) {
+    if (! (pulsecap->flags_ni & BSP430_TIMER_PULSECAP_ENABLED)) {
       BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
                                       pulsecap->hal->cc_cbchain_ni[pulsecap->ccidx],
                                       pulsecap->cb,
                                       next_ni);
-      pulsecap->hal->hpl->cctl[pulsecap->ccidx] &= ~CCIFG;
-      pulsecap->hal->hpl->cctl[pulsecap->ccidx] |= CCIE;
-      pulsecap->flags |= BSP430_TIMER_PULSECAP_ENABLED;
+      pulsecap->flags_ni |= BSP430_TIMER_PULSECAP_ENABLED;
     }
   } else {
-    if (pulsecap->flags & BSP430_TIMER_PULSECAP_ENABLED) {
-      pulsecap->flags &= ~BSP430_TIMER_PULSECAP_ENABLED;
-      pulsecap->hal->hpl->cctl[pulsecap->ccidx] &= ~CCIE;
+    /* Deactivate before disabling */
+    iBSP430timerPulseCaptureSetActive_ni(pulsecap, 0);
+    if (pulsecap->flags_ni & BSP430_TIMER_PULSECAP_ENABLED) {
+      pulsecap->flags_ni &= ~BSP430_TIMER_PULSECAP_ENABLED;
       BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRIndexedChainNode,
                                         pulsecap->hal->cc_cbchain_ni[pulsecap->ccidx],
                                         pulsecap->cb,
@@ -744,13 +779,14 @@ hBSP430timerPulseCaptureInitialize (hBSP430timerPulseCapture pulsecap,
     return NULL;
   }
   if (iBSP430timerSupportedCCs(periph) <= ccidx) {
+    pulsecap->hal = NULL;
     return NULL;
   }
   pulsecap->ccidx = ccidx;
   pulsecap->ccis = ccis;
   pulsecap->callback_ni = callback;
-  pulsecap->flags = flags & (BSP430_TIMER_PULSECAP_START_CALLBACK
-                             | BSP430_TIMER_PULSECAP_END_CALLBACK);
+  pulsecap->flags_ni = flags & (BSP430_TIMER_PULSECAP_START_CALLBACK
+                                | BSP430_TIMER_PULSECAP_END_CALLBACK);
   pulsecap->hal->hpl->cctl[ccidx] = CM_3 | (ccis & (CCIS0 | CCIS1)) | SCS | CAP;
   return pulsecap;
 }

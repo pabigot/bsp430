@@ -29,16 +29,16 @@ pulsecap_callback_ni (hBSP430timerPulseCapture pulsecap)
   int do_clear = 0;
   int rv = 0;
 
-  cprintf("pc flags %04x start %lu end %lu\n", pulsecap->flags, pulsecap->start_tt, pulsecap->end_tt);
-  if (both == ((both | BSP430_TIMER_PULSECAP_OVERFLOW) & pulsecap->flags)) {
-    pulseWidth_tt_v = pulsecap->end_tt - pulsecap->start_tt;
+  cprintf("pc flags %04x start %lu end %lu\n", pulsecap->flags_ni, pulsecap->start_tt_ni, pulsecap->end_tt_ni);
+  if (both == ((both | BSP430_TIMER_PULSECAP_OVERFLOW) & pulsecap->flags_ni)) {
+    pulseWidth_tt_v = pulsecap->end_tt_ni - pulsecap->start_tt_ni;
     do_clear = 1;
   }
-  if (active_high == ((active_high | BSP430_TIMER_PULSECAP_OVERFLOW) & pulsecap->flags)) {
+  if (active_high == ((active_high | BSP430_TIMER_PULSECAP_OVERFLOW) & pulsecap->flags_ni)) {
     ++activehighs_v;
     do_clear = 1;
   }
-  if (BSP430_TIMER_PULSECAP_OVERFLOW & pulsecap->flags) {
+  if (BSP430_TIMER_PULSECAP_OVERFLOW & pulsecap->flags_ni) {
     ++overflows_v;
     do_clear = 1;
   }
@@ -108,7 +108,7 @@ void main ()
           BUTTON0_TIMER_CCIDX,
           'A' + (BUTTON0_TIMER_CCIS / CCIS0),
           b0timer_hal->hpl->cctl[BUTTON0_TIMER_CCIDX],
-          pulsecap, pulsecap->flags);
+          pulsecap, pulsecap->flags_ni);
 
   /* Need to enable interrupts so timer overflow events are properly
    * acknowledged */
@@ -124,7 +124,7 @@ void main ()
 
     BSP430_CORE_DISABLE_INTERRUPT();
     do {
-      flags = pulsecap_state.flags;
+      flags = pulsecap_state.flags_ni;
       pulseWidth_tt = pulseWidth_tt_v;
       overflows = overflows_v;
       activehighs = activehighs_v;
