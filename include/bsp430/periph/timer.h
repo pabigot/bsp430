@@ -1545,26 +1545,12 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
   return rv;
 }
 
-/** Time limit for past alarms.
- *
- * If the requested time is less than this many ticks in the past,
- * iBSP430timerAlarmSet_ni() will not schedule the alarm and will
- * return #BSP430_TIMER_ALARM_SET_PAST.  Times more than this number
- * of ticks in the past are assumed to be valid future times that were
- * subject to 32-bit overflow.
- *
- * @defaulted
- * @ingroup grp_timer_alarm */
-#ifndef BSP430_TIMER_ALARM_PAST_LIMIT
-#define BSP430_TIMER_ALARM_PAST_LIMIT 65536UL
-#endif /* BSP430_TIMER_ALARM_PAST_LIMIT */
-
 /** Time limit for future alarms.
  *
  * If the requested time is less than this many ticks in the future,
  * iBSP430timerAlarmSet_ni() will not schedule the alarm and will
- * returned #BSP430_TIMER_ALARM_SET_NOW.  This more than this limit in
- * the future will be scheduled.
+ * returned #BSP430_TIMER_ALARM_SET_NOW.  Events at least this many
+ * ticks in the future will be scheduled.
  *
  * @defaulted
  * @ingroup grp_timer_alarm */
@@ -1580,8 +1566,7 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
 #define BSP430_TIMER_ALARM_SET_NOW 1
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the requested
- * time appears to have recently passed.  See
- * #BSP430_TIMER_ALARM_PAST_LIMIT.
+ * time appears to be in the past.
  *
  * @ingroup grp_timer_alarm */
 #define BSP430_TIMER_ALARM_SET_PAST 2
@@ -1597,28 +1582,22 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * This function may be invoked in normal user code, or within an
  * alarm callback or other interrupt handler to reschedule the alarm.
  *
- * @warning The default value for BSP430_TIMER_ALARM_PAST_LIMIT
- * assumes the interrupt will be processed within a single overflow of
- * the underlying 16-bit timer peripheral.  When a busy system uses
- * very high-speed timers, e.g. an undivided @c SMCLK, application
- * code should take into account that the
- * sBSP430timerAlarm::setting_tck value may be so far in the past that
- * new settings are mis-interpreted as being in the far future.
- *
  * @note The alarm is set only if the return value is zero.
  *
  * @param alarm a pointer to an alarm structure initialized using
  * iBSP430timerAlarmInitialize().
  *
- * @param setting_tck the time at which the alarm should go off.
+ * @param setting_tck the time at which the alarm should go off.  The
+ * value should be no more than 2^31 ticks ahead of the current time
+ * or it will be assumed to specify a past time.
  *
  * @return
  * @li Zero to indicate the alarm was successfully scheduled;
  * @li The positive value #BSP430_TIMER_ALARM_SET_NOW if @p
- * setting_tck is too near for the alarm infrastructure to guarantee
- * delivery of the alarm event;
+ * setting_tck is in the future but too near for the alarm
+ * infrastructure to guarantee delivery of the alarm event;
  * @li The positive value #BSP430_TIMER_ALARM_SET_PAST if @p
- * setting_tck appears to be in the recent past;
+ * setting_tck appears to be in the past;
  * @li The negative value #BSP430_TIMER_ALARM_SET_ALREADY if the alarm
  * was already scheduled;
  * @li other negative values indicating specific or generic errors.
@@ -1634,9 +1613,14 @@ int iBSP430timerAlarmSet_ni (hBSP430timerAlarm alarm,
  * forces the alarm to be configured and the interrupt set to execute
  * as soon as possible.
  *
- * This is useful when initially configuring an alarm for system
- * timeslices, where the underlying timer has already been started and
- * what would normally be the first tick may have already passed.
+ * This is useful when:
+ *
+ * @li initially configuring an alarm for system timeslices, where the
+ * underlying timer has already been started and what would normally
+ * be the first tick may have already passed; or
+ *
+ * @li using a high-speed (MCLK-rate) timer when intervening activity
+ * may delay the scheduling.
  *
  * @note The alarm is set only if the return value is non-negative.
  * For positive return values the alarm interrupt may already be

@@ -426,11 +426,15 @@ vBSP430timerSetCounter_ni (hBSP430halTIMER timer,
 static inline
 void alarmConfigureInterrupts_ni (sBSP430timerAlarm * map)
 {
-  unsigned int olo = map->timer->overflow_count;
-  unsigned int hi = map->setting_tck >> 16;
-  unsigned int lo = map->setting_tck;
+  unsigned int chi = map->timer->overflow_count;
+  unsigned int shi = map->setting_tck >> 16;
+  unsigned int slo = map->setting_tck;
 
-  if (olo == hi) {
+  /* NB: When invoked from the overflow handler we can expect there
+   * are no unhandled overflow events; that's not true when invoked
+   * timerAlarmSet_ni(), and chi may be one too low.  If so it'll get
+   * corrected when the overflow event is handled. */
+  if (chi == shi) {
     volatile sBSP430hplTIMER * hpl = map->timer->hpl;
 
     /* Clear any flag set in previous cycles, then set to generate an
@@ -438,8 +442,11 @@ void alarmConfigureInterrupts_ni (sBSP430timerAlarm * map)
     hpl->cctl[map->ccidx] &= ~CCIFG;
     hpl->cctl[map->ccidx] |= CCIE;
 
-    /* If it looks like we missed the count-to-lo event, set one. */
-    if (uiBSP430timerBestCounterRead_ni(hpl, map->timer->hal_state.flags) >= lo) {
+    /* If it looks like we missed the count-to-lo event, set one.  NB:
+     * The low part intentionally uses unsigned compare, since we
+     * really do want to know whether the counter value is higher than
+     * the value we're trying to count to. */
+    if (uiBSP430timerBestCounterRead_ni(hpl, map->timer->hal_state.flags) >= slo) {
       hpl->cctl[map->ccidx] |= CCIFG;
     }
   }
@@ -567,44 +574,47 @@ timerAlarmSet_ni (hBSP430timerAlarm alarm,
 {
   sBSP430timerAlarm * malarmp = (sBSP430timerAlarm *)alarm;
   int rv = 0;
-  unsigned long now_tck;
-  unsigned long delay_tck;
+  long now_tck;
+  long delay_tck;
 
   if (NULL == alarm) {
     return -1;
   }
   now_tck = ulBSP430timerCounter_ni(alarm->timer, NULL);
-  delay_tck = setting_tck - now_tck;
+  delay_tck = (long)setting_tck - now_tck;
   if (! (BSP430_TIMER_ALARM_FLAG_ENABLED & alarm->flags)) {
     /* Can't set an alarm that's not enabled */
     rv = -1;
   } else if (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags) {
     /* Can't set an alarm that's already set */
     rv = BSP430_TIMER_ALARM_SET_ALREADY;
+  } else if (0 > delay_tck) {
+    /* Maybe can't set an alarm that's in the past */
+    rv = BSP430_TIMER_ALARM_SET_PAST;
   } else if (BSP430_TIMER_ALARM_FUTURE_LIMIT > delay_tck) {
     /* Maybe can't set an alarm that's coming up too fast */
     rv = BSP430_TIMER_ALARM_SET_NOW;
-  } else if (BSP430_TIMER_ALARM_PAST_LIMIT > (now_tck - setting_tck)) {
-    /* Maybe can't set an alarm that's in the past */
-    rv = BSP430_TIMER_ALARM_SET_PAST;
   } else {
     /* Can set the alarm */
     rv = 0;
   }
 
   if ((0 == rv) || (0 < rv && force)) {
-    /* Record the time at which the event occurs, and that the alarm is
-     * scheduled.  Also set the CCR to match the point in the cycle at
-     * which the event should be raised.  We don't enable an interrupt
-     * on the event until the timer overflow is consistent with the
-     * upper word of the scheduled time. */
+    volatile sBSP430hplTIMER * hpl = malarmp->timer->hpl;
+
+    /* Record the time at which the event occurs, and that the alarm
+     * is scheduled.  If we've determined that the event is to be
+     * forced, just generate an interrupt; otherwise set the CCR to
+     * match the point in the cycle at which the event should be
+     * raised and hand off control to the routine that checks that
+     * we're in the right overflow cycle. */
     malarmp->setting_tck = setting_tck;
     malarmp->flags |= BSP430_TIMER_ALARM_FLAG_SET;
-    alarm->timer->hpl->ccr[alarm->ccidx] = (unsigned int)setting_tck;
-    alarmConfigureInterrupts_ni(malarmp);
+    hpl->ccr[alarm->ccidx] = (unsigned int)setting_tck;
     if (0 < rv) {
-      volatile sBSP430hplTIMER * hpl = malarmp->timer->hpl;
-      hpl->cctl[malarmp->ccidx] |= CCIFG;
+      hpl->cctl[malarmp->ccidx] |= CCIE | CCIFG;
+    } else {
+      alarmConfigureInterrupts_ni(malarmp);
     }
   }
   return rv;
