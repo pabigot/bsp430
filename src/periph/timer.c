@@ -350,9 +350,10 @@ uiBSP430timerCaptureDelta_ni (tBSP430periphHandle periph,
   return c1 - c0;
 }
 
+static BSP430_CORE_INLINE_FORCED
 unsigned long
-ulBSP430timerOverflowAdjusted_ni (hBSP430halTIMER timer,
-                                  unsigned int ctr)
+timerOverflowAdjusted_ni (hBSP430halTIMER timer,
+                          unsigned int ctr)
 {
   unsigned long overflow_count = timer->overflow_count;
 
@@ -371,25 +372,21 @@ ulBSP430timerOverflowAdjusted_ni (hBSP430halTIMER timer,
 }
 
 unsigned long
+ulBSP430timerOverflowAdjusted_ni (hBSP430halTIMER timer,
+                                  unsigned int ctr)
+{
+  return timerOverflowAdjusted_ni(timer, ctr);
+}
+
+unsigned long
 ulBSP430timerCounter_ni (hBSP430halTIMER timer,
                          unsigned int * overflowp)
 {
   unsigned int r;
   unsigned long overflow_count;
-  unsigned int ctla;
-  unsigned int ctlb;
 
-  /* What we're doing is ensuring that we have a valid counter value
-   * that was captured at a point where the control word did not
-   * change.  The expectation is that any pending overflow flag
-   * reflected in that CTL word applies to the counter value. */
-  do {
-    ctla = timer->hpl->ctl;
-    r = uiBSP430timerBestCounterRead_ni(timer->hpl, timer->hal_state.flags);
-    ctlb = timer->hpl->ctl;
-  } while (ctla != ctlb);
-
-  overflow_count = ulBSP430timerOverflowAdjusted_ni(timer, r);
+  r = uiBSP430timerBestCounterRead_ni(timer->hpl, timer->hal_state.flags);
+  overflow_count = timerOverflowAdjusted_ni(timer, r);
   if (overflowp) {
     *overflowp = overflow_count >> 16;
   }
@@ -674,7 +671,7 @@ pulsecap_isr (const struct sBSP430halISRIndexedChainNode * cb,
     flags |= BSP430_TIMER_PULSECAP_OVERFLOW;
   }
   if (! (BSP430_TIMER_PULSECAP_OVERFLOW & flags)) {
-    unsigned long cap_tt = (ulBSP430timerOverflowAdjusted_ni(timer, ccr) << 16) | ccr;
+    unsigned long cap_tt = (timerOverflowAdjusted_ni(timer, ccr) << 16) | ccr;
     if (! (BSP430_TIMER_PULSECAP_START_VALID & flags)) {
       pulsecap->start_tt_ni = cap_tt;
       flags |= BSP430_TIMER_PULSECAP_START_VALID;
