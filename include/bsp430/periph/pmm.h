@@ -91,6 +91,24 @@
 #define BSP430_MODULE_PMM_FRAM (defined(__MSP430_HAS_PMM_FR5xx__)       \
                                 || defined(__MSP430_HAS_PMM_FRAM__))
 
+/** Defined to a preprocessor true value when the PMM modules supports
+ * adjusting core voltage.
+ *
+ * This is limited to MCUs that have the PMM module and are not FRAM
+ * devices.
+ *
+ * @cppflag */
+#define BSP430_PMM_SUPPORTS_COREV ((BSP430_MODULE_PMM - 0) && ! (BSP430_MODULE_PMM_FRAM - 0))
+
+/** Defined to a preprocessor true value when the PMM modules supports
+ * the supply voltage supervisor and monitor functions.
+ *
+ * This is limited to MCUs that have the PMM module and are not FRAM
+ * devices.
+ *
+ * @cppflag */
+#define BSP430_PMM_SUPPORTS_SVSM ((BSP430_MODULE_PMM - 0) && ! (BSP430_MODULE_PMM_FRAM - 0))
+
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_PMM - 0)
 
 #if defined(BSP430_DOXYGEN) || defined(LOCKLPM5)
@@ -124,6 +142,7 @@
 
 #endif /* LOCKLPM5 */
 
+#if defined(BSP430_DOXYGEN) || (BSP430_PMM_SUPPORTS_SVSM - 0)
 /** Macro to set the #SVSMLCTL and #SVSMLCTL registers
  *
  * The Supply Voltage Supervisor and Monitor High- and Low-Side
@@ -136,7 +155,9 @@
  * use:
  *
  * @code
+ * #if (BSP430_PMM_SUPPORTS_SVSM - 0)
  * BSP430_PMM_SET_SVSMCTL_NI(SVSMHCTL & ~(SVMHE | SVSHE), SVSMLCTL & ~(SVMLE | SVSLE));
+ * #endif // BSP430_PMM_SUPPORTS_SVSM
  * @endcode
  *
  * @param _hctl The new value for #SVSMHCTL, e.g. <tt>#SVSMHCTL & ~(#SVMHE | #SVSHE)</tt>
@@ -165,13 +186,16 @@
  * separately for each of high and low cross supervisory and
  * monitoring functions.  Initial experimentation suggests that
  * disabling all four capabilities reduces current by only 3uA in
- * LPM3, though more may be reduced when active. */
+ * LPM3, though more may be reduced when active.
+ *
+ * @dependency #BSP430_PMM_SUPPORTS_SVSM */
 #define BSP430_PMM_SET_SVSMCTL_NI(_hctl,_lctl) do {   \
     PMMCTL0_H = PMMPW_H;                              \
     SVSMHCTL = (_hctl);                               \
     SVSMLCTL = (_lctl);                               \
     PMMCTL0_H = !PMMPW_H;                             \
   } while (0)
+#endif /* BSP430_PMM_SUPPORTS_SVSM */
 
 /** Cause a brown-out reset */
 static BSP430_CORE_INLINE
@@ -189,16 +213,7 @@ vBSP430pmmInducePOR (void)
   PMMCTL0 = PMMPW | PMMSWPOR;
 }
 
-/** Defined to a preprocessor true value when the PMM modules supports
- * adjusting core voltage.
- *
- * This is limited to MCUs that have the PMM module and are not FRAM
- * devices.
- *
- * @cppflag */
-#define BSP430_PMM_SUPPORTS_COREV (defined(BSP430_DOXYGEN) || ! (BSP430_MODULE_PMM_FRAM - 0))
-
-#if (BSP430_PMM_SUPPORTS_COREV - 0)
+#if defined(BSP430_DOXYGEN) || (BSP430_PMM_SUPPORTS_COREV - 0)
 
 /** Determine PMM core voltage setting for clock speed.
  *
@@ -211,7 +226,8 @@ vBSP430pmmInducePOR (void)
  * @param _mclk Desired f_SYSTEM (maximum MCLK frequency)
  *
  * @defaulted
- * @platformvalue */
+ * @platformvalue
+ * @dependency #BSP430_PMM_SUPPORTS_COREV */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_PMM_COREV_FOR_MCLK(_mclk) include <bsp430/platform.h>
 #endif /* BSP430_PMM_COREV_FOR_MCLK */
@@ -235,8 +251,7 @@ vBSP430pmmInducePOR (void)
  * the requested level could not be reached due to inadequate supply
  * voltage.
  *
- * @note This function is available only on non-FRAM 5xx PMM
- * implementations.
+ * @dependency #BSP430_PMM_SUPPORTS_COREV
  */
 int iBSP430pmmSetCoreVoltageLevel_ni (unsigned int target_level);
 

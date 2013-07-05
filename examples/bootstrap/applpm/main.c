@@ -237,7 +237,7 @@ void main ()
   *rx_head++ = CMD_STATE;
 
   memset(&state, 0, sizeof(state));
-#if 1 && (BSP430_MODULE_PMM - 0) && (! (BSP430_MODULE_PMM_FRAM - 0))
+#if 1 && (BSP430_PMM_SUPPORTS_SVSM - 0)
   BSP430_PMM_SET_SVSMCTL_NI(SVSMHCTL & ~(SVMHE | SVSHE), SVSMLCTL & ~(SVMLE | SVSLE));
 #endif /* BSP430_MODULE_PMM */
 

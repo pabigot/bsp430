@@ -602,7 +602,7 @@ void main ()
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   cprintf("alarm: " __DATE__ " " __TIME__ "\n");
 
-#if 1 && defined(BSP430_PMM_SET_SVSMCTL_NI)
+#if (BSP430_PMM_SUPPORTS_SVSM - 0)
   /* Ensure fast wakeup on 5xx/6xx devices */
   BSP430_PMM_SET_SVSMCTL_NI(SVSMHCTL & ~(SVMHE | SVSHE), SVSMLCTL & ~(SVMLE | SVSLE));
 #endif /* BSP430_PMM_SET_SVSMCTL_NI */
