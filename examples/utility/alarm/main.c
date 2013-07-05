@@ -17,6 +17,7 @@
 #include <bsp430/utility/cli.h>
 #include <bsp430/periph/timer.h>
 #include <bsp430/periph/flash.h>
+#include <bsp430/periph/pmm.h>
 #include <string.h>
 
 #define ALARM_TIMER_PERIPH_HANDLE BSP430_TIMER_CCACLK_PERIPH_HANDLE
@@ -48,6 +49,8 @@ typedef struct sAlarmStats {
   unsigned long sum_late;
   unsigned long last_late;
   unsigned long max_late;
+  /** Number of times an alarm failed to be set because the scheduled
+   * time was in the past. */
   unsigned long lost;
 } sAlarmStats;
 
@@ -95,6 +98,50 @@ alarmCallback_ni (hBSP430timerAlarm alarm)
  * rearranged without having to change the links. */
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
+
+static int
+cmd_autotest (const char * command)
+{
+  static const unsigned int base2[] = { 17, 31, 61, 127, 256, 509, 1021 };
+  static const unsigned int base10[] = { 11, 101, 499, 997, 499, 10007,  19997 };
+  const unsigned int * base = base10;
+  size_t nbase = sizeof(base10)/sizeof(*base10);
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int cc;
+
+  (void)base2;
+  (void)base10;
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    size_t bi = 0;
+    for (cc = 0; cc < nTimers; ++cc) {
+      hBSP430timerAlarm ap = alarm[cc];
+      if (NULL != ap) {
+        cprintf("config %p %u with %u\n", ap, cc, base[bi]);
+        (void)iBSP430timerAlarmCancel_ni(ap);
+        if (bi < nbase) {
+          (void)iBSP430timerAlarmSetEnabled_ni(ap, 1);
+          alarm_stats[cc].interval_tck = base[bi];
+          (void)iBSP430timerAlarmSetForced_ni(ap, 4*base[bi] + ulBSP430timerCounter_ni(alarmHAL_, NULL));
+          ++bi;
+        } else {
+          (void)iBSP430timerAlarmSetEnabled_ni(ap, 0);
+        }
+      }
+    }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return 0;
+}
+static const sBSP430cliCommand dcmd_autotest = {
+  .key = "autotest",
+  .help = "# autotest alarm cc",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_autotest
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND (&dcmd_autotest)
 
 static int
 cmd_cancel (const char * command)
@@ -390,8 +437,8 @@ cmd_stats (const char * command)
     if (NULL == alarm[ai]) {
       cprintf(" %u: not available\n", ai);
     } else {
-      cprintf(" %u: %cset %cenab %cwake %cskip cnt %lu, rc %d, inter %lu\n"
-              "    lost %lu; late: last %lu, max %lu, ave %lu\n",
+      cprintf(" %u: %cset %cenab %cwake %cskip cnt %9lu, rc %d, inter %6lu\n"
+              "    lost %6lu; late: last %6ld, max %6lu, ave %6lu\n",
               ai,
               (alarm[ai]->flags & BSP430_TIMER_ALARM_FLAG_SET) ? '+' : '-',
               (alarm[ai]->flags & BSP430_TIMER_ALARM_FLAG_ENABLED) ? '+' : '-',
@@ -555,6 +602,11 @@ void main ()
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   cprintf("alarm: " __DATE__ " " __TIME__ "\n");
 
+#if 1 && defined(BSP430_PMM_SET_SVSMCTL_NI)
+  /* Ensure fast wakeup on 5xx/6xx devices */
+  BSP430_PMM_SET_SVSMCTL_NI(SVSMHCTL & ~(SVMHE | SVSHE), SVSMLCTL & ~(SVMLE | SVSLE));
+#endif /* BSP430_PMM_SET_SVSMCTL_NI */
+
   alarmHAL_ = hBSP430timerLookup(ALARM_TIMER_PERIPH_HANDLE);
   if (! alarmHAL_) {
     cprintf("ERROR -- Timer not available\n");
@@ -633,7 +685,7 @@ void main ()
         continue;
       }
     }
-    BSP430_CORE_LPM_ENTER_NI(LPM2_bits);
+    BSP430_CORE_LPM_ENTER_NI(LPM3_bits);
     ++wakeups;
   }
 
