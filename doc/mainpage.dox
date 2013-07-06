@@ -189,7 +189,7 @@ bsp430/utility/unittest.h unit test capability@endlink supported by BSP430.
 \li \ref ex_utility_cli demonstrates the command line interface structure
 based on the @link bsp430/utility/console.h console capability @endlink.
 
-\li \ref ex_utility_alarm provides an interactive program for using one-shot
+\li \ref ex_periph_alarm provides an interactive program for using one-shot
 and repeating alarms with the @ref grp_timer_alarm.
 
 \li \ref ex_rf_cc110x demonstrates the abstraction of the @link
