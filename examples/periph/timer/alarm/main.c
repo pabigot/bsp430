@@ -102,22 +102,31 @@ const sBSP430cliCommand * commandSet;
 static int
 cmd_autotest (const char * command)
 {
-  static const unsigned int base2[] = { 17, 31, 61, 127, 256, 509, 1021 };
-  static const unsigned int base10[] = { 11, 101, 499, 997, 499, 10007,  19997 };
-  const unsigned int * base = base10;
-  size_t nbase = sizeof(base10)/sizeof(*base10);
+  static const unsigned long base[] = {
+#if 0
+    /* Primes testing delays nominally powers of 2 */
+    17, 31, 61, 127, 256, 509, 1021
+#endif
+#if 0
+    /* Primes testing delays nominally multiples of 10 */
+    11, 101, 499, 997, 499, 10007, 19997
+#endif
+#if 1
+    /* Primes testing delays beyond 16-bits */
+    16381, 32749, 32771, 65537, 131101, 262147, 524309
+#endif
+  };
+  size_t nbase = sizeof(base)/sizeof(*base);
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int cc;
 
-  (void)base2;
-  (void)base10;
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     size_t bi = 0;
     for (cc = 0; cc < nTimers; ++cc) {
       hBSP430timerAlarm ap = alarm[cc];
       if (NULL != ap) {
-        cprintf("config %p %u with %u\n", ap, cc, base[bi]);
+        cprintf("config %p %u with %lu\n", ap, cc, base[bi]);
         (void)iBSP430timerAlarmCancel_ni(ap);
         if (bi < nbase) {
           (void)iBSP430timerAlarmSetEnabled_ni(ap, 1);
