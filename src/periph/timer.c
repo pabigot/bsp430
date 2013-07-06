@@ -393,6 +393,14 @@ ulBSP430timerCounter_ni (hBSP430halTIMER timer,
   return (overflow_count << 16) + r;
 }
 
+unsigned long
+ulBSP430timerCaptureCounter_ni (hBSP430halTIMER timer,
+                                unsigned int ccidx)
+{
+  unsigned int lo = timer->hpl->ccr[ccidx];
+  return (timerOverflowAdjusted_ni(timer, lo) << 16) | lo;
+}
+
 void
 vBSP430timerResetCounter_ni (hBSP430halTIMER timer)
 {

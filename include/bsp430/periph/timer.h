@@ -1300,17 +1300,25 @@ ulBSP430timerCounter (hBSP430halTIMER timer,
   return rv;
 }
 
-/** Read the timer counter.
+/** Read a timer capture register.
+ *
+ * Capture/compare registers may be set to record the time of an
+ * external event.  The 16-bit captured value is held in
+ * sBSP430hplTIMER::ccr, but for many cases a 32-bit counter value is
+ * needed.  This function combines the 16-bit value with the result of
+ * ulBSP430timerOverflowAdjusted_ni() to produce a 32-bit value under
+ * the assumption that the combination is calculated less than 32768
+ * ticks past the capture event.
  *
  * @param timer The timer for which the count is desired.
  *
- * @param overflowp An optional pointer in which the high word of the
- * overflow counter is stored, supporting a 48-bit counter.
+ * @param ccidx The capture/compare register from which the low 16
+ * bits are taken.
  *
  * @return A 32-bit unsigned count of the number of clock ticks
- * observed since the timer was last reset. */
-unsigned long ulBSP430timerCounter (hBSP430halTIMER timer,
-                                    unsigned int * overflowp);
+ * at the point where the capture register was set. */
+unsigned long ulBSP430timerCaptureCounter_ni (hBSP430halTIMER timer,
+                                              unsigned int ccidx);
 
 /** Reset the timer counter.
  *
