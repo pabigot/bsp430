@@ -156,11 +156,18 @@
  *
  * @brief bsp430/periph/timer.h data structures and functions supporting alarms
  *
- * BSP430 provides an infrastructure that uses the capture/compare
- * interrupt callbacks of the timer peripheral to support a
- * configurable alarm system.
+ * BSP430 provides infrastructure that uses the capture/compare
+ * interrupt callbacks of the timer peripheral to support two types of
+ * configurable alarm system:
+ * @li @ref grp_timer_alarm_dedicated supports one deadline+callback
+ * associated with specific capture/compare register
+ * @li @ref grp_timer_alarm_muxed supports an arbitrary number of
+ * independent deadline+callbacks that share a single dedicated
+ * alarm
  *
- * Each alarm is configured at initialization to reference a specific
+ * @section grp_timer_alarm_dedicated Dedicated Alarm Infrastructure
+ *
+ * Each dedicated alarm is configured to reference a specific
  * capture/compare register within a specific timer peripheral.  The
  * HAL infrastructure for that peripheral must also have been
  * requested.  The number of capture/compare registers supported by a
@@ -227,7 +234,7 @@
  * alarm cancellation failed, e.g. due to it having already gone off.
  *
  * When the alarm fires, the callback registered in
- * sBSP430timerAlarm::callback is invoked.  The callback may invoke
+ * sBSP430timerAlarm::callback_ni is invoked.  The callback may invoke
  * iBSP430timerAlarmSet_ni() to reschedule a periodic alarm, but
  * complex processing should not be done.  The callback should instead
  * set a volatile global variable and return a value such as
@@ -263,6 +270,8 @@
  *
  * @note Many of these features are enabled through functional
  * configuration settings documented in @ref grp_config_functional.
+ *
+ * @section grp_timer_alarm_muxed Multiplexed Alarm Infrastructure
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -1446,7 +1455,9 @@ typedef struct sBSP430timerAlarm {
  * be manipulated by user code.
  *
  * Note that this simply initializes the structure; it does not set
- * any alarms, nor does it enable the alarm.
+ * any alarms, nor does it enable the alarm.  @p ccidx for @p periph
+ * may be reused for another purpose, or re-initialized for a new
+ * alarm role, as long as the alarm has first been disabled.
  *
  * @param alarm a pointer to the structure holding alarm configuration
  * data.
@@ -1663,9 +1674,11 @@ int iBSP430timerAlarmSet (hBSP430timerAlarm alarm,
  * @param alarm a pointer to an alarm structure initialized using
  * iBSP430timerAlarmInitialize().
  *
- * @return zero if the alarm was disabled.  A negative value indicates
- * an error, such as that the alarm was not set when this was called.
- * This may indicate that the alarm had already fired.
+ * @return A non-negative value if the cancellation was effective
+ * disabled.  The value is 1 if the alarm had been set, and zero if it
+ * had not been set (e.g., the alarm had already fired).  A negative
+ * value indicates an error such as an invalid @p alarm value, or the
+ * alarm not being enabled.
  *
  * @ingroup grp_timer_alarm */
 int iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm);
@@ -1685,6 +1698,163 @@ int iBSP430timerAlarmCancel (hBSP430timerAlarm alarm)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
+
+/* Forward declaration */
+struct sBSP430timerMuxAlarm;
+
+/* Forward declaration */
+struct sBSP430timerMuxSharedAlarm;
+
+/** Callback used for multiplexed timers.
+ *
+ * This is invoked by the shared alarm when the time specified by
+ * @link sBSP430timerMuxAlarm::setting_tck alarm->setting_tck@endlink
+ * has been reached.  When this is invoked @p alarm has been removed
+ * from the list of alarms associated with @shared.
+ *
+ * It is permitted to invoke iBSP430timerMuxAlarmSet_ni() from this
+ * callback to re-associate @p alarm with @p shared.  Prior to doing
+ * this the @p alarm->setting_tck value should be updated.
+ *
+ * @ingroup grp_timer_alarm
+ */
+typedef int (* iBSP430timerMuxAlarmCallback_ni) (struct sBSP430timerMuxSharedAlarm * shared,
+                                                 struct sBSP430timerMuxAlarm * alarm);
+
+/** Structure holding multiplexed alarm shared data.
+ * @ingroup grp_timer_alarm */
+typedef struct sBSP430timerMuxSharedAlarm {
+  /** The underlying dedicated alarm that manages the multiplexed
+   * alarms.
+   *
+   * Under normal circumstances this alarm remains enabled between
+   * hBSP430timerMuxAlarmStartup() and iBSP430timerMuxAlarmShutdown().
+   * The contents of this field should not be manipulated by user
+   * code.  */
+  sBSP430timerAlarm dedicated;
+
+  /** The active multiplexed alarms, sorted by time with earliest
+   * wakeup first. */
+  struct sBSP430timerMuxAlarm * alarms;
+} sBSP430timerMuxSharedAlarm;
+
+/** Handle for the underlying shared alarm for multiplixed alarms.
+ * @ingroup grp_timer_alarm */
+typedef sBSP430timerMuxSharedAlarm * hBSP430timerMuxSharedAlarm;
+
+/** Structure holding data for an individual multiplexed alarm.
+ * Instances of the structure are adopted by a shared alarm when added
+ * using iBSP430timerMuxAlarmAdd_ni(), and must not be mutated until
+ * the corresponding callback is invoked or the alarm is cancelled.
+ * @ingroup grp_timer_alarm */
+typedef struct sBSP430timerMuxAlarm {
+  /** The time, in absolute ticks of the associated @link
+   * hBSP430timerMuxSharedAlarm shared alarm@endlink, at which the
+   * alarm is due to fire.
+   *
+   * The value must be set by the user prior to invoking
+   * iBSP430timerMuxAlarmAdd_ni(), and must not be modified until the
+   * alarm is cancelled or has fired. */
+  unsigned long setting_tck;
+
+  /** The callback to be invoked when the alarm goes off. */
+  iBSP430timerMuxAlarmCallback_ni callback_ni;
+
+  /** A link to the next alarm in a chain.
+   *
+   * User code is only permitted to use this field when the structure
+   * is not owned by a shared multiplex alarm. */
+  struct sBSP430timerMuxAlarm * next;
+} sBSP430timerMuxAlarm;
+
+/** Handle for an individual multiplixed alarm.
+ * @ingroup grp_timer_alarm */
+typedef sBSP430timerMuxAlarm * hBSP430timerMuxAlarm;
+
+/** Configure for a multiplexed alarm.
+ *
+ * hBSP430timerAlarmInitialize() is used to initialize the dedicated
+ * timer capture/compare interrupt associated with @p periph and @p
+ * ccidx, and the resulting alarm is enabled.  The list of shared
+ * alarms is initialized to be empty.
+ *
+ * @see iBSP430timerMuxAlarmShutdown()
+ *
+ * @param shared a pointer to a structure that holds the underlying
+ * dedicated alarm data along with a list of active alarms.
+ *
+ * @param periph the timer peripheral used to control the alarm.
+ *
+ * @param ccidx the capture/compare index within @p periph that is to be used for the shared alarms.
+ *
+ * @return a handle for the shared alarm, or a null pointer if an error is detected.
+ *
+ * @ingroup grp_timer_alarm */
+hBSP430timerMuxSharedAlarm hBSP430timerMuxAlarmStartup (sBSP430timerMuxSharedAlarm * shared,
+                                                        tBSP430periphHandle periph,
+                                                        int ccidx);
+
+/** Disable multiplexed alarms.
+ *
+ * The underlying shared alarm is cancelled and disabled.  User code
+ * may inspect and manipulate the remaining alarms to process any
+ * unexpired timers.
+ *
+ * @param shared a pointer to the structure used for multiplexed alarms
+ *
+ * @return as with iBSP430timerAlarmDisable_ni()
+ *
+ * @ingroup grp_timer_alarm */
+int iBSP430timerMuxAlarmShutdown (sBSP430timerMuxSharedAlarm * shared);
+
+/** Link a new alarm into the list managed by @p shared
+ *
+ * The user must have already initialized the @p alarm structure
+ * including its callback and setting.  @p alarm is linked into the
+ * list of alarms managed by @p shared, and the underlying timer is
+ * configured to wake when the first alarm is due.
+ *
+ * The underlying dedicated alarm sets its wakeup using
+ * iBSP430timerAlarmSetForced_ni() so that delays resulting from slow
+ * processing will still result in the alarm being set even if it is
+ * overdue.
+ *
+ * @param shared the shared alarm that manages multiplexed alarms.
+ *
+ * @param alarm information on the alarm to be set.  The structure
+ * must not already be in an alarm list.  The contents pointed to by
+ * this handle must not be manipulated by the user until the alarm
+ * fires or is cancelled via iBSP430timerMuxAlarmRemove_ni().
+ *
+ * @return Normally the return value from
+ * iBSP430timerAlarmSetForced_ni() when setting for the first
+ * multiplexed alarm.  If a negative value appears, the multiplexed
+ * alarm structure is in an undefined state.
+ *
+ * @ingroup grp_timer_alarm */
+int iBSP430timerMuxAlarmAdd_ni (hBSP430timerMuxSharedAlarm shared,
+                                hBSP430timerMuxAlarm alarm);
+
+/** Remove an alarm from a shared list.
+ *
+ * The alarm is removed from the list.  If any alarms remain, @p
+ * shared is updated to fire when the next alarm is due.  It is
+ * guaranteed that the removed alarm will not fire after this function
+ * has been invoked.
+ *
+ * @param shared the shared alarm that manages multiplexed alarms.
+ *
+ * @param alarm the alarm to be removed.
+ *
+ * @return Normally the return value from
+ * iBSP430timerAlarmSetForced_ni() when setting for the next scheduled
+ * multiplexed alarm.  Zero is returned if no alarms remain.  If a
+ * negative value appears, the multiplexed alarm structure is in an
+ * undefined state.
+ *
+ * @ingroup grp_timer_alarm */
+int iBSP430timerMuxAlarmRemove_ni (hBSP430timerMuxSharedAlarm shared,
+                                   hBSP430timerMuxAlarm alarm);
 
 /** Bit set in sBSP430timerPulseCapture::flags if the
  * sBSP430timerPulseCapture::start_tt timestamp corresponds to the

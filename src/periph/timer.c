@@ -586,13 +586,16 @@ timerAlarmSet_ni (hBSP430timerAlarm alarm,
     /* Can't set an alarm that's not enabled */
     rv = -1;
   } else if (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags) {
-    /* Can't set an alarm that's already set */
+    /* Can't set an alarm that's already set.  NB: rv value is
+     * negative. */
     rv = BSP430_TIMER_ALARM_SET_ALREADY;
   } else if (0 > delay_tck) {
-    /* Maybe can't set an alarm that's in the past */
+    /* Maybe can't set an alarm that's in the past.  NB: rv value is
+     * positive. */
     rv = BSP430_TIMER_ALARM_SET_PAST;
   } else if (BSP430_TIMER_ALARM_FUTURE_LIMIT > delay_tck) {
-    /* Maybe can't set an alarm that's coming up too fast */
+    /* Maybe can't set an alarm that's coming up too fast.  NB: rv
+     * value is positive. */
     rv = BSP430_TIMER_ALARM_SET_NOW;
   } else {
     /* Can set the alarm */
@@ -645,13 +648,145 @@ iBSP430timerAlarmCancel_ni (hBSP430timerAlarm alarm)
     return -1;
   }
   if (! (BSP430_TIMER_ALARM_FLAG_SET & alarm->flags)) {
-    return -1;
+    return 0;
   }
   /* Clear the set and clear the CCIE and CCIFG bits in the timer
    * (along with everything else). */
   malarm->flags &= ~BSP430_TIMER_ALARM_FLAG_SET;
   alarm->timer->hpl->cctl[alarm->ccidx] = 0;
-  return 0;
+  return 1;
+}
+
+/* The capture/compare callback registered for enabled alarms.  It is
+ * responsible for clearing the alarm and invoking the user-provided
+ * callback. */
+static int
+muxAlarm_cb_ni (hBSP430timerAlarm alarm)
+{
+  hBSP430timerMuxSharedAlarm sap = (sBSP430timerMuxSharedAlarm *)(-offsetof(sBSP430timerMuxSharedAlarm, dedicated) + (char *)alarm);
+  unsigned long now_tck = ulBSP430timerCounter_ni(sap->dedicated.timer, NULL);
+  hBSP430timerMuxAlarm fired = sap->alarms;
+  hBSP430timerMuxAlarm * ap = &sap->alarms;
+  int rv = 0;
+
+  while (NULL != *ap) {
+    if (0 < ((long)((*ap)->setting_tck) - (long)now_tck)) {
+      break;
+    }
+    ap = &(*ap)->next;
+  }
+  sap->alarms = *ap;
+  if (sap->alarms) {
+    (void)timerAlarmSet_ni(&sap->dedicated, sap->alarms->setting_tck, 1);
+  }
+  if (fired != sap->alarms) {
+    *ap = NULL;
+    while (NULL != fired) {
+      hBSP430timerMuxAlarm notify = fired;
+      fired = notify->next;
+      notify->next = NULL;
+      rv |= notify->callback_ni(sap, notify);
+    }
+  }
+  return rv;
+}
+
+hBSP430timerMuxSharedAlarm
+hBSP430timerMuxAlarmStartup (sBSP430timerMuxSharedAlarm * shared,
+                             tBSP430periphHandle periph,
+                             int ccidx)
+{
+  hBSP430timerMuxSharedAlarm rv = NULL;
+  hBSP430timerAlarm ap;
+  int rc;
+
+  if (NULL == shared) {
+    return rv;
+  }
+  memset(shared, 0, sizeof(*shared));
+  ap = hBSP430timerAlarmInitialize(&shared->dedicated, periph, ccidx, muxAlarm_cb_ni);
+  if (NULL == ap) {
+    return rv;
+  }
+  rc = iBSP430timerAlarmEnable(ap);
+  if (0 != rc) {
+    return rv;
+  }
+  rv = shared;
+  return rv;
+}
+
+int
+iBSP430timerMuxAlarmShutdown (hBSP430timerMuxSharedAlarm shared)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rc = -1;
+
+  if (NULL == shared) {
+    return rc;
+  }
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    rc = iBSP430timerAlarmCancel_ni(&shared->dedicated);
+    if (0 <= rc) {
+      rc = iBSP430timerAlarmSetEnabled_ni(&shared->dedicated, 0);
+    }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rc;
+}
+
+int
+iBSP430timerMuxAlarmAdd_ni (hBSP430timerMuxSharedAlarm shared,
+                            hBSP430timerMuxAlarm alarm)
+{
+  int rc;
+
+  rc = iBSP430timerAlarmCancel_ni(&shared->dedicated);
+  if (0 <= rc) {
+    hBSP430timerMuxAlarm * np = &shared->alarms;
+    hBSP430halTIMER timer = shared->dedicated.timer;
+    unsigned long now_tck = ulBSP430timerCounter_ni(timer, NULL);
+    long delay_tck = alarm->setting_tck - now_tck;
+
+    /* Insert the alarm into the sequence after any alarm that should
+     * fire at or before the time of the new alarm. */
+    while (NULL != *np) {
+      long next_delay_tck = (*np)->setting_tck - now_tck;
+      if (next_delay_tck > delay_tck) {
+        break;
+      }
+      np = &(*np)->next;
+    }
+    alarm->next = *np;
+    *np = alarm;
+    rc = timerAlarmSet_ni(&shared->dedicated, shared->alarms->setting_tck, 1);
+  }
+  return rc;
+}
+
+int
+iBSP430timerMuxAlarmRemove_ni (hBSP430timerMuxSharedAlarm shared,
+                               hBSP430timerMuxAlarm alarm)
+{
+  int rc;
+
+  rc = iBSP430timerAlarmCancel_ni(&shared->dedicated);
+  if (0 <= rc) {
+    hBSP430timerMuxAlarm * np = &shared->alarms;
+    while (NULL != *np) {
+      if (alarm == *np) {
+        *np = alarm->next;
+        break;
+      }
+      np = &(*np)->next;
+    }
+    rc = 0;
+    if (NULL != shared->alarms) {
+      rc = timerAlarmSet_ni(&shared->dedicated, shared->alarms->setting_tck, 1);
+    }
+  }
+  return rc;
 }
 
 static int
