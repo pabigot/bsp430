@@ -100,6 +100,52 @@ const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
 static int
+cmd_synctest (const char * command)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  /* Interval should be > 10ms to ensure delays don't cascade into the
+   * next synchronization point.  I.e., the maximum late value should
+   * be less than the interval. */
+  const unsigned long interval =
+#if (APP_SOURCE_SMCLK - 0)
+    100000UL
+#else
+    10000UL
+#endif
+    ;
+
+  int cc;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    alarmHAL_->hpl->ctl &= ~(MC0 | MC1);
+    vBSP430timerResetCounter_ni(alarmHAL_);
+    for (cc = 0; cc < nTimers; ++cc) {
+      hBSP430timerAlarm ap = alarm[cc];
+      if (NULL != ap) {
+        (void)iBSP430timerAlarmCancel_ni(ap);
+        (void)iBSP430timerAlarmSetEnabled_ni(ap, 1);
+        alarm_stats[cc].interval_tck = interval;
+        alarm_stats[cc].flags |= FLG_SkipLost;
+        (void)iBSP430timerAlarmSetForced_ni(ap, 10 * interval);
+      }
+    }
+    alarmHAL_->hpl->ctl |= MC_2 | TACLR;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return 0;
+}
+static const sBSP430cliCommand dcmd_synctest = {
+  .key = "synctest",
+  .help = "# synctest alarm cc",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_synctest
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND (&dcmd_synctest)
+
+static int
 cmd_autotest (const char * command)
 {
   static const unsigned long base[] = {
