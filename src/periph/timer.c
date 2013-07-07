@@ -34,7 +34,6 @@
 #include <bsp430/platform.h>    /* BSP430_PLATFORM_TIMER_CCACLK defined by this */
 #include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
-#include <bsp430/utility/console.h>
 
 #if (BSP430_CORE_FAMILY_IS_5XX - 0)
 /* In 5xx Timer_A and Timer_B use the same layout with 0x0E denoting

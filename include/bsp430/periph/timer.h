@@ -1864,17 +1864,17 @@ int iBSP430timerMuxAlarmAdd_ni (hBSP430timerMuxSharedAlarm shared,
 int iBSP430timerMuxAlarmRemove_ni (hBSP430timerMuxSharedAlarm shared,
                                    hBSP430timerMuxAlarm alarm);
 
-/** Bit set in sBSP430timerPulseCapture::flags if the
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the
  * sBSP430timerPulseCapture::start_tt timestamp corresponds to the
  * start of a pulse on a timer input. */
 #define BSP430_TIMER_PULSECAP_START_VALID 0x01
 
-/** Bit set in sBSP430timerPulseCapture::flags if the
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the
  * sBSP430timerPulseCapture::end_tt timestamp corresponds to the end
  * of a pulse on a timer input. */
 #define BSP430_TIMER_PULSECAP_END_VALID 0x02
 
-/** Bit set in sBSP430timerPulseCapture::flags if any of these
+/** Bit set in sBSP430timerPulseCapture::flags_ni if any of these
  * conditions hold:
  *
  * @li the underlying timer recorded an overflow event (hardware #COV);
@@ -1886,7 +1886,7 @@ int iBSP430timerMuxAlarmRemove_ni (hBSP430timerMuxSharedAlarm shared,
  * #BSP430_TIMER_PULSECAP_ACTIVE_HIGH bit are reliable. */
 #define BSP430_TIMER_PULSECAP_OVERFLOW 0x04
 
-/** Bit set in sBSP430timerPulseCapture::flags if the captured start
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the captured start
  * time corresponded to a low-to-high transition.  The bit is cleared
  * if the start corresponded to a high-to-low transition.
  *
@@ -1896,26 +1896,26 @@ int iBSP430timerMuxAlarmRemove_ni (hBSP430timerMuxSharedAlarm shared,
  * wrong transition was captured as the start of the pulse. */
 #define BSP430_TIMER_PULSECAP_ACTIVE_HIGH 0x08
 
-/** Bit set in sBSP430timerPulseCapture::flags if the
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the
  * sBSP430timerPulseCapture::callback_ni is to be invoked when a pulse
  * start is captured. */
 #define BSP430_TIMER_PULSECAP_START_CALLBACK 0x100
 
-/** Bit set in sBSP430timerPulseCapture::flags if the
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the
  * sBSP430timerPulseCapture::callback_ni is to be invoked when a pulse
  * end is captured. */
 #define BSP430_TIMER_PULSECAP_END_CALLBACK 0x200
 
-/** Bit set in sBSP430timerPulseCapture::flags if the callback is
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the callback is
  * being invoked.  This is used for diagnostics and error checking. */
 #define BSP430_TIMER_PULSECAP_CALLBACK_ACTIVE 0x0400
 
-/** Bit set in sBSP430timerPulseCapture::flags if the pulse capture
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the pulse capture
  * infrastructure is enabled (i.e., linked into the interrupt callback
  * chains). */
 #define BSP430_TIMER_PULSECAP_ENABLED 0x1000
 
-/** Bit set in sBSP430timerPulseCapture::flags if the pulse capture
+/** Bit set in sBSP430timerPulseCapture::flags_ni if the pulse capture
  * infrastructure is active (i.e., the interrupt is enabled). */
 #define BSP430_TIMER_PULSECAP_ACTIVE 0x2000
 
@@ -1962,7 +1962,7 @@ typedef struct sBSP430timerPulseCapture {
 
   /** The pulse start time from the underlying clock.  The content is
    * valid only if #BSP430_TIMER_PULSECAP_START_VALID is set in @a
-   * flags. */
+   * flags_ni. */
   volatile unsigned long start_tt_ni;
 
   /** The pulse end time from the underlying clock.  The content is
@@ -2181,6 +2181,34 @@ iBSP430timerPulseCaptureDeactivate (hBSP430timerPulseCapture pulsecap)
   rv = iBSP430timerPulseCaptureSetActive_ni(pulsecap, 0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
+}
+
+/** Invert the sense of a partial or full pulse capture.
+ *
+ * #BSP430_TIMER_PULSECAP_ACTIVE_HIGH is inverted in
+ * sBSP430timerPulseCapture::flags_ni
+ *
+ * If the provided capture has a valid end timestamp it is copied into
+ * sBSP430timerPulseCapture::start_tt_ni and
+ * #BSP430_TIMER_PULSECAP_END_VALID is cleared.
+ *
+ * Otherwise, if the provided capture has a valid start timestamp it
+ * is cleared.
+ *
+ * @param pulsecap the structure to be updated. */
+static BSP430_CORE_INLINE
+void vBSP430timerPulseCaptureInvertSense_ni (hBSP430timerPulseCapture pulsecap)
+{
+  unsigned int flags = pulsecap->flags_ni;
+  flags ^= BSP430_TIMER_PULSECAP_ACTIVE_HIGH;
+  if (BSP430_TIMER_PULSECAP_END_VALID & flags) {
+    flags &= ~BSP430_TIMER_PULSECAP_END_VALID;
+    flags |= BSP430_TIMER_PULSECAP_START_VALID;
+    pulsecap->start_tt_ni = pulsecap->end_tt_ni;
+  } else {
+    flags &= ~BSP430_TIMER_PULSECAP_START_VALID;
+  }
+  pulsecap->flags_ni = flags;
 }
 
 /* !BSP430! insert=hal_decl */
