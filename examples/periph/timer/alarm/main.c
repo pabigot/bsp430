@@ -583,6 +583,9 @@ cmd_clocks (const char * argstr)
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   unsigned long now_tck;
   unsigned long timer_overhead;
+#if (BSP430_PMM_SUPPORTS_SVSM - 0)
+  int fast_wakeup = 0;
+#endif
 
   cprintf("CPU clocks (Hz): MCLK %lu ; SMCLK %lu ; ACLK %lu\n",
           ulBSP430clockMCLK_Hz(), ulBSP430clockSMCLK_Hz(),
@@ -595,11 +598,18 @@ cmd_clocks (const char * argstr)
     t0 = ulBSP430timerCounter_ni(alarmHAL_, NULL);
     now_tck = ulBSP430timerCounter_ni(alarmHAL_, NULL);
     timer_overhead = now_tck - t0;
+#if (BSP430_PMM_SUPPORTS_SVSM - 0)
+    fast_wakeup = (0 == (SVSMHCTL & (SVMHE | SVSHE)))
+      && (0 == (SVSMLCTL & (SVMLE | SVSLE)));
+#endif /* BSP430_PMM_SET_SVSMCTL_NI */
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   cprintf("Timer %s freq %lu Hz now %lu\n", xBSP430timerName(ALARM_TIMER_PERIPH_HANDLE), alarm_Hz, now_tck);
   cprintf("\tResolution %lu ns/tt, overhead %lu tt @ 32bit\n",
           1000000000UL/alarm_Hz, timer_overhead);
+#if (BSP430_PMM_SUPPORTS_SVSM - 0)
+  cprintf("PMM is %sconfigured for fast wakeup\n", fast_wakeup ? "" : "NOT ");
+#endif /* BSP430_PMM_SET_SVSMCTL_NI */
   return 0;
 }
 static const sBSP430cliCommand dcmd_clocks = {
@@ -657,8 +667,12 @@ void main ()
   vBSP430cliSetDiagnosticFunction(iBSP430cliConsoleDiagnostic);
   cprintf("alarm: " __DATE__ " " __TIME__ "\n");
 
-#if (BSP430_PMM_SUPPORTS_SVSM - 0)
-  /* Ensure fast wakeup on 5xx/6xx devices */
+#if 0 && (BSP430_PMM_SUPPORTS_SVSM - 0)
+  /* Ensure fast wakeup on 5xx/6xx devices.  Absent UCS errata this
+   * won't make much difference when SMCLK is driving the alarms,
+   * because its use inhibits entering the really low power modes.
+   * However, if ACLK is used then without this optimization wakeup
+   * takes ~150us. */
   BSP430_PMM_SET_SVSMCTL_NI(SVSMHCTL & ~(SVMHE | SVSHE), SVSMLCTL & ~(SVMLE | SVSLE));
 #endif /* BSP430_PMM_SET_SVSMCTL_NI */
 
@@ -740,7 +754,7 @@ void main ()
         continue;
       }
     }
-    BSP430_CORE_LPM_ENTER_NI(LPM3_bits);
+    BSP430_CORE_LPM_ENTER_NI(LPM2_bits);
     ++wakeups;
   }
 
