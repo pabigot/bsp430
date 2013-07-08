@@ -587,6 +587,37 @@ iBSP430cliConsoleBufferProcessInput_ni ()
   return rv;
 }
 
+int
+iBSP430cliConsoleBufferConsumeEscape (int flags)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
+  while (flags & eBSP430cliConsole_ANY_ESCAPE) {
+    int c;
+    while (0 <= ((c = cgetchar()))) {
+      /* Technically CSI is a single character 0x9b representing
+       * ESC+[.  In the two-character mode accepted here, we use the
+       * value for the second character. */
+#define KEY_CSI '['
+      if ((KEY_CSI == c) && (flags & eBSP430cliConsole_PROCESS_ESCAPE)) {
+        flags &= ~eBSP430cliConsole_PROCESS_ESCAPE;
+        flags |= eBSP430cliConsole_IN_ESCAPE;
+      } else if ((64 <= c) && (c <= 126)) {
+        flags &= ~eBSP430cliConsole_ANY_ESCAPE;
+        break;
+      }
+#undef KEY_CSI
+    }
+    if (flags & eBSP430cliConsole_ANY_ESCAPE) {
+      BSP430_CORE_LPM_ENTER(GIE | LPM0_bits);
+    }
+  }
+  /* Blocking for input may have set #GIE though it was clear on
+   * entry. */
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return flags;
+}
+
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 #if (configBSP430_CLI_COMMAND_COMPLETION - 0)

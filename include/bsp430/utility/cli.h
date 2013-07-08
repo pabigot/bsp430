@@ -1013,7 +1013,12 @@ typedef enum eBSP430cliConsole {
    * @li Otherwise, the consumed ESC is expected to be followed by a
    * single ASCII character in the range 64 to 95.
    *
-   * See http://en.wikipedia.org/wiki/ANSI_escape_code. */
+   * If the caller is uninterested in escape sequences but wishes to
+   * be robust if the user generates one, use
+   * iBSP430cliConsoleBufferConsumeEscape() to filter them without
+   * misinterpreting partial escape sequences as valid input.
+   *
+   * @see http://en.wikipedia.org/wiki/ANSI_escape_code. */
   eBSP430cliConsole_PROCESS_ESCAPE = 0x08,
 
   /** Bit set in flags if system is processing an escape sequence.
@@ -1029,7 +1034,7 @@ typedef enum eBSP430cliConsole {
    * mode until the entire sequence has been consumed (i.e., a
    * character in the range 64 to 126 is recognized).
    *
-   * See @ref ex_utility_cli. */
+   * @see @ref ex_utility_cli. */
   eBSP430cliConsole_IN_ESCAPE = 0x10,
 
   /** Bit mask for flags indicating that some escape-sequence
@@ -1202,6 +1207,30 @@ int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
 int iBSP430cliConsoleBufferProcessInput_ni (void);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
+
+/** Consume any pending escape sequences recorded in @p flags.
+ *
+ * This utility function allows applications that perform console
+ * input but do not support escape sequences to discard them without
+ * having to implement the escape state machine or incorrectly
+ * processing the tail of an escape sequence as text.
+ *
+ * If @p flags on entry already has no set bits in
+ * #eBSP430cliConsole_ANY_ESCAPE then @p flags is returned without
+ * change or delay.  Otherwise this function will block until the
+ * remainder of the escape sequence has been entered and consumed.
+ *
+ * The escape sequence is not returned to the caller.
+ *
+ * @param flags A value returned by
+ * iBSP430cliConsoleBufferProcessInput_ni()
+ *
+ * @return @p flags with #eBSP430cliConsole_ANY_ESCAPE zero after
+ * consuming the necessary characters to complete the escape
+ * sequence.
+ *
+ * @blocking */
+int iBSP430cliConsoleBufferConsumeEscape (int flags);
 
 /** Interface to command completion.
  *
