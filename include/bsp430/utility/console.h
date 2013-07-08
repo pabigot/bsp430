@@ -576,6 +576,12 @@ int cputul_ni (unsigned long n, int radix);
  * call to iBSP430consoleDeconfigure(), the existing configuration is
  * unchanged.
  *
+ * @note If #BSP430_SERIAL_ENABLE_RESOURCE is non-zero the resource
+ * associated with the console peripheral will be claimed by the
+ * console infrastructure and held until iBSP430consoleDeconfigure()
+ * is invoked.  Failure to obtain the resource will result in an error
+ * during initialization.
+ *
  * @return 0 if the console was successfully initialized, -1 if an
  * error occurred. */
 int iBSP430consoleInitialize (void);

@@ -538,6 +538,15 @@ iBSP430consoleInitialize (void)
 
     /* Attempt to configure and install the console */
     console_hal_ = hBSP430serialOpenUART(hal, 0, 0, BSP430_CONSOLE_BAUD_RATE);
+#if (BSP430_SERIAL_ENABLE_RESOURCE - 0)
+    /* Fail if found peripheral but could not get control of its
+     * resource */
+    if ((NULL != console_hal_)
+        && (0 != iBSP430resourceClaim_ni(&console_hal_->resource, &console_hal_, eBSP430resourceWait_NONE, NULL))) {
+      console_hal_ = NULL;
+    }
+#endif /* BSP430_SERIAL_ENABLE_RESOURCE */
+
     if (! console_hal_) {
       /* Open failed, revert the callback association. */
 #if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
@@ -573,6 +582,9 @@ iBSP430consoleDeconfigure (void)
 #if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
     BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
+#if (BSP430_SERIAL_ENABLE_RESOURCE - 0)
+    (void)iBSP430resourceRelease_ni(&console_hal_->resource, &console_hal_);
+#endif /* BSP430_SERIAL_ENABLE_RESOURCE */
     console_hal_ = NULL;
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
