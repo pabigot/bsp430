@@ -302,8 +302,10 @@ cputs (const char * s)
     return 0;
   }
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = emit_text_ni(s, uart);
-  emit_char2_ni('\n', uart);
+  do {
+    rv = emit_text_ni(s, uart);
+    emit_char2_ni('\n', uart);
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return 1+rv;
 }
@@ -319,7 +321,9 @@ cputtext (const char * cp)
     return 0;
   }
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = emit_text_ni(cp, uart);
+  do {
+    rv = emit_text_ni(cp, uart);
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
@@ -342,7 +346,9 @@ cputchars (const char * cp,
     return 0;
   }
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = emit_chars_ni(cp, len, uart);
+  do {
+    rv = emit_chars_ni(cp, len, uart);
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
@@ -409,7 +415,9 @@ vcprintf (const char * fmt, va_list ap)
     return 0;
   }
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = vuprintf(emit_char_ni, fmt, ap);
+  do {
+    rv = vuprintf(emit_char_ni, fmt, ap);
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
@@ -514,7 +522,6 @@ iBSP430consoleInitialize (void)
   rv = -1;
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
-
 #if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
     /* Associate the callback before opening the device, so the
      * interrupts are enabled properly. */
@@ -558,14 +565,16 @@ iBSP430consoleDeconfigure (void)
     return rv;
   }
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = iBSP430serialClose(console_hal_);
+  do {
+    rv = iBSP430serialClose(console_hal_);
 #if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0)
-  BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
+    BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->rx_cbchain_ni, rx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 #if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
-  BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
+    BSP430_HAL_ISR_CALLBACK_UNLINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
 #endif /* BSP430_CONSOLE_TX_BUFFER_SIZE */
-  console_hal_ = NULL;
+    console_hal_ = NULL;
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
@@ -617,8 +626,10 @@ iBSP430consoleFlush (void)
     return 0;
   }
   BSP430_CORE_DISABLE_INTERRUPT();
-  rv = iBSP430consoleWaitForTxSpace_ni(-1);
-  vBSP430serialFlush_ni(console_hal_);
+  do {
+    rv = iBSP430consoleWaitForTxSpace_ni(-1);
+    vBSP430serialFlush_ni(console_hal_);
+  } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }

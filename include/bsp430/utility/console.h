@@ -362,21 +362,21 @@ void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
  *
- * @consoleoutput
- *
  * @param s a string to be emitted to the console
  *
  * @return the number of characters written, including the newline
+ *
+ * @consoleoutput
  */
 int cputs (const char * s);
 
 /** Like putchar(3) to the console UART, with interrupts already disabled
  *
- * @consoleoutput
- *
  * @param c character to be output
  *
- * @return the character that was output */
+ * @return the character that was output
+ *
+ * @consoleoutput */
 int cputchar_ni (int c);
 
 /** Like putchar(3) to the console UART
@@ -384,11 +384,11 @@ int cputchar_ni (int c);
  * This wraps cputchar_ni() with code to preserve the interrupt enable
  * state.
  *
- * @consoleoutput
- *
  * @param c character to be output
  *
- * @return the character that was output */
+ * @return the character that was output
+ *
+ * @consoleoutput */
 static BSP430_CORE_INLINE
 int
 cputchar (int c)
@@ -407,12 +407,11 @@ cputchar (int c)
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
  *
- * @consoleoutput
- *
  * @param s a NUL-terminated string to be emitted to the console
  *
  * @return the number of characters written
- */
+ *
+ * @consoleoutput */
 int cputtext_ni (const char * s);
 
 /** Like puts(3) to the console UART without trailing newline
@@ -423,12 +422,11 @@ int cputtext_ni (const char * s);
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
  *
- * @consoleoutput
- *
  * @param s a NUL-terminated string to be emitted to the console
  *
  * @return the number of characters written
- */
+ *
+ * @consoleoutput */
 int cputtext (const char * s);
 
 /** Like puts(3) to the console UART without trailing newline and
@@ -437,15 +435,14 @@ int cputtext (const char * s);
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
  *
- * @consoleoutput
- *
  * @param cp first of a series of characters to be emitted to the
  * console
  *
  * @param len number of characters to emit
  *
  * @return the number of characters written
- */
+ *
+ * @consoleoutput */
 int cputchars_ni (const char * cp, size_t len);
 
 /** Like puts(3) to the console UART without trailing newline and
@@ -457,15 +454,14 @@ int cputchars_ni (const char * cp, size_t len);
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
  *
- * @consoleoutput
- *
  * @param cp first of a series of characters to be emitted to the
  * console
  *
  * @param len number of characters to emit
  *
  * @return the number of characters written
- */
+ *
+ * @consoleoutput */
 int cputchars (const char * cp, size_t len);
 
 #if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE_USE_EMBTEXTF - 0) || (__MSPGCC__ - 0)
@@ -479,15 +475,15 @@ int cputchars (const char * cp, size_t len);
  * If xBSP430consoleInitialize() has not assigned a UART device, the
  * call is a no-op.
  *
- * @consoleoutput
- *
  * @param format A printf(3) format string
  *
  * @return Number of characters printed if the console is enabled; 0
  * if it is disabled; a negative error code if an error is
  * encountered
  *
- * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
+ *
+ * @consoleoutput */
 int cprintf (const char * format, ...)
 #if (__GNUC__ - 0)
 __attribute__((__format__(printf, 1, 2)))
@@ -496,18 +492,16 @@ __attribute__((__format__(printf, 1, 2)))
 
 /** Like vprintf(3), but to the console UART.
  *
- * @consoleoutput
- *
  * @param format A printf(3) format string
  * @param ap A stdarg reference to variable arguments to a calling function.
  * @return as with cprintf().
  *
- * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
+ *
+ * @consoleoutput */
 int vcprintf (const char * format, va_list ap);
 
 /** Format an int using itoa and emit it to the console.
- *
- * @consoleoutput
  *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
@@ -532,13 +526,13 @@ int cputi_ni (int n, int radix);
  *
  * @return the number of characters emitted
  *
- * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
+ *
+ * @consoleoutput */
 int cputu_ni (unsigned int n, int radix);
 
 /** Format an int using ltoa and emit it to the console.
  *
- * @consoleoutput
- *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
@@ -547,13 +541,13 @@ int cputu_ni (unsigned int n, int radix);
  *
  * @return the number of characters emitted
  *
- * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
+ *
+ * @consoleoutput */
 int cputl_ni (long n, int radix);
 
 /** Format an int using itoa and emit it to the console.
  *
- * @consoleoutput
- *
  * @param n the integer value to be formatted
  * @param radix the radix to use when formatting
  *
@@ -562,7 +556,9 @@ int cputl_ni (long n, int radix);
  *
  * @return the number of characters emitted
  *
- * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
+ *
+ * @consoleoutput */
 int cputul_ni (unsigned long n, int radix);
 
 #endif /* BSP430_CONSOLE_USE_EMBTEXTF */
@@ -645,8 +641,6 @@ int iBSP430consoleTransmitUseInterrupts_ni (int enablep);
  * re-check other conditions to ensure there is no pending work prior
  * to entering low power mode.
  *
- * @blocking
- *
  * @param want_available the number of bytes that are requested.  A
  * negative number requires that the transmit buffer be empty (i.e.,
  * flushed).
@@ -659,14 +653,17 @@ int iBSP430consoleTransmitUseInterrupts_ni (int enablep);
  * that space;
  * @li -1 if @p want_available is larger than
  * #BSP430_CONSOLE_TX_BUFFER_SIZE-1, which is the maximum number of
- * bytes that can be made available. */
+ * bytes that can be made available.
+ *
+ * @consoleoutput */
 int iBSP430consoleWaitForTxSpace_ni (int want_available);
 
 /** Flush any pending data in the console transmit buffer.
  *
- * The caller may enter low power mode while waiting for the console
- * transmission infrastructure to drain the buffer.  On return, all
- * queued output will have been transmitted.
+ * This is simply a wrapper around calls to
+ * iBSP430consoleWaitForTxSpace_ni() and vBSP430serialFlush_ni(), with
+ * interrupts disabled if required.  On return, all queued output will
+ * have been transmitted.
  *
  * If the console does not use interrupt driven transmission, this
  * function will simply spin until the last character has been
@@ -675,7 +672,8 @@ int iBSP430consoleWaitForTxSpace_ni (int want_available);
  * @return 0 if the console was flushed without suspending; a positive
  * number of the application had to suspend to permit interrupt-driven
  * transmission to complete.
- */
+ *
+ * @consoleoutput */
 int iBSP430consoleFlush (void);
 
 #endif /* BSP430_UTILITY_CONSOLE_H */
