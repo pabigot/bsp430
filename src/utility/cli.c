@@ -482,7 +482,7 @@ void vBSP430cliConsoleDisplayHelp (const sBSP430cliCommand * cmd)
 }
 
 const char *
-xBSP430cliConsoleBuffer_ni (void)
+xBSP430cliConsoleBuffer (void)
 {
 #if 0 < BSP430_CLI_CONSOLE_BUFFER_SIZE
   if (NULL == cbEnd_) {
@@ -508,14 +508,14 @@ xBSP430cliConsoleBuffer_ni (void)
 #define KEY_KILL_WORD 0x17
 
 void
-vBSP430cliConsoleBufferClear_ni (void)
+vBSP430cliConsoleBufferClear (void)
 {
   cbEnd_ = NULL;
 }
 
 int
-iBSP430cliConsoleBufferExtend_ni (const char * text,
-                                  size_t len)
+iBSP430cliConsoleBufferExtend (const char * text,
+                               size_t len)
 {
   const char * in_cb = cbEnd_;
 
@@ -528,7 +528,7 @@ iBSP430cliConsoleBufferExtend_ni (const char * text,
 }
 
 int
-iBSP430cliConsoleBufferProcessInput_ni ()
+iBSP430cliConsoleBufferProcessInput ()
 {
   int rv;
   int c;
@@ -537,13 +537,13 @@ iBSP430cliConsoleBufferProcessInput_ni ()
   if (NULL == cbEnd_) {
     cbEnd_ = consoleBuffer_;
   }
-  while (0 <= ((c = cgetchar_ni()))) {
+  while (0 <= ((c = cgetchar()))) {
     if (KEY_BS == c) {
       if (cbEnd_ == consoleBuffer_) {
-        cputchar_ni(KEY_BEL);
+        cputchar(KEY_BEL);
       } else {
         --cbEnd_;
-        cputtext_ni("\b \b");
+        cputtext("\b \b");
       }
 #if (configBSP430_CLI_COMMAND_COMPLETION - 0)
     } else if (KEY_HT == c) {
@@ -554,11 +554,11 @@ iBSP430cliConsoleBufferProcessInput_ni ()
       rv |= eBSP430cliConsole_PROCESS_ESCAPE;
       break;
     } else if (KEY_FF == c) {
-      cputchar_ni(c);
+      cputchar(c);
       rv |= eBSP430cliConsole_REPAINT;
       break;
     } else if (KEY_CR == c) {
-      cputchar_ni('\n');
+      cputchar('\n');
       rv |= eBSP430cliConsole_READY;
       break;
     } else if (KEY_KILL_LINE == c) {
@@ -577,10 +577,10 @@ iBSP430cliConsoleBufferProcessInput_ni ()
       *cbEnd_ = 0;
     } else {
       if ((1+cbEnd_) >= (consoleBuffer_ + sizeof(consoleBuffer_))) {
-        cputchar_ni(KEY_BEL);
+        cputchar(KEY_BEL);
       } else {
         *cbEnd_++ = c;
-        cputchar_ni(c);
+        cputchar(c);
       }
     }
   }
@@ -856,16 +856,13 @@ int
 iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
                                    const char * * commandp)
 {
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   sBSP430cliCompletionData ccd;
   const char * matches[BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS];
   int flags;
 
   memset(&ccd, 0, sizeof(ccd));
   if (NULL == *commandp) {
-    BSP430_CORE_DISABLE_INTERRUPT();
-    *commandp = xBSP430cliConsoleBuffer_ni();
-    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+    *commandp = xBSP430cliConsoleBuffer();
   }
   ccd.command = *commandp;
   ccd.command_set = command_set;
@@ -875,23 +872,19 @@ iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
   if (NULL != ccd.append) {
     size_t app_len = 0;
 
-    BSP430_CORE_DISABLE_INTERRUPT();
-    do {
-      if (0 < ccd.append_len) {
-        app_len += ccd.append_len;
-        iBSP430cliConsoleBufferExtend_ni(ccd.append, ccd.append_len);
-      }
-      if (flags & eBSP430cliConsole_COMPLETE_SPACE) {
-        flags &= ~eBSP430cliConsole_COMPLETE_SPACE;
-        iBSP430cliConsoleBufferExtend_ni(" ", 1);
-        ++app_len;
-      }
-      *commandp = xBSP430cliConsoleBuffer_ni();
-      if ((0 < app_len) && ! (flags & eBSP430cliConsole_REPAINT)) {
-        cputtext_ni(*commandp + strlen(*commandp) - app_len);
-      }
-    } while (0);
-    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+    if (0 < ccd.append_len) {
+      app_len += ccd.append_len;
+      iBSP430cliConsoleBufferExtend(ccd.append, ccd.append_len);
+    }
+    if (flags & eBSP430cliConsole_COMPLETE_SPACE) {
+      flags &= ~eBSP430cliConsole_COMPLETE_SPACE;
+      iBSP430cliConsoleBufferExtend(" ", 1);
+      ++app_len;
+    }
+    *commandp = xBSP430cliConsoleBuffer();
+    if ((0 < app_len) && ! (flags & eBSP430cliConsole_REPAINT)) {
+      cputtext(*commandp + strlen(*commandp) - app_len);
+    }
   } else {
     if (0 < ccd.ncandidates) {
       size_t ci = 0;

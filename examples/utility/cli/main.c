@@ -407,37 +407,32 @@ void main ()
       cputchar('\a');
       flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
-    BSP430_CORE_DISABLE_INTERRUPT();
+    if (flags & eBSP430cliConsole_READY) {
+      /* Clear the command we just completed */
+      vBSP430cliConsoleBufferClear();
+      flags &= ~eBSP430cliConsole_READY;
+    }
     do {
-      if (flags & eBSP430cliConsole_READY) {
-        /* Clear the command we just completed */
-        vBSP430cliConsoleBufferClear_ni();
-        flags &= ~eBSP430cliConsole_READY;
+      /* Unless we're processing application-specific escape
+       * characters let iBSP430cliConsoleBufferProcessInput_ni()
+       * process any input characters that have already been
+       * received. */
+      if (! (flags & eBSP430cliConsole_ANY_ESCAPE)) {
+        flags |= iBSP430cliConsoleBufferProcessInput();
       }
-      do {
-        /* Unless we're processing application-specific escape
-         * characters let iBSP430cliConsoleBufferProcessInput_ni()
-         * process any input characters that have already been
-         * received. */
-        if (! (flags & eBSP430cliConsole_ANY_ESCAPE)) {
-          flags |= iBSP430cliConsoleBufferProcessInput_ni();
-        }
-        if (0 == flags) {
-          /* Sleep until something wakes us, such as console input.
-           * Then turn off interrupts and loop back to read that
-           * input. */
-          vBSP430ledSet(0, 0);
-          BSP430_CORE_LPM_ENTER_NI(LPM0_bits);
-          BSP430_CORE_DISABLE_INTERRUPT();
-          vBSP430ledSet(0, 1);
-        }
-        /* Repeat if still nothing to do */
-      } while (! flags);
+      if (0 == flags) {
+        /* Sleep until something wakes us, such as console input.
+         * Then turn off interrupts and loop back to read that
+         * input. */
+        vBSP430ledSet(0, 0);
+        BSP430_CORE_LPM_ENTER(LPM0_bits);
+        vBSP430ledSet(0, 1);
+      }
+      /* Repeat if still nothing to do */
+    } while (! flags);
 
-      /* Got something to do; get the command contents in place so
-       * we can update the screen. */
-      command = xBSP430cliConsoleBuffer_ni();
-    } while (0);
-    BSP430_CORE_ENABLE_INTERRUPT();
+    /* Got something to do; get the command contents in place so
+     * we can update the screen. */
+    command = xBSP430cliConsoleBuffer();
   }
 }

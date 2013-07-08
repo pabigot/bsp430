@@ -70,7 +70,7 @@ hup # No help available
 Below is a capture from an interactive session with the application.  Where
 the sequence @c \<TAB\> appears a tab character was typed.  Where the
 sequence @c \<UP\> appears the up-arrow on an ANSI terminal was pressed.
-See iBSP430cliConsoleBufferProcessInput_ni() for a table showing command
+See iBSP430cliConsoleBufferProcessInput() for a table showing command
 metacharacters.
 
 @verbatim

@@ -57,8 +57,8 @@ testNextQToken (void)
 #define SET_INPUT(str_) do {                    \
     mcommand = command = str_;                  \
     command_len = strlen(str_);                 \
-  } while (0)                                   \
- 
+  } while (0)
+
   SET_INPUT("'one two'");
   tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
@@ -97,17 +97,17 @@ testConsoleBufferExtend (void)
   const char * p;
   int rv;
 
-  vBSP430cliConsoleBufferClear_ni();
-  p = xBSP430cliConsoleBuffer_ni();
+  vBSP430cliConsoleBufferClear();
+  p = xBSP430cliConsoleBuffer();
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0, strlen(p));
-  rv = iBSP430cliConsoleBufferExtend_ni("one", 1);
+  rv = iBSP430cliConsoleBufferExtend("one", 1);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(rv, 1);
-  p = xBSP430cliConsoleBuffer_ni();
+  p = xBSP430cliConsoleBuffer();
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(1, strlen(p));
   BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ("o", p);
-  rv = iBSP430cliConsoleBufferExtend_ni("ne", (size_t)-1);
+  rv = iBSP430cliConsoleBufferExtend("ne", (size_t)-1);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(rv, 2);
-  p = xBSP430cliConsoleBuffer_ni();
+  p = xBSP430cliConsoleBuffer();
   BSP430_UNITTEST_ASSERT_EQUAL_ASCIIZ("one", p);
 }
 
@@ -302,12 +302,10 @@ void main (void)
   vBSP430platformInitialize_ni();
   vBSP430unittestInitialize();
 
-#if 0
   testNextToken();
   testNextQToken();
   testConsoleBufferExtend();
   testCommandCompletion();
-#endif
   testHelperStringsExtract();
 
   vBSP430unittestFinalize();

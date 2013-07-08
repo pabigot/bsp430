@@ -600,7 +600,7 @@ cmd_clocks (const char * argstr)
     timer_overhead = now_tck - t0;
 #if (BSP430_PMM_SUPPORTS_SVSM - 0)
     fast_wakeup = (0 == (SVSMHCTL & (SVMHE | SVSHE)))
-      && (0 == (SVSMLCTL & (SVMLE | SVSLE)));
+                  && (0 == (SVSMLCTL & (SVMLE | SVSLE)));
 #endif /* BSP430_PMM_SET_SVSMCTL_NI */
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -737,27 +737,28 @@ void main ()
       cputchar('\a');
       flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
-    BSP430_CORE_DISABLE_INTERRUPT();
     if (flags & eBSP430cliConsole_READY) {
       /* Clear the command we just completed */
       flags &= ~eBSP430cliConsole_READY;
-      vBSP430cliConsoleBufferClear_ni();
+      vBSP430cliConsoleBufferClear();
     }
-    /* Discard any pending escape sequence */
-    flags = iBSP430cliConsoleBufferConsumeEscape(flags);
+    do {
+      /* Discard any pending escape sequence */
+      flags = iBSP430cliConsoleBufferConsumeEscape(flags);
+      /* If no operations are pending, see if there is pending input. */
+      if (0 == flags) {
+        flags = iBSP430cliConsoleBufferProcessInput();
+      }
+      /* If still no operations pending wait for something to
+       * happen. */
+      if (0 == flags) {
+        BSP430_CORE_LPM_ENTER(LPM2_bits);
+        ++wakeups;
+      }
+    } while (! flags);
 
-    /* If no operations are active, see if there is pending input. */
-    if (! flags) {
-      flags = iBSP430cliConsoleBufferProcessInput_ni();
-    }
-    if (flags) {
-      /* Got something to do; get the command contents in place */
-      command = xBSP430cliConsoleBuffer_ni();
-      BSP430_CORE_ENABLE_INTERRUPT();
-      continue;
-    }
-    BSP430_CORE_LPM_ENTER_NI(LPM2_bits);
-    ++wakeups;
+    /* Got something to do; get the command contents in place and
+     * restart at top of loop */
+    command = xBSP430cliConsoleBuffer();
   }
-
 }

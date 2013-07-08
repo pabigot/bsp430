@@ -775,18 +775,23 @@ void main (void)
       cputchar('\a');
       flags &= ~eBSP430cliConsole_REPAINT_BEL;
     }
-    BSP430_CORE_DISABLE_INTERRUPT();
     if (flags & eBSP430cliConsole_READY) {
       /* Clear the command we just completed */
-      vBSP430cliConsoleBufferClear_ni();
+      vBSP430cliConsoleBufferClear();
+      flags &= ~eBSP430cliConsole_READY;
     }
-    flags = iBSP430cliConsoleBufferProcessInput_ni();
-    if (flags) {
-      /* Got something to do; get the command contents in place */
-      command = xBSP430cliConsoleBuffer_ni();
-      BSP430_CORE_ENABLE_INTERRUPT();
-      continue;
-    }
-    BSP430_CORE_LPM_ENTER_NI(LPM2_bits);
+    do {
+      /* Discard any pending escape sequence */
+      flags = iBSP430cliConsoleBufferConsumeEscape(flags);
+      /* If no operations are pending, see if there is pending input. */
+      if (0 == flags) {
+        flags = iBSP430cliConsoleBufferProcessInput();
+      }
+      /* If still no operations pending wait for something to
+       * happen. */
+      if (0 == flags) {
+        BSP430_CORE_LPM_ENTER(LPM2_bits);
+      }
+    } while (! flags);
   }
 }

@@ -964,10 +964,10 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 /** Specify the size of an internal command buffer for editing.
  *
  * A non-zero setting for this parameter allocates an internal buffer
- * that is used by iBSP430cliConsoleBufferProcessInput_ni() to aggregate
+ * that is used by iBSP430cliConsoleBufferProcessInput() to aggregate
  * keystrokes and produce a command string.
  *
- * If the value of this is zero, iBSP430cliConsoleBufferProcessInput_ni()
+ * If the value of this is zero, iBSP430cliConsoleBufferProcessInput()
  * will not be available.
  *
  * @ingroup grp_utility_cli_cli
@@ -977,18 +977,18 @@ sBSP430cliCommandLink * xBSP430cliReverseChain (sBSP430cliCommandLink * chain);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 /** Enumeration of bit values returned from
- * iBSP430cliConsoleBufferProcessInput_ni().
+ * iBSP430cliConsoleBufferProcessInput().
  *
  * @ingroup grp_utility_cli_cli*/
 typedef enum eBSP430cliConsole {
   /** Bit set in response if console buffer now holds a completed
    * command.  The application should retrieve it using
-   * xBSP430cliConsoleBuffer_ni(), process it, then reset the buffer
-   * using vBSP430cliConsoleBufferClear_ni().
+   * xBSP430cliConsoleBuffer(), process it, then reset the buffer
+   * using vBSP430cliConsoleBufferClear().
    *
    * @note If this bit is set, there may be additional input that has
    * not been processed.  After processing the command that is ready
-   * the caller should re-invoke iBSP430cliConsoleBufferProcessInput_ni()
+   * the caller should re-invoke iBSP430cliConsoleBufferProcessInput()
    * to complete reading pending input. */
   eBSP430cliConsole_READY = 0x01,
 
@@ -1134,12 +1134,12 @@ void vBSP430cliCompletionHelperCallback (sBSP430cliCompletionData * cdp,
  * is zero.
  *
  * @ingroup grp_utility_cli_cli */
-const char * xBSP430cliConsoleBuffer_ni (void);
+const char * xBSP430cliConsoleBuffer (void);
 
 /** Clear any current console buffer contents.
  *
  * Invoke this after having processed a command that was returned by
- * iBSP430cliConsoleBufferProcessInput_ni() so subsequent input begins a new
+ * iBSP430cliConsoleBufferProcessInput() so subsequent input begins a new
  * command.
  *
  * @dependency #BSP430_CONSOLE
@@ -1147,7 +1147,7 @@ const char * xBSP430cliConsoleBuffer_ni (void);
  * @ingroup grp_utility_cli_cli
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
-void vBSP430cliConsoleBufferClear_ni (void);
+void vBSP430cliConsoleBufferClear (void);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 /** Append characters to the current console buffer contents.
@@ -1169,7 +1169,7 @@ void vBSP430cliConsoleBufferClear_ni (void);
  * @ingroup grp_utility_cli_cli
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
-int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
+int iBSP430cliConsoleBufferExtend (const char * text, size_t len);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 /** Process pending console input and produce completed commands.
@@ -1205,7 +1205,7 @@ int iBSP430cliConsoleBufferExtend_ni (const char * text, size_t len);
  * @ingroup grp_utility_cli_cli
  */
 #if defined(BSP430_DOXYGEN) || (0 < BSP430_CLI_CONSOLE_BUFFER_SIZE)
-int iBSP430cliConsoleBufferProcessInput_ni (void);
+int iBSP430cliConsoleBufferProcessInput (void);
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 /** Consume any pending escape sequences recorded in @p flags.
@@ -1288,8 +1288,8 @@ int iBSP430cliCommandCompletion (sBSP430cliCompletionData * cdp);
  *
  * @param commandp a pointer to storage for a command pointer.  On
  * input, this should be NULL or pre-initialized with the return value
- * from xBSP430cliConsoleBuffer_ni().  On exit, it will be updated to
- * the new return value from xBSP430cliConsoleBuffer_ni().
+ * from xBSP430cliConsoleBuffer().  On exit, it will be updated to
+ * the new return value from xBSP430cliConsoleBuffer().
  *
  * @return a bitset of flags indicating caller update
  * responsibilities, potentially including #eBSP430cliConsole_REPAINT,
