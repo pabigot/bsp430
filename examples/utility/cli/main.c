@@ -9,6 +9,7 @@
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/cli.h>
 #include <bsp430/utility/led.h>
+#include <bsp430/periph/pmm.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -318,6 +319,83 @@ static const sBSP430cliCommand dcmd_say = {
 #undef LAST_COMMAND
 #define LAST_COMMAND (&dcmd_say)
 
+#ifndef RESPONSIVE_CCIDX
+#define RESPONSIVE_CCIDX 1
+#endif /* RESPONSIVE_CCIDX */
+
+typedef struct sResponsive {
+  sBSP430timerAlarm alarm;
+  volatile unsigned long wakeups;
+  unsigned long interval_tck;
+  volatile unsigned long max_late;
+  unsigned long lastDump_tck;
+} sResponsive;
+
+static sResponsive responsiveData;
+
+static int
+responsive_cb_ni (hBSP430timerAlarm alarm)
+{
+  sResponsive * rdp = (sResponsive *)alarm;
+  unsigned long now_tck = ulBSP430timerCounter_ni(alarm->timer, NULL);
+  unsigned long late_tck = now_tck - alarm->setting_tck;
+  unsigned long setting_tck;
+  int rc;
+
+  if (0 == rdp->wakeups) {
+    rdp->max_late = late_tck;
+  } else if (late_tck > rdp->max_late) {
+    rdp->max_late = late_tck;
+  }
+  rdp->wakeups++;
+
+  /* Set the next setting.  Jump over all the missed alarms if we're
+   * more than an interval late. */
+  setting_tck = alarm->setting_tck;
+  setting_tck += (late_tck / rdp->interval_tck) * rdp->interval_tck;
+  do {
+    setting_tck += rdp->interval_tck;
+    rc = iBSP430timerAlarmSet_ni(alarm, setting_tck);
+  } while (0 < rc);
+  return 0;
+}
+
+static int
+cmd_responsive (const char * argstr)
+{
+  sResponsive state;
+  unsigned long resp_Hz;
+  unsigned long now_utt;
+
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    now_utt = ulBSP430uptime_ni();
+    resp_Hz = ulBSP430uptimeConversionFrequency_Hz_ni();
+    state = responsiveData;
+    responsiveData.wakeups = 0;
+    responsiveData.lastDump_tck = now_utt;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+
+  cprintf("State: %lu tick span with %lu wakeups\n"
+          "\twakeup interval %lu tick (%lu us)\n"
+          "\tlate maximum %lu tick (%lu us)\n",
+          (now_utt - state.lastDump_tck), state.wakeups,
+          state.interval_tck, BSP430_CORE_TICKS_TO_US(state.interval_tck, resp_Hz),
+          state.max_late, BSP430_CORE_TICKS_TO_US(state.max_late, resp_Hz));
+  return 0;
+}
+static const sBSP430cliCommand dcmd_responsive = {
+  .key = "responsive",
+  .help = "# Display responsiveness data",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_responsive
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_responsive
+
 static int
 cmd_help (sBSP430cliCommandLink * chain,
           void * param,
@@ -339,6 +417,7 @@ static const sBSP430cliCommand dcmd_help = {
 void main ()
 {
   const char * command;
+  hBSP430timerAlarm rh;
   int flags;
 
   vBSP430platformInitialize_ni();
@@ -348,6 +427,33 @@ void main ()
 #if (configBSP430_CLI_COMMAND_COMPLETION - 0)
   cprintf("Command completion is available.\n");
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
+
+#if (BSP430_PMM_SUPPORTS_SVSM - 0)
+  BSP430_PMM_SET_SVSMCTL_NI(SVSMHCTL & ~(SVMHE | SVSHE), SVSMLCTL & ~(SVMLE | SVSLE));
+#endif // BSP430_PMM_SUPPORTS_SVSM
+
+  rh = hBSP430timerAlarmInitialize(&responsiveData.alarm,
+                                   BSP430_UPTIME_TIMER_PERIPH_HANDLE,
+                                   RESPONSIVE_CCIDX,
+                                   responsive_cb_ni);
+  if (NULL == rh) {
+    cprintf("Failed to initialize responsiveness alarm\n");
+  } else {
+    int rc;
+
+    responsiveData.wakeups = 0;
+    responsiveData.interval_tck = 10;
+    responsiveData.max_late = 0;
+    responsiveData.lastDump_tck = 32768 + ulBSP430uptime_ni();
+    rc = iBSP430timerAlarmSetEnabled_ni(rh, 1);
+    if (0 == rc) {
+      rc = iBSP430timerAlarmSet_ni(rh, responsiveData.lastDump_tck);
+    }
+    if (0 != rc) {
+      cprintf("Failed to initialize alarm\n");
+    }
+  }
+
   vBSP430ledSet(0, 1);
   cprintf("\nLED lit when not awaiting input\n");
 
