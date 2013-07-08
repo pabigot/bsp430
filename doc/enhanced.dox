@@ -105,6 +105,8 @@ status register is reset, meaning that all interrupts are disabled when
 <c>main()</c> begins executing.  If the application wishes to accept
 interrupts, it must explicitly enable them after configuration is complete.
 
+\anchor suffix_ni
+
 \subsection enh_interrupts_ni The _ni "not interrupt-able" suffix
 
 Several function and structure field names have a suffix @c _ni.  This
@@ -145,6 +147,9 @@ suffix) that could enable interrupts should clearly state this in its
 description using the @ref coding_doc_blocking and/or @ref
 coding_doc_consoleoutput attributes.
 
+\note Where both @c _rh and @c _ni apply the combined suffix @c _rh_ni
+should be used.
+
 \anchor suffix_rh
 
 \subsection enh_interrupts_rh The _rh "resource held" suffix
@@ -165,6 +170,12 @@ functions, even if accessed from an interrupt handler.  When resources are
 used for a HAL structure (e.g. #BSP430_SERIAL_ENABLE_RESOURCE) all fields in
 the structure should be manipulated only when the resource is held by the
 subsystem that is accessing it.
+
+The documentation for functions that require resources should use @ref
+coding_doc_resource.
+
+\note Where both @c _rh and @c _ni apply the combined suffix @c _rh_ni
+should be used.
 
 \subsection enh_interrupts_eint Unconditionally Enabling and Disabling Interrupts
 

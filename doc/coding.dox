@@ -68,6 +68,17 @@ astyle \
     '*.inc'
 @endcode
 
+Note in particular that the one-true-brace-style expects single statements
+in loop, @c if and @c else bodies to be enclosed in braces, e.g.:
+
+@code
+  if (condition) {
+    f1();
+  } else {
+    f2();
+  }
+@endcode
+
 \section coding_naming Identifiers and Naming Conventions
 
 Care is taken in BSP430 to conform to the rules for C regarding global
@@ -178,6 +189,30 @@ indeed:
     /* Success here... */
   }
 @endcode
+
+\subsection coding_misc_critsect Critical Sections (Not-Interruptible and Resource Held)
+
+Statements that temporarily change interrupt enabled state should be
+enclosed in <tt>do ... while(0);</tt> blocks as shown in the documentation
+for #BSP430_CORE_SAVED_INTERRUPT_STATE or in more complex situations like
+@ref h_resource_ex.
+
+The single-iteration loop construct used in these cases is strictly
+redundant but serves a purpose similar to the requirement for braces around
+single statements: it highlights that the content is conceptually a block
+with entry and exit operations and encourages the maintainer to read beyond
+a single statement to understand its context.  It also simplifies control
+flow by allowing @c break to be used to jump to the end of the critical
+section.  It is encouraged but not required when the protected statements
+are inherently within a scoped block anyway, as with:
+
+@code
+  if (0 == iBSP430consoleResourceClaim_ni()) {
+    rv = iBSP430consoleInitialize_rh_ni();
+    (void)iBSP430consoleResourceRelease_ni();
+  }
+@endcode
+
 
 \subsection coding_misc_incl Include Files
 
@@ -466,6 +501,19 @@ cputchar_ni()
 Produces:
 
 @consoleoutput
+
+\subsection coding_doc_resource @@resource
+
+Annotation to indicate that the function or data should only be invoked or
+accessed when a particular resource is held.  The resource may be implicit,
+but normally it should be explicitly identified with this annotation.  The
+annotation applies both to functions that require the resource be held
+before they are invoked, and functions that must internally acquire and
+release the resource.  Example: cgetchar(), cgetchar_rh()
+
+Produces:
+
+@resource @em resource_identifier
 
 @copyright_doc
 */
