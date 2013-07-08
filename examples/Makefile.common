@@ -268,7 +268,7 @@ MODULES_M25P ?=
 # MODULES_PLATFORM: The platform-specific platform module, together
 # with the clock and LED modules and anything the platform thinks is
 # important.  The combination is non-orthogonal, but convenient.
-MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED) $(MODULES_PLATFORM_AUX)
+MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED) $(MODULES_PLATFORM_AUX) $(MODULES_PLATFORM_EXT)
 
 # Add all selected modules to the SRC, eliminating any duplicates
 
