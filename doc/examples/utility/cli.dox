@@ -1,21 +1,21 @@
 /* Copyright 2012-2013, Peter A. Bigot
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of the software nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -37,7 +37,7 @@ command line interface within a program that uses
 function, and registered as available by linking them into a chain of static
 structures at compile-time.  The example below shows how this can be done in
 a way that makes it simple to include or exclude commands based on
-development needs and available options.  
+development needs and available options.
 
 The module also provides utilities that make it easy to add commands for
 users to reconfigure parameters of various types, obtain help on the
@@ -45,7 +45,7 @@ available commands, and implement nested commands.
 
 The example below supports the following commands:
 @verbatim
-> help 
+> help
 help [cmd] # Show help on cmd or all commands
 say {word}... # Customized completion demonstration
 complete # No help available
@@ -86,7 +86,7 @@ Expanded: hup two three( 4)
 Display: hup two three four
 WTH are we fighting for? Walk!
 
-> sh 
+> sh
 ival 0
 uival 0 (0x0)
 lval 0
@@ -114,15 +114,15 @@ Candidates: say set show
 Candidates: zero one two three four (+ 6 more)
 > say t<TAB>
 Candidates: two three ten
-> say three 
+> say three
 Match three for 6 consumed position 3
 1 matches found
-> say ten five sev                                                             
-Match ten for 4 consumed position 10                                           
-Match five for 5 consumed position 5                                           
-Match seven for 4 consumed position 7                                          
-3 matches found                                                                
-> 
+> say ten five sev
+Match ten for 4 consumed position 10
+Match five for 5 consumed position 5
+Match seven for 4 consumed position 7
+3 matches found
+>
 > <UP>escape char 0x5b (91) '['
 escape char 0x41 (65) 'A'
 Leaving escape mode
