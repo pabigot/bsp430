@@ -202,13 +202,13 @@ void main ()
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
   cputtext("\nBSP430_UCS_FLL_SELREF: "
 #if SELREF__XT2CLK <= BSP430_UCS_FLL_SELREF
-              "XT2CLK"
+           "XT2CLK"
 #elif SELREF__REFOCLK <= BSP430_UCS_FLL_SELREF
-              "REFOCLK"
+           "REFOCLK"
 #else /* BSP430_UCS_FLL_SELREF */
-              "XT1CLK"
+           "XT1CLK"
 #endif /* BSP430_UCS_FLL_SELREF */
-             );
+          );
   cprintf("\nUCS RSEL %d DCO %d MOD %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
           "\n CTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x",
