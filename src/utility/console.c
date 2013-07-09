@@ -178,11 +178,13 @@ static sConsoleTxBuffer tx_buffer_ = {
   .cb_node = { .callback_ni = console_tx_isr_ni },
 };
 
-int
-console_tx_queue_ni (hBSP430halSERIAL uart, uint8_t c)
+static int
+console_tx_queue (hBSP430halSERIAL uart, uint8_t c)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   sConsoleTxBuffer * bufp = &tx_buffer_;
 
+  BSP430_CORE_DISABLE_INTERRUPT();
   while (1) {
     unsigned char head = bufp->head;
     unsigned char next_head = (head + 1) % (sizeof(bufp->buffer)/sizeof(*bufp->buffer));
@@ -204,12 +206,13 @@ console_tx_queue_ni (hBSP430halSERIAL uart, uint8_t c)
     }
     break;
   }
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return c;
 }
 
-static int (* uartTransmit_ni) (hBSP430halSERIAL uart, uint8_t c);
+static int (* uartTransmit) (hBSP430halSERIAL uart, uint8_t c);
 
-#define UART_TRANSMIT(uart_, c_) uartTransmit_ni(uart_, c_)
+#define UART_TRANSMIT(uart_, c_) uartTransmit(uart_, c_)
 
 #else /* BSP430_CONSOLE_TX_BUFFER_SIZE */
 
@@ -221,7 +224,7 @@ static int (* uartTransmit_ni) (hBSP430halSERIAL uart, uint8_t c);
  * null. */
 static BSP430_CORE_INLINE
 int
-emit_char2_ni (int c, hBSP430halSERIAL uart)
+emit_char2 (int c, hBSP430halSERIAL uart)
 {
 #if (configBSP430_CONSOLE_USE_ONLCR - 0)
   if ('\n' == c) {
@@ -235,38 +238,38 @@ emit_char2_ni (int c, hBSP430halSERIAL uart)
  * variable each time. */
 static BSP430_CORE_INLINE
 int
-emit_char_ni (int c)
+emit_char (int c)
 {
   hBSP430halSERIAL uart = console_hal_;
   if (NULL == uart) {
     return -1;
   }
-  return emit_char2_ni(c, uart);
+  return emit_char2(c, uart);
 }
 
 #if (configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0)
 int putchar (c)
 {
-  return emit_char_ni(c);
+  return emit_char(c);
 }
 #endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
 
 int
-cputchar_ni (int c)
+cputchar (int c)
 {
-  return emit_char_ni(c);
+  return emit_char(c);
 }
 
 /* Emit a NUL-terminated string of text, returning the number of
  * characters emitted. */
 static int
-emit_text_ni (const char * s,
-              hBSP430halSERIAL uart)
+emit_text (const char * s,
+           hBSP430halSERIAL uart)
 {
   int rv = 0;
   if (uart) {
     while (s[rv]) {
-      emit_char2_ni(s[rv++], uart);
+      emit_char2(s[rv++], uart);
       BSP430_CORE_WATCHDOG_CLEAR();
     }
   }
@@ -276,15 +279,15 @@ emit_text_ni (const char * s,
 /* Emit a NUL-terminated string of text, returning the number of
  * characters emitted. */
 static int
-emit_chars_ni (const char * cp,
-               size_t len,
-               hBSP430halSERIAL uart)
+emit_chars (const char * cp,
+            size_t len,
+            hBSP430halSERIAL uart)
 {
   int rv = 0;
 
   if (uart) {
     while (rv < len) {
-      emit_char2_ni(cp[rv++], uart);
+      emit_char2(cp[rv++], uart);
       BSP430_CORE_WATCHDOG_CLEAR();
     }
   }
@@ -294,100 +297,67 @@ emit_chars_ni (const char * cp,
 int
 cputs (const char * s)
 {
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv = 0;
   hBSP430halSERIAL uart = console_hal_;
 
   if (! uart) {
     return 0;
   }
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    rv = emit_text_ni(s, uart);
-    emit_char2_ni('\n', uart);
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  rv = emit_text(s, uart);
+  emit_char2('\n', uart);
   return 1+rv;
 }
 
 int
 cputtext (const char * cp)
 {
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
-  int rv = 0;
   hBSP430halSERIAL uart = console_hal_;
 
   if (! uart) {
     return 0;
   }
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    rv = emit_text_ni(cp, uart);
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
-}
-
-int
-cputtext_ni (const char * s)
-{
-  return emit_text_ni(s, console_hal_);
+  return emit_text(cp, uart);
 }
 
 int
 cputchars (const char * cp,
            size_t len)
 {
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
-  int rv = 0;
   hBSP430halSERIAL uart = console_hal_;
 
   if (! uart) {
     return 0;
   }
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    rv = emit_chars_ni(cp, len, uart);
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
+  return emit_chars(cp, len, uart);
 }
-
-int
-cputchars_ni (const char * cp,
-              size_t len)
-{
-  return emit_chars_ni(cp, len, console_hal_);
-}
-
 
 #if HAVE_EMBTEXTF
 int
-cputi_ni (int n, int radix)
+cputi (int n, int radix)
 {
   char buffer[sizeof("-32767")];
-  return emit_text_ni(itoa(n, buffer, radix), console_hal_);
+  return emit_text(itoa(n, buffer, radix), console_hal_);
 }
 
 int
-cputu_ni (unsigned int n, int radix)
+cputu (unsigned int n, int radix)
 {
   char buffer[sizeof("65535")];
-  return emit_text_ni(utoa(n, buffer, radix), console_hal_);
+  return emit_text(utoa(n, buffer, radix), console_hal_);
 }
 
 int
-cputl_ni (long n, int radix)
+cputl (long n, int radix)
 {
   char buffer[sizeof("-2147483647")];
-  return emit_text_ni(ltoa(n, buffer, radix), console_hal_);
+  return emit_text(ltoa(n, buffer, radix), console_hal_);
 }
 
 int
-cputul_ni (unsigned long n, int radix)
+cputul (unsigned long n, int radix)
 {
   char buffer[sizeof("4294967295")];
-  return emit_text_ni(ultoa(n, buffer, radix), console_hal_);
+  return emit_text(ultoa(n, buffer, radix), console_hal_);
 }
 
 int
@@ -407,19 +377,11 @@ cprintf (const char *fmt, ...)
 int
 vcprintf (const char * fmt, va_list ap)
 {
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
-  int rv;
-
   /* Fail fast if printing is disabled */
   if (! console_hal_) {
     return 0;
   }
-  BSP430_CORE_DISABLE_INTERRUPT();
-  do {
-    rv = vuprintf(emit_char_ni, fmt, ap);
-  } while (0);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
+  return vuprintf(emit_char, fmt, ap);
 }
 
 #endif /* HAVE_EMBTEXTF */
@@ -435,24 +397,30 @@ hBSP430console (void)
 static int
 console_getchar_ (int do_pop)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   int rv = -1;
-  if (rx_buffer_.head != rx_buffer_.tail) {
-    rv = rx_buffer_.buffer[rx_buffer_.tail];
-    if (do_pop) {
-      rx_buffer_.tail = (rx_buffer_.tail + 1) & ((sizeof(rx_buffer_.buffer) / sizeof(*rx_buffer_.buffer)) - 1);
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    if (rx_buffer_.head != rx_buffer_.tail) {
+      rv = rx_buffer_.buffer[rx_buffer_.tail];
+      if (do_pop) {
+        rx_buffer_.tail = (rx_buffer_.tail + 1) & ((sizeof(rx_buffer_.buffer) / sizeof(*rx_buffer_.buffer)) - 1);
+      }
     }
-  }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
 
 int
-cpeekchar_ni (void)
+cpeekchar (void)
 {
   return console_getchar_(0);
 }
 
 int
-cgetchar_ni (void)
+cgetchar (void)
 {
   return console_getchar_(1);
 }
@@ -460,7 +428,7 @@ cgetchar_ni (void)
 #else /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
 int
-cgetchar_ni (void)
+cgetchar (void)
 {
   int rv = -1;
   if (NULL != console_hal_) {
@@ -476,8 +444,8 @@ iBSP430consoleTransmitUseInterrupts_ni (int enablep)
 {
 #if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
   if (enablep) {
-    if (uartTransmit_ni != console_tx_queue_ni) {
-      uartTransmit_ni = console_tx_queue_ni;
+    if (uartTransmit != console_tx_queue) {
+      uartTransmit = console_tx_queue;
       vBSP430serialFlush_ni(console_hal_);
       iBSP430serialSetHold_rh(console_hal_, 1);
       BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, console_hal_->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);
@@ -487,8 +455,8 @@ iBSP430consoleTransmitUseInterrupts_ni (int enablep)
       }
     }
   } else {
-    if (uartTransmit_ni != iBSP430uartTxByte_rh) {
-      uartTransmit_ni = iBSP430uartTxByte_rh;
+    if (uartTransmit != iBSP430uartTxByte_rh) {
+      uartTransmit = iBSP430uartTxByte_rh;
       /* This flushes any character currently in the UART; it does not
        * flush anything left in the transmission buffer. */
       vBSP430serialFlush_ni(console_hal_);
@@ -530,7 +498,7 @@ iBSP430consoleInitialize (void)
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
 #if (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
-    uartTransmit_ni = console_tx_queue_ni;
+    uartTransmit = console_tx_queue;
     tx_buffer_.wake_available = 0;
     tx_buffer_.head = tx_buffer_.tail = 0;
     BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode, hal->tx_cbchain_ni, tx_buffer_.cb_node, next_ni);

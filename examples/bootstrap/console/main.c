@@ -79,29 +79,29 @@ void main ()
 #if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)
       BSP430_CORE_DISABLE_INTERRUPT();
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
-      while (0 <= ((rc = cgetchar_ni()))) {
-        cputtext_ni(" rx char ");
-        cputu_ni(rc, 10);
-        cputtext_ni(" '");
-        cputchar_ni(rc);
-        cputtext_ni("'");
+      while (0 <= ((rc = cgetchar()))) {
+        cputtext(" rx char ");
+        cputu(rc, 10);
+        cputtext(" '");
+        cputchar(rc);
+        cputtext("'");
       }
-      cputtext_ni("\nctr ");
-      cputu_ni(counter, 10);
+      cputtext("\nctr ");
+      cputu(counter, 10);
 #if (APP_VERBOSE - 0)
-      cputtext_ni("; tx ");
-      cputul_ni(console->num_tx, 10);
-      cputtext_ni("; rx ");
-      cputul_ni(console->num_rx, 10);
-      cputtext_ni("; stat 0x");
+      cputtext("; tx ");
+      cputul(console->num_tx, 10);
+      cputtext("; rx ");
+      cputul(console->num_rx, 10);
+      cputtext("; stat 0x");
 #if (configBSP430_SERIAL_USE_USCI - 0)
-      cputu_ni(console->hpl.usci->stat, 16);
+      cputu(console->hpl.usci->stat, 16);
 #endif
 #if (configBSP430_SERIAL_USE_USCI5 - 0)
-      cputu_ni(console->hpl.usci5->stat, 16);
+      cputu(console->hpl.usci5->stat, 16);
 #endif
 #if (configBSP430_SERIAL_USE_EUSCI - 0)
-      cputu_ni(console->hpl.euscia->statw, 16);
+      cputu(console->hpl.euscia->statw, 16);
 #endif
 #endif /* APP_VERBOSE */
       ++counter;

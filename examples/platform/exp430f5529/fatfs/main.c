@@ -70,20 +70,20 @@ void main ()
     }
   }
 
-  cputtext_ni("System reset included:");
+  cputtext("System reset included:");
   if (reset_flags & BSP430_SYS_FLAG_SYSRST_BOR) {
-    cputtext_ni(" BOR");
+    cputtext(" BOR");
   }
   if (reset_flags & BSP430_SYS_FLAG_SYSRST_LPM5WU) {
-    cputtext_ni(" LPM5WU");
+    cputtext(" LPM5WU");
   }
   if (reset_flags & BSP430_SYS_FLAG_SYSRST_POR) {
-    cputtext_ni(" POR");
+    cputtext(" POR");
   }
   if (reset_flags & BSP430_SYS_FLAG_SYSRST_PUC) {
-    cputtext_ni(" PUC");
+    cputtext(" PUC");
   }
-  cputchar_ni('\n');
+  cputchar('\n');
 
   rv = iBSP430pmmSetCoreVoltageLevel_ni(PMMCOREV_3);
   cprintf("Set core voltage gets %d\n", rv);

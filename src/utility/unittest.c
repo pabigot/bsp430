@@ -82,7 +82,7 @@ vBSP430unittestResult_ (int line,
   cprintf("%s [%u]: ", passp ? "pass" : "FAIL", line);
   va_start(argp, format);
   vcprintf(format, argp);
-  cputchar_ni('\n');
+  cputchar('\n');
   va_end(argp);
 #if (configBSP430_UNITTEST_FAILFAST - 0)
   cputs("# FAILFAST");

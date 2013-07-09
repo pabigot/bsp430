@@ -33,87 +33,51 @@
  *
  * @brief A generic console output capability.
  *
- * In the default configuration with interrupt-driven transmission
- * disabled, it disables interrupts while operating to ensure that
- * interleaved messages do not occur, transmits with direct UART
- * writes, and is "safe" for call from within interrupt handlers.
+ * This module collects various functions that format and generate
+ * human-readable output on a serial console, or support reading data
+ * from a serial console.
  *
- * cputs() and cputchars() are provided where the complexity of cprintf()
- * is not required but atomic output is desired.  Other routines
- * permit display of NUL-terminated plain text without a newline
- * (cputtext_ni()), plain text of a fixed length (cputchars_ni()), and
- * single characters (cputchar_ni()).
+ * In the original design of BSP430 console output was performed with
+ * interrupts disabled under the belief that the potential of
+ * interleaved output between different tasks and interrupts was
+ * undesired.  In practice, interrupt handlers only invoke console
+ * output when debugging, and this can be handled other ways.  The
+ * impact of extended periods with interrupts disabled was
+ * unacceptable in applications that require prompt response to
+ * interrupts, such as radio packet reception and acknowledgement
+ * transmission.
+ *
+ * Consequently all console output and input are now non-blocking and
+ * disable interrupts only where this is necessary to prevent
+ * corruption when both interrupt handlers and user code manipulate
+ * the same data structures.
+ *
+ * The script <tt>${BSP430_ROOT}/maintainer/xni_console.sed</tt> may
+ * be used to convert older sources to the new API where @link
+ * suffix_ni <tt>_ni</tt>@endlink suffixes are no longer present.
+ *
+ * @section h_utility_console_capabilities Basic Capabilities
+ *
+ * Core routines natively supported are cputchar(), cputs(), and
+ * cgetchar().  Extensions include cputchars(), cputtext(), and
+ * cpeekchar().
  *
  * With library support through #BSP430_CONSOLE_USE_EMBTEXTF or <a
  * href="https://sourceforge.net/projects/mspgcc/files/msp430-libc/">msp430-libc</a>
  * in the MSPGCC toolchain full support for formatted output via
- * cprintf() is possible.  Optimized routines are provided to convert
- * integers in standard bases with minimal space overhead (cputi_ni(),
- * cputu_ni(), cputl_ni(), cputul_ni()).  The integer routines are
- * more cumbersome but necessary when the platform cannot accommodate
- * the stack overhead of cprintf() (on the order of 100 bytes if
- * 64-bit integer support is included).  Following the standard
- * BSP430 naming conventions some of these capabilities are available
- * with wrappers that preserve interrupt state.
+ * cprintf() and vcprintf() is possible.
  *
- * All output functions are safe to call even if the console was not
- * initialized, or its initialization failed, or it is temporarily
- * disabled. In those situations they simply return immediately.
+ * In addition optimized routines are provided to convert integers in
+ * standard bases with minimal space overhead (cputi(), cputu(),
+ * cputl(), cputul()).  The integer routines are more cumbersome but
+ * necessary when the platform cannot accommodate the stack overhead
+ * of cprintf() (on the order of 100 bytes if 64-bit integer support
+ * is included).
  *
- * @section h_utility_console_interrupts Console Output and Interrupts
- *
- * As the console has proved to be extremely useful, it has been
- * enhanced with interrupt-driven transmision capabilities.  By
- * configuring #BSP430_CONSOLE_TX_BUFFER_SIZE to a positive value all
- * console output routines will place their output into the buffer.
- * If insufficient room remains, they will sleep using #LPM0_bits with
- * interrupts enabled until the buffer drains enough to add more.
- *
- * @warning This feature overrides the safe use of these routines from
- * within interrupt handlers and within critical sections.  When
- * interrupt-driven transmission is enabled all console output
- * routines are allowed to block (enabling interrupts) if the
- * transmission buffer is full.  This is true even for output routines
- * that are marked with the @c _ni suffix.
- *
- * As an example, the following pattern is unsafe:
- *
- @code
-   BSP430_CORE_DISABLE_INTERRUPT();
-   do {
-     events = events_ni;
-     events_ni = 0;
-     if (! events) {
-       cputs_ni("Going to sleep now");
-       // ERROR: Above call may have blocked allowing events_ni to be set.
-       // If the expected event has been missed LPM may never be awoken.
-       BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
-     }
-   } while (0);
-   BSP430_CORE_ENABLE_INTERRUPT();
- @endcode
- *
- * An alternative if you must do output in your event check loop is to
- * use iBSP430consoleTransmitUseInterrupts_ni() to disable and
- * re-enable interrupt-driven transmission:
- *
- @code
-   vBSP430consoleFlush();
-   BSP430_CORE_DISABLE_INTERRUPT();
-   (void)iBSP430consoleTransmitUseInterrupts_ni(0);
-   do {
-     events = events_ni;
-     events_ni = 0;
-     if (! events) {
-       cputs_ni("Going to sleep now");
-       // Interrupts disabled, cputs_ni could not block and events_ni will
-       // remain unset.
-       BSP430_CORE_LPM_ENTER_NI(LPM0_bits | GIE);
-     }
-   } while (0);
-   (void)iBSP430consoleTransmitUseInterrupts_ni(1);
-   BSP430_CORE_ENABLE_INTERRUPT();
- @endcode
+ * Compile-time options #BSP430_CONSOLE_RX_BUFFER_SIZE and
+ * #BSP430_CONSOLE_TX_BUFFER_SIZE enable interrupt-driven input and
+ * output, allowing the application to make progress while output is
+ * produced and input buffered using interrupts.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -198,15 +162,13 @@
 #define BSP430_CONSOLE_BAUD_RATE 9600
 #endif /* BSP430_CONSOLE_BAUD_RATE */
 
-/** @def BSP430_CONSOLE_RX_BUFFER_SIZE
- *
- * Define this to the size of a buffer to be used for interrupt-driven
+/** Define this to the size of a buffer to be used for interrupt-driven
  * console input.  The value must not exceed 254, and buffer
  * management is most efficient if the value is a power of 2.
  *
  * If this has a value of zero, character input is not interrupt
- * driven.  cgetchar_ni() will return the most recently received
- * character, if any, and cpeekchar_ni() will not be available.
+ * driven.  cgetchar() will return the most recently received
+ * character, if any, and cpeekchar() will not be available.
  *
  * @defaulted */
 #ifndef BSP430_CONSOLE_RX_BUFFER_SIZE
@@ -220,7 +182,7 @@
  * management is most efficient if the value is a power of 2.
  *
  * If this has a value of zero, character output is not interrupt
- * driven.  cputchar_ni() will block until the UART is ready to accept
+ * driven.  cputchar() will block until the UART is ready to accept
  * a new character.
  *
  * @warning By enabling interrupt-driven output the console output
@@ -238,7 +200,7 @@
  * infrastructure when the external @ref mp_external_embtextf library
  * is to supply enhanced formatting functions.  This enables:
  * @li cprintf(), vcprintf()
- * @li cputi_ni(), cputu_ni(), cputl_ni(), cputul_ni()
+ * @li cputi(), cputu(), cputl(), cputul()
  *
  * @note When using the MSPGCC toolchain this capability is available
  * implicitly through msp430-libc.  #BSP430_CONSOLE_USE_EMBTEXTF
@@ -257,37 +219,10 @@
  * @note This function is available even if
  * #BSP430_CONSOLE_RX_BUFFER_SIZE is zero.
  */
-int cgetchar_ni (void);
+int cgetchar (void);
 
-/** Return character disregarding interrupt state.
- *
- * This is a wrapper around cgetchar_ni(). */
-static BSP430_CORE_INLINE
-int
-cgetchar (void)
-{
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
-  int rv;
 
-  BSP430_CORE_DISABLE_INTERRUPT();
-  rv = cgetchar_ni();
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
-}
-
-/** Peek at the next character input to the console
- *
- * Use this to determine whether there's any data ready to be read,
- * without actually consuming it yet.
- *
- * @return the value that would be returned by invoking cgetchar_ni(),
- * but without consuming any pending input.
- *
- * @warning This function is not available if
- * #BSP430_CONSOLE_RX_BUFFER_SIZE is zero.
- *
- * @dependency #BSP430_CONSOLE_RX_BUFFER_SIZE */
-int cpeekchar_ni (void);
+#if defined(BSP430_DOXYGEN) || (0 < BSP430_CONSOLE_RX_BUFFER_SIZE)
 
 /** Callback for alarm events.
  *
@@ -296,6 +231,20 @@ int cpeekchar_ni (void);
  *
  * @return As with iBSP430halISRCallbackVoid_ni(). */
 typedef int (* iBSP430consoleRxCallback_ni) (void);
+
+/** Peek at the next character input to the console
+ *
+ * Use this to determine whether there's any data ready to be read,
+ * without actually consuming it yet.
+ *
+ * @return the value that would be returned by invoking cgetchar(),
+ * but without consuming any pending input.
+ *
+ * @warning This function is not available if
+ * #BSP430_CONSOLE_RX_BUFFER_SIZE is zero.
+ *
+ * @dependency #BSP430_CONSOLE_RX_BUFFER_SIZE */
+int cpeekchar (void);
 
 /** Register a callback for console RX events.
  *
@@ -324,6 +273,8 @@ typedef int (* iBSP430consoleRxCallback_ni) (void);
  * @dependency #BSP430_CONSOLE_RX_BUFFER_SIZE
  */
 void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
+
+#endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
 /** @def configBSP430_CONSOLE_PROVIDES_PUTCHAR
  *
@@ -370,54 +321,16 @@ void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
  */
 int cputs (const char * s);
 
-/** Like putchar(3) to the console UART, with interrupts already disabled
- *
- * @param c character to be output
- *
- * @return the character that was output
- *
- * @consoleoutput */
-int cputchar_ni (int c);
-
 /** Like putchar(3) to the console UART
  *
- * This wraps cputchar_ni() with code to preserve the interrupt enable
- * state.
- *
  * @param c character to be output
  *
  * @return the character that was output
  *
  * @consoleoutput */
-static BSP430_CORE_INLINE
-int
-cputchar (int c)
-{
-  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
-  int rv;
-
-  BSP430_CORE_DISABLE_INTERRUPT();
-  rv = cputchar_ni(c);
-  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
-  return rv;
-}
+int cputchar (int c);
 
 /** Like puts(3) to the console UART without trailing newline
- *
- * @note Any errors returned by the underlying UART implementation
- * while writing are ignored.
- *
- * @param s a NUL-terminated string to be emitted to the console
- *
- * @return the number of characters written
- *
- * @consoleoutput */
-int cputtext_ni (const char * s);
-
-/** Like puts(3) to the console UART without trailing newline
- *
- * As with #cprintf, interrupts are disabled for the duration of the
- * invocation (except see @ref h_utility_console_interrupts).
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
@@ -431,25 +344,6 @@ int cputtext (const char * s);
 
 /** Like puts(3) to the console UART without trailing newline and
  * with explicit length instead of a terminating NUL.
- *
- * @note Any errors returned by the underlying UART implementation
- * while writing are ignored.
- *
- * @param cp first of a series of characters to be emitted to the
- * console
- *
- * @param len number of characters to emit
- *
- * @return the number of characters written
- *
- * @consoleoutput */
-int cputchars_ni (const char * cp, size_t len);
-
-/** Like puts(3) to the console UART without trailing newline and
- * with explicit length instead of a terminating NUL.
- *
- * As with #cprintf, interrupts are disabled for the duration of the
- * invocation (except see @ref h_utility_console_interrupts).
  *
  * @note Any errors returned by the underlying UART implementation
  * while writing are ignored.
@@ -512,7 +406,7 @@ int vcprintf (const char * format, va_list ap);
  * @return the number of characters emitted
  *
  * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF */
-int cputi_ni (int n, int radix);
+int cputi (int n, int radix);
 
 /** Format an int using utoa and emit it to the console.
  *
@@ -529,7 +423,7 @@ int cputi_ni (int n, int radix);
  * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
  *
  * @consoleoutput */
-int cputu_ni (unsigned int n, int radix);
+int cputu (unsigned int n, int radix);
 
 /** Format an int using ltoa and emit it to the console.
  *
@@ -544,7 +438,7 @@ int cputu_ni (unsigned int n, int radix);
  * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
  *
  * @consoleoutput */
-int cputl_ni (long n, int radix);
+int cputl (long n, int radix);
 
 /** Format an int using itoa and emit it to the console.
  *
@@ -559,7 +453,7 @@ int cputl_ni (long n, int radix);
  * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
  *
  * @consoleoutput */
-int cputul_ni (unsigned long n, int radix);
+int cputul (unsigned long n, int radix);
 
 #endif /* BSP430_CONSOLE_USE_EMBTEXTF */
 

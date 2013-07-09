@@ -230,7 +230,7 @@ void main ()
 
   cprintf("Writing %u bytes through busy-waiting console interface:\n\t", chp->sz);
   lt0 = ulBSP430uptime_ni();
-  cputtext_ni(message);
+  cputtext(message);
   lt1 = ulBSP430uptime_ni();
   /* Delay to allow last character to get out the serial port */
   BSP430_UPTIME_DELAY_MS_NI(10, LPM0_bits, 0);
@@ -240,7 +240,7 @@ void main ()
   (void)iBSP430consoleTransmitUseInterrupts_ni(1);
   cprintf("Writing %u bytes through %u-octet interrupt-driven console interface:\n\t", chp->sz, BSP430_CONSOLE_TX_BUFFER_SIZE);
   lt0 = ulBSP430uptime_ni();
-  cputtext_ni(message);
+  cputtext(message);
   /* Low-overhead flush */
   while (0 != iBSP430consoleWaitForTxSpace_ni(-1)) {
     /* nop */

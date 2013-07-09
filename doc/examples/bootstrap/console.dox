@@ -34,7 +34,7 @@
 BSP430 provides a @link configBSP430_CONSOLE standard console facility
 @endlink which gives you a 9600 baud 8N1 terminal along with cprintf() and
 related routines to output formatted text.  It also supports input with
-cgetchar_ni().
+cgetchar().
 
 This application loops forever, printing a counter and blinking an LED every
 half second, and displaying any input characters that were received between

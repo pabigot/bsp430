@@ -27,11 +27,11 @@ void dumpRegion (const char * header,
       cprintf("\n%p", addr+i);
     }
     if (0 == (i % 8)) {
-      cputchar_ni(' ');
+      cputchar(' ');
     }
     cprintf(" %02x", addr[i]);
   }
-  cputchar_ni('\n');
+  cputchar('\n');
 }
 
 char dummy[128];

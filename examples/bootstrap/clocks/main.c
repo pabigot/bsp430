@@ -54,74 +54,74 @@ void main ()
    * information. */
 #if (BSP430_CONSOLE - 0)
   (void)iBSP430consoleInitialize();
-  cputtext_ni("\nclocks " __DATE__ " " __TIME__ "\n");
-  cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1: ");
-  cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1, 10);
-  cputtext_ni("\nBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES: ");
-  cputul_ni(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, 10);
-  cputtext_ni("\nBSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC: ");
-  cputu_ni(BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC, 10);
-  cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS: ");
-  cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS, 10);
+  cputtext("\nclocks " __DATE__ " " __TIME__ "\n");
+  cputtext("\nBSP430_PLATFORM_BOOT_CONFIGURE_LFXT1: ");
+  cputu(BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1, 10);
+  cputtext("\nBSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES: ");
+  cputul(BSP430_CLOCK_LFXT1_STABILIZATION_DELAY_CYCLES, 10);
+  cputtext("\nBSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC: ");
+  cputu(BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC, 10);
+  cputtext("\nBSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS: ");
+  cputu(BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS, 10);
 #if defined(__MSP430_HAS_BC2__)
 #if (configBSP430_BC2_TRIM_TO_MCLK - 0)
-  cputtext_ni("\nconfigBSP430_BC2_TRIM_TO_MCLK: 1");
+  cputtext("\nconfigBSP430_BC2_TRIM_TO_MCLK: 1");
 #else /* configBSP430_BC2_TRIM_TO_MCLK */
-  cputtext_ni("\nconfigBSP430_BC2_TRIM_TO_MCLK: 0");
+  cputtext("\nconfigBSP430_BC2_TRIM_TO_MCLK: 0");
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
 #if (BSP430_BC2_TRIM_TO_MCLK - 0)
-  cputtext_ni("\nBSP430_BC2_TRIM_TO_MCLK: 1");
+  cputtext("\nBSP430_BC2_TRIM_TO_MCLK: 1");
 #else /* BSP430_BC2_TRIM_TO_MCLK */
-  cputtext_ni("\nBSP430_BC2_TRIM_TO_MCLK: 0");
+  cputtext("\nBSP430_BC2_TRIM_TO_MCLK: 0");
 #endif /* BSP430_BC2_TRIM_TO_MCLK */
 #endif /* BC2 */
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
 #if (configBSP430_UCS_TRIM_DCOCLKDIV - 0)
-  cputtext_ni("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 1");
+  cputtext("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 1");
 #else /* configBSP430_UCS_TRIM_DCOCLKDIV */
-  cputtext_ni("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 0");
+  cputtext("\nconfigBSP430_UCS_TRIM_DCOCLKDIV: 0");
 #endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
 #if (BSP430_UCS_TRIM_DCOCLKDIV - 0)
-  cputtext_ni("\nBSP430_UCS_TRIM_DCOCLKDIV: 1");
+  cputtext("\nBSP430_UCS_TRIM_DCOCLKDIV: 1");
 #else /* BSP430_UCS_TRIM_DCOCLKDIV */
-  cputtext_ni("\nBSP430_UCS_TRIM_DCOCLKDIV: 0");
+  cputtext("\nBSP430_UCS_TRIM_DCOCLKDIV: 0");
 #endif /* BSP430_UCS_TRIM_DCOCLKDIV */
 #endif /* UCS */
 
-  cputtext_ni("\nBSP430_CLOCK_PUC_MCLK_HZ: ");
-  cputul_ni(BSP430_CLOCK_PUC_MCLK_HZ, 10);
-  cputtext_ni("\nBSP430_CLOCK_NOMINAL_MCLK_HZ: ");
-  cputul_ni(BSP430_CLOCK_NOMINAL_MCLK_HZ, 10);
-  cputtext_ni("\nBSP430_CLOCK_LFXT1_IS_FAULTED_NI(): ");
-  cputu_ni(BSP430_CLOCK_LFXT1_IS_FAULTED_NI(), 10);
-  cputtext_ni("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
-  cputu_ni(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
-  cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");
-  cputul_ni(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
+  cputtext("\nBSP430_CLOCK_PUC_MCLK_HZ: ");
+  cputul(BSP430_CLOCK_PUC_MCLK_HZ, 10);
+  cputtext("\nBSP430_CLOCK_NOMINAL_MCLK_HZ: ");
+  cputul(BSP430_CLOCK_NOMINAL_MCLK_HZ, 10);
+  cputtext("\nBSP430_CLOCK_LFXT1_IS_FAULTED_NI(): ");
+  cputu(BSP430_CLOCK_LFXT1_IS_FAULTED_NI(), 10);
+  cputtext("\nBSP430_CLOCK_NOMINAL_VLOCLK_HZ: ");
+  cputu(BSP430_CLOCK_NOMINAL_VLOCLK_HZ, 10);
+  cputtext("\nBSP430_CLOCK_NOMINAL_XT1CLK_HZ: ");
+  cputul(BSP430_CLOCK_NOMINAL_XT1CLK_HZ, 10);
 #if defined(BSP430_CLOCK_NOMINAL_XT2CLK_HZ)
-  cputtext_ni("\nBSP430_PLATFORM_BOOT_CONFIGURE_XT2: ");
-  cputu_ni(BSP430_PLATFORM_BOOT_CONFIGURE_XT2, 10);
-  cputtext_ni("\nBSP430_CLOCK_XT2_IS_FAULTED_NI(): ");
-  cputu_ni(BSP430_CLOCK_XT2_IS_FAULTED_NI(), 10);
-  cputtext_ni("\nBSP430_CLOCK_NOMINAL_XT2CLK_HZ: ");
-  cputul_ni(BSP430_CLOCK_NOMINAL_XT2CLK_HZ, 10);
+  cputtext("\nBSP430_PLATFORM_BOOT_CONFIGURE_XT2: ");
+  cputu(BSP430_PLATFORM_BOOT_CONFIGURE_XT2, 10);
+  cputtext("\nBSP430_CLOCK_XT2_IS_FAULTED_NI(): ");
+  cputu(BSP430_CLOCK_XT2_IS_FAULTED_NI(), 10);
+  cputtext("\nBSP430_CLOCK_NOMINAL_XT2CLK_HZ: ");
+  cputul(BSP430_CLOCK_NOMINAL_XT2CLK_HZ, 10);
 #endif /* BSP430_CLOCK_NOMINAL_XT2CLK_HZ */
-  cputtext_ni("\nulBSP430clockMCLK_Hz_ni(): ");
-  cputul_ni(ulBSP430clockMCLK_Hz_ni(), 10);
-  cputtext_ni("\nBSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT: ");
-  cputi_ni(BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT, 10);
-  cputtext_ni("\nulBSP430clockSMCLK_Hz_ni(): ");
+  cputtext("\nulBSP430clockMCLK_Hz_ni(): ");
+  cputul(ulBSP430clockMCLK_Hz_ni(), 10);
+  cputtext("\nBSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT: ");
+  cputi(BSP430_PLATFORM_BOOT_SMCLK_DIVIDING_SHIFT, 10);
+  cputtext("\nulBSP430clockSMCLK_Hz_ni(): ");
   smclk_Hz = ulBSP430clockSMCLK_Hz_ni();
-  cputul_ni(smclk_Hz, 10);
-  cputtext_ni("\nBSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT: ");
-  cputi_ni(BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT, 10);
-  cputtext_ni("\nulBSP430clockACLK_Hz_ni(): ");
+  cputul(smclk_Hz, 10);
+  cputtext("\nBSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT: ");
+  cputi(BSP430_PLATFORM_BOOT_ACLK_DIVIDING_SHIFT, 10);
+  cputtext("\nulBSP430clockACLK_Hz_ni(): ");
   aclk_Hz = ulBSP430clockACLK_Hz_ni();
-  cputul_ni(aclk_Hz, 10);
+  cputul(aclk_Hz, 10);
 
 #if (BSP430_TIMER_CCACLK - 0)
   if (1000000UL <= aclk_Hz) {
-    cputtext_ni("\nUnable to use high-speed ACLK for differential timing of SMCLK");
+    cputtext("\nUnable to use high-speed ACLK for differential timing of SMCLK");
   } else {
     do {
       const unsigned int SAMPLE_PERIOD_ACLK = 10;
@@ -131,7 +131,7 @@ void main ()
       unsigned long smclk_rel_aclk_Hz;
 
       if (! tp) {
-        cputtext_ni("\nUnable to access configured CCACLK timer");
+        cputtext("\nUnable to access configured CCACLK timer");
         break;
       }
       /* Capture the SMCLK ticks between adjacent ACLK ticks */
@@ -143,48 +143,48 @@ void main ()
                                               SAMPLE_PERIOD_ACLK);
       tp->ctl = 0;
       if (-1 == cc_delta) {
-        cputtext_ni("\nCCACLK measurement failed");
+        cputtext("\nCCACLK measurement failed");
         break;
       }
-      cputchar_ni('\n');
-      cputu_ni(SAMPLE_PERIOD_ACLK, 10);
-      cputtext_ni(" ticks of ACLK produced ");
-      cputu_ni(cc_delta, 10);
-      cputtext_ni(" ticks of SMCLK");
-      cputtext_ni("\nComparison with measured values:");
-      cputtext_ni("\n SMCLK (Hz) (if measured ACLK correct): ");
+      cputchar('\n');
+      cputu(SAMPLE_PERIOD_ACLK, 10);
+      cputtext(" ticks of ACLK produced ");
+      cputu(cc_delta, 10);
+      cputtext(" ticks of SMCLK");
+      cputtext("\nComparison with measured values:");
+      cputtext("\n SMCLK (Hz) (if measured ACLK correct): ");
       smclk_rel_aclk_Hz = (cc_delta * aclk_Hz) / SAMPLE_PERIOD_ACLK;
-      cputul_ni(smclk_rel_aclk_Hz, 10);
-      cputtext_ni(" (error ");
-      cputl_ni(smclk_rel_aclk_Hz - smclk_Hz, 10);
-      cputtext_ni(" = ");
-      cputl_ni(1000 * labs(smclk_rel_aclk_Hz - smclk_Hz) / smclk_Hz, 10);
-      cputtext_ni(" kHz/MHz)");
-      cputtext_ni("\n ACLK (Hz) (if measured SMCLK correct): ");
+      cputul(smclk_rel_aclk_Hz, 10);
+      cputtext(" (error ");
+      cputl(smclk_rel_aclk_Hz - smclk_Hz, 10);
+      cputtext(" = ");
+      cputl(1000 * labs(smclk_rel_aclk_Hz - smclk_Hz) / smclk_Hz, 10);
+      cputtext(" kHz/MHz)");
+      cputtext("\n ACLK (Hz) (if measured SMCLK correct): ");
       aclk_rel_smclk_Hz = SAMPLE_PERIOD_ACLK * smclk_Hz / cc_delta;
-      cputul_ni(aclk_rel_smclk_Hz, 10);
-      cputtext_ni(" (error ");
-      cputl_ni(aclk_rel_smclk_Hz - aclk_Hz, 10);
-      cputtext_ni(" = ");
-      cputl_ni(1000 * labs(aclk_rel_smclk_Hz - aclk_Hz) / aclk_Hz, 10);
-      cputtext_ni(" Hz/kHz)");
+      cputul(aclk_rel_smclk_Hz, 10);
+      cputtext(" (error ");
+      cputl(aclk_rel_smclk_Hz - aclk_Hz, 10);
+      cputtext(" = ");
+      cputl(1000 * labs(aclk_rel_smclk_Hz - aclk_Hz) / aclk_Hz, 10);
+      cputtext(" Hz/kHz)");
     } while (0);
   }
 #else /* BSP430_TIMER_CCACLK */
-  cputtext_ni("\nNo CCACLK timer available for ACLK/SMCLK comparison");
+  cputtext("\nNo CCACLK timer available for ACLK/SMCLK comparison");
 #endif /* BSP430_TIMER_CCACLK */
 
-  cputchar_ni('\n');
+  cputchar('\n');
 
 #if defined(__MSP430_HAS_BC2__)
-  cputtext_ni("\nBC2: DCO ");
-  cputu_ni(DCOCTL, 16);
-  cputtext_ni(" CTL1  ");
-  cputu_ni(BCSCTL1, 16);
-  cputtext_ni(" CTL2  ");
-  cputu_ni(BCSCTL2, 16);
-  cputtext_ni(" CTL3  ");
-  cputu_ni(BCSCTL3, 16);
+  cputtext("\nBC2: DCO ");
+  cputu(DCOCTL, 16);
+  cputtext(" CTL1  ");
+  cputu(BCSCTL1, 16);
+  cputtext(" CTL2  ");
+  cputu(BCSCTL2, 16);
+  cputtext(" CTL3  ");
+  cputu(BCSCTL3, 16);
 
 #endif
 
@@ -200,7 +200,7 @@ void main ()
 #endif /* FLL/PLUS */
 
 #if defined(__MSP430_HAS_UCS__) || defined(__MSP430_HAS_UCS_RF__)
-  cputtext_ni("\nBSP430_UCS_FLL_SELREF: "
+  cputtext("\nBSP430_UCS_FLL_SELREF: "
 #if SELREF__XT2CLK <= BSP430_UCS_FLL_SELREF
               "XT2CLK"
 #elif SELREF__REFOCLK <= BSP430_UCS_FLL_SELREF
@@ -230,7 +230,7 @@ void main ()
 
   if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 0, 1)) {
 #if (BSP430_CONSOLE - 0)
-    cputtext_ni("\n\nClock signals exposed:\n ");
+    cputtext("\n\nClock signals exposed:\n ");
     help = NULL;
 #ifdef BSP430_PLATFORM_PERIPHERAL_HELP
     help = xBSP430platformPeripheralHelp(BSP430_PERIPH_EXPOSED_CLOCKS, 0);
@@ -238,18 +238,18 @@ void main ()
     if (NULL == help) {
       help = "Go look at the data sheet and source, because nobody told me where they are";
     }
-    cputtext_ni(help);
-    cputtext_ni("\nStatus register LPM bits: ");
-    cputu_ni(__read_status_register() & BSP430_CORE_LPM_SR_MASK, 16);
-    cputtext_ni("\nIFG1 bits: ");
+    cputtext(help);
+    cputtext("\nStatus register LPM bits: ");
+    cputu(__read_status_register() & BSP430_CORE_LPM_SR_MASK, 16);
+    cputtext("\nIFG1 bits: ");
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
-    cputu_ni(SFRIFG1, 16);
+    cputu(SFRIFG1, 16);
 #else /* CPUX */
-    cputu_ni(IFG1, 16);
+    cputu(IFG1, 16);
 #endif /* CPUX */
-    cputtext_ni(" with OFIFG ");
-    cputu_ni(OFIFG, 16);
-    cputchar_ni('\n');
+    cputtext(" with OFIFG ");
+    cputu(OFIFG, 16);
+    cputchar('\n');
 #endif /* BSP430_CONSOLE */
 
     /* Spin here with CPU active.  In LPM0, MCLK is disabled.  Other
@@ -260,7 +260,7 @@ void main ()
     }
   } else {
 #if (BSP430_CONSOLE - 0)
-    cputtext_ni("\nFailed to expose clock signals\n");
+    cputtext("\nFailed to expose clock signals\n");
 #endif /* BSP430_CONSOLE */
   }
 }

@@ -496,7 +496,7 @@ Produces:
 
 Annotation to indicate that the function may enable interrupts and block due
 to an internal dependence on iBSP430consoleWaitForTxSpace_ni().  Example:
-cputchar_ni()
+cputchar()
 
 Produces:
 

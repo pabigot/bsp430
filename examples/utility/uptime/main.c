@@ -54,12 +54,12 @@ void main ()
     }
     cprintf("%s: wake with %ld remaining,", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rem);
     cprintf(" GIE %s,", (__read_status_register() & GIE) ? "ON" : "off");
-    rc = cgetchar_ni();
+    rc = cgetchar();
     if (0 <= rc) {
       cprintf(" input '");
       do {
-        cputchar_ni(rc);
-      } while (0 <= ((rc = cgetchar_ni())));
+        cputchar(rc);
+      } while (0 <= ((rc = cgetchar())));
       cprintf("',");
     }
     cprintf(" next wake %s\n", xBSP430uptimeAsText_ni(wake_utt));

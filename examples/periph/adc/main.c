@@ -487,7 +487,7 @@ void main ()
         displayVoltage(&v25);
       }
     }
-    cputchar_ni('\n');
+    cputchar('\n');
     next_wake_utt += delta_wake_utt;
     while (0 < lBSP430uptimeSleepUntil_ni(next_wake_utt, LPM3_bits)) {
       /* nop */
