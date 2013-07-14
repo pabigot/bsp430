@@ -568,7 +568,7 @@ hBSP430halSERIAL hBSP430serialOpenI2C (hBSP430halSERIAL hal,
  * device prior to invoking this function.
  *
  * @warning On some families the underlying peripheral must be @link
- * vBSP430serialSetReset_rh held in reset@endlink if @p own_address is
+ * iBSP430serialSetReset_rh held in reset@endlink if @p own_address is
  * to be set.
  *
  * @param hal the serial device to be configured
@@ -708,18 +708,21 @@ int iBSP430i2cRxData_rh (hBSP430halSERIAL hal,
  * @param resetp A positive value places peripheral into reset mode.
  * A negative value places peripheral into reset mode after blocking
  * until peripheral is no longer busy.  A zero value releases
- * peripheral from reset mode. */
+ * peripheral from reset mode.
+ *
+ * @return A positive value if the device had been in reset mode; zero
+ * if it had not been in reset mode. */
 static BSP430_CORE_INLINE
-void vBSP430serialSetReset_rh (hBSP430halSERIAL hal,
-                               int resetp)
+int iBSP430serialSetReset_rh (hBSP430halSERIAL hal,
+                              int resetp)
 {
-  hal->dispatch->setReset_rh(hal, resetp);
+  return hal->dispatch->setReset_rh(hal, resetp);
 }
 
 /** Control serial device hold mode
  *
  * When a serial peripheral is placed in hold mode the peripheral is
- * reset per vBSP430serialSetReset_rh() with @a resetp set to a
+ * reset per iBSP430serialSetReset_rh() with @a resetp set to a
  * negative value to force a wait for pending activity to complete.
  * In addition, the function reconfigures the associated port pins to
  * their digital I/O function per
@@ -735,7 +738,7 @@ void vBSP430serialSetReset_rh (hBSP430halSERIAL hal,
  * specific GPIO use each time the peripheral is placed into hold
  * mode.
  *
- * @see vBSP430serialSetReset_rh()
+ * @see iBSP430serialSetReset_rh()
  *
  * @param hal a serial HAL handle to a peripheral that has been
  * opened
@@ -743,10 +746,8 @@ void vBSP430serialSetReset_rh (hBSP430halSERIAL hal,
  * @param holdp a nonzero value if the peripheral is to be placed into
  * hold mode, and a zero value to release it from hold mode
  *
- * @return 0 if the transition was successful, -1 if an error
- * occurred.  Potential errors include inability to configure the
- * peripheral pins.  On error, the peripheral is left in reset
- * mode. */
+ * @return 0 f the device was previously enabled; a positive value if
+ * the device was previously in hold mode. */
 static BSP430_CORE_INLINE
 int iBSP430serialSetHold_rh (hBSP430halSERIAL hal,
                              int holdp)

@@ -66,16 +66,16 @@ void main ()
             i2c_b->hpl.usci5->i2csa, i2c_b->hpl.usci5->i2coa);         \
   } while (0)
 
-  vBSP430serialSetReset_rh(i2c_a, 1);
-  vBSP430serialSetReset_rh(i2c_b, 1);
+  iBSP430serialSetReset_rh(i2c_a, 1);
+  iBSP430serialSetReset_rh(i2c_b, 1);
   iBSP430i2cSetAddresses_rh(i2c_a, 'A', 'B');
   iBSP430i2cSetAddresses_rh(i2c_b, 'B', 'A');
   i2c_a->hpl.usci5->ctl1 &= ~(UCTR | UCTXNACK | UCTXSTP | UCTXSTT);
   i2c_b->hpl.usci5->ctl1 &= ~(UCTR | UCTXNACK | UCTXSTP | UCTXSTT);
   i2c_a->hpl.usci5->ctl0 |= UCMST;
   i2c_b->hpl.usci5->ctl0 |= UCMST;
-  vBSP430serialSetReset_rh(i2c_a, 0);
-  vBSP430serialSetReset_rh(i2c_b, 0);
+  iBSP430serialSetReset_rh(i2c_a, 0);
+  iBSP430serialSetReset_rh(i2c_b, 0);
 
   SHOW_STATE("initial");
   i2c_a->hpl.usci5->ctl1 |= UCTR | UCTXSTT;

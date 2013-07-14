@@ -71,7 +71,7 @@ getCalibration_ni (hBSP430halSERIAL i2c,
   uint16_t * wp;
 
   data[0] = BMP085_REG_CALIBRATION;
-  vBSP430serialSetReset_rh(i2c, 0);
+  iBSP430serialSetReset_rh(i2c, 0);
   do {
     rc = iBSP430i2cTxData_rh(i2c, data, 1);
     if (0 > rc) {
@@ -85,7 +85,7 @@ getCalibration_ni (hBSP430halSERIAL i2c,
       break;
     }
   } while (0);
-  vBSP430serialSetReset_rh(i2c, 1);
+  iBSP430serialSetReset_rh(i2c, 1);
   if (0 > rc) {
     return;
   }
@@ -147,7 +147,7 @@ void main ()
     return;
   }
 
-  vBSP430serialSetReset_rh(i2c, 1);
+  iBSP430serialSetReset_rh(i2c, 1);
   (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_BMP085_I2C_ADDRESS);
 
   getCalibration_ni(i2c, &calib);
@@ -163,7 +163,7 @@ void main ()
     long pres_cinHg;
     int oss = 3;
 
-    vBSP430serialSetReset_rh(i2c, 0);
+    iBSP430serialSetReset_rh(i2c, 0);
     do {
       data[0] = BMP085_REG_CMD;
       data[1] = BMP085_VAL_TEMP;
@@ -206,7 +206,7 @@ void main ()
         break;
       }
     } while (0);
-    vBSP430serialSetReset_rh(i2c, 1);
+    iBSP430serialSetReset_rh(i2c, 1);
     if (0 > rc) {
       break;
     }

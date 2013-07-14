@@ -95,7 +95,7 @@
  */
 #define BSP430_MODULE_USCI5 (defined(__MSP430_HAS_USCI_A0__)     \
                             || defined(__MSP430_HAS_USCI_B0__)) \
- 
+
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_USCI5 - 0)
 
 /** Maximum baud rate acceptable for UART mode.
@@ -1044,7 +1044,7 @@ hBSP430halSERIAL hBSP430usci5OpenSPI (hBSP430halSERIAL hal,
                                       unsigned int prescaler);
 
 /** USCI5-specific implementation of iBSP430serialSetReset_rh() */
-void vBSP430usci5SetReset_rh (hBSP430halSERIAL hal, int resetp);
+int iBSP430usci5SetReset_rh (hBSP430halSERIAL hal, int resetp);
 
 /** USCI5-specific implementation of iBSP430serialSetHold_rh() */
 int iBSP430usci5SetHold_rh (hBSP430halSERIAL hal, int holdp);

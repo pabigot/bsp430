@@ -116,7 +116,7 @@ usci5Configure (hBSP430halSERIAL hal,
     hal->num_rx = hal->num_tx = 0;
 
     /* Release the device for use */
-    vBSP430usci5SetReset_rh(hal, 0);
+    iBSP430usci5SetReset_rh(hal, 0);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -212,15 +212,17 @@ hBSP430usci5OpenI2C (hBSP430halSERIAL hal,
   return usci5Configure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
 }
 
-void
-vBSP430usci5SetReset_rh (hBSP430halSERIAL hal,
+int
+iBSP430usci5SetReset_rh (hBSP430halSERIAL hal,
                          int resetp)
 {
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   volatile struct sBSP430hplUSCI5 * hpl = SERIAL_HAL_HPL(hal);
+  int rc;
 
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
+    rc = !!(hpl->ctlw0 & UCSWRST);
     if (resetp) {
       if (0 > resetp) {
         SERIAL_HPL_FLUSH_NI(hpl);
@@ -237,6 +239,7 @@ vBSP430usci5SetReset_rh (hBSP430halSERIAL hal,
     }
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rc;
 }
 
 int
@@ -250,13 +253,11 @@ iBSP430usci5SetHold_rh (hBSP430halSERIAL hal,
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     if (holdp) {
-      vBSP430usci5SetReset_rh(hal, -1);
-      rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
+      rc = iBSP430usci5SetReset_rh(hal, -1);
+      (void)iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
     } else {
-      rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
-      if (0 == rc) {
-        vBSP430usci5SetReset_rh(hal, 0);
-      }
+      (void)iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
+      rc = iBSP430usci5SetReset_rh(hal, 0);
     }
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -603,7 +604,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .i2cRxData_rh = iBSP430usci5I2CrxData_rh,
   .i2cTxData_rh = iBSP430usci5I2CtxData_rh,
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
-  .setReset_rh = vBSP430usci5SetReset_rh,
+  .setReset_rh = iBSP430usci5SetReset_rh,
   .setHold_rh = iBSP430usci5SetHold_rh,
   .close = iBSP430usci5Close,
   .wakeupTransmit_rh = vBSP430usci5WakeupTransmit_rh,

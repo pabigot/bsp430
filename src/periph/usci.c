@@ -143,7 +143,7 @@ usciConfigure (hBSP430halSERIAL hal,
     hal->num_rx = hal->num_tx = 0;
 
     /* Release the device for use */
-    vBSP430usciSetReset_rh(hal, 0);
+    iBSP430usciSetReset_rh(hal, 0);
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
@@ -243,13 +243,16 @@ hBSP430usciOpenI2C (hBSP430halSERIAL hal,
   return usciConfigure(hal, ctl0_byte, ctl1_byte, prescaler, -1);
 }
 
-void
-vBSP430usciSetReset_rh (hBSP430halSERIAL hal,
+int
+iBSP430usciSetReset_rh (hBSP430halSERIAL hal,
                         int resetp)
 {
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rc;
+
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
+    rc = !!(SERIAL_HAL_HPL(hal)->ctl1 & UCSWRST);
     if (resetp) {
       if (0 > resetp) {
         FLUSH_HAL_NI(hal);
@@ -268,6 +271,7 @@ vBSP430usciSetReset_rh (hBSP430halSERIAL hal,
     }
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rc;
 }
 
 int
@@ -281,15 +285,13 @@ iBSP430usciSetHold_rh (hBSP430halSERIAL hal,
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     if (holdp) {
-      vBSP430usciSetReset_rh(hal, -1);
-      rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
+      rc = iBSP430usciSetReset_rh(hal, -1);
+      (void)iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 0);
     } else {
-      rc = iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
-      if (0 == rc) {
-        /* Release the USCI and enable the interrupts.  Interrupts are
-         * disabled and cleared when UCSWRST is set. */
-        vBSP430usciSetReset_rh(hal, 0);
-      }
+      (void)iBSP430platformConfigurePeripheralPins_ni(xBSP430periphFromHPL(hal->hpl.any), periph_config, 1);
+      /* Release the USCI and enable the interrupts.  Interrupts are
+       * disabled and cleared when UCSWRST is set. */
+      rc = iBSP430usciSetReset_rh(hal, 0);
     }
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
@@ -561,7 +563,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .i2cRxData_rh = iBSP430usciI2CrxData_rh,
   .i2cTxData_rh = iBSP430usciI2CtxData_rh,
 #endif /* configBSP430_SERIAL_ENABLE_I2C */
-  .setReset_rh = vBSP430usciSetReset_rh,
+  .setReset_rh = iBSP430usciSetReset_rh,
   .setHold_rh = iBSP430usciSetHold_rh,
   .close = iBSP430usciClose,
   .wakeupTransmit_rh = vBSP430usciWakeupTransmit_rh,

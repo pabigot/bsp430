@@ -106,14 +106,14 @@ void main ()
     return;
   }
 
-  vBSP430serialSetReset_rh(i2c, 1);
+  iBSP430serialSetReset_rh(i2c, 1);
   (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_I2C_ADDRESS);
 
   {
     uint8_t cmd = SHT21_SOFT_RESET;
-    vBSP430serialSetReset_rh(i2c, 0);
+    iBSP430serialSetReset_rh(i2c, 0);
     rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
-    vBSP430serialSetReset_rh(i2c, 1);
+    iBSP430serialSetReset_rh(i2c, 1);
     cprintf("Reset got %d\n", rc);
   }
 
@@ -134,7 +134,7 @@ void main ()
     unsigned int rh_ms;
     int rh_ppt;
 
-    vBSP430serialSetReset_rh(i2c, 0);
+    iBSP430serialSetReset_rh(i2c, 0);
     t0 = ulBSP430uptime_ni();
     cmd = SHT21_TRIGGER_T_HM;
     rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
@@ -163,7 +163,7 @@ void main ()
     t1 = ulBSP430uptime_ni();
     rh_ms = BSP430_UPTIME_UTT_TO_MS(t1-t0);
 
-    vBSP430serialSetReset_rh(i2c, 1);
+    iBSP430serialSetReset_rh(i2c, 1);
     t_dC = TEMPERATURE_RAW_TO_dC(t_raw);
     rh_ppt = HUMIDITY_RAW_TO_PPT(rh_raw);
     cprintf("%s: ", xBSP430uptimeAsText_ni(t0));

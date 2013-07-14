@@ -47,7 +47,7 @@ void main ()
     return;
   }
 
-  vBSP430serialSetReset_rh(i2c, 1);
+  iBSP430serialSetReset_rh(i2c, 1);
   (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_HIH6130_I2C_ADDRESS);
 
   /* HIH-613x wants max 60ms on power-up. */
@@ -68,7 +68,7 @@ void main ()
     unsigned int hum_raw = 0;
     unsigned int temp_raw = 0;
 
-    vBSP430serialSetReset_rh(i2c, 0);
+    iBSP430serialSetReset_rh(i2c, 0);
     t0 = ulBSP430uptime_ni();
     do {
       uint8_t data[4];
@@ -106,7 +106,7 @@ void main ()
       } while (1 == status);
     } while (0);
     t1 = ulBSP430uptime_ni();
-    vBSP430serialSetReset_rh(i2c, 1);
+    iBSP430serialSetReset_rh(i2c, 1);
     if (0 > rc) {
       break;
     }

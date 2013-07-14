@@ -98,7 +98,7 @@
  */
 #define BSP430_MODULE_EUSCI (defined(__MSP430_HAS_EUSCI_A0__)           \
                              || defined(__MSP430_HAS_EUSCI_B0__))       \
- 
+
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_EUSCI - 0)
 
 /** Maximum baud rate acceptable for UART mode.
@@ -879,8 +879,8 @@ hBSP430halSERIAL hBSP430eusciOpenI2C (hBSP430halSERIAL hal,
                                       unsigned char ctl1_byte,
                                       unsigned int prescaler);
 
-/** eUSCI-specific implementation of vBSP430serialSetReset_rh() */
-void vBSP430eusciSetReset_rh (hBSP430halSERIAL hal, int resetp);
+/** eUSCI-specific implementation of iBSP430serialSetReset_rh() */
+int iBSP430eusciSetReset_rh (hBSP430halSERIAL hal, int resetp);
 
 /** eUSCI-specific implementation of iBSP430serialSetHold_rh() */
 int iBSP430eusciSetHold_rh (hBSP430halSERIAL hal, int holdp);
