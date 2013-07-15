@@ -218,8 +218,9 @@ extern unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
  *
  * This is the number of uptime ticks in a standard second, and is
  * used when translating between tick measurements and second-based
- * durations.  The default value is the nominal frequency of the timer
- * underlying the uptime clock, but this may be overridden by
+ * durations.  The default value is the estimated frequency of the
+ * timer underlying the uptime clock (per
+ * ulBSP430timerFrequency_Hz_ni()), but this may be overridden by
  * ulBSP430uptimeSetConversionFrequency_ni() when a more accurate
  * estimate of actual frequency is available.
  *
