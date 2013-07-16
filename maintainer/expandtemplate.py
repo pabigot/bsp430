@@ -406,6 +406,9 @@ struct sBSP430halPORT xBSP430hal_%(INSTANCE)s_ = {
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P%(#)sREN,
 #endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P%(#)sSEL2,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',

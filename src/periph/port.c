@@ -60,6 +60,9 @@ struct sBSP430halPORT xBSP430hal_PORT1_ = {
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P1REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P1SEL2,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT1 */
 
@@ -86,6 +89,9 @@ struct sBSP430halPORT xBSP430hal_PORT2_ = {
   },
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P2REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P2SEL2,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT2 */
@@ -114,6 +120,9 @@ struct sBSP430halPORT xBSP430hal_PORT3_ = {
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P3REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P3SEL2,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT3 */
 
@@ -140,6 +149,9 @@ struct sBSP430halPORT xBSP430hal_PORT4_ = {
   },
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P4REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P4SEL2,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT4 */
@@ -168,6 +180,9 @@ struct sBSP430halPORT xBSP430hal_PORT5_ = {
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P5REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P5SEL2,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT5 */
 
@@ -194,6 +209,9 @@ struct sBSP430halPORT xBSP430hal_PORT6_ = {
   },
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P6REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P6SEL2,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT6 */
@@ -222,6 +240,9 @@ struct sBSP430halPORT xBSP430hal_PORT7_ = {
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P7REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P7SEL2,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT7 */
 
@@ -248,6 +269,9 @@ struct sBSP430halPORT xBSP430hal_PORT8_ = {
   },
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P8REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P8SEL2,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT8 */
@@ -276,6 +300,9 @@ struct sBSP430halPORT xBSP430hal_PORT9_ = {
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P9REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P9SEL2,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT9 */
 
@@ -303,6 +330,9 @@ struct sBSP430halPORT xBSP430hal_PORT10_ = {
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P10REN,
 #endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P10SEL2,
+#endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT10 */
 
@@ -329,6 +359,9 @@ struct sBSP430halPORT xBSP430hal_PORT11_ = {
   },
 #if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
   .renp = &P11REN,
+#endif /* __MSP430_HAS_PORT1_R__ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  .sel2p = &P11SEL2,
 #endif /* __MSP430_HAS_PORT1_R__ */
 };
 #endif /* configBSP430_HAL_PORT11 */

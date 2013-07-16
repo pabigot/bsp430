@@ -361,6 +361,145 @@
                                    || (BSP430_PORT_SUPPORTS_SEL2_5XX - 0) \
                                    || (BSP430_PORT_SUPPORTS_SEL2C_5XX - 0))
 
+/** @def BSP430_PORT_HAL_SET_SEL
+ *
+ * Set port function selection value via @HAL handle.
+ *
+ * MSP430 ports support peripheral functions that are enabled through
+ * port-specific function selector registers.  In some MCUs a second
+ * and third function may be selected with a second port-specific
+ * function selector register.  This function simplifies selecting the
+ * peripheral function.  It exists to allow a macro to identify the
+ * desired function as a single value, and to resolve inconsistencies
+ * in selection register naming across the MSP430 product line.
+ *
+ * @see #BSP430_PORT_SUPPORTS_SEL2_2XX, #BSP430_PORT_SUPPORTS_SEL2_47XX,
+ * #BSP430_PORT_SUPPORTS_SEL2_5XX, #BSP430_PORT_SUPPORTS_SEL2C_5XX
+ *
+ * The @p sel_ parameter value 0 clears all sel registers for the
+ * specified port and bit, leaving the pin in its digital i/o role.
+ *
+ * Non-zero values are treated as binary numbers, where the least
+ * significant bit corresponds to the setting for @c PxSEL (@c PxSEL0
+ * on FRAM devices), the next most significant bit to the setting for
+ * @c PxSEL2 (normally, @c PxSEL1 on FRAM devices)
+ *
+ * @note Setting a new selection that requires changing bit values in
+ * two registers is safe only on #BSP430_PORT_SUPPORTS_SELC_5XX
+ * systems.  For all other systems the register will be configured to
+ * an intermediate selection before the final bit is set correctly.
+ *
+ * @warning This function macro currently does not support @p sel_
+ * values above 1 under #BSP430_PORT_SUPPORTS_SEL2_47XX.  Request
+ * support if you need this.
+ *
+ * @param hal_ the handle for the port @HAL
+ *
+ * @param bit_ the bit identifing the pin for which the function is
+ * desired
+ *
+ * @param sel_ the selection function index, with 0 selecting digital
+ * input/output (no peripheral function)
+ *
+ * @platformdep
+ */
+
+/** @def BSP430_PORT_HPL_SET_SEL
+ *
+ * Set port function selection value via @HPL handle.
+ *
+ * As with #BSP430_PORT_HAL_SET_SEL(), but not fully supported for
+ * families where the necessary registers cannot be reached from the
+ * @HPL handle.
+ *
+ * @warning For #BSP430_PORT_SUPPORTS_SEL2_2XX and
+ * #BSP430_PORT_SUPPORTS_SEL2_47XX this function macro does not
+ * correctly process @p sel_ values above 1.
+ *
+ * @param hpl_ the handle for the port @HPL
+ *
+ * @param bit_ the bit identifing the pin for which the function is
+ * desired
+ *
+ * @param sel_ the selection function index, with 0 selecting digital
+ * input/output (no peripheral function)
+ *
+ * @platformdep
+ */
+#if (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+#define BSP430_PORT_HPL_SET_SEL(hpl_, bit_, sel_) do {  \
+    if (0x01 & (sel_)) {                                \
+      (hpl_)->sel |= (bit_);                            \
+    } else {                                            \
+      (hpl_)->sel &= ~(bit_);                           \
+    }                                                   \
+  } while (0)
+#define BSP430_PORT_HAL_SET_SEL(hal_, bit_, sel_) do {  \
+    if (0x01 & (sel_)) {                                \
+      BSP430_PORT_HAL_HPL_SEL(hal_) |= (bit_);          \
+    } else {                                            \
+      BSP430_PORT_HAL_HPL_SEL(hal_) &= ~(bit_);         \
+    }                                                   \
+    if (0x02 & (sel_)) {                                \
+      *(hal_)->sel2p |= (bit_);                         \
+    } else {                                            \
+      *(hal_)->sel2p &= ~(bit_);                        \
+    }                                                   \
+  } while (0)
+/* #elif (BSP430_PORT_SUPPORTS_SEL2_47XX - 0) : NOT SUPPORTED AT THIS TIME */
+#elif (BSP430_PORT_SUPPORTS_SEL2_5XX - 0) || defined(BSP430_DOXYGEN)
+#define BSP430_PORT_HPL_SET_SEL(hpl_, bit_, sel_) do {  \
+    if (0x01 & (sel_)) {                                \
+      (hpl_)->sel |= (bit_);                            \
+    } else {                                            \
+      (hpl_)->sel &= ~(bit_);                           \
+    }                                                   \
+    if (0x02 & (sel_)) {                                \
+      (hpl_)->sel1 |= (bit_);                           \
+    } else {                                            \
+      (hpl_)->sel1 &= ~(bit_);                          \
+    }                                                   \
+  } while (0)
+#define BSP430_PORT_HAL_SET_SEL(hal_, bit_, sel_) BSP430_PORT_HPL_SET_SEL((hal_)->hpl.port_5xx_8, bit_, sel_)
+#elif (BSP430_PORT_SUPPORTS_SEL2C_5XX - 0)
+/* Ugliness: if bits in both registers are to change, then use SELC.
+ * Otherwise only one actually changes, so it's ok to write both. */
+#define BSP430_PORT_HPL_SET_SEL(hpl_, bit_, sel_) do {                  \
+    unsigned char cs = (((!!((bit_) & (hpl_)->sel1) != !!(0x02 & (sel_))) << 1) \
+                        | (!!((bit_) & (hpl_)->sel0) != !!(0x01 & (sel_)))); \
+    if (0x03 == cs) {                                                   \
+      (hpl_)->selc |= (bit_);                                           \
+    } else {                                                            \
+      if (0x01 & (sel_)) {                                              \
+        (hpl_)->sel0 |= (bit_);                                         \
+      } else {                                                          \
+        (hpl_)->sel0 &= ~(bit_);                                        \
+      }                                                                 \
+      if (0x02 & (sel_)) {                                              \
+        (hpl_)->sel1 |= (bit_);                                         \
+      } else {                                                          \
+        (hpl_)->sel1 &= ~(bit_);                                        \
+      }                                                                 \
+    }                                                                   \
+  } while (0)
+#define BSP430_PORT_HAL_SET_SEL(hal_, bit_, sel_) BSP430_PORT_HPL_SET_SEL((hal_)->hpl.port_5xx_8, bit_, sel_)
+#else /* SEL2 options */
+#define BSP430_PORT_HPL_SET_SEL(hpl_, bit_, sel_) do {  \
+    if (0x01 & (sel_)) {                                \
+      (hpl_)->sel |= (bit_);                            \
+    } else {                                            \
+      (hpl_)->sel &= ~(bit_);                           \
+    }                                                   \
+  } while (0)
+#define BSP430_PORT_HAL_SET_SEL(hal_, bit_, sel_) do {  \
+    if (0x01 & (sel_)) {                                \
+      BSP430_PORT_HAL_HPL_SEL(hal_) |= (bit_);          \
+    } else {                                            \
+      BSP430_PORT_HAL_HPL_SEL(hal_) &= ~(bit_);         \
+    }                                                   \
+  } while (0)
+#endif /* SEL2 options */
+
 /** Layout for pre-5xx--family ports supporting interrupts.
  *
  * Access to SEL2 capability for these ports is not available in the
@@ -422,10 +561,10 @@ typedef struct sBSP430hplPORT_5XX_16 {
   };
   uBSP430hplPORT_16 sel1;       /**< PxSEL1 (secondary/tertiary function, FR5xx devices only) */ /* 0x0C */
   unsigned int _reserved_x0E;
-  uBSP430hplPORT_16 selc;       /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x10 */
+  unsigned int _reserved_x10;
   unsigned int _reserved_x12;
   unsigned int _reserved_x14;
-  unsigned int _reserved_x16;
+  uBSP430hplPORT_16 selc;       /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) */ /* 0x16 */
   uBSP430hplPORT_16 ies;        /**< PxIES */ /* 0x18 */
   uBSP430hplPORT_16 ie;         /**< PxIE */ /* 0x1A */
   uBSP430hplPORT_16 ifg;        /**< PxIFG */ /* 0x1C */
@@ -456,13 +595,13 @@ typedef struct sBSP430hplPORT_5XX_8 {
   unsigned char _reserved_x0D;
   unsigned char _reserved_x0E;
   unsigned char _reserved_x0F;
-  unsigned char selc;            /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) *//* 0x10 */
+  unsigned char _reserved_x10;
   unsigned char _reserved_x11;
   unsigned char _reserved_x12;
   unsigned char _reserved_x13;
   unsigned char _reserved_x14;
   unsigned char _reserved_x15;
-  unsigned char _reserved_x16;
+  unsigned char selc;            /**< PxSELC (support atomic transition to tertiary function, FR5xx devices only) *//* 0x16 */
   unsigned char _reserved_x17;
   unsigned char ies;             /**< PxIES */ /* 0x18 */
   unsigned char _reserved_x19;
@@ -722,7 +861,7 @@ typedef struct sBSP430halPORT {
   /** Callbacks invoked when the HAL ISR handler receives an event for
    * the corresponding bit of the port. */
   const struct sBSP430halISRIndexedChainNode * volatile pin_cbchain_ni[8];
-#if (BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0)
+#if defined(BSP430_DOXYGEN) || ((BSP430_PORT_SUPPORTS_REN - 0) && ! (BSP430_CORE_FAMILY_IS_5XX - 0))
   /** Pointer to the resistor enable register for this peripheral.
    *
    * On 2xx/4xx MCUs where this register exists, it is outside the
@@ -732,6 +871,16 @@ typedef struct sBSP430halPORT {
    * @dependency Only on non-5xx MCUs that support REN */
   volatile unsigned char * const renp;
 #endif /* Pre-5xx REN */
+#if defined(BSP430_DOXYGEN) || (BSP430_PORT_SUPPORTS_SEL2_2XX - 0)
+  /** Pointer to the secondary selection register for this peripheral.
+   *
+   * On 2xx/4xx MCUs where this register exists, it is outside the
+   * normal register area.  In 5xx ports this feature is available in
+   * the HPL structure.
+   *
+   * @dependency Only on non-5xx MCUs that support SEL2 */
+  volatile unsigned char * const sel2p;
+#endif /* Pre-5xx SEL2 */
 } sBSP430halPORT;
 
 /** Handle for a port HAL instance */
