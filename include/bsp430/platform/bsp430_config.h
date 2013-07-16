@@ -396,10 +396,12 @@
 
 #endif /* configBSP430_TIMER_CCACLK */
 
+/** @cond DOXYGEN_EXCLUDE */
 /* Explicitly disable RFEM if not previously explicitly configured */
 #ifndef configBSP430_RFEM
 #define configBSP430_RFEM 0
 #endif /* configBSP430_RFEM */
+/* @endcond */
 
 #if (configBSP430_RFEM - 0)
 /* If using the RFEM feature, incorporate the header that maps RFEM

@@ -56,9 +56,7 @@
  * serial capabilities through multiple modules (USART+USCI) where SPI
  * might come from one and UART from another. */
 
-/** @def configBSP430_SERIAL_USE_USCI
- *
- * Define to true value to allow the generic serial dispatches to
+/** Define to true value to allow the generic serial dispatches to
  * recognize #sBSP430hplUSCI as an underlying serial implementation.
  * This defaults to true iff the MCU supports the USCI device as
  * implemented on 2xx/4xx MCUs.
@@ -69,9 +67,7 @@
 #define configBSP430_SERIAL_USE_USCI defined(__MSP430_HAS_USCI__)
 #endif /* configBSP430_SERIAL_USE_USCI */
 
-/** @def configBSP430_SERIAL_USE_USCI5
- *
- * Define to true value to allow the generic serial dispatches to
+/** Define to true value to allow the generic serial dispatches to
  * recognize #sBSP430hplUSCI5 as an underlying serial implementation.
  * This defaults to true iff the MCU supports the USCI device as
  * implemented on 5xx MCUs.
@@ -82,9 +78,7 @@
 #define configBSP430_SERIAL_USE_USCI5 defined(__MSP430_HAS_USCI_A0__)
 #endif /* configBSP430_SERIAL_USE_USCI5 */
 
-/** @def configBSP430_SERIAL_USE_EUSCI
- *
- * Define to true value to allow the generic serial dispatches to
+/** Define to true value to allow the generic serial dispatches to
  * recognize #sBSP430hplEUSCIA and #sBSP430hplEUSCIB as underlying
  * serial implementation.  This defaults to true iff the MCU supports
  * the eUSCI device as implemented on 5xx MCUs.
@@ -95,9 +89,7 @@
 #define configBSP430_SERIAL_USE_EUSCI (defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_B0__))
 #endif /* configBSP430_SERIAL_USE_EUSCI */
 
-/** @def configBSP430_SERIAL_ENABLE_UART
- *
- * Define to a true value to allow the general serial layer to
+/** Define to a true value to allow the general serial layer to
  * recognize and dispatch UART-related functions.  If left false,
  * UART-related functions will not be added to the serial abstraction
  * dispatch table.
@@ -112,9 +104,7 @@
 #define configBSP430_SERIAL_ENABLE_UART (configBSP430_CONSOLE - 0)
 #endif /* configBSP430_SERIAL_ENABLE_UART */
 
-/** @def configBSP430_SERIAL_ENABLE_SPI
- *
- * Define to a true value to allow the general serial layer to
+/** Define to a true value to allow the general serial layer to
  * recognize and dispatch SPI-related functions.  If left false,
  * SPI-related functions will not be added to the serial abstraction
  * dispatch table.
@@ -145,9 +135,7 @@
 #define BSP430_SERIAL_SPI_BUS_SPEED_HZ 4000000UL
 #endif /* BSP430_SERIAL_SPI_BUS_SPEED_HZ */
 
-/** @def configBSP430_SERIAL_ENABLE_I2C
- *
- * Define to a true value to allow the general serial layer to
+/** Define to a true value to allow the general serial layer to
  * recognize and dispatch I2C-related functions.  If left false,
  * I2C-related functions will not be added to the serial abstraction
  * dispatch table.
@@ -180,9 +168,7 @@
 #define BSP430_SERIAL_I2C_BUS_SPEED_HZ 400000UL
 #endif /* BSP430_SERIAL_SPI_BUS_SPEED_HZ */
 
-/** @def BSP430_SERIAL
- *
- * Defined by the infrastructure to a true expression in the case
+/** Defined by the infrastructure to a true expression in the case
  * where at least one protocol is to be supported by the serial
  * abstraction.  If it evaluates to false, the serial abstraction will
  * be absent from the compiled infrastructure code.
@@ -197,9 +183,7 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_SERIAL - 0)
 
-/** @def BSP430_SERIAL_ADJUST_CTL0_INITIALIZER
- *
- * When the underlying implementation is an EUSCI device (as on FR5xx
+/** When the underlying implementation is an EUSCI device (as on FR5xx
  * chips), the header defines used to construct the value @p ctl0_byte
  * are specified for a 16-bit access.  The ctl0 byte is the upper byte
  * of the ctlw0 word that comprises @a ctl0 and @a ctl1 on these MCUs.

@@ -58,9 +58,7 @@
 #include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
 
-/** @def configBSP430_UPTIME
- *
- * Define to a true value to enable the uptime infrastructure to
+/** Define to a true value to enable the uptime infrastructure to
  * maintain a continuous system clock.  A timer that will support this
  * must be identified; see #BSP430_UPTIME_TIMER_PERIPH_CPPID.
  *
@@ -72,9 +70,7 @@
 #define configBSP430_UPTIME 0
 #endif /* configBSP430_UPTIME */
 
-/** @def BSP430_UPTIME
- *
- * Defined to a true value if #BSP430_UPTIME_TIMER_PERIPH_CPPID has
+/** Defined to a true value if #BSP430_UPTIME_TIMER_PERIPH_CPPID has
  * been provided, making the uptime infrastructure available.
  *
  * @dependency #configBSP430_UPTIME
@@ -83,9 +79,7 @@
 #define BSP430_UPTIME include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_UPTIME_TIMER_PERIPH_CPPID
- *
- * Define to the preprocessor-compatible identifier for a timer that
+/** Define to the preprocessor-compatible identifier for a timer that
  * should be used to maintain a continuous system clock sourced from
  * ACLK.  The define must appear in the @ref bsp430_config subsystem
  * so that functional resource requests are correctly propagated to
@@ -98,9 +92,7 @@
 #define BSP430_UPTIME_TIMER_PERIPH_CPPID include "bsp430_config.h"
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_UPTIME_TIMER_PERIPH_HANDLE
- *
- * Defined to the peripheral identifier for a timer that can be used
+/** Defined to the peripheral identifier for a timer that can be used
  * to maintain a continuous system clock sourced from ACLK.  This
  * derives directly from #BSP430_UPTIME_TIMER_PERIPH_CPPID, but is a
  * timer peripheral handle suitable for use in code.
@@ -164,9 +156,7 @@
 #define configBSP430_UPTIME_TIMER_HAL_CC0_ISR indirectly defaulted
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_UPTIME_TASSEL
- *
- * Source selector for uptime clock.  This should be bits suitable for
+/** Source selector for uptime clock.  This should be bits suitable for
  * storage into the TASSEL field of a timer control register.  (Note
  * that TASSEL and TBSSEL support the same values; this works when
  * using TBx as well.)
@@ -176,9 +166,7 @@
 #define BSP430_UPTIME_TASSEL TASSEL_1 /* == TASSEL__ACLK */
 #endif /* BSP430_UPTIME_TASSEL */
 
-/** @def BSP430_UPTIME_DIVIDING_SHIFT
- *
- * Shift value dividing #BSP430_UPTIME_TASSEL for the uptime clock.
+/** Shift value dividing #BSP430_UPTIME_TASSEL for the uptime clock.
  *
  * @defaulted
  */

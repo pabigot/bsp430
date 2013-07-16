@@ -119,9 +119,7 @@ void vBSP430platformInitialize_ni (void);
  */
 int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int periph_config, int enablep);
 
-/** @def configBSP430_PLATFORM_SPIN_FOR_JUMPER
- *
- * Define to a true value to indicate that the application or
+/** Define to a true value to indicate that the application or
  * infrastructure suggests use of the
  * vBSP430platformSpinForJumper_ni() function.
  *
@@ -159,9 +157,7 @@ int iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle periph, int p
 void vBSP430platformSpinForJumper_ni (void);
 #endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
-/** @def configBSP430_PLATFORM_PERIPHERAL_HELP
- *
- * Define to a true value if the application will want to invoke
+/** Define to a true value if the application will want to invoke
  * xBSP430platformPeripheralHelp().
  *
  * @cppflag
@@ -213,9 +209,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define configBSP430_PLATFORM_RF 0
 #endif /* configBSP430_PLATFORM_RF */
 
-/** @def configBSP430_PLATFORM_BUTTON0
- *
- * Define to a true value if the application will want to use the
+/** Define to a true value if the application will want to use the
  * primary button (if any) supported by a platform.
  *
  * @note If the platform supports more than one button, the
@@ -229,9 +223,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define configBSP430_PLATFORM_BUTTON0 0
 #endif /* configBSP430_PLATFORM_BUTTON0 */
 
-/** @def BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE
- *
- * A platform-specific identification of a port device handle through
+/** A platform-specific identification of a port device handle through
  * which the platform's primary button is controlled.
  *
  * The value is defined if the platform supports a button, regardless
@@ -249,9 +241,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_PLATFORM_BUTTON0_PORT_BIT
- *
- * A platform-specific identification of the bit on
+/** A platform-specific identification of the bit on
  * #BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE that is associated with
  * the platform's primary button.
  *
@@ -269,9 +259,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BUTTON0_PORT_BIT include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_PLATFORM_BUTTON0
- *
- * Defined by the infrastructure if #configBSP430_PLATFORM_BUTTON0 is
+/** Defined by the infrastructure if #configBSP430_PLATFORM_BUTTON0 is
  * true.  The defined value evaluates to true if the button is
  * supported by the platform, and to false if the button is not
  * supported.
@@ -290,8 +278,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430fr5739,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
-/** @def BSP430_PLATFORM_EXP430F5438
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -313,8 +300,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #include <bsp430/platform/exp430f5438/platform.h>
 #endif /* BSP430_PLATFORM_EXP430F5438 */
 
-/** @def BSP430_PLATFORM_EXP430F5529
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -336,8 +322,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #include <bsp430/platform/exp430f5529/platform.h>
 #endif /* BSP430_PLATFORM_EXP430F5529 */
 
-/** @def BSP430_PLATFORM_EXP430FR5739
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -359,8 +344,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #include <bsp430/platform/exp430fr5739/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
 
-/** @def BSP430_PLATFORM_EXP430FG4618
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -382,8 +366,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #include <bsp430/platform/exp430fg4618/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FG4618 */
 
-/** @def BSP430_PLATFORM_EXP430G2
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-exp430g2">MSP-EXP430G2</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -410,8 +393,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* !BSP430! tool=ez430 subst=tool instance=rf2500t */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
-/** @def BSP430_PLATFORM_RF2500T
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/ez430-rf2500t">EZ430-RF2500T</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -438,8 +420,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* !BSP430! url=http://www.ti.com/tool/em430f5137rf900 subst=url instance=em430 */
 /* !BSP430! insert=platform_decl_url */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl_url] */
-/** @def BSP430_PLATFORM_EM430
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/em430f5137rf900">EM430</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -466,8 +447,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* !BSP430! url=http://en.wikipedia.org/wiki/HTTP_404 subst=url instance=surf */
 /* !BSP430! insert=platform_decl_url */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl_url] */
-/** @def BSP430_PLATFORM_SURF
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://en.wikipedia.org/wiki/http_404">SURF</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -494,8 +474,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* !BSP430! url=http://www.ti.com/tool/cc1125dk subst=url instance=trxeb */
 /* !BSP430! insert=platform_decl_url */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl_url] */
-/** @def BSP430_PLATFORM_TRXEB
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/cc1125dk">TRXEB</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -522,8 +501,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* !BSP430! url=http://www.ti.com/tool/msp-fet430u48c subst=url instance=wolverine */
 /* !BSP430! insert=platform_decl_url */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl_url] */
-/** @def BSP430_PLATFORM_WOLVERINE
- * Define to a true value if application is being built for the
+/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-fet430u48c">WOLVERINE</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -548,9 +526,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 /* END AUTOMATICALLY GENERATED CODE [platform_decl_url] */
 /* !BSP430! end=platform_decl_url */
 
-/** @def BSP430_PLATFORM_CUSTOM
-
- * Define to a true value if application is being built for a custom
+/** Define to a true value if application is being built for a custom
  * (out-of-tree) platform.
  *
  * A true value causes <bsp430/platform.h> to include  corresponding
@@ -666,9 +642,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #if (BSP430_PLATFORM_M25P - 0)
 #endif /* BSP430_PLATFORM_M25P */
 
-/** @def BSP430_PLATFORM_SPIN_FOR_JUMPER
- *
- * Defined to indicate that the application or infrastructure supports
+/** Defined to indicate that the application or infrastructure supports
  * use of the vBSP430platformSpinForJumper_ni() function.  The value
  * is defined only if #configBSP430_PLATFORM_SPIN_FOR_JUMPER is set,
  * and is true only if the platform supports
@@ -681,9 +655,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #endif /* BSP430_PLATFORM_SPIN_FOR_JUMPER */
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_PLATFORM_PERIPHERAL_HELP
- *
- * Defined to indicate that the application or infrastructure supports
+/** Defined to indicate that the application or infrastructure supports
  * use of the vBSP430platformSpinForJumper_ni() function.  The value
  * is defined only if #configBSP430_PLATFORM_PERIPHERAL_HELP is set,
  * and is true only if the platform supports
@@ -697,9 +669,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG
- *
- * If defined to a true value vBSP430platformInitialize_ni() will set
+/** If defined to a true value vBSP430platformInitialize_ni() will set
  * the watchdog infrastructure into a reset state prior to any other
  * activities.
  *
@@ -717,9 +687,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG (! (configBSP430_CORE_SUPPORT_WATCHDOG - 0))
 #endif /* BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG */
 
-/** @def BSP430_PLATFORM_BOOT_CONFIGURE_LEDS
- *
- * If defined to a true value and #BSP430_LED is also true,
+/** If defined to a true value and #BSP430_LED is also true,
  * vBSP430platformInitialize_ni() will invoke
  * vBSP430ledInitialize_ni() prior to the crystal stabilization phase
  * of platform initialization.
@@ -734,9 +702,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BOOT_CONFIGURE_LEDS 1
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LEDS */
 
-/** @def BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS
- *
- * If defined to a true value, vBSP430platformInitialize_ni() will
+/** If defined to a true value, vBSP430platformInitialize_ni() will
  * configure the MCLK, SMCLK, and ACLK clock infrastructure.
  *
  * If defined to a false value, vBSP430platformInitialize_ni() will
@@ -750,9 +716,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS 1
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS */
 
-/** @def BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1
- *
- * If defined to a true value, vBSP430platformInitialize_ni() will:
+/** If defined to a true value, vBSP430platformInitialize_ni() will:
  * <ul>
  * <li> invoke iBSP430clockConfigureLFXT1_ni() to enable and stabilize the crystal
  * </ul>
@@ -797,9 +761,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BOOT_CONFIGURE_XT2 0
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_XT2 */
 
-/** @def BSP430_PLATFORM_BOOT_LFXT1_DELAY_SEC
- *
- * The number of seconds that vBSP430platformInitialize_ni() should
+/** The number of seconds that vBSP430platformInitialize_ni() should
  * use in calculating the loop count parameter to
  * iBSP430clockConfigureLFXT1_ni() while attempting to stabilize the
  * clock.

@@ -80,9 +80,7 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
-/** @def BSP430_MODULE_FLLPLUS
- *
- * Defined on inclusion of <bsp430/periph/fllplus.h>.  The value
+/** Defined on inclusion of <bsp430/periph/fllplus.h>.  The value
  * evaluates to true if the target MCU supports the FLL Plus module,
  * and false if it does not.
  *
@@ -166,9 +164,7 @@
   } while (0)
 #endif /*  BSP430_CLOCK_CLEAR_FAULTS_NI */
 
-/** @def BSP430_FLLPLUS_XCAPxPF
- *
- * @deprecated Use #BSP430_CLOCK_LFXT1_XCAP
+/** @deprecated Use #BSP430_CLOCK_LFXT1_XCAP
  *
  * @defaulted */
 #if defined(BSP430_DOXYGEN)

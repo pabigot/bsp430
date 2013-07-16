@@ -64,9 +64,7 @@
 
 #include <bsp430/periph.h>
 
-/** @def BSP430_MODULE_SYS
- *
- * Defined on inclusion of <bsp430/periph/sys.h>.  The value evaluates
+/** Defined on inclusion of <bsp430/periph/sys.h>.  The value evaluates
  * to true if the target MCU supports the System Control Module, and
  * false if it does not.
  *

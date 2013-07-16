@@ -65,9 +65,7 @@
 
 #include <bsp430/periph.h>
 
-/** @def BSP430_MODULE_FLASH
- *
- * Defined on inclusion of <bsp430/periph/flash.h>.  The value
+/** Defined on inclusion of <bsp430/periph/flash.h>.  The value
  * evaluates to true if the target MCU supports the Flash Memory
  * module, and false if it does not.
  *

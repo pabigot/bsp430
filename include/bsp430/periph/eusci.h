@@ -87,9 +87,7 @@
 #include <bsp430/periph.h>
 #include <bsp430/serial_.h>
 
-/** @def BSP430_MODULE_EUSCI
- *
- * Defined on inclusion of <bsp430/periph/eusci.h>.  The value
+/** Defined on inclusion of <bsp430/periph/eusci.h>.  The value
  * evaluates to true if the target MCU supports the Enhanced Universal
  * Serial Communcations Interface peripheral, and false if it does
  * not.

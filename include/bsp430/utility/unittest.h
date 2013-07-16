@@ -63,9 +63,7 @@
 #include <string.h>
 #include <inttypes.h>
 
-/** @def configBSP430_UNITTEST
- *
- * Define to a true value to enable the unit test infrastructure.  In
+/** Define to a true value to enable the unit test infrastructure.  In
  * addition, the <bsp430/utility/unittest.h> header must be included,
  * and the @c utility/unittest module linked in.
  *
@@ -77,9 +75,7 @@
 #define configBSP430_UNITTEST 0
 #endif /* configBSP430_UNITTEST */
 
-/** @def BSP430_UNITTEST
- *
- * Indicate that the unit test interface is available on the platform.
+/** Indicate that the unit test interface is available on the platform.
  * This is normally set by <bsp430/utility/unittest.h> when
  * #configBSP430_UNITTEST is true.
  *
@@ -89,17 +85,13 @@
 #define BSP430_UNITTEST (configBSP430_UNITTEST - 0)
 
 #if defined(BSP430_DOXYGEN) || (defined(BSP430_LED_GREEN) && defined(BSP430_LED_RED))
-/** @def BSP430_UNITTEST_LED_FAILED
- *
- * The LED that is lit if the tests failed.  This is normally the
+/** The LED that is lit if the tests failed.  This is normally the
  * first red LED; if either the red or green LED is missing, it is the
  * first available LED so that on a one-LED platform failure is
  * indicated by a lit LED. */
 #define BSP430_UNITTEST_LED_FAILED BSP430_LED_RED
 
-/** @def BSP430_UNITTEST_LED_PASSED
- *
- * The LED that is lit if the tests failed.  This is normally the
+/** The LED that is lit if the tests failed.  This is normally the
  * first green LED; if either the red or green LED is missing, it is
  * the second available LED.  On a one-LED platform, success is not
  * visibly indicated. */
@@ -109,9 +101,7 @@
 #define BSP430_UNITTEST_LED_PASSED 1
 #endif
 
-/** @def configBSP430_UNITTEST_FAILFAST
- *
- * Define to a true value to bypass subsequent tests after a failure.
+/** Define to a true value to bypass subsequent tests after a failure.
  * In this case, the internals of the unittest framework immediately
  * execute the finalization routine on detection of a failure.
  *

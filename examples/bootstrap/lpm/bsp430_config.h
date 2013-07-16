@@ -2,9 +2,7 @@
  * initialize, so no need to configure those.  The only thing needed
  * is to specify the target LPM mode. */
 
-/** @def APP_LPM
- *
- * Low power mode to enter.  Valid values are 0 through 4, plus -1 to
+/** Low power mode to enter.  Valid values are 0 through 4, plus -1 to
  * indicate that the application should spin with the CPU enabled. */
 #ifndef APP_LPM
 #define APP_LPM 4

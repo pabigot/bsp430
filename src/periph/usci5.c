@@ -408,9 +408,7 @@ iBSP430usci5I2CsetAddresses_rh (hBSP430halSERIAL hal,
     }                                                  \
   } while (0)
 
-/** @def I2C_ERRCHECK_SPIN_WHILE_COND
- *
- * Loop repeatedly (at least once) until @a c_ evaluates to false.
+/** Loop repeatedly (at least once) until @a c_ evaluates to false.
  *
  * Within the loop, an I2C transaction-aborting error will result in
  * the containing function returning a negative error code

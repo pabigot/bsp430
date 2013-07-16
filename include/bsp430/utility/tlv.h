@@ -56,9 +56,7 @@
 
 #include <bsp430/core.h>
 
-/** @def configBSP430_TLV
- *
- * Define to a true value to indicate intent to use the TLV interface.
+/** Define to a true value to indicate intent to use the TLV interface.
  *
  * @cppflag
  * @affects #BSP430_TLV
@@ -68,9 +66,7 @@
 #define configBSP430_TLV 0
 #endif /* configBSP430_TLV */
 
-/** @def BSP430_TLV
- *
- * Indicate that the TLV interface is available on the platform.  The
+/** Indicate that the TLV interface is available on the platform.  The
  * value is true iff #configBSP430_TLV is true.
  *
  * This flag is defined only if #configBSP430_TLV is true.
@@ -164,9 +160,7 @@ typedef sBSP430tlvTable2xx sBSP430tlvTable;
  * guide. */
 #define BSP430_TLV_NEXT_ENTRY(ep_) ((sBSP430tlvEntry *)(sizeof(sBSP430tlvEntry) + (ep_)->len + (unsigned char *)(ep_)))
 
-/** @def BSP430_TLV_ENTRY_IS_ADC
- *
- * Check whether a TLV entry corresponds to an ADC.
+/** Check whether a TLV entry corresponds to an ADC.
  *
  * On 5xx/6xx MCUs this may be either #TLV_ADC10CAL or #TLV_ADC12CAL.  No MCU has both.
  *

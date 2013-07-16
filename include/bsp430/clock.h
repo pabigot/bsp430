@@ -66,9 +66,7 @@
 
 #include <bsp430/core.h>
 
-/** @def BSP430_CLOCK_NOMINAL_MCLK_HZ
- *
- * A constant representing the desired clock speed of the master
+/** A constant representing the desired clock speed of the master
  * clock.
  *
  * If #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS is true,
@@ -91,12 +89,12 @@
 #define BSP430_CLOCK_NOMINAL_MCLK_HZ 7948800UL
 #endif /* BSP430_CLOCK_NOMINAL_MCLK_HZ */
 
-/** @def BSP430_CLOCK_US_TO_NOMINAL_MCLK
+/** A function macro that converts a value specified in microseconds
+ * to an approximate duration counted in MCLK cycles.
  *
- * A function macro that converts a value specified in microseconds to
- * an approximate duration counted in MCLK cycles.  This is primarily
- * used to provide the parameter to #BSP430_CORE_DELAY_CYCLES when the
- * desired delay is specified by time rather than cycles.
+ * This is primarily used to provide the parameter to
+ * #BSP430_CORE_DELAY_CYCLES when the desired delay is specified by
+ * time rather than cycles.
  *
  * @param delay_us_ the delay in microseconds.  Expected, but not
  * required, to be a compile-time integer constant compatible with
@@ -265,22 +263,21 @@
 #define BSP430_CLOCK_XT2_IS_FAULTED_NI() peripheral specific
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_CLOCK_NOMINAL_XT1CLK_HZ
+/** Nominal rate of the external low-frequency crystal.
  *
- * Nominal rate of the external low-frequency crystal.  This is
- * expected to be a 32 KiHz watch crystal, so that's what the default
- * is.
+ * This is expected to be a 32 KiHz watch crystal, so that's what the
+ * default is.
+ *
  * @defaulted */
 #ifndef BSP430_CLOCK_NOMINAL_XT1CLK_HZ
 #define BSP430_CLOCK_NOMINAL_XT1CLK_HZ 32768U
 #endif /* BSP430_CLOCK_NOMINAL_XT1CLK_HZ */
 
-/** @def BSP430_CLOCK_NOMINAL_XT2CLK_HZ
+/** Nominal rate of a secondary external clock (or crystal), in Hz.
  *
- * Nominal rate of a secondary external clock.  This must be defined
- * externally if #eBSP430clockSRC_XT2CLK is to be used.  Normally this
- * would be done in the platform-specified header obtained through
- * <bsp430/platform.h>.
+ * This must be defined externally if #eBSP430clockSRC_XT2CLK is to be
+ * used.  Normally this would be done in the platform-specified header
+ * obtained through <bsp430/platform.h>.
  *
  * If the platform does not support a secondary external clock, or it
  * is normally left unpopulated, this macro will be undefined.
@@ -291,9 +288,7 @@
 #define BSP430_CLOCK_NOMINAL_XT2CLK_HZ include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_CLOCK_NOMINAL_VLOCLK_HZ
- *
- * Nominal frequency of VLOCLK, in Hz.
+/** Nominal frequency of VLOCLK, in Hz.
  *
  * The value is constant for all platforms using a specific clock
  * peripheral, and is defined in the peripheral header.  It is usually
@@ -307,9 +302,7 @@
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ platform specific around 10-12 kHz
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_CLOCK_PUC_MCLK_HZ
- *
- * Nominal frequency of MCLK at power-up, in Hz.
+/** Nominal frequency of MCLK at power-up, in Hz.
  *
  * The value is constant for all platforms using a specific clock
  * peripheral, and is defined in the peripheral header.  It is usually

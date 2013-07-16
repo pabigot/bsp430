@@ -78,9 +78,7 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
-/** @def BSP430_MODULE_BC2
- *
- * Defined on inclusion of <bsp430/periph/bc2.h>.  The value evaluates
+/** Defined on inclusion of <bsp430/periph/bc2.h>.  The value evaluates
  * to true if the target MCU supports the Basic Clock Module+, and
  * false if it does not.
  *
@@ -90,9 +88,7 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_BC2 - 0)
 
-/** @def configBSP430_BC2_TRIM_TO_MCLK
- *
- * Define to a true value to request that ulBSP430bc2TrimToMCLK_ni()
+/** Define to a true value to request that ulBSP430bc2TrimToMCLK_ni()
  * be made available.
  *
  * Because implementation of this function depends on
@@ -117,9 +113,7 @@
 #warning configBSP430_BC2_TRIM_TO_MCLK requested without configBSP430_TIMER_CCACLK
 #endif /* configBSP430_BC2_TRIM_TO_MCLK */
 
-/** @def BSP430_BC2_TRIM_TO_MCLK
- *
- * Defined to a true value if #configBSP430_BC2_TRIM_TO_MCLK was requested
+/** Defined to a true value if #configBSP430_BC2_TRIM_TO_MCLK was requested
  * and #BSP430_TIMER_CCACLK is available on the platform.
  *
  * In the absence of this flag, iBSP430bc2TrimToMCLK_ni() will not be

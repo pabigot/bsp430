@@ -139,9 +139,7 @@ typedef int tBSP430periphHandle;
 #define BSP430_PERIPH_XT2 ((tBSP430periphHandle)0x4003)
 #endif /* configBSP430_PERIPH_XT2 */
 
-/** @def configBSP430_PERIPH_EXPOSED_CLOCKS
- *
- * Define to a true value in @c bsp430_config.h to enable use of
+/** Define to a true value in @c bsp430_config.h to enable use of
  * #BSP430_PERIPH_EXPOSED_CLOCKS in
  * #iBSP430platformConfigurePeripheralPins_ni.
  *

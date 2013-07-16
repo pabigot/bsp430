@@ -73,9 +73,7 @@
 #define configBSP430_RF_CC110XEMK 0
 #endif /* configBSP430_RF_CC110XEMK */
 
-/** @def configBSP430_RF_ANAREN_CC110L
- *
- * Define to a true value to indicate intent to use a <a
+/** Define to a true value to indicate intent to use a <a
  * href="http://www.anaren.com/air/cc110l-air-module-boosterpack-embedded-antenna-module-anaren">Anaren
  * AIR BoosterPack</a>.
  *

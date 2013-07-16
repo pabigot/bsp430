@@ -108,9 +108,7 @@
  * @cppflag */
 #define BSP430_CS_IS_FR57XX (defined(__MSP430_HAS_CS__) && (! (defined(__MSP430_HAS_CS_A__) || defined(DCOFSEL2))))
 
-/** @def BSP430_MODULE_CS
- *
- * Defined on inclusion of <bsp430/periph/cs.h>.  The value evaluates
+/** Defined on inclusion of <bsp430/periph/cs.h>.  The value evaluates
  * to true if the target MCU supports the Clock System peripheral, and
  * false if it does not.
  *

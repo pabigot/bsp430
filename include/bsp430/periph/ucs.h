@@ -91,9 +91,7 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
-/** @def BSP430_MODULE_UCS
- *
- * Defined on inclusion of <bsp430/periph/ucs.h>.  The value evaluates
+/** Defined on inclusion of <bsp430/periph/ucs.h>.  The value evaluates
  * to true if the target MCU supports the Unified Clock System, and
  * false if it does not.
  *
@@ -104,9 +102,7 @@
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_UCS - 0)
 
-/** @def configBSP430_UCS_TRIM_DCOCLKDIV
- *
- * Define to a true value to request that
+/** Define to a true value to request that
  * ulBSP430ucsTrimDCOCLKDIV_ni() be made available.
  *
  * Because implementation of this function depends on
@@ -134,9 +130,7 @@
 #warning configBSP430_UCS_TRIM_DCOCLKDIV requested without configBSP430_TIMER_CCACLK
 #endif /* configBSP430_UCS_TRIM_DCOCLKDIV */
 
-/** @def BSP430_UCS_TRIM_DCOCLKDIV
- *
- * Defined to a true value if #configBSP430_UCS_TRIM_DCOCLKDIV was requested
+/** Defined to a true value if #configBSP430_UCS_TRIM_DCOCLKDIV was requested
  * and #BSP430_TIMER_CCACLK is available on the platform.
  *
  * In the absence of this flag, iBSP430ucsTrimDCOCLKDIV_ni() will not
@@ -316,9 +310,7 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
 
-/** @def BSP430_UCS_NOMINAL_REFOCLK_HZ
- *
- * The UCS module supports an internally trimmed reference oscillator
+/** The UCS module supports an internally trimmed reference oscillator
  * running at a nominal 32 KiHz rate, for use where XT1 is not
  * populated. */
 #define BSP430_UCS_NOMINAL_REFOCLK_HZ 32768U

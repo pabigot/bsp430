@@ -65,9 +65,7 @@
 
 #include <bsp430/periph.h>
 
-/** @def BSP430_MODULE_PMM
- *
- * Defined on inclusion of <bsp430/periph/pmm.h>.  The value evaluates
+/** Defined on inclusion of <bsp430/periph/pmm.h>.  The value evaluates
  * to true if the target MCU supports the Power Management Module, and
  * false if it does not.
  *
@@ -77,9 +75,7 @@
                            || defined(__MSP430_HAS_PMM_FR5xx__) \
                            || defined(__MSP430_HAS_PMM_FRAM__))
 
-/** @def BSP430_MODULE_PMM_FRAM
- *
- * Defined on inclusion of <bsp430/periph/pmm.h>.  The value evaluates
+/** Defined on inclusion of <bsp430/periph/pmm.h>.  The value evaluates
  * to true if the target MCU supports the FRAM version of the Power
  * Management Module, and false if it does not.
  *

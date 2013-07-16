@@ -87,9 +87,7 @@
 #define configBSP430_RTOS_FREERTOS 0
 #endif /* configBSP430_RTOS_FREERTOS */
 
-/** @def configBSP430_FREERTOS_SCHEDULER
- *
- * If defined to a true value, the FreeRTOS-BSP430 port.c file will
+/** If defined to a true value, the FreeRTOS-BSP430 port.c file will
  * use the BSP430 timer infrastructure on TA0 for the task scheduler.
  * This requires that #configBSP430_HPL_TA0 be true and
  * #configBSP430_HAL_TA0_CC0_ISR be false.  Use of this feature is
@@ -101,9 +99,7 @@
 #define configBSP430_FREERTOS_SCHEDULER 1
 #endif /* configBSP430_FREERTOS_SCHEDULER */
 
-/** @def portACLK_FREQUENCY_HZ
- *
- * The FreeRTOS-BSP430 port needs to know the rate at which the
+/** The FreeRTOS-BSP430 port needs to know the rate at which the
  * scheduler clock runs.  This is normally ACLK, but whether ACLK is
  * XT1CLK, VLOCLK, or some other frequency isn't really known.
  *

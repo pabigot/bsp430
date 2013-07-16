@@ -197,9 +197,7 @@
 /* END AUTOMATICALLY GENERATED CODE [periph_cppid] */
 /* !BSP430! end=periph_cppid */
 
-/** @def configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE
- *
- * BSP430 depends heavily on configuration specified by preprocessor
+/** BSP430 depends heavily on configuration specified by preprocessor
  * tokens defined to true or false values.  Proper application
  * behavior requires that all object files be built using the same
  * configuration settings.
@@ -246,9 +244,7 @@
 #define BSP430_CORE_NDEBUG 0
 #endif /* BSP430_CORE_NDEBUG */
 
-/** @def BSP430_CORE_FAMILY_IS_5XX
- *
- * Defined to a value that is true if the build target is an MCU in
+/** Defined to a value that is true if the build target is an MCU in
  * the 5xx/FR5xx/6xx family.  These MCUs have incompatible HPL
  * structures compared with the same peripheral in earlier families;
  * where user or library code must take into account those
@@ -258,16 +254,16 @@
  * In the future it may be necessary to distinguish membership in this
  * family from the CPU architecture, but for now the presence of the
  * @c __MSP430_HAS_MSP430XV2_CPU__ preprocessor symbol in <msp430.h>
- * is what controls the value of this flag.  */
+ * is what controls the value of this flag.
+ *
+ * @platformdep */
 #if defined(__MSP430_HAS_MSP430XV2_CPU__)
 #define BSP430_CORE_FAMILY_IS_5XX 1
 #else /* 5xx == CPUXv2*/
 #define BSP430_CORE_FAMILY_IS_5XX 0
 #endif /* 5xx == CPUXv2 */
 
-/** @def configBSP430_CORE_DISABLE_FLL
- *
- * This macro may be defined to a true value to request that #SCG0 be
+/** This macro may be defined to a true value to request that #SCG0 be
  * set after vBSP430platformInitialize_ni() configures the clocks,
  * preventing the FLL from changing the DCO configuration without
  * application intervention.  It also enables steps to prevent #SCG0
@@ -325,9 +321,7 @@
 #endif /* configBSP430_CORE_LPM_EXIT_CLEAR_GIE */
 /** @endcond */
 
-/** @def BSP430_CORE_LPM_EXIT_MASK
- *
- * The bits cleared in the stored status word to exit from low power
+/** The bits cleared in the stored status word to exit from low power
  * mode in an interrupt.
  *
  * This starts as either #LPM4_bits or (#LPM4_bits & ~#SCG0),
@@ -429,9 +423,7 @@
 #define BSP430_CORE_INLINE_FORCED BSP430_CORE_INLINE
 #endif /* TOOLCHAIN */
 
-/** @def BSP430_CORE_PACKED_STRUCT
- *
- * Declare a packed structure in a toolchain-specific manner.
+/** Declare a packed structure in a toolchain-specific manner.
  *
  * @param nm_ name of the structure to be declared
  *
@@ -522,9 +514,7 @@
  */
 #define BSP430_CORE_LPM_EXIT_FROM_ISR(lpm_bits_) __bic_status_register_on_exit(BSP430_CORE_LPM_SR_MASK & (lpm_bits_))
 
-/** @def configBSP430_CORE_SUPPORT_WATCHDOG
- *
- * Control use of the watchdog infrastructure by BSP430.
+/** Control use of the watchdog infrastructure by BSP430.
  *
  * If defined to a true value, the function macros
  * #BSP430_CORE_WATCHDOG_CLEAR() and #BSP430_CORE_DELAY_CYCLES() will
@@ -548,9 +538,7 @@
 #define configBSP430_CORE_SUPPORT_WATCHDOG 0
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
-/** @def BSP430_CORE_WATCHDOG_CLEAR
- *
- * A function macro which should expand to a toolchain-specific
+/** A function macro which should expand to a toolchain-specific
  * statement that resets ("kicks") the watchdog timer.
  *
  * Be aware that the toolchain may provide an intrinsic with special
@@ -578,9 +566,7 @@
 #define BSP430_CORE_WATCHDOG_CLEAR() do { } while (0)
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
-/** @def BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES
- *
- * The maximum number of delay cycles that can be executed without
+/** The maximum number of delay cycles that can be executed without
  * obliging BSP430 to execute #BSP430_CORE_WATCHDOG_CLEAR().
  *
  * If you know that <bsp430/clock.h> is available, you could define
@@ -590,9 +576,7 @@
 #define BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES 10000U
 #endif /* BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES */
 
-/** @def BSP430_CORE_DELAY_CYCLES
- *
- * A function macro which requests a delay for a specific number of
+/** A function macro which requests a delay for a specific number of
  * MCLK cycles.
  *
  * This macro could be used to abstract between the spelling used by
@@ -637,9 +621,7 @@
 #define BSP430_CORE_DELAY_CYCLES(duration_mclk_) __delay_cycles(duration_mclk_)
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
-/** @def BSP430_CORE_INTERRUPT_STATE_T
- *
- * A type that can be used to declare a variable that will hold
+/** A type that can be used to declare a variable that will hold
  * interrupt state stored by #BSP430_CORE_SAVE_INTERRUPT_STATE.
  *
  * @defaulted */
@@ -651,9 +633,7 @@
 #endif /* TOOLCHAIN */
 #endif /* BSP430_CORE_INTERRUPT_STATE_T */
 
-/** @def BSP430_CORE_SAVE_INTERRUPT_STATE(state_)
- *
- * A function macro that will record whether interrupts are currently
+/** A function macro that will record whether interrupts are currently
  * enabled in the state parameter.  The parameter should subsequently
  * be passed to #BSP430_CORE_RESTORE_INTERRUPT_STATE.
  *
@@ -707,9 +687,7 @@
   BSP430_CORE_INTERRUPT_STATE_T var_ = __get_interrupt_state()
 #endif /* BSP430_CORE_SAVED_INTERRUPT_STATE */
 
-/** @def BSP430_CORE_RESTORE_INTERRUPT_STATE(state_)
- *
- * A function macro that will enable or disable interrupts as recorded
+/** A function macro that will enable or disable interrupts as recorded
  * in the provided state parameter.  The parameter value should have
  * been created using #BSP430_CORE_SAVE_INTERRUPT_STATE.
  *
@@ -722,9 +700,7 @@
   } while (0)
 #endif /* BSP430_CORE_RESTORE_INTERRUPT_STATE */
 
-/** @def BSP430_CORE_ENABLE_INTERRUPT()
- *
- * Set the status register #GIE bit so that interrupts are enabled.
+/** Set the status register #GIE bit so that interrupts are enabled.
  *
  * @note BSP430 will insert a @c nop after the @c eint when
  * #BSP430_CORE_FAMILY_IS_5XX is true, on the assumption that MSP430
@@ -743,9 +719,7 @@
 #endif /* BSP430_CORE_FAMILY_IS_5XX */
 #endif /* BSP430_CORE_ENABLE_INTERRUPT */
 
-/** @def BSP430_CORE_DISABLE_INTERRUPT()
- *
- * Clear the status register #GIE bit so that interrupts are disabled.
+/** Clear the status register #GIE bit so that interrupts are disabled.
  *
  * @defaulted */
 #ifndef BSP430_CORE_DISABLE_INTERRUPT
@@ -829,9 +803,7 @@
 
 #endif /* configBSP430_RTOS_FREERTOS */
 
-/** @def BSP430_RTOS_YIELD_FROM_ISR
- *
- * Instruct the RTOS environment to execute a context switch.  This
+/** Instruct the RTOS environment to execute a context switch.  This
  * should only be invoked from with the function that is the top-half
  * of an interrupt service routine, and is usually invoked within
  * #BSP430_HAL_ISR_CALLBACK_TAIL_NI when

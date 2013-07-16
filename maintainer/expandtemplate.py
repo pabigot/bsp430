@@ -505,8 +505,7 @@ isr_%(INSTANCE)s (void)
 #endif /* configBSP430_HAL_%(INSTANCE)s */
 ''',
 
-    'platform_decl' : '''/** @def BSP430_PLATFORM_%(INSTANCE)s
- * Define to a true value if application is being built for the
+    'platform_decl' : '''/** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/%(tool)s-%(instance)s">%(TOOL)s-%(INSTANCE)s</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding
@@ -529,8 +528,7 @@ isr_%(INSTANCE)s (void)
 #endif /* BSP430_PLATFORM_%(INSTANCE)s */
 ''',
 
-    'platform_decl_url' : '''/** @def BSP430_PLATFORM_%(INSTANCE)s
- * Define to a true value if application is being built for the
+    'platform_decl_url' : '''/** Define to a true value if application is being built for the
  * <a href="%(url)s">%(INSTANCE)s</a> platform.
  *
  * A true value causes <bsp430/platform.h> to include the corresponding

@@ -67,9 +67,7 @@
 
 #include <bsp430/rf.h>
 
-/** @def configBSP430_RFEM
- *
- * Define to a true value to indicate intent to use the RFEM
+/** Define to a true value to indicate intent to use the RFEM
  * interface.  If supported by the platform, this will provide
  * definitions for the relevant ports and pins, and request the
  * relevant peripherals.
@@ -86,9 +84,7 @@
  * platform-specific headers. */
 #if defined(BSP430_DOXYGEN)
 
-/** @def BSP430_RFEM
- *
- * Indicate that the RFEM interface is available on the platform.
+/** Indicate that the RFEM interface is available on the platform.
  * This is normally set by the platform-specific header included by
  * <bsp430/platform.h> when #configBSP430_RFEM is true.  If it is
  * unset or false, the platform does not support the RFEM interface

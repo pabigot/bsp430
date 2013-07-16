@@ -49,9 +49,7 @@
 
 #include <bsp430/core.h>
 
-/** @def configBSP430_EUI64
- *
- * Define to a true value to indicate intent to use the EUI-64 interface.
+/** Define to a true value to indicate intent to use the EUI-64 interface.
  *
  * @cppflag
  * @defaulted
@@ -60,9 +58,7 @@
 #define configBSP430_EUI64 0
 #endif /* configBSP430_EUI64 */
 
-/** @def BSP430_EUI64
- *
- * Indicate that the EUI-64 interface is available on the platform.
+/** Indicate that the EUI-64 interface is available on the platform.
  * This is normally set to reflect whether #configBSP430_EUI64 was
  * requested, but it may be explicitly set to false by the platform if
  * it does not support the EUI-64 functionality.

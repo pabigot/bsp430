@@ -48,9 +48,7 @@
 
 #include <bsp430/rf/rf.h>
 
-/** @def configBSP430_RF_CC2520EMK
- *
- * Define to a true value to indicate intent to use a <a
+/** Define to a true value to indicate intent to use a <a
  * href="http://www.ti.com/tool/cc2520emk">CC2520 RF Evaluation
  * Module</a> accessed through the RFEM header.
  *

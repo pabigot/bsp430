@@ -286,9 +286,7 @@
 #include <bsp430/periph.h>
 #include <bsp430/clock.h>
 
-/** @def BSP430_MODULE_TIMER_A
- *
- * Defined on inclusion of <bsp430/periph/timer.h>.  The value
+/** Defined on inclusion of <bsp430/periph/timer.h>.  The value
  * evaluates to true if the target MCU supports the Timer_A Module,
  * and false if it does not.
  *
@@ -300,9 +298,7 @@
                                || defined(__MSP430_HAS_T0A3__)  \
                                || defined(__MSP430_HAS_T0A5__))
 
-/** @def BSP430_MODULE_TIMER_B
- *
- * Defined on inclusion of <bsp430/periph/timer.h>.  The value
+/** Defined on inclusion of <bsp430/periph/timer.h>.  The value
  * evaluates to true if the target MCU supports the Timer_B Module,
  * and false if it does not.
  *
@@ -314,9 +310,7 @@
                                || defined(__MSP430_HAS_T0B7__))
 
 
-/** @def BSP430_MODULE_TIMER
- *
- * Defined on inclusion of <bsp430/periph/timer.h>.  The value
+/** Defined on inclusion of <bsp430/periph/timer.h>.  The value
  * evaluates to true if the target MCU supports the Timer_A or
  * Timer_B, and false if it does not.
  *
@@ -328,9 +322,7 @@
  * Timer (BT). */
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_TIMER - 0)
 
-/** @def configBSP430_TIMER_CCACLK
- *
- * Define to true to indicate that the application or infrastructure
+/** Define to true to indicate that the application or infrastructure
  * would like to use a timer that supports using ACLK as a
  * capture/compare input signal.  The timer is identified by
  * #BSP430_TIMER_CCACLK_PERIPH_CPPID, and that macro is defined only
@@ -368,9 +360,7 @@
 #define configBSP430_TIMER_CCACLK 0
 #endif /* configBSP430_TIMER_CCACLK */
 
-/** @def BSP430_TIMER_CCACLK
- *
- * Defined to a true value if ACLK-triggered timer captures are
+/** Defined to a true value if ACLK-triggered timer captures are
  * supported due to somebody providing
  * #BSP430_TIMER_CCACLK_PERIPH_CPPID.
  *
@@ -408,9 +398,7 @@
 #define BSP430_TIMER_CCACLK_PERIPH_CPPID include "bsp430_config.h"
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_TIMER_CCACLK_PERIPH_HANDLE
- *
- * Defined to the peripheral identifier for a timer that can be used
+/** Defined to the peripheral identifier for a timer that can be used
  * to maintain a continuous system clock sourced from ACLK.  This
  * derives directly from #BSP430_TIMER_CCACLK_PERIPH_CPPID, but is a
  * timer peripheral handle suitable for use in code.

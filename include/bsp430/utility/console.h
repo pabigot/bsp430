@@ -89,9 +89,7 @@
 #include <bsp430/serial.h>
 #include <stdarg.h>
 
-/** @def configBSP430_CONSOLE
- *
- * Define to a true value to request that a serial handle be
+/** Define to a true value to request that a serial handle be
  * identified to serve as a system console.
  *
  * See #BSP430_CONSOLE_SERIAL_PERIPH_CPPID for information about which
@@ -105,9 +103,7 @@
 #define configBSP430_CONSOLE 0
 #endif /* configBSP430_CONSOLE */
 
-/** @def BSP430_CONSOLE
- *
- * Defined to a true value if #BSP430_CONSOLE_SERIAL_PERIPH_CPPID has
+/** Defined to a true value if #BSP430_CONSOLE_SERIAL_PERIPH_CPPID has
  * been provided, making the console infrastructure available.
  *
  * @dependency #configBSP430_CONSOLE
@@ -117,9 +113,7 @@
 #define BSP430_CONSOLE include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_CONSOLE_SERIAL_PERIPH_CPPID
- *
- * Define to the preprocessor-compatible identifier for the peripheral
+/** Define to the preprocessor-compatible identifier for the peripheral
  * that should be used by platform-agnostic programs to create the
  * console, for example #BSP430_PERIPH_CPPID_USCI5_A0.
  *
@@ -135,9 +129,7 @@
 #define BSP430_CONSOLE_SERIAL_PERIPH_CPPID include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_CONSOLE_SERIAL_PERIPH_HANDLE
- *
- * The peripheral handle that should be used by platform-agnostic
+/** The peripheral handle that should be used by platform-agnostic
  * programs to create the console.  This derives directly from
  * #BSP430_CONSOLE_SERIAL_PERIPH_CPPID, but is a serial peripheral
  * handle suitable for use in code.
@@ -152,9 +144,7 @@
 #define BSP430_CONSOLE_SERIAL_PERIPH_HANDLE include <bsp430/platform.h>
 #endif /* BSP430_CONSOLE_SERIAL_PERIPH_HANDLE */
 
-/** @def BSP430_CONSOLE_BAUD_RATE
- *
- * The baud rate that should be used for the console.  This may be
+/** The baud rate that should be used for the console.  This may be
  * overridden in a platform header or by an application configuration.
  *
  * @defaulted */
@@ -175,9 +165,7 @@
 #define BSP430_CONSOLE_RX_BUFFER_SIZE 0
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
-/** @def BSP430_CONSOLE_TX_BUFFER_SIZE
- *
- * Define this to the size of a buffer to be used for interrupt-driven
+/** Define this to the size of a buffer to be used for interrupt-driven
  * console output.  The value must not exceed 254, and buffer
  * management is most efficient if the value is a power of 2.
  *
@@ -276,9 +264,7 @@ void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
 
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
 
-/** @def configBSP430_CONSOLE_PROVIDES_PUTCHAR
- *
- * If defined to a true value, the individual character display
+/** If defined to a true value, the individual character display
  * function used internally to the console module will be made public
  * with the name @c putchar so that it will be used by @c printf(3)
  * when the C library depends on an external @c putchar.
@@ -293,9 +279,7 @@ void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
 #define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0
 #endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
 
-/** @def configBSP430_CONSOLE_USE_ONLCR
- *
- * If defined to true, the console display routines will always emit a
+/** If defined to true, the console display routines will always emit a
  * carriage return before a newline.  This provides compatibility with
  * standard terminal programs like minicom.
  *

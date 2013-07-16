@@ -40,9 +40,7 @@
 #ifndef BSP430_UTILITY_LED_H
 #define BSP430_UTILITY_LED_H
 
-/** @def configBSP430_LED
- *
- * Define to a true value to indicate intent to use the LED interface.
+/** Define to a true value to indicate intent to use the LED interface.
  * Most platforms should support LEDs directly, bypassing any HAL/HPL
  * interfaces.
  *
@@ -54,9 +52,7 @@
 #define configBSP430_LED 1
 #endif /* configBSP430_LED */
 
-/** @def BSP430_LED
- *
- * Indicate that the LED interface is available on the platform.  This
+/** Indicate that the LED interface is available on the platform.  This
  * is normally set by <bsp430/platform.h> when #configBSP430_LED is
  * true.  If it happens to be false, the LED interface functions are
  * replaced by macros that do nothing.
@@ -118,9 +114,7 @@ int vBSP430ledGet (int led_idx);
 #define vBSP430ledGet(led_idx) 0
 #endif /* BSP430_LED */
 
-/** @def BSP430_LED_GREEN
- *
- * The platform-specific index for the first green LED.
+/** The platform-specific index for the first green LED.
  *
  * This macro is defined in the platform-specific header on platforms
  * that include a green LED.  It is undefined if no green LED is
@@ -144,9 +138,7 @@ int vBSP430ledGet (int led_idx);
 #define BSP430_LED_GREEN include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_LED_RED
- *
- * As with #BSP430_LED_GREEN, but for red LEDs.
+/** As with #BSP430_LED_GREEN, but for red LEDs.
  *
  * @platformvalue
  */
@@ -154,9 +146,7 @@ int vBSP430ledGet (int led_idx);
 #define BSP430_LED_RED include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
-/** @def configBSP430_LED_USE_COMMON
- *
- * If the development board has LEDs that can be expressed using
+/** If the development board has LEDs that can be expressed using
  * #sBSP430halLED (i.e., controlled through 8-bit digital I/O ports with
  * a single selection register) then the common implementation of the
  * LED interface can be used.  In that case, define this to a true

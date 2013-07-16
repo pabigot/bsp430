@@ -84,9 +84,7 @@
 #include <bsp430/periph.h>
 #include <bsp430/serial_.h>
 
-/** @def BSP430_MODULE_USCI5
- *
- * Defined on inclusion of <bsp430/periph/usci5.h>.  The value
+/** Defined on inclusion of <bsp430/periph/usci5.h>.  The value
  * evaluates to true if the target MCU supports the Universal Serial
  * Communications Interface (5xx/6xx version), and false if it does
  * not.

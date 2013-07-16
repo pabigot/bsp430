@@ -118,9 +118,7 @@
 
 #include <bsp430/periph.h>
 
-/** @def BSP430_MODULE_PORT
- *
- * Defined on inclusion of <bsp430/periph/port.h>.  The value
+/** Defined on inclusion of <bsp430/periph/port.h>.  The value
  * evaluates to true if the target MCU supports the Digital I/O
  * Module, and false if it does not.
  *
@@ -184,9 +182,7 @@
  * HPL based on the 16-bit alphabetic register names is presented.
  */
 
-/** @def BSP430_PORT_SUPPORTS_REN
- *
- * A macro that is defined to a true value if the port peripheral
+/** A macro that is defined to a true value if the port peripheral
  * supports a resistor-enable register, and to a false value if it
  * does not.
  *

@@ -45,9 +45,7 @@
 
 #include <bsp430/core.h>
 
-/** @def configBSP430_RF_TIMER
- *
- * Define to a true value to enable any timer infrastructure
+/** Define to a true value to enable any timer infrastructure
  * associated with RF component GPIOs.  A timer that will support this
  * must be identified; see #BSP430_RF_TIMER_PERIPH_CPPID.
  *
@@ -59,9 +57,7 @@
 #define configBSP430_RF_TIMER 0
 #endif /* configBSP430_RF_TIMER */
 
-/** @def BSP430_RF_TIMER_PERIPH_CPPID
- *
- * Define to the preprocessor-compatible identifier for a timer that
+/** Define to the preprocessor-compatible identifier for a timer that
  * may be used to capture or generate signals on RF module GPIO pins.
  * This timer should run at a speed capable of resolving individual
  * symbols of the RF stream.  It may only be active at times when the
@@ -83,9 +79,7 @@
 #define BSP430_RF_TIMER_PERIPH_CPPID include "bsp430_config.h"
 #endif /* BSP430_DOXYGEN */
 
-/** @def BSP430_RF_TIMER_PERIPH_HANDLE
- *
- * Defined to the peripheral identifier for a timer that can be used
+/** Defined to the peripheral identifier for a timer that can be used
  * to capture or generate signals on RF module GPIO pins.  This
  * derives directly from #BSP430_RF_TIMER_PERIPH_CPPID, but is a timer
  * peripheral handle suitable for use in code.
