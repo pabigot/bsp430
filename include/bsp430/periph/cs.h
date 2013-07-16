@@ -225,8 +225,8 @@
  * registers are locked will result in a restart. */
 #define BSP430_CS_CLEAR_FAULTS_NI() do {                        \
     CSCTL5 &= ~(BSP430_CS_XT2OFFG_ | BSP430_CS_XT1OFFG_);       \
-  } while (0)                                                   \
- 
+  } while (0)
+
 /** Clear all clock faults.
  *
  * This definition overrides the generic definition to clear the

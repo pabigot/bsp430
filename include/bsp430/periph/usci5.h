@@ -94,7 +94,7 @@
  * @cppflag
  */
 #define BSP430_MODULE_USCI5 (defined(__MSP430_HAS_USCI_A0__)     \
-                            || defined(__MSP430_HAS_USCI_B0__)) \
+                             || defined(__MSP430_HAS_USCI_B0__))
 
 #if defined(BSP430_DOXYGEN) || (BSP430_MODULE_USCI5 - 0)
 

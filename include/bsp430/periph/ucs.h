@@ -275,8 +275,8 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 /** Clear all UCS-specific faults. */
 #define BSP430_UCS_CLEAR_FAULTS_NI() do {                               \
     UCSCTL7 &= ~(BSP430_UCS_XT2OFFG_ | BSP430_UCS_XT1HFOFFG_ | XT1LFOFFG | DCOFFG); \
-  } while (0)                                                           \
- 
+  } while (0)
+
 /** Clear all clock faults.
  *
  * This definition overrides the generic definition to clear the
