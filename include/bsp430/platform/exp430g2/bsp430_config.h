@@ -41,6 +41,14 @@
 
 /** @cond DOXYGEN_EXCLUDE */
 
+/* Provide default for SEL2 support; TI toolchain does not provide
+ * information necessary to infer support from header contents. */
+#ifndef BSP430_PORT_SUPPORTS_SEL2_2XX
+#if defined(__MSP430G2553__)
+#define BSP430_PORT_SUPPORTS_SEL2_2XX 1
+#endif /* MCU */
+#endif /* BSP430_PORT_SUPPORTS_SEL2_2XX */
+
 /* Use native USCI for genericized serial port unless told not to */
 #ifndef configBSP430_SERIAL_USE_USCI
 #if defined(__MSP430G2553__)

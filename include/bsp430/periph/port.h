@@ -295,6 +295,72 @@
   } while (0)
 #endif /* BSP430_PORT_SUPPORTS_REN */
 
+/** Defined to true value if MCU supports multiple peripheral function
+ * selections with 2xx API (P1SEL, P1SEL2, no complement, all
+ * ports).
+ *
+ * The value may be overridden in platform-specific @c bsp430_config.h
+ * files when the toolchain does not allow inferring the correct
+ * setting, as with Code Composer Studio for some families.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_PORT_SUPPORTS_SEL2_2XX)
+#define BSP430_PORT_SUPPORTS_SEL2_2XX ((! (BSP430_CORE_FAMILY_IS_5XX - 0)) \
+                                       && (defined(P1SEL2_) || defined(P1SEL)) \
+                                       && (defined(P2SEL2_) || defined(P2SEL2)))
+#endif /* BSP430_PORT_SUPPORTS_SEL2_2XX */
+
+/** Defined to true value if MCU supports multiple peripheral function
+ * selections with 4xx API (P1SEL, P1SEL2, no complement, only
+ * PORT1).
+ *
+ * The value may be overridden in platform-specific @c bsp430_config.h
+ * files when the toolchain does not allow inferring the correct
+ * setting, as with Code Composer Studio for some families.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_PORT_SUPPORTS_SEL2_47XX)
+#define BSP430_PORT_SUPPORTS_SEL2_47XX ((! (BSP430_CORE_FAMILY_IS_5XX - 0)) \
+                                        && (defined(P1SEL2_) || defined(P1SEL2)) \
+                                        && ! (defined(P2SEL2_) || defined(P2SEL2)))
+#endif /* BSP430_PORT_SUPPORTS_SEL2_47XX */
+
+/** Defined to true value if MCU supports multiple peripheral function
+ * selections with the base 5xx API (PxSEL0, PxSEL1, no complement
+ * function).
+ *
+ * The value may be overridden in platform-specific @c bsp430_config.h
+ * files when the toolchain does not allow inferring the correct
+ * setting, as with Code Composer Studio for some families.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_PORT_SUPPORTS_SEL2_5XX)
+#define BSP430_PORT_SUPPORTS_SEL2_5XX ((BSP430_CORE_FAMILY_IS_5XX - 0)  \
+                                       && (defined(PASEL0_) || defined(PASEL0)) \
+                                       && ! (defined(PASELC_) || defined(PASELC)))
+#endif /* BSP430_PORT_SUPPORTS_SEL2_5XX */
+
+/** Defined to true value if MCU supports multiple peripheral function
+ * selections with the FR5xx API (PxSEL0, PxSEL1, PxSELC).
+ *
+ * The value may be overridden in platform-specific @c bsp430_config.h
+ * files when the toolchain does not allow inferring the correct
+ * setting, as with Code Composer Studio for some families.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || ! defined(BSP430_PORT_SUPPORTS_SEL2C_5XX)
+#define BSP430_PORT_SUPPORTS_SEL2C_5XX ((BSP430_CORE_FAMILY_IS_5XX - 0) \
+                                        && (defined(PASEL0_) || defined(PASEL0)) \
+                                        && (defined(PASELC_) || defined(PASELC)))
+#endif /* BSP430_PORT_SUPPORTS_SEL2C_5XX */
+
+/** Defined to true value if MCU supports multiple peripheral function
+ * selections. */
+#define BSP430_PORT_SUPPORTS_SEL2 ((BSP430_PORT_SUPPORTS_SEL2_2XX - 0) \
+                                   || (BSP430_PORT_SUPPORTS_SEL2_47XX - 0) \
+                                   || (BSP430_PORT_SUPPORTS_SEL2_5XX - 0) \
+                                   || (BSP430_PORT_SUPPORTS_SEL2C_5XX - 0))
+
 /** Layout for pre-5xx--family ports supporting interrupts.
  *
  * Access to SEL2 capability for these ports is not available in the
