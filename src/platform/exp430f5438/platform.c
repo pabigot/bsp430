@@ -91,6 +91,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
         || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
       /* UCA1CLK is on P3.6 */
       if (enablep) {
+        P3REN &= ~BIT6;
         P3SEL |= BIT6;
       } else {
         P3OUT &= ~BIT6;
@@ -151,7 +152,9 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
       }
     }
     if (enablep) {
+      P3REN &= ~bits3;
       P3SEL |= bits3;
+      P5REN &= ~bits5;
       P5SEL |= bits5;
     } else {
       P3OUT &= ~bits3;
@@ -191,6 +194,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
   }
   hpl = (volatile sBSP430hplPORT_5XX_8 *)pba;
   if (enablep) {
+    hpl->ren &= ~bits;
     hpl->sel |= bits;
   } else {
     hpl->out &= ~bits;

@@ -54,8 +54,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
                                            int enablep)
 {
   unsigned char bits = 0;
-  uintptr_t pba = 0;
-  volatile sBSP430hplPORT_IE_8 * hpl;
+  uintptr_t pbi = 0;
+  uintptr_t pbn = 0;
 
   if (BSP430_PERIPH_LFXT1 == device) {
     /* XIN/XOUT are dedicated pins on this device. */
@@ -64,7 +64,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
 #if (configBSP430_PERIPH_EXPOSED_CLOCKS - 0)
   else if (BSP430_PERIPH_EXPOSED_CLOCKS == device) {
     bits = BIT1 | BIT4 | BIT5;
-    pba = BSP430_PERIPH_PORT1_BASEADDRESS_;
+    pbi = BSP430_PERIPH_PORT1_BASEADDRESS_;
   }
 #endif /* configBSP430_PERIPH_EXPOSED_CLOCKS */
 #if (configBSP430_HPL_USCI_A0 - 0)
@@ -72,14 +72,19 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     if ((0 == periph_config) || (BSP430_PERIPHCFG_SERIAL_UART == periph_config)) {
       /* UART on P2 */
       bits = BIT4 | BIT5;
-      pba = BSP430_PERIPH_PORT2_BASEADDRESS_;
+      pbi = BSP430_PERIPH_PORT2_BASEADDRESS_;
     } else {
       /* SPI on P7 */
       bits = BIT1 | BIT2 | BIT3;
       if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
         bits |= BIT0;
       }
-      pba = BSP430_PERIPH_PORT7_BASEADDRESS_;
+#if (BSP430_PORT_SUPPORTS_REN - 0)
+      if (enablep) {
+        P7REN &= ~bits;
+      }
+#endif /* BSP430_PORT_SUPPORTS_REN */
+      pbn = BSP430_PERIPH_PORT7_BASEADDRESS_;
     }
   }
 #endif /* configBSP430_HPL_USCI_A0 */
@@ -93,19 +98,38 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
         bits |= BIT0;
       }
     }
-    pba = BSP430_PERIPH_PORT3_BASEADDRESS_;
+#if (BSP430_PORT_SUPPORTS_REN - 0)
+    if (enablep) {
+      P3REN &= ~bits;
+    }
+#endif /* BSP430_PORT_SUPPORTS_REN */
+    pbn = BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
-  if (0 == pba) {
+  if ((0 == pbi) && (0 == pbn)) {
     return -1;
   }
-  hpl = (volatile sBSP430hplPORT_IE_8 *)pba;
-  if (enablep) {
-    hpl->sel |= bits;
-  } else {
-    hpl->out &= ~bits;
-    hpl->dir |= bits;
-    hpl->sel &= ~bits;
+  if (0 != pbi) {
+    volatile sBSP430hplPORT_IE_8 * const hpl = (volatile sBSP430hplPORT_IE_8 *)pbi;
+    if (enablep) {
+      hpl->ren &= ~bits;
+      hpl->sel |= bits;
+    } else {
+      hpl->out &= ~bits;
+      hpl->dir |= bits;
+      hpl->sel &= ~bits;
+    }
+  }
+  if (0 != pbn) {
+    volatile sBSP430hplPORT_8 * const hpl = (volatile sBSP430hplPORT_8 *)pbn;
+    if (enablep) {
+      /* REN outside HPL handled in each peripheral above */
+      hpl->sel |= bits;
+    } else {
+      hpl->out &= ~bits;
+      hpl->dir |= bits;
+      hpl->sel &= ~bits;
+    }
   }
   return 0;
 }

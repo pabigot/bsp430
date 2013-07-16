@@ -80,6 +80,11 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
         bits |= BIT3;
       }
     }
+#if (BSP430_PORT_SUPPORTS_REN - 0)
+    if (enablep) {
+      P3REN &= ~bits;
+    }
+#endif /* BSP430_PORT_SUPPORTS_REN */
     hpl = (volatile sBSP430hplPORT_8 *)BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_A0 */
@@ -93,11 +98,17 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
         bits |= BIT0;
       }
     }
+#if (BSP430_PORT_SUPPORTS_REN - 0)
+    if (enablep) {
+      P3REN &= ~bits;
+    }
+#endif /* BSP430_PORT_SUPPORTS_REN */
     hpl = (volatile sBSP430hplPORT_8 *)BSP430_PERIPH_PORT3_BASEADDRESS_;
   }
 #endif /* configBSP430_HPL_USCI_B0 */
   if (NULL != hplie) {
     if (enablep) {
+      hplie->ren &= ~bits;
       hplie->sel |= bits;
     } else {
       hplie->out &= ~bits;

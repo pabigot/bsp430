@@ -125,6 +125,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
       P2MAP2 = PM_SMCLK;                        // Map SMCLK to P2.2
       P2MAP3 = PM_RTCCLK;                       // Map RTCCLK to P2.3
       PMAPPWD = 0;                              // Lock port mapping registers
+      P2REN &= ~0x0F;
       P2DIR |= 0x0F;
       P2SEL |= 0x0F;
     } else {
@@ -161,6 +162,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
   }
   hpl = (volatile sBSP430hplPORT_5XX_8 *)pba;
   if (enablep) {
+    hpl->ren &= ~bits;
     hpl->sel |= bits;
   } else {
     hpl->out &= ~bits;

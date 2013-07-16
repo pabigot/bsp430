@@ -60,6 +60,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
      * it. */
     unsigned char bits = BIT4;
     if (enablep) {
+      PJREN &= ~bits;
       PJSEL0 |= bits;
     } else {
       PJOUT &= ~bits;
@@ -75,6 +76,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     PJDIR |= bits;
     PJSEL1 &= ~bits;
     if (enablep) {
+      PJREN &= ~bits;
       PJSEL0 |= bits;
     } else {
       PJOUT &= ~bits;
@@ -123,6 +125,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     volatile sBSP430hplPORT_5XX_8 * hpl = (volatile sBSP430hplPORT_5XX_8 *)BSP430_PERIPH_PORT1_BASEADDRESS_;
     hpl->sel0 &= ~bits1;
     if (enablep) {
+      hpl->ren &= ~bits1;
       hpl->sel1 |= bits1;
     } else {
       hpl->out &= ~bits1;
@@ -134,6 +137,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     volatile sBSP430hplPORT_5XX_8 * hpl = (volatile sBSP430hplPORT_5XX_8 *)BSP430_PERIPH_PORT2_BASEADDRESS_;
     hpl->sel0 &= ~bits2;
     if (enablep) {
+      hpl->ren &= ~bits2;
       hpl->sel1 |= bits2;
     } else {
       hpl->out &= ~bits2;

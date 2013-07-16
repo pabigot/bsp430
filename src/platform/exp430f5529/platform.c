@@ -80,8 +80,11 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
     P2DIR |= BIT2;
     P7DIR |= BIT7;
     if (enablep) {
+      P1REN &= ~BIT0;
       P1SEL |= BIT0;
+      P2REN &= ~BIT2;
       P2SEL |= BIT2;
+      P7REN &= ~BIT7;
       P7SEL |= BIT7;
     } else {
       P1OUT &= ~BIT0;
@@ -101,6 +104,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
         || (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config)) {
       /* UCA0CLK is on P2.7 */
       if (enablep) {
+        P2REN &= ~BIT7;
         P2SEL |= BIT7;
       } else {
         P2OUT &= ~BIT7;
@@ -138,6 +142,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
       if (BSP430_PERIPHCFG_SERIAL_SPI4 == periph_config) {
         /* UCB0STE is on P2.7 */
         if (enablep) {
+          P2REN &= ~BIT7;
           P2SEL |= BIT7;
         } else {
           P2OUT &= ~BIT7;
@@ -168,6 +173,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
   }
   hpl = (volatile sBSP430hplPORT_5XX_8 *)pba;
   if (enablep) {
+    hpl->ren &= ~bits;
     hpl->sel |= bits;
   } else {
     hpl->out &= ~bits;

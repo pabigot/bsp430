@@ -72,6 +72,8 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
      * (At least on my board, which might have experimental
      * silicon.) */
     if (enablep) {
+      P3REN &= ~BIT7;
+      P2REN &= ~BIT6;
       P3DIR |= BIT7;
       P2DIR |= BIT6;
       P3SEL |= BIT7;
@@ -114,6 +116,7 @@ iBSP430platformConfigurePeripheralPins_ni (tBSP430periphHandle device,
   }
   hpl = (volatile sBSP430hplPORT_5XX_8 *)pba;
   if (enablep) {
+    hpl->ren &= ~bits;
     hpl->sel |= bits;
   } else {
     hpl->out &= ~bits;
