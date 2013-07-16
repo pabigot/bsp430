@@ -462,8 +462,7 @@ iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
     /* Set PPS port for input as CC trigger, with weak pull-down */
     BSP430_PORT_HAL_HPL_DIR(pps_port_hal) &= ~bit;
 #if BSP430_PORT_SUPPORTS_REN
-    BSP430_PORT_HAL_HPL_OUT(pps_port_hal) &= ~bit;
-    BSP430_PORT_HAL_HPL_REN(pps_port_hal) |= bit;
+    BSP430_PORT_HAL_SET_REN(pps_port_hal, bit, BSP430_PORT_REN_PULL_DOWN);
 #endif /* BSP430_PORT_SUPPORTS_REN */
     BSP430_PORT_HAL_HPL_SEL(pps_port_hal) |= bit;
 

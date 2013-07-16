@@ -75,9 +75,8 @@ configureSPIforSD (int fastp)
   /* For some SD cards, need MISO pullup, or so we're told.  Do that
    * first, hoping the platform peripheral configuration won't destroy
    * it. */
-  miso_port->ren |= APP_SD_MISO_PORT_BIT;
   miso_port->dir &= ~APP_SD_MISO_PORT_BIT;
-  miso_port->out |= APP_SD_MISO_PORT_BIT;
+  BSP430_PORT_HPL_SET_REN(miso_port, APP_SD_MISO_PORT_BIT, BSP430_PORT_REN_PULL_UP);
 
   /* Configure SPI.  Probably ought to have a way to return an error
    * code.  Note: Per http://elm-chan.org/docs/mmc/mmc_e.html use SPI

@@ -98,8 +98,7 @@ void main ()
 
   /* SO to input, pull-up */
   so->dir &= ~BSP430_RF_CC2520_SO_PORT_BIT;
-  so->out |= BSP430_RF_CC2520_SO_PORT_BIT;
-  so->ren |= BSP430_RF_CC2520_SO_PORT_BIT;
+  BSP430_PORT_HPL_SET_REN(so, BSP430_RF_CC2520_SO_PORT_BIT, BSP430_PORT_REN_PULL_UP);
 
   /* CSnn to output, high */
   csn->dir |= BSP430_RF_CC2520_CSn_PORT_BIT;
@@ -111,8 +110,7 @@ void main ()
 
   /* GPIO0 as input, pull down */
   gpio0->dir &= ~BSP430_RF_CC2520_GPIO0_PORT_BIT;
-  gpio0->out |= BSP430_RF_CC2520_GPIO0_PORT_BIT;
-  gpio0->ren |= BSP430_RF_CC2520_GPIO0_PORT_BIT;
+  BSP430_PORT_HPL_SET_REN(gpio0, BSP430_RF_CC2520_GPIO0_PORT_BIT, BSP430_PORT_REN_PULL_DOWN);
 
   cprintf("Power-up using RESETn\n");
   RESET_ASSERT();

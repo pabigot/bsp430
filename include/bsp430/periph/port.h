@@ -201,6 +201,100 @@
 #define BSP430_PORT_SUPPORTS_REN 0
 #endif /* P1REN */
 
+/** Value for #BSP430_PORT_HAL_SET_REN() for high impedance input.
+ *
+ * This disables any port resistor enabled capability.  It corresponds
+ * to REN reset, OUT dontcare. */
+#define BSP430_PORT_REN_HIGH_Z -1
+
+/** Value for #BSP430_PORT_HAL_SET_REN() for pulldown resistor.
+ *
+ * This corresponds to REN set, OUT reset. */
+#define BSP430_PORT_REN_PULL_DOWN 0
+
+/** Value for #BSP430_PORT_HAL_SET_REN() for pullup resistor.
+ *
+ * This corresponds to REN set, OUT set. */
+#define BSP430_PORT_REN_PULL_UP 1
+
+/** Set port resistor-enabled configuration via @HAL handle.
+ *
+ * On MCUs that support internal pullup and pulldown resistors this
+ * function macro can be used to configure between those choices and
+ * floating inputs.  This version is suited for all families, and is
+ * required for 2xx/4xx devices where resistor-enable capability is
+ * not present within the @HPL structure.
+ *
+ * @see #BSP430_PORT_HPL_SET_REN()
+ *
+ * @note This does not reconfigure the pin for input.  It only affects
+ * internal pullup configuration.
+ *
+ * @param hal_ the handle for the port @HAL
+ *
+ * @param bit_ the bit for which resistor/impedance is to be configured
+ *
+ * @param rv_ the selected configuration, one of
+ * #BSP430_PORT_REN_HIGH_Z, #BSP430_PORT_REN_PULL_DOWN,
+ * #BSP430_PORT_REN_PULL_UP.
+ *
+ * @dependency #BSP430_PORT_SUPPORTS_REN
+ */
+#if defined(BSP430_DOXYGEN) || (BSP430_PORT_SUPPORTS_REN - 0)
+#define BSP430_PORT_HAL_SET_REN(hal_, bit_, rv_) do {    \
+    if ((BSP430_PORT_REN_PULL_UP == (rv_))               \
+        || (BSP430_PORT_REN_PULL_DOWN == (rv_))) {       \
+      if (BSP430_PORT_REN_PULL_UP == (rv_)) {            \
+        BSP430_PORT_HAL_HPL_OUT(hal_) |= (bit_);         \
+      } else {                                           \
+        BSP430_PORT_HAL_HPL_OUT(hal_) &= ~(bit_);        \
+      }                                                  \
+      BSP430_PORT_HAL_HPL_REN(hal_) |= (bit_);           \
+    } else {                                             \
+      BSP430_PORT_HAL_HPL_REN(hal_) &= ~(bit_);          \
+    }                                                    \
+  } while (0)
+#endif /* BSP430_PORT_SUPPORTS_REN */
+
+/** Set port resistor-enabled configuration via @HPL handle.
+ *
+ * On MCUs that support internal pullup and pulldown resistors this
+ * function macro can be used to configure between those choices and
+ * floating inputs.  This version is suited for 5xx-family devices for
+ * which the resistor-enable functionality is within the port @HPL.
+ *
+ * @note This does not reconfigure the pin for input.  It only affects
+ * internal pullup configuration.
+ *
+ * @see #BSP430_PORT_HAL_SET_REN()
+ *
+ * @param hpl_ the handle for the port @HPL
+ *
+ * @param bit_ the bit for which resistor/impedance is to be configured
+ *
+ * @param rv_ the selected configuration, one of
+ * #BSP430_PORT_REN_HIGH_Z, #BSP430_PORT_REN_PULL_DOWN,
+ * #BSP430_PORT_REN_PULL_UP.
+ *
+ * @dependency #BSP430_PORT_SUPPORTS_REN
+ * @dependency BSP430_CORE_FAMILY_IS_5XX
+ */
+#if defined(BSP430_DOXYGEN) || (BSP430_PORT_SUPPORTS_REN - 0)
+#define BSP430_PORT_HPL_SET_REN(hpl_, bit_, rv_) do {    \
+    if ((BSP430_PORT_REN_PULL_UP == (rv_))               \
+        || (BSP430_PORT_REN_PULL_DOWN == (rv_))) {       \
+      if (BSP430_PORT_REN_PULL_UP == (rv_)) {            \
+        (hpl_)->out |= (bit_);                           \
+      } else {                                           \
+        (hpl_)->out &= ~(bit_);                          \
+      }                                                  \
+      (hpl_)->ren |= (bit_);                             \
+    } else {                                             \
+      (hpl_)->ren &= ~(bit_);                            \
+    }                                                    \
+  } while (0)
+#endif /* BSP430_PORT_SUPPORTS_REN */
+
 /** Layout for pre-5xx--family ports supporting interrupts.
  *
  * Access to SEL2 capability for these ports is not available in the

@@ -87,10 +87,7 @@ void main ()
 
   /* Configure the port for its peripheral function */
   b0hpl->dir &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
-#if (BSP430_PORT_SUPPORTS_REN - 0)
-  b0hpl->ren |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
-  b0hpl->ren |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
-#endif /* BSP430_PORT_SUPPORTS_REN */
+  BSP430_PORT_HPL_SET_REN(b0hpl, BSP430_PLATFORM_BUTTON0_PORT_BIT, BSP430_PORT_REN_PULL_UP);
   b0hpl->sel0 |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
 
   pulsecap = hBSP430timerPulseCaptureInitialize(&pulsecap_state,

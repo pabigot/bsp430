@@ -101,8 +101,7 @@ void main ()
     rc = iBSP430serialSetHold_rh(spi, 1);
     /* GPIO1 to input, pull-up */
     BSP430_PORT_HAL_HPL_DIR(hgdo1) &= ~BSP430_RF_CC1125_GPIO1_PORT_BIT;
-    BSP430_PORT_HAL_HPL_REN(hgdo1) |= BSP430_RF_CC1125_GPIO1_PORT_BIT;
-    BSP430_PORT_HAL_HPL_OUT(hgdo1) |= BSP430_RF_CC1125_GPIO1_PORT_BIT;
+    BSP430_PORT_HAL_SET_REN(hgdo1, BSP430_RF_CC1125_GPIO1_PORT_BIT, BSP430_PORT_REN_PULL_UP);
   }
 
   cprintf("SPI device %p hold returned %d\n", spi, rc);

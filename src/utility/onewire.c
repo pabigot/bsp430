@@ -91,8 +91,7 @@ iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
    * setting would cause a pulldown configuration, as it would
    * here. */
   if (bus->use_ren) {
-    BSP430_PORT_HAL_HPL_REN(bus->port) |= bus->bit;
-    BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
+    BSP430_PORT_HAL_SET_REN(bus->port, bus->bit, BSP430_PORT_REN_PULL_UP);
   }
 #endif /* BSP430_PORT_SUPPORTS_REN */
   __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_PDHIGH_us));
