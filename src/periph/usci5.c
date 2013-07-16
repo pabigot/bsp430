@@ -37,30 +37,30 @@
 /* !BSP430! periph=usci5 */
 /* !BSP430! instance=USCI5_A0,USCI5_A1,USCI5_A2,USCI5_A3,USCI5_B0,USCI5_B1,USCI5_B2,USCI5_B3 */
 
-#define SERIAL_HAL_HPL(_hal) ((_hal)->hpl.usci5)
+#define SERIAL_HAL_HPL(hal_) ((hal_)->hpl.usci5)
 
-#define MODE_IS_I2C(_hal) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & SERIAL_HAL_HPL(_hal)->ctl0))
+#define MODE_IS_I2C(hal_) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & SERIAL_HAL_HPL(hal_)->ctl0))
 
-#define SERIAL_HPL_WAKEUP_TRANSMIT_RH(_hpl) do {        \
-    _hpl->ie |= UCTXIE;                                 \
+#define SERIAL_HPL_WAKEUP_TRANSMIT_RH(hpl_) do {        \
+    (hpl_)->ie |= UCTXIE;                               \
   } while (0)
 
-#define SERIAL_HPL_RAW_TRANSMIT_RH(_hpl, _c) do {       \
-    while (! (_hpl->ifg & UCTXIFG)) {                   \
+#define SERIAL_HPL_RAW_TRANSMIT_RH(hpl_, _c) do {       \
+    while (! ((hpl_)->ifg & UCTXIFG)) {                 \
       ;                                                 \
     }                                                   \
-    _hpl->txbuf = _c;                                   \
+    (hpl_)->txbuf = _c;                                 \
   } while (0)
 
-#define SERIAL_HPL_RAW_RECEIVE_RH(_hpl, _c) do {        \
-    while (! (_hpl->ifg & UCRXIFG)) {                   \
+#define SERIAL_HPL_RAW_RECEIVE_RH(hpl_, _c) do {        \
+    while (! ((hpl_)->ifg & UCRXIFG)) {                 \
       ;                                                 \
     }                                                   \
-    _c = _hpl->rxbuf;                                   \
+    _c = (hpl_)->rxbuf;                                 \
   } while (0)
 
-#define SERIAL_HPL_FLUSH_NI(_hpl) do {          \
-    while (_hpl->stat & UCBUSY) {               \
+#define SERIAL_HPL_FLUSH_NI(hpl_) do {          \
+    while ((hpl_)->stat & UCBUSY) {             \
       ;                                         \
     }                                           \
   } while (0)

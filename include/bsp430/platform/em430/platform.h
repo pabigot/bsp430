@@ -70,8 +70,8 @@
 #define BSP430_LED_RED 1
 
 /* Select core voltage: CC430F5137 8=12/25 */
-#define BSP430_PMM_COREV_FOR_MCLK(_mclk)    \
-  ((12000000UL < (_mclk)) ? PMMCOREV_2 :    \
+#define BSP430_PMM_COREV_FOR_MCLK(mclk_)    \
+  ((12000000UL < (mclk_)) ? PMMCOREV_2 :    \
    PMMCOREV_0)
 
 /* How to use ACLK as a capture/compare input source */

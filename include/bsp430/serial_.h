@@ -102,36 +102,36 @@
 /* !BSP430! periph=serial insert=hal_variant_hpl_macro */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [hal_variant_hpl_macro] */
 /** True iff the HPL pointer of the serial HAL is a USCI variant. */
-#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(_hal) (BSP430_SERIAL_HAL_HPL_VARIANT_USCI == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
+#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(hal_) (BSP430_SERIAL_HAL_HPL_VARIANT_USCI == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(hal_))
 
 /** Get the serial HPL pointer if the HAL is a USCI variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPL_USCI(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(_hal)) ? (_hal)->hpl.usci : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPL_USCI(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(hal_)) ? (hal_)->hpl.usci : (void *)0)
 
 /** True iff the HPL pointer of the serial HAL is a USCI5 variant. */
-#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(_hal) (BSP430_SERIAL_HAL_HPL_VARIANT_USCI5 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
+#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(hal_) (BSP430_SERIAL_HAL_HPL_VARIANT_USCI5 == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(hal_))
 
 /** Get the serial HPL pointer if the HAL is a USCI5 variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPL_USCI5(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(_hal)) ? (_hal)->hpl.usci5 : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPL_USCI5(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(hal_)) ? (hal_)->hpl.usci5 : (void *)0)
 
 /** True iff the HPL pointer of the serial HAL is a EUSCIA variant. */
-#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(_hal) (BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
+#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(hal_) (BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIA == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(hal_))
 
 /** Get the serial HPL pointer if the HAL is a EUSCIA variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPL_EUSCIA(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(_hal)) ? (_hal)->hpl.euscia : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPL_EUSCIA(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(hal_)) ? (hal_)->hpl.euscia : (void *)0)
 
 /** True iff the HPL pointer of the serial HAL is a EUSCIB variant. */
-#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal) (BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
+#define BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(hal_) (BSP430_SERIAL_HAL_HPL_VARIANT_EUSCIB == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(hal_))
 
 /** Get the serial HPL pointer if the HAL is a EUSCIB variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPL_EUSCIB(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal)) ? (_hal)->hpl.euscib : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPL_EUSCIB(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(hal_)) ? (hal_)->hpl.euscib : (void *)0)
 
 /* END AUTOMATICALLY GENERATED CODE [hal_variant_hpl_macro] */
 /* !BSP430! end=hal_variant_hpl_macro */
@@ -140,22 +140,22 @@
 /** Get the serial HPL auxiliary pointer if the HAL is a USCI variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(_hal)) ? (_hal)->hpl_aux.usci : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI(hal_)) ? (hal_)->hpl_aux.usci : (void *)0)
 
 /** Get the serial HPL auxiliary pointer if the HAL is a USCI5 variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI5(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(_hal)) ? (_hal)->hpl_aux.usci5 : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPLAUX_USCI5(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_USCI5(hal_)) ? (hal_)->hpl_aux.usci5 : (void *)0)
 
 /** Get the serial HPL auxiliary pointer if the HAL is a EUSCIA variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIA(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(_hal)) ? (_hal)->hpl_aux.euscia : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIA(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIA(hal_)) ? (hal_)->hpl_aux.euscia : (void *)0)
 
 /** Get the serial HPL auxiliary pointer if the HAL is a EUSCIB variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIB(_hal) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal)) ? (_hal)->hpl_aux.euscib : (void *)0)
+#define BSP430_SERIAL_HAL_GET_HPLAUX_EUSCIB(hal_) ((BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(hal_)) ? (hal_)->hpl_aux.euscib : (void *)0)
 
 /* END AUTOMATICALLY GENERATED CODE [hal_variant_hplaux_macro] */
 /* !BSP430! end=hal_variant_hplaux_macro */

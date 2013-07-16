@@ -34,26 +34,26 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/eusci.h>
 
-#define SERIAL_HAL_HPL_A(_hal) (_hal)->hpl.euscia
-#define SERIAL_HAL_HPL_B(_hal) (_hal)->hpl.euscib
-#define HAL_HPL_FIELD(_hal,_fld) (*(BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(_hal) ? &(_hal)->hpl.euscib->_fld : &(_hal)->hpl.euscia->_fld))
+#define SERIAL_HAL_HPL_A(hal_) (hal_)->hpl.euscia
+#define SERIAL_HAL_HPL_B(hal_) (hal_)->hpl.euscib
+#define HAL_HPL_FIELD(hal_,fld_) (*(BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(hal_) ? &(hal_)->hpl.euscib->fld_ : &(hal_)->hpl.euscia->fld_))
 
-#define MODE_IS_I2C(_hal) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & HAL_HPL_FIELD(_hal,ctlw0)))
+#define MODE_IS_I2C(hal_) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & HAL_HPL_FIELD(hal_,ctlw0)))
 
-#define SERIAL_HAL_WAKEUP_TRANSMIT_RH(_hal) do {                        \
-    HAL_HPL_FIELD(_hal,ie) |= UCTXIE;                                   \
+#define SERIAL_HAL_WAKEUP_TRANSMIT_RH(hal_) do {                        \
+    HAL_HPL_FIELD(hal_,ie) |= UCTXIE;                                   \
   } while (0)
 
-#define UART_RAW_TRANSMIT_RH(_hal, _c) do {             \
-    while (! (SERIAL_HAL_HPL_A(_hal)->ifg & UCTXIFG)) { \
+#define UART_RAW_TRANSMIT_RH(hal_, _c) do {             \
+    while (! (SERIAL_HAL_HPL_A(hal_)->ifg & UCTXIFG)) { \
       ;                                                 \
     }                                                   \
-    ++(_hal)->num_tx;                                   \
-    SERIAL_HAL_HPL_A(_hal)->txbuf = _c;                 \
+    ++(hal_)->num_tx;                                   \
+    SERIAL_HAL_HPL_A(hal_)->txbuf = _c;                 \
   } while (0)
 
-#define SERIAL_HAL_FLUSH_NI(_hal) do {                  \
-    while (HAL_HPL_FIELD(_hal,statw) & UCBUSY) {        \
+#define SERIAL_HAL_FLUSH_NI(hal_) do {                  \
+    while (HAL_HPL_FIELD(hal_,statw) & UCBUSY) {        \
       ;                                                 \
     }                                                   \
   } while (0)

@@ -279,28 +279,28 @@ typedef sBSP430m25p * hBSP430m25p;
 #define BSP430_M25P_SR_SRWD 0x80
 
 /** Set the RESET# signal to place the device into reset */
-#define BSP430_M25P_RESET_SET(_dev) do {                \
-    if (NULL != (_dev)->rstn_port) {                    \
-      (_dev)->rstn_port->out &= ~(_dev)->rstn_bit;      \
+#define BSP430_M25P_RESET_SET(dev_) do {                \
+    if (NULL != (dev_)->rstn_port) {                    \
+      (dev_)->rstn_port->out &= ~(dev_)->rstn_bit;      \
     }                                                   \
   } while (0)
 
 /** Clear the RESET# signal to take the device out of reset */
-#define BSP430_M25P_RESET_CLEAR(_dev) do {      \
-    if (NULL != (_dev)->rstn_port) {                    \
-      (_dev)->rstn_port->out |= (_dev)->rstn_bit;       \
+#define BSP430_M25P_RESET_CLEAR(dev_) do {              \
+    if (NULL != (dev_)->rstn_port) {                    \
+      (dev_)->rstn_port->out |= (dev_)->rstn_bit;       \
     }                                                   \
   } while (0)
 
 /** Assert the CS# signal in preparation for interacting with the
  * device. */
-#define BSP430_M25P_CS_ASSERT(_dev) do {        \
-    (_dev)->csn_port->out &= ~(_dev)->csn_bit;  \
+#define BSP430_M25P_CS_ASSERT(dev_) do {        \
+    (dev_)->csn_port->out &= ~(dev_)->csn_bit;  \
   } while (0)
 
 /** De-assert the CS# signal after interacting with the device. */
-#define BSP430_M25P_CS_DEASSERT(_dev) do {      \
-    (_dev)->csn_port->out |= (_dev)->csn_bit;   \
+#define BSP430_M25P_CS_DEASSERT(dev_) do {      \
+    (dev_)->csn_port->out |= (dev_)->csn_bit;   \
   } while (0)
 
 

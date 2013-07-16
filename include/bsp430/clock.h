@@ -98,10 +98,10 @@
  * used to provide the parameter to #BSP430_CORE_DELAY_CYCLES when the
  * desired delay is specified by time rather than cycles.
  *
- * @param _delay_us the delay in microseconds.  Expected, but not
+ * @param delay_us_ the delay in microseconds.  Expected, but not
  * required, to be a compile-time integer constant compatible with
  * unsigned long. */
-#define BSP430_CLOCK_US_TO_NOMINAL_MCLK(_delay_us) BSP430_CORE_US_TO_TICKS((_delay_us), BSP430_CLOCK_NOMINAL_MCLK_HZ)
+#define BSP430_CLOCK_US_TO_NOMINAL_MCLK(delay_us_) BSP430_CORE_US_TO_TICKS((delay_us_), BSP430_CLOCK_NOMINAL_MCLK_HZ)
 
 /** Oscillator capacitor setting for use by
  * #iBSP430clockConfigureLFXT1_ni.

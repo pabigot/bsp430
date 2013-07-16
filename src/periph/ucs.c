@@ -110,10 +110,10 @@
 static unsigned long lastTrimDCOCLKDIV_Hz_ = BSP430_CLOCK_PUC_MCLK_HZ;
 
 /** Convert from Hz to Trim Sample Periods */
-#define HZ_TO_TSP(_clk_hz) ((_clk_hz) / (TRIM_ACLK_HZ / TRIM_SAMPLE_PERIOD_ACLK))
+#define HZ_TO_TSP(clk_hz_) ((clk_hz_) / (TRIM_ACLK_HZ / TRIM_SAMPLE_PERIOD_ACLK))
 
 /** Convert from Trim Sample Periods to Hz */
-#define TSP_TO_HZ(_clk_tsp) (((_clk_tsp) * (unsigned long)TRIM_ACLK_HZ) / TRIM_SAMPLE_PERIOD_ACLK)
+#define TSP_TO_HZ(clk_tsp_) (((clk_tsp_) * (unsigned long)TRIM_ACLK_HZ) / TRIM_SAMPLE_PERIOD_ACLK)
 
 #if (BSP430_UCS_TRIM_DCOCLKDIV - 0)
 #include <bsp430/periph/timer.h>

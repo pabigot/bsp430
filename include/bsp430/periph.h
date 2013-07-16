@@ -502,16 +502,16 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
  * Clear the requested bits in the status register, and if necessary
  * yield control to a higher priority task.
  *
- * @param _return_flags An expression denoting a return value from a
+ * @param return_flags_ An expression denoting a return value from a
  * chain of callbacks, producing bits including (for example) @c
  * LPM_bits and/or #BSP430_HAL_ISR_CALLBACK_YIELD. */
-#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(_return_flags) do {             \
-    unsigned int return_flags_ = (_return_flags);                       \
-    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {             \
-      return_flags_ |= BSP430_CORE_LPM_EXIT_MASK;                       \
+#define BSP430_HAL_ISR_CALLBACK_TAIL_NI(return_flags_) do {             \
+    unsigned int rf = (return_flags_);                                  \
+    if (rf & BSP430_HAL_ISR_CALLBACK_EXIT_LPM) {                        \
+      rf |= BSP430_CORE_LPM_EXIT_MASK;                                  \
     }                                                                   \
-    BSP430_CORE_LPM_EXIT_FROM_ISR(return_flags_);                       \
-    if (return_flags_ & BSP430_HAL_ISR_CALLBACK_YIELD) {                \
+    BSP430_CORE_LPM_EXIT_FROM_ISR(rf);                                  \
+    if (rf & BSP430_HAL_ISR_CALLBACK_YIELD) {                           \
       BSP430_RTOS_YIELD_FROM_ISR();                                     \
     }                                                                   \
   } while (0)

@@ -37,33 +37,33 @@
 /* !BSP430! periph=usci */
 /* !BSP430! instance=USCI_A0,USCI_A1,USCI_B0,USCI_B1 */
 
-#define SERIAL_HAL_HPL(_hal) (_hal)->hpl.usci
-#define SERIAL_HAL_HPLAUX(_hal) (_hal)->hpl_aux.usci
+#define SERIAL_HAL_HPL(hal_) (hal_)->hpl.usci
+#define SERIAL_HAL_HPLAUX(hal_) (hal_)->hpl_aux.usci
 
-#define MODE_IS_I2C(_hal) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & SERIAL_HAL_HPL(_hal)->ctl0))
+#define MODE_IS_I2C(hal_) ((UCSYNC | UCMODE_3) == ((UCSYNC | UCMODE_3) & SERIAL_HAL_HPL(hal_)->ctl0))
 
-#define WAKEUP_TRANSMIT_HAL_RH(_hal) do {                               \
-    *SERIAL_HAL_HPLAUX(_hal)->iep |= SERIAL_HAL_HPLAUX(_hal)->tx_bit;   \
+#define WAKEUP_TRANSMIT_HAL_RH(hal_) do {                               \
+    *SERIAL_HAL_HPLAUX(hal_)->iep |= SERIAL_HAL_HPLAUX(hal_)->tx_bit;   \
   } while (0)
 
-#define RAW_TRANSMIT_HAL_RH(_hal, _c) do {                              \
-    while (! (SERIAL_HAL_HPLAUX(_hal)->tx_bit & *SERIAL_HAL_HPLAUX(_hal)->ifgp)) { \
+#define RAW_TRANSMIT_HAL_RH(hal_, _c) do {                              \
+    while (! (SERIAL_HAL_HPLAUX(hal_)->tx_bit & *SERIAL_HAL_HPLAUX(hal_)->ifgp)) { \
       ;                                                                 \
     }                                                                   \
-    SERIAL_HAL_HPL(_hal)->txbuf = _c;                                   \
-    ++(_hal)->num_tx;                                                   \
+    SERIAL_HAL_HPL(hal_)->txbuf = _c;                                   \
+    ++(hal_)->num_tx;                                                   \
   } while (0)
 
-#define RAW_RECEIVE_HAL_RH(_hal, _c) do {                               \
-    while (! (SERIAL_HAL_HPLAUX(_hal)->rx_bit & *SERIAL_HAL_HPLAUX(_hal)->ifgp)) { \
+#define RAW_RECEIVE_HAL_RH(hal_, _c) do {                               \
+    while (! (SERIAL_HAL_HPLAUX(hal_)->rx_bit & *SERIAL_HAL_HPLAUX(hal_)->ifgp)) { \
       ;                                                                 \
     }                                                                   \
-    _c = SERIAL_HAL_HPL(_hal)->rxbuf;                                   \
-    ++(_hal)->num_rx;                                                   \
+    _c = SERIAL_HAL_HPL(hal_)->rxbuf;                                   \
+    ++(hal_)->num_rx;                                                   \
   } while (0)
 
-#define FLUSH_HAL_NI(_hal) do {                         \
-    while (SERIAL_HAL_HPL(_hal)->stat & UCBUSY) {       \
+#define FLUSH_HAL_NI(hal_) do {                         \
+    while (SERIAL_HAL_HPL(hal_)->stat & UCBUSY) {       \
       ;                                                 \
     }                                                   \
   } while (0)

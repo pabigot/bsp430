@@ -426,18 +426,18 @@ struct sBSP430halSERIAL xBSP430hal_%(INSTANCE)s_ = {
 ''',
 
     'hal_variant_hpl_macro' : '''/** True iff the HPL pointer of the %(periph)s HAL is a %(INSTANCE)s variant. */
-#define BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal) (BSP430_%(PERIPH)s_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(_hal))
+#define BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(hal_) (BSP430_%(PERIPH)s_HAL_HPL_VARIANT_%(INSTANCE)s == BSP430_PERIPH_HAL_STATE_CFLAGS_VARIANT(hal_))
 
 /** Get the %(periph)s HPL pointer if the HAL is a %(INSTANCE)s variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_%(PERIPH)s_HAL_GET_HPL_%(INSTANCE)s(_hal) ((BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal)) ? (_hal)->hpl.%(instance)s : (void *)0)
+#define BSP430_%(PERIPH)s_HAL_GET_HPL_%(INSTANCE)s(hal_) ((BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(hal_)) ? (hal_)->hpl.%(instance)s : (void *)0)
 ''',
 
     'hal_variant_hplaux_macro' : '''/** Get the %(periph)s HPL auxiliary pointer if the HAL is a %(INSTANCE)s variant.
  *
  * Value is a null pointer if the HAL references a different HPL type. */
-#define BSP430_%(PERIPH)s_HAL_GET_HPLAUX_%(INSTANCE)s(_hal) ((BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(_hal)) ? (_hal)->hpl_aux.%(instance)s : (void *)0)
+#define BSP430_%(PERIPH)s_HAL_GET_HPLAUX_%(INSTANCE)s(hal_) ((BSP430_%(PERIPH)s_HAL_HPL_VARIANT_IS_%(INSTANCE)s(hal_)) ? (hal_)->hpl_aux.%(instance)s : (void *)0)
 ''',
 
     'hal_port_isr_defn' : '''#if (configBSP430_HAL_%(INSTANCE)s_ISR - 0)

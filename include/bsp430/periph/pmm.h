@@ -160,8 +160,8 @@
  * #endif // BSP430_PMM_SUPPORTS_SVSM
  * @endcode
  *
- * @param _hctl The new value for #SVSMHCTL, e.g. <tt>#SVSMHCTL & ~(#SVMHE | #SVSHE)</tt>
- * @param _lctl The new value for #SVSMLCTL, e.g. <tt>#SVSMLCTL & ~(#SVMLE | #SVSLE)</tt>
+ * @param hctl_ The new value for #SVSMHCTL, e.g. <tt>#SVSMHCTL & ~(#SVMHE | #SVSHE)</tt>
+ * @param lctl_ The new value for #SVSMLCTL, e.g. <tt>#SVSMLCTL & ~(#SVMLE | #SVSLE)</tt>
  *
  * @warning Changing any other flags, but particularly the core
  * voltage, may requires care to wait for stability before making
@@ -189,10 +189,10 @@
  * LPM3, though more may be reduced when active.
  *
  * @dependency #BSP430_PMM_SUPPORTS_SVSM */
-#define BSP430_PMM_SET_SVSMCTL_NI(_hctl,_lctl) do {   \
+#define BSP430_PMM_SET_SVSMCTL_NI(hctl_,lctl_) do {   \
     PMMCTL0_H = PMMPW_H;                              \
-    SVSMHCTL = (_hctl);                               \
-    SVSMLCTL = (_lctl);                               \
+    SVSMHCTL = (hctl_);                               \
+    SVSMLCTL = (lctl_);                               \
     PMMCTL0_H = !PMMPW_H;                             \
   } while (0)
 #endif /* BSP430_PMM_SUPPORTS_SVSM */
@@ -223,13 +223,13 @@ vBSP430pmmInducePOR (void)
  * based on values specified in the data sheet under Recommended
  * Operating Conditions for f_SYSTEM.
  *
- * @param _mclk Desired f_SYSTEM (maximum MCLK frequency)
+ * @param mclk_ Desired f_SYSTEM (maximum MCLK frequency)
  *
  * @defaulted
  * @platformvalue
  * @dependency #BSP430_PMM_SUPPORTS_COREV */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_PMM_COREV_FOR_MCLK(_mclk) include <bsp430/platform.h>
+#define BSP430_PMM_COREV_FOR_MCLK(mclk_) include <bsp430/platform.h>
 #endif /* BSP430_PMM_COREV_FOR_MCLK */
 
 /** Safely adjust the PMM core voltage to a desired level.

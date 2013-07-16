@@ -66,7 +66,7 @@ passing that output through:
    | dos2unix
 */
 
-#define EMIT_SYSRSTIV(_iv,_txt) { iv: _iv, desc: _txt },
+#define EMIT_SYSRSTIV(iv_,txt_) { iv: iv_, desc: txt_ },
 
 typedef struct sysrstiv_pair_t {
   unsigned char iv;

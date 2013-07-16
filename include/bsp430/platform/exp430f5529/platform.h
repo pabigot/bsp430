@@ -101,10 +101,10 @@
 #define BSP430_LED_BLUE4 7
 
 /* Select core voltage: MSP430F5529 8/12/20/25 */
-#define BSP430_PMM_COREV_FOR_MCLK(_mclk)    \
-  ((20000000UL < (_mclk)) ? PMMCOREV_3 :    \
-   ((12000000UL < (_mclk)) ? PMMCOREV_2 :   \
-    (((8000000UL < (_mclk)) ? PMMCOREV_1 :  \
+#define BSP430_PMM_COREV_FOR_MCLK(mclk_)    \
+  ((20000000UL < (mclk_)) ? PMMCOREV_3 :    \
+   ((12000000UL < (mclk_)) ? PMMCOREV_2 :   \
+    (((8000000UL < (mclk_)) ? PMMCOREV_1 :  \
       PMMCOREV_0))))
 
 /* How to use ACLK as a capture/compare input source.  This board does

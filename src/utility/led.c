@@ -39,13 +39,13 @@
  * for all, so we'll use the existings of P1SEL0 as the trigger for
  * the variation. */
 #if defined(P1SEL0)
-#define CLEAR_SEL_X(_x, _bit) do {              \
-    P##_x##SEL0 &= ~_bit;                       \
-    P##_x##SEL1 &= ~_bit;                       \
+#define CLEAR_SEL_X(x_, bit_) do {              \
+    P##x_##SEL0 &= ~bit_;                       \
+    P##x_##SEL1 &= ~bit_;                       \
   } while(0)
 #else /* P1SEL0 */
-#define CLEAR_SEL_X(_x, _bit) do {              \
-    P##_x##SEL &= ~_bit;                        \
+#define CLEAR_SEL_X(x_, bit_) do {              \
+    P##x_##SEL &= ~bit_;                        \
   } while(0)
 #endif /* P1SEL0 */
 
@@ -53,12 +53,12 @@
  *
  * I'm sorry if this isn't MISRA compliant, but I'm not replicating
  * this code for each of the 11 potential ports. */
-#define CONFIG_PORT_X_LED(_x)                   \
+#define CONFIG_PORT_X_LED(x_)                   \
   do {                                          \
-    if (&P##_x##OUT == lp->outp) {              \
-      P##_x##DIR |= lp->bit;                    \
-      CLEAR_SEL_X(_x, lp->bit);                 \
-      P##_x##OUT &= ~lp->bit;                   \
+    if (&P##x_##OUT == lp->outp) {              \
+      P##x_##DIR |= lp->bit;                    \
+      CLEAR_SEL_X(x_, lp->bit);                 \
+      P##x_##OUT &= ~lp->bit;                   \
       continue;                                 \
     }                                           \
   } while (0)

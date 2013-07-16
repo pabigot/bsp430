@@ -60,11 +60,11 @@ ucompare (unsigned int u1,
 }
 
 #if 0
-#define UCOMPARE(_u1, _u2) ((_u2) >= (_u1))
+#define UCOMPARE(u1_, u2_) ((u2_) >= (u1_))
 #define UCOMPARE_DESC "Unsigned Comparison"
 #endif
 #if 1
-#define UCOMPARE(_u1, _u2) (((_u2) - (_u1)) <= (unsigned int)INT_MAX)
+#define UCOMPARE(u1_, u2_) (((u2_) - (u1_)) <= (unsigned int)INT_MAX)
 #define UCOMPARE_DESC "Positive Delta"
 #endif
 

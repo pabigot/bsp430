@@ -390,9 +390,9 @@
 #if (BSP430_CORE_TOOLCHAIN_TI - 0)
 #define __read_stack_register() _get_SP_register()
 #define __read_status_register() _get_SR_register()
-#define __bis_status_register(_v) _bis_SR_register(_v)
-#define __bic_status_register(_v) _bic_SR_register(_v)
-#define __bic_status_register_on_exit(_v) _bic_SR_register_on_exit(_v)
+#define __bis_status_register(v_) _bis_SR_register(v_)
+#define __bic_status_register(v_) _bic_SR_register(v_)
+#define __bic_status_register_on_exit(v_) _bic_SR_register_on_exit(v_)
 #define __nop() _nop()
 #endif /* BSP430_CORE_TOOLCHAIN_TI */
 
@@ -614,7 +614,7 @@
  * BSP430_CORE_DELAY_CYCLES in the loop doesn't involve a watchdog
  * clear.
  *
- * @param _duration_mclk the number of MCLK cycles for which the delay
+ * @param duration_mclk_ the number of MCLK cycles for which the delay
  * is desired.  This must be a compile-time integer constant
  * compatible with unsigned long.  #configBSP430_CORE_SUPPORT_WATCHDOG
  * is enabled and the constant exceeds
@@ -623,18 +623,18 @@
  *
  * @dependency #configBSP430_CORE_SUPPORT_WATCHDOG */
 #if (configBSP430_CORE_SUPPORT_WATCHDOG - 0)
-#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) do {                   \
-    if ((_duration_mclk) > BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES) {     \
-      unsigned int _watchdog_iterations = (_duration_mclk) / BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES; \
+#define BSP430_CORE_DELAY_CYCLES(duration_mclk_) do {                   \
+    if ((duration_mclk_) > BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES) {     \
+      unsigned int _watchdog_iterations = (duration_mclk_) / BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES; \
       while (0 < _watchdog_iterations--) {                              \
         __delay_cycles(BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES);          \
         BSP430_CORE_WATCHDOG_CLEAR();                                   \
       }                                                                 \
     }                                                                   \
-    __delay_cycles((_duration_mclk) % BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES); \
+    __delay_cycles((duration_mclk_) % BSP430_CORE_WATCHDOG_MAX_DELAY_CYCLES); \
   } while (0)
 #else /* configBSP430_CORE_SUPPORT_WATCHDOG */
-#define BSP430_CORE_DELAY_CYCLES(_duration_mclk) __delay_cycles(_duration_mclk)
+#define BSP430_CORE_DELAY_CYCLES(duration_mclk_) __delay_cycles(duration_mclk_)
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
 /** @def BSP430_CORE_INTERRUPT_STATE_T
@@ -651,7 +651,7 @@
 #endif /* TOOLCHAIN */
 #endif /* BSP430_CORE_INTERRUPT_STATE_T */
 
-/** @def BSP430_CORE_SAVE_INTERRUPT_STATE(_state)
+/** @def BSP430_CORE_SAVE_INTERRUPT_STATE(state_)
  *
  * A function macro that will record whether interrupts are currently
  * enabled in the state parameter.  The parameter should subsequently
@@ -669,12 +669,12 @@
  * BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
  * @endcode
  *
- * @param _state where the interrupt enable/disable state is stored.
+ * @param state_ where the interrupt enable/disable state is stored.
  *
  * @defaulted */
 #ifndef BSP430_CORE_SAVE_INTERRUPT_STATE
-#define BSP430_CORE_SAVE_INTERRUPT_STATE(_state) do {   \
-    (_state) = __get_interrupt_state();                 \
+#define BSP430_CORE_SAVE_INTERRUPT_STATE(state_) do {   \
+    (state_) = __get_interrupt_state();                 \
   } while (0)
 #endif /* BSP430_CORE_SAVE_INTERRUPT_STATE */
 
@@ -699,26 +699,26 @@
  * stored is immediately followed by the command that stores the
  * current state into that variable.
  *
- * @param _state where the interrupt enable/disable state is stored.
+ * @param var_ where the interrupt enable/disable state is stored.
  *
  * @defaulted */
 #ifndef BSP430_CORE_SAVED_INTERRUPT_STATE
-#define BSP430_CORE_SAVED_INTERRUPT_STATE(_var)             \
-  BSP430_CORE_INTERRUPT_STATE_T _var = __get_interrupt_state()
+#define BSP430_CORE_SAVED_INTERRUPT_STATE(var_)             \
+  BSP430_CORE_INTERRUPT_STATE_T var_ = __get_interrupt_state()
 #endif /* BSP430_CORE_SAVED_INTERRUPT_STATE */
 
-/** @def BSP430_CORE_RESTORE_INTERRUPT_STATE(_state)
+/** @def BSP430_CORE_RESTORE_INTERRUPT_STATE(state_)
  *
  * A function macro that will enable or disable interrupts as recorded
  * in the provided state parameter.  The parameter value should have
  * been created using #BSP430_CORE_SAVE_INTERRUPT_STATE.
  *
- * @param _state where the interrupt enable/disable state is stored.
+ * @param state_ where the interrupt enable/disable state is stored.
  *
  * @defaulted */
 #ifndef BSP430_CORE_RESTORE_INTERRUPT_STATE
-#define BSP430_CORE_RESTORE_INTERRUPT_STATE(_state) do {        \
-    __set_interrupt_state(_state);                              \
+#define BSP430_CORE_RESTORE_INTERRUPT_STATE(state_) do {        \
+    __set_interrupt_state(state_);                              \
   } while (0)
 #endif /* BSP430_CORE_RESTORE_INTERRUPT_STATE */
 

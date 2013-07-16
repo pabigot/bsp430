@@ -83,7 +83,8 @@ in loop, @c if and @c else bodies to be enclosed in braces, e.g.:
 
 Care is taken in BSP430 to conform to the rules for C regarding global
 identifiers; in particular, underscores may not appear at the start of an
-identifier, and certain suffixes like @c _t are reserved.
+identifier (including macro parameters), and certain suffixes like @c _t are
+reserved.
 
 @li All global symbols and macros encode that they are part of BSP430 by
 beginning with @c BSP430 with or without prefix characters that indicate
