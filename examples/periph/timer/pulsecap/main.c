@@ -85,10 +85,10 @@ void main ()
   cprintf("Cool, we're good to go with a %lu Hz timer at %p, now %lu.\n",
           freq_Hz, b0timer_hal, ulBSP430timerCounter_ni(b0timer_hal, NULL));
 
-  /* Configure the port for its peripheral function */
+  /* Configure the port for its primary peripheral function */
   b0hpl->dir &= ~BSP430_PLATFORM_BUTTON0_PORT_BIT;
   BSP430_PORT_HPL_SET_REN(b0hpl, BSP430_PLATFORM_BUTTON0_PORT_BIT, BSP430_PORT_REN_PULL_UP);
-  b0hpl->sel0 |= BSP430_PLATFORM_BUTTON0_PORT_BIT;
+  BSP430_PORT_HPL_SET_SEL(b0hpl, BSP430_PLATFORM_BUTTON0_PORT_BIT, 1);
 
   pulsecap = hBSP430timerPulseCaptureInitialize(&pulsecap_state,
                                                 BUTTON0_TIMER_PERIPH_HANDLE,
@@ -113,6 +113,8 @@ void main ()
 
   rc = iBSP430timerPulseCaptureEnable(pulsecap);
   cprintf("Enable got %d\n", rc);
+  rc = iBSP430timerPulseCaptureActivate(pulsecap);
+  cprintf("Activate got %d\n", rc);
   while (1) {
     unsigned int flags;
     unsigned long pulseWidth_tt;
