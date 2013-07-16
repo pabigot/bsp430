@@ -173,6 +173,12 @@ int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
  *
  * This checks exactly for the fault condition.
  *
+ * @warning On this platform the fault flags are read-only and may
+ * clear themselves.  If a fault is detected after steps have been
+ * taken to enable the crystal, the peripheral should be reconfigured
+ * to explicitly avoid referencing the crystal lest it begin
+ * functioning and change system behavior.
+ *
  * @note A crystal that has never been enabled will not register as
  * faulted. */
 #define BSP430_BC2_LFXT1_IS_FAULTED_NI() (BCSCTL3 & BSP430_BC2_LFXT1OF_)
@@ -182,9 +188,15 @@ int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
  * If the platform does not support an XT2 crystal no fault is
  * diagnosed.
  *
+ * @warning On this platform the fault flags are read-only and may
+ * clear themselves.  If a fault is detected after steps have been
+ * taken to enable the crystal, the peripheral should be reconfigured
+ * to explicitly avoid referencing the crystal lest it begin
+ * functioning and change system behavior.
+ *
  * @note A crystal that has never been enabled will not register as
  * faulted. */
-#define BSP430_BC2_XT2_IS_FAULTED_NI() (BC2CTL7 & BSP430_BC2_XT2OF_)
+#define BSP430_BC2_XT2_IS_FAULTED_NI() (BC2CTL3 & BSP430_BC2_XT2OF_)
 
 /** Check whether the BC2-controlled LFXT1 crystal has a fault condition.
  *
@@ -194,6 +206,12 @@ int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
  * fault flag is still valid only if the external crystal is selected.
  * This check will indicate a fault if one is present, or if the LFXT1
  * source is not the external crystal.
+ *
+ * @warning On this platform the fault flags are read-only and may
+ * clear themselves.  If a fault is detected after steps have been
+ * taken to enable the crystal, the peripheral should be reconfigured
+ * to explicitly avoid referencing the crystal lest it begin
+ * functioning and change system behavior.
  *
  * @defaulted
  * @see #BSP430_BC2_LFXT1_IS_FAULTED_NI()
