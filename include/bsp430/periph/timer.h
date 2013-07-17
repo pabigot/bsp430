@@ -3326,7 +3326,7 @@ uiBSP430timerAsyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
   return v1;
 }
 
-/** Configure a timer CC to support uiBBSP430timerLatchedCounterRead_ni().
+/** Configure a timer CC to support uiBSP430timerLatchedCounterRead_ni().
  *
  * Latched counter reads rely on a pre-configured capture/compare
  * register.  This routine configures that register.
@@ -3334,7 +3334,7 @@ uiBSP430timerAsyncCounterRead_ni (volatile sBSP430hplTIMER * const hpl)
  * @param hpl reference to the underlying timer
  *
  * @param ccidx the index of the capture/compare register to be used
- * for latched timer reads
+ * for latched timer reads, often #BSP430_TIMER_VALID_COUNTER_READ_CCIDX
  */
 static BSP430_CORE_INLINE_FORCED
 void
@@ -3357,7 +3357,7 @@ vBSP430timerLatchedCounterInitialize_ni (volatile sBSP430hplTIMER * const hpl,
  * This call takes about 8 clock cycles on a CPUX MCU.
  *
  * @warning If the selected capture/compare register has not been
- * configured using vBSP430timerLachedCounterInitialize_ni() the
+ * configured using vBSP430timerLatchedCounterInitialize_ni() the
  * return value will not represent the timer counter.
  *
  * @param hpl reference to the underlying timer
