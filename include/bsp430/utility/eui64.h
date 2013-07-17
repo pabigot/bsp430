@@ -111,7 +111,7 @@
 
 /** Bit mask for first octet in canonical-order EUI-64, identifying
  * the individual/group marker.  The bit is set to indicate group, and
- * cleared to indiate individual. */
+ * cleared to indicate individual. */
 #define BSP430_EUI64_MASK_GROUP 0x01
 
 /** Bit mask for first octet in canonical-order EUI-64, identifying
