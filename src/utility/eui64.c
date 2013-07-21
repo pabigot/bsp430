@@ -33,6 +33,8 @@
 #include <bsp430/utility/eui64.h>
 #include <bsp430/utility/tlv.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
 #include <string.h>
 
 #if (BSP430_EUI64 - 0)
@@ -84,5 +86,56 @@ iBSP430eui64 (hBSP430eui64 eui64)
   return rv;
 }
 #endif /* configBSP430_EUI64_USE_PLATFORM */
+
+char *
+xBSP430eui64AsText (hBSP430eui64 eui64,
+                    char * buffer)
+{
+  char * rv = buffer;
+  int ei;
+
+  if (NULL == eui64) {
+    return NULL;
+  }
+  buffer += sprintf(buffer, "%02X", eui64->bytes[0]);
+  for (ei = 1; ei < sizeof(eui64->bytes); ++ei) {
+    buffer += sprintf(buffer, "-%02X", eui64->bytes[ei]);
+  }
+  return rv;
+}
+
+int
+iBSP430eui64Parse (const char * cfp,
+                   size_t len,
+                   hBSP430eui64 eui64)
+{
+  const char * const cfpe = cfp + len;
+  int ei = 0;
+  int nn = 0;
+
+  if (NULL == eui64) {
+    return -1;
+  }
+  memset(eui64, 0, sizeof(*eui64));
+  while ((ei < sizeof(eui64->bytes)) && (cfp < cfpe) && (0 <= nn)) {
+    int c = *cfp++;
+    int v;
+    c = tolower(c);
+    if ('-' == c) {
+      nn = 0;
+      ++ei;
+    } else if ((nn < 2) && (isdigit(c) || (('a' <= c) && (c <= 'f')))) {
+      v = isdigit(c) ? (c - '0') : (10 + c - 'a');
+      eui64->bytes[ei] = (eui64->bytes[ei] << 4) + v;
+      ++nn;
+    } else {
+      break;
+    }
+  }
+  if (((sizeof(eui64->bytes) - 1) != ei) || (cfp != cfpe)) {
+    return -1;
+  }
+  return 0;
+}
 
 #endif /* BSP430_EUI64 */

@@ -185,4 +185,44 @@ typedef uBSP430eui64 * hBSP430eui64;
 int iBSP430eui64 (hBSP430eui64 eui64);
 #endif /* BSP430_EUI64 */
 
+/** Parse a canonical-form EUI-64.
+ *
+ * This routine recognizes eight octets separated by dashes as an
+ * EUI-64.  Each octet is expressed by zero, one, or two hexadecimal
+ * digits; if zero digits are present, the octet is given the value 0.
+ *
+ * For example, the string <c>"1-2--a-bc-d-32-"</c> is translated into
+ * the EUI-64 with canonical form <c>01-02-00-0A-BC-0D-32-00</c>.
+ *
+ * Such a routine may be useful in conjunction with @ref
+ * grp_utility_cli_hci.
+ *
+ * @param cfp pointer to text supposedly expressing an EUI-64
+ *
+ * @param len number of bytes of text that belong to the EUI-64
+ *
+ * @param eui64 where the extracted value should be stored
+ *
+ * @return 0 if the parsing was successful and the value stored; a
+ * negative value if the text was syntactically invalid.
+ */
+int iBSP430eui64Parse (const char * cfp,
+                       size_t len,
+                       hBSP430eui64 eui64);
+
+/** Expected length for a buffer used by xBSP430eui64AsText().
+ *
+ * This macro may be used to allocate such a buffer. */
+#define BSP430_EUI64_AS_TEXT_LENGTH sizeof("01-02-03-04-05-06-07-08")
+
+/** Convert an EUI64 to its canonical text representation.
+ *
+ * @param eui64 the EUI64 value to be converted
+ *
+ * @param buffer a sequence that can hold at least #BSP430_EUI64_AS_TEXT_LENGTH characters
+ *
+ * @return @p buffer if successful, or a null pointer if @p eui64 is null. */
+char * xBSP430eui64AsText (hBSP430eui64 eui64,
+                           char * buffer);
+
 #endif /* BSP430_UTILITY_EUI64_H */
