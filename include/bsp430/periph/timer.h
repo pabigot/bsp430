@@ -1562,7 +1562,7 @@ int iBSP430timerAlarmDisable (hBSP430timerAlarm alarm)
  * @defaulted
  * @ingroup grp_timer_alarm */
 #ifndef BSP430_TIMER_ALARM_FUTURE_LIMIT
-#define BSP430_TIMER_ALARM_FUTURE_LIMIT 5UL
+#define BSP430_TIMER_ALARM_FUTURE_LIMIT 3UL
 #endif /* BSP430_TIMER_ALARM_FUTURE_LIMIT */
 
 /** Value returned by iBSP430timerAlarmSet_ni() when the requested
