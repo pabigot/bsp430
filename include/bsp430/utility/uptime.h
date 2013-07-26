@@ -463,29 +463,49 @@ long lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
 int iBSP430uptimeDelaySetEnabled_ni (int enablep);
 #endif /* configBSP430_UPTIME_DELAY */
 
-/** Macro to simplify basic delay operations.
+/** Macro to simplify basic delay-in-ticks operations
  *
  * This invokes lBSP430uptimeSleepUntil_ni() in a loop for a specified
  * duration or until another event has occurred.
  *
- * @param delay_ms_ Duration, in milliseconds, that application should sleep
+ * @param delay_utt_ duration, in uptime ticks, that application should sleep
  *
- * @param lpm_bits_ The LPM mode in which the application should sleep.
+ * @param lpm_bits_ the LPM mode in which the application should sleep.
  * See corresponding parameter in lBSP430uptimeSleepUntil_ni().
  *
- * @param exit_expr_ An expression that will be tested prior to
- * sleeping; if it evaluates to true, the delay will be aborted
+ * @param exit_expr_ an expression that will be tested prior to
+ * sleeping.  If it evaluates to true, the delay will be aborted
  * immediately regardless of remaining time.  Pass @c 0 if you wish to
  * delay regardless of other activity.
  *
  * @dependency #configBSP430_UPTIME_DELAY */
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
-#define BSP430_UPTIME_DELAY_MS_NI(delay_ms_, lpm_bits_, exit_expr_) do { \
+#define BSP430_UPTIME_DELAY_UTT_NI(delay_utt_, lpm_bits_, exit_expr_) do { \
     unsigned long wake_utt;                                             \
-    wake_utt = ulBSP430uptime_ni() + BSP430_UPTIME_MS_TO_UTT(delay_ms_); \
+    wake_utt = ulBSP430uptime_ni() + (delay_utt_);                      \
     while ((! (exit_expr_)) && (0 < lBSP430uptimeSleepUntil_ni(wake_utt, lpm_bits_))) { \
       /* nop */                                                         \
     }                                                                   \
+  } while (0)
+#endif /* configBSP430_UPTIME_DELAY */
+
+/** Macro to simplify basic delay-in-milliseconds operations.
+ *
+ * Wrapper around #BSP430_UPTIME_DELAY_UTT_NI() to support delays
+ * specified in milliseconds.
+ *
+ * @param delay_ms_ duration, in milliseconds, that application should sleep
+ *
+ * @param lpm_bits_ as with #BSP430_UPTIME_DELAY_UTT_NI()
+ *
+ * @param exit_expr_ as with #BSP430_UPTIME_DELAY_UTT_NI()
+ *
+ * @see #BSP430_UPTIME_MS_TO_UTT
+ *
+ * @dependency #configBSP430_UPTIME_DELAY */
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
+#define BSP430_UPTIME_DELAY_MS_NI(delay_ms_, lpm_bits_, exit_expr_) do { \
+    BSP430_UPTIME_DELAY_UTT_NI(BSP430_UPTIME_MS_TO_UTT(delay_ms_), lpm_bits_, exit_expr_); \
   } while (0)
 #endif /* configBSP430_UPTIME_DELAY */
 
