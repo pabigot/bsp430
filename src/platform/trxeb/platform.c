@@ -51,7 +51,7 @@ void vBSP430ledInitialize_ni (void)
 {
   P4DIR |= LED_BITS;
   P4OUT |= LED_BITS;
-  P4SEL &= LED_BITS;
+  P4SEL &= ~LED_BITS;
 }
 
 void vBSP430ledSet (int led_idx,
