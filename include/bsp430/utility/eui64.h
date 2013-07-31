@@ -94,6 +94,22 @@
 #define configBSP430_EUI64_USE_PLATFORM 1
 #endif /*  configBSP430_EUI64_USE_PLATFORM */
 
+/** Define to a true value to use the generic EUI-64 infrastructure.
+ *
+ * The <c>utility/eui64</c> module provides a default implementation
+ * of iBSP430eui64() that generates a value by hashing bytes from the
+ * @link bsp430/utility/tlv.h TLV@endlink structures or possibly other
+ * device-specific data.  This is used as the implementation when
+ * #configBSP430_EUI64_USE_PLATFORM is true but the platform does not
+ * provide an alternative implementation.
+ *
+ * @cppflag
+ * @defaulted
+ */
+#ifndef configBSP430_EUI64_USE_GENERIC
+#define configBSP430_EUI64_USE_GENERIC 1
+#endif /*  configBSP430_EUI64_USE_GENERIC */
+
 /** Value indicating stored EUI-64 is valid and was permanently
  * assigned by something that guarantees uniqueness within the
  * platform. */

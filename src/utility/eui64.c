@@ -39,7 +39,7 @@
 
 #if (BSP430_EUI64 - 0)
 
-#if (configBSP430_EUI64_USE_PLATFORM - 0)
+#if (configBSP430_EUI64_USE_PLATFORM - 0) && (configBSP430_EUI64_USE_GENERIC - 0)
 int
 iBSP430eui64 (hBSP430eui64 eui64)
 {

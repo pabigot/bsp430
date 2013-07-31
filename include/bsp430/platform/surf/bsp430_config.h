@@ -96,9 +96,11 @@
 #endif /* configBSP430_HPL_PORT1 */
 #endif /* configBSP430_PLATFORM_M25P */
 
-/* Use platform-provided EUI64 unless told not to */
+/* Use platform-provided EUI64 unless told not to.  SuRF does not use
+ * the generic implementation for its platform default. */
 #ifndef configBSP430_EUI64_USE_PLATFORM
 #define configBSP430_EUI64_USE_PLATFORM 1
+#define configBSP430_EUI64_USE_GENERIC 0
 #endif /* configBSP430_EUI64_USE_PLATFORM */
 
 #if (configBSP430_EUI64_USE_PLATFORM - 0)
