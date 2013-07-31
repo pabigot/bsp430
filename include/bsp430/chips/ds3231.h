@@ -58,7 +58,11 @@ MODULES += chips/ds3231
 #define DS3231_I2C_ADDRESS 0x68
 
 /** DS3231 register map */
+#if defined(BSP430_DOXYGEN)
+struct sDS3231registers
+#else /* BSP430_DOXYGEN */
 BSP430_CORE_PACKED_STRUCT(sDS3231registers)
+#endif /* BSP430_DOXYGEN */
 {
   uint8_t seconds;              /**< 0x00 Seconds (0-59) (BCD) */
   uint8_t minutes;              /**< 0x01 Minutes (0-59) (BCD) */
@@ -80,6 +84,7 @@ BSP430_CORE_PACKED_STRUCT(sDS3231registers)
   uint8_t temp_msb;             /**< 0x11 MSB of temperature (C/256) */
   uint8_t temp_lsb;             /**< 0x12 LSB of temperature (C/256) */
 };
+/** DS3231 register map */
 typedef struct sDS3231registers sDS3231registers;
 
 /** Convert from integer hour value to DS3231 encoded hour

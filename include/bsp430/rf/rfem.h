@@ -160,8 +160,7 @@
  * sBSP430hplPORT_5XX_8::sel sel@endlink register of the
  * #BSP430_RFEM_RF1P20_PORT_PERIPH_HANDLE port peripheral associated
  * with the RF header pin, while that bit is cleared on any secondary
- * selection registers such as @link sBSP430hplPORT_5XX_8::sel2
- * sel2@endlink.)
+ * selection registers.  See #BSP430_PORT_SUPPORTS_SEL2.)
  *
  * Defined analogously by each platform for all connected pins on RF1,
  * RF2, and RF3.  If the macro for a specific header pin is not

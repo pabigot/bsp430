@@ -241,7 +241,7 @@
  * #BSP430_HAL_ISR_CALLBACK_EXIT_LPM.  See
  * #iBSP430timerAlarmCallback_ni.
  *
- * The @ref ex_utility_alarm example program provides an environment
+ * The @ref ex_periph_alarm example program provides an environment
  * where the behavior of alarms can be interactively probed.
  *
  * @homepage http://github.com/pabigot/bsp430
@@ -266,7 +266,7 @@
  * by platform-independent applications for various purposes, such as
  * alarms drive by a clock distinct from the bsp430/utility/uptime.h
  * infrastructure.  Use of CCACLK in this role can be seen in @ref
- * ex_utility_alarm.
+ * ex_periph_alarm.
  *
  * @note Many of these features are enabled through functional
  * configuration settings documented in @ref grp_config_functional.
@@ -1706,7 +1706,7 @@ struct sBSP430timerMuxSharedAlarm;
  * This is invoked by the shared alarm when the time specified by
  * @link sBSP430timerMuxAlarm::setting_tck alarm->setting_tck@endlink
  * has been reached.  When this is invoked @p alarm has been removed
- * from the list of alarms associated with @shared.
+ * from the list of alarms associated with @p shared.
  *
  * It is permitted to invoke iBSP430timerMuxAlarmSet_ni() from this
  * callback to re-associate @p alarm with @p shared.  Prior to doing
@@ -1942,9 +1942,9 @@ typedef struct sBSP430timerPulseCapture {
   iBSP430timerPulseCaptureCallback_ni callback_ni;
 
   /** Flags indicating validity and configuration information.
-   * @warning This field must be treated as @link enh_interrupt_ni not
-   * interrupt-able@endlink while the pulse capture is enabled.  I.e.,
-   * its contents should be inspected and mutated only while
+   * @warning This field must be treated as @link enh_interrupts_ni
+   * not interrupt-able@endlink while the pulse capture is enabled.
+   * I.e., its contents should be inspected and mutated only while
    * interrupts are disabled. */
   volatile unsigned int flags_ni;
 

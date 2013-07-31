@@ -37,6 +37,8 @@
  * human-readable output on a serial console, or support reading data
  * from a serial console.
  *
+ * @section h_utility_console_interrupts Interrupts and Console Operations
+ *
  * In the original design of BSP430 console output was performed with
  * interrupts disabled under the belief that the potential of
  * interleaved output between different tasks and interrupts was

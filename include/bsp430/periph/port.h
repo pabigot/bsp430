@@ -385,7 +385,7 @@
  * @c PxSEL2 (normally, @c PxSEL1 on FRAM devices)
  *
  * @note Setting a new selection that requires changing bit values in
- * two registers is safe only on #BSP430_PORT_SUPPORTS_SELC_5XX
+ * two registers is safe only on #BSP430_PORT_SUPPORTS_SEL2C_5XX
  * systems.  For all other systems the register will be configured to
  * an intermediate selection before the final bit is set correctly.
  *
