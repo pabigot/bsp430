@@ -2,6 +2,6 @@
 
 # Unless told otherwise, assume the board has an MSP430G2553
 MCU ?= msp430g2553
-MSPDEBUG_DRIVER=rf2500
+MSPDEBUG_DRIVER ?= rf2500
 MODULES_CLOCK=periph/bc2
 MODULES_PLATFORM_SERIAL=periph/usci

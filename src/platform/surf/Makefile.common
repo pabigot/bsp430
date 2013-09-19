@@ -1,7 +1,7 @@
 # No provision for an alternative chip.
 MCU=cc430f5137
 
-MSPDEBUG_DRIVER=-j uif
+MSPDEBUG_DRIVER ?= -j uif
 # UCS needs CCACLK for DCO configuration
 # MCLK configurations need PMM module
 MODULES_CLOCK=periph/ucs periph/timer periph/pmm
