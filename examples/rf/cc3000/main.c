@@ -768,7 +768,7 @@ void main (void)
     }
     if (flags & eBSP430cliConsole_REPAINT) {
       /* Draw the prompt along with whatever's left in the command buffer */
-      cprintf("> %s", command ? command : "");
+      cprintf("\r> %s", command ? command : "");
       flags &= ~eBSP430cliConsole_REPAINT;
     }
     if (flags & eBSP430cliConsole_REPAINT_BEL) {
@@ -793,5 +793,9 @@ void main (void)
         BSP430_CORE_LPM_ENTER(LPM2_bits);
       }
     } while (! flags);
+
+    /* Got something to do; get the command contents in place so
+     * we can update the screen. */
+    command = xBSP430cliConsoleBuffer();
   }
 }
