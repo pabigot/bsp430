@@ -8,8 +8,8 @@ MODULES += periph/sys
 MODULES += periph/flash
 MODULES += utility/cli
 
-# Set this to where you installed the cc3000 library
-CC3000_ROOT ?= /usr/local/msp430-cc3000-dev
+# Set this to where you installed the cc3000 headers and library
+CC3000_ROOT ?= /usr/local/msp430-cc3000
 
 # Tell BSP430's build infrastructure about the library.
 AUX_CPPFLAGS=-I$(CC3000_ROOT)/include
