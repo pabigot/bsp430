@@ -69,6 +69,41 @@ static void wlan_cb (long event_type,
           event_type, length, data, __read_status_register());
 }
 
+static void
+displayMemory (const uint8_t * dp,
+               size_t len,
+               size_t offset)
+{
+  char asciiz[17];
+  const uint8_t * const dpe = dp + len;
+  char * ap;
+
+  ap = asciiz;
+  while (1) {
+    if (0 == (offset % 16)) {
+      if (asciiz < ap) {
+        *ap = 0;
+        cprintf("    %s\n", asciiz);
+      }
+      if (dp >= dpe) {
+        break;
+      }
+      cprintf("%04x ", offset);
+      ap = asciiz;
+    } else if (0 == (offset % 8)) {
+      cprintf(" ");
+    }
+    ++offset;
+    if (dp < dpe) {
+      *ap++ = isprint(*dp) ? *dp : '.';
+      cprintf(" %02x", *dp);
+    } else {
+      cprintf("   ");
+    }
+    ++dp;
+  }
+}
+
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
@@ -416,8 +451,6 @@ cmd_nvmem_read (const char * argstr)
   unsigned int len = 128;
   unsigned int ofs = 0;
   unsigned char data[32];
-  char asciiz[17];
-  char * ap;
   unsigned int end_read;
   unsigned int ui;
   size_t argstr_len = strlen(argstr);
@@ -436,38 +469,19 @@ cmd_nvmem_read (const char * argstr)
     ofs = ui;
   }
   end_read = ofs + len;
-  memset(asciiz, 0, sizeof(asciiz));
-  ap = asciiz;
   rc = 0;
   while ((0 == rc) && (ofs < end_read)) {
-    unsigned char * dp;
-    unsigned char * dpe;
     nb = (end_read - ofs);
     if (sizeof(data) < nb) {
       nb = sizeof(data);
     }
     rc = nvmem_read(fileid, nb, ofs, data);
     if (0 == rc) {
-      dp = data;
-      dpe = dp + nb;
-      while (dp < dpe) {
-        if (0 == (ofs % 16)) {
-          cprintf("    %s\n%x.%04x ", asciiz, fileid, ofs);
-          memset(asciiz, 0, sizeof(asciiz));
-          ap = asciiz;
-        } else if (0 == (ofs % 8)) {
-          cprintf(" ");
-        }
-        ++ofs;
-        *ap++ = isprint(*dp) ? *dp : '.';
-        cprintf(" %02x", *dp++);
-      }
-      len -= nb;
+      displayMemory(data, nb, ofs);
+      ofs += nb;
     }
   }
-  if (0 == rc) {
-    cprintf("    %s\n", asciiz);
-  } else {
+  if (0 != rc) {
     cprintf("\nERR: Read returned %u for %u bytes at %u of fileid %u\n",
             rc, nb, ofs, fileid);
   }
@@ -590,10 +604,27 @@ cmd_info_store (const char * argstr)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
+
+
+static int
+cmd_info_dump (const char * argstr)
+{
+  cprintf("Configuration memory:\n");
+  displayMemory((const uint8_t *)infoConnectParams, __info_segment_size, (uintptr_t)infoConnectParams);
+  return 0;
+}
+
+static sBSP430cliCommand dcmd_info_dump = {
+  .key = "dump",
+  .help = HELP_STRING("# display INFO_B contents"),
+  .next = NULL,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_info_dump
+};
 static sBSP430cliCommand dcmd_info_store = {
   .key = "store",
   .help = HELP_STRING("# store wlan AP params in INFO_B"),
-  .next = NULL,
+  .next = &dcmd_info_dump,
   .handler = iBSP430cliHandlerSimple,
   .param.simple_handler = cmd_info_store
 };
