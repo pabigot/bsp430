@@ -20,6 +20,7 @@
 #include <cc3000/wlan.h>
 #include <cc3000/nvmem.h>
 #include <cc3000/netapp.h>
+#include <cc3000/hci.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -65,6 +66,13 @@ static void wlan_cb (long event_type,
                      char * data,
                      unsigned char length)
 {
+  /* Ignore unsolicited keep-alives, which occur every 10 seconds
+   * whenever the WLAN has been started, regardless of whether it's
+   * connected or scanning. */
+  if (HCI_EVNT_WLAN_KEEPALIVE == event_type) {
+    return;
+  }
+
   cprintf("%s wlan_cb %#lx %u at %p SR %#x\n",
           xBSP430uptimeAsText_ni(ulBSP430uptime_ni()),
           event_type, length, data, __read_status_register());
