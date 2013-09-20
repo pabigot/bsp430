@@ -199,10 +199,7 @@ static const sWlanSecMap wlanSecMap[] = {
   { WLAN_SEC_UNSEC, "unsec" },
   { WLAN_SEC_WEP, "wep" },
   { WLAN_SEC_WPA, "wpa" },
-#if 0
-  /* WPA2 is not implemented.  Unit will transmit unsecured auth request */
   { WLAN_SEC_WPA2, "wpa2" },
-#endif /* 0 */
 };
 static const sWlanSecMap * const wlanSecMap_end = wlanSecMap + sizeof(wlanSecMap)/sizeof(*wlanSecMap);
 static const sWlanSecMap * wlanSecMapFromValue (unsigned int val)
