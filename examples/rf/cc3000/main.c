@@ -572,7 +572,7 @@ cmd_scan_start (const char * argstr)
     delays[i] = 2000;
   }
 
-  rc = wlan_ioctl_set_scan_params(10000U, /* Enable (1 is 10 min interval; other values are interval between active probe sweeps, in ms) */
+  rc = wlan_ioctl_set_scan_params(1U, /* Enable (1 is 10 min interval; other values are interval between active probe sweeps, in ms) */
                                   100, /* Min dwell per channel */
                                   150, /* Max dwell per channel */
                                   5,  /* Probes within dwell.  0 will still send one probe. */
@@ -596,6 +596,8 @@ cmd_scan_stop (const char * argstr)
     delays[i] = 2000;
   }
 
+  /* This stops the scan within the current session, but it will
+   * automatically restart on the next power-up. */
   rc = wlan_ioctl_set_scan_params(0, 150, 150, 5, 0x1fff, -80, 0, 205, delays);
   cprintf("Scan stop got %ld\n", rc);
   return rc;
