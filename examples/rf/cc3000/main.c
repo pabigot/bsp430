@@ -31,6 +31,7 @@
  * disable WLAN_CONNECT, which makes this pretty useless.  On the
  * EXP430F5438 the total application size is just over 20 kB. */
 #define CMD_WLAN 1
+#define CMD_WLAN_BROKEN 1
 #define CMD_WLAN_SCAN 1
 #define CMD_WLAN_STOP 1
 #define CMD_WLAN_STATUS 1
@@ -391,6 +392,42 @@ static sBSP430cliCommand dcmd_wlan_status = {
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_status
 #endif /* CMD_WLAN_STATUS */
+
+#if (CMD_WLAN_BROKEN - 0)
+static int
+cmd_wlan_timeouts (const char * argstr)
+{
+  long rc;
+  struct {
+    unsigned long dhcp_s;
+    unsigned long arp_s;
+    unsigned long ka_s;
+    unsigned long inactive_s;
+  } params;
+
+  params.dhcp_s = 14400;
+  params.arp_s = 3600;
+  params.ka_s = 600000;
+  params.inactive_s = 600000;
+  cprintf("*** NOTE: No evidence this function works (KA does not)\n");
+  cprintf("DHCP timeout: %lu sec\n", params.dhcp_s);
+  cprintf("ARP timeout: %lu sec\n", params.arp_s);
+  cprintf("Keep-Alive timeout: %lu sec\n", params.ka_s);
+  cprintf("Inactive timeout: %lu sec\n", params.inactive_s);
+  rc = netapp_timeout_values(&params.dhcp_s, &params.arp_s, &params.ka_s, &params.inactive_s);
+  cprintf("Timeout set got %ld\n", rc);
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_timeouts = {
+  .key = "timeouts",
+  .help = HELP_STRING("# set CC3000 timeouts"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_timeouts
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_timeouts
+#endif /* CMD_WLAN_BROKEN */
 
 #if (CMD_WLAN_START - 0)
 static int
