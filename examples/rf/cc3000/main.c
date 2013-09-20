@@ -30,6 +30,7 @@
  * disable WLAN_CONNECT, which makes this pretty useless.  On the
  * EXP430F5438 the total application size is just over 20 kB. */
 #define CMD_WLAN 1
+#define CMD_WLAN_SCAN 1
 #define CMD_WLAN_STOP 1
 #define CMD_WLAN_STATUS 1
 #define CMD_WLAN_CONNECT 1
@@ -190,7 +191,6 @@ static sBSP430cliCommand dcmd_wlan_ipconfig = {
 #define LAST_SUB_COMMAND &dcmd_wlan_ipconfig
 #endif /* CMD_WLAN_IPCONFIG */
 
-#if (CMD_WLAN_CONNECT - 0)
 typedef struct sWlanSecMap {
   unsigned int val;
   const char * tag;
@@ -222,6 +222,8 @@ static const sWlanSecMap * wlanSecMapFromTag (const char * tag)
   }
   return NULL;
 }
+
+#if (CMD_WLAN_CONNECT - 0)
 
 sConnectParams connectParams;
 
@@ -415,6 +417,175 @@ static sBSP430cliCommand dcmd_wlan = {
 #define LAST_SUB_COMMAND NULL
 
 #endif /* CMD_WLAN */
+
+#if (CMD_WLAN_SCAN - 0)
+/** Scan status when there are no entries that have not already been
+ * returned */
+#define X_WLAN_SCAN_STATUS_AGED 0
+/** Scan status when result is valid and has not previously been
+ * returned */
+#define X_WLAN_SCAN_STATUS_VALID 1
+/** Scan status when no scan has yet been initiated */
+#define X_WLAN_SCAN_STATUS_NONE 2
+
+/** Structure filled in by wlan_ioctl_get_scan_results() */
+typedef struct sWLANFullScanResults {
+  /** Number of results remaining, including this one */
+  uint32_t network_count;
+  /** Scan status per X_WLAN_SCAN_STATUS_* */
+  uint32_t scan_status;
+  /** Non-zero if result is valid; alternatively, sign bit for
+   * subsequent RSSI */
+  unsigned int isValid:1;
+  /** Low 7 bits of a signed 8-bit negative RSSI in dBm. */
+  unsigned int rssi:7;
+  /** Security mode per WLAN_SEC_* */
+  unsigned int securityMode:2;
+  /** Number of valid characters in ssid array */
+  unsigned int ssidNameLength:6;
+  /** Time last heard from entry, in seconds since start of wlan */
+  uint16_t entryTime;
+  /** SSID, no termination (see #ssidNameLength) */
+  char ssid[32];
+  /** BSSID */
+  unsigned char bssid[6];
+} sWLANFullScanResults;
+
+static int
+cmd_scan_show (const char * argstr)
+{
+  long rc;
+  union {
+    sWLANFullScanResults structure;
+    unsigned char bytes[1];
+  } uresult;
+  const sWLANFullScanResults * const sp = &uresult.structure;
+
+  cprintf("Scan results:\n"
+          "SSID                             "
+          "Scty  "
+          "BSSID             "
+          "RSSI "
+          "Time"
+          "\n");
+  do {
+    rc = wlan_ioctl_get_scan_results(0, uresult.bytes);
+    if (0 != rc) {
+      cprintf("ERR: rc %ld\n", rc);
+      break;
+    }
+    if (X_WLAN_SCAN_STATUS_NONE == sp->scan_status) {
+      cprintf("No results\n");
+      break;
+    }
+    if (X_WLAN_SCAN_STATUS_AGED == sp->scan_status) {
+      cprintf("No new results\n");
+      break;
+    }
+    if (! sp->isValid) {
+      cprintf("Invalid\n");
+      continue;
+    }
+#if 0
+    displayMemory(uresult.bytes, sizeof(*sp), 0);
+#endif
+    { /* SSID */
+      const int nsp = sp->ssidNameLength;
+      int i;
+      for (i = 0; i < sizeof(sp->ssid); ++i) {
+        cputchar((i < nsp) ? sp->ssid[i] : ' ');
+      }
+      cputchar(' ');
+    }
+    { /* Security */
+      const sWlanSecMap * mp = wlanSecMapFromValue(sp->securityMode);
+      cprintf("%-5s ", (NULL == mp) ? "???" : mp->tag);
+    }
+    { /* BSSI */
+      int i;
+      cprintf("%02x", sp->bssid[0]);
+      for (i = 1; i < sizeof(sp->bssid); ++i) {
+        cprintf(":%02x", sp->bssid[i]);
+      }
+      cputchar(' '); /* 17 chars plus separating space */
+    }
+    cprintf("% 3d  ", (int)(signed char)(0x80 | sp->rssi)); /* RSSI */
+    cprintf("%-5u ", sp->entryTime);                       /* Time */
+    cputchar('\n');
+  } while (1 < sp->network_count);
+  return 0;
+}
+
+static int
+cmd_scan_start (const char * argstr)
+{
+  unsigned long rc;
+  unsigned long delays[16];
+  int i;
+
+  for (i = 0; i < sizeof(delays)/sizeof(*delays); ++i) {
+    delays[i] = 2000;
+  }
+
+  rc = wlan_ioctl_set_scan_params(10000U, /* Enable (1 is 10 min interval; other values are interval between active probe sweeps, in ms) */
+                                  100, /* Min dwell per channel */
+                                  150, /* Max dwell per channel */
+                                  5,  /* Probes within dwell.  0 will still send one probe. */
+                                  0x7ff, /* Channel mask: 0x7ff enables 1..11 */
+                                  -80,   /* Default RSSI threshold.  No apparent effect changing this. */
+                                  0,   /* SNR threshold */
+                                  205, /* Probe TX power */
+                                  delays); /* Timeout between scans */
+  cprintf("Scan start got %ld\n", rc);
+  return rc;
+}
+
+static int
+cmd_scan_stop (const char * argstr)
+{
+  unsigned long rc;
+  unsigned long delays[16];
+  int i;
+
+  for (i = 0; i < sizeof(delays)/sizeof(*delays); ++i) {
+    delays[i] = 2000;
+  }
+
+  rc = wlan_ioctl_set_scan_params(0, 150, 150, 5, 0x1fff, -80, 0, 205, delays);
+  cprintf("Scan stop got %ld\n", rc);
+  return rc;
+}
+
+static sBSP430cliCommand dcmd_scan_show = {
+  .key = "show",
+  .help = HELP_STRING("# display scan results"),
+  .next = NULL,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_scan_show
+};
+static sBSP430cliCommand dcmd_scan_stop = {
+  .key = "stop",
+  .help = HELP_STRING("# disable periodic scan"),
+  .next = &dcmd_scan_show,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_scan_stop
+};
+static sBSP430cliCommand dcmd_scan_start = {
+  .key = "start",
+  .help = HELP_STRING("# initiate a scan"),
+  .next = &dcmd_scan_stop,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_scan_start
+};
+static sBSP430cliCommand dcmd_scan = {
+  .key = "scan",
+  .next = LAST_COMMAND,
+  .child = &dcmd_scan_start
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_scan
+
+#endif /* CMD_SCAN */
 
 #if (CMD_NVMEM - 0) && (CMD_NVMEM_SP - 0)
 static int
@@ -648,6 +819,22 @@ static sBSP430cliCommand dcmd_info = {
 #define LAST_COMMAND &dcmd_info
 
 #endif /* CMD_INFO */
+
+static int
+cmd_test (sBSP430cliCommandLink * chain,
+          void * param,
+          const char * command,
+          size_t command_len)
+{
+  return 0;
+}
+static sBSP430cliCommand dcmd_test = {
+  .key = "test",
+  .next = LAST_COMMAND,
+  .handler = cmd_test
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_test
 
 #if (CMD_HELP - 0)
 static int
