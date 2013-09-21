@@ -21,6 +21,7 @@
 #include <cc3000/nvmem.h>
 #include <cc3000/netapp.h>
 #include <cc3000/hci.h>
+#include <cc3000/security.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -423,6 +424,47 @@ static sBSP430cliCommand dcmd_wlan_profile = {
 
 #if (CMD_WLAN_SMART - 0)
 static int
+cmd_wlan_smart_aes (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  const char * key = NULL;
+  size_t keylen;
+  unsigned char keybuf[AES128_KEY_SIZE];
+  long rc;
+
+  while (isspace(*argstr)) {
+    ++argstr;
+  }
+  argstr_len = strlen(argstr);
+  if (*argstr) {
+    key = xBSP430cliNextQToken(&argstr, &argstr_len, &keylen);
+    memset(keybuf, 0, sizeof(keybuf));
+    if (sizeof(keybuf) < keylen) {
+      keylen = sizeof(keybuf);
+    }
+    memcpy(keybuf, key, keylen);
+    rc = aes_write_key(keybuf);
+    cprintf("aes_write_key got %ld\n", rc);
+  } else {
+    rc = aes_read_key(keybuf);
+    cprintf("aes_read_key got %ld\n", rc);
+  }
+  cprintf("Key:\n");
+  displayMemory((unsigned char *)keybuf, sizeof(keybuf), 0);
+  return 0;
+}
+
+static int
+cmd_wlan_smart_process (const char * argstr)
+{
+  long rc;
+
+  rc = wlan_smart_config_process();
+  cprintf("wlan_smart_config_process() got %ld\n", rc);
+  return 0;
+}
+
+static int
 cmd_wlan_smart_stop (const char * argstr)
 {
   long rc;
@@ -445,10 +487,24 @@ cmd_wlan_smart_start (const char * argstr)
   return 0;
 }
 
+static sBSP430cliCommand dcmd_wlan_smart_aes = {
+  .key = "aes",
+  .help = HELP_STRING("[key] # set or read AES key"),
+  .next = NULL,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_smart_aes
+};
+static sBSP430cliCommand dcmd_wlan_smart_process = {
+  .key = "process",
+  .help = HELP_STRING("# process AES received data"),
+  .next = &dcmd_wlan_smart_aes,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_smart_process
+};
 static sBSP430cliCommand dcmd_wlan_smart_stop = {
   .key = "stop",
   .help = HELP_STRING("# stop smart config process"),
-  .next = NULL,
+  .next = &dcmd_wlan_smart_process,
   .handler = iBSP430cliHandlerSimple,
   .param.simple_handler = cmd_wlan_smart_stop
 };
@@ -797,6 +853,33 @@ static sBSP430cliCommand dcmd_nvmem_dir = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_nvmem_dir
+
+static int
+cmd_nvmem_create (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  unsigned int fileid = NVMEM_AES128_KEY_FILEID;
+  unsigned int length = AES128_KEY_SIZE;
+  long rc;
+  int rv;
+
+  rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &fileid);
+  if (0 == rv) {
+    rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &length);
+  }
+  rc = nvmem_create_entry(fileid, length);
+  cprintf("nvmem_create_entry(%u, %u) got %ld\n", fileid, length, rc);
+  return 0;
+}
+static sBSP430cliCommand dcmd_nvmem_create = {
+  .key = "create",
+  .help = HELP_STRING("[fileid=12 [length=16]] # create a new NVMEM section"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_nvmem_create
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_nvmem_create
 
 #if (CMD_NVMEM_SP - 0)
 static int
