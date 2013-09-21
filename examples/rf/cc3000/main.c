@@ -429,6 +429,43 @@ static sBSP430cliCommand dcmd_wlan_timeouts = {
 #define LAST_SUB_COMMAND &dcmd_wlan_timeouts
 #endif /* CMD_WLAN_BROKEN */
 
+static int
+cmd_wlan_autocon (const char * argstr)
+{
+  long rc;
+  int rv;
+  size_t argstr_len = strlen(argstr);
+  unsigned int should_connect_to_open_ap = 0;
+  unsigned int should_use_fast_connect = 1;
+  unsigned int auto_start = 1;
+
+  /* Analysis shows:
+   * should_connect_to_open_ap in NVS at 0x44 32-bit int
+   * should_use_fast_connect in NVS at 0x48 32-bit int
+   * auto_start in NVS at 0x50 32-bit int */
+  rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &should_connect_to_open_ap);
+  if (0 == rv) {
+    rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &should_use_fast_connect);
+  }
+  if (0 == rv) {
+    rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &auto_start);
+  }
+  cprintf("Connection policy: open_ap=%u fast_connect=%u auto_start=%u\n",
+          should_connect_to_open_ap, should_use_fast_connect, auto_start);
+  rc = wlan_ioctl_set_connection_policy(should_connect_to_open_ap, should_use_fast_connect, auto_start);
+  cprintf("Connection policy set got %ld\n", rc);
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_autocon = {
+  .key = "autocon",
+  .help = HELP_STRING("# autocon [open_ap=0 [fast_conn=1 [auto_conn=1]]]"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_autocon
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_autocon
+
 #if (CMD_WLAN_START - 0)
 static int
 cmd_wlan_start (const char * argstr)
