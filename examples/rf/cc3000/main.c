@@ -38,6 +38,8 @@
 #define CMD_WLAN_IPCONFIG 1
 #define CMD_WLAN_DISCONNECT 1
 #define CMD_WLAN_START 1
+#define CMD_WLAN_PROFILE 1
+#define CMD_WLAN_SMART 1
 #define CMD_NVMEM 1
 #define CMD_NVMEM_SP 1
 #define CMD_NVMEM_READ 1
@@ -371,7 +373,7 @@ static sBSP430cliCommand dcmd_wlan_sectype = {
 };
 static sBSP430cliCommand dcmd_wlan_autocon = {
   .key = "autocon",
-  .help = HELP_STRING("# autocon [open_ap=0 [fast_conn=1 [auto_conn=1]]]"),
+  .help = HELP_STRING("[open_ap=0 [fast_conn=1 [auto_conn=1]]]"),
   .next = &dcmd_wlan_sectype,
   .handler = iBSP430cliHandlerSimple,
   .param.simple_handler = cmd_wlan_autocon
@@ -386,6 +388,86 @@ static sBSP430cliCommand dcmd_wlan_connect = {
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_connect
 #endif /* CMD_WLAN_CONNECT */
+
+#if (CMD_WLAN_PROFILE - 0)
+static int
+cmd_wlan_profile_del (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  long rc;
+  int profile = -1;
+
+  /* Profiles start with number 0, somewhere at 0x430.  SSID at 0x442, PSK at 0x49a.  */
+  (void)iBSP430cliStoreExtractedI(&argstr, &argstr_len, &profile);
+  rc = wlan_ioctl_del_profile(profile);
+  cprintf("Del profile %d got %ld\n", profile, rc);
+  return 0;
+}
+
+static sBSP430cliCommand dcmd_wlan_profile_del = {
+  .key = "del",
+  .help = HELP_STRING("[profile=0] # delete profile, 255 for all"),
+  .next = NULL,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_profile_del
+};
+
+static sBSP430cliCommand dcmd_wlan_profile = {
+  .key = "profile",
+  .next = LAST_SUB_COMMAND,
+  .child = &dcmd_wlan_profile_del
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_profile
+#endif /* CMD_WLAN_PROFILE */
+
+#if (CMD_WLAN_SMART - 0)
+static int
+cmd_wlan_smart_stop (const char * argstr)
+{
+  long rc;
+
+  rc = wlan_smart_config_stop();
+  cprintf("wlan_smart_config_stop() got %ld\n", rc);
+  return 0;
+}
+
+static int
+cmd_wlan_smart_start (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  unsigned int encrypted = 0;
+  long rc;
+
+  (void)iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &encrypted);
+  rc = wlan_smart_config_start(encrypted);
+  cprintf("wlan_smart_config_start(%d) got %ld\n", encrypted, rc);
+  return 0;
+}
+
+static sBSP430cliCommand dcmd_wlan_smart_stop = {
+  .key = "stop",
+  .help = HELP_STRING("# stop smart config process"),
+  .next = NULL,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_smart_stop
+};
+static sBSP430cliCommand dcmd_wlan_smart_start = {
+  .key = "start",
+  .help = HELP_STRING("[encrypted=0] # start smart config process"),
+  .next = &dcmd_wlan_smart_stop,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_smart_start
+};
+
+static sBSP430cliCommand dcmd_wlan_smart = {
+  .key = "smart",
+  .next = LAST_SUB_COMMAND,
+  .child = &dcmd_wlan_smart_start
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_smart
+#endif /* CMD_WLAN_SMART */
 
 #if (CMD_WLAN_STATUS - 0)
 static int
