@@ -634,7 +634,54 @@ static sBSP430cliCommand dcmd_scan = {
 
 #endif /* CMD_SCAN */
 
-#if (CMD_NVMEM - 0) && (CMD_NVMEM_SP - 0)
+#if (CMD_NVMEM - 0)
+typedef struct sNVMEMFileIds {
+  unsigned int fileid;
+  unsigned int size;
+  const char * tag;
+} sNVMEMFileIds;
+static const sNVMEMFileIds nvmemFiles[] = {
+  { NVMEM_NVS_FILEID, 512, "NVS", },
+  { NVMEM_NVS_SHADOW_FILEID, 512, "NVS (shadow)" },
+  { NVMEM_WLAN_CONFIG_FILEID, 4096, "WLAN Config", },
+  { NVMEM_WLAN_CONFIG_SHADOW_FILEID, 4096, "WLAN Config (shadow)" },
+  { NVMEM_WLAN_DRIVER_SP_FILEID, 0, "WLAN Driver SP" },
+  { NVMEM_WLAN_FW_SP_FILEID, 0, "WLAN Firmware SP" },
+  { NVMEM_MAC_FILEID, 16, "MAC address" },
+  { NVMEM_FRONTEND_VARS_FILEID, 0, "Front End Vars ??" },
+  { NVMEM_IP_CONFIG_FILEID, 64, "IP Config" },
+  { NVMEM_IP_CONFIG_SHADOW_FILEID, 64, "IP Config (shadow)" },
+  { NVMEM_BOOTLOADER_SP_FILEID, 0, "Bootloader SP" },
+  { NVMEM_RM_FILEID, 0, "RM ??" },
+  { NVMEM_AES128_KEY_FILEID, 0, "AES128 Key ??" },
+  { NVMEM_SHARED_MEM_FILEID, 0, "Shared Memory ??" },
+};
+
+static int
+cmd_nvmem_dir (const char * argstr)
+{
+  const sNVMEMFileIds * fp = nvmemFiles;
+  const sNVMEMFileIds * const fpe = fp + sizeof(nvmemFiles) / sizeof(*nvmemFiles);
+
+  cprintf("%u NVMEM files with %u documented:\n", NVMEM_MAX_ENTRY, fpe-fp);
+  cprintf("ID  Size  Description\n");
+  while (fp < fpe) {
+    cprintf("%2d  %4d  %s\n", fp->fileid, fp->size, fp->tag);
+    ++fp;
+  }
+  return 0;
+}
+static sBSP430cliCommand dcmd_nvmem_dir = {
+  .key = "dir",
+  .help = HELP_STRING("# describe NVMEM sections"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_nvmem_dir
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_nvmem_dir
+
+#if (CMD_NVMEM_SP - 0)
 static int
 cmd_nvmem_sp (const char * argstr)
 {
@@ -657,7 +704,7 @@ static sBSP430cliCommand dcmd_nvmem_sp = {
 #define LAST_SUB_COMMAND &dcmd_nvmem_sp
 #endif /* CMD_NVMEM_SP */
 
-#if (CMD_NVMEM - 0) && (CMD_NVMEM_READ - 0)
+#if (CMD_NVMEM_READ - 0)
 static int
 cmd_nvmem_read (const char * argstr)
 {
@@ -715,7 +762,7 @@ static sBSP430cliCommand dcmd_nvmem_read = {
 #define LAST_SUB_COMMAND &dcmd_nvmem_read
 #endif /* CMD_NVMEM_READ */
 
-#if (CMD_NVMEM - 0) && (CMD_NVMEM_MAC - 0)
+#if (CMD_NVMEM_MAC - 0)
 static int
 cmd_nvmem_mac (const char * argstr)
 {
@@ -743,7 +790,6 @@ static sBSP430cliCommand dcmd_nvmem_mac = {
 #define LAST_SUB_COMMAND &dcmd_nvmem_mac
 #endif /* CMD_NVMEM_MAC */
 
-#if (CMD_NVMEM - 0)
 static sBSP430cliCommand dcmd_nvmem = {
   .key = "nvmem",
   .next = LAST_COMMAND,
@@ -821,7 +867,6 @@ cmd_info_store (const char * argstr)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
-
 
 static int
 cmd_info_dump (const char * argstr)
