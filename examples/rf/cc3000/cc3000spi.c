@@ -84,7 +84,7 @@ static unsigned char wlan_rx_buffer[BSP430_CC3000SPI_RX_BUFFER_SIZE];
  * device. */
 #define CC3000_SPI_OPCODE_READ 3
 
-static unsigned int spiFlags_;
+static volatile unsigned int spiFlags_v_;
 static hBSP430halSERIAL spi_;
 static hBSP430halPORT halCSn_;
 static volatile sBSP430hplPORTIE * spiIRQport_;
@@ -92,12 +92,12 @@ static gcSpiHandleRx rxCallback_ni_;
 
 /* Assert chip select by clearing CSn */
 #define CS_ASSERT() do {                                                \
-    BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RF_CC3000_CSn_PORT_BIT;  \
+    BSP430_PORT_HAL_HPL_OUT(halCSn_) &= ~BSP430_RF_CC3000_CSn_PORT_BIT; \
   } while (0)
 
 /* De-assert chip select by setting CSn */
 #define CS_DEASSERT() do {                                              \
-    BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RF_CC3000_CSn_PORT_BIT;   \
+    BSP430_PORT_HAL_HPL_OUT(halCSn_) |= BSP430_RF_CC3000_CSn_PORT_BIT;  \
   } while (0)
 
 /* Implementation of tWlanReadInterruptPin for wlan_init().
@@ -139,11 +139,16 @@ writeWlanPin_ (unsigned char val)
 {
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
 
+  /* Done correctly, the application always starts with this disabled
+   * (by SpiOpen), then enables it (later in wlan_start()) then
+   * disables it (in wlan_stop()), always alternating.  For internal
+   * consistency, always assume we're turning things off, and change
+   * them to on only by request.  Specifically, we want the
+   * spiFlags_v_ to be cleared when the PWR_EN line is low. */
+  pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
+  spiFlags_v_ &= ~SPIFLAG_INITIALIZED;
   if (val) {
     pwr_en_port->out |= BSP430_RF_CC3000_PWR_EN_PORT_BIT;
-  } else {
-    pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
-    spiFlags_ &= ~SPIFLAG_INITIALIZED;
   }
 }
 
@@ -178,7 +183,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
                 void * context,
                 int idx)
 {
-  if (spiFlags_ & SPIFLAG_INITIALIZED) {
+  if (spiFlags_v_ & SPIFLAG_INITIALIZED) {
     int rv;
     const unsigned char opcode = CC3000_SPI_OPCODE_READ;
     unsigned char * rp;
@@ -213,7 +218,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
     /* If not initialized, this is the IRQ raised by the CC3000 to
      * notify the MCU that it is now powered up and active.  No data
      * to read, no callback to invoke. */
-    spiFlags_ |= SPIFLAG_INITIALIZED;
+    spiFlags_v_ |= SPIFLAG_INITIALIZED;
   }
   return 0;
 }
@@ -246,13 +251,13 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
     }
 
     /* Clear the SPI flags */
-    spiFlags_ = 0;
+    spiFlags_v_ = 0;
 
     /* Preserve the callback pointer */
     rxCallback_ni_ = pfRxHandler;
 
     /* Configure CC3000 power-enable pin and turn off power.  It'll be
-     * turned on in wlan_start(). */
+     * turned on in wlan_start() after this function returns. */
     pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
     pwr_en_port->dir |= BSP430_RF_CC3000_PWR_EN_PORT_BIT;
 
@@ -340,20 +345,25 @@ SpiWrite (unsigned char * tx_buffer,
 
   CS_ASSERT();
   /* Spin waiting for acknowledgement, then clear the flag that would
-   * look like a read request when we exit. */
+   * look like a read request when we exit.  If we collided with a
+   * read request from the CC3000, it'll re-assert after we're done
+   * writing (per
+   * http://processors.wiki.ti.com/index.php/CC3000_Host_Driver_Porting_Guide#Handling_Collision) */
   while (0 != readWlanInterruptPin_()) {
     ;
   }
   spiIRQport_->ifg &= ~BSP430_RF_CC3000_IRQn_PORT_BIT;
 
-  /* Special handling for first write */
-  if (! (spiFlags_ & SPIFLAG_DID_FIRST_WRITE)) {
+  /* Special handling for first write.  See
+   * http://processors.wiki.ti.com/index.php/CC3000_Serial_Port_Interface_%28SPI%29#First_Host_Write_Operation */
+  tp = tx_buffer;
+  if (! (spiFlags_v_ & SPIFLAG_DID_FIRST_WRITE)) {
     BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
-    tp = tx_buffer;
     rv = iBSP430spiTxRx_rh(spi_, tp, 4, 0, NULL);
     tp += 4;
     len -= 4;
     BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
+    spiFlags_v_ |= SPIFLAG_DID_FIRST_WRITE;
   }
   rv = iBSP430spiTxRx_rh(spi_, tp, len, 0, NULL);
   CS_DEASSERT();
