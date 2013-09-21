@@ -82,6 +82,11 @@ testNextQToken (void)
   tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0,len);
+  SET_INPUT("\"\"");
+  command_len += 1;
+  tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTp(tp, command+1);
+  BSP430_UNITTEST_ASSERT_EQUAL_FMTu(0,len);
 
   SET_INPUT("'one'x two");
   tp = xBSP430cliNextQToken(&mcommand, &command_len, &len);

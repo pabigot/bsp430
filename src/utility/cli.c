@@ -126,11 +126,11 @@ xBSP430cliNextQToken (const char * * commandp,
   }
 
   /* If we didn't find the end quote, or the end quote is not the end
-   * of the input and is followed by a non-space character, defer to
-   * the base implementation */
+   * of the input and is followed by a non-space/non-NUL character,
+   * defer to the base implementation */
   if (((lp - command) >= remaining)
       || (((lp + 1 - command) < remaining)
-          && ! isspace(lp[1]))) {
+          && ! ((0 == lp[1]) || isspace(lp[1])))) {
     return xBSP430cliNextToken(commandp, remainingp, lenp);
   }
   *commandp = lp+1;
