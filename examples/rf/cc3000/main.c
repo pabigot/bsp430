@@ -665,7 +665,7 @@ cmd_nvmem_read (const char * argstr)
   unsigned int fileid = 0;
   unsigned int len = 128;
   unsigned int ofs = 0;
-  unsigned char data[32];
+  unsigned char data[16];       /* Page size? */
   unsigned int end_read;
   unsigned int ui;
   size_t argstr_len = strlen(argstr);
@@ -690,6 +690,8 @@ cmd_nvmem_read (const char * argstr)
     if (sizeof(data) < nb) {
       nb = sizeof(data);
     }
+    /* NB: API documentation is wrong, return is 0 if successful, 4 if
+     * offset too large, 3 unknown error. */
     rc = nvmem_read(fileid, nb, ofs, data);
     if (0 == rc) {
       displayMemory(data, nb, ofs);
