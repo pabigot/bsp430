@@ -646,7 +646,10 @@ static sBSP430cliCommand dcmd_wlan = {
 /** Scan status when no scan has yet been initiated */
 #define X_WLAN_SCAN_STATUS_NONE 2
 
-/** Structure filled in by wlan_ioctl_get_scan_results() */
+/** Structure filled in by wlan_ioctl_get_scan_results().
+ *
+ * @warning The four bit fields work only with little-endian data with
+ * bits allocated from the least significant bit upward. */
 typedef struct sWLANFullScanResults {
   /** Number of results remaining, including this one */
   uint32_t network_count;
@@ -655,7 +658,7 @@ typedef struct sWLANFullScanResults {
   /** Non-zero if result is valid; alternatively, sign bit for
    * subsequent RSSI */
   unsigned int isValid:1;
-  /** Low 7 bits of a signed 8-bit negative RSSI in dBm. */
+  /** RSSI as the unsigned offset from -128 dBm. */
   unsigned int rssi:7;
   /** Security mode per WLAN_SEC_* */
   unsigned int securityMode:2;
@@ -727,8 +730,8 @@ cmd_scan_show (const char * argstr)
       }
       cputchar(' '); /* 17 chars plus separating space */
     }
-    cprintf("% 3d  ", (int)(signed char)(0x80 | sp->rssi)); /* RSSI */
-    cprintf("%-5u ", sp->entryTime);                       /* Time */
+    cprintf("% 3d  ", -128 + sp->rssi); /* RSSI */
+    cprintf("%-5u ", sp->entryTime);    /* Time */
     cputchar('\n');
   } while (1 < sp->network_count);
   return 0;
@@ -737,15 +740,19 @@ cmd_scan_show (const char * argstr)
 static int
 cmd_scan_start (const char * argstr)
 {
+  size_t argstr_len = strlen(argstr);
   unsigned long rc;
+  unsigned long interval_ms = 1;
   unsigned long delays[16];
   int i;
+
+  (void)iBSP430cliStoreExtractedUL(&argstr, &argstr_len, &interval_ms);
 
   for (i = 0; i < sizeof(delays)/sizeof(*delays); ++i) {
     delays[i] = 2000;
   }
 
-  rc = wlan_ioctl_set_scan_params(1U, /* Enable (1 is 10 min interval; other values are interval between active probe sweeps, in ms) */
+  rc = wlan_ioctl_set_scan_params(interval_ms, /* Enable (1 is 10 min interval; other values are interval between active probe sweeps, in ms) */
                                   100, /* Min dwell per channel */
                                   150, /* Max dwell per channel */
                                   5,  /* Probes within dwell.  0 will still send one probe. */
@@ -754,7 +761,7 @@ cmd_scan_start (const char * argstr)
                                   0,   /* SNR threshold */
                                   205, /* Probe TX power */
                                   delays); /* Timeout between scans */
-  cprintf("Scan start got %ld\n", rc);
+  cprintf("Scan start %lu ms got %ld\n", interval_ms, rc);
   return rc;
 }
 
