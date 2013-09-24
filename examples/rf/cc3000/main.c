@@ -675,6 +675,8 @@ typedef struct sWLANFullScanResults {
 static int
 cmd_scan_show (const char * argstr)
 {
+  size_t argstr_len = strlen(argstr);
+  int with_mem = 0;
   long rc;
   union {
     sWLANFullScanResults structure;
@@ -682,6 +684,7 @@ cmd_scan_show (const char * argstr)
   } uresult;
   const sWLANFullScanResults * const sp = &uresult.structure;
 
+  (void)iBSP430cliStoreExtractedI(&argstr, &argstr_len, &with_mem);
   cprintf("Scan results:\n"
           "SSID                             "
           "Scty  "
@@ -707,9 +710,9 @@ cmd_scan_show (const char * argstr)
       cprintf("Invalid\n");
       continue;
     }
-#if 0
-    displayMemory(uresult.bytes, sizeof(*sp), 0);
-#endif
+    if (with_mem) {
+      displayMemory(uresult.bytes, sizeof(*sp), 0);
+    }
     { /* SSID */
       const int nsp = sp->ssidNameLength;
       int i;
@@ -785,7 +788,7 @@ cmd_scan_stop (const char * argstr)
 
 static sBSP430cliCommand dcmd_scan_show = {
   .key = "show",
-  .help = HELP_STRING("# display scan results"),
+  .help = HELP_STRING(" [with_mem=0] # display scan results"),
   .next = NULL,
   .handler = iBSP430cliHandlerSimple,
   .param.simple_handler = cmd_scan_show
@@ -799,7 +802,7 @@ static sBSP430cliCommand dcmd_scan_stop = {
 };
 static sBSP430cliCommand dcmd_scan_start = {
   .key = "start",
-  .help = HELP_STRING("# initiate a scan"),
+  .help = HELP_STRING(" [interval=1] # start periodic scan (ms)"),
   .next = &dcmd_scan_stop,
   .handler = iBSP430cliHandlerSimple,
   .param.simple_handler = cmd_scan_start
