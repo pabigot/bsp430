@@ -22,6 +22,7 @@
 #include <cc3000/netapp.h>
 #include <cc3000/hci.h>
 #include <cc3000/security.h>
+#include <cc3000/socket.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -1123,6 +1124,39 @@ static sBSP430cliCommand dcmd_info = {
 #define LAST_COMMAND &dcmd_info
 
 #endif /* CMD_INFO */
+
+static int
+cmd_mdns (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  const char * name = "CC3000";
+  size_t name_len;
+  int rc;
+
+  name = xBSP430cliNextQToken(&argstr, &argstr_len, &name_len);
+  if (0 == name_len) {
+    rc = mdnsAdvertiser(0, "CC3000", strlen("CC3000"));
+  } else {
+    int i;
+    cprintf("Will advertize: '");
+    for (i = 0; i < name_len; ++i) {
+      cputchar(name[i]);
+    }
+    cprintf("'\n");
+    rc = mdnsAdvertiser(1, (char *)name, name_len);
+  }
+  cprintf("mdnsAdvertiser got %d\n", rc);
+  return 0;
+}
+static sBSP430cliCommand dcmd_mdns = {
+  .key = "mdns",
+  .help = HELP_STRING("[name] # enable/disable mDNS"),
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_mdns
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_mdns
 
 static int
 cmd_test (sBSP430cliCommandLink * chain,
