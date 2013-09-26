@@ -67,19 +67,27 @@ typedef struct sConnectParams {
   unsigned char passphrase[65];
 } sConnectParams;
 
+volatile unsigned long lastKeepAlive_utt;
+volatile unsigned long lastCallback_utt;
+volatile long lastEventType;
+
 static void wlan_cb (long event_type,
                      char * data,
                      unsigned char length)
 {
+  lastEventType = event_type;
+  lastCallback_utt = ulBSP430uptime_ni();
+
   /* Ignore unsolicited keep-alives, which occur every 10 seconds
    * whenever the WLAN has been started, regardless of whether it's
    * connected or scanning. */
   if (HCI_EVNT_WLAN_KEEPALIVE == event_type) {
+    lastKeepAlive_utt = lastCallback_utt;
     return;
   }
 
   cprintf("%s wlan_cb %#lx %u at %p SR %#x\n",
-          xBSP430uptimeAsText_ni(ulBSP430uptime_ni()),
+          xBSP430uptimeAsText_ni(lastCallback_utt),
           event_type, length, data, __read_status_register());
 }
 
@@ -1157,6 +1165,30 @@ static sBSP430cliCommand dcmd_mdns = {
 };
 #undef LAST_COMMAND
 #define LAST_COMMAND &dcmd_mdns
+
+static int
+cmd_uptime (const char * argstr)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  unsigned long now_utt;
+  char timebuf[BSP430_UPTIME_AS_TEXT_LENGTH];
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  now_utt = ulBSP430uptime_ni();
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  cprintf("Time: %s\n", xBSP430uptimeAsText(now_utt, timebuf));
+  cprintf("Last Event %lx: %s\n", lastEventType, xBSP430uptimeAsText(lastCallback_utt, timebuf));
+  cprintf("Last KA: %s\n", xBSP430uptimeAsText(lastKeepAlive_utt, timebuf));
+  return 0;
+}
+static sBSP430cliCommand dcmd_uptime = {
+  .key = "uptime",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_uptime
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_uptime
 
 static int
 cmd_test (sBSP430cliCommandLink * chain,
