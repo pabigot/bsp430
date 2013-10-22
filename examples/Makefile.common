@@ -76,6 +76,7 @@ TEST_PLATFORMS ?= \
     em430 \
     exp430f5438 \
     exp430f5529 \
+    exp430f5529lp \
     exp430fg4618 \
     exp430fr5739 \
     exp430g2 \

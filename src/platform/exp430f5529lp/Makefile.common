@@ -1,0 +1,8 @@
+MCU=msp430f5529
+MSPDEBUG_DRIVER ?= tilib
+# You can program with the ezfet interface, but it's really slow.
+#MSPDEBUG_DRIVER ?= ezfet
+# UCS needs CCACLK for DCO configuration
+# MCLK configurations need PMM module
+MODULES_CLOCK=periph/ucs periph/timer periph/pmm
+MODULES_PLATFORM_SERIAL=periph/usci5
