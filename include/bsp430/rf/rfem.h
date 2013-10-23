@@ -68,9 +68,29 @@
 #include <bsp430/rf.h>
 
 /** Define to a true value to indicate intent to use the RFEM
- * interface.  If supported by the platform, this will provide
+ * interface as provided through an attached <a
+ * href="http://www.ti.com/tool/boost-ccemadapter">EM Adapter
+ * BoosterPack</a>.  If supported by the platform, this will provide
  * definitions for the relevant ports and pins, and request the
  * relevant peripherals.
+ *
+ * @cppflag
+ * @affects #BSP430_RFEM_CCEM, #BSP430_RFEM
+ * @defaulted
+ */
+#ifndef configBSP430_RFEM_CCEM
+#define configBSP430_RFEM_CCEM 0
+#endif /* configBSP430_RFEM_CCEM */
+
+/** Define to a true value to indicate intent to use the platform's
+ * native RFEM interface.  If supported by the platform, this will
+ * provide definitions for the relevant ports and pins, and request
+ * the relevant peripherals.
+ *
+ * @note This flag is to be used when the platform natively supports
+ * an RFEM connector.  When the RFEM connector is provided through a
+ * booster pack (e.g. #configBSP430_RFEM_CCEM), the request for the
+ * feature should be made by setting that option.
  *
  * @cppflag
  * @affects #BSP430_RFEM
@@ -84,15 +104,31 @@
  * platform-specific headers. */
 #if defined(BSP430_DOXYGEN)
 
-/** Indicate that the RFEM interface is available on the platform.
- * This is normally set by the platform-specific header included by
- * <bsp430/platform.h> when #configBSP430_RFEM is true.  If it is
- * unset or false, the platform does not support the RFEM interface
- * and RFEM identifiers in this module should not be referenced.
+/** Indicate that the RFEM interface is available on the platform
+ * through use of an attached <a
+ * href="http://www.ti.com/tool/boost-ccemadapter">EM Adapter
+ * BoosterPack</a>.  This is normally set by the platform-specific
+ * header included by <bsp430/platform.h> when #configBSP430_RFEM_CCEM
+ * is true.  If it is unset or false, the platform does not support
+ * the RFEM interface through the EM Adapter Booster Pack.
+ *
+ * This flag is defined only if #configBSP430_RFEM_CCEM is true.
+ *
+ * @dependency #configBSP430_RFEM_CCEM
+ * @platformvalue */
+#define BSP430_RFEM_CCEM include <bsp430/platform.h>
+
+/** Indicate that the RFEM interface is available on the platform,
+ * either natively or thorough a booster pack.  This is normally set
+ * by the platform-specific header included by <bsp430/platform.h>
+ * when #configBSP430_RFEM (or a RFEM-supporting booster-pack
+ * configuration flag) is true.  If it is unset or false, the platform
+ * does not support the RFEM interface and RFEM identifiers in this
+ * module should not be referenced.
  *
  * This flag is defined only if #configBSP430_RFEM is true.
  *
- * @dependency #configBSP430_RFEM
+ * @dependency #configBSP430_RFEM, #configBSP430_RFEM_CCEM
  * @platformvalue */
 #define BSP430_RFEM include <bsp430/platform.h>
 

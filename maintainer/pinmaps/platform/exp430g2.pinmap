@@ -1,31 +1,34 @@
 # EXP430G2 Launchpad
 #
-# The EXP430G2 has two 10-pin headers, J1 and J2, accommodating both 14-pin
-# and 20-pin DIP form factors.  For the purposes of this document, J1 and J2
-# are independently numbered starting from the top of the board.  I.e., J1.1
-# (VCC) corresponds to MCU pin 1, while J2.1 (GND) corresponds to MCU pin 14
-# for 14-pin devices and MCU pin 20 for 20-pin devices.
+# The EXP430G2 has two 10-pin headers, J1 (booster pack standard header
+# A) and J2 (booster pack standard header B), accommodating both 14-pin
+# and 20-pin DIP form factors.  For the purposes of this document, J1
+# and J2 are independently numbered starting from the top of the board,
+# and use the booster-pack standard names.  I.e., J1.1 (VCC) is denoted
+# A.1 and corresponds to MCU pin 1, while J2.1 (GND) is denoted B.1 and
+# corresponds to MCU pin 14 for 14-pin devices and MCU pin 20 for 20-pin
+# devices.
 #
 # The MCU port identifiers here correspond to the ones silkscreened onto the
 # PCB.  It is assumed any MCU placed into this platform uses this layout.
 #
-J1.1	VCC
-J1.2	P1.0
-J1.3	P1.1
-J1.4	P1.2
-J1.5	P1.3
-J1.6	P1.4
-J1.7	P1.5
-J1.8	P2.0
-J1.9	P2.1
-J1.10	P2.2
-J2.1	GND
-J2.2	P2.6
-J2.3	P2.7
-J2.4	TEST
-J2.5	RST
-J2.6	P1.7
-J2.7	P1.6
-J2.8	P2.5
-J2.9	P2.4
-J2.10	P2.3
+A.1	VCC
+A.2	P1.0
+A.3	P1.1
+A.4	P1.2
+A.5	P1.3
+A.6	P1.4
+A.7	P1.5
+A.8	P2.0
+A.9	P2.1
+A.10	P2.2
+B.1	GND
+B.2	P2.6
+B.3	P2.7
+B.4	TEST
+B.5	RST
+B.6	P1.7
+B.7	P1.6
+B.8	P2.5
+B.9	P2.4
+B.10	P2.3

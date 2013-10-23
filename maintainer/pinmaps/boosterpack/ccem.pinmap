@@ -1,0 +1,22 @@
+# http://www.ti.com/tool/boost-ccemadapter
+# Assumes default GPIO config GPIO0=GPIOA, GPIO2=GPIOB
+A.1     3V3
+A.2     RF1.12
+A.3     RF1.9
+A.4     RF1.7
+A.5     n/c
+A.6     n/c
+A.7     RF1.16
+A.8     n/c
+A.9     n/c
+A.10    RF2.19
+B.1     GND
+B.2     RF1.10
+B.3     RF1.14
+B.4     n/c
+B.5     n/c
+B.6     RF1.18
+B.7     RF1.20
+B.8     RF2.15
+B.9     RF1.3
+B.10    RF2.18

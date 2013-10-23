@@ -16,7 +16,11 @@
 #define configBSP430_UPTIME 1
 
 /* Request RFEM interface resources */
+#if (BSP430_PLATFORM_EXP430F5529LP - 0)
+#define configBSP430_RFEM_CCEM 1
+#else /* native platform */
 #define configBSP430_RFEM 1
+#endif /* native platform */
 #define configBSP430_PLATFORM_RF 1
 #define configBSP430_RF_CC1125EMK 1
 

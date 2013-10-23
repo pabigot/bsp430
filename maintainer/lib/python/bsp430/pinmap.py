@@ -43,6 +43,9 @@ class RFEMPin (PinmapBase):
     def __cmp__ (self, other):
         return cmp(self.hdr, other.hdr) or cmp(self.pin, other.pin)
 
+    def __str__ (self):
+        return 'RF%u.%u' % (self.hdr, self.pin)
+
 class PeripheralBase (PinmapBase):
     @classmethod
     def ProcessDirective (cls, ln):
@@ -101,6 +104,22 @@ class Timer (PeripheralBase):
         if is_config:
             return ('_TIMER_PERIPH_CPPID',)
         return ( '_TIMER_PERIPH_HANDLE', '_TIMER_CCIDX', '_TIMER_CCIS' )
+
+class BPHeaderPin (PeripheralBase):
+    Template_re = re.compile('(?P<hdr>[ABCD])\.(?P<pin>\d+)$')
+
+    def __init__ (self, hdr, pin):
+        self.hdr = hdr
+        self.pin = int(pin)
+
+    def __hash__ (self):
+        return hash(self.astuple())
+
+    def astuple (self):
+        return (self.hdr, self.pin)
+
+    def __str__ (self):
+        return '%s.%u' % (self.hdr, self.pin)
 
 class Port (PeripheralBase):
     Template_re = re.compile('P(?P<port>\d+)\.(?P<pin>\d)$')

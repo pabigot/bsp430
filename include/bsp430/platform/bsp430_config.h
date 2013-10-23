@@ -404,7 +404,7 @@
 /** @cond DOXYGEN_EXCLUDE */
 /* Explicitly disable RFEM if not previously explicitly configured */
 #ifndef configBSP430_RFEM
-#define configBSP430_RFEM 0
+#define configBSP430_RFEM (configBSP430_RFEM_CCEM - 0)
 #endif /* configBSP430_RFEM */
 /* @endcond */
 

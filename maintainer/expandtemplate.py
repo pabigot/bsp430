@@ -590,18 +590,32 @@ isr_%(INSTANCE)s (void)
 #define BSP430_%(FUNCTIONAL)s_PERIPH_HANDLE BSP430_PERIPH_%(INSTANCE)s''',
     }
 
-def RFEMPlatformMap (platform):
+def RFEMPlatformMap (platform, indirmap={}):
     platform_path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', 'platform', '%s.pinmap' % (platform))
     rfmap = {}
     for l in bsp430.pinmap.GenerateLines(platform_path):
         (hdr, pin) = l.split()
         rfem = bsp430.pinmap.RFEMPin.Create(hdr)
+        if rfem is None:
+            rfem = indirmap.get(bsp430.pinmap.BPHeaderPin.Create(hdr))
         port = bsp430.pinmap.Port.Create(pin)
         if not (rfem and port):
             continue
         assert not rfem in rfmap
         rfmap[rfem] = port
     return rfmap
+
+def RFEMBuildBPIndirMap (boosterpack):
+    bp_path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', 'boosterpack', '%s.pinmap' % (boosterpack))
+    bpmap = {}
+    for l in bsp430.pinmap.GenerateLines(bp_path):
+        (bph, rfpin) = l.split()
+        bp = bsp430.pinmap.BPHeaderPin.Create(bph)
+        rf = bsp430.pinmap.RFEMPin.Create(rfpin)
+        if not (bp and rf):
+            continue
+        bpmap[bp] = rf
+    return bpmap
 
 def RFEMMCUFunctionMap (mcu, serial_port):
     mcu_path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', 'mcu', '%s.pinmap' % (mcu))
@@ -633,21 +647,29 @@ def RFEMMCUFunctionMap (mcu, serial_port):
             sel += 1
     return (serial_periph, mcumap)
 
-def RFEMBuildHeaderMCULinkage (platform, mcu):
-    rfmap = RFEMPlatformMap(platform)
+def RFEMBuildPlatformMCULinkage (platform, mcu, indirmap):
+    rfmap = RFEMPlatformMap(platform, indirmap)
     (serial_periph, mcumap) = RFEMMCUFunctionMap(mcu, rfmap[bsp430.pinmap.RFEMPin(1, 20)])
     return (serial_periph, rfmap, mcumap)
 
 def fn_rfem_expand (subst_map, idmap, is_config):
     text = []
-    (serial_periph, rfmap, mcumap) = RFEMBuildHeaderMCULinkage(idmap['platform'], idmap['mcu'])
+    cpptag = 'RFEM'
+    indirmap = {}
+    bp = idmap.get('bp', None)
+    if bp is not None:
+        indirmap = RFEMBuildBPIndirMap(idmap.get('bp'))
+        cpptag = 'RFEM_{}'.format(bp.upper())
+    (serial_periph, rfmap, mcumap) = RFEMBuildPlatformMCULinkage(idmap['platform'], idmap['mcu'], indirmap)
     if is_config:
-        text.append('#if (configBSP430_RFEM - 0)')
+        text.append('#if (configBSP430_{} - 0)'.format(cpptag))
     else:
-        text.append('#if (configBSP430_RFEM - 0)')
-        text.append('#define BSP430_RFEM 1')
-        text.append('#endif /* configBSP430_RFEM */')
-        text.append('#if (BSP430_RFEM - 0)')
+        text.append('#if (configBSP430_{} - 0)'.format(cpptag))
+        text.append('#define BSP430_{} 1'.format(cpptag))
+        if bp is not None:
+            text.append('#define BSP430_RFEM 1')
+        text.append('#endif /* configBSP430_{} */'.format(cpptag))
+        text.append('#if (BSP430_{} - 0)'.format(cpptag))
     if serial_periph is not None:
         text.append(serial_periph.expandTemplate('RFEM_SERIAL', is_config=is_config))
         if is_config:
@@ -660,9 +682,9 @@ def fn_rfem_expand (subst_map, idmap, is_config):
         if mcumap.get(port, None) is not None:
             text.append(mcumap[port].expandTemplate(tag, is_config))
     if is_config:
-        text.append('#endif /* configBSP430_RFEM */')
+        text.append('#endif /* configBSP430_{} */'.format(cpptag))
     else:
-        text.append('#endif /* BSP430_RFEM */')
+        text.append('#endif /* BSP430_{} */'.format(cpptag))
     return text
 
 def fn_rfem_config (subst_map, idmap):

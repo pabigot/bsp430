@@ -1,0 +1,49 @@
+# http://www.ti.com/tool/boostxl-senshub
+#
+# NOTE: Although this board provides an RFEM connector, the pin
+# assignments do not allow it to be used on MSP430 booster packs: RF1.20
+# which is the key RF SPI identifier is mapped to B.8 for which the
+# standard BoosterPack function is a display chip-select.
+#
+# In particular the EXP430F5529LP does not support SPI on the
+# pins connected to the RFEM.
+A.1	3V3
+A.2	n/c
+A.3	RF1.9
+A.4	RF1.7
+A.5	n/c
+A.6	_INT_LT
+A.7	n/c
+A.8	RF1.18
+A.9	RF1.13
+A.10	RF1.11
+B.1	GND
+B.2	_INT_MOTION
+B.3	_INT_TEMP
+B.4	n/c
+B.5	n/c
+B.6	_I2C_SDA
+B.7	_I2C_SCL
+B.8	RF1.20
+B.9	RF1.14
+B.10	RF1.16
+C.1	n/c
+C.2	n/c
+C.3	n/c
+C.4	n/c
+C.5	_LED_GPIO
+C.6	_S1_GPIO
+C.7	_S2_GPIO
+C.8	RF1.12
+C.9	RF2.13
+C.10	n/c
+D.1	n/c
+D.2	n/c
+D.3	RF1.10
+D.4	RF1.3
+D.5	RF2.18
+D.6	RF2.19
+D.7	RF2.15
+D.8	RF2.20
+D.9	n/c
+D.10	n/c
