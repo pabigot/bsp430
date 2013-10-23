@@ -710,22 +710,22 @@ def fn_emk_expand (subst_map, idmap, is_config):
     signals = []
     emk_path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', 'rfem', '%s.pinmap' % (emk,))
     for l in bsp430.pinmap.GenerateLines(emk_path):
-        (signal, pin) = l.split()
+        (signal, rfempin) = l.split()
         sig_tag = 'RF_%s_%s' % (tag.upper(), signal)
         sig_prefix = 'BSP430_%s' % (sig_tag,)
         is_gpio = (gpio_signals is not None) and (signal in gpio_signals)
         signals.append( (sig_prefix, is_gpio) )
         if mcu:
-            port = bsp430.pinmap.Port.Create(pin)
-            assert port is not None
+            port = bsp430.pinmap.Port.Create(rfempin)
+            assert port is not None, 'invalid port %s' % (rfempin,)
             timer = mcumap[port]
             text.append(port.expandTemplate(sig_tag, is_config))
             if is_gpio and (timer is not None) and (timer.ccis is not None):
                 text.append(timer.expandTemplate(sig_tag, is_config))
         else:
-            rf = bsp430.pinmap.RFEMPin.Create(pin)
+            rf = bsp430.pinmap.RFEMPin.Create(rfempin)
+            assert rf is not None, 'invalid RFEM header %s' % (rfempin,)
             rf_prefix = 'BSP430_%s' % (rf.prefix(),)
-            assert rf is not None, 'no rf %s on %s' % (pin, emk)
             for sfx in bsp430.pinmap.Port.TemplateSuffixes(is_config):
                 appendDefine(text, '%s%s' % (rf_prefix, sfx), rf_prefix, sig_prefix, sfx)
             if is_gpio:
