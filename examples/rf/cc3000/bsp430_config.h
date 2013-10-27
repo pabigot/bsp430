@@ -23,6 +23,7 @@
 /* Request RFEM interface resources specific to the CC3000EM.  NB:
  * CCEM maps SPI_IRQ to P6.5 on EXP430F5529LP; since that port is not
  * interrupt-enabled the CC3000 can't be used on that platform. */
+#define configBSP430_RFEM_CCEM 1
 #define configBSP430_RFEM 1
 #define configBSP430_RF_CC3000EM 1
 
