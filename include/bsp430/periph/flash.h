@@ -34,11 +34,10 @@
  * @brief Hardware presentation/abstraction for flash memory peripheral (FLASH).
  *
  * A flash memory peripherals is available on almost every MSP430 MCU,
- * and may be identified as either FLASH or FLASH2.  It is not clear
- * what the differences are, as different MCUs in the same family have
- * different markings.  CPUX does not appear to be a distinguishing
- * characteristic either.  The differences between these peripherals
- * are not made visible in the interface provided by this module.
+ * and may be identified as either FLASH or FLASH2.  Different MCUs in
+ * the same family are one or the other.  The differences between
+ * these peripherals are visible in the interface provided by this
+ * module.
  *
  * @section h_periph_flash_opt Module Configuration Options
  *

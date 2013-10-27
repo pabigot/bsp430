@@ -45,6 +45,11 @@
 
 #if (BSP430_MODULE_FLASH - 0)
 
+/* Fix API inconsistency between FLASH2 and FLASH modules */
+#if defined(__MSP430_HAS_FLASH2__)
+#define FWPW FWKEY
+#endif /* FWPW */
+
 int
 iBSP430flashEraseSegment_ni (const void * addr)
 {
