@@ -17,6 +17,7 @@
 #include <bsp430/utility/led.h>
 #include <bsp430/utility/cli.h>
 #include "cc3000spi.h"
+#include <cc3000/host_driver_version.h>
 #include <cc3000/wlan.h>
 #include <cc3000/nvmem.h>
 #include <cc3000/netapp.h>
@@ -910,6 +911,7 @@ cmd_nvmem_sp (const char * argstr)
   memset(patch_version, -1, sizeof(patch_version));
   rv = nvmem_read_sp_version(patch_version);
   cprintf("sp ret %u: %u.%u\n", rv, patch_version[0], patch_version[1]);
+  cprintf("Host driver %u\n", DRIVER_VERSION_NUMBER);
   return 0;
 }
 static sBSP430cliCommand dcmd_nvmem_sp = {
@@ -1306,6 +1308,7 @@ void main (void)
 #if BSP430_PLATFORM_PERIPHERAL_HELP
   cprintf("SPI Pins: %s\n", xBSP430platformPeripheralHelp(BSP430_RF_CC3000_SPI_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_SPI3));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
+  cprintf("CC3000 host driver: %u\n", DRIVER_VERSION_NUMBER);
   cprintf(__DATE__ " " __TIME__ "\n");
 
   /* Initialization can be done with interrupts disabled, since the
