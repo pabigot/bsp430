@@ -442,7 +442,7 @@ cmd_wlan_smart_aes (const char * argstr)
   unsigned char keybuf[AES128_KEY_SIZE];
   long rc;
 
-  while (isspace(*argstr)) {
+  while (isspace((unsigned char)*argstr)) {
     ++argstr;
   }
   argstr_len = strlen(argstr);

@@ -71,13 +71,13 @@ xBSP430cliNextToken (const char * * commandp,
 
   /* Skip leading space up to end of input */
   while (((rv - command) < remaining)
-         && isspace(*rv)) {
+         && isspace((unsigned char)*rv)) {
     ++rv;
   }
   /* Skip non-space up to end of input */
   lp = rv;
   while (((lp - command) < remaining)
-         && ! isspace(*lp)) {
+         && ! isspace((unsigned char)*lp)) {
     ++lp;
   }
   /* Updated command string */
@@ -105,7 +105,7 @@ xBSP430cliNextQToken (const char * * commandp,
 
   /* Skip leading space up to end of input */
   while (((rv - command) < remaining)
-         && isspace(*rv)) {
+         && isspace((unsigned char)*rv)) {
     ++rv;
   }
 
@@ -130,7 +130,7 @@ xBSP430cliNextQToken (const char * * commandp,
    * defer to the base implementation */
   if (((lp - command) >= remaining)
       || (((lp + 1 - command) < remaining)
-          && ! ((0 == lp[1]) || isspace(lp[1])))) {
+          && ! ((0 == lp[1]) || isspace((unsigned char)lp[1])))) {
     return xBSP430cliNextToken(commandp, remainingp, lenp);
   }
   *commandp = lp+1;
@@ -567,9 +567,9 @@ iBSP430cliConsoleBufferProcessInput ()
       *cbEnd_ = 0;
     } else if (KEY_KILL_WORD == c) {
       char * kp = cbEnd_;
-      while (--kp > consoleBuffer_ && isspace(*kp)) {
+      while (--kp > consoleBuffer_ && isspace((unsigned char)*kp)) {
       }
-      while (--kp > consoleBuffer_ && !isspace(*kp)) {
+      while (--kp > consoleBuffer_ && !isspace((unsigned char)*kp)) {
       }
       ++kp;
       cprintf("\e[%uD\e[K", (unsigned int)(cbEnd_ - kp));
