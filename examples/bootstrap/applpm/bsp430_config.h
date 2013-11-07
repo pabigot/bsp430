@@ -5,7 +5,9 @@
 #endif /* BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 */
 
 /* Application does output: support spin-for-jumper */
+#ifndef configBSP430_PLATFORM_SPIN_FOR_JUMPER
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
+#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
 
 /* Support console output */
 #define configBSP430_CONSOLE 1
