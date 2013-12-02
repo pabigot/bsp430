@@ -298,6 +298,8 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
    * checking for a corresponding preprocessor definition */
 #if defined(CALDCO_1MHZ_)
   TRY_FREQ(1MHZ, 1000000UL);
+#else
+#error No calibration constants
 #endif /* CALDCO_1MHZ */
 #if defined(CALDCO_8MHZ_)
   TRY_FREQ(8MHZ, 8000000UL);
