@@ -165,14 +165,15 @@ void main ()
   cprintf("Clear DMA0: CTL %04x ; SA %04x ; DA %04x ; SZ %04x\n",
           chp->ctl, (unsigned int)chp->sa, (unsigned int)chp->da, chp->sz);
   cprintf("Buffer %u bytes at %p, src8 at %p, src16 at %p\n",
-          sizeof(buffer), buffer, &src8, &src16);
+          (unsigned int)sizeof(buffer), buffer, &src8, &src16);
   cprintf("Initial %u .. %u\n", buffer[0], buffer[sizeof(buffer)-1]);
 
   /* Time zeroing an array using memset */
   t0 = uiBSP430timerSyncCounterRead_ni(hrt);
   memset(buffer, src8, sizeof(buffer));
   t1 = uiBSP430timerSyncCounterRead_ni(hrt);
-  cprintf("memset %u bytes took %u: %u .. %u\n", sizeof(buffer),
+  cprintf("memset %u bytes took %u: %u .. %u\n",
+          (unsigned int)sizeof(buffer),
           t1 - t0, buffer[0], buffer[sizeof(buffer)-1]);
 
   chp->ctl = DMADT_1 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE;
@@ -187,7 +188,8 @@ void main ()
   chp->ctl |= DMAREQ;
   t1 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl &= ~DMAEN;
-  cprintf("DMA init %u bytes from %u took %u: %u .. %u\n", sizeof(buffer), src8,
+  cprintf("DMA init %u bytes from %u took %u: %u .. %u\n",
+          (unsigned int)sizeof(buffer), src8,
           t1 - t0, buffer[0], buffer[sizeof(buffer)-1]);
 
   ++src8;
@@ -204,7 +206,8 @@ void main ()
   t1 = uiBSP430timerSyncCounterRead_ni(hrt);
   chp->ctl &= ~DMAEN;
 
-  cprintf("DMA init %u words from %04x took %u: %u .. %u\n", sizeof(buffer), src16,
+  cprintf("DMA init %u words from %04x took %u: %u .. %u\n",
+          (unsigned int)sizeof(buffer), src16,
           t1 - t0, buffer[0], buffer[sizeof(buffer)-1]);
 
   chp->ctl = DMADT_1 | DMASRCINCR_3 | DMADSTINCR_3 | DMADSTBYTE | DMASRCBYTE;
@@ -318,7 +321,7 @@ void main ()
       dmat_hpl->cctl[ccidx] &= ~CCIFG;
     }
     dmat_hpl->ctl &= ~(MC0 | MC1);
-    cprintf("Manual capture %u entries; deltas:\n", cpe - captures);
+    cprintf("Manual capture %u entries; deltas:\n", (unsigned int)(cpe - captures));
     cp = captures;
     while (++cp < cpe) {
       cprintf(" %7u", cp[0] - cp[-1]);
@@ -348,7 +351,9 @@ void main ()
     dmat_hpl->ctl &= ~(MC0 | MC1);
     lt1 = ulBSP430uptime_ni();
 
-    cprintf("DMA capture %u entries counter %d in %lu ms; deltas:\n", channel0.counter, cpe - captures, BSP430_UPTIME_UTT_TO_MS(lt1 - lt0));
+    cprintf("DMA capture %u entries counter %u in %lu ms; deltas:\n",
+            channel0.counter, (unsigned int)(cpe - captures),
+            BSP430_UPTIME_UTT_TO_MS(lt1 - lt0));
     cp = captures;
     while (++cp < cpe) {
       cprintf(" %7u", cp[0] - cp[-1]);

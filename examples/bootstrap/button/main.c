@@ -19,8 +19,8 @@
 typedef struct sButtonState {
   sBSP430halISRIndexedChainNode button_cb; /* Callback structure */
   const unsigned char bit;      /* Bit for button */
-  volatile int in_mask;         /* Bit set if button is pressed */
-  volatile int count;           /* Number of interrupts occured */
+  volatile unsigned int in_mask; /* Bit set if button is pressed */
+  volatile unsigned int count;  /* Number of interrupts occured */
 } sButtonState;
 
 static int

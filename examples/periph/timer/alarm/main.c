@@ -33,7 +33,7 @@ unsigned long alarm_Hz;
 #define MAX_TIMERS 7
 sBSP430timerAlarm alarm_data[MAX_TIMERS];
 hBSP430timerAlarm alarm[MAX_TIMERS];
-size_t nTimers;
+unsigned int nTimers;
 unsigned long wakeups;
 
 enum {

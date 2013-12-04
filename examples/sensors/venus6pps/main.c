@@ -80,7 +80,7 @@ typedef struct sAppGPSState {
   const uint8_t * msg;
 
   /** Number of octets in the msg field. */
-  size_t msg_len;
+  unsigned int msg_len;
 
   /** Driver-provided timestamp recording when the contents of @p msg
    * started appearing on the serial line. */

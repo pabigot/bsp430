@@ -95,7 +95,7 @@ static void wlan_cb (long event_type,
 static void
 displayMemory (const uint8_t * dp,
                size_t len,
-               size_t offset)
+               uintptr_t offset)
 {
   char asciiz[17];
   const uint8_t * const dpe = dp + len;
@@ -111,7 +111,7 @@ displayMemory (const uint8_t * dp,
       if (dp >= dpe) {
         break;
       }
-      cprintf("%04x ", offset);
+      cprintf("%04x ", (unsigned int)offset);
       ap = asciiz;
     } else if (0 == (offset % 8)) {
       cprintf(" ");
@@ -288,7 +288,7 @@ cmd_wlan_ssid (const char * argstr)
     connectParams.ssid[len] = 0;
     connectParams.ssid_len = len;
   }
-  cprintf("AP SSID is %s (%u chars)\n", connectParams.ssid, connectParams.ssid_len);
+  cprintf("AP SSID is %s (%u chars)\n", connectParams.ssid, (unsigned int)connectParams.ssid_len);
   return 0;
 }
 
@@ -302,14 +302,14 @@ cmd_wlan_passphrase (const char * argstr)
   tp = xBSP430cliNextQToken(&argstr, &remaining, &len);
   if (0 < len) {
     if (sizeof(connectParams.passphrase) <= (len+1)) {
-      cprintf("ERR: Passphrase too long (> %u chars + EOS)\n", sizeof(connectParams.passphrase));
+      cprintf("ERR: Passphrase too long (> %u chars + EOS)\n", (unsigned int)sizeof(connectParams.passphrase));
     } else {
       memcpy(connectParams.passphrase, tp, len);
       connectParams.passphrase[len] = 0;
       connectParams.passphrase_len = len;
     }
   }
-  cprintf("AP passphrase is '%s' (%u chars)\n", connectParams.passphrase, connectParams.passphrase_len);
+  cprintf("AP passphrase is '%s' (%u chars)\n", connectParams.passphrase, (unsigned int)connectParams.passphrase_len);
   return 0;
 }
 
@@ -856,7 +856,7 @@ cmd_nvmem_dir (const char * argstr)
   const sNVMEMFileIds * fp = nvmemFiles;
   const sNVMEMFileIds * const fpe = fp + sizeof(nvmemFiles) / sizeof(*nvmemFiles);
 
-  cprintf("%u NVMEM files with %u documented:\n", NVMEM_MAX_ENTRY, fpe-fp);
+  cprintf("%u NVMEM files with %u documented:\n", NVMEM_MAX_ENTRY, (unsigned int)(fpe-fp));
   cprintf("ID  Size  Description\n");
   while (fp < fpe) {
     cprintf("%2d  %4d  %s\n", fp->fileid, fp->size, fp->tag);

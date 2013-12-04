@@ -896,7 +896,7 @@ iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
         ++ci;
       }
       if (ci < ccd.ncandidates) {
-        cprintf(" (+ %u more)", ccd.ncandidates - ci);
+        cprintf(" (+ %u more)", (unsigned int)(ccd.ncandidates - ci));
       }
       cputchar('\n');
       flags |= eBSP430cliConsole_REPAINT;

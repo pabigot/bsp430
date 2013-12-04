@@ -210,10 +210,10 @@ cmd_quote (const char * argstr)
   size_t arglen = strlen(argstr);
   size_t len;
 
-  cprintf("Extracting text tokens from %u characters\n", arglen);
+  cprintf("Extracting text tokens from %u characters\n", (unsigned int)arglen);
   while (0 < arglen) {
     const char * tp = xBSP430cliNextQToken(&argstr, &arglen, &len);
-    cprintf("%u-char token <", len);
+    cprintf("%u-char token <", (unsigned int)len);
     while (len--) {
       cputchar(*tp++);
     }
@@ -300,7 +300,9 @@ cmd_say (sBSP430cliCommandLink * chain,
     np = xBSP430cliHelperStringsExtract(&completion_helper_say, &command, &command_len);
     if (NULL != np) {
       ++nmatches;
-      cprintf("Match %s for %u consumed position %u\n", *np, ocl - command_len, np - numbers);
+      cprintf("Match %s for %u consumed position %u\n", *np,
+              (unsigned int)(ocl - command_len),
+              (unsigned int)(np - numbers));
     }
   }
   cprintf("%u matches found\n", nmatches);

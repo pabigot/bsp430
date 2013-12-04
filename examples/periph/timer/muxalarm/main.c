@@ -35,7 +35,7 @@ static unsigned int total_fired;
 static volatile unsigned long late_min_v;
 static volatile unsigned long late_max_v;
 
-size_t
+unsigned int
 cacheQueue_ni (hBSP430timerMuxSharedAlarm sap)
 {
   hBSP430timerMuxAlarm map = sap->alarms;
@@ -47,7 +47,7 @@ cacheQueue_ni (hBSP430timerMuxSharedAlarm sap)
     map = map->next;
     ++qp;
   }
-  return qp - queue;
+  return (unsigned int)(qp - queue);
 }
 
 void
@@ -64,7 +64,7 @@ displayQueue (hBSP430timerMuxSharedAlarm sap)
   char * sep = "";
   sAlarmQueue * qp = queue;
   sAlarmQueue * qpe;
-  size_t nq;
+  unsigned int nq;
 
   BSP430_CORE_DISABLE_INTERRUPT();
   do {

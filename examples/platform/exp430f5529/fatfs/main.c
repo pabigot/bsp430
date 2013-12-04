@@ -115,7 +115,8 @@ void main ()
     if (FR_OK == rv) {
       UINT nbytes = -1;
       rv = f_read(&fil_obj, buffer, sizeof(buffer), &nbytes);
-      cprintf("Read boot log %u got %d with %u read\n", sizeof(buffer), rv, nbytes);
+      cprintf("Read boot log %u got %d with %u read\n",
+              (unsigned int)sizeof(buffer), rv, nbytes);
       if (0 == rv) {
         buffer[nbytes] = 0;
         cputs("Contents:");

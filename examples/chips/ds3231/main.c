@@ -122,7 +122,7 @@ void main ()
     cprintf("Address set got %d\n", rc);
   }
   while (1) {
-    cprintf("Regs %u long\n", sizeof(regs));
+    cprintf("Regs %u long\n", (unsigned int)sizeof(regs));
     memset(&regs, 0, sizeof(regs));
     rc = iBSP430i2cRxData_rh(i2c, (uint8_t*)&regs, sizeof(regs));
     if (0 > rc) {
