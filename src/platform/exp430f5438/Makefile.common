@@ -2,7 +2,7 @@
 # bad silicon.
 MCU ?= msp430f5438a
 
-MSPDEBUG_DRIVER ?= -j uif
+MSPDEBUG_DRIVER ?= tilib
 # UCS needs CCACLK for DCO configuration
 # MCLK configurations need PMM module
 MODULES_CLOCK=periph/ucs periph/timer periph/pmm
