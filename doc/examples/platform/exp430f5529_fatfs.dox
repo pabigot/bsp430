@@ -38,7 +38,14 @@ The <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529</a>
 happens to have a micro SD card peripheral.
 
 The bridge is in the @c bsp430mmc.c file, which is a lightly modified
-version of the generic example that comes with the FatFs sample package.
+version of the generic example that came with the FatFs sample package
+before sometime in 2013 when it was removed (post R0.09b).
+
+This has been tested with R0.09 and R0.10 versions of FatFS.  By default
+it will expect R0.10, which includes an API change.  If you are using an
+older release (e.g. R0.09b) you need to tell the source code, because
+there's no usable information in the FatFS headers.  Add @c
+EXT_CPPFLAGS=-DFATFS_IS_PRE_R0_10=1 to the @c make command line.
 
 \section ex_platform_exp430f5529_fatfs_bsp430mmc bsp430mmc.c
 

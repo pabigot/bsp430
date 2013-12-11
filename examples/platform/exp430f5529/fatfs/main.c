@@ -5,7 +5,10 @@
  *
  * You'll need to install the FatFs distribution in a subdirectory
  * named "fatfs".  This implementation has been tested with FatFs
- * R0.09a.
+ * R0.10 and R0.09b.
+ *
+ * @note: If you use a version older than R0.10 you need to add @c
+ * EXT_CPPFLAGS=-DFATFS_IS_PRE_R0_10=1 to the make command line.
  *
  * You can get fatfs from http://elm-chan.org/fsw/ff/00index_e.html
  *
@@ -29,9 +32,12 @@
  * definition from FatFS. */
 #undef DIR
 
-#include "inttypes.h"
 #include "diskio.h"
 #include "ff.h"
+
+/* Get definitions for FATFS_IS_PRE_R0_10 and other flags that
+ * accommodate API changes. */
+#include "ff_compat.h"
 
 char buffer[1024];
 
@@ -88,7 +94,11 @@ void main ()
   rv = iBSP430pmmSetCoreVoltageLevel_ni(PMMCOREV_3);
   cprintf("Set core voltage gets %d\n", rv);
 
+#if (FATFS_IS_PRE_R0_10 - 0)
   rv = f_mount(0, &fso);
+#else /* Pre R0.10 */
+  rv = f_mount(&fso, "", 1);
+#endif /* Pre R0.10 */
   cprintf("mount gets %d\n", rv);
   if (FR_OK == rv) {
     rv = f_opendir(&dir_obj, "/");
@@ -134,7 +144,11 @@ void main ()
     }
   }
 
+#if (FATFS_IS_PRE_R0_10 - 0)
   f_mount(0, NULL);
+#else /* Pre R0.10 */
+  f_mount(NULL, NULL, 1);
+#endif /* Pre R0.10 */
   cprintf("Exiting application\n");
 
 }

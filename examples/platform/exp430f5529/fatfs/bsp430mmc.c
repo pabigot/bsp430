@@ -37,6 +37,10 @@
 #define BSP430_MMC_FAST_HZ 8000000UL
 #endif /* BSP430_MMC_FAST_HZ */
 
+/* Wrapper to ensure FATFS_IS_PRE_R0_10 is defined.  This supports an
+ * API change at R0.10. */
+#include "ff_compat.h"
+
 #include "diskio.h"		/* Common include file for FatFs and disk I/O layer */
 
 /*-------------------------------------------------------------------------*/
@@ -447,7 +451,12 @@ DRESULT disk_read (
 	BYTE drv,			/* Physical drive nmuber (0) */
 	BYTE *buff,			/* Pointer to the data buffer to store read data */
 	DWORD sector,		/* Start sector number (LBA) */
-	BYTE count			/* Sector count (1..128) */
+#if (FATFS_IS_PRE_R0_10 - 0)
+	BYTE
+#else /* FATFS_IS_PRE_R0_10 */
+	UINT
+#endif /* FATFS_IS_PRE_R0_10 */
+	 count			/* Sector count (1..128) */
 )
 {
 	if (disk_status(drv) & STA_NOINIT) return RES_NOTRDY;
@@ -483,7 +492,12 @@ DRESULT disk_write (
 	BYTE drv,			/* Physical drive nmuber (0) */
 	const BYTE *buff,	/* Pointer to the data to be written */
 	DWORD sector,		/* Start sector number (LBA) */
-	BYTE count			/* Sector count (1..128) */
+#if (FATFS_IS_PRE_R0_10 - 0)
+	BYTE
+#else /* FATFS_IS_PRE_R0_10 */
+	UINT
+#endif /* FATFS_IS_PRE_R0_10 */
+	 count			/* Sector count (1..128) */
 )
 {
 	if (disk_status(drv) & STA_NOINIT) return RES_NOTRDY;
