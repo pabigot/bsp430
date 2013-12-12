@@ -677,6 +677,10 @@ int iBSP430i2cRxData_rh (hBSP430halSERIAL hal,
  * for @a resetp does the functional equivalent of invoking
  * vBSP430serialFlush_ni() prior to placing the device in reset.
  *
+ * @warning The GPIO configuration of peripheral pins is not affected
+ * by this function.  Power consumption in a low power mode may be
+ * elevated as a result.  Consider using iBSP430seriaLSetHold_rh().
+ *
  * @note This function differs from iBSP430serialSetHold_rh() in that
  * it:
  * @li Allows caller to determine whether to wait for pending activity
@@ -716,11 +720,6 @@ int iBSP430serialSetReset_rh (hBSP430halSERIAL hal,
  * peripheral function per
  * iBSP430platformConfigurePeripheralPins_ni(), and the device is
  * taken out of reset mode.
- *
- * @warning The GPIO configuration of peripheral pins is not preserved
- * or restored by this function; the pins must be reconfigured for any
- * specific GPIO use each time the peripheral is placed into hold
- * mode.
  *
  * @see iBSP430serialSetReset_rh()
  *
