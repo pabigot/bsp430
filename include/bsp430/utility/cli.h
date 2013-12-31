@@ -193,7 +193,7 @@
  * are updated to have value zero.
  *
  * @ingroup grp_utility_cli_hci */
-const char * xBSP430cliNextToken (const char * * commandp,
+const char * xBSP430cliNextToken (const char ** commandp,
                                   size_t * remainingp,
                                   size_t * lenp);
 
@@ -223,7 +223,7 @@ const char * xBSP430cliNextToken (const char * * commandp,
  * identified, the return value begins after the opening quote.
  *
  * @ingroup grp_utility_cli_hci */
-const char * xBSP430cliNextQToken (const char * * commandp,
+const char * xBSP430cliNextQToken (const char ** commandp,
                                    size_t * remainingp,
                                    size_t * lenp);
 
@@ -387,7 +387,7 @@ void vBSP430cliCompletionHelperStrings (const struct sBSP430cliCompletionHelper 
  *
  * @ingroup grp_utility_cli_hci */
 const char * const * xBSP430cliHelperStringsExtract (const struct sBSP430cliCompletionHelperStrings * chsp,
-                                                     const char * * argstrp,
+                                                     const char ** argstrp,
                                                      size_t * argstr_lenp);
 
 /** Type for a function that implements a command.
@@ -548,9 +548,9 @@ typedef struct sBSP430cliMatchCallback {
 int iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
                             const char * command,
                             size_t command_len,
-                            const sBSP430cliCommand * * matchp,
+                            const sBSP430cliCommand ** matchp,
                             sBSP430cliMatchCallback * match_callback,
-                            const char * * argstrp,
+                            const char ** argstrp,
                             size_t * argstr_lenp);
 
 /** Entrypoint to command execution.
@@ -627,7 +627,7 @@ iBSP430cliParseCommand (const sBSP430cliCommand * cmds,
  * the conversion was unsuccessful.
  *
  * @ingroup grp_utility_cli_hci */
-int iBSP430cliStoreExtractedI (const char * * argstrp,
+int iBSP430cliStoreExtractedI (const char ** argstrp,
                                size_t * argstr_lenp,
                                int * destp);
 
@@ -652,7 +652,7 @@ int iBSP430cliStoreExtractedI (const char * * argstrp,
  * the conversion was unsuccessful.
  *
  * @ingroup grp_utility_cli_hci */
-int iBSP430cliStoreExtractedUI (const char * * argstrp,
+int iBSP430cliStoreExtractedUI (const char ** argstrp,
                                 size_t * argstr_lenp,
                                 unsigned int * destp);
 
@@ -677,7 +677,7 @@ int iBSP430cliStoreExtractedUI (const char * * argstrp,
  * the conversion was unsuccessful.
  *
  * @ingroup grp_utility_cli_hci */
-int iBSP430cliStoreExtractedL (const char * * argstrp,
+int iBSP430cliStoreExtractedL (const char ** argstrp,
                                size_t * argstr_lenp,
                                long * destp);
 
@@ -702,7 +702,7 @@ int iBSP430cliStoreExtractedL (const char * * argstrp,
  * the conversion was unsuccessful.
  *
  * @ingroup grp_utility_cli_hci */
-int iBSP430cliStoreExtractedUL (const char * * argstrp,
+int iBSP430cliStoreExtractedUL (const char ** argstrp,
                                 size_t * argstr_lenp,
                                 unsigned long * destp);
 
@@ -1085,7 +1085,7 @@ typedef struct sBSP430cliCompletionData {
    * be returned to the user.  When used internally, the pointer must
    * not be null: the module will provide a temporary buffer in this
    * case. */
-  const char * * returned_candidates;
+  const char ** returned_candidates;
 
   /** Maximum number of elements that can be placed in @a
    * candidatesp. */
@@ -1303,7 +1303,7 @@ int iBSP430cliCommandCompletion (sBSP430cliCompletionData * cdp);
  */
 #if defined(BSP430_DOXYGEN) || (configBSP430_CLI_COMMAND_COMPLETION - 0)
 int iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
-                                       const char * * commandp);
+                                       const char ** commandp);
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
 
 #endif /* BSP430_UTILITY_CLI_H */

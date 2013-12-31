@@ -586,7 +586,8 @@ typedef struct sBSP430hplPORT_5XX_8 {
   unsigned char _reserved_x07;
   unsigned char ds;              /**< PxDS (drive select, some devices) */ /* 0x08 */
   unsigned char _reserved_x09;
-  union __attribute__((__packed__)) {
+  union __attribute__((__packed__))
+  {
     unsigned char sel;           /**< PxSEL (non-FR5xx devices) */ /* 0x0A */
     unsigned char sel0;          /**< PxSEL0 (FR5xx devices) */ /* 0x0A */
   };

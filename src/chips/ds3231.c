@@ -90,7 +90,8 @@ unsigned int uiDS3231decodeHour (uint8_t hour_ds3231)
 
 const struct tm *
 xDS3231registersToTm (const sDS3231registers * regp,
-                      struct tm * timep) {
+                      struct tm * timep)
+{
   memset(timep, 0, sizeof(*timep));
   timep->tm_sec = DECODE_BCD(regp->seconds);
   timep->tm_min = DECODE_BCD(regp->minutes);

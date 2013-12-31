@@ -195,7 +195,7 @@ nmea_rx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
         sp->state = SRX_read_csum_NMEA;
         break;
       }
-      /*FALLTHRU*/
+    /*FALLTHRU*/
     case SRX_store_Binary:
       /* If attempt to store would go beyond end, abort the message. */
       if ((cp->message + sp->message_idx) == cp->message_endp) {
@@ -341,7 +341,7 @@ nmea_tx_isr_ni (const struct sBSP430halISRVoidChainNode * cb,
          * application */
         rv |= sp->complete_cb(sp->msg, 0);
       }
-      /*FALLTHRU*/
+    /*FALLTHRU*/
     default:
     case STX_idle:
       rv |= BSP430_HAL_ISR_CALLBACK_DISABLE_INTERRUPT;

@@ -75,10 +75,10 @@ u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     switch (msg) {
-        /* None of these are implemented because the BSP430-supported
-         * devices use neither the u8glib devices nor WriteEscSeqP.  To
-         * detect changes in that situation, invocations of these
-         * operations will hang. */
+      /* None of these are implemented because the BSP430-supported
+       * devices use neither the u8glib devices nor WriteEscSeqP.  To
+       * detect changes in that situation, invocations of these
+       * operations will hang. */
       case U8G_COM_MSG_STOP:
       case U8G_COM_MSG_ADDRESS:
       case U8G_COM_MSG_CHIP_SELECT:

@@ -145,7 +145,7 @@ gps_serial_cb (const uint8_t * msg,
           flags = 0;
           break;
         }
-        /*FALLTHRU*/
+      /*FALLTHRU*/
       default:
         /* Accept everything else */
 accept:

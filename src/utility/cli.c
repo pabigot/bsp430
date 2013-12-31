@@ -60,7 +60,7 @@ static char * cbEnd_;
 #endif /* BSP430_CLI_CONSOLE_BUFFER_SIZE */
 
 const char *
-xBSP430cliNextToken (const char * * commandp,
+xBSP430cliNextToken (const char ** commandp,
                      size_t * remainingp,
                      size_t * lenp)
 {
@@ -92,7 +92,7 @@ xBSP430cliNextToken (const char * * commandp,
 }
 
 const char *
-xBSP430cliNextQToken (const char * * commandp,
+xBSP430cliNextQToken (const char ** commandp,
                       size_t * remainingp,
                       size_t * lenp)
 {
@@ -145,9 +145,9 @@ int
 iBSP430cliMatchCommand (const sBSP430cliCommand * cmds,
                         const char * command,
                         size_t command_len,
-                        const sBSP430cliCommand * * matchp,
+                        const sBSP430cliCommand ** matchp,
                         sBSP430cliMatchCallback * match_callback,
-                        const char * * argstrp,
+                        const char ** argstrp,
                         size_t * argstr_lenp)
 {
   const sBSP430cliCommand * match = NULL;
@@ -348,7 +348,7 @@ xBSP430cliReverseChain (sBSP430cliCommandLink * chain)
 
   last = NULL;
   while (chain) {
-    sBSP430cliCommandLink * * linkp = &chain->link;
+    sBSP430cliCommandLink ** linkp = &chain->link;
     sBSP430cliCommandLink * next = *linkp;
     *linkp = last;
     last = chain;
@@ -823,7 +823,7 @@ vBSP430cliCompletionHelperStrings (const struct sBSP430cliCompletionHelper * sel
 
 const char * const *
 xBSP430cliHelperStringsExtract (const struct sBSP430cliCompletionHelperStrings * chsp,
-                                const char * * argstrp,
+                                const char ** argstrp,
                                 size_t * argstr_lenp)
 {
   int ni;
@@ -854,7 +854,7 @@ xBSP430cliHelperStringsExtract (const struct sBSP430cliCompletionHelperStrings *
 
 int
 iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
-                                   const char * * commandp)
+                                   const char ** commandp)
 {
   sBSP430cliCompletionData ccd;
   const char * matches[BSP430_CLI_CONSOLE_BUFFER_MAX_COMPLETIONS];

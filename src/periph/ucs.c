@@ -424,7 +424,7 @@ cselToFreq_Hz_ (int csel)
       if (! BSP430_CLOCK_LFXT1_IS_FAULTED_NI()) {
         return BSP430_CLOCK_NOMINAL_XT1CLK_HZ;
       }
-      /*FALLTHRU*/
+    /*FALLTHRU*/
     case CSEL_REFOCLK: /* REFOCLK */
       return BSP430_UCS_NOMINAL_REFOCLK_HZ;
     case CSEL_VLOCLK: /* VLOCLK */
