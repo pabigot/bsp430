@@ -186,7 +186,7 @@ u8g_dev_fn (u8g_t * u8g,
          * the spi_ handle and csn_port.  Initialization failed if we
          * don't have a SPI interface.  Otherwise power is left off,
          * display is held in reset, and chip select is deasserted.  */
-        u8g_InitCom(u8g, dev);
+        u8g_InitCom(u8g, dev, U8G_SPI_CLK_CYCLE_NONE);
         if (! spi_) {
           rc = 0;
           break;
