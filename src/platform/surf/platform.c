@@ -56,7 +56,6 @@ const unsigned char nBSP430led = sizeof(xBSP430halLED_) / sizeof(*xBSP430halLED_
 const struct sBSP430onewireBus xBSP430surfDS1825 = {
   .port = BSP430_PLATFORM_SURF_DS1825_PORT_HAL,
   .bit = BSP430_PLATFORM_SURF_DS1825_PORT_BIT,
-  .use_ren = 1,
 };
 #endif /* configBSP430_PLATFORM_SURF_DS1825 */
 

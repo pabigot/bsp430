@@ -52,11 +52,6 @@ typedef struct sBSP430onewireBus {
   hBSP430halPORT port;
   /** The pin by which the bus is connected to the MCU */
   unsigned char bit;
-  /** A nonzero value if REN should be used to provide a strong pullup
-   * (where available).  Functionality on some platforms requires this
-   * to be true, while on others it must be false.  Haven't figured
-   * out why yet. */
-  unsigned char use_ren;
 } sBSP430onewireBus;
 
 /** Structure holding a 1-wire serial number. */
@@ -96,10 +91,6 @@ enum {
  * 1-wire device is present.  The protocol requires that the bus be
  * held low for a given period, then returns it to pullup input.  A
  * device present on the bus will respond by pulling the bus low.
- *
- * If the port supports pullup resistors and sBSP430onewireBus.use_ren
- * is set, the resistor is enabled by this command and is left so
- * configured.
  *
  * @param bus The port and bit identifying the 1-wire bus
  *
