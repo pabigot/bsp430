@@ -590,38 +590,6 @@ isr_%(INSTANCE)s (void)
 #define BSP430_%(FUNCTIONAL)s_PERIPH_HANDLE BSP430_PERIPH_%(INSTANCE)s''',
     }
 
-def RFEMPlatformMap (platform, indirmap={}):
-    """Return a map from platform header pin or function to MCU port
-    pin.
-
-    @param platform the name of the platform that provides header-to-MCU maps.
-
-    @param indirmap an optional map that converts from platform
-    booster-pack header pins to the RF function.
-    """
-    rfmap = {}
-    for l in bsp430.pinmap.GenerateLines('platform', platform):
-        (hdr, pin) = l.split()
-        rfem = None
-        bppin = bsp430.pinmap.CreateInstance(hdr)
-        if bppin is not None:
-            rfem = indirmap.get(bppin)
-        if rfem is None:
-            rfem = bsp430.pinmap.RFEMPin.Create(hdr)
-        port = bsp430.pinmap.Port.Create(pin)
-        if not (rfem and port):
-            continue
-        assert not rfem in rfmap
-        rfmap[rfem] = port
-    return rfmap
-
-def RFEMBuildBPIndirMap (boosterpack):
-    bpmap = bsp430.pinmap.GenerateMap('boosterpack', boosterpack)
-    for (k, v) in bpmap.items():
-        assert isinstance(k, bsp430.pinmap.BPHeaderPin)
-        assert isinstance(v, bsp430.pinmap.RFEMPin)
-    return bpmap
-
 def RFEMMCUFunctionMap (mcu, serial_port):
     mcumap = {}
     serial_periph = None
@@ -651,11 +619,6 @@ def RFEMMCUFunctionMap (mcu, serial_port):
             sel += 1
     return (serial_periph, mcumap)
 
-def RFEMBuildPlatformMCULinkage (platform, mcu, indirmap):
-    rfmap = RFEMPlatformMap(platform, indirmap)
-    (serial_periph, mcumap) = RFEMMCUFunctionMap(mcu, rfmap[bsp430.pinmap.RFEMPin(1, 20)])
-    return (serial_periph, rfmap, mcumap)
-
 # The rfem template uses a platform and an mcu to define mappings from
 # RFx.y pins to MCU pins.  When the platform includes the RFEM socket
 # this is done directly; when the RFEM socket is on a boosterpack, an
@@ -667,9 +630,15 @@ def fn_rfem_expand (subst_map, idmap, is_config):
     indirmap = {}
     boosterpack = idmap.get('boosterpack', None)
     if boosterpack is not None:
-        indirmap.update(RFEMBuildBPIndirMap(boosterpack))
+        indirmap.update(bsp430.pinmap.GenerateMap('boosterpack', boosterpack))
         cpptag = 'RFEM_{}'.format(boosterpack.upper())
-    (serial_periph, rfmap, mcumap) = RFEMBuildPlatformMCULinkage(idmap['platform'], idmap['mcu'], indirmap)
+    rfmap = {}
+    for (lhs, rhs) in bsp430.pinmap.GenerateMap('platform', idmap['platform']).items():
+        if not isinstance(lhs, bsp430.pinmap.RFEMPin):
+            lhs = indirmap.get(lhs)
+        if isinstance(lhs, bsp430.pinmap.RFEMPin) and isinstance(rhs, bsp430.pinmap.Port):
+            rfmap[lhs] = rhs
+    (serial_periph, mcumap) = RFEMMCUFunctionMap(idmap['mcu'], rfmap[bsp430.pinmap.RFEMPin(1, 20)])
     if is_config:
         text.append('#if (configBSP430_{} - 0)'.format(cpptag))
     else:
