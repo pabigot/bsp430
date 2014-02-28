@@ -26,6 +26,39 @@ class PinmapBase (object):
     def __cmp__ (self, other):
         return cmp(hash(self), hash(other))
 
+    _TypeOrdering = []
+    def _type_cmp (self, other):
+        return cmp(self._TypeOrdering.index(type(self)),
+                   self._TypeOrdering.index(type(other)))
+
+def pinmap_type (cls):
+    PinmapBase._TypeOrdering.append(cls)
+    return cls
+
+@pinmap_type
+class BPHeaderPin (PinmapBase):
+    """A header identifier compatible with a BoosterPack header: [ABCD].#"""
+    Template_re = re.compile('(?P<hdr>[ABCD])\.(?P<pin>\d+)$')
+
+    def __init__ (self, hdr, pin):
+        self.hdr = hdr
+        self.pin = int(pin)
+
+    def __hash__ (self):
+        return hash(self.astuple())
+
+    def astuple (self):
+        return (self.hdr, self.pin)
+
+    def __cmp__ (self, other):
+        if isinstance(other, type(self)):
+            return cmp(self.hdr, other.hdr) or cmp(self.pin, other.pin)
+        return self._type_cmp(other)
+
+    def __str__ (self):
+        return '%s.%u' % (self.hdr, self.pin)
+
+@pinmap_type
 class RFEMPin (PinmapBase):
     """A header identifier compatible with an RF header: RF#.#"""
     Template_re = re.compile('RF(?P<hdr>\d+)\.(?P<pin>\d+)$')
@@ -44,28 +77,14 @@ class RFEMPin (PinmapBase):
         self.pin = int(pin)
 
     def __cmp__ (self, other):
-        return cmp(self.hdr, other.hdr) or cmp(self.pin, other.pin)
+        if isinstance(other, type(self)):
+            return cmp(self.hdr, other.hdr) or cmp(self.pin, other.pin)
+        return self._type_cmp(other)
 
     def __str__ (self):
         return 'RF%u.%u' % (self.hdr, self.pin)
 
-class BPHeaderPin (PinmapBase):
-    """A header identifier compatible with a BoosterPack header: [ABCD].#"""
-    Template_re = re.compile('(?P<hdr>[ABCD])\.(?P<pin>\d+)$')
-
-    def __init__ (self, hdr, pin):
-        self.hdr = hdr
-        self.pin = int(pin)
-
-    def __hash__ (self):
-        return hash(self.astuple())
-
-    def astuple (self):
-        return (self.hdr, self.pin)
-
-    def __str__ (self):
-        return '%s.%u' % (self.hdr, self.pin)
-
+@pinmap_type
 class OtherPin (PinmapBase):
     @classmethod
     def Create (cls, id):
@@ -83,6 +102,11 @@ class OtherPin (PinmapBase):
 
     def astuple (self):
         return (self.id,)
+
+    def __cmp__ (self, other):
+        if isinstance(other, type(self)):
+            return cmp(self.id, other.id)
+        return self._type_cmp(other)
 
     def __str__ (self):
         return self.id
@@ -106,6 +130,7 @@ class PeripheralBase (PinmapBase):
         tmap['tag'] = tag
         return self.template(is_config) % tmap
 
+@pinmap_type
 class Timer (PeripheralBase):
 
     Template_re = re.compile('T(?P<variant>.)(?P<instance>\d+)\.(?P<ccidx>\d+)(?P<ccisc>[AB])?$')
@@ -202,12 +227,12 @@ class Serial (PeripheralBase):
     _ConfigTemplate = '#define BSP430_%(tag)s_PERIPH_CPPID BSP430_PERIPH_CPPID_%(periph)s'
     _PlatformTemplate = '#define BSP430_%(tag)s_PERIPH_HANDLE BSP430_PERIPH_%(periph)s'
 
-def _path_from_args (category, name, path):
+def _path_from_args (category, name, path=None):
     if path is None:
         path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', category, '{}.pinmap'.format(name))
     return path
 
-def GenerateLines (category, name, path=None):
+def GenerateLines (category=None, name=None, path=None):
     path = _path_from_args(category, name, path)
     directive_re = re.compile('@(?P<cls>\w*)\.(?P<dir>.*)$')
     inf = file(path)
@@ -228,9 +253,9 @@ def CreateInstance (identifier):
             return pin
     return OtherPin(identifier)
 
-def GenerateMap (category, name, path=None):
+def GenerateMap (category=None, name=None, path=None):
     mapping = {}
-    for ln in GenerateLines(category, name):
+    for ln in GenerateLines(category, name, path):
         elts = ln.split()
         assert 2 == len(elts)
         lhs = CreateInstance(elts[0])

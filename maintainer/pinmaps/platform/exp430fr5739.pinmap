@@ -1,31 +1,76 @@
-RF1.3	P2.4
-RF1.5	P1.0
-RF1.6	P1.1
-RF1.7	P1.1
-RF1.8	P1.2
-RF1.9	P1.2
-RF1.10	P4.1
-RF1.12	P2.3
-RF1.14	P1.3
-RF1.16	P2.2
-RF1.18	P1.6
-RF1.20	P1.7
-RF2.13	P2.0
-RF2.15	P1.0
-RF2.18	P2.7
-RF2.19	P4.0
-RF2.20	P3.7
-RF3.3	P2.0
-RF3.4	P1.0
-RF3.5	P2.6
-RF3.7	P2.5
-RF3.8	P1.2
-RF3.9	P2.7
-RF3.10	P2.3
-RF3.11	P4.0
-RF3.13	P4.1
-RF3.14	P2.4
-RF3.15	P1.7
-RF3.16	P2.2
-RF3.17	P1.3
-RF3.18	P1.6
+# The exp430fr5739 "fraunchpad" does not conform to the BoosterPack
+# standard, though its two 12-pin headers are spaced to be compatible with
+# the BP 10-pin headers.  To potentially enable use of boosterpacks that
+# are aligned with the top 10 pins, the same header nomenclature is
+# used.
+A.1     _VCC    # SV2.12
+A.2     P2.0    # SV2.11
+A.3     P2.5    # SV2.10
+A.4     P2.6    # SV2.9
+A.5     P2.1    # SV2.8
+A.6     P2.2    # SV2.7
+A.7     P3.4    # SV2.6
+A.8     P3.5    # SV2.5
+A.9     P3.6    # SV2.4
+A.10    P3.7    # SV2.3
+A.11    P1.6    # SV2.2
+A.12    P1.7    # SV2.1
+B.1     _GND    # SV1.12
+B.2     P4.0    # SV1.11
+B.3     P1.5    # SV1.10
+B.4     P1.4    # SV1.9
+B.5     P1.3    # SV1.8
+B.6     P3.3    # SV1.7
+B.7     P3.2    # SV1.6
+B.8     P3.1    # SV1.5
+B.9     P3.0    # SV1.4
+B.10    P1.2    # SV1.3
+B.11    P1.1    # SV1.2
+B.12    P1.0    # SV1.1
+RF1.3   P2.4
+RF1.5   P1.0
+RF1.6   P1.1
+RF1.7   P1.1
+RF1.8   P1.2
+RF1.9   P1.2
+RF1.10  P4.1
+RF1.12  P2.3
+RF1.14  P1.3
+RF1.16  P2.2
+RF1.18  P1.6
+RF1.20  P1.7
+RF2.13  P2.0
+RF2.15  P1.0
+RF2.18  P2.7
+RF2.19  P4.0
+RF2.20  P3.7
+RF3.3   P2.0
+RF3.4   P1.0
+RF3.5   P2.6
+RF3.7   P2.5
+RF3.8   P1.2
+RF3.9   P2.7
+RF3.10  P2.3
+RF3.11  P4.0
+RF3.13  P4.1
+RF3.14  P2.4
+RF3.15  P1.7
+RF3.16  P2.2
+RF3.17  P1.3
+RF3.18  P1.6
+_S1     P4.0    # Buttons
+_S2     P4.1
+_VS     P2.7    # Peripheral Voltage Source (ADXL335, LDR, NTC)
+_ACC_X  P3.0    # X axis voltage
+_ACC_Y  P3.1    # Y axis voltage
+_ACC_Z  P3.2    # Z axis voltage
+_LED1   PJ.0    # LED bank, all blue
+_LED2   PJ.1
+_LED3   PJ.2
+_LED4   PJ.3
+_LED5   P3.4    # Yes, the port changes here
+_LED6   P3.5
+_LED7   P3.6
+_LED8   P3.7
+_LDR    P3.3    # Light-dependent resistor, not populated
+_NTC    P1.4    # 100K thermistor

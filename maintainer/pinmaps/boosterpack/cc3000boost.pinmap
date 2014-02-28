@@ -1,0 +1,22 @@
+# http://www.ti.com/tool/cc3000boost
+#
+A.1     VBAT      # J9.1
+A.2     PWR_EN    # J9.2 aka VBAT_EN
+A.3     n/c       # J9.3
+A.4     n/c       # J9.4
+A.5     n/c       # J9.5
+A.6     n/c       # J9.6
+A.7     SCLK      # J9.7
+A.8     n/c       # J9.8
+A.9     n/c       # J9.9
+A.10    n/c       # J9.10
+B.1     GND       # J10.1
+B.2     IRQn      # J10.2
+B.3     CSn       # J10.3
+B.4     n/c       # J10.4
+B.5     n/c       # J10.5
+B.6     MOSI      # J10.6
+B.7     MISO      # J10.7
+B.8     n/c       # J10.8
+B.9     n/c       # J10.9
+B.10    n/c       # J10.10

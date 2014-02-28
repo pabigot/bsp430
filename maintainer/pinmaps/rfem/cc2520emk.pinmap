@@ -5,8 +5,8 @@ GPIO2	RF1.9
 VREG_EN	RF1.10
 GPIO3	RF1.12
 CSn	RF1.14
-#SCLK	RF1.16
-#SI	RF1.18
+_SCLK	RF1.16
+_MOSI	RF1.18
 SO	RF1.20	# SO line signals clocks/state when CS is asserted
 RESETn	RF2.15
 GPIO4	RF2.18
