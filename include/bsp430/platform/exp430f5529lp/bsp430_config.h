@@ -91,7 +91,7 @@
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_PERIPH_CPPID */
 #endif /* configBSP430_TIMER_CCACLK */
 
-/* !BSP430! insert=rfem_config platform=exp430f5529lp bp=ccem mcu=msp430f5529 */
+/* !BSP430! insert=rfem_config platform=exp430f5529lp boosterpack=ccem mcu=msp430f5529 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [rfem_config] */
 #if (configBSP430_RFEM_CCEM - 0)
 #define BSP430_RFEM_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI5_B0

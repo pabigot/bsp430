@@ -109,7 +109,7 @@
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT4
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
 
-/* !BSP430! insert=rfem_platform platform=exp430f5529lp bp=ccem mcu=msp430f5529 */
+/* !BSP430! insert=rfem_platform platform=exp430f5529lp boosterpack=ccem mcu=msp430f5529 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [rfem_platform] */
 #if (configBSP430_RFEM_CCEM - 0)
 #define BSP430_RFEM_CCEM 1

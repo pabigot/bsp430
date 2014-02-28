@@ -652,21 +652,26 @@ def RFEMBuildPlatformMCULinkage (platform, mcu, indirmap):
     (serial_periph, mcumap) = RFEMMCUFunctionMap(mcu, rfmap[bsp430.pinmap.RFEMPin(1, 20)])
     return (serial_periph, rfmap, mcumap)
 
+# The rfem template uses a platform and an mcu to define mappings from
+# RFx.y pins to MCU pins.  When the platform includes the RFEM socket
+# this is done directly; when the RFEM socket is on a boosterpack, an
+# indirection maps RFx.y to boosterpack header pins, which are then
+# mapped by the platform to MCU pins.
 def fn_rfem_expand (subst_map, idmap, is_config):
     text = []
     cpptag = 'RFEM'
     indirmap = {}
-    bp = idmap.get('bp', None)
-    if bp is not None:
-        indirmap = RFEMBuildBPIndirMap(idmap.get('bp'))
-        cpptag = 'RFEM_{}'.format(bp.upper())
+    boosterpack = idmap.get('boosterpack', None)
+    if boosterpack is not None:
+        indirmap = RFEMBuildBPIndirMap(boosterpack)
+        cpptag = 'RFEM_{}'.format(boosterpack.upper())
     (serial_periph, rfmap, mcumap) = RFEMBuildPlatformMCULinkage(idmap['platform'], idmap['mcu'], indirmap)
     if is_config:
         text.append('#if (configBSP430_{} - 0)'.format(cpptag))
     else:
         text.append('#if (configBSP430_{} - 0)'.format(cpptag))
         text.append('#define BSP430_{} 1'.format(cpptag))
-        if bp is not None:
+        if boosterpack is not None:
             text.append('#define BSP430_RFEM 1')
         text.append('#endif /* configBSP430_{} */'.format(cpptag))
         text.append('#if (BSP430_{} - 0)'.format(cpptag))

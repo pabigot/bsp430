@@ -115,7 +115,7 @@
 /* END AUTOMATICALLY GENERATED CODE [emk_platform] */
 /* !BSP430! end=emk_platform */
 
-/* !BSP430! insert=rfem_platform platform=exp430g2 bp=ccem mcu=msp430g2553 */
+/* !BSP430! insert=rfem_platform platform=exp430g2 boosterpack=ccem mcu=msp430g2553 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [rfem_platform] */
 #if (configBSP430_RFEM_CCEM - 0)
 #define BSP430_RFEM_CCEM 1

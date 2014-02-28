@@ -187,7 +187,7 @@
 /* END AUTOMATICALLY GENERATED CODE [emk_config] */
 /* !BSP430! end=emk_config */
 
-/* !BSP430! insert=rfem_config platform=exp430g2 bp=ccem mcu=msp430g2553 */
+/* !BSP430! insert=rfem_config platform=exp430g2 boosterpack=ccem mcu=msp430g2553 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [rfem_config] */
 #if (configBSP430_RFEM_CCEM - 0)
 #define BSP430_RFEM_SERIAL_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI_B0
