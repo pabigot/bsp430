@@ -64,11 +64,6 @@
 
 /** @cond DOXYGEN_EXCLUDE */
 
-/* Enable if requested (ez430 serial needs it) */
-#if (configBSP430_PLATFORM_SPIN_FOR_JUMPER - 0)
-#define BSP430_PLATFORM_SPIN_FOR_JUMPER 1
-#endif /* configBSP430_PLATFORM_SPIN_FOR_JUMPER */
-
 /* Available button definitions */
 #define BSP430_PLATFORM_BUTTON0_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT2
 #define BSP430_PLATFORM_BUTTON0_PORT_BIT BIT1
