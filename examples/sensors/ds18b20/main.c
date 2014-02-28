@@ -4,6 +4,14 @@
  * temperature from an externally-powered Maxim DS18B20 (or similar)
  * digital thermometer.
  *
+ * For parasitic power: Keep the 4K7 resistor between DQ and Vcc,
+ * connect DS18B20 Vdd to GND, and specify a second bit on the device
+ * port that will supply power during temperature conversions.
+ *
+ * There is perhaps 0.2uA discernable difference in idle current
+ * consumption between parasitic and external power supply, but this
+ * is at the extreme limit of what my test equipment can measure.
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */
@@ -32,12 +40,20 @@ const struct sBSP430onewireBus ds18b20 = {
 };
 #endif /* APP_DS18B20_BUS */
 
+#ifndef APP_DS18B20_POWER_BIT
+/* Bit on APP_DS18B20_BUS.port that supplies power during temperature
+ * conversions. */
+#define APP_DS18B20_POWER_BIT 0
+#endif /* APP_DS18B20_POWER_BIT */
+
 /* The serial number read from the device on startup */
 struct sBSP430onewireSerialNumber serial;
 
 void main ()
 {
   int rc;
+  int external_power;
+  static const char * const supply_type[] = { "parasitic", "external" };
   const struct sBSP430onewireBus * const bus = &APP_DS18B20_BUS;
 
   vBSP430platformInitialize_ni();
@@ -50,17 +66,24 @@ void main ()
   cprintf("Uptime now %lu with frequency %lu Hz\n",
           ulBSP430uptime_ni(), ulBSP430uptimeConversionFrequency_Hz_ni());
 
-  cprintf("Monitoring DS18xx on %s.%u bit %x\n",
+  cprintf("Monitoring DS18xx on %s.%u ; ",
           xBSP430portName(BSP430_PORT_HAL_GET_PERIPH_HANDLE(bus->port)) ?: "P?",
-          iBSP430portBitPosition(bus->bit),
-          bus->bit);
-
-  rc = iBSP430onewireReadPowerSupply(bus);
-  if (0 > rc) {
-    cprintf("WARNING: Device not present?\n");
+          iBSP430portBitPosition(bus->bit));
+  if (APP_DS18B20_POWER_BIT) {
+    cprintf("parasitic conversion power from %s.%u\n",
+            xBSP430portName(BSP430_PORT_HAL_GET_PERIPH_HANDLE(bus->port)) ?: "P?",
+            iBSP430portBitPosition(APP_DS18B20_POWER_BIT));
+    BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~APP_DS18B20_POWER_BIT;
   } else {
-    static const char * const supply_type[] = { "parasitic", "external" };
-    cprintf("Power supply: %s\n", supply_type[!!rc]);
+    cprintf("no parasitic power boost\n");
+  }
+
+  external_power = iBSP430onewireReadPowerSupply(bus);
+  cprintf("Power supply: %s\n", supply_type[external_power]);
+  if (0 > external_power) {
+    cprintf("ERROR: Device not present?\n");
+  } else if ((! external_power) && (! (APP_DS18B20_POWER_BIT))) {
+    cprintf("ERROR: Parasitic power without conversion boost?\n");
   }
 
   do {
@@ -84,15 +107,25 @@ void main ()
     start_tck = ulBSP430uptime_ni();
     rc = -1;
     if (0 == iBSP430onewireRequestTemperature_ni(bus)) {
-      /* Wait for read to complete.  Conversion time can be as long as
-       * 750 ms if 12-bit resolution is used (this resolution is the
-       * default). Timing will be wrong unless interrupts are enabled
-       * so uptime overflow events can be handled.  Sleep for 600ms,
-       * then test at 10ms intervals until the result is ready.  Each
-       * check is nominally 61 microseconds. */
-      BSP430_UPTIME_DELAY_MS_NI(600, LPM3_bits, 0);
-      while (! iBSP430onewireReadBit_ni(bus)) {
-        BSP430_UPTIME_DELAY_MS_NI(10, LPM3_bits, 0);
+      if (external_power) {
+        /* Wait for read to complete.  Conversion time can be as long as
+         * 750 ms if 12-bit resolution is used (this resolution is the
+         * default). Timing will be wrong unless interrupts are enabled
+         * so uptime overflow events can be handled.  Sleep for 600ms,
+         * then test at 10ms intervals until the result is ready.  Each
+         * check is nominally 61 microseconds. */
+        BSP430_UPTIME_DELAY_MS_NI(600, LPM3_bits, 0);
+        while (! iBSP430onewireReadBit_ni(bus)) {
+          BSP430_UPTIME_DELAY_MS_NI(10, LPM3_bits, 0);
+        }
+      } else {
+        /* Output high on the parasitic power boost line for 750ms, to
+         * power the conversion.  Then switch that signal back to
+         * input so the data can flow over the same circuit. */
+        BSP430_PORT_HAL_HPL_OUT(bus->port) |= APP_DS18B20_POWER_BIT;
+        BSP430_PORT_HAL_HPL_DIR(bus->port) |= APP_DS18B20_POWER_BIT;
+        BSP430_UPTIME_DELAY_MS_NI(750, LPM3_bits, 0);
+        BSP430_PORT_HAL_HPL_DIR(bus->port) &= ~APP_DS18B20_POWER_BIT;
       }
       rc = iBSP430onewireReadTemperature_ni(bus, &t_c);
     }
@@ -110,6 +143,6 @@ void main ()
 
     /* You'd want to do this if you were going to sleep here */
     vBSP430onewireShutdown_ni(bus);
-    BSP430_UPTIME_DELAY_MS_NI(5000, LPM3_bits, 0);
+    BSP430_UPTIME_DELAY_MS_NI(30000, LPM3_bits, 0);
   }
 }
