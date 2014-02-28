@@ -113,7 +113,7 @@
 #undef BSP430_WANT_PERIPH_CPPID
 #endif /* configBSP430_RF_TIMER */
 
-/* !BSP430! insert=emk_config emk=anaren emktag=anaren_cc110l mcu=msp430g2553 spi=UCB0SOMI tag=cc110x gpio=GDO0,GDO1,GDO2 */
+/* !BSP430! insert=emk_config boosterpack=anaren_cc110l platform=exp430g2 mcu=msp430g2553 spi=UCB0SOMI tag=cc110x gpio=GDO0,GDO1,GDO2 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_config] */
 #if (configBSP430_RF_ANAREN_CC110L - 0)
 #define BSP430_RF_CC110X_SPI_PERIPH_CPPID BSP430_PERIPH_CPPID_USCI_B0

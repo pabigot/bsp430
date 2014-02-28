@@ -680,12 +680,25 @@ def appendDefine (text, test_def, source_prefix, result_prefix, *suffixes):
     if test_def is not None:
         text.append('#endif /* %s */' % (test_def,))
 
+# The emk template uses a map from a radio function to a header pin,
+# along with a radio identifier and the set of tags for GPIO
+# functions, and defines radio-specific function peripheral
+# identifiers.  Where no mcu is provided the mapping is defined in
+# terms of RFEM pins.  Otherwise platform and mcu maps are used to
+# define the identifiers directly in terms of MCU functions.
 def fn_emk_expand (subst_map, idmap, is_config):
     text = []
     serial_periph = None
-    mcu = idmap.get('mcu', None)
-    emk = idmap['emk']
-    emktag = idmap.get('emktag', emk)
+    mcu = idmap.get('mcu')
+    boosterpack = None
+    emk = idmap.get('emk')
+    platform_map = {}
+    if emk is None:
+        boosterpack = idmap.get('boosterpack')
+        platform_map = bsp430.pinmap.GenerateMap('platform', idmap['platform'])
+        emktag = idmap.get('emktag', boosterpack)
+    else:
+        emktag = idmap.get('emktag', emk)
     tag = idmap['tag']
     cpp_cond = 'configBSP430_RF_%s' % (emktag.upper(),)
     text.append('#if (%s - 0)' % (cpp_cond,))
@@ -708,28 +721,41 @@ def fn_emk_expand (subst_map, idmap, is_config):
     if gpio_signals is not None:
         gpio_signals = frozenset(gpio_signals.split(','))
     signals = []
-    for l in bsp430.pinmap.GenerateLines('rfem', emk):
-        (signal, rfempin) = l.split()
+    if emk is None:
+        generator = bsp430.pinmap.GenerateLines('boosterpack', boosterpack)
+    else:
+        generator = bsp430.pinmap.GenerateLines('rfem', emk)
+    for l in generator:
+        if emk is None:
+            (pinif, signal) = l.split()
+        else:
+            (signal, pinif) = l.split()
+        if signal in ('n/c',) or signal.startswith('_'):
+            continue
         sig_tag = 'RF_%s_%s' % (tag.upper(), signal)
         sig_prefix = 'BSP430_%s' % (sig_tag,)
         is_gpio = (gpio_signals is not None) and (signal in gpio_signals)
-        signals.append( (sig_prefix, is_gpio) )
-        if mcu:
-            port = bsp430.pinmap.Port.Create(rfempin)
-            assert port is not None, 'invalid port %s' % (rfempin,)
-            timer = mcumap[port]
-            text.append(port.expandTemplate(sig_tag, is_config))
+        pin = bsp430.pinmap.CreateInstance(pinif)
+        if isinstance(pin, bsp430.pinmap.BPHeaderPin):
+            pin = platform_map.get(pin)
+        if (pin is None) or isinstance(pin, bsp430.pinmap.OtherPin):
+            continue
+        if isinstance(pin, bsp430.pinmap.Port):
+            timer = mcumap[pin]
+            text.append(pin.expandTemplate(sig_tag, is_config))
             if is_gpio and (timer is not None) and (timer.ccis is not None):
                 text.append(timer.expandTemplate(sig_tag, is_config))
-        else:
-            rf = bsp430.pinmap.RFEMPin.Create(rfempin)
-            assert rf is not None, 'invalid RFEM header %s' % (rfempin,)
-            rf_prefix = 'BSP430_%s' % (rf.prefix(),)
+        elif isinstance(pin, bsp430.pinmap.RFEMPin):
+            rf_prefix = 'BSP430_%s' % (pin.prefix(),)
             for sfx in bsp430.pinmap.Port.TemplateSuffixes(is_config):
                 appendDefine(text, '%s%s' % (rf_prefix, sfx), rf_prefix, sig_prefix, sfx)
             if is_gpio:
                 for sfx in bsp430.pinmap.Timer.TemplateSuffixes(is_config):
                     appendDefine(text, '%s%s' % (rf_prefix, sfx), rf_prefix, sig_prefix, sfx)
+        else:
+            print 'unexpected pinif %s: %s %s %s' % (pinif, pin, subst_map, idmap)
+            continue
+        signals.append( (sig_prefix, is_gpio) )
     if is_config:
         hal_text = []
         hpl_text = []

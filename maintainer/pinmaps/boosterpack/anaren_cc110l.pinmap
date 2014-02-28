@@ -2,22 +2,22 @@
 # Connector pin maps for Anaren BoosterPack using the primary configuration
 # (no jumper modifications to Anaren board).
 #
-A.1	3V3
+A.1	_3V3
 A.2	GDO2
 A.3	_alt_GDO0
 A.4	_alt_CSn
 A.5	_alt_GDO0
 A.6	_alt_CSn
-A.7	SCLK
+A.7	_SCLK
 A.8	n/c
 A.9	n/c
 A.10	n/c
-B.1	GND
+B.1	_GND
 B.2	GDO0
 B.3	CSn
 B.4	n/c
 B.5	n/c
-B.6	MOSI
+B.6	_MOSI
 B.7	GDO1    # provides MISO when CS is asserted
 B.8	n/c
 B.9	n/c

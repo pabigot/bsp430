@@ -35,3 +35,7 @@ between these names is documented in a comment.
 Subdirectory boosterpack maps boosterpack standard BoosterPack headers A
 though D to functional capabilities.  Where the function corresponds to
 an RFEM header the RF header identifiers are used.
+
+Where a map target is informational (e.g., not connected, VDD, 3V3, GND,
+or other signals not supported in BSP430) it is prefixed by a single
+underscore, which causes the template expansion to skip that mapping.

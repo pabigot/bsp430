@@ -66,6 +66,27 @@ class BPHeaderPin (PinmapBase):
     def __str__ (self):
         return '%s.%u' % (self.hdr, self.pin)
 
+class OtherPin (PinmapBase):
+    @classmethod
+    def Create (cls, id):
+        if id in ('n/c', 'VCC', 'GND'):
+            return None
+        if id.startswith('_'):
+            return None
+        return cls(id)
+
+    def __init__ (self, id):
+        self.id = id
+
+    def __hash__ (self):
+        return hash(self.astuple())
+
+    def astuple (self):
+        return (self.id,)
+
+    def __str__ (self):
+        return self.id
+
 class PeripheralBase (PinmapBase):
     @classmethod
     def ProcessDirective (cls, ln):
@@ -205,9 +226,7 @@ def CreateInstance (identifier):
         pin = cls.Create(identifier)
         if pin is not None:
             return pin
-    if not (identifier in ('3V3', 'GND', 'n/c')):
-        print 'unrecognized identifier: {}'.format(identifier)
-    return None
+    return OtherPin(identifier)
 
 def GenerateMap (category, name, path=None):
     mapping = {}
