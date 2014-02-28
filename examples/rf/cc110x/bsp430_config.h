@@ -22,15 +22,26 @@
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1
 
-/* Request RFEM interface resources */
-#if (BSP430_PLATFORM_EXP430F5529LP - 0)
-#define configBSP430_RFEM_CCEM 1
-#else /* native platform */
+/* Request RFEM interface resources. */
+
+/* G2 and 5529LP have been vetted with the Anaren boosterpack.  Select
+ * that unless told not to. */
+#ifndef configBSP430_RF_ANAREN_CC110L
+#define configBSP430_RF_ANAREN_CC110L ((BSP430_PLATFORM_EXP430G2 - 0) || (BSP430_PLATFORM_EXP430F5529LP - 0))
+#endif /* configBSP430_RF_ANAREN_CC110L */
+
+/* CCEM boosterpack also works on G2 and 5529LP. */
+#if ! (configBSP430_RF_ANAREN_CC110L - 0) && ! defined(configBSP430_RFEM_CCEM)
+#define configBSP430_RFEM_CCEM ((BSP430_PLATFORM_EXP430G2 - 0) || (BSP430_PLATFORM_EXP430F5529LP - 0))
+#endif
+
+/* Use RFEM unless using RFEM_CCEM. */
+#if ! (configBSP430_RFEM_CCEM - 0)
 #define configBSP430_RFEM 1
-#endif /* native platform */
+#endif /* configBSP430_RFEM */
+
 #define configBSP430_PLATFORM_RF 1
 #define configBSP430_RF_CC110XEMK 1
-#define configBSP430_RF_ANAREN_CC110L (BSP430_PLATFORM_EXP430G2 - 0)
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>
