@@ -1,4 +1,5 @@
 import re
+import os.path
 
 class PinmapBase (object):
     _dict = {}
@@ -180,7 +181,13 @@ class Serial (PeripheralBase):
     _ConfigTemplate = '#define BSP430_%(tag)s_PERIPH_CPPID BSP430_PERIPH_CPPID_%(periph)s'
     _PlatformTemplate = '#define BSP430_%(tag)s_PERIPH_HANDLE BSP430_PERIPH_%(periph)s'
 
-def GenerateLines (path):
+def _path_from_args (category, name, path):
+    if path is None:
+        path = os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'pinmaps', category, '{}.pinmap'.format(name))
+    return path
+
+def GenerateLines (category, name, path=None):
+    path = _path_from_args(category, name, path)
     directive_re = re.compile('@(?P<cls>\w*)\.(?P<dir>.*)$')
     inf = file(path)
     for ln in inf:
@@ -192,6 +199,27 @@ def GenerateLines (path):
                 cls.ProcessDirective(mo.group('dir'))
                 continue
             yield ln
+
+def CreateInstance (identifier):
+    for cls in (Serial, Port, Timer, BPHeaderPin, RFEMPin):
+        pin = cls.Create(identifier)
+        if pin is not None:
+            return pin
+    if not (identifier in ('3V3', 'GND', 'n/c')):
+        print 'unrecognized identifier: {}'.format(identifier)
+    return None
+
+def GenerateMap (category, name, path=None):
+    mapping = {}
+    for ln in GenerateLines(category, name):
+        elts = ln.split()
+        assert 2 == len(elts)
+        lhs = CreateInstance(elts[0])
+        rhs = CreateInstance(elts[1])
+        if (lhs is not None) and (rhs is not None):
+            assert not (lhs in mapping)
+            mapping[lhs] = rhs
+    return mapping
 
 class Signal (object):
     withPort = True
