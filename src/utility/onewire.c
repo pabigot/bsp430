@@ -71,6 +71,14 @@ iBSP430onewireReset_ni (const sBSP430onewireBus * bus)
 {
   int present;
 
+  /* Non-standard: Hold bus high for OWT_RESET_us.  This provides
+   * enough parasitic power for the device to signal presence.
+   * Without this, effective RSTL duration may exceed the maximum
+   * 960us before device reset. */
+  BSP430_PORT_HAL_HPL_OUT(bus->port) |= bus->bit;
+  BSP430_PORT_HAL_HPL_DIR(bus->port) |= bus->bit;
+  __delay_cycles(BSP430_CLOCK_US_TO_NOMINAL_MCLK(OWT_RSTH_us));
+
   /* Hold bus low for OWT_RESET_us */
   BSP430_PORT_HAL_HPL_OUT(bus->port) &= ~bus->bit;
   BSP430_PORT_HAL_HPL_DIR(bus->port) |= bus->bit;
@@ -214,6 +222,25 @@ iBSP430onewireRequestTemperature_ni (const sBSP430onewireBus * bus)
   vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_SKIP_ROM);
   vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_CONVERT_T);
   return 0;
+}
+
+int
+iBSP430onewireReadPowerSupply (const sBSP430onewireBus * bus)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv = -1;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    if (! iBSP430onewireReset_ni(bus)) {
+      break;
+    }
+    vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_SKIP_ROM);
+    vBSP430onewireWriteByte_ni(bus, BSP430_ONEWIRE_CMD_READ_POWER_SUPPLY);
+    rv = iBSP430onewireReadBit_ni(bus);
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 int

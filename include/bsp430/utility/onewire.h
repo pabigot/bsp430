@@ -67,6 +67,10 @@ enum {
   /** Skip ROM sends the following command to all bus devices */
   BSP430_ONEWIRE_CMD_SKIP_ROM = 0xcc,
 
+  /** Determine whether device is parasite-powered or
+   * external-powered */
+  BSP430_ONEWIRE_CMD_READ_POWER_SUPPLY = 0xb4,
+
   /** Store data from EEPROM into RAM */
   BSP430_ONEWIRE_CMD_RECALL_EE = 0xb8,
 
@@ -158,6 +162,15 @@ int iBSP430onewireComputeCRC (const unsigned char * data, int len);
  * error occurred. */
 int iBSP430onewireReadSerialNumber (const sBSP430onewireBus * bus,
                                     sBSP430onewireSerialNumber * snp);
+
+/** Determine whether device is externally powered or uses parasite power.
+ *
+ * @param bus The port and bit identifying the 1-wire bus
+ *
+ * @return 1 if the bus is externally powered; 0 if the bus is
+ * parasitically powered; a negative value if an error is encountered.
+ */
+int iBSP430onewireReadPowerSupply (const sBSP430onewireBus * bus);
 
 /** Send the command sequence to initiate a temperature measurement
  *

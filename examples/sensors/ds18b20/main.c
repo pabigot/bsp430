@@ -55,6 +55,14 @@ void main ()
           iBSP430portBitPosition(bus->bit),
           bus->bit);
 
+  rc = iBSP430onewireReadPowerSupply(bus);
+  if (0 > rc) {
+    cprintf("WARNING: Device not present?\n");
+  } else {
+    static const char * const supply_type[] = { "parasitic", "external" };
+    cprintf("Power supply: %s\n", supply_type[!!rc]);
+  }
+
   do {
     rc = iBSP430onewireReadSerialNumber(bus, &serial);
     if (0 != rc) {
