@@ -1,13 +1,14 @@
 import re
 
 class PinmapBase (object):
-    # A dictionary used for template expansion.  The contents are the
-    # named subclass constructor arguments plus whatever derived
-    # information the subclass adds during construction.
     _dict = {}
+    """A dictionary used for template expansion.  The contents are the
+    named subclass constructor arguments plus whatever derived
+    information the subclass adds during construction."""
 
-    # A compiled regular expression that extracts from a standard peripheral description
     Template_re = None
+    """A compiled regular expression that extracts from a standard
+    peripheral description.  Must be provided by subclasses."""
 
     @classmethod
     def Create (cls, id):
@@ -25,6 +26,7 @@ class PinmapBase (object):
         return cmp(hash(self), hash(other))
 
 class RFEMPin (PinmapBase):
+    """A header identifier compatible with an RF header: RF#.#"""
     Template_re = re.compile('RF(?P<hdr>\d+)\.(?P<pin>\d+)$')
 
     def __hash__ (self):
@@ -45,6 +47,23 @@ class RFEMPin (PinmapBase):
 
     def __str__ (self):
         return 'RF%u.%u' % (self.hdr, self.pin)
+
+class BPHeaderPin (PinmapBase):
+    """A header identifier compatible with a BoosterPack header: [ABCD].#"""
+    Template_re = re.compile('(?P<hdr>[ABCD])\.(?P<pin>\d+)$')
+
+    def __init__ (self, hdr, pin):
+        self.hdr = hdr
+        self.pin = int(pin)
+
+    def __hash__ (self):
+        return hash(self.astuple())
+
+    def astuple (self):
+        return (self.hdr, self.pin)
+
+    def __str__ (self):
+        return '%s.%u' % (self.hdr, self.pin)
 
 class PeripheralBase (PinmapBase):
     @classmethod
@@ -105,22 +124,6 @@ class Timer (PeripheralBase):
             return ('_TIMER_PERIPH_CPPID',)
         return ( '_TIMER_PERIPH_HANDLE', '_TIMER_CCIDX', '_TIMER_CCIS' )
 
-class BPHeaderPin (PeripheralBase):
-    Template_re = re.compile('(?P<hdr>[ABCD])\.(?P<pin>\d+)$')
-
-    def __init__ (self, hdr, pin):
-        self.hdr = hdr
-        self.pin = int(pin)
-
-    def __hash__ (self):
-        return hash(self.astuple())
-
-    def astuple (self):
-        return (self.hdr, self.pin)
-
-    def __str__ (self):
-        return '%s.%u' % (self.hdr, self.pin)
-
 class Port (PeripheralBase):
     Template_re = re.compile('P(?P<port>\d+)\.(?P<pin>\d)$')
 
@@ -154,18 +157,25 @@ class Serial (PeripheralBase):
     Template_re = re.compile('UC(?P<variant>.)(?P<instance>\d)(?P<role>\w+)$')
 
     Periph = None
+    """The MSP430 peripheral that supplies serial functionality on
+    this family of device.
+
+    There should be a directive like "@Serial.Periph USCI5" in the MCU
+    pinmap to set this class attribute, which in turn is used to set
+    the peripheral identifier for the remaining instances in the map.
+    """
 
     def __init__ (self, variant, instance, role):
         self.variant = variant
         self.instance = int(instance)
         self.role = role
-        self._dict = { 'periph': self.periph() }
+        self._dict = { 'periph': '%s_%s%s' % (self.Periph, self.variant, self.instance) }
 
     def __str__ (self):
         return 'UC%s%u%s' % (self.variant, self.instance, self.role)
 
     def periph (self):
-        return '%s_%s%s' % (self.Periph, self.variant, self.instance)
+        return self._dict['periph']
 
     _ConfigTemplate = '#define BSP430_%(tag)s_PERIPH_CPPID BSP430_PERIPH_CPPID_%(periph)s'
     _PlatformTemplate = '#define BSP430_%(tag)s_PERIPH_HANDLE BSP430_PERIPH_%(periph)s'
