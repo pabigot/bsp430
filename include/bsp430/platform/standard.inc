@@ -48,34 +48,53 @@
 #include <bsp430/periph/pmm.h>
 
 #ifndef BSP430_PLATFORM_STANDARD_USE_INITIALIZE
-/** Define to true value to include default vBSP430platformInitialize_ni() implementation */
+/** Define to true value to include default vBSP430platformInitialize_ni() implementation
+ * @defaulted */
 #define BSP430_PLATFORM_STANDARD_USE_INITIALIZE 1
 #endif /* BSP430_PLATFORM_STANDARD_USE_INITIALIZE */
 
 #ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE
 /** Define to a C statement to do platform-specific operations in
  * vBSP340platformInitialize_ni() after initializing watchdog but
- * before anything else. */
+ * before anything else.
+ *
+ * @defaulted */
 #define BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE do { } while (0)
+#endif /* BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE */
+
+#ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5
+/** Define to a C statement to do clear the #LOCKLPM5 bit prior to
+ * configuring GPIOs in vBSP430platformInitialize_ni ().
+ *
+ * In the current FR58xx family this bit is set on power-up, even if
+ * not waking from LPM3.5 or LPM4.5.  Since
+ * vBSP430platformInitialize_ni() is supposed to configure things like
+ * LEDs, this bit needs to be cleared for normal startup.
+ *
+ * Applications that make use of LPM5 should either provide their own
+ * platform initialization, or inspect and record the port state and
+ * configuration prior to invoking the default
+ * vBSP430platformInitialize_ni() provided by
+ * <bsp430/platform/standard.inc> via
+ * #BSP430_PLATFORM_STANDARD_USE_INITIALIZE.
+ *
+ * @defaulted */
+#if defined(BSP430_DOXYGEN) || defined(LOCKLPM5)
+#define BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5 do { \
+    PM5CTL0 &= ~LOCKLPM5;                                       \
+  } while (0)
+#else /* LOCKLPM5 */
+#define BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5 do { } while (0)
+#endif /* LOCKLPM5 */
 #endif /* BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE */
 
 #ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE
 /** Define to a C statement to do platform-specific operations before
- * leaving vBSP340platformInitialize_ni(). */
+ * leaving vBSP340platformInitialize_ni().
+ *
+ * @defaulted */
 #define BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE do { } while (0)
 #endif /* BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE */
-
-#ifndef BSP430_PLATFORM_STANDARD_SET_CORE_VOLTAGE
-/** Define to a C statement to do platform-specific voltage initialization.
- *
- * On MCUs with the @link bsp430/periph/pmm.h PMM@endlink module it is
- * recommended to adjust the processor core voltage prior to setting
- * the clock above a certain frequency.  Based on clock ranges
- * specified in the MCU data sheet the platform header file should
- * define this macro to invoke iBSP430pmmSetCoreVoltageLevel_ni() with
- * the necessary level. */
-#define BSP430_PLATFORM_STANDARD_SET_CORE_VOLTAGE do { } while (0)
-#endif /* BSP430_PLATFORM_STANDARD_SET_CORE_VOLTAGE */
 
 /** @cond DOXYGEN_EXCLUDE */
 #if (BSP430_PLATFORM_STANDARD_USE_INITIALIZE - 0)
@@ -88,6 +107,8 @@ vBSP430platformInitialize_ni (void)
 #endif /* configBSP430_CORE_SUPPORT_WATCHDOG */
 
   BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE;
+
+  BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5;
 
 #if (BSP430_PLATFORM_BOOT_CONFIGURE_LEDS - 0) && (BSP430_LED - 0)
   vBSP430ledInitialize_ni();

@@ -33,15 +33,7 @@
  *
  * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-fet430u48c">MSP430FR5969 in a TS430RGZ48C carrier</a>.
  *
- * This board is also known as the "Fraunchpad"
- *
  * The following platform-specific features are supported: <ul>
- *
- * <li> #BSP430_PERIPH_EXPOSED_CLOCKS Clocks share LED lines, and can
- * be measured at the test points below the LEDs.  Proceeding from the
- * rightmost LED: TP10 provides SMCLK, TP11 provides MCLK, and TP12
- * provides ACLK.
- *
  * </ul>
  *
  * @homepage http://github.com/pabigot/bsp430

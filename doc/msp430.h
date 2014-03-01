@@ -250,6 +250,9 @@
 #define PMMCOREV_2          (0x0002)  /**< PMM Core Voltage 2 (1.75V) */
 #define PMMCOREV_3          (0x0003)  /**< PMM Core Voltage 3 (1.85V) */
 
+/* PM5CTL0 Power Mode 5 Control Bits */
+#define LOCKLPM5            (0x0001)  /**< Lock I/O pin configuration upon entry/exit to/from LPM5 */
+
 extern unsigned int SVSMHCTL;    /**< SVS and SVM high side control register */
 extern unsigned int SVSMLCTL;    /**< SVS and SVM low side control register */
 #define SVSMHRRL1           (0x0002)  /**< SVS and SVM high side Reset Release Voltage Level Bit: 1 */

@@ -74,10 +74,14 @@ void vBSP430platformInitialize_ni (void);
  *
  * This routine should:
  * @li Disable the watchdog (see #BSP430_PLATFORM_BOOT_DISABLE_WATCHDOG)
+ * @li Execute #BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE
+ * @li Execute #BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5
  * @li Configure the LEDs (see #BSP430_PLATFORM_BOOT_CONFIGURE_LEDS)
  * @li Configure crystals (see #BSP430_PLATFORM_BOOT_CONFIGURE_LFXT1 and #BSP430_PLATFORM_BOOT_CONFIGURE_XT2)
+ * @li Configure the core voltage to support #BSP430_CLOCK_NOMINAL_MCLK_HZ
  * @li Configure clocks (see #BSP430_PLATFORM_BOOT_CONFIGURE_CLOCKS)
  * @li Start the system clock (see #BSP430_UPTIME)
+ * @li Execute #BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE
  *
  * If your platform does not need to do anything special, you can
  * re-use the standard implementation of this function by including
@@ -86,6 +90,15 @@ void vBSP430platformInitialize_ni (void);
  * @code
  * #include <bsp430/platform/standard.inc>
  * @endcode
+ *
+ * This standard implementation can be customized through several of
+ * the macros listed above.
+ *
+ * @warning On MCUs supporting the #LOCKLPM5 bit the standard
+ * implementation of this function will clear that bit so GPIOs can be
+ * initialized.  Applications that wish to make use of the LPM3.5 or
+ * LPM4.5 modes should record the port configuration prior to invoking
+ * this function.
  */
 void vBSP430platformInitialize_ni (void);
 
