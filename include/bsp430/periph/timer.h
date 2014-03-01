@@ -1,4 +1,4 @@
-/* Copyright 2012-2013, Peter A. Bigot
+/* Copyright 2012-2014, Peter A. Bigot
  *
  * All rights reserved.
  *
@@ -150,7 +150,7 @@
  * @li @ref grp_config_functional
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
  * @defgroup grp_timer_alarm Alarm-related Timer Functionality
  *
@@ -245,7 +245,7 @@
  * where the behavior of alarms can be interactively probed.
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  *
  * @defgroup grp_timer_ccaclk Platform-independent Secondary Timer Functionality
  *
@@ -274,7 +274,7 @@
  * @section grp_timer_alarm_muxed Multiplexed Alarm Infrastructure
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2012-2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_PERIPH_TIMER_H
