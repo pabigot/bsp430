@@ -24,10 +24,13 @@
 
 /* Request RFEM interface resources. */
 
-/* G2 and 5529LP have been vetted with the Anaren boosterpack.  Select
- * that unless told not to. */
+/* G2, 5529LP, and FR5969 have been vetted with the Anaren
+ * boosterpack.  Select that unless told not to. */
 #ifndef configBSP430_RF_ANAREN_CC110L
-#define configBSP430_RF_ANAREN_CC110L ((BSP430_PLATFORM_EXP430G2 - 0) || (BSP430_PLATFORM_EXP430F5529LP - 0))
+#define configBSP430_RF_ANAREN_CC110L           \
+  ((BSP430_PLATFORM_EXP430G2 - 0)               \
+   || (BSP430_PLATFORM_EXP430F5529LP - 0)       \
+   || (BSP430_PLATFORM_EXP430FR5969 - 0))
 #endif /* configBSP430_RF_ANAREN_CC110L */
 
 /* CCEM boosterpack also works on G2 and 5529LP. */
