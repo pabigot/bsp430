@@ -11,6 +11,7 @@
 #include <bsp430/periph/port.h>
 #include <bsp430/periph/sys.h>
 #include <bsp430/periph/flash.h>
+#include <bsp430/periph/pmm.h>
 #include <sys/crtld.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
@@ -31,8 +32,13 @@
 /* Memory is extremely tight on the FR5739 (16 kB including CC3000
  * buffers).  Set these to restrict the set of commands to ones of
  * interest that will fit.  You'll probably find you'll need to
- * disable WLAN_CONNECT, which makes this pretty useless.  On the
- * EXP430F5438 the total application size is just over 20 kB. */
+ * disable WLAN_CONNECT, which makes this pretty useless.
+ *
+ * On the EXP430G2 there isn't enough memory to do anything, so
+ * disable everything.
+ *
+ * No issues on the "real" chips: MSP430F5438, MSP430F5529, .... */
+#if ! (BSP430_PLATFORM_EXP430G2 - 0)
 #define CMD_WLAN 1
 #define CMD_WLAN_BROKEN 1
 #define CMD_WLAN_STOP 1
@@ -50,6 +56,7 @@
 #define CMD_SCAN 1
 #define CMD_INFO 1
 #define CMD_HELP 1
+#endif /* CC3000BOOST */
 
 #if (NO_HELP - 0)
 #define HELP_STRING(h_) NULL
@@ -1296,12 +1303,11 @@ void main (void)
   cputchar('\n');
 #endif /* BSP430_MODULE_SYS */
 
-#if (BSP430_PMM_SUPPORTS_COREV - 0)
-  rv = iBSP430pmmSetCoreVoltageLevel_ni(PMMCOREV_3);
-  cprintf("Vcore at %d\n", rv);
-#endif
-
+#ifdef BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE
   cprintf("PWR_EN at %s.%u\n", xBSP430portName(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC3000_PWR_EN_PORT_BIT));
+#else /* BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE */
+  cprintf("No PWR_EN control.\n");
+#endif /* BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE */
   cprintf("SPI_IRQ HAL at %s.%u\n", xBSP430portName(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT));
   cprintf("CSn HAL at %s.%u\n", xBSP430portName(BSP430_RF_CC3000_CSn_PORT_PERIPH_HANDLE), iBSP430portBitPosition(BSP430_RF_CC3000_CSn_PORT_BIT));
   cprintf("SPI is %s\n", xBSP430serialName(BSP430_RF_CC3000_SPI_PERIPH_HANDLE));
@@ -1330,6 +1336,7 @@ void main (void)
   wlan_start(0);
 
   cprintf("\nAnd wlan has been started.\n");
+  (void)displayMemory;
 
 #if (CMD_INFO - 0)
   if (0 == cmd_info_load("")) {

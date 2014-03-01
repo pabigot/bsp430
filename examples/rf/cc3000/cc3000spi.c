@@ -137,6 +137,7 @@ wlanInterruptDisable_ (void)
 static void
 writeWlanPin_ (unsigned char val)
 {
+#ifdef BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE
   volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
 
   /* Done correctly, the application always starts with this disabled
@@ -150,6 +151,7 @@ writeWlanPin_ (unsigned char val)
   if (val) {
     pwr_en_port->out |= BSP430_RF_CC3000_PWR_EN_PORT_BIT;
   }
+#endif /* BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE */
 }
 
 int
@@ -230,7 +232,6 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
 {
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE);
-  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
   unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT);
 
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -256,10 +257,16 @@ SpiOpen (gcSpiHandleRx pfRxHandler)
     /* Preserve the callback pointer */
     rxCallback_ni_ = pfRxHandler;
 
-    /* Configure CC3000 power-enable pin and turn off power.  It'll be
-     * turned on in wlan_start() after this function returns. */
-    pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
-    pwr_en_port->dir |= BSP430_RF_CC3000_PWR_EN_PORT_BIT;
+#ifdef BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE
+    {
+      volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
+
+      /* Configure CC3000 power-enable pin and turn off power.  It'll be
+       * turned on in wlan_start() after this function returns. */
+      pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
+      pwr_en_port->dir |= BSP430_RF_CC3000_PWR_EN_PORT_BIT;
+    }
+#endif /* BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE */
 
     /* Clear chip select (set value before making it an output) */
     CS_DEASSERT();
@@ -284,7 +291,6 @@ SpiClose (void)
 {
   BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
   hBSP430halPORT spi_irq_hal = hBSP430portLookup(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE);
-  volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
   unsigned int spi_irq_pin = iBSP430portBitPosition(BSP430_RF_CC3000_IRQn_PORT_BIT);
 
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -307,9 +313,15 @@ SpiClose (void)
     /* Release the chip select line, just for completeness. */
     CS_DEASSERT();
 
-    /* Power down the CC3000.  In fact, this was already done by
-     * wlan_stop(). */
-    pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
+#ifdef BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE
+    {
+      volatile sBSP430hplPORTIE * const pwr_en_port = xBSP430hplLookupPORTIE(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE);
+
+      /* Power down the CC3000.  In fact, this was already done by
+       * wlan_stop(). */
+      pwr_en_port->out &= ~BSP430_RF_CC3000_PWR_EN_PORT_BIT;
+    }
+#endif /* BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE */
 
     rxCallback_ni_ = NULL;
     spi_ = NULL;

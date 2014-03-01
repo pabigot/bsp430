@@ -20,12 +20,19 @@
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1
 
+/* Support for CC30000 BoosterPack.  This conflicts with RFEM use. */
+#ifndef configBSP430_RF_CC3000BOOST
+#define configBSP430_RF_CC3000BOOST 0
+#endif /* configBSP430_RF_CC3000BOOST */
+
+#if ! (configBSP430_RF_CC3000BOOST - 0)
 /* Request RFEM interface resources specific to the CC3000EM.  NB:
  * CCEM maps SPI_IRQ to P6.5 on EXP430F5529LP; since that port is not
  * interrupt-enabled the CC3000 can't be used on that platform. */
 #define configBSP430_RFEM_CCEM 1
 #define configBSP430_RFEM 1
 #define configBSP430_RF_CC3000EM 1
+#endif /* RFEM */
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>
