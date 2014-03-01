@@ -718,8 +718,11 @@ def fn_emk_expand (subst_map, idmap, is_config):
             text.append('#define BSP430_RF_%s_%s_PERIPH_HANDLE BSP430_RFEM_SERIAL_PERIPH_HANDLE' % (tag.upper(), serial_type.upper()))
 
     gpio_signals = idmap.get('gpio')
+    hal_signals = idmap.get('hal')
     if gpio_signals is not None:
         gpio_signals = frozenset(gpio_signals.split(','))
+    if hal_signals is not None:
+        hal_signals = frozenset(hal_signals.split(','))
     signals = []
     if emk is None:
         generator = bsp430.pinmap.GenerateLines('boosterpack', boosterpack)
@@ -735,6 +738,7 @@ def fn_emk_expand (subst_map, idmap, is_config):
         sig_tag = 'RF_%s_%s' % (tag.upper(), signal)
         sig_prefix = 'BSP430_%s' % (sig_tag,)
         is_gpio = (gpio_signals is not None) and (signal in gpio_signals)
+        is_hal = is_gpio or ((hal_signals is not None) and (signal in hal_signals))
         pin = bsp430.pinmap.CreateInstance(pinif)
         if isinstance(pin, bsp430.pinmap.BPHeaderPin):
             pin = platform_map.get(pin)
@@ -755,12 +759,12 @@ def fn_emk_expand (subst_map, idmap, is_config):
         else:
             print 'unexpected pinif %s: %s %s %s' % (pinif, pin, subst_map, idmap)
             continue
-        signals.append( (sig_prefix, is_gpio) )
+        signals.append( (sig_prefix, is_gpio, is_hal) )
     if is_config:
         hal_text = []
         hpl_text = []
         timer_text = []
-        for (sig_prefix, is_gpio) in signals:
+        for (sig_prefix, is_gpio, is_hal) in signals:
             want_text = []
             want_text.append("#define BSP430_WANT_PERIPH_CPPID %s_PORT_PERIPH_CPPID" % (sig_prefix,))
             want_text.append("#include <bsp430/periph/want_.h>")
@@ -780,10 +784,12 @@ def fn_emk_expand (subst_map, idmap, is_config):
 #undef BSP430_WANT_PERIPH_CPPID
 #endif /* %(gpio)s timer */''' % { 'gpio' : sig_prefix } )
                 hal_text.extend(want_text)
+            elif is_hal:
+                hal_text.extend(want_text)
             else:
                 hpl_text.extend(want_text)
         if hal_text:
-            text.append("/* Request HAL (and HPL) for all GPIO ports */")
+            text.append("/* Request HAL (and HPL) for all GPIO and HAL-enabled ports */")
             text.append("#define BSP430_WANT_CONFIG_HAL 1")
             text.extend(hal_text)
             text.append("#undef BSP430_WANT_CONFIG_HAL")

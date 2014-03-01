@@ -39,7 +39,7 @@
 #ifndef BSP430_RF_EMKPLATFORM_H
 #define BSP430_RF_EMKPLATFORM_H
 
-/* !BSP430! insert=emk_platform emk=cc110xemk tag=cc110x gpio=GDO0,GDO1,GDO2 */
+/* !BSP430! insert=emk_platform emk=cc110xemk tag=cc110x hal=CSn gpio=GDO0,GDO1,GDO2 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_platform] */
 #if (configBSP430_RF_CC110XEMK - 0)
 #define BSP430_RF_CC110X 1
@@ -98,7 +98,7 @@
 #endif /* configBSP430_RF_CC110XEMK */
 /* END AUTOMATICALLY GENERATED CODE [emk_platform] */
 /* !BSP430! end=emk_platform */
-/* !BSP430! insert=emk_platform emk=cc1125emk tag=cc1125 gpio=GPIO0,GPIO1,GPIO2,GPIO3 */
+/* !BSP430! insert=emk_platform emk=cc1125emk tag=cc1125 hal=CSn gpio=GPIO0,GPIO1,GPIO2,GPIO3 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_platform] */
 #if (configBSP430_RF_CC1125EMK - 0)
 #define BSP430_RF_CC1125 1
@@ -178,7 +178,7 @@
 #endif /* configBSP430_RF_CC1125EMK */
 /* END AUTOMATICALLY GENERATED CODE [emk_platform] */
 /* !BSP430! end=emk_platform */
-/* !BSP430! insert=emk_platform emk=cc2520emk tag=cc2520 gpio=GPIO0,GPIO1,GPIO2,GPIO3,GPIO4,GPIO5 */
+/* !BSP430! insert=emk_platform emk=cc2520emk tag=cc2520 hal=CSn gpio=GPIO0,GPIO1,GPIO2,GPIO3,GPIO4,GPIO5 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_platform] */
 #if (configBSP430_RF_CC2520EMK - 0)
 #define BSP430_RF_CC2520 1
@@ -300,7 +300,7 @@
 #endif /* configBSP430_RF_CC2520EMK */
 /* END AUTOMATICALLY GENERATED CODE [emk_platform] */
 /* !BSP430! end=emk_platform */
-/* !BSP430! insert=emk_platform emk=cc3000em tag=cc3000 gpio=IRQn */
+/* !BSP430! insert=emk_platform emk=cc3000em tag=cc3000 hal=CSn gpio=IRQn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_platform] */
 #if (configBSP430_RF_CC3000EM - 0)
 #define BSP430_RF_CC3000 1

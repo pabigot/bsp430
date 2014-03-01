@@ -104,7 +104,7 @@
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT4
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
 
-/* !BSP430! insert=emk_platform boosterpack=cc3000boost platform=exp430f5529lp mcu=msp430f5529 spi=UCB0SOMI tag=cc3000 gpio=IRQn */
+/* !BSP430! insert=emk_platform boosterpack=cc3000boost platform=exp430f5529lp mcu=msp430f5529 spi=UCB0SOMI tag=cc3000 hal=CSn gpio=IRQn */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_platform] */
 #if (configBSP430_RF_CC3000BOOST - 0)
 #define BSP430_RF_CC3000 1
@@ -128,7 +128,7 @@
 /* END AUTOMATICALLY GENERATED CODE [emk_platform] */
 /* !BSP430! end=emk_platform */
 
-/* !BSP430! insert=emk_platform boosterpack=anaren_cc110l platform=exp430f5529lp mcu=msp430f5529 spi=UCB0SOMI tag=cc110x gpio=GDO0,GDO1,GDO2 */
+/* !BSP430! insert=emk_platform boosterpack=anaren_cc110l platform=exp430f5529lp mcu=msp430f5529 spi=UCB0SOMI tag=cc110x hal=CSn gpio=GDO0,GDO1,GDO2 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_platform] */
 #if (configBSP430_RF_ANAREN_CC110L - 0)
 #define BSP430_RF_CC110X 1

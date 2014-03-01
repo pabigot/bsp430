@@ -109,7 +109,7 @@
 #define BSP430_TIMER_CCACLK_CC1_PORT_BIT BIT1
 #endif /* BSP430_TIMER_CCACLK_CC1_PORT_BIT */
 
-/* !BSP430! insert=emk_platform emk=rf2500t mcu=msp430f2274 spi=UCB0SOMI tag=cc110x gpio=GDO0,GDO1,GDO2 */
+/* !BSP430! insert=emk_platform emk=rf2500t mcu=msp430f2274 spi=UCB0SOMI tag=cc110x hal=CSn gpio=GDO0,GDO1,GDO2 */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [emk_platform] */
 #if (configBSP430_RF_RF2500T - 0)
 #define BSP430_RF_CC110X 1
