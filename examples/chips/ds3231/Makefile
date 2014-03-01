@@ -1,6 +1,6 @@
 PLATFORM ?= trxeb
 # Test requires >2 kiB RAM for time conversion support
-TEST_PLATFORMS_EXCLUDE=exp430fr5739 exp430g2 rf2500t wolverine
+TEST_PLATFORMS_EXCLUDE=exp430fr5739 exp430g2 rf2500t wolverine exp430fr5969
 MODULES=$(MODULES_PLATFORM)
 MODULES += $(MODULES_UPTIME)
 MODULES += $(MODULES_CONSOLE)
