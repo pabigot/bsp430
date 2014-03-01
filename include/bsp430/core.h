@@ -56,7 +56,7 @@
  * the BSP430 library that is being used.  The value represents a
  * development freeze date in the form YYYYMMDD as a decimal
  * number. */
-#define BSP430_VERSION 20130730
+#define BSP430_VERSION 20140301
 
 /** Constant to specify no peripheral in preprocessor checks.
  *

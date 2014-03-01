@@ -1,4 +1,4 @@
-Release: 20130730
+Release: 20140301
 
 BSP430 is a set of C language adaptation layers simplifying cross-MCU
 library and application development on Texas Instruments MSP430
