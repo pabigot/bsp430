@@ -24,6 +24,9 @@
 /* We want to know the nominal clock speed so we can delay. */
 #include <bsp430/clock.h>
 
+/* We're going to use LEDs so we need the interface file */
+#include <bsp430/utility/led.h>
+
 /* We're going to want to differentially compare ACLK and SMCLK if we
  * can */
 #include <bsp430/periph/timer.h>
@@ -218,10 +221,16 @@ void main ()
 #endif /* UCS */
 
 #if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)
-  cprintf("\nCS RSEL %d DCOFSEL %d:"
+  cprintf("\nCS %s : RSEL %d DCOFSEL %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
           "\n CTL4 %04x CTL5 %04x CTL6 %04x",
-          !!(DCORSEL & CSCTL1), 0x07 & (CSCTL1 / DCOFSEL0),
+#if (BSP430_CS_IS_FR57XX - 0)
+          "FR57xx"
+#endif
+#if (BSP430_CS_IS_FR58XX - 0)
+          "FR58xx"
+#endif
+          "", !!(DCORSEL & CSCTL1), 0x07 & (CSCTL1 / DCOFSEL0),
           CSCTL0, CSCTL1, CSCTL2, CSCTL3,
           CSCTL4, CSCTL5, CSCTL6);
 #endif /* CS */
@@ -256,7 +265,9 @@ void main ()
      * clocks get disabled at deeper sleep modes; if you fall off the
      * bottom, you might end up in LPM4 with all clocks disabled. */
     while (1) {
+      vBSP430ledSet(0, -1);
       BSP430_CORE_WATCHDOG_CLEAR();
+      BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
     }
   } else {
 #if (BSP430_CONSOLE - 0)
