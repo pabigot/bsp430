@@ -1,0 +1,24 @@
+A.1     _VCC    # J4.1 = BP1
+A.2	P4.2
+A.3	P2.6
+A.4	P2.5
+A.5	P4.3
+A.6	P2.4
+A.7	P2.2
+A.8	P3.4
+A.9	P3.5
+A.10	P3.6
+B.1     _GND    # J5.1 = BP20
+B.2	P1.2
+B.3	P3.0
+B.4	n/c
+B.5	RST
+B.6	P1.6
+B.7	P1.7
+B.8	P1.5
+B.9	P1.4
+B.10	P1.3
+_S1     P4.5    # Buttons
+_S2     P1.1
+_LED1   P4.6	# Red, J6 disable
+_LED2   P1.0    # Green, no jumper

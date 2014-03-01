@@ -46,6 +46,7 @@
  * <li>#BSP430_PLATFORM_EXP430F5529</a>
  * <li>#BSP430_PLATFORM_EXP430F5529LP</a>
  * <li>#BSP430_PLATFORM_EXP430FR5739</a>
+ * <li>#BSP430_PLATFORM_EXP430FR5969</a>
  * <li>#BSP430_PLATFORM_EM430</a>
  * <li>#BSP430_PLATFORM_RF2500T</a>
  * <li>#BSP430_PLATFORM_SURF</a>
@@ -289,7 +290,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #endif /* configBSP430_PLATFORM_BUTTON0 */
 
 
-/* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430f5529lp,exp430fr5739,exp430fg4618,exp430g2 */
+/* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430f5529lp,exp430fr5739,exp430fr5969,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
 /** Define to a true value if application is being built for the
@@ -379,6 +380,28 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #if (BSP430_PLATFORM_EXP430FR5739 - 0)
 #include <bsp430/platform/exp430fr5739/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FR5739 */
+
+/** Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-exp430fr5969">MSP-EXP430FR5969</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/exp430fr5969/platform.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EXP430FR5969 will be
+ * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/exp430fr5969/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_EXP430FR5969
+#define BSP430_PLATFORM_EXP430FR5969 0
+#endif /* BSP430_PLATFORM_EXP430FR5969 */
+
+#if (BSP430_PLATFORM_EXP430FR5969 - 0)
+#include <bsp430/platform/exp430fr5969/platform.h>
+#endif /* BSP430_PLATFORM_EXP430FR5969 */
 
 /** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a> platform.

@@ -1,0 +1,22 @@
+# http://www.ti.com/tool/430boost-sharp96
+#
+A.1     VBAT      # J3.1
+A.2     PWR_EN    # n/c by DNP R17
+A.3     n/c
+A.4     n/c
+A.5     LCD_EN	  # GPIO control
+A.6     CS
+A.7     SCLK
+A.8     _LS2	  # Left slider elements
+A.9     _LS1
+A.10    _LS0
+B.1     GND       # J4.1
+B.2     IRQn
+B.3	n/c
+B.4	n/c
+B.5	n/c
+B.6     MOSI
+B.7	n/c	  # not MISO; no device output
+B.8	_RS2	  # Right slider elements
+B.9	_RS1
+B.10	_RS0

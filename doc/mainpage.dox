@@ -135,6 +135,7 @@ and @ref grp_timer_alarm; and demonstration @link bsp430/utility/onewire.h
 \li <a href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>
 \li <a href="http://www.ti.com/tool/msp-exp430f5529">MSP-EXP430F5529 ("USB Experimenter's Board")</a>
 \li <a href="http://www.ti.com/tool/msp-exp430f5529lp">MSP-EXP430F5529LP ("USB LaunchPad")</a>
+\li <a href="http://www.ti.com/tool/msp-exp430fr5969">MSP-EXP430FR5969 ("Wolverine LaunchPad")</a>
 \li <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a>
 \li <a href="http://www.ti.com/tool/em430f5137rf900">EM430-900</a>
 \li <a href="http://google.com/?q=people+power+company+surf+board">PeoplePower Company SuRF
