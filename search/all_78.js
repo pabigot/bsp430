@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['xbsp430cliconsolebuffer_5fni',['xBSP430cliConsoleBuffer_ni',['../group__grp__utility__cli__cli.html#gad0d2c92b96b17302159c049f7a9bfb17',1,'cli.h']]],
+  ['xbsp430cliconsolebuffer',['xBSP430cliConsoleBuffer',['../group__grp__utility__cli__cli.html#ga634626363e043b2a1efa7fb7b657ebe4',1,'cli.h']]],
   ['xbsp430clihelperstringsextract',['xBSP430cliHelperStringsExtract',['../group__grp__utility__cli__hci.html#ga28e7e4a8ab65e7240377f5327fc30256',1,'cli.h']]],
   ['xbsp430clinextqtoken',['xBSP430cliNextQToken',['../group__grp__utility__cli__hci.html#gabcda3dd127008a5cdcc5f40cac4e9e68',1,'cli.h']]],
   ['xbsp430clinexttoken',['xBSP430cliNextToken',['../group__grp__utility__cli__hci.html#gad8ad62488676a6ef0de220019d635c29',1,'cli.h']]],
@@ -8,6 +8,7 @@ var searchData=
   ['xbsp430clockaclksource',['xBSP430clockACLKSource',['../clock_8h.html#ac935555e3b12a0bc4a799eb193d54101',1,'clock.h']]],
   ['xbsp430clockmclksource',['xBSP430clockMCLKSource',['../clock_8h.html#ac4b770a224b729588068d009a19e620d',1,'clock.h']]],
   ['xbsp430clocksmclksource',['xBSP430clockSMCLKSource',['../clock_8h.html#a117adb1cb741b31f0abf81ae08f052c4',1,'clock.h']]],
+  ['xbsp430eui64astext',['xBSP430eui64AsText',['../eui64_8h.html#a01277ca2a5b340c211f133df07ac8668',1,'eui64.h']]],
   ['xbsp430eusciname',['xBSP430eusciName',['../eusci_8h.html#a543ffe8b48f4ca7cde657e222aca8d33',1,'eusci.h']]],
   ['xbsp430gpsconvertgpstoutc_5fni',['xBSP430gpsConvertGPStoUTC_ni',['../gps_8h.html#a3c372f07bd98a2de291929c21a749caa',1,'gps.h']]],
   ['xbsp430halled_5f',['xBSP430halLED_',['../led_8h.html#aaf319eee3d004a0a6733cd7fb0b31b66',1,'led.h']]],

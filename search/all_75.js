@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['utilities_3a_20alarms',['Utilities: Alarms',['../ex_utility_alarm.html',1,'']]],
   ['utilities_3a_20command_20line_20interface',['Utilities: Command Line Interface',['../ex_utility_cli.html',1,'']]],
   ['u8glib_20lcd_20text_20and_20graphics',['U8GLIB LCD Text and Graphics',['../ex_utility_u8glib.html',1,'']]],
   ['utilities_3a_20unit_20test',['Utilities: Unit Test',['../ex_utility_unittest.html',1,'']]],
@@ -59,9 +58,11 @@ var searchData=
   ['ulbsp430clockmclk_5fhz_5fni',['ulBSP430clockMCLK_Hz_ni',['../clock_8h.html#a5d5257ff00b9fafcd86e4f5eaa73ee79',1,'clock.h']]],
   ['ulbsp430clocksmclk_5fhz',['ulBSP430clockSMCLK_Hz',['../clock_8h.html#aae393938e85c471bb779ca0d5baa705f',1,'clock.h']]],
   ['ulbsp430clocksmclk_5fhz_5fni',['ulBSP430clockSMCLK_Hz_ni',['../clock_8h.html#a0642c6f082ed8feafd057ff8132b75da',1,'clock.h']]],
-  ['ulbsp430timercounter',['ulBSP430timerCounter',['../timer_8h.html#a73cf4f30824d57dead07b2aa52614b2f',1,'timer.h']]],
+  ['ulbsp430timercapturecounter_5fni',['ulBSP430timerCaptureCounter_ni',['../timer_8h.html#a1b1f0d0467a0f7cf394453a902eb4ca4',1,'timer.h']]],
+  ['ulbsp430timercounter',['ulBSP430timerCounter',['../timer_8h.html#aceb3578bf4d49881b128f6bc6a9f68df',1,'timer.h']]],
   ['ulbsp430timercounter_5fni',['ulBSP430timerCounter_ni',['../timer_8h.html#a24b984912d7624627b33023f76c14d31',1,'timer.h']]],
   ['ulbsp430timerfrequency_5fhz_5fni',['ulBSP430timerFrequency_Hz_ni',['../timer_8h.html#a6bbdf693689d7631cbada96054c065f8',1,'timer.h']]],
+  ['ulbsp430timeroverflowadjusted_5fni',['ulBSP430timerOverflowAdjusted_ni',['../timer_8h.html#a679087454149c918599c0980cfe53e81',1,'timer.h']]],
   ['ulbsp430uptime',['ulBSP430uptime',['../uptime_8h.html#a7e0b8aeba63d7b2ce965a650125eb8ef',1,'uptime.h']]],
   ['ulbsp430uptime_5fni',['ulBSP430uptime_ni',['../uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93',1,'uptime.h']]],
   ['ulbsp430uptimeconversionfrequency_5fhz_5fni',['ulBSP430uptimeConversionFrequency_Hz_ni',['../uptime_8h.html#abee524dac4c6d777b5493f1c16bc1c2a',1,'uptime.h']]],

@@ -2,6 +2,8 @@ var searchData=
 [
   ['r',['r',['../structsBSP430hplTIMER.html#a5ae8e86c33f6f960e81fa27f708511b2',1,'sBSP430hplTIMER']]],
   ['ren',['ren',['../structsBSP430hplPORT__5XX__16.html#af40087661bbb154457b2753a17ac6c33',1,'sBSP430hplPORT_5XX_16::ren()'],['../structsBSP430hplPORT__5XX__8.html#ab3513d7df8e9570b77d9813f50ef2ed0',1,'sBSP430hplPORT_5XX_8::ren()']]],
+  ['renp',['renp',['../structsBSP430halPORT.html#a399cec481f9b406d46680bb4b2d69052',1,'sBSP430halPORT']]],
+  ['resource',['resource',['../structsBSP430halSERIAL.html#a305d5e911594031188b186e54f4d83de',1,'sBSP430halSERIAL']]],
   ['returned_5fcandidates',['returned_candidates',['../structsBSP430cliCompletionData.html#a6b8e5151cbce9d7440b7aa781b7f1b76',1,'sBSP430cliCompletionData']]],
   ['revision',['revision',['../structsSkyTraqMsgOut__SW__VERSION.html#a5e4622be3088b22002176312b5d0769a',1,'sSkyTraqMsgOut_SW_VERSION']]],
   ['rmc_5fs',['rmc_s',['../structsSkyTraqMsgIn__CFG__NMEA.html#aa5b851651d2543761a52c6c209a71816',1,'sSkyTraqMsgIn_CFG_NMEA']]],
