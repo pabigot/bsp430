@@ -9,21 +9,21 @@
  * ADC10_A is ADC10 on a 5xx/6xx MCU.  It has external channels on A8
  * and A9 instead of reference voltage inputs.
  *
- * ADC10_B is ADC10 on a FR5xx MCU.  It provides a facility to measure
- * VeREF+ and VeREF- on channels 8 and 9.
+ * ADC10_B is ADC10 on a FR57xx MCU.  It provides a facility to
+ * measure VeREF+ and VeREF- on channels 8 and 9.
  *
  * ADC12 is classic 1xx/2xx/4xx 12-bit ADC.
  *
- * ADC12_B is ADC12 on a FR5xx MCU.  It will be on the FR5969 which is
- * not yet documented.
+ * ADC12_A (identified as ADC12_PLUS) is ADC12 on a 5xx/6xx MCU.  It
+ * adds REFOUT not available on ADC12.
  *
- * ADC12_PLUS is ADC12 on a 5xx/6xx MCU.  It adds REFOUT not available
- * on ADC12.
+ * ADC12_B is ADC12 on a FR58xx MCU.  It supports up to 32 external
+ * and 6 internal channels.
  *
  * REF is classic 5xx REF.
  *
- * REF_A is an FR5xx REF not yet documented but planned for the
- * FR5969.
+ * REF_A is an FR58xx REF which adds status registers to indicate when
+ * the reference is ready, and supports 1.2V instead of 1.5V.
  *
  * @homepage http://github.com/pabigot/bsp430
  *
@@ -77,6 +77,10 @@ cal_adc_ptr_type cal_adc;
 #ifndef ADC12ENC
 #define ADC12ENC ENC
 #endif /* ADC12ENC */
+#if defined(__MSP430_HAS_ADC12_B__)
+#define INCH_TEMP ADC12INCH_30
+#define INCH_VMID ADC12INCH_31
+#else /* ADC12_B */
 #ifdef ADC12INCH_10
 #define INCH_TEMP ADC12INCH_10
 #define INCH_VMID ADC12INCH_11
@@ -84,6 +88,7 @@ cal_adc_ptr_type cal_adc;
 #define INCH_TEMP INCH_10
 #define INCH_VMID INCH_11
 #endif /* ADC12INCH_10 */
+#endif /* ADC12_B */
 #else /* HAVE_ADC* */
 #error No ADC available */
 #endif /* HAVE_ADC* */
@@ -100,7 +105,15 @@ typedef struct sSample {
   };
 } sSample;
 
-#define REF_1p5 15
+#if defined(__MSP430_HAS_REF_A__)
+#define REF_1pX 12
+#define REF_1pX_SCALE 1200
+#define REF_1pX_STR "1.2"
+#else /* REF_A */
+#define REF_1pX 15
+#define REF_1pX_SCALE 1500
+#define REF_1pX_STR "1.5"
+#endif /* REF_A */
 #define REF_2p0 20
 #define REF_2p5 25
 
@@ -129,10 +142,11 @@ int initializeADC (void)
   }
   REFCTL0 = REFVSEL_1 | REFON
 #ifdef REFMSTR
-            /* REFMSTR is implicit (and not defined) in FR5xx devices,
-             * required on ADC10_A devices, and optional for ADC12_A (but if
-             * not selected you have to control the reference voltage from the
-             * legacy ADC12 settings).  Use it if you got it. */
+            /* REFMSTR is implicit (and not defined) in FR57xx/FR58xx
+             * devices, required on ADC10_A devices, and optional for
+             * ADC12_A (but if not selected you have to control the
+             * reference voltage from the legacy ADC12 settings).  Use
+             * it if you've got it. */
             | REFMSTR
 #endif
             ;
@@ -176,8 +190,6 @@ int initializeADC (void)
       /* nop */
     }
   }
-#elif defined(__MSP430_HAS_ADC12_B__)
-#error Not implemented
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
   /* ~ADC12ENC: Place module into hold before modifying configuration */
   ADC12CTL0 &= ~ADC12ENC;
@@ -200,6 +212,33 @@ int initializeADC (void)
    * Binary unsigned read-back
    * ADC12SR: Sampling rate limited to 50 ksps (reduce current) */
   ADC12CTL2 = ADC12RES_2 | ADC12SR;
+#elif defined(__MSP430_HAS_ADC12_B__)
+  /* ~ADC12ENC: Place module into hold before modifying configuration */
+  ADC12CTL0 &= ~ADC12ENC;
+  /* ADC12SHT_10:  512 ADC12CLK cycles per sample
+   * ADC12ON: Turn module on
+   * Do not enable yet.
+   */
+  ADC12CTL0 = ADC12SHT0_10 | ADC12ON;
+  /* Start collection with conversion register zero
+   * ADC12SHS_0: Trigger on ADC12SC bit
+   * ADC12SHP: Pulsed sampling
+   * No sample-input signal inversion
+   * Divide clock by 1
+   * ADC12SSEL_0: Clock source is MODCLK (nominal 5MHz)
+   * ADC12CONSEQ_0: Single-channel, single-conversion
+   */
+  ADC12CTL1 = ADC12SHS_0 | ADC12SHP | ADC12SSEL_0 | ADC12CONSEQ_0;
+  /* No predivider
+   * ADC12RES: 12-bit resolution
+   * Binary unsigned read-back */
+  ADC12CTL2 = ADC12RES_2;
+  /* Disable channel mapping.
+   * Use internal temperature and voltage channels */
+  ADC12CTL3 = ADC12TCMAP | ADC12BATMAP;
+
+  /* Delay 75us to allow REF to stabilize */
+  BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_US_TO_NOMINAL_MCLK(75));
 #else
 #error No ADC available
 #endif /* ADC */
@@ -210,7 +249,7 @@ int setReferenceVoltage (int ref)
 {
 #if HAVE_REF
   REFCTL0 &= ~REFVSEL_3;
-  if (REF_1p5 == ref) {
+  if (REF_1pX == ref) {
     REFCTL0 |= REFVSEL_0;
   } else if (REF_2p0 == ref) {
     REFCTL0 |= REFVSEL_1;
@@ -225,7 +264,7 @@ int setReferenceVoltage (int ref)
     return -1;
   }
 #if HAVE_ADC10
-  if (REF_1p5 == ref) {
+  if (REF_1pX == ref) {
     ADC10CTL0 &= ~REF2_5V;
   } else if (REF_2p5 == ref) {
     ADC10CTL0 |= REF2_5V;
@@ -233,7 +272,7 @@ int setReferenceVoltage (int ref)
     return -1;
   }
 #elif HAVE_ADC12
-  if (REF_1p5 == ref) {
+  if (REF_1pX == ref) {
     ADC12CTL0 &= ~REF2_5V;
   } else if (REF_2p5 == ref) {
     ADC12CTL0 |= REF2_5V;
@@ -257,10 +296,10 @@ int setSource (unsigned int inch)
   ADC10MCTL0 = ADC10SREF_1 | (inch * ADC10INCH0);
 #elif defined(__MSP430_HAS_ADC12__)
   ADC12MCTL0 = EOS | SREF_1 | (inch * INCH0);
-#elif defined(__MSP430_HAS_ADC12_B__)
-#error Not implemented
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
   ADC12MCTL0 = ADC12EOS | ADC12SREF_1 | (inch * ADC12INCH0);
+#elif defined(__MSP430_HAS_ADC12_B__)
+  ADC12MCTL0 = ADC12EOS | ADC12VRSEL_1 | (inch * ADC12INCH0);
 #else
 #error No ADC available
 #endif /* ADC */
@@ -297,8 +336,8 @@ int getSample (sSample * sp,
   ADC12CTL0 &= ~ADC12ENC;
 #endif
 
-  if (REF_1p5 == refv) {
-    vref_scale = 1500;
+  if (REF_1pX == refv) {
+    vref_scale = REF_1pX_SCALE;
 #if HAVE_REF
   } else if (REF_2p0 == refv) {
     vref_scale = 2000;
@@ -313,7 +352,7 @@ int getSample (sSample * sp,
     int t30;
     int t85;
 
-    if (REF_1p5 == refv) {
+    if (REF_1pX == refv) {
 #if HAVE_REF
       vref_factor = cal_ref->cal_adc_15vref_factor;
 #else /* HAVE_REF */
@@ -368,10 +407,10 @@ int getSample (sSample * sp,
 #error No ADC available
 #endif /* ADC */
 
-#define VALID_T_1p5 0x01
+#define VALID_T_1pX 0x01
 #define VALID_T_2p0 0x02
 #define VALID_T_2p5 0x04
-#define VALID_V_1p5 0x10
+#define VALID_V_1pX 0x10
 #define VALID_V_2p0 0x20
 #define VALID_V_2p5 0x40
 
@@ -396,7 +435,7 @@ void main ()
 
   cprintf("\n\nadc demo, " __DATE__ " " __TIME__ "\n");
 
-  delta_wake_utt = ulBSP430uptimeConversionFrequency_Hz_ni();
+  delta_wake_utt = 10 * ulBSP430uptimeConversionFrequency_Hz_ni();
 
   rc = initializeADC();
   cprintf("%s initialized, returned %d, ADC cal at %p, REF cal at %p\n",
@@ -415,32 +454,49 @@ void main ()
 #endif /* ADC */
           , rc, cal_adc, cal_ref);
 
+#if HAVE_REF
+  if (cal_ref) {
+    cprintf("Reference factors:\n"
+            "\t" REF_1pX_STR "V %u (0x%04x)\n"
+            "\t2.0V %u (0x%04x)\n"
+            "\t2.5V %u (0x%04x)\n",
+            cal_ref->cal_adc_15vref_factor, cal_ref->cal_adc_15vref_factor,
+            cal_ref->cal_adc_20vref_factor, cal_ref->cal_adc_20vref_factor,
+            cal_ref->cal_adc_25vref_factor, cal_ref->cal_adc_25vref_factor);
+  }
+#endif /* HAVE_REF */
   if (cal_adc) {
+    cprintf("ADC gain factor %d (0x%04x), offset %d\n",
+            cal_adc->cal_adc_gain_factor, cal_adc->cal_adc_gain_factor,
+            cal_adc->cal_adc_offset);
     cprintf("Temperature ranges:\n");
-    cprintf("\t1.5V T30 %u T85 %u\n", cal_adc->cal_adc_15t30, cal_adc->cal_adc_15t85);
+    cprintf("\t" REF_1pX_STR "V T30 %u T85 %u\n", cal_adc->cal_adc_15t30, cal_adc->cal_adc_15t85);
 #if BSP430_TLV_IS_5XX
     cprintf("\t2.0V T30 %u T85 %u\n", cal_adc->cal_adc_20t30, cal_adc->cal_adc_20t85);
 #endif /* BSP430_TLV_IS_5XX */
     cprintf("\t2.5V T30 %u T85 %u\n", cal_adc->cal_adc_25t30, cal_adc->cal_adc_25t85);
   }
 
+  cprintf("Vmid channel %u, Temp channel %u\n",
+          INCH_VMID, INCH_TEMP);
+
   next_wake_utt = ulBSP430uptime_ni();
   while (1) {
     char timestamp[BSP430_UPTIME_AS_TEXT_LENGTH];
     int valid = 0;
-    sSample t15;
+    sSample t1X;
     sSample t20;
     sSample t25;
-    sSample v15;
+    sSample v1X;
     sSample v20;
     sSample v25;
 
-    if (0 == setReferenceVoltage(REF_1p5)) {
-      if (0 == getSample(&t15, REF_1p5, INCH_TEMP)) {
-        valid |= VALID_T_1p5;
+    if (0 == setReferenceVoltage(REF_1pX)) {
+      if (0 == getSample(&t1X, REF_1pX, INCH_TEMP)) {
+        valid |= VALID_T_1pX;
       }
-      if (0 == getSample(&v15, REF_1p5, INCH_VMID)) {
-        valid |= VALID_V_1p5;
+      if (0 == getSample(&v1X, REF_1pX, INCH_VMID)) {
+        valid |= VALID_V_1pX;
       }
     }
     if (0 == setReferenceVoltage(REF_2p0)) {
@@ -460,13 +516,13 @@ void main ()
       }
     }
     cprintf("%s: valid %x", xBSP430uptimeAsText(ulBSP430uptime_ni(), timestamp), valid);
-    if (valid & (VALID_T_1p5 | VALID_V_1p5)) {
-      cprintf("\n\t1.5V: ");
-      if (valid & VALID_T_1p5) {
-        displayTemperature(&t15);
+    if (valid & (VALID_T_1pX | VALID_V_1pX)) {
+      cprintf("\n\t" REF_1pX_STR "V: ");
+      if (valid & VALID_T_1pX) {
+        displayTemperature(&t1X);
       }
-      if (valid & VALID_V_1p5) {
-        displayVoltage(&v15);
+      if (valid & VALID_V_1pX) {
+        displayVoltage(&v1X);
       }
     }
     if (valid & (VALID_T_2p0 | VALID_V_2p0)) {
