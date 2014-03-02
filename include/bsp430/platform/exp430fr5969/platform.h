@@ -72,6 +72,16 @@
 #define BSP430_LED_RED 0
 #define BSP430_LED_GREEN 1
 
+/* Select FRAM wait states for MSP430FR5969:
+ *    zero if <=8 MHz
+ *    one if 8 < SYS <= 16
+ * Rated system max frequency is 16MHz, but configurable max is 24MHz
+ * so assume the setting is linear. */
+#define BSP430_CS_FRAM_NWAITS_FOR_FREQ(freq_) \
+  ((16000000UL < (freq_)) ? 2 :               \
+   ((8000000UL < (freq_)) ? 1 :               \
+    0))
+
 /* How to use ACLK as a capture/compare input source */
 /* Settings for TA1: T1A2 ccis=1 ; clk P1.1 ; cc0 P1.7 ; cc1 P1.2 */
 #ifndef BSP430_TIMER_CCACLK_ACLK_CCIDX

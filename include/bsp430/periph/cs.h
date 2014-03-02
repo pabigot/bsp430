@@ -240,6 +240,41 @@
   } while (0)
 #endif /*  BSP430_CLOCK_CLEAR_FAULTS_NI */
 
+/** Determine FRAM wait states required for clock speed.
+ *
+ * This is a platform-specific macro to select the appropriate number
+ * of wait states required for reliable FRAM access when using a given
+ * system clock speed.  It should be defined in the platform.h header,
+ * based on values specified in the data sheet under Recommended
+ * Operating Conditions for f_SYSTEM.  A value of zero is used if a
+ * negative value is requested.
+ *
+ * @param freq_ Desired f_SYSTEM (maximum RAM access frequency)
+ *
+ * @note For FR57xx devices this macro is optional, as that family
+ * supports an automatic setting for wait states; if the macro is
+ * defined it will be used, otherwise it will not.  For FR58xx devices
+ * setting wait stats manually is required, but if the macro is
+ * missing this definition will be used:
+ * @note
+ * @code
+ * #define BSP430_CS_FRAM_NWAITS_FOR_FREQ(freq_) (((int)((freq_)/8000000L)) - 1)
+ * @endcode
+ *
+ * @warning Though the gloss in the datasheet references MCLK, the
+ * FR58xx user's guide documents that wait states also apply to DMA,
+ * which may run at a higher speed if MCLK's divisor is greater than
+ * SMCLK's.  BSP430 assumes MCLK's divisor is one, and so uses the
+ * actual configured DCO frequency to determine the wait states.  This
+ * is sub-optimal, but correct, if all clocks divide that frequency.
+ *
+ * @defaulted
+ * @platformvalue
+ * @dependency #BSP430_FR58XX */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CS_FRAM_NWAITS_FOR_FREQ(mclk_) include <bsp430/platform.h>
+#endif /* BSP430_PMM_COREV_FOR_MCLK */
+
 /** Unconditional define for peripheral-specific constant */
 #define BSP430_CLOCK_NOMINAL_VLOCLK_HZ 10000U
 

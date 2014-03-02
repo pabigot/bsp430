@@ -223,7 +223,8 @@ void main ()
 #if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)
   cprintf("\nCS %s : RSEL %d DCOFSEL %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
-          "\n CTL4 %04x CTL5 %04x CTL6 %04x",
+          "\n CTL4 %04x CTL5 %04x CTL6 %04x"
+          "\n FRCTL0 %04x",
 #if (BSP430_CS_IS_FR57XX - 0)
           "FR57xx"
 #endif
@@ -232,7 +233,7 @@ void main ()
 #endif
           "", !!(DCORSEL & CSCTL1), 0x07 & (CSCTL1 / DCOFSEL0),
           CSCTL0, CSCTL1, CSCTL2, CSCTL3,
-          CSCTL4, CSCTL5, CSCTL6);
+          CSCTL4, CSCTL5, CSCTL6, FRCTL0);
 #endif /* CS */
 
 #endif /* BSP430_CONSOLE */

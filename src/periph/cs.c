@@ -43,6 +43,7 @@
 #define XT1DRIVE1 LFXTDRIVE1
 #define SELA__XT1CLK SELA__LFXTCLK
 #define XTS 0
+
 #endif /* BSP430_CS_IS_FR58XX */
 
 /* Basic clock sources on both CS and CS_A.  These values may be used
@@ -51,6 +52,28 @@
 #define CSEL_VLOCLK 1
 #define CSEL_DCOCLK 3
 #define CSEL_XT2CLK 5
+
+/* FRAM wait stat mask values.  The preferred name changed from
+ * NACCESS to NWAITS at some point, as did the need to configure wait
+ * states.  Assume if no known name is available that there is no need
+ * to configure things. */
+#if defined(NWAITS0)
+#define NWAITS_BASE NWAITS0
+#define NWAITS_MASK (7 * NWAITS0)
+#elif defined(NACCESS0)
+#define NWAITS_BASE NACCESS0
+#define NWAITS_MASK (7 * NACCESS0)
+#endif /* waitstate mask */
+
+#if (BSP430_CS_IS_FR58XX - 0)
+/* FR57xx devices may define this conversion, but they support
+ * automatic wait state selection; FR58xx devices do not, and must
+ * provide a definition in the platform header.  If one is missing use
+ * this as a default (based on one sample point) */
+#ifndef BSP430_CS_FRAM_NWAITS_FOR_FREQ
+#define BSP430_CS_FRAM_NWAITS_FOR_FREQ(freq_) (((int)((freq_)/8000000L)) - 1)
+#endif /* BSP430_CS_FRAM_NWAITS_FOR_FREQ */
+#endif /* BSP430_CS_IS_FR58XX */
 
 /* Mask for legal CSEL value range */
 #define CSEL_MASK 0x07
@@ -131,6 +154,10 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
   int best_ci;
   unsigned long delta;
   unsigned long best_delta;
+#if defined(BSP430_CS_FRAM_NWAITS_FOR_FREQ)
+  int pre_waits = (FRCTL0 & NWAITS_MASK) / NWAITS_BASE;
+  int post_waits;
+#endif
 
   if (0 == mclk_Hz) {
     mclk_Hz = BSP430_CLOCK_PUC_MCLK_HZ;
@@ -144,12 +171,30 @@ ulBSP430clockConfigureMCLK_ni (unsigned long mclk_Hz)
       best_ci = ci;
     }
   }
+
+#if defined(BSP430_CS_FRAM_NWAITS_FOR_FREQ)
+  post_waits = BSP430_CS_FRAM_NWAITS_FOR_FREQ(supported_freq[best_ci]);
+  if (0 > post_waits) {
+    post_waits = 0;
+  }
+  if (post_waits > pre_waits) {
+    FRCTL0 = FWPW | (post_waits * NWAITS_BASE);
+    FRCTL0_H = !FWPW;
+  }
+#endif /*BSP430_CS_IS_FR58XX */
+
   csctl1 = (best_ci & 1) ? DCORSEL : 0;
   csctl1 |= (best_ci / 2) * DCOFSEL0;
   CSCTL0_H = 0xA5;
   CSCTL1 = csctl1;
   CSCTL2 = (CSCTL2 & (SELA_MASK | SELS_MASK)) | SELM__DCOCLK;
   CSCTL3 &= ~DIVM_MASK;
+#if defined(BSP430_CS_FRAM_NWAITS_FOR_FREQ)
+  if (post_waits < pre_waits) {
+    FRCTL0 = FWPW | (post_waits * NWAITS_BASE);
+    FRCTL0_H = !FWPW;
+  }
+#endif /*BSP430_CS_IS_FR58XX */
 
   /* The CS peripheral does not support a DCO fault signal */
 
