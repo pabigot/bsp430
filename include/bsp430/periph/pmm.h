@@ -138,6 +138,38 @@
 
 #endif /* LOCKLPM5 */
 
+/** Macro to clear the LOCKLPM5 bit.
+ *
+ * In the current FR58xx family this bit is set on power-up, even if
+ * not waking from LPM3.5 or LPM4.5.  Since
+ * vBSP430platformInitialize_ni() is supposed to configure things like
+ * LEDs, this bit needs to be cleared for normal startup.
+ *
+ * @note Although this bit may be cleared without locking the PMM
+ * registers on some FR58xx devices, on other devices the lock is
+ * required.  On some non-FRAM devices with the PMM module, the bit
+ * does not even exist.  This macro exists on all MCUs for which
+ * #BSP430_MODULE_PMM is enabled; it is a no-op if the bit is not
+ * supported.
+ *
+ * @warning The implementation assumes that the PMM control registers
+ * are locked.  The macro will unlock the registers, set the bit for
+ * LPMx.5, then lock the registers again.  If used in a context where
+ * the PMM registers are already unlocked, this will probably not be
+ * what you want.
+ *
+ * @defaulted
+ * @platformdep */
+#if defined(BSP430_DOXYGEN) || defined(LOCKLPM5)
+#define BSP430_PMM_CLEAR_LOCKLPM5() do { \
+    PMMCTL0_H = PMMPW_H;                 \
+    PM5CTL0 &= ~LOCKLPM5;                \
+    PMMCTL0_H = !PMMPW_H;                \
+  } while (0)
+#else /* LOCKLPM5 */
+#define BSP430_PMM_CLEAR_LOCKLPM5() do { } while (0)
+#endif /* LOCKLPM5 */
+
 #if defined(BSP430_DOXYGEN) || (BSP430_PMM_SUPPORTS_SVSM - 0)
 /** Macro to set the #SVSMLCTL and #SVSMLCTL registers
  *

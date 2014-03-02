@@ -66,6 +66,9 @@
 /** Define to a C statement to do clear the #LOCKLPM5 bit prior to
  * configuring GPIOs in vBSP430platformInitialize_ni ().
  *
+ * This has effect only on platforms that support the Power Management
+ * Module.
+ *
  * In the current FR58xx family this bit is set on power-up, even if
  * not waking from LPM3.5 or LPM4.5.  Since
  * vBSP430platformInitialize_ni() is supposed to configure things like
@@ -75,17 +78,18 @@
  * platform initialization, or inspect and record the port state and
  * configuration prior to invoking the default
  * vBSP430platformInitialize_ni() provided by
- * <bsp430/platform/standard.inc> via
- * #BSP430_PLATFORM_STANDARD_USE_INITIALIZE.
+ * <bsp430/platform/standard.inc> when
+ * #BSP430_PLATFORM_STANDARD_USE_INITIALIZE is enabled.
  *
- * @defaulted */
-#if defined(BSP430_DOXYGEN) || defined(LOCKLPM5)
+ * @defaulted
+ * @platformdep */
+#if (BSP430_MODULE_PMM - 0)
 #define BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5 do { \
-    PM5CTL0 &= ~LOCKLPM5;                                       \
+    BSP430_PMM_CLEAR_LOCKLPM5();                                \
   } while (0)
-#else /* LOCKLPM5 */
+#else /* BSP430_MODULE_PMM */
 #define BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5 do { } while (0)
-#endif /* LOCKLPM5 */
+#endif /* BSP430_MODULE_PMM */
 #endif /* BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE */
 
 #ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE
