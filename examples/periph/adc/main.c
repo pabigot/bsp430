@@ -25,6 +25,10 @@
  * REF_A is an FR58xx REF which adds status registers to indicate when
  * the reference is ready, and supports 1.2V instead of 1.5V.
  *
+ * Normally the internal temperature and Vmid channels are converted.
+ * By defining AUX_CHANNEL and possibly modifying configuration code
+ * below, an external channel may be added.
+ *
  * @homepage http://github.com/pabigot/bsp430
  *
  */
@@ -69,9 +73,11 @@ cal_adc_ptr_type cal_adc;
 #ifdef ADC10INCH_10
 #define INCH_TEMP ADC10INCH_10
 #define INCH_VMID ADC10INCH_11
+#define INCH_BASE ADC10INCH0
 #else /* ADC10INCH_10 */
 #define INCH_TEMP INCH_10
 #define INCH_VMID INCH_11
+#define INCH_BASE INCH0
 #endif /* ADC10INCH_10 */
 #elif HAVE_ADC12
 #ifndef ADC12ENC
@@ -80,18 +86,25 @@ cal_adc_ptr_type cal_adc;
 #if defined(__MSP430_HAS_ADC12_B__)
 #define INCH_TEMP ADC12INCH_30
 #define INCH_VMID ADC12INCH_31
+#define INCH_BASE ADC12INCH0
 #else /* ADC12_B */
 #ifdef ADC12INCH_10
 #define INCH_TEMP ADC12INCH_10
 #define INCH_VMID ADC12INCH_11
+#define INCH_BASE ADC12INCH0
 #else /* ADC12INCH_10 */
 #define INCH_TEMP INCH_10
 #define INCH_VMID INCH_11
+#define INCH_BASE INCH0
 #endif /* ADC12INCH_10 */
 #endif /* ADC12_B */
 #else /* HAVE_ADC* */
 #error No ADC available */
 #endif /* HAVE_ADC* */
+
+#if defined(AUX_CHANNEL)
+#define INCH_AUX ((AUX_CHANNEL) * INCH_BASE)
+#endif /* AUX_CHANNEL */
 
 typedef struct sSample {
   unsigned int raw;
@@ -242,6 +255,15 @@ int initializeADC (void)
 #else
 #error No ADC available
 #endif /* ADC */
+
+#ifdef INCH_AUX
+  /* Manually configure aux channel here */
+#if (BSP430_PLATFORM_EXP430F5529LP - 0)
+  P6SEL |= BIT0 << AUX_CHANNEL;
+#elif (BSP430_PLATFORM_EXP430G2 - 0)
+  ADC10AE0 |= BIT0 << AUX_CHANNEL;
+#endif /* EXP430F5529LP */
+#endif /* INCH_AUX */
   return 0;
 }
 
@@ -388,9 +410,8 @@ int getSample (sSample * sp,
       sp->cF = dC_TO_dF(sp->cCel);
     }
   }
-  if (INCH_TEMP == inch) {
-  } else {
-#define ADC_TO_mV(_v) ((unsigned int)((2 * (_v) * (long)vref_scale) / divisor))
+  if (INCH_TEMP != inch) {
+#define ADC_TO_mV(_v) ((unsigned int)(((_v) * (long)vref_scale) / divisor))
     sp->mV = ADC_TO_mV(sp->adj);
   }
 
@@ -407,12 +428,14 @@ int getSample (sSample * sp,
 #error No ADC available
 #endif /* ADC */
 
-#define VALID_T 0x01
-#define VALID_V 0x10
-
 void displayTemperature (const sSample * sp)
 {
   cprintf(" T %u %u : %d cCel %d cF ;", sp->raw, sp->adj, sp->cCel, sp->cF);
+}
+
+void displayVmid (const sSample * sp)
+{
+  cprintf(" Vcc %u %u : %u mV ;", sp->raw, sp->adj, 2*sp->mV);
 }
 
 void displayVoltage (const sSample * sp)
@@ -431,7 +454,7 @@ void main ()
 
   cprintf("\n\nadc demo, " __DATE__ " " __TIME__ "\n");
 
-  delta_wake_utt = 10 * ulBSP430uptimeConversionFrequency_Hz_ni();
+  delta_wake_utt = 2 * ulBSP430uptimeConversionFrequency_Hz_ni();
 
   rc = initializeADC();
   cprintf("%s initialized, returned %d, ADC cal at %p, REF cal at %p\n",
@@ -473,38 +496,61 @@ void main ()
     cprintf("\t2.5V T30 %u T85 %u\n", cal_adc->cal_adc_25t30, cal_adc->cal_adc_25t85);
   }
 
-  cprintf("Vmid channel %u, Temp channel %u\n",
-          INCH_VMID, INCH_TEMP);
+  cprintf("Vmid channel %u, Temp channel %u"
+#ifdef INCH_AUX
+          ", Aux channel %u"
+#endif /* INCH_AUX */
+          "\n",
+          INCH_VMID / INCH_BASE, INCH_TEMP / INCH_BASE
+#ifdef INCH_AUX
+          , INCH_AUX / INCH_BASE
+#endif /* INCH_AUX */
+          );
 
   next_wake_utt = ulBSP430uptime_ni();
   while (1) {
     char timestamp[BSP430_UPTIME_AS_TEXT_LENGTH];
-    static const int const refv[] = { REF_1pX, REF_2p0, REF_2p5 };
-    static const char * const refv_str[] = { REF_1pX_STR, "2.0", "3.0" };
+    static const int refv[] = { REF_1pX, REF_2p0, REF_2p5 };
+    static const char * const refv_str[] = { REF_1pX_STR, "2.0", "2.5" };
     static const int const nrefv = sizeof(refv)/sizeof(*refv);
+    static const int inch[] = { INCH_TEMP,
+                                INCH_VMID,
+#if defined(INCH_AUX)
+                                INCH_AUX,
+#endif /* INCH_AUX */
+    };
+    static const int const ninch = sizeof(inch)/sizeof(*inch);
     int valid = 0;
-    sSample t[sizeof(refv)/sizeof(*refv)];
-    sSample v[sizeof(refv)/sizeof(*refv)];
+    sSample sample[sizeof(refv)/sizeof(*refv)][sizeof(inch)/sizeof(*inch)];
     int ri;
+    int ii;
+
+#define VALID(_ri,_ii) ((1 << (_ii)) << ((_ri) * nrefv))
+#define ANY_VALID(_ri) (((1 << nrefv)-1) << ((_ri) * nrefv))
+
     for (ri = 0; ri < nrefv; ++ri) {
       if (0 == setReferenceVoltage(refv[ri])) {
-        if (0 == getSample(t+ri, refv[ri], INCH_TEMP)) {
-          valid |= VALID_T << ri;
-        }
-        if (0 == getSample(v+ri, refv[ri], INCH_VMID)) {
-          valid |= VALID_V << ri;
+        for (ii = 0; ii < ninch; ++ii) {
+          if (0 == getSample(sample[ri]+ii, refv[ri], inch[ii])) {
+            valid |= VALID(ri, ii);
+          }
         }
       }
     }
     cprintf("%s: valid %x", xBSP430uptimeAsText(ulBSP430uptime_ni(), timestamp), valid);
     for (ri = 0; ri < nrefv; ++ri) {
-      if (valid & ((VALID_T | VALID_V) << ri)) {
+      if (valid & ANY_VALID(ri)) {
         cprintf("\n\t%sV: ", refv_str[ri]);
-        if (valid & (VALID_T << ri)) {
-          displayTemperature(t+ri);
-        }
-        if (valid & (VALID_V << ri)) {
-          displayVoltage(v+ri);
+        for (ii = 0; ii < ninch; ++ii) {
+          if (VALID(ri, ii) & valid) {
+            if (INCH_TEMP == inch[ii]) {
+              displayTemperature(sample[ri] + ii);
+            } else if (INCH_VMID == inch[ii]) {
+              displayVmid(sample[ri] + ii);
+            } else {
+              displayVoltage(sample[ri] + ii);
+            }
+          }
         }
       }
     }
