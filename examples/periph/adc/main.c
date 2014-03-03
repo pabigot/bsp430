@@ -407,12 +407,8 @@ int getSample (sSample * sp,
 #error No ADC available
 #endif /* ADC */
 
-#define VALID_T_1pX 0x01
-#define VALID_T_2p0 0x02
-#define VALID_T_2p5 0x04
-#define VALID_V_1pX 0x10
-#define VALID_V_2p0 0x20
-#define VALID_V_2p5 0x40
+#define VALID_T 0x01
+#define VALID_V 0x10
 
 void displayTemperature (const sSample * sp)
 {
@@ -483,64 +479,33 @@ void main ()
   next_wake_utt = ulBSP430uptime_ni();
   while (1) {
     char timestamp[BSP430_UPTIME_AS_TEXT_LENGTH];
+    static const int const refv[] = { REF_1pX, REF_2p0, REF_2p5 };
+    static const char * const refv_str[] = { REF_1pX_STR, "2.0", "3.0" };
+    static const int const nrefv = sizeof(refv)/sizeof(*refv);
     int valid = 0;
-    sSample t1X;
-    sSample t20;
-    sSample t25;
-    sSample v1X;
-    sSample v20;
-    sSample v25;
-
-    if (0 == setReferenceVoltage(REF_1pX)) {
-      if (0 == getSample(&t1X, REF_1pX, INCH_TEMP)) {
-        valid |= VALID_T_1pX;
-      }
-      if (0 == getSample(&v1X, REF_1pX, INCH_VMID)) {
-        valid |= VALID_V_1pX;
-      }
-    }
-    if (0 == setReferenceVoltage(REF_2p0)) {
-      if (0 == getSample(&t20, REF_2p0, INCH_TEMP)) {
-        valid |= VALID_T_2p0;
-      }
-      if (0 == getSample(&v20, REF_2p0, INCH_VMID)) {
-        valid |= VALID_V_2p0;
-      }
-    }
-    if (0 == setReferenceVoltage(REF_2p5)) {
-      if (0 == getSample(&t25, REF_2p5, INCH_TEMP)) {
-        valid |= VALID_T_2p5;
-      }
-      if (0 == getSample(&v25, REF_2p5, INCH_VMID)) {
-        valid |= VALID_V_2p5;
+    sSample t[sizeof(refv)/sizeof(*refv)];
+    sSample v[sizeof(refv)/sizeof(*refv)];
+    int ri;
+    for (ri = 0; ri < nrefv; ++ri) {
+      if (0 == setReferenceVoltage(refv[ri])) {
+        if (0 == getSample(t+ri, refv[ri], INCH_TEMP)) {
+          valid |= VALID_T << ri;
+        }
+        if (0 == getSample(v+ri, refv[ri], INCH_VMID)) {
+          valid |= VALID_V << ri;
+        }
       }
     }
     cprintf("%s: valid %x", xBSP430uptimeAsText(ulBSP430uptime_ni(), timestamp), valid);
-    if (valid & (VALID_T_1pX | VALID_V_1pX)) {
-      cprintf("\n\t" REF_1pX_STR "V: ");
-      if (valid & VALID_T_1pX) {
-        displayTemperature(&t1X);
-      }
-      if (valid & VALID_V_1pX) {
-        displayVoltage(&v1X);
-      }
-    }
-    if (valid & (VALID_T_2p0 | VALID_V_2p0)) {
-      cprintf("\n\t2.0V: ");
-      if (valid & VALID_T_2p0) {
-        displayTemperature(&t20);
-      }
-      if (valid & VALID_V_2p0) {
-        displayVoltage(&v20);
-      }
-    }
-    if (valid & (VALID_T_2p5 | VALID_V_2p5)) {
-      cprintf("\n\t2.5V: ");
-      if (valid & VALID_T_2p5) {
-        displayTemperature(&t25);
-      }
-      if (valid & VALID_V_2p5) {
-        displayVoltage(&v25);
+    for (ri = 0; ri < nrefv; ++ri) {
+      if (valid & ((VALID_T | VALID_V) << ri)) {
+        cprintf("\n\t%sV: ", refv_str[ri]);
+        if (valid & (VALID_T << ri)) {
+          displayTemperature(t+ri);
+        }
+        if (valid & (VALID_V << ri)) {
+          displayVoltage(v+ri);
+        }
       }
     }
     cputchar('\n');
