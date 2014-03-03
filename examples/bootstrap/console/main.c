@@ -44,7 +44,7 @@ void main ()
   vBSP430platformInitialize_ni();
 
   /* Turn on the first LED */
-  vBSP430ledSet(0, 1);
+  vBSP430ledSet(BSP430_LED_RED, 1);
 
   /* Configure the console to use the default UART handle */
   rv = iBSP430consoleInitialize();
@@ -54,11 +54,11 @@ void main ()
 #endif /* APP_VERBOSE */
 
   /* Indicate we made it this far. */
-  vBSP430ledSet(1, 1);
+  vBSP430ledSet(BSP430_LED_GREEN, 1);
 
   if (0 > rv) {
     /* Failed to configure the UART HAL */
-    vBSP430ledSet(0, 0);
+    vBSP430ledSet(BSP430_LED_GREEN, 0);
   } else {
     unsigned int counter = 0;
 
@@ -80,6 +80,7 @@ void main ()
       BSP430_CORE_DISABLE_INTERRUPT();
 #endif /* BSP430_CONSOLE_RX_BUFFER_SIZE */
       while (0 <= ((rc = cgetchar()))) {
+        vBSP430ledSet(BSP430_LED_GREEN, -1);
         cputtext(" rx char ");
         cputu(rc, 10);
         cputtext(" '");
@@ -105,7 +106,7 @@ void main ()
 #endif
 #endif /* APP_VERBOSE */
       ++counter;
-      vBSP430ledSet(0, -1);
+      vBSP430ledSet(BSP430_LED_RED, -1);
     }
   }
 }

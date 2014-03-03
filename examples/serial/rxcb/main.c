@@ -9,6 +9,7 @@
 #include <bsp430/clock.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
+#include <bsp430/utility/led.h>
 
 volatile unsigned int events_ni;
 
@@ -16,6 +17,7 @@ static int
 rx_cb (void)
 {
   ++events_ni;
+  vBSP430ledSet(BSP430_LED_GREEN, -1);
   return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
 }
 
@@ -23,12 +25,15 @@ void main ()
 {
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
+
   vBSP430consoleSetRxCallback_ni(rx_cb);
 
   BSP430_CORE_ENABLE_INTERRUPT();
   cprintf("rxcb " __DATE__ " " __TIME__ "\n"
           "Sleep until keys pressed.\n"
           "Additional events may occur while displaying previous events.\n");
+
+  vBSP430ledSet(BSP430_LED_GREEN, 1);
   while (1) {
     char timestamp[BSP430_UPTIME_AS_TEXT_LENGTH];
     int c;
@@ -44,6 +49,7 @@ void main ()
     BSP430_CORE_ENABLE_INTERRUPT();
     cprintf("%s: Up with %u rx callbacks:", xBSP430uptimeAsText(ulBSP430uptime_ni(), timestamp), events);
     while (0 <= ((c = cgetchar()))) {
+      vBSP430ledSet(BSP430_LED_RED, -1);
       cprintf(" %02x", c);
     }
     cputchar('\n');
