@@ -293,13 +293,13 @@ int setSource (unsigned int inch)
 #elif defined(__MSP430_HAS_ADC10_A__)
 #error Not implemented
 #elif defined(__MSP430_HAS_ADC10_B__)
-  ADC10MCTL0 = ADC10SREF_1 | (inch * ADC10INCH0);
+  ADC10MCTL0 = ADC10SREF_1 | inch;
 #elif defined(__MSP430_HAS_ADC12__)
-  ADC12MCTL0 = EOS | SREF_1 | (inch * INCH0);
+  ADC12MCTL0 = EOS | SREF_1 | inch;
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
-  ADC12MCTL0 = ADC12EOS | ADC12SREF_1 | (inch * ADC12INCH0);
+  ADC12MCTL0 = ADC12EOS | ADC12SREF_1 | inch;
 #elif defined(__MSP430_HAS_ADC12_B__)
-  ADC12MCTL0 = ADC12EOS | ADC12VRSEL_1 | (inch * ADC12INCH0);
+  ADC12MCTL0 = ADC12EOS | ADC12VRSEL_1 | inch;
 #else
 #error No ADC available
 #endif /* ADC */
