@@ -37,6 +37,11 @@ Bit Embedded Systems</a> library to produce text and graphical elements
 using an on-board LCD.  The example works with #BSP430_PLATFORM_EXP430F5438,
 #BSP430_PLATFORM_EXP430F5529, and #BSP430_PLATFORM_TRXEB.
 
+When built with @c SHARP96=1 it also works with the
+#BSP430_PLATFORM_BOOSTERPACK_SHARP96.  Note that these displays require
+a periodic refresh, which is supported using the BSP430 alarm
+infrastructure.
+
 \section ex_utility_u8glib_main main.c
 \include utility/u8glib/main.c
 

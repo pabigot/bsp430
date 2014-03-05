@@ -304,4 +304,12 @@ hBSP430u8gSPI (void)
   return spi_;
 }
 
+int
+iBSP430u8gRefresh (u8g_t * u8g)
+
+{
+  /* No refresh needed on this device */
+  return 0;
+}
+
 #endif /* BSP430_UTILITY_U8GLIB */

@@ -252,6 +252,14 @@
 /* END AUTOMATICALLY GENERATED CODE [rfem_config] */
 /* !BSP430! end=rfem_config */
 
+#if (configBSP430_PLATFORM_BOOSTERPACK_SHARP96 - 0)
+/* CS on P2.4, LCD_EN on P4.3, PWR_en on P4.2, SPI on EUSCI_B0 */
+#define configBSP430_HPL_PORT2 1
+#define configBSP430_HPL_PORT4 1
+#define configBSP430_HAL_EUSCI_B0 1
+#define configBSP430_SERIAL_ENABLE_SPI 1
+#endif /* configBSP430_PLATFORM_BOOSTERPACK_SHARP96 */
+
 /** @endcond */
 
 #endif /* BSP430_PLATFORM_EXP430FR5969_BSP430_CONFIG_H */

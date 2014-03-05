@@ -701,6 +701,27 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #if (BSP430_PLATFORM_M25P - 0)
 #endif /* BSP430_PLATFORM_M25P */
 
+/* If configBSP430_PLATFORM_BOOSTERPACK_SHARP96 was requested, then
+ * mark the feature as available or not based on whether the platform
+ * provided a peripheral handle to use to access the device. */
+#if (configBSP430_PLATFORM_BOOSTERPACK_SHARP96 - 0)
+#ifdef BSP430_PLATFORM_SHARPLCD_SPI_PERIPH_HANDLE
+#define BSP430_PLATFORM_BOOSTERPACK_SHARP96 1
+#define BSP430_PLATFORM_SHARPLCD 1
+#define BSP430_PLATFORM_SHARPLCD_ROWS 96
+#define BSP430_PLATFORM_SHARPLCD_COLUMNS 96
+#else /* BSP430_PLATFORM_SHARPLCD_SPI_PERIPH_HANDLE */
+#define BSP430_PLATFORM_SHARPLCD 0
+#endif /* BSP430_PLATFORM_SHARPLCD_SPI_PERIPH_HANDLE */
+#endif /* configBSP430_PLATFORM_BOOSTERPACK_SHARP96 */
+
+#if (BSP430_PLATFORM_SHARPLCD - 0)
+#ifndef BSP430_UTILITY_U8GLIB
+  /* Enable U8GLIB if requested */
+#define BSP430_UTILITY_U8GLIB (configBSP430_UTILITY_U8GLIB - 0)
+#endif /* BSP430_UTILITY_U8GLIB */
+#endif /* BSP430_PLATFORM_SHARPLCD */
+
 /** Defined to indicate that the application or infrastructure supports
  * use of the vBSP430platformSpinForJumper_ni() function.  The value
  * is defined only if #configBSP430_PLATFORM_SPIN_FOR_JUMPER is set,

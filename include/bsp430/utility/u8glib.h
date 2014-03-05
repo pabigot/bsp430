@@ -111,6 +111,42 @@
  * @dependency #BSP430_UTILITY_U8GLIB
  */
 extern u8g_dev_t xBSP430u8gDevice;
+
+#if defined(BSP430_DOXYGEN) || !defined(BSP430_U8GLIB_REFRESH_HZ)
+/** Define to an interval, in milliseconds, at which
+ * iBSP430u8gRefresh() should be invoked to keep the display
+ * stable.
+ *
+ * If the value is zero, there is no need to periodically refresh the
+ * display.
+ *
+ * @defaulted
+ * @platformvalue */
+#if (BSP430_PLATFORM_SHARPLCD - 0)
+#include <bsp430/utility/sharplcd.h>
+#define BSP430_U8GLIB_REFRESH_INTERVAL_MS BSP430_SHARPLCD_REFRESH_INTERVAL_MS
+#else
+#define BSP430_U8GLIB_REFRESH_INTERVAL_MS 0
+#endif
+#endif /* BSP430_U8GLIB_REFRESH_HZ */
+
+/** A function that should be invoked at
+ * #BSP430_U8GLIB_REFRESH_INTERVAL_MS milliseconds to keep the display
+ * functioning.
+ *
+ * For example, this is required for the Sharp Memory LCD to toggle
+ * VCOM so that DC bias does not build up within the display.
+ *
+ * @note This function is suitable to be invoked from an interrupt
+ * handler.  The return value conforms to the expectations of @ref
+ * callback_retval.
+ *
+ * @param u8g the u8glib handle for the display
+ *
+ * @return Generally zero, or a value as described in @ref
+ * callback_retval. */
+int iBSP430u8gRefresh (u8g_t * u8g);
+
 #endif /* BSP430_DOXYGEN */
 
 /** Provide access to the SPI device used to communicate with the u8glib device.
