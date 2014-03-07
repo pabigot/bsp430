@@ -852,7 +852,7 @@ static const sNVMEMFileIds nvmemFiles[] = {
   { NVMEM_IP_CONFIG_FILEID, 64, "IP Config" },
   { NVMEM_IP_CONFIG_SHADOW_FILEID, 64, "IP Config (shadow)" },
   { NVMEM_BOOTLOADER_SP_FILEID, 0, "Bootloader SP" },
-  { NVMEM_RM_FILEID, 0, "RM ??" },
+  { NVMEM_RM_FILEID, 0, "Radio Module" },
   { NVMEM_AES128_KEY_FILEID, 0, "AES128 Key ??" },
   { NVMEM_SHARED_MEM_FILEID, 0, "Shared Memory ??" },
 };
@@ -860,15 +860,42 @@ static const sNVMEMFileIds nvmemFiles[] = {
 static int
 cmd_nvmem_dir (const char * argstr)
 {
-  const sNVMEMFileIds * fp = nvmemFiles;
-  const sNVMEMFileIds * const fpe = fp + sizeof(nvmemFiles) / sizeof(*nvmemFiles);
+  int rc;
+  const unsigned int num_doc_files = sizeof(nvmemFiles) / sizeof(*nvmemFiles);
+  uint8_t fat[4*(NVMEM_MAX_ENTRY+1)];
+  const uint16_t * fp = (const uint16_t *)(fat+4);
+  const uint16_t * efp = (const uint16_t *)(fat+sizeof(fat));
+  int ffi = 0;
 
-  cprintf("%u NVMEM files with %u documented:\n", NVMEM_MAX_ENTRY, (unsigned int)(fpe-fp));
-  cprintf("ID  Size  Description\n");
-  while (fp < fpe) {
-    cprintf("%2d  %4d  %s\n", fp->fileid, fp->size, fp->tag);
-    ++fp;
+  cprintf("%u NVMEM files with %u documented:\n", NVMEM_MAX_ENTRY, num_doc_files);
+  rc = nvmem_read(NVMEM_MAX_ENTRY, sizeof(fat), 0, fat);
+  if (0 != rc) {
+    cprintf("ERROR: nvmem read got %d\n", rc);
+    return 0;
   }
+  if (('L' != fat[0]) || ('S' != fat[1])) {
+    cprintf("ERROR: nvmem signature %02x %02x not %02x %02x\n",
+            fat[0], fat[1], 'L', 'S');
+    return 0;
+  }
+  cprintf("ID Addr  Size  Flg : Doc ID  Size Description\n");
+  while (fp < efp) {
+    cprintf("%2d %04x %5d  %c%c%c",
+            ffi, fp[0] & ~(BIT0|BIT1|BIT2), fp[1],
+            (fp[0] & BIT0) ? 'a' : ' ',
+            (fp[0] & BIT1) ? 'v' : ' ',
+            (fp[0] & BIT2) ? 'p' : ' ');
+    if (ffi < sizeof(nvmemFiles)/sizeof(*nvmemFiles)) {
+      cprintf("       %2d %5d %s",
+              nvmemFiles[ffi].fileid,
+              nvmemFiles[ffi].size,
+              nvmemFiles[ffi].tag);
+    }
+    cputchar('\n');
+    ++ffi;
+    fp += 2;
+  }
+
   return 0;
 }
 static sBSP430cliCommand dcmd_nvmem_dir = {
