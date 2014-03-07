@@ -51,6 +51,7 @@
 #define CMD_WLAN_SMART 1
 #define CMD_NVMEM 1
 #define CMD_NVMEM_SP 1
+#define CMD_NVMEM_RMPARAM 1
 #define CMD_NVMEM_READ 1
 #define CMD_NVMEM_MAC 1
 #define CMD_SCAN 1
@@ -857,6 +858,67 @@ static const sNVMEMFileIds nvmemFiles[] = {
   { NVMEM_SHARED_MEM_FILEID, 0, "Shared Memory ??" },
 };
 
+#if (WITH_UPDATE - 0)
+/* Firmware updates for the CC3000 are distributed by TI through the
+ * Patch Programmer utility available at:
+ * http://processors.wiki.ti.com/index.php/CC3000_Wi-Fi_Downloads#Patch_Programmer
+ *
+ * This utility is export-controlled, and there is no indication that
+ * the binary firmware data is licensed with rights to redistribute.
+ * Therefore, if you want to update firmware or compare radio module
+ * parameters, you need to obtain the source to the patch programmer
+ * and create files that contain the byte literal initializer sequence
+ * to fill in the arrays below. */
+
+/* This array should hold the default radio module parameters.  The
+ * length is nominally 128 bytes, and the values can be found in the
+ * cRMdefaultParams array in PatchProgrammer_DR_Patch.c from the TI
+ * patch programmer utility. */
+const uint8_t default_rm_param[] = {
+  #include "rm_param.inc"
+};
+/* This array should hold WLAN driver patches.  The length is
+ * somewhere around 8kB, and the values can be found in the
+ * wlan_drv_patch array in PatchProgrammer_DR_Patch.c from the TI
+ * patch programmer utility. */
+const uint8_t wlan_drv_patch[] = {
+  #include "wlan_drv_patch.inc"
+};
+/* This array should hold WLAN firmware patches.  The length is
+ * somewhere around 8kB, and the values can be found in the fw_patch
+ * array in PatchProgrammer_FW_Patch.c from the TI patch programmer
+ * utility. */
+const uint8_t fw_patch[] = {
+  #include "fw_patch.inc"
+};
+
+static int
+cmd_nvmem_update (const char * argstr)
+{
+  cprintf("wlan_drv_patch %u\n", sizeof(wlan_drv_patch));
+  cprintf("fw_patch %u\n", sizeof(fw_patch));
+  cprintf("default_rm_param %u\n", sizeof(default_rm_param));
+  cprintf("Head wlan_drv_patch:\n");
+  displayMemory(wlan_drv_patch, 64, 0);
+  cprintf("Head fw_patch:\n");
+  displayMemory(fw_patch, 64, 0);
+  cprintf("default_rm_param:\n");
+  displayMemory(default_rm_param, sizeof(default_rm_param), 0);
+  return 0;
+}
+
+static sBSP430cliCommand dcmd_nvmem_update = {
+  .key = "update",
+  .help = HELP_STRING("# "),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_nvmem_update
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_nvmem_update
+
+#endif /* WITH_UPDATE */
+
 static int
 cmd_nvmem_dir (const char * argstr)
 {
@@ -959,6 +1021,58 @@ static sBSP430cliCommand dcmd_nvmem_sp = {
 #define LAST_SUB_COMMAND &dcmd_nvmem_sp
 #endif /* CMD_NVMEM_SP */
 
+#if (CMD_NVMEM_RMPARAM - 0)
+static int
+cmd_nvmem_rmparam (const char * argstr)
+{
+  uint8_t rmparam[128];
+  const uint8_t * const rmpe = rmparam + sizeof(rmparam);
+  uint8_t * rp = rmparam;
+  int rc;
+
+  while (rp < rmpe) {
+    unsigned int offset = rp - rmparam;
+    unsigned int nb = rmpe - rp;
+    if (16 < nb) {
+      nb = 16;
+    }
+    rc = nvmem_read(NVMEM_RM_FILEID, nb, offset, rp);
+    if (0 != rc) {
+      cprintf("ERROR %d reading at offset %u\n", rc, offset);
+      return 0;
+    }
+    rp += nb;
+  }
+  cprintf("Radio module parameters:\n");
+  displayMemory(rmparam, sizeof(rmparam), 0);
+#if (WITH_UPDATE - 0)
+  {
+    const uint8_t * drp = default_rm_param;
+    const uint8_t * const drpe = default_rm_param + sizeof(default_rm_param);
+
+    rp = rmparam;
+    while ((rp < rmpe) && (drp < drpe)) {
+      *rp++ ^= *drp++;
+    }
+  }
+  cprintf("Bitwise difference from default:\n");
+  displayMemory(rmparam, sizeof(rmparam), 0);
+  cprintf("Default RM parameters:\n");
+  displayMemory(default_rm_param, sizeof(default_rm_param), 0);
+#endif
+  return 0;
+}
+static sBSP430cliCommand dcmd_nvmem_rmparam = {
+  .key = "rmparam",
+  .help = HELP_STRING("# display radio module parameters"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_nvmem_rmparam
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_nvmem_rmparam
+#endif /* CMD_NVMEM_SP */
+
 #if (CMD_NVMEM_READ - 0)
 static int
 cmd_nvmem_read (const char * argstr)
@@ -992,8 +1106,8 @@ cmd_nvmem_read (const char * argstr)
     if (sizeof(data) < nb) {
       nb = sizeof(data);
     }
-    /* NB: API documentation is wrong, return is 0 if successful, 4 if
-     * offset too large, 3 unknown error. */
+    /* Return is 0 if successful, 4 if offset too large, 3 unknown
+     * error. */
     rc = nvmem_read(fileid, nb, ofs, data);
     if (0 == rc) {
       displayMemory(data, nb, ofs);

@@ -1,0 +1,5 @@
+# Ignore firmware patches: contents are export-controlled and no
+# redistribution policy provided by TI
+rm_param.inc
+fw_patch.inc
+wlan_drv_patch.inc

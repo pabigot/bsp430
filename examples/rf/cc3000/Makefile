@@ -25,7 +25,19 @@ endif # CC3000BOOST
 ifeq ($(PLATFORM),exp430g2)
 AUX_CPPFLAGS+=-DBSP430_CC3000SPI_TX_BUFFER_SIZE=8
 AUX_CPPFLAGS+=-DBSP430_CC3000SPI_RX_BUFFER_SIZE=8
+WITH_UPDATE=0
 endif # exp430g2
+
+# Optionally enable the nvmem update infrastructure.
+# This requires the presence of three files:
+#  rm_param.inc         # has radio module default parameters
+#  wlan_drv_patch.inc   # has patches to the CC3000 driver
+#  fw_patch.inc         # has patches to the CC3000 firmware
+# See the source for information on where to get these files.
+WITH_UPDATE ?= 0
+ifneq (0,$(WITH_UPDATE))
+AUX_CPPFLAGS += -DWITH_UPDATE
+endif # WITH_UPDATE
 
 SRC=cc3000spi.c main.c
 include $(BSP430_ROOT)/examples/Makefile.common
