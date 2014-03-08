@@ -13,30 +13,40 @@ import os.path
 sys.path.append(os.path.join(os.environ['BSP430_ROOT'], 'maintainer', 'lib', 'python'))
 import bsp430.pinmap
 
-#rfem = None
-rfem ='cc3000em'
-#boosterpack = 'cc3000boost'
-boosterpack = 'senshub'
+rfem = None
+#rfem ='cc3000em'
+#rfem ='cc110xemk'
+#boosterpack = None
+boosterpack = 'cc3000boost'
+#boosterpack = 'ccem'
+#boosterpack = 'senshub'
+boosterpack = 'battpack'
 platform = 'exp430f5529lp'
+#platform = 'exp430fr5739'
 mcu = 'msp430f5529'
+#mcu = 'msp430fr5739'
 
 maps = []
 
 if rfem is not None:
+    print('RFEM %s' % (rfem,))
     m = bsp430.pinmap.GenerateMap('rfem', rfem)
     #m = dict([(v,k) for (k,v) in m.iteritems()])
     maps.append(m)
 
 if boosterpack is not None:
+    print('Boosterpack %s' % (boosterpack,))
     m = bsp430.pinmap.GenerateMap('boosterpack', boosterpack)
     m = dict([(v,k) for (k,v) in m.iteritems()])
     maps.append(m)
 
 if platform is not None:
+    print('Platform %s' % (platform,))
     m = bsp430.pinmap.GenerateMap('platform', platform)
     maps.append(m)
 
 if mcu is not None:
+    print('MCU %s' % (mcu,))
     m = {}
     for ln in bsp430.pinmap.GenerateLines('mcu', mcu):
         elts = ln.split()

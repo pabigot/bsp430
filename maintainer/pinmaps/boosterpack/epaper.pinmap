@@ -1,0 +1,24 @@
+# http://www.pervasivedisplays.com/kits/ext_kit
+# http://www.pervasivedisplays.com/LiteratureRetrieve.aspx?ID=138408
+# http://www.pervasivedisplays.com/_literature_198794/COG_Driver_Interface_Timing_for_small_size_G2_V230
+# http://www.pervasivedisplays.com/_literature_138408/E-paper_Display_COG_Driver_Interface_Timing_V110
+A.1     _3V3      # J3.1
+A.2     _LED1
+A.3     _UART_RX
+A.4     _UART_TX
+A.5     _SW2
+A.6     _TEMP
+A.7     SCLK
+A.8     _BUSY	  # Left slider elements
+A.9     _PWM
+A.10    _RESETn   # J3.10
+B.1     GND       # J3.20
+B.2     _EPD_CS
+B.3	_FLASH_CS
+B.4	_TEST
+B.5	_RST
+B.6     MOSI
+B.7	MISO
+B.8	_BORDER_CONTROL
+B.9	_DISCHARGE
+B.10	_PANEL_ON # J3.11

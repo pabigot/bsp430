@@ -1,0 +1,48 @@
+# http://www.element14.com/community/docs/DOC-55618/l/element14-fuel-tank-boosterpack-for-ti-launchpad
+#
+# The signals are to a TI BQ24210 800mA single-input single-cell Li-Ion
+# battery solar charger.  Input/output are from the perspective of the
+# boosterpack (viz., ENn is an output from the MCU)
+#
+# The I2C bus is to a TI BQ27510 System-Side Impedance Track(TM) Fuel
+# Gauge With Direct Battery Connection
+A.1	3V3
+A.2	_CHGn	# Charge (out): low when charging; HighZ otherwise
+A.3	n/c
+A.4	n/c
+A.5	_ENn	# Enable (in) : low to charge or load; input high to suspend
+A.6	n/c
+A.7	_PGn	# Power Good (out): low when power is present
+A.8	n/c
+A.9	n/c
+A.10	n/c
+B.1	GND
+B.2	n/c
+B.3	n/c
+B.4	n/c
+B.5	n/c
+B.6	SDA
+B.7	SCL
+B.8	n/c
+B.9	n/c
+B.10	n/c
+C.1	5V0
+C.2	n/c
+C.3	n/c
+C.4	n/c
+C.5	n/c
+C.6	n/c
+C.7	n/c
+C.8	n/c
+C.9	n/c
+C.10	n/c
+D.1	n/c
+D.2	n/c
+D.3	n/c
+D.4	n/c
+D.5	n/c
+D.6	n/c
+D.7	n/c
+D.8	n/c
+D.9	n/c
+D.10	n/c
