@@ -29,6 +29,18 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifndef BYPASS_SP_LOAD
+/* If defined to a true value, the wlan_init() call at power-up will
+ * inhibit loading of any service packs that may be present in the
+ * NVMEM.  This will allow you to get access to the board when the
+ * NVMEM is corrupt.
+ *
+ * BSP430 does not currently have support for complete restoration of
+ * the NVMEM, which includes defining the FAT, providing radio module
+ * parameters, etc. */
+#define BYPASS_SP_LOAD 0
+#endif /* BYPASS_SP_LOAD */
+
 /* Memory is extremely tight on the FR5739 (16 kB including CC3000
  * buffers).  Set these to restrict the set of commands to ones of
  * interest that will fit.  You'll probably find you'll need to
@@ -895,21 +907,74 @@ const uint8_t fw_patch[] = {
 static int
 cmd_nvmem_update (const char * argstr)
 {
-  cprintf("wlan_drv_patch %u\n", sizeof(wlan_drv_patch));
-  cprintf("fw_patch %u\n", sizeof(fw_patch));
-  cprintf("default_rm_param %u\n", sizeof(default_rm_param));
-  cprintf("Head wlan_drv_patch:\n");
-  displayMemory(wlan_drv_patch, 64, 0);
-  cprintf("Head fw_patch:\n");
-  displayMemory(fw_patch, 64, 0);
-  cprintf("default_rm_param:\n");
-  displayMemory(default_rm_param, sizeof(default_rm_param), 0);
+  int rc;
+  int stage;
+  const uint16_t drv_sp_size = sizeof(wlan_drv_patch);
+  const uint16_t fw_sp_size = sizeof(fw_patch);
+  uint16_t drv_sp_fatsize;
+  uint16_t fw_sp_fatsize;
+
+  do {
+    stage = __LINE__;
+    rc = nvmem_read(NVMEM_MAX_ENTRY, sizeof(drv_sp_fatsize), 4*(1 + NVMEM_WLAN_DRIVER_SP_FILEID) + 2, (uint8_t*)&drv_sp_fatsize);
+    if (0 != rc) {
+      break;
+    }
+    stage = __LINE__;
+    rc = nvmem_read(NVMEM_MAX_ENTRY, sizeof(drv_sp_fatsize), 4*(1 + NVMEM_WLAN_FW_SP_FILEID) + 2, (uint8_t*)&fw_sp_fatsize);
+    if (0 != rc) {
+      break;
+    }
+    cprintf("Driver update size %u, file size %u\n"
+            "Firmware update size %u, file size %u\n",
+            drv_sp_size, drv_sp_fatsize,
+            fw_sp_size, fw_sp_fatsize);
+    if ((0 == drv_sp_size) || (drv_sp_size > drv_sp_fatsize)) {
+      cprintf("ERROR: No driver, or driver too large\n");
+      return -1;
+    }
+    if ((0 == fw_sp_size) || (fw_sp_size > fw_sp_fatsize)) {
+      cprintf("ERROR: No firmware, or firmware too large\n");
+      return -1;
+    }
+    cprintf("Shutting down WLAN for driver update\n");
+    wlan_stop();
+    cprintf("Waiting a few...");
+    BSP430_CORE_DELAY_CYCLES(3 * BSP430_CLOCK_NOMINAL_MCLK_HZ);
+    cprintf("back now\n");
+    cprintf("Starting WLAN in patch mode\n");
+    wlan_start(2);
+    wlan_ioctl_set_connection_policy(0, 0, 0);
+    wlan_ioctl_del_profile(255);
+    wlan_set_event_mask(HCI_EVNT_WLAN_KEEPALIVE|HCI_EVNT_WLAN_UNSOL_INIT|HCI_EVNT_WLAN_ASYNC_PING_REPORT);
+    cprintf("Updating driver firmware...");
+    stage = __LINE__;
+    rc = nvmem_write_patch(NVMEM_WLAN_DRIVER_SP_FILEID, drv_sp_size, (uint8_t *)wlan_drv_patch);
+    if (0 != rc) {
+      break;
+    }
+    cprintf("success.\n"
+            "Updating firmware...");
+    stage = __LINE__;
+    rc = nvmem_write_patch(NVMEM_WLAN_FW_SP_FILEID, fw_sp_size, (uint8_t *)fw_patch);
+    if (0 != rc) {
+      break;
+    }
+    cprintf("success.\n"
+            "Shutting down WLAN after driver update\n");
+    wlan_stop();
+    cprintf("Restarting WLAN with new drivers\n");
+    wlan_start(0);
+  } while (0);
+  if (0 != rc) {
+    cprintf("ERROR %d in update at line %u\n", rc, stage);
+  }
   return 0;
 }
 
 static sBSP430cliCommand dcmd_nvmem_update = {
   .key = "update",
-  .help = HELP_STRING("# "),
+  .help = HELP_STRING("# Update firmware"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param.simple_handler = cmd_nvmem_update
@@ -1459,7 +1524,8 @@ void main (void)
   cprintf(__DATE__ " " __TIME__ "\n");
 
   /* Initialization can be done with interrupts disabled, since the
-   * function does nothing but store callbacks. */
+   * function does nothing but store callbacks.  We use the same
+   * callback for all three update capabilities. */
   rv = iBSP430cc3000spiInitialize(wlan_cb, NULL, NULL, NULL);
   cprintf("%s Initialize returned %d\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), rv);
   if (0 > rv) {
@@ -1473,8 +1539,15 @@ void main (void)
 
   BSP430_CORE_ENABLE_INTERRUPT();
 
-  /* wlan_start() MUST be invoked with interrupts enabled. */
+  /* wlan_start() MUST be invoked with interrupts enabled.  Pass 0 for
+   * a normal startup.  If the firmware is suspect, you need to pass 2
+   * which will cause the NVMEM firmware sections to be ignored. */
+#if (BYPASS_SP_LOAD - 0)
+  cprintf("Bypassing service packs\n");
+  wlan_start(2);
+#else
   wlan_start(0);
+#endif
 
   cprintf("\nAnd wlan has been started.\n");
   (void)displayMemory;

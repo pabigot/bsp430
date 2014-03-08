@@ -50,6 +50,8 @@ endif # exp430g2
 #  wlan_drv_patch.inc   # has patches to the CC3000 driver
 #  fw_patch.inc         # has patches to the CC3000 firmware
 # See the source for information on where to get these files.
+# You may need to disable other commands to make room for
+# these, or build with 20-bit support.
 WITH_UPDATE ?= 0
 ifneq (0,$(WITH_UPDATE))
 AUX_CPPFLAGS += -DWITH_UPDATE
