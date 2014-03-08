@@ -11,10 +11,26 @@ MODULES += utility/cli
 # Set this to where you installed the cc3000 headers and library
 CC3000_ROOT ?= /usr/local/msp430-cc3000
 
-# Tell BSP430's build infrastructure about the library.
+# Auxiliary source files for the CC3000 host driver, when not using
+# its library format.
+CC3000_SRC=
+
+# Tell BSP430's build infrastructure about the CC3000 host driver.
+# Normally use the pre-built library in CC3000_ROOT; optionally build
+# the source directly.  The latter is useful when you need to
+# instrument the library with BSP430 operations like vBSP430setLed and
+# cprintf.
+ifdef CC3000_SRC_ROOT
+# Source-build
+AUX_CPPFLAGS=-I$(CC3000_SRC_ROOT)/include
+CC3000_MODULES=cc3000_common evnt_handler hci netapp nvmem security socket wlan
+CC3000_SRC=$(CC3000_MODULES:%=$(CC3000_SRC_ROOT)/%.c)
+else # CC3000_SRC_ROOT
+# Normal library link.
 AUX_CPPFLAGS=-I$(CC3000_ROOT)/include
 AUX_LDFLAGS=-L$(CC3000_ROOT)/lib
 AUX_LDLIBS=-lcc3000
+endif # CC3000_SRC_ROOT
 
 # Use CC3000BOOST booster pack
 ifdef CC3000BOOST
@@ -39,5 +55,5 @@ ifneq (0,$(WITH_UPDATE))
 AUX_CPPFLAGS += -DWITH_UPDATE
 endif # WITH_UPDATE
 
-SRC=cc3000spi.c main.c
+SRC=cc3000spi.c main.c $(CC3000_SRC)
 include $(BSP430_ROOT)/examples/Makefile.common
