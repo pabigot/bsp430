@@ -53,6 +53,20 @@
 #include <bsp430/platform.h>
 #include <cc3000/cc3000_common.h>
 
+#ifndef BSP430_CC3000_ENABLE_SMART
+/** Define externally to a true value when you want the <a
+ * href="http://processors.wiki.ti.com/index.php/CC3000_Smart_Config">CC3000
+ * Smart Config</a> process to work.
+ *
+ * This feature requires that the RX buffer size be a full 1500
+ * octets; setting this flag changes the default value for
+ * #BSP430_CC3000SPI_RX_BUFFER_SIZE to satisfy that requirement.
+ *
+ * @defaulted
+ * @affects #BSP430_CC3000SPI_RX_BUFFER_SIZE */
+#define BSP430_CC3000_ENABLE_SMART 0
+#endif /* BSP430_CC3000_ENABLE_SMART */
+
 /** Size of the cc3000spi receive buffer, in octets.
  *
  * The value is an integer between #CC3000_MINIMAL_RX_SIZE=119 and
@@ -63,9 +77,24 @@
  * CC3000_RX_BUFFER_SIZE constant, but it is not referenced by the
  * driver and is not relevant to this implementation.
  *
+ * @note The current (SP 1.10.1 and later) <a
+ * href="http://processors.wiki.ti.com/index.php/CC3000_Smart_Config">CC3000
+ * Smart Config</a> process works by encoding data in the length of
+ * UDP packets transmitted to/from port 15000 of the gateway.  It is
+ * necessary to have at least the RX buffer of the CC3000 at full size
+ * in order to receive this information.  (Documentation says use
+ * 1500; I have observed packets that are 1498 octets, so this is
+ * probably accurate.)
+ *
+ * @defaulted
+ * @dependency #BSP430_CC3000SPI_RX_BUFFER_SIZE
  */
 #ifndef BSP430_CC3000SPI_RX_BUFFER_SIZE
+#if (BSP430_CC3000_ENABLE_SMART - 0)
+#define BSP430_CC3000SPI_RX_BUFFER_SIZE 1500
+#else /* BSP430_CC3000_ENABLE_SMART */
 #define BSP430_CC3000SPI_RX_BUFFER_SIZE 400
+#endif /* BSP430_CC3000_ENABLE_SMART */
 #endif /* BSP430_CC3000SPI_RX_BUFFER_SIZE */
 
 /** Size of the cc3000spi transmit buffer, in octets.
@@ -78,6 +107,7 @@
  * CC3000_TX_BUFFER_SIZE constant, but it is not referenced by the
  * driver and is not relevant to this implementation.
  *
+ * @defaulted
  */
 #ifndef BSP430_CC3000SPI_TX_BUFFER_SIZE
 #define BSP430_CC3000SPI_TX_BUFFER_SIZE 400

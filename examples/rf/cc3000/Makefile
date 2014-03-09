@@ -57,5 +57,11 @@ ifneq (0,$(WITH_UPDATE))
 AUX_CPPFLAGS += -DWITH_UPDATE
 endif # WITH_UPDATE
 
+# Optionally enable SmartConfig.
+WITH_SMART ?= 0
+ifneq (0,$(WITH_SMART))
+AUX_CPPFLAGS += -DBSP430_CC3000_ENABLE_SMART
+endif # WITH_SMART
+
 SRC=cc3000spi.c main.c $(CC3000_SRC)
 include $(BSP430_ROOT)/examples/Makefile.common

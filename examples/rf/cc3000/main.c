@@ -60,7 +60,12 @@
 #define CMD_WLAN_DISCONNECT 1
 #define CMD_WLAN_START 1
 #define CMD_WLAN_PROFILE 1
-#define CMD_WLAN_SMART 1
+#if (BSP430_CC3000_ENABLE_SMART - 0) && (BSP430_CC3000SPI_RX_BUFFER_SIZE < 1500)
+#error BSP430_CC3000_ENABLE_SMART requires BSP430_CC3000SPI_RX_BUFFER_SIZE >= 1500
+#endif /* BSP430_CC3000_ENABLE_SMART diagnostic */
+#ifndef CMD_WLAN_SMART
+#define CMD_WLAN_SMART (BSP430_CC3000SPI_RX_BUFFER_SIZE >= 1500)
+#endif /* CMD_WLAN_SMART */
 #define CMD_NVMEM 1
 #define CMD_NVMEM_SP 1
 #define CMD_NVMEM_RMPARAM 1
@@ -426,9 +431,9 @@ cmd_wlan_profile_del (const char * argstr)
 {
   size_t argstr_len = strlen(argstr);
   long rc;
-  int profile = -1;
+  int profile = 255;
 
-  /* Profiles start with number 0, somewhere at 0x430.  SSID at 0x442, PSK at 0x49a.  */
+  /* Use 255 to delete all profiles. */
   (void)iBSP430cliStoreExtractedI(&argstr, &argstr_len, &profile);
   rc = wlan_ioctl_del_profile(profile);
   cprintf("Del profile %d got %ld\n", profile, rc);
@@ -511,7 +516,20 @@ cmd_wlan_smart_start (const char * argstr)
   unsigned int encrypted = 0;
   long rc;
 
+  /* This has to be TTT.  It doesn't matter what you pass as long as
+   * it's non-null; SP 1.10.1 through 1.12 (at least) will use TTT. */
+  rc = wlan_smart_config_set_prefix("TTT");
+  cprintf("Prefix set returned %ld\n", rc);
+
   (void)iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &encrypted);
+  if (encrypted) {
+    unsigned char keybuf[AES128_KEY_SIZE];
+    rc = aes_read_key(keybuf);
+    cprintf("Config with AES key:\n");
+    displayMemory((unsigned char *)keybuf, sizeof(keybuf), 0);
+  } else {
+    cprintf("Config unencrypted\n");
+  }
   rc = wlan_smart_config_start(encrypted);
   cprintf("wlan_smart_config_start(%d) got %ld\n", encrypted, rc);
   return 0;
