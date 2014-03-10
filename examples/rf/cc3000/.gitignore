@@ -1,5 +1,10 @@
 # Ignore firmware patches: contents are export-controlled and no
 # redistribution policy provided by TI
+# Radio Module parameters (WITH_UPDATE)
 rm_param.inc
+# Firmware patch (WITH_UPDATE)
 fw_patch.inc
+# Driver patch (WITH_UPDATE)
 wlan_drv_patch.inc
+# Profiles (WITH_PROFILES)
+profiles.inc

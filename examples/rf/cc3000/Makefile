@@ -63,5 +63,11 @@ ifneq (0,$(WITH_SMART))
 AUX_CPPFLAGS += -DBSP430_CC3000_ENABLE_SMART
 endif # WITH_SMART
 
+# Optionally read profiles from local file
+WITH_PROFILES ?= 0
+ifneq (0,$(WITH_PROFILES))
+AUX_CPPFLAGS += -DWITH_PROFILES
+endif # WITH_PROFILES
+
 SRC=cc3000spi.c main.c $(CC3000_SRC)
 include $(BSP430_ROOT)/examples/Makefile.common

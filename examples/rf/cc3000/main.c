@@ -84,13 +84,16 @@
 
 #define MAGIC_CONNECT_PARAMS 0x3000
 
+#define MAX_SSID_LEN 32
+#define MAX_PASSPHRASE_LEN 64
+
 typedef struct sConnectParams {
   unsigned int magic;
   int security_type;
   size_t ssid_len;
   size_t passphrase_len;
-  char ssid[33];
-  unsigned char passphrase[65];
+  char ssid[MAX_SSID_LEN+1];
+  unsigned char passphrase[MAX_PASSPHRASE_LEN+1];
 } sConnectParams;
 
 static uint32_t lebtohl (uint8_t * vp)
@@ -462,6 +465,91 @@ cmd_wlan_profile_del (const char * argstr)
   return 0;
 }
 
+typedef struct sProfileEntry {
+  unsigned int priority;        /**< 0 to 7; 0 is lowest priority, 1 used by Smart Config */
+  int security_type;            /**< One of the WLAN_SEC_* types  */
+  const char * ssid;            /**< SSID as text string, NUL terminated */
+  const char * passphrase;      /**< Passphrase in plain text, NUL terminated */
+} sProfileEntry;
+
+static int
+cmd_wlan_profile_update (const char * argstr)
+{
+  static const sProfileEntry entries[] = {
+#if (WITH_PROFILES - 0)
+#include "profiles.inc"
+#endif /* WITH_PROFILES */
+  };
+  const sProfileEntry * pep = entries;
+  const sProfileEntry * const pepe = pep + sizeof(entries)/sizeof(*entries);
+  long rc;
+
+  if (pep == pepe) {
+    cprintf("No profiles available\n");
+    return -1;
+  }
+
+  /* Per
+   * http://e2e.ti.com/support/low_power_rf/f/851/p/285991/999909.aspx#999909
+   * the magic constants below are from wpa_supplicant. */
+#define WPA_DRIVER_CAPA_KEY_MGMT_WPA2              0x00000002
+#define WPA_CIPHER_NONE 0x01
+#define WPA_CIPHER_WEP40 0x02
+#define WPA_CIPHER_WEP104 0x04
+#define WPA_CIPHER_TKIP 0x08
+#define WPA_CIPHER_CCMP 0x10
+
+  while (pep < pepe) {
+    uint32_t pairwisecipher_or_keylen = 0;
+    uint32_t groupcipher_or_keyindex = 0;
+    uint32_t key_mgmt = 0;
+    uint8_t * pf_or_key = NULL;
+    uint32_t key_length = 0;
+    const sWlanSecMap * const mp = wlanSecMapFromValue(pep->security_type);
+
+    if (NULL != mp) {
+      if ((WLAN_SEC_WPA == pep->security_type)
+          || (WLAN_SEC_WPA2 == pep->security_type)) {
+        pairwisecipher_or_keylen = WPA_CIPHER_TKIP | WPA_CIPHER_CCMP;
+        groupcipher_or_keyindex = WPA_CIPHER_WEP40 | WPA_CIPHER_WEP104 | WPA_CIPHER_TKIP | WPA_CIPHER_CCMP;
+        key_mgmt = WPA_DRIVER_CAPA_KEY_MGMT_WPA2;
+        pf_or_key = (uint8_t*)pep->passphrase;
+        key_length = strlen(pep->passphrase);
+      } else if (WLAN_SEC_WEP == pep->security_type) {
+        pairwisecipher_or_keylen = strlen(pep->passphrase);
+        groupcipher_or_keyindex = 0;
+        key_mgmt = 0;
+        pf_or_key = (uint8_t*)pep->passphrase;
+        key_length = 0;
+      } else if (WLAN_SEC_UNSEC == pep->security_type) {
+        pairwisecipher_or_keylen = 0;
+        groupcipher_or_keyindex = 0;
+        key_mgmt = 0;
+        pf_or_key = NULL;
+        key_length = 0;
+      }
+      rc = wlan_add_profile(pep->security_type,
+                            (uint8_t*)pep->ssid,
+                            strlen(pep->ssid),
+                            NULL,   /* bssid is inferred */
+                            pep->priority,
+                            pairwisecipher_or_keylen,
+                            groupcipher_or_keyindex,
+                            key_mgmt,
+                            pf_or_key,
+                            key_length);
+
+      cprintf("Add SSID '%s' sec '%s' pri %u got %ld\n",
+              pep->ssid, mp->tag, pep->priority, rc);
+    } else {
+      cprintf("ERR: Profile %u %s has invalid security type %d\n",
+              pep - entries, pep->ssid, pep->security_type);
+    }
+    ++pep;
+  }
+  return 0;
+}
+
 static sBSP430cliCommand dcmd_wlan_profile_del = {
   .key = "del",
   .help = HELP_STRING("[profile=0] # delete profile, 255 for all"),
@@ -470,10 +558,19 @@ static sBSP430cliCommand dcmd_wlan_profile_del = {
   .param.simple_handler = cmd_wlan_profile_del
 };
 
+static sBSP430cliCommand dcmd_wlan_profile_update = {
+  .key = "update",
+  .help = HELP_STRING("[profile=0] # add configured profiles"),
+  .next = &dcmd_wlan_profile_del,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_profile_update
+};
+
+
 static sBSP430cliCommand dcmd_wlan_profile = {
   .key = "profile",
   .next = LAST_SUB_COMMAND,
-  .child = &dcmd_wlan_profile_del
+  .child = &dcmd_wlan_profile_update
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_profile
