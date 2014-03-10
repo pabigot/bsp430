@@ -32,17 +32,46 @@
 /** \page releases Release Notes and API Changes
 @tableofcontents
 
+This is rarely updated; see the github <a
+href="http://github.com/pabigot/bsp430/issues">issue tracker</a> for the
+status and resolution of reported bugs, and the <a
+href="http://github.com/pabigot/bsp430/">source repository</a> for
+individual commit history.
+
+\section releases_20140301 Changes in Release 20140310
+
+@li Fix LPM5 locking on FR58xx devices (not reported as an issue, bad me)
+@li Support #BSP430_PLATFORM_BOOSTERPACK_SHARP96 and similar Sharp
+Memory LCD displays with a demo and in @ref bsp430/utility/u8glib.h.
+@li Add demo of <a
+href="http://www.element14.com/community/docs/DOC-55618/l/element14-fuel-tank-boosterpack-for-ti-launchpad">BOOSTXL-BATTPACK</a>,
+which turns out to be useless because it drains in three days with no load
+connected.
+@li Validate and document the current state of @ref ex_rf_cc3000 which
+is IMO pretty cool.
+
+\section releases_20140301 Changes in Release 20140301
+
+@li Support for #BSP430_PLATFORM_EXP430F5529LP
+@li Support for #BSP430_PLATFORM_EXP430FR5969
+@li Update @ref bsp430/utility/u8glib.h to upstream 1.15
+@li Update @ref ex_platform_exp430f5529_fatfs to support 0.10 and 0.10a
+@li Add CC3000BOOST boosterpack support to @ref ex_rf_cc3000
+@li Add #configBSP430_RFEM_CCEM RFEM boosterpack support
+@li Example of ADXL335 on Fraunchpad
+@li CC3000 Service Pack 1.11 enhancements
+
 \section releases_20130625 Changes in Release 20130625
 
 \subsection releases_20130625_nirh Replacement of _ni with _rh
 
 In this release many functions with @link enh_interrupts_ni _ni@endlink
-suffixes were renamed to use the @link enh_interrupts_rh _rh@endlink suffix,
-allowing them to be used when interrupts are disabled if resource conflicts
-are prevented through some other mechanism such as @ref
-Existing code may be translated using the sed script at
-<tt>${BSP430_ROOT}/maintainer/nirh_serial.sed</tt>, with the following
-command line (assuming your sources are under git):
+suffixes were renamed to use the @link enh_interrupts_rh _rh@endlink
+suffix, allowing them to be used when interrupts are disabled if
+resource conflicts are prevented through some other mechanism such as
+@ref bsp430/resource.h.  Existing code may be translated using the sed
+script at <tt>${BSP430_ROOT}/maintainer/nirh_serial.sed</tt>, with the
+following command line (assuming your sources are under git):
 
 @verbatim
 git ls-tree HEAD \
