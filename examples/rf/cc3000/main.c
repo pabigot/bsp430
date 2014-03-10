@@ -93,6 +93,14 @@ typedef struct sConnectParams {
   unsigned char passphrase[65];
 } sConnectParams;
 
+static uint32_t lebtohl (uint8_t * vp)
+{
+  return ((uint32_t)vp[0]
+          | ((uint32_t)vp[1] << 8)
+          | ((uint32_t)vp[1] << 16)
+          | ((uint32_t)vp[1] << 24));
+}
+
 volatile unsigned long lastKeepAlive_utt;
 volatile unsigned long lastCallback_utt;
 volatile long lastEventType;
@@ -346,22 +354,36 @@ cmd_wlan_autocon (const char * argstr)
   size_t argstr_len = strlen(argstr);
   unsigned int should_connect_to_open_ap = 0;
   unsigned int should_use_fast_connect = 1;
-  unsigned int auto_start = 1;
+  unsigned int use_profiles = 1;
+  uint8_t u32octets[4];
 
   /* Analysis shows:
    * should_connect_to_open_ap in NVS at 0x44 32-bit int
    * should_use_fast_connect in NVS at 0x48 32-bit int
-   * auto_start in NVS at 0x50 32-bit int */
+   * use_profiles in NVS at 0x50 32-bit int */
+  cprintf("Current connection policy:\n");
+  rc = nvmem_read(NVMEM_WLAN_CONFIG_FILEID, sizeof(uint32_t), 0x44, u32octets);
+  if (0 == rc) {
+    cprintf("should_connect_to_open_ap = 0x%08lx\n", lebtohl(u32octets));
+  }
+  rc = nvmem_read(NVMEM_WLAN_CONFIG_FILEID, sizeof(uint32_t), 0x48, u32octets);
+  if (0 == rc) {
+    cprintf("should_use_fast_connect = 0x%08lx\n", lebtohl(u32octets));
+  }
+  rc = nvmem_read(NVMEM_WLAN_CONFIG_FILEID, sizeof(uint32_t), 0x50, u32octets);
+  if (0 == rc) {
+    cprintf("use_profiles = 0x%08lx\n", lebtohl(u32octets));
+  }
   rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &should_connect_to_open_ap);
   if (0 == rv) {
     rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &should_use_fast_connect);
   }
   if (0 == rv) {
-    rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &auto_start);
+    rv = iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &use_profiles);
   }
-  cprintf("Connection policy: open_ap=%u fast_connect=%u auto_start=%u\n",
-          should_connect_to_open_ap, should_use_fast_connect, auto_start);
-  rc = wlan_ioctl_set_connection_policy(should_connect_to_open_ap, should_use_fast_connect, auto_start);
+  cprintf("New connection policy: open_ap=%u fast_connect=%u use_profiles=%u\n",
+          should_connect_to_open_ap, should_use_fast_connect, use_profiles);
+  rc = wlan_ioctl_set_connection_policy(should_connect_to_open_ap, should_use_fast_connect, use_profiles);
   cprintf("Connection policy set got %ld\n", rc);
   return 0;
 }
