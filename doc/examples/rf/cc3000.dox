@@ -30,6 +30,7 @@
  */
 
 /** \page ex_rf_cc3000 CC3000 SimpleLink Exploration
+\tableofcontents
 
 This example is a fairly complex program demonstrating the basic goal that
 drove BSP430 development: the ability to quickly develop tools to explore
@@ -42,36 +43,104 @@ href="http://processors.wiki.ti.com/index.php/CC3000_Wi-Fi_for_MCU">Texas
 Instruments SimpleLink(TM) CC3000 Wi-Fi SOC</a> is a solution intended to
 enable microcontrollers to communicate over 802.11 Wi-Fi networks.  It is
 available in RF evaluation module form-factor, and comes with example
-programs from Texas Instruments that are mostly tested only on the <a
-href="http://www.ti.com/tool/msp-exp430fr5739">MSP-EXP430FR5739
-"Fraunchpad"</a>.
+programs from Texas Instruments that are mostly tested on the <a
+href="http://www.ti.com/tool/msp-exp430f5529lp">MSP-EXP430F5529LP
+"USB Launchpad"</a>.
 
 The example here uses the TI-provided host driver with a BSP430 SPI
 interface to provide an interactive program to invoke various capabilities
-of the SimpleLink hardware.  The Fraunchpad has extremely limited
-memory (16 kB including the space used for the packet buffers) and simply
-can't support an interactive application with extensive text help and
-command processing.  It's close, though; this application takes slightly
-more than 20 kB when compiled with <a
-href="https://sourceforge.net/projects/mspgcc/">MSPGCC</a> for the <a
-href="http://www.ti.com/tool/msp-exp430f5438">MSP-EXP430F5438</a>.
+of the SimpleLink hardware.
 
-Below are the commands supported:
+To build the program, you will need a copy of the CC3000 Host Driver.  This
+application uses one that has been repackaged to place header files out of
+the application namespace, support MSPGCC, fix a few bugs, and support
+building as a library that can be linked into an application.  It can be
+obtained from: http://github.com/pabigot/cc3000
+
+An example build command line is:
 @verbatim
-> help
+make PLATFORM=exp430f5529lp \
+   CC3000_ROOT=/usr/local/msp430-cc3000 \
+   CC3000BOOST=1 \
+   WITH_SMART=1 WITH_PROFILES=1 WITH_RMPARAM=1 \
+   install
+@endverbatim
+
+Several build-time flags control available features:
+<ul>
+<li>@c CC3000_ROOT specifies the location that you used as the @c
+--prefix argument to configure and install the CC3000 host driver.
+<li>@c CC3000_BOOST=1 enables the pin mappings for the <a
+href="http://www.ti.com/tool/cc3000boost">CC3000 BoosterPack</a>.  By
+default (without this flag) the application will be built assuming a <a href="http://www.ti.com/tool/cc3000em">
+CC3000 Evaluation Module</a> is present in the platform's @link bsp430/rf/rfem.h RFEM @endlink socket.
+<li>@c WITH_SMART=1 enables TI's <a
+href="http://processors.wiki.ti.com/index.php/CC3000_Smart_Config">CC3000
+Smart Config</a> protocol, which uses an Android or IOS application to
+communicate WiFi access point information to the device without manual
+configuration.  This mode requires 1500 bytes of RAM for receive
+packets, which is enabled with this flag.  The @c smart command is
+absent without this option.
+<li>@c WITH_PROFILES=1 reads a set of access point definitions from a
+file @c profiles.inc in the source directory, allowing the <tt>wlan
+profile update</tt> command to store them for automatic connection
+without using Smart Config.
+<li>@c WITH_RMPARAM=1 reads the set of default radio module parameters
+from @c rm_param.inc in the source directory.  This allows <tt>nvm
+rmparam</tt> to display the differences between the in-radio parameters
+and the standard parameters.
+<li>@c WITH_UPDATE=1 provides the ability to update the firmware of an
+otherwise-working CC3000.  Due to licensing and/or export restrictions on the
+distribution of the firmware, you will need to download the patch
+utility sources from <a
+href="http://processors.wiki.ti.com/index.php/CC3000_Patch_Programmer">the
+TI Wiki</a>, extract the firmware image contents from the source files,
+and place them in files in the local file system.  Instructions are in
+the source code.  The two images together exceed 11 kB of flash, so
+enabling this feature may cause a small-memory-model build to fail.  The
+<tt>nvm update</tt> command is absent without this option.
+</ul>
+
+\section ex_rf_cc3000_demo Available Commands and Examples
+
+The API is a command-line, it supports editing commands, and will accept
+the shortest unique command prefix.  Below are the commands supported
+when built with the options above.
+@verbatim
 help # No help available
+test # No help available
+uptime # No help available
+mdns [name] # enable/disable mDNS
 info # No help available
   load # load wlan AP params from INFO_B
   erase # erase INFO_B
   store # store wlan AP params in INFO_B
+  dump # display INFO_B contents
 nvmem # No help available
   mac # get mac address
   read fileid [len(=128) [ofs(=0)]] # read block from nvmem file
+  rmparam # display radio module parameters
   sp # read firmware service pack level
+  create [fileid=12 [length=16]] # create a new NVMEM section
+  dir # describe NVMEM sections
+scan # No help available
+  start  [interval=1] # start periodic scan (ms)
+  stop # disable periodic scan
+  show  [with_mem=0] # display scan results
 wlan # No help available
-  start # power-up CC3000
+  start [patchcount=0] # power-up CC3000
+  timeouts # set CC3000 timeouts
   status # get CC3000 status and AP config
+  smart # No help available
+    start [encrypted=0] # start smart config process
+    stop # stop smart config process
+    process # process AES received data
+    aes [key] # set or read AES key
+  profile # No help available
+    update [profile=0] # add configured profiles
+    del [profile=0] # delete profile, 255 for all
   connect # connect to specified access point using AP config
+  autocon [open_ap=0 [fast_conn=1 [auto_conn=1]]]
   sectype [{sectype}] # Display or set AP sectype
   passphrase [{passphrase}] # Display or set AP passphrase
   ssid [{ssid}] # Display or set AP SSID for connect
@@ -80,55 +149,215 @@ wlan # No help available
   stop # shut down CC3000
 @endverbatim
 
+\subsection ex_rf_cc3000_demo_boot Basic Boot with Manual Configuration
+
 A demonstration boot sequence with a couple commands is:
 @verbatim
-WLAN test program
+cc3000 Mar 10 2014 12:00:54
 System reset bitmask 4; causes:
         RST/NMI
 System reset included: BOR POR PUC
-PWR_EN at PORT1.7
-SPI_IRQ HAL at PORT1.3
-CSn HAL at PORT3.0
+PWR_EN at PORT6.5
+SPI_IRQ HAL at PORT2.0
+CSn HAL at PORT2.2
 SPI is USCI5_B0
-SPI Pins: MOSI/SDA=P3.1; MISO/SCL=P3.2; CLK=P3.3; STE=P3.0
-Oct  2 2012 13:43:22
- 0:00.771 Initialize returned 0
+SPI Pins: MOSI/SDA=P3.0; MISO/SCL=P3.1; CLK=P3.2; STE=P2.7
+CC3000 host driver: 15
+Mar 10 2014 12:00:54
+ 0:00.807 Initialize returned 0
+
 And wlan has been started.
-AP configuration SSID 'myssid', passphrase 'mypassphrase'
-AP security type wpa (2)
-WLAN status 0: disconnected
-> wla co
-connect to ssid 'myssid' by wpa using 'mypassphrase'
-con 0 in  0:06.365
- 0:12.506 wlan_cb 0x8200 0 at 0 SR 0x1
->  0:13.220 wlan_cb 0x8001 0 at 0 SR 0x1
- 0:22.306 wlan_cb 0x8010 20 at 0x5bbe SR 0
- 0:22.487 wlan_cb 0x8200 0 at 0 SR 0x1
+ERR: Stored connection params invalid
+> wlan ssid myssid
+AP SSID is myssid (7 chars)
+> wlan passph key-for-myssid
+AP passphrase is 'key-for-myssid' (15 chars)
+> wlan sec wpa2
+AP security type is wpa2 (3)
+> wlan con
+connect to ssid 'myssid' by wpa2 using 'key-for-myssid'
+con 0 in  0:06.334
+>  0:26.615 wlan_cb 0x8001 0 at 0 SR 0x44
+ 0:26.678 wlan_cb 0x8010 21 at 0x43ba SR 0x44
 w ip
-IP: 192.168.0.101
+IP: 192.168.0.100
 NM: 255.255.255.0
 GW: 192.168.0.1
 DHCP: 192.168.0.1
 DNS: 192.168.0.1
-MAC: 00.25.ca.02.09.9d
+MAC: 08:00:28:57:d4:df
 SSID: myssid
->  0:32.486 wlan_cb 0x8200 0 at 0 SR 0x1
+> info store
+Erasing stored params at 0x1900...0
+Copying current configuration...106
+Command execution returned 106
+>
 @endverbatim
 
-Note that asynchronous callbacks from the host driver are displayed
-interspersed with the commands, and that in this case the AP configuration
-parameters had been stored in information memory and reloaded on power-up.
+<ul>
+<li> <tt>nvm sp</tt> displays the service pack and host driver
+versions.  Unfortunately these don't conform to the package version
+distributed by TI: for example, firmware version 1.26 and host driver 15
+are really SP 1.12.
+<li> <tt>wlan ssid</tt> specifies the access point SSID to which
+connection should be made.  The passphrase and security type are
+provided similarly.
+<li> <tt>wlan connect</tt> initiates a manual connection to the
+specified access point.  Note that asynchronous callbacks from the host
+driver are displayed as they arrive.
+<li> <tt>wlan ipconfig</tt> displays the IP configuration of the device.
+<li> <tt>info store</tt> saves the configured access point parameters
+in the MSP430 Information Section B so they need not be entered when the
+MCU is power-cycled.
+</ul>
 
-Experience while reaching this point revealed that the SimpleLink solution
-is too immature for serious development, and it is unlikely that the example
-will be evolved further.  Nonetheless, it's a good demonstration of BSP430's
-capabilities.
+\subsection ex_rf_cc3000_demo_smart Smart Configuration
 
-To build the program, you will need a copy of the CC3000 Host Driver.  This
-application uses one that has been repackaged to place header files out of
-the application namespace, support MSPGCC, fix a few bugs, and support
-building as a library that can be linked into an application.  It can be
-obtained from: http://github.com/pabigot/cc3000
+Although Smart Config can be used without encryption, you'll probably
+want to use it for any real-world application.  The encryption key is
+stored in the NVMEM section of the CC3000.  Display the NVMEM file table
+with this command:
+@verbatim
+> nvm dir
+16 NVMEM files with 14 documented:
+ID Addr  Size  Flg : Doc ID  Size Description
+ 0 01f0   416  av         0   512 NVS
+ 1 0050   416  a          1   512 NVS (shadow)
+ 2 0390  4096  av         2  4096 WLAN Config
+ 3 1390  4096  av         3  4096 WLAN Config (shadow)
+ 4 2390  8192  av         4     0 WLAN Driver SP
+ 5 4390  8192  av         5     0 WLAN Firmware SP
+ 6 6390    16  av         6    16 MAC address
+ 7 63a0    16  a          7     0 Front End Vars ??
+ 8 63b0    64  a          8    64 IP Config
+ 9 63f0    64  a          9    64 IP Config (shadow)
+10 6430  1024  a         10     0 Bootloader SP
+11 6830   512  av        11     0 Radio Module
+12 0000     0            12     0 AES128 Key
+13 0000     0            13     0 Shared Memory ??
+14 6a30    64  av
+15 0000     0
+@endverbatim
+If this table shows that file 12, which holds the AES key, does not
+have the available and valid flags (@c av), create it:
+@verbatim
+> nvm create
+nvmem_create_entry(12, 16) got 0
+@endverbatim
+The file entry should now be:
+@verbatim
+12 6a70    16  a         12     0 AES128 Key
+@endverbatim
+Store a key with this command:
+@verbatim
+> wlan smart aes 123456789abcdef0
+aes_write_key got 0
+Key:
+0000  31 32 33 34 35 36 37 38  39 61 62 63 64 65 66 30    123456789abcdef0
+@endverbatim
+The key must be ASCII and a full 16 characters.  The FAT entry will
+update to mark the section valid:
+@verbatim
+12 6a70    16  av        12     0 AES128 Key
+@endverbatim
+You can now initiate the smart config process on your Android or IOS
+device, and at the demo application do the following:
+@verbatim
+> wlan smart start 1
+Prefix set returned 0
+Config with AES key:
+0000  31 32 33 34 35 36 37 38  39 61 62 63 64 65 66 30    123456789abcdef0
+wlan_smart_config_start(1) got 0
+> wlan smart stop
+wlan_smart_config_stop() got 0
+> wlan smart process
+wlan_smart_config_process() got 0
+> wlan autocon
+Current connection policy:
+should_connect_to_open_ap = 0x00000000
+should_use_fast_connect = 0x00000000
+use_profiles = 0x00000000
+New connection policy: open_ap=0 fast_connect=1 use_profiles=1
+Connection policy set got 0
+> wlan stop
+> wlan start
+wlan_start(0) took  0:01.190
+>  0:36.572 wlan_cb 0x8001 0 at 0 SR 0x44
+ 0:37.212 wlan_cb 0x8010 21 at 0x43ba SR 0x44
+wlan ip
+IP: 192.168.0.100
+NM: 255.255.255.0
+GW: 192.168.0.1
+DHCP: 192.168.0.1
+DNS: 192.168.0.1
+MAC: 08:00:28:57:d4:df
+SSID: myssid
+>
+@endverbatim
+<ul>
+<li> <tt>wlan smart start 1</tt> starts the Smart Config process with
+encryption enabled.  You can pass zero (or leave the last argument off)
+to do unencrypted configuration.  When the driver is working properly
+there should be an event notification when configuration is complete:
+@verbatim
+>  0:27.488 wlan_cb 0x8080 0 at 0 SR 0x44
+@endverbatim
+The host driver for service pack 1.12 does not display this event, so
+after about twenty seconds assume it worked and keep going.
+<li> <tt>wlan smart stop</tt> stops the configuration process.  If you
+were doing an unencrypted configuration, the received access point data
+would be written to profile 1 by this operation.
+<li> <tt>wlan smart process</tt> is used for encrypted configuration to
+decrypt the access point data and write it to profile 1.
+<li> <tt>wlan autocon</tt> ensures that the autoconnect parameters are
+set to do fast-connect and use profiles.
+<li> Stopping and starting the device allows it to autoconnect to the
+smart-configured AP.
+</ul>
+
+\subsection ex_rf_cc3000_demo_profile Multiple Profile Automated Configuration
+
+Manual configuration works, but the startup procedure is slow.  Smart
+Configuration is a pain when you have the ability to interact with the
+device.  The following sequence shows how to store a set of profiles
+with priorities when the application is built with @c WITH_PROFILES=1:
+@verbatim
+> wlan profile del
+ 7:53.662 wlan_cb 0x8010 21 at 0x42d0 SR 0x44
+ 7:53.710 wlan_cb 0x8002 0 at 0 SR 0x44
+Del profile 255 got 0
+> wlan profile update
+Add SSID 'pab-stream' sec 'wpa2' pri 3 got 0
+Add SSID 'pabmn' sec 'wpa2' pri 2 got 1
+Add SSID 'pab-llc' sec 'wpa2' pri 1 got 2
+> wlan stop
+> wlan start
+wlan_start(0) took  0:01.190
+>  8:29.536 wlan_cb 0x8001 0 at 0 SR 0x44
+ 8:30.647 wlan_cb 0x8010 21 at 0x43ba SR 0x44
+w ip
+IP: 192.168.66.244
+NM: 255.255.252.0
+GW: 192.168.64.1
+DHCP: 192.168.66.10
+DNS: 192.168.66.10
+MAC: 08:00:28:57:d4:df
+SSID: pab-stream
+>
+@endverbatim
+<ul>
+<li> <tt>wlan profile del</tt> deletes the profiles stored in the CC3000
+NVMEM.  Note that deleting a profile while connected to it causes the
+link to come down (producing asynchronous events).
+<li> <tt>wlan profile update</tt> stores profiles that defined in a local
+file @c profiles.inc.  This file specifies the priority, security mode,
+SSID, and passphrase for the AP.  The return value from the add
+operation is the position of the entry, but this isn't very useful since
+the host API provides no way to read the profile table (you can pull the
+bits out of @c NVMEM_NVS_FILEID if you wish).
+<li> Stopping and starting causes the autoconnect process to execute
+using the highest-priority available access point.
+</li>
 
 \section ex_rf_cc3000_spi cc3000spi.c
 
