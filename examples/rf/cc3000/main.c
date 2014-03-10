@@ -233,7 +233,7 @@ cmd_wlan_ipconfig (const char * argstr)
   /* WTF?  A little-endian MAC address?  This may be because of a bug
    * fix in the host driver; the original version was completely
    * wrong. */
-  cprintf("MAC: %02x.%02x.%02x.%02x.%02x.%02x\n",
+  cprintf("MAC: %02x:%02x:%02x:%02x:%02x:%02x\n",
           p[5], p[4], p[3], p[2], p[1], p[0]);
   cprintf("SSID: %s\n", ipc.uaSSID);
   return 0;
@@ -1343,7 +1343,7 @@ cmd_nvmem_mac (const char * argstr)
   /* Could extend this to parse "set {addr}" if you wanted. */
   rc = nvmem_get_mac_address(mac);
   if (0 == rc) {
-    cprintf("nvmem mac is %02x.%02x.%02x.%02x.%02x.%02x\n",
+    cprintf("nvmem mac is %02x:%02x:%02x:%02x:%02x:%02x\n",
             mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
   } else {
     cprintf("ERR: nvmem mac read got %u\n", rc);
