@@ -36,6 +36,7 @@ var searchData=
   ['sbsp430resource',['sBSP430resource',['../resource_8h.html#ab682caf5e0d2c8dafbbc4c2d566ee6e1',1,'resource.h']]],
   ['sbsp430resourcereleaseflag',['sBSP430resourceReleaseFlag',['../resource_8h.html#a252150bb9a417d354b71ab9d83112e68',1,'resource.h']]],
   ['sbsp430resourcewaiter',['sBSP430resourceWaiter',['../resource_8h.html#a12fd24282454d19b56692f0748ef0417',1,'resource.h']]],
+  ['sbsp430sharplcd',['sBSP430sharplcd',['../sharplcd_8h.html#afa1be39031b2364a969deb4e509df113',1,'sharplcd.h']]],
   ['sbsp430timeralarm',['sBSP430timerAlarm',['../group__grp__timer__alarm.html#gaa8ab7898617be7936c00e18e65d42df6',1,'timer.h']]],
   ['sbsp430timermuxalarm',['sBSP430timerMuxAlarm',['../group__grp__timer__alarm.html#ga586d1d0cebb3c98715502162e47b5d56',1,'timer.h']]],
   ['sbsp430timermuxsharedalarm',['sBSP430timerMuxSharedAlarm',['../group__grp__timer__alarm.html#gaf7d406a6d5e7d33262603a982abe0e20',1,'timer.h']]],

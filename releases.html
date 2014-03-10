@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -83,16 +83,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#releases_20130625">Changes in Release 20130625</a><ul><li class="level2"><a href="#releases_20130625_nirh">Replacement of _ni with _rh</a></li>
+<ul><li class="level1"><a href="#releases_20140301">Changes in Release 20140301</a></li>
+<li class="level1"><a href="#releases_20130625">Changes in Release 20130625</a><ul><li class="level2"><a href="#releases_20130625_nirh">Replacement of _ni with _rh</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="textblock"><h1><a class="anchor" id="releases_20130625"></a>
+<div class="textblock"><p>This is rarely updated; see the github <a href="http://github.com/pabigot/bsp430/issues">issue tracker</a> for the status and resolution of reported bugs, and the <a href="http://github.com/pabigot/bsp430/">source repository</a> for individual commit history.</p>
+<h1><a class="anchor" id="releases_20140301"></a>
+Changes in Release 20140301</h1>
+<ul>
+<li>Fix LPM5 locking on FR58xx devices (not reported as an issue, bad me) </li>
+<li>Support <a class="el" href="sharplcd_8h.html#a491c5cfaab126865193b626dad293bb4">BSP430_PLATFORM_BOOSTERPACK_SHARP96</a> and similar Sharp Memory LCD displays with a demo and in <a class="el" href="u8glib_8h.html">bsp430/utility/u8glib.h</a>. </li>
+<li>Add demo of <a href="http://www.element14.com/community/docs/DOC-55618/l/element14-fuel-tank-boosterpack-for-ti-launchpad">BOOSTXL-BATTPACK</a>, which turns out to be useless because it drains in three days with no load connected. </li>
+<li>Validate and document the current state of <a class="el" href="ex_rf_cc3000.html">CC3000 SimpleLink Exploration</a> which is IMO pretty cool.</li>
+</ul>
+<h1><a class="anchor" id="releases_20140301"></a>
+Changes in Release 20140301</h1>
+<ul>
+<li>Support for <a class="el" href="platform_8h.html#a250a7deea10139959137eaf916f40911">BSP430_PLATFORM_EXP430F5529LP</a> </li>
+<li>Support for <a class="el" href="platform_8h.html#a0a7315d51b7bd11064c11f6ae85fb79e">BSP430_PLATFORM_EXP430FR5969</a> </li>
+<li>Update <a class="el" href="u8glib_8h.html">bsp430/utility/u8glib.h</a> to upstream 1.15 </li>
+<li>Update <a class="el" href="ex_platform_exp430f5529_fatfs.html">FatFs on an EXP430F5529</a> to support 0.10 and 0.10a </li>
+<li>Add CC3000BOOST boosterpack support to <a class="el" href="ex_rf_cc3000.html">CC3000 SimpleLink Exploration</a> </li>
+<li>Add <a class="el" href="rfem_8h.html#a0ba55c4a192e0b8e88c0437a53ee8634">configBSP430_RFEM_CCEM</a> RFEM boosterpack support </li>
+<li>Example of ADXL335 on Fraunchpad </li>
+<li>CC3000 Service Pack 1.11 enhancements</li>
+</ul>
+<h1><a class="anchor" id="releases_20130625"></a>
 Changes in Release 20130625</h1>
 <h2><a class="anchor" id="releases_20130625_nirh"></a>
 Replacement of _ni with _rh</h2>
-<p>In this release many functions with <a class="el" href="enhanced.html#enh_interrupts_ni">_ni</a> suffixes were renamed to use the <a class="el" href="enhanced.html#enh_interrupts_rh">_rh</a> suffix, allowing them to be used when interrupts are disabled if resource conflicts are prevented through some other mechanism such as Existing code may be translated using the sed script at <code>${BSP430_ROOT}/maintainer/nirh_serial.sed</code>, with the following command line (assuming your sources are under git):</p>
+<p>In this release many functions with <a class="el" href="enhanced.html#enh_interrupts_ni">_ni</a> suffixes were renamed to use the <a class="el" href="enhanced.html#enh_interrupts_rh">_rh</a> suffix, allowing them to be used when interrupts are disabled if resource conflicts are prevented through some other mechanism such as <a class="el" href="resource_8h.html">bsp430/resource.h</a>. Existing code may be translated using the sed script at <code>${BSP430_ROOT}/maintainer/nirh_serial.sed</code>, with the following command line (assuming your sources are under git):</p>
 <pre class="fragment">git ls-tree HEAD \
   -r -z --name-only \
 | xargs -0 sed -i -r -f ${BSP430_ROOT}/maintainer/nirh_serial.sed
@@ -100,7 +122,7 @@ Replacement of _ni with _rh</h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

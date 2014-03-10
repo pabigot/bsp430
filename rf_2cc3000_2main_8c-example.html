@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -106,6 +106,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;ctype.h&gt;</span></div>
 <div class="line"></div>
+<div class="line"><span class="preprocessor">#ifndef BYPASS_SP_LOAD</span></div>
+<div class="line"><span class="comment">/* If defined to a true value, the wlan_init() call at power-up will</span></div>
+<div class="line"><span class="comment"> * inhibit loading of any service packs that may be present in the</span></div>
+<div class="line"><span class="comment"> * NVMEM.  This will allow you to get access to the board when the</span></div>
+<div class="line"><span class="comment"> * NVMEM is corrupt.</span></div>
+<div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * BSP430 does not currently have support for complete restoration of</span></div>
+<div class="line"><span class="comment"> * the NVMEM, which includes defining the FAT, providing radio module</span></div>
+<div class="line"><span class="comment"> * parameters, etc. */</span></div>
+<div class="line"><span class="preprocessor">#define BYPASS_SP_LOAD 0</span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BYPASS_SP_LOAD */</span><span class="preprocessor"></span></div>
+<div class="line"></div>
 <div class="line"><span class="comment">/* Memory is extremely tight on the FR5739 (16 kB including CC3000</span></div>
 <div class="line"><span class="comment"> * buffers).  Set these to restrict the set of commands to ones of</span></div>
 <div class="line"><span class="comment"> * interest that will fit.  You&#39;ll probably find you&#39;ll need to</span></div>
@@ -125,9 +137,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#define CMD_WLAN_DISCONNECT 1</span></div>
 <div class="line"><span class="preprocessor">#define CMD_WLAN_START 1</span></div>
 <div class="line"><span class="preprocessor">#define CMD_WLAN_PROFILE 1</span></div>
-<div class="line"><span class="preprocessor">#define CMD_WLAN_SMART 1</span></div>
+<div class="line"><span class="preprocessor">#if (BSP430_CC3000_ENABLE_SMART - 0) &amp;&amp; (BSP430_CC3000SPI_RX_BUFFER_SIZE &lt; 1500)</span></div>
+<div class="line"><span class="preprocessor">#error BSP430_CC3000_ENABLE_SMART requires BSP430_CC3000SPI_RX_BUFFER_SIZE &gt;= 1500</span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CC3000_ENABLE_SMART diagnostic */</span><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#ifndef CMD_WLAN_SMART</span></div>
+<div class="line"><span class="preprocessor">#define CMD_WLAN_SMART (BSP430_CC3000SPI_RX_BUFFER_SIZE &gt;= 1500)</span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* CMD_WLAN_SMART */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#define CMD_NVMEM 1</span></div>
 <div class="line"><span class="preprocessor">#define CMD_NVMEM_SP 1</span></div>
+<div class="line"><span class="preprocessor">#define CMD_NVMEM_RMPARAM 1</span></div>
 <div class="line"><span class="preprocessor">#define CMD_NVMEM_READ 1</span></div>
 <div class="line"><span class="preprocessor">#define CMD_NVMEM_MAC 1</span></div>
 <div class="line"><span class="preprocessor">#define CMD_SCAN 1</span></div>
@@ -143,14 +161,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#define MAGIC_CONNECT_PARAMS 0x3000</span></div>
 <div class="line"></div>
+<div class="line"><span class="preprocessor">#define MAX_SSID_LEN 32</span></div>
+<div class="line"><span class="preprocessor">#define MAX_PASSPHRASE_LEN 64</span></div>
+<div class="line"></div>
 <div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>sConnectParams {</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> magic;</div>
 <div class="line">  <span class="keywordtype">int</span> security_type;</div>
 <div class="line">  <span class="keywordtype">size_t</span> ssid_len;</div>
 <div class="line">  <span class="keywordtype">size_t</span> passphrase_len;</div>
-<div class="line">  <span class="keywordtype">char</span> ssid[33];</div>
-<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> passphrase[65];</div>
+<div class="line">  <span class="keywordtype">char</span> ssid[MAX_SSID_LEN+1];</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> passphrase[MAX_PASSPHRASE_LEN+1];</div>
 <div class="line">} sConnectParams;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> uint32_t lebtohl (uint8_t * vp)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> ((uint32_t)vp[0]</div>
+<div class="line">          | ((uint32_t)vp[1] &lt;&lt; 8)</div>
+<div class="line">          | ((uint32_t)vp[1] &lt;&lt; 16)</div>
+<div class="line">          | ((uint32_t)vp[1] &lt;&lt; 24));</div>
+<div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> lastKeepAlive_utt;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> lastCallback_utt;</div>
@@ -281,7 +310,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="comment">/* WTF?  A little-endian MAC address?  This may be because of a bug</span></div>
 <div class="line"><span class="comment">   * fix in the host driver; the original version was completely</span></div>
 <div class="line"><span class="comment">   * wrong. */</span></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;MAC: %02x.%02x.%02x.%02x.%02x.%02x\n&quot;</span>,</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;MAC: %02x:%02x:%02x:%02x:%02x:%02x\n&quot;</span>,</div>
 <div class="line">          p[5], p[4], p[3], p[2], p[1], p[0]);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SSID: %s\n&quot;</span>, ipc.uaSSID);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
@@ -405,22 +434,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="keywordtype">size_t</span> argstr_len = strlen(argstr);</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> should_connect_to_open_ap = 0;</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> should_use_fast_connect = 1;</div>
-<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> auto_start = 1;</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> use_profiles = 1;</div>
+<div class="line">  uint8_t u32octets[4];</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Analysis shows:</span></div>
 <div class="line"><span class="comment">   * should_connect_to_open_ap in NVS at 0x44 32-bit int</span></div>
 <div class="line"><span class="comment">   * should_use_fast_connect in NVS at 0x48 32-bit int</span></div>
-<div class="line"><span class="comment">   * auto_start in NVS at 0x50 32-bit int */</span></div>
+<div class="line"><span class="comment">   * use_profiles in NVS at 0x50 32-bit int */</span></div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Current connection policy:\n&quot;</span>);</div>
+<div class="line">  rc = nvmem_read(NVMEM_WLAN_CONFIG_FILEID, <span class="keyword">sizeof</span>(uint32_t), 0x44, u32octets);</div>
+<div class="line">  <span class="keywordflow">if</span> (0 == rc) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;should_connect_to_open_ap = 0x%08lx\n&quot;</span>, lebtohl(u32octets));</div>
+<div class="line">  }</div>
+<div class="line">  rc = nvmem_read(NVMEM_WLAN_CONFIG_FILEID, <span class="keyword">sizeof</span>(uint32_t), 0x48, u32octets);</div>
+<div class="line">  <span class="keywordflow">if</span> (0 == rc) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;should_use_fast_connect = 0x%08lx\n&quot;</span>, lebtohl(u32octets));</div>
+<div class="line">  }</div>
+<div class="line">  rc = nvmem_read(NVMEM_WLAN_CONFIG_FILEID, <span class="keyword">sizeof</span>(uint32_t), 0x50, u32octets);</div>
+<div class="line">  <span class="keywordflow">if</span> (0 == rc) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;use_profiles = 0x%08lx\n&quot;</span>, lebtohl(u32octets));</div>
+<div class="line">  }</div>
 <div class="line">  rv = <a name="a7"></a><a class="code" href="group__grp__utility__cli__hci.html#gad6c6edd09983b8360f0a44d47ed32ec6">iBSP430cliStoreExtractedUI</a>(&amp;argstr, &amp;argstr_len, &amp;should_connect_to_open_ap);</div>
 <div class="line">  <span class="keywordflow">if</span> (0 == rv) {</div>
 <div class="line">    rv = <a class="code" href="group__grp__utility__cli__hci.html#gad6c6edd09983b8360f0a44d47ed32ec6">iBSP430cliStoreExtractedUI</a>(&amp;argstr, &amp;argstr_len, &amp;should_use_fast_connect);</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">if</span> (0 == rv) {</div>
-<div class="line">    rv = <a class="code" href="group__grp__utility__cli__hci.html#gad6c6edd09983b8360f0a44d47ed32ec6">iBSP430cliStoreExtractedUI</a>(&amp;argstr, &amp;argstr_len, &amp;auto_start);</div>
+<div class="line">    rv = <a class="code" href="group__grp__utility__cli__hci.html#gad6c6edd09983b8360f0a44d47ed32ec6">iBSP430cliStoreExtractedUI</a>(&amp;argstr, &amp;argstr_len, &amp;use_profiles);</div>
 <div class="line">  }</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Connection policy: open_ap=%u fast_connect=%u auto_start=%u\n&quot;</span>,</div>
-<div class="line">          should_connect_to_open_ap, should_use_fast_connect, auto_start);</div>
-<div class="line">  rc = wlan_ioctl_set_connection_policy(should_connect_to_open_ap, should_use_fast_connect, auto_start);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;New connection policy: open_ap=%u fast_connect=%u use_profiles=%u\n&quot;</span>,</div>
+<div class="line">          should_connect_to_open_ap, should_use_fast_connect, use_profiles);</div>
+<div class="line">  rc = wlan_ioctl_set_connection_policy(should_connect_to_open_ap, should_use_fast_connect, use_profiles);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Connection policy set got %ld\n&quot;</span>, rc);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
@@ -490,12 +533,97 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">{</div>
 <div class="line">  <span class="keywordtype">size_t</span> argstr_len = strlen(argstr);</div>
 <div class="line">  <span class="keywordtype">long</span> rc;</div>
-<div class="line">  <span class="keywordtype">int</span> profile = -1;</div>
+<div class="line">  <span class="keywordtype">int</span> profile = 255;</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* Profiles start with number 0, somewhere at 0x430.  SSID at 0x442, PSK at 0x49a.  */</span></div>
+<div class="line">  <span class="comment">/* Use 255 to delete all profiles. */</span></div>
 <div class="line">  (void)<a name="a9"></a><a class="code" href="group__grp__utility__cli__hci.html#ga91a46c6159bd5218814c96cbc28a60db">iBSP430cliStoreExtractedI</a>(&amp;argstr, &amp;argstr_len, &amp;profile);</div>
 <div class="line">  rc = wlan_ioctl_del_profile(profile);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Del profile %d got %ld\n&quot;</span>, profile, rc);</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>sProfileEntry {</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> priority;        </div>
+<div class="line">  <span class="keywordtype">int</span> security_type;            </div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> * ssid;            </div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> * passphrase;      </div>
+<div class="line">} sProfileEntry;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">cmd_wlan_profile_update (<span class="keyword">const</span> <span class="keywordtype">char</span> * argstr)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">const</span> sProfileEntry entries[] = {</div>
+<div class="line"><span class="preprocessor">#if (WITH_PROFILES - 0)</span></div>
+<div class="line"><span class="preprocessor">#include &quot;profiles.inc&quot;</span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* WITH_PROFILES */</span><span class="preprocessor"></span></div>
+<div class="line">  };</div>
+<div class="line">  <span class="keyword">const</span> sProfileEntry * pep = entries;</div>
+<div class="line">  <span class="keyword">const</span> sProfileEntry * <span class="keyword">const</span> pepe = pep + <span class="keyword">sizeof</span>(entries)/<span class="keyword">sizeof</span>(*entries);</div>
+<div class="line">  <span class="keywordtype">long</span> rc;</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">if</span> (pep == pepe) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;No profiles available\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span> -1;</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Per</span></div>
+<div class="line"><span class="comment">   * http://e2e.ti.com/support/low_power_rf/f/851/p/285991/999909.aspx#999909</span></div>
+<div class="line"><span class="comment">   * the magic constants below are from wpa_supplicant. */</span></div>
+<div class="line"><span class="preprocessor">#define WPA_DRIVER_CAPA_KEY_MGMT_WPA2              0x00000002</span></div>
+<div class="line"><span class="preprocessor">#define WPA_CIPHER_NONE 0x01</span></div>
+<div class="line"><span class="preprocessor">#define WPA_CIPHER_WEP40 0x02</span></div>
+<div class="line"><span class="preprocessor">#define WPA_CIPHER_WEP104 0x04</span></div>
+<div class="line"><span class="preprocessor">#define WPA_CIPHER_TKIP 0x08</span></div>
+<div class="line"><span class="preprocessor">#define WPA_CIPHER_CCMP 0x10</span></div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">while</span> (pep &lt; pepe) {</div>
+<div class="line">    uint32_t pairwisecipher_or_keylen = 0;</div>
+<div class="line">    uint32_t groupcipher_or_keyindex = 0;</div>
+<div class="line">    uint32_t key_mgmt = 0;</div>
+<div class="line">    uint8_t * pf_or_key = NULL;</div>
+<div class="line">    uint32_t key_length = 0;</div>
+<div class="line">    <span class="keyword">const</span> sWlanSecMap * <span class="keyword">const</span> mp = wlanSecMapFromValue(pep-&gt;security_type);</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span> (NULL != mp) {</div>
+<div class="line">      <span class="keywordflow">if</span> ((WLAN_SEC_WPA == pep-&gt;security_type)</div>
+<div class="line">          || (WLAN_SEC_WPA2 == pep-&gt;security_type)) {</div>
+<div class="line">        pairwisecipher_or_keylen = WPA_CIPHER_TKIP | WPA_CIPHER_CCMP;</div>
+<div class="line">        groupcipher_or_keyindex = WPA_CIPHER_WEP40 | WPA_CIPHER_WEP104 | WPA_CIPHER_TKIP | WPA_CIPHER_CCMP;</div>
+<div class="line">        key_mgmt = WPA_DRIVER_CAPA_KEY_MGMT_WPA2;</div>
+<div class="line">        pf_or_key = (uint8_t*)pep-&gt;passphrase;</div>
+<div class="line">        key_length = strlen(pep-&gt;passphrase);</div>
+<div class="line">      } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (WLAN_SEC_WEP == pep-&gt;security_type) {</div>
+<div class="line">        pairwisecipher_or_keylen = strlen(pep-&gt;passphrase);</div>
+<div class="line">        groupcipher_or_keyindex = 0;</div>
+<div class="line">        key_mgmt = 0;</div>
+<div class="line">        pf_or_key = (uint8_t*)pep-&gt;passphrase;</div>
+<div class="line">        key_length = 0;</div>
+<div class="line">      } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (WLAN_SEC_UNSEC == pep-&gt;security_type) {</div>
+<div class="line">        pairwisecipher_or_keylen = 0;</div>
+<div class="line">        groupcipher_or_keyindex = 0;</div>
+<div class="line">        key_mgmt = 0;</div>
+<div class="line">        pf_or_key = NULL;</div>
+<div class="line">        key_length = 0;</div>
+<div class="line">      }</div>
+<div class="line">      rc = wlan_add_profile(pep-&gt;security_type,</div>
+<div class="line">                            (uint8_t*)pep-&gt;ssid,</div>
+<div class="line">                            strlen(pep-&gt;ssid),</div>
+<div class="line">                            NULL,   <span class="comment">/* bssid is inferred */</span></div>
+<div class="line">                            pep-&gt;priority,</div>
+<div class="line">                            pairwisecipher_or_keylen,</div>
+<div class="line">                            groupcipher_or_keyindex,</div>
+<div class="line">                            key_mgmt,</div>
+<div class="line">                            pf_or_key,</div>
+<div class="line">                            key_length);</div>
+<div class="line"></div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Add SSID &#39;%s&#39; sec &#39;%s&#39; pri %u got %ld\n&quot;</span>,</div>
+<div class="line">              pep-&gt;ssid, mp-&gt;tag, pep-&gt;priority, rc);</div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERR: Profile %u %s has invalid security type %d\n&quot;</span>,</div>
+<div class="line">              pep - entries, pep-&gt;ssid, pep-&gt;security_type);</div>
+<div class="line">    }</div>
+<div class="line">    ++pep;</div>
+<div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -507,10 +635,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  .param.simple_handler = cmd_wlan_profile_del</div>
 <div class="line">};</div>
 <div class="line"></div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_wlan_profile_update = {</div>
+<div class="line">  .<a class="code" href="structsBSP430cliCommand.html#afc4749b003e26d829a7d9b92698edfd4">key</a> = <span class="stringliteral">&quot;update&quot;</span>,</div>
+<div class="line">  .help = HELP_STRING(<span class="stringliteral">&quot;[profile=0] # add configured profiles&quot;</span>),</div>
+<div class="line">  .next = &amp;dcmd_wlan_profile_del,</div>
+<div class="line">  .<a class="code" href="structsBSP430cliCommand.html#a896e8594759400c197809d7e346eabd8">handler</a> = <a class="code" href="cli_8h.html#a3262960abdfc1bbfa7143bb79e9396ff">iBSP430cliHandlerSimple</a>,</div>
+<div class="line">  .param.simple_handler = cmd_wlan_profile_update</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"></div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_wlan_profile = {</div>
 <div class="line">  .<a class="code" href="structsBSP430cliCommand.html#afc4749b003e26d829a7d9b92698edfd4">key</a> = <span class="stringliteral">&quot;profile&quot;</span>,</div>
 <div class="line">  .next = LAST_SUB_COMMAND,</div>
-<div class="line">  .child = &amp;dcmd_wlan_profile_del</div>
+<div class="line">  .child = &amp;dcmd_wlan_profile_update</div>
 <div class="line">};</div>
 <div class="line"><span class="preprocessor">#undef LAST_SUB_COMMAND</span></div>
 <div class="line"><span class="preprocessor">#define LAST_SUB_COMMAND &amp;dcmd_wlan_profile</span></div>
@@ -575,7 +712,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> encrypted = 0;</div>
 <div class="line">  <span class="keywordtype">long</span> rc;</div>
 <div class="line"></div>
+<div class="line">  <span class="comment">/* This has to be TTT.  It doesn&#39;t matter what you pass as long as</span></div>
+<div class="line"><span class="comment">   * it&#39;s non-null; SP 1.10.1 through 1.12 (at least) will use TTT. */</span></div>
+<div class="line">  rc = wlan_smart_config_set_prefix(<span class="stringliteral">&quot;TTT&quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Prefix set returned %ld\n&quot;</span>, rc);</div>
+<div class="line"></div>
 <div class="line">  (void)<a class="code" href="group__grp__utility__cli__hci.html#gad6c6edd09983b8360f0a44d47ed32ec6">iBSP430cliStoreExtractedUI</a>(&amp;argstr, &amp;argstr_len, &amp;encrypted);</div>
+<div class="line">  <span class="keywordflow">if</span> (encrypted) {</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> keybuf[AES128_KEY_SIZE];</div>
+<div class="line">    rc = aes_read_key(keybuf);</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Config with AES key:\n&quot;</span>);</div>
+<div class="line">    displayMemory((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *)keybuf, <span class="keyword">sizeof</span>(keybuf), 0);</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Config unencrypted\n&quot;</span>);</div>
+<div class="line">  }</div>
 <div class="line">  rc = wlan_smart_config_start(encrypted);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;wlan_smart_config_start(%d) got %ld\n&quot;</span>, encrypted, rc);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
@@ -700,16 +850,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
 <div class="line">cmd_wlan_start (<span class="keyword">const</span> <span class="keywordtype">char</span> * argstr)</div>
 <div class="line">{</div>
+<div class="line">  <span class="keywordtype">size_t</span> argstr_len = strlen(argstr);</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> patches_available = 0;</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> t[2];</div>
+<div class="line"></div>
+<div class="line">  (void)<a class="code" href="group__grp__utility__cli__hci.html#gad6c6edd09983b8360f0a44d47ed32ec6">iBSP430cliStoreExtractedUI</a>(&amp;argstr, &amp;argstr_len, &amp;patches_available);</div>
 <div class="line">  t[0] = <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
-<div class="line">  wlan_start(0);</div>
+<div class="line">  wlan_start(patches_available);</div>
 <div class="line">  t[1] = <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;wlan_start() took %s\n&quot;</span>, <a class="code" href="uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1">xBSP430uptimeAsText_ni</a>(t[1]-t[0]));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;wlan_start(%u) took %s\n&quot;</span>, patches_available, <a class="code" href="uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1">xBSP430uptimeAsText_ni</a>(t[1]-t[0]));</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_wlan_start = {</div>
 <div class="line">  .<a class="code" href="structsBSP430cliCommand.html#afc4749b003e26d829a7d9b92698edfd4">key</a> = <span class="stringliteral">&quot;start&quot;</span>,</div>
-<div class="line">  .help = HELP_STRING(<span class="stringliteral">&quot;# power-up CC3000&quot;</span>),</div>
+<div class="line">  .help = HELP_STRING(<span class="stringliteral">&quot;[patchcount=0] # power-up CC3000&quot;</span>),</div>
 <div class="line">  .next = LAST_SUB_COMMAND,</div>
 <div class="line">  .handler = <a class="code" href="cli_8h.html#a3262960abdfc1bbfa7143bb79e9396ff">iBSP430cliHandlerSimple</a>,</div>
 <div class="line">  .param.simple_handler = cmd_wlan_start</div>
@@ -913,23 +1067,157 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  { NVMEM_IP_CONFIG_FILEID, 64, <span class="stringliteral">&quot;IP Config&quot;</span> },</div>
 <div class="line">  { NVMEM_IP_CONFIG_SHADOW_FILEID, 64, <span class="stringliteral">&quot;IP Config (shadow)&quot;</span> },</div>
 <div class="line">  { NVMEM_BOOTLOADER_SP_FILEID, 0, <span class="stringliteral">&quot;Bootloader SP&quot;</span> },</div>
-<div class="line">  { NVMEM_RM_FILEID, 0, <span class="stringliteral">&quot;RM ??&quot;</span> },</div>
-<div class="line">  { NVMEM_AES128_KEY_FILEID, 0, <span class="stringliteral">&quot;AES128 Key ??&quot;</span> },</div>
+<div class="line">  { NVMEM_RM_FILEID, 0, <span class="stringliteral">&quot;Radio Module&quot;</span> },</div>
+<div class="line">  { NVMEM_AES128_KEY_FILEID, 0, <span class="stringliteral">&quot;AES128 Key&quot;</span> },</div>
 <div class="line">  { NVMEM_SHARED_MEM_FILEID, 0, <span class="stringliteral">&quot;Shared Memory ??&quot;</span> },</div>
 <div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#if (WITH_UPDATE - 0)</span></div>
+<div class="line"><span class="comment">/* Firmware updates for the CC3000 are distributed by TI through the</span></div>
+<div class="line"><span class="comment"> * Patch Programmer utility available at:</span></div>
+<div class="line"><span class="comment"> * http://processors.wiki.ti.com/index.php/CC3000_Wi-Fi_Downloads#Patch_Programmer</span></div>
+<div class="line"><span class="comment"> *</span></div>
+<div class="line"><span class="comment"> * This utility is export-controlled, and there is no indication that</span></div>
+<div class="line"><span class="comment"> * the binary firmware data is licensed with rights to redistribute.</span></div>
+<div class="line"><span class="comment"> * Therefore, if you want to update firmware or compare radio module</span></div>
+<div class="line"><span class="comment"> * parameters, you need to obtain the source to the patch programmer</span></div>
+<div class="line"><span class="comment"> * and create files that contain the byte literal initializer sequence</span></div>
+<div class="line"><span class="comment"> * to fill in the arrays below. */</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* This array should hold WLAN driver patches.  The length is</span></div>
+<div class="line"><span class="comment"> * somewhere around 8kB, and the values can be found in the</span></div>
+<div class="line"><span class="comment"> * wlan_drv_patch array in PatchProgrammer_DR_Patch.c from the TI</span></div>
+<div class="line"><span class="comment"> * patch programmer utility. */</span></div>
+<div class="line"><span class="keyword">const</span> uint8_t wlan_drv_patch[] = {</div>
+<div class="line"><span class="preprocessor">  #include &quot;wlan_drv_patch.inc&quot;</span></div>
+<div class="line">};</div>
+<div class="line"><span class="comment">/* This array should hold WLAN firmware patches.  The length is</span></div>
+<div class="line"><span class="comment"> * somewhere around 8kB, and the values can be found in the fw_patch</span></div>
+<div class="line"><span class="comment"> * array in PatchProgrammer_FW_Patch.c from the TI patch programmer</span></div>
+<div class="line"><span class="comment"> * utility. */</span></div>
+<div class="line"><span class="keyword">const</span> uint8_t fw_patch[] = {</div>
+<div class="line"><span class="preprocessor">  #include &quot;fw_patch.inc&quot;</span></div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">cmd_nvmem_update (<span class="keyword">const</span> <span class="keywordtype">char</span> * argstr)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">int</span> rc;</div>
+<div class="line">  <span class="keywordtype">int</span> stage;</div>
+<div class="line">  <span class="keyword">const</span> uint16_t drv_sp_size = <span class="keyword">sizeof</span>(wlan_drv_patch);</div>
+<div class="line">  <span class="keyword">const</span> uint16_t fw_sp_size = <span class="keyword">sizeof</span>(fw_patch);</div>
+<div class="line">  uint16_t drv_sp_fatsize;</div>
+<div class="line">  uint16_t fw_sp_fatsize;</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">do</span> {</div>
+<div class="line">    stage = __LINE__;</div>
+<div class="line">    rc = nvmem_read(NVMEM_MAX_ENTRY, <span class="keyword">sizeof</span>(drv_sp_fatsize), 4*(1 + NVMEM_WLAN_DRIVER_SP_FILEID) + 2, (uint8_t*)&amp;drv_sp_fatsize);</div>
+<div class="line">    <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">    stage = __LINE__;</div>
+<div class="line">    rc = nvmem_read(NVMEM_MAX_ENTRY, <span class="keyword">sizeof</span>(drv_sp_fatsize), 4*(1 + NVMEM_WLAN_FW_SP_FILEID) + 2, (uint8_t*)&amp;fw_sp_fatsize);</div>
+<div class="line">    <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Driver update size %u, file size %u\n&quot;</span></div>
+<div class="line">            <span class="stringliteral">&quot;Firmware update size %u, file size %u\n&quot;</span>,</div>
+<div class="line">            drv_sp_size, drv_sp_fatsize,</div>
+<div class="line">            fw_sp_size, fw_sp_fatsize);</div>
+<div class="line">    <span class="keywordflow">if</span> ((0 == drv_sp_size) || (drv_sp_size &gt; drv_sp_fatsize)) {</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERROR: No driver, or driver too large\n&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">return</span> -1;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span> ((0 == fw_sp_size) || (fw_sp_size &gt; fw_sp_fatsize)) {</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERROR: No firmware, or firmware too large\n&quot;</span>);</div>
+<div class="line">      <span class="keywordflow">return</span> -1;</div>
+<div class="line">    }</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Shutting down WLAN for driver update\n&quot;</span>);</div>
+<div class="line">    wlan_stop();</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Waiting a few...&quot;</span>);</div>
+<div class="line">    <a name="a12"></a><a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(3 * <a name="a13"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;back now\n&quot;</span>);</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Starting WLAN in patch mode\n&quot;</span>);</div>
+<div class="line">    wlan_start(2);</div>
+<div class="line">    wlan_ioctl_set_connection_policy(0, 0, 0);</div>
+<div class="line">    wlan_ioctl_del_profile(255);</div>
+<div class="line">    wlan_set_event_mask(HCI_EVNT_WLAN_KEEPALIVE|HCI_EVNT_WLAN_UNSOL_INIT|HCI_EVNT_WLAN_ASYNC_PING_REPORT);</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Updating driver firmware...&quot;</span>);</div>
+<div class="line">    stage = __LINE__;</div>
+<div class="line">    rc = nvmem_write_patch(NVMEM_WLAN_DRIVER_SP_FILEID, drv_sp_size, (uint8_t *)wlan_drv_patch);</div>
+<div class="line">    <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;success.\n&quot;</span></div>
+<div class="line">            <span class="stringliteral">&quot;Updating firmware...&quot;</span>);</div>
+<div class="line">    stage = __LINE__;</div>
+<div class="line">    rc = nvmem_write_patch(NVMEM_WLAN_FW_SP_FILEID, fw_sp_size, (uint8_t *)fw_patch);</div>
+<div class="line">    <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;success.\n&quot;</span></div>
+<div class="line">            <span class="stringliteral">&quot;Shutting down WLAN after driver update\n&quot;</span>);</div>
+<div class="line">    wlan_stop();</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Restarting WLAN with new drivers\n&quot;</span>);</div>
+<div class="line">    wlan_start(0);</div>
+<div class="line">  } <span class="keywordflow">while</span> (0);</div>
+<div class="line">  <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERROR %d in update at line %u\n&quot;</span>, rc, stage);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_nvmem_update = {</div>
+<div class="line">  .<a class="code" href="structsBSP430cliCommand.html#afc4749b003e26d829a7d9b92698edfd4">key</a> = <span class="stringliteral">&quot;update&quot;</span>,</div>
+<div class="line">  .help = HELP_STRING(<span class="stringliteral">&quot;# Update firmware&quot;</span>),</div>
+<div class="line">  .next = LAST_SUB_COMMAND,</div>
+<div class="line">  .handler = <a class="code" href="cli_8h.html#a3262960abdfc1bbfa7143bb79e9396ff">iBSP430cliHandlerSimple</a>,</div>
+<div class="line">  .param.simple_handler = cmd_nvmem_update</div>
+<div class="line">};</div>
+<div class="line"><span class="preprocessor">#undef LAST_SUB_COMMAND</span></div>
+<div class="line"><span class="preprocessor">#define LAST_SUB_COMMAND &amp;dcmd_nvmem_update</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* WITH_UPDATE */</span><span class="preprocessor"></span></div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
 <div class="line">cmd_nvmem_dir (<span class="keyword">const</span> <span class="keywordtype">char</span> * argstr)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">const</span> sNVMEMFileIds * fp = nvmemFiles;</div>
-<div class="line">  <span class="keyword">const</span> sNVMEMFileIds * <span class="keyword">const</span> fpe = fp + <span class="keyword">sizeof</span>(nvmemFiles) / <span class="keyword">sizeof</span>(*nvmemFiles);</div>
+<div class="line">  <span class="keywordtype">int</span> rc;</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> num_doc_files = <span class="keyword">sizeof</span>(nvmemFiles) / <span class="keyword">sizeof</span>(*nvmemFiles);</div>
+<div class="line">  uint8_t fat[4*(NVMEM_MAX_ENTRY+1)];</div>
+<div class="line">  <span class="keyword">const</span> uint16_t * fp = (<span class="keyword">const</span> uint16_t *)(fat+4);</div>
+<div class="line">  <span class="keyword">const</span> uint16_t * efp = (<span class="keyword">const</span> uint16_t *)(fat+<span class="keyword">sizeof</span>(fat));</div>
+<div class="line">  <span class="keywordtype">int</span> ffi = 0;</div>
 <div class="line"></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%u NVMEM files with %u documented:\n&quot;</span>, NVMEM_MAX_ENTRY, (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)(fpe-fp));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ID  Size  Description\n&quot;</span>);</div>
-<div class="line">  <span class="keywordflow">while</span> (fp &lt; fpe) {</div>
-<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%2d  %4d  %s\n&quot;</span>, fp-&gt;fileid, fp-&gt;size, fp-&gt;tag);</div>
-<div class="line">    ++fp;</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%u NVMEM files with %u documented:\n&quot;</span>, NVMEM_MAX_ENTRY, num_doc_files);</div>
+<div class="line">  rc = nvmem_read(NVMEM_MAX_ENTRY, <span class="keyword">sizeof</span>(fat), 0, fat);</div>
+<div class="line">  <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERROR: nvmem read got %d\n&quot;</span>, rc);</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">  }</div>
+<div class="line">  <span class="keywordflow">if</span> ((<span class="charliteral">&#39;L&#39;</span> != fat[0]) || (<span class="charliteral">&#39;S&#39;</span> != fat[1])) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERROR: nvmem signature %02x %02x not %02x %02x\n&quot;</span>,</div>
+<div class="line">            fat[0], fat[1], <span class="charliteral">&#39;L&#39;</span>, <span class="charliteral">&#39;S&#39;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">  }</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ID Addr  Size  Flg : Doc ID  Size Description\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">while</span> (fp &lt; efp) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%2d %04x %5d  %c%c%c&quot;</span>,</div>
+<div class="line">            ffi, fp[0] &amp; ~(<a name="a14"></a><a class="code" href="msp430_8h.html#ad4d43f8748b542bce39e18790f845ecc">BIT0</a>|<a name="a15"></a><a class="code" href="msp430_8h.html#a601923eba46784638244c1ebf2622a2a">BIT1</a>|<a name="a16"></a><a class="code" href="msp430_8h.html#a9c9560bccccb00174801c728f1ed1399">BIT2</a>), fp[1],</div>
+<div class="line">            (fp[0] &amp; <a class="code" href="msp430_8h.html#ad4d43f8748b542bce39e18790f845ecc">BIT0</a>) ? <span class="charliteral">&#39;a&#39;</span> : <span class="charliteral">&#39; &#39;</span>,</div>
+<div class="line">            (fp[0] &amp; <a class="code" href="msp430_8h.html#a601923eba46784638244c1ebf2622a2a">BIT1</a>) ? <span class="charliteral">&#39;v&#39;</span> : <span class="charliteral">&#39; &#39;</span>,</div>
+<div class="line">            (fp[0] &amp; <a class="code" href="msp430_8h.html#a9c9560bccccb00174801c728f1ed1399">BIT2</a>) ? <span class="charliteral">&#39;p&#39;</span> : <span class="charliteral">&#39; &#39;</span>);</div>
+<div class="line">    <span class="keywordflow">if</span> (ffi &lt; <span class="keyword">sizeof</span>(nvmemFiles)/<span class="keyword">sizeof</span>(*nvmemFiles)) {</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;       %2d %5d %s&quot;</span>,</div>
+<div class="line">              nvmemFiles[ffi].fileid,</div>
+<div class="line">              nvmemFiles[ffi].size,</div>
+<div class="line">              nvmemFiles[ffi].tag);</div>
+<div class="line">    }</div>
+<div class="line">    <a class="code" href="console_8h.html#aa0572fcebf5d24edff00fc60c4563681">cputchar</a>(<span class="charliteral">&#39;\n&#39;</span>);</div>
+<div class="line">    ++ffi;</div>
+<div class="line">    fp += 2;</div>
+<div class="line">  }</div>
+<div class="line"></div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_nvmem_dir = {</div>
@@ -993,6 +1281,69 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#define LAST_SUB_COMMAND &amp;dcmd_nvmem_sp</span></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* CMD_NVMEM_SP */</span><span class="preprocessor"></span></div>
 <div class="line"></div>
+<div class="line"><span class="preprocessor">#if (CMD_NVMEM_RMPARAM - 0)</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#if (WITH_RMPARAM - 0)</span></div>
+<div class="line"><span class="comment">/* This array should hold the default radio module parameters.  The</span></div>
+<div class="line"><span class="comment"> * length is nominally 128 bytes, and the values can be found in the</span></div>
+<div class="line"><span class="comment"> * cRMdefaultParams array in PatchProgrammer_DR_Patch.c from the TI</span></div>
+<div class="line"><span class="comment"> * patch programmer utility. */</span></div>
+<div class="line"><span class="keyword">const</span> uint8_t default_rm_param[] = {</div>
+<div class="line"><span class="preprocessor">  #include &quot;rm_param.inc&quot;</span></div>
+<div class="line">};</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">cmd_nvmem_rmparam (<span class="keyword">const</span> <span class="keywordtype">char</span> * argstr)</div>
+<div class="line">{</div>
+<div class="line">  uint8_t rmparam[128];</div>
+<div class="line">  <span class="keyword">const</span> uint8_t * <span class="keyword">const</span> rmpe = rmparam + <span class="keyword">sizeof</span>(rmparam);</div>
+<div class="line">  uint8_t * rp = rmparam;</div>
+<div class="line">  <span class="keywordtype">int</span> rc;</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">while</span> (rp &lt; rmpe) {</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> offset = rp - rmparam;</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb = rmpe - rp;</div>
+<div class="line">    <span class="keywordflow">if</span> (16 &lt; nb) {</div>
+<div class="line">      nb = 16;</div>
+<div class="line">    }</div>
+<div class="line">    rc = nvmem_read(NVMEM_RM_FILEID, nb, offset, rp);</div>
+<div class="line">    <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERROR %d reading at offset %u\n&quot;</span>, rc, offset);</div>
+<div class="line">      <span class="keywordflow">return</span> 0;</div>
+<div class="line">    }</div>
+<div class="line">    rp += nb;</div>
+<div class="line">  }</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Radio module parameters:\n&quot;</span>);</div>
+<div class="line">  displayMemory(rmparam, <span class="keyword">sizeof</span>(rmparam), 0);</div>
+<div class="line"><span class="preprocessor">#if (WITH_RMPARAM - 0)</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">const</span> uint8_t * drp = default_rm_param;</div>
+<div class="line">    <span class="keyword">const</span> uint8_t * <span class="keyword">const</span> drpe = default_rm_param + <span class="keyword">sizeof</span>(default_rm_param);</div>
+<div class="line"></div>
+<div class="line">    rp = rmparam;</div>
+<div class="line">    <span class="keywordflow">while</span> ((rp &lt; rmpe) &amp;&amp; (drp &lt; drpe)) {</div>
+<div class="line">      *rp++ ^= *drp++;</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Bitwise difference from default:\n&quot;</span>);</div>
+<div class="line">  displayMemory(rmparam, <span class="keyword">sizeof</span>(rmparam), 0);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Default RM parameters:\n&quot;</span>);</div>
+<div class="line">  displayMemory(default_rm_param, <span class="keyword">sizeof</span>(default_rm_param), 0);</div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* WITH_RMPARAM */</span><span class="preprocessor"></span></div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_nvmem_rmparam = {</div>
+<div class="line">  .<a class="code" href="structsBSP430cliCommand.html#afc4749b003e26d829a7d9b92698edfd4">key</a> = <span class="stringliteral">&quot;rmparam&quot;</span>,</div>
+<div class="line">  .help = HELP_STRING(<span class="stringliteral">&quot;# display radio module parameters&quot;</span>),</div>
+<div class="line">  .next = LAST_SUB_COMMAND,</div>
+<div class="line">  .handler = <a class="code" href="cli_8h.html#a3262960abdfc1bbfa7143bb79e9396ff">iBSP430cliHandlerSimple</a>,</div>
+<div class="line">  .param.simple_handler = cmd_nvmem_rmparam</div>
+<div class="line">};</div>
+<div class="line"><span class="preprocessor">#undef LAST_SUB_COMMAND</span></div>
+<div class="line"><span class="preprocessor">#define LAST_SUB_COMMAND &amp;dcmd_nvmem_rmparam</span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* CMD_NVMEM_SP */</span><span class="preprocessor"></span></div>
+<div class="line"></div>
 <div class="line"><span class="preprocessor">#if (CMD_NVMEM_READ - 0)</span></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
 <div class="line">cmd_nvmem_read (<span class="keyword">const</span> <span class="keywordtype">char</span> * argstr)</div>
@@ -1026,8 +1377,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordflow">if</span> (<span class="keyword">sizeof</span>(data) &lt; nb) {</div>
 <div class="line">      nb = <span class="keyword">sizeof</span>(data);</div>
 <div class="line">    }</div>
-<div class="line">    <span class="comment">/* NB: API documentation is wrong, return is 0 if successful, 4 if</span></div>
-<div class="line"><span class="comment">     * offset too large, 3 unknown error. */</span></div>
+<div class="line">    <span class="comment">/* Return is 0 if successful, 4 if offset too large, 3 unknown</span></div>
+<div class="line"><span class="comment">     * error. */</span></div>
 <div class="line">    rc = nvmem_read(fileid, nb, ofs, data);</div>
 <div class="line">    <span class="keywordflow">if</span> (0 == rc) {</div>
 <div class="line">      displayMemory(data, nb, ofs);</div>
@@ -1061,7 +1412,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="comment">/* Could extend this to parse &quot;set {addr}&quot; if you wanted. */</span></div>
 <div class="line">  rc = nvmem_get_mac_address(mac);</div>
 <div class="line">  <span class="keywordflow">if</span> (0 == rc) {</div>
-<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;nvmem mac is %02x.%02x.%02x.%02x.%02x.%02x\n&quot;</span>,</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;nvmem mac is %02x:%02x:%02x:%02x:%02x:%02x\n&quot;</span>,</div>
 <div class="line">            mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERR: nvmem mac read got %u\n&quot;</span>, rc);</div>
@@ -1118,7 +1469,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <span class="keywordtype">int</span> rv;</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Erasing stored params at %p...&quot;</span>, infoConnectParams);</div>
-<div class="line">  rv = <a name="a12"></a><a class="code" href="flash_8h.html#a94c76cef12d30a8fb476cb7664338285">iBSP430flashEraseSegment_ni</a>(infoConnectParams);</div>
+<div class="line">  rv = <a name="a17"></a><a class="code" href="flash_8h.html#a94c76cef12d30a8fb476cb7664338285">iBSP430flashEraseSegment_ni</a>(infoConnectParams);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%d\n&quot;</span>, rv);</div>
 <div class="line">  <span class="keywordflow">return</span> rv;</div>
 <div class="line">}</div>
@@ -1126,14 +1477,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
 <div class="line">cmd_info_erase (<span class="keyword">const</span> <span class="keywordtype">char</span> * argstr)</div>
 <div class="line">{</div>
-<div class="line">  <a name="a13"></a><a class="code" href="core_8h.html#aa45390f99fe6b993083301d3613de4a3">BSP430_CORE_SAVED_INTERRUPT_STATE</a>(istate);</div>
+<div class="line">  <a name="a18"></a><a class="code" href="core_8h.html#aa45390f99fe6b993083301d3613de4a3">BSP430_CORE_SAVED_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">  <span class="keywordtype">int</span> rv;</div>
 <div class="line"></div>
-<div class="line">  <a name="a14"></a><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line">  <a name="a19"></a><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
 <div class="line">  <span class="keywordflow">do</span> {</div>
 <div class="line">    rv = cmd_info_erase_ni();</div>
 <div class="line">  } <span class="keywordflow">while</span> (0);</div>
-<div class="line">  <a name="a15"></a><a class="code" href="core_8h.html#ab2a0adfa112adbcaf1f834165fee15d3">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line">  <a name="a20"></a><a class="code" href="core_8h.html#ab2a0adfa112adbcaf1f834165fee15d3">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">  <span class="keywordflow">return</span> rv;</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -1149,7 +1500,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordflow">if</span> (0 == rv) {</div>
 <div class="line">      connectParams.magic = MAGIC_CONNECT_PARAMS;</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Copying current configuration...&quot;</span>);</div>
-<div class="line">      rv = <a name="a16"></a><a class="code" href="flash_8h.html#ae8561ad078b62fd3ceadabbe69421d5a">iBSP430flashWriteData_ni</a>(infoConnectParams, &amp;connectParams, <span class="keyword">sizeof</span>(connectParams));</div>
+<div class="line">      rv = <a name="a21"></a><a class="code" href="flash_8h.html#ae8561ad078b62fd3ceadabbe69421d5a">iBSP430flashWriteData_ni</a>(infoConnectParams, &amp;connectParams, <span class="keyword">sizeof</span>(connectParams));</div>
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%d\n&quot;</span>, rv);</div>
 <div class="line">    }</div>
 <div class="line">  } <span class="keywordflow">while</span> (0);</div>
@@ -1241,12 +1592,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">{</div>
 <div class="line">  <a class="code" href="core_8h.html#aa45390f99fe6b993083301d3613de4a3">BSP430_CORE_SAVED_INTERRUPT_STATE</a>(istate);</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> now_utt;</div>
-<div class="line">  <span class="keywordtype">char</span> timebuf[<a name="a17"></a><a class="code" href="uptime_8h.html#ae47d677ac9443e2e26608ef5278f1a6d">BSP430_UPTIME_AS_TEXT_LENGTH</a>];</div>
+<div class="line">  <span class="keywordtype">char</span> timebuf[<a name="a22"></a><a class="code" href="uptime_8h.html#ae47d677ac9443e2e26608ef5278f1a6d">BSP430_UPTIME_AS_TEXT_LENGTH</a>];</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
 <div class="line">  now_utt = <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
 <div class="line">  <a class="code" href="core_8h.html#ab2a0adfa112adbcaf1f834165fee15d3">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Time: %s\n&quot;</span>, <a name="a18"></a><a class="code" href="uptime_8h.html#a1cb1310c769f028347010502456fb918">xBSP430uptimeAsText</a>(now_utt, timebuf));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Time: %s\n&quot;</span>, <a name="a23"></a><a class="code" href="uptime_8h.html#a1cb1310c769f028347010502456fb918">xBSP430uptimeAsText</a>(now_utt, timebuf));</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Last Event %lx: %s\n&quot;</span>, lastEventType, <a class="code" href="uptime_8h.html#a1cb1310c769f028347010502456fb918">xBSP430uptimeAsText</a>(lastCallback_utt, timebuf));</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Last KA: %s\n&quot;</span>, <a class="code" href="uptime_8h.html#a1cb1310c769f028347010502456fb918">xBSP430uptimeAsText</a>(lastKeepAlive_utt, timebuf));</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
@@ -1261,7 +1612,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#define LAST_COMMAND &amp;dcmd_uptime</span></div>
 <div class="line"></div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
-<div class="line">cmd_test (<a name="_a19"></a><a class="code" href="structsBSP430cliCommandLink.html">sBSP430cliCommandLink</a> * chain,</div>
+<div class="line">cmd_test (<a name="_a24"></a><a class="code" href="structsBSP430cliCommandLink.html">sBSP430cliCommandLink</a> * chain,</div>
 <div class="line">          <span class="keywordtype">void</span> * param,</div>
 <div class="line">          <span class="keyword">const</span> <span class="keywordtype">char</span> * command,</div>
 <div class="line">          <span class="keywordtype">size_t</span> command_len)</div>
@@ -1283,7 +1634,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">          <span class="keyword">const</span> <span class="keywordtype">char</span> * command,</div>
 <div class="line">          <span class="keywordtype">size_t</span> command_len)</div>
 <div class="line">{</div>
-<div class="line">  <a name="a20"></a><a class="code" href="group__grp__utility__cli__cli.html#ga2c3a36a00ea6f676cf2006859364d45a">vBSP430cliConsoleDisplayHelp</a>(chain-&gt;<a name="a21"></a><a class="code" href="structsBSP430cliCommandLink.html#ad4701a7a6b809d746683cb5b0a6f2018">cmd</a>);</div>
+<div class="line">  <a name="a25"></a><a class="code" href="group__grp__utility__cli__cli.html#ga2c3a36a00ea6f676cf2006859364d45a">vBSP430cliConsoleDisplayHelp</a>(chain-&gt;<a name="a26"></a><a class="code" href="structsBSP430cliCommandLink.html#ad4701a7a6b809d746683cb5b0a6f2018">cmd</a>);</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="line"><span class="keyword">static</span> <a class="code" href="structsBSP430cliCommand.html">sBSP430cliCommand</a> dcmd_help = {</div>
@@ -1310,14 +1661,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> sysrstiv;</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* Record all the reset causes */</span></div>
-<div class="line">    <span class="keywordflow">while</span> (0 != ((sysrstiv = <a name="a22"></a><a class="code" href="sys_8h.html#a49bc446977f788990eaf4de3e3b3d234">uiBSP430sysSYSRSTGenerator_ni</a>(&amp;reset_flags)))) {</div>
+<div class="line">    <span class="keywordflow">while</span> (0 != ((sysrstiv = <a name="a27"></a><a class="code" href="sys_8h.html#a49bc446977f788990eaf4de3e3b3d234">uiBSP430sysSYSRSTGenerator_ni</a>(&amp;reset_flags)))) {</div>
 <div class="line">      reset_causes |= 1UL &lt;&lt; (sysrstiv / 2);</div>
 <div class="line">    }</div>
 <div class="line"><span class="preprocessor">#ifdef BSP430_PMM_ENTER_LPMXp5_NI</span></div>
 <div class="line">    <span class="comment">/* If we woke from LPMx.5, we need to clear the lock in PM5CTL0.</span></div>
 <div class="line"><span class="comment">     * We&#39;ll do it early, since we&#39;re not really interested in</span></div>
 <div class="line"><span class="comment">     * retaining the current IFG settings. */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a23"></a><a class="code" href="sys_8h.html#ae4f97a3ceec5eb5a0c3d5f523a1f303a">BSP430_SYS_FLAG_SYSRST_LPM5WU</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a28"></a><a class="code" href="sys_8h.html#ae4f97a3ceec5eb5a0c3d5f523a1f303a">BSP430_SYS_FLAG_SYSRST_LPM5WU</a>) {</div>
 <div class="line">      PMMCTL0_H = PMMPW_H;</div>
 <div class="line">      PM5CTL0 = 0;</div>
 <div class="line">      PMMCTL0_H = 0;</div>
@@ -1326,10 +1677,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  }</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_SYS */</span><span class="preprocessor"></span></div>
 <div class="line"></div>
-<div class="line">  <a name="a24"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
-<div class="line">  (void)<a name="a25"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
-<div class="line">  <a name="a26"></a><a class="code" href="cli_8h.html#a0a5b3cee7e2d9002d5d301b36c814d55">vBSP430cliSetDiagnosticFunction</a>(<a name="a27"></a><a class="code" href="group__grp__utility__cli__cli.html#ga30922f40d6b2702628bb88d9e0069caf">iBSP430cliConsoleDiagnostic</a>);</div>
-<div class="line">  <a name="a28"></a><a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(<a name="a29"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
+<div class="line">  <a name="a29"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
+<div class="line">  (void)<a name="a30"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
+<div class="line">  <a name="a31"></a><a class="code" href="cli_8h.html#a0a5b3cee7e2d9002d5d301b36c814d55">vBSP430cliSetDiagnosticFunction</a>(<a name="a32"></a><a class="code" href="group__grp__utility__cli__cli.html#ga30922f40d6b2702628bb88d9e0069caf">iBSP430cliConsoleDiagnostic</a>);</div>
+<div class="line">  <a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(<a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\ncc3000 &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#if (BSP430_MODULE_SYS - 0)</span></div>
@@ -1338,24 +1689,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordtype">int</span> bit = 0;</div>
 <div class="line">    <span class="keywordflow">while</span> (bit &lt; (8 * <span class="keyword">sizeof</span>(reset_causes))) {</div>
 <div class="line">      <span class="keywordflow">if</span> (reset_causes &amp; (1UL &lt;&lt; bit)) {</div>
-<div class="line">        <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\t%s\n&quot;</span>, <a name="a30"></a><a class="code" href="sys_8h.html#a2012d634fbc0045a010a2158b37248f2">xBSP430sysSYSRSTIVDescription</a>(2*bit));</div>
+<div class="line">        <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\t%s\n&quot;</span>, <a name="a33"></a><a class="code" href="sys_8h.html#a2012d634fbc0045a010a2158b37248f2">xBSP430sysSYSRSTIVDescription</a>(2*bit));</div>
 <div class="line">      }</div>
 <div class="line">      ++bit;</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line"></div>
-<div class="line">  <a name="a31"></a><a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;System reset included:&quot;</span>);</div>
+<div class="line">  <a name="a34"></a><a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;System reset included:&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (reset_flags) {</div>
-<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a32"></a><a class="code" href="sys_8h.html#a790d901e62558a64459412e0459d8d7a">BSP430_SYS_FLAG_SYSRST_BOR</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a35"></a><a class="code" href="sys_8h.html#a790d901e62558a64459412e0459d8d7a">BSP430_SYS_FLAG_SYSRST_BOR</a>) {</div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; BOR&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a class="code" href="sys_8h.html#ae4f97a3ceec5eb5a0c3d5f523a1f303a">BSP430_SYS_FLAG_SYSRST_LPM5WU</a>) {</div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; LPM5WU&quot;</span>);</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a33"></a><a class="code" href="sys_8h.html#ad8a250b767d995a059bcf3b2d2af5d12">BSP430_SYS_FLAG_SYSRST_POR</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a36"></a><a class="code" href="sys_8h.html#ad8a250b767d995a059bcf3b2d2af5d12">BSP430_SYS_FLAG_SYSRST_POR</a>) {</div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; POR&quot;</span>);</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a34"></a><a class="code" href="sys_8h.html#a43c4718bdc338c7f4bcfc66726b3fe86">BSP430_SYS_FLAG_SYSRST_PUC</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (reset_flags &amp; <a name="a37"></a><a class="code" href="sys_8h.html#a43c4718bdc338c7f4bcfc66726b3fe86">BSP430_SYS_FLAG_SYSRST_PUC</a>) {</div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; PUC&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
@@ -1365,22 +1716,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_SYS */</span><span class="preprocessor"></span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#ifdef BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE</span></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;PWR_EN at %s.%u\n&quot;</span>, <a name="a35"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE), <a name="a36"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(BSP430_RF_CC3000_PWR_EN_PORT_BIT));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;PWR_EN at %s.%u\n&quot;</span>, <a name="a38"></a><a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE), <a name="a39"></a><a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(BSP430_RF_CC3000_PWR_EN_PORT_BIT));</div>
 <div class="line"><span class="preprocessor">#else </span><span class="comment">/* BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE */</span><span class="preprocessor"></span></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;No PWR_EN control.\n&quot;</span>);</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE */</span><span class="preprocessor"></span></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI_IRQ HAL at %s.%u\n&quot;</span>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(BSP430_RF_CC3000_IRQn_PORT_BIT));</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CSn HAL at %s.%u\n&quot;</span>, <a class="code" href="port_8h.html#a78a791b05b428f3aa2bf5ff09e907200">xBSP430portName</a>(BSP430_RF_CC3000_CSn_PORT_PERIPH_HANDLE), <a class="code" href="port_8h.html#aa9b72a778f0f690c08bba27871c4d374">iBSP430portBitPosition</a>(BSP430_RF_CC3000_CSn_PORT_BIT));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI is %s\n&quot;</span>, <a name="a37"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(BSP430_RF_CC3000_SPI_PERIPH_HANDLE));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI is %s\n&quot;</span>, <a name="a40"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(BSP430_RF_CC3000_SPI_PERIPH_HANDLE));</div>
 <div class="line"><span class="preprocessor">#if BSP430_PLATFORM_PERIPHERAL_HELP</span></div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI Pins: %s\n&quot;</span>, <a name="a38"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(BSP430_RF_CC3000_SPI_PERIPH_HANDLE, <a name="a39"></a><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>));</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI Pins: %s\n&quot;</span>, <a name="a41"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(BSP430_RF_CC3000_SPI_PERIPH_HANDLE, <a name="a42"></a><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>));</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_PERIPHERAL_HELP */</span><span class="preprocessor"></span></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;CC3000 host driver: %u\n&quot;</span>, DRIVER_VERSION_NUMBER);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(__DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Initialization can be done with interrupts disabled, since the</span></div>
-<div class="line"><span class="comment">   * function does nothing but store callbacks. */</span></div>
-<div class="line">  rv = <a name="a40"></a><a class="code" href="cc3000spi_8h.html#a18c48988f94c6984548d28e802377344">iBSP430cc3000spiInitialize</a>(wlan_cb, NULL, NULL, NULL);</div>
+<div class="line"><span class="comment">   * function does nothing but store callbacks.  We use the same</span></div>
+<div class="line"><span class="comment">   * callback for all three update capabilities. */</span></div>
+<div class="line">  rv = <a name="a43"></a><a class="code" href="cc3000spi_8h.html#a18c48988f94c6984548d28e802377344">iBSP430cc3000spiInitialize</a>(wlan_cb, NULL, NULL, NULL);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;%s Initialize returned %d\n&quot;</span>, <a class="code" href="uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1">xBSP430uptimeAsText_ni</a>(<a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>()), rv);</div>
 <div class="line">  <span class="keywordflow">if</span> (0 &gt; rv) {</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Aborting due to failure to initialized\n&quot;</span>);</div>
@@ -1389,12 +1741,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"></div>
 <div class="line">  commandSet = LAST_COMMAND;</div>
 <div class="line">  command = NULL;</div>
-<div class="line">  flags = <a name="a41"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3">eBSP430cliConsole_REPAINT</a>;</div>
+<div class="line">  flags = <a name="a44"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deaf4a31c8e1956488e1ff37d22d55936b3">eBSP430cliConsole_REPAINT</a>;</div>
 <div class="line"></div>
-<div class="line">  <a name="a42"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line">  <a name="a45"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">/* wlan_start() MUST be invoked with interrupts enabled. */</span></div>
+<div class="line">  <span class="comment">/* wlan_start() MUST be invoked with interrupts enabled.  Pass 0 for</span></div>
+<div class="line"><span class="comment">   * a normal startup.  If the firmware is suspect, you need to pass 2</span></div>
+<div class="line"><span class="comment">   * which will cause the NVMEM firmware sections to be ignored. */</span></div>
+<div class="line"><span class="preprocessor">#if (BYPASS_SP_LOAD - 0)</span></div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Bypassing service packs\n&quot;</span>);</div>
+<div class="line">  wlan_start(2);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
 <div class="line">  wlan_start(0);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nAnd wlan has been started.\n&quot;</span>);</div>
 <div class="line">  (void)displayMemory;</div>
@@ -1406,14 +1765,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a43"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deafdfdebe7b8568728238e4069ae19cd09">eBSP430cliConsole_DO_COMPLETION</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a46"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69deafdfdebe7b8568728238e4069ae19cd09">eBSP430cliConsole_DO_COMPLETION</a>) {</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_DO_COMPLETION;</div>
-<div class="line">      flags |= <a name="a44"></a><a class="code" href="group__grp__utility__cli__completion.html#ga5086d946e412fa4e9928819d664fc2cc">iBSP430cliConsoleBufferCompletion</a>(commandSet, &amp;command);</div>
+<div class="line">      flags |= <a name="a47"></a><a class="code" href="group__grp__utility__cli__completion.html#ga5086d946e412fa4e9928819d664fc2cc">iBSP430cliConsoleBufferCompletion</a>(commandSet, &amp;command);</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a45"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94">eBSP430cliConsole_READY</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a48"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea09d4c7792c3db363181260eebd086d94">eBSP430cliConsole_READY</a>) {</div>
 <div class="line">      <span class="keywordtype">int</span> rv;</div>
 <div class="line"></div>
-<div class="line">      rv = <a name="a46"></a><a class="code" href="cli_8h.html#adcdb159a40c5cb6737cf97b497b58a55">iBSP430cliExecuteCommand</a>(commandSet, 0, command);</div>
+<div class="line">      rv = <a name="a49"></a><a class="code" href="cli_8h.html#adcdb159a40c5cb6737cf97b497b58a55">iBSP430cliExecuteCommand</a>(commandSet, 0, command);</div>
 <div class="line">      <span class="keywordflow">if</span> (0 != rv) {</div>
 <div class="line">        <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Command execution returned %d\n&quot;</span>, rv);</div>
 <div class="line">      }</div>
@@ -1427,38 +1786,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">      <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\r&gt; %s&quot;</span>, command ? command : <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT;</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a47"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b">eBSP430cliConsole_REPAINT_BEL</a>) {</div>
+<div class="line">    <span class="keywordflow">if</span> (flags &amp; <a name="a50"></a><a class="code" href="group__grp__utility__cli__cli.html#ggabf197215e696298dd3a9690ef10a69dea1af184228ab718533ff1ef6a1b4f5a8b">eBSP430cliConsole_REPAINT_BEL</a>) {</div>
 <div class="line">      <a class="code" href="console_8h.html#aa0572fcebf5d24edff00fc60c4563681">cputchar</a>(<span class="charliteral">&#39;\a&#39;</span>);</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_REPAINT_BEL;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">if</span> (flags &amp; eBSP430cliConsole_READY) {</div>
 <div class="line">      <span class="comment">/* Clear the command we just completed */</span></div>
-<div class="line">      <a name="a48"></a><a class="code" href="group__grp__utility__cli__cli.html#ga15ac053830a35c1b1410fda48c0e7e3a">vBSP430cliConsoleBufferClear</a>();</div>
+<div class="line">      <a name="a51"></a><a class="code" href="group__grp__utility__cli__cli.html#ga15ac053830a35c1b1410fda48c0e7e3a">vBSP430cliConsoleBufferClear</a>();</div>
 <div class="line">      flags &amp;= ~eBSP430cliConsole_READY;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">do</span> {</div>
 <div class="line">      <span class="comment">/* Discard any pending escape sequence */</span></div>
-<div class="line">      flags = <a name="a49"></a><a class="code" href="cli_8h.html#ab53c18df933fd6696f8d3e92795295f8">iBSP430cliConsoleBufferConsumeEscape</a>(flags);</div>
+<div class="line">      flags = <a name="a52"></a><a class="code" href="cli_8h.html#ab53c18df933fd6696f8d3e92795295f8">iBSP430cliConsoleBufferConsumeEscape</a>(flags);</div>
 <div class="line">      <span class="comment">/* If no operations are pending, see if there is pending input. */</span></div>
 <div class="line">      <span class="keywordflow">if</span> (0 == flags) {</div>
-<div class="line">        flags = <a name="a50"></a><a class="code" href="group__grp__utility__cli__cli.html#gaf192635722fef70abb4583a1c52a4e7a">iBSP430cliConsoleBufferProcessInput</a>();</div>
+<div class="line">        flags = <a name="a53"></a><a class="code" href="group__grp__utility__cli__cli.html#gaf192635722fef70abb4583a1c52a4e7a">iBSP430cliConsoleBufferProcessInput</a>();</div>
 <div class="line">      }</div>
 <div class="line">      <span class="comment">/* If still no operations pending wait for something to</span></div>
 <div class="line"><span class="comment">       * happen. */</span></div>
 <div class="line">      <span class="keywordflow">if</span> (0 == flags) {</div>
-<div class="line">        <a name="a51"></a><a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<a name="a52"></a><a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a>);</div>
+<div class="line">        <a name="a54"></a><a class="code" href="core_8h.html#a1b153003ca93d41bd574dcd4790feb6d">BSP430_CORE_LPM_ENTER</a>(<a name="a55"></a><a class="code" href="msp430_8h.html#a8af1e5b3633693d9439d284100183004">LPM2_bits</a>);</div>
 <div class="line">      }</div>
 <div class="line">    } <span class="keywordflow">while</span> (! flags);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">/* Got something to do; get the command contents in place so</span></div>
 <div class="line"><span class="comment">     * we can update the screen. */</span></div>
-<div class="line">    command = <a name="a53"></a><a class="code" href="group__grp__utility__cli__cli.html#ga634626363e043b2a1efa7fb7b657ebe4">xBSP430cliConsoleBuffer</a>();</div>
+<div class="line">    command = <a name="a56"></a><a class="code" href="group__grp__utility__cli__cli.html#ga634626363e043b2a1efa7fb7b657ebe4">xBSP430cliConsoleBuffer</a>();</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

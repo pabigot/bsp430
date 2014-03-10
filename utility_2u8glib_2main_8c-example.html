@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -85,6 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="platform_8h.html">bsp430/platform.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="clock_8h.html">bsp430/clock.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="led_8h.html">bsp430/utility/led.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="uptime_8h.html">bsp430/utility/uptime.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="console_8h.html">bsp430/utility/console.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="serial_8h.html">bsp430/serial.h</a>&gt;</span></div>
@@ -92,41 +93,132 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="u8glib_8h.html">bsp430/utility/u8glib.h</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
 <div class="line"></div>
+<div class="line"><span class="keyword">static</span> u8g_t u8g_data;</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#if (BSP430_U8GLIB_REFRESH_INTERVAL_MS - 0)</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#ifndef REFRESH_ALARM_CCIDX</span></div>
+<div class="line"><span class="preprocessor">#define REFRESH_ALARM_CCIDX 1</span></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* REFRESH_ALARM_CCIDX */</span><span class="preprocessor"></span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>sRefreshTimerState {</div>
+<div class="line">  <a name="_a0"></a><a class="code" href="structsBSP430timerAlarm.html">sBSP430timerAlarm</a> alarm;</div>
+<div class="line">  <a class="code" href="structsBSP430timerAlarm.html">hBSP430timerAlarm</a> active_alarm;</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> interval_tck;</div>
+<div class="line">  u8g_t * u8g;</div>
+<div class="line">} sRefreshTimerState;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> sRefreshTimerState refresh_state;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">refresh_cb_ni (<a class="code" href="structsBSP430timerAlarm.html">hBSP430timerAlarm</a> alarm)</div>
+<div class="line">{</div>
+<div class="line">  sRefreshTimerState * rtsp = (sRefreshTimerState *)alarm;</div>
+<div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> setting_tck;</div>
+<div class="line">  <span class="keywordtype">int</span> rc;</div>
+<div class="line">  <span class="keywordtype">int</span> rv;</div>
+<div class="line"></div>
+<div class="line">  <a name="a1"></a><a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a name="a2"></a><a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, -1);</div>
+<div class="line">  rv = <a name="a3"></a><a class="code" href="u8glib_8h.html#aa1a780608c4dda916a92fb676a9093a3">iBSP430u8gRefresh</a>(rtsp-&gt;u8g);</div>
+<div class="line">  setting_tck = alarm-&gt;<a name="a4"></a><a class="code" href="structsBSP430timerAlarm.html#aa42f23d79c51dc804e7e00a940b27277">setting_tck</a>;</div>
+<div class="line">  <span class="keywordflow">do</span> {</div>
+<div class="line">    setting_tck += rtsp-&gt;interval_tck;</div>
+<div class="line">    rc = <a name="a5"></a><a class="code" href="group__grp__timer__alarm.html#ga691c60553180266436fbea9a9a8bfed7">iBSP430timerAlarmSet_ni</a>(alarm, setting_tck);</div>
+<div class="line">  } <span class="keywordflow">while</span> (0 &lt; rc);</div>
+<div class="line">  <span class="keywordflow">return</span> rv;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">enableRefreshTimer ()</div>
+<div class="line">{</div>
+<div class="line">  <a name="a6"></a><a class="code" href="core_8h.html#aa45390f99fe6b993083301d3613de4a3">BSP430_CORE_SAVED_INTERRUPT_STATE</a>(istate);</div>
+<div class="line">  <a class="code" href="structsBSP430timerAlarm.html">hBSP430timerAlarm</a> ah;</div>
+<div class="line">  <span class="keywordtype">int</span> rc = 0;</div>
+<div class="line"></div>
+<div class="line">  refresh_state.interval_tck = <a name="a7"></a><a class="code" href="uptime_8h.html#a463e61b338971a18298935cfca570eb4">BSP430_UPTIME_MS_TO_UTT</a>(<a name="a8"></a><a class="code" href="u8glib_8h.html#a069c035d7bb5299cc7a8479e986adabf">BSP430_U8GLIB_REFRESH_INTERVAL_MS</a>);</div>
+<div class="line">  <span class="keywordflow">if</span> (0 == refresh_state.interval_tck) {</div>
+<div class="line">    <a name="a9"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Refresh timer defined but empty interval?&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span> -1;</div>
+<div class="line">  }</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Enable refresh every %lu ticks\n&quot;</span>, refresh_state.interval_tck);</div>
+<div class="line">  refresh_state.u8g = &amp;u8g_data;</div>
+<div class="line">  ah = <a name="a10"></a><a class="code" href="group__grp__timer__alarm.html#ga006a132cabb227524de5203697814c12">hBSP430timerAlarmInitialize</a>(&amp;refresh_state.alarm,</div>
+<div class="line">                                   <a name="a11"></a><a class="code" href="uptime_8h.html#a6d4b3ca225b4057be8a5c6f05de6eb7e">BSP430_UPTIME_TIMER_PERIPH_HANDLE</a>,</div>
+<div class="line">                                   REFRESH_ALARM_CCIDX,</div>
+<div class="line">                                   refresh_cb_ni);</div>
+<div class="line">  <span class="keywordflow">if</span> (ah) {</div>
+<div class="line">    <a name="a12"></a><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line">    <span class="keywordflow">do</span> {</div>
+<div class="line">      rc = <a name="a13"></a><a class="code" href="group__grp__timer__alarm.html#gaf78fc60de828bc03bb7c93624f384ef1">iBSP430timerAlarmSetEnabled_ni</a>(ah, 1);</div>
+<div class="line">      <span class="keywordflow">if</span> (0 == rc) {</div>
+<div class="line">        rc = <a class="code" href="group__grp__timer__alarm.html#ga691c60553180266436fbea9a9a8bfed7">iBSP430timerAlarmSet_ni</a>(ah, <a name="a14"></a><a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>() + refresh_state.interval_tck);</div>
+<div class="line">      }</div>
+<div class="line">    } <span class="keywordflow">while</span> (0);</div>
+<div class="line">    <a name="a15"></a><a class="code" href="core_8h.html#ab2a0adfa112adbcaf1f834165fee15d3">BSP430_CORE_RESTORE_INTERRUPT_STATE</a>(istate);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">if</span> (0 != rc) {</div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Failed to initialize alarm\n&quot;</span>);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> rc;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#else </span><span class="comment">/* BSP430_U8GLIB_REFRESH_INTERVAL_MS */</span><span class="preprocessor"></span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span></div>
+<div class="line">enableRefreshTimer ()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;No refresh timer required\n&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_U8GLIB_REFRESH_INTERVAL_MS */</span><span class="preprocessor"></span></div>
+<div class="line"></div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> main ()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordtype">int</span> w;</div>
 <div class="line">  <span class="keywordtype">int</span> h;</div>
-<div class="line">  u8g_t u8g;</div>
 <div class="line">  <span class="keywordtype">int</span> rc;</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> t0;</div>
 <div class="line">  <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> t1;</div>
-<div class="line">  <a name="_a0"></a><a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> spi;</div>
+<div class="line">  <a name="_a16"></a><a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> spi;</div>
+<div class="line">  u8g_t * u8g = &amp;u8g_data;</div>
 <div class="line"></div>
-<div class="line">  <a name="a1"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
-<div class="line">  (void)<a name="a2"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
+<div class="line">  <a name="a17"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
+<div class="line">  (void)<a name="a18"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
+<div class="line">  <a name="a19"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line"></div>
-<div class="line">  <a name="a3"></a><a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nBuild &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nBuild &quot;</span> __DATE__ <span class="stringliteral">&quot; &quot;</span> __TIME__ <span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"></div>
-<div class="line">  rc = u8g_Init(&amp;u8g, &amp;<a name="a4"></a><a class="code" href="u8glib_8h.html#ab5d211ea5b3e864d8919f7cbd48e16c4">xBSP430u8gDevice</a>);</div>
+<div class="line">  rc = u8g_Init(u8g, &amp;<a name="a20"></a><a class="code" href="u8glib_8h.html#ab5d211ea5b3e864d8919f7cbd48e16c4">xBSP430u8gDevice</a>);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;U8G device initialization got %d\n&quot;</span>, rc);</div>
-<div class="line">  spi = <a name="a5"></a><a class="code" href="u8glib_8h.html#a1b4b7f3d0fb745d58d02179d91c8e408">hBSP430u8gSPI</a>();</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI is %s: %s\n&quot;</span>, <a name="a6"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(<a name="a7"></a><a class="code" href="periph_8h.html#ac66bae341c44d62f5c8fc6086e4abde7">xBSP430periphFromHPL</a>(spi-&gt;<a name="a8"></a><a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a9"></a><a class="code" href="structsBSP430halSERIAL.html#a916b10c7934fe6c5f64a5433715aa4de">any</a>)),</div>
-<div class="line">          <a name="a10"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(<a class="code" href="periph_8h.html#ac66bae341c44d62f5c8fc6086e4abde7">xBSP430periphFromHPL</a>(spi-&gt;<a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a class="code" href="structsBSP430halSERIAL.html#a916b10c7934fe6c5f64a5433715aa4de">any</a>), <a name="a11"></a><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>));</div>
-<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Device size %u x %u, mode %d\n&quot;</span>, u8g_GetWidth(&amp;u8g), u8g_GetHeight(&amp;u8g), u8g_GetMode(&amp;u8g));</div>
+<div class="line">  spi = <a name="a21"></a><a class="code" href="u8glib_8h.html#a1b4b7f3d0fb745d58d02179d91c8e408">hBSP430u8gSPI</a>();</div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;SPI is %s: %s\n&quot;</span>, <a name="a22"></a><a class="code" href="serial_8h.html#a7f2e6f39abd1faca343663917e34840a">xBSP430serialName</a>(<a name="a23"></a><a class="code" href="periph_8h.html#ac66bae341c44d62f5c8fc6086e4abde7">xBSP430periphFromHPL</a>(spi-&gt;<a name="a24"></a><a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a25"></a><a class="code" href="structsBSP430halSERIAL.html#a916b10c7934fe6c5f64a5433715aa4de">any</a>)),</div>
+<div class="line">          <a name="a26"></a><a class="code" href="platform_8h.html#ad5df0a450196592bc395c5efe89a6fb3">xBSP430platformPeripheralHelp</a>(<a class="code" href="periph_8h.html#ac66bae341c44d62f5c8fc6086e4abde7">xBSP430periphFromHPL</a>(spi-&gt;<a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a class="code" href="structsBSP430halSERIAL.html#a916b10c7934fe6c5f64a5433715aa4de">any</a>), <a name="a27"></a><a class="code" href="periph_8h.html#a5a28880814f93f755ea189df4e2d1900">BSP430_PERIPHCFG_SERIAL_SPI3</a>));</div>
+<div class="line"></div>
+<div class="line">  <span class="keywordflow">if</span> (0 != enableRefreshTimer()) {</div>
+<div class="line">    <span class="comment">/* Failure to configure the refresh timer is a fatal error, on the</span></div>
+<div class="line"><span class="comment">     * theory that it could result in damage due to DC bias */</span></div>
+<div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;ERROR: Unable to configure refresh timer\n&quot;</span>);</div>
+<div class="line">    <span class="keywordflow">return</span>;</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Device size %u x %u, mode %d\n&quot;</span>, u8g_GetWidth(u8g), u8g_GetHeight(u8g), u8g_GetMode(u8g));</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Use maximum color value */</span></div>
-<div class="line">  u8g_SetColorIndex(&amp;u8g, (1 &lt;&lt; u8g_GetMode(&amp;u8g)) - 1);</div>
-<div class="line">  u8g_SetFont(&amp;u8g, u8g_font_10x20);</div>
-<div class="line">  w = u8g_GetFontBBXWidth(&amp;u8g);</div>
-<div class="line">  h = u8g_GetFontBBXHeight(&amp;u8g);</div>
+<div class="line">  u8g_SetColorIndex(u8g, (1 &lt;&lt; u8g_GetMode(u8g)) - 1);</div>
+<div class="line">  u8g_SetFont(u8g, u8g_font_10x20);</div>
+<div class="line">  w = u8g_GetFontBBXWidth(u8g);</div>
+<div class="line">  h = u8g_GetFontBBXHeight(u8g);</div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Font cell %u x %u\n&quot;</span>, w, h);</div>
 <div class="line"></div>
-<div class="line">  t0 = <a name="a12"></a><a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
-<div class="line">  u8g_FirstPage(&amp;u8g);</div>
+<div class="line">  t0 = <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
+<div class="line">  u8g_FirstPage(u8g);</div>
 <div class="line">  <span class="keywordflow">do</span> {</div>
-<div class="line">    u8g_DrawStr(&amp;u8g, 0, h, <span class="stringliteral">&quot;Hello World!&quot;</span>);</div>
-<div class="line">    u8g_DrawStr(&amp;u8g, 0, 3*h, <span class="stringliteral">&quot;(Hi there!)&quot;</span>);</div>
-<div class="line">  } <span class="keywordflow">while</span> (u8g_NextPage(&amp;u8g));</div>
+<div class="line">    u8g_DrawLine(u8g, 0, 0, u8g_GetWidth(u8g), u8g_GetHeight(u8g));</div>
+<div class="line">    u8g_DrawStr(u8g, 0, h, <span class="stringliteral">&quot;Hello World!&quot;</span>);</div>
+<div class="line">    u8g_DrawStr(u8g, 0, 3*h, <span class="stringliteral">&quot;(Hi there!)&quot;</span>);</div>
+<div class="line">  } <span class="keywordflow">while</span> (u8g_NextPage(u8g));</div>
 <div class="line">  t1 = <a class="code" href="uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93">ulBSP430uptime_ni</a>();</div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Write screen took %lu ticks\n&quot;</span>, t1-t0);</div>
@@ -136,31 +228,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> contrast;</div>
 <div class="line">    <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Cycling through contrast levels\n&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">for</span> (contrast = 0; contrast &lt; 256; contrast += 16) {</div>
-<div class="line">      u8g_SetContrast(&amp;u8g, contrast);</div>
-<div class="line">      <a name="a13"></a><a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(<a name="a14"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
+<div class="line">      u8g_SetContrast(u8g, contrast);</div>
+<div class="line">      <a name="a28"></a><a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(<a name="a29"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">/* Don&#39;t muck with contrast unless you have to.  Legibility is</span></div>
 <div class="line"><span class="comment">     * different on different LCDs; TrxEB works with 22/64,</span></div>
 <div class="line"><span class="comment">     * EXP430F5529 works at 8/64, EXP430F5438 works at 0x58/128.</span></div>
 <div class="line"><span class="comment">     * None is legible at another&#39;s setting. */</span></div>
-<div class="line">    u8g_SetContrast(&amp;u8g, 22 &lt;&lt; 2);</div>
+<div class="line">    u8g_SetContrast(u8g, 22 &lt;&lt; 2);</div>
 <div class="line">  }</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;Toggling sleep mode\n&quot;</span>);</div>
 <div class="line">  <span class="keywordflow">while</span> (1) {</div>
-<div class="line">    u8g_SleepOn(&amp;u8g);</div>
-<div class="line">    <a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(2 * <a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
-<div class="line">    u8g_SleepOff(&amp;u8g);</div>
+<div class="line">    u8g_SleepOff(u8g);</div>
+<div class="line">    <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a name="a30"></a><a class="code" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>, 1);</div>
 <div class="line">    <a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(1 * <a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
+<div class="line">    <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>, 0);</div>
+<div class="line">    u8g_SleepOn(u8g);</div>
+<div class="line">    <a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(2 * <a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a>);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="line"></div>
-<div class="line"></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

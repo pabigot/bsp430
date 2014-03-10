@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -109,21 +109,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">  <a name="a1"></a><a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Turn on the first LED */</span></div>
-<div class="line">  <a name="a2"></a><a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 1);</div>
+<div class="line">  <a name="a2"></a><a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a name="a3"></a><a class="code" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>, 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Configure the console to use the default UART handle */</span></div>
-<div class="line">  rv = <a name="a3"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
+<div class="line">  rv = <a name="a4"></a><a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
 <div class="line">  <span class="comment">/* assert(0 == rv); */</span></div>
 <div class="line"><span class="preprocessor">#if (APP_VERBOSE - 0)</span></div>
-<div class="line">  console = <a name="a4"></a><a class="code" href="console_8h.html#a641b6419ca463bcb87d4ec1645928c0b">hBSP430console</a>();</div>
+<div class="line">  console = <a name="a5"></a><a class="code" href="console_8h.html#a641b6419ca463bcb87d4ec1645928c0b">hBSP430console</a>();</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_VERBOSE */</span><span class="preprocessor"></span></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Indicate we made it this far. */</span></div>
-<div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(1, 1);</div>
+<div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a name="a6"></a><a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (0 &gt; rv) {</div>
 <div class="line">    <span class="comment">/* Failed to configure the UART HAL */</span></div>
-<div class="line">    <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 0);</div>
+<div class="line">    <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, 0);</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> counter = 0;</div>
 <div class="line"></div>
@@ -134,50 +134,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="comment">     * present. */</span></div>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
 <div class="line">      <span class="keywordtype">int</span> rc;</div>
-<div class="line">      <a name="a5"></a><a class="code" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR</a>();</div>
+<div class="line">      <a name="a7"></a><a class="code" href="core_8h.html#ae7df9374f27e94580ce596ad98949dcd">BSP430_CORE_WATCHDOG_CLEAR</a>();</div>
 <div class="line"><span class="preprocessor">#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)</span></div>
 <div class="line">      <span class="comment">/* If we&#39;re using interrupt-driven transmission or reception, we&#39;d</span></div>
 <div class="line"><span class="comment">       * better enable interrupts. */</span></div>
-<div class="line">      <a name="a6"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
+<div class="line">      <a name="a8"></a><a class="code" href="core_8h.html#a954f39fe5652611f5a20f74289b0cfbf">BSP430_CORE_ENABLE_INTERRUPT</a>();</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
-<div class="line">      <a name="a7"></a><a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(<a name="a8"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
+<div class="line">      <a name="a9"></a><a class="code" href="core_8h.html#a3124959aa09ef7d745fb63c9ff5ee897">BSP430_CORE_DELAY_CYCLES</a>(<a name="a10"></a><a class="code" href="clock_8h.html#a6ffd3f4fab35b64d0e8ff8d3179d69d9">BSP430_CLOCK_NOMINAL_MCLK_HZ</a> / 2);</div>
 <div class="line"><span class="preprocessor">#if (BSP430_CONSOLE_RX_BUFFER_SIZE - 0) || (BSP430_CONSOLE_TX_BUFFER_SIZE - 0)</span></div>
-<div class="line">      <a name="a9"></a><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
+<div class="line">      <a name="a11"></a><a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
-<div class="line">      <span class="keywordflow">while</span> (0 &lt;= ((rc = <a name="a10"></a><a class="code" href="console_8h.html#a1ea443e362fde4016b85cdf7676b7872">cgetchar</a>()))) {</div>
-<div class="line">        <a name="a11"></a><a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; rx char &quot;</span>);</div>
-<div class="line">        <a name="a12"></a><a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(rc, 10);</div>
+<div class="line">      <span class="keywordflow">while</span> (0 &lt;= ((rc = <a name="a12"></a><a class="code" href="console_8h.html#a1ea443e362fde4016b85cdf7676b7872">cgetchar</a>()))) {</div>
+<div class="line">        <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, -1);</div>
+<div class="line">        <a name="a13"></a><a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; rx char &quot;</span>);</div>
+<div class="line">        <a name="a14"></a><a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(rc, 10);</div>
 <div class="line">        <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; &#39;&quot;</span>);</div>
-<div class="line">        <a name="a13"></a><a class="code" href="console_8h.html#aa0572fcebf5d24edff00fc60c4563681">cputchar</a>(rc);</div>
+<div class="line">        <a name="a15"></a><a class="code" href="console_8h.html#aa0572fcebf5d24edff00fc60c4563681">cputchar</a>(rc);</div>
 <div class="line">        <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;&#39;&quot;</span>);</div>
 <div class="line">      }</div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;\nctr &quot;</span>);</div>
 <div class="line">      <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(counter, 10);</div>
 <div class="line"><span class="preprocessor">#if (APP_VERBOSE - 0)</span></div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;; tx &quot;</span>);</div>
-<div class="line">      <a name="a14"></a><a class="code" href="console_8h.html#a482a73d216ecdf6435416c952ef718ca">cputul</a>(console-&gt;<a name="a15"></a><a class="code" href="structsBSP430halSERIAL.html#ab96893c7c8a493681cda94f69e97d9c3">num_tx</a>, 10);</div>
+<div class="line">      <a name="a16"></a><a class="code" href="console_8h.html#a482a73d216ecdf6435416c952ef718ca">cputul</a>(console-&gt;<a name="a17"></a><a class="code" href="structsBSP430halSERIAL.html#ab96893c7c8a493681cda94f69e97d9c3">num_tx</a>, 10);</div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;; rx &quot;</span>);</div>
-<div class="line">      <a class="code" href="console_8h.html#a482a73d216ecdf6435416c952ef718ca">cputul</a>(console-&gt;<a name="a16"></a><a class="code" href="structsBSP430halSERIAL.html#a1e2a97da554ce15b300b5196298c2111">num_rx</a>, 10);</div>
+<div class="line">      <a class="code" href="console_8h.html#a482a73d216ecdf6435416c952ef718ca">cputul</a>(console-&gt;<a name="a18"></a><a class="code" href="structsBSP430halSERIAL.html#a1e2a97da554ce15b300b5196298c2111">num_rx</a>, 10);</div>
 <div class="line">      <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot;; stat 0x&quot;</span>);</div>
 <div class="line"><span class="preprocessor">#if (configBSP430_SERIAL_USE_USCI - 0)</span></div>
-<div class="line">      <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(console-&gt;<a name="a17"></a><a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a18"></a><a class="code" href="structsBSP430halSERIAL.html#a4cd861e49424af73d3f9eee1c5f98773">usci</a>-&gt;<a name="a19"></a><a class="code" href="structsBSP430hplUSCI.html#a5def5813240b818a12353a6c318d52ed">stat</a>, 16);</div>
+<div class="line">      <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(console-&gt;<a name="a19"></a><a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a20"></a><a class="code" href="structsBSP430halSERIAL.html#a4cd861e49424af73d3f9eee1c5f98773">usci</a>-&gt;<a name="a21"></a><a class="code" href="structsBSP430hplUSCI.html#a5def5813240b818a12353a6c318d52ed">stat</a>, 16);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor">#if (configBSP430_SERIAL_USE_USCI5 - 0)</span></div>
-<div class="line">      <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(console-&gt;<a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a20"></a><a class="code" href="structsBSP430halSERIAL.html#a21731732853980738a40d6cccdfd2c5b">usci5</a>-&gt;<a name="a21"></a><a class="code" href="structsBSP430hplUSCI5.html#a8fe3e0cd6ef1a4508cd907c14d4a4555">stat</a>, 16);</div>
+<div class="line">      <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(console-&gt;<a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a22"></a><a class="code" href="structsBSP430halSERIAL.html#a21731732853980738a40d6cccdfd2c5b">usci5</a>-&gt;<a name="a23"></a><a class="code" href="structsBSP430hplUSCI5.html#a8fe3e0cd6ef1a4508cd907c14d4a4555">stat</a>, 16);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor">#if (configBSP430_SERIAL_USE_EUSCI - 0)</span></div>
-<div class="line">      <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(console-&gt;<a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a22"></a><a class="code" href="structsBSP430halSERIAL.html#aa2d4d67aa80b76463042f10eaf44cdb9">euscia</a>-&gt;<a name="a23"></a><a class="code" href="structsBSP430hplEUSCIA.html#ad0fe60afb08c31522ff25f35b4db6632">statw</a>, 16);</div>
+<div class="line">      <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(console-&gt;<a class="code" href="structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e">hpl</a>.<a name="a24"></a><a class="code" href="structsBSP430halSERIAL.html#aa2d4d67aa80b76463042f10eaf44cdb9">euscia</a>-&gt;<a name="a25"></a><a class="code" href="structsBSP430hplEUSCIA.html#ad0fe60afb08c31522ff25f35b4db6632">statw</a>, 16);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_VERBOSE */</span><span class="preprocessor"></span></div>
 <div class="line">      ++counter;</div>
-<div class="line">      <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, -1);</div>
+<div class="line">      <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>, -1);</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

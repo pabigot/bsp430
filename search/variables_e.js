@@ -17,5 +17,7 @@ var searchData=
   ['pps_5fport',['pps_port',['../structsBSP430gpsConfiguration.html#ae95d838b0c7d30086936e66761859f26',1,'sBSP430gpsConfiguration']]],
   ['pps_5fport_5fbit',['pps_port_bit',['../structsBSP430gpsConfiguration.html#ac03d7f5d2c63ff906e50e8f33a80003d',1,'sBSP430gpsConfiguration']]],
   ['pps_5ftimer',['pps_timer',['../structsBSP430gpsConfiguration.html#ab3f7481db3bd6f1c31cf8625209edb76',1,'sBSP430gpsConfiguration']]],
-  ['ptr',['ptr',['../unionsBSP430cliCommand_1_1uParam.html#a494c597bf8604806c0aa45c1f0836ed3',1,'sBSP430cliCommand::uParam']]]
+  ['ptr',['ptr',['../unionsBSP430cliCommand_1_1uParam.html#a494c597bf8604806c0aa45c1f0836ed3',1,'sBSP430cliCommand::uParam']]],
+  ['pwr_5fen',['pwr_en',['../structsBSP430sharplcd.html#a1a8851508a7abf36cf870ee15249fdcc',1,'sBSP430sharplcd']]],
+  ['pwr_5fen_5fbit',['pwr_en_bit',['../structsBSP430sharplcd.html#a0c110f716a0dc0e94b2154d4991a6f59',1,'sBSP430sharplcd']]]
 ];

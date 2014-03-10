@@ -44,6 +44,7 @@ var searchData=
   ['vbsp430usci5wakeuptransmit_5frh',['vBSP430usci5WakeupTransmit_rh',['../usci5_8h.html#a36b88ac1c024fd3b3163f3562c31fbd4',1,'usci5.h']]],
   ['vbsp430usciflush_5fni',['vBSP430usciFlush_ni',['../usci_8h.html#a4e7f07198ad59310af771e1201a809f2',1,'usci.h']]],
   ['vbsp430usciwakeuptransmit_5frh',['vBSP430usciWakeupTransmit_rh',['../usci_8h.html#a9a9bf3073f3993e943aeee8a9935ffe9',1,'usci.h']]],
+  ['vcom_5fstate_5f',['vcom_state_',['../structsBSP430sharplcd.html#afecf015d45180acabef1bc7597090204',1,'sBSP430sharplcd']]],
   ['vcprintf',['vcprintf',['../console_8h.html#a88bc4e1137c425954f5e5624c95367ab',1,'console.h']]],
   ['vdop_5fpc_5fbe',['vdop_pc_be',['../structsSkyTraqMsgOut__NAV__DATA.html#aa17eeccdce671074fe890c044af0782b',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['vtg_5fs',['vtg_s',['../structsSkyTraqMsgIn__CFG__NMEA.html#a2985cad74da5c7fb61ed5ea7c421fa45',1,'sSkyTraqMsgIn_CFG_NMEA']]]

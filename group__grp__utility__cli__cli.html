@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -299,7 +299,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>zero if all pending input was consumed and no actions are required. A positive result encodes bits from <a class="el" href="group__grp__utility__cli__cli.html#gabf197215e696298dd3a9690ef10a69de">eBSP430cliConsole</a> indicating available commands or other actions that are required.</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__utility__cli__cli.html#ga80909b9854af24b22d02cc9e881ab4d8">BSP430_CLI_CONSOLE_BUFFER_SIZE</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a68">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a50">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a67">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a68">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a53">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a67">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -342,7 +342,7 @@ Functions</h2></td></tr>
 <p>Normal practice would be to install this using iBSP430cliSetDiagnosticFunction() after configuring the console but before accepting any user input; see <a class="el" href="ex_utility_cli.html">Utilities: Command Line Interface</a>.</p>
 <dl class="section warning"><dt>Warning</dt><dd>This function may enable interrupts and sleep if interrupt-driven console transmission is enabled. See <a class="el" href="console_8h.html#h_utility_console_interrupts">Interrupts and Console Operations</a>. </dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a51">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a27">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a43">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a51">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a32">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a43">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -363,7 +363,7 @@ Functions</h2></td></tr>
 <p>Invoke this after having processed a command that was returned by <a class="el" href="group__grp__utility__cli__cli.html#gaf192635722fef70abb4583a1c52a4e7a">iBSP430cliConsoleBufferProcessInput()</a> so subsequent input begins a new command.</p>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="group__grp__utility__cli__cli.html#ga80909b9854af24b22d02cc9e881ab4d8">BSP430_CLI_CONSOLE_BUFFER_SIZE</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a66">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a48">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a66">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a66">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a51">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a66">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -427,7 +427,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="console_8h.html#ac415beb77c9981cd718e79fca118b46d">BSP430_CONSOLE</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a46">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a20">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a38">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a46">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a25">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a38">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -447,14 +447,14 @@ Functions</h2></td></tr>
 <p>Return a pointer to the internal console buffer.</p>
 <dl class="section note"><dt>Note</dt><dd>Although the value returned from this function is a constant throughout the life of the program, it is the call to this function that stores the NUL character terminating the command based on data received.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>pointer to the NUL-terminated current contents of the internal command buffer, or NULL if <a class="el" href="group__grp__utility__cli__cli.html#ga80909b9854af24b22d02cc9e881ab4d8">BSP430_CLI_CONSOLE_BUFFER_SIZE</a> is zero. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a71">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a53">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a70">utility/cli/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a71">periph/timer/alarm/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a56">rf/cc3000/main.c</a>, and <a class="el" href="utility_2cli_2main_8c-example.html#a70">utility/cli/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

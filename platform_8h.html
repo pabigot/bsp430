@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -828,7 +828,7 @@ invoke <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">i
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="standard_8inc.html">bsp430/platform/standard.inc</a>&gt;</span></div>
 </div><!-- fragment --><p>This standard implementation can be customized through several of the macros listed above.</p>
 <dl class="section warning"><dt>Warning</dt><dd>On MCUs supporting the <a class="el" href="msp430_8h.html#ae5ced65b3157bff07c84be399063da5c">LOCKLPM5</a> bit the standard implementation of this function will clear that bit so GPIOs can be initialized. Applications that wish to make use of the LPM3.5 or LPM4.5 modes should record the port configuration prior to invoking this function. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a19">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2blink_2main_8c-example.html#a0">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a12">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a0">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a1">bootstrap/console/main.c</a>, <a class="el" href="bootstrap_2nop_2main_8c-example.html#a0">bootstrap/nop/main.c</a>, <a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a48">periph/timer/alarm/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a1">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rf_2cc110x_2main_8c-example.html#a12">rf/cc110x/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a24">rf/cc3000/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a3">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a13">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a2">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a15">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2cli_2main_8c-example.html#a40">utility/cli/main.c</a>, <a class="el" href="utility_2m25p_2main_8c-example.html#a11">utility/m25p/main.c</a>, <a class="el" href="utility_2u8glib_2main_8c-example.html#a1">utility/u8glib/main.c</a>, and <a class="el" href="utility_2unittest_2main_8c-example.html#a0">utility/unittest/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2applpm_2main_8c-example.html#a19">bootstrap/applpm/main.c</a>, <a class="el" href="bootstrap_2blink_2main_8c-example.html#a0">bootstrap/blink/main.c</a>, <a class="el" href="bootstrap_2button_2main_8c-example.html#a12">bootstrap/button/main.c</a>, <a class="el" href="bootstrap_2clocks_2main_8c-example.html#a0">bootstrap/clocks/main.c</a>, <a class="el" href="bootstrap_2console_2main_8c-example.html#a1">bootstrap/console/main.c</a>, <a class="el" href="bootstrap_2nop_2main_8c-example.html#a0">bootstrap/nop/main.c</a>, <a class="el" href="periph_2timer_2alarm_2main_8c-example.html#a48">periph/timer/alarm/main.c</a>, <a class="el" href="platform_2exp430f5529_2fatfs_2main_8c-example.html#a1">platform/exp430f5529/fatfs/main.c</a>, <a class="el" href="rf_2cc110x_2main_8c-example.html#a12">rf/cc110x/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a29">rf/cc3000/main.c</a>, <a class="el" href="sensors_2ds18b20_2main_8c-example.html#a3">sensors/ds18b20/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a13">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a2">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a15">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2cli_2main_8c-example.html#a40">utility/cli/main.c</a>, <a class="el" href="utility_2m25p_2main_8c-example.html#a11">utility/m25p/main.c</a>, <a class="el" href="utility_2u8glib_2main_8c-example.html#a17">utility/u8glib/main.c</a>, and <a class="el" href="utility_2unittest_2main_8c-example.html#a0">utility/unittest/main.c</a>.</dd>
 </dl>
 </div>
 </div>
@@ -888,14 +888,14 @@ invoke <a class="el" href="platform_8h.html#a7c332b3b2af080a737e5b75ab08a4f4f">i
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to a help string suitable for display. A null pointer is returned if the peripheral was not enabled.</dd></dl>
 <dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="platform_8h.html#ab6710fe3c15825a6d4cfad92debe14bd">BSP430_PLATFORM_PERIPHERAL_HELP</a> </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a42">bootstrap/clocks/main.c</a>, <a class="el" href="rf_2cc110x_2main_8c-example.html#a24">rf/cc110x/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a38">rf/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a22">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a6">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a31">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2m25p_2main_8c-example.html#a17">utility/m25p/main.c</a>, and <a class="el" href="utility_2u8glib_2main_8c-example.html#a10">utility/u8glib/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="bootstrap_2clocks_2main_8c-example.html#a42">bootstrap/clocks/main.c</a>, <a class="el" href="rf_2cc110x_2main_8c-example.html#a24">rf/cc110x/main.c</a>, <a class="el" href="rf_2cc3000_2main_8c-example.html#a41">rf/cc3000/main.c</a>, <a class="el" href="sensors_2hh10d_2main_8c-example.html#a22">sensors/hh10d/main.c</a>, <a class="el" href="sensors_2tmp102_2main_8c-example.html#a6">sensors/tmp102/main.c</a>, <a class="el" href="sensors_2venus6pps_2main_8c-example.html#a31">sensors/venus6pps/main.c</a>, <a class="el" href="utility_2m25p_2main_8c-example.html#a17">utility/m25p/main.c</a>, and <a class="el" href="utility_2u8glib_2main_8c-example.html#a26">utility/u8glib/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

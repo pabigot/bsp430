@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -155,52 +155,62 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* LOCKLPM5 */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_PMM_SUPPORTS_SVSM - 0)</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="pmm_8h.html#a0bf0ec44ad7918e57576e4612cc307ae">  188</a></span>&#160;<span class="preprocessor">#define BSP430_PMM_SET_SVSMCTL_NI(hctl_,lctl_) do {   \</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor">    PMMCTL0_H = PMMPW_H;                              \</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="preprocessor">    SVSMHCTL = (hctl_);                               \</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">    SVSMLCTL = (lctl_);                               \</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="preprocessor">    PMMCTL0_H = !PMMPW_H;                             \</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_SUPPORTS_SVSM */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="pmm_8h.html#abaec56228be231bba18d6edd8b505869">  199</a></span>&#160;<a class="code" href="pmm_8h.html#abaec56228be231bba18d6edd8b505869">vBSP430pmmInduceBOR</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;{</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  PMMCTL0 = PMMPW | PMMSWBOR;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno"><a class="line" href="pmm_8h.html#a168885116eb851452f51b7ce7ae1b3c5">  207</a></span>&#160;<a class="code" href="pmm_8h.html#a168885116eb851452f51b7ce7ae1b3c5">vBSP430pmmInducePOR</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;{</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  PMMCTL0 = PMMPW | PMMSWPOR;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_PMM_SUPPORTS_COREV - 0)</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno"><a class="line" href="pmm_8h.html#a812275ab49340952a56211501f9d232d">  228</a></span>&#160;<span class="preprocessor">#define BSP430_PMM_COREV_FOR_MCLK(mclk_) include &lt;bsp430/platform.h&gt;</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_COREV_FOR_MCLK */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="keywordtype">int</span> <a class="code" href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> target_level);</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PMM not FRAM */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_PMM_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || defined(LOCKLPM5)</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="pmm_8h.html#a839582a50d6aa7de06fab882543f3f01">  164</a></span>&#160;<span class="preprocessor">#define BSP430_PMM_CLEAR_LOCKLPM5() do { \</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor">    PMMCTL0_H = PMMPW_H;                 \</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">    PM5CTL0 &amp;= ~LOCKLPM5;                \</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor">    PMMCTL0_H = !PMMPW_H;                \</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* LOCKLPM5 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#define BSP430_PMM_CLEAR_LOCKLPM5() do { } while (0)</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* LOCKLPM5 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_PMM_SUPPORTS_SVSM - 0)</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="pmm_8h.html#a0bf0ec44ad7918e57576e4612cc307ae">  220</a></span>&#160;<span class="preprocessor">#define BSP430_PMM_SET_SVSMCTL_NI(hctl_,lctl_) do {   \</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="preprocessor">    PMMCTL0_H = PMMPW_H;                              \</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="preprocessor">    SVSMHCTL = (hctl_);                               \</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;<span class="preprocessor">    SVSMLCTL = (lctl_);                               \</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor">    PMMCTL0_H = !PMMPW_H;                             \</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_SUPPORTS_SVSM */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno"><a class="line" href="pmm_8h.html#abaec56228be231bba18d6edd8b505869">  231</a></span>&#160;<a class="code" href="pmm_8h.html#abaec56228be231bba18d6edd8b505869">vBSP430pmmInduceBOR</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;{</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  PMMCTL0 = PMMPW | PMMSWBOR;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;}</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="keyword">static</span> <a class="code" href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno"><a class="line" href="pmm_8h.html#a168885116eb851452f51b7ce7ae1b3c5">  239</a></span>&#160;<a class="code" href="pmm_8h.html#a168885116eb851452f51b7ce7ae1b3c5">vBSP430pmmInducePOR</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;{</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  PMMCTL0 = PMMPW | PMMSWPOR;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;}</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || (BSP430_PMM_SUPPORTS_COREV - 0)</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN)</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="pmm_8h.html#a812275ab49340952a56211501f9d232d">  260</a></span>&#160;<span class="preprocessor">#define BSP430_PMM_COREV_FOR_MCLK(mclk_) include &lt;bsp430/platform.h&gt;</span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PMM_COREV_FOR_MCLK */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="keywordtype">int</span> <a class="code" href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> target_level);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* PMM not FRAM */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_MODULE_PMM */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PERIPH_PMM_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="pmm_8h_html_ac3621d45ad0e516384a5dce097dadba9"><div class="ttname"><a href="pmm_8h.html#ac3621d45ad0e516384a5dce097dadba9">iBSP430pmmSetCoreVoltageLevel_ni</a></div><div class="ttdeci">int iBSP430pmmSetCoreVoltageLevel_ni(unsigned int target_level)</div></div>
 <div class="ttc" id="core_8h_html_acc9bdec15b3ab4175315a6e0f6b6d142"><div class="ttname"><a href="core_8h.html#acc9bdec15b3ab4175315a6e0f6b6d142">BSP430_CORE_INLINE</a></div><div class="ttdeci">#define BSP430_CORE_INLINE</div><div class="ttdef"><b>Definition:</b> core.h:406</div></div>
 <div class="ttc" id="periph_8h_html"><div class="ttname"><a href="periph_8h.html">periph.h</a></div><div class="ttdoc">Generic peripheral support for MSP430 MCUs. </div></div>
-<div class="ttc" id="pmm_8h_html_a168885116eb851452f51b7ce7ae1b3c5"><div class="ttname"><a href="pmm_8h.html#a168885116eb851452f51b7ce7ae1b3c5">vBSP430pmmInducePOR</a></div><div class="ttdeci">static BSP430_CORE_INLINE void vBSP430pmmInducePOR(void)</div><div class="ttdef"><b>Definition:</b> pmm.h:207</div></div>
-<div class="ttc" id="pmm_8h_html_abaec56228be231bba18d6edd8b505869"><div class="ttname"><a href="pmm_8h.html#abaec56228be231bba18d6edd8b505869">vBSP430pmmInduceBOR</a></div><div class="ttdeci">static BSP430_CORE_INLINE void vBSP430pmmInduceBOR(void)</div><div class="ttdef"><b>Definition:</b> pmm.h:199</div></div>
+<div class="ttc" id="pmm_8h_html_a168885116eb851452f51b7ce7ae1b3c5"><div class="ttname"><a href="pmm_8h.html#a168885116eb851452f51b7ce7ae1b3c5">vBSP430pmmInducePOR</a></div><div class="ttdeci">static BSP430_CORE_INLINE void vBSP430pmmInducePOR(void)</div><div class="ttdef"><b>Definition:</b> pmm.h:239</div></div>
+<div class="ttc" id="pmm_8h_html_abaec56228be231bba18d6edd8b505869"><div class="ttname"><a href="pmm_8h.html#abaec56228be231bba18d6edd8b505869">vBSP430pmmInduceBOR</a></div><div class="ttdeci">static BSP430_CORE_INLINE void vBSP430pmmInduceBOR(void)</div><div class="ttdef"><b>Definition:</b> pmm.h:231</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

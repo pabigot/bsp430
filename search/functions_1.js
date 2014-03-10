@@ -11,6 +11,7 @@ var searchData=
   ['hbsp430serialopeni2c',['hBSP430serialOpenI2C',['../serial_8h.html#a85fb70e450164721994aad656c24d6a0',1,'serial.h']]],
   ['hbsp430serialopenspi',['hBSP430serialOpenSPI',['../serial_8h.html#a40983f5ed625fd352698117786691dd5',1,'serial.h']]],
   ['hbsp430serialopenuart',['hBSP430serialOpenUART',['../serial_8h.html#a32f608fdca583bd1c68b1eb2617426e5',1,'serial.h']]],
+  ['hbsp430sharplcdinitializeplatformdevice',['hBSP430sharplcdInitializePlatformDevice',['../sharplcd_8h.html#ae7b4b5219d665ea46f921f50d7e7cde6',1,'sharplcd.h']]],
   ['hbsp430timeralarminitialize',['hBSP430timerAlarmInitialize',['../group__grp__timer__alarm.html#ga006a132cabb227524de5203697814c12',1,'timer.h']]],
   ['hbsp430timerlookup',['hBSP430timerLookup',['../timer_8h.html#afe3886cec73bfe10e638855dac7964dc',1,'timer.h']]],
   ['hbsp430timermuxalarmstartup',['hBSP430timerMuxAlarmStartup',['../group__grp__timer__alarm.html#ga2625293c077869f035235cd7d4810250',1,'timer.h']]],

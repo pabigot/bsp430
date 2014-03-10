@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -105,6 +105,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ab1c6e1c7e8ef36c03e472caf6becdfac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cc3000spi_8h.html#ab1c6e1c7e8ef36c03e472caf6becdfac">BSP430_CC3000_ENABLE_SMART</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ab1c6e1c7e8ef36c03e472caf6becdfac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0be8d9dad7f10d193314afbb436822e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cc3000spi_8h.html#ad0be8d9dad7f10d193314afbb436822e">BSP430_CC3000SPI_RX_BUFFER_SIZE</a>&#160;&#160;&#160;400</td></tr>
 <tr class="separator:ad0be8d9dad7f10d193314afbb436822e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91296e239f43b23894ff57a3d196a644"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cc3000spi_8h.html#a91296e239f43b23894ff57a3d196a644">BSP430_CC3000SPI_TX_BUFFER_SIZE</a>&#160;&#160;&#160;400</td></tr>
@@ -122,6 +124,22 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Homepage</dt><dd><a href="http://github.com/pabigot/bsp430">http://github.com/pabigot/bsp430</a> </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright 2012-2014, Peter A. Bigot. Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a> </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ab1c6e1c7e8ef36c03e472caf6becdfac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BSP430_CC3000_ENABLE_SMART&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Define externally to a true value when you want the <a href="http://processors.wiki.ti.com/index.php/CC3000_Smart_Config">CC3000 Smart Config</a> process to work.</p>
+<p>This feature requires that the RX buffer size be a full 1500 octets; setting this flag changes the default value for <a class="el" href="cc3000spi_8h.html#ad0be8d9dad7f10d193314afbb436822e">BSP430_CC3000SPI_RX_BUFFER_SIZE</a> to satisfy that requirement.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+<dl class="section user"><dt>Affects:</dt><dd><a class="el" href="cc3000spi_8h.html#ad0be8d9dad7f10d193314afbb436822e">BSP430_CC3000SPI_RX_BUFFER_SIZE</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ad0be8d9dad7f10d193314afbb436822e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +151,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Size of the cc3000spi receive buffer, in octets.</p>
 <p>The value is an integer between #CC3000_MINIMAL_RX_SIZE=119 and #CC3000_MAXIMAL_RX_SIZE=1520, unless #CC3000_TINY_DRIVER is defined in which case #CC3000_MAXIMAL_RX_SIZE is 44.</p>
-<p>&lt;cc3000/cc3000_common.h&gt; unconditionally defines a CC3000_RX_BUFFER_SIZE constant, but it is not referenced by the driver and is not relevant to this implementation. </p>
+<p>&lt;cc3000/cc3000_common.h&gt; unconditionally defines a CC3000_RX_BUFFER_SIZE constant, but it is not referenced by the driver and is not relevant to this implementation.</p>
+<dl class="section note"><dt>Note</dt><dd>The current (SP 1.10.1 and later) <a href="http://processors.wiki.ti.com/index.php/CC3000_Smart_Config">CC3000 Smart Config</a> process works by encoding data in the length of UDP packets transmitted to/from port 15000 of the gateway. It is necessary to have at least the RX buffer of the CC3000 at full size in order to receive this information. (Documentation says use 1500; I have observed packets that are 1498 octets, so this is probably accurate.)</dd></dl>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+<dl class="section user"><dt>Dependency:</dt><dd><a class="el" href="cc3000spi_8h.html#ad0be8d9dad7f10d193314afbb436822e">BSP430_CC3000SPI_RX_BUFFER_SIZE</a> </dd></dl>
 
 </div>
 </div>
@@ -148,7 +169,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Size of the cc3000spi transmit buffer, in octets.</p>
 <p>The value is an integer between #CC3000_MINIMAL_TX_SIZE=119 and #CC3000_MAXIMAL_TX_SIZE=1520, unless #CC3000_TINY_DRIVER is defined in which case #CC3000_MAXIMAL_TX_SIZE is 59.</p>
-<p>&lt;cc3000/cc3000_common.h&gt; unconditionally defines a CC3000_TX_BUFFER_SIZE constant, but it is not referenced by the driver and is not relevant to this implementation. </p>
+<p>&lt;cc3000/cc3000_common.h&gt; unconditionally defines a CC3000_TX_BUFFER_SIZE constant, but it is not referenced by the driver and is not relevant to this implementation.</p>
+<dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
 
 </div>
 </div>
@@ -201,14 +223,14 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if all goes well; -1 if one of the underlying BSP430 resources could not be obtained. </dd></dl>
-<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rf_2cc3000_2main_8c-example.html#a40">rf/cc3000/main.c</a>.</dd>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="rf_2cc3000_2main_8c-example.html#a43">rf/cc3000/main.c</a>.</dd>
 </dl>
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

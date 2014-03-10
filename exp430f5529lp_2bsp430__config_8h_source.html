@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -328,12 +328,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="comment">/* END AUTOMATICALLY GENERATED CODE [rfem_config] */</span></div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">/* !BSP430! end=rfem_config */</span></div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_EXP430F5529LP_BSP430_CONFIG_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="preprocessor">#if (configBSP430_PLATFORM_BOOSTERPACK_SHARP96 - 0)</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="comment">/* CS on P6.6, LCD_EN on P1.6, PWR_en on P6.5, SPI on USCI5_B0 */</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="preprocessor">#define configBSP430_HPL_PORT6 1</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor">#define configBSP430_HPL_PORT1 1</span></div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor">#define configBSP430_HAL_USCI5_B0 1</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor">#define configBSP430_SERIAL_ENABLE_SPI 1</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* configBSP430_PLATFORM_BOOSTERPACK_SHARP96 */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_PLATFORM_EXP430F5529LP_BSP430_CONFIG_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="want___8h_html"><div class="ttname"><a href="want___8h.html">want_.h</a></div><div class="ttdoc">Translate functional resource requests to core resource requests. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

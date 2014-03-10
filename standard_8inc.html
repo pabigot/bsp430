@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -109,7 +109,7 @@ Macros</h2></td></tr>
 <tr class="separator:a89c25460ca814d7dd3d6c59dedd10a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89ded4381c179b87528bca1a341ac58a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="standard_8inc.html#a89ded4381c179b87528bca1a341ac58a">BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE</a>&#160;&#160;&#160;do { } while (0)</td></tr>
 <tr class="separator:a89ded4381c179b87528bca1a341ac58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53b9e0fe864c960eef0cc31636f601ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="standard_8inc.html#a53b9e0fe864c960eef0cc31636f601ba">BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5</a></td></tr>
+<tr class="memitem:a53b9e0fe864c960eef0cc31636f601ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="standard_8inc.html#a53b9e0fe864c960eef0cc31636f601ba">BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5</a>&#160;&#160;&#160;do { } while (0)</td></tr>
 <tr class="separator:a53b9e0fe864c960eef0cc31636f601ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16187016810b66f1389bf7c925fc8af2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="standard_8inc.html#a16187016810b66f1389bf7c925fc8af2">BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE</a>&#160;&#160;&#160;do { } while (0)</td></tr>
 <tr class="separator:a16187016810b66f1389bf7c925fc8af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,18 +125,16 @@ Macros</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5</td>
+          <td class="memname">#define BSP430_PLATFORM_STANDARD_INITIALIZE_CLEAR_LOCKLPM5&#160;&#160;&#160;do { } while (0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> { \</div>
-<div class="line">    PM5CTL0 &amp;= ~<a class="code" href="msp430_8h.html#ae5ced65b3157bff07c84be399063da5c">LOCKLPM5</a>;                                       \</div>
-<div class="line">  } <span class="keywordflow">while</span> (0)</div>
-<div class="ttc" id="msp430_8h_html_ae5ced65b3157bff07c84be399063da5c"><div class="ttname"><a href="msp430_8h.html#ae5ced65b3157bff07c84be399063da5c">LOCKLPM5</a></div><div class="ttdeci">#define LOCKLPM5</div><div class="ttdef"><b>Definition:</b> msp430.h:254</div></div>
-</div><!-- fragment --><p>Define to a C statement to do clear the <a class="el" href="msp430_8h.html#ae5ced65b3157bff07c84be399063da5c">LOCKLPM5</a> bit prior to configuring GPIOs in vBSP430platformInitialize_ni ().</p>
+<p>Define to a C statement to do clear the <a class="el" href="msp430_8h.html#ae5ced65b3157bff07c84be399063da5c">LOCKLPM5</a> bit prior to configuring GPIOs in vBSP430platformInitialize_ni ().</p>
+<p>This has effect only on platforms that support the Power Management Module.</p>
 <p>In the current FR58xx family this bit is set on power-up, even if not waking from LPM3.5 or LPM4.5. Since <a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni()</a> is supposed to configure things like LEDs, this bit needs to be cleared for normal startup.</p>
-<p>Applications that make use of LPM5 should either provide their own platform initialization, or inspect and record the port state and configuration prior to invoking the default <a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni()</a> provided by &lt;<a class="el" href="standard_8inc.html" title="Common implementation of platform functions. ">bsp430/platform/standard.inc</a>&gt; via <a class="el" href="standard_8inc.html#a89c25460ca814d7dd3d6c59dedd10a06">BSP430_PLATFORM_STANDARD_USE_INITIALIZE</a>.</p>
+<p>Applications that make use of LPM5 should either provide their own platform initialization, or inspect and record the port state and configuration prior to invoking the default <a class="el" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni()</a> provided by &lt;<a class="el" href="standard_8inc.html" title="Common implementation of platform functions. ">bsp430/platform/standard.inc</a>&gt; when <a class="el" href="standard_8inc.html#a89c25460ca814d7dd3d6c59dedd10a06">BSP430_PLATFORM_STANDARD_USE_INITIALIZE</a> is enabled.</p>
 <dl class="section user"><dt>Defaulted:</dt><dd>The value here is superseded by previously encountered definitions. </dd></dl>
+<dl class="section user"><dt>Platform-Specific Value:</dt><dd>The value here is an example, and may differ from the actual value used depending on platform information. </dd></dl>
 
 </div>
 </div>
@@ -185,7 +183,7 @@ Macros</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -292,7 +292,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><span class="preprocessor">#if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)</span></div>
 <div class="line">  <a class="code" href="console_8h.html#a20188454c5c787938220b7bcf3179869">cprintf</a>(<span class="stringliteral">&quot;\nCS %s : RSEL %d DCOFSEL %d:&quot;</span></div>
 <div class="line">          <span class="stringliteral">&quot;\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x&quot;</span></div>
-<div class="line">          <span class="stringliteral">&quot;\n CTL4 %04x CTL5 %04x CTL6 %04x&quot;</span>,</div>
+<div class="line">          <span class="stringliteral">&quot;\n CTL4 %04x CTL5 %04x CTL6 %04x&quot;</span></div>
+<div class="line">          <span class="stringliteral">&quot;\n FRCTL0 %04x&quot;</span>,</div>
 <div class="line">#<span class="keywordflow">if</span> (<a name="a38"></a><a class="code" href="cs_8h.html#adbd5b34e1678b069772c9087173b9305">BSP430_CS_IS_FR57XX</a> - 0)</div>
 <div class="line">          <span class="stringliteral">&quot;FR57xx&quot;</span></div>
 <div class="line">#endif</div>
@@ -301,7 +302,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line">#endif</div>
 <div class="line">          <span class="stringliteral">&quot;&quot;</span>, !!(DCORSEL &amp; CSCTL1), 0x07 &amp; (CSCTL1 / DCOFSEL0),</div>
 <div class="line">          CSCTL0, CSCTL1, CSCTL2, CSCTL3,</div>
-<div class="line">          CSCTL4, CSCTL5, CSCTL6);</div>
+<div class="line">          CSCTL4, CSCTL5, CSCTL6, FRCTL0);</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* CS */</span><span class="preprocessor"></span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE */</span><span class="preprocessor"></span></div>
@@ -347,7 +348,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

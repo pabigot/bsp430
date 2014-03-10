@@ -11,7 +11,7 @@ var searchData=
   ['serial_5fcb',['serial_cb',['../structsBSP430gpsConfiguration.html#adef8cac6c278fd984dd5825d5d79ecc6',1,'sBSP430gpsConfiguration']]],
   ['setting_5ftck',['setting_tck',['../structsBSP430timerAlarm.html#aa42f23d79c51dc804e7e00a940b27277',1,'sBSP430timerAlarm::setting_tck()'],['../structsBSP430timerMuxAlarm.html#a9a8ea5812478f41a81db0afe3bcb0161',1,'sBSP430timerMuxAlarm::setting_tck()']]],
   ['simple_5fhandler',['simple_handler',['../unionsBSP430cliCommand_1_1uParam.html#a4e1d71d5521b6dd8c3ae67ec077f70b7',1,'sBSP430cliCommand::uParam']]],
-  ['spi',['spi',['../structsBSP430m25p.html#af3dd901691c0d55f8e385950129dea35',1,'sBSP430m25p']]],
+  ['spi',['spi',['../structsBSP430m25p.html#af3dd901691c0d55f8e385950129dea35',1,'sBSP430m25p::spi()'],['../structsBSP430sharplcd.html#a20bc555d4ae2301425b22b171593c3af',1,'sBSP430sharplcd::spi()']]],
   ['start_5ftt_5fni',['start_tt_ni',['../structsBSP430timerPulseCapture.html#a1700681b948973c03389c8c87985d8b2',1,'sBSP430timerPulseCapture']]],
   ['stat',['stat',['../structsDS3231registers.html#a48cfc0213aec5e780bdaeb703b1aa99a',1,'sDS3231registers::stat()'],['../structsBSP430hplEUSCIB.html#af7f37b5dca124e4f26cb2952fb18c024',1,'sBSP430hplEUSCIB::stat()'],['../structsBSP430hplUSCI.html#a5def5813240b818a12353a6c318d52ed',1,'sBSP430hplUSCI::stat()'],['../structsBSP430hplUSCI5.html#a8fe3e0cd6ef1a4508cd907c14d4a4555',1,'sBSP430hplUSCI5::stat()']]],
   ['statw',['statw',['../structsBSP430hplEUSCIA.html#ad0fe60afb08c31522ff25f35b4db6632',1,'sBSP430hplEUSCIA::statw()'],['../structsBSP430hplEUSCIB.html#a5ac06ef723d183dca849cae9ea8c3fdf',1,'sBSP430hplEUSCIB::statw()']]],

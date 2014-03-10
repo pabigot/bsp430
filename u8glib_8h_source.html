@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -141,20 +141,35 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#include &lt;u8g.h&gt;</span></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">extern</span> u8g_dev_t <a class="code" href="u8glib_8h.html#ab5d211ea5b3e864d8919f7cbd48e16c4">xBSP430u8gDevice</a>;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="u8glib_8h.html#a1b4b7f3d0fb745d58d02179d91c8e408">hBSP430u8gSPI</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_U8GLIB_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#if defined(BSP430_DOXYGEN) || !defined(BSP430_U8GLIB_REFRESH_HZ)</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#if (BSP430_PLATFORM_SHARPLCD - 0)</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="sharplcd_8h.html">bsp430/utility/sharplcd.h</a>&gt;</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#define BSP430_U8GLIB_REFRESH_INTERVAL_MS BSP430_SHARPLCD_REFRESH_INTERVAL_MS</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="u8glib_8h.html#a069c035d7bb5299cc7a8479e986adabf">  129</a></span>&#160;<span class="preprocessor">#define BSP430_U8GLIB_REFRESH_INTERVAL_MS 0</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_U8GLIB_REFRESH_HZ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">int</span> <a class="code" href="u8glib_8h.html#aa1a780608c4dda916a92fb676a9093a3">iBSP430u8gRefresh</a> (u8g_t * u8g);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_DOXYGEN */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<a class="code" href="structsBSP430halSERIAL.html">hBSP430halSERIAL</a> <a class="code" href="u8glib_8h.html#a1b4b7f3d0fb745d58d02179d91c8e408">hBSP430u8gSPI</a> (<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BSP430_UTILITY_U8GLIB_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="u8glib_8h_html_aa1a780608c4dda916a92fb676a9093a3"><div class="ttname"><a href="u8glib_8h.html#aa1a780608c4dda916a92fb676a9093a3">iBSP430u8gRefresh</a></div><div class="ttdeci">int iBSP430u8gRefresh(u8g_t *u8g)</div></div>
 <div class="ttc" id="u8glib_8h_html_a1b4b7f3d0fb745d58d02179d91c8e408"><div class="ttname"><a href="u8glib_8h.html#a1b4b7f3d0fb745d58d02179d91c8e408">hBSP430u8gSPI</a></div><div class="ttdeci">hBSP430halSERIAL hBSP430u8gSPI(void)</div></div>
 <div class="ttc" id="core_8h_html"><div class="ttname"><a href="core_8h.html">core.h</a></div><div class="ttdoc">Common header included by all BSP430 leaf headers. </div></div>
 <div class="ttc" id="structsBSP430halSERIAL_html"><div class="ttname"><a href="structsBSP430halSERIAL.html">sBSP430halSERIAL</a></div><div class="ttdef"><b>Definition:</b> serial_.h:193</div></div>
 <div class="ttc" id="serial_8h_html"><div class="ttname"><a href="serial_8h.html">serial.h</a></div><div class="ttdoc">Declarations for abstracted serial interface. </div></div>
+<div class="ttc" id="sharplcd_8h_html"><div class="ttname"><a href="sharplcd_8h.html">sharplcd.h</a></div><div class="ttdoc">Interface for Sharp Memory LCD displays. </div></div>
 <div class="ttc" id="u8glib_8h_html_ab5d211ea5b3e864d8919f7cbd48e16c4"><div class="ttname"><a href="u8glib_8h.html#ab5d211ea5b3e864d8919f7cbd48e16c4">xBSP430u8gDevice</a></div><div class="ttdeci">u8g_dev_t xBSP430u8gDevice</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

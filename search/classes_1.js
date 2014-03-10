@@ -35,6 +35,7 @@ var searchData=
   ['sbsp430resource',['sBSP430resource',['../structsBSP430resource.html',1,'']]],
   ['sbsp430resourcereleaseflag',['sBSP430resourceReleaseFlag',['../structsBSP430resourceReleaseFlag.html',1,'']]],
   ['sbsp430resourcewaiter',['sBSP430resourceWaiter',['../structsBSP430resourceWaiter.html',1,'']]],
+  ['sbsp430sharplcd',['sBSP430sharplcd',['../structsBSP430sharplcd.html',1,'']]],
   ['sbsp430timeralarm',['sBSP430timerAlarm',['../structsBSP430timerAlarm.html',1,'']]],
   ['sbsp430timermuxalarm',['sBSP430timerMuxAlarm',['../structsBSP430timerMuxAlarm.html',1,'']]],
   ['sbsp430timermuxsharedalarm',['sBSP430timerMuxSharedAlarm',['../structsBSP430timerMuxSharedAlarm.html',1,'']]],

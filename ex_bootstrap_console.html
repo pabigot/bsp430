@@ -23,7 +23,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">BSP430
-   &#160;<span id="projectnumber">20140301</span>
+   &#160;<span id="projectnumber">20140310</span>
    </div>
    <div id="projectbrief">Board Support Package for MSP430 microcontrollers</div>
   </td>
@@ -117,7 +117,7 @@ main.c</h1>
 <div class="line">  <a class="code" href="platform_8h.html#a616515ce5e0f7635ca36a815841d2a21">vBSP430platformInitialize_ni</a>();</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Turn on the first LED */</span></div>
-<div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 1);</div>
+<div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>, 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Configure the console to use the default UART handle */</span></div>
 <div class="line">  rv = <a class="code" href="console_8h.html#a91f5f68fa2ee29ca39bf9a23ea98cbe1">iBSP430consoleInitialize</a>();</div>
@@ -127,11 +127,11 @@ main.c</h1>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_VERBOSE */</span><span class="preprocessor"></span></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Indicate we made it this far. */</span></div>
-<div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(1, 1);</div>
+<div class="line">  <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, 1);</div>
 <div class="line"></div>
 <div class="line">  <span class="keywordflow">if</span> (0 &gt; rv) {</div>
 <div class="line">    <span class="comment">/* Failed to configure the UART HAL */</span></div>
-<div class="line">    <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, 0);</div>
+<div class="line">    <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, 0);</div>
 <div class="line">  } <span class="keywordflow">else</span> {</div>
 <div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> counter = 0;</div>
 <div class="line"></div>
@@ -153,6 +153,7 @@ main.c</h1>
 <div class="line">      <a class="code" href="core_8h.html#ac381d1a1ade729f63011e7e4db511f61">BSP430_CORE_DISABLE_INTERRUPT</a>();</div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* BSP430_CONSOLE_RX_BUFFER_SIZE */</span><span class="preprocessor"></span></div>
 <div class="line">      <span class="keywordflow">while</span> (0 &lt;= ((rc = <a class="code" href="console_8h.html#a1ea443e362fde4016b85cdf7676b7872">cgetchar</a>()))) {</div>
+<div class="line">        <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a660d45784c69ff3843c9de4683c6e414">BSP430_LED_GREEN</a>, -1);</div>
 <div class="line">        <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; rx char &quot;</span>);</div>
 <div class="line">        <a class="code" href="console_8h.html#a6bea20d3515b0f84ed652c903a01181a">cputu</a>(rc, 10);</div>
 <div class="line">        <a class="code" href="console_8h.html#ac4ebbf60b8d0840b3039203c47f61c86">cputtext</a>(<span class="stringliteral">&quot; &#39;&quot;</span>);</div>
@@ -178,7 +179,7 @@ main.c</h1>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor">#endif </span><span class="comment">/* APP_VERBOSE */</span><span class="preprocessor"></span></div>
 <div class="line">      ++counter;</div>
-<div class="line">      <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(0, -1);</div>
+<div class="line">      <a class="code" href="led_8h.html#ae66246141775652517b8a6fe88537360">vBSP430ledSet</a>(<a class="code" href="led_8h.html#a895d03ce18ff50a43a9cc1164afae057">BSP430_LED_RED</a>, -1);</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">}</div>
@@ -208,7 +209,7 @@ Makefile</h1>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 1 2014 16:30:48 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 10 2014 14:22:18 for BSP430 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
