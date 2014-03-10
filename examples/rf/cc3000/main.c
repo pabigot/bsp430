@@ -773,16 +773,20 @@ static sBSP430cliCommand dcmd_wlan_timeouts = {
 static int
 cmd_wlan_start (const char * argstr)
 {
+  size_t argstr_len = strlen(argstr);
+  unsigned int patches_available = 0;
   unsigned long t[2];
+
+  (void)iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &patches_available);
   t[0] = ulBSP430uptime_ni();
-  wlan_start(0);
+  wlan_start(patches_available);
   t[1] = ulBSP430uptime_ni();
-  cprintf("wlan_start() took %s\n", xBSP430uptimeAsText_ni(t[1]-t[0]));
+  cprintf("wlan_start(%u) took %s\n", patches_available, xBSP430uptimeAsText_ni(t[1]-t[0]));
   return 0;
 }
 static sBSP430cliCommand dcmd_wlan_start = {
   .key = "start",
-  .help = HELP_STRING("# power-up CC3000"),
+  .help = HELP_STRING("[patchcount=0] # power-up CC3000"),
   .next = LAST_SUB_COMMAND,
   .handler = iBSP430cliHandlerSimple,
   .param.simple_handler = cmd_wlan_start
