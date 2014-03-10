@@ -45,8 +45,7 @@ WITH_UPDATE=0
 endif # exp430g2
 
 # Optionally enable the nvmem update infrastructure.
-# This requires the presence of three files:
-#  rm_param.inc         # has radio module default parameters
+# This requires the presence of two files:
 #  wlan_drv_patch.inc   # has patches to the CC3000 driver
 #  fw_patch.inc         # has patches to the CC3000 firmware
 # See the source for information on where to get these files.
@@ -56,6 +55,15 @@ WITH_UPDATE ?= 0
 ifneq (0,$(WITH_UPDATE))
 AUX_CPPFLAGS += -DWITH_UPDATE
 endif # WITH_UPDATE
+
+# Optionally enable radio module comparison
+# This requires the presence of the following file:
+#  rm_param.inc         # has radio module default parameters
+# See the source for information on where to get these files.
+WITH_RMPARAM ?= 0
+ifneq (0,$(WITH_RMPARAM))
+AUX_CPPFLAGS += -DWITH_RMPARAM
+endif # WITH_RMPARAM
 
 # Optionally enable SmartConfig.
 WITH_SMART ?= 0

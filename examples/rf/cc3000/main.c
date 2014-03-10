@@ -1023,13 +1023,6 @@ static const sNVMEMFileIds nvmemFiles[] = {
  * and create files that contain the byte literal initializer sequence
  * to fill in the arrays below. */
 
-/* This array should hold the default radio module parameters.  The
- * length is nominally 128 bytes, and the values can be found in the
- * cRMdefaultParams array in PatchProgrammer_DR_Patch.c from the TI
- * patch programmer utility. */
-const uint8_t default_rm_param[] = {
-  #include "rm_param.inc"
-};
 /* This array should hold WLAN driver patches.  The length is
  * somewhere around 8kB, and the values can be found in the
  * wlan_drv_patch array in PatchProgrammer_DR_Patch.c from the TI
@@ -1228,6 +1221,17 @@ static sBSP430cliCommand dcmd_nvmem_sp = {
 #endif /* CMD_NVMEM_SP */
 
 #if (CMD_NVMEM_RMPARAM - 0)
+
+#if (WITH_RMPARAM - 0)
+/* This array should hold the default radio module parameters.  The
+ * length is nominally 128 bytes, and the values can be found in the
+ * cRMdefaultParams array in PatchProgrammer_DR_Patch.c from the TI
+ * patch programmer utility. */
+const uint8_t default_rm_param[] = {
+  #include "rm_param.inc"
+};
+#endif
+
 static int
 cmd_nvmem_rmparam (const char * argstr)
 {
@@ -1251,7 +1255,7 @@ cmd_nvmem_rmparam (const char * argstr)
   }
   cprintf("Radio module parameters:\n");
   displayMemory(rmparam, sizeof(rmparam), 0);
-#if (WITH_UPDATE - 0)
+#if (WITH_RMPARAM - 0)
   {
     const uint8_t * drp = default_rm_param;
     const uint8_t * const drpe = default_rm_param + sizeof(default_rm_param);
@@ -1265,7 +1269,7 @@ cmd_nvmem_rmparam (const char * argstr)
   displayMemory(rmparam, sizeof(rmparam), 0);
   cprintf("Default RM parameters:\n");
   displayMemory(default_rm_param, sizeof(default_rm_param), 0);
-#endif
+#endif /* WITH_RMPARAM */
   return 0;
 }
 static sBSP430cliCommand dcmd_nvmem_rmparam = {
