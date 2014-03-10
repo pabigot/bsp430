@@ -1007,7 +1007,7 @@ static const sNVMEMFileIds nvmemFiles[] = {
   { NVMEM_IP_CONFIG_SHADOW_FILEID, 64, "IP Config (shadow)" },
   { NVMEM_BOOTLOADER_SP_FILEID, 0, "Bootloader SP" },
   { NVMEM_RM_FILEID, 0, "Radio Module" },
-  { NVMEM_AES128_KEY_FILEID, 0, "AES128 Key ??" },
+  { NVMEM_AES128_KEY_FILEID, 0, "AES128 Key" },
   { NVMEM_SHARED_MEM_FILEID, 0, "Shared Memory ??" },
 };
 
