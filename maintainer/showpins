@@ -16,14 +16,19 @@ import bsp430.pinmap
 rfem = None
 #rfem ='cc3000em'
 #rfem ='cc110xemk'
-#boosterpack = None
+boosterpack = None
 boosterpack = 'cc3000boost'
 #boosterpack = 'ccem'
-#boosterpack = 'senshub'
-boosterpack = 'battpack'
+boosterpack = 'sharp96'
+boosterpack = 'senshub'
+#boosterpack = 'battpack'
 platform = 'exp430f5529lp'
-#platform = 'exp430fr5739'
 mcu = 'msp430f5529'
+#platform = 'exp430fr5969'
+#mcu = 'msp430fr5969'
+#platform = 'exp430g2'
+#mcu = 'msp430g2553'
+#platform = 'exp430fr5739'
 #mcu = 'msp430fr5739'
 
 maps = []
