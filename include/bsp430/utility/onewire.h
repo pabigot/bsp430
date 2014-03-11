@@ -231,6 +231,19 @@ int iBSP430onewireReadTemperature_ni (const sBSP430onewireBus * bus,
  *
  * 9 * t / 8 == (9/5) * 10 * (t / 16) without incidental overflow
  */
-#define BSP430_ONEWIRE_xCel_TO_ddegF(xcel_) (320 + ((9 * xcel_) / 8))
+#define BSP430_ONEWIRE_xCel_TO_ddegF(xcel_) (320 + ((9 * (xcel_)) / 8))
+
+/** Convert temperature from 1/16th Cel to tenths Kelvin (dK)
+ *
+ * For those of us who obey the instruction of the <a
+ * href="http://unitsofmeasure.org/ucum.html">Unified Code for Units
+ * of Measure</a>
+ *
+ * 10 * (273.15 + x / 16)
+ *  = (16*27315 + 100*x) / 160
+ *  = (437040 + 100 * x) / 160
+ *  = (21852 + 5 * x) / 8
+ */
+#define BSP430_ONEWIRE_xCel_TO_dK(xcel_) ((21852U + 5U * (xcel_)) / 8U)
 
 #endif /* BSP430_UTILITY_ONEWIRE_H */
