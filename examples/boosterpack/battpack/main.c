@@ -238,11 +238,9 @@ void main ()
       flags &= ~FLG_UPDATE_INTERVAL;
     }
     flags = 0;
-    BSP430_CORE_DISABLE_INTERRUPT();
     while (! flags) {
       iBSP430consoleFlush();
-      BSP430_CORE_DISABLE_INTERRUPT();
-      if (0 > lBSP430uptimeSleepUntil_ni(resample_wake_utt, LPM3_bits)) {
+      if (0 > lBSP430uptimeSleepUntil(resample_wake_utt, LPM3_bits)) {
         flags |= FLG_UPDATE_INTERVAL;
       }
       while (0 <= ((rc = cgetchar()))) {
@@ -252,7 +250,6 @@ void main ()
           flags |= FLG_DUMP_STATE;
         }
       }
-      BSP430_CORE_ENABLE_INTERRUPT();
     }
 
   }

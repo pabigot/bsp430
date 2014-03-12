@@ -197,12 +197,8 @@ int initializeADC (void)
   ADC12CTL1 = SHS_0 | SHP | ADC12SSEL_0 | CONSEQ_0;
 
   /* Delay 17ms to allow REF to stabilize */
-  {
-    unsigned long wake_utt = ulBSP430uptime_ni() + BSP430_UPTIME_MS_TO_UTT(17);
-    while (0 < lBSP430uptimeSleepUntil_ni(wake_utt, LPM0_bits)) {
-      /* nop */
-    }
-  }
+  BSP430_UPTIME_DELAY_MS(17, LPM0_bits, 0);
+
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
   /* ~ADC12ENC: Place module into hold before modifying configuration */
   ADC12CTL0 &= ~ADC12ENC;
@@ -556,7 +552,7 @@ void main ()
     }
     cputchar('\n');
     next_wake_utt += delta_wake_utt;
-    while (0 < lBSP430uptimeSleepUntil_ni(next_wake_utt, LPM3_bits)) {
+    while (0 < lBSP430uptimeSleepUntil(next_wake_utt, LPM3_bits)) {
       /* nop */
     }
   }

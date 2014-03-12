@@ -377,11 +377,11 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  * This flag enables infrastructure support to use the @ref
  * grp_timer_alarm infrastructure on the uptime timer to support
  * application delays.  The core API for this capability is
- * lBSP430uptimeSleepUntil_ni() and #BSP430_UPTIME_DELAY_MS_NI().
+ * lBSP430uptimeSleepUntil() and #BSP430_UPTIME_DELAY_MS_NI().
  *
  * @note Applications that use the delay functionality should normally
  * enable #configBSP430_CORE_LPM_EXIT_CLEAR_GIE.  See discussion at
- * lBSP430uptimeSleepUntil_ni().
+ * lBSP430uptimeSleepUntil().
  *
  * @cppflag
  * @defaulted */
@@ -461,11 +461,11 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
  *
  * @dependency #configBSP430_UPTIME_DELAY */
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
-long lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
-                                 unsigned int lpm_bits);
+long lBSP430uptimeSleepUntil (unsigned long setting_utt,
+                              unsigned int lpm_bits);
 #endif /* configBSP430_UPTIME_DELAY */
 
-/** Enable or disable the alarm used by ulBSP430uptimeDelayUntil_ni().
+/** Enable or disable the alarm used by ulBSP430uptimeDelayUntil().
  *
  * This delegates to iBSP430timerAlarmSetEnabled_ni().
  *
@@ -479,7 +479,7 @@ int iBSP430uptimeDelaySetEnabled_ni (int enablep);
 
 /** Macro to simplify basic delay-in-ticks operations
  *
- * This invokes lBSP430uptimeSleepUntil_ni() in a loop for a specified
+ * This invokes lBSP430uptimeSleepUntil() in a loop for a specified
  * duration or until another event has occurred.
  *
  * @param delay_utt_ duration, in uptime ticks, that application should sleep
@@ -497,9 +497,22 @@ int iBSP430uptimeDelaySetEnabled_ni (int enablep);
 #define BSP430_UPTIME_DELAY_UTT_NI(delay_utt_, lpm_bits_, exit_expr_) do { \
     unsigned long wake_utt;                                             \
     wake_utt = ulBSP430uptime_ni() + (delay_utt_);                      \
-    while ((! (exit_expr_)) && (0 < lBSP430uptimeSleepUntil_ni(wake_utt, lpm_bits_))) { \
+    while ((! (exit_expr_)) && (0 < lBSP430uptimeSleepUntil(wake_utt, lpm_bits_))) { \
       /* nop */                                                         \
     }                                                                   \
+  } while (0)
+#endif /* configBSP430_UPTIME_DELAY */
+
+/** Wrapper around BSP430_UPTIME_DELAY_UTT_NI() suitable for use when
+ * interrupts are enabled.
+ *
+ * @dependency #configBSP430_UPTIME_DELAY */
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
+#define BSP430_UPTIME_DELAY_UTT(delay_utt_, lpm_bits_, exit_expr_) do { \
+    BSP430_CORE_SAVED_INTERRUPT_STATE(istate);                          \
+    BSP430_CORE_DISABLE_INTERRUPT();                                    \
+    BSP430_UPTIME_DELAY_UTT_NI(BSP430_UPTIME_UTT_TO_UTT(delay_utt_), lpm_bits_, exit_expr_); \
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);                        \
   } while (0)
 #endif /* configBSP430_UPTIME_DELAY */
 
@@ -520,6 +533,19 @@ int iBSP430uptimeDelaySetEnabled_ni (int enablep);
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
 #define BSP430_UPTIME_DELAY_MS_NI(delay_ms_, lpm_bits_, exit_expr_) do { \
     BSP430_UPTIME_DELAY_UTT_NI(BSP430_UPTIME_MS_TO_UTT(delay_ms_), lpm_bits_, exit_expr_); \
+  } while (0)
+#endif /* configBSP430_UPTIME_DELAY */
+
+/** Wrapper around BSP430_UPTIME_DELAY_MS_NI() suitable for use when
+ * interrupts are enabled.
+ *
+ * @dependency #configBSP430_UPTIME_DELAY */
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_DELAY - 0)
+#define BSP430_UPTIME_DELAY_MS(delay_ms_, lpm_bits_, exit_expr_) do {   \
+    BSP430_CORE_SAVED_INTERRUPT_STATE(istate);                          \
+    BSP430_CORE_DISABLE_INTERRUPT();                                    \
+    BSP430_UPTIME_DELAY_UTT_NI(BSP430_UPTIME_MS_TO_UTT(delay_ms_), lpm_bits_, exit_expr_); \
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);                        \
   } while (0)
 #endif /* configBSP430_UPTIME_DELAY */
 

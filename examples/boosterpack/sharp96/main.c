@@ -187,7 +187,7 @@ void main ()
       iBSP430sharplcdRefreshDisplay_rh(dev);
       wake_utt += stable_interval_utt;
     }
-    rem = lBSP430uptimeSleepUntil_ni(wake_utt, LPM3_bits);
+    rem = lBSP430uptimeSleepUntil(wake_utt, LPM3_bits);
     if (0 < rem) {
       cprintf("woke early, button active %u\n", button_state.active);
     }

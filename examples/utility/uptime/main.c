@@ -48,7 +48,7 @@ void main ()
     long rem;
     int rc;
 
-    rem = lBSP430uptimeSleepUntil_ni(wake_utt, LPM1_bits);
+    rem = lBSP430uptimeSleepUntil(wake_utt, LPM1_bits);
     if (0 >= rem) {
       wake_utt += APP_DELAY_UTT;
     }

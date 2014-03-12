@@ -278,7 +278,7 @@ void main ()
     cprintf("\tRaw pressure %lu becomes %lu Pa or %lu cinHg\n", up, pres_Pa, pres_cinHg);
 
     resample_wake_utt += resample_interval_utt;
-    while (0 < lBSP430uptimeSleepUntil_ni(resample_wake_utt, LPM3_bits)) {
+    while (0 < lBSP430uptimeSleepUntil(resample_wake_utt, LPM3_bits)) {
     }
   } while (1);
   cprintf("Error: RC %d\n", rc);

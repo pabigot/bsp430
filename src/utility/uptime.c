@@ -233,31 +233,38 @@ iBSP430uptimeDelaySetEnabled_ni (int enablep)
 }
 
 long
-lBSP430uptimeSleepUntil_ni (unsigned long setting_utt,
-                            unsigned int lpm_bits)
+lBSP430uptimeSleepUntil (unsigned long setting_utt,
+                         unsigned int lpm_bits)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  long rv = 0;
   int rc;
 
-  /* Exit immediately unless the alarm callback is registered. */
-  if (! (DELAY_ALARM_REGISTERED & delayAlarm_.flags)) {
-    return 0;
-  }
-  delayAlarm_.flags &= ~DELAY_ALARM_FIRED;
-  rc = iBSP430timerAlarmSet_ni(H_delayAlarm, setting_utt);
-  if (0 != rc) {
-    return 0;
-  }
-  /* Sleep until the alarm goes off, or something else wakes us up.
-   * Immediately disable the interrupts as that probably was not done
-   * during wakeup. */
-  BSP430_CORE_LPM_ENTER_NI(lpm_bits);
   BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    /* Exit immediately unless the alarm callback is registered. */
+    if (! (DELAY_ALARM_REGISTERED & delayAlarm_.flags)) {
+      break;
+    }
+    delayAlarm_.flags &= ~DELAY_ALARM_FIRED;
+    rc = iBSP430timerAlarmSet_ni(H_delayAlarm, setting_utt);
+    if (0 != rc) {
+      break;
+    }
+    /* Sleep until the alarm goes off, or something else wakes us up.
+     * Immediately disable the interrupts in the unlikely event the
+     * interrupt return enabled them. */
+    BSP430_CORE_LPM_ENTER_NI(lpm_bits);
+    BSP430_CORE_DISABLE_INTERRUPT();
 
-  /* Cancel the alarm if it hasn't fired yet. */
-  if (! (delayAlarm_.flags & DELAY_ALARM_FIRED)) {
-    (void)iBSP430timerAlarmCancel_ni(H_delayAlarm);
-  }
-  return setting_utt - ulBSP430uptime_ni();
+    /* Cancel the alarm if it hasn't fired yet. */
+    if (! (delayAlarm_.flags & DELAY_ALARM_FIRED)) {
+      (void)iBSP430timerAlarmCancel_ni(H_delayAlarm);
+    }
+    rv = setting_utt - ulBSP430uptime_ni();
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 #endif /* configBSP430_UPTIME_DELAY */

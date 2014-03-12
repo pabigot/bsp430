@@ -40,12 +40,7 @@ void main ()
   ADC12CTL0 = REFON | REF2_5V;
 
   /* Delay 17ms to allow REF to stabilize */
-  {
-    unsigned long wake_utt = ulBSP430uptime_ni() + BSP430_UPTIME_MS_TO_UTT(17);
-    while (0 < lBSP430uptimeSleepUntil_ni(wake_utt, LPM0_bits)) {
-      /* nop */
-    }
-  }
+  BSP430_UPTIME_DELAY_MS(17, LPM0_bits, 0);
 
   DAC12_0CTL = DAC12IR + DAC12AMP_5 + DAC12ENC; // Int ref gain 1
 
