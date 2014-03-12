@@ -1,4 +1,4 @@
-/* Copyright (c) 2012, Peter A. Bigot
+/* Copyright (c) 2012-2014, Peter A. Bigot
  *
  * All rights reserved.
  *

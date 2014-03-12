@@ -1,4 +1,4 @@
-/* Copyright 2013, Peter A. Bigot
+/* Copyright 2013-2014, Peter A. Bigot
  *
  * All rights reserved.
  *
@@ -41,7 +41,7 @@
  * in a system.
  *
  * @homepage http://github.com/pabigot/bsp430
- * @copyright Copyright 2013, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ * @copyright Copyright 2013-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
 #ifndef BSP430_UTILITY_EUI64_H
