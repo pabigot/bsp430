@@ -280,6 +280,20 @@ ulBSP430uptime (void)
 {
   return ulBSP430timerCounter(hBSP430uptimeTimer(), 0);
 }
+
+/** Return the low word of the system uptime counter.
+ *
+ * This is suitable for use by applications that wish to configure
+ * capture/compare registers on hBSP430uptimeTimer().
+ */
+static BSP430_CORE_INLINE
+unsigned int
+uiBSP430uptimeCounter_ni (void)
+{
+  hBSP430halTIMER utp = hBSP430uptimeTimer();
+  return uiBSP430timerBestCounterRead_ni(utp->hpl, utp->hal_state.flags);
+}
+
 #endif /* BSP430_UPTIME */
 
 /** Configure the system uptime clock.
