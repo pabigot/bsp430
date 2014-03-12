@@ -5,6 +5,7 @@
  *
  */
 
+#include <string.h>
 #include <bsp430/platform.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/port.h>
@@ -12,6 +13,7 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/onewire.h>
 #include <bsp430/periph/timer.h>
+#include <bsp430/sensors/hh10d.h>
 
 /* Sanity check that the features we requested are present */
 #if ! (BSP430_CONSOLE - 0)
@@ -26,61 +28,24 @@
 #error No HH10D port specified
 #endif /* APP_HH10D_PORT_PERIPH_HANDLE */
 
-struct sHH10D {
-  sBSP430halISRIndexedChainNode cb;
-  volatile sBSP430hplTIMER * freq_timer;
-  int uptime_ccidx;
-  unsigned int sample_duration_utt;
-  unsigned int last_capture;
-  unsigned int last_period_count;
-};
-
-static int
-hh10d_1Hz_isr_ni (const struct sBSP430halISRIndexedChainNode *cb,
-                  void *context,
-                  int idx)
-{
-  volatile struct sHH10D * hh10d = (struct sHH10D *)cb;
-  unsigned int capture;
-  hBSP430halTIMER timer = (hBSP430halTIMER)context;
-  vBSP430ledSet(0, -1);
-
-  /* Record the HH10D counter, schedule the next wakeup, then return
-   * waking the MCU and inhibiting further interrupts when active. */
-  capture = uiBSP430timerSafeCounterRead_ni(hh10d->freq_timer);
-  hh10d->last_period_count = capture - hh10d->last_capture;
-  hh10d->last_capture = capture;
-  timer->hpl->ccr[idx] += hh10d->sample_duration_utt;
-  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
-}
-
-static struct sHH10D hh10d = {
-  .cb = { .callback_ni = hh10d_1Hz_isr_ni },
-};
-
-static int bitToPin (int v)
-{
-  int pin = 0;
-  unsigned int bit = 1;
-  while (bit && !(v & bit)) {
-    ++pin;
-    bit <<= 1;
-  }
-  return bit ? pin : -1;
-}
+#ifndef APP_HH10D_INTERVAL_S
+#define APP_HH10D_INTERVAL_S 2
+#endif /* APP_HH10D_INTERVAL_S */
 
 void main ()
 {
+  sBSP430sensorsHH10Dstate hh10d;
+
   sBSP430halPORT * hh10d_port = hBSP430portLookup(APP_HH10D_PORT_PERIPH_HANDLE);
   hBSP430halSERIAL i2c = hBSP430serialLookup(APP_HH10D_I2C_PERIPH_HANDLE);
-  int uptime_Hz;
-  int hh10d_offs;
-  int hh10d_sens;
+  unsigned long uptime_Hz;
+  int rc;
 
   vBSP430platformInitialize_ni();
 
   (void)iBSP430consoleInitialize();
-  cprintf("\nApplication starting\n");
+  cprintf("\nhh10d " __DATE__ " " __TIME__ "\n");
+  uptime_Hz = ulBSP430uptimeConversionFrequency_Hz_ni();
   BSP430_CORE_DELAY_CYCLES(10000);
 
   if (NULL == hh10d_port) {
@@ -88,11 +53,16 @@ void main ()
     return;
   }
 
-  /* Initialize the state information used in the HH10D ISR */
+  /* Initialize the state information used in the HH10D ISR. */
+  memset(&hh10d, 0, sizeof(hh10d));
+  hh10d.cb.callback_ni = iBSP430sensorsHH10DperiodicCallback_ni;
   hh10d.freq_timer = xBSP430hplLookupTIMER(APP_HH10D_TIMER_PERIPH_HANDLE);
-  hh10d.uptime_ccidx = APP_HH10D_UPTIME_CC_INDEX;
-  uptime_Hz = ulBSP430uptimeConversionFrequency_Hz_ni();
-  hh10d.sample_duration_utt = uptime_Hz;
+  hh10d.interval_tck = APP_HH10D_INTERVAL_S * uptime_Hz;
+  hh10d.flags = BSP430_SENSORS_HH10D_FLAG_WAKE_ON_COUNT | BSP430_SENSORS_HH10D_FLAG_AUTOSAMPLE;
+
+  /* Set up so we can safely read the counter value, since the clock
+   * is asynchronous to MCLK. */
+  vBSP430timerSafeCounterInitialize_ni(hh10d.freq_timer);
 
   cprintf("HH10D I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n",
           xBSP430serialName(APP_HH10D_I2C_PERIPH_HANDLE) ?: "UNKNOWN",
@@ -103,15 +73,12 @@ void main ()
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf("Monitoring HH10D on %s.%u using timer %s\n",
           xBSP430portName(APP_HH10D_PORT_PERIPH_HANDLE) ?: "P?",
-          bitToPin(APP_HH10D_PORT_BIT),
+          iBSP430portBitPosition(APP_HH10D_PORT_BIT),
           xBSP430timerName(APP_HH10D_TIMER_PERIPH_HANDLE) ?: "T?");
-  cprintf("Uptime CC block %s.%u at %u Hz sample duration %u ticks\n",
+  cprintf("Uptime CC block %s.%u at %lu Hz sample duration %u ticks for interval %us\n",
           xBSP430timerName(BSP430_UPTIME_TIMER_PERIPH_HANDLE),
-          APP_HH10D_UPTIME_CC_INDEX, uptime_Hz, hh10d.sample_duration_utt);
-
-  /* Set up so we can safely read the counter value, since the clock
-   * is asynchronous to MCLK. */
-  vBSP430timerSafeCounterInitialize_ni(hh10d.freq_timer);
+          APP_HH10D_UPTIME_CC_INDEX, uptime_Hz,
+          hh10d.interval_tck, APP_HH10D_INTERVAL_S);
 
   i2c = hBSP430serialOpenI2C(i2c,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),
@@ -121,27 +88,12 @@ void main ()
     return;
   }
 
-  (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_HH10D_I2C_ADDRESS);
-
-  hh10d_sens = 0;
-  {
-    int rc;
-    uint8_t addr = 10;
-    uint8_t data[4];
-    rc = iBSP430i2cTxData_rh(i2c, &addr, sizeof(addr));
-    if (sizeof(addr) == rc) {
-      rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
-      if (sizeof(data) == rc) {
-        hh10d_sens = (data[0] << 8) | data[1];
-        hh10d_offs = (data[2] << 8) | data[3];
-      }
-    }
+  rc = iBSP430sensorsHH10DgetCalibration(i2c, &hh10d);
+  if (0 != rc) {
+    cprintf("ERR: getCalibration returned %d\n", rc);
+    return;
   }
-  if (hh10d_sens) {
-    cprintf("I2C read offset %u sensitivity %u\n", hh10d_offs, hh10d_sens);
-  } else {
-    cprintf("I2C read of offset and sensitivity failed\n");
-  }
+  cprintf("I2C read offset %u sensitivity %u\n", hh10d.cal_offs, hh10d.cal_sens);
 
   /* Select input peripheral function mode for CCACLK timer clock
    * signal, which is where the HH10D's frequency signal should be
@@ -151,31 +103,35 @@ void main ()
   BSP430_PORT_HAL_HPL_DIR(hh10d_port) &= ~APP_HH10D_PORT_BIT;
   hh10d.freq_timer->ctl = TASSEL_0 | MC_2 | TACLR;
 
-  /* Hook into the uptime infrastructure */
+  /* Hook into the uptime infrastructure, then set the alarm to
+   * execute immediately, synthesizing an interrupt request for the
+   * current time. */
   BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
-                                  hBSP430uptimeTimer()->cc_cbchain_ni[hh10d.uptime_ccidx],
+                                  hBSP430uptimeTimer()->cc_cbchain_ni[APP_HH10D_UPTIME_CC_INDEX],
                                   hh10d.cb,
                                   next_ni);
-  hBSP430uptimeTimer()->hpl->cctl[hh10d.uptime_ccidx] = CCIFG | CCIE;
+  hBSP430uptimeTimer()->hpl->ccr[APP_HH10D_UPTIME_CC_INDEX] = uiBSP430uptimeCounter_ni();
+  hBSP430uptimeTimer()->hpl->cctl[APP_HH10D_UPTIME_CC_INDEX] = CCIFG | CCIE;
 
   /* Configuration done; enable interrupts */
   BSP430_CORE_ENABLE_INTERRUPT();
 
-  /* The first capture is just for initialization; the count isn't
-   * useful.  The second will be the first aligned capture, which is
-   * the basis for subsequent delta calculations. */
-  BSP430_CORE_LPM_ENTER(LPM1_bits);
-  BSP430_CORE_LPM_ENTER(LPM1_bits);
-  cprintf("Initial %u\n", hh10d.last_capture);
-
   while (1) {
+    BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+    char as_text[BSP430_UPTIME_AS_TEXT_LENGTH];
+    unsigned long now_utt;
+    unsigned int lpc;
+    int hum_ppth;
+
     BSP430_CORE_LPM_ENTER(LPM1_bits);
-    cprintf("%s: Sample %u in %u uptime ticks",
-            xBSP430uptimeAsText_ni(ulBSP430uptime_ni()),
-            hh10d.last_period_count, hh10d.sample_duration_utt);
-    if (0 != hh10d_sens) {
-      cprintf(": RH %u ppt", (unsigned int)(((hh10d_offs - hh10d.last_period_count) * (10UL * hh10d_sens)) / 4096));
-    }
-    cputchar('\n');
+    BSP430_CORE_DISABLE_INTERRUPT();
+    do {
+      now_utt = ulBSP430uptime_ni();
+      lpc = hh10d.last_period_count;
+      hum_ppth = iBSP430sensorsHH10Dconvert_ppth_ni(&hh10d, APP_HH10D_INTERVAL_S);
+    } while (0);
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+    cprintf("%s: Count %u ; humidity %u ppth\n",
+            xBSP430uptimeAsText(now_utt, as_text), lpc, hum_ppth);
   }
 }
