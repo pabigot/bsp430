@@ -1,26 +1,17 @@
-/** This file is in the public domain, except as noted below:
- *
- * The sBMP085calibration structure definition and the algorithm to
- * calculate pressure and temperature from uncompensated sensor values
- * are directly derived from Figure 3 of the BST-BMP085-DS000-06.pdf
- * which specifies:
- *
- * Copyright [2011] Bosch Sensortec GmbH reserves all rights even in
- * the event of industrial property rights. We reserve all rights of
- * disposal such as copying and passing on to third parties. BOSCH and
- * the symbol are registered trademarks of Robert Bosch GmbH, Germany.
+/** This file is in the public domain.
  *
  * @homepage http://github.com/pabigot/bsp430
- *
  */
 
+#include <string.h>
 #include <bsp430/platform.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/periph/sys.h>
-#include <string.h>
+#include <bsp430/sensors/bmp180.h>
+#include <bsp430/sensors/utility.h>
 
 /* Sanity check that the features we requested are present */
 #if ! (BSP430_CONSOLE - 0)
@@ -35,93 +26,17 @@
 #define RESAMPLE_INTERVAL_MS 10000
 #endif /* RESAMPLE_INTERVAL_MS */
 
-#define BMP085_REG_CALIBRATION 0xAA
-#define BMP085_REG_CMD 0xF4
-#define BMP085_REG_DATA 0xF6
-
-#define BMP085_VAL_TEMP 0x2E
-#define BMP085_VAL_PRESSURE(oss_) (0x34 + ((0x03 & (oss_)) << 6))
-
-typedef struct sBMP085calibration {
-  int16_t ac1;
-  int16_t ac2;
-  int16_t ac3;
-  uint16_t ac4;
-  uint16_t ac5;
-  uint16_t ac6;
-  int16_t b1;
-  int16_t b2;
-  int16_t mb;
-  int16_t mc;
-  int16_t md;
-} sBMP085calibration;
-
-sBMP085calibration calib;
-
-#define TEMP_dC_TO_dF(dc_) (320 + ((dc_) * 9) / 5)
-#define PRESSURE_Pa_TO_cinHg(pa_) (((pa_) * 100) / 3386)
-
-void
-getCalibration_ni (hBSP430halSERIAL i2c,
-                   sBMP085calibration * cp)
-{
-  int rc;
-  int i;
-  uint8_t data[sizeof(*cp)];
-  uint16_t * wp;
-
-  data[0] = BMP085_REG_CALIBRATION;
-  iBSP430serialSetReset_rh(i2c, 0);
-  do {
-    rc = iBSP430i2cTxData_rh(i2c, data, 1);
-    if (0 > rc) {
-      cprintf("I2C TX ERROR %d\n", rc);
-      break;
-    }
-    memset(data, 0, sizeof(data));
-    rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
-    if (0 > rc) {
-      cprintf("I2C RX ERROR %d\n", rc);
-      break;
-    }
-  } while (0);
-  iBSP430serialSetReset_rh(i2c, 1);
-  if (0 > rc) {
-    return;
-  }
-  cprintf("Read got %d: ", rc);
-  for (i = 0; i < rc; ++i) {
-    cprintf(" %02x", data[i]);
-  }
-  cputchar('\n');
-
-  wp = (uint16_t *)cp;
-  i = 0;
-  while (i < rc) {
-    *wp++ = (data[i] << 8) | data[i+1];
-    i += 2;
-  }
-  cprintf("AC1 = %d\n", cp->ac1);
-  cprintf("AC2 = %d\n", cp->ac2);
-  cprintf("AC3 = %d\n", cp->ac3);
-  cprintf("AC4 = %u\n", cp->ac4);
-  cprintf("AC5 = %u\n", cp->ac5);
-  cprintf("AC6 = %u\n", cp->ac6);
-  cprintf("B1 = %d\n", cp->b1);
-  cprintf("B2 = %d\n", cp->b2);
-  cprintf("MB = %d\n", cp->mb);
-  cprintf("MC = %d\n", cp->mc);
-  cprintf("MD = %d\n", cp->md);
-}
-
 void main ()
 {
+  sBSP430sensorsBMP180calibration calib;
   hBSP430halSERIAL i2c = hBSP430serialLookup(APP_BMP085_I2C_PERIPH_HANDLE);
   unsigned long resample_wake_utt;
   unsigned long resample_interval_utt;
   int rc;
 
   vBSP430platformInitialize_ni();
+  BSP430_CORE_ENABLE_INTERRUPT();
+
   resample_interval_utt = BSP430_UPTIME_MS_TO_UTT(RESAMPLE_INTERVAL_MS);
 
   (void)iBSP430consoleInitialize();
@@ -135,9 +50,49 @@ void main ()
   cprintf("BMP085 I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_BMP085_I2C_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_I2C));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
 
+#if 1
+  {
+    sBSP430sensorsBMP180sample sample;
+    const int reference_dK = BSP430_SENSORS_UTILITY_dC_TO_dK(150);
+    const long reference_Pa = 69964L;
+
+    /* Values from the data sheet, for algorithm validation.
+     * Should produce temp_dC = 150, pres_Pa = 69964. */
+    calib.ac1 = 408;
+    calib.ac2 = -72;
+    calib.ac3 = -14383;
+    calib.ac4 = 32741;
+    calib.ac5 = 32757;
+    calib.ac6 = 23153;
+    calib.b1 = 6190;
+    calib.b2 = 4;
+    calib.mb = -32768;
+    calib.mc = -8711;
+    calib.md = 2868;
+
+    sample.oversampling = 0;
+    sample.temperature_uncomp = 27898;
+    sample.pressure_uncomp = 23843;
+    vBSP430sensorsBMP180convertSample(&calib, &sample);
+    if (reference_dK != sample.temperature_dK) {
+      cprintf("WARNING: Reference example temperature got %d expected %d\n",
+              sample.temperature_dK, reference_dK);
+    } else {
+      cprintf("Test matched reference temperature\n");
+    }
+    if (reference_Pa != sample.pressure_Pa) {
+      cprintf("WARNING: Reference example pressure got %ld expected %ld\n",
+              sample.pressure_Pa, reference_Pa);
+    } else {
+      cprintf("Test matched reference pressure\n");
+    }
+  }
+#endif
+
+
   /* XCLR not currently connected */
   /* 10ms delay before first communication */
-  BSP430_UPTIME_DELAY_MS_NI(10, LPM0_bits, 0);
+  BSP430_UPTIME_DELAY_MS(10, LPM0_bits, 0);
 
   i2c = hBSP430serialOpenI2C(i2c,
                              BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(UCMST),
@@ -148,134 +103,48 @@ void main ()
   }
 
   iBSP430serialSetReset_rh(i2c, 1);
-  (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_BMP085_I2C_ADDRESS);
 
-  getCalibration_ni(i2c, &calib);
-  resample_wake_utt = ulBSP430uptime_ni();
+  rc = iBSP430sensorsBMP180getCalibration(i2c, &calib);
+  if (0 != rc) {
+    cprintf("ERR: getCalibration returned %d\n", rc);
+    return;
+  }
+  cprintf("Calibration values:\n");
+  cprintf("AC1 = %d\n", calib.ac1);
+  cprintf("AC2 = %d\n", calib.ac2);
+  cprintf("AC3 = %d\n", calib.ac3);
+  cprintf("AC4 = %u\n", calib.ac4);
+  cprintf("AC5 = %u\n", calib.ac5);
+  cprintf("AC6 = %u\n", calib.ac6);
+  cprintf("B1 = %d\n", calib.b1);
+  cprintf("B2 = %d\n", calib.b2);
+  cprintf("MB = %d\n", calib.mb);
+  cprintf("MC = %d\n", calib.mc);
+  cprintf("MD = %d\n", calib.md);
+  resample_wake_utt = ulBSP430uptime();
   do {
-    sBMP085calibration * const cp = &calib;
-    uint8_t data[4];
-    int32_t ut = 0;
-    int32_t up = 0;
-    int temp_dC;
+    char as_text[BSP430_UPTIME_AS_TEXT_LENGTH];
     int temp_dF;
-    long pres_Pa;
-    long pres_cinHg;
-    int oss = 3;
+    int pres_cinHg;
+    sBSP430sensorsBMP180sample sample;
+    unsigned long start_utt;
+    unsigned long end_utt;
 
-    iBSP430serialSetReset_rh(i2c, 0);
-    do {
-      data[0] = BMP085_REG_CMD;
-      data[1] = BMP085_VAL_TEMP;
-      rc = iBSP430i2cTxData_rh(i2c, data, 2);
-      if (0 > rc) {
-        break;
-      }
-
-      /* 4.5 ms but make it 5 */
-      BSP430_UPTIME_DELAY_MS_NI(5, LPM0_bits, 0);
-
-      data[0] = BMP085_REG_DATA;
-      rc = iBSP430i2cTxData_rh(i2c, data, 1);
-      if (0 > rc) {
-        break;
-      }
-      rc = iBSP430i2cRxData_rh(i2c, data, 2);
-      if (0 > rc) {
-        break;
-      }
-      ut = data[0];
-      ut = (ut << 8) | data[1];
-
-      data[0] = BMP085_REG_CMD;
-      data[1] = BMP085_VAL_PRESSURE(oss);
-      rc = iBSP430i2cTxData_rh(i2c, data, 2);
-      if (0 > rc) {
-        break;
-      }
-
-      /* 1.5 ms plus 3 ms for each sample. */
-      BSP430_UPTIME_DELAY_MS_NI(2 + (3 << oss), LPM0_bits, 0);
-      data[0] = BMP085_REG_DATA;
-      rc = iBSP430i2cTxData_rh(i2c, data, 1);
-      if (0 > rc) {
-        break;
-      }
-      rc = iBSP430i2cRxData_rh(i2c, data, 3);
-      if (0 > rc) {
-        break;
-      }
-    } while (0);
-    iBSP430serialSetReset_rh(i2c, 1);
+    sample.oversampling = 3;
+    start_utt = ulBSP430uptime();
+    rc = iBSP430sensorsBMP180getSample(i2c, &sample);
+    end_utt = ulBSP430uptime();
     if (0 > rc) {
       break;
     }
-
-    up = data[0];
-    up = (up << 8) | data[1];
-    up = (up << 8) | data[2];
-    up >>= 8 - oss;
-
-#if 0
-    /* Values from the data sheet, for algorithm validation.
-     * Should produce temp_dC = 150, pres_Pa = 69964. */
-    oss = 0;
-    cp->ac1 = 408;
-    cp->ac2 = -72;
-    cp->ac3 = -14383;
-    cp->ac4 = 32741;
-    cp->ac5 = 32757;
-    cp->ac6 = 23153;
-    cp->b1 = 6190;
-    cp->b2 = 4;
-    cp->mb = -32768;
-    cp->mc = -8711;
-    cp->md = 2868;
-
-    ut = 27898;
-    up = 23843;
-#endif
-
-    do {
-      int32_t x1;
-      int32_t x2;
-      int32_t x3;
-      int32_t b3;
-      uint32_t b4;
-      int32_t b5;
-      int32_t b6;
-      uint32_t b7;
-      int32_t p;
-
-      x1 = (((int32_t)ut - cp->ac6) * cp->ac5) >> 15;
-      x2 = ((int32_t)cp->mc << 11) / (x1 + cp->md);
-      b5 = x1 + x2;
-      temp_dC = (b5 + 8) >> 4;
-      b6 = b5 - 4000;
-      x1 = (cp->b2 * ((b6 * b6) >> 12)) >> 11;
-      x2 = (cp->ac2 * b6) >> 11;
-      x3 = x1 + x2;
-      b3 = ((((cp->ac1 * 4) + x3) << oss) + 2) / 4;
-      x1 = (cp->ac3 * b6) >> 13;
-      x2 = (cp->b1 * ((b6 * b6) >> 12)) >> 16;
-      x3 = ((x1 + x2) + 2) >> 2;
-      b4 = (cp->ac4 * (uint32_t)(x3 + 32768UL)) >> 15;
-      b7 = ((uint32_t)up - b3) * (50000 >> oss);
-      if (0x80000000UL > b7) {
-        p = (b7 * 2) / b4;
-      } else {
-        p = (b7 / b4) * 2;
-      }
-      x1 = (p >> 8) * (p >> 8);
-      x1 = (x1 * 3038) >> 16;
-      x2 = (-7357 * p) >> 16;
-      pres_Pa = p + ((x1 + x2 + 3791) >> 4);
-    } while (0);
-
-    temp_dF = TEMP_dC_TO_dF(temp_dC);
-    cprintf("%s: Raw temperature %lu becomes %d dC and %d dF\n", xBSP430uptimeAsText_ni(ulBSP430uptime_ni()), ut, temp_dC, temp_dF);
-    pres_cinHg = PRESSURE_Pa_TO_cinHg(pres_Pa);
-    cprintf("\tRaw pressure %lu becomes %lu Pa or %lu cinHg\n", up, pres_Pa, pres_cinHg);
+    vBSP430sensorsBMP180convertSample(&calib, &sample);
+    temp_dF = BSP430_SENSORS_UTILITY_dK_TO_dFahr(sample.temperature_dK);
+    pres_cinHg = BSP430_SENSORS_UTILITY_Pa_TO_cinHg(sample.pressure_Pa);
+    cprintf("%s: Sample in %u ms\n\tTemperature %u raw or %d dK or %d d[Fahr]\n\tpressure %lu raw or %ld Pa or %d cinHg\n",
+            xBSP430uptimeAsText(end_utt, as_text),
+            (uint16_t)BSP430_UPTIME_UTT_TO_MS(end_utt - start_utt),
+            sample.temperature_uncomp, sample.temperature_dK, temp_dF,
+            sample.pressure_uncomp, sample.pressure_Pa, pres_cinHg);
 
     resample_wake_utt += resample_interval_utt;
     while (0 < lBSP430uptimeSleepUntil(resample_wake_utt, LPM3_bits)) {

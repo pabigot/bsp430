@@ -5,5 +5,9 @@ MODULES += $(MODULES_CONSOLE) $(MODULES_UPTIME)
 MODULES += $(MODULES_TIMER)
 MODULES += periph/port
 MODULES += periph/sys
+
+VPATH += $(BSP430_ROOT)/src/sensors
+MODULES += sensors/bmp180
+
 SRC=main.c
 include $(BSP430_ROOT)/examples/Makefile.common
