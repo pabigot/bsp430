@@ -11,20 +11,8 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/periph/timer.h>
 #include <bsp430/periph/sys.h>
-
-/* Address for the thing. */
-#define APP_I2C_ADDRESS 0x40
-
-#define SHT21_TRIGGER_T_HM 0xE3
-#define SHT21_TRIGGER_RH_HM 0xE5
-#define SHT21_TRIGGER_T (0x10 | SHT21_TRIGGER_T_HM)
-#define SHT21_SOFT_RESET 0xFE
-
-/** Convert a raw humidity value to per-mille */
-#define HUMIDITY_RAW_TO_PPT(raw_) (unsigned int)(((1250UL * (raw_)) >> 16) - 60)
-/** Convert a raw temperature value to deci-degrees Celcius */
-#define TEMPERATURE_RAW_TO_dC(raw_) ((-937 + (int)((((raw_) * 4393L) / 5) >> 14)) / 2)
-#define TEMPERATURE_dC_TO_dF(dc_) (320 + ((9 * (dc_)) / 5))
+#include <bsp430/sensors/sht21.h>
+#include <bsp430/sensors/utility.h>
 
 /* Sanity check that the features we requested are present */
 #if ! (BSP430_CONSOLE - 0)
@@ -35,65 +23,22 @@
 #error Uptime is not configured correctly
 #endif /* BSP430_UPTIME */
 
-int
-iSHT21ComputeCRC (const unsigned char * romp,
-                  int len)
-{
-  static const uint16_t SHT_CRC_POLY = 0x131;
-  uint8_t crc = 0;
-
-  while (0 < len--) {
-    int bi;
-
-    crc ^= *romp++;
-    for (bi = 8; bi > 0; --bi) {
-      if (crc & 0x80) {
-        crc = (crc << 1) ^ SHT_CRC_POLY;
-      } else {
-        crc <<= 1;
-      }
-    }
-  }
-  return crc;
-}
-
-int
-iSHT21readMeasurement_ni (hBSP430halSERIAL i2c,
-                          unsigned int * rawp)
-{
-  int rc;
-  uint8_t data[3];
-
-  rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
-  if (sizeof(data) != rc) {
-    return rc;
-  }
-  if (0 != iSHT21ComputeCRC(data, sizeof(data))) {
-    cprintf("CRC failed\n");
-    return -1;
-  }
-#if 0
-  cprintf("Data: %02x %02x %02x\n", data[0], data[1], data[2]);
-#endif
-  *rawp = (data[0] << 8) | data[1];
-  *rawp &= ~0x03;
-  return 0;
-}
-
 void main ()
 {
+  uint8_t eic[BSP430_SENSORS_SHT21_EIC_LENGTH];
   hBSP430halSERIAL i2c = hBSP430serialLookup(APP_I2C_PERIPH_HANDLE);
+  int i;
   int rc;
 
   vBSP430platformInitialize_ni();
 
   (void)iBSP430consoleInitialize();
-  cprintf("\nApplication starting\n");
+  cprintf("\nsht21 " __DATE__ " " __TIME__ "\n");
 
   cprintf("I2C on %s at %p, bus rate %lu Hz, address 0x%02x\n",
           xBSP430serialName(APP_I2C_PERIPH_HANDLE) ?: "UNKNOWN",
           i2c, (unsigned long)BSP430_SERIAL_I2C_BUS_SPEED_HZ,
-          APP_I2C_ADDRESS);
+          BSP430_SENSORS_SHT21_I2C_ADDRESS);
 #if BSP430_PLATFORM_PERIPHERAL_HELP
   cprintf("I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_I2C_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_I2C));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
@@ -106,69 +51,85 @@ void main ()
     return;
   }
 
-  iBSP430serialSetReset_rh(i2c, 1);
-  (void)iBSP430i2cSetAddresses_rh(i2c, -1, APP_I2C_ADDRESS);
-
-  {
-    uint8_t cmd = SHT21_SOFT_RESET;
-    iBSP430serialSetReset_rh(i2c, 0);
-    rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
-    iBSP430serialSetReset_rh(i2c, 1);
-    cprintf("Reset got %d\n", rc);
+  rc = iBSP430sensorsSHT21eic(i2c, eic);
+  cprintf("EIC read got %d:", rc);
+  for (i = 0; i < sizeof(eic); ++i) {
+    cprintf(" %02x", eic[i]);
   }
+  cputchar('\n');
 
-  /* SHT21 wants max 15ms on power-up. */
-  BSP430_UPTIME_DELAY_MS_NI(15, LPM3_bits, 0);
+  cprintf("First config: %02x\n", iBSP430sensorsSHT21configuration (i2c, -1, -1));
+  rc = iBSP430sensorsSHT21configuration (i2c, BSP430_SENSORS_SHT21_CONFIG_H11T11, 1);
+  cprintf("Reconfig got %02x\n", rc);
+  cprintf("After config: %02x\n", iBSP430sensorsSHT21configuration (i2c, -1, -1));
+
+  rc = iBSP430sensorsSHT21reset (i2c);
+  /* SHT21 wants max 15ms delay to complete reset. */
+  BSP430_UPTIME_DELAY_MS_NI(BSP430_SENSORS_SHT21_RESET_DELAY_MS, LPM3_bits, 0);
+
+  cprintf("Reset got %d\n", rc);
+  cprintf("Actual config: %02x\n", iBSP430sensorsSHT21configuration (i2c, -1, -1));
 
   /* Need interrupts enabled for uptime overflow, but off when
    * manipulating timers and doing I2C.  Leave disabled except when
    * sleeping. */
   while (1) {
+    char as_text[BSP430_UPTIME_AS_TEXT_LENGTH];
     unsigned long t0;
     unsigned long t1;
     unsigned int t_raw;
     unsigned int t_ms;
-    int t_dC;
-    uint8_t cmd;
     unsigned int rh_raw;
     unsigned int rh_ms;
-    int rh_ppt;
+    int nhiters = 0;
 
-    iBSP430serialSetReset_rh(i2c, 0);
     t0 = ulBSP430uptime_ni();
-    cmd = SHT21_TRIGGER_T_HM;
-    rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
-    if (1 != rc) {
+    rc = iBSP430sensorsSHT21initiateMeasurement(i2c, 1, eBSP430sensorsSHT21measurement_TEMPERATURE);
+    if (0 != rc) {
       cprintf("T_HM failed %d\n", rc);
       break;
     }
-    rc = iSHT21readMeasurement_ni(i2c, &t_raw);
-    if (0 > rc) {
-      break;
-    }
+    rc = iBSP430sensorsSHT21getSample(i2c, 1, &t_raw);
     t1 = ulBSP430uptime_ni();
     t_ms = BSP430_UPTIME_UTT_TO_MS(t1-t0);
-
-    t0 = ulBSP430uptime_ni();
-    cmd = SHT21_TRIGGER_RH_HM;
-    rc = iBSP430i2cTxData_rh(i2c, &cmd, sizeof(cmd));
-    if (1 != rc) {
-      cprintf("RH_HM failed %d\n", rc);
-      break;
-    }
-    rc = iSHT21readMeasurement_ni(i2c, &rh_raw);
     if (0 > rc) {
       break;
+    }
+    if (0 != rc) {
+      cprintf("ERR: Temperature CRC failed %02x\n", rc);
+    }
+
+    t0 = ulBSP430uptime_ni();
+    rc = iBSP430sensorsSHT21initiateMeasurement(i2c, 0, eBSP430sensorsSHT21measurement_HUMIDITY);
+    if (0 != rc) {
+      cprintf("RN_NH failed %d\n", rc);
+      break;
+    }
+    do {
+      rc = iBSP430sensorsSHT21getSample(i2c, 0, &rh_raw);
+      if (0 > rc) {
+        BSP430_UPTIME_DELAY_MS_NI(1, LPM0_bits, 0);
+        ++nhiters;
+      }
+    } while (0 > rc);
+    if (0 != rc) {
+      cprintf("ERR: Humidity CRC failed %02x\n", rc);
     }
     t1 = ulBSP430uptime_ni();
     rh_ms = BSP430_UPTIME_UTT_TO_MS(t1-t0);
 
     iBSP430serialSetReset_rh(i2c, 1);
-    t_dC = TEMPERATURE_RAW_TO_dC(t_raw);
-    rh_ppt = HUMIDITY_RAW_TO_PPT(rh_raw);
-    cprintf("%s: ", xBSP430uptimeAsText_ni(t0));
-    cprintf("T %u raw %d dC %d dF %u ms ; ", t_raw, t_dC, TEMPERATURE_dC_TO_dF(t_dC), t_ms);
-    cprintf("RH %u raw %u ppt %u ms\n", rh_raw, rh_ppt, rh_ms);
+    cprintf("%s:\n", xBSP430uptimeAsText(t0, as_text));
+    cprintf("\tTemperature %u raw or %u cK or %u dK or %d d[Fahr] in %u ms\n",
+            t_raw,
+            BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_cK(t_raw),
+            BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_dK(t_raw),
+            BSP430_SENSORS_UTILITY_dK_TO_dFahr(BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_dK(t_raw)),
+            t_ms);
+    cprintf("\tHumidity %u raw %u ppth in %u iters %u ms \n",
+            rh_raw,
+            BSP430_SENSORS_SHT21_HUMIDITY_RAW_TO_ppth(rh_raw),
+            nhiters, rh_ms);
     BSP430_UPTIME_DELAY_MS_NI(5000, LPM3_bits, 0);
   }
   cprintf("Aborted due to error result code %d : %x\n", rc, -rc);
