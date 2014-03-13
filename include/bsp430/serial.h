@@ -729,7 +729,7 @@ int iBSP430serialSetReset_rh (hBSP430halSERIAL hal,
  * @param holdp a nonzero value if the peripheral is to be placed into
  * hold mode, and a zero value to release it from hold mode
  *
- * @return 0 f the device was previously enabled; a positive value if
+ * @return 0 if the device was previously enabled; a positive value if
  * the device was previously in hold mode. */
 static BSP430_CORE_INLINE
 int iBSP430serialSetHold_rh (hBSP430halSERIAL hal,
