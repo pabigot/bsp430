@@ -50,7 +50,7 @@
  *
  * @note @li The caller must hold the @p i2c resource
  *
- * @note @li @p i2c may be in @link iBSP340serialSetReset_rh reset
+ * @note @li @p i2c may be in @link iBSP430serialSetReset_rh reset
  * mode @endlink on entry, in which case it will be put back into
  * reset mode before returning.  @p i2c must @b not be in @link
  * iBSP430serialSetHold_rh hold mode @endlink.

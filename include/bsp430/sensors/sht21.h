@@ -49,7 +49,7 @@
  * @p i2c resource.  For most functions the following conditions apply
  * at the time the function is invoked:
  *
- * @note @li @p i2c may be in @link iBSP340serialSetReset_rh reset
+ * @note @li @p i2c may be in @link iBSP430serialSetReset_rh reset
  * mode @endlink on entry, in which case it will be put back into
  * reset mode before returning.  @p i2c must @b not be in @link
  * iBSP430serialSetHold_rh hold mode @endlink.

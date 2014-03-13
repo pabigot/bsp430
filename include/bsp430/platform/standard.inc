@@ -55,7 +55,7 @@
 
 #ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE
 /** Define to a C statement to do platform-specific operations in
- * vBSP340platformInitialize_ni() after initializing watchdog but
+ * vBSP430platformInitialize_ni() after initializing watchdog but
  * before anything else.
  *
  * @defaulted */
@@ -94,7 +94,7 @@
 
 #ifndef BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE
 /** Define to a C statement to do platform-specific operations before
- * leaving vBSP340platformInitialize_ni().
+ * leaving vBSP430platformInitialize_ni().
  *
  * @defaulted */
 #define BSP430_PLATFORM_STANDARD_INITIALIZE_EPILOGUE do { } while (0)
