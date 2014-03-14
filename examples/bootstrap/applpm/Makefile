@@ -9,4 +9,4 @@ MODULES += periph/sys
 MODULES += periph/pmm
 MODULES += lpm
 SRC=main.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

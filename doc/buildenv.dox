@@ -97,7 +97,7 @@ listing for the source file @c foo.c;
 @li Full control over how applications are downloaded into devices
 
 All of which are documented in
-<c>${BSP430_ROOT}/examples/Makefile.common</c>.  For more details read that
+<c>${BSP430_ROOT}/make/Makefile.common</c>.  For more details read that
 file and review the Makefiles in the examples directories.
 
 Here is one last example, the Makefile for the @link ex_bootstrap_applpm the

@@ -3,4 +3,4 @@ TEST_PLATFORMS_EXCLUDE=exp430fg4618 exp430g2 rf2500t
 MODULES=$(MODULES_PLATFORM)
 MODULES += $(MODULES_CONSOLE)
 SRC=main.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

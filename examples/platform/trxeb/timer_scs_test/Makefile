@@ -7,4 +7,4 @@ MODULES += utility/unittest
 MODULES += periph/timer
 MODULES += periph/port
 SRC=main.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

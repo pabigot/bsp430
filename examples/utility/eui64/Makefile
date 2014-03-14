@@ -4,4 +4,4 @@ MODULES += $(MODULES_UPTIME)
 MODULES += $(MODULES_CONSOLE)
 MODULES += $(MODULES_EUI64)
 SRC=main.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

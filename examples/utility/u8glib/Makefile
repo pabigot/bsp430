@@ -28,4 +28,4 @@ U8GLIB_SRC = \
     $(PLATFORM_U8G_PB_C) \
     $(U8GLIB_ROOT)/fntsrc/u8g_font_10x20.c
 SRC = $(U8GLIB_SRC) u8g_bsp430.c main.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

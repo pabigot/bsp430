@@ -40,6 +40,9 @@ individual commit history.
 
 \section releases_next Changes in Next Release
 
+@li @c examples/Makefile.common moved to @c make/Makefile.common.  It is
+not specific to examples, and should be made available for general use.
+
 @li lBSP430uptimeSleepUntil() renamed to eliminate suffix @c _ni as this
 function will now disable interrupts and restore the calling interrupt
 state as necessary to do its work.

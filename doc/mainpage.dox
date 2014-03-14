@@ -163,7 +163,7 @@ not have an efficient generic formatted print capability.  These functions
 are used in <bsp430/utility/console.h> by defining
 #BSP430_CONSOLE_USE_EMBTEXTF, which is enabled by the default when @c
 EMBTEXTF_ROOT is defined for use by
-<tt>${BSP430_ROOT}/examples/Makefile.common</tt>.
+<tt>${BSP430_ROOT}/make/Makefile.common</tt>.
 
 \subsection mp_external_u8glib u8glib (Graphics for Embedded Systems)
 @see http://code.google.com/p/u8glib/

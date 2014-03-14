@@ -8,4 +8,4 @@ MODULES += $(MODULES_SERIAL)
 MODULES += periph/sys
 MODULES += periph/pmm
 SRC=bsp430mmc.c main.c fatfs/src/ff.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

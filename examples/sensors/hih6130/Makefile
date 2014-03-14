@@ -6,4 +6,4 @@ MODULES += $(MODULES_TIMER)
 MODULES += periph/port
 MODULES += periph/sys
 SRC=main.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

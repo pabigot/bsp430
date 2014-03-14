@@ -78,4 +78,4 @@ AUX_CPPFLAGS += -DWITH_PROFILES
 endif # WITH_PROFILES
 
 SRC=cc3000spi.c main.c $(CC3000_SRC)
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common

@@ -11,4 +11,4 @@ MODULES += sensors/skytraq
 CPPFLAGS += -Ifragpool/include
 
 SRC=main.c fragpool/src/fragpool.c
-include $(BSP430_ROOT)/examples/Makefile.common
+include $(BSP430_ROOT)/make/Makefile.common
