@@ -450,7 +450,7 @@ void main ()
 
   cprintf("\n\nadc demo, " __DATE__ " " __TIME__ "\n");
 
-  delta_wake_utt = 2 * ulBSP430uptimeConversionFrequency_Hz_ni();
+  delta_wake_utt = 2 * ulBSP430uptimeConversionFrequency_Hz();
 
   rc = initializeADC();
   cprintf("%s initialized, returned %d, ADC cal at %p, REF cal at %p\n",

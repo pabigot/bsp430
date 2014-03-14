@@ -26,7 +26,7 @@ void main ()
     long ts;
     long utt;
 
-    cprintf("Uptime timer running at %lu Hz\n", ulBSP430uptimeConversionFrequency_Hz_ni());
+    cprintf("Uptime timer running at %lu Hz\n", ulBSP430uptimeConversionFrequency_Hz());
     ts = 12345;
     utt = BSP430_UPTIME_MS_TO_UTT(ts);
     cprintf("%ld ms is %ld utt\n", ts, utt);

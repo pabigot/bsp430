@@ -158,9 +158,15 @@ vBSP430uptimeResume_ni (void)
 }
 
 unsigned long
-ulBSP430uptimeConversionFrequency_Hz_ni (void)
+ulBSP430uptimeConversionFrequency_Hz (void)
 {
-  return ulBSP430uptimeConversionFrequency_Hz_ni_;
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  unsigned long rv;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  rv = ulBSP430uptimeConversionFrequency_Hz_ni_;
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
 }
 
 unsigned long

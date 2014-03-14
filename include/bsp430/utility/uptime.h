@@ -197,7 +197,7 @@ hBSP430uptimeTimer (void)
 /** @cond DOXYGEN_EXCLUDE */
 /** This provides the conversion factor between uptime ticks and
  * normal time.  It is not for direct reference by users; see
- * ulBSP430uptimeConversionFrequency_Hz_ni(). */
+ * ulBSP430uptimeConversionFrequency_Hz(). */
 extern unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
 /** @endcond */
 #endif /* BSP430_UPTIME */
@@ -219,7 +219,7 @@ extern unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
  * its value.
  *
  * @return The conversion frequency of the uptime clock, in Hz. */
-unsigned long ulBSP430uptimeConversionFrequency_Hz_ni (void);
+unsigned long ulBSP430uptimeConversionFrequency_Hz (void);
 
 /** Set the uptime frequency that will be used for tick/time conversion.
  *
@@ -242,16 +242,16 @@ unsigned long ulBSP430uptimeSetConversionFrequency_ni (unsigned long frequency_H
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
 /** Convert from milliseconds to ticks of the uptime timer.
  * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
-#define BSP430_UPTIME_MS_TO_UTT(ms_) BSP430_CORE_MS_TO_TICKS((ms_), ulBSP430uptimeConversionFrequency_Hz_ni_)
+#define BSP430_UPTIME_MS_TO_UTT(ms_) BSP430_CORE_MS_TO_TICKS((ms_), ulBSP430uptimeConversionFrequency_Hz())
 /** Convert from ticks of the uptime timer to milliseconds.
  * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
-#define BSP430_UPTIME_UTT_TO_MS(utt_) BSP430_CORE_TICKS_TO_MS((utt_), ulBSP430uptimeConversionFrequency_Hz_ni_)
+#define BSP430_UPTIME_UTT_TO_MS(utt_) BSP430_CORE_TICKS_TO_MS((utt_), ulBSP430uptimeConversionFrequency_Hz())
 /** Convert from microseconds to ticks of the uptime timer.
  * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
-#define BSP430_UPTIME_US_TO_UTT(us_) BSP430_CORE_US_TO_TICKS((us_), ulBSP430uptimeConversionFrequency_Hz_ni_)
+#define BSP430_UPTIME_US_TO_UTT(us_) BSP430_CORE_US_TO_TICKS((us_), ulBSP430uptimeConversionFrequency_Hz())
 /** Convert from ticks of the uptime timer to microseconds.
  * @note Evaluation is valid only when the uptime timer is running.  The result is rounded down. */
-#define BSP430_UPTIME_UTT_TO_US(utt_) BSP430_CORE_TICKS_TO_US((utt_), ulBSP430uptimeConversionFrequency_Hz_ni_)
+#define BSP430_UPTIME_UTT_TO_US(utt_) BSP430_CORE_TICKS_TO_US((utt_), ulBSP430uptimeConversionFrequency_Hz())
 #endif /* BSP430_UPTIME */
 
 #if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
@@ -323,7 +323,7 @@ void vBSP430uptimeSuspend_ni (void);
  *
  * The clocks are re-enabled to continue counting from their last
  * recorded value.  Also, the conversion frequency used by
- * ulBSP430uptimeConversionFrequency_Hz_ni() is updated based on the
+ * ulBSP430uptimeConversionFrequency_Hz() is updated based on the
  * current timer configuration.
  */
 void vBSP430uptimeResume_ni (void);
@@ -346,8 +346,8 @@ void vBSP430uptimeResume_ni (void);
  * space-padded hours will be included as well, and minutes will be
  * zero-padded.
  *
- * The conversion factor from
- * ulBSP430uptimeConversionFrequency_Hz_ni() is used.
+ * The conversion factor from ulBSP430uptimeConversionFrequency_Hz()
+ * is used.
  *
  * @param duration_utt a duration in uptime ticks
  *

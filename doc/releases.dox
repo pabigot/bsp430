@@ -44,6 +44,10 @@ individual commit history.
 function will now disable interrupts and restore the calling interrupt
 state as necessary to do its work.
 
+@li ulBSP430uptimeConversionFrequency_Hz() renamed to eliminate
+suffix @c _ni as this function will now disable interrupts and restore
+the calling interrupt state as necessary to do its work.
+
 \section releases_20140301 Changes in Release 20140310
 
 @li Fix LPM5 locking on FR58xx devices (not reported as an issue, bad me)

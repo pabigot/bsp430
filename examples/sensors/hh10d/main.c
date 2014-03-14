@@ -45,7 +45,7 @@ void main ()
 
   (void)iBSP430consoleInitialize();
   cprintf("\nhh10d " __DATE__ " " __TIME__ "\n");
-  uptime_Hz = ulBSP430uptimeConversionFrequency_Hz_ni();
+  uptime_Hz = ulBSP430uptimeConversionFrequency_Hz();
   BSP430_CORE_DELAY_CYCLES(10000);
 
   if (NULL == hh10d_port) {

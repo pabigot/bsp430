@@ -64,7 +64,7 @@ void main ()
   cprintf("\nHere we go...\n");
 
   cprintf("Uptime now %lu with frequency %lu Hz\n",
-          ulBSP430uptime_ni(), ulBSP430uptimeConversionFrequency_Hz_ni());
+          ulBSP430uptime_ni(), ulBSP430uptimeConversionFrequency_Hz());
 
   cprintf("Monitoring DS18xx on %s.%u ; ",
           xBSP430portName(BSP430_PORT_HAL_GET_PERIPH_HANDLE(bus->port)) ?: "P?",

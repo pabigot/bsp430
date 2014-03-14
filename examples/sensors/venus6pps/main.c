@@ -208,7 +208,7 @@ void main ()
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
 
-  utt_per_sec = ulBSP430uptimeConversionFrequency_Hz_ni();
+  utt_per_sec = ulBSP430uptimeConversionFrequency_Hz();
 
   cprintf("\n\nrtc " __DATE__ " " __TIME__ "\n");
   cprintf("Uptime clock uses %lu Hz\n", utt_per_sec);

@@ -373,7 +373,7 @@ cmd_responsive (const char * argstr)
   BSP430_CORE_DISABLE_INTERRUPT();
   do {
     now_utt = ulBSP430uptime_ni();
-    resp_Hz = ulBSP430uptimeConversionFrequency_Hz_ni();
+    resp_Hz = ulBSP430uptimeConversionFrequency_Hz();
     state = responsiveData;
     responsiveData.wakeups = 0;
     responsiveData.lastDump_tck = now_utt;
