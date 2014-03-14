@@ -124,7 +124,7 @@ void main ()
             t_raw,
             BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_cK(t_raw),
             BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_dK(t_raw),
-            BSP430_SENSORS_UTILITY_dK_TO_dFahr(BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_dK(t_raw)),
+            BSP430_SENSORS_CONVERT_dK_TO_dFahr(BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_dK(t_raw)),
             t_ms);
     cprintf("\tHumidity %u raw %u ppth in %u iters %u ms \n",
             rh_raw,

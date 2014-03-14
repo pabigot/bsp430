@@ -45,18 +45,22 @@
 
 /** Convert a temperature, expressed in dK (tenths of one degree
  * Kelvin) into dC (tenths of one degree Celcius). */
-#define BSP430_SENSORS_UTILITY_dK_TO_dC(dk_) ((dk_) - 2732)
+#define BSP430_SENSORS_CONVERT_dK_TO_dC(dk_) ((dk_) - 2732)
 
 /** Convert a temperature, expressed in dC (tenths of one degree
  * Celcius) into dK (tenths of one degree Kelvin). */
-#define BSP430_SENSORS_UTILITY_dC_TO_dK(dc_) ((dc_) + 2732)
+#define BSP430_SENSORS_CONVERT_dC_TO_dK(dc_) ((dc_) + 2732)
 
 /** Convert a temperature, expressed in dK (tenths of one degree
  * Kelvin) into d[Fahr] (tenths of one degree Fahrenheit). */
-#define BSP430_SENSORS_UTILITY_dK_TO_dFahr(dk_) (320 + (9 * ((dk_) - 2732)) / 5)
+#define BSP430_SENSORS_CONVERT_dK_TO_dFahr(dk_) (320 + (9 * ((dk_) - 2732)) / 5)
+
+/** Convert a temperature, expressed in dC (tenths of one degree
+ * Celcius) into d[Fahr] (tenths of one degree Fahrenheit). */
+#define BSP430_SENSORS_CONVERT_dC_TO_dFahr(dc_) BSP430_SENSORS_CONVERT_dK_TO_dFahr(BSP430_SENSORS_CONVERT_dC_TO_dK(dc_))
 
 /** Convert a pressure, expressed in Pa (Pascals) into cinHg
  * (hundredths of inches of mercury). */
-#define BSP430_SENSORS_UTILITY_Pa_TO_cinHg(pa_) ((int)(((pa_) * 100L) / 3386))
+#define BSP430_SENSORS_CONVERT_Pa_TO_cinHg(pa_) ((int)(((pa_) * 100L) / 3386))
 
 #endif /* BSP430_SENSORS_UTILITY_H */

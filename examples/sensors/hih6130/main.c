@@ -11,6 +11,7 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/periph/timer.h>
 #include <bsp430/periph/sys.h>
+#include <bsp430/sensors/utility.h>
 
 /* Sanity check that the features we requested are present */
 #if ! (BSP430_CONSOLE - 0)
@@ -57,7 +58,6 @@ void main ()
 #define HUMIDITY_RAW_TO_PPT(raw_) ((unsigned int)((1000UL * (raw_)) / DENOMINATOR))
   /** Convert a raw temperature value to deci-degrees Celcius */
 #define TEMPERATURE_RAW_TO_dC(raw_) ((int)(-400 + (1650L * (raw_)) / DENOMINATOR))
-#define TEMPERATURE_dC_TO_dF(dc_) (320 + ((9 * (dc_)) / 5))
 
   /* Need interrupts enabled for uptime overflow, but off when
    * manipulating timers and doing I2C.  Leave disabled except when
@@ -111,9 +111,10 @@ void main ()
       break;
     }
     cprintf("%s: ", xBSP430uptimeAsText_ni(t0));
-    cprintf("Temp %d dF, humidity %u ppt, in %s\n", TEMPERATURE_dC_TO_dF(TEMPERATURE_RAW_TO_dC(temp_raw)),
+    cprintf("Temp %d dF, humidity %u ppt, in %u ms\n",
+            BSP430_SENSORS_CONVERT_dC_TO_dFahr(TEMPERATURE_RAW_TO_dC(temp_raw)),
             HUMIDITY_RAW_TO_PPT(hum_raw),
-            xBSP430uptimeAsText_ni(t1 - t0));
+            (uint16_t)BSP430_UPTIME_UTT_TO_MS(t1 - t0));
     BSP430_UPTIME_DELAY_MS_NI(5000, LPM3_bits, 0);
   }
   cprintf("Aborted due to result code %d\n", rc);

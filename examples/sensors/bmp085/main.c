@@ -53,7 +53,7 @@ void main ()
 #if 1
   {
     sBSP430sensorsBMP180sample sample;
-    const int reference_dK = BSP430_SENSORS_UTILITY_dC_TO_dK(150);
+    const int reference_dK = BSP430_SENSORS_CONVERT_dC_TO_dK(150);
     const long reference_Pa = 69964L;
 
     /* Values from the data sheet, for algorithm validation.
@@ -138,8 +138,8 @@ void main ()
       break;
     }
     vBSP430sensorsBMP180convertSample(&calib, &sample);
-    temp_dF = BSP430_SENSORS_UTILITY_dK_TO_dFahr(sample.temperature_dK);
-    pres_cinHg = BSP430_SENSORS_UTILITY_Pa_TO_cinHg(sample.pressure_Pa);
+    temp_dF = BSP430_SENSORS_CONVERT_dK_TO_dFahr(sample.temperature_dK);
+    pres_cinHg = BSP430_SENSORS_CONVERT_Pa_TO_cinHg(sample.pressure_Pa);
     cprintf("%s: Sample in %u ms\n\tTemperature %u raw or %d dK or %d d[Fahr]\n\tpressure %lu raw or %ld Pa or %d cinHg\n",
             xBSP430uptimeAsText(end_utt, as_text),
             (uint16_t)BSP430_UPTIME_UTT_TO_MS(end_utt - start_utt),
