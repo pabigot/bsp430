@@ -636,9 +636,17 @@ cmd_wlan_smart_start (const char * argstr)
   long rc;
 
   /* This has to be TTT.  It doesn't matter what you pass as long as
-   * it's non-null; SP 1.10.1 through 1.12 (at least) will use TTT. */
-  rc = wlan_smart_config_set_prefix("TTT");
-  cprintf("Prefix set returned %ld\n", rc);
+   * it's non-null; SP 1.10.1 through 1.12 (at least) will use TTT.
+   * In fact, it will helpfully overwrite whatever you pass in so that
+   * you know you're using TTT.  So you can't pass a string literal
+   * unless your MCU allows you to write into flash, which is probably
+   * a bad thing to promote given the use of FRAM devices. */
+  {
+    char prefix[] = "123";
+    cprintf("Setting prefix to '%s'\n", prefix);
+    rc = wlan_smart_config_set_prefix(prefix);
+    cprintf("Prefix set returned %ld, now '%s'\n", rc, prefix);
+  }
 
   (void)iBSP430cliStoreExtractedUI(&argstr, &argstr_len, &encrypted);
   if (encrypted) {
