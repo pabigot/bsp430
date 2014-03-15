@@ -46,7 +46,7 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/periph/port.h>
 #include <bsp430/serial.h>
-#include "cc3000spi.h"
+#include <bsp430/rf/cc3000.h>
 #include <cc3000/wlan.h>
 #include <cc3000/hci.h>
 #include <cc3000/spi.h>

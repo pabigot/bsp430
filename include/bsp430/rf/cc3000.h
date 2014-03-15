@@ -47,8 +47,8 @@
  * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
 
-#ifndef BSP430_UTILITY_CC3000SPI_H
-#define BSP430_UTILITY_CC3000SPI_H
+#ifndef BSP430_RF_CC3000_H
+#define BSP430_RF_CC3000_H
 
 #include <bsp430/platform.h>
 #include <cc3000/cc3000_common.h>
@@ -113,6 +113,129 @@
 #define BSP430_CC3000SPI_TX_BUFFER_SIZE 400
 #endif /* BSP430_CC3000SPI_TX_BUFFER_SIZE */
 
+/** Define to a true value to indicate intent to use a <a
+ * href="http://www.ti.com/tool/cc3000boost">CC3000BOOST</a>
+ * boosterpack.
+ *
+ * This selects the boosterpack pin mapping in preference to the
+ * default RFEM pin mapping.
+ *
+ * @cppflag
+ * @defaulted
+ */
+#ifndef configBSP430_RF_CC3000BOOST
+#define configBSP430_RF_CC3000BOOST 0
+#endif /* configBSP430_RF_CC3000BOOST */
+
+#if defined(BSP430_DOXYGEN)
+
+/** The @link #BSP430_PERIPH_CPPID_NONE CPPID@endlink associated with
+ * the serial device serving as the SPI interface to the CC3000
+ * radio. */
+#define BSP430_RF_CC3000_SPI_PERIPH_CPPID include <bsp430/platform.h>
+
+/** The serial peripheral serving as the SPI interface to the CC3000
+ * radio. */
+#define BSP430_RF_CC3000_SPI_PERIPH_HANDLE include <bsp430/platform.h>
+
+/* -- Begin material from genrf */
+
+/** BSP430 peripheral handle for port on which CSn is placed.
+ *
+ * The CSn signal is ***FILL IN HERE***
+ */
+#define BSP430_RF_CC3000_CSn_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+
+/** BSP430 peripheral handle for port on which IRQn is placed.
+ *
+ * The IRQn signal is ***FILL IN HERE***
+ */
+#define BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+
+/** BSP430 peripheral handle for port on which PWR_EN is placed.
+ *
+ * The PWR_EN signal is ***FILL IN HERE***
+ */
+#define BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE include <bsp430/platform.h>
+/* *** END OF CUSTOMIZED DECLARATIONS */
+
+
+/** Preprocessor-compatible identifier corresponding to #BSP430_RF_CC3000_CSn_PORT_PERIPH_HANDLE.
+ *
+ * @see #BSP430_PERIPH_CPPID_NONE
+ */
+#define BSP430_RF_CC3000_CSn_PORT_PERIPH_CPPID include <bsp430/platform.h>
+
+/** Port bit on #BSP430_RF_CC3000_CSn_PORT_PERIPH_HANDLE for CSn.
+ *
+ * This is the bit mask, not a bit position.
+ */
+#define BSP430_RF_CC3000_CSn_PORT_BIT include <bsp430/platform.h>
+
+/** Preprocessor-compatible identifier corresponding to #BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE.
+ *
+ * @see #BSP430_PERIPH_CPPID_NONE
+ */
+#define BSP430_RF_CC3000_IRQn_PORT_PERIPH_CPPID include <bsp430/platform.h>
+
+/** Preprocessor-compatible identifier corresponding to #BSP430_RF_CC3000_IRQn_TIMER_PERIPH_HANDLE.
+ *
+ * This macro is defined only if IRQn is connected to a port that
+ * supports capture of a timer counter based on signal changes.
+ *
+ * @see #BSP430_PERIPH_CPPID_NONE
+ */
+#define BSP430_RF_CC3000_IRQn_TIMER_PERIPH_CPPID include <bsp430/platform.h>
+
+/** Port bit on #BSP430_RF_CC3000_IRQn_PORT_PERIPH_HANDLE for IRQn.
+ *
+ * This is the bit mask, not a bit position.
+ */
+#define BSP430_RF_CC3000_IRQn_PORT_BIT include <bsp430/platform.h>
+
+/** BSP430 peripheral handle for timer connected to IRQn.
+ *
+ * This macro is defined only if IRQn is connected to a port that
+ * supports capture of a timer counter based on signal changes.
+ */
+#define BSP430_RF_CC3000_IRQn_TIMER_PERIPH_HANDLE include <bsp430/platform.h>
+
+/** The capture/compare index on #BSP430_RF_CC3000_IRQn_TIMER_PERIPH_HANDLE
+ * corresponding to IRQn.
+ *
+ * This macro is defined only if IRQn is connected to a port that
+ * supports capture of a timer counter based on signal changes.
+ *
+ * @see #BSP430_RF_CC3000_IRQn_TIMER_CCIS
+ */
+#define BSP430_RF_CC3000_IRQn_TIMER_CCIDX include <bsp430/platform.h>
+
+/** The capture/compare input selector necessary to capture any signal
+ * changes associated with CC3000 IRQn.
+ *
+ * This macro is defined only if IRQn is connected to a port that
+ * supports capture of a timer counter based on signal changes.
+ *
+ * @see #BSP430_RF_CC3000_IRQn_TIMER_CCIDX
+ */
+#define BSP430_RF_CC3000_IRQn_TIMER_CCIS include <bsp430/platform.h>
+
+/** Preprocessor-compatible identifier corresponding to #BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE.
+ *
+ * @see #BSP430_PERIPH_CPPID_NONE
+ */
+#define BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_CPPID include <bsp430/platform.h>
+
+/** Port bit on #BSP430_RF_CC3000_PWR_EN_PORT_PERIPH_HANDLE for PWR_EN.
+ *
+ * This is the bit mask, not a bit position.
+ */
+#define BSP430_RF_CC3000_PWR_EN_PORT_BIT include <bsp430/platform.h>
+
+/* -- End material from genrf */
+
+#endif /* BSP430_DOXYGEN */
+
 /** BSP430 wrapper around CC3000 wlan_init().
  *
  * This interface provides access to user-level callbacks, and adds
@@ -142,4 +265,4 @@ int iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
                                 tDriverPatches driver_patch_fn,
                                 tBootLoaderPatches boot_loader_patch_fn);
 
-#endif /* BSP430_UTILITY_CC3000SPI_H */
+#endif /* BSP430_RF_CC3000_H */

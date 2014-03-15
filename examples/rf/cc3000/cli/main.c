@@ -17,7 +17,7 @@
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>
 #include <bsp430/utility/cli.h>
-#include "cc3000spi.h"
+#include <bsp430/rf/cc3000.h>
 #include <cc3000/host_driver_version.h>
 #include <cc3000/wlan.h>
 #include <cc3000/nvmem.h>

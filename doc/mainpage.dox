@@ -165,12 +165,23 @@ are used in <bsp430/utility/console.h> by defining
 EMBTEXTF_ROOT is defined for use by
 <tt>${BSP430_ROOT}/make/Makefile.common</tt>.
 
+\subsection mp_external_cc3000 CC3000 (SimpleLink&trade; Wi-Fi Module)
+@see http://pabigot.github.com/cc3000/
+
+This library provides a microcontroller API to the <a
+href="http://www.ti.com/product/cc3000">Texas Instruments CC3000</a>, an
+802.11 wireless network interface.  The content is from TI's host
+driver, but has been repackaged to make it easier to share among
+applications and to reduce include file namespace collisions.  The
+library as validated in BSP430 is available in a <a
+href="https://github.com/pabigot/cc3000">github repository</a>.
+
 \subsection mp_external_u8glib u8glib (Graphics for Embedded Systems)
 @see http://code.google.com/p/u8glib/
 
 This library is a general-purpose graphics library supporting liquid crystal
 displays (LCDs) commonly used on embedded platforms.  It provides a variety
-of fonts as well as graphical elements.  The library with some patches as
+of fonts as well as graphical elements.  The library as
 validated in BSP430 is available in a <a
 href="https://github.com/pabigot/u8glib">github repository</a>.
 
@@ -216,10 +227,11 @@ SPI serial abstraction
 exploration of the <a
 href="http://processors.wiki.ti.com/index.php/CC3000_Wi-Fi_for_MCU">Texas
 Instruments CC3000 SimpleLink(tm) Wi-Fi</a> evaluation module.  It
-demonstrates advanced use of the BSP430 @link bsp430/utility/cli.h command
-line interface @endlink as well as a @link bsp430/serial.h SPI interface
-@endlink to the on most TI experimenter boards through the @link
-bsp430/rf/rfem.h RFEM @endlink capabilities of BSP430.
+demonstrates advanced use of the BSP430 @link bsp430/utility/cli.h
+command line interface @endlink as well as a @link bsp430/serial.h SPI
+interface @endlink to the on most TI experimenter boards through the
+@link bsp430/rf/rfem.h RFEM @endlink or @link
+configBSP430_RF_CC3000BOOST CC3000BOOST @endlink capabilities of BSP430.
 
 \subsection ex_sensors Sensors
 

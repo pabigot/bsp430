@@ -8,41 +8,8 @@ MODULES += periph/sys
 MODULES += periph/flash
 MODULES += utility/cli
 
-# Set this to where you installed the cc3000 headers and library
-CC3000_ROOT ?= /usr/local/msp430-cc3000
-
-# Auxiliary source files for the CC3000 host driver, when not using
-# its library format.
-CC3000_SRC=
-
-# Tell BSP430's build infrastructure about the CC3000 host driver.
-# Normally use the pre-built library in CC3000_ROOT; optionally build
-# the source directly.  The latter is useful when you need to
-# instrument the library with BSP430 operations like vBSP430setLed and
-# cprintf.
-ifdef CC3000_SRC_ROOT
-# Source-build
-AUX_CPPFLAGS=-I$(CC3000_SRC_ROOT)/include
-CC3000_MODULES=cc3000_common evnt_handler hci netapp nvmem security socket wlan
-CC3000_SRC=$(CC3000_MODULES:%=$(CC3000_SRC_ROOT)/%.c)
-else # CC3000_SRC_ROOT
-# Normal library link.
-AUX_CPPFLAGS=-I$(CC3000_ROOT)/include
-AUX_LDFLAGS=-L$(CC3000_ROOT)/lib
-AUX_LDLIBS=-lcc3000
-endif # CC3000_SRC_ROOT
-
-# Use CC3000BOOST booster pack
-ifdef CC3000BOOST
-AUX_CPPFLAGS+=-DconfigBSP430_RF_CC3000BOOST=1
-endif # CC3000BOOST
-
-# EXP430G2 has too little memory
-ifeq ($(PLATFORM),exp430g2)
-AUX_CPPFLAGS+=-DBSP430_CC3000SPI_TX_BUFFER_SIZE=8
-AUX_CPPFLAGS+=-DBSP430_CC3000SPI_RX_BUFFER_SIZE=8
-WITH_UPDATE=0
-endif # exp430g2
+# Add the rules to provide external library support for the CC3000
+include $(BSP430_ROOT)/make/Makefile.cc3000
 
 # Optionally enable the nvmem update infrastructure.
 # This requires the presence of two files:
@@ -77,5 +44,5 @@ ifneq (0,$(WITH_PROFILES))
 AUX_CPPFLAGS += -DWITH_PROFILES
 endif # WITH_PROFILES
 
-SRC=cc3000spi.c main.c $(CC3000_SRC)
+SRC += main.c
 include $(BSP430_ROOT)/make/Makefile.common
