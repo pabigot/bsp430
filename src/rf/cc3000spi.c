@@ -180,11 +180,14 @@ iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
   return 0;
 }
 
+int iBSP430cc3000IRQrv;
+
 static int
 processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
                 void * context,
                 int idx)
 {
+  iBSP430cc3000IRQrv = 0;
   if (spiFlags_v_ & SPIFLAG_INITIALIZED) {
     int rv;
     const unsigned char opcode = CC3000_SPI_OPCODE_READ;
@@ -222,7 +225,7 @@ processSpiIRQ_ (const struct sBSP430halISRIndexedChainNode * cb,
      * to read, no callback to invoke. */
     spiFlags_v_ |= SPIFLAG_INITIALIZED;
   }
-  return 0;
+  return iBSP430cc3000IRQrv;
 }
 
 static sBSP430halISRIndexedChainNode spi_irq_cb = { .callback_ni = processSpiIRQ_ };

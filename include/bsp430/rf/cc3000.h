@@ -265,4 +265,16 @@ int iBSP430cc3000spiInitialize (tWlanCB wlan_cb,
                                 tDriverPatches driver_patch_fn,
                                 tBootLoaderPatches boot_loader_patch_fn);
 
+/** A global variable used to communicate the IRQ return value back to
+ * the TI driver code, since there is no other way to do that.
+ *
+ * Implementations of #tWlanCB passed to iBSP430cc3000spiInitialize()
+ * should assign a value consistent with @ref callback_retval to
+ * control wakeup behavior when unsolicited CC3000 events might
+ * require the application to wake.  The value is cleared to zero
+ * prior to invoking the application callback, so if no interrupt
+ * chain/wakeup operations are required the variable need not be
+ * updated. */
+int iBSP430cc3000IRQrv;
+
 #endif /* BSP430_RF_CC3000_H */
