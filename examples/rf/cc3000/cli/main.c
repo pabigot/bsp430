@@ -100,8 +100,8 @@ static uint32_t lebtohl (uint8_t * vp)
 {
   return ((uint32_t)vp[0]
           | ((uint32_t)vp[1] << 8)
-          | ((uint32_t)vp[1] << 16)
-          | ((uint32_t)vp[1] << 24));
+          | ((uint32_t)vp[2] << 16)
+          | ((uint32_t)vp[3] << 24));
 }
 
 volatile unsigned long lastKeepAlive_utt;
