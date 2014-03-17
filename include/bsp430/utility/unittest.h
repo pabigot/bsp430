@@ -235,21 +235,21 @@ void vBSP430unittestFinalize (void);
  * If they are not, emit a diagnostic showing both values formatted as
  * signed 32-bit decimal integers. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTld(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,int,"%" PRId32)
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,long,"%" PRId32)
 
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * unsigned 32-bit decimal integers. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTlu(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int,"%" PRIu32)
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned long,"%" PRIu32)
 
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * unsigned 32-bit hexadecimal integers. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTlx(v1_,v2_) \
-  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned int, "%#" PRIx32)
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned long, "%#" PRIx32)
 
 /** Validate that the pointer expressions are equal.
  *
