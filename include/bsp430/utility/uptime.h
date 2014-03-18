@@ -48,6 +48,62 @@
  * #BSP430_TIMER_VALID_COUNTER_READ_CCIDX is reserved for use in
  * overflow management.  Do not use or reconfigure this register.
  *
+ * @see grp_utility_uptime_epoch
+ *
+ * @homepage http://github.com/pabigot/bsp430
+ * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
+ *
+ * @defgroup grp_utility_uptime_epoch Epoch Support for the Uptime Timer
+ *
+ * @brief bsp430/utility/uptime.h data structures and functions
+ * supporting conversion between civil time and the uptime facility.
+ *
+ * @note This functionality depends on #configBSP430_UPTIME_EPOCH.
+ *
+ * The uptime clock in BSP430 supports a 32-bit monotonically
+ * non-decreasing fixed-frequency counter used for low-resolution
+ * timing.  Normally the clock is based on a 32 kiHz crystal; this can
+ * be divided, or the clock may be based on VLOCLK at roughly 10 kHz.
+ * Thus the minimum duration representable without wrapping is about
+ * 36 hours.  The *era* of the uptime clock is the number of times it
+ * has wrapped since the system started.  (For your amusement, the era
+ * can be found in the upper 16 bits of the @link
+ * sBSP430halTIMER::overflow_count overflow counter @endlink of the
+ * @link hBSP430uptimeTimer associated timer@endlink, but it is not
+ * used in this feature.)
+ *
+ * In some applications it's necessary to correlate the internal time
+ * with a time standard such as UTC.  While many MSP430s have a
+ * real-time clock that can assist in representing long durations, the
+ * key issue is registering the internal clock with a time standard.
+ * BSP430 supports this with the concept of an (uptime) *epoch*, being
+ * a representation of a time that corresponds to the start of an era,
+ * accurate to the resolution of the uptime clock.
+ *
+ * As the era can change asynchronously to epoch updates, the
+ * following expectation affect use of the uptime epoch facility:
+ *
+ * @li There is no valid epoch until the application provides one,
+ * through iBSP430uptimeSetEpochFromNTP() or
+ * iBSP430uptimeSetEpochFromTimeval().
+ *
+ * @li If there is no valid epoch, the functions that convert to time
+ * standards (e.g., iBSP430uptimeAsTimeval(),
+ * xBSP430uptimeAsPOSIXTime()) return an error.
+ *
+ * @li The epoch must be explicitly updated at least once every
+ * #BSP430_UPTIME_EPOCH_UPDATE_INTERVAL_UTT ticks (1/4 era, or about
+ * nine hours at 32 kiHz).
+ *
+ * @li Times that are to be converted must be within
+ * #BSP430_UPTIME_EPOCH_VALID_OFFSET_UTT ticks (3/8 era, or about 13
+ * hours at 32 kiHz) before or after the time the epoch was last
+ * updated.  @warning Conversion of a time outside this range will
+ * invalidate the epoch.
+ *
+ * @li The uptime epoch is invalidated when the uptime clock is @link
+ * vBSP430uptimeSuspend_ni suspended@endlink .
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -78,6 +134,40 @@
 #if defined(BSP430_DOXYGEN)
 #define BSP430_UPTIME include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
+
+/** Define to a true value to support uptime timer epochs.
+ *
+ * This flag enables infrastructure support to use the @ref
+ * grp_utility_uptime_epoch infrastructure to translate between civil
+ * time values such as UTC (represented as NTP timestamps or
+ * <tt>struct timeval</tt>) and uptime clocks, by providing a precise
+ * epoch that denotes the time at which the uptime timer last rolled
+ * over.
+ *
+ * @see grp_utility_uptime_epoch
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_UPTIME_EPOCH
+#define configBSP430_UPTIME_EPOCH 0
+#endif /* configBSP430_UPTIME_EPOCH */
+
+/** Define to a true value to support uptime-driven delays.
+ *
+ * This flag enables infrastructure support to use the @ref
+ * grp_timer_alarm infrastructure on the uptime timer to support
+ * application delays.  The core API for this capability is
+ * lBSP430uptimeSleepUntil() and #BSP430_UPTIME_DELAY_MS_NI().
+ *
+ * @note Applications that use the delay functionality should normally
+ * enable #configBSP430_CORE_LPM_EXIT_CLEAR_GIE.  See discussion at
+ * lBSP430uptimeSleepUntil().
+ *
+ * @cppflag
+ * @defaulted */
+#ifndef configBSP430_UPTIME_DELAY
+#define configBSP430_UPTIME_DELAY 0
+#endif /* configBSP430_UPTIME_DELAY */
 
 /** Define to the preprocessor-compatible identifier for a timer that
  * should be used to maintain a continuous system clock sourced from
@@ -328,12 +418,11 @@ void vBSP430uptimeSuspend_ni (void);
  */
 void vBSP430uptimeResume_ni (void);
 
-
 /** Expected length for a buffer used by xBSP430uptimeAsText().
  *
  * This macro may be used to allocate such a buffer.
  *
- * At 32 kHz resolution a 32-bit integer holding ticks can only
+ * At 32 kiHz resolution a 32-bit integer holding ticks can only
  * represent 36 hours before wrapping, but at 10 kHz resolution the
  * same counter might express up to 119 hours, so this allows
  * durations up to up to 999:59:59.999 to be expressed. */
@@ -371,23 +460,6 @@ const char * xBSP430uptimeAsText (unsigned long duration_utt,
  *
  * @deprecated Legacy interface, use xBSP430uptimeAsText(). */
 const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
-
-/** Define to a true value to support uptime-driven delays.
- *
- * This flag enables infrastructure support to use the @ref
- * grp_timer_alarm infrastructure on the uptime timer to support
- * application delays.  The core API for this capability is
- * lBSP430uptimeSleepUntil() and #BSP430_UPTIME_DELAY_MS_NI().
- *
- * @note Applications that use the delay functionality should normally
- * enable #configBSP430_CORE_LPM_EXIT_CLEAR_GIE.  See discussion at
- * lBSP430uptimeSleepUntil().
- *
- * @cppflag
- * @defaulted */
-#ifndef configBSP430_UPTIME_DELAY
-#define configBSP430_UPTIME_DELAY 0
-#endif /* configBSP430_UPTIME_DELAY */
 
 /** The capture/compare index to be used for delays.
  *
@@ -548,5 +620,312 @@ int iBSP430uptimeDelaySetEnabled_ni (int enablep);
     BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);                        \
   } while (0)
 #endif /* configBSP430_UPTIME_DELAY */
+
+#if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_EPOCH - 0)
+
+#include <sys/time.h>
+
+/** The time of the POSIX epoch (1970-01-01T00:00:00Z) as represented
+ * in integral seconds since the NTP epoch (1900-01-01T00:00:00Z).
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+#define BSP430_UPTIME_POSIX_EPOCH_NTPIS 2208988800UL
+
+/** An NTP timestamp for a time known to be within 34 years of any
+ * current server.  The calculations of offset and round trip in
+ * section 8 "On-wire Protocol" of <a
+ * href="http://tools.ietf.org/html/rfc5905">RFC5905</a> are valid
+ * only when the client and server are no more than 34 years apart.
+ * This is the epoch used when @p bypass_validity is used in
+ * iBSP430uptimeAsNTP(), as is the case when doing NTP client/server
+ * communications prior to obtaining a valid epoch.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+#define BSP430_UPTIME_BYPASS_EPOCH_NTP ((uint64_t)(BSP430_UPTIME_POSIX_EPOCH_NTPIS + 1388534400UL) << 32)
+
+/** <a href="http://tools.ietf.org/html/rfc5905#section-6">RFC5905 (NTP v4)</a>
+ * structure to represent a short-format time (more accurately, a
+ * duration, as there is no epoch).
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+typedef struct sBSP430uptimeNTPShortFormat {
+  uint16_t integral;            /**< Whole seconds */
+  uint16_t fractional;          /**< Fractional seconds */
+} sBSP430uptimeNTPShortFormat;
+
+/** <a href="http://tools.ietf.org/html/rfc5905#section-6">RFC5905
+ * (NTP v4)</a> structure to represent a timestamp, measured in 2^32
+ * Hz ticks since the NTP epoch 1900-01-01T00:00:00Z.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+typedef struct sBSP430uptimeNTPTimestamp {
+  uint32_t integral;            /**< Whole seconds */
+  uint32_t fractional;          /**< Fractional seconds */
+} sBSP430uptimeNTPTimestamp;
+
+/** <a href="http://tools.ietf.org/html/rfc5905#section-7.3">RFC5905
+ * (NTP v4)</a> packet header.  Extension fields are not supported in
+ * this implementation.
+ *
+ * @note In almost no situations does a user need to inspect or mutate
+ * the fields of this structure.  Use
+ * iBSP430uptimeInitializeNTPRequest() to initialize the structure,
+ * and iBSP430uptimeSetNTPXmtField() to set the transmission time.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+typedef struct sBSP430uptimeNTPPacketHeader {
+  uint8_t li_vn_mode;          /**< Leap indicator, version, and packet mode; fixed for client */
+  uint8_t stratum;             /**< Peer stratum, used for kiss-of-death indicator */
+  uint8_t ppoll;               /**< Unused: peer poll interval */
+  int8_t precision;            /**< Precision of clock as power of 2 (e.g. -15 for 32 kiHz) */
+  sBSP430uptimeNTPShortFormat rootdelay; /**< Unused: roundtrip delay to primary source */
+  sBSP430uptimeNTPShortFormat rootdisp;  /**< Unused: dispersion to primary source */
+  uint32_t refid;              /**< Unused: reference id */
+  sBSP430uptimeNTPTimestamp reftime; /**< Unused last update time */
+  sBSP430uptimeNTPTimestamp org;     /**< Client #xmt time stamp in packet received by server */
+  sBSP430uptimeNTPTimestamp rec;     /**< Server time when client packet received */
+  sBSP430uptimeNTPTimestamp xmt;     /**< Server time when server response transmitted */
+} sBSP430uptimeNTPPacketHeader;
+
+/** Return 0 if there is an epoch that is presumed to be valid, or a
+ * negative error if no epoch is available.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+int iBSP430uptimeCheckEpochValidity ();
+
+/** Return the uptime clock value at which the epoch was last updated.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+unsigned long ulBSP430uptimeLastEpochUpdate ();
+
+/** Return the number of uptime ticks since the epoch was last updated.
+ *
+ * A negative value is returned if the epoch is not valid, or has not
+ * been updated within the last half era.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+long lBSP430uptimeEpochAge ();
+
+/** The maximum number of uptime ticks between updates to the epoch,
+ * if epoch consistency is to be maintained.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+#define BSP430_UPTIME_EPOCH_UPDATE_INTERVAL_UTT 0x40000000L
+
+/** The maximum number of uptime ticks between an uptime value and the
+ * last time the epoch was updated that will not cause epoch
+ * invalidation if used to convert the uptime value.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+#define BSP430_UPTIME_EPOCH_VALID_OFFSET_UTT 0x60000000L
+
+/** Determine which era @p time_utt belongs to for the purposes of
+ * conversion using the current epoch.
+ *
+ * Reasons for invalidity include:
+ * @li There is no valid epoch at all (iBSP430uptimeCheckEpochValidity())
+ *
+ * @li @p time_utt is more than #BSP430_UPTIME_EPOCH_VALID_OFFSET_UTT
+ * ticks earlier or later than the time the epoch was last updated
+ *
+ * @param time_utt the time at which conversion is being proposed.
+ *
+ * @return a negative code if @p time_utt cannot be converted.
+ * Non-negative results indicate the era, relative to the era the
+ * epoch was set for, in which @p time_utt lies (0 for the preceding,
+ * 1 for the same, 2 for the next).
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+int iBSP430uptimeEpochEra (unsigned long time_utt);
+
+/** Initialize an NTP packet to serve as a request for the current time.
+ *
+ * This initializes the leap-information, version, and mode flags, and
+ * sets the precision based on the local uptime clock.  No timestamps
+ * are stored; see iBSP430uptimeNTPUpdateXmtField().
+ *
+ * @return 0 on success, a negative error code on failure.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+int iBSP430uptimeInitializeNTPRequest (sBSP430uptimeNTPPacketHeader * ntpp);
+
+/** Update the sBSP430uptimeNTPPacketHeader::xmt field.
+ *
+ * This should be called just prior to (or while) transmitting an NTP
+ * request to ensure it holds the most accurate estimate of
+ * transmission time available.
+ *
+ * @param ntpp pointer to the NTP packet to be updated
+ *
+ * @param putt pointer to the uptime clock value to be stored as
+ * transmission time.  If this is a null pointer, the current time is
+ * stored.
+ *
+ * @return 0 on success, a negative error code on failure.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch  */
+int iBSP430uptimeSetNTPXmtField (sBSP430uptimeNTPPacketHeader * ntpp,
+                                 unsigned long * putt);
+
+/** Set the uptime epoch using an absolute NTP timestamp.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch  */
+int iBSP430uptimeSetEpochFromNTP (uint64_t epoch_ntp);
+
+/** Adjust the uptime epoch using a relative NTP timestamp.
+ *
+ * @param adjustment_ntp the number of ticks of a 2^32 Hz clock that
+ * must be added to the epoch to cause the local time to coincide with
+ * a reference clock.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch  */
+int iBSP430uptimeAdjustEpochFromNTP (int64_t adjustment_ntp);
+
+/** Set the uptime epoch using an absolute Unix time value.
+ *
+ * @param tv a civil time value
+ *
+ * @param when_utt the time within the current era at which @p tv is
+ * current.
+ *
+ * @return 0 on success, otherwise a negative error code.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch  */
+int iBSP430uptimeSetEpochFromTimeval (const struct timeval * tv,
+                                      unsigned long when_utt);
+
+/** Convert a time to an NTP timestamp.
+ *
+ * @param utt count of ticks since the last time the uptime clock
+ * rolled over.
+ *
+ * @param ntpp where to store the time represented by @p utt as the
+ * number of 2^32 Hz ticks since the NTP epoch (1900-01-01T00:00:00Z).
+ *
+ * @param bypass_validation a flag that bypasses the normal check to
+ * see that the epoch is valid.  When set to a true value and the
+ * epoch is invalid, a pseudo-epoch corresponding to
+ * 2014-01-01T00:00:00Z is used so that a client NTP request packet
+ * can be formed with a valid transmission timestamp.  You will need
+ * to set this flag when obtaining the @p rec_ntp parameter to
+ * iBSP430uptimeProcessNTPResponse() when the epoch is invalid.  If
+ * the epoch is valid, this flag is ignored.
+ *
+ * @return 0 if conversion is successful, otherwise a negative error
+ * code.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch  */
+int iBSP430uptimeAsNTP (unsigned long utt,
+                        uint64_t * ntpp,
+                        int bypass_validation);
+
+/** Determine the current time to microsecond resolution by adding the
+ * uptime clock time in @p utt to a configured offset.
+ *
+ * @param utt the uptime clock value
+ *
+ * @param tv where to store the converted time.  The referenced object
+ * is left unchanged if the conversion fails.
+ *
+ * @return 0 on success, a negative error code if the epoch is not
+ * valid or something else went wrong.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch  */
+int iBSP430uptimeAsTimeval (unsigned long utt,
+                            struct timeval * tv);
+
+/** Return the current time expressed as seconds since the POSIX
+ * epoch.
+ *
+ * This invokes iBSP430uptimeAsTimeval() and returns the @c tv_sec
+ * field of the resulting structure.
+ *
+ * @note If the epoch is not valid for the time, the returned value
+ * will be @c (time_t)-1.
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+time_t xBSP430uptimeAsPOSIXTime (unsigned long utt);
+
+/** Process an NTP response.
+ *
+ * This calculates the offset between the local uptime clock and the
+ * time provided by an external server.
+ *
+ * The request and response packets are validated for server stratum,
+ * mismatched, and duplicate/bogus/replayed packets.  Failure of these
+ * checks results in an error return.
+ *
+ * @warning On successful processing, the internally-stored uptime
+ * epoch is adjusted to account for the difference between local and
+ * server times.
+ *
+ * @param req pointer to the locally-generated request packet.  This
+ * may be null if you don't care to (or cannot) validate that the
+ * response origin time matches the request transmit time.
+ *
+ * @param resp pointer to the response packet.  This must be provided
+ * and must be valid.
+ *
+ * @param rec_ntp the time when the response packet was received
+ * locally, in NTP 2^32 Hz ticks since the NTP epoch.  Use
+ * iBSP430uptimeAsNTP() to convert from a local uptime measurement.
+ *
+ * @param adjustment_ntp optional (but recommended) location into
+ * which the delta between the local time and the server will be
+ * stored (a positive value indicates that the local time is behind
+ * the server).  When a valid epoch is already available, this value
+ * is suitable for passing unmodified to
+ * iBSP430uptimeAdjustEpochFromNTP().  When a valid epoch is not
+ * available, this value should be added to
+ * #BSP430_UPTIME_BYPASS_EPOCH_NTP and the result passed to
+ * iBSP430uptimeSetEpochFromNTP().
+ *
+ * @param adjustment_ms optional location in which the adjustment,
+ * converted to milliseconds, will be stored.  This is primarily
+ * intended for diagnostics, as a value in milliseconds is more useful
+ * than the 2^32 Hz tick count provided by @p adjustment_ntp.  If the
+ * offset cannot be represented in the space available, the signed
+ * maximum value will be stored.  If the offset is not of interest,
+ * pass a null pointer.  The value is not stored if this function
+ * returns an error.
+ *
+ * @param rtt_us optional location in which to store the estimated
+ * round-trip time for request and response.  If the round-trip time
+ * cannot be represented (which should never happen), the maximum
+ * representable value will be stored.  If the round-trip time is not
+ * of interest, pass a null pointer.  The value is not stored if this
+ * function returns an error.
+ *
+ * @return 0 on success, a negative error code on failure
+ *
+ * @dependency #configBSP430_UPTIME_EPOCH
+ * @ingroup grp_utility_uptime_epoch */
+int iBSP430uptimeProcessNTPResponse (const sBSP430uptimeNTPPacketHeader * req,
+                                     const sBSP430uptimeNTPPacketHeader * resp,
+                                     uint64_t rec_ntp,
+                                     int64_t * adjustment_ntp,
+                                     long * adjustment_ms,
+                                     unsigned long * rtt_us);
+
+#endif /* configBSP430_UPTIME_EPOCH */
 
 #endif /* BSP430_UTILITY_UPTIME_H */

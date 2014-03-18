@@ -32,12 +32,26 @@
 #include <bsp430/platform.h>
 #include <bsp430/utility/uptime.h>
 #include <stdio.h>
+#include <limits.h>
+#include <string.h>
 
 #if (BSP430_UPTIME - 0)
 /* Inhibit definition if required components were not provided. */
 
 hBSP430halTIMER xBSP430uptimeTIMER_;
 unsigned long ulBSP430uptimeConversionFrequency_Hz_ni_;
+
+#if (configBSP430_UPTIME_EPOCH - 0)
+/* Flag indicating epoch is valid.  Invalidated by resuming the timer,
+ * so needs to be visible to those routines. */
+static char epoch_is_valid_ni;
+
+/* Number of bits of precision available for sub-second times.  Set by
+ * iBSP430uptimeResume_ni() to a non-negative value based on
+ * conversion frequency. */
+static int8_t epoch_precision_bits = -1;
+
+#endif /* configBSP430_UPTIME_EPOCH */
 
 #if (configBSP430_UPTIME_DELAY - 0)
 
@@ -154,6 +168,17 @@ vBSP430uptimeResume_ni (void)
   delayAlarm_.flags |= DELAY_ALARM_TIMER_ACTIVE;
   (void)delayAlarmSetRegistered_ni_(1);
 #endif /* configBSP430_UPTIME_DELAY */
+#if (configBSP430_UPTIME_EPOCH - 0)
+  epoch_is_valid_ni = 0;
+  {
+    unsigned long divisor = ulBSP430uptimeConversionFrequency_Hz_ni_;
+    epoch_precision_bits = 0;
+    while (0 != divisor) {
+      ++epoch_precision_bits;
+      divisor >>= 1;
+    }
+  }
+#endif /* configBSP430_UPTIME_EPOCH */
   xBSP430uptimeTIMER_->hpl->ctl |= MC_2;
 }
 
@@ -271,6 +296,389 @@ lBSP430uptimeSleepUntil (unsigned long setting_utt,
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
+}
+
+#endif /* configBSP430_UPTIME_DELAY */
+
+#if (configBSP430_UPTIME_EPOCH - 0)
+
+#include <bits/byteswap.h>
+#define ntohl(x_) __bswap_32(x_)
+#define htonl(x_) __bswap_32(x_)
+#define ntohs(x_) __bswap_16(x_)
+#define htons(x_) __bswap_16(x_)
+
+/** Number of microseconds per second, for convenience */
+#define US_PER_S 1000000UL
+
+/** The duration of an era in uptime ticks. */
+#define ERA_UTT (1 + (uint64_t)~(unsigned long)0)
+
+/* NTP epoch. */
+static uint64_t epoch_ntp_ni;
+static unsigned long epoch_updated_utt_ni;
+static struct timeval epoch_tv_ni;
+
+int
+iBSP430uptimeCheckEpochValidity ()
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  long rv;
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    rv = epoch_is_valid_ni ? 0 : -1;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+unsigned long
+ulBSP430uptimeLastEpochUpdate ()
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  unsigned long rv;
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    rv = epoch_updated_utt_ni;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+long
+lBSP430uptimeEpochAge ()
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  long rv;
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    if (! epoch_is_valid_ni) {
+      rv = -1L;
+    } else {
+      rv = ulBSP430uptime_ni() - epoch_updated_utt_ni;
+    }
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+static int
+epoch_era_ni (unsigned long utt)
+{
+  const unsigned long HALF_ERA = 0x80000000L;
+  unsigned long delta_utt;
+  int is_before;
+
+  if (! epoch_is_valid_ni) {
+    return -1;
+  }
+  delta_utt = epoch_updated_utt_ni - utt;
+  is_before = (delta_utt < HALF_ERA);
+  if (is_before) {
+    /* utt appears to precede the time the epoch was set.  If it's too
+     * far in the past, the epoch is not valid for this time. */
+    if (delta_utt >= BSP430_UPTIME_EPOCH_VALID_OFFSET_UTT) {
+      return -1;
+    }
+    /* If utt is before the update time, but its value is greater,
+     * then return 0 to indicate it belongs to the previous era. */
+    if (utt > epoch_updated_utt_ni) {
+      return 0;
+    }
+  } else {
+    /* utt appears to follow the time the epoch was set.  If it's too
+     * far in the future, the epoch is not valid for this time. */
+    if (-delta_utt >= BSP430_UPTIME_EPOCH_VALID_OFFSET_UTT) {
+      return -1;
+    }
+    /* If utt is after the update time, but its value is lesser, then
+     * return 2 to indicate it belongs to the next era. */
+    if (utt < epoch_updated_utt_ni) {
+      return 2;
+    }
+  }
+  /* Return 1 to indicate that the epoch is valid for and set within
+   * the same era as utt. */
+  return 1;
+}
+
+int
+iBSP430uptimeEpochEra (unsigned long time_utt)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv;
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    rv = epoch_era_ni(time_utt);
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+static uint64_t
+timestamp_to_ntp (const sBSP430uptimeNTPTimestamp * fp)
+{
+  return ((uint64_t)ntohl(fp->integral) << 32) | ntohl(fp->fractional);
+}
+
+/* Note that this converts 64-bit uptime counters which may have
+ * values longer than an era can represent. */
+static void
+get_relative_timeval (uint64_t utt,
+                      struct timeval * tv)
+{
+  tv->tv_sec = (utt / ulBSP430uptimeConversionFrequency_Hz_ni_);
+  tv->tv_usec  = (US_PER_S * (utt % ulBSP430uptimeConversionFrequency_Hz_ni_)) / ulBSP430uptimeConversionFrequency_Hz_ni_;
+  return;
+}
+
+/* Note that this converts 64-bit uptime counters which may have
+ * values longer than an era can represent. */
+static uint64_t
+get_relative_ntp (uint64_t utt)
+{
+  return (utt << 32) / ulBSP430uptimeConversionFrequency_Hz_ni_;
+}
+
+int
+iBSP430uptimeSetNTPXmtField (sBSP430uptimeNTPPacketHeader * ntpp,
+                             unsigned long * putt)
+{
+  unsigned long utt;
+  int rv;
+  uint64_t ntp;
+
+  if (putt) {
+    utt = *putt;
+  } else {
+    utt = ulBSP430uptime();
+  }
+  rv = iBSP430uptimeAsNTP(utt, &ntp, 1);
+  if (0 == rv) {
+    ntpp->xmt.integral = htonl((uint32_t)(ntp >> 32));
+    ntpp->xmt.fractional = htonl((uint32_t)(ntp & ~(uint32_t)0));
+  }
+  return rv;
+}
+
+int
+iBSP430uptimeInitializeNTPRequest (sBSP430uptimeNTPPacketHeader * ntpp)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
+  if (! ntpp) {
+    return -1;
+  }
+  memset(ntpp, 0, sizeof(*ntpp));
+  ntpp->li_vn_mode = 0x23; /* No leap info, NTP version 4, client mode */
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    ntpp->precision = -epoch_precision_bits;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return 0;
+}
+
+int
+iBSP430uptimeSetEpochFromNTP (uint64_t epoch_ntp)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    epoch_ntp_ni = epoch_ntp;
+    epoch_tv_ni.tv_sec = ((uint32_t)(epoch_ntp >> 32) - BSP430_UPTIME_POSIX_EPOCH_NTPIS);
+    epoch_tv_ni.tv_usec = (US_PER_S * (epoch_ntp & ~(uint32_t)0)) >> 32;
+    epoch_updated_utt_ni = ulBSP430uptime_ni();
+    epoch_is_valid_ni = 1;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return 0;
+}
+
+int
+iBSP430uptimeAdjustEpochFromNTP (int64_t adjustment_ntp)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    rv = iBSP430uptimeSetEpochFromNTP(epoch_ntp_ni + adjustment_ntp);
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return rv;
+}
+
+int
+iBSP430uptimeSetEpochFromTimeval (const struct timeval * tv,
+                                  unsigned long when_utt)
+{
+  uint64_t epoch_ntp;
+
+  if (! tv) {
+    return -1;
+  }
+  epoch_ntp = (BSP430_UPTIME_POSIX_EPOCH_NTPIS + (uint64_t)tv->tv_sec) << 32;
+  epoch_ntp += ((uint64_t)tv->tv_usec << 32) / US_PER_S;
+  epoch_ntp -= get_relative_ntp(when_utt);
+  return iBSP430uptimeSetEpochFromNTP(epoch_ntp);
+}
+
+int
+iBSP430uptimeAsNTP (unsigned long utt,
+                    uint64_t * ntpp,
+                    int bypass_validation)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  int rv = -1;
+  uint64_t ntp;
+
+  ntp = get_relative_ntp(utt);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    int era;
+    era = epoch_era_ni(utt);
+    if (0 > era) {
+      if (! bypass_validation) {
+        epoch_is_valid_ni = 0;
+        break;
+      }
+      era = 0;
+      ntp += BSP430_UPTIME_BYPASS_EPOCH_NTP;
+    } else {
+      era -= 1;
+      ntp += epoch_ntp_ni;
+    }
+    if (0 != era) {
+      uint64_t era_ntp = get_relative_ntp(ERA_UTT);
+      if (0 > era) {
+        ntp -= era_ntp;
+      } else {
+        ntp += era_ntp;
+      }
+    }
+    rv = 0;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  if (0 == rv) {
+    if (ntpp) {
+      *ntpp = ntp;
+    }
+  }
+  return rv;
+}
+
+int
+iBSP430uptimeAsTimeval (unsigned long utt,
+                        struct timeval * tvp)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  struct timeval tv;
+  int rv = -1;
+
+  get_relative_timeval(utt, &tv);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    int era = epoch_era_ni(utt);
+    if (0 > era) {
+      epoch_is_valid_ni = 0;
+      break;
+    }
+    era -= 1;
+    tv.tv_sec += epoch_tv_ni.tv_sec;
+    tv.tv_usec += epoch_tv_ni.tv_usec;
+    if (0 != era) {
+      struct timeval etv;
+      get_relative_timeval(ERA_UTT, &etv);
+      if (0 > era) {
+        /* Subtract the duration of an era.  Note that modern timeval
+         * has signed tv_usec so this is safe. */
+        tv.tv_sec -= etv.tv_sec;
+        tv.tv_usec -= etv.tv_usec;
+      } else {
+        /* Add the duration of an era */
+        tv.tv_sec += etv.tv_sec;
+        tv.tv_usec += etv.tv_usec;
+      }
+    }
+    rv = 0;
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  if (0 == rv) {
+    /* Normalize the result */
+    while (0 > tv.tv_usec) {
+      tv.tv_sec -= 1;
+      tv.tv_usec += US_PER_S;
+    }
+    while (US_PER_S <= tv.tv_usec) {
+      tv.tv_usec -= US_PER_S;
+      tv.tv_sec += 1;
+    }
+    if (tvp) {
+      *tvp = tv;
+    }
+  }
+  return rv;
+}
+
+time_t
+xBSP430uptimeAsPOSIXTime (unsigned long utt)
+{
+  struct timeval tv;
+  tv.tv_sec = (time_t)-1;
+  (void)iBSP430uptimeAsTimeval(utt, &tv);
+  return tv.tv_sec;
+}
+
+int
+iBSP430uptimeProcessNTPResponse (const sBSP430uptimeNTPPacketHeader * req,
+                                 const sBSP430uptimeNTPPacketHeader * resp,
+                                 uint64_t rec_ntp,
+                                 int64_t * adjustment_ntp,
+                                 long * adjustment_ms,
+                                 unsigned long * rtt_us)
+{
+  if ((! resp)
+      || (0 == resp->stratum)
+      || (0 == resp->xmt.integral)
+      || (0 == resp->xmt.fractional)) {
+    return -1;
+  }
+  if (req && ((req->xmt.integral != resp->org.integral)
+              || (req->xmt.fractional != resp->org.fractional))) {
+    return -1;
+  }
+  uint64_t t1 = timestamp_to_ntp(&resp->org);
+  uint64_t t2 = timestamp_to_ntp(&resp->rec);
+  uint64_t t3 = timestamp_to_ntp(&resp->xmt);
+  uint64_t t4 = rec_ntp;
+  int64_t theta = (((int64_t)t2 - (int64_t)t1) + ((int64_t)t3 - (int64_t)t4)) / 2;
+  uint64_t delta = (t4 - t1) - (t3 - t2);
+  if (adjustment_ntp) {
+    *adjustment_ntp = theta;
+  }
+  if (adjustment_ms) {
+    int64_t adjustment64_ms = theta >> 22;
+    /* The adjustment is usually either really big, or fairly small.
+     * If it's big enough that the approximation of (1024*theta)/2^32
+     * doesn't fit in 32 bits, just use the saturated maxima.  If it
+     * does fit, calculate the real value (which will be smaller). */
+    if ((int32_t)adjustment64_ms == adjustment64_ms) {
+      *adjustment_ms = (1000 * theta) >> 32;
+    } else {
+      *adjustment_ms = (0 > theta) ? LONG_MIN : LONG_MAX;
+    }
+  }
+  if (rtt_us) {
+    uint64_t rtt64_us = (US_PER_S * delta) >> 32;
+    uint32_t rtt32_us = rtt64_us;
+    if (rtt64_us == rtt32_us) {
+      *rtt_us = rtt32_us;
+    } else {
+      *rtt_us = ULONG_MAX;
+    }
+  }
+  return 0;
 }
 
 #endif /* configBSP430_UPTIME_DELAY */
