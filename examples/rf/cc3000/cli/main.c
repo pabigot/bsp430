@@ -1707,6 +1707,8 @@ void main (void)
 
   cprintf("\nAnd wlan has been started.\n");
   (void)displayMemory;
+  rv = wlan_set_event_mask(0);
+  cprintf("Unmask events returned %d\n", rv);
 
 #if (CMD_INFO - 0)
   if (0 == cmd_info_load("")) {
