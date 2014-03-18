@@ -83,7 +83,7 @@ int iBSP430sharplcdSetEnabled_ni (hBSP430sharplcd dev,
   iBSP430sharplcdClearDisplay_rh(dev);
   if (enablep) {
     /* Allow 60us for whatever that TCOM stuff is (two, each > 30 uS). */
-    BSP430_CORE_DELAY_CYCLES((50 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
+    BSP430_CORE_DELAY_CYCLES((60 * BSP430_CLOCK_NOMINAL_MCLK_HZ) / 1000000UL);
   } else {
     dev->cs->dir &= ~dev->cs_bit;
     if (dev->lcd_en) {
