@@ -1622,6 +1622,33 @@ static sBSP430cliCommand dcmd_uptime = {
 #define LAST_COMMAND &dcmd_uptime
 
 static int
+cmd_ghbn (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  const char * name;
+  uint16_t name_len;
+  uint32_t addr = -1;
+  int rc;
+
+  name = xBSP430cliNextQToken(&argstr, &argstr_len, &name_len);
+  if (0 == name_len) {
+    name = "ntp.pool.org";
+    name_len = strlen(name);
+  }
+  rc = gethostbyname((char*)name, name_len, &addr);
+  cprintf("gethostbyname(%s) returned %d, ip: %s\n", name, rc, ipv4AsText((const uint8_t*)&addr));
+  return 0;
+}
+static sBSP430cliCommand dcmd_ghbn = {
+  .key = "ghbn",
+  .next = LAST_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_ghbn
+};
+#undef LAST_COMMAND
+#define LAST_COMMAND &dcmd_ghbn
+
+static int
 cmd_test (sBSP430cliCommandLink * chain,
           void * param,
           const char * command,
