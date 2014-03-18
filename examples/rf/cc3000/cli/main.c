@@ -1674,6 +1674,9 @@ void main (void)
   cprintf("SPI Pins: %s\n", xBSP430platformPeripheralHelp(BSP430_RF_CC3000_SPI_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_SPI3));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
   cprintf("CC3000 host driver: %u\n", DRIVER_VERSION_NUMBER);
+  cprintf("RX buffer size %u, TX buffer size %u\n",
+          BSP430_CC3000SPI_RX_BUFFER_SIZE,
+          BSP430_CC3000SPI_TX_BUFFER_SIZE);
   cprintf(__DATE__ " " __TIME__ "\n");
 
   /* Initialization can be done with interrupts disabled, since the
