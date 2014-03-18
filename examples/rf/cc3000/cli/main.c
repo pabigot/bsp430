@@ -104,6 +104,30 @@ static uint32_t lebtohl (uint8_t * vp)
           | ((uint32_t)vp[3] << 24));
 }
 
+static uint32_t bebtohl (uint8_t * vp)
+{
+  return ((uint32_t)vp[3]
+          | ((uint32_t)vp[2] << 8)
+          | ((uint32_t)vp[1] << 16)
+          | ((uint32_t)vp[0] << 24));
+}
+
+const char *
+ipv4AsText (const unsigned char * ipaddr)
+{
+  static char buffer[16];
+  snprintf(buffer, sizeof(buffer), "%u.%u.%u.%u", ipaddr[3], ipaddr[2], ipaddr[1], ipaddr[0]);
+  return buffer;
+}
+
+const char *
+net_ipv4AsText (const unsigned char * ipaddr)
+{
+  static char buffer[16];
+  snprintf(buffer, sizeof(buffer), "%u.%u.%u.%u", ipaddr[0], ipaddr[1], ipaddr[2], ipaddr[3]);
+  return buffer;
+}
+
 volatile unsigned long lastKeepAlive_utt;
 volatile unsigned long lastCallback_utt;
 volatile long lastEventType;
@@ -208,14 +232,6 @@ static sBSP430cliCommand dcmd_wlan_disconnect = {
 #endif /* CMD_WLAN_DISCONNECT */
 
 #if (CMD_WLAN_IPCONFIG - 0)
-const char *
-ipv4AsText (const unsigned char * ipaddr)
-{
-  static char buffer[16];
-  snprintf(buffer, sizeof(buffer), "%u.%u.%u.%u", ipaddr[3], ipaddr[2], ipaddr[1], ipaddr[0]);
-  return buffer;
-}
-
 static int
 cmd_wlan_ipconfig (const char * argstr)
 {
@@ -247,6 +263,53 @@ static sBSP430cliCommand dcmd_wlan_ipconfig = {
 };
 #undef LAST_SUB_COMMAND
 #define LAST_SUB_COMMAND &dcmd_wlan_ipconfig
+
+static int
+cmd_wlan_dhcp (const char * argstr)
+{
+  size_t argstr_len = strlen(argstr);
+  int store_ipc = 0;
+  long lrc;
+  union {
+    uint32_t u32;
+    uint8_t u8[4];
+  } address[4];
+
+  (void)iBSP430cliStoreExtractedI(&argstr, &argstr_len, &store_ipc);
+  if (store_ipc) {
+    tNetappIpconfigRetArgs ipc;
+    memset(&ipc, 0, sizeof(ipc));
+    netapp_ipconfig(&ipc);
+    cprintf("Copying DHCP from IP config\n");
+    address[0].u32 = bebtohl(ipc.aucIP);
+    address[1].u32 = bebtohl(ipc.aucSubnetMask);
+    address[2].u32 = bebtohl(ipc.aucDefaultGateway);
+    address[3].u32 = bebtohl(ipc.aucDNSServer);
+  } else {
+    cprintf("Clearing DHCP config\n");
+    memset(address, 0, sizeof(address));
+  }
+  cprintf("IP: %s\n", net_ipv4AsText(address[0].u8));
+  cprintf("NM: %s\n", net_ipv4AsText(address[1].u8));
+  cprintf("GW: %s\n", net_ipv4AsText(address[2].u8));
+  cprintf("DNS: %s\n", net_ipv4AsText(address[3].u8));
+  lrc = netapp_dhcp(&address[0].u32,
+                    &address[1].u32,
+                    &address[2].u32,
+                    &address[3].u32);
+  cprintf("dhcp got %ld\n", lrc);
+  return 0;
+}
+static sBSP430cliCommand dcmd_wlan_dhcp = {
+  .key = "dhcp",
+  .help = HELP_STRING("[1] # reset(0)/set(1) dhcp params"),
+  .next = LAST_SUB_COMMAND,
+  .handler = iBSP430cliHandlerSimple,
+  .param.simple_handler = cmd_wlan_dhcp
+};
+#undef LAST_SUB_COMMAND
+#define LAST_SUB_COMMAND &dcmd_wlan_dhcp
+
 #endif /* CMD_WLAN_IPCONFIG */
 
 typedef struct sWlanSecMap {
