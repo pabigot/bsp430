@@ -72,8 +72,14 @@ get_device_data (u8g_t *u8g)
 
 /* The LS013B4DN04 presents text as white (clear) on silver (set).  Or
  * vice versa.  Since u8glib doesn't have the notion of an inverted
- * display, this routine may be called before and after updating
- * display lines to invert the image. */
+ * display, the solution is invert the "cgram" before and after
+ * updating display lines to put the content into the right mode.
+ * Normally you will want this to be done. */
+#ifndef BSP430_UTILITY_U8GLIB_INVERT
+#define BSP430_UTILITY_U8GLIB_INVERT 1
+#endif /* BSP430_UTILITY_U8GLIB_INVERT */
+
+#if (BSP430_UTILITY_U8GLIB_INVERT - 0)
 static BSP430_CORE_INLINE
 void invert_cgram (void)
 {
@@ -84,6 +90,12 @@ void invert_cgram (void)
     ++dp;
   }
 }
+#define MAYBE_INVERT_CGRAM() do { \
+    invert_cgram();         \
+  } while (0)
+#else /* BSP430_UTILITY_U8GLIB_INVERT */
+#define MAYBE_INVERT_CGRAM() do { } while (0)
+#endif /* BSP430_UTILITY_U8GLIB_INVERT */
 
 static uint8_t
 u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
@@ -130,7 +142,7 @@ u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
         int start_line = 1+pb->p.page_y0;
         int num_lines = (pb->p.page_y1 - pb->p.page_y0) + 1;
 
-        (void)invert_cgram;     /* reference to avoid compiler warnings */
+        MAYBE_INVERT_CGRAM();
         BSP430_CORE_DISABLE_INTERRUPT();
         do {
           while (dd->in_use) {
@@ -141,6 +153,7 @@ u8g_com_fn (u8g_t *u8g, uint8_t msg, uint8_t arg_val, void *arg_ptr)
           dd->in_use = 0;
         } while (0);
         BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+        MAYBE_INVERT_CGRAM();
         break;
       }
     }

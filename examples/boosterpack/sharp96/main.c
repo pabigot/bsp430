@@ -21,29 +21,49 @@
 #include <bsp430/utility/led.h>
 #include <bsp430/utility/sharplcd.h>
 
-#define DISPLAY_HEIGHT BSP430_PLATFORM_SHARPLCD_ROWS
+/* Limit memory use by operating on four lines at a time.  A 400x240
+ * pixel display otherwise sucks up 12 kB. */
+#define DISPLAY_HEIGHT 4
 #define DISPLAY_WIDTH_BYTES BSP430_PLATFORM_SHARPLCD_BYTES_PER_LINE
 
 /* Line-addressed display buffer */
 uint8_t display_buffer[DISPLAY_HEIGHT * DISPLAY_WIDTH_BYTES];
 
 static void
-scroll_buffer_up (int nlines)
+updateDisplay (hBSP430sharplcd dev)
 {
-  int end_line = (DISPLAY_HEIGHT - nlines);
-  memmove(display_buffer, display_buffer + (nlines * DISPLAY_WIDTH_BYTES), end_line * DISPLAY_WIDTH_BYTES);
-  memset(display_buffer + end_line * DISPLAY_WIDTH_BYTES, 0, nlines);
-}
+  static unsigned int lines;
+  unsigned int offset;
+  uint8_t * dp = display_buffer;
+  unsigned int br;
+  unsigned int r;
+  unsigned int re;
+  unsigned int c;
+  unsigned int val;
 
-static void
-fill_buffer_last ()
-{
-  static unsigned int offset;
-  unsigned char * dp = display_buffer + (DISPLAY_HEIGHT - 1) * DISPLAY_WIDTH_BYTES;
-  unsigned int val = ++offset;
-  int ci;
-  for (ci = 0; ci <= DISPLAY_WIDTH_BYTES; ++ci) {
-    *dp++ = val++;
+  offset = ++lines;
+  br = r = 0;
+  re = DISPLAY_HEIGHT;
+  if (re > BSP430_PLATFORM_SHARPLCD_ROWS) {
+    re = BSP430_PLATFORM_SHARPLCD_ROWS;
+  }
+  while (r <= BSP430_PLATFORM_SHARPLCD_ROWS) {
+    if (++r == re) {
+      (void)iBSP430sharplcdUpdateDisplayLines_rh(dev, 1+br, r-br, display_buffer);
+      if (BSP430_PLATFORM_SHARPLCD_ROWS == r) {
+        break;
+      }
+      br = r;
+      re = r + DISPLAY_HEIGHT;
+      if (re > BSP430_PLATFORM_SHARPLCD_ROWS) {
+        re = BSP430_PLATFORM_SHARPLCD_ROWS;
+      }
+      dp = display_buffer;
+    }
+    val = ++offset;
+    for (c = 0; c < DISPLAY_WIDTH_BYTES; ++c) {
+      *dp++ = val++;
+    }
   }
 }
 
@@ -89,7 +109,6 @@ void main ()
   unsigned long stable_interval_utt;
   sBSP430sharplcd device;
   hBSP430sharplcd dev;
-  int li;
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
@@ -161,13 +180,9 @@ void main ()
     BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   }
 
-  cprintf("Initializing display buffer\n");
-  for (li = 0; li < DISPLAY_HEIGHT; ++li) {
-    scroll_buffer_up(1);
-    fill_buffer_last();
-  }
-  cprintf("Loading initial display\n");
-  iBSP430sharplcdUpdateDisplayLines_rh(dev, 1, -1, display_buffer);
+  cprintf("Initializing display\n");
+  iBSP430sharplcdClearDisplay_rh(dev);
+  updateDisplay(dev);
 
   scroll_interval_utt = BSP430_UPTIME_MS_TO_UTT(100);
   stable_interval_utt = BSP430_UPTIME_MS_TO_UTT(BSP430_SHARPLCD_REFRESH_INTERVAL_MS);
@@ -177,9 +192,7 @@ void main ()
     if (button_state.active) {
       vBSP430ledSet(BSP430_LED_RED, 0);
       vBSP430ledSet(BSP430_LED_GREEN, -1);
-      scroll_buffer_up(1);
-      fill_buffer_last();
-      iBSP430sharplcdUpdateDisplayLines_rh(dev, 1, -1, display_buffer);
+      updateDisplay(dev);
       wake_utt += scroll_interval_utt;
     } else {
       vBSP430ledSet(BSP430_LED_GREEN, 0);

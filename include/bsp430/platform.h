@@ -703,13 +703,19 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 
 /* If configBSP430_PLATFORM_BOOSTERPACK_SHARP96 was requested, then
  * mark the feature as available or not based on whether the platform
- * provided a peripheral handle to use to access the device. */
+ * provided a peripheral handle to use to access the device.  Default
+ * the screen size to the boosterpack, but accept existing
+ * overrides. */
 #if (configBSP430_PLATFORM_BOOSTERPACK_SHARP96 - 0)
 #ifdef BSP430_PLATFORM_SHARPLCD_SPI_PERIPH_HANDLE
 #define BSP430_PLATFORM_BOOSTERPACK_SHARP96 1
 #define BSP430_PLATFORM_SHARPLCD 1
+#ifndef BSP430_PLATFORM_SHARPLCD_ROWS
 #define BSP430_PLATFORM_SHARPLCD_ROWS 96
+#endif /* BSP430_PLATFORM_SHARPLCD_ROWS */
+#ifndef BSP430_PLATFORM_SHARPLCD_COLUMNS
 #define BSP430_PLATFORM_SHARPLCD_COLUMNS 96
+#endif /* BSP430_PLATFORM_SHARPLCD_COLUMNS */
 #else /* BSP430_PLATFORM_SHARPLCD_SPI_PERIPH_HANDLE */
 #define BSP430_PLATFORM_SHARPLCD 0
 #endif /* BSP430_PLATFORM_SHARPLCD_SPI_PERIPH_HANDLE */

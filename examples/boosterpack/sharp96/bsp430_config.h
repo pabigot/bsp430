@@ -19,7 +19,9 @@
 /* Request a button */
 #define configBSP430_PLATFORM_BUTTON0 1
 
-/* Request support for this boosterpack */
+/* Request support for this boosterpack.  The screen size is defaulted
+ * but can be overridden using the COLS= and ROWS= make variables
+ * during a build. */
 #define configBSP430_PLATFORM_BOOSTERPACK_SHARP96 1
 
 /* Get platform defaults */
