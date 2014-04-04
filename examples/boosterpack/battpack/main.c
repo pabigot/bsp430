@@ -240,7 +240,7 @@ void main ()
     flags = 0;
     while (! flags) {
       iBSP430consoleFlush();
-      if (0 > lBSP430uptimeSleepUntil(resample_wake_utt, LPM3_bits)) {
+      if (0 >= lBSP430uptimeSleepUntil(resample_wake_utt, LPM3_bits)) {
         flags |= FLG_UPDATE_INTERVAL;
       }
       while (0 <= ((rc = cgetchar()))) {
