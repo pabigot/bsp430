@@ -41,10 +41,27 @@
 void
 vBSP430lpmConfigurePortsForLPM_ni (void)
 {
+#if 1
+  /* Configure as output low */
 #define CONFIGURE_FOR_LPM(_p) do {              \
     P##_p##DIR = ~0;                            \
     P##_p##OUT = 0;                             \
   } while (0)
+#elif 0
+  /* Configure as input pull-up */
+#define CONFIGURE_FOR_LPM(_p) do {              \
+    P##_p##DIR = 0;                             \
+    P##_p##OUT = ~0;                            \
+    P##_p##REN = ~0;                            \
+  } while (0)
+#else
+  /* Configure as input pull-down */
+#define CONFIGURE_FOR_LPM(_p) do {              \
+    P##_p##DIR = 0;                             \
+    P##_p##OUT = 0;                             \
+    P##_p##REN = ~0;                            \
+  } while (0)
+#endif
 
 #if (BSP430_CORE_FAMILY_IS_5XX - 0)
 #if defined(__MSP430_HAS_PORTA__) || defined(__MSP430_HAS_PORTA_R__)
