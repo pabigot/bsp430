@@ -129,8 +129,7 @@ void main ()
 
   cprintf("Device size %u x %u, mode %d\n", u8g_GetWidth(u8g), u8g_GetHeight(u8g), u8g_GetMode(u8g));
 
-  /* Use maximum color value */
-  u8g_SetColorIndex(u8g, (1 << u8g_GetMode(u8g)) - 1);
+  u8g_SetDefaultForegroundColor(u8g);
   u8g_SetFont(u8g, u8g_font_10x20);
   w = u8g_GetFontBBXWidth(u8g);
   h = u8g_GetFontBBXHeight(u8g);
@@ -140,8 +139,8 @@ void main ()
   u8g_FirstPage(u8g);
   do {
     u8g_DrawLine(u8g, 0, 0, u8g_GetWidth(u8g), u8g_GetHeight(u8g));
-    u8g_DrawStr(u8g, 0, h, "Hello World!");
-    u8g_DrawStr(u8g, 0, 3*h, "(Hi there!)");
+    u8g_DrawStr(u8g, 0, h, __DATE__);
+    u8g_DrawStr(u8g, 0, 3*h, __TIME__);
   } while (u8g_NextPage(u8g));
   t1 = ulBSP430uptime_ni();
 

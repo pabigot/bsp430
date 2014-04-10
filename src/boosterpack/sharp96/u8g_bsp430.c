@@ -76,7 +76,7 @@ get_device_data (u8g_t *u8g)
  * updating display lines to put the content into the right mode.
  * Normally you will want this to be done. */
 #ifndef BSP430_UTILITY_U8GLIB_INVERT
-#define BSP430_UTILITY_U8GLIB_INVERT 1
+#define BSP430_UTILITY_U8GLIB_INVERT (! defined(U8G_MODE_WB))
 #endif /* BSP430_UTILITY_U8GLIB_INVERT */
 
 #if (BSP430_UTILITY_U8GLIB_INVERT - 0)
@@ -179,6 +179,13 @@ u8g_dev_fn (u8g_t * u8g,
       default:
         /* Anything not specifically handled is delegated to the base function */
         rc = u8g_dev_pb8h1_base_fn(u8g, dev, msg, arg);
+        break;
+      case U8G_DEV_MSG_GET_MODE:
+#if defined(U8G_MODE_WB)
+        rc = U8G_MODE_WB;
+#else
+        rc = u8g_dev_pb8h1_base_fn(u8g, dev, msg, arg);
+#endif
         break;
       case U8G_DEV_MSG_INIT: {
         /* This call delegates to USG_COM_MSG_INIT, which initializes
