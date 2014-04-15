@@ -32,29 +32,30 @@ uint8_t display_buffer[DISPLAY_HEIGHT * DISPLAY_WIDTH_BYTES];
 static void
 updateDisplay (hBSP430sharplcd dev)
 {
-  static unsigned int lines;
+  static unsigned int updates;
   unsigned int offset;
   uint8_t * dp = display_buffer;
   unsigned int br;
-  unsigned int r;
+  int r;
   unsigned int re;
   unsigned int c;
   unsigned int val;
 
-  offset = ++lines;
-  br = r = 0;
+  offset = ++updates;
+  r = -1;
+  br = 0;
   re = DISPLAY_HEIGHT;
   if (re > BSP430_PLATFORM_SHARPLCD_ROWS) {
     re = BSP430_PLATFORM_SHARPLCD_ROWS;
   }
   while (r <= BSP430_PLATFORM_SHARPLCD_ROWS) {
     if (++r == re) {
-      (void)iBSP430sharplcdUpdateDisplayLines_rh(dev, 1+br, r-br, display_buffer);
+      (void)iBSP430sharplcdUpdateDisplayLines_rh(dev, 1+br, re-br, display_buffer);
       if (BSP430_PLATFORM_SHARPLCD_ROWS == r) {
         break;
       }
       br = r;
-      re = r + DISPLAY_HEIGHT;
+      re = br + DISPLAY_HEIGHT;
       if (re > BSP430_PLATFORM_SHARPLCD_ROWS) {
         re = BSP430_PLATFORM_SHARPLCD_ROWS;
       }
