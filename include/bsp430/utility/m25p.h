@@ -243,9 +243,9 @@ typedef sBSP430m25p * hBSP430m25p;
 #define BSP430_M25P_CMD_READ 0x03
 /** READ DATA BYTES at HIGHER SPEED command */
 #define BSP430_M25P_CMD_FAST_READ 0x0b
-/** PAGE WRITE command */
+/** PAGE WRITE command.  Not available on all devices.  See #BSP430_PLATFORM_M25P_SUPPORTS_PW. */
 #define BSP430_M25P_CMD_PW 0x0a
-/** PAGE PROGRAM command.  Not available on all devices.  See #BSP430_PLATFORM_M25P_SUPPORTS_PE.  */
+/** PAGE PROGRAM command. */
 #define BSP430_M25P_CMD_PP 0x02
 /** PAGE ERASE command.  Not available on all devices.  See #BSP430_PLATFORM_M25P_SUPPORTS_PE. */
 #define BSP430_M25P_CMD_PE 0xdb
