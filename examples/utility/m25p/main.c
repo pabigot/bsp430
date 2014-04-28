@@ -15,6 +15,27 @@
 #include <ctype.h>
 #include <string.h>
 
+#ifndef WITH_W25Q80BV
+#define WITH_W25Q80BV (BSP430_PLATFORM_EXP430F5529LP - 0)
+#endif /* WITH_W25Q80BV */
+
+#if (WITH_W25Q80BV - 0)
+/* Winbond W25Q80BV is a 8 Mibit (1 MiBy) serial FLASH supporting 256
+ * 4 KiBy sub-sectors (sectors) or 16 64 KiBy sectors (blocks).  PAGE
+ * WRITE and PAGE ERASE are not supported; (SUB) SECTOR ERASE is
+ * supported. */
+#define BSP430_PLATFORM_M25P_SUPPORTS_SSE 1
+#define BSP430_PLATFORM_M25P_SECTOR_COUNT 16
+#define BSP430_PLATFORM_M25P_SECTOR_SIZE 0x10000
+#define BSP430_PLATFORM_M25P_SUBSECTOR_SIZE 0x1000
+
+#if (BSP430_PLATFORM_EXP430F5529LP - 0)
+/* SPI on USCI_A0, CSn on P6.6, PWR and RSTn hard-wired */
+#define BSP430_PLATFORM_M25P_CSn_PORT_PERIPH_HANDLE BSP430_PERIPH_PORT6
+#define BSP430_PLATFORM_M25P_CSn_PORT_BIT BIT6
+#endif
+#endif /* WITH_W25Q80BV */
+
 void dumpMemory (const uint8_t * dp,
                  size_t len,
                  unsigned long base)
