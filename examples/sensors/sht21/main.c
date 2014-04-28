@@ -89,6 +89,8 @@ void main ()
       cprintf("T_HM failed %d\n", rc);
       break;
     }
+    /* NB: HTU21D faults if the sample is read too quickly. */
+    BSP430_UPTIME_DELAY_MS_NI(50, LPM3_bits, 0);
     rc = iBSP430sensorsSHT21getSample(i2c, 1, &t_raw);
     t1 = ulBSP430uptime_ni();
     t_ms = BSP430_UPTIME_UTT_TO_MS(t1-t0);
