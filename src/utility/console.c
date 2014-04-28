@@ -42,6 +42,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #if (BSP430_CONSOLE - 0)
 /* Inhibit definition if required components were not provided. */
@@ -612,6 +613,61 @@ iBSP430consoleFlush (void)
   } while (0);
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
+}
+
+void
+vBSP430consoleDisplayOctets (const uint8_t * dp,
+                             size_t len)
+{
+  const uint8_t * const edp = dp + len;
+  while (dp < edp) {
+    cprintf("%02x", *dp++);
+    if (dp < edp) {
+      cputchar(' ');
+    }
+  }
+}
+
+void
+vBSP430consoleDisplayMemory (const uint8_t * dp,
+                             size_t len,
+                             unsigned long base)
+{
+  const uint8_t * const edp = dp + len;
+  const uint8_t * adp = dp;
+
+  while (dp < edp) {
+    if (0 == (base & 0x0F)) {
+      if (adp < dp) {
+        cputtext("  ");
+        while (adp < dp) {
+          cputchar(isprint(*adp) ? *adp : '.');
+          ++adp;
+        }
+      }
+      adp = dp;
+      cprintf("\n%08lx ", base);
+    } else if (0 == (base & 0x07)) {
+      cputchar(' ');
+    }
+    cprintf(" %02x", *dp++);
+    ++base;
+  }
+  if (adp < dp) {
+    while (base & 0x0F) {
+      if (0 == (base & 0x07)) {
+        cputchar(' ');
+      }
+      cprintf("   ");
+      ++base;
+    }
+    cputtext("  ");
+    while (adp < dp) {
+      cputchar(isprint(*adp) ? *adp : '.');
+      ++adp;
+    }
+  }
+  cputchar('\n');
 }
 
 #endif /* BSP430_CONSOLE */

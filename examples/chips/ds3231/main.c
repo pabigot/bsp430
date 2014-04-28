@@ -13,47 +13,6 @@
 #include <ctype.h>
 #include <time.h>
 
-void dumpMemory (const uint8_t * dp,
-                 size_t len,
-                 unsigned long base)
-{
-  const uint8_t * const edp = dp + len;
-  const uint8_t * adp = dp;
-
-  while (dp < edp) {
-    if (0 == (base & 0x0F)) {
-      if (adp < dp) {
-        cprintf("  ");
-        while (adp < dp) {
-          cputchar(isprint(*adp) ? *adp : '.');
-          ++adp;
-        }
-      }
-      adp = dp;
-      cprintf("\n%08lx ", base);
-    } else if (0 == (base & 0x07)) {
-      cputchar(' ');
-    }
-    cprintf(" %02x", *dp++);
-    ++base;
-  }
-  if (adp < dp) {
-    while (base & 0x0F) {
-      if (0 == (base & 0x07)) {
-        cputchar(' ');
-      }
-      cprintf("   ");
-      ++base;
-    }
-    cprintf("  ");
-    while (adp < dp) {
-      cputchar(isprint(*adp) ? *adp : '.');
-      ++adp;
-    }
-  }
-  cputchar('\n');
-}
-
 void main ()
 {
   sDS3231registers regs;
@@ -110,11 +69,11 @@ void main ()
 #if 0
     cprintf("Write time: %s", asctime(&tms));
     xDS3231tmToRegisters(&tms, &regs);
-    dumpMemory((uint8_t*)&regs, sizeof(regs), 0);
+    vBSP430consoleDisplayMemory((uint8_t*)&regs, sizeof(regs), 0);
     xDS3231registersToTm(&regs, &tms);
     cprintf("Converted time: %s", asctime(&tms));
     memcpy(data+1, &regs, offsetof(sDS3231registers, alrm1_sec));
-    dumpMemory(data, sizeof(data), 0);
+    vBSP430consoleDisplayMemory(data, sizeof(data), 0);
     rc = iBSP430i2cTxData_rh(i2c, data, sizeof(data));
     cprintf("Time write got %d\n", rc);
 #endif
@@ -129,7 +88,7 @@ void main ()
       cprintf("I2C RX ERROR: %d\n", rc);
       break;
     }
-    dumpMemory((uint8_t*)&regs, sizeof(regs), 0);
+    vBSP430consoleDisplayMemory((uint8_t*)&regs, sizeof(regs), 0);
 
     cputs(asctime(xDS3231registersToTm(&regs, &tms)));
     {

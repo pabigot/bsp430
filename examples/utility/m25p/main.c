@@ -36,47 +36,6 @@
 #endif
 #endif /* WITH_W25Q80BV */
 
-void dumpMemory (const uint8_t * dp,
-                 size_t len,
-                 unsigned long base)
-{
-  const uint8_t * const edp = dp + len;
-  const uint8_t * adp = dp;
-
-  while (dp < edp) {
-    if (0 == (base & 0x0F)) {
-      if (adp < dp) {
-        cprintf("  ");
-        while (adp < dp) {
-          cputchar(isprint(*adp) ? *adp : '.');
-          ++adp;
-        }
-      }
-      adp = dp;
-      cprintf("\n%08lx ", base);
-    } else if (0 == (base & 0x07)) {
-      cputchar(' ');
-    }
-    cprintf(" %02x", *dp++);
-    ++base;
-  }
-  if (adp < dp) {
-    while (base & 0x0F) {
-      if (0 == (base & 0x07)) {
-        cputchar(' ');
-      }
-      cprintf("   ");
-      ++base;
-    }
-    cprintf("  ");
-    while (adp < dp) {
-      cputchar(isprint(*adp) ? *adp : '.');
-      ++adp;
-    }
-  }
-  cputchar('\n');
-}
-
 /* As-delivered TrxEB flash is completely erased except for the first
  * sixteen bytes which have this useful test pattern. */
 const uint8_t flashContents[] = {
@@ -234,7 +193,7 @@ void main ()
   BSP430_CORE_ENABLE_INTERRUPT();
   cprintf("READ_IDENTIFICATION got %d\n", rc);
   if (0 <= rc) {
-    dumpMemory(buffer, rc, 0);
+    vBSP430consoleDisplayMemory(buffer, rc, 0);
   }
   cprintf("Config identified %u sectors of %lu bytes each: %lu bytes total\n",
           BSP430_PLATFORM_M25P_SECTOR_COUNT,
@@ -255,7 +214,7 @@ void main ()
   if (sizeof(flashContents) != rc) {
     cprintf("ERROR %d reading initial block\n", rc);
   } else {
-    dumpMemory(buffer, rc, addr);
+    vBSP430consoleDisplayMemory(buffer, rc, addr);
     if (0 == memcmp(flashContents, buffer, rc)) {
       cprintf("Found expected contents.\n");
     } else {
@@ -264,7 +223,7 @@ void main ()
   }
 
   cprintf("\nTest pattern (expected contents):");
-  dumpMemory(flashContents, sizeof(flashContents), 0);
+  vBSP430consoleDisplayMemory(flashContents, sizeof(flashContents), 0);
 
 #if (BSP430_PLATFORM_M25P_SUPPORTS_PE - 0)
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PE, addr, NULL, 0);
@@ -275,14 +234,14 @@ void main ()
 #endif /* BSP430_PLATFORM_M25P_SUPPORTS_PE */
   rc = readFromAddress(m25p, addr, sizeof(buffer));
   if (0 < rc) {
-    dumpMemory(buffer, rc, addr);
+    vBSP430consoleDisplayMemory(buffer, rc, addr);
   }
 
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PP, addr, flashContents, sizeof(flashContents));
   cprintf("PAGE_PROGRAM got %d\n", rc);
   rc = readFromAddress(m25p, addr, sizeof(buffer));
   if (0 < rc) {
-    dumpMemory(buffer, rc, addr);
+    vBSP430consoleDisplayMemory(buffer, rc, addr);
   }
 
   /* PAGE PROGRAM is the one that only clears 1s to 0s so needs a
@@ -290,7 +249,7 @@ void main ()
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PP, addr, flashContents + 4, 4);
   cprintf("PAGE_PROGRAM to %lx returned %d\n", addr, rc);
   rc = readFromAddress(m25p, 0, sizeof(flashContents));
-  dumpMemory(buffer, rc, 0);
+  vBSP430consoleDisplayMemory(buffer, rc, 0);
   /*
   Write 4 took 8
   PAGE_PROGRAM to 0 returned 4
@@ -307,7 +266,7 @@ void main ()
   cprintf("overwrite PAGE_PROGRAM to unerased %lx returned %d\n", addr, rc);
 #endif
   rc = readFromAddress(m25p, 0, sizeof(flashContents));
-  dumpMemory(buffer, rc, 0);
+  vBSP430consoleDisplayMemory(buffer, rc, 0);
   /*
   Write 4 took 204
   PAGE_WRITE to 8 returned 4
@@ -335,7 +294,7 @@ void main ()
     cprintf("Bulk erase took %lu utt = %s\n", t1-t0, xBSP430uptimeAsText(t1 - t0, tstr));
   }
   rc = readFromAddress(m25p, 0, sizeof(flashContents));
-  dumpMemory(buffer, rc, 0);
+  vBSP430consoleDisplayMemory(buffer, rc, 0);
 
   rc = writeToAddress(m25p, BSP430_M25P_CMD_PP, 0, flashContents, sizeof(flashContents));
   cprintf("Restore got %d\n", rc);
@@ -346,7 +305,7 @@ void main ()
     if (0 > rc) {
       break;
     }
-    dumpMemory(buffer, rc, addr);
+    vBSP430consoleDisplayMemory(buffer, rc, addr);
     addr += rc;
     break;
   }

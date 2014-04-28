@@ -152,41 +152,6 @@ static void wlan_cb (long event_type,
           event_type, length, data, __read_status_register());
 }
 
-static void
-displayMemory (const uint8_t * dp,
-               size_t len,
-               uintptr_t offset)
-{
-  char asciiz[17];
-  const uint8_t * const dpe = dp + len;
-  char * ap;
-
-  ap = asciiz;
-  while (1) {
-    if (0 == (offset % 16)) {
-      if (asciiz < ap) {
-        *ap = 0;
-        cprintf("    %s\n", asciiz);
-      }
-      if (dp >= dpe) {
-        break;
-      }
-      cprintf("%04x ", (unsigned int)offset);
-      ap = asciiz;
-    } else if (0 == (offset % 8)) {
-      cprintf(" ");
-    }
-    ++offset;
-    if (dp < dpe) {
-      *ap++ = isprint(*dp) ? *dp : '.';
-      cprintf(" %02x", *dp);
-    } else {
-      cprintf("   ");
-    }
-    ++dp;
-  }
-}
-
 const sBSP430cliCommand * commandSet;
 #define LAST_COMMAND NULL
 
@@ -667,7 +632,7 @@ cmd_wlan_smart_aes (const char * argstr)
     cprintf("aes_read_key got %ld\n", rc);
   }
   cprintf("Key:\n");
-  displayMemory((unsigned char *)keybuf, sizeof(keybuf), 0);
+  vBSP430consoleDisplayMemory((unsigned char *)keybuf, sizeof(keybuf), 0);
   return 0;
 }
 
@@ -716,7 +681,7 @@ cmd_wlan_smart_start (const char * argstr)
     unsigned char keybuf[AES128_KEY_SIZE];
     rc = aes_read_key(keybuf);
     cprintf("Config with AES key:\n");
-    displayMemory((unsigned char *)keybuf, sizeof(keybuf), 0);
+    vBSP430consoleDisplayMemory((unsigned char *)keybuf, sizeof(keybuf), 0);
   } else {
     cprintf("Config unencrypted\n");
   }
@@ -953,7 +918,7 @@ cmd_scan_show (const char * argstr)
       continue;
     }
     if (with_mem) {
-      displayMemory(uresult.bytes, sizeof(*sp), 0);
+      vBSP430consoleDisplayMemory(uresult.bytes, sizeof(*sp), 0);
     }
     { /* SSID */
       const int nsp = sp->ssidNameLength;
@@ -1325,7 +1290,7 @@ cmd_nvmem_rmparam (const char * argstr)
     rp += nb;
   }
   cprintf("Radio module parameters:\n");
-  displayMemory(rmparam, sizeof(rmparam), 0);
+  vBSP430consoleDisplayMemory(rmparam, sizeof(rmparam), 0);
 #if (WITH_RMPARAM - 0)
   {
     const uint8_t * drp = default_rm_param;
@@ -1337,9 +1302,9 @@ cmd_nvmem_rmparam (const char * argstr)
     }
   }
   cprintf("Bitwise difference from default:\n");
-  displayMemory(rmparam, sizeof(rmparam), 0);
+  vBSP430consoleDisplayMemory(rmparam, sizeof(rmparam), 0);
   cprintf("Default RM parameters:\n");
-  displayMemory(default_rm_param, sizeof(default_rm_param), 0);
+  vBSP430consoleDisplayMemory(default_rm_param, sizeof(default_rm_param), 0);
 #endif /* WITH_RMPARAM */
   return 0;
 }
@@ -1391,7 +1356,7 @@ cmd_nvmem_read (const char * argstr)
      * error. */
     rc = nvmem_read(fileid, nb, ofs, data);
     if (0 == rc) {
-      displayMemory(data, nb, ofs);
+      vBSP430consoleDisplayMemory(data, nb, ofs);
       ofs += nb;
     }
   }
@@ -1522,7 +1487,7 @@ static int
 cmd_info_dump (const char * argstr)
 {
   cprintf("Configuration memory:\n");
-  displayMemory((const uint8_t *)infoConnectParams, __info_segment_size, (uintptr_t)infoConnectParams);
+  vBSP430consoleDisplayMemory((const uint8_t *)infoConnectParams, __info_segment_size, (uintptr_t)infoConnectParams);
   return 0;
 }
 
@@ -1796,7 +1761,7 @@ void main (void)
 #endif
 
   cprintf("\nAnd wlan has been started.\n");
-  (void)displayMemory;
+  (void)vBSP430consoleDisplayMemory;
   rv = wlan_set_event_mask(0);
   cprintf("Unmask events returned %d\n", rv);
 

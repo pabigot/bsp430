@@ -562,4 +562,34 @@ int iBSP430consoleWaitForTxSpace_ni (int want_available);
  * @consoleoutput */
 int iBSP430consoleFlush (void);
 
+/** Display the contents of a block of memory.
+ *
+ * This function displays on the console the contents of a memory
+ * region as octets and printable characters.  The memory must by
+ * byte-addressable.  One line is emitted for each 16-byte block: it
+ * begins with the address of the displayed data (per @p base),
+ * followed by up to 16 octet values, followed by the values as
+ * printable characters.
+ *
+ * @param dp pointer to start of memory region
+ * @param len number of octets to display
+ * @param base base displayed address for first octet
+ */
+void vBSP430consoleDisplayMemory (const uint8_t * dp,
+                                  size_t len,
+                                  unsigned long base);
+
+/** Display a short memory region contents of a block of memory.
+ *
+ * This function displays a sequence of octets on the console.  It
+ * differs from vBSP430consoleDisplayMemory() in that there is no
+ * address information, no printable character display, and no attempt
+ * to split the output into individual lines.
+ *
+ * @param dp pointer to start of memory region
+ * @param len number of octetst to display
+ */
+void vBSP430consoleDisplayOctets (const uint8_t * dp,
+                                  size_t len);
+
 #endif /* BSP430_UTILITY_CONSOLE_H */
