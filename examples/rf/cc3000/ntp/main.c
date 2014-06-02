@@ -289,11 +289,10 @@ void main (void)
             rc = -1;
             break;
           }
-
           remote_addr.sai.sin_addr.s_addr = htonl(ntp_addr.u32);
+          cprintf("{%s}", net_ipv4AsText(&remote_addr.sai.sin_addr));
           retries_left = NTP_REQUESTS_PER_SERVER;
         }
-
 
         /* Configure the NTP request and send it */
         iBSP430uptimeInitializeNTPRequest(&ntp0);
