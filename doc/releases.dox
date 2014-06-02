@@ -40,18 +40,29 @@ individual commit history.
 
 \section releases_next Changes in Next Release
 
+N/A
+
+\section releases_20140602 Changes in Release 20140602
+
+@li Integrated support for the upstream GNU msp430-elf toolchain.
+Select by defining @c WITH_GCC_MSP430_ELF=1 when building.
 @li @c examples/Makefile.common moved to @c make/Makefile.common.  It is
 not specific to examples, and should be made available for general use.
-
 @li lBSP430uptimeSleepUntil() renamed to eliminate suffix @c _ni as this
 function will now disable interrupts and restore the calling interrupt
 state as necessary to do its work.
-
 @li ulBSP430uptimeConversionFrequency_Hz() renamed to eliminate
 suffix @c _ni as this function will now disable interrupts and restore
 the calling interrupt state as necessary to do its work.
+@li Refactor the sensor interfaces so code can be shared among
+applications.
+@li Refactor the CC3000 support, using a separate Makefile.cc3000 to
+access the host driver, and adding features like firmware upgrade
+support, smart config support, and NTP.
+@li More Sharp Memory LCD support (wider variety of displays).
+@li Change default I2C bus on EXP430F5529LP to free SPI for CC3000.
 
-\section releases_20140301 Changes in Release 20140310
+\section releases_20140310 Changes in Release 20140310
 
 @li Fix LPM5 locking on FR58xx devices (not reported as an issue, bad me)
 @li Support #BSP430_PLATFORM_BOOSTERPACK_SHARP96 and similar Sharp
