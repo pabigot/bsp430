@@ -2,6 +2,9 @@ var searchData=
 [
   ['rf_20evaluation_20module_20and_20chipcon_20radios',['RF Evaluation Module and ChipCon Radios',['../ex_rf_cc110x.html',1,'']]],
   ['r',['r',['../structsBSP430hplTIMER.html#a5ae8e86c33f6f960e81fa27f708511b2',1,'sBSP430hplTIMER']]],
+  ['rec',['rec',['../structsBSP430uptimeNTPPacketHeader.html#a9500111176f3f2d7135020c9d5256b9e',1,'sBSP430uptimeNTPPacketHeader']]],
+  ['refid',['refid',['../structsBSP430uptimeNTPPacketHeader.html#a8b70b034302bd7e012d3a8e8b2e47a41',1,'sBSP430uptimeNTPPacketHeader']]],
+  ['reftime',['reftime',['../structsBSP430uptimeNTPPacketHeader.html#a2d54a4ac502c26986670c969788fac1e',1,'sBSP430uptimeNTPPacketHeader']]],
   ['release_20notes_20and_20api_20changes',['Release Notes and API Changes',['../releases.html',1,'']]],
   ['ren',['ren',['../structsBSP430hplPORT__5XX__16.html#af40087661bbb154457b2753a17ac6c33',1,'sBSP430hplPORT_5XX_16::ren()'],['../structsBSP430hplPORT__5XX__8.html#ab3513d7df8e9570b77d9813f50ef2ed0',1,'sBSP430hplPORT_5XX_8::ren()']]],
   ['renp',['renp',['../structsBSP430halPORT.html#a399cec481f9b406d46680bb4b2d69052',1,'sBSP430halPORT']]],
@@ -12,6 +15,8 @@ var searchData=
   ['rf_2eh',['rf.h',['../rf_8h.html',1,'']]],
   ['rfem_2eh',['rfem.h',['../rfem_8h.html',1,'']]],
   ['rmc_5fs',['rmc_s',['../structsSkyTraqMsgIn__CFG__NMEA.html#aa5b851651d2543761a52c6c209a71816',1,'sSkyTraqMsgIn_CFG_NMEA']]],
+  ['rootdelay',['rootdelay',['../structsBSP430uptimeNTPPacketHeader.html#ade380df897e91c9dbfc5e42247f667b6',1,'sBSP430uptimeNTPPacketHeader']]],
+  ['rootdisp',['rootdisp',['../structsBSP430uptimeNTPPacketHeader.html#a753a15bfe3370237b26a0a07cf4115c5',1,'sBSP430uptimeNTPPacketHeader']]],
   ['rstn_5fbit',['rstn_bit',['../structsBSP430m25p.html#ae39fcb399d621f13a9bf42f1f7223454',1,'sBSP430m25p']]],
   ['rstn_5fport',['rstn_port',['../structsBSP430m25p.html#adf4208722ba00a5ac20334d5826927ea',1,'sBSP430m25p']]],
   ['rx_5fbyte',['rx_byte',['../structsBSP430halSERIAL.html#a15e5570eb45ae458119bb23a3a346dfc',1,'sBSP430halSERIAL']]],

@@ -41,6 +41,9 @@ var searchData=
   ['ebsp430resourcewait_5ffifo',['eBSP430resourceWait_FIFO',['../resource_8h.html#ab68f276c7c273f34f7552d584dfeaa37a20b7ae98ffa57184d699049033a84469',1,'resource.h']]],
   ['ebsp430resourcewait_5flifo',['eBSP430resourceWait_LIFO',['../resource_8h.html#ab68f276c7c273f34f7552d584dfeaa37acf974269005560f42ded00fdaa73f34c',1,'resource.h']]],
   ['ebsp430resourcewait_5fnone',['eBSP430resourceWait_NONE',['../resource_8h.html#ab68f276c7c273f34f7552d584dfeaa37aae0fbb756c217ffd8dd7654529772f71',1,'resource.h']]],
+  ['ebsp430sensorssht21measurement',['eBSP430sensorsSHT21measurement',['../sht21_8h.html#ac6df7048db29d213e680139af2d07c6e',1,'eBSP430sensorsSHT21measurement():&#160;sht21.h'],['../sht21_8h.html#a0de82fd24b0bbf0e45bb33c6bae1eca2',1,'eBSP430sensorsSHT21measurement():&#160;sht21.h']]],
+  ['ebsp430sensorssht21measurement_5fhumidity',['eBSP430sensorsSHT21measurement_HUMIDITY',['../sht21_8h.html#ac6df7048db29d213e680139af2d07c6eaee911ebf2ce0c2c2912a4dd0e99f2fc8',1,'sht21.h']]],
+  ['ebsp430sensorssht21measurement_5ftemperature',['eBSP430sensorsSHT21measurement_TEMPERATURE',['../sht21_8h.html#ac6df7048db29d213e680139af2d07c6ea3fceeca27b10287e4dc494636fcde605',1,'sht21.h']]],
   ['ecef_5fvx_5fcm_5fbe',['ecef_vx_cm_be',['../structsSkyTraqMsgOut__NAV__DATA.html#aae61d914fe59ff7e0192974a6a7f5c38',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['ecef_5fvy_5fcm_5fbe',['ecef_vy_cm_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a775a58ec337f99ed8b8fa42e658fed1a',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['ecef_5fvz_5fcm_5fbe',['ecef_vz_cm_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a1d608ce3ed69a4566f106212f8839d3c',1,'sSkyTraqMsgOut_NAV_DATA']]],
@@ -93,5 +96,6 @@ var searchData=
   ['euscia',['euscia',['../structsBSP430halSERIAL.html#aa2d4d67aa80b76463042f10eaf44cdb9',1,'sBSP430halSERIAL']]],
   ['euscib',['euscib',['../structsBSP430halSERIAL.html#a97b9adabd09f7a2db31335c7c86e77a2',1,'sBSP430halSERIAL']]],
   ['extension_5fid',['extension_id',['../structuBSP430eui64_1_1as48.html#a8c32e2c096f347a7e11d3315b125ec43',1,'uBSP430eui64::as48']]],
-  ['extracting_20data_20from_20user_20input',['Extracting Data from User Input',['../group__grp__utility__cli__hci.html',1,'']]]
+  ['extracting_20data_20from_20user_20input',['Extracting Data from User Input',['../group__grp__utility__cli__hci.html',1,'']]],
+  ['epoch_20support_20for_20the_20uptime_20timer',['Epoch Support for the Uptime Timer',['../group__grp__utility__uptime__epoch.html',1,'']]]
 ];

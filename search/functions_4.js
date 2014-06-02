@@ -12,6 +12,7 @@ var searchData=
   ['uibsp430timersafecounterread_5fni',['uiBSP430timerSafeCounterRead_ni',['../timer_8h.html#a5e250ebcd2e7538ba568455318eede59',1,'timer.h']]],
   ['uibsp430timersynccounterread_5fni',['uiBSP430timerSyncCounterRead_ni',['../timer_8h.html#aa4bfe7c6eee0c1e7da07b5b6ffd1454a',1,'timer.h']]],
   ['uibsp430tlvchecksum',['uiBSP430tlvChecksum',['../tlv_8h.html#a3c805d05391e3b41d5372fb5bc0de901',1,'tlv.h']]],
+  ['uibsp430uptimecounter_5fni',['uiBSP430uptimeCounter_ni',['../uptime_8h.html#aab05faa2cb7543ab1532ae80f0f3fd4d',1,'uptime.h']]],
   ['uids3231decodehour',['uiDS3231decodeHour',['../ds3231_8h.html#a3d39895c934e87bc663dec6477dab343',1,'ds3231.h']]],
   ['ulbsp430clockaclk_5fhz',['ulBSP430clockACLK_Hz',['../clock_8h.html#a9997899ae094a0e809c01239328f2e0b',1,'clock.h']]],
   ['ulbsp430clockaclk_5fhz_5fni',['ulBSP430clockACLK_Hz_ni',['../clock_8h.html#a50f0e84be872123b2fae87995681a600',1,'clock.h']]],
@@ -27,6 +28,7 @@ var searchData=
   ['ulbsp430timeroverflowadjusted_5fni',['ulBSP430timerOverflowAdjusted_ni',['../timer_8h.html#a679087454149c918599c0980cfe53e81',1,'timer.h']]],
   ['ulbsp430uptime',['ulBSP430uptime',['../uptime_8h.html#a7e0b8aeba63d7b2ce965a650125eb8ef',1,'uptime.h']]],
   ['ulbsp430uptime_5fni',['ulBSP430uptime_ni',['../uptime_8h.html#ab4b2fa8646bfd0856d6a9b095db30e93',1,'uptime.h']]],
-  ['ulbsp430uptimeconversionfrequency_5fhz_5fni',['ulBSP430uptimeConversionFrequency_Hz_ni',['../uptime_8h.html#abee524dac4c6d777b5493f1c16bc1c2a',1,'uptime.h']]],
+  ['ulbsp430uptimeconversionfrequency_5fhz',['ulBSP430uptimeConversionFrequency_Hz',['../uptime_8h.html#a4be2d8e43ecbecf517a452b430ecf029',1,'uptime.h']]],
+  ['ulbsp430uptimelastepochupdate',['ulBSP430uptimeLastEpochUpdate',['../group__grp__utility__uptime__epoch.html#gacbf9d7cbabe6c7060d94eccd41adff07',1,'uptime.h']]],
   ['ulbsp430uptimesetconversionfrequency_5fni',['ulBSP430uptimeSetConversionFrequency_ni',['../uptime_8h.html#aa3bacc5bf6eeb96037f3470fa3ac9c5c',1,'uptime.h']]]
 ];

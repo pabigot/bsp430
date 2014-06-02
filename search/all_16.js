@@ -28,6 +28,7 @@ var searchData=
   ['xbsp430timerclocksource',['xBSP430timerClockSource',['../timer_8h.html#a3538758f690143471a3224c2cd222867',1,'timer.h']]],
   ['xbsp430timername',['xBSP430timerName',['../timer_8h.html#aad872aaa82973fd3accca3bcc004ea69',1,'timer.h']]],
   ['xbsp430u8gdevice',['xBSP430u8gDevice',['../u8glib_8h.html#ab5d211ea5b3e864d8919f7cbd48e16c4',1,'u8glib.h']]],
+  ['xbsp430uptimeasposixtime',['xBSP430uptimeAsPOSIXTime',['../group__grp__utility__uptime__epoch.html#ga1ca2a9bd04be064e542473f4157fde06',1,'uptime.h']]],
   ['xbsp430uptimeastext',['xBSP430uptimeAsText',['../uptime_8h.html#a1cb1310c769f028347010502456fb918',1,'uptime.h']]],
   ['xbsp430uptimeastext_5fni',['xBSP430uptimeAsText_ni',['../uptime_8h.html#a790fc3c41c4a8e93ec7caca7825733c1',1,'uptime.h']]],
   ['xbsp430usci5name',['xBSP430usci5Name',['../usci5_8h.html#a597e0da824a01c3f4815cd6ebff10e92',1,'usci5.h']]],
@@ -41,5 +42,6 @@ var searchData=
   ['xcap_5f2',['XCAP_2',['../msp430_8h.html#a589aa43c062ec99964795c11ffe8bf38',1,'msp430.h']]],
   ['xcap_5f3',['XCAP_3',['../msp430_8h.html#a87d2ff960bbfa72c9551a76a8bc867d0',1,'msp430.h']]],
   ['xds3231registerstotm',['xDS3231registersToTm',['../ds3231_8h.html#aa76d025f3bf2fd4ef742eab8a94ce595',1,'ds3231.h']]],
-  ['xds3231tmtoregisters',['xDS3231tmToRegisters',['../ds3231_8h.html#a1899946648ed582b0e2266bd5917c8d5',1,'ds3231.h']]]
+  ['xds3231tmtoregisters',['xDS3231tmToRegisters',['../ds3231_8h.html#a1899946648ed582b0e2266bd5917c8d5',1,'ds3231.h']]],
+  ['xmt',['xmt',['../structsBSP430uptimeNTPPacketHeader.html#ac85e5222e743583018f5c0d638d978b2',1,'sBSP430uptimeNTPPacketHeader']]]
 ];

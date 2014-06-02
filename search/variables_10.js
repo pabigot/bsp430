@@ -15,6 +15,7 @@ var searchData=
   ['start_5ftt_5fni',['start_tt_ni',['../structsBSP430timerPulseCapture.html#a1700681b948973c03389c8c87985d8b2',1,'sBSP430timerPulseCapture']]],
   ['stat',['stat',['../structsDS3231registers.html#a48cfc0213aec5e780bdaeb703b1aa99a',1,'sDS3231registers::stat()'],['../structsBSP430hplEUSCIB.html#af7f37b5dca124e4f26cb2952fb18c024',1,'sBSP430hplEUSCIB::stat()'],['../structsBSP430hplUSCI.html#a5def5813240b818a12353a6c318d52ed',1,'sBSP430hplUSCI::stat()'],['../structsBSP430hplUSCI5.html#a8fe3e0cd6ef1a4508cd907c14d4a4555',1,'sBSP430hplUSCI5::stat()']]],
   ['statw',['statw',['../structsBSP430hplEUSCIA.html#ad0fe60afb08c31522ff25f35b4db6632',1,'sBSP430hplEUSCIA::statw()'],['../structsBSP430hplEUSCIB.html#a5ac06ef723d183dca849cae9ea8c3fdf',1,'sBSP430hplEUSCIB::statw()']]],
+  ['stratum',['stratum',['../structsBSP430uptimeNTPPacketHeader.html#a3a460fba1f791f864ec1aedca5729838',1,'sBSP430uptimeNTPPacketHeader']]],
   ['strings',['strings',['../structsBSP430cliCompletionHelperStrings.html#a5d58af2738f1252e0a7c4e0448c974ee',1,'sBSP430cliCompletionHelperStrings']]],
   ['svsmhctl',['SVSMHCTL',['../msp430_8h.html#ac11a993ad6c277854031e52bd2b1c4c1',1,'msp430.h']]],
   ['svsmlctl',['SVSMLCTL',['../msp430_8h.html#a851565872e6d9b1b747449156a44d81d',1,'msp430.h']]],

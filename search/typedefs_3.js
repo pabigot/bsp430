@@ -36,6 +36,9 @@ var searchData=
   ['sbsp430resource',['sBSP430resource',['../resource_8h.html#ab682caf5e0d2c8dafbbc4c2d566ee6e1',1,'resource.h']]],
   ['sbsp430resourcereleaseflag',['sBSP430resourceReleaseFlag',['../resource_8h.html#a252150bb9a417d354b71ab9d83112e68',1,'resource.h']]],
   ['sbsp430resourcewaiter',['sBSP430resourceWaiter',['../resource_8h.html#a12fd24282454d19b56692f0748ef0417',1,'resource.h']]],
+  ['sbsp430sensorsbmp180calibration',['sBSP430sensorsBMP180calibration',['../bmp180_8h.html#a8e27d7468891c2836259daef55bc05bb',1,'bmp180.h']]],
+  ['sbsp430sensorsbmp180sample',['sBSP430sensorsBMP180sample',['../bmp180_8h.html#a6cf1a7ac49d8213f9ddf973589f1c5e0',1,'bmp180.h']]],
+  ['sbsp430sensorshh10dstate',['sBSP430sensorsHH10Dstate',['../hh10d_8h.html#a13223250b0267893ecc2804dcac172f4',1,'hh10d.h']]],
   ['sbsp430sharplcd',['sBSP430sharplcd',['../sharplcd_8h.html#afa1be39031b2364a969deb4e509df113',1,'sharplcd.h']]],
   ['sbsp430timeralarm',['sBSP430timerAlarm',['../group__grp__timer__alarm.html#gaa8ab7898617be7936c00e18e65d42df6',1,'timer.h']]],
   ['sbsp430timermuxalarm',['sBSP430timerMuxAlarm',['../group__grp__timer__alarm.html#ga586d1d0cebb3c98715502162e47b5d56',1,'timer.h']]],
@@ -50,5 +53,8 @@ var searchData=
   ['sbsp430tlvtable',['sBSP430tlvTable',['../tlv_8h.html#ace3ea3a61ff148934bcd2404c9f8ccff',1,'tlv.h']]],
   ['sbsp430tlvtable2xx',['sBSP430tlvTable2xx',['../tlv_8h.html#a175d88356bb1555f7fe23a627523768e',1,'tlv.h']]],
   ['sbsp430tlvtable5xx',['sBSP430tlvTable5xx',['../tlv_8h.html#a71243f9918b36d18d51db6274f2a8c51',1,'tlv.h']]],
+  ['sbsp430uptimentppacketheader',['sBSP430uptimeNTPPacketHeader',['../group__grp__utility__uptime__epoch.html#gac941bf3f0730d029f956cfe8f7028304',1,'uptime.h']]],
+  ['sbsp430uptimentpshortformat',['sBSP430uptimeNTPShortFormat',['../group__grp__utility__uptime__epoch.html#ga5f55b02ec7e0b0fb400718b7add22f0a',1,'uptime.h']]],
+  ['sbsp430uptimentptimestamp',['sBSP430uptimeNTPTimestamp',['../group__grp__utility__uptime__epoch.html#ga057de2cee4aab178d2448c1a0a814bb1',1,'uptime.h']]],
   ['sds3231registers',['sDS3231registers',['../ds3231_8h.html#af4f60f13f7921f4cda83d5b3f3893add',1,'ds3231.h']]]
 ];

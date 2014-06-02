@@ -37,6 +37,8 @@ var searchData=
   ['ebsp430resourcewait_5ffifo',['eBSP430resourceWait_FIFO',['../resource_8h.html#ab68f276c7c273f34f7552d584dfeaa37a20b7ae98ffa57184d699049033a84469',1,'resource.h']]],
   ['ebsp430resourcewait_5flifo',['eBSP430resourceWait_LIFO',['../resource_8h.html#ab68f276c7c273f34f7552d584dfeaa37acf974269005560f42ded00fdaa73f34c',1,'resource.h']]],
   ['ebsp430resourcewait_5fnone',['eBSP430resourceWait_NONE',['../resource_8h.html#ab68f276c7c273f34f7552d584dfeaa37aae0fbb756c217ffd8dd7654529772f71',1,'resource.h']]],
+  ['ebsp430sensorssht21measurement_5fhumidity',['eBSP430sensorsSHT21measurement_HUMIDITY',['../sht21_8h.html#ac6df7048db29d213e680139af2d07c6eaee911ebf2ce0c2c2912a4dd0e99f2fc8',1,'sht21.h']]],
+  ['ebsp430sensorssht21measurement_5ftemperature',['eBSP430sensorsSHT21measurement_TEMPERATURE',['../sht21_8h.html#ac6df7048db29d213e680139af2d07c6ea3fceeca27b10287e4dc494636fcde605',1,'sht21.h']]],
   ['eskytraqmid_5fnmea',['eSkyTraqMID_NMEA',['../skytraq_8h.html#ab154e902f3b9f539b74cb95f21644341a009dddaafd735ecc166824348d0c5030',1,'skytraq.h']]],
   ['eskytraqmidin_5fcfg_5f1pps',['eSkyTraqMIDin_CFG_1PPS',['../skytraq_8h.html#ab154e902f3b9f539b74cb95f21644341a0fd5b646e482683a1dcfe55903b12f73',1,'skytraq.h']]],
   ['eskytraqmidin_5fcfg_5fdatum',['eSkyTraqMIDin_CFG_DATUM',['../skytraq_8h.html#ab154e902f3b9f539b74cb95f21644341a36e54c3065473e770e32eea8ebde7292',1,'skytraq.h']]],

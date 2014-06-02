@@ -56,6 +56,7 @@ var searchData=
   ['configbsp430_5frf_5fcc110xemk',['configBSP430_RF_CC110XEMK',['../cc110x_8h.html#ab808d799285721a0fe1390154c56000f',1,'cc110x.h']]],
   ['configbsp430_5frf_5fcc1125emk',['configBSP430_RF_CC1125EMK',['../cc1125_8h.html#a82f3dfe2a08fb96ad923821b8c661327',1,'cc1125.h']]],
   ['configbsp430_5frf_5fcc2520emk',['configBSP430_RF_CC2520EMK',['../cc2520_8h.html#ac0757df6eaf3b415f3865391e83a481d',1,'cc2520.h']]],
+  ['configbsp430_5frf_5fcc3000boost',['configBSP430_RF_CC3000BOOST',['../cc3000_8h.html#a5af5d13c5c41f45bc6bc5bfcf4e5a542',1,'cc3000.h']]],
   ['configbsp430_5frf_5frf2500t',['configBSP430_RF_RF2500T',['../rf2500t_2bsp430__config_8h.html#aa2141f15e50356c641d40d464023da42',1,'bsp430_config.h']]],
   ['configbsp430_5frf_5ftimer',['configBSP430_RF_TIMER',['../rf_8h.html#a294e4cfb982b2a0dbc4ab4328f380322',1,'rf.h']]],
   ['configbsp430_5frfem',['configBSP430_RFEM',['../rfem_8h.html#a6126a0db5d0c04e541477f16b643b7d9',1,'rfem.h']]],
@@ -74,6 +75,7 @@ var searchData=
   ['configbsp430_5funittest_5ffailfast',['configBSP430_UNITTEST_FAILFAST',['../unittest_8h.html#ae9f4d2292f29af7e385140c33dc5dc54',1,'unittest.h']]],
   ['configbsp430_5fuptime',['configBSP430_UPTIME',['../uptime_8h.html#a9d11620036fe41e9f4fca30676e4d821',1,'uptime.h']]],
   ['configbsp430_5fuptime_5fdelay',['configBSP430_UPTIME_DELAY',['../uptime_8h.html#adb0fd811e867799ad7873f867c67dbd3',1,'uptime.h']]],
+  ['configbsp430_5fuptime_5fepoch',['configBSP430_UPTIME_EPOCH',['../uptime_8h.html#a61dba25c9c2606cf5acb2595c5162d42',1,'uptime.h']]],
   ['configbsp430_5futility_5fu8glib',['configBSP430_UTILITY_U8GLIB',['../u8glib_8h.html#ad03871e4386595f3bd9f11755c74d946',1,'u8glib.h']]],
   ['cov',['COV',['../msp430_8h.html#a1b0fda8ba947077492614595b1371c99',1,'msp430.h']]],
   ['cpuoff',['CPUOFF',['../msp430_8h.html#acb24a5cd5fd8e152af2dae98b3883013',1,'msp430.h']]]
