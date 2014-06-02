@@ -206,14 +206,15 @@ ifneq (,$(WITH_CCS))
 WARN_CFLAGS ?= --diag_suppress=10229,10374
 endif # WITH_CCS
 
-# WITH_WARN_ERROR: If not set to zero, adds -Werror which causes all
-# warnings to be treated as errors.
-WITH_WARN_ERROR ?= 1
-ifneq (,$(WITH_WARN_ERROR))
+# WITHOUT_WARN_ERROR: If set to a non-empty string, prevents the
+# default addition of toolchain-specific flags like -Werror which
+# cause all warnings to be treated as errors.
+WITHOUT_WARN_ERROR ?=
+ifeq (,$(WITHOUT_WARN_ERROR))
 ifneq (,$(WITH_GCC))
 WARN_CFLAGS += -Werror
 endif # WITH_GCC
-endif # WITH_WARN_ERROR
+endif # WITHOUT_WARN_ERROR
 
 # External capabilities
 
@@ -375,10 +376,10 @@ MSPDEBUG_OPTIONS ?=
 # to the driver, e.g. that the uif driver is to use JTAG.
 MSPDEBUG_DRIVER ?= tilib
 
-# WITH_MSPDEBUG: Unless defined to 0, assume that the image will be
-# downloaded to the board using mspdebug.  If this is zero, an install
-# rule must be provided externally.
-WITH_MSPDEBUG ?= 1
+# WITH_MSPDEBUG: Unless defined to an empty string, assume that the
+# image will be downloaded to the board using mspdebug.  If this is
+# empty, an install rule must be provided externally.
+WITH_MSPDEBUG ?= yes
 
 # BSP430_INHIBIT_MAKE_RULES: Define to a nonzero value to exclude the
 # Make rules while leaving all the variable declarations in place.

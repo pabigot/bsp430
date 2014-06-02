@@ -12,7 +12,14 @@
 #include <bsp430/periph/sys.h>
 #include <bsp430/periph/flash.h>
 #include <bsp430/periph/pmm.h>
+#if (BSP430_CORE_TOOLCHAIN_GCC_MSPGCC - 0)
 #include <sys/crtld.h>
+#elif (BSP430_CORE_TOOLCHAIN_GCC_MSP430_ELF - 0)
+#ifdef __MSP430F5438A__
+#define __infob ((unsigned char *)0x1980)
+#define __info_segment_size 128
+#endif
+#endif /* get info section information */
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>

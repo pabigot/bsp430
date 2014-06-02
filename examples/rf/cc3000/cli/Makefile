@@ -18,8 +18,8 @@ include $(BSP430_ROOT)/make/Makefile.cc3000
 # See the source for information on where to get these files.
 # You may need to disable other commands to make room for
 # these, or build with 20-bit support.
-WITH_UPDATE ?= 0
-ifneq (0,$(WITH_UPDATE))
+WITH_UPDATE ?=
+ifneq (,$(WITH_UPDATE))
 AUX_CPPFLAGS += -DWITH_UPDATE
 endif # WITH_UPDATE
 
@@ -27,20 +27,20 @@ endif # WITH_UPDATE
 # This requires the presence of the following file:
 #  rm_param.inc         # has radio module default parameters
 # See the source for information on where to get these files.
-WITH_RMPARAM ?= 0
-ifneq (0,$(WITH_RMPARAM))
+WITH_RMPARAM ?=
+ifneq (,$(WITH_RMPARAM))
 AUX_CPPFLAGS += -DWITH_RMPARAM
 endif # WITH_RMPARAM
 
 # Optionally enable SmartConfig.
-WITH_SMART ?= 0
-ifneq (0,$(WITH_SMART))
+WITH_SMART ?=
+ifneq (,$(WITH_SMART))
 AUX_CPPFLAGS += -DBSP430_CC3000_ENABLE_SMART
 endif # WITH_SMART
 
 # Optionally read profiles from local file
-WITH_PROFILES ?= 0
-ifneq (0,$(WITH_PROFILES))
+WITH_PROFILES ?=
+ifneq (,$(WITH_PROFILES))
 AUX_CPPFLAGS += -DWITH_PROFILES
 endif # WITH_PROFILES
 
