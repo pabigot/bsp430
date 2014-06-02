@@ -26,7 +26,6 @@
 #include <bsp430/periph/sys.h>
 #include <bsp430/periph/flash.h>
 #include <bsp430/periph/pmm.h>
-#include <sys/crtld.h>
 #include <bsp430/utility/uptime.h>
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>

@@ -98,8 +98,7 @@ const sBSP430halISRIndexedChainNode button_cb = {
   .callback_ni = button_isr_ni,
 };
 
-static void
-__attribute__((__interrupt__(RTC_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(RTC_VECTOR)
 isr_RTC (void)
 {
   unsigned int rtciv = RTCIV;
@@ -129,8 +128,7 @@ isr_RTC (void)
   BSP430_CORE_LPM_EXIT_FROM_ISR(rv);
 }
 
-static void
-__attribute__((__interrupt__(ADC12_VECTOR)))
+BSP430_CORE_DECLARE_INTERRUPT(ADC12_VECTOR)
 isr_ADC12 (void)
 {
   unsigned int adc12iv = ADC12IV;

@@ -302,11 +302,10 @@ lBSP430uptimeSleepUntil (unsigned long setting_utt,
 
 #if (configBSP430_UPTIME_EPOCH - 0)
 
-#include <bits/byteswap.h>
-#define ntohl(x_) __bswap_32(x_)
-#define htonl(x_) __bswap_32(x_)
-#define ntohs(x_) __bswap_16(x_)
-#define htons(x_) __bswap_16(x_)
+#define ntohl(x_) BSP430_CORE_SWAP_32(x_)
+#define htonl(x_) BSP430_CORE_SWAP_32(x_)
+#define ntohs(x_) BSP430_CORE_SWAP_16(x_)
+#define htons(x_) BSP430_CORE_SWAP_16(x_)
 
 /** Number of microseconds per second, for convenience */
 #define US_PER_S 1000000UL

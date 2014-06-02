@@ -450,7 +450,12 @@ ifeq ($(filter-out realclean clean emit-test-platforms test-platforms, $(MAKECMD
 -include $(DEP)
 endif # make [real]clean
 
-TEST_PLATFORMS_=$(filter-out $(TEST_PLATFORMS_EXCLUDE), $(TEST_PLATFORMS))
+# EXT_TEST_PLATFORMS_EXCLUDE: Additional platforms that should be
+# excluded.  Used for WITH_GCC_MSP430_ELF to select EMBTEXTF_ROOT as
+# either the msp430 or msp430X library depending on which platform is
+# being built, since msp430-elf cannot link non-CPUX code into a CPUX
+# image.
+TEST_PLATFORMS_=$(filter-out $(TEST_PLATFORMS_EXCLUDE) $(EXT_TEST_PLATFORMS_EXCLUDE), $(TEST_PLATFORMS))
 
 .PHONY: emit-test-platforms
 emit-test-platforms:

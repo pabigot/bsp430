@@ -1,8 +1,10 @@
-
 #!/bin/sh
 #
 # Utility script to run make on all examples for all platforms.
 #
+# For external WITH_GCC_MSP430_ELF use external
+# EXT_TEST_PLATFORMS_EXCLUDE="exp430g2 rf2500t" to match against
+# EMBTEXTF_ROOT architecture msp430X.
 
 for tc in $(find examples -name Makefile | egrep -v '/fragpool/') ; do
   make -C $(dirname ${tc}) test-platforms || break

@@ -74,16 +74,14 @@ const struct sLPMconfig lpm_configs[] = {
 
 volatile unsigned int ta0r;
 
-#pragma vector=TIMER0_A0_VECTOR
-__interrupt void
+BSP430_CORE_DECLARE_INTERRUPT(TIMER0_A0_VECTOR)
 ta0cc0_isr (void)
 {
   ta0r = TA0R;
   __bic_status_register_on_exit(BSP430_CORE_LPM_EXIT_MASK);
 }
 
-#pragma vector=TIMER0_A1_VECTOR
-__interrupt void
+BSP430_CORE_DECLARE_INTERRUPT(TIMER0_A1_VECTOR)
 ta0_isr (void)
 {
   (void)TA0IV;

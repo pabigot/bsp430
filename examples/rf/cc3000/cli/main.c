@@ -1598,7 +1598,7 @@ cmd_ghbn (const char * argstr)
 {
   size_t argstr_len = strlen(argstr);
   const char * name;
-  uint16_t name_len;
+  size_t name_len;
   uint32_t addr = -1;
   int rc;
 

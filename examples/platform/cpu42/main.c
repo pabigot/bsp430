@@ -14,8 +14,7 @@
 #include <bsp430/utility/console.h>
 #include <bsp430/utility/led.h>
 
-#pragma vector=PORT1_VECTOR
-__interrupt void
+BSP430_CORE_DECLARE_INTERRUPT(PORT1_VECTOR)
 port_isr (void)
 {
   (void)P1IV;
