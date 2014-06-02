@@ -36,11 +36,6 @@
 #include <bsp430/utility/uptime.h>
 #include <bsp430/platform/exp430fr5969/platform.h>
 
-/* Pre-extend standard: In final FR58xx family devices
- * PM5CTL0.LOCKLPM5 comes up set after a power-up event.  Need to clear this so */
-#define BSP430_PLATFORM_STANDARD_INITIALIZE_PROLOGUE do {       \
-  } while (0)
-
 #include <bsp430/platform/standard.inc>
 
 #if (BSP430_LED - 0)
