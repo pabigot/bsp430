@@ -25,9 +25,10 @@ BSP430 features:
 
 * Integrated support for watchdog and low power mode execution
 
-* A build infrastructure designed to simplify creating new applications,
-  currently focused on the `MSPGCC`_ toolchain in a POSIX command-line
-  environment supported by GNU Make
+* A build infrastructure designed to simplify creating new applications
+  in a POSIX command-line environment supported by GNU Make, with GNU C
+  (legacy `MSPGCC`_ and upstream msp430-elf) and TI compiler toolchain
+  support
 
 Please see the `documentation`_, `issue tracker`_, and
 `homepage`_ on github.  Get a copy using git::
