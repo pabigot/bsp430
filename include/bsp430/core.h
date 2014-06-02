@@ -362,6 +362,22 @@
 /** Defined to a true value if GCC is being used */
 #define BSP430_CORE_TOOLCHAIN_GCC (1 < __GNUC__)
 
+/** Defined to a true value if mspgcc is being used */
+#define BSP430_CORE_TOOLCHAIN_GCC_MSPGCC (1 < __MSPGCC__)
+
+/** Defined to a true value if msp430-elf GCC is being used */
+#define BSP430_CORE_TOOLCHAIN_GCC_MSP430_ELF (BSP430_CORE_TOOLCHAIN_GCC && ! BSP430_CORE_TOOLCHAIN_GCC_MSPGCC)
+
+#if (BSP430_CORE_TOOLCHAIN_GCC_MSP430_ELF - 0)
+#define __read_status_register() _get_SR_register()
+#define __bis_status_register(v_) _bis_SR_register(v_)
+#define __bic_status_register(v_) _bic_SR_register(v_)
+#define __bic_status_register_on_exit(v_) __bic_SR_register_on_exit(v_)
+#define __bis_status_register_on_exit(v_) __bis_SR_register_on_exit(v_)
+#define __disable_interrupts() _disable_interrupts()
+#define __enable_interrupts() _enable_interrupts()
+#endif /* RHGCC */
+
 /** Defined to a true value if the Texas Instruments compiler is being
  * used.
  *
@@ -448,7 +464,7 @@
  * string literal */
 #define _BSP430_CORE_TOOLCHAIN_TI_PRAGMA(x_) _Pragma(#x_)
 #else  /* TOOLCHAIN */
-#define BSP430_CORE_DECLARE_INTERRUPT(iv_) static void __attribute__((__interrupt__(iv_)))
+#define BSP430_CORE_DECLARE_INTERRUPT(iv_) void __attribute__((__interrupt__(iv_)))
 #endif /* TOOLCHAIN */
 
 /** Enter a low-power mode
@@ -626,7 +642,7 @@
  *
  * @defaulted */
 #ifndef BSP430_CORE_INTERRUPT_STATE_T
-#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC - 0)
+#if defined(BSP430_DOXYGEN) || (BSP430_CORE_TOOLCHAIN_GCC_MSPGCC - 0)
 #define BSP430_CORE_INTERRUPT_STATE_T __istate_t
 #else /* TOOLCHAIN */
 #define BSP430_CORE_INTERRUPT_STATE_T unsigned int
@@ -770,9 +786,11 @@
  *
  * Some toolchains may provide an intrinsic that is faster than basic C code.
  */
-#if (BSP430_CORE_TOOLCHAIN_GCC - 0)
+#if (BSP430_CORE_TOOLCHAIN_GCC_MSPGCC - 0)
 #include <byteswap.h>
 #define BSP430_CORE_SWAP_16(w_) bswap_16(w_)
+#elif (BSP430_CORE_TOOLCHAIN_GCC_MSP430_ELF - 0)
+#define BSP430_CORE_SWAP_16(w_) _swap_bytes(w_)
 #else
 #define BSP430_CORE_SWAP_16(w_) ((  ((w_) & 0xFF00) >> 8)       \
                                  | (((w_) & 0x00FF) << 8) )
@@ -782,7 +800,7 @@
  *
  * Some toolchains may provide an intrinsic that is faster than basic C code.
  */
-#if (BSP430_CORE_TOOLCHAIN_GCC - 0)
+#if (BSP430_CORE_TOOLCHAIN_GCC_MSPGCC - 0)
 #include <byteswap.h>
 #define BSP430_CORE_SWAP_32(lw_) bswap_32(lw_)
 #else

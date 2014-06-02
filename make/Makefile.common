@@ -13,28 +13,37 @@ ifndef BSP430_ROOT
 $(error Must specify BSP430_ROOT)
 endif # BSP430_ROOT
 
+# NOTE: All Make variables treated as booleans including WITH_*
+# represent false as an empty string and interpret non-empty strings
+# as true.
+
 # WITH_CCS: Indicate that Code Composer Studio is installed and the TI
 # compiler used in it should be preferred.  Unless defined to 1, assumes CCS
 # will not be used.
 # NOTE: Within the source, the toolchain is identified as the TI compiler,
 # not CCS.
-WITH_CCS ?= 0
-ifneq (0,$(WITH_CCS))
-WITH_GCC ?= 0
+
+# WITH_GCC_MSP430_ELF: Indicate that the upstream GCC with MSP430
+# support ("msp430-elf-gcc") is installed and should be preferred.
+
+# WITH_GCC_MSPGCC: Indicate that the legacy MSPGCC ("msp430-gcc") is
+# installed and should be used.
+
+# Attempt to catch use of old interface.  WITH_GCC is now inferred.
+ifneq (,$(WITH_GCC))
+$(error Use WITH_GCC_MSPGCC or WITH_GCC_MSP430_ELF)
 endif # WITH_GCC
 
-# WITH_GCC: Unless defined to 0, assume that GCC will be used, and
-# define options suitable for building with it.
-WITH_GCC ?= 1
+ifeq (,$(WITH_GCC_MSPGCC)$(WITH_GCC_MSP430_ELF)$(WITH_CCS))
+WITH_CCS ?=
+WITH_GCC_MSP430_ELF ?=
+WITH_GCC_MSPGCC ?= yes
+endif
 
-ifneq (0,$(WITH_GCC))
-CROSS_COMPILE ?= msp430-
-CC=$(CROSS_COMPILE)gcc
-LD=$(CROSS_COMPILE)ld
-AR=$(CROSS_COMPILE)ar
-SIZE=$(CROSS_COMPILE)size
-endif # WITH_GCC
-ifneq (0,$(WITH_CCS))
+CPPFLAGS ?=
+LDFLAGS ?=
+
+ifneq (,$(WITH_CCS))
 # The Code Composer Studio root containing the TI toolchain
 CCS_INSTALL_ROOT ?= /usr/local/ccs/ccsv5
 
@@ -51,7 +60,6 @@ endif # CG_TOOL_ROOT
 CC=cl430
 OBJ_EXT=.obj
 CFLAGS = --abi=eabi --relaxed_ansi
-CPPFLAGS ?=
 CPPFLAGS += --include_path="$(CCS_BASE_ROOT)/msp430/include"
 CPPFLAGS += --include_path="$(CG_TOOL_ROOT)/include"
 
@@ -68,6 +76,35 @@ LDFLAGS += -i"$(CG_TOOL_ROOT)/lib"
 # Note that global variables without initializers are not zeroed
 # as is required by the C standard.  No workaround.
 LDFLAGS += --rom_model
+
+else # WITH_CCS
+
+ifneq (,$(WITH_GCC_MSP430_ELF))
+WITH_GCC = yes
+CROSS_COMPILE ?= msp430-elf-
+
+# GCC_MSP430_ELF_TI_ROOT: Where the TI-provided GCC_RH-date.zip file
+# was unpacked.  The MCU-specific header files and linker scripts are
+# found in the include subdirectory of this directory.  The default
+# location should be the msp430-elf subdirectory of the gcc-msp430-elf
+# installation.
+GCC_MSP430_ELF_TI_ROOT ?= /usr/local/gcc-msp430-elf/msp430-elf
+LDFLAGS += -L$(GCC_MSP430_ELF_TI_ROOT)/include
+CPPFLAGS += -I$(GCC_MSP430_ELF_TI_ROOT)/include
+else # WITH_GCC_MSP430_ELF
+# Assume
+WITH_GCC_MSPGCC ?= yes
+WITH_GCC = yes
+CROSS_COMPILE ?= msp430-
+endif # WITH_GCC_MSP430_ELF
+
+ifneq (,$(WITH_GCC))
+CC=$(CROSS_COMPILE)gcc
+LD=$(CROSS_COMPILE)ld
+AR=$(CROSS_COMPILE)ar
+SIZE=$(CROSS_COMPILE)size
+endif # WITH_GCC
+
 endif # WITH_CCS
 
 # TEST_PLATFORMS: Space-separated list of platforms to use for testing a
@@ -112,18 +149,29 @@ ifndef MCU
 $(error No MCU identified)
 endif # MCU
 
-ifneq (0,$(WITH_GCC))
+ifneq (,$(WITH_GCC))
 TARGET_CFLAGS += -mmcu=$(MCU)
+ifneq (,$(WITH_GCC_MSPGCC))
 TARGET_LDFLAGS += -mmcu=$(MCU)
+endif # WITH_GCC_MSPGCC
 
 # MEMORY_MODEL: Level of 20-bit support, assuming this is a CPUX MCU.
 ifdef MEMORY_MODEL
+ifneq (,$(WITH_GCC_MSP430_ELF))
+ifeq (large,$(MEMORY_MODEL))
+TARGET_CFLAGS += -mlarge
+endif # MEMORY_MODEL
+ifeq (small,$(MEMORY_MODEL))
+TARGET_CFLAGS += -msmall
+endif # MEMORY_MODEL
+else # WITH_GCC_MSP430_ELF
 TARGET_CFLAGS += -mmemory-model=$(MEMORY_MODEL)
 TARGET_LDFLAGS += -mmemory-model=$(MEMORY_MODEL)
+endif # WITH_GCC_MSP430_ELF
 endif # MEMORY_MODEL
 endif # WITH_GCC
 
-ifneq (0,$(WITH_CCS))
+ifneq (,$(WITH_CCS))
 # Add the define for the target MCU
 TARGET_CPPFLAGS += -D__$(shell echo $(MCU)|tr '[a-z]' '[A-Z]')__
 endif # WITH_CCS
@@ -132,25 +180,25 @@ endif # WITH_CCS
 # default enables debugging and optimizes for size, and puts each
 # function and data object in its own section so it can be discarded
 # at link time if not needed.  Also review OPT_LDFLAGS.
-ifneq (0,$(WITH_CCS))
+ifneq (,$(WITH_CCS))
 OPT_CFLAGS ?= -o -mf=0
 endif # WITH_CCS
-ifneq (0,$(WITH_GCC))
+ifneq (,$(WITH_GCC))
 OPT_CFLAGS ?= -ggdb -Os -ffunction-sections -fdata-sections
 endif # WITH_GCC
 
 # OPT_LDFLAGS: LDFLAGS related to optimization and debugging.  THe
 # default value enables removal of unreferenced sections during
 # non-relocatable link.
-ifneq (0,$(WITH_GCC))
+ifneq (,$(WITH_GCC))
 OPT_LDFLAGS ?= -Wl,-gc-sections
 endif # WITH_GCC
 
 # WARN_CFLAGS: CFLAGS that control warnings
-ifneq (0,$(WITH_GCC))
+ifneq (,$(WITH_GCC))
 WARN_CFLAGS ?= -Wall -Wno-main
 endif # WITH_GCC
-ifneq (0,$(WITH_CCS))
+ifneq (,$(WITH_CCS))
 # Suppress various TI compiler warnings.  Use -pden to add diagnostic number
 # to output.
 # 10229 : (FRAM) output section ".data" refers to load symbol cannot be compressed
@@ -161,8 +209,8 @@ endif # WITH_CCS
 # WITH_WARN_ERROR: If not set to zero, adds -Werror which causes all
 # warnings to be treated as errors.
 WITH_WARN_ERROR ?= 1
-ifneq (0,$(WITH_WARN_ERROR))
-ifneq (0,$(WITH_GCC))
+ifneq (,$(WITH_WARN_ERROR))
+ifneq (,$(WITH_GCC))
 WARN_CFLAGS += -Werror
 endif # WITH_GCC
 endif # WITH_WARN_ERROR
@@ -174,6 +222,10 @@ endif # WITH_WARN_ERROR
 ifdef EMBTEXTF_ROOT
 CPPFLAGS += -DBSP430_CONSOLE_USE_EMBTEXTF -I"$(EMBTEXTF_ROOT)/include"
 AUX_LDLIBS += $(EMBTEXTF_ROOT)/lib/libembtextf.a
+ifneq (,$(WITH_GCC_MSP430_ELF))
+# newlib snprintf() overflows memory; bypass it too
+AUX_LDLIBS += $(EMBTEXTF_ROOT)/lib/libembtextf-libc.a
+endif # WITH_GCC_MSP430_ELF
 endif # EMBTEXTF_ROOT
 
 CPPFLAGS += $(TARGET_CPPFLAGS)
@@ -333,10 +385,10 @@ WITH_MSPDEBUG ?= 1
 # This allows the BSP430 build infrastructure to provide toolchain
 # and platform declarations to an external build infrastructure
 # like that for Contiki, which wants to provide its own rules.
-BSP430_INHIBIT_MAKE_RULES ?= 0
-ifeq (0,$(BSP430_INHIBIT_MAKE_RULES))
+BSP430_INHIBIT_MAKE_RULES ?=
+ifeq (,$(BSP430_INHIBIT_MAKE_RULES))
 
-ifneq (0,$(WITH_GCC))
+ifneq (,$(WITH_GCC))
 # Use GCC to generate dependency files
 %.d: %.c
 	set -e; $(RM) $@; \
@@ -354,7 +406,7 @@ ifneq (0,$(WITH_GCC))
 CLEAN += $(SRC:.c=.lst)
 endif # WITH_GCC
 
-ifneq (0,$(WITH_CCS))
+ifneq (,$(WITH_CCS))
 # Rule for CCS compiler which insists on placing output in foo.obj
 %.obj: %.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $<
@@ -370,12 +422,12 @@ REALCLEAN += $(REALCLEAN_OBJ)
 # AOUT: The name of the application image.
 AOUT ?= app.elf
 $(AOUT): $(OBJ)
-ifneq (0,$(WITH_CCS))
+ifneq (,$(WITH_CCS))
 	$(CC) $(CFLAGS) -z $(LDFLAGS) -o $@ $(OBJ) $(LDLIBS) $(CCS_LNK_CMD)
 else # WITH_CCS
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ) $(LDLIBS)
 endif # WITH_CCS
-ifneq (0,$(WITH_GCC))
+ifneq (,$(WITH_GCC))
 	$(SIZE) $@
 endif # WITH_GCC
 
@@ -387,7 +439,7 @@ clean:
 realclean: clean
 	-$(RM) $(AOUT) $(DEP) $(REALCLEAN) *.d *.o
 
-ifneq (0,$(WITH_MSPDEBUG))
+ifneq (,$(WITH_MSPDEBUG))
 install: $(AOUT)
 	$(MSPDEBUG) $(MSPDEBUG_OPTIONS) $(MSPDEBUG_DRIVER) '$(MSPDEBUG_PROG) $(AOUT)'
 endif # WITH_MSPDEBUG
