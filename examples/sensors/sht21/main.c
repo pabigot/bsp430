@@ -77,10 +77,10 @@ void main ()
     char as_text[BSP430_UPTIME_AS_TEXT_LENGTH];
     unsigned long t0;
     unsigned long t1;
-    unsigned int t_raw;
+    uint16_t t_raw;
     unsigned int t_ms;
-    unsigned int rh_raw;
-    unsigned int rh_ms;
+    uint16_t rh_raw;
+    unsigned  rh_ms;
     int nhiters = 0;
 
     t0 = ulBSP430uptime_ni();
