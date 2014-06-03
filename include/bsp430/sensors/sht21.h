@@ -60,7 +60,7 @@
  * @note When @p hold_master is used in
  * iBSP430sensorsSHT21initiateMeasurement() the I2C bus is not
  * restored to reset mode on return.  The caller must do so, after
- * successful completion of iBSP430sensorsSHT21getSample(), if
+ * successful completion of iBSP430sensorsSHT21getMeasurement(), if
  * desired.
  *
  * @homepage http://github.com/pabigot/bsp430
@@ -106,12 +106,18 @@
  * by iBSP430sensorsSHT21configuration(). */
 #define BSP430_SENSORS_SHT21_CONFIG_EOB_MASK 0x40
 
-/** Bits that represent on-chip heater enabled state in the value
+/** Bit that represents on-chip heater enabled state in the value
  * returned by iBSP430sensorsSHT21configuration(). */
-#define BSP430_SENSORS_SHT21_CONFIG_HEATER_MASK 0x02
+#define BSP430_SENSORS_SHT21_CONFIG_HEATER_MASK 0x04
 
 /** Number of octets in the SHT21 Electronic Identification Code */
 #define BSP430_SENSORS_SHT21_EIC_LENGTH 8
+
+/** Assess whether an EIC represents a true SHT21 device. */
+#define BSP430_SENSORS_SHT21_EIC_IS_SHT21(eic_) ((0x00 == (eic_)[0]) && (0x80 == (eic_)[1]))
+
+/** Assess whether an EIC represents a true HTU21D device. */
+#define BSP430_SENSORS_SHT21_EIC_IS_HTU21D(eic_) ((0x48 == (eic_)[0]) && (0x54 == (eic_)[1]))
 
 /** Convert a raw humidity value to parts-per-thousand as an unsigned
  * int */
@@ -129,6 +135,44 @@
 /** Convert a raw temperature value to deci-degrees Kelvin as an
  * unsigned int. */
 #define BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_dK(raw_) ((unsigned int)((5 + BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_cK(raw_)) / 10))
+
+#ifndef BSP430_SENSORS_SHT21_IS_HTU21D
+/** Define to true value to indicate that device is <a
+ * href="http://www.meas-spec.com/product/humidity/HTU21D.aspx">HTU21D</a>
+ * as opposed to a real <a
+ * href="http://www.sensirion.com/en/products/humidity-temperature/humidity-sensor-sht21/">SHT21</a>.
+ *
+ * The HTU21D has a significantly less stable I2C interface: in
+ * particular, bus errors occur in if a measurement read request
+ * arrives too soon after the measurement initialization.
+ *
+ * When enabled, hard-coded delays are introduced at certain points,
+ * decreasing but not eliminating the likelihood of bus failures.
+ */
+#define BSP430_SENSORS_SHT21_IS_HTU21D 1
+#endif /* BSP430_SENSORS_SHT21_IS_HTU21D */
+
+/** Data defining a SHT21 sample. */
+typedef struct sBSP430sensorsSHT21sample {
+  /** The raw uncompensated temperatures provided by the device. */
+  unsigned int temperature_raw;
+
+  /** The raw humidity value provided by the device. */
+  unsigned int humidity_raw;
+
+  /** The corrected temperature, in tenths of a degree Kelvin.  (The
+   * value will never be negative, but is represented in a signed type
+   * to simplify difference calculations.) */
+  int temperature_dK;
+
+  /** The corrected relative humidity, in parts per thousand.  (The
+   * value will never be negative, but is represented in a signed type
+   * to simplify difference calculations.) */
+  int humidity_ppth;
+} sBSP430sensorsSHT21sample;
+
+/** A handle for a SHT21 sample */
+typedef sBSP430sensorsSHT21sample * hBSP430sensorsSHT21sample;
 
 /** Calculate the Cyclic Redundancy Checksum over a range of data.
  *
@@ -230,7 +274,7 @@ typedef enum eBSP430sensorsSHT21measurement {
  * until the measurement is complete; zero if it should release it for
  * other use.  If nonzero the i2c bus is not restored to its original
  * state on return; it must remain untouched until the corresponding
- * iBSP430sensorsSHT21getSample() succeeds, and must be manually
+ * iBSP430sensorsSHT21getMeasurement() succeeds, and must be manually
  * placed back in reset mode if so desired.
  *
  * @param type the type of measurement requested.
@@ -260,8 +304,23 @@ int iBSP430sensorsSHT21initiateMeasurement (hBSP430halSERIAL i2c,
  * @return A negative error code on I2C failure, otherwise the result
  * of running iBSP430sensorsSHT21crc() on the data read from the
  * sensor. */
+int iBSP430sensorsSHT21getMeasurement (hBSP430halSERIAL i2c,
+                                       int hold_master,
+                                       uint16_t * rawp);
+
+/** Read both temperature and humidity from the SHT21.
+ *
+ * @param i2c the i2c bus on which the SHT21 device can be contacted.
+ *
+ * @param sample a pointer to where the sample data should be stored.
+ * Calibrated values are calculated from the raw values if the
+ * measurement was successful.  On input
+ * sBSP430sensorsSHT21sample::config should accurately reflect the
+ * current configuration of the device.
+ *
+ * @return 0 if the sample was successfully retrieved, otherwise a
+ * negative error code. */
 int iBSP430sensorsSHT21getSample (hBSP430halSERIAL i2c,
-                                  int hold_master,
-                                  uint16_t * rawp);
+                                  hBSP430sensorsSHT21sample sample);
 
 #endif /* BSP430_SENSORS_SHT21_H */

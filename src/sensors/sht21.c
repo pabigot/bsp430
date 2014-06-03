@@ -33,6 +33,7 @@
 #include <bsp430/platform.h>
 #include <bsp430/serial.h>
 #include <bsp430/sensors/sht21.h>
+#include <bsp430/utility/uptime.h>
 
 /* These constants define the bits for componentized basic 8-bit
  * commands described in the data sheet. */
@@ -261,13 +262,12 @@ iBSP430sensorsSHT21reset(hBSP430halSERIAL i2c)
   return rv;
 }
 
-int
-iBSP430sensorsSHT21initiateMeasurement (hBSP430halSERIAL i2c,
-                                        int hold_master,
-                                        eBSP430sensorsSHT21measurement type)
+static int
+initiate_measurement (hBSP430halSERIAL i2c,
+                      int hold_master,
+                      eBSP430sensorsSHT21measurement type)
 {
   int rv = -1;
-  int reset_mode = 0;
   uint8_t cmd = SHT21_CMDBIT_BASE | SHT21_CMDBIT_READ;
 
   switch (type) {
@@ -283,13 +283,6 @@ iBSP430sensorsSHT21initiateMeasurement (hBSP430halSERIAL i2c,
   if (! hold_master) {
     cmd |= SHT21_CMDBIT_NOHOLD;
   }
-  if (! i2c) {
-    return rv;
-  }
-  reset_mode = configure_i2c(i2c);
-  if (0 > reset_mode) {
-    return rv;
-  }
   do {
     int rc;
 
@@ -298,6 +291,50 @@ iBSP430sensorsSHT21initiateMeasurement (hBSP430halSERIAL i2c,
       rv = 0;
     }
   } while (0);
+  return rv;
+}
+
+/* This returns -1 on any I2C error.  When not doing hold master, this
+ * is probably a NACK indicating the measurement isn't ready.  For
+ * hold master, an error may indicate that the read was attempted too
+ * soon.
+ *
+ * Note that if this returns -1 a caller using no-hold-master should
+ * reset the I2C bus, otherwise the error may be sticky. */
+static int
+get_measurement (hBSP430halSERIAL i2c,
+                 uint16_t * rawp)
+{
+  uint8_t data[3];
+  int rc;
+
+  rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
+  if (sizeof(data) != rc) {
+    return -1;
+  }
+
+  /* Store the MSB value, masking off the status bits. */
+  *rawp = ((data[0] << 8) | data[1]) & ~0x03;
+  return iBSP430sensorsSHT21crc(data, sizeof(data));
+}
+
+int
+iBSP430sensorsSHT21initiateMeasurement (hBSP430halSERIAL i2c,
+                                        int hold_master,
+                                        eBSP430sensorsSHT21measurement type)
+{
+  int rv = -1;
+  int reset_mode = 0;
+
+  if (! i2c) {
+    return rv;
+  }
+  reset_mode = configure_i2c(i2c);
+  if (0 > reset_mode) {
+    return rv;
+  }
+
+  rv = initiate_measurement(i2c, hold_master, type);
 
   /* If SHT21 holds I2C and the request was successful, do nothing;
    * otherwise if the I2C bus was in reset mode on entry put it back
@@ -309,9 +346,9 @@ iBSP430sensorsSHT21initiateMeasurement (hBSP430halSERIAL i2c,
 }
 
 int
-iBSP430sensorsSHT21getSample (hBSP430halSERIAL i2c,
-                              int hold_master,
-                              uint16_t * rawp)
+iBSP430sensorsSHT21getMeasurement (hBSP430halSERIAL i2c,
+                                   int hold_master,
+                                   uint16_t * rawp)
 {
   int rv = -1;
   int reset_mode = -1;
@@ -325,17 +362,85 @@ iBSP430sensorsSHT21getSample (hBSP430halSERIAL i2c,
       return rv;
     }
   }
-  do {
-    uint8_t data[3];
-    int rc;
 
-    rc = iBSP430i2cRxData_rh(i2c, data, sizeof(data));
-    if (sizeof(data) != rc) {
-      break;
+  rv = get_measurement(i2c, rawp);
+
+  /* If we took the I2C out of reset mode on entry, put it back in
+   * reset mode on exit. */
+  if (0 < reset_mode) {
+    iBSP430serialSetReset_rh(i2c, reset_mode);
+  }
+  return rv;
+}
+
+int
+iBSP430sensorsSHT21getSample (hBSP430halSERIAL i2c,
+                              hBSP430sensorsSHT21sample sample)
+{
+  int rv = -1;
+  int reset_mode = 0;
+
+  if ((! i2c) || (! sample)) {
+    return rv;
+  }
+  reset_mode = configure_i2c(i2c);
+  if (0 > reset_mode) {
+    return rv;
+  }
+  do {
+    uint16_t measurement;
+
+    sample->temperature_raw = 0;
+    sample->humidity_raw = 0;
+    sample->temperature_dK = 0;
+    sample->humidity_ppth = 0;
+    rv = initiate_measurement(i2c, 0, eBSP430sensorsSHT21measurement_TEMPERATURE);
+    if (0 == rv) {
+      /* SHT21 maximum measurement delay for temperature is 85 ms for
+       * 14-bit mode (HTU21D is 50 ms). */
+      int remaining = 100;
+#if (BSP430_SENSORS_SHT21_IS_HTU21D - 0)
+      BSP430_UPTIME_DELAY_MS_NI(10, LPM0_bits, 0);
+      remaining -= 10;
+#endif /* BSP430_SENSORS_SHT21_IS_HTU21D */
+      do {
+        BSP430_UPTIME_DELAY_MS_NI(1, LPM0_bits, 0);
+        (void)iBSP430serialSetReset_rh(i2c, 0);
+        rv = get_measurement(i2c, &measurement);
+        if (-1 == rv) {
+          iBSP430serialSetReset_rh(i2c, 1);
+        }
+      } while ((-1 == rv) && (0 < --remaining));
+      if (0 == rv) {
+        sample->temperature_raw = measurement;
+        sample->temperature_dK = BSP430_SENSORS_SHT21_TEMPERATURE_RAW_TO_dK(measurement);
+      }
     }
-    /* Store the MSB value, masking off the status bits. */
-    *rawp = ((data[0] << 8) | data[1]) & ~0x03;
-    rv = iBSP430sensorsSHT21crc(data, sizeof(data));
+    if (0 == rv) {
+      (void)iBSP430serialSetReset_rh(i2c, 0);
+      rv = initiate_measurement(i2c, 0, eBSP430sensorsSHT21measurement_HUMIDITY);
+    }
+    if (0 == rv) {
+      /* SHT21 maximum measurement delay for humidity is 29 ms for
+       * 12-bit mode (HTU21D is 16 ms). */
+      int remaining = 50;
+#if (BSP430_SENSORS_SHT21_IS_HTU21D - 0)
+      BSP430_UPTIME_DELAY_MS_NI(5, LPM0_bits, 0);
+      remaining -= 5;
+#endif /* BSP430_SENSORS_SHT21_IS_HTU21D */
+      do {
+        BSP430_UPTIME_DELAY_MS_NI(1, LPM0_bits, 0);
+        (void)iBSP430serialSetReset_rh(i2c, 0);
+        rv = get_measurement(i2c, &measurement);
+        if (-1 == rv) {
+          iBSP430serialSetReset_rh(i2c, 1);
+        }
+      } while ((-1 == rv) && (0 < --remaining));
+      if (0 == rv) {
+        sample->humidity_raw = measurement;
+        sample->humidity_ppth = BSP430_SENSORS_SHT21_HUMIDITY_RAW_TO_ppth(measurement);
+      }
+    }
   } while (0);
   /* If we took the I2C out of reset mode on entry, put it back in
    * reset mode on exit. */

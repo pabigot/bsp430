@@ -99,7 +99,9 @@ typedef struct sBSP430sensorsBMP180sample {
   /** The raw uncompensated temperatures provided by the device. */
   uint16_t temperature_uncomp;
 
-  /** The corrected temperature, in tenths of a degree Kelvin. */
+  /** The corrected temperature, in tenths of a degree Kelvin.  (The
+   * value will never be negative, but is represented in a signed type
+   * to simplify temperature difference calculations.) */
   int16_t temperature_dK;
 
   /** The oversampling setting: an integer from 0 to 3 inclusive.  For
