@@ -227,11 +227,11 @@ vBSP430sensorsBMP180convertSample (const sBSP430sensorsBMP180calibration * calp,
   x1 = (calp->b2 * ((b6 * b6) >> 12)) >> 11;
   x2 = (calp->ac2 * b6) >> 11;
   x3 = x1 + x2;
-  b3 = ((((calp->ac1 * 4) + x3) << sample->oversampling) + 2) / 4;
+  b3 = ((((calp->ac1 * 4L) + x3) << sample->oversampling) + 2) / 4;
   x1 = (calp->ac3 * b6) >> 13;
   x2 = (calp->b1 * ((b6 * b6) >> 12)) >> 16;
   x3 = ((x1 + x2) + 2) >> 2;
-  b4 = (calp->ac4 * (uint32_t)(x3 + 32768UL)) >> 15;
+  b4 = (calp->ac4 * (uint32_t)(x3 + 32768)) >> 15;
   b7 = ((uint32_t)sample->pressure_uncomp - b3) * (50000 >> sample->oversampling);
   if (0x80000000UL > b7) {
     p = (b7 * 2) / b4;
