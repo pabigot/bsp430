@@ -158,7 +158,7 @@ int iBSP430sensorsBMP180getSample (hBSP430halSERIAL i2c,
  * sBSP430sensorsBMP180sample::temperature_dK and
  * sBSP430sensorsBMP180sample::pressure_Pa will have been updated.
  */
-void vBSP430sensorsBMP180convertSample (hBSP430sensorsBMP180calibration calh,
+void vBSP430sensorsBMP180convertSample (const sBSP430sensorsBMP180calibration * calp,
                                         hBSP430sensorsBMP180sample sample);
 
 #endif /* BSP430_SENSORS_BMP180_H */

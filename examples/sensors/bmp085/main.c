@@ -26,6 +26,62 @@
 #define RESAMPLE_INTERVAL_MS 10000
 #endif /* RESAMPLE_INTERVAL_MS */
 
+#ifndef WITH_VALIDATION
+#define WITH_VALIDATION 1
+#endif /* WITH_VALIDATION */
+
+#if (WITH_VALIDATION - 0)
+typedef struct sTestCase {
+  sBSP430sensorsBMP180calibration calib;
+  sBSP430sensorsBMP180sample sample;
+} sTestCase;
+
+const sTestCase tests[] = {
+  /* Values from the data sheet, for algorithm validation.
+   * Should produce temp_dC = 150, pres_Pa = 69964. */
+  { .calib = { .ac1 = 408, .ac2 = -72, .ac3 = -14383, .ac4 = 32741,
+               .ac5 = 32757, .ac6 = 23153, .b1 = 6190, .b2 = 4,
+               .mb = -32768, .mc = -8711, .md = 2868 },
+    .sample = { .oversampling = 0,
+                .temperature_uncomp = 27898,
+                .temperature_dK = BSP430_SENSORS_CONVERT_dC_TO_dK(150),
+                .pressure_uncomp = 23843,
+                .pressure_Pa = 69964 } },
+};
+
+int run_test_cases ()
+{
+  const sTestCase * tp = tests;
+  const sTestCase * const etp = tests + sizeof(tests)/sizeof(*tests);
+  const unsigned int num_tests = 2 * (etp - tp);
+  unsigned int passes = 0;
+
+  while (tp < etp) {
+    sBSP430sensorsBMP180sample sample = tp->sample;
+    sample.temperature_dK = 0;
+    sample.pressure_Pa = 0;
+    vBSP430sensorsBMP180convertSample(&tp->calib, &sample);
+    if (tp->sample.temperature_dK != sample.temperature_dK) {
+      cprintf("FAIL TC %u: T %d != %d\n", tp - tests,
+              tp->sample.temperature_dK,  sample.temperature_dK);
+    } else {
+      ++passes;
+    }
+    if (tp->sample.pressure_Pa != sample.pressure_Pa) {
+      cprintf("FAIL TC %u: P %ld != %ld\n", tp - tests,
+              tp->sample.pressure_Pa,  sample.pressure_Pa);
+    } else {
+      ++passes;
+    }
+    ++tp;
+  }
+  cprintf("%u passes in %u tests\n", passes, num_tests);
+  return (num_tests == passes);
+}
+
+#endif /* WITH_VALIDATION */
+
+
 void main ()
 {
   sBSP430sensorsBMP180calibration calib;
@@ -50,45 +106,9 @@ void main ()
   cprintf("BMP085 I2C Pins: %s\n", xBSP430platformPeripheralHelp(APP_BMP085_I2C_PERIPH_HANDLE, BSP430_PERIPHCFG_SERIAL_I2C));
 #endif /* BSP430_PLATFORM_PERIPHERAL_HELP */
 
-#if 1
-  {
-    sBSP430sensorsBMP180sample sample;
-    const int reference_dK = BSP430_SENSORS_CONVERT_dC_TO_dK(150);
-    const long reference_Pa = 69964L;
-
-    /* Values from the data sheet, for algorithm validation.
-     * Should produce temp_dC = 150, pres_Pa = 69964. */
-    calib.ac1 = 408;
-    calib.ac2 = -72;
-    calib.ac3 = -14383;
-    calib.ac4 = 32741;
-    calib.ac5 = 32757;
-    calib.ac6 = 23153;
-    calib.b1 = 6190;
-    calib.b2 = 4;
-    calib.mb = -32768;
-    calib.mc = -8711;
-    calib.md = 2868;
-
-    sample.oversampling = 0;
-    sample.temperature_uncomp = 27898;
-    sample.pressure_uncomp = 23843;
-    vBSP430sensorsBMP180convertSample(&calib, &sample);
-    if (reference_dK != sample.temperature_dK) {
-      cprintf("WARNING: Reference example temperature got %d expected %d\n",
-              sample.temperature_dK, reference_dK);
-    } else {
-      cprintf("Test matched reference temperature\n");
-    }
-    if (reference_Pa != sample.pressure_Pa) {
-      cprintf("WARNING: Reference example pressure got %ld expected %ld\n",
-              sample.pressure_Pa, reference_Pa);
-    } else {
-      cprintf("Test matched reference pressure\n");
-    }
-  }
-#endif
-
+#if (WITH_VALIDATION - 0)
+  run_test_cases();
+#endif /* WITH_VALIDATION */
 
   /* XCLR not currently connected */
   /* 10ms delay before first communication */
