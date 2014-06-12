@@ -64,6 +64,7 @@ void main ()
   (void)iBSP430consoleInitialize();
 
   cprintf("\nBUILD " __DATE__ " " __TIME__ "\n");
+  cprintf("FatFS Revision ID: %lu\n", (unsigned long)_FATFS);
 
   cprintf("System reset bitmask %lx; causes:\n", reset_causes);
   {
