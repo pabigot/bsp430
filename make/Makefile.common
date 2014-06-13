@@ -34,6 +34,7 @@ ifneq (,$(WITH_GCC))
 $(error Use WITH_GCC_MSPGCC or WITH_GCC_MSP430_ELF)
 endif # WITH_GCC
 
+# If nothing specified, pick mspgcc.
 ifeq (,$(WITH_GCC_MSPGCC)$(WITH_GCC_MSP430_ELF)$(WITH_CCS))
 WITH_CCS ?=
 WITH_GCC_MSP430_ELF ?=
@@ -81,6 +82,7 @@ else # WITH_CCS
 
 ifneq (,$(WITH_GCC_MSP430_ELF))
 WITH_GCC = yes
+WITH_NEWLIB = yes
 CROSS_COMPILE ?= msp430-elf-
 
 # GCC_MSP430_ELF_TI_ROOT: Where the TI-provided GCC_RH-date.zip file
@@ -240,7 +242,6 @@ LDFLAGS += $(TARGET_LDFLAGS)
 
 # Assume the application-specific bsp430_config.h is same directory as the
 # Makefile.
-
 CPPFLAGS += -I.
 
 # GNU Make function to convert text to upper case (assuming a POSIX shell

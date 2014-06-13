@@ -57,11 +57,8 @@
 #define ltoa embtextf_ltoa
 #define ultoa embtextf_ultoa
 #define vuprintf embtextf_vuprintf
-#elif (__MSPGCC__ - 0)
-/* Technically this should use __MSP430_LIBC__ which will be obtained
- * implicitly from <msp430libc.h> via <inttypes.h>, but since that's
- * not available in the header we'll use __MSPGCC__ as a
- * substitute. */
+#elif (BSP430_CORE_TOOLCHAIN_LIBC_MSP430_LIBC - 0)
+/* msp430-libc natively incorporates the same interfaces provided by embtextf. */
 #define HAVE_EMBTEXTF 1
 #endif /* BSP430_CONSOLE_USE_EMBTEXTF */
 
@@ -362,6 +359,35 @@ cputul (unsigned long n, int radix)
 }
 
 int
+vcprintf (const char * fmt, va_list ap)
+{
+  /* Fail fast if printing is disabled */
+  if (! console_hal_) {
+    return 0;
+  }
+  return vuprintf(emit_char, fmt, ap);
+}
+
+#elif (BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB - 0)
+
+int
+vcprintf (const char * fmt, va_list ap)
+{
+  /* Fail fast if printing is disabled */
+  if (! console_hal_) {
+    return 0;
+  }
+  /* Delegate to newlib standard output */
+  return vprintf(fmt, ap);
+}
+
+#endif /* HAVE_EMBTEXTF */
+
+#if ((BSP430_CONSOLE_USE_EMBTEXTF - 0)                  \
+     || (BSP430_CORE_TOOLCHAIN_LIBC_MSP430_LIBC - 0)    \
+     || (BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB - 0))
+
+int
 #if (__GNUC__ - 0)
 __attribute__((__format__(printf, 1, 2)))
 #endif /* __GNUC__ */
@@ -375,17 +401,7 @@ cprintf (const char *fmt, ...)
   return rv;
 }
 
-int
-vcprintf (const char * fmt, va_list ap)
-{
-  /* Fail fast if printing is disabled */
-  if (! console_hal_) {
-    return 0;
-  }
-  return vuprintf(emit_char, fmt, ap);
-}
-
-#endif /* HAVE_EMBTEXTF */
+#endif /* cprintf */
 
 hBSP430halSERIAL
 hBSP430console (void)

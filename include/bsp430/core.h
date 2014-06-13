@@ -378,6 +378,22 @@
 #define __enable_interrupts() _enable_interrupts()
 #endif /* RHGCC */
 
+/** Defined to a true value iff the stdc library is msp430-libc
+ *
+ * Technically this should use __MSP430_LIBC__ which will be obtained
+ * implicitly from <msp430libc.h> via some other include file, but in
+ * practice we have no guarantee it'll be included so we'll treat use
+ * of the mspgcc toolchain as the indicator. */
+#define BSP430_CORE_TOOLCHAIN_LIBC_MSP430_LIBC BSP430_CORE_TOOLCHAIN_GCC_MSPGCC
+
+/** Defined to a true value iff the stdc library is newlib.
+ *
+ * <newlib.h> defines _NEWLIB_VERSION, and is included by <_ansi.h>
+ * which is included by most standard headers, but not any of the ones
+ * included by this file.  Treat use of msp430-elf toolchain as the
+ * indicator. */
+#define BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB BSP430_CORE_TOOLCHAIN_GCC_MSP430_ELF
+
 /** Defined to a true value if the Texas Instruments compiler is being
  * used.
  *

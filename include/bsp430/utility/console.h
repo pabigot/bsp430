@@ -344,7 +344,10 @@ int cputtext (const char * s);
  * @consoleoutput */
 int cputchars (const char * cp, size_t len);
 
-#if defined(BSP430_DOXYGEN) || (BSP430_CONSOLE_USE_EMBTEXTF - 0) || (__MSPGCC__ - 0)
+#if (defined(BSP430_DOXYGEN)                            \
+     || (BSP430_CONSOLE_USE_EMBTEXTF - 0)               \
+     || (BSP430_CORE_TOOLCHAIN_LIBC_MSP430_LIBC - 0)    \
+     || (BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB - 0))
 
 /** Like printf(3), but to the console UART.
  *
@@ -361,7 +364,7 @@ int cputchars (const char * cp, size_t len);
  * if it is disabled; a negative error code if an error is
  * encountered
  *
- * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF
+ * @dependency #BSP430_CONSOLE, #BSP430_CONSOLE_USE_EMBTEXTF, libc
  *
  * @consoleoutput */
 int cprintf (const char * format, ...)
