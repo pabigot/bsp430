@@ -755,7 +755,11 @@
  *
  * @defaulted */
 #ifndef BSP430_CORE_DISABLE_INTERRUPT
+#if (BSP430_CORE_TOOLCHAIN_GCC_MSP430_ELF - 0)
+#define BSP430_CORE_DISABLE_INTERRUPT() do { _disable_interrupts(); _no_operation(); } while (0)
+#else /* BSP430_CORE_TOOLCHAIN */
 #define BSP430_CORE_DISABLE_INTERRUPT() __disable_interrupt()
+#endif /* BSP430_CORE_TOOLCHAIN */
 #endif /* BSP430_CORE_DISABLE_INTERRUPT */
 
 /** Generic convert from microseconds to ticks at some frequency.
