@@ -231,6 +231,25 @@ AUX_LDLIBS += $(EMBTEXTF_ROOT)/lib/libembtextf-libc.a
 endif # WITH_GCC_MSP430_ELF
 endif # EMBTEXTF_ROOT
 
+# NEWLIB support.
+ifneq (,$(WITH_NEWLIB))
+# Select a file that provides an implementation for heap memory
+# allocation.  newlib/sbrk provides a couple algorithms, with the
+# default one supporting dynamic allocation growing up to meet the
+# bottom of the stack.
+NEWLIB_SBRK ?= newlib/sbrk
+
+# The module that provides the systemcall stubs.  newlib/nosys is
+# weakly-defined blank stubs that link and do nothing.  Applications
+# can provide non-weak definitions for functions of interest or can
+# replace the entire system call basis by providing an alternative
+# definition for this variable.
+NEWLIB_SYS ?= newlib/nosys
+
+# Default to using the selected sbrk and sys implementations.
+MODULES_LIBC ?= $(NEWLIB_SBRK) $(NEWLIB_SYS)
+endif # WITH_NEWLIB
+
 CPPFLAGS += $(TARGET_CPPFLAGS)
 
 CFLAGS += $(WARN_CFLAGS)
@@ -321,10 +340,15 @@ MODULES_EUI64 ?= utility/eui64
 # #configBSP430_PLATFORM_M25P.
 MODULES_M25P ?=
 
+# MODULES_LIBC: Support for libc-specific extensions.  Currently this
+# is used only by newlib which provides a higher-priority default
+# earlier in this file.
+MODULES_LIBC ?=
+
 # MODULES_PLATFORM: The platform-specific platform module, together
 # with the clock and LED modules and anything the platform thinks is
 # important.  The combination is non-orthogonal, but convenient.
-MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED) $(MODULES_PLATFORM_AUX) $(MODULES_PLATFORM_EXT)
+MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED) $(MODULES_LIBC) $(MODULES_PLATFORM_AUX) $(MODULES_PLATFORM_EXT)
 
 # Add all selected modules to the SRC, eliminating any duplicates
 
@@ -341,6 +365,9 @@ VPATH += $(BSP430_ROOT)/src/platform/$(PLATFORM)
 endif # PLATFORM
 VPATH += $(BSP430_ROOT)/src/utility
 VPATH += $(BSP430_ROOT)/src/periph
+ifneq (,$(WITH_GCC_MSP430_ELF))
+VPATH += $(BSP430_ROOT)/src/newlib
+endif # WITH_GCC_MSP430_ELF
 VPATH += $(BSP430_ROOT)/src
 SRC += $(addsuffix .c,$(notdir $(sort $(MODULES))))
 
