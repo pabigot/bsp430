@@ -371,6 +371,42 @@ ulBSP430uptime (void)
   return ulBSP430timerCounter(hBSP430uptimeTimer(), 0);
 }
 
+/** Return the system uptime in clock ticks at its full precision
+ *
+ * This incorporates the overflow and the current counter.  On the
+ * MSP430 the result is expected to be a 64-bit value of which the low
+ * 48-bits are valid. */
+static BSP430_CORE_INLINE
+unsigned long long
+ullBSP430uptime (void)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  unsigned int overflow;
+  unsigned long ul;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    ul = ulBSP430timerCounter_ni(hBSP430uptimeTimer(), &overflow);
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  return (((unsigned long long)overflow) << (8 * sizeof(ul))) | ul;
+}
+
+/** Adjust a captured 16-bit counter to a full resolution timestamp.
+ *
+ * This obtains the current time, then adjusts it backwards to be the
+ * most recent time for which the low 16 bits match @p ctr.  The
+ * result should be a 48-bit timestamp expressed in a 64-bit unsigned
+ * integer.
+ *
+ * @see ullBSP430timerCorrected() */
+static BSP430_CORE_INLINE
+unsigned long long
+ullBSP430uptimeCorrected (unsigned int ctr)
+{
+  return ullBSP430timerCorrected(hBSP430uptimeTimer(), ctr);
+}
+
 /** Return the low word of the system uptime counter.
  *
  * This is suitable for use by applications that wish to configure

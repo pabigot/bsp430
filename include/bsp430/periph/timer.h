@@ -1288,6 +1288,46 @@ ulBSP430timerCounter (hBSP430halTIMER timer,
   return rv;
 }
 
+/** Return the full-precision counter at the point the timer produced @p ctr
+ *
+ * MSP430 capture registers hold only the low 16 bits of the BSP430
+ * timer counter.  Overflow at both the 16 and 32 bit counter levels
+ * must be accounted for when reconstructing the full captured counter
+ * value.  That's done by this function, which must be invoked within
+ * one 16-bit timer cycle of the time that @p ctr was recorded.
+ *
+ * @p timer The timer for which the count is desired
+ *
+ * @p ctr An underlying timer counter value captured within the last
+ * 2^16 ticks of @p timer
+ *
+ * @return the reconstructed full-precision timer corresponding to @p
+ * ctr */
+static BSP430_CORE_INLINE
+unsigned long long
+ullBSP430timerCorrected (hBSP430halTIMER timer,
+                         unsigned int ctr)
+{
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  unsigned int overflow;
+  unsigned int ui;
+  unsigned long ul;
+  unsigned long long ull;
+
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    ul = ulBSP430timerCounter_ni(timer, &overflow);
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  ull = overflow;
+  ull <<= 8 * sizeof(ul);
+  ull += ul;
+  ui = ul;
+  ui -= ctr;
+  ull -= (long)ui;
+  return ull;
+}
+
 /** Read a timer capture register.
  *
  * Capture/compare registers may be set to record the time of an
