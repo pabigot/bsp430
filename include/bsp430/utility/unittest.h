@@ -237,6 +237,15 @@ void vBSP430unittestFinalize (void);
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTld(v1_,v2_) \
   BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,long,"%" PRId32)
 
+#ifdef PRId64
+/** Validate that the expressions are equal.
+ *
+ * If they are not, emit a diagnostic showing both values formatted as
+ * signed 64-bit decimal integers. */
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTlld(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,long long,"%" PRId64)
+#endif /* PRId64 */
+
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
@@ -244,12 +253,30 @@ void vBSP430unittestFinalize (void);
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTlu(v1_,v2_) \
   BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned long,"%" PRIu32)
 
+#ifdef PRIu64
+/** Validate that the expressions are equal.
+ *
+ * If they are not, emit a diagnostic showing both values formatted as
+ * unsigned 64-bit decimal integers. */
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTllu(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned long long,"%" PRIu64)
+#endif /* PRIu64 */
+
 /** Validate that the expressions are equal.
  *
  * If they are not, emit a diagnostic showing both values formatted as
  * unsigned 32-bit hexadecimal integers. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTlx(v1_,v2_) \
   BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned long, "%#" PRIx32)
+
+#ifdef PRIx64
+/** Validate that the expressions are equal.
+ *
+ * If they are not, emit a diagnostic showing both values formatted as
+ * unsigned 64-bit hexadecimal integers. */
+#define BSP430_UNITTEST_ASSERT_EQUAL_FMTllx(v1_,v2_) \
+  BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,unsigned long long, "%#" PRIx64)
+#endif /* PRIx64 */
 
 /** Validate that the pointer expressions are equal.
  *
