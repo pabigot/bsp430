@@ -5,9 +5,15 @@
  * the handler without wake are all present.
  *
  * You should see repeatedly:
- * @li the red LED blinking at 300 ms without wakeup
+ * @li the red LED blinking at 150 ms without wakeup
  * @li the green LED blinking at 500 ms from Flags 0x02
  * @li tagged timestamped output at 700 ms from Flags 0x01
+ * @li event/interrupt/duty cycle statistics at 10s from Flags 0x01
+ *
+ * The stable state active duty cycle is about 0.6%, most of which is
+ * formatting the statistics output.  BSP430_CONSOLE_TX_BUFFER_SIZE
+ * enables interrupt-driven output so emitting the formatted output
+ * does not fully wake the MCU.
  *
  * @homepage http://github.com/pabigot/bsp430
  */
@@ -19,6 +25,20 @@
 #include <bsp430/utility/led.h>
 #include <bsp430/utility/event.h>
 #include <bsp430/utility/console.h>
+#include <string.h>
+
+#ifndef USE_FULL_STATS
+/* If evalutes to true at preprocessor, display full details on
+ * statistics.  If false, displays a reduced set showing only
+ * duty-cycle statistics. */
+#define USE_FULL_STATS 1
+#endif /* USE_FULL_STATS */
+
+#ifndef SHOW_FLAGS
+/* If evalutes to true at preprocessor, display the set of event flags
+ * each time events are received. */
+#define SHOW_FLAGS 0
+#endif /* SHOW_FLAGS */
 
 struct sExampleMuxAlarm;
 
@@ -40,9 +60,20 @@ typedef struct sExampleMuxAlarm {
 } sExampleMuxAlarm;
 
 static unsigned char mux_tag;
+static unsigned char stats_tag;
 static unsigned int mux_flag;
 static sBSP430timerMuxSharedAlarm mux_alarm_base;
-static sExampleMuxAlarm mux_alarms[3];
+static sExampleMuxAlarm mux_alarms[4];
+
+typedef struct sStatistics {
+  unsigned long awake_utt;
+  unsigned long sleep_utt;
+  unsigned int mux_intr_ct;
+  unsigned int sleep_ct;
+  unsigned int counter[sizeof(mux_alarms)/sizeof(*mux_alarms)];
+} sStatistics;
+
+static volatile sStatistics statistics_v;
 
 static int
 mux_alarm_callback (sBSP430timerMuxSharedAlarm * shared,
@@ -55,6 +86,8 @@ mux_alarm_callback (sBSP430timerMuxSharedAlarm * shared,
 
   alarm->setting_tck += map->interval_utt;
   rc = iBSP430timerMuxAlarmAdd_ni(shared, alarm);
+  statistics_v.counter[map - mux_alarms] += 1;
+  statistics_v.mux_intr_ct += 1;
   if (map->tag) {
     u.p = map;
     xBSP430eventRecordEvent_ni(map->tag, !!rc, &u);
@@ -85,10 +118,52 @@ process_mux_flag ()
   vBSP430ledSet(BSP430_LED_GREEN, -1);
 }
 
+static void
+process_statistics (const struct sBSP430eventTagRecord * ep,
+                    struct sExampleMuxAlarm * ap)
+{
+  sStatistics st;
+  char as_text[BSP430_UPTIME_AS_TEXT_LENGTH];
+  unsigned long period_utt;
+  unsigned long duty_ppt;
+  int i;
+
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    st = statistics_v;
+    memset((void *)&statistics_v, 0, sizeof(statistics_v));
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
+  period_utt = st.awake_utt + st.sleep_utt;
+  if (0 == period_utt) {
+    duty_ppt = 0;
+  } else {
+    duty_ppt = (1000 * st.awake_utt + (period_utt / 2)) / period_utt;
+  }
+#if (USE_FULL_STATS - 0)
+  cprintf("%s : Sleep %u ; MUX ", xBSP430uptimeAsText(ep->timestamp_utt, as_text), st.sleep_ct);
+  for (i = 0; i < sizeof(st.counter)/sizeof(*st.counter); ++i) {
+    cprintf(" %u", st.counter[i]);
+  }
+  cprintf(" = intr %u ; duty %lu ppt\n", st.mux_intr_ct, duty_ppt);
+  cprintf("\tasleep %lu tck = %lu ms ; awake %lu tck = %lu ms\n",
+          st.sleep_utt, BSP430_UPTIME_UTT_TO_MS(st.sleep_utt),
+          st.awake_utt, BSP430_UPTIME_UTT_TO_MS(st.awake_utt));
+#else /* USE_FULL_STATS */
+  (void)i;
+  (void)as_text;
+  cprintf("sleep %lu awake %lu ; duty %lu ppt\n",
+          st.sleep_utt, st.awake_utt, duty_ppt);
+#endif /* USE_FULL_STATS */
+}
+
 static unsigned int
 process_events (unsigned int events)
 {
+#if (SHOW_FLAGS - 0)
   cprintf("Flags %02x\n", events);
+#endif /* SHOW_FLAGS */
   if (uiBSP430eventFlag_EventRecord & events) {
     sBSP430eventTagRecord evt[4];
     const sBSP430eventTagRecord * ep = evt;
@@ -97,7 +172,8 @@ process_events (unsigned int events)
 
     events &= ~uiBSP430eventFlag_EventRecord;
     while (ep < epe) {
-      if (mux_tag == ep->tag) {
+      if ((mux_tag == ep->tag)
+          || (stats_tag == ep->tag)) {
         sExampleMuxAlarm * map = ep->u.p;
         map->process_fn(ep, map);
       } else {
@@ -118,21 +194,25 @@ void main ()
   hBSP430timerMuxSharedAlarm map;
   tBSP430periphHandle uptime_periph;
   int arc[sizeof(mux_alarms)/sizeof(*mux_alarms)];
+  unsigned long last_wake_utt;
+  unsigned long last_sleep_utt;
   int rc = 0;
 
   vBSP430platformInitialize_ni();
+  last_wake_utt = ulBSP430uptime_ni();
   (void)iBSP430consoleInitialize();
   BSP430_CORE_ENABLE_INTERRUPT();
 
   cprintf("\n\nevent demo " __DATE__ " " __TIME__ "\n");
   mux_tag = ucBSP430eventTagAllocate("MuxAlarm");
+  stats_tag = ucBSP430eventTagAllocate("Statistics");
   mux_flag = uiBSP430eventFlagAllocate();
 
   uptime_periph = xBSP430periphFromHPL(hBSP430uptimeTimer()->hpl);
 
   map = hBSP430timerMuxAlarmStartup(&mux_alarm_base, uptime_periph, UPTIME_MUXALARM_CCIDX);
-  cprintf("Mux tag %u, flag %x, with alarm base %p on %s.%u\n",
-          mux_tag, mux_flag, map,
+  cprintf("Mux tag %u, stats tag %u, flag %x, with alarm base %p on %s.%u\n",
+          mux_tag, stats_tag, mux_flag, map,
           xBSP430timerName(uptime_periph), UPTIME_MUXALARM_CCIDX);
   if (! map) {
     cprintf("ERR initializing mux shared alarm\n");
@@ -141,7 +221,7 @@ void main ()
 
   /* Processing done entirely in mux callback.  No wakeup. */
   mux_alarms[0].alarm.callback_ni = mux_alarm_callback;
-  mux_alarms[0].interval_utt = BSP430_UPTIME_MS_TO_UTT(300);
+  mux_alarms[0].interval_utt = BSP430_UPTIME_MS_TO_UTT(150);
 
   /* Processing done by an event flag */
   mux_alarms[1].alarm.callback_ni = mux_alarm_callback;
@@ -153,6 +233,12 @@ void main ()
   mux_alarms[2].interval_utt = BSP430_UPTIME_MS_TO_UTT(700);
   mux_alarms[2].process_fn = process_timestamp;
   mux_alarms[2].tag = mux_tag;
+
+  /* Processing done by a callback with a timestamped event */
+  mux_alarms[3].alarm.callback_ni = mux_alarm_callback;
+  mux_alarms[3].interval_utt = BSP430_UPTIME_MS_TO_UTT(10000);
+  mux_alarms[3].process_fn = process_statistics;
+  mux_alarms[3].tag = stats_tag;
 
   /* Enable the multiplexed alarms */
   BSP430_CORE_DISABLE_INTERRUPT();
@@ -182,7 +268,9 @@ void main ()
     goto err_out;
   }
 
+  last_sleep_utt = ulBSP430uptime();
   while (1) {
+    last_wake_utt = ulBSP430uptime();
     unsigned int events = process_events(uiBSP430eventFlagsGet());
     if (events) {
       cprintf("ERR: Unprocessed event flags %04x\n", events);
@@ -194,6 +282,10 @@ void main ()
     if (iBSP430eventFlagsEmpty_ni()) {
       /* Nothing pending: go to sleep, then jump back to the loop head
        * when we get woken. */
+      statistics_v.sleep_utt += last_wake_utt - last_sleep_utt;
+      last_sleep_utt = ulBSP430uptime_ni();
+      statistics_v.awake_utt += last_sleep_utt - last_wake_utt;
+      statistics_v.sleep_ct += 1;
       BSP430_CORE_LPM_ENTER_NI(LPM4_bits | GIE);
       continue;
     }

@@ -7,7 +7,7 @@
 
 /* Support console output with transmission buffer */
 #define configBSP430_CONSOLE 1
-#define BSP430_CONSOLE_TX_BUFFER_SIZE 32
+#define BSP430_CONSOLE_TX_BUFFER_SIZE 80
 
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1
