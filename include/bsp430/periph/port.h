@@ -230,6 +230,9 @@
  * @note This does not reconfigure the pin for input.  It only affects
  * internal pullup configuration.
  *
+ * @note If #BSP430_PORT_SUPPORTS_REN is false, this macro does
+ * nothing.
+ *
  * @param hal_ the handle for the port @HAL
  *
  * @param bit_ the bit for which resistor/impedance is to be configured
@@ -237,8 +240,6 @@
  * @param rv_ the selected configuration, one of
  * #BSP430_PORT_REN_HIGH_Z, #BSP430_PORT_REN_PULL_DOWN,
  * #BSP430_PORT_REN_PULL_UP.
- *
- * @dependency #BSP430_PORT_SUPPORTS_REN
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_PORT_SUPPORTS_REN - 0)
 #define BSP430_PORT_HAL_SET_REN(hal_, bit_, rv_) do {    \
@@ -254,6 +255,8 @@
       BSP430_PORT_HAL_HPL_REN(hal_) &= ~(bit_);          \
     }                                                    \
   } while (0)
+#else /* BSP430_PORT_SUPPORTS_REN */
+#define BSP430_PORT_HAL_SET_REN(hal_, bit_, rv_) do { } while (0)
 #endif /* BSP430_PORT_SUPPORTS_REN */
 
 /** Set port resistor-enabled configuration via @HPL handle.
@@ -266,6 +269,9 @@
  * @note This does not reconfigure the pin for input.  It only affects
  * internal pullup configuration.
  *
+ * @note If #BSP430_PORT_SUPPORTS_REN is false, this macro does
+ * nothing.
+ *
  * @see #BSP430_PORT_HAL_SET_REN()
  *
  * @param hpl_ the handle for the port @HPL
@@ -276,7 +282,6 @@
  * #BSP430_PORT_REN_HIGH_Z, #BSP430_PORT_REN_PULL_DOWN,
  * #BSP430_PORT_REN_PULL_UP.
  *
- * @dependency #BSP430_PORT_SUPPORTS_REN
  * @dependency BSP430_CORE_FAMILY_IS_5XX
  */
 #if defined(BSP430_DOXYGEN) || (BSP430_PORT_SUPPORTS_REN - 0)
@@ -293,6 +298,8 @@
       (hpl_)->ren &= ~(bit_);                            \
     }                                                    \
   } while (0)
+#else /* BSP430_PORT_SUPPORTS_REN */
+#define BSP430_PORT_HPL_SET_REN(hal_, bit_, rv_) do { } while (0)
 #endif /* BSP430_PORT_SUPPORTS_REN */
 
 /** Defined to true value if MCU supports multiple peripheral function
