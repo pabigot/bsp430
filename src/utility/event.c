@@ -163,3 +163,36 @@ iBSP430eventTagGetRecords (sBSP430eventTagRecord * evts,
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return nevt;
 }
+
+static int
+periodic_callback_ni (sBSP430timerMuxSharedAlarm * shared,
+                      sBSP430timerMuxAlarm * alarm)
+{
+  sBSP430eventPeriodicConfig * cfg = (sBSP430eventPeriodicConfig *)alarm;
+  uBSP430eventAnyType u;
+
+  if (cfg->interval_tck) {
+    alarm->setting_tck += cfg->interval_tck;
+    (void)iBSP430timerMuxAlarmAdd_ni(shared, alarm);
+  }
+  u.p = cfg;
+  xBSP430eventRecordEvent_ni(cfg->tag, cfg->flags, &u);
+  return BSP430_HAL_ISR_CALLBACK_EXIT_LPM;
+}
+
+int
+iBSP430eventPeriodicAdd_ni (hBSP430timerMuxSharedAlarm shared,
+                            hBSP430eventPeriodicConfig cfg,
+                            unsigned long setting_tck)
+{
+  cfg->alarm_.setting_tck = setting_tck;
+  cfg->alarm_.callback_ni = periodic_callback_ni;
+  return iBSP430timerMuxAlarmAdd_ni(shared, &cfg->alarm_);
+}
+
+int
+iBSP430eventPeriodicRemove_ni (hBSP430timerMuxSharedAlarm shared,
+                               hBSP430eventPeriodicConfig cfg)
+{
+  return iBSP430timerMuxAlarmRemove_ni(shared, &cfg->alarm_);
+}
