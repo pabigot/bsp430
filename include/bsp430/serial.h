@@ -203,7 +203,6 @@
  */
 #define BSP430_SERIAL_ADJUST_CTL0_INITIALIZER(_i) (((_i) >= 0x100) ? ((_i) >> 8) : (_i))
 
-
 /** Calculate prescaler to obtain desired clock from SMCLK.
  *
  * The prescaler returned is designed to produce the fastest clock
@@ -798,6 +797,21 @@ static BSP430_CORE_INLINE
 void vBSP430serialFlush_ni (hBSP430halSERIAL hal)
 {
   hal->dispatch->flush_ni(hal);
+}
+
+/** Return the frequency of the serial interface.
+ *
+ * If @p hal is configured in UART mode, this is the baud rate.  In
+ * all other modes it's the bus frequency.
+ *
+ * @param hal the serial device for which frequency is desired
+ *
+ * @return Frequency of the serial interface in baud (UART) or Hz
+ * (SPI, I2C).  A zero value indicates an error. */
+static BSP430_CORE_INLINE
+unsigned long ulBSP430serialRate (hBSP430halSERIAL hal)
+{
+  return hal->dispatch->rate(hal);
 }
 
 #endif /* BSP430_SERIAL - 0 */

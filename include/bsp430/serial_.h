@@ -340,6 +340,7 @@ struct sBSP430serialDispatch {
   int (* close) (hBSP430halSERIAL hal);
   void (* wakeupTransmit_rh) (hBSP430halSERIAL hal);
   void (* flush_ni) (hBSP430halSERIAL hal);
+  unsigned long (* rate) (hBSP430halSERIAL hal);
 };
 /** @endcond */
 

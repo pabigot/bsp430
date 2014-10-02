@@ -80,6 +80,25 @@ peripheralConfigFlag (unsigned int ctlw0)
 }
 
 static
+unsigned long
+ulBSP430eusciRate (hBSP430halSERIAL hal)
+{
+  unsigned long clock_Hz;
+  switch (UCSSEL_3 & HAL_HPL_FIELD(hal,ctlw0)) {
+    case UCSSEL_0:
+      clock_Hz = 0;
+      break;
+    case UCSSEL_1:
+      clock_Hz = ulBSP430clockACLK_Hz();
+      break;
+    default:
+      clock_Hz = ulBSP430clockSMCLK_Hz();
+      break;
+  }
+  return clock_Hz / HAL_HPL_FIELD(hal,brw);
+}
+
+static
 hBSP430halSERIAL
 eusciConfigure (hBSP430halSERIAL hal,
                 unsigned int ctlw0,
@@ -744,6 +763,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .close = iBSP430eusciClose,
   .wakeupTransmit_rh = vBSP430eusciWakeupTransmit_rh,
   .flush_ni = vBSP430eusciFlush_ni,
+  .rate = ulBSP430eusciRate,
 };
 #endif /* BSP430_SERIAL */
 

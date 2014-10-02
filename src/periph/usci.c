@@ -113,6 +113,27 @@ struct sBSP430usciHPLAux {
 #define HAL_HPL_IS_USCI_B(hal_) (NULL != SERIAL_HAL_HPLAUX(hal_)->i2coap)
 
 static
+unsigned long
+ulBSP430usciRate (hBSP430halSERIAL hal)
+{
+  unsigned long clock_Hz;
+  unsigned int prescale = SERIAL_HAL_HPL(hal)->br0 + 256 * SERIAL_HAL_HPL(hal)->br1;
+
+  switch (UCSSEL_3 & SERIAL_HAL_HPL(hal)->ctl1) {
+    case UCSSEL_0:
+      clock_Hz = 0;
+      break;
+    case UCSSEL_1:
+      clock_Hz = ulBSP430clockACLK_Hz();
+      break;
+    default:
+      clock_Hz = ulBSP430clockSMCLK_Hz();
+      break;
+  }
+  return clock_Hz / prescale;
+}
+
+static
 hBSP430halSERIAL
 usciConfigure (hBSP430halSERIAL hal,
                unsigned char ctl0_byte,
@@ -566,6 +587,7 @@ static struct sBSP430serialDispatch dispatch_ = {
   .close = iBSP430usciClose,
   .wakeupTransmit_rh = vBSP430usciWakeupTransmit_rh,
   .flush_ni = vBSP430usciFlush_ni,
+  .rate = ulBSP430usciRate,
 };
 #endif /* BSP430_SERIAL */
 
