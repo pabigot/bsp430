@@ -1843,6 +1843,23 @@ hBSP430timerMuxSharedAlarm hBSP430timerMuxAlarmStartup (sBSP430timerMuxSharedAla
  * @ingroup grp_timer_alarm */
 int iBSP430timerMuxAlarmShutdown (sBSP430timerMuxSharedAlarm * shared);
 
+/** Get the current time of the underlying shared alarm.
+ *
+ * This makes it easier to schedule multiplexed alarms at a relative
+ * time.
+ *
+ * @param shared a pointer to the structure used for multiplexed alarms
+ *
+ * @return the counter value of the timer used for the alarm */
+static BSP430_CORE_INLINE
+unsigned long ulBSP430timerMuxSharedAlarmCounter (sBSP430timerMuxSharedAlarm * shared)
+{
+  if (! shared->dedicated.timer) {
+    return 0;
+  }
+  return ulBSP430timerCounter_ni(shared->dedicated.timer, NULL);
+}
+
 /** Link a new alarm into the list managed by @p shared
  *
  * The user must have already initialized the @p alarm structure
