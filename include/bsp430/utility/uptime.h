@@ -497,6 +497,32 @@ const char * xBSP430uptimeAsText (unsigned long duration_utt,
  * @deprecated Legacy interface, use xBSP430uptimeAsText(). */
 const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
 
+/** Convert a duration in ticks to a scaled value suitable for display.
+ *
+ * This is useful when the code needs to accommodate a wide range of
+ * times, from microseconds to hours.  The duration value is scaled to
+ * reduce the number of digits required to represent it, and the
+ * selected unit specifier returned in an output parameter.  The
+ * cutoff for each unit is:
+ *
+ * Time    | Units
+ * :------ | :------
+ * < 10ms  | us
+ * < 10s   | ms
+ * < 3min  | s
+ * < 3h    | min
+ * >= 3h   | h
+ *
+ * @param duration_utt a count in ticks
+ *
+ * @param unitp a pointer to where to store the standard unit
+ * description for the scaled value
+ *
+ * @return the duration expressed in units, rounded down to a whole
+ * number. */
+unsigned int uiBSP430uptimeScaleForDisplay (unsigned long long duration_utt,
+                                            const char ** unitp);
+
 /** The capture/compare index to be used for delays.
  *
  * If #configBSP430_UPTIME_DELAY is enabled this capture/compare

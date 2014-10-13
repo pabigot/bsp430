@@ -238,6 +238,39 @@ xBSP430uptimeAsText_ni (unsigned long duration_utt)
   return xBSP430uptimeAsText(duration_utt, buf);
 }
 
+unsigned int
+uiBSP430uptimeScaleForDisplay (unsigned long long duration_utt,
+                               const char ** unitp)
+{
+  const unsigned long long s_utt = ulBSP430uptimeConversionFrequency_Hz_ni_;
+  const unsigned long long min_utt = 60U * s_utt;
+  const unsigned long long h_utt = 60U * min_utt;
+  const unsigned long long us_cutoff_utt = (10 * s_utt) / 1000U;
+  const unsigned long long ms_cutoff_utt = 10 * s_utt;
+  const unsigned long long s_cutoff_utt = 3U * min_utt;
+  const unsigned long long min_cutoff_utt = 3U * h_utt;
+
+  if (duration_utt < us_cutoff_utt) {
+    *unitp = "us";
+    return (1000000U * duration_utt) / s_utt;
+  }
+  if (duration_utt < ms_cutoff_utt) {
+    *unitp = "ms";
+    return (1000U * duration_utt) / s_utt;
+  }
+  if (duration_utt < s_cutoff_utt) {
+    *unitp = "s";
+    return duration_utt / s_utt;
+  }
+  if (duration_utt < min_cutoff_utt) {
+    *unitp = "min";
+    return duration_utt / min_utt;
+  }
+  *unitp = "h";
+  return duration_utt / h_utt;
+}
+
+
 #if (configBSP430_UPTIME_DELAY - 0)
 
 int
