@@ -141,14 +141,22 @@ typedef union uBSP430eui64 {
    * I.e., the OUI-24 component appears in elements 0, 1, and 2 of the
    * array. */
   uint8_t bytes[8];
+
+  /** The 8 octets comprising the 64-bit value aggregated into a
+   * host-byte-order 64-bit integer.  Not a canonical form, really
+   * only suitable for optimized equality comparisons. */
+  uint64_t u64;
+
   /** The EUI-64 broken down into components as derived from an
    * underlying 48-bit value (EUI-48 or MAC-48). */
   struct as48 {
     /** The 24-bit Organizationally Unique Identifier */
     uint8_t oui[3];
+
     /** A label indicating how the value was derived from a 48-bit
      * value (FF FF from MAC-48, FF FE from EUI-48). */
     uint8_t label[2];
+
     /** The manufacturer-assigned extension identifier */
     uint8_t extension_id[3];
   } as48;
