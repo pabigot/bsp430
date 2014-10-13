@@ -49,6 +49,7 @@
 #include <msp430.h>             /* MSP430 MCU-specific information */
 #include <stdint.h>             /* Size-annotated integral types (uint8_t) */
 #include <stddef.h>             /* NULL and size_t */
+#include <stdbool.h>            /* bool */
 
 /** Version identifier for the BSP430 library
  *
