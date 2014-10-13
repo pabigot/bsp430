@@ -172,7 +172,10 @@ typedef void (* vBSP430eventPeriodicProcess) (const sBSP430eventTagRecord * ep,
  * It allows xBSP430eventRecordEvent_ni() to be invoked at a regular
  * interval automatically.  The @c tag and @c flags fields of the
  * event may be customized.  The @c u.p field of the event will point
- * to this configuration structure. */
+ * to this configuration structure.
+ *
+ * @note None of the fields in this structure may be mutated while the
+ * periodic event is registered. */
 typedef struct sBSP430eventPeriodicConfig {
   /** A standard alarm structure.  No fields in this need be
    * initialized: that will be done when iBSP430eventPeriodicAdd_ni()
@@ -182,8 +185,7 @@ typedef struct sBSP430eventPeriodicConfig {
   /** The interval at which the periodic alarm should repeat.  The
    * periodic event infrastructure will automatically reschedule the
    * event to be posted again this many ticks after the last posting.
-   * A value of zero will terminate the repetition at the end of the
-   * interval.
+   * A zero interval results in a single event with no re-schedule.
    *
    * Note that the interval is not coupled to the
    * processing of the event; an unresponsive handler may result in
