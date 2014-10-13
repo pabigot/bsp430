@@ -523,6 +523,111 @@ const char * xBSP430uptimeAsText_ni (unsigned long duration_utt);
 unsigned int uiBSP430uptimeScaleForDisplay (unsigned long long duration_utt,
                                             const char ** unitp);
 
+
+/** A structure to record the relative levels of activity and sleep.
+ *
+ * Primarily this can be used to calculate the duty cycle of an
+ * application.  This infrastructure assumes that the uptime clock
+ * runs continuously, including in sleep mode, and that no active or
+ * sleep period exceeds the duration representable in an unsigned
+ * long.
+ *
+ * @see vBSP430uptimeActivityInitialize() */
+typedef struct sBSP430uptimeActivityTotals {
+  /** Cumulative number of uptime ticks spent in active mode. */
+  unsigned long long awake_utt;
+  /** Cumulative number of uptime ticks spent in low-power mode. */
+  unsigned long long sleep_utt;
+  /** Number of times low-power mode has been entered. */
+  unsigned long sleeps;
+  /** The uptime clock when the system last came out of low-power
+   * mode. */
+  unsigned long last_wake_utt;
+  /** The uptime clock when the system last entered low-power mode. */
+  unsigned long last_sleep_utt;
+} sBSP430uptimeActivityTotals;
+
+/** Initialize state to record activity levels.
+ *
+ * This can be used to measure the amount of time spent in active and
+ * sleep modes, with the following pattern:
+
+ * @code
+ * sBSP430uptimeActivityTotals busy;
+ * // initialize the application
+ * vBSP430uptimeActivityReset(&busy, false);
+ * while (1) {
+ *   // do stuff
+ *   BSP430_CORE_DISABLE_INTERRUPT();
+ *   if (go_to_sleep) {
+ *     vBSP430uptimeActivityStartSleep_ni(&busy);
+ *     BSP430_CORE_LPM_ENTER_NI(LPM4_bits);
+ *     vBSP430uptimeActivityStartActive_ni(&busy);
+ *   } else {
+ *     BSP430_CORE_ENABLE_INTERRUPT();
+ *   }
+ * }
+ * @endcode
+ *
+ * See uiBSP430uptimeActivity_ppt() for extracting the basic duty
+ * cycle ratio.
+ *
+ * @param sp pointer to the activity record to initialize
+ *
+ * @param from_now whether accounting should start from now.  Passing
+ * @c false is normal, and counts active durations from power-up.  If
+ * the application initialization code should be excluded, pass @c
+ * true to set the last sleep and wake to the current time.
+ */
+void vBSP430uptimeActivityReset (sBSP430uptimeActivityTotals * sp,
+                                 bool from_now);
+
+#if defined(BSP430_DOXYGEN) || (BSP430_UPTIME - 0)
+
+/** Record activity times prior to entering sleep mode.
+ *
+ * @param sp pointer to the activity record.
+ *
+ * @see vBSP430uptimeActivityReset() */
+static BSP430_CORE_INLINE
+void vBSP430uptimeActivityStartSleep_ni (sBSP430uptimeActivityTotals * sp)
+{
+  sp->sleep_utt += sp->last_wake_utt - sp->last_sleep_utt;
+  sp->last_sleep_utt = ulBSP430uptime_ni();
+  sp->awake_utt += sp->last_sleep_utt - sp->last_wake_utt;
+  sp->sleeps += 1;
+}
+
+/** Record activity times after waking from sleep mode.
+ *
+ * @param sp pointer to the activity record.
+ *
+ * @see vBSP430uptimeActivityReset() */
+static BSP430_CORE_INLINE
+void vBSP430uptimeActivityStartActive_ni (sBSP430uptimeActivityTotals * sp)
+{
+  sp->last_wake_utt = ulBSP430uptime_ni();
+}
+
+#endif /* BSP430_UPTIME */
+
+/** Return the per-mille activity measure.
+ *
+ * This is the ratio of total active time to total time, expressed as
+ * parts-per-thousand.  The value is rounded to the nearest integer.
+ *
+ * @param sp pointer to the activity record. */
+static BSP430_CORE_INLINE
+unsigned int uiBSP430uptimeActivity_ppt (sBSP430uptimeActivityTotals * sp)
+{
+  unsigned long long period_tck = sp->awake_utt + sp->sleep_utt;
+  unsigned int duty_ppt = 0;
+  if (0 < period_tck) {
+    duty_ppt = (1000 * sp->awake_utt + (period_tck / 2)) / period_tck;
+  }
+  return duty_ppt;
+}
+
 /** The capture/compare index to be used for delays.
  *
  * If #configBSP430_UPTIME_DELAY is enabled this capture/compare

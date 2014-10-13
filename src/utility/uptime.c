@@ -270,6 +270,15 @@ uiBSP430uptimeScaleForDisplay (unsigned long long duration_utt,
   return duration_utt / h_utt;
 }
 
+void
+vBSP430uptimeActivityReset (sBSP430uptimeActivityTotals * sp,
+                            bool from_now)
+{
+  memset(sp, 0, sizeof(*sp));
+  if (from_now) {
+    sp->last_wake_utt = sp->last_sleep_utt = ulBSP430uptime();
+  }
+}
 
 #if (configBSP430_UPTIME_DELAY - 0)
 
