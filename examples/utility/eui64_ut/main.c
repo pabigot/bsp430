@@ -84,6 +84,24 @@ testBad ()
   }
 }
 
+static void
+testNull ()
+{
+  uBSP430eui64 eui64;
+  memset(&eui64, 0, sizeof(eui64));
+  BSP430_UNITTEST_ASSERT_TRUE(BSP430_EUI64_IS_NULL(&eui64));
+  BSP430_UNITTEST_ASSERT_FALSE(BSP430_EUI64_IS_INVALID(&eui64));
+  memset(&eui64, 0xff, sizeof(eui64));
+  BSP430_UNITTEST_ASSERT_FALSE(BSP430_EUI64_IS_NULL(&eui64));
+  BSP430_UNITTEST_ASSERT_TRUE(BSP430_EUI64_IS_INVALID(&eui64));
+  memset(&eui64, 0xa5, sizeof(eui64));
+  BSP430_UNITTEST_ASSERT_FALSE(BSP430_EUI64_IS_NULL(&eui64));
+  BSP430_UNITTEST_ASSERT_FALSE(BSP430_EUI64_IS_INVALID(&eui64));
+  BSP430_EUI64_INVALIDATE(&eui64);
+  BSP430_UNITTEST_ASSERT_FALSE(BSP430_EUI64_IS_NULL(&eui64));
+  BSP430_UNITTEST_ASSERT_TRUE(BSP430_EUI64_IS_INVALID(&eui64));
+}
+
 void main ()
 {
   vBSP430platformInitialize_ni();
@@ -92,6 +110,7 @@ void main ()
   testAsText();
   testGood();
   testBad();
+  testNull();
 
   vBSP430unittestFinalize();
 }

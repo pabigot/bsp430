@@ -40,6 +40,17 @@
  * other situations where it is necessary to distinguish between nodes
  * in a system.
  *
+ * @note The EUI-64 guidelines specify two distinct null values: all
+ * bits zero and all bits 1.  BSP430 standard practice is to denote
+ * the all-zero version as a @link BSP430_EUI64_IS_NULL null@endlink
+ * EUI-64 which no data has yet been surveyed, and the all-ones
+ * version as @link BSP430_EUI64_IS_INVALID invalid@endlink to denote
+ * inability to obtain EUI-64 information.  Thus, a null-initialized
+ * object containing a #uBSP430eui64 object is cleared and ready for
+ * assignment, perhaps to an invalid value.
+ *
+ * @see https://standards.ieee.org/develop/regauth/tut/eui64.pdf
+ *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2013-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
  */
@@ -147,6 +158,11 @@ typedef union uBSP430eui64 {
    * only suitable for optimized equality comparisons. */
   uint64_t u64;
 
+  /** The 8 octets comprising the 64-bit value aggregated into an
+   * array of integers.  Not a canonical form, suitable only for
+   * checking against the null identifier. */
+  int16_t ints[4];
+
   /** The EUI-64 broken down into components as derived from an
    * underlying 48-bit value (EUI-48 or MAC-48). */
   struct as48 {
@@ -165,16 +181,33 @@ typedef union uBSP430eui64 {
 /** A handle for an EUI64. */
 typedef uBSP430eui64 * hBSP430eui64;
 
-/** Test whether an EUI-64 is the distinct null identifier (all bits
- * are set) */
-#define BSP430_EUI64_IS_NULL(_h) ((0xFF == (_h)->bytes[0])      \
-                                  & (0xFF == (_h)->bytes[1])    \
-                                  & (0xFF == (_h)->bytes[2])    \
-                                  & (0xFF == (_h)->bytes[3])    \
-                                  & (0xFF == (_h)->bytes[4])    \
-                                  & (0xFF == (_h)->bytes[5])    \
-                                  & (0xFF == (_h)->bytes[6])    \
-                                  & (0xFF == (_h)->bytes[7]))
+/** Test whether an EUI-64 is the distinct identifier with all
+ * bits clear */
+#define BSP430_EUI64_IS_NULL(h_) ((0 == (h_)->ints[0])    \
+                                  & (0 == (h_)->ints[1])  \
+                                  & (0 == (h_)->ints[2])  \
+                                  & (0 == (h_)->ints[3]))
+
+/** Test whether an EUI-64 is the distinct identifier with all
+ * bits set.
+ *
+ * @see BSP430_EUI64_INVALIDATE() */
+#define BSP430_EUI64_IS_INVALID(h_) ((-1 == (h_)->ints[0])    \
+                                     & (-1 == (h_)->ints[1])  \
+                                     & (-1 == (h_)->ints[2])  \
+                                     & (-1 == (h_)->ints[3]))
+
+/** Reset an EUI-64 to the distinct identifier with all bits set.
+ *
+ * This is suitable when it is necessary to represent that the EUI-64
+ * is invalid, most likely because the device does not  */
+#define BSP430_EUI64_INVALIDATE(h_) do { \
+    hBSP430eui64 const h = (h_);         \
+    h->ints[0] = -1;                     \
+    h->ints[1] = -1;                     \
+    h->ints[2] = -1;                     \
+    h->ints[3] = -1;                     \
+  } while (0)
 
 /** Obtain an EUI-64 for the board.
  *
