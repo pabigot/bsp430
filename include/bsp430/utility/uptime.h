@@ -422,6 +422,40 @@ uiBSP430uptimeCounter_ni (void)
 
 #endif /* BSP430_UPTIME */
 
+/** Determine whether an uptime value is valid.
+ *
+ * In some contexts, a clock value of zero may be used used to
+ * indicate an unassigned value, and a clock value of ~0UL is used to
+ * indicate an assigned invalid value.  Determine whether the provided
+ * time is valid (i.e., not one of these reserved identifying values).
+ *
+ * @see ulBSP430uptimeValidated() */
+static BSP430_CORE_INLINE
+bool bBSP430uptimeIsValid (unsigned long duration_utt)
+{
+  return (0 != duration_utt) && (~0UL != duration_utt);
+}
+
+/** Adjust a timestamp if necessary to make it valid.
+ *
+ * If the value of the timestamp happens to match one of the reserved
+ * invalid values, invert the least significant bit so the value is a
+ * valid time, albeit off by one tick.
+ *
+ * (A legitimate uptime clock will coincidently match one of the
+ * invalid values only for two clock ticks at each 32-bit uptime clock
+ * rollover.)
+ *
+ * @see bBSP430uptimeIsValid() */
+static BSP430_CORE_INLINE
+unsigned long ulBSP430uptimeValidated (unsigned long duration_utt)
+{
+  if (! bBSP430uptimeIsValid(duration_utt)) {
+    duration_utt ^= 1;
+  }
+  return duration_utt;
+}
+
 /** Configure the system uptime clock.
  *
  * The timer associated with the uptime clock is reset to zero and
