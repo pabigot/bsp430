@@ -98,7 +98,11 @@
  *
  * @param delay_us_ the delay in microseconds.  Expected, but not
  * required, to be a compile-time integer constant compatible with
- * unsigned long. */
+ * unsigned long.
+ *
+ * @warn If #BSP430_CLOCK_NOMINAL_MCLK_HZ or @p delay_us_ is large, it
+ * may be necessary to cast the @p delay_us_ to <tt>unsigned long
+ * long</tt> to avoid integer overflow. */
 #define BSP430_CLOCK_US_TO_NOMINAL_MCLK(delay_us_) BSP430_CORE_US_TO_TICKS((delay_us_), BSP430_CLOCK_NOMINAL_MCLK_HZ)
 
 /** Oscillator capacitor setting for use by

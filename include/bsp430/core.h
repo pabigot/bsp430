@@ -765,8 +765,12 @@
 
 /** Generic convert from microseconds to ticks at some frequency.
  *
- * @note Calculations are done using 32-bit operations.  Fastest code
- * when parameters are compile-time constants.
+ * @note Calculations are done using the promoted type of <tt>unsigned
+ * long</tt> and @p us_.  The fastest code is generated when
+ * parameters are compile-time constants.
+ *
+ * @warning If @p us_ or @p hz_ is large, it may be necessary to cast
+ * @p us_ to <tt>unsigned long long</tt> to avoid integer overflow.
  *
  * @note The result is rounded down.
  *
@@ -775,8 +779,12 @@
 
 /** Generic convert from ticks at some frequency to microseconds.
  *
- * @note Calculations are done using 32-bit operations.  Fastest code
- * when parameters are compile-time constants.
+ * @note Calculations are done using the promoted type of <tt>unsigned
+ * long</tt> and @p ticks_.  The fastest code is generated when
+ * parameters are compile-time constants.
+ *
+ * @warning If @p ticks_ is more than 2000 it may be necessary to cast
+ * it to <tt>unsigned long long</tt> to avoid integer overflow.
  *
  * @note The result is rounded down.
  *
@@ -785,8 +793,12 @@
 
 /** Generic convert from milliseconds to ticks at some frequency.
  *
- * @note Calculations are done using 32-bit operations.  Fastest code
- * when parameters are compile-time constants.
+ * @note Calculations are done using the promoted type of <tt>unsigned
+ * long</tt> and @p ms_.  The fastest code is generated when
+ * parameters are compile-time constants.
+ *
+ * @warning If @p ms_ or @p hz_ is large, it may be necessary to cast
+ * @p ms_ to <tt>unsigned long long</tt> to avoid integer overflow.
  *
  * @note The result is rounded down.
  *
@@ -795,8 +807,12 @@
 
 /** Generic convert from ticks at some frequency to milliseconds.
  *
- * @note Calculations are done using 32-bit operations.  Fastest code
- * when parameters are compile-time constants.
+ * @note Calculations are done using the promoted type of <tt>unsigned
+ * long</tt> and @p ticks_.  The fastest code is generated when
+ * parameters are compile-time constants.
+ *
+ * @warning If @p ticks_ is large, it may be necessary to cast it to
+ * <tt>unsigned long long</tt> to avoid integer overflow.
  *
  * @note The result is rounded down.
  *
