@@ -245,13 +245,6 @@ emit_char (int c)
   return emit_char2(c, uart);
 }
 
-#if (configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0)
-int putchar (c)
-{
-  return emit_char(c);
-}
-#endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
-
 int
 cputchar (int c)
 {
@@ -685,5 +678,76 @@ vBSP430consoleDisplayMemory (const uint8_t * dp,
   }
   cputchar('\n');
 }
+
+#if (BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB - 0)
+#if (configBSP430_CONSOLE_PROVIDES_STDIO - 0)
+#define _COMPILING_NEWLIB
+#include <sys/unistd.h>
+#include <errno.h>
+
+static bool newlib_initialized;
+
+static void
+initialize_newlib_console (void)
+{
+  (void)iBSP430consoleInitialize();
+  setvbuf(stdout, NULL, _IONBF, 0);
+  newlib_initialized = true;
+}
+
+#define INITIALIZE_CONSOLE() do {   \
+    if (! newlib_initialized) {     \
+      initialize_newlib_console();  \
+    }                               \
+  } while (0)
+
+_READ_WRITE_RETURN_TYPE
+read (int fd,
+      void * buf,
+      size_t count)
+{
+  int rc;
+
+  if ((0 != fd) || (0 == count)) {
+    return -1;
+  }
+  INITIALIZE_CONSOLE();
+  rc = cgetchar();
+  if (0 <= rc) {
+    *(char *)buf = rc;
+    return 1;
+  }
+  errno = EAGAIN;
+  return -1;
+}
+
+_READ_WRITE_RETURN_TYPE
+write (int fd,
+        const void * buf,
+        size_t count)
+{
+#if 0
+  errno = ENOSYS;
+  RECORD_SYSTEM_CALL(write);
+  return -1;
+#else
+  const char * sp = (const char *)buf;
+  const char * const spe = sp + count;
+  INITIALIZE_CONSOLE();
+  while (sp < spe) {
+    (void)cputchar(*sp++);
+  }
+  return count;
+#endif
+}
+#endif /* configBSP430_CONSOLE_PROVIDES_STDIO */
+#else /* BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB */
+#if (configBSP430_CONSOLE_PROVIDES_PUTCHAR - 0)
+int putchar (c)
+{
+  return emit_char(c);
+}
+#endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
+#endif /* BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB */
 
 #endif /* BSP430_CONSOLE */

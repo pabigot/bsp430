@@ -278,8 +278,20 @@ void vBSP430consoleSetRxCallback_ni (iBSP430consoleRxCallback_ni cb);
  * @cppflag
  * @defaulted */
 #ifndef configBSP430_CONSOLE_PROVIDES_PUTCHAR
-#define configBSP430_CONSOLE_PROVIDES_PUTCHAR 0
+#define configBSP430_CONSOLE_PROVIDES_PUTCHAR 1
 #endif /* configBSP430_CONSOLE_PROVIDES_PUTCHAR */
+
+/** If defined to a true value, the console module will provide strong
+ * definitions of read() and write() that override the non-functional
+ * weak newlib nosys defaults to allow @c stdout and @c stdin to
+ * operate on the console UART.
+ *
+ * @cppflag
+ * @defaulted
+ * @dependency #BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB*/
+#ifndef configBSP430_CONSOLE_PROVIDES_STDIO
+#define configBSP430_CONSOLE_PROVIDES_STDIO (BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB - 0)
+#endif /* configBSP430_CONSOLE_PROVIDES_STDIO */
 
 /** If defined to true, the console display routines will always emit a
  * carriage return before a newline.  This provides compatibility with
