@@ -1,0 +1,98 @@
+#!/bin/sh
+#
+# REPO_BASE : A directory expected to hold gcc, binutils, newlib, and
+# msp430-elf workspaces.  The toolchain is built for the checked-out
+# version.  You want these repositories and branches:
+#
+#  Package     Git URI                                    Branch
+#  binutils    git://sourceware.org/git/binutils-gdb.git  master
+#  gcc         git://gcc.gnu.org/git/gcc.git              trunk
+#  newlib      git://sourceware.org/git/newlib.git        master
+#  msp430-elf  git://github.com/pabigot/msp430-elf.git    gcc_rh
+#
+# PREFIX : The directory into which the toolchain is installed.  By
+# default it is a date-stamped subdirectory of /usr/local.  The script
+# will exit immediately if this directory already exists.
+#
+# In ${PREFIX} the file origins will record the git commit used for
+# building each package, and the file mball.out will record a trace of
+# the build.
+
+REPO_BASE=${REPO_BASE:-/opt}
+PREFIX=${PREFIX:-/usr/local/gcc-msp430-elf-dev-$(date +%Y%m%d)}
+
+emit_git_info () {
+  repo=$(basename $(pwd))
+  echo "${repo}.repo=$(git config --get remote.origin.url)"
+  echo "${repo}.branch=$(git rev-parse --abbrev-ref HEAD)"
+  echo "${repo}.commit=$(git rev-parse HEAD)"
+}
+
+stamp () {
+  echo "===>" "${@}" "<===" 1>&2
+}
+
+[ -d ${PREFIX} ] && exit 0
+mkdir -p ${PREFIX}
+cd /tmp
+exec >${PREFIX}/mball.out
+
+stamp Building binutils
+rm -rf binutils && mkdir binutils && cd binutils
+( cd ${REPO_BASE}/binutils && emit_git_info >> ${PREFIX}/origins )
+${REPO_BASE}/binutils/configure --prefix=${PREFIX} --target=msp430-elf 2>&1 | tee co
+make -j8 2>&1 | tee mo
+make install 2>&1 | tee moi
+cd ..
+
+stamp Building gcc host
+rm -rf gcc && mkdir gcc && cd gcc
+( cd ${REPO_BASE}/gcc && emit_git_info >> ${PREFIX}/origins )
+${REPO_BASE}/gcc/configure \
+  --prefix=${PREFIX} \
+  --target=msp430-elf \
+  --with-newlib \
+  --enable-languages=c,c++ \
+2>&1 | tee co
+make -j12 all-host 2>&1 | tee moah
+make install-host 2>&1 | tee moiah
+cd ..
+
+# 20141105 : --disable-newlib-multithread deadlocks in small memory model
+stamp Building newlib
+rm -rf newlib && mkdir newlib && cd newlib
+( cd ${REPO_BASE}/newlib && emit_git_info >> ${PREFIX}/origins )
+${REPO_BASE}/newlib/configure \
+  --prefix=${PREFIX} \
+  --target=msp430-elf \
+  --disable-newlib-supplied-syscalls    \
+  --enable-newlib-reent-small           \
+  --disable-newlib-fseek-optimization   \
+  --disable-newlib-wide-orient          \
+  --enable-newlib-nano-formatted-io     \
+  --disable-newlib-io-float             \
+  --enable-newlib-nano-malloc           \
+  --disable-newlib-unbuf-stream-opt     \
+  --enable-lite-exit                    \
+  --enable-newlib-global-atexit         \
+  --disable-nls                         \
+ 2>&1 | tee co
+make 2>&1 | tee mo
+make install 2>&1 | tee moi
+cd ..
+
+cd gcc
+stamp Building gcc target
+make -j12 all-target 2>&1 | tee moat
+make install-target 2>&1 | tee moiat
+cd ..
+
+stamp Installing target headers
+( cd ${REPO_BASE}/msp430-elf && emit_git_info >> ${PREFIX}/origins )
+( cd ${PREFIX}/msp430-elf/include &&
+  rsync -avr ${REPO_BASE}/msp430-elf/include/. . )
+
+stamp Checking for errors
+fgrep '***' ${PREFIX}/mball.out 1>&2
+
+stamp Done
