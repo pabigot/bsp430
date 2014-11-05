@@ -259,6 +259,12 @@ CFLAGS += $(TARGET_CFLAGS)
 LDFLAGS += $(OPT_LDFLAGS)
 LDFLAGS += $(TARGET_LDFLAGS)
 
+# Unless overridden any default ldscript identified by the build chain
+# will be used.  The platform-specific include directory will
+# automatically be added to the linker search path.
+LDSCRIPT ?=
+LDFLAGS += $(if $(LDSCRIPT),-L$(BSP430_ROOT)/include/bsp430/platform/$(PLATFORM) -T$(LDSCRIPT))
+
 # Assume the application-specific bsp430_config.h is same directory as the
 # Makefile.
 CPPFLAGS += -I.
