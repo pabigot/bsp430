@@ -1,0 +1,11 @@
+--- msp430f5529.ld	2014-11-05 08:36:35.781539065 -0600
++++ msp430f5529-far-rodata.ld	2014-11-05 08:44:25.666470409 -0600
+@@ -230,7 +230,7 @@
+     KEEP (*(EXCLUDE_FILE (*crtend*.o ) .dtors))
+     KEEP (*(SORT(.dtors.*)))
+     KEEP (*(.dtors))
+-  } > ROM
++  } > FAR_ROM
+ 
+   .text           :
+   {

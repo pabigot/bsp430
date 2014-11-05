@@ -1,0 +1,14 @@
+SUFFIXES='far-rodata far-text'
+
+find ${BSP430_ROOT}/include/bsp430/platform -name '*.ld' \
+  | sed /-/d \
+  | while read f ; do
+      d=$(dirname ${f})
+      mcu=$(basename ${f} .ld)
+      for s in ${SUFFIXES} ; do
+        sf=${d}/${mcu}-${s}.ld
+        cp -p ${d}/${mcu}.ld ${sf}
+        patch ${sf} ${BSP430_ROOT}/maintainer/${s}.patch
+        rm -f ${sf}.orig
+      done
+    done

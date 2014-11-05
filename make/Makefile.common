@@ -162,6 +162,11 @@ ifdef MEMORY_MODEL
 ifneq (,$(WITH_GCC_MSP430_ELF))
 ifeq (large,$(MEMORY_MODEL))
 TARGET_CFLAGS += -mlarge
+# TI scripts don't support far memory.  Provide a way to pick an
+# alternative linker script that puts all code in far memory (far-text)
+# or all read-only data in far memory (far-rodata).
+LDSCRIPT_LARGE_SUFFIX ?= far-text
+LDSCRIPT ?= $(MCU)-$(LDSCRIPT_LARGE_SUFFIX).ld
 endif # MEMORY_MODEL
 ifeq (small,$(MEMORY_MODEL))
 TARGET_CFLAGS += -msmall

@@ -1,0 +1,23 @@
+--- msp430f5529.ld	2014-11-05 08:36:35.781539065 -0600
++++ msp430f5529-far-text.ld	2014-11-05 08:41:17.347702827 -0600
+@@ -232,12 +232,19 @@
+     KEEP (*(.dtors))
+   } > ROM
+ 
++  .far.text :
++  {
++    . = ALIGN(2);
++    *(.far.text .far.text.*)
++    *(.text .stub .text.* .gnu.linkonce.t.* .text:*)
++  } > FAR_ROM
++
+   .text           :
+   {
+     . = ALIGN(2);
+     PROVIDE (_start = .);
+     KEEP (*(SORT(.crt_*)))
+-    *(.lowtext .text .stub .text.* .gnu.linkonce.t.* .text:*)
++    *(.lowtext)
+     KEEP (*(.text.*personality*))
+     /* .gnu.warning sections are handled specially by elf32.em.  */
+     *(.gnu.warning)
