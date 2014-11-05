@@ -55,6 +55,10 @@
  * Kelvin) into d[Fahr] (tenths of one degree Fahrenheit). */
 #define BSP430_SENSORS_CONVERT_dK_TO_dFahr(dk_) (320 + (9 * ((dk_) - 2732)) / 5)
 
+/** Convert a temperature, expressed in cK (hundredths of one degree
+ * Kelvin) into d[Fahr] (hundredths of one degree Fahrenheit). */
+#define BSP430_SENSORS_CONVERT_cK_TO_cFahr(ck_) (3200 + (9 * ((ck_) - 27315)) / 5)
+
 /** Convert a temperature, expressed in dC (tenths of one degree
  * Celcius) into d[Fahr] (tenths of one degree Fahrenheit). */
 #define BSP430_SENSORS_CONVERT_dC_TO_dFahr(dc_) BSP430_SENSORS_CONVERT_dK_TO_dFahr(BSP430_SENSORS_CONVERT_dC_TO_dK(dc_))
