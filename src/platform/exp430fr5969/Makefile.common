@@ -1,4 +1,5 @@
 MCU=msp430fr5969
+MCU_HWMULT=f5series
 MSPDEBUG_DRIVER ?= tilib
 # This is through the USB port, and is slow
 #MSPDEBUG_DRIVER ?= ezfet
