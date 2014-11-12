@@ -363,6 +363,82 @@ vcprintf (const char * fmt, va_list ap)
 
 #elif (BSP430_CORE_TOOLCHAIN_LIBC_NEWLIB - 0)
 
+#define XTOA_T(INT_T)                                                   \
+static char *                                                           \
+xtoa_##INT_T (INT_T sval,                                               \
+              char * str,                                               \
+              int radix,                                                \
+              int signedp)                                              \
+{                                                                       \
+  unsigned INT_T uval;                                                  \
+  unsigned int uradix = radix;                                          \
+  char *sp = str;                                                       \
+  char *sp2;                                                            \
+                                                                        \
+  /* If signed, store sign at start of buffer for negative base-10 values */ \
+  if (signedp && (10 == uradix) && (0 > sval)) {                        \
+    *sp++ = '-';                                                        \
+    uval = -sval;                                                       \
+  } else {                                                              \
+    uval = sval;                                                        \
+  }                                                                     \
+  sp2 = sp;                                                             \
+                                                                        \
+  do {                                                                  \
+    unsigned int rem = uval % uradix;                                   \
+    uval /= uradix;                                                     \
+    if (10 > rem) {                                                     \
+      *sp++ = '0' + rem;                                                \
+    } else {                                                            \
+      *sp++ = 'A' + rem - 10;                                           \
+    }                                                                   \
+  } while (0 < uval);                                                   \
+                                                                        \
+  /* Mark end of string */                                              \
+  *sp-- = 0;                                                            \
+                                                                        \
+  /* Reverse string contents (excluding sign) in place */               \
+  while (sp2 < sp) {                                                    \
+    char tmp = *sp2;                                                    \
+    *sp2++ = *sp;                                                       \
+    *sp-- = tmp;                                                        \
+  }                                                                     \
+                                                                        \
+  return str;                                                           \
+}
+
+XTOA_T(int)
+
+int
+cputi (int n, int radix)
+{
+  char buffer[sizeof("-32767")];
+  return emit_text(xtoa_int(n, buffer, radix, 1), console_hal_);
+}
+
+int
+cputu (unsigned int n, int radix)
+{
+  char buffer[sizeof("65535")];
+  return emit_text(xtoa_int((int)n, buffer, radix, 0), console_hal_);
+}
+
+XTOA_T(long)
+
+int
+cputl (long n, int radix)
+{
+  char buffer[sizeof("-2147483647")];
+  return emit_text(xtoa_long(n, buffer, radix, 1), console_hal_);
+}
+
+int
+cputul (unsigned long n, int radix)
+{
+  char buffer[sizeof("4294967295")];
+  return emit_text(xtoa_long((long)n, buffer, radix, 0), console_hal_);
+}
+
 int
 vcprintf (const char * fmt, va_list ap)
 {
