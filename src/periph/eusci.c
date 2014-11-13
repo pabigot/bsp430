@@ -34,6 +34,10 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/eusci.h>
 
+/* eUSCI on FR4xx/2xx devices uses UCSSEL_1 to identify MODCLK at 5
+ * MHz instead of ACLK at whatever. */
+#define UCSSEL_1_IS_MODCLK (defined(UCSSEL__MODCLK) && !defined(UCSSEL__ACLK) && (UCSSEL__MODCLK == UCSSEL_1))
+
 #define SERIAL_HAL_HPL_A(hal_) (hal_)->hpl.euscia
 #define SERIAL_HAL_HPL_B(hal_) (hal_)->hpl.euscib
 #define HAL_HPL_FIELD(hal_,fld_) (*(BSP430_SERIAL_HAL_HPL_VARIANT_IS_EUSCIB(hal_) ? &(hal_)->hpl.euscib->fld_ : &(hal_)->hpl.euscia->fld_))
@@ -89,7 +93,11 @@ ulBSP430eusciRate (hBSP430halSERIAL hal)
       clock_Hz = 0;
       break;
     case UCSSEL_1:
+#if (UCSSEL_1_IS_MODCLK - 0)
+      clock_Hz = BSP430_NOMINAL_MODCLK_HZ;
+#else /* UCSSEL_1_IS_MODCLK */
       clock_Hz = ulBSP430clockACLK_Hz();
+#endif /* UCSSEL_1_IS_MODCLK */
       break;
     default:
       clock_Hz = ulBSP430clockSMCLK_Hz();
@@ -167,6 +175,13 @@ hBSP430eusciOpenUART (hBSP430halSERIAL hal,
   ctlw0 = (ctl0_byte << 8) | ctl1_byte;
   ctlw0 &= ~(UCMODE1 | UCMODE0 | UCSYNC | UCSSEL1 | UCSSEL0);
 
+#if (UCSSEL_1_IS_MODCLK - 0)
+  /* When ACLK is not available, use SMCLK: MODCLK is only available
+   * in active mode and LPM0 so there's no real win over SMCLK, and
+   * MODCLK is pretty unstable (+/- 20%). */
+  ctlw0 |= UCSSEL__SMCLK;
+  brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
+#else /* BSP430_PERIPH_EUSCI_IS_FR4 */
   /* Assume ACLK <= 20 kHz is VLOCLK and cannot be trusted.  Prefer
    * 32 KiHz ACLK for rates that are low enough.  Use SMCLK for
    * anything larger.  */
@@ -177,6 +192,7 @@ hBSP430eusciOpenUART (hBSP430halSERIAL hal,
     ctlw0 |= UCSSEL__SMCLK;
     brclk_Hz = ulBSP430clockSMCLK_Hz_ni();
   }
+#endif /* BSP430_PERIPH_EUSCI_IS_FR4 */
 
 #define BR_FRACTION_SHIFT 6
   /* The value for BRS is supposed to be a table lookup based on the
