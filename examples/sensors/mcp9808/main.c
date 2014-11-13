@@ -125,7 +125,7 @@ main ()
          read_reg_rh(i2c, BSP430_SENSORS_MCP9808_REGNO_DEVID));
   rc = read_r16_rh(i2c, BSP430_SENSORS_MCP9808_REGNO_CONFIG, &cfg);
   printf("Config %04x resolution 1/%d\n", cfg,
-          2 << read_r8_rh(i2c, BSP430_SENSORS_MCP9808_REGNO_RESOLUTION));
+         2 << read_r8_rh(i2c, BSP430_SENSORS_MCP9808_REGNO_RESOLUTION));
   iBSP430serialSetReset_rh(i2c, 1);
   cfg &= ~BSP430_SENSORS_MCP9808_CONFIG_SHDN;
 

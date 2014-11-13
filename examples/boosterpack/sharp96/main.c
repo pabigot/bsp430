@@ -205,7 +205,7 @@ void main ()
     if (0 < rem) {
       cprintf("woke early, button active %u\n", button_state.active);
     }
-   }
+  }
   iBSP430sharplcdClearDisplay_rh(dev);
   iBSP430sharplcdSetEnabled_ni(dev, 0);
 }

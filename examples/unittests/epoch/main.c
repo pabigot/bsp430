@@ -248,14 +248,14 @@ testNTPSequence (void)
 
   ph = (const sBSP430uptimeNTPPacketHeader *)data0;
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(0, iBSP430uptimeProcessNTPResponse(NULL, ph, recv0_ntp,
-                                                                       &adjustment_ntp, &adjustment_ms, &rtt_us));
+                                    &adjustment_ntp, &adjustment_ms, &rtt_us));
   BSP430_UNITTEST_ASSERT_EQUAL(adj0_ntp, adjustment_ntp);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTld(adj0_ms, adjustment_ms);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTld(rtt0_us, rtt_us);
 
   ph = (const sBSP430uptimeNTPPacketHeader *)data1;
   BSP430_UNITTEST_ASSERT_EQUAL_FMTd(0, iBSP430uptimeProcessNTPResponse(NULL, ph, recv1_ntp,
-                                                                       &adjustment_ntp, &adjustment_ms, &rtt_us));
+                                    &adjustment_ntp, &adjustment_ms, &rtt_us));
   BSP430_UNITTEST_ASSERT_EQUAL(adj1_ntp, adjustment_ntp);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTld(adj1_ms, adjustment_ms);
   BSP430_UNITTEST_ASSERT_EQUAL_FMTld(rtt1_us, rtt_us);

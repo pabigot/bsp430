@@ -110,7 +110,7 @@ isr_RTC (void)
       goto finish;
     case RTCIV_RTCTEVIFG:
       events_ni |= EVT_RTC1MIN;
-    finish:
+finish:
       rtc_tm_ni.tm_year = RTCYEAR - 1900;
       rtc_tm_ni.tm_mon = RTCMON - 1;
       rtc_tm_ni.tm_mday = RTCDAY;

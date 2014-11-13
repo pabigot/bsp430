@@ -112,7 +112,7 @@ static void wlan_cb (long event_type,
       cprintf("%s wlan_cb evnt %#lx len %u at %p\n",
               xBSP430uptimeAsText_ni(ulBSP430uptime_ni()),
               event_type, length, data);
-      /*FALLTHRU*/
+    /*FALLTHRU*/
     case HCI_EVNT_WLAN_KEEPALIVE:
       /* No wakeup for uninteresting events */
       rv = 0;

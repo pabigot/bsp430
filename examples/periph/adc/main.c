@@ -501,7 +501,7 @@ void main ()
 #ifdef INCH_AUX
           , INCH_AUX / INCH_BASE
 #endif /* INCH_AUX */
-          );
+         );
 
   next_wake_utt = ulBSP430uptime_ni();
   while (1) {
@@ -514,7 +514,7 @@ void main ()
 #if defined(INCH_AUX)
                                 INCH_AUX,
 #endif /* INCH_AUX */
-    };
+                              };
     static const int const ninch = sizeof(inch)/sizeof(*inch);
     int valid = 0;
     sSample sample[sizeof(refv)/sizeof(*refv)][sizeof(inch)/sizeof(*inch)];

@@ -39,33 +39,51 @@ typedef struct sTestCase {
 const sTestCase tests[] = {
   /* Values from the data sheet, for algorithm validation.
    * Should produce temp_dC = 150, pres_Pa = 69964. */
-  { .calib = { .ac1 = 408, .ac2 = -72, .ac3 = -14383, .ac4 = 32741,
-               .ac5 = 32757, .ac6 = 23153, .b1 = 6190, .b2 = 4,
-               .mb = -32768, .mc = -8711, .md = 2868 },
-    .sample = { .oversampling = 0,
-                .temperature_uncomp = 27898,
-                .temperature_dK = BSP430_SENSORS_CONVERT_dC_TO_dK(150),
-                .pressure_uncomp = 23843,
-                .pressure_Pa = 69964 } },
+  {
+    .calib = {
+      .ac1 = 408, .ac2 = -72, .ac3 = -14383, .ac4 = 32741,
+      .ac5 = 32757, .ac6 = 23153, .b1 = 6190, .b2 = 4,
+      .mb = -32768, .mc = -8711, .md = 2868
+    },
+    .sample = {
+      .oversampling = 0,
+      .temperature_uncomp = 27898,
+      .temperature_dK = BSP430_SENSORS_CONVERT_dC_TO_dK(150),
+      .pressure_uncomp = 23843,
+      .pressure_Pa = 69964
+    }
+  },
   /* A BMP085-based example verified to be correct */
-  { .calib = { .ac1 = 6985, .ac2 = -1231, .ac3 = -14484, .ac4 = 33686,
-               .ac5 = 24946, .ac6 = 17665, .b1 = 5498, .b2 = 67,
-               .mb = -32768, .mc = -11075, .md = 2432 },
-    .sample = { .oversampling = 3,
-                .temperature_uncomp = 26230,
-                .temperature_dK = 2981,
-                .pressure_uncomp = 319070,
-                .pressure_Pa = 97612 } },
+  {
+    .calib = {
+      .ac1 = 6985, .ac2 = -1231, .ac3 = -14484, .ac4 = 33686,
+      .ac5 = 24946, .ac6 = 17665, .b1 = 5498, .b2 = 67,
+      .mb = -32768, .mc = -11075, .md = 2432
+    },
+    .sample = {
+      .oversampling = 3,
+      .temperature_uncomp = 26230,
+      .temperature_dK = 2981,
+      .pressure_uncomp = 319070,
+      .pressure_Pa = 97612
+    }
+  },
   /* A BMP180-based example that revealed an implicit
    * conversion-to-unsigned issue */
-  { .calib = { .ac1 = 9222, .ac2 = -1170, .ac3 = -14164, .ac4 = 34109,
-               .ac5 = 25117, .ac6 = 22976, .b1 = 6515, .b2 = 46,
-               .mb = -32768, .mc = -11786, .md = 2749 },
-    .sample = { .oversampling = 3,
-                .temperature_uncomp = 32314,
-                .temperature_dK = 3027,
-                .pressure_uncomp = 337493,
-                .pressure_Pa = 97842 } },
+  {
+    .calib = {
+      .ac1 = 9222, .ac2 = -1170, .ac3 = -14164, .ac4 = 34109,
+      .ac5 = 25117, .ac6 = 22976, .b1 = 6515, .b2 = 46,
+      .mb = -32768, .mc = -11786, .md = 2749
+    },
+    .sample = {
+      .oversampling = 3,
+      .temperature_uncomp = 32314,
+      .temperature_dK = 3027,
+      .pressure_uncomp = 337493,
+      .pressure_Pa = 97842
+    }
+  },
 };
 
 int run_test_cases ()

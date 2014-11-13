@@ -49,52 +49,52 @@ void main ()
         "MSP430MCU " XSTR(__MSP430MCU__) "\n"
         "MSP430MCU_UPSTREAM " XSTR(__MSP430MCU_UPSTREAM__) "\n"
 #if 20110716 < __MSPGCC__
-  "CPU "
+        "CPU "
 #if MSP430_CPU_MSP430XV2 == __MSP430_CPU__
-  "MSP430XV2"
+        "MSP430XV2"
 #elif MSP430_CPU_MSP430X == __MSP430_CPU__
-  "MSP430X"
+        "MSP430X"
 #elif MSP430_CPU_MSP430 == __MSP430_CPU__
-  "MSP430"
+        "MSP430"
 #else
 #error Unrecognized CPU
 #endif
-  "\n"
-  "MPY "
+        "\n"
+        "MPY "
 #if MSP430_MPY_NONE == __MSP430_MPY__
-  "none"
+        "none"
 #elif MSP430_MPY_16 == __MSP430_MPY__
-  "16"
+        "16"
 #elif MSP430_MPY_16SE == __MSP430_MPY__
-  "16SE"
+        "16SE"
 #elif MSP430_MPY_32 == __MSP430_MPY__
-  "32"
+        "32"
 #elif MSP430_MPY_32DW == __MSP430_MPY__
-  "32DW"
+        "32DW"
 #else
-  #error Unrecognized MPY
+#error Unrecognized MPY
 #endif
 #if __MSP430X__
-  "\nCPUX_TARGET"
+        "\nCPUX_TARGET"
 #if __MSP430X__ & __MSP430_CPUX_TARGET_SR20__
-  " SR20"
+        " SR20"
 #endif /* SR20 */
 #if __MSP430X__ & __MSP430_CPUX_TARGET_ISR20__
-  " ISR20"
+        " ISR20"
 #endif /* ISR20 */
 #if __MSP430X__ & __MSP430_CPUX_TARGET_A20__
-  " A20"
+        " A20"
 #endif /* A20 */
 #if __MSP430X__ & __MSP430_CPUX_TARGET_C20__
-  " C20"
+        " C20"
 #endif /* C20 */
 #if __MSP430X__ & __MSP430_CPUX_TARGET_D20__
-  " D20"
+        " D20"
 #endif /* D20 */
 #endif /* __MSP430X__ */
-  "\n"
+        "\n"
 #endif /* post LTS-20110716 */
-        );
+       );
 #endif /* mspgcc */
 
 #if (BSP430_CORE_TOOLCHAIN_GCC_MSP430_ELF - 0)
@@ -105,21 +105,21 @@ void main ()
 #else
         " not defined"
 #endif
-        );
+       );
   cputs("MSP430X "
 #ifdef __MSP430X__
         XSTR(__MSP430X__)
 #else
         " not defined"
 #endif
-        );
+       );
   cputs("MSP430X_LARGE "
 #ifdef __MSP430X_LARGE__
         XSTR(__MSP430X_LARGE__)
 #else
         " not defined"
 #endif
-        );
+       );
 #endif /* msp430-elf */
 
 #define SHOW_SIZEOF(_t) do { cprintf("sizeof(" #_t ") = %u\n", (unsigned int)sizeof(_t)); } while (0)

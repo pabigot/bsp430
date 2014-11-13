@@ -291,7 +291,7 @@ void main ()
     }
     BSP430_CORE_ENABLE_INTERRUPT();
   }
- err_out:
+err_out:
   (void)iBSP430consoleFlush();
   return;
 }

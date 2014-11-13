@@ -723,7 +723,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 
 #if (BSP430_PLATFORM_SHARPLCD - 0)
 #ifndef BSP430_UTILITY_U8GLIB
-  /* Enable U8GLIB if requested */
+/* Enable U8GLIB if requested */
 #define BSP430_UTILITY_U8GLIB (configBSP430_UTILITY_U8GLIB - 0)
 #endif /* BSP430_UTILITY_U8GLIB */
 #endif /* BSP430_PLATFORM_SHARPLCD */

@@ -232,7 +232,7 @@ void main ()
             u.state.instantaneousCurrent_mA,
             u.state.averageCurrent_mA,
             u.state.cycleCount
-            );
+           );
     if (FLG_UPDATE_INTERVAL & flags) {
       resample_wake_utt += resample_interval_utt;
       flags &= ~FLG_UPDATE_INTERVAL;

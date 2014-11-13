@@ -1071,14 +1071,14 @@ static const sNVMEMFileIds nvmemFiles[] = {
  * wlan_drv_patch array in PatchProgrammer_DR_Patch.c from the TI
  * patch programmer utility. */
 const uint8_t wlan_drv_patch[] = {
-  #include "wlan_drv_patch.inc"
+#include "wlan_drv_patch.inc"
 };
 /* This array should hold WLAN firmware patches.  The length is
  * somewhere around 8kB, and the values can be found in the fw_patch
  * array in PatchProgrammer_FW_Patch.c from the TI patch programmer
  * utility. */
 const uint8_t fw_patch[] = {
-  #include "fw_patch.inc"
+#include "fw_patch.inc"
 };
 
 static int
@@ -1271,7 +1271,7 @@ static sBSP430cliCommand dcmd_nvmem_sp = {
  * cRMdefaultParams array in PatchProgrammer_DR_Patch.c from the TI
  * patch programmer utility. */
 const uint8_t default_rm_param[] = {
-  #include "rm_param.inc"
+#include "rm_param.inc"
 };
 #endif
 
