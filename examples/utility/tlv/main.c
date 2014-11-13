@@ -45,6 +45,7 @@ void main ()
   dumpRegion("Legacy device table", (const unsigned char *)0xFF0, 16);
   cprintf("TLV table starts at %p and ends at %p\n", tlvt_start, tlvt_end);
   dumpRegion("TLV table", tlvt_start, tlvt_end - tlvt_start);
+  cprintf("BSP430_TLV_TABLE_IS_VALID: %d\n", BSP430_TLV_TABLE_IS_VALID());
   crc = uiBSP430tlvChecksum(crc_start, crc_end - crc_start);
   cprintf("CRC for [%p, %p] expect %04x get %04x: %s\n",
           crc_start, crc_end, tp->crc, crc,

@@ -309,7 +309,7 @@ typedef struct sBPS430tlvADC {
 #endif /* ! BSP430_TLV_IS_5XX */
 
 #if defined(BSP430_DOXYGEN) || (BSP430_TLV_IS_5XX - 0)
-/** Offset from start of TLV table to where the CRC value is stored */
+/** Offset from start of TLV table to skip past the CRC value */
 #define BSP430_TLV_TABLE_DATA_OFFSET 4
 /** Offset from start of TLV table to the first #sBSP430tlvEntry entry
  * in the table. */
