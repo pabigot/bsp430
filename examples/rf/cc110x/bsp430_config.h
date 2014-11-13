@@ -30,6 +30,7 @@
 #define configBSP430_RF_ANAREN_CC110L           \
   ((BSP430_PLATFORM_EXP430G2 - 0)               \
    || (BSP430_PLATFORM_EXP430F5529LP - 0)       \
+   || (BSP430_PLATFORM_EXP430FR4133 - 0)        \
    || (BSP430_PLATFORM_EXP430FR5969 - 0))
 #endif /* configBSP430_RF_ANAREN_CC110L */
 
