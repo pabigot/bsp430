@@ -149,11 +149,20 @@
 #if defined(BSP430_DOXYGEN) || (BSP430_CS_IS_FR58XX - 0)
 /* CS_A has a significantly different set of capabilities */
 
-/** Nominal rate of the CS_A peripheral MODCLK.
+/** The CS_A module supports an internal low-precision high-frequency
+ * module clock source running at a nominal 5 MHz rate, for use where
+ * SMCLK is unsuitable.  Its rate varies with temperature, voltage,
+ * and individual device.
  *
  * This source exists only in the CS_A version of the CS peripheral.
- * It is driven by an internal low-power oscillator. */
+
+ * @defaulted */
+#ifndef BSP430_CS_NOMINAL_MODCLK_HZ
 #define BSP430_CS_NOMINAL_MODCLK_HZ 5000000UL
+#endif /* BSP430_CS_NOMINAL_MODCLK_HZ */
+
+/* Provide definition for clock system */
+#define BSP430_NOMINAL_MODCLK_HZ BSP430_CS_NOMINAL_MODCLK_HZ
 
 /** Nominal rate of the CS_A peripheral LFMODCLK.
  *

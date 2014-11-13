@@ -277,6 +277,19 @@
 #define BSP430_CLOCK_NOMINAL_XT1CLK_HZ 32768U
 #endif /* BSP430_CLOCK_NOMINAL_XT1CLK_HZ */
 
+/** Nominal rate of MODCLK.
+ *
+ * MODCLK is an internally-generated high frequency clock source
+ * available with certain clock systems (UCS, CS_A, and CS4).  The
+ * supporting peripheral header will define this if the feature is
+ * available, and leave it undefined otherwise.
+ *
+ * @defaulted
+ * @platformdep */
+#if defined(BSP430_DOXYGEN)
+#define BSP430_CLOCK_NOMINAL_MODCLK_HZ peripheral specific
+#endif /* BSP430_DOXYGEN */
+
 /** Nominal rate of a secondary external clock (or crystal), in Hz.
  *
  * This must be defined externally if #eBSP430clockSRC_XT2CLK is to be

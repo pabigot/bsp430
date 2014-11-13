@@ -315,6 +315,19 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
  * populated. */
 #define BSP430_UCS_NOMINAL_REFOCLK_HZ 32768U
 
+/** The UCS module supports an internal low-precision high-frequency
+ * module clock source running at a nominal 5 MHz rate, for use where
+ * SMCLK is unsuitable.  Its rate varies with temperature, voltage,
+ * and individual device.
+ *
+ * @defaulted */
+#ifndef BSP430_UCS_NOMINAL_MODCLK_HZ
+#define BSP430_UCS_NOMINAL_MODCLK_HZ 5000000UL
+#endif /* BSP430_UCS_NOMINAL_MODCLK_HZ */
+
+/* Provide definition for clock system */
+#define BSP430_NOMINAL_MODCLK_HZ BSP430_UCS_NOMINAL_MODCLK_HZ
+
 #endif /* BSP430_MODULE_UCS */
 
 #endif /* BSP430_PERIPH_UCS_H */
