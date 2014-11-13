@@ -46,7 +46,8 @@
  * <li> <bsp430/periph/bc2.h> for BC2 (Basic Clock Module+)
  * <li> <bsp430/periph/fllplus.h> for FLLPLUS and FLLPLUS_SMALL (FLL Plus)
  * <li> <bsp430/periph/ucs.h> for UCS and UCS_RF (Unified Clock System)
- * <li> <bsp430/periph/cs.h> for CS and CS_A (Clock System)
+ * <li> <bsp430/periph/cs.h> for CS and CS_A (Clock System) on FR5xx devices
+ * <li> <bsp430/periph/cs4.h> for CS (Clock System) on FR4xx/2xx devices
  * </ul>
  *
  * @note Some modules (such as BC2) use LFXT1 to denote the source for
@@ -65,6 +66,18 @@
 #define BSP430_CLOCK_H
 
 #include <bsp430/core.h>
+
+/** Identify use of the CS peripheral on FR4xx/2xx devices.
+ *
+ * TI in its infinite idiocy does not distinguish the CS module on the
+ * FR4xx/2xx from the CS module on the FR5xx, though the only thing
+ * they share is register names (not structure or architecture).
+ * Empirically they can be distinguished because the FR4xx/2xx version
+ * has a single-bit SELA field.
+*
+ * @defaulted
+ * @cppflag */
+#define BSP430_PERIPH_CS_IS_CS4 (defined(__MSP430_HAS_CS__) && defined(SELA))
 
 /** A constant representing the desired clock speed of the master
  * clock.
@@ -417,6 +430,14 @@ typedef enum eBSP430clockSource {
 
   /** A unique unrecognized value.  Not a valid source for clock
    * configuration. */
+  eBSP430clockSRC_UNKNOWN_4,
+
+  /** A unique unrecognized value.  Not a valid source for clock
+   * configuration. */
+  eBSP430clockSRC_UNKNOWN_5,
+
+  /** A unique unrecognized value.  Not a valid source for clock
+   * configuration. */
   eBSP430clockSRC_UNKNOWN_6,
 
   /** A unique unrecognized value.  Not a valid source for clock
@@ -504,6 +525,10 @@ eBSP430clockSource xBSP430clockMCLKSource ();
  * select the closest calibrated frequency supported by the MCU.
  * There is no facility for adjusting this to an arbitrary frequency.
  * </ul>
+ *
+ * <li>The <bsp430/periph/cs4.h> implementation (FR4xx/2xx family)
+ * relies on presence of a stable LFXT1 or REFO, and configures to the
+ * requested frequency.
  *
  * @note Although passing @p mclk_Hz zero is a short-hand for using
  * #BSP430_CLOCK_PUC_MCLK_HZ, the result may not be to restore the
@@ -732,7 +757,11 @@ uiBSP430clockACLK_Hz (void)
 #include <bsp430/periph/ucs.h>
 #endif /* __MSP430_HAS_UCS__ */
 #if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)
+#if (BSP430_PERIPH_CS_IS_CS4 - 0)
+#include <bsp430/periph/cs4.h>
+#else /* BSP430_PERIPH_CS_IS_CS4 */
 #include <bsp430/periph/cs.h>
+#endif /* BSP430_PERIPH_CS_IS_CS4 */
 #endif /* __MSP430_HAS_CS__ */
 
 #endif /* BSP430_CLOCK_H */
