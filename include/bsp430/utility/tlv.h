@@ -229,7 +229,11 @@ typedef struct sBSP430tlvREFCAL {
  *
  * These are ADC gain and offset calibration constants, as well as
  * constants for the internal temperature sensor.  See the family user
- * guide for details. */
+ * guide for details.
+ *
+ * @warning: On FR4xx/2xx ADC_10 variants the structure stops after 10
+ * bytes, at the cal_adc_20t30 field, since that variant supports only
+ * a 1.5V reference. */
 typedef struct sBPS430tlvADCCAL {
   sBSP430tlvEntry hdr;          /**< Standard tag/len pair */
   unsigned int cal_adc_gain_factor; /**< ADC gain factor */

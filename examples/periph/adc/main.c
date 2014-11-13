@@ -12,6 +12,10 @@
  * ADC10_B is ADC10 on a FR57xx MCU.  It provides a facility to
  * measure VeREF+ and VeREF- on channels 8 and 9.
  *
+ * ADC10_B4 is ADC10 on an FR4xx/2xx MCU.  It has no external
+ * reference inputs and supports only an internal device-specific
+ * reference voltage.
+ *
  * ADC12 is classic 1xx/2xx/4xx 12-bit ADC.
  *
  * ADC12_A (identified as ADC12_PLUS) is ADC12 on a 5xx/6xx MCU.  It
@@ -24,6 +28,9 @@
  *
  * REF_A is an FR58xx REF which adds status registers to indicate when
  * the reference is ready, and supports 1.2V instead of 1.5V.
+ *
+ * REF_B4 is the single-source internal reference voltage on the
+ * FR4xx/2xx devices corresponding to ADC10_B4.
  *
  * Normally the internal temperature and Vmid channels are converted.
  * By defining AUX_CHANNEL and possibly modifying configuration code
@@ -40,12 +47,22 @@
 #include <bsp430/utility/tlv.h>
 #include <string.h>
 
+/* FR4xx/2xx family device headers have an ADC which does not indicate
+ * what type of ADC it is.  Infer the definition for a variant of the
+ * ADC10_B. */
+#if defined(__MSP430_HAS_ADC__)
+#define __MSP430_HAS_ADC10_B4__
+#define __MSP430_HAS_REF_B4__
+#endif /* __MSP430_HAS_ADC__ */
+
+/* REF_B4 is not a reference generator. */
 #define HAVE_REF (defined(__MSP430_HAS_REF__)           \
                   || defined(__MSP430_HAS_REF_A__))
 
-#define HAVE_ADC10 (defined(__MSP430_HAS_ADC10__)       \
-                    || defined(__MSP430_HAS_ADC10_A__)  \
-                    || defined(__MSP430_HAS_ADC10_B__))
+#define HAVE_ADC10 (defined(__MSP430_HAS_ADC10__)               \
+                    || defined(__MSP430_HAS_ADC10_A__)          \
+                    || defined(__MSP430_HAS_ADC10_B__)          \
+                    || defined(__MSP430_HAS_ADC10_B4__))
 
 #define HAVE_ADC12 (defined(__MSP430_HAS_ADC12__)               \
                     || defined(__MSP430_HAS_ADC12_PLUS__)       \
@@ -64,6 +81,31 @@ typedef const sBSP430tlvADC * cal_adc_ptr_type;
 cal_adc_ptr_type cal_adc;
 
 #if HAVE_ADC10
+#ifdef __MSP430_HAS_ADC10_B4__
+/* Alias all the constants TI decided to rename. */
+#define ADC10CTL0 ADCCTL0
+#define ADC10CTL1 ADCCTL1
+#define ADC10CTL2 ADCCTL2
+#define ADC10MCTL0 ADCMCTL0
+#define ADC10MEM0 ADCMEM0
+#define ADC10SHT_3 ADCSHT_3
+#define ADC10ON ADCON
+#define ADC10SHS_0 ADCSHS_0
+#define ADC10SHP ADCSHP
+#define ADC10DIV_3 ADCDIV_3
+#define ADC10SSEL_0 ADCSSEL_0
+#define ADC10PDIV_0 ADCPDIV_0
+#define ADC10RES ADCRES
+#define ADC10SR ADCSR
+#define ADC10SREF_1 ADCSREF_1
+#define ADC10ENC ADCENC
+#define ADC10SC ADCSC
+#define ADC10BUSY ADCBUSY
+/* NB: ADC10_B4 puts temperature on INCH 12 and does not support VMID */
+#define INCH_BASE ADCINCH0
+#define INCH_TEMP ADCINCH_12
+#define INCH_VMID ADCINCH_0
+#else /* ADC10_B4 */
 #ifndef ADC10ENC
 #define ADC10ENC ENC
 #endif /* ADC10ENC */
@@ -79,6 +121,7 @@ cal_adc_ptr_type cal_adc;
 #define INCH_VMID INCH_11
 #define INCH_BASE INCH0
 #endif /* ADC10INCH_10 */
+#endif /* ADC10_B4 */
 #elif HAVE_ADC12
 #ifndef ADC12ENC
 #define ADC12ENC ENC
@@ -161,9 +204,15 @@ int initializeADC (void)
              * reference voltage from the legacy ADC12 settings).  Use
              * it if you've got it. */
             | REFMSTR
-#endif
+#endif /* REFMSTR */
             ;
-#endif
+#else /* HAVE_REF */
+#if defined(__MSP430_HAS_REF_B4__)
+  PMMCTL0_H = PMMPW_H;
+  PMMCTL2 |= INTREFEN | TSENSOREN;
+  PMMCTL0_H = !PMMPW_H;
+#endif /* REF_B4 */
+#endif /* HAVE_REF */
 
 #if defined(__MSP430_HAS_ADC10__)
   ADC10CTL0 = 0;
@@ -171,7 +220,7 @@ int initializeADC (void)
   ADC10CTL1 = ADC10DIV_3;
 #elif defined(__MSP430_HAS_ADC10_A__)
 #error Not implemented
-#elif defined(__MSP430_HAS_ADC10_B__)
+#elif defined(__MSP430_HAS_ADC10_B__) || defined(__MSP430_HAS_ADC10_B4__)
   ADC10CTL0 = 0;
   ADC10CTL0 = ADC10SHT_3 | ADC10ON;
   ADC10CTL1 = ADC10SHS_0 | ADC10SHP | ADC10DIV_3 | ADC10SSEL_0;
@@ -282,6 +331,11 @@ int setReferenceVoltage (int ref)
     return -1;
   }
 #if HAVE_ADC10
+#if defined(__MSP430_HAS_ADC10_B4__)
+  if (REF_1pX != ref) {
+    return -1;
+  }
+#else /* __MSP430_HAS_ADC10_B4__ */
   if (REF_1pX == ref) {
     ADC10CTL0 &= ~REF2_5V;
   } else if (REF_2p5 == ref) {
@@ -289,6 +343,7 @@ int setReferenceVoltage (int ref)
   } else {
     return -1;
   }
+#endif /* __MSP430_HAS_ADC10_B4__ */
 #elif HAVE_ADC12
   if (REF_1pX == ref) {
     ADC12CTL0 &= ~REF2_5V;
@@ -310,7 +365,7 @@ int setSource (unsigned int inch)
   ADC10CTL1 = (ADC10CTL1 & 0x0FFF) | inch;
 #elif defined(__MSP430_HAS_ADC10_A__)
 #error Not implemented
-#elif defined(__MSP430_HAS_ADC10_B__)
+#elif defined(__MSP430_HAS_ADC10_B__) || defined(__MSP430_HAS_ADC10_B4__)
   ADC10MCTL0 = ADC10SREF_1 | inch;
 #elif defined(__MSP430_HAS_ADC12__)
   ADC12MCTL0 = EOS | SREF_1 | inch;
@@ -374,10 +429,15 @@ int getSample (sSample * sp,
 #if HAVE_REF
       vref_factor = cal_ref->cal_adc_15vref_factor;
 #else /* HAVE_REF */
+#if defined(__MSP430_HAS_ADC10_B4__)
+      vref_factor = 0x8000;
+#else /* __MSP430_HAS_ADC10_B4__ */
       vref_factor = cal_adc->cal_adc_15vref_factor;
+#endif /* __MSP430_HAS_ADC10_B4__ */
 #endif /* HAVE_REF */
       t30 = cal_adc->cal_adc_15t30;
       t85 = cal_adc->cal_adc_15t85;
+#if !defined(__MSP430_HAS_ADC10_B4__)
 #if HAVE_REF
     } else if (REF_2p0 == refv) {
       vref_factor = cal_ref->cal_adc_20vref_factor;
@@ -392,6 +452,7 @@ int getSample (sSample * sp,
 #endif /* HAVE_REF */
       t30 = cal_adc->cal_adc_25t30;
       t85 = cal_adc->cal_adc_25t85;
+#endif /* __MSP430_HAS_ADC10_B4__ */
     } else {
       return -1;
     }
@@ -417,6 +478,7 @@ int getSample (sSample * sp,
 #if defined(__MSP430_HAS_ADC10__)
 #elif defined(__MSP430_HAS_ADC10_A__)
 #elif defined(__MSP430_HAS_ADC10_B__)
+#elif defined(__MSP430_HAS_ADC10_B4__)
 #elif defined(__MSP430_HAS_ADC12__)
 #elif defined(__MSP430_HAS_ADC12_B__)
 #elif defined(__MSP430_HAS_ADC12_PLUS__)
@@ -460,6 +522,8 @@ void main ()
           "ADC10_A"
 #elif defined(__MSP430_HAS_ADC10_B__)
           "ADC10_B"
+#elif defined(__MSP430_HAS_ADC10_B4__)
+          "ADC10_B (FR4xx)"
 #elif defined(__MSP430_HAS_ADC12__)
           "ADC12"
 #elif defined(__MSP430_HAS_ADC12_B__)
