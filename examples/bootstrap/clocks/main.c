@@ -53,6 +53,14 @@ void main ()
   /* First thing you do in main is configure the platform. */
   vBSP430platformInitialize_ni();
 
+  /* May not have console output yet.  Indicate that we got past
+   * initialization, then expose the clocks and indicate that we've
+   * done so. */
+  vBSP430ledSet(BSP430_LED_RED, 1);
+  if (0 == iBSP430platformConfigurePeripheralPins_ni(BSP430_PERIPH_EXPOSED_CLOCKS, 0, 1)) {
+    vBSP430ledSet(BSP430_LED_GREEN, 1);
+  }
+
   /* If we support a console, dump out a bunch of configuration
    * information. */
 #if (BSP430_CONSOLE - 0)
@@ -220,11 +228,21 @@ void main ()
           UCSCTL4, UCSCTL5, UCSCTL6, UCSCTL7);
 #endif /* UCS */
 
+
 #if defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)
+#if (BSP430_PERIPH_CS_IS_CS4 - 0)
+  cprintf("\nCS FR4 : FLLD %u FLLN %u"
+          "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
+          "\n CTL4 %04x CTL5 %04x CTL6 %04x CTL7 %04x"
+          "\n CTL8 %04x",
+          0x07 & (CSCTL2 / FLLD0), 0x3FF & CSCTL2,
+          CSCTL0, CSCTL1, CSCTL2, CSCTL3,
+          CSCTL4, CSCTL5, CSCTL6, CSCTL7,
+          CSCTL8);
+#else /* BSP430_PERIPH_CS_IS_CS4 */
   cprintf("\nCS %s : RSEL %d DCOFSEL %d:"
           "\n CTL0 %04x CTL1 %04x CTL2 %04x CTL3 %04x"
           "\n CTL4 %04x CTL5 %04x CTL6 %04x"
-          "\n FRCTL0 %04x",
 #if (BSP430_CS_IS_FR57XX - 0)
           "FR57xx"
 #endif
@@ -233,7 +251,9 @@ void main ()
 #endif
           "", !!(DCORSEL & CSCTL1), 0x07 & (CSCTL1 / DCOFSEL0),
           CSCTL0, CSCTL1, CSCTL2, CSCTL3,
-          CSCTL4, CSCTL5, CSCTL6, FRCTL0);
+          CSCTL4, CSCTL5, CSCTL6);
+#endif /* BSP430_PERIPH_CS_IS_CS4 */
+  cprintf("\n FRCTL0 %04x", FRCTL0);
 #endif /* CS */
 
 #endif /* BSP430_CONSOLE */
@@ -262,11 +282,22 @@ void main ()
     cputchar('\n');
 #endif /* BSP430_CONSOLE */
 
+
+    /* One of the LEDs is often the signal used for one of the clocks.
+     * Select a different LED for the idle blinker. */
+#ifndef IDLE_LED
+#if (BSP430_PLATFORM_EXP430FR4133 - 0)
+#define IDLE_LED BSP430_LED_GREEN
+#else /* BSP430 PLATFORM */
+#define IDLE_LED BSP430_LED_RED
+#endif /* BSP430 PLATFORM */
+#endif /* IDLE_LED */
+
     /* Spin here with CPU active.  In LPM0, MCLK is disabled.  Other
      * clocks get disabled at deeper sleep modes; if you fall off the
      * bottom, you might end up in LPM4 with all clocks disabled. */
     while (1) {
-      vBSP430ledSet(0, -1);
+      vBSP430ledSet(IDLE_LED, -1);
       BSP430_CORE_WATCHDOG_CLEAR();
       BSP430_CORE_DELAY_CYCLES(BSP430_CLOCK_NOMINAL_MCLK_HZ / 2);
     }
