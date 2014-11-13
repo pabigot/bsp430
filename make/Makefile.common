@@ -119,6 +119,7 @@ TEST_PLATFORMS ?= \
     exp430fg4618 \
     exp430fr5739 \
     exp430fr5969 \
+    exp430fr4133 \
     exp430g2 \
     rf2500t \
     surf \

@@ -1,0 +1,8 @@
+MCU=msp430fr4133
+MSPDEBUG_DRIVER ?= tilib
+# This is through the USB port, and is slow
+#MSPDEBUG_DRIVER ?= ezfet
+MSPDEBUG_PROG=load
+
+MODULES_CLOCK=periph/cs4
+MODULES_PLATFORM_SERIAL=periph/eusci

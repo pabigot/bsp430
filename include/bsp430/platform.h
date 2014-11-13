@@ -290,7 +290,7 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #endif /* configBSP430_PLATFORM_BUTTON0 */
 
 
-/* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430f5529lp,exp430fr5739,exp430fr5969,exp430fg4618,exp430g2 */
+/* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430f5529lp,exp430fr5739,exp430fr5969,exp430fr4133,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */
 /* BEGIN AUTOMATICALLY GENERATED CODE---DO NOT MODIFY [platform_decl] */
 /** Define to a true value if application is being built for the
@@ -402,6 +402,28 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #if (BSP430_PLATFORM_EXP430FR5969 - 0)
 #include <bsp430/platform/exp430fr5969/platform.h>
 #endif /* BSP430_PLATFORM_EXP430FR5969 */
+
+/** Define to a true value if application is being built for the
+ * <a href="http://www.ti.com/tool/msp-exp430fr4133">MSP-EXP430FR4133</a> platform.
+ *
+ * A true value causes <bsp430/platform.h> to include the corresponding
+ * platform-specific header <bsp430/platform/exp430fr4133/platform.h>.
+ * If you include that header directly, #BSP430_PLATFORM_EXP430FR4133 will be
+ * defined for you.
+ *
+ * A true value also causes <bsp430/platform/bsp430_config.h> to
+ * include <bsp430/platform/exp430fr4133/bsp430_config.h> for you.
+ * You should not include that header directly, as it coordinates with
+ * the generic platform version.
+ *
+ * @defaulted */
+#ifndef BSP430_PLATFORM_EXP430FR4133
+#define BSP430_PLATFORM_EXP430FR4133 0
+#endif /* BSP430_PLATFORM_EXP430FR4133 */
+
+#if (BSP430_PLATFORM_EXP430FR4133 - 0)
+#include <bsp430/platform/exp430fr4133/platform.h>
+#endif /* BSP430_PLATFORM_EXP430FR4133 */
 
 /** Define to a true value if application is being built for the
  * <a href="http://www.ti.com/tool/msp-exp430fg4618">MSP-EXP430FG4618</a> platform.
