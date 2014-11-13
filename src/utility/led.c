@@ -34,14 +34,20 @@
 
 #if (BSP430_LED - 0)
 
-/* Some MSP430 MCUs use two selector registers.  At this time, it
- * appears that if an MCU has two selectors for one port, it has two
- * for all, so we'll use the existings of P1SEL0 as the trigger for
- * the variation. */
-#if defined(P1SEL0)
+/* Some MSP430 MCUs use two selector registers.  Some of the ones that
+ * have one selector register use PxSEL and some use PxSEL0.  At this
+ * time, it appears that if an MCU has two selectors for one port, it
+ * has two for all, so we'll use the existence of P1SEL1 as the
+ * trigger for using for both, and P1SEL0 for the trigger for using
+ * P1SEL0 alone. */
+#if defined(P1SEL1)
 #define CLEAR_SEL_X(x_, bit_) do {              \
     P##x_##SEL0 &= ~bit_;                       \
     P##x_##SEL1 &= ~bit_;                       \
+  } while(0)
+#elif defined(P1SEL0)
+#define CLEAR_SEL_X(x_, bit_) do {              \
+    P##x_##SEL0 &= ~bit_;                       \
   } while(0)
 #else /* P1SEL0 */
 #define CLEAR_SEL_X(x_, bit_) do {              \
