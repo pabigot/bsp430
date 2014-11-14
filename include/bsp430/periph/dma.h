@@ -33,9 +33,9 @@
  * @brief Hardware presentation/abstraction for DMA (DMA/DMAX)
  *
  * The Direct Memory Access (DMA) module is present on certain MCUs in
- all MSP430 families.  The functionality is essentially the same
- across the line, but the register layout is different on CPUX-based
- devices where addresses require 20 bits.
+ * all MSP430 families.  The functionality is essentially the same
+ * across the line, but the register layout is different on CPUX-based
+ * devices where addresses require 20 bits.
  *
  * @section h_periph_dma_opt Module Configuration Options
  *
@@ -124,8 +124,8 @@
  * These are only used on CPUX MCUs, and support 20-bit addresses. */
 typedef struct sBSP430hplDMAchannel {
   unsigned int ctl;             /**< Channel control : 0x00 */
-  uint20_t sa;                  /**< Source address: 0x02 */
-  uint20_t da;                  /**< Destination address: 0x06 */
+  unsigned long sa;             /**< Source address: 0x02 */
+  unsigned long da;             /**< Destination address: 0x06 */
   unsigned int sz;              /**< Size of transfer: 0x0a */
   unsigned int _reserved_x0c;
   unsigned int _reserved_x0e;
