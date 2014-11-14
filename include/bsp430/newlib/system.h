@@ -46,9 +46,14 @@
 /** The system function used to allocate memory for use by libc heap
  * memory management.
  *
- * @ref newlib_sys_sbrk documents how to select a specific _sbrk()
- * implementation from among the available policies by which
- * allocation is done, and how to supply your own implementation.
+ * Normally this is an alias for either _bsp430_sbrk_dynstack() (the
+ * default) or _bsp430_sbrk_fatal().  An alternative may be specified
+ * by defining a function with the same API and adding a alias
+ * definition such as:
+ *
+ * @code
+ * void * sbrk (ptrdiff_t increment) __attribute__((__alias__("_my_sbrk")));
+ * @endcode
  *
  * @note All BSP430 policies invoke _bsp430_sbrk_error() if allocation
  * fails, allowing an application to control response to the failure.
@@ -58,7 +63,18 @@
  *
  * @return a pointer to the new end-of-memory, or <tt>(void*)-1</tt>
  * if no allocation can be performed. */
-void * _sbrk (intptr_t increment);
+void * sbrk (intptr_t increment);
+
+/** An sbrk() implementation that rejects any attempt to allocate
+ * memory dynamically.  It immediately invokes _bsp430_brk_error(). */
+void * _bsp430_sbrk_fatal (ptrdiff_t increment);
+
+/** An sbrk() implementation that allows heap (growing up) and stack
+ * (growing down) to share a region of memory.
+ *
+ * An error is indicated if the new break point would encroach into
+ * the current stack space. */
+void * _bsp430_sbrk_dynstack (ptrdiff_t increment);
 
 /** This function is invoked whenever _sbrk() runs out of memory.
  *
@@ -78,9 +94,9 @@ void * _sbrk (intptr_t increment);
  * @param increment the number of bytes in the request that _sbrk()
  * cannot satisfy
  *
- * @return This implementation does not return.  If superseded, an
+ * @return The weak implementation does not return.  If superseded, an
  * implementation that does return must set @c errno to @c ENOMEM and
- * return <tt>(void*)-1</tt>. */
+ * return <tt>(void*)-1</tt>.  */
 void * _bsp430_sbrk_error (void * brk,
                            ptrdiff_t current,
                            ptrdiff_t increment);

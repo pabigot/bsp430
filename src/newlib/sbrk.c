@@ -95,23 +95,12 @@ common_sbrk (char * const upper_bound,
   return rv;
 }
 
-/** An sbrk() implementation that rejects any attempt to allocate
- * memory dynamically. */
 void *
 _bsp430_sbrk_fatal (ptrdiff_t increment)
 {
   return _bsp430_sbrk_error(0, 0, increment);
 }
 
-/** An sbrk() implementation that allows heap (growing up) and stack
- * (growing down) to share a region of memory.
- *
- * An error is indicated if the new break point would encroach into
- * the current stack space.
- *
- * @note Like _bsp430_sbrk_unlimited(), but eliminating the minimum
- * reserved stack.  Not sure why this would be worth doing, but for
- * completeness.... */
 void *
 _bsp430_sbrk_dynstack (ptrdiff_t increment)
 {
