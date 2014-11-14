@@ -27,6 +27,10 @@
 #include <bsp430/periph/port.h>
 #include <bsp430/utility/console.h>
 
+#if ! (BSP430_TIMER_CCACLK - 0)
+#error Application requires CCACLK support
+#endif /* BSP430_TIMER_CCACLK */
+
 typedef struct sCapture {
   sBSP430halISRIndexedChainNode cb;
   int last_cci;

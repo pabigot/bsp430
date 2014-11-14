@@ -20,6 +20,10 @@
 #include <bsp430/periph/timer.h>
 #include <string.h>
 
+#if ! (BSP430_TIMER_CCACLK - 0)
+#error Application requires CCACLK support
+#endif /* BSP430_TIMER_CCACLK */
+
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 2048
 #endif /* BUFFER_SIZE */

@@ -25,6 +25,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if ! (BSP430_TIMER_CCACLK - 0)
+#error Application requires CCACLK support
+#endif /* BSP430_TIMER_CCACLK */
+
 #ifndef HISTORY_EXP
 #define HISTORY_EXP 4
 #endif /* HISTORY_EXP */

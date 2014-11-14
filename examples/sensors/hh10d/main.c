@@ -23,6 +23,9 @@
 #if ! (BSP430_UPTIME - 0)
 #error Uptime is not configured correctly
 #endif /* BSP430_UPTIME */
+#if ! (BSP430_TIMER_CCACLK - 0)
+#error Application requires CCACLK support
+#endif /* BSP430_TIMER_CCACLK */
 /* Sanity check that we have the HH10D interface */
 #ifndef APP_HH10D_PORT_PERIPH_HANDLE
 #error No HH10D port specified
