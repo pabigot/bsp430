@@ -19,9 +19,15 @@
 #endif /* BSP430_UPTIME_DIVIDING_SHIFT */
 #endif /* APP_USE_SMCLK */
 
-/* Use the secondary timer for high-resolution timing without overflow
+/* Use a secondary timer for high-resolution timing without overflow
  * support. */
+#if (BSP430_PLATFORM_EXP430FR4133 - 0)
+#define configBSP430_HAL_TA1 1
+#define HRT_PERIPH_HANDLE BSP430_PERIPH_TA1
+#else /* PLATFORM */
 #define configBSP430_TIMER_CCACLK 1
+#define HRT_PERIPH_HANDLE BSP430_TIMER_CCACLK_PERIPH_HANDLE
+#endif /* PLATFORM */
 
 /* Enable valid counter read infrastructure, unless testing its
  * behavior when disabled. */

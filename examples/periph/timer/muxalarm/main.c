@@ -165,7 +165,7 @@ void main ()
     map->setting_tck = rand();
   }
 
-  sap = hBSP430timerMuxAlarmStartup(&muxbase, BSP430_TIMER_CCACLK_PERIPH_HANDLE, 1);
+  sap = hBSP430timerMuxAlarmStartup(&muxbase, HRT_PERIPH_HANDLE, 1);
   cprintf("Shared alarm handle %p\n", sap);
   if (NULL == sap) {
     return;
@@ -181,7 +181,7 @@ void main ()
   }
   displayQueue(sap);
   sap->dedicated.timer->hpl->ctl = TASSEL_2 | ID_3 | TACLR | TAIE;
-  cprintf("Mux alarm base timer running at %lu Hz\n", ulBSP430timerFrequency_Hz_ni(BSP430_TIMER_CCACLK_PERIPH_HANDLE));
+  cprintf("Mux alarm base timer running at %lu Hz\n", ulBSP430timerFrequency_Hz_ni(HRT_PERIPH_HANDLE));
   sap->dedicated.timer->hpl->ctl |= MC_2;
   while (1) {
     BSP430_CORE_DISABLE_INTERRUPT();

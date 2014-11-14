@@ -15,10 +15,14 @@
 /* Monitor uptime and provide generic ACLK-driven timer */
 #define configBSP430_UPTIME 1
 
-/* Use the secondary timer as an SMCLK-based multiplexed alarm.  We'll
- * use CC1 so the default HAL is all that's necessary. */
+/* Use a secondary timer for high-resolution timing. */
+#if (BSP430_PLATFORM_EXP430FR4133 - 0)
+#define configBSP430_HAL_TA1 1
+#define HRT_PERIPH_HANDLE BSP430_PERIPH_TA1
+#else /* PLATFORM */
 #define configBSP430_TIMER_CCACLK 1
-#define configBSP430_TIMER_CCACLK_HAL 1
+#define HRT_PERIPH_HANDLE BSP430_TIMER_CCACLK_PERIPH_HANDLE
+#endif /* PLATFORM */
 
 /* Get platform defaults */
 #include <bsp430/platform/bsp430_config.h>

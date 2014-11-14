@@ -18,7 +18,7 @@ void main ()
 {
   volatile sBSP430hplTIMER * const lrt = xBSP430hplLookupTIMER(BSP430_UPTIME_TIMER_PERIPH_HANDLE);
   hBSP430halTIMER uthal;
-  volatile sBSP430hplTIMER * const hrt = xBSP430hplLookupTIMER(BSP430_TIMER_CCACLK_PERIPH_HANDLE);
+  volatile sBSP430hplTIMER * const hrt = xBSP430hplLookupTIMER(HRT_PERIPH_HANDLE);
 
   vBSP430platformInitialize_ni();
   (void)iBSP430consoleInitialize();
