@@ -62,9 +62,9 @@ execution, and interrupt management;
 
 \li A @link buildenv build infrastructure @endlink designed to simplify
 creating new applications, in a POSIX command-line environment supported
-by GNU Make, focused on the GNU toolchain (both legacy mspgcc and
-upstream msp430-elf-gcc) but also supporting the TI compiler from Code
-Composer Studio;
+by GNU Make, focused on the GNU toolchain (both upstream @link msp430elf
+msp430-elf-gcc@endlink and legacy mspgcc) but also supporting the TI
+compiler from Code Composer Studio when used in command-line mode;
 
 \li Value-added capabilities including a @link bsp430/utility/cli.h command
 line interface@endlink, @link bsp430/utility/unittest.h unit test

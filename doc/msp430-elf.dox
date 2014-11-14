@@ -1,0 +1,204 @@
+/* Copyright 2014, Peter A. Bigot
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice,
+ *   this list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * * Neither the name of the software nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*! @page msp430elf Using the GNU msp430-elf Compiler System
+@tableofcontents
+
+BSP430 was initially developed using the <a
+href="http://sourceforge.net/projects/mspgcc/">MSPGCC</a> toolchain, a
+port of the GNU compiler collection to the MSP430 that was begun by
+Dmitry Diky and Chris Liechti in 2001.  Because copyright assignments
+could not be obtained from some past contributors this port could not be
+integrated by GNU so in 2012 TI funded Red Hat to create a new back-end
+for the MSP430.
+
+In late 2014 this port reached maturity, and is now fully supported by
+BSP430.  It is selected by setting @c WITH_GCC_MSP430_ELF=1 in the
+environment or passed through as an option to @c make.  In a future
+release this toolchain will become the default, with MSPGCC available as
+an alternative using @c WITH_GCC_MSPGCC=1.  (To disable a selected
+toolchain use @c WITH_GCC_MSP430_ELF= leaving an empty string as the
+value.)
+
+\section msp430elf_building How to Build the Toolchain
+
+Texas Instruments provides a <a
+href="http://www.ti.com/tool/msp430-gcc-opensource">vendor-supported
+fork of the GCC compiler</a> but BSP430 is developed using the
+fully open source release as built from the upstream repositories.
+
+The script <a
+href="https://github.com/pabigot/bsp430/blob/next/maintainer/msp430-elf-build"><tt>maintainer/msp430-elf</tt></a>
+provided in BSP430 can be used to do the build.  It assumes you have
+updated workspaces for the required packages already cloned onto your
+system:
+
+@li binutils at git://sourceware.org/git/binutils-gdb.git
+@li gcc at git://gcc.gnu.org/git/gcc.git
+@li newlib at git://sourceware.org/git/newlib.git
+@li git://github.com/pabigot/msp430-elf.git
+
+The development trunk of each project should always work, but the
+versions listed in @ref releases have been tested.
+
+@note Please do not ask the BSP430 maintainer for help with toolchain
+building.  If you are uncomfortable building a compiler toolchain, look
+to TI or your OS vendor for packaged releases.
+
+\section msp430elf_ld Overriding Linker Scripts
+
+By default the linker script provided by the <a
+href="https://github.com/pabigot/msp430-elf">TI device bundle</a> is
+used.  BSP430 allows you to override this by defining an alternative
+with the @c LDSCRIPT Make variable.  See @c make/Makefile.common for
+details.
+
+\subsection msp430elf_ld_far 20-Bit Support
+
+Large memory model is specified by adding @c MEMORY_MODEL=large to the
+@c make options.  This changes the default @c LDSCRIPT value, since the
+TI-provided ones do not currently include sections placed in far memory.
+
+Due to limitations in the msp430-elf linker, it is only possible to
+place either read-only data or code above the 64 kiB boundary.  By
+default code is placed in high memory, but if read-only data is large it
+can be placed there by using @c LDSCRIPT_LARGE_SUFFIX=far-rodata.
+
+\section msp430elf_newlib C Library Support
+
+<a href="https://sourceware.org/newlib/">Newlib</a> is an open-source
+implementation of the standard C library, and is used as the libc
+implementation in BSPACM's primary toolchain, <a
+href="https://launchpad.net/gcc-arm-embedded">GNU Tools for ARM Embedded
+Processors</a>.  It was designed for use in embedded systems, using a
+small set of externally-supplied functions to interface with the system.
+
+While newlib is still too large for the smallest MSP430 processors, the
+efforts of the <a href="https://launchpad.net/gcc-arm-embedded">GNU for
+ARM Embedded</a> folks to create "newlib-nano" are slowly being
+integrated into newlib, and as of late 2014 there are options that allow
+it to be small enough to work on most MSP430 processors.
+
+The default build options suggested by @c maintainer/msp430-elf-build
+result in the following issues:
+
+@li No support for @c uint64_t format specifiers (e.g. PRIx64 from
+<inttypes.h>
+
+@li stdio buffering is disabled by default for descriptors other than
+stdin/stdout/stderr.
+
+@subsection msp430elf_newlib_sys System Interface
+
+newlib expects each target to provide an implementation of certain
+low-level functions to interact with the system environment.  If nothing
+provides an implementation of one of these functions (e.g., @c write())
+but the application requires one, the application will fail to link.
+The following symbols are referenced by the msp430 newlib
+infrastructure:
+
+@anchor msp430elf_newlib_sys_weak_misc
+@code
+extern char ** environ;
+int _chown (const char * path, uid_t owner, gid_t group);
+int close (int fd);
+int execve (const char * filename, char * const argv[], char * const envp[]);
+pid_t fork (void);
+int fstat (int fd, struct stat * buf);
+pid_t getpid (void);
+int gettimeofday (struct timeval * tv, struct timezone * tz);
+int isatty (int fd);
+int kill (pid_t pid, int sig);
+int link (const char * oldpath, const char * newpath);
+off_t lseek (int fd, off_t offset, int whence);
+int open (const char * pathname, int flags);
+_READ_WRITE_RETURN_TYPE read (int fd, void * buf, size_t count);
+ssize_t _readlink (const char * path, char * buf, size_t bufsiz);
+void * sbrk (ptrdiff_t increment);
+int stat (const char * path, struct stat * buf);
+int _symlink (const char * oldpath, const char * newpath);
+clock_t times (struct tms *buf);
+int unlink (const char * pathname);
+pid_t wait (int * status);
+_READ_WRITE_RETURN_TYPE write (int fd, const void * buf, size_t count);
+void _exit (int status);
+@endcode
+
+BSP430's @c Makefile.common uses the @c NEWLIB_SYS variable to identify
+the provider of these functions.  The default is to use @c
+newlib/nosys.c which provides weak definitions for each required
+function.
+
+Most of the weak definitions simply return an error code.
+
+\subsubsection msp430elf_newlib_sys_sbrk Dynamic Memory Management
+
+BSP430 provides a function @c sbrk() which controls dynamic memory
+allocation, with several implementations in @c newlib/sbrk.c with the
+default being to dynamically allocate memory between static allocations
+and the bottom of the stack.  See <bsp430/newlib/system.h> for details
+on these options and how to override them.
+
+A highlight of this implementation is that if dynamic allocation fails
+the system will invoke an _bsp430_sbrk_error() allowing the application
+to recover appropriately.  The default implementation of that function
+spins in place with interrupts disabled, allowing a debugger to inspect
+the call stack to locate the problematic allocation.
+
+\subsubsection msp430elf_newlib_sys_printf Formatted Input/Output
+
+MSPGCC used a custom libc implementation that was highly optimized to
+reduce code space.  Support for formatted output is particularly bloated
+in many other libc implementations, resulting in a fork of msp430-libc's
+version into <a href="http://pabigot.github.com/embtextf/">embtextf</a>.
+
+With the "nano" options selected newlib for MSP430 is competitive with
+embtextf; a basic check showed that overriding newlib's routines with
+embtextf for formatted output reduced code size and data size by about
+350 bytes each.  However, newlib's @c printf will attempt to dynamically
+allocate memory for buffers which an introduce problems on very small
+devices.
+
+newlib also assumes that descriptors for stdin (0), stdout (1), and
+stderr(2) are provided by the system and are supported by provided
+definitions of read() and write().  When @link configBSP430_CONSOLE
+console support@endlink is enabled BSP430 supports this by ensuring that
+read() and write() are overridden to use the console UART.
+
+\subsubsection msp430elf_newlib_sys_fdops_stdio Standard I/O Descriptors
+
+At this time BSP430 provides no infrastructure for generalized file
+descriptor operations.  Should this ever change, the @link
+http://pabigot.github.io/bspacm/newlib.html#newlib_sys_fdops techniques
+used by BSPACM@endlink are likely to be ported to BSP430.
+
+@copyright_doc
+*/
