@@ -177,7 +177,7 @@ void main ()
     map->callback_ni = handle_mux_alarm;
     map->setting_tck = (unsigned int)rand();
     rc = iBSP430timerMuxAlarmAdd_ni(sap, map);
-    cprintf("Add %u at %lu got %d\n", map-alarms, map->setting_tck, rc);
+    cprintf("Add %u at %lu got %d\n", (unsigned int)(map-alarms), map->setting_tck, rc);
   }
   displayQueue(sap);
   sap->dedicated.timer->hpl->ctl = TASSEL_2 | ID_3 | TACLR | TAIE;

@@ -99,13 +99,13 @@ int run_test_cases ()
     sample.pressure_Pa = 0;
     vBSP430sensorsBMP180convertSample(&tp->calib, &sample);
     if (tp->sample.temperature_dK != sample.temperature_dK) {
-      cprintf("FAIL TC %u: T %d != %d\n", tp - tests,
+      cprintf("FAIL TC %u: T %d != %d\n", (unsigned int)(tp - tests),
               tp->sample.temperature_dK,  sample.temperature_dK);
     } else {
       ++passes;
     }
     if (tp->sample.pressure_Pa != sample.pressure_Pa) {
-      cprintf("FAIL TC %u: P %ld != %ld\n", tp - tests,
+      cprintf("FAIL TC %u: P %ld != %ld\n", (unsigned int)(tp - tests),
               tp->sample.pressure_Pa,  sample.pressure_Pa);
     } else {
       ++passes;

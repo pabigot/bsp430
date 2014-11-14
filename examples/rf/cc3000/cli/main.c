@@ -578,7 +578,8 @@ cmd_wlan_profile_update (const char * argstr)
               pep->ssid, mp->tag, pep->priority, rc);
     } else {
       cprintf("ERR: Profile %u %s has invalid security type %d\n",
-              pep - entries, pep->ssid, pep->security_type);
+              (unsigned int)(pep - entries),
+              pep->ssid, pep->security_type);
     }
     ++pep;
   }
