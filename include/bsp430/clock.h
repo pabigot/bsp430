@@ -67,14 +67,25 @@
 
 #include <bsp430/core.h>
 
+/** Identify use of the CS peripheral on FR58xx devices.
+ *
+ * TI fails to distinguish the three types of CS module in the three
+ * FRAM families.  The original one on the FR57xx is slightly
+ * different from the one on the FR58xx family (which was originally
+ * identified by TI as CS_A).  Empirically CS_A can be distinguished
+ * by more bits in the DCOFSEL field.
+ *
+ * @defaulted
+ * @cppflag */
+#define BSP430_PERIPH_CS_IS_CSA (defined(__MSP430_HAS_CS_A__) || (defined(__MSP430_HAS_CS__) && defined(DCOFSEL2)))
+
 /** Identify use of the CS peripheral on FR4xx/2xx devices.
  *
- * TI in its infinite idiocy does not distinguish the CS module on the
- * FR4xx/2xx from the CS module on the FR5xx, though the only thing
- * they share is register names (not structure or architecture).
- * Empirically they can be distinguished because the FR4xx/2xx version
- * has a single-bit SELA field.
-*
+ * TI fails to distinguish the three types of CS module in the three
+ * FRAM families.  The one on the FR4xx/2xx is so different it shares
+ * nothing but the module name.  Empirically they can be distinguished
+ * because the FR4xx/2xx version has a single-bit SELA field.
+ *
  * @defaulted
  * @cppflag */
 #define BSP430_PERIPH_CS_IS_CS4 (defined(__MSP430_HAS_CS__) && defined(SELA))
@@ -389,11 +400,11 @@ typedef enum eBSP430clockSource {
    * clock. */
   eBSP430clockSRC_HFXTCLK = eBSP430clockSRC_XT2CLK,
 
-  /** Internal low-power oscillator that exists only on CS_A
+  /** Internal low-power oscillator that exists only on CS_A and CS4
    * peripherals. */
   eBSP430clockSRC_MODCLK,
 
-  /** Internal low-power oscillator that exists only on CS_A
+  /** Internal low-power oscillator that exists only on CS_A and CS4
    * peripherals. */
   eBSP430clockSRC_LFMODCLK,
 

@@ -40,6 +40,10 @@
  * supported DCOCLK frequencies, and in whether DCOCLK can source
  * ACLK.
  *
+ * @note The CS peripheral on the FR4xx/2xx-family devices is
+ * completely different and its supporting material is provided in the
+ * <bsp430/periph/cs4.h> header.
+ *
  * @section h_periph_cs_opt Module Configuration Options
  *
  * None supported.
@@ -96,7 +100,7 @@
  * of @c DCOFSEL2, a bit not available on the original CS peripheral.
  *
  * @cppflag */
-#define BSP430_CS_IS_FR58XX (defined(__MSP430_HAS_CS_A__) || (defined(__MSP430_HAS_CS__) && defined(DCOFSEL2)))
+#define BSP430_CS_IS_FR58XX (BSP430_PERIPH_CS_IS_CSA - 0)
 
 /** Determine whether target has a CS or CS_A peripheral.
  *
@@ -106,11 +110,15 @@
  * @see #BSP430_CS_IS_FR58XX
  *
  * @cppflag */
-#define BSP430_CS_IS_FR57XX (defined(__MSP430_HAS_CS__) && (! (defined(__MSP430_HAS_CS_A__) || defined(DCOFSEL2))))
+#define BSP430_CS_IS_FR57XX (defined(__MSP430_HAS_CS__) && (! ((BSP430_PERIPH_CS_IS_CSA - 0) || (BSP430_PERIPH_CS_IS_CS4 - 0))))
 
 /** Defined on inclusion of <bsp430/periph/cs.h>.  The value evaluates
  * to true if the target MCU supports the Clock System peripheral, and
  * false if it does not.
+ *
+ * @note Although TI calls it a CS module, the Clock System on the
+ * FR4xx/2xx devices is not anywhere like this one and is provided by
+ * the <bsp430/periph/cs4.h> header.
  *
  * @cppflag
  */
