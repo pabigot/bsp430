@@ -38,9 +38,38 @@ status and resolution of reported bugs, and the <a
 href="http://github.com/pabigot/bsp430/">source repository</a> for
 individual commit history.
 
+Tested @link msp430elf msp430-elf@endlink toolchain versions:
+@verbatim
+binutils.repo=git://sourceware.org/git/binutils-gdb.git
+binutils.branch=master
+binutils.commit=d3d7100a0d225f44d0bcfc05ae4ede96b462dc9b
+gcc.repo=git://gcc.gnu.org/git/gcc.git
+gcc.branch=trunk
+gcc.commit=388a5b26893e35fae82423a99984896846ddb9fb
+newlib.repo=git://sourceware.org/git/newlib.git
+newlib.branch=master
+newlib.commit=9b9f839addfe16ab0fd11f09a30a28139bfae6d5
+msp430-elf.repo=git://github.com/pabigot/msp430-elf.git
+msp430-elf.branch=gcc_rh
+msp430-elf.commit=104bb0f78a95ec54d5184288fa2e355df3dd255f
+@endverbatim
+
 \section releases_next Changes in Next Release
 
 N/A
+
+\section releases_20141114 Changes in Release 20141114
+
+@li Completed support for @link msp430elf GNU msp430-elf
+toolchain@endlink including use of newlib.
+@li Added a facility for @link msp430elf_ld_far far ROM support@endlink.
+@li Added support for <a href="http://www.ti.com/tool/msp-exp430fr4133">MSP-EXP430FR4133</a>
+@li Rework and extension of sensor interfaces
+@li Added an @link bsp430/utility/event.h event notification@endlink
+infrastructure
+@li Enhancements to NTP support
+@li Add @link uiBSP430uptimeScaleForDisplay utility to display
+human-readable durations@endlink
 
 \section releases_20140602 Changes in Release 20140602
 
