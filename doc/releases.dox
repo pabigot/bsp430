@@ -58,7 +58,7 @@ msp430-elf.commit=104bb0f78a95ec54d5184288fa2e355df3dd255f
 
 N/A
 
-\section releases_20141114 Changes in Release 20141114
+\section releases_20141115 Changes in Release 20141115
 
 @li Completed support for @link msp430elf GNU msp430-elf
 toolchain@endlink including use of newlib.
