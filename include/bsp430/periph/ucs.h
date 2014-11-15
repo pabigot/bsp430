@@ -325,8 +325,10 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 #define BSP430_UCS_NOMINAL_MODCLK_HZ 5000000UL
 #endif /* BSP430_UCS_NOMINAL_MODCLK_HZ */
 
+/** @cond DOXYGEN_EXCLUDE */
 /* Provide definition for clock system */
 #define BSP430_NOMINAL_MODCLK_HZ BSP430_UCS_NOMINAL_MODCLK_HZ
+/** @endcond */
 
 #endif /* BSP430_MODULE_UCS */
 

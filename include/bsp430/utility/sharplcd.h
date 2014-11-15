@@ -72,7 +72,7 @@
  * @li Device size: #BSP430_PLATFORM_SHARPLCD_ROWS and #BSP430_PLATFORM_SHARPLCD_COLUMNS
  *
  * @cppflag
- * @dependency #configBSP430_UTILITY_SHARPLCD, #configBSP430_PLATFORM_BOOSTERPACK_SHARP96
+ * @dependency #configBSP430_PLATFORM_SHARPLCD, #configBSP430_PLATFORM_BOOSTERPACK_SHARP96
  * @defaulted */
 #if defined(BSP430_DOXYGEN)
 #define BSP430_PLATFORM_SHARPLCD include <bsp430/platform.h>

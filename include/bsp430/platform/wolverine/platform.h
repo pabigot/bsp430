@@ -33,8 +33,7 @@
  *
  * @brief Platform-specific include for <a href="http://www.ti.com/tool/msp-fet430u48c">MSP430FR5969 in a TS430RGZ48C carrier</a>.
  *
- * The following platform-specific features are supported: <ul>
- * </ul>
+ * The following platform-specific features are supported: None
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>

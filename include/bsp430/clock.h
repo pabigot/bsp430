@@ -124,8 +124,8 @@
  * required, to be a compile-time integer constant compatible with
  * unsigned long.
  *
- * @warn If #BSP430_CLOCK_NOMINAL_MCLK_HZ or @p delay_us_ is large, it
- * may be necessary to cast the @p delay_us_ to <tt>unsigned long
+ * @warning If #BSP430_CLOCK_NOMINAL_MCLK_HZ or @p delay_us_ is large,
+ * it may be necessary to cast the @p delay_us_ to <tt>unsigned long
  * long</tt> to avoid integer overflow. */
 #define BSP430_CLOCK_US_TO_NOMINAL_MCLK(delay_us_) BSP430_CORE_US_TO_TICKS((delay_us_), BSP430_CLOCK_NOMINAL_MCLK_HZ)
 
@@ -535,11 +535,11 @@ eBSP430clockSource xBSP430clockMCLKSource ();
  * <li>The <bsp430/periph/cs.h> implementation (FR5xx family) will
  * select the closest calibrated frequency supported by the MCU.
  * There is no facility for adjusting this to an arbitrary frequency.
- * </ul>
  *
  * <li>The <bsp430/periph/cs4.h> implementation (FR4xx/2xx family)
  * relies on presence of a stable LFXT1 or REFO, and configures to the
  * requested frequency.
+ * </ul>
  *
  * @note Although passing @p mclk_Hz zero is a short-hand for using
  * #BSP430_CLOCK_PUC_MCLK_HZ, the result may not be to restore the

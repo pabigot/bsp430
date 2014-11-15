@@ -196,9 +196,9 @@ read() and write() are overridden to use the console UART.
 \subsubsection msp430elf_newlib_sys_fdops_stdio Standard I/O Descriptors
 
 At this time BSP430 provides no infrastructure for generalized file
-descriptor operations.  Should this ever change, the @link
-http://pabigot.github.io/bspacm/newlib.html#newlib_sys_fdops techniques
-used by BSPACM@endlink are likely to be ported to BSP430.
+descriptor operations.  Should this ever change, the <a
+href="http://pabigot.github.io/bspacm/newlib.html#newlib_sys_fdops">techniques
+used by BSPACM<a> are likely to be ported to BSP430.
 
 @copyright_doc
 */

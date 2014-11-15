@@ -468,12 +468,14 @@ typedef struct sBSP430cliCommand {
    * circumstances this must not be null. */
   iBSP430cliHandlerFunction const handler;
 
-  /** A parameter providing additional information required for the
-   * command.  The value is generally used by
-   * sBSP430cliCommand::handler in this or a parent command structure.
-   * For example, iBSP430cliHandlerStoreUI() extracts the address of
-   * the variable into which the value should be stored from
-   * uParam::ptr. */
+  /** @var param
+   *
+   * A parameter providing additional information required for the
+   * command through sBSP430cliCommand::uParam.  The value is
+   * generally used by sBSP430cliCommand::handler in this or a parent
+   * command structure.  For example, iBSP430cliHandlerStoreUI()
+   * extracts the address of the variable into which the value should
+   * be stored from uParam::ptr. */
   union uParam {
     /** The parameter field used for a pointer to a data object. */
     void * const ptr;

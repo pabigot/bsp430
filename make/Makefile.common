@@ -109,22 +109,29 @@ endif # WITH_GCC
 
 endif # WITH_CCS
 
-# TEST_PLATFORMS: Space-separated list of platforms to use for testing a
-# given application.  Defaults to all known platforms.
-TEST_PLATFORMS ?= \
+# SMALL_TEST_PLATFORMS: Platforms that will never have more than 64
+# kiB memory.
+SMALL_TEST_PLATFORMS ?= \
     em430 \
+    exp430fr5739 \
+    exp430fr4133 \
+    exp430g2 \
+    rf2500t \
+    surf
+
+# LARGE_TEST_PLATFORMS: Platforms that do have memory above 64 kiB.
+LARGE_TEST_PLATFORMS ?= \
     exp430f5438 \
     exp430f5529 \
     exp430f5529lp \
     exp430fg4618 \
-    exp430fr5739 \
     exp430fr5969 \
-    exp430fr4133 \
-    exp430g2 \
-    rf2500t \
-    surf \
     trxeb \
     wolverine
+
+# TEST_PLATFORMS: Space-separated list of platforms to use for testing a
+# given application.  Defaults to all known platforms.
+TEST_PLATFORMS ?= $(SMALL_TEST_PLATFORMS) $(LARGE_TEST_PLATFORMS)
 
 # TEST_PLATFORMS_EXCLUDE: Space-separated list of platforms not to use for
 # testing a given application.  These platforms are removed from

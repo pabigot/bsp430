@@ -150,10 +150,10 @@ int iBSP430sensorsBMP180getSample (hBSP430halSERIAL i2c,
 /** Apply calibration correction to set the final temperature and
  * pressure values for a sample.
  *
- * @param calh reference to calibration constants retrieved by
+ * @param calp reference to calibration constants retrieved by
  * iBSP430sensorsBMP180getCalibration()
  *
- * @param cample reference to a sample retrieved by
+ * @param sample reference to a sample retrieved by
  * iBSP430sensorsBMP180getSample.  On return,
  * sBSP430sensorsBMP180sample::temperature_dK and
  * sBSP430sensorsBMP180sample::pressure_Pa will have been updated.

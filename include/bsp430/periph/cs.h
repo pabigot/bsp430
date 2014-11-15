@@ -169,8 +169,10 @@
 #define BSP430_CS_NOMINAL_MODCLK_HZ 5000000UL
 #endif /* BSP430_CS_NOMINAL_MODCLK_HZ */
 
+/** @cond DOXYGEN_EXCLUDE */
 /* Provide definition for clock system */
 #define BSP430_NOMINAL_MODCLK_HZ BSP430_CS_NOMINAL_MODCLK_HZ
+/** @endcond */
 
 /** Nominal rate of the CS_A peripheral LFMODCLK.
  *
@@ -287,9 +289,9 @@
  *
  * @defaulted
  * @platformvalue
- * @dependency #BSP430_FR58XX */
+ * @dependency #BSP430_CS_IS_FR58XX */
 #if defined(BSP430_DOXYGEN)
-#define BSP430_CS_FRAM_NWAITS_FOR_FREQ(mclk_) include <bsp430/platform.h>
+#define BSP430_CS_FRAM_NWAITS_FOR_FREQ(freq_) include <bsp430/platform.h>
 #endif /* BSP430_PMM_COREV_FOR_MCLK */
 
 /** Unconditional define for peripheral-specific constant */

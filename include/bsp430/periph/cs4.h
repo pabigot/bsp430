@@ -40,9 +40,6 @@
  *
  * @section h_periph_cs4_opt Module Configuration Options
  *
- * @li #configBSP430_CS4_TRIM_DCOCLKDIV enables specific MCLK
- * frequencies to be configured
- *
  * @section h_periph_cs4_hpl Hardware Presentation Layer
  *
  * As there can be only one instance of CS4 on any MCU, there is no
@@ -56,31 +53,6 @@
  *
  * The standard set of capabilities in the bsp430/clocks.h header are
  * supported, with the following details:
- *
- * @li Comparison of SMCLK against a clock of known frequency is
- * required to set MCLK frequencies as there are no DCO calibration
- * constants for this peripheral.  bsp430/platform/bsp430_config.h
- * will automatically request the required #configBSP430_TIMER_CCACLK
- * in support of this unless #configBSP430_CS4_TRIM_DCOCLKDIV is
- * explicitly disabled.
- *
- * @li FLLREFDIV is /1.
- *
- * @li MCLK and SMCLK are sourced from DCOCLKDIV
- *
- * @li DCOCLKDIV is DCOCLK/2 (the power-up value)
- *
- * @li FLL trimming will leave the FLL disabled if it was disabled on
- * entry; see #configBSP430_CORE_DISABLE_FLL.
- *
- * @li Executing an FLL trim (either directly or due to having invoked
- * ulBSP430clockConfigureMCLK_ni()) will record in private state
- * the measured clock frequency.
- *
- * @li ulBSP430clockMCLK_Hz_ni() and ulBSP430clockSMCLK_Hz_ni() return
- * values are calculated by applying the relevant clock dividers as
- * read from the CS4 registers to the recorded measured clock
- * frequency.
  *
  * @homepage http://github.com/pabigot/bsp430
  * @copyright Copyright 2012-2014, Peter A. Bigot.  Licensed under <a href="http://www.opensource.org/licenses/BSD-3-Clause">BSD-3-Clause</a>
@@ -202,8 +174,10 @@
 #define BSP430_CS4_NOMINAL_MODCLK_HZ 5000000UL
 #endif /* BSP430_CS4_NOMINAL_MODCLK_HZ */
 
+/** @cond DOXYGEN_EXCLUDE */
 /* Provide definition for clock system */
 #define BSP430_NOMINAL_MODCLK_HZ BSP430_CS4_NOMINAL_MODCLK_HZ
+/** @endcond */
 
 #endif /* BSP430_MODULE_CS4 */
 
