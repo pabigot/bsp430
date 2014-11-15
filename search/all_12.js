@@ -1,7 +1,7 @@
 var searchData=
 [
   ['the_20bsp430_20build_20environment',['The BSP430 Build Environment',['../buildenv.html',1,'']]],
-  ['tag',['tag',['../structsBSP430tlvEntry.html#a9987e392ad76aa7fe5b6c38333ab5e42',1,'sBSP430tlvEntry']]],
+  ['tag',['tag',['../structsBSP430eventTagRecord.html#abc61997f28c2b54687717175140a9089',1,'sBSP430eventTagRecord::tag()'],['../structsBSP430eventPeriodicConfig.html#abe8a9961e924feb1f179b5014af616dc',1,'sBSP430eventPeriodicConfig::tag()'],['../structsBSP430tlvEntry.html#a9987e392ad76aa7fe5b6c38333ab5e42',1,'sBSP430tlvEntry::tag()']]],
   ['tag_5fadc10_5f1',['TAG_ADC10_1',['../msp430_8h.html#ad1dbde5392a503d12b441103c5282470',1,'msp430.h']]],
   ['tag_5fadc12_5f1',['TAG_ADC12_1',['../msp430_8h.html#af7b5664aa714a65649218b966c8dcb5e',1,'msp430.h']]],
   ['tag_5fdco_5f30',['TAG_DCO_30',['../tlv_8h.html#af49fa09b89feef6cb6bae0e0c4421e96',1,'TAG_DCO_30():&#160;tlv.h'],['../msp430_8h.html#af49fa09b89feef6cb6bae0e0c4421e96',1,'TAG_DCO_30():&#160;msp430.h']]],
@@ -11,11 +11,13 @@ var searchData=
   ['tdop_5fpc_5fbe',['tdop_pc_be',['../structsSkyTraqMsgOut__NAV__DATA.html#a561fdad4b5d9b68f93056a2499456ec4',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['temp_5flsb',['temp_lsb',['../structsDS3231registers.html#a7957b94e33f493b989fbbd28952982a4',1,'sDS3231registers']]],
   ['temp_5fmsb',['temp_msb',['../structsDS3231registers.html#a418142586409be511a13de9ae2e4db77',1,'sDS3231registers']]],
-  ['temperature_5fdk',['temperature_dK',['../structsBSP430sensorsBMP180sample.html#af4f5ac7227fe9a989074e9211eba1038',1,'sBSP430sensorsBMP180sample']]],
+  ['temperature_5fdk',['temperature_dK',['../structsBSP430sensorsBMP180sample.html#af4f5ac7227fe9a989074e9211eba1038',1,'sBSP430sensorsBMP180sample::temperature_dK()'],['../structsBSP430sensorsSHT21sample.html#a3d7afd72cc29cc4a98cabf744acac6a1',1,'sBSP430sensorsSHT21sample::temperature_dK()']]],
+  ['temperature_5fraw',['temperature_raw',['../structsBSP430sensorsSHT21sample.html#a13a6301573c6e1f770909aa37ade0041',1,'sBSP430sensorsSHT21sample']]],
   ['temperature_5funcomp',['temperature_uncomp',['../structsBSP430sensorsBMP180sample.html#aba9944c9506f3d3beb06b7027f379235',1,'sBSP430sensorsBMP180sample']]],
   ['test_5fresults',['test_results',['../structsBSP430tlvDIERECORD.html#a8cd7c23f351e2a8914159425ebd10e44',1,'sBSP430tlvDIERECORD']]],
   ['timer',['timer',['../structsBSP430timerAlarm.html#a24d34f70d968e0cde40d35c6c0e21637',1,'sBSP430timerAlarm']]],
   ['timer_2eh',['timer.h',['../timer_8h.html',1,'']]],
+  ['timestamp_5futt',['timestamp_utt',['../structsBSP430eventTagRecord.html#aade5303de844f002d1a9b95f2950332c',1,'sBSP430eventTagRecord']]],
   ['tlv_2eh',['tlv.h',['../tlv_8h.html',1,'']]],
   ['tlv_5fadc10cal',['TLV_ADC10CAL',['../tlv_8h.html#a437b56896ac8bbd6a752a8a41c9af769',1,'TLV_ADC10CAL():&#160;tlv.h'],['../msp430_8h.html#a437b56896ac8bbd6a752a8a41c9af769',1,'TLV_ADC10CAL():&#160;msp430.h']]],
   ['tlv_5fadc12cal',['TLV_ADC12CAL',['../tlv_8h.html#a705977844312a275696f04a03d0f8342',1,'TLV_ADC12CAL():&#160;tlv.h'],['../msp430_8h.html#a705977844312a275696f04a03d0f8342',1,'TLV_ADC12CAL():&#160;msp430.h']]],

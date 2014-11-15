@@ -4,6 +4,7 @@ var searchData=
   ['addmask',['addmask',['../structsBSP430hplEUSCIB.html#aacb79d117e3e1f3399f6b3c2f8761703',1,'sBSP430hplEUSCIB']]],
   ['addrx',['addrx',['../structsBSP430hplEUSCIB.html#abf00e23222c8e4d55da4521ae37506a4',1,'sBSP430hplEUSCIB']]],
   ['aging',['aging',['../structsDS3231registers.html#ab983afa6f7f6b1d1509b2749310ee184',1,'sDS3231registers']]],
+  ['alarm_5f',['alarm_',['../structsBSP430eventPeriodicConfig.html#a62d85969cc84cc0a7c2bdcf977f99489',1,'sBSP430eventPeriodicConfig']]],
   ['alarms',['alarms',['../structsBSP430timerMuxSharedAlarm.html#a6e3e7730ac0136a1646ffe4db334fa5a',1,'sBSP430timerMuxSharedAlarm']]],
   ['alrm1_5fdoa',['alrm1_doa',['../structsDS3231registers.html#a3798109ca59f7b450f365d3481ad3143',1,'sDS3231registers']]],
   ['alrm1_5fhr',['alrm1_hr',['../structsDS3231registers.html#acf5df6dc170ca5214d839e0c17297d7b',1,'sDS3231registers']]],
@@ -18,6 +19,7 @@ var searchData=
   ['append_5flen',['append_len',['../structsBSP430cliCompletionData.html#a1a99f6e947a5a49799d47a79a54c548d',1,'sBSP430cliCompletionData']]],
   ['as48',['as48',['../structuBSP430eui64_1_1as48.html',1,'uBSP430eui64']]],
   ['attributes',['attributes',['../structsSkyTraqMsgIn__CFG__SERIAL.html#a1fbad9fc8f9e523a03706c85419afe6d',1,'sSkyTraqMsgIn_CFG_SERIAL::attributes()'],['../structsSkyTraqMsgIn__CFG__NMEA.html#ae7a43792f0314b68df57fc4e7e4bc465',1,'sSkyTraqMsgIn_CFG_NMEA::attributes()']]],
+  ['awake_5futt',['awake_utt',['../structsBSP430uptimeActivityTotals.html#aac69bdd7c76da4428f96c2bacc264e67',1,'sBSP430uptimeActivityTotals']]],
   ['alarm_2drelated_20timer_20functionality',['Alarm-related Timer Functionality',['../group__grp__timer__alarm.html',1,'']]],
   ['abstraction_20layers',['Abstraction Layers',['../layer.html',1,'']]]
 ];

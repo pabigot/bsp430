@@ -11,6 +11,8 @@ var searchData=
   ['hbsp430eusciopeni2c',['hBSP430eusciOpenI2C',['../eusci_8h.html#a9eee56bc961776b89104888aaaa4345e',1,'eusci.h']]],
   ['hbsp430eusciopenspi',['hBSP430eusciOpenSPI',['../eusci_8h.html#a105be2a888ebe0a32ea54935986ba8cb',1,'eusci.h']]],
   ['hbsp430eusciopenuart',['hBSP430eusciOpenUART',['../eusci_8h.html#a979f8d655b638d5ee057fad3eb18f5dd',1,'eusci.h']]],
+  ['hbsp430eventperiodicconfig',['hBSP430eventPeriodicConfig',['../event_8h.html#afd180069865ff9d488c42c8aaf596266',1,'event.h']]],
+  ['hbsp430eventtaglookup',['hBSP430eventTagLookup',['../event_8h.html#acdccc34ca51d61ff3cea8720661bbb00',1,'event.h']]],
   ['hbsp430haldma',['hBSP430halDMA',['../dma_8h.html#a8a1c59559839040bba5def9a828552b6',1,'dma.h']]],
   ['hbsp430halport',['hBSP430halPORT',['../port_8h.html#a4f245f3da3b5eed631b0ea57caeb55af',1,'port.h']]],
   ['hbsp430halserial',['hBSP430halSERIAL',['../serial___8h.html#a31185ece51d6a343bb1f1c6f44fa8bcb',1,'serial_.h']]],
@@ -23,6 +25,7 @@ var searchData=
   ['hbsp430sensorsbmp180calibration',['hBSP430sensorsBMP180calibration',['../bmp180_8h.html#a7c20e7b5352116ebddf2529f5f2d5cb6',1,'bmp180.h']]],
   ['hbsp430sensorsbmp180sample',['hBSP430sensorsBMP180sample',['../bmp180_8h.html#a85e01b491a9eef3d9a0d4a371d280ae0',1,'bmp180.h']]],
   ['hbsp430sensorshh10dstate',['hBSP430sensorsHH10Dstate',['../hh10d_8h.html#a7cc58ae2404a26c09e450eadbc2c48b3',1,'hh10d.h']]],
+  ['hbsp430sensorssht21sample',['hBSP430sensorsSHT21sample',['../sht21_8h.html#a16b113041ca22141c88a0c3fa3818667',1,'sht21.h']]],
   ['hbsp430seriallookup',['hBSP430serialLookup',['../serial_8h.html#ad311104b2da6d177b2ae5ec0b29e7207',1,'serial.h']]],
   ['hbsp430serialopeni2c',['hBSP430serialOpenI2C',['../serial_8h.html#a85fb70e450164721994aad656c24d6a0',1,'serial.h']]],
   ['hbsp430serialopenspi',['hBSP430serialOpenSPI',['../serial_8h.html#a40983f5ed625fd352698117786691dd5',1,'serial.h']]],
@@ -55,5 +58,7 @@ var searchData=
   ['hour',['hour',['../structsSkyTraqMsgIn__RESTART.html#af3590dd3d228a1565c2535a54646667b',1,'sSkyTraqMsgIn_RESTART']]],
   ['hours',['hours',['../structsDS3231registers.html#ae285b8466c87a60138ef8489faaa8f51',1,'sDS3231registers']]],
   ['hpl',['hpl',['../structsBSP430halDMA.html#a0885d5289c4e9e1b90b436c755b25d4e',1,'sBSP430halDMA::hpl()'],['../structsBSP430halPORT.html#a9ae1fb5b8701209131ce8dd59acf50e2',1,'sBSP430halPORT::hpl()'],['../structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716',1,'sBSP430halTIMER::hpl()'],['../structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e',1,'sBSP430halSERIAL::hpl()']]],
-  ['hpl_5faux',['hpl_aux',['../structsBSP430halSERIAL.html#aeebc30be9fddb9c5f0c46fe8dc188e0c',1,'sBSP430halSERIAL']]]
+  ['hpl_5faux',['hpl_aux',['../structsBSP430halSERIAL.html#aeebc30be9fddb9c5f0c46fe8dc188e0c',1,'sBSP430halSERIAL']]],
+  ['humidity_5fppth',['humidity_ppth',['../structsBSP430sensorsSHT21sample.html#a634d87a379ed1df398ba13aec1c9f599',1,'sBSP430sensorsSHT21sample']]],
+  ['humidity_5fraw',['humidity_raw',['../structsBSP430sensorsSHT21sample.html#a6ac5f938f69ac4af851d73e4d3464c76',1,'sBSP430sensorsSHT21sample']]]
 ];

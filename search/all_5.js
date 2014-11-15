@@ -29,6 +29,8 @@ var searchData=
   ['ebsp430clocksrc_5fsmclk_5fpu_5fdefault',['eBSP430clockSRC_SMCLK_PU_DEFAULT',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaae41b5c50379e5025118ff41bd99d2e2f',1,'clock.h']]],
   ['ebsp430clocksrc_5ftclk',['eBSP430clockSRC_TCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa4da308307cfa270930b1ae8e00def287',1,'clock.h']]],
   ['ebsp430clocksrc_5funknown_5f1',['eBSP430clockSRC_UNKNOWN_1',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaae55d22b2f0d8c7a2feee84c11b528d6e',1,'clock.h']]],
+  ['ebsp430clocksrc_5funknown_5f4',['eBSP430clockSRC_UNKNOWN_4',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa15014fee4b910de5df7330ec49ef8e76',1,'clock.h']]],
+  ['ebsp430clocksrc_5funknown_5f5',['eBSP430clockSRC_UNKNOWN_5',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaad9de6d0196a4d8733cbd8720640c9df1',1,'clock.h']]],
   ['ebsp430clocksrc_5funknown_5f6',['eBSP430clockSRC_UNKNOWN_6',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa48e420b1e5f10595e426b9ab67f57905',1,'clock.h']]],
   ['ebsp430clocksrc_5funknown_5f7',['eBSP430clockSRC_UNKNOWN_7',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa1c00de48da23afef0ca851f55dda2cf5',1,'clock.h']]],
   ['ebsp430clocksrc_5fvloclk',['eBSP430clockSRC_VLOCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaad127090299761a8dbd1b8248b7ab2c0e',1,'clock.h']]],
@@ -95,6 +97,7 @@ var searchData=
   ['eusci_2eh',['eusci.h',['../eusci_8h.html',1,'']]],
   ['euscia',['euscia',['../structsBSP430halSERIAL.html#aa2d4d67aa80b76463042f10eaf44cdb9',1,'sBSP430halSERIAL']]],
   ['euscib',['euscib',['../structsBSP430halSERIAL.html#a97b9adabd09f7a2db31335c7c86e77a2',1,'sBSP430halSERIAL']]],
+  ['event_2eh',['event.h',['../event_8h.html',1,'']]],
   ['extension_5fid',['extension_id',['../structuBSP430eui64_1_1as48.html#a8c32e2c096f347a7e11d3315b125ec43',1,'uBSP430eui64::as48']]],
   ['extracting_20data_20from_20user_20input',['Extracting Data from User Input',['../group__grp__utility__cli__hci.html',1,'']]],
   ['epoch_20support_20for_20the_20uptime_20timer',['Epoch Support for the Uptime Timer',['../group__grp__utility__uptime__epoch.html',1,'']]]

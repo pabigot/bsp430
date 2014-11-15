@@ -26,6 +26,8 @@ var searchData=
   ['ebsp430clocksrc_5fsmclk_5fpu_5fdefault',['eBSP430clockSRC_SMCLK_PU_DEFAULT',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaae41b5c50379e5025118ff41bd99d2e2f',1,'clock.h']]],
   ['ebsp430clocksrc_5ftclk',['eBSP430clockSRC_TCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa4da308307cfa270930b1ae8e00def287',1,'clock.h']]],
   ['ebsp430clocksrc_5funknown_5f1',['eBSP430clockSRC_UNKNOWN_1',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaae55d22b2f0d8c7a2feee84c11b528d6e',1,'clock.h']]],
+  ['ebsp430clocksrc_5funknown_5f4',['eBSP430clockSRC_UNKNOWN_4',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa15014fee4b910de5df7330ec49ef8e76',1,'clock.h']]],
+  ['ebsp430clocksrc_5funknown_5f5',['eBSP430clockSRC_UNKNOWN_5',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaad9de6d0196a4d8733cbd8720640c9df1',1,'clock.h']]],
   ['ebsp430clocksrc_5funknown_5f6',['eBSP430clockSRC_UNKNOWN_6',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa48e420b1e5f10595e426b9ab67f57905',1,'clock.h']]],
   ['ebsp430clocksrc_5funknown_5f7',['eBSP430clockSRC_UNKNOWN_7',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaa1c00de48da23afef0ca851f55dda2cf5',1,'clock.h']]],
   ['ebsp430clocksrc_5fvloclk',['eBSP430clockSRC_VLOCLK',['../clock_8h.html#afad775d35ca969034172f0955cf1bcdaad127090299761a8dbd1b8248b7ab2c0e',1,'clock.h']]],

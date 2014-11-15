@@ -13,5 +13,7 @@ var searchData=
   ['hour',['hour',['../structsSkyTraqMsgIn__RESTART.html#af3590dd3d228a1565c2535a54646667b',1,'sSkyTraqMsgIn_RESTART']]],
   ['hours',['hours',['../structsDS3231registers.html#ae285b8466c87a60138ef8489faaa8f51',1,'sDS3231registers']]],
   ['hpl',['hpl',['../structsBSP430halDMA.html#a0885d5289c4e9e1b90b436c755b25d4e',1,'sBSP430halDMA::hpl()'],['../structsBSP430halPORT.html#a9ae1fb5b8701209131ce8dd59acf50e2',1,'sBSP430halPORT::hpl()'],['../structsBSP430halTIMER.html#a7fb689ae502f0155fa847d2f8550d716',1,'sBSP430halTIMER::hpl()'],['../structsBSP430halSERIAL.html#a451d8634f2ef283bac8fb73b8f83955e',1,'sBSP430halSERIAL::hpl()']]],
-  ['hpl_5faux',['hpl_aux',['../structsBSP430halSERIAL.html#aeebc30be9fddb9c5f0c46fe8dc188e0c',1,'sBSP430halSERIAL']]]
+  ['hpl_5faux',['hpl_aux',['../structsBSP430halSERIAL.html#aeebc30be9fddb9c5f0c46fe8dc188e0c',1,'sBSP430halSERIAL']]],
+  ['humidity_5fppth',['humidity_ppth',['../structsBSP430sensorsSHT21sample.html#a634d87a379ed1df398ba13aec1c9f599',1,'sBSP430sensorsSHT21sample']]],
+  ['humidity_5fraw',['humidity_raw',['../structsBSP430sensorsSHT21sample.html#a6ac5f938f69ac4af851d73e4d3464c76',1,'sBSP430sensorsSHT21sample']]]
 ];

@@ -10,6 +10,7 @@ var searchData=
   ['xbsp430clocksmclksource',['xBSP430clockSMCLKSource',['../clock_8h.html#a117adb1cb741b31f0abf81ae08f052c4',1,'clock.h']]],
   ['xbsp430eui64astext',['xBSP430eui64AsText',['../eui64_8h.html#a01277ca2a5b340c211f133df07ac8668',1,'eui64.h']]],
   ['xbsp430eusciname',['xBSP430eusciName',['../eusci_8h.html#a543ffe8b48f4ca7cde657e222aca8d33',1,'eusci.h']]],
+  ['xbsp430eventrecordevent_5fni',['xBSP430eventRecordEvent_ni',['../event_8h.html#a199bfafe758d887817cbede8d7a09ccb',1,'event.h']]],
   ['xbsp430gpsconvertgpstoutc_5fni',['xBSP430gpsConvertGPStoUTC_ni',['../gps_8h.html#a3c372f07bd98a2de291929c21a749caa',1,'gps.h']]],
   ['xbsp430halled_5f',['xBSP430halLED_',['../led_8h.html#aaf319eee3d004a0a6733cd7fb0b31b66',1,'led.h']]],
   ['xbsp430hpllookupeuscia',['xBSP430hplLookupEUSCIA',['../eusci_8h.html#afc9b676a8acb765fedf300703c493785',1,'eusci.h']]],

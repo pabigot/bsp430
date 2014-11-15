@@ -4,6 +4,8 @@ var searchData=
   ['label',['label',['../structuBSP430eui64_1_1as48.html#aa261f401b1cce79b093e3a8783aa5166',1,'uBSP430eui64::as48']]],
   ['last_5fcapture',['last_capture',['../structsBSP430sensorsHH10Dstate.html#a7e3dd043cb2593ffb13cd9a9dfb74bbc',1,'sBSP430sensorsHH10Dstate']]],
   ['last_5fperiod_5fcount',['last_period_count',['../structsBSP430sensorsHH10Dstate.html#aeaa74cbe5e7d0609f8f5722b5848ea36',1,'sBSP430sensorsHH10Dstate']]],
+  ['last_5fsleep_5futt',['last_sleep_utt',['../structsBSP430uptimeActivityTotals.html#af4acf57703083d2d27d23f2de87291dd',1,'sBSP430uptimeActivityTotals']]],
+  ['last_5fwake_5futt',['last_wake_utt',['../structsBSP430uptimeActivityTotals.html#a970eb3437a34ad9233a0dcd88c91adb7',1,'sBSP430uptimeActivityTotals']]],
   ['lat_5fcdeg_5fbe',['lat_cdeg_be',['../structsSkyTraqMsgIn__RESTART.html#a9a21b14d92d04fa4976e4f955128adcd',1,'sSkyTraqMsgIn_RESTART']]],
   ['lat_5fxdeg_5fbe',['lat_xdeg_be',['../structsSkyTraqMsgOut__NAV__DATA.html#ae27cc5a13b0a4c1eeeeeb7a001a89d28',1,'sSkyTraqMsgOut_NAV_DATA']]],
   ['lbsp430uptimeepochage',['lBSP430uptimeEpochAge',['../group__grp__utility__uptime__epoch.html#ga1b6f91fb75c529345a0ac630c8360407',1,'uptime.h']]],

@@ -20,6 +20,7 @@ var searchData=
   ['configbsp430_5fbc2_5ftrim_5fto_5fmclk',['configBSP430_BC2_TRIM_TO_MCLK',['../bc2_8h.html#a4cfe6f32391ffebb454ac32609505a80',1,'bc2.h']]],
   ['configbsp430_5fconsole',['configBSP430_CONSOLE',['../console_8h.html#a7e7be9a93cd9726e38378c1736d3b239',1,'console.h']]],
   ['configbsp430_5fconsole_5fprovides_5fputchar',['configBSP430_CONSOLE_PROVIDES_PUTCHAR',['../console_8h.html#aa6d5f61057e52b70dbaf40efc79449fd',1,'console.h']]],
+  ['configbsp430_5fconsole_5fprovides_5fstdio',['configBSP430_CONSOLE_PROVIDES_STDIO',['../console_8h.html#a30eb8eee0920a38c6f74fb9619eef794',1,'console.h']]],
   ['configbsp430_5fconsole_5fuse_5fonlcr',['configBSP430_CONSOLE_USE_ONLCR',['../console_8h.html#a786264c47d20252b7ddb6142890d0c58',1,'console.h']]],
   ['configbsp430_5fcore_5fdisable_5ffll',['configBSP430_CORE_DISABLE_FLL',['../core_8h.html#a6c655623731b60f2257aedfb35e3cfa1',1,'core.h']]],
   ['configbsp430_5fcore_5finclude_5fbsp430_5fconfig_5ffile',['configBSP430_CORE_INCLUDE_BSP430_CONFIG_FILE',['../core_8h.html#ab63537e5c8c1fa94b5d3cbdfc53d9220',1,'core.h']]],
