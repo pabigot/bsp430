@@ -132,6 +132,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to request that command completion be enabled.
  *
  * When command completion is enabled, a horizontal tab in command
@@ -1307,5 +1311,9 @@ int iBSP430cliCommandCompletion (sBSP430cliCompletionData * cdp);
 int iBSP430cliConsoleBufferCompletion (const sBSP430cliCommand * command_set,
                                        const char ** commandp);
 #endif /* configBSP430_CLI_COMMAND_COMPLETION */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_CLI_H */

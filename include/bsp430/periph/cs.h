@@ -83,6 +83,10 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Determine whether target has a CS or CS_A peripheral.
  *
  * The base CS peripheral as defined in the FR57xx family has a
@@ -301,5 +305,9 @@
 #define BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
 
 #endif /* BSP430_MODULE_CS */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_CS_H */

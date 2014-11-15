@@ -56,6 +56,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to indicate intent to use the TLV interface.
  *
  * @cppflag
@@ -392,5 +396,9 @@ typedef struct sBPS430tlvADC {
  */
 unsigned int uiBSP430tlvChecksum (const unsigned char * data,
                                   size_t len);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_TLV_H */

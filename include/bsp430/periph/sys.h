@@ -64,6 +64,10 @@
 
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/sys.h>.  The value evaluates
  * to true if the target MCU supports the System Control Module, and
  * false if it does not.
@@ -141,5 +145,9 @@ const char * xBSP430sysSYSRSTIVDescription (unsigned int sysrstiv);
 unsigned int uiBSP430sysSYSRSTGenerator_ni (unsigned int * puiResetFlags);
 
 #endif /* BSP430_MODULE_SYS */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_SYS_H */

@@ -64,6 +64,10 @@
 
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/flash.h>.  The value
  * evaluates to true if the target MCU supports the Flash Memory
  * module, and false if it does not.
@@ -124,5 +128,9 @@ int iBSP430flashWriteData_ni (void * dest,
                               size_t len);
 
 #endif /* BSP430_MODULE_FLASH */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_FLASH_H */

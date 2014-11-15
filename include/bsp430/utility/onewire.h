@@ -46,6 +46,10 @@
 
 #include <bsp430/periph/port.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Structure identifying 1-wire bus information. */
 typedef struct sBSP430onewireBus {
   /** The peripheral port containing the bus. */
@@ -245,5 +249,9 @@ int iBSP430onewireReadTemperature_ni (const sBSP430onewireBus * bus,
  *  = (21852 + 5 * x) / 8
  */
 #define BSP430_ONEWIRE_xCel_TO_dK(xcel_) ((21852U + 5U * (xcel_)) / 8U)
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_ONEWIRE_H */

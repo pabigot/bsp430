@@ -72,6 +72,10 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/port.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to request that platform enable its M25P flash.
  *
  * Some platforms have an external serial flash memory suitable for
@@ -480,5 +484,9 @@ int iBSP430m25pCompleteTxRx_rh (hBSP430m25p dev,
                                 size_t tx_len,
                                 size_t rx_len,
                                 uint8_t * rx_data);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_M25P_H */

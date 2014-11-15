@@ -78,6 +78,10 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/bc2.h>.  The value evaluates
  * to true if the target MCU supports the Basic Clock Module+, and
  * false if it does not.
@@ -263,5 +267,9 @@ int iBSP430bc2TrimToMCLK_ni (unsigned long mclk_Hz);
 #define BSP430_CLOCK_PUC_MCLK_HZ 1100000UL
 
 #endif /* BSP430_MODULE_BC2 */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_BC2_H */

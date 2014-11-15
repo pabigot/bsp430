@@ -51,6 +51,10 @@
 #include <stddef.h>             /* NULL and size_t */
 #include <stdbool.h>            /* bool */
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Version identifier for the BSP430 library
  *
  * A monotonically non-decreasing integer reflecting the version of
@@ -818,6 +822,10 @@
  *
  * @see #BSP430_CORE_MS_TO_TICKS, #BSP430_CORE_TICKS_TO_US */
 #define BSP430_CORE_TICKS_TO_MS(ticks_, hz_) ((1000UL * (ticks_)) / (hz_))
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 /** Utility to convert a 16-bit word between big-endian and little-endian.
  *

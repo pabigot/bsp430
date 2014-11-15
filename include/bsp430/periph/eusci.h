@@ -87,6 +87,10 @@
 #include <bsp430/periph.h>
 #include <bsp430/serial_.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/eusci.h>.  The value
  * evaluates to true if the target MCU supports the Enhanced Universal
  * Serial Communcations Interface peripheral, and false if it does
@@ -1071,5 +1075,8 @@ const char * xBSP430eusciName (tBSP430periphHandle periph);
 
 #endif /* BSP430_MODULE_EUSCI */
 
-#endif /* BSP430_PERIPH_EUSCI_H */
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
+#endif /* BSP430_PERIPH_EUSCI_H */

@@ -78,6 +78,10 @@
 #include <bsp430/resource.h>
 #endif /* BSP430_SERIAL_ENABLE_RESOURCE */
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Field value for variant stored in
  * sBSP430halSERIAL.hal_state.cflags when HPL reference is to an
  * #sBSP430hplUSCI. */
@@ -343,5 +347,9 @@ struct sBSP430serialDispatch {
   unsigned long (* rate) (hBSP430halSERIAL hal);
 };
 /** @endcond */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SERIAL__H */

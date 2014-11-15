@@ -91,6 +91,10 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/ucs.h>.  The value evaluates
  * to true if the target MCU supports the Unified Clock System, and
  * false if it does not.
@@ -331,6 +335,10 @@ int iBSP430ucsTrimDCOCLKDIV_ni ();
 /** @endcond */
 
 #endif /* BSP430_MODULE_UCS */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_UCS_H */
 

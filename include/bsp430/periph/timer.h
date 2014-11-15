@@ -286,6 +286,10 @@
 #include <bsp430/periph.h>
 #include <bsp430/clock.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/timer.h>.  The value
  * evaluates to true if the target MCU supports the Timer_A Module,
  * and false if it does not.
@@ -3588,5 +3592,9 @@ uiBSP430timerBestCounterRead_ni (volatile sBSP430hplTIMER * const hpl,
 }
 
 #endif /* BSP430_MODULE_TIMER */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_TIMER_H */

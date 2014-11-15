@@ -43,6 +43,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Convert a temperature, expressed in dK (tenths of one degree
  * Kelvin) into dC (tenths of one degree Celcius). */
 #define BSP430_SENSORS_CONVERT_dK_TO_dC(dk_) ((dk_) - 2732)
@@ -66,5 +70,9 @@
 /** Convert a pressure, expressed in Pa (Pascals) into cinHg
  * (hundredths of inches of mercury). */
 #define BSP430_SENSORS_CONVERT_Pa_TO_cinHg(pa_) ((int)(((pa_) * 100L) / 3386))
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SENSORS_UTILITY_H */

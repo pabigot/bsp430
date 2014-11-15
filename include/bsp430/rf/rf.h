@@ -45,6 +45,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to enable any timer infrastructure
  * associated with RF component GPIOs.  A timer that will support this
  * must be identified; see #BSP430_RF_TIMER_PERIPH_CPPID.
@@ -119,5 +123,9 @@
 /* END AUTOMATICALLY GENERATED CODE [periph_sethandle] */
 /* !BSP430! end=periph_sethandle */
 #endif /* BSP430_RF_TIMER_PERIPH_CPPID */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_RF_RF_H */

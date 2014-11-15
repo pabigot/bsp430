@@ -70,6 +70,10 @@
 #include <bsp430/core.h>
 #include <bsp430/serial.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to request that platform enable its U8GLIB adaptation.
  *
  * Some platforms have an on-board LCD for which a bridge to u8glib is
@@ -101,9 +105,16 @@
 #define BSP430_UTILITY_U8GLIB include <bsp430/platform.h>
 #endif /* BSP430_DOXYGEN */
 
+
 #if defined(BSP430_DOXYGEN) || (configBSP430_UTILITY_U8GLIB - 0)
 /** @cond DOXYGEN_EXCLUDE */
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 #include <u8g.h>
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 /** @endcond */
 
 /** The platform-provided device for the on-board LCD.
@@ -123,7 +134,13 @@ extern u8g_dev_t xBSP430u8gDevice;
  * @defaulted
  * @platformvalue */
 #if (BSP430_PLATFORM_SHARPLCD - 0)
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 #include <bsp430/utility/sharplcd.h>
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 #define BSP430_U8GLIB_REFRESH_INTERVAL_MS BSP430_SHARPLCD_REFRESH_INTERVAL_MS
 #else
 #define BSP430_U8GLIB_REFRESH_INTERVAL_MS 0
@@ -156,5 +173,9 @@ int iBSP430u8gRefresh (u8g_t * u8g);
  * not usable.
  */
 hBSP430halSERIAL hBSP430u8gSPI (void);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_U8GLIB_H */

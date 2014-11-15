@@ -61,6 +61,10 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/timer.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** The 7-bit I2C slave address for the device.  This is not
  * configurable. */
 #define BSP430_SENSORS_HH10D_I2C_ADDRESS 0x51
@@ -194,5 +198,9 @@ int iBSP430sensorsHH10Dconvert_ppth_ni (hBSP430sensorsHH10Dstate hh10d,
   ul *= 10UL * hh10d->cal_sens;
   return (unsigned int) (ul / 4096);
 }
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SENSORS_HH10D_H */

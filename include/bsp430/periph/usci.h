@@ -94,6 +94,10 @@
 #include <bsp430/periph.h>
 #include <bsp430/serial_.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/usci.h>.  The value
  * evaluates to true if the target MCU supports the Universal Serial
  * Communications Interface (2xx/4xx version), and false if it does
@@ -740,5 +744,9 @@ hBSP430halSERIAL hBSP430usciLookup (tBSP430periphHandle periph)
 const char * xBSP430usciName (tBSP430periphHandle periph);
 
 #endif /* BSP430_MODULE_USCI */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_USCI_H */

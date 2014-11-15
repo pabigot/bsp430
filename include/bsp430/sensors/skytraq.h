@@ -73,6 +73,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Message identifiers */
 typedef enum eSkyTraqMessageID {
   eSkyTraqMID_NMEA = 71,                  /**< 'G' for GP* NMEA messages */
@@ -304,5 +308,9 @@ typedef union uSkyTraqMsg {
 #ifndef SKYTRAQ_NMEA_RX_POOL_FRAGMENTS
 #define SKYTRAQ_NMEA_RX_POOL_FRAGMENTS 4
 #endif /* SKYTRAQ_NMEA_RX_POOL_FRAGMENTS */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SENSORS_SKYTRAQ_H */

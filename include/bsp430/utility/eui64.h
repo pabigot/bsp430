@@ -60,6 +60,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to indicate intent to use the EUI-64 interface.
  *
  * @cppflag
@@ -281,5 +285,9 @@ int iBSP430eui64Parse (const char * cfp,
  * @return @p buffer if successful, or a null pointer if @p eui64 is null. */
 char * xBSP430eui64AsText (hBSP430eui64 eui64,
                            char * buffer);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_EUI64_H */

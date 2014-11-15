@@ -63,6 +63,10 @@
 #include <string.h>
 #include <inttypes.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to enable the unit test infrastructure.  In
  * addition, the <bsp430/utility/unittest.h> header must be included,
  * and the @c utility/unittest module linked in.
@@ -283,5 +287,9 @@ void vBSP430unittestFinalize (void);
  * If they are not, emit a diagnostic showing both pointer values. */
 #define BSP430_UNITTEST_ASSERT_EQUAL_FMTp(v1_,v2_) \
   BSP430_UNITTEST_ASSERT_EQUAL_FMT_(v1_,v2_,const void *,"%p")
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_UNITTEST_H */

@@ -49,6 +49,10 @@
 #include <bsp430/core.h>
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* NOTE TO MAINTAINER: You will be tempted to refactor the boolean
  * configBSP430_SERIAL_USE_FOO flag to a valued
  * configBSP430_SERIAL_USE_VARIANT==BSP430_SERIAL_HAL_HPL_VARIANT_FOO
@@ -179,7 +183,15 @@
    || (configBSP430_SERIAL_ENABLE_SPI - 0)      \
    || (configBSP430_SERIAL_ENABLE_I2C - 0))
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #include <bsp430/serial_.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 #if defined(BSP430_DOXYGEN) || (BSP430_SERIAL - 0)
 
@@ -816,6 +828,10 @@ unsigned long ulBSP430serialRate (hBSP430halSERIAL hal)
 
 #endif /* BSP430_SERIAL - 0 */
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #if (configBSP430_SERIAL_USE_USCI - 0)
 #include <bsp430/periph/usci.h>
 #endif /* configBSP430_SERIAL_USE_USCI */
@@ -825,6 +841,10 @@ unsigned long ulBSP430serialRate (hBSP430halSERIAL hal)
 #if (configBSP430_SERIAL_USE_EUSCI - 0)
 #include <bsp430/periph/eusci.h>
 #endif /* configBSP430_SERIAL_USE_EUSCI */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /** Get the HAL handle for a specific serial peripheral.
  *
@@ -863,5 +883,9 @@ hBSP430halSERIAL hBSP430serialLookup (tBSP430periphHandle periph)
  * @return The short name of the port, e.g. "USCI_A0".  If the peripheral
  * is not recognized as a serial device, a null pointer is returned. */
 const char * xBSP430serialName (tBSP430periphHandle periph);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SERIAL_H */

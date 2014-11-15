@@ -114,6 +114,10 @@
 #include <bsp430/periph/timer.h>
 #include <bsp430/clock.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to enable the uptime infrastructure to
  * maintain a continuous system clock.  A timer that will support this
  * must be identified; see #BSP430_UPTIME_TIMER_PERIPH_CPPID.
@@ -824,7 +828,15 @@ int iBSP430uptimeDelaySetEnabled_ni (int enablep);
 
 #if defined(BSP430_DOXYGEN) || (configBSP430_UPTIME_EPOCH - 0)
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #include <sys/time.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /** The time of the POSIX epoch (1970-01-01T00:00:00Z) as represented
  * in integral seconds since the NTP epoch (1900-01-01T00:00:00Z).
@@ -1128,5 +1140,9 @@ int iBSP430uptimeProcessNTPResponse (const sBSP430uptimeNTPPacketHeader * req,
                                      unsigned long * rtt_us);
 
 #endif /* configBSP430_UPTIME_EPOCH */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_UPTIME_H */

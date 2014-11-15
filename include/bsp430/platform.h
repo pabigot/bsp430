@@ -65,6 +65,10 @@
 #include <msp430.h>
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Basic configuration for the platform.
  *
  * Applications should assume that invoking this in main() will
@@ -289,6 +293,9 @@ const char * xBSP430platformPeripheralHelp (tBSP430periphHandle periph, int peri
 #define BSP430_PLATFORM_BUTTON0 include <bsp430/platform.h>
 #endif /* configBSP430_PLATFORM_BUTTON0 */
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 /* !BSP430! tool=msp subst=tool instance=exp430f5438,exp430f5529,exp430f5529lp,exp430fr5739,exp430fr5969,exp430fr4133,exp430fg4618,exp430g2 */
 /* !BSP430! insert=platform_decl */

@@ -91,6 +91,10 @@
 #include <bsp430/serial.h>
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to request that a serial handle be
  * identified to serve as a system console.
  *
@@ -606,5 +610,9 @@ void vBSP430consoleDisplayMemory (const uint8_t * dp,
  */
 void vBSP430consoleDisplayOctets (const uint8_t * dp,
                                   size_t len);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_CONSOLE_H */

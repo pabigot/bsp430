@@ -67,6 +67,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Identify use of the CS peripheral on FR58xx devices.
  *
  * TI fails to distinguish the three types of CS module in the three
@@ -756,6 +760,10 @@ uiBSP430clockACLK_Hz (void)
   BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   return rv;
 }
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 /* Include peripheral-specific header where recognized */
 #if defined(__MSP430_HAS_BC2__)

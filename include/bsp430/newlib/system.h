@@ -43,6 +43,10 @@
 #include <bsp430/core.h>
 #include <unistd.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** The system function used to allocate memory for use by libc heap
  * memory management.
  *
@@ -112,5 +116,9 @@ void * _bsp430_sbrk_error (void * brk,
  *
  * This is a diagnostic aid that may not be worth maintaining. */
 extern unsigned long ulBSP430newlibNoSysInvoked;
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_NEWLIB_SYSTEM_H */

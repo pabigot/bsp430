@@ -70,6 +70,10 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/timer.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** The 7-bit I2C slave address for the device.  This is not
  * configurable. */
 #define BSP430_SENSORS_SHT21_I2C_ADDRESS 0x40
@@ -322,5 +326,9 @@ int iBSP430sensorsSHT21getMeasurement (hBSP430halSERIAL i2c,
  * negative error code. */
 int iBSP430sensorsSHT21getSample (hBSP430halSERIAL i2c,
                                   hBSP430sensorsSHT21sample sample);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SENSORS_SHT21_H */

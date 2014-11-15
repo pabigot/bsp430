@@ -54,6 +54,10 @@ MODULES += chips/ds3231
 #include <bsp430/core.h>
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** I2C address for DS3231 I2C RTX/TCXO/Crystal */
 #define DS3231_I2C_ADDRESS 0x68
 
@@ -133,5 +137,9 @@ xDS3231registersToTm (const sDS3231registers * regp,
 const sDS3231registers *
 xDS3231tmToRegisters (const struct tm * timep,
                       sDS3231registers * regp);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_CHIPS_DS3231_H */

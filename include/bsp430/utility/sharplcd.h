@@ -47,6 +47,10 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/port.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to request that platform enable its <a
  * href="http://www.sharpmemorylcd.com">Sharp Microelectronics Memory
  * LCD display</a>.
@@ -290,5 +294,9 @@ int iBSP430sharplcdUpdateDisplayLines_rh (hBSP430sharplcd dev,
                                           int start_line,
                                           int num_lines,
                                           const uint8_t * line_data);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_SHARPLCD_H */

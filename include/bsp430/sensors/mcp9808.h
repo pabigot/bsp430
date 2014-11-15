@@ -52,6 +52,10 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/timer.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** The 7-bit I2C slave address for the device.  If you pull up any of
  * the three address lines, add the binary value to this. */
 #define BSP430_SENSORS_MCP9808_I2C_ADDRESS 0x18
@@ -164,5 +168,9 @@ iBSP430sensorsMCP9808tempFromRaw_cK (uint16_t raw)
   }
   return (int)v;
 }
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SENSORS_MCP9808_H */

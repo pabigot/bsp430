@@ -65,6 +65,10 @@
 #include <bsp430/serial.h>
 #include <bsp430/periph/timer.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** The 7-bit I2C slave address for the device.  This is not
  * configurable. */
 #define BSP430_SENSORS_BMP180_I2C_ADDRESS 0x77
@@ -160,5 +164,9 @@ int iBSP430sensorsBMP180getSample (hBSP430halSERIAL i2c,
  */
 void vBSP430sensorsBMP180convertSample (const sBSP430sensorsBMP180calibration * calp,
                                         hBSP430sensorsBMP180sample sample);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_SENSORS_BMP180_H */

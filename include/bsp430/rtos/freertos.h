@@ -63,6 +63,10 @@
 #include <bsp430/core.h>
 #include <bsp430/clock.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Mark that BSP430 will be running under FreeRTOS.
  *
  * Defining this macro to a true value externally to the system will:
@@ -146,5 +150,9 @@ void vBSP430freertosSuspendScheduler (void);
  * @note This function is available only if
  #configBSP430_FREERTOS_SCHEDULER is true. */
 void vBSP430freertosResumeScheduler (void);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_RTOS_FREERTOS_H */

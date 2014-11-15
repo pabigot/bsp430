@@ -85,6 +85,10 @@
 #include <bsp430/core.h>
 #include <msp430.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** An integral type used to uniquely identify a raw MCU peripheral.
  *
  * For MCU families where peripheral base addresses are provided in
@@ -566,5 +570,9 @@ iBSP430callbackInvokeISRIndexed_ni (const struct sBSP430halISRIndexedChainNode *
       (node_).next_ = NULL;                                             \
     }                                                                   \
   } while (0)
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_H */

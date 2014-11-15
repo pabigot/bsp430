@@ -65,6 +65,10 @@
 
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined to true if DMAX peripheral is supported.
  *
  * Defined on inclusion of <bsp430/periph/dma.h> based on MCU-specific
@@ -328,5 +332,9 @@ extern sBSP430halDMA xBSP430hal_DMA_;
 /* !BSP430! end=hal_isr_decl */
 
 #endif /* BSP430_MODULE_DMA */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_DMA_H */

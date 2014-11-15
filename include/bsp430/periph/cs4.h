@@ -64,6 +64,10 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/cs4.h>.  The value
  * evaluates to true if the target MCU supports the CS peripheral of
  * the FR4xx/2xx devices, and false if it does not.
@@ -180,5 +184,9 @@
 /** @endcond */
 
 #endif /* BSP430_MODULE_CS4 */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_CS4_H */

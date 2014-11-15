@@ -65,6 +65,10 @@
 
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/pmm.h>.  The value evaluates
  * to true if the target MCU supports the Power Management Module, and
  * false if it does not.
@@ -286,5 +290,9 @@ int iBSP430pmmSetCoreVoltageLevel_ni (unsigned int target_level);
 #endif /* PMM not FRAM */
 
 #endif /* BSP430_MODULE_PMM */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_PMM_H */

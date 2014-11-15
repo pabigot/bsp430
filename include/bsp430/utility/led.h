@@ -40,6 +40,10 @@
 #ifndef BSP430_UTILITY_LED_H
 #define BSP430_UTILITY_LED_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Define to a true value to indicate intent to use the LED interface.
  * Most platforms should support LEDs directly, bypassing any HAL/HPL
  * interfaces.
@@ -195,5 +199,9 @@ extern const sBSP430halLED xBSP430halLED_[];
  * xBSP430halLED_ configuration array.  Otherwise it's just a constant.
  * We'll assume there can't be more than 255 LEDs. */
 extern const unsigned char nBSP430led;
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_LED_H */

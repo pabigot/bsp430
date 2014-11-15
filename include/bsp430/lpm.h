@@ -63,6 +63,10 @@
 #include <bsp430/core.h>
 #include <msp430.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Reset all port pins for low power applications.
  *
  * This function should be invoked at application power-up so that
@@ -76,5 +80,9 @@
  * i/o function, output direction, and outputs set to zero.
  */
 void vBSP430lpmConfigurePortsForLPM_ni (void);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_LPM_H */

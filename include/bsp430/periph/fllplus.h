@@ -80,6 +80,10 @@
 #include <bsp430/clock.h>
 #include <bsp430/periph.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** Defined on inclusion of <bsp430/periph/fllplus.h>.  The value
  * evaluates to true if the target MCU supports the FLL Plus module,
  * and false if it does not.
@@ -192,5 +196,9 @@
 #define BSP430_CLOCK_PUC_MCLK_HZ 1048576UL
 
 #endif /* BSP430_MODULE_FLLPLUS */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_PERIPH_FLLPLUS_H */

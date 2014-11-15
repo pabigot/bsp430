@@ -67,6 +67,10 @@
 
 #include <bsp430/core.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* Forward declaration */
 struct sBSP430resourceWaiter;
 
@@ -302,5 +306,9 @@ typedef struct sBSP430resourceReleaseFlag {
  * @return #BSP430_HAL_ISR_CALLBACK_EXIT_LPM */
 int iBSP430resourceSetFlagOnRelease (hBSP430resource resource,
                                      hBSP430resourceWaiter waiter);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_RESOURCE_H */

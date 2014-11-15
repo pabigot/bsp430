@@ -69,6 +69,10 @@
 #include <bsp430/core.h>
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** The GPS epoch in the POSIX epoch.
  *
  * The epoch for GPS time is 1980-01-06T00:00:00Z.  POSIX measures
@@ -358,5 +362,9 @@ time_t xBSP430gpsConvertGPStoUTC_ni (unsigned int weekno,
 int iBSP430gpsTransmit_ni (const uint8_t * msg,
                            size_t len,
                            iBSP430gpsTransmitComplete_ni complete_cb);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_GPS_H */

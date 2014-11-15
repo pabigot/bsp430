@@ -74,6 +74,10 @@
 
 #include <bsp430/periph/timer.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /** A utility union that allows event records to hold one value of any
  * scalar type not exceeding 32 bits.  The union field that is valid
  * for a particular even tag should be documented at the point the tag
@@ -419,5 +423,9 @@ void vBSP430eventRecordEvent (unsigned char tag,
  * into @p evts */
 int iBSP430eventTagGetRecords (sBSP430eventTagRecord * evts,
                                int len);
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* BSP430_UTILITY_EVENT_H */
