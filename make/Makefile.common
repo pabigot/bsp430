@@ -376,11 +376,6 @@ MODULES_PLATFORM ?= platform/$(PLATFORM)/platform $(MODULES_CLOCK) $(MODULES_LED
 
 # Add all selected modules to the SRC, eliminating any duplicates
 
-# This places dependencies and object files in the common directories.  It
-# makes builds across platforms and between applications confusing.
-# undefine VPATH
-#SRC += $(patsubst %,$(BSP430_ROOT)/src/%.c,$(sort $(MODULES)))
-
 # This places all dependencies and object files in the app directory, but
 # would break if the same file basename is used for different capabilities.
 # Doesn't happen for now; let's see how it works.
@@ -394,11 +389,6 @@ VPATH += $(BSP430_ROOT)/src/newlib
 endif # WITH_GCC_MSP430_ELF
 VPATH += $(BSP430_ROOT)/src
 SRC += $(addsuffix .c,$(notdir $(sort $(MODULES))))
-
-# This places dependencies and object files in subdirectories of the app
-# directory, but would require somebody to create those subdirectories
-#VPATH=$(BSP430_ROOT)/src
-#SRC += $(addsuffix .c,$(sort $(MODULES)))
 
 # Normal compilers use .o for object files.  TI's uses .obj, and defines
 # OBJ_EXT above.
