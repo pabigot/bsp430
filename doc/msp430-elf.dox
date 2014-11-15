@@ -41,12 +41,9 @@ integrated by GNU so in 2012 TI funded Red Hat to create a new back-end
 for the MSP430.
 
 In late 2014 this port reached maturity, and is now fully supported by
-BSP430.  It is selected by setting @c WITH_GCC_MSP430_ELF=1 in the
-environment or passed through as an option to @c make.  In a future
-release this toolchain will become the default, with MSPGCC available as
-an alternative using @c WITH_GCC_MSPGCC=1.  (To disable a selected
-toolchain use @c WITH_GCC_MSP430_ELF= leaving an empty string as the
-value.)
+BSP430.  This toolchain is now the default, with MSPGCC available as an
+alternative using the pair: @c WITH_GCC_MSP430_ELF= @c
+WITH_GCC_MSPGCC=yes
 
 \section msp430elf_building How to Build the Toolchain
 

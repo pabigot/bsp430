@@ -34,11 +34,11 @@ ifneq (,$(WITH_GCC))
 $(error Use WITH_GCC_MSPGCC or WITH_GCC_MSP430_ELF)
 endif # WITH_GCC
 
-# If nothing specified, pick mspgcc.
+# If nothing specified, pick msp430-elf.
 ifeq (,$(WITH_GCC_MSPGCC)$(WITH_GCC_MSP430_ELF)$(WITH_CCS))
 WITH_CCS ?=
-WITH_GCC_MSP430_ELF ?=
-WITH_GCC_MSPGCC ?= yes
+WITH_GCC_MSP430_ELF ?= yes
+WITH_GCC_MSPGCC ?=
 endif
 
 CPPFLAGS ?=
