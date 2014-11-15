@@ -56,7 +56,13 @@ msp430-elf.commit=104bb0f78a95ec54d5184288fa2e355df3dd255f
 
 \section releases_next Changes in Next Release
 
-N/A
+@li Support for C++ sources specified by setting/augmenting @c SRC_CXX
+in the Makefile.  Only @c .cc is recognized as a suffix, and only the @c
+msp430-elf toolchain is supported.  The inferred @c CXXFLAGS
+automatically includes the target @c WARN_CFLAGS, @c OPT_CFLAGS, and @c
+TARGET_CFLAGS settings; all other settings that affect CFLAGS (e.g. @c
+AUX_CFLAGS) need to be duplicated to the corresponding C++ variable
+(viz. @c AUX_CXXFLAGS).
 
 \section releases_20141115 Changes in Release 20141115
 

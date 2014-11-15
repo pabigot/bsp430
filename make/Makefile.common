@@ -102,6 +102,7 @@ endif # WITH_GCC_MSP430_ELF
 
 ifneq (,$(WITH_GCC))
 CC=$(CROSS_COMPILE)gcc
+CXX=$(CROSS_COMPILE)g++
 LD=$(CROSS_COMPILE)ld
 AR=$(CROSS_COMPILE)ar
 SIZE=$(CROSS_COMPILE)size
@@ -274,6 +275,10 @@ CFLAGS += $(WARN_CFLAGS)
 CFLAGS += $(OPT_CFLAGS)
 CFLAGS += $(TARGET_CFLAGS)
 
+CXXFLAGS += $(WARN_CFLAGS)
+CXXFLAGS += $(OPT_CFLAGS)
+CXXFLAGS += $(TARGET_CFLAGS)
+
 LDFLAGS += $(OPT_LDFLAGS)
 LDFLAGS += $(TARGET_LDFLAGS)
 
@@ -304,6 +309,7 @@ endif # BSP430_ROOT
 # on the make command line (EXT_*).
 CPPFLAGS += $(AUX_CPPFLAGS) $(EXT_CPPFLAGS)
 CFLAGS += $(AUX_CFLAGS) $(EXT_CFLAGS)
+CXXFLAGS += $(AUX_CXXFLAGS) $(EXT_CXXFLAGS)
 LDFLAGS += $(AUX_LDFLAGS) $(EXT_LDFLAGS)
 LDLIBS += $(AUX_LDLIBS) $(EXT_LDLIBS)
 
@@ -395,12 +401,12 @@ SRC += $(addsuffix .c,$(notdir $(sort $(MODULES))))
 OBJ_EXT ?= .o
 
 # Object files derive from C source files and preprocessed assembly files
-OBJ += $(SRC:.c=$(OBJ_EXT)) $(SRC_S:.S=$(OBJ_EXT))
+OBJ += $(SRC:.c=$(OBJ_EXT)) $(SRC_CXX:.cc=$(OBJ_EXT)) $(SRC_S:.S=$(OBJ_EXT))
 
 # Dependency files derive from anything that was preprocessed.  I'd like
 # these stuffed in a hidden subdirectory, haven't worked that one yet.
 # Also see http://locklessinc.com/articles/makefile_tricks/
-DEP += $(SRC:.c=.d) $(SRC_S:.S=.d)
+DEP += $(SRC:.c=.d) $(SRC_CXX:.cc=.d) $(SRC_S:.S=.d)
 
 # MSPDEBUG: Path to the mspdebug application (http://mspdebug.sourceforge.net/)
 MSPDEBUG ?= mspdebug
@@ -438,6 +444,11 @@ ifneq (,$(WITH_GCC))
 	 $(CC) -MM -MT$*.o $(CPPFLAGS) $(CFLAGS) $< > $@.$$$$; \
 	 sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 	 $(RM) $@.$$$$
+%.d: %.cc
+	set -e; $(RM) $@; \
+	 $(CXX) -MM -MT$*.o $(CPPFLAGS) $(CXXFLAGS) $< > $@.$$$$; \
+	 sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	 $(RM) $@.$$$$
 
 # Object file derived from assembler source including preprocessor
 %.o: %.S
@@ -446,7 +457,9 @@ ifneq (,$(WITH_GCC))
 # Interleaved source/object-code/asm listing
 %.lst: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -ggdb -Wa,-ahdlns=$@ -c $<
-CLEAN += $(SRC:.c=.lst)
+%.lst: %.cc
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -ggdb -Wa,-ahdlns=$@ -c $<
+CLEAN += $(SRC:.c=.lst) $(SRC_CXX:.cc=.lst)
 endif # WITH_GCC
 
 ifneq (,$(WITH_CCS))
@@ -462,13 +475,22 @@ endif # WITH_CCS
 REALCLEAN_OBJ ?= *.o
 REALCLEAN += $(REALCLEAN_OBJ)
 
+# How to do linking: if there's C++ anywhere, use the C++ compiler.
+ifneq (,$(SRC_CXX))
+# Some C++ sources; link using CXX
+AOUT_LINKER = $(CXX) $(CXXFLAGS)
+else # C++ sources?
+# No C++ sources, use CC
+AOUT_LINKER = $(CC) $(CFLAGS)
+endif # C++ sources?
+
 # AOUT: The name of the application image.
 AOUT ?= app.elf
 $(AOUT): $(OBJ)
 ifneq (,$(WITH_CCS))
 	$(CC) $(CFLAGS) -z $(LDFLAGS) -o $@ $(OBJ) $(LDLIBS) $(CCS_LNK_CMD)
 else # WITH_CCS
-	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(OBJ) $(LDLIBS)
+	$(AOUT_LINKER) -o $@ $(LDFLAGS) $(OBJ) $(LDLIBS)
 endif # WITH_CCS
 ifneq (,$(WITH_GCC))
 	$(SIZE) $@
