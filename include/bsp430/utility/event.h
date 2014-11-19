@@ -79,20 +79,28 @@ extern "C" {
 #endif /* __cplusplus */
 
 /** A utility union that allows event records to hold one value of any
- * scalar type not exceeding 32 bits.  The union field that is valid
- * for a particular even tag should be documented at the point the tag
- * is declared. */
+ * type not exceeding 32 bits.  The union field that is valid for a
+ * particular event tag should be documented at the point the tag is
+ * declared. */
 typedef union uBSP430eventAnyType {
   char c;
+  char ca[4];
   unsigned char uc;
+  char uca[4];
   int i;
+  int ia[2];
   unsigned int ui;
+  unsigned int uia[2];
   long l;
   unsigned long ul;
   uint8_t u8;
+  uint8_t u8a[4];
   int8_t i8;
+  int8_t i8a[4];
   uint16_t u16;
+  uint16_t u16a[2];
   int16_t i16;
+  int16_t i16a[2];
   uint32_t u32;
   int32_t i32;
   size_t sz;
