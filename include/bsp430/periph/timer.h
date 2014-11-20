@@ -1901,7 +1901,9 @@ int iBSP430timerMuxAlarmAdd_ni (hBSP430timerMuxSharedAlarm shared,
  *
  * @param shared the shared alarm that manages multiplexed alarms.
  *
- * @param alarm the alarm to be removed.
+ * @param alarm the alarm to be removed.  The structure may or may not
+ * be present in the list for @p shared; it must not be present in the
+ * list for another alarm.
  *
  * @return Normally the return value from
  * iBSP430timerAlarmSetForced_ni() when setting for the next scheduled
