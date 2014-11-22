@@ -45,8 +45,9 @@ CPPFLAGS ?=
 LDFLAGS ?=
 
 ifneq (,$(WITH_CCS))
-# The Code Composer Studio root containing the TI toolchain
-CCS_INSTALL_ROOT ?= /usr/local/ccs/ccsv5
+# The Code Composer Studio root containing the TI toolchain.
+# NB: Link ccsv to ccsv5 or ccsv6
+CCS_INSTALL_ROOT ?= /usr/local/ccs/ccsv
 
 # CCS_BASE_ROOT is the name used in CCS Eclipse project files for the
 # code-generator--independent files such as MCU-specific headers
@@ -55,7 +56,7 @@ CCS_BASE_ROOT ?= $(CCS_INSTALL_ROOT)/ccs_base
 # CG_TOOL_ROOT is the name used in CCS Eclipse project files for the
 # compiler toolchain root
 ifndef CG_TOOL_ROOT
-CG_TOOL_ROOT := $(shell ls -d $(CCS_INSTALL_ROOT)/tools/compiler/msp430_*)
+CG_TOOL_ROOT := $(shell ls -d $(CCS_INSTALL_ROOT)/tools/compiler/msp430_* | tail -1)
 endif # CG_TOOL_ROOT
 
 CC=cl430
