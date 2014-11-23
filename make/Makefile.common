@@ -171,6 +171,9 @@ MCU_HWMULT ?= auto
 ifneq (,$(WITH_GCC_MSP430_ELF))
 TARGET_CFLAGS += -mhwmult=$(MCU_HWMULT)
 endif # WITH_GCC_MSP430_ELF
+ifneq (,$(WITH_GCC_MSPGCC))
+TARGET_CFLAGS += -std=c99
+endif # WITH_GCC_MSPGCC
 
 # MEMORY_MODEL: Level of 20-bit support, assuming this is a CPUX MCU.
 ifdef MEMORY_MODEL
