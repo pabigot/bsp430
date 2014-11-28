@@ -90,7 +90,8 @@ cd ..
 stamp Installing target headers
 ( cd ${REPO_BASE}/msp430-elf && emit_git_info >> ${PREFIX}/origins )
 ( cd ${PREFIX}/msp430-elf/include &&
-  rsync -avr ${REPO_BASE}/msp430-elf/include/. . )
+  rsync -avr ${REPO_BASE}/msp430-elf/include/. . &&
+  sed -i -r -e 's@\basm\b@__asm__@g' iomacros.h )
 
 stamp Checking for errors
 fgrep '***' ${PREFIX}/mball.out 1>&2
