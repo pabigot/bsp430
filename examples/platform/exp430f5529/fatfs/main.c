@@ -95,6 +95,13 @@ void main ()
   rv = iBSP430pmmSetCoreVoltageLevel_ni(PMMCOREV_3);
   cprintf("Set core voltage gets %d\n", rv);
 
+  cprintf("SD card on %s at:\n\t%s\n",
+          xBSP430serialName(APP_SD_SPI_PERIPH_HANDLE),
+          xBSP430platformPeripheralHelp(APP_SD_SPI_PERIPH_HANDLE,  BSP430_PERIPHCFG_SERIAL_SPI3));
+  cprintf("SD CS on %s.%u\n",
+          xBSP430portName(APP_SD_CS_PORT_PERIPH_HANDLE),
+          iBSP430portBitPosition(APP_SD_CS_PORT_BIT));
+
 #if (FATFS_IS_PRE_R0_10 - 0)
   rv = f_mount(0, &fso);
 #else /* Pre R0.10 */

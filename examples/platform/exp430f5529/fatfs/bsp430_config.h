@@ -5,6 +5,9 @@
 /* Application does output: support spin-for-jumper */
 #define configBSP430_PLATFORM_SPIN_FOR_JUMPER 1
 
+/* Add support to tell the user where to connect things */
+#define configBSP430_PLATFORM_PERIPHERAL_HELP 1
+
 /* Support console output */
 #define configBSP430_CONSOLE 1
 
