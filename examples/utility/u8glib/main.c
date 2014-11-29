@@ -117,8 +117,21 @@ void main ()
   rc = u8g_Init(u8g, &xBSP430u8gDevice);
   cprintf("U8G device initialization got %d\n", rc);
   spi = hBSP430u8gSPI();
-  cprintf("SPI is %s: %s\n", xBSP430serialName(xBSP430periphFromHPL(spi->hpl.any)),
+  cprintf("SPI is %s bus rate %lu Hz:\n\t%s\n", xBSP430serialName(xBSP430periphFromHPL(spi->hpl.any)),
+          ulBSP430serialRate(spi),
           xBSP430platformPeripheralHelp(xBSP430periphFromHPL(spi->hpl.any), BSP430_PERIPHCFG_SERIAL_SPI3));
+
+#if (BSP430_PLATFORM_BOOSTERPACK_SHARP96 - 0)
+  cprintf("CS active high on %s.%u\n",
+          xBSP430portName(BSP430_PLATFORM_SHARPLCD_CS_PORT_PERIPH_HANDLE),
+          iBSP430portBitPosition(BSP430_PLATFORM_SHARPLCD_CS_PORT_BIT));
+  cprintf("LCD_EN on %s.%u\n",
+          xBSP430portName(BSP430_PLATFORM_SHARPLCD_LCD_EN_PORT_PERIPH_HANDLE),
+          iBSP430portBitPosition(BSP430_PLATFORM_SHARPLCD_LCD_EN_PORT_BIT));
+  cprintf("PWR_EN on %s.%u\n",
+          xBSP430portName(BSP430_PLATFORM_SHARPLCD_PWR_EN_PORT_PERIPH_HANDLE),
+          iBSP430portBitPosition(BSP430_PLATFORM_SHARPLCD_PWR_EN_PORT_BIT));
+#endif
 
   if (0 != enableRefreshTimer()) {
     /* Failure to configure the refresh timer is a fatal error, on the
