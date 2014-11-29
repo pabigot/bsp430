@@ -50,19 +50,19 @@ static iBSP430gpsPPSCallback_ni pps_cb;
 static int gpsToUtcOffset_s_ = BSP430_GPS_GPS_UTC_OFFSET_S;
 
 int
-iBSP430gpsGPStoUTCOffset_s_ni (void)
+iBSP430gpsGPStoUTCOffset_s (void)
 {
   return gpsToUtcOffset_s_;
 }
 
 void
-vBSP430gpsGPStoUTCOffset_s_ni (int gps_to_utc_offset_s)
+vBSP430gpsGPStoUTCOffset_s (int gps_to_utc_offset_s)
 {
   gpsToUtcOffset_s_ = gps_to_utc_offset_s;
 }
 
 time_t
-xBSP430gpsConvertGPStoUTC_ni (unsigned int weekno,
+xBSP430gpsConvertGPStoUTC (unsigned int weekno,
                               unsigned long sow)
 {
   const uint32_t EPOCH_UNIX_GPS = BSP430_GPS_EPOCH_POSIX;
@@ -409,9 +409,11 @@ static struct sPpsState pps_state_ = {
 };
 
 int
-iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
-                         void * devconfigp)
+iBSP430gpsInitialize (const sBSP430gpsConfiguration * configp,
+                      void * devconfigp)
 {
+  BSP430_CORE_SAVED_INTERRUPT_STATE(istate);
+
   /* Request and configure the serial port. */
   uart_hal = hBSP430serialOpenUART(hBSP430serialLookup(configp->nmea_serial),
                                    0, 0, configp->nmea_baud);
@@ -425,15 +427,19 @@ iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
   serial_cb = configp->serial_cb;
   pps_cb = configp->pps_cb;
 
-  BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode,
-                                  uart_hal->rx_cbchain_ni,
-                                  rx_state_.cb_node,
-                                  next_ni);
+  BSP430_CORE_DISABLE_INTERRUPT();
+  do {
+    BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode,
+                                    uart_hal->rx_cbchain_ni,
+                                    rx_state_.cb_node,
+                                    next_ni);
 
-  BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode,
-                                  uart_hal->tx_cbchain_ni,
-                                  tx_state_.cb_node,
-                                  next_ni);
+    BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRVoidChainNode,
+                                    uart_hal->tx_cbchain_ni,
+                                    tx_state_.cb_node,
+                                    next_ni);
+  } while (0);
+  BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
 
   /* Configure 1PPS-related peripherals */
   if (BSP430_PERIPH_NONE != configp->pps_timer) {
@@ -456,21 +462,26 @@ iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
     if ((0 == bit) || (0 != (bit & (bit - 1)))) {
       return -1;
     }
-    /* Capture synchronously on rising edge and interrupt */
-    pps_timer_hal->hpl->cctl[configp->pps_ccidx] = (configp->pps_ccis & (CCIS0 | CCIS1)) | CM_1 | SCS | CAP | CCIE;
 
-    /* Set PPS port for input as CC trigger, with weak pull-down */
-    BSP430_PORT_HAL_HPL_DIR(pps_port_hal) &= ~bit;
+    BSP430_CORE_DISABLE_INTERRUPT();
+    do {
+      /* Capture synchronously on rising edge and interrupt */
+      pps_timer_hal->hpl->cctl[configp->pps_ccidx] = (configp->pps_ccis & (CCIS0 | CCIS1)) | CM_1 | SCS | CAP | CCIE;
+
+      /* Set PPS port for input as CC trigger, with weak pull-down */
+      BSP430_PORT_HAL_HPL_DIR(pps_port_hal) &= ~bit;
 #if BSP430_PORT_SUPPORTS_REN
-    BSP430_PORT_HAL_SET_REN(pps_port_hal, bit, BSP430_PORT_REN_PULL_DOWN);
+      BSP430_PORT_HAL_SET_REN(pps_port_hal, bit, BSP430_PORT_REN_PULL_DOWN);
 #endif /* BSP430_PORT_SUPPORTS_REN */
-    BSP430_PORT_HAL_HPL_SEL(pps_port_hal) |= bit;
+      BSP430_PORT_HAL_HPL_SEL(pps_port_hal) |= bit;
 
-    /* Chain in PPS interrupt handler */
-    BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
-                                    hBSP430uptimeTimer()->cc_cbchain_ni[APP_PPS_CCIDX],
-                                    pps_state_.cb,
-                                    next_ni);
+      /* Chain in PPS interrupt handler */
+      BSP430_HAL_ISR_CALLBACK_LINK_NI(sBSP430halISRIndexedChainNode,
+                                      hBSP430uptimeTimer()->cc_cbchain_ni[APP_PPS_CCIDX],
+                                      pps_state_.cb,
+                                      next_ni);
+    } while (0);
+    BSP430_CORE_RESTORE_INTERRUPT_STATE(istate);
   }
 
   /* Reset the NMEA state and release its uart */

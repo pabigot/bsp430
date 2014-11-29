@@ -239,7 +239,7 @@ void main ()
             xBSP430portName(config.pps_port),
             iBSP430portBitPosition(config.pps_port_bit));
 
-    rv = iBSP430gpsInitialize_ni(&config, NULL);
+    rv = iBSP430gpsInitialize(&config, NULL);
     cprintf("GPS init got %d\n", rv);
   }
 
@@ -334,7 +334,7 @@ void main ()
           uint32_t gps_sow = gps_csow / 100;
           time_t when_utc;
 
-          when_utc = xBSP430gpsConvertGPStoUTC_ni(gps_week, gps_sow);
+          when_utc = xBSP430gpsConvertGPStoUTC(gps_week, gps_sow);
           gmtime_r(&when_utc, &when_tm);
           cprintf("\tfix %u GPS week %d sec %lu: %lu.%03u: %s",
                   np->fix_mode, gps_week, gps_sow, when_utc, msec, ctime_r(&when_utc, cbuf));

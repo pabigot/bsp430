@@ -90,7 +90,7 @@ extern "C" {
  * to convert it to be in UTC.  The correct value will change over
  * time based on IERS Bulletin C.  The application is responsible for
  * managing any updates that might occur during fielded life; see
- * vBSP430gpsGPStoUTCOffset_s_ni(). */
+ * vBSP430gpsGPStoUTCOffset_s(). */
 #define BSP430_GPS_GPS_UTC_OFFSET_S -16
 
 /** Prototype for applications that receive GPS messages from the infrastructure.
@@ -156,7 +156,7 @@ typedef int (* iBSP430gpsSerialCallback_ni) (const uint8_t * msg,
  * @param msg the message pointer as passed to iBSP430gpsSerialCallback_ni(). */
 void vBSP430gpsReleaseMessage_ni (const uint8_t * msg);
 
-/** Prototype for applications that need 1PPS notifications the infrastructure.
+/** Prototype for applications that need 1PPS notifications.
  *
  * When configured properly a 1PPS signal from a GPS unit is connected
  * to a capture/compare register associated with an MSP430 timer.  On
@@ -266,8 +266,8 @@ typedef struct sBSP430gpsConfiguration {
  *
  * @return 0 if the GPS was successfully initialized; -1 to indicate a
  * misconfiguration (e.g. inconsistent information). */
-int iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
-                             void * devconfigp);
+int iBSP430gpsInitialize (const sBSP430gpsConfiguration * configp,
+                          void * devconfigp);
 
 /** Deconfigure a GPS driver.
  *
@@ -275,7 +275,7 @@ int iBSP430gpsInitialize_ni (const sBSP430gpsConfiguration * configp,
  * capture callbacks.
  *
  * @return 0 */
-int iBSP430gpsShutdown_ni ();
+int iBSP430gpsShutdown ();
 
 /** @cond DOXYGEN_EXCLUDE
  *
@@ -312,7 +312,7 @@ int iBSP430gpsExtractTime (const uint8_t * msg,
  * updates with any use of this call, though the driver for a
  * particular GPS system may do this internally or through some other
  * notification mechanism (e.g. a synthesized NMEA message). */
-int iBSP430gpsGPStoUTCOffset_s_ni (void);
+int iBSP430gpsGPStoUTCOffset_s (void);
 
 /** Set the GPS to UTC offset.
  *
@@ -321,14 +321,14 @@ int iBSP430gpsGPStoUTCOffset_s_ni (void);
  * the earth speeds up unexpectedly, this should be a negative value
  * such as -16.
  *
- * @see iBSP430gpsGPStoUTCOffset_s_ni() */
-void vBSP430gpsGPStoUTCOffset_s_ni (int gps_to_utc_offset_s);
+ * @see iBSP430gpsGPStoUTCOffset_s() */
+void vBSP430gpsGPStoUTCOffset_s (int gps_to_utc_offset_s);
 
 /** Convert a GPS time into UTC.
  *
  * This function converts a GPS time expressed as a week number and
  * second within the week to a UTC time expressed as seconds since the
- * POSIX epoch.  This references iBSP430gpsGPStoUTCOffset_s_ni().
+ * POSIX epoch.  This references iBSP430gpsGPStoUTCOffset_s().
  *
  * @param weekno GPS week number.  The value passed should have been
  * adjusted for any week number rollovers due to the specification
@@ -338,8 +338,8 @@ void vBSP430gpsGPStoUTCOffset_s_ni (int gps_to_utc_offset_s);
  * @param sow Number of seconds within the GPS week.
  *
  * @return A POSIX time in UTC. */
-time_t xBSP430gpsConvertGPStoUTC_ni (unsigned int weekno,
-                                     unsigned long sow);
+time_t xBSP430gpsConvertGPStoUTC (unsigned int weekno,
+                                  unsigned long sow);
 
 /** Send a driver-specific message to the GPS sensor.
  *
