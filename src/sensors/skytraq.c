@@ -63,7 +63,7 @@ vBSP430gpsGPStoUTCOffset_s (int gps_to_utc_offset_s)
 
 time_t
 xBSP430gpsConvertGPStoUTC (unsigned int weekno,
-                              unsigned long sow)
+                           unsigned long sow)
 {
   const uint32_t EPOCH_UNIX_GPS = BSP430_GPS_EPOCH_POSIX;
   const uint32_t SECONDS_PER_WEEK = 7 * 24 * (60 * 60UL);
