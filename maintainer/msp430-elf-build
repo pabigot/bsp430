@@ -37,6 +37,8 @@ mkdir -p ${PREFIX}
 cd /tmp
 exec >${PREFIX}/mball.out
 
+export PATH=${PREFIX}/bin:${PATH}
+
 stamp Building binutils
 rm -rf binutils && mkdir binutils && cd binutils
 ( cd ${REPO_BASE}/binutils && emit_git_info >> ${PREFIX}/origins )
