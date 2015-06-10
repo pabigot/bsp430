@@ -7,7 +7,7 @@
 #  Package     Git URI                                    Branch
 #  binutils    git://sourceware.org/git/binutils-gdb.git  master
 #  gcc         git://gcc.gnu.org/git/gcc.git              trunk
-#  newlib      git://sourceware.org/git/newlib.git        master
+#  newlib      git://sourceware.org/git/newlib-cygwin.git master
 #  msp430-elf  git://github.com/pabigot/msp430-elf.git    gcc_rh
 #
 # PREFIX : The directory into which the toolchain is installed.  By
@@ -32,7 +32,18 @@ stamp () {
   echo "===>" "${@}" "<===" 1>&2
 }
 
-[ -d ${PREFIX} ] && exit 0
+# Prerequisite: binutils install will fail if your texinfo package
+# is 5.x.
+if (makeinfo --version | sed 1q | grep ' 5' ) ; then
+   echo "ERROR: binutils requires texinfo 4.x for installation to succeed"
+   echo "Version 4.13a will work."
+   exit 1
+fi
+
+if [ -d ${PREFIX} ] ; then
+   echo "ERROR: destination ${PREFIX} already exists"
+   exit 1
+fi
 mkdir -p ${PREFIX}
 cd /tmp
 exec >${PREFIX}/mball.out
