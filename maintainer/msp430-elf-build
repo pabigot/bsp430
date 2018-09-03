@@ -8,7 +8,8 @@
 #  binutils    git://sourceware.org/git/binutils-gdb.git  master
 #  gcc         git://gcc.gnu.org/git/gcc.git              trunk
 #  newlib      git://sourceware.org/git/newlib.git        master
-#  msp430-elf  git://github.com/pabigot/msp430-elf.git    gcc_rh
+#  msp430-elf  http://software-dl.ti.com/msp430/msp430_public_sw/mcu/msp430/MSPGCC/latest/index_FDS.html
+#               or (an old version) git://github.com/pabigot/msp430-elf.git    gcc_rh
 #
 # PREFIX : The directory into which the toolchain is installed.  By
 # default it is a date-stamped subdirectory of /usr/local.  The script
@@ -40,7 +41,7 @@ exec >${PREFIX}/mball.out
 stamp Building binutils
 rm -rf binutils && mkdir binutils && cd binutils
 ( cd ${REPO_BASE}/binutils && emit_git_info >> ${PREFIX}/origins )
-${REPO_BASE}/binutils/configure --prefix=${PREFIX} --target=msp430-elf 2>&1 | tee co
+${REPO_BASE}/binutils/configure --prefix=${PREFIX} --target=msp430-elf --disable-werror 2>&1 | tee co
 make -j8 2>&1 | tee mo
 make install 2>&1 | tee moi
 cd ..
@@ -88,9 +89,12 @@ make install-target 2>&1 | tee moiat
 cd ..
 
 stamp Installing target headers
+mkdir -p ${PREFIX}/msp430-elf/include
 ( cd ${REPO_BASE}/msp430-elf && emit_git_info >> ${PREFIX}/origins )
 ( cd ${PREFIX}/msp430-elf/include &&
   rsync -avr ${REPO_BASE}/msp430-elf/include/. . )
+
+mv -f ${PREFIX}/msp430-elf/include/*.ld ${PREFIX}/msp430-elf/lib/
 
 stamp Checking for errors
 fgrep '***' ${PREFIX}/mball.out 1>&2
